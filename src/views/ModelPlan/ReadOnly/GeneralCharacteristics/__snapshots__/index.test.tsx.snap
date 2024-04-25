@@ -1536,3 +1536,1664 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
   </div>
 </DocumentFragment>
 `;
+
+exports[`Read Only Model Plan Summary -- General Characteristics > matches snapshot 2`] = `
+<DocumentFragment>
+  <div
+    class="read-only-model-plan--general-characteristics"
+    data-testid="read-only-model-plan--general-characteristics"
+  >
+    <div
+      class="display-flex flex-justify flex-align-start"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-4"
+      >
+        General characteristics
+      </h2>
+      <div>
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--is-this-a-new-track-of-an-existing-model-or-a-new-model margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Is this a new track of an existing model or a new model?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            New track of an existing model
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--which-existing-model margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Which existing model?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Accountable Care Organizations (ACOs): General Information
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--does-your-proposed-track-model-resemble-any-existing-models margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Does your proposed track/model resemble any existing models?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--explain-why-and-how-the-model-made-this-decision margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Explain why and how the model made this decision.
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            We think it is right
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--which-existing-models-does-your-proposed-track-model-most-closely-resemble margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Which existing models does your proposed track/model most closely resemble?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              name
+            </li>
+            <ul />
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Other model
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--in-what-way-does-the-new-model-resemble-the-selected-model-s margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              In what way does the new model resemble the selected model(s)?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    />
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            THIS IS A NEW NOTE
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--is-participation-in-another-model-a-precondition-for-participation-in-this-model margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Is participation in another model a precondition for participation in this model?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--which-models margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Which models?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              name
+            </li>
+            <ul />
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Other model
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--explain-any-details-including-if-it-is-just-part-of-the-model margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Explain any details including if it is just part of the model.
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            It is a condition
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Precondition note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-there-different-components-tracks--if-so--how-do-the-tracks-differ margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Are there different components/tracks? If so, how do the tracks differ?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+            <span
+              data-testid="other-entry"
+            >
+               - In every way
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Tracks note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will another Agency or State help design/operate the model?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Yes, we will partner with states
+            </li>
+            <ul />
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Agency other
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            State note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--what-type-of-alternative-payment-model--apm--do-you-think-the-model-could-be margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              What type of Alternative Payment Model (APM) do you think the model could be?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              MIPS APM
+            </li>
+            <ul />
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Regular APM
+            </li>
+            <ul />
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            asdfasd
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--what-are-the-model-key-characteristics margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              What are the model key characteristics?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Payment Model
+            </li>
+            <ul />
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Population-based Model
+            </li>
+            <ul />
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Service Delivery Model
+            </li>
+            <ul />
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Custom characteristic
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <div
+          class="usa-alert usa-alert--info usa-alert--no-icon flex margin-bottom-3"
+          data-testid="alert"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                There are 3 additional questions that are not applicable for this model based on the answers selected in the question above.
+              </span>
+            </p>
+          </div>
+        </div>
+        <div
+          class="margin-bottom-3 mint-collapsable-link"
+        >
+          <button
+            aria-controls="related-what-are-the-model-key-characteristics"
+            aria-expanded="false"
+            class="usa-button usa-button--unstyled mint-no-print"
+            data-testid="collapsable-link"
+            type="button"
+          >
+            <svg
+              class="usa-icon top-05 margin-right-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+              />
+            </svg>
+            Show other questions
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            test
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Collect bids note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Manage enrollment note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Contract updated note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--is-care-coordination-involved--how-so margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Is care coordination involved? How so?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+            <span
+              data-testid="other-entry"
+            >
+               - Care description
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Care note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-additional-services-involved--how-so margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Are additional services involved? How so?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+            <span
+              data-testid="other-entry"
+            >
+               - Lots of additional services
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Additional services note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-community-partners-involved--how-so margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Are community partners involved? How so?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+            <span
+              data-testid="other-entry"
+            >
+               - Are community partners involved?
+
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            frwegqergqgrqwg planContractUpdatedNote
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--is-the-model-targeted-at-specific-geographies margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Is the model targeted at specific geographies?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--geography-type-is margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Geography type is
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              States and territories
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                California, Indiana
+              </li>
+            </ul>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Region
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Core-based statistical areas (CBSAs)
+              </li>
+            </ul>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Geography type other
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    />
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Geographies are applied to
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Beneficiaries
+            </li>
+            <ul />
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Geography applied other
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Geography note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--does-the-model-offer-different-options-for-participation margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Does the model offer different options for participation?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Participation options note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--what-is-the-agreement-type margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              What is the agreement type?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Other agreement
+              </li>
+            </ul>
+          </ul>
+        </div>
+        <div
+          class="usa-alert usa-alert--info usa-alert--no-icon flex margin-bottom-3"
+          data-testid="alert"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                There is 1 additional question that is not applicable for this model based on the answers selected in the question above.
+              </span>
+            </p>
+          </div>
+        </div>
+        <div
+          class="margin-bottom-3 mint-collapsable-link"
+        >
+          <button
+            aria-controls="related-what-is-the-agreement-type"
+            aria-expanded="false"
+            class="usa-button usa-button--unstyled mint-no-print"
+            data-testid="collapsable-link"
+            type="button"
+          >
+            <svg
+              class="usa-icon top-05 margin-right-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+              />
+            </svg>
+            Show other question
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            We will need agreements
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--is-rulemaking-required--if-so--which-rule-do-you-anticipate-using-and-what-is-the-target-date-of-display-for-that-regulation margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+            <span
+              data-testid="other-entry"
+            >
+               - Lots of rules
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            My rulemaking note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--what-authority-allows-cmmi-to-test-the-model margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              What authority allows CMMI to test the model?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              3021 Affordable Care Act (ACA)
+            </li>
+            <ul />
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Other allowance
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Allowance note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-waivers-required--if-so--which-types-of-waivers margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Are waivers required? If so, which types of waivers?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+            <ul
+              class="margin-y-0 padding-left-3"
+            >
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Fraud and Abuse
+              </li>
+              <ul />
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Medicaid
+              </li>
+              <ul />
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            My waiver note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--this-section-of-the-model-plan--general-characteristics--is-ready-for-review margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              This section of the Model Plan (General characteristics) is ready for review.
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--ready-for-review-date margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Ready for review date
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--this-section-of-the-model-plan--general-characteristics--is-ready-for-clearance margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              This section of the Model Plan (General characteristics) is ready for clearance.
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--ready-for-clearance-date margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Ready for clearance date
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

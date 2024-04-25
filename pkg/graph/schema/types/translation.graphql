@@ -12,6 +12,7 @@ enum TranslationDataType {
   DATE
   ENUM
   OBJECT
+  UUID
 }
 
 """
@@ -61,6 +62,10 @@ type TranslationField {
   Labels specifically for export/change history.  Takes priority over all other labels
   """
   exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: String
 }
 
 """
@@ -94,6 +99,10 @@ type TranslationFieldWithOptions {
   Labels specifically for export/change history.  Takes priority over all other labels
   """
   exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: String
   options: Map!
 }
 
@@ -128,6 +137,10 @@ type TranslationFieldWithParent {
   Labels specifically for export/change history.  Takes priority over all other labels
   """
   exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: String
   parentRelation: TranslationField!
 }
 
@@ -162,6 +175,10 @@ type TranslationFieldWithOptionsAndChildren {
   Labels specifically for export/change history.  Takes priority over all other labels
   """
   exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: String
   options: Map!
   childRelation: Map!
 }
@@ -197,6 +214,10 @@ type TranslationFieldWithOptionsAndParent {
   Labels specifically for export/change history.  Takes priority over all other labels
   """
   exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: String
   options: Map!
   parentRelation: TranslationFieldWithOptionsAndChildren!
 }
@@ -232,6 +253,10 @@ type TranslationFieldWithParentAndChildren {
   Labels specifically for export/change history.  Takes priority over all other labels
   """
   exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: String
   options: Map!
   parentRelation: TranslationFieldWithOptionsAndChildren!
   childRelation: Map!

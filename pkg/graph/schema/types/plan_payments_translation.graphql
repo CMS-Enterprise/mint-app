@@ -89,5 +89,9 @@ type PlanPaymentsTranslation {
   paymentStartDate: TranslationField! @goTag(key: "db", value: "payment_start_date")
   paymentStartDateNote: TranslationField! @goTag(key: "db", value: "payment_start_date_note")
 
+  readyForReviewBy: TranslationField! @goTag(key: "db", value: "ready_for_review_by")
+  readyForReviewDts: TranslationField! @goTag(key: "db", value: "ready_for_review_dts")
+  readyForClearanceBy: TranslationField! @goTag(key: "db", value: "ready_for_clearance_by")
+  readyForClearanceDts: TranslationField! @goTag(key: "db", value: "ready_for_clearance_dts")
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }

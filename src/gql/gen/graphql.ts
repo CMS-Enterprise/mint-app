@@ -1408,6 +1408,10 @@ export type PlanBasicsTranslation = {
   phasedIn: TranslationFieldWithOptions;
   phasedInNote: TranslationField;
   problem: TranslationField;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
   status: TranslationFieldWithOptions;
   testInterventions: TranslationField;
   wrapUpEnds: TranslationField;
@@ -1527,6 +1531,10 @@ export type PlanBeneficiariesTranslation = {
   precedenceRulesNo: TranslationField;
   precedenceRulesNote: TranslationField;
   precedenceRulesYes: TranslationField;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
   status: TranslationFieldWithOptions;
   treatDualElligibleDifferent: TranslationFieldWithOptions;
   treatDualElligibleDifferentHow: TranslationField;
@@ -1943,6 +1951,10 @@ export type PlanGeneralCharacteristicsTranslation = {
   participationOptionsNote: TranslationField;
   planContractUpdated: TranslationFieldWithOptionsAndParent;
   planContractUpdatedNote: TranslationField;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
   resemblesExistingModel: TranslationFieldWithOptionsAndChildren;
   resemblesExistingModelHow: TranslationFieldWithParent;
   resemblesExistingModelNote: TranslationField;
@@ -2259,6 +2271,10 @@ export type PlanOpsEvalAndLearningTranslation = {
   qualityReportingStarts: TranslationFieldWithOptions;
   qualityReportingStartsNote: TranslationField;
   qualityReportingStartsOther: TranslationField;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
   riskAdjustFeedback: TranslationFieldWithOptions;
   riskAdjustNote: TranslationField;
   riskAdjustOther: TranslationFieldWithOptions;
@@ -2497,6 +2513,10 @@ export type PlanParticipantsAndProvidersTranslation = {
   providerRemovalFrequencyContinually: TranslationField;
   providerRemovalFrequencyNote: TranslationField;
   providerRemovalFrequencyOther: TranslationField;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
   recruitmentMethod: TranslationFieldWithOptions;
   recruitmentNote: TranslationField;
   recruitmentOther: TranslationField;
@@ -2748,6 +2768,10 @@ export type PlanPaymentsTranslation = {
   planningToUseInnovationPaymentContractor: TranslationFieldWithOptionsAndParent;
   planningToUseInnovationPaymentContractorNote: TranslationField;
   providingThirdPartyFile: TranslationFieldWithOptionsAndParent;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
   sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldWithOptionsAndParent;
   sharedSystemsInvolvedAdditionalClaimPaymentNote: TranslationField;
   shouldAnyProviderExcludedFFSSystemsNote: TranslationField;
@@ -3359,7 +3383,8 @@ export enum TranslationDataType {
   ENUM = 'ENUM',
   NUMBER = 'NUMBER',
   OBJECT = 'OBJECT',
-  STRING = 'STRING'
+  STRING = 'STRING',
+  UUID = 'UUID'
 }
 
 /** Represents a translation question with no options */
@@ -3384,6 +3409,8 @@ export type TranslationField = {
   parentReferencesLabel?: Maybe<Scalars['String']['output']>;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<Scalars['String']['output']>;
 };
 
 /** Represents a translation question with options */
@@ -3409,6 +3436,8 @@ export type TranslationFieldWithOptions = {
   parentReferencesLabel?: Maybe<Scalars['String']['output']>;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<Scalars['String']['output']>;
 };
 
 /** Represents a translation question with options and child/children */
@@ -3435,6 +3464,8 @@ export type TranslationFieldWithOptionsAndChildren = {
   parentReferencesLabel?: Maybe<Scalars['String']['output']>;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<Scalars['String']['output']>;
 };
 
 /** Represents a translation question with options and parent */
@@ -3461,6 +3492,8 @@ export type TranslationFieldWithOptionsAndParent = {
   parentRelation: TranslationFieldWithOptionsAndChildren;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<Scalars['String']['output']>;
 };
 
 /** Represents a translation question with no options and a parent */
@@ -3486,6 +3519,8 @@ export type TranslationFieldWithParent = {
   parentRelation: TranslationField;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<Scalars['String']['output']>;
 };
 
 /** Represents a translation question with options and parent and children */
@@ -3513,6 +3548,8 @@ export type TranslationFieldWithParentAndChildren = {
   parentRelation: TranslationFieldWithOptionsAndChildren;
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<Scalars['String']['output']>;
 };
 
 /** Represents the FORM type of the translation field */

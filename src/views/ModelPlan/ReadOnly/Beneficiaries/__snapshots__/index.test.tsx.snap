@@ -648,3 +648,776 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
   </div>
 </DocumentFragment>
 `;
+
+exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 2`] = `
+<DocumentFragment>
+  <div
+    class="read-only-model-plan--beneficiaries"
+    data-testid="read-only-model-plan--beneficiaries"
+  >
+    <div
+      class="display-flex flex-justify flex-align-start"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-4"
+      >
+        Beneficiaries
+      </h2>
+      <div>
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--who-are-the-beneficiaries-of-this-model margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Who are the beneficiaries of this model?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Disease-specific
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Other disease group
+              </li>
+            </ul>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Dually-eligible beneficiaries
+            </li>
+            <ul />
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note beneficiary
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--should-dually-eligible-beneficiaries-be-treated-differently-than-non-dually-eligibles--how-so margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes
+            <span
+              data-testid="other-entry"
+            >
+               - This is how
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Treat note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--should-beneficiaries-with-certain-characteristics-or-enrollments-be-excluded--how-so--what-are-the-exclusionary-criteria margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Should beneficiaries with certain characteristics or enrollments be excluded? How so, what are the exclusionary criteria?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            No
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Exclude note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
+      <div
+        class="grid-row grid-gap"
+        data-testid="grid"
+      >
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--how-many-people-do-you-think-will-be-impacted-by-this-model margin-bottom-3"
+            >
+              <div
+                class="display-flex flex-align-center"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  How many people do you think will be impacted by this model?
+                </p>
+              </div>
+              <div
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                1234
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="desktop:grid-col-12"
+            data-testid="grid"
+          >
+            <div
+              class="read-only-section read-only-section--what-is-your-level-of-confidence-on-this-estimate margin-bottom-3"
+            >
+              <div
+                class="display-flex flex-align-center"
+              >
+                <p
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                >
+                  What is your level of confidence on this estimate?
+                </p>
+              </div>
+              <div
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              >
+                Completely confident
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note of confidence
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-will-you-choose-beneficiaries margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How will you choose beneficiaries?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Historical claims
+            </li>
+            <ul />
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note selection
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-4 padding-top-4 border-top-1px border-base-light"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-frequently-are-beneficiaries-added margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How frequently are beneficiaries added?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Frequency other
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note frequency
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--how-frequently-are-beneficiaries-removed margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              How frequently are beneficiaries removed?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Continually
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Frequency continually
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note frequency
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-the-beneficiaries-overlap-with-other-models margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Will the beneficiaries overlap with other models?
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Yes, we expect to develop policies to manage the overlaps
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Note overlap
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-there-precedence-rules-between-this-model-and-other-model-s margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Are there precedence rules between this model and other model(s)?
+            </p>
+          </div>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Yes
+            </li>
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Yes precedence rules
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    />
+    <div
+      class=""
+    />
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--notes margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Notes
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            Precedence note
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--this-section-of-the-model-plan--beneficiaries--is-ready-for-review margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              This section of the Model Plan (Beneficiaries) is ready for review.
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--ready-for-review-date margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Ready for review date
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--this-section-of-the-model-plan--beneficiaries--is-ready-for-clearance margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              This section of the Model Plan (Beneficiaries) is ready for clearance.
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--ready-for-clearance-date margin-bottom-3"
+        >
+          <div
+            class="display-flex flex-align-center"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Ready for clearance date
+            </p>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+          >
+            <em
+              class="text-base"
+            >
+              No answer entered
+            </em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

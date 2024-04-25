@@ -100,6 +100,7 @@ export type TranslationFieldProperties = Omit<
   };
   hideRelatedQuestionAlert?: boolean; // Ex: CCW and Quality questions do not need to render the alert immediately following the question
   questionTooltip?: string; // Render tooltip next to the question
+  hideFromReadonly?: boolean; // Hide question from readonly view
 };
 
 /*
@@ -307,6 +308,10 @@ export type TranslationBasicsForm = {
   wrapUpEnds: TranslationFieldProperties;
   phasedIn: TranslationFieldPropertiesWithOptions<Bool>;
   phasedInNote: TranslationFieldProperties;
+  readyForReviewBy: TranslationFieldProperties;
+  readyForReviewDts: TranslationFieldProperties;
+  readyForClearanceBy: TranslationFieldProperties;
+  readyForClearanceDts: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
@@ -413,6 +418,10 @@ export type TranslationGeneralCharacteristicsForm = {
   waiversRequired: TranslationFieldPropertiesWithOptions<Bool>;
   waiversRequiredTypes: TranslationFieldPropertiesWithOptions<WaiverType>;
   waiversRequiredNote: TranslationFieldProperties;
+  readyForReviewBy: TranslationFieldProperties;
+  readyForReviewDts: TranslationFieldProperties;
+  readyForClearanceBy: TranslationFieldProperties;
+  readyForClearanceDts: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
@@ -511,6 +520,10 @@ export type TranslationParticipantsAndProvidersForm = {
   >;
   providerOverlapHierarchy: TranslationFieldPropertiesWithParent<OverlapType>;
   providerOverlapNote: TranslationFieldProperties;
+  readyForReviewBy: TranslationFieldProperties;
+  readyForReviewDts: TranslationFieldProperties;
+  readyForClearanceBy: TranslationFieldProperties;
+  readyForClearanceDts: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
@@ -561,6 +574,10 @@ export type TranslationBeneficiariesForm = {
   precedenceRulesYes: TranslationFieldProperties;
   precedenceRulesNo: TranslationFieldProperties;
   precedenceRulesNote: TranslationFieldProperties;
+  readyForReviewBy: TranslationFieldProperties;
+  readyForReviewDts: TranslationFieldProperties;
+  readyForClearanceBy: TranslationFieldProperties;
+  readyForClearanceDts: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
@@ -719,6 +736,10 @@ export type TranslationOpsEvalAndLearningForm = {
   modelLearningSystemsOther: TranslationFieldProperties;
   modelLearningSystemsNote: TranslationFieldProperties;
   anticipatedChallenges: TranslationFieldProperties;
+  readyForReviewBy: TranslationFieldProperties;
+  readyForReviewDts: TranslationFieldProperties;
+  readyForClearanceBy: TranslationFieldProperties;
+  readyForClearanceDts: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
@@ -855,6 +876,10 @@ export type TranslationPaymentsForm = {
   paymentDemandRecoupmentFrequencyNote: TranslationFieldProperties;
   paymentStartDate: TranslationFieldProperties;
   paymentStartDateNote: TranslationFieldProperties;
+  readyForReviewBy: TranslationFieldProperties;
+  readyForReviewDts: TranslationFieldProperties;
+  readyForClearanceBy: TranslationFieldProperties;
+  readyForClearanceDts: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 

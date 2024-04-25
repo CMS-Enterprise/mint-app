@@ -21,7 +21,7 @@ const ReadOnlyBody = ({
     <>
       {/* Map through all the translation config questions */}
       {getKeys(config)
-        .filter(field => field !== 'status') // Don't render status(in progress/ready for review, etc) field
+        .filter(field => !config[field]?.hideFromReadonly) // Don't render status(in progress/ready for review, etc) field
         .map(field => (
           <div
             key={field}

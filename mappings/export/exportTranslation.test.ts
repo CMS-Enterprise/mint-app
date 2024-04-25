@@ -293,6 +293,46 @@ describe('exportTranslation Util', () => {
         dataType: 'STRING',
         formType: 'TEXTAREA'
       },
+      readyForReviewBy: {
+        gqlField: 'readyForReviewBy',
+        goField: 'ReadyForReviewBy',
+        dbField: 'ready_for_review_by',
+        label:
+          'This section of the Model Plan (Model basics) is ready for review.',
+        dataType: 'UUID',
+        formType: 'TEXT',
+        tableReference: 'user_account',
+        hideFromReadonly: true
+      },
+      readyForReviewDts: {
+        gqlField: 'readyForReviewDts',
+        goField: 'ReadyForReviewDts',
+        dbField: 'ready_for_review_dts',
+        label: 'Ready for review date',
+        dataType: 'DATE',
+        formType: 'DATEPICKER',
+        hideFromReadonly: true
+      },
+      readyForClearanceBy: {
+        gqlField: 'readyForClearanceBy',
+        goField: 'ReadyForClearanceBy',
+        dbField: 'ready_for_clearance_by',
+        label:
+          'This section of the Model Plan (Model basics) is ready for clearance.',
+        dataType: 'UUID',
+        formType: 'TEXT',
+        tableReference: 'user_account',
+        hideFromReadonly: true
+      },
+      readyForClearanceDts: {
+        gqlField: 'readyForClearanceDts',
+        goField: 'ReadyForClearanceDts',
+        dbField: 'ready_for_clearance_dts',
+        label: 'Ready for clearance date',
+        dataType: 'DATE',
+        formType: 'DATEPICKER',
+        hideFromReadonly: true
+      },
       status: {
         gqlField: 'status',
         goField: 'Status',
@@ -305,7 +345,8 @@ describe('exportTranslation Util', () => {
           IN_PROGRESS: 'In progress',
           READY_FOR_REVIEW: 'Ready for review',
           READY_FOR_CLEARANCE: 'Ready for clearance'
-        }
+        },
+        hideFromReadonly: true
       }
     });
   });
