@@ -69,6 +69,7 @@ const ChangeHistory = () => {
             })}
           </span>
 
+          {/* TODO: implement once we have a definitive release date */}
           <div className="bg-white-opacity-50 margin-top-4 padding-y-1 padding-x-2">
             {t('changesSinceRelease')}
           </div>
