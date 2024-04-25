@@ -1057,7 +1057,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'This section of the Model Plan (General characteristics) is ready for review.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
-    tableReference: 'user_account'
+    tableReference: 'user_account',
+    hideFromReadonly: true
   },
   readyForReviewDts: {
     gqlField: 'readyForReviewDts',
@@ -1065,7 +1066,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'ready_for_review_dts',
     label: 'Ready for review date',
     dataType: TranslationDataType.DATE,
-    formType: TranslationFormType.DATEPICKER
+    formType: TranslationFormType.DATEPICKER,
+    hideFromReadonly: true
   },
   readyForClearanceBy: {
     gqlField: 'readyForClearanceBy',
@@ -1075,7 +1077,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'This section of the Model Plan (General characteristics) is ready for clearance.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
-    tableReference: 'user_account'
+    tableReference: 'user_account',
+    hideFromReadonly: true
   },
   readyForClearanceDts: {
     gqlField: 'readyForClearanceDts',
@@ -1083,7 +1086,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'ready_for_clearance_dts',
     label: 'Ready for clearance date',
     dataType: TranslationDataType.DATE,
-    formType: TranslationFormType.DATEPICKER
+    formType: TranslationFormType.DATEPICKER,
+    hideFromReadonly: true
   },
   status: {
     gqlField: 'status',
@@ -1097,7 +1101,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       IN_PROGRESS: 'In progress',
       READY_FOR_REVIEW: 'Ready for review',
       READY_FOR_CLEARANCE: 'Ready for clearance'
-    }
+    },
+    hideFromReadonly: true
   }
 };
 

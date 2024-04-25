@@ -957,7 +957,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'This section of the Model Plan (Participants and providers) is ready for review.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
-    tableReference: 'user_account'
+    tableReference: 'user_account',
+    hideFromReadonly: true
   },
   readyForReviewDts: {
     gqlField: 'readyForReviewDts',
@@ -965,7 +966,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'ready_for_review_dts',
     label: 'Ready for review date',
     dataType: TranslationDataType.DATE,
-    formType: TranslationFormType.DATEPICKER
+    formType: TranslationFormType.DATEPICKER,
+    hideFromReadonly: true
   },
   readyForClearanceBy: {
     gqlField: 'readyForClearanceBy',
@@ -975,7 +977,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'This section of the Model Plan (Participants and providers) is ready for clearance.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
-    tableReference: 'user_account'
+    tableReference: 'user_account',
+    hideFromReadonly: true
   },
   readyForClearanceDts: {
     gqlField: 'readyForClearanceDts',
@@ -983,7 +986,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'ready_for_clearance_dts',
     label: 'Ready for clearance date',
     dataType: TranslationDataType.DATE,
-    formType: TranslationFormType.DATEPICKER
+    formType: TranslationFormType.DATEPICKER,
+    hideFromReadonly: true
   },
   status: {
     gqlField: 'status',
@@ -997,7 +1001,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       IN_PROGRESS: 'In progress',
       READY_FOR_REVIEW: 'Ready for review',
       READY_FOR_CLEARANCE: 'Ready for clearance'
-    }
+    },
+    hideFromReadonly: true
   }
 };
 
