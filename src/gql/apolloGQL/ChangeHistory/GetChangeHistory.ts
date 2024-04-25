@@ -1,13 +1,10 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query translatedAuditCollection($modelPlanID: UUID!) {
+  query GetChangeHistory($modelPlanID: UUID!) {
     translatedAuditCollection(modelPlanID: $modelPlanID) {
       id
-      modelName
-      tableID
       tableName
-      primaryKey
       date
       action
 
@@ -29,16 +26,7 @@ export default gql(/* GraphQL */ `
         }
       }
 
-      actorID
       actorName
-
-      changeID
-      metaData {
-        ... on TranslatedAuditMetaBaseStruct {
-          version
-          tableName
-        }
-      }
     }
   }
 `);

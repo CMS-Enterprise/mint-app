@@ -2,8 +2,10 @@ const changeHistory = {
   heading: 'Change history',
   subheading: 'for {{modelName}}',
   back: 'Back to the task list',
-  change: 'made {{count}} change in {{section}} on {{date}} at {{time}}',
-  change_other: 'made {{count}} changes in {{section}} on {{date}} at {{time}}',
+  change:
+    'made {{count}} change in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
+  change_other:
+    'made {{count}} changes in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   sections: {
     model_plan: 'Model plan',
     plan_basics: 'Model basics',
@@ -21,7 +23,13 @@ const changeHistory = {
     REMOVED: 'removed',
     UPDATED: 'updated'
   },
-  previousAnswer: 'Previous answer'
+  previousAnswer: 'Previous answer',
+  recentChanges: 'Recent changes',
+  viewChangeHistory: 'View change history',
+  noChanges:
+    'There are no changes to show at this time. When a change is made to this Model Plan, it will appear here.',
+  changesSinceRelease:
+    'This Model Plan was created before the release of Change history. Because of this, you can only view changes made since [Release date].'
 };
 
 export default changeHistory;

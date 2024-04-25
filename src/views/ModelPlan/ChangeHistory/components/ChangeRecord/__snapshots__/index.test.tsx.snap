@@ -13,26 +13,21 @@ exports[`ChangeRecord > matches snapshot 1`] = `
         class="display-flex flex-align-center"
       >
         <div
-          class="display-flex margin-right-05 flex-align-center"
+          class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
+          data-testid="avatar--basic"
         >
-          <div
-            class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
-            data-testid="avatar--basic"
-          >
-            MD
-          </div>
-          <div
-            class="margin-y-0"
-          >
-            <span
-              class="text-bold"
-            >
-              MINT Doe
-            </span>
-          </div>
+          MD
         </div>
         <span>
-          made 1 change in Model basics on April 22, 2024 at 1:55 PM
+          <span
+            class="text-bold"
+          >
+            MINT Doe 
+          </span>
+          made 1 change in Model basics 
+          <span>
+            on April 22, 2024 at 1:55 PM
+          </span>
         </span>
       </div>
       <ul

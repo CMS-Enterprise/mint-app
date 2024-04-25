@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
-import { useTranslatedAuditCollectionQuery } from 'gql/gen/graphql';
+import { useGetChangeHistoryQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import Alert from 'components/shared/Alert';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
@@ -22,7 +23,7 @@ const ChangeHistory = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useTranslatedAuditCollectionQuery({
+  const { data, loading, error } = useGetChangeHistoryQuery({
     variables: {
       modelPlanID: modelID
     }
@@ -67,6 +68,11 @@ const ChangeHistory = () => {
               modelName
             })}
           </span>
+
+          {/* TODO: implement once we have a definitive release date */}
+          <div className="bg-white-opacity-50 margin-top-4 padding-y-1 padding-x-2">
+            {t('changesSinceRelease')}
+          </div>
         </GridContainer>
       </SummaryBox>
 
@@ -75,6 +81,12 @@ const ChangeHistory = () => {
           <PageLoading />
         ) : (
           <>
+            {changesSortedByDate.length === 0 && (
+              <Alert type="info" slim className="margin-bottom-2">
+                {t('noChanges')}
+              </Alert>
+            )}
+
             {changesSortedByDate.map(changeRecord => (
               <ChangeRecord changeRecord={changeRecord} key={changeRecord.id} />
             ))}
