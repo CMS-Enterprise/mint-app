@@ -1,4 +1,4 @@
-import { GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits_changes as ChangeTypes } from 'gql/gen/types/GetNotifications';
+import { AnalyzedAuditChange as ChangeTypes } from 'gql/gen/graphql';
 
 import { pushValuesToChangesArray } from './_utils';
 
@@ -22,7 +22,18 @@ describe('PushValuesToChangesArray Util', () => {
           {
             __typename: 'AnalyzedModelLeadInfo',
             id: '00',
-            commonName: 'Mint Doe'
+            commonName: 'Mint Doe',
+            userAccount: {
+              __typename: 'UserAccount',
+              id: '00',
+              email: 'mint@doe.oddball.io',
+              familyName: 'Doe',
+              givenName: 'MINT',
+              locale: 'en',
+              zoneInfo: 'America/New_York',
+              commonName: 'Mint Doe',
+              username: 'MINT'
+            }
           }
         ]
       },

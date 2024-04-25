@@ -2,91 +2,99 @@ import React from 'react';
 import { Trans } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import {
-  GetNotifications_currentUser_notifications_notifications_activity_metaData as MetaDataType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_AddedAsCollaboratorMeta as AddCollaboratorType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta as DailyDigestCompleteActivityType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits_changes as ChangeTypes,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_ModelPlanSharedActivityMeta as NewSharedActivityType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_NewDiscussionRepliedActivityMeta as NewReplyActivityType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInDiscussionReplyActivityMeta as TaggedInDiscussionReplyActivityType,
-  GetNotifications_currentUser_notifications_notifications_activity_metaData_TaggedInPlanDiscussionActivityMeta as TaggedInDiscussionActivityType
-} from 'gql/gen/types/GetNotifications';
+  AddedAsCollaboratorMeta,
+  AnalyzedAuditChange,
+  AnalyzedCrTdls,
+  DailyDigestCompleteActivityMeta,
+  ModelPlanSharedActivityMeta,
+  NewDiscussionRepliedActivityMeta,
+  TaggedInDiscussionReplyActivityMeta,
+  TaggedInPlanDiscussionActivityMeta
+} from 'gql/gen/graphql';
+
+type MetaDataType =
+  | TaggedInDiscussionReplyActivityMeta
+  | TaggedInPlanDiscussionActivityMeta
+  | DailyDigestCompleteActivityMeta
+  | NewDiscussionRepliedActivityMeta
+  | ModelPlanSharedActivityMeta
+  | AddedAsCollaboratorMeta;
 
 // Type guard to check union type
 export const isTaggedInDiscussion = (
   data:
-    | TaggedInDiscussionReplyActivityType
-    | TaggedInDiscussionActivityType
-    | DailyDigestCompleteActivityType
-    | NewReplyActivityType
-    | NewSharedActivityType
-    | AddCollaboratorType
-): data is TaggedInDiscussionActivityType => {
+    | TaggedInDiscussionReplyActivityMeta
+    | TaggedInPlanDiscussionActivityMeta
+    | DailyDigestCompleteActivityMeta
+    | NewDiscussionRepliedActivityMeta
+    | ModelPlanSharedActivityMeta
+    | AddedAsCollaboratorMeta
+): data is TaggedInPlanDiscussionActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'TaggedInPlanDiscussionActivityMeta';
 };
 
 export const isTaggedInDiscussionReply = (
   data:
-    | TaggedInDiscussionReplyActivityType
-    | TaggedInDiscussionActivityType
-    | DailyDigestCompleteActivityType
-    | NewReplyActivityType
-    | NewSharedActivityType
-    | AddCollaboratorType
-): data is TaggedInDiscussionReplyActivityType => {
+    | TaggedInDiscussionReplyActivityMeta
+    | TaggedInPlanDiscussionActivityMeta
+    | DailyDigestCompleteActivityMeta
+    | NewDiscussionRepliedActivityMeta
+    | ModelPlanSharedActivityMeta
+    | AddedAsCollaboratorMeta
+): data is TaggedInDiscussionReplyActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'TaggedInDiscussionReplyActivityMeta';
 };
 
 export const isDailyDigest = (
   data:
-    | TaggedInDiscussionReplyActivityType
-    | TaggedInDiscussionActivityType
-    | DailyDigestCompleteActivityType
-    | NewReplyActivityType
-    | NewSharedActivityType
-    | AddCollaboratorType
-): data is DailyDigestCompleteActivityType => {
+    | TaggedInDiscussionReplyActivityMeta
+    | TaggedInPlanDiscussionActivityMeta
+    | DailyDigestCompleteActivityMeta
+    | NewDiscussionRepliedActivityMeta
+    | ModelPlanSharedActivityMeta
+    | AddedAsCollaboratorMeta
+): data is DailyDigestCompleteActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'DailyDigestCompleteActivityMeta';
 };
 
 export const isNewDiscussionReply = (
   data:
-    | TaggedInDiscussionReplyActivityType
-    | TaggedInDiscussionActivityType
-    | DailyDigestCompleteActivityType
-    | NewReplyActivityType
-    | NewSharedActivityType
-    | AddCollaboratorType
-): data is NewReplyActivityType => {
+    | TaggedInDiscussionReplyActivityMeta
+    | TaggedInPlanDiscussionActivityMeta
+    | DailyDigestCompleteActivityMeta
+    | NewDiscussionRepliedActivityMeta
+    | ModelPlanSharedActivityMeta
+    | AddedAsCollaboratorMeta
+): data is NewDiscussionRepliedActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'NewDiscussionRepliedActivityMeta';
 };
 
 export const isSharedActivity = (
   data:
-    | TaggedInDiscussionReplyActivityType
-    | TaggedInDiscussionActivityType
-    | DailyDigestCompleteActivityType
-    | NewReplyActivityType
-    | NewSharedActivityType
-    | AddCollaboratorType
-): data is NewSharedActivityType => {
+    | TaggedInDiscussionReplyActivityMeta
+    | TaggedInPlanDiscussionActivityMeta
+    | DailyDigestCompleteActivityMeta
+    | NewDiscussionRepliedActivityMeta
+    | ModelPlanSharedActivityMeta
+    | AddedAsCollaboratorMeta
+): data is ModelPlanSharedActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'ModelPlanSharedActivityMeta';
 };
 
 export const isAddingCollaborator = (
   data:
-    | TaggedInDiscussionReplyActivityType
-    | TaggedInDiscussionActivityType
-    | DailyDigestCompleteActivityType
-    | NewReplyActivityType
-    | NewSharedActivityType
-    | AddCollaboratorType
-): data is AddCollaboratorType => {
+    | TaggedInDiscussionReplyActivityMeta
+    | TaggedInPlanDiscussionActivityMeta
+    | DailyDigestCompleteActivityMeta
+    | NewDiscussionRepliedActivityMeta
+    | ModelPlanSharedActivityMeta
+    | AddedAsCollaboratorMeta
+): data is AddedAsCollaboratorMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'AddedAsCollaboratorMeta';
 };
@@ -253,11 +261,11 @@ type ChangesArrayType =
  * @returns `ChangesArrayType[]`
  */
 export const pushValuesToChangesArray = (
-  obj: ChangeTypes
+  obj: AnalyzedAuditChange
 ): ChangesArrayType[] => {
   const changesArray: ChangesArrayType[] = [];
 
-  const pushValues = (innerObj: ChangeTypes) => {
+  const pushValues = (innerObj: AnalyzedAuditChange | AnalyzedCrTdls) => {
     Object.entries(innerObj).forEach(([key, value]) => {
       if (key !== '__typename') {
         // Ignore key values that where the key is '__typename'

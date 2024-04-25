@@ -2,10 +2,10 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import { BeneficiariesType } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import { benficiaryMocks as mocks, modelID } from 'data/mock/readonly';
-import { BeneficiariesType } from 'types/graphql-global-types';
 
 import ReadOnlyBeneficiaries from './index';
 

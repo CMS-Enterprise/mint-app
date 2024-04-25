@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import { ModelPlanFilter } from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import {
@@ -10,7 +11,6 @@ import {
   modelPlanCollectionMock
 } from 'data/mock/general';
 import { MessageProvider } from 'hooks/useMessage';
-import { ModelPlanFilter } from 'types/graphql-global-types';
 
 import ModelPlan from './index';
 

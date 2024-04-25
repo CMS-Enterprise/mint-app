@@ -5,9 +5,9 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import { OperationalSolutionKey } from 'gql/gen/graphql';
 
 import { possibleSolutionsMock } from 'data/mock/solutions';
-import { OperationalSolutionKey } from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import SolutionCard, { SolutionCardType } from '.';

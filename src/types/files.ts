@@ -1,4 +1,4 @@
-import { DocumentType } from 'types/graphql-global-types';
+import { DocumentType } from 'gql/gen/graphql';
 
 export type FileUploadForm = {
   file: File | null;

@@ -10,10 +10,11 @@ import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
 import {
   GetOperationalNeedQuery,
+  GetOperationalSolutionQuery,
+  OperationalNeedKey,
   useGetOperationalNeedQuery,
   useUpdateOperationalSolutionMutation
 } from 'gql/gen/graphql';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
@@ -21,7 +22,6 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useMessage from 'hooks/useMessage';
-import { OperationalNeedKey } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
@@ -32,6 +32,7 @@ import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 import Solution from './_components/Solution';
 
 type OperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 // Passing in operationalNeed to Formik instead of array of solutions
 // Fomik does not take an array structure

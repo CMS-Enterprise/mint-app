@@ -20,12 +20,14 @@ import {
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
 import {
+  GetOperationalSolutionQuery,
+  OperationalSolutionKey,
+  OpSolutionStatus,
   useCreateOperationalSolutionMutation,
   useGetOperationalSolutionQuery,
   useGetPossibleOperationalSolutionsQuery,
   useUpdateOperationalSolutionMutation
 } from 'gql/gen/graphql';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
@@ -35,10 +37,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import {
-  OperationalSolutionKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortPossibleOperationalNeeds } from 'utils/modelPlan';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -51,6 +49,8 @@ import SolutionCard from '../_components/SolutionCard';
 type OperationalSolutionFormType = {
   key?: OperationalSolutionKey;
 };
+
+type GetOperationalSolutionOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 const AddSolution = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{

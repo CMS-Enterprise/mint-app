@@ -1,12 +1,14 @@
 import React from 'react';
-import { GetPossibleSolutionsQuery } from 'gql/gen/graphql';
+import {
+  GetPossibleSolutionsQuery,
+  OperationalSolutionKey
+} from 'gql/gen/graphql';
 
 import {
   OperationalSolutionCategories,
   OperationalSolutionCategoryRoute,
   OperationalSolutionSubCategories
 } from 'data/operationalSolutionCategories';
-import { OperationalSolutionKey } from 'types/graphql-global-types';
 
 import GatheringInfoAlert from './SolutionDetails/_components/GatheringInfoAlert';
 import Innovation4TimeLine from './SolutionDetails/Solutions/4Innovation';

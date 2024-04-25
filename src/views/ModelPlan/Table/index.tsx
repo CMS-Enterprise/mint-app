@@ -15,13 +15,13 @@ import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   GetCrtdLsQuery,
+  GetModelPlansQuery,
+  KeyCharacteristic,
+  ModelCategory,
+  ModelPlanFilter,
   TeamRole,
   useGetModelPlansQuery
 } from 'gql/gen/graphql';
-import {
-  GetModelPlans_modelPlanCollection as AllModelPlansType,
-  GetModelPlans_modelPlanCollection_collaborators as CollaboratorsType
-} from 'gql/gen/types/GetModelPlans';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -30,11 +30,6 @@ import Alert from 'components/shared/Alert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
-import {
-  KeyCharacteristic,
-  ModelCategory,
-  ModelPlanFilter
-} from 'types/graphql-global-types';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
 import CsvExportLink from 'utils/export/CsvExportLink';
 import globalFilterCellText from 'utils/globalFilterCellText';
@@ -45,6 +40,9 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
+
+type AllModelPlansType = GetModelPlansQuery['modelPlanCollection'][0];
+type CollaboratorsType = GetModelPlansQuery['modelPlanCollection'][0]['collaborators'][0];
 
 type CRTDLType =
   | GetCrtdLsQuery['modelPlan']['crs'][0]
