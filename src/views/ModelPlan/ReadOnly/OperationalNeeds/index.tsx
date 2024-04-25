@@ -1,28 +1,25 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
-
-import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
 import {
-  GetOperationalNeeds as GetOperationalNeedsType,
-  GetOperationalNeeds_modelPlan_operationalNeeds as OperationalNeedsType
-} from 'queries/ITSolutions/types/GetOperationalNeeds';
-import { TaskStatus } from 'types/graphql-global-types';
+  GetOperationalNeedsQuery,
+  TaskStatus,
+  useGetOperationalNeedsQuery
+} from 'gql/gen/graphql';
+
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import OperationalNeedsTable from 'views/ModelPlan/TaskList/ITSolutions/Home/operationalNeedsTable';
 import { NotFoundPartial } from 'views/NotFound';
 
+type OperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
+
 const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('opSolutionsMisc');
 
-  const { data, loading, error } = useQuery<GetOperationalNeedsType>(
-    GetOperationalNeeds,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useGetOperationalNeedsQuery({
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;

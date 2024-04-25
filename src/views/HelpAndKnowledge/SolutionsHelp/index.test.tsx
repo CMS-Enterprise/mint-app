@@ -1,5 +1,6 @@
+import { OperationalSolutionKey } from 'gql/gen/graphql';
+
 import { OperationalSolutionCategories } from 'data/operationalSolutionCategories';
-import { OperationalSolutionKey } from 'types/graphql-global-types';
 
 import { helpSolutions, HelpSolutionType } from './solutionsMap';
 import { findCategoryMapByRouteParam, searchSolutions } from '.';

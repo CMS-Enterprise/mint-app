@@ -49,3 +49,19 @@ func verifySolutionContactLoader(ctx context.Context, solutionID int) error {
 	return nil
 
 }
+
+// Test retrieving the primary contact for a possible operational solution
+func (suite *ResolverSuite) TestPossibleOperationalSolutionPrimaryContactGetByPossibleSolutionID() error {
+	contact, err := suite.testConfigs.Store.PossibleOperationalSolutionPrimaryContactGetByPossibleSolutionID(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		1,
+	)
+
+	suite.NoError(err)
+	suite.NotNil(contact)
+	suite.Equal(1, contact.PossibleOperationalSolutionID)
+	suite.Equal("Nora Fleming", contact.Name)
+
+	return nil
+}

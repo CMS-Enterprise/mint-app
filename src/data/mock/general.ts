@@ -1,16 +1,19 @@
-import { GetFavoritesDocument, GetModelPlansDocument } from 'gql/gen/graphql';
-import { GetFavorites_modelPlanCollection as GetFavoritesType } from 'gql/gen/types/GetFavorites';
-import { GetModelPlans_modelPlanCollection as GetModelPlansType } from 'gql/gen/types/GetModelPlans';
-
 import {
+  GetFavoritesDocument,
+  GetFavoritesQuery,
+  GetModelPlansDocument,
+  GetModelPlansQuery,
   ModelCategory,
   ModelPlanFilter,
   ModelStatus
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
+
+type GetFavoritesType = GetFavoritesQuery['modelPlanCollection'];
+type GetModelPlansType = GetModelPlansQuery['modelPlanCollection'];
 
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
-const modelPlanData: GetModelPlansType[] = [
+const modelPlanData: GetModelPlansType = [
   {
     id: modelID,
     modelName: 'My plan',
@@ -80,7 +83,7 @@ export const modelPlanCollectionMock = (
   ];
 };
 
-const favoritesModelPlanData: GetFavoritesType[] = [
+const favoritesModelPlanData: GetFavoritesType = [
   {
     id: modelID,
     modelName: 'My plan',

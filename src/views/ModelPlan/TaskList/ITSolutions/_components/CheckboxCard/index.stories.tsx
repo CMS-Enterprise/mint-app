@@ -2,17 +2,17 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 import { Formik } from 'formik';
-
-import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
 import {
+  GetOperationalNeedQuery,
   OperationalSolutionKey,
   OpSolutionStatus
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
 
 import { initialValues } from '../../SelectSolutions';
 
 import CheckboxCard from '.';
 
+type GetOperationalNeedSolutionsType = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
 export default {
   title: 'Operational Need Checkbox Card',
   component: CheckboxCard,

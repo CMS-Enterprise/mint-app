@@ -424,45 +424,47 @@ const csvFields = [
 
   // Discussions
   {
-    label: i18next.t<string>('discussions:discussionCSV.content'),
+    label: i18next.t<string>('discussionsMisc:discussionCSV.content'),
     value: 'discussions.content.rawContent'
   },
   {
-    label: i18next.t<string>('discussions:discussionCSV.createdBy'),
+    label: i18next.t<string>('discussionsMisc:discussionCSV.createdBy'),
     value: 'discussions.createdByUserAccount.commonName'
   },
   {
-    label: i18next.t<string>('discussions:discussionCSV.userRole'),
+    label: i18next.t<string>('discussionsMisc:discussionCSV.userRole'),
     value: 'discussions.userRole'
   },
   {
-    label: i18next.t<string>('discussions:discussionCSV.userRoleDescription'),
+    label: i18next.t<string>(
+      'discussionsMisc:discussionCSV.userRoleDescription'
+    ),
     value: 'discussions.userRoleDescription'
   },
   {
-    label: i18next.t<string>('discussions:discussionCSV.createdAt'),
+    label: i18next.t<string>('discussionsMisc:discussionCSV.createdAt'),
     value: 'discussions.createdDts'
   },
 
   // Discussion Replies
   {
-    label: i18next.t<string>('discussions:replyCSV.content'),
+    label: i18next.t<string>('discussionsMisc:replyCSV.content'),
     value: 'discussions.replies.content.rawContent'
   },
   {
-    label: i18next.t<string>('discussions:replyCSV.createdBy'),
+    label: i18next.t<string>('discussionsMisc:replyCSV.createdBy'),
     value: 'discussions.replies.createdByUserAccount.commonName'
   },
   {
-    label: i18next.t<string>('discussions:replyCSV.userRole'),
+    label: i18next.t<string>('discussionsMisc:replyCSV.userRole'),
     value: 'discussions.replies.userRole'
   },
   {
-    label: i18next.t<string>('discussions:replyCSV.userRoleDescription'),
+    label: i18next.t<string>('discussionsMisc:replyCSV.userRoleDescription'),
     value: 'discussions.replies.userRoleDescription'
   },
   {
-    label: i18next.t<string>('discussions:replyCSV.createdAt'),
+    label: i18next.t<string>('discussionsMisc:replyCSV.createdAt'),
     value: 'discussions.replies.createdDts'
   }
 ];

@@ -2,25 +2,29 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DatePicker, Fieldset, Label, Radio } from '@trussworks/react-uswds';
 import { Field, FormikProps } from 'formik';
+import {
+  GetOperationalNeedQuery,
+  GetOperationalSolutionQuery
+} from 'gql/gen/graphql';
 
 import Divider from 'components/shared/Divider';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import {
-  GetOperationalNeed_operationalNeed as OperationNeedType,
-  GetOperationalNeed_operationalNeed_solutions as OpertionalNeedSolutionTypes
-} from 'queries/ITSolutions/types/GetOperationalNeed';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 import { getKeys } from 'types/translation';
 
 import ImplementationStatuses from '../../_components/ImplementationStatus';
 import SolutionCard from '../../_components/SolutionCard';
 import SolutionDetailCard from '../../_components/SolutionDetailCard';
 
+type OpertionalNeedSolutionTypes = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
+
 type flatErrorsType = {
   [key: string]: string;
 };
+
+type OperationNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 type SolutionTypes = {
   solution: OpertionalNeedSolutionTypes;

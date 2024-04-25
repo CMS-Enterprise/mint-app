@@ -1,10 +1,8 @@
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
-
-import { TaskListSection } from 'types/graphql-global-types';
+import { TaskListSection, TaskListSectionLockStatus } from 'gql/gen/graphql';
 
 import { findLockedSection, LockStatus } from '.';
 
-const locks: LockSectionType[] = [
+const locks: TaskListSectionLockStatus[] = [
   {
     __typename: 'TaskListSectionLockStatus',
     modelPlanID: '123',
@@ -13,6 +11,11 @@ const locks: LockSectionType[] = [
       id: '00000001-0001-0001-0001-000000000001',
       username: 'MINT',
       commonName: 'MINT Doe',
+      email: 'doe@oddball.io',
+      familyName: 'Doe',
+      givenName: 'MINT',
+      locale: 'en',
+      zoneInfo: 'America/New_York',
       __typename: 'UserAccount'
     },
     isAssessment: true
@@ -25,6 +28,11 @@ const locks: LockSectionType[] = [
       id: '00000001-0001-0001-0001-000000000001',
       username: 'MINT',
       commonName: 'MINT Doe',
+      email: 'doe@oddball.io',
+      familyName: 'Doe',
+      givenName: 'MINT',
+      locale: 'en',
+      zoneInfo: 'America/New_York',
       __typename: 'UserAccount'
     },
     isAssessment: false

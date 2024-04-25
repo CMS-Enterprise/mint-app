@@ -85,6 +85,10 @@ const SolutionDetailsModal = ({
 
   const isMobile = useCheckResponsiveScreen('tablet');
 
+  const primaryContact = solution?.pointsOfContact?.find(
+    contact => contact.isPrimary
+  );
+
   useEffect(() => {
     setIsOpen(!!solution);
   }, [solution]);
@@ -160,7 +164,7 @@ const SolutionDetailsModal = ({
                     paramActive
                   />
 
-                  <Contact contact={solution.pointsOfContact?.[0]} />
+                  <Contact contact={primaryContact} />
 
                   <Alert
                     type="info"
@@ -184,7 +188,7 @@ const SolutionDetailsModal = ({
 
               {isMobile && (
                 <Grid desktop={{ col: 3 }}>
-                  <Contact contact={solution.pointsOfContact?.[0]} />
+                  <Contact contact={primaryContact} />
                 </Grid>
               )}
             </Grid>

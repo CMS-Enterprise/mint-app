@@ -482,9 +482,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
-          >
-            12/12/2026
-          </div>
+          />
         </div>
       </div>
     </div>
@@ -1905,7 +1903,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="usa-alert__text"
           >
             <span>
-              There are 2 additional questions that are not applicable for this model based on the answers selected in the question above.
+              There are 2 additional questions that are not applicable for this model based on the answer to "What data do you need to monitor the model?"
             </span>
           </p>
         </div>

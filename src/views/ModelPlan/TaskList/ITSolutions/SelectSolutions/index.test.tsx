@@ -6,23 +6,25 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import {
+  CreateOperationalSolutionDocument,
+  GetOperationalNeedDocument,
+  GetOperationalNeedQuery,
+  OperationalNeedKey,
+  OperationalSolutionKey,
+  OpSolutionStatus
+} from 'gql/gen/graphql';
 
 import {
   needQuestionAndAnswerMock,
   possibleSolutionsMock
 } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
-import { GetOperationalNeed_operationalNeed as GetOperationalNeedType } from 'queries/ITSolutions/types/GetOperationalNeed';
-import {
-  OperationalNeedKey,
-  OperationalSolutionKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
 import setup from 'utils/testing/setup';
 
 import SelectSolutions, { findChangedSolution } from '.';
+
+type GetOperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
@@ -58,7 +60,7 @@ const operationalNeed: GetOperationalNeedType = {
 const mocks = [
   {
     request: {
-      query: GetOperationalNeed,
+      query: GetOperationalNeedDocument,
       variables: {
         id: operationalNeedID,
         includeNotNeeded: true
@@ -72,7 +74,7 @@ const mocks = [
   },
   {
     request: {
-      query: CreateOperationalSolution,
+      query: CreateOperationalSolutionDocument,
       variables: {
         operationalNeedID,
         solutionType: 'RMADA',
