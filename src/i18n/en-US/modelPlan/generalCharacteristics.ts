@@ -1049,6 +1049,42 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     formType: TranslationFormType.TEXTAREA,
     filterGroups: [ModelViewFilter.CMMI]
   },
+  readyForReviewBy: {
+    gqlField: 'readyForReviewBy',
+    goField: 'ReadyForReviewBy',
+    dbField: 'ready_for_review_by',
+    label:
+      'This section of the Model Plan (General characteristics) is ready for review.',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.TEXT,
+    tableReference: 'user_account'
+  },
+  readyForReviewDts: {
+    gqlField: 'readyForReviewDts',
+    goField: 'ReadyForReviewDts',
+    dbField: 'ready_for_review_dts',
+    label: 'Ready for review date',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER
+  },
+  readyForClearanceBy: {
+    gqlField: 'readyForClearanceBy',
+    goField: 'ReadyForClearanceBy',
+    dbField: 'ready_for_clearance_by',
+    label:
+      'This section of the Model Plan (General characteristics) is ready for clearance.',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.TEXT,
+    tableReference: 'user_account'
+  },
+  readyForClearanceDts: {
+    gqlField: 'readyForClearanceDts',
+    goField: 'ReadyForClearanceDts',
+    dbField: 'ready_for_clearance_dts',
+    label: 'Ready for clearance date',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER
+  },
   status: {
     gqlField: 'status',
     goField: 'Status',

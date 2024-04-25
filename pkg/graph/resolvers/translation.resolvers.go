@@ -6,10 +6,41 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
+
+// ExportLabel is the resolver for the exportLabel field.
+func (r *translationFieldResolver) ExportLabel(ctx context.Context, obj *models.TranslationField) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+
+// TableReference is the resolver for the tableReference field.
+func (r *translationFieldResolver) TableReference(ctx context.Context, obj *models.TranslationField) (*string, error) {
+	panic(fmt.Errorf("not implemented: TableReference - tableReference"))
+}
+
+// ExportLabel is the resolver for the exportLabel field.
+func (r *translationFieldWithOptionsResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithOptions) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+
+// TableReference is the resolver for the tableReference field.
+func (r *translationFieldWithOptionsResolver) TableReference(ctx context.Context, obj *models.TranslationFieldWithOptions) (*string, error) {
+	panic(fmt.Errorf("not implemented: TableReference - tableReference"))
+}
+
+// ExportLabel is the resolver for the exportLabel field.
+func (r *translationFieldWithOptionsAndChildrenResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+
+// TableReference is the resolver for the tableReference field.
+func (r *translationFieldWithOptionsAndChildrenResolver) TableReference(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (*string, error) {
+	panic(fmt.Errorf("not implemented: TableReference - tableReference"))
+}
 
 // ChildRelation is the resolver for the childRelation field.
 func (r *translationFieldWithOptionsAndChildrenResolver) ChildRelation(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (map[string]interface{}, error) {
@@ -19,6 +50,36 @@ func (r *translationFieldWithOptionsAndChildrenResolver) ChildRelation(ctx conte
 		resultMap[key] = value
 	}
 	return resultMap, nil
+}
+
+// ExportLabel is the resolver for the exportLabel field.
+func (r *translationFieldWithOptionsAndParentResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithOptionsAndParent) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+
+// TableReference is the resolver for the tableReference field.
+func (r *translationFieldWithOptionsAndParentResolver) TableReference(ctx context.Context, obj *models.TranslationFieldWithOptionsAndParent) (*string, error) {
+	panic(fmt.Errorf("not implemented: TableReference - tableReference"))
+}
+
+// ExportLabel is the resolver for the exportLabel field.
+func (r *translationFieldWithParentResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithParent) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+
+// TableReference is the resolver for the tableReference field.
+func (r *translationFieldWithParentResolver) TableReference(ctx context.Context, obj *models.TranslationFieldWithParent) (*string, error) {
+	panic(fmt.Errorf("not implemented: TableReference - tableReference"))
+}
+
+// ExportLabel is the resolver for the exportLabel field.
+func (r *translationFieldWithParentAndChildrenResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithParentAndChildren) (*string, error) {
+	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
+}
+
+// TableReference is the resolver for the tableReference field.
+func (r *translationFieldWithParentAndChildrenResolver) TableReference(ctx context.Context, obj *models.TranslationFieldWithParentAndChildren) (*string, error) {
+	panic(fmt.Errorf("not implemented: TableReference - tableReference"))
 }
 
 // ChildRelation is the resolver for the childRelation field.
@@ -31,9 +92,29 @@ func (r *translationFieldWithParentAndChildrenResolver) ChildRelation(ctx contex
 	return resultMap, nil
 }
 
+// TranslationField returns generated.TranslationFieldResolver implementation.
+func (r *Resolver) TranslationField() generated.TranslationFieldResolver {
+	return &translationFieldResolver{r}
+}
+
+// TranslationFieldWithOptions returns generated.TranslationFieldWithOptionsResolver implementation.
+func (r *Resolver) TranslationFieldWithOptions() generated.TranslationFieldWithOptionsResolver {
+	return &translationFieldWithOptionsResolver{r}
+}
+
 // TranslationFieldWithOptionsAndChildren returns generated.TranslationFieldWithOptionsAndChildrenResolver implementation.
 func (r *Resolver) TranslationFieldWithOptionsAndChildren() generated.TranslationFieldWithOptionsAndChildrenResolver {
 	return &translationFieldWithOptionsAndChildrenResolver{r}
+}
+
+// TranslationFieldWithOptionsAndParent returns generated.TranslationFieldWithOptionsAndParentResolver implementation.
+func (r *Resolver) TranslationFieldWithOptionsAndParent() generated.TranslationFieldWithOptionsAndParentResolver {
+	return &translationFieldWithOptionsAndParentResolver{r}
+}
+
+// TranslationFieldWithParent returns generated.TranslationFieldWithParentResolver implementation.
+func (r *Resolver) TranslationFieldWithParent() generated.TranslationFieldWithParentResolver {
+	return &translationFieldWithParentResolver{r}
 }
 
 // TranslationFieldWithParentAndChildren returns generated.TranslationFieldWithParentAndChildrenResolver implementation.
@@ -41,5 +122,9 @@ func (r *Resolver) TranslationFieldWithParentAndChildren() generated.Translation
 	return &translationFieldWithParentAndChildrenResolver{r}
 }
 
+type translationFieldResolver struct{ *Resolver }
+type translationFieldWithOptionsResolver struct{ *Resolver }
 type translationFieldWithOptionsAndChildrenResolver struct{ *Resolver }
+type translationFieldWithOptionsAndParentResolver struct{ *Resolver }
+type translationFieldWithParentResolver struct{ *Resolver }
 type translationFieldWithParentAndChildrenResolver struct{ *Resolver }

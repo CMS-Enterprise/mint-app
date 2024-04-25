@@ -75,6 +75,10 @@ type PlanBasicsTranslation struct {
 	HighLevelNote             models.TranslationField            `json:"highLevelNote" db:"high_level_note"`
 	PhasedIn                  models.TranslationFieldWithOptions `json:"phasedIn" db:"phased_in"`
 	PhasedInNote              models.TranslationField            `json:"phasedInNote" db:"phased_in_note"`
+	ReadyForReviewBy          models.TranslationField            `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts         models.TranslationField            `json:"readyForReviewDts" db:"ready_for_review_dts"`
+	ReadyForClearanceBy       models.TranslationField            `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
+	ReadyForClearanceDts      models.TranslationField            `json:"readyForClearanceDts" db:"ready_for_clearance_dts"`
 	Status                    models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
@@ -110,6 +114,10 @@ type PlanBeneficiariesTranslation struct {
 	PrecedenceRulesYes                       models.TranslationField            `json:"precedenceRulesYes" db:"precedence_rules_yes"`
 	PrecedenceRulesNo                        models.TranslationField            `json:"precedenceRulesNo" db:"precedence_rules_no"`
 	PrecedenceRulesNote                      models.TranslationField            `json:"precedenceRulesNote" db:"precedence_rules_note"`
+	ReadyForReviewBy                         models.TranslationField            `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts                        models.TranslationField            `json:"readyForReviewDts" db:"ready_for_review_dts"`
+	ReadyForClearanceBy                      models.TranslationField            `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
+	ReadyForClearanceDts                     models.TranslationField            `json:"readyForClearanceDts" db:"ready_for_clearance_dts"`
 	Status                                   models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
@@ -232,6 +240,10 @@ type PlanGeneralCharacteristicsTranslation struct {
 	WaiversRequired                               models.TranslationFieldWithOptions            `json:"waiversRequired" db:"waivers_required"`
 	WaiversRequiredTypes                          models.TranslationFieldWithOptions            `json:"waiversRequiredTypes" db:"waivers_required_types"`
 	WaiversRequiredNote                           models.TranslationField                       `json:"waiversRequiredNote" db:"waivers_required_note"`
+	ReadyForReviewBy                              models.TranslationField                       `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts                             models.TranslationField                       `json:"readyForReviewDts" db:"ready_for_review_dts"`
+	ReadyForClearanceBy                           models.TranslationField                       `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
+	ReadyForClearanceDts                          models.TranslationField                       `json:"readyForClearanceDts" db:"ready_for_clearance_dts"`
 	Status                                        models.TranslationFieldWithOptions            `json:"status" db:"status"`
 }
 
@@ -333,6 +345,10 @@ type PlanOpsEvalAndLearningTranslation struct {
 	ModelLearningSystemsOther                    models.TranslationField                       `json:"modelLearningSystemsOther" db:"model_learning_systems_other"`
 	ModelLearningSystemsNote                     models.TranslationField                       `json:"modelLearningSystemsNote" db:"model_learning_systems_note"`
 	AnticipatedChallenges                        models.TranslationField                       `json:"anticipatedChallenges" db:"anticipated_challenges"`
+	ReadyForReviewBy                             models.TranslationField                       `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts                            models.TranslationField                       `json:"readyForReviewDts" db:"ready_for_review_dts"`
+	ReadyForClearanceBy                          models.TranslationField                       `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
+	ReadyForClearanceDts                         models.TranslationField                       `json:"readyForClearanceDts" db:"ready_for_clearance_dts"`
 	Status                                       models.TranslationFieldWithOptions            `json:"status" db:"status"`
 }
 
@@ -402,6 +418,10 @@ type PlanParticipantsAndProvidersTranslation struct {
 	ProviderOverlap                           models.TranslationFieldWithOptionsAndChildren `json:"providerOverlap" db:"provider_overlap"`
 	ProviderOverlapHierarchy                  models.TranslationFieldWithParent             `json:"providerOverlapHierarchy" db:"provider_overlap_hierarchy"`
 	ProviderOverlapNote                       models.TranslationField                       `json:"providerOverlapNote" db:"provider_overlap_note"`
+	ReadyForReviewBy                          models.TranslationField                       `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts                         models.TranslationField                       `json:"readyForReviewDts" db:"ready_for_review_dts"`
+	ReadyForClearanceBy                       models.TranslationField                       `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
+	ReadyForClearanceDts                      models.TranslationField                       `json:"readyForClearanceDts" db:"ready_for_clearance_dts"`
 	Status                                    models.TranslationFieldWithOptions            `json:"status" db:"status"`
 }
 
@@ -480,6 +500,10 @@ type PlanPaymentsTranslation struct {
 	PaymentDemandRecoupmentFrequencyNote              models.TranslationField                       `json:"paymentDemandRecoupmentFrequencyNote" db:"payment_demand_recoupment_frequency_note"`
 	PaymentStartDate                                  models.TranslationField                       `json:"paymentStartDate" db:"payment_start_date"`
 	PaymentStartDateNote                              models.TranslationField                       `json:"paymentStartDateNote" db:"payment_start_date_note"`
+	ReadyForReviewBy                                  models.TranslationField                       `json:"readyForReviewBy" db:"ready_for_review_by"`
+	ReadyForReviewDts                                 models.TranslationField                       `json:"readyForReviewDts" db:"ready_for_review_dts"`
+	ReadyForClearanceBy                               models.TranslationField                       `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
+	ReadyForClearanceDts                              models.TranslationField                       `json:"readyForClearanceDts" db:"ready_for_clearance_dts"`
 	Status                                            models.TranslationFieldWithOptions            `json:"status" db:"status"`
 }
 

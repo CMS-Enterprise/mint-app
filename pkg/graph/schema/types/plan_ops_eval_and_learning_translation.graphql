@@ -116,5 +116,9 @@ type PlanOpsEvalAndLearningTranslation {
   modelLearningSystemsNote: TranslationField! @goTag(key: "db", value: "model_learning_systems_note")
   anticipatedChallenges: TranslationField! @goTag(key: "db", value: "anticipated_challenges")
 
+  readyForReviewBy: TranslationField! @goTag(key: "db", value: "ready_for_review_by")
+  readyForReviewDts: TranslationField! @goTag(key: "db", value: "ready_for_review_dts")
+  readyForClearanceBy: TranslationField! @goTag(key: "db", value: "ready_for_clearance_by")
+  readyForClearanceDts: TranslationField! @goTag(key: "db", value: "ready_for_clearance_dts")
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
