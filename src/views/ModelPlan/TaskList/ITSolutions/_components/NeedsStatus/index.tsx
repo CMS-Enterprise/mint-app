@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { OpSolutionStatus } from 'gql/gen/graphql';
 
 import Tag from 'components/shared/Tag';
-import { OpSolutionStatus } from 'types/graphql-global-types';
 
 export enum OperationalNeedStatus {
   NOT_ANSWERED = 'NOT_ANSWERED',

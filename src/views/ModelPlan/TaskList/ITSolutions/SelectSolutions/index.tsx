@@ -16,6 +16,7 @@ import {
 import { Form, Formik, FormikProps } from 'formik';
 import {
   GetOperationalNeedQuery,
+  OperationalNeedKey,
   useCreateOperationalSolutionMutation,
   useGetOperationalNeedQuery,
   useUpdateOperationalSolutionMutation
@@ -29,7 +30,6 @@ import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import { OperationalNeedKey } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';

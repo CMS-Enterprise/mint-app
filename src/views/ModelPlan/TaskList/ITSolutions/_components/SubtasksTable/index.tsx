@@ -9,8 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-
-import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
+import { OperationalSolutionSubtaskStatus } from 'gql/gen/graphql';
 
 type SubtaskType = {
   name: string;

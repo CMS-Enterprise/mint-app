@@ -25,9 +25,11 @@ import classNames from 'classnames';
 import {
   GetCrtdLsQuery,
   GetModelPlanQuery,
+  GetTaskListSubscriptionsQuery,
+  TaskListSection,
+  TaskStatus,
   useGetModelPlanQuery
 } from 'gql/gen/graphql';
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -37,7 +39,6 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -52,6 +53,8 @@ import TaskListSideNav from './_components/TaskListSideNav';
 import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
+
+type TaskListSectionLockStatus = GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 type BasicsType = GetModelPlanQuery['modelPlan']['basics'];
@@ -204,7 +207,7 @@ const TaskList = () => {
 
   const getTaskListLockedStatus = (
     section: string
-  ): LockSectionType | undefined => {
+  ): TaskListSectionLockStatus | undefined => {
     return taskListSectionLocks.find(
       sectionLock => sectionLock.section === taskListSectionMap[section]
     );

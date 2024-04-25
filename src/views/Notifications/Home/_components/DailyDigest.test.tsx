@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { act, render, screen, waitFor } from '@testing-library/react';
-import { GetNotifications_currentUser_notifications_notifications_activity_metaData_DailyDigestCompleteActivityMeta_analyzedAudits as AnalyzedAuditsTypes } from 'gql/gen/types/GetNotifications';
+import { AnalyzedAudit as AnalyzedAuditsTypes } from 'gql/gen/graphql';
 
 import setup from 'utils/testing/setup';
 
@@ -14,6 +14,19 @@ const dailyDigestProps: AnalyzedAuditsTypes[] = [
     modelPlanID: '1bf249a6-577b-42fd-8dd2-46563e3d1d9e',
     modelName: 'Empty Plan',
     date: '2024-03-20T00:00:00Z',
+    createdBy: '04194827-1997-470a-b3d4-221abf4b86b6',
+    createdByUserAccount: {
+      __typename: 'UserAccount',
+      id: '04194827-1997-470a-b3d4-221abf4b86b6',
+      commonName: 'MINT Doe',
+      email: 'mint@doe.oddball.io',
+      familyName: 'Doe',
+      givenName: 'MINT',
+      locale: 'en',
+      username: 'mint.doe',
+      zoneInfo: 'America/New_York'
+    },
+    createdDts: '2024-03-20T00:00:00Z',
     changes: {
       __typename: 'AnalyzedAuditChange',
       modelPlan: {
@@ -38,7 +51,18 @@ const dailyDigestProps: AnalyzedAuditsTypes[] = [
           {
             __typename: 'AnalyzedModelLeadInfo',
             id: '04194827-1997-470a-b3d4-221abf4b86b6',
-            commonName: 'MINT Doe'
+            commonName: 'MINT Doe',
+            userAccount: {
+              __typename: 'UserAccount',
+              id: '04194827-1997-470a-b3d4-221abf4b86b6',
+              commonName: 'MINT Doe',
+              email: 'mint@doe.oddball.io',
+              familyName: 'Doe',
+              givenName: 'MINT',
+              locale: 'en',
+              username: 'mint.doe',
+              zoneInfo: 'America/New_York'
+            }
           }
         ]
       },

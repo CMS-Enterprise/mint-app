@@ -1,7 +1,6 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-
-import { OpSolutionStatus } from 'types/graphql-global-types';
+import { OpSolutionStatus } from 'gql/gen/graphql';
 
 import NeedsStatus, {
   OperationalNeedsSolutionsStatus,

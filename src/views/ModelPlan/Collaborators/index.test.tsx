@@ -8,15 +8,19 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import { GetModelCollaboratorsDocument } from 'gql/gen/graphql';
-import { GetModelCollaborators_modelPlan as GetModelPlanType } from 'gql/gen/types/GetModelCollaborators';
+import {
+  GetModelCollaboratorsDocument,
+  GetModelCollaboratorsQuery,
+  TeamRole
+} from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import { TeamRole } from 'types/graphql-global-types';
 
 import { CollaboratorsContent } from './index';
+
+type GetModelPlanType = GetModelCollaboratorsQuery['modelPlan'];
 
 const mockAuthReducer = {
   isUserSet: true,

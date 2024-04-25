@@ -1,6 +1,7 @@
-import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'gql/gen/types/TaskListSubscription';
-
-import { TaskListSection } from 'types/graphql-global-types';
+import {
+  TaskListSection,
+  TaskListSectionLockStatus as LockSectionType
+} from 'gql/gen/graphql';
 
 import { addLockedSection, removeLockedSection } from '.';
 
@@ -14,7 +15,12 @@ describe('SubscriptionWrapper functions', () => {
         id: '00000001-0001-0001-0001-000000000001',
         username: 'MINT',
         commonName: 'MINT Doe',
-        __typename: 'UserAccount'
+        __typename: 'UserAccount',
+        email: 'mint@doe.oddball.io',
+        familyName: 'Doe',
+        givenName: 'MINT',
+        locale: 'en',
+        zoneInfo: 'America/New_York'
       },
       isAssessment: true
     };
@@ -28,7 +34,12 @@ describe('SubscriptionWrapper functions', () => {
           id: '00000001-0001-0001-0001-000000000001',
           username: 'MINT',
           commonName: 'MINT Doe',
-          __typename: 'UserAccount'
+          __typename: 'UserAccount',
+          email: 'mint@doe.oddball.io',
+          familyName: 'Doe',
+          givenName: 'MINT',
+          locale: 'en',
+          zoneInfo: 'America/New_York'
         },
         isAssessment: true
       }
@@ -48,7 +59,12 @@ describe('SubscriptionWrapper functions', () => {
         id: '00000000-0000-0000-0000-000000000000',
         username: 'ABCD',
         commonName: 'ABCD Doe',
-        __typename: 'UserAccount'
+        __typename: 'UserAccount',
+        email: 'mint@doe.oddball.io',
+        familyName: 'Doe',
+        givenName: 'MINT',
+        locale: 'en',
+        zoneInfo: 'America/New_York'
       },
       isAssessment: false
     };
@@ -62,7 +78,12 @@ describe('SubscriptionWrapper functions', () => {
           id: '00000000-0000-0000-0000-000000000000',
           username: 'ABCD',
           commonName: 'ABCD Doe',
-          __typename: 'UserAccount'
+          __typename: 'UserAccount',
+          email: 'mint@doe.oddball.io',
+          familyName: 'Doe',
+          givenName: 'MINT',
+          locale: 'en',
+          zoneInfo: 'America/New_York'
         },
         isAssessment: false
       }
@@ -98,7 +119,12 @@ describe('SubscriptionWrapper functions', () => {
         id: '00000000-0000-0000-0000-000000000000',
         username: 'ABCD',
         commonName: 'ABCD Doe',
-        __typename: 'UserAccount'
+        __typename: 'UserAccount',
+        email: 'mint@doe.oddball.io',
+        familyName: 'Doe',
+        givenName: 'MINT',
+        locale: 'en',
+        zoneInfo: 'America/New_York'
       },
       isAssessment: false
     };

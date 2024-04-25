@@ -1,12 +1,13 @@
 import React from 'react';
-import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType } from 'gql/gen/types/GetOperationalNeeds';
+import {
+  GetOperationalNeedsQuery,
+  OperationalNeedKey,
+  OperationalSolutionKey,
+  OpSolutionStatus
+} from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import {
-  OperationalNeedKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
 import { GetOperationalNeedsTableType } from './Home/operationalNeedsTable';
@@ -16,6 +17,8 @@ import {
   returnActionLinks
 } from './util';
 
+type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'];
+
 const modelID = 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06';
 
 const operationalNeed: any = {
@@ -24,44 +27,87 @@ const operationalNeed: any = {
   id: 'b7290d2c-0eae-4df4-8657-b22b5df3159e'
 };
 
-describe('Operational Solutions Util', () => {
-  it('returns formatted needed solutions', async () => {
-    expect(
-      filterNeedsFormatSolutions([
-        {
-          name: 'Recruit participants',
-          needed: true,
-          solutions: [
-            {
-              name: 'Salesforce',
-              needed: true
-            }
-          ]
-        }
-      ] as GetOperationalNeedsOperationalNeedsType[])
-    ).toEqual([
+const needs: GetOperationalNeedsOperationalNeedsType = [
+  {
+    __typename: 'OperationalNeed',
+    id: 'b7290d2c-0eae-4df4-8657-b22b5df3159e',
+    modelPlanID: 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06',
+    name: 'Recruit participants',
+    key: OperationalNeedKey.RECRUIT_PARTICIPANTS,
+    nameOther: null,
+    modifiedDts: '2021-08-10T14:00:00Z',
+    needed: true,
+    solutions: [
       {
+        __typename: 'OperationalSolution',
+        id: 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06',
+        mustFinishDts: null,
+        mustStartDts: null,
+        status: OpSolutionStatus.NOT_STARTED,
+        createdBy: 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06',
+        createdDts: '2021-08-10T14:00:00Z',
         name: 'Salesforce',
         needed: true,
-        needName: 'Recruit participants'
+        key: OperationalSolutionKey.APPS,
+        operationalSolutionSubtasks: []
+      }
+    ]
+  }
+];
+
+describe('Operational Solutions Util', () => {
+  it('returns formatted needed solutions', async () => {
+    expect(filterNeedsFormatSolutions(needs)).toEqual([
+      {
+        __typename: 'OperationalSolution',
+        id: 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06',
+        mustFinishDts: null,
+        mustStartDts: null,
+        status: OpSolutionStatus.NOT_STARTED,
+        createdBy: 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06',
+        createdDts: '2021-08-10T14:00:00Z',
+        needID: 'b7290d2c-0eae-4df4-8657-b22b5df3159e',
+        needKey: 'RECRUIT_PARTICIPANTS',
+        needName: 'Recruit participants',
+        name: 'Salesforce',
+        needed: true,
+        key: OperationalSolutionKey.APPS,
+        operationalSolutionSubtasks: []
       }
     ]);
   });
 
   it('returns formatted possible', async () => {
-    const possibleNeed = {
-      name: 'Recruit participants',
-      __typename: 'OperationalNeed',
-      key: OperationalNeedKey.RECRUIT_PARTICIPANTS,
-      needed: false,
-      solutions: [
-        {
-          name: 'Salesforce'
-        }
-      ]
-    } as GetOperationalNeedsOperationalNeedsType;
-    expect(filterPossibleNeeds([possibleNeed])).toEqual([
-      { ...possibleNeed, status: OperationalNeedStatus.NOT_NEEDED }
+    const possibleNeeds: GetOperationalNeedsOperationalNeedsType = [
+      {
+        __typename: 'OperationalNeed',
+        id: 'b7290d2c-0eae-4df4-8657-b22b5df3159e',
+        modelPlanID: 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06',
+        name: 'Recruit participants',
+        key: OperationalNeedKey.RECRUIT_PARTICIPANTS,
+        nameOther: null,
+        modifiedDts: '2021-08-10T14:00:00Z',
+        needed: false,
+        solutions: [
+          {
+            __typename: 'OperationalSolution',
+            id: 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06',
+            mustFinishDts: null,
+            mustStartDts: null,
+            status: OpSolutionStatus.NOT_STARTED,
+            createdBy: 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06',
+            createdDts: '2021-08-10T14:00:00Z',
+            name: 'Salesforce',
+            needed: true,
+            key: OperationalSolutionKey.APPS,
+            operationalSolutionSubtasks: []
+          }
+        ]
+      }
+    ];
+
+    expect(filterPossibleNeeds(possibleNeeds)).toEqual([
+      { ...possibleNeeds[0], status: OperationalNeedStatus.NOT_NEEDED }
     ]);
   });
 

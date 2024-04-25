@@ -9,8 +9,11 @@ import {
   Icon,
   SummaryBox
 } from '@trussworks/react-uswds';
-import { useGetFavoritesQuery } from 'gql/gen/graphql';
-import { GetFavorites_modelPlanCollection as GetFavoritesModelPlanCollection } from 'gql/gen/types/GetFavorites';
+import {
+  GetFavoritesQuery,
+  ModelPlanFilter,
+  useGetFavoritesQuery
+} from 'gql/gen/graphql';
 
 import FavoritesTable from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -22,10 +25,11 @@ import Alert from 'components/shared/Alert';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
-import { ModelPlanFilter } from 'types/graphql-global-types';
 import { isMAC } from 'utils/user';
 
 import ModelPlansTable from '../Table';
+
+type GetFavoritesModelPlanCollection = GetFavoritesQuery['modelPlanCollection'][0];
 
 export type UpdateFavoriteProps = 'addFavorite' | 'removeFavorite';
 

@@ -1,6 +1,6 @@
 import React from 'react';
+import { TaskStatus } from 'gql/gen/graphql';
 
-import { TaskStatus } from 'types/graphql-global-types';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
 type TitleAndStatusProps = {

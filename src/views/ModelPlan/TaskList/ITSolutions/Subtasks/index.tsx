@@ -12,13 +12,14 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import {
+  CreateOperationalSolutionSubtasksMutation,
+  GetOperationalSolutionQuery,
+  OperationalSolutionSubtaskStatus,
   useCreateOperationalSolutionSubtasksMutation,
   useDeleteOperationalSolutionSubtaskMutation,
   useGetOperationalSolutionQuery,
   useUpdateOperationalSolutionSubtasksMutation
 } from 'gql/gen/graphql';
-import { CreateOperationalSolutionSubtasks_createOperationalSolutionSubtasks as CreateType } from 'gql/gen/types/CreateOperationalSolutionSubtasks';
-import { GetOperationalSolution_operationalSolution_operationalSolutionSubtasks as UpdateType } from 'gql/gen/types/GetOperationalSolution';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import Modal from 'components/Modal';
@@ -31,7 +32,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -39,6 +39,12 @@ import NotFound from 'views/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+
+type CreateType = NonNullable<
+  CreateOperationalSolutionSubtasksMutation['createOperationalSolutionSubtasks']
+>[0];
+
+type UpdateType = GetOperationalSolutionQuery['operationalSolution']['operationalSolutionSubtasks'][0];
 
 type SubTaskType = UpdateType[] | CreateType[];
 

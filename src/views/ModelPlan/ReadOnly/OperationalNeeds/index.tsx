@@ -2,10 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   GetOperationalNeedsQuery,
+  TaskStatus,
   useGetOperationalNeedsQuery
 } from 'gql/gen/graphql';
 
-import { TaskStatus } from 'types/graphql-global-types';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import OperationalNeedsTable from 'views/ModelPlan/TaskList/ITSolutions/Home/operationalNeedsTable';
 import { NotFoundPartial } from 'views/NotFound';

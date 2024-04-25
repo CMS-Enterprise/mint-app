@@ -1,11 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
-
-import {
-  PrepareForClearanceStatus,
-  TaskStatus
-} from 'types/graphql-global-types';
+import { PrepareForClearanceStatus, TaskStatus } from 'gql/gen/graphql';
 
 type TaskListDescriptionProps = {
   children?: React.ReactNode | React.ReactNodeArray;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import { GetFavorites_modelPlanCollection as FavoritesType } from 'gql/gen/types/GetFavorites';
-
-import { ModelStatus, TeamRole } from 'types/graphql-global-types';
+import { GetFavoritesQuery, ModelStatus, TeamRole } from 'gql/gen/graphql';
 
 import FavoriteCard from './index';
+
+type FavoritesType = GetFavoritesQuery['modelPlanCollection'][0];
 
 const mockModel: FavoritesType = {
   id: '0186774a-80b0-454c-b69e-c4e949343483',

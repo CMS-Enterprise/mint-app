@@ -18,11 +18,13 @@ import {
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
+  GetClearanceStatusesQuery,
+  PrepareForClearanceStatus,
+  TaskStatus,
   TaskStatusInput,
   useGetClearanceStatusesQuery,
   useUpdatePrepareForClearanceMutation
 } from 'gql/gen/graphql';
-import { GetClearanceStatuses as GetClearanceStatusesType } from 'gql/gen/types/GetClearanceStatuses';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
@@ -30,10 +32,6 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import {
-  PrepareForClearanceStatus,
-  TaskStatus
-} from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
@@ -170,7 +168,7 @@ const PrepareForClearanceCheckList = ({
   if (
     (!loading && error) ||
     (!loading && !modelPlan) ||
-    (data as GetClearanceStatusesType)?.modelPlan?.prepareForClearance
+    (data as GetClearanceStatusesQuery)?.modelPlan?.prepareForClearance
       ?.status === PrepareForClearanceStatus.CANNOT_START
   ) {
     return <NotFoundPartial />;
