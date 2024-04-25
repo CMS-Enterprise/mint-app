@@ -20,10 +20,10 @@ import {
 import { Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
+  GetOperationalNeedsQuery,
   OperationalSolutionKey,
   useGetOperationalNeedsQuery
 } from 'gql/gen/graphql';
-import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType } from 'gql/gen/types/GetOperationalNeeds';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -55,6 +55,8 @@ import {
   returnActionLinks,
   returnActionText
 } from '../util';
+
+type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
 
 export interface GetOperationalNeedsTableType
   extends GetOperationalNeedsOperationalNeedsType {

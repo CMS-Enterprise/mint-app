@@ -1,8 +1,7 @@
 import React from 'react';
 import { act, render, waitFor } from '@testing-library/react';
 import { Formik } from 'formik';
-
-import { TaskStatus } from 'types/graphql-global-types';
+import { TaskStatus } from 'gql/gen/graphql';
 
 import ReadyForReview from './index';
 

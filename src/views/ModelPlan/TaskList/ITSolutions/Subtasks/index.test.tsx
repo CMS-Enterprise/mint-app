@@ -8,17 +8,17 @@ import {
   within
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { GetOperationalSolutionDocument } from 'gql/gen/graphql';
+import {
+  GetOperationalSolutionDocument,
+  OperationalSolutionSubtaskStatus,
+  OpSolutionStatus
+} from 'gql/gen/graphql';
 
 import {
   needQuestionAndAnswerMock,
   possibleSolutionsMock
 } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import {
-  OperationalSolutionSubtaskStatus,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import Subtasks from '.';

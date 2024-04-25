@@ -6,7 +6,6 @@ import {
   GetOperationalNeedQuery,
   GetOperationalSolutionQuery
 } from 'gql/gen/graphql';
-import { GetOperationalNeed_operationalNeed_solutions as OpertionalNeedSolutionTypes } from 'gql/gen/types/GetOperationalNeed';
 
 import Divider from 'components/shared/Divider';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -17,6 +16,8 @@ import { getKeys } from 'types/translation';
 import ImplementationStatuses from '../../_components/ImplementationStatus';
 import SolutionCard from '../../_components/SolutionCard';
 import SolutionDetailCard from '../../_components/SolutionDetailCard';
+
+type OpertionalNeedSolutionTypes = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
 
 type flatErrorsType = {
   [key: string]: string;

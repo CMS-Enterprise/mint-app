@@ -4,13 +4,13 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
+  GetIndividualModelPlanCollaboratorQuery,
+  GetModelCollaboratorsQuery,
   TeamRole,
   useCreateModelPlanCollaboratorMutation,
   useGetModelCollaboratorsQuery,
   useUpdateModelPlanCollaboratorMutation
 } from 'gql/gen/graphql';
-import { GetIndividualModelPlanCollaborator_planCollaboratorByID as CollaboratorFormType } from 'gql/gen/types/GetIndividualModelPlanCollaborator';
-import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -30,6 +30,9 @@ import { composeMultiSelectOptions } from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
 import { isLastModelLead } from '..';
+
+type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type CollaboratorFormType = GetIndividualModelPlanCollaboratorQuery['planCollaboratorByID'];
 
 const Collaborators = () => {
   const { t: collaboratorsT } = useTranslation('collaborators');

@@ -3,12 +3,11 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import { GetModelPlanDocumentsDocument } from 'gql/gen/graphql';
+import { DocumentType, GetModelPlanDocumentsDocument } from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
-import { DocumentType } from 'types/graphql-global-types';
 
 import ReadOnlyDocuments from './index';
 

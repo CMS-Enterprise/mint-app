@@ -9,7 +9,14 @@ const config: CodegenConfig = {
       plugins: [
         'typescript',
         'typescript-operations',
-        'typescript-react-apollo'
+        'typescript-react-apollo',
+        {
+          'typed-document-node': {
+            transformUnderscore: false,
+            documentVariablePrefix: 'Typed',
+            fragmentVariablePrefix: 'Typed'
+          }
+        }
       ],
       config: {
         withHooks: true,

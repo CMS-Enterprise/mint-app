@@ -1,12 +1,14 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
-import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'gql/gen/types/GetModelPlanDiscussions';
+import { GetModelPlanDiscussionsQuery } from 'gql/gen/graphql';
 
 import SectionWrapper from 'components/shared/SectionWrapper';
 import TruncatedText from 'components/shared/TruncatedText';
 
 import DiscussionUserInfo from '../_components/DiscussionUserInfo';
+
+type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
 
 const Replies = ({
   originalDiscussion: { replies },

@@ -1,8 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
-
-import { OperationalSolutionSubtaskStatus } from 'types/graphql-global-types';
+import { OperationalSolutionSubtaskStatus } from 'gql/gen/graphql';
 
 import SubtasksTable from '.';
 

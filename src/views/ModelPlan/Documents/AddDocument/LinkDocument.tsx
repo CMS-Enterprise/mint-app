@@ -5,7 +5,10 @@ import { useMutation } from '@apollo/client';
 import { Button, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import LinkNewPlanDocument from 'gql/apolloGQL/Documents/LinkNewPlanDocument';
-import { useCreateDocumentSolutionLinksMutation } from 'gql/gen/graphql';
+import {
+  DocumentType,
+  useCreateDocumentSolutionLinksMutation
+} from 'gql/gen/graphql';
 
 import BooleanRadio from 'components/BooleanRadioForm';
 import Alert from 'components/shared/Alert';
@@ -19,7 +22,6 @@ import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { LinkingDocumentFormTypes } from 'types/files';
-import { DocumentType } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { DocumentLinkValidationSchema } from 'validations/documentUploadSchema';

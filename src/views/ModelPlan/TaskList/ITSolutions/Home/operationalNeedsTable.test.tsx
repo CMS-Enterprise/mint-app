@@ -3,14 +3,13 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { GetOperationalNeedsDocument } from 'gql/gen/graphql';
-import configureMockStore from 'redux-mock-store';
-
 import {
+  GetOperationalNeedsDocument,
   OperationalNeedKey,
   OperationalSolutionKey,
   OpSolutionStatus
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
+import configureMockStore from 'redux-mock-store';
 
 import OperationalNeedsTable, {
   FilterViewSolutionsAlert

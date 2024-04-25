@@ -1,9 +1,14 @@
-import { TeamRole } from 'gql/gen/graphql';
-import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
-import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'gql/gen/types/GetModelPlan';
+import {
+  GetModelCollaboratorsQuery,
+  GetModelPlanQuery,
+  TeamRole
+} from 'gql/gen/graphql';
 import { orderBy } from 'lodash';
 
 import { getKeys } from 'types/translation';
+
+type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
 
 // Sorts discussions by the most recent reply
 export const sortRepliesByDate = (
