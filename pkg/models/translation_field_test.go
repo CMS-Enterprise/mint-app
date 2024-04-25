@@ -155,21 +155,26 @@ func TestTranslationFieldLabel(t *testing.T) {
 		assert.EqualValues(t, &parentReferenceLabel, referencesLabel)
 	})
 	t.Run("Parent other field will Favor Export Label over regular label for references label", func(t *testing.T) {
-		testTranslation.IsNote = true
-		testTranslation.IsOtherType = true
+		//Changes (Testing) update this, I think it is a race condition error because it is using it's own thing
+		transOtherTranslation := testTranslation
+		transOtherTranslation.IsNote = true
+		transOtherTranslation.IsOtherType = true
+		transOtherTranslation.OtherParentField = &otherParentField
 
-		testTranslation.ParentReferencesLabel = nil
+		transOtherTranslation.ParentReferencesLabel = nil
 		exportLabel := "Export Label"
-		testTranslation.ExportLabel = &exportLabel
-		label := testTranslation.GetLabel()
+		transOtherTranslation.ExportLabel = &exportLabel
+		label := transOtherTranslation.GetLabel()
 		assert.EqualValues(t, exportLabel, label)
 
 		// Update the map to have the updated parent which has an export label
 		parentExportLabel := "Parent Export Label"
 		parentTranslationTest.ExportLabel = &parentExportLabel
-		testTranslationMap[otherParentField] = parentTranslationTest
+		updatedTranslationMap := map[string]ITranslationField{
+			otherParentField: parentTranslationTest,
+		}
 
-		referencesLabel := testTranslation.GetReferencesLabel(testTranslationMap)
+		referencesLabel := transOtherTranslation.GetReferencesLabel(updatedTranslationMap)
 		assert.EqualValues(t, &parentExportLabel, referencesLabel)
 	})
 
