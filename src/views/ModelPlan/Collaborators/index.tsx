@@ -10,12 +10,12 @@ import {
 } from 'react-router-dom';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import {
+  DeleteModelPlanCollaboratorMutation,
+  GetModelCollaboratorsQuery,
   TeamRole,
   useDeleteModelPlanCollaboratorMutation,
   useGetModelCollaboratorsQuery
 } from 'gql/gen/graphql';
-import { DeleteModelPlanCollaborator_deletePlanCollaborator as ModelPlanCollaboratorType } from 'gql/gen/types/DeleteModelPlanCollaborator';
-import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 
 import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -32,6 +32,9 @@ import NotFound from 'views/NotFound';
 
 import AddCollaborator from './AddCollaborator';
 import CollaboratorsTable from './table';
+
+type ModelPlanCollaboratorType = DeleteModelPlanCollaboratorMutation['deletePlanCollaborator'];
+type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 // Checking if there is only one collaborator with role of MODEL_LEAD - can't edit or remove if so
 export const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {

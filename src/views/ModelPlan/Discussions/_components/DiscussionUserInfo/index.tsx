@@ -1,15 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { DiscussionUserRole } from 'gql/gen/graphql';
 import {
-  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
-  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
-} from 'gql/gen/types/GetModelPlanDiscussions';
+  DiscussionUserRole,
+  GetModelPlanDiscussionsQuery
+} from 'gql/gen/graphql';
 
 import { Avatar } from 'components/shared/Avatar';
 import { getTimeElapsed } from 'utils/date';
 
 import './index.scss';
+
+type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
+type ReplyType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 type DiscussionUserInfoProps = {
   connected?: boolean;

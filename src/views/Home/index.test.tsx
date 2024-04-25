@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { mount } from 'enzyme';
+import { ModelPlanFilter } from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { ASSESSMENT } from 'constants/jobCodes';
 import { modelPlanCollectionMock } from 'data/mock/general';
 import { MessageProvider } from 'hooks/useMessage';
-import { ModelPlanFilter } from 'types/graphql-global-types';
 import Table from 'views/ModelPlan/Table';
 
 import Home from './index';

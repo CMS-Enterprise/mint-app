@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryBox } from '@trussworks/react-uswds';
 import { Field } from 'formik';
+import { TaskStatus, TaskStatusInput } from 'gql/gen/graphql';
 
 import CheckboxField from 'components/shared/CheckboxField';
 import FieldGroup from 'components/shared/FieldGroup';
-import { TaskStatus, TaskStatusInput } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
 
 type ReadyForReviewType = {

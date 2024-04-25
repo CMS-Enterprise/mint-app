@@ -7,12 +7,13 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import {
+  GetOperationalNeedQuery,
+  GetOperationalSolutionQuery,
+  OperationalNeedKey,
   useCreateDocumentSolutionLinksMutation,
   useDeleteDocumentSolutionLinkMutation,
   useGetOperationalSolutionQuery
 } from 'gql/gen/graphql';
-import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
 import { isEqual } from 'lodash';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -22,13 +23,15 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import { OperationalNeedKey } from 'types/graphql-global-types';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import PlanDocumentsTable from 'views/ModelPlan/Documents/table';
 import NotFound from 'views/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+
+type GetOperationalNeedOperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalSolutionOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 export const initialValues: GetOperationalNeedOperationalNeedType = {
   __typename: 'OperationalNeed',

@@ -8,7 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { Card, CardGroup, Grid, Icon, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetOperationalSolutionQuery } from 'gql/gen/graphql';
+import {
+  GetOperationalSolutionQuery,
+  OperationalSolutionKey
+} from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
@@ -16,7 +19,6 @@ import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { OperationalSolutionKey } from 'types/graphql-global-types';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 import { findSolutionByKey } from '../CheckboxCard';

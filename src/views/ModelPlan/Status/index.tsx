@@ -13,14 +13,13 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
-import { useUpdateModelPlanMutation } from 'gql/gen/graphql';
+import { ModelStatus, useUpdateModelPlanMutation } from 'gql/gen/graphql';
 import * as Yup from 'yup';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { ModelStatus } from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 

@@ -15,7 +15,10 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
+  ClaimsBasedPayType,
+  FundingSource as FundingSourceEnum,
   GetFundingQuery,
+  PayRecipient,
   PayType,
   useGetFundingQuery,
   useUpdatePaymentsMutation
@@ -34,11 +37,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import Tooltip from 'components/shared/Tooltip';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import {
-  ClaimsBasedPayType,
-  FundingSource as FundingSourceEnum,
-  PayRecipient
-} from 'types/graphql-global-types';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';

@@ -19,10 +19,10 @@ import classNames from 'classnames';
 import {
   DocumentType,
   GetModelPlanDocumentsQuery,
+  GetOperationalSolutionQuery,
   useDeleteModelPlanDocumentMutation,
   useGetModelPlanDocumentsQuery
 } from 'gql/gen/graphql';
-import { GetOperationalSolution_operationalSolution_documents as SolutionDocumentType } from 'gql/gen/types/GetOperationalSolution';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Modal from 'components/Modal';
@@ -44,6 +44,8 @@ import { isAssessment } from 'utils/user';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import './index.scss';
+
+type SolutionDocumentType = GetOperationalSolutionQuery['operationalSolution']['documents'][0];
 
 type PlanDocumentsTableProps = {
   hiddenColumns?: string[];

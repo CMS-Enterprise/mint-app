@@ -8,18 +8,20 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import { GetModelPlanDocument } from 'gql/gen/graphql';
-import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'gql/gen/types/GetModelPlan';
-import configureMockStore from 'redux-mock-store';
-
-import { MessageProvider } from 'hooks/useMessage';
 import {
+  GetModelPlanDocument,
+  GetModelPlanQuery,
   ModelStatus,
   PrepareForClearanceStatus,
   TaskStatus
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
+import configureMockStore from 'redux-mock-store';
+
+import { MessageProvider } from 'hooks/useMessage';
 
 import TaskList, { getLatestModifiedDate } from './index';
+
+type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 
 describe('The Model Plan Task List', () => {
   const mockStore = configureMockStore();

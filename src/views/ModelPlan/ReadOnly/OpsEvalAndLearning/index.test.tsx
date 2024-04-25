@@ -2,10 +2,10 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import { DataToSendParticipantsType } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import { modelID, opsEvalAndLearningMocks as mocks } from 'data/mock/readonly';
-import { DataToSendParticipantsType } from 'types/graphql-global-types';
 
 import ReadOnlyOpsEvalAndLearning from './index';
 

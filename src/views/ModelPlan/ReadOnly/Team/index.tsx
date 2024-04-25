@@ -1,14 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, Grid, Icon, Link } from '@trussworks/react-uswds';
-import { useGetModelCollaboratorsQuery } from 'gql/gen/graphql';
-import { GetModelCollaborators_modelPlan_collaborators as CollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
+import {
+  GetModelCollaboratorsQuery,
+  TeamRole,
+  useGetModelCollaboratorsQuery
+} from 'gql/gen/graphql';
 
-import { TeamRole } from 'types/graphql-global-types';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
+
+type CollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 const MemberCards = ({ collaborator }: { collaborator: CollaboratorsType }) => {
   const { t: collaboratorsT } = useTranslation('collaborators');
