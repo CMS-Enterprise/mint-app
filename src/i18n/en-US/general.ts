@@ -33,7 +33,8 @@ const general = {
     stay: 'Stay on this page',
     leave: 'Leave this page'
   },
-  onPageLeaveMessage: 'You have unsaved changes. Continue?'
+  onPageLeaveMessage:
+    'You have unsaved changes. To be sure your changes are saved, navigate back to the task list before leaving the site.'
 };
 
 export default general;
