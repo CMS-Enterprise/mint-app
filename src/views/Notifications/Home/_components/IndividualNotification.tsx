@@ -74,7 +74,7 @@ const IndividualNotification = ({
         {!isRead && (
           <div
             className="circle-1 bg-error position-absolute margin-top-3 margin-left-1"
-            // data-testid="notification-red-dot"
+            data-testid="notification-red-dot"
           />
         )}
 
