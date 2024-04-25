@@ -52,7 +52,7 @@ const opSolutionsMisc = {
       'The operational needs below are not required for your model either because you have not yet answered the relevant question as a part of your Model Plan, or because you have answered it in a way that means you do not need an operational solution for that need.',
     need: 'Operational needs',
     solution: 'Solution',
-    finishBy: 'Must finish by',
+    finishBy: 'Must be ready by',
     subtasks: 'Subtasks',
     status: 'Status',
     actions: 'Actions',
@@ -164,7 +164,7 @@ const opSolutionsMisc = {
   addImplementationDetailsInfo:
     'Add additional information and update the implementation status of each selected solution. If you do not know this information you may add it at a later date.',
   mustStartBy: 'Must start by',
-  mustFinishBy: 'Must finish by',
+  mustFinishBy: 'Must be ready by',
   whatIsStatus: 'What is the status of this solution?',
   solutionDetails: 'Solution details',
   solutionDetailsInfo:

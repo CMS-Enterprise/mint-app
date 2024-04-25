@@ -56,6 +56,12 @@ enum AuditFieldChangeType {
     REMOVED
 }
 
+enum TranslationQuestionType {
+    OTHER
+    NOTE
+}
+
+
 type TranslatedAuditField {
     id: UUID!
     translatedAuditID: UUID!
@@ -65,8 +71,26 @@ type TranslatedAuditField {
     """
     changeType: AuditFieldChangeType! 
 
+    dataType: TranslationDataType
+    formType: TranslationFormType
+
     fieldName: String!
     fieldNameTranslated: String!
+    """
+    The label for the parent question that this question refers to
+    """
+    referenceLabel: String
+    """
+    Specifies if this is a specific category of question. Needed for conditionally rendering note details etc
+    """
+    questionType: TranslationQuestionType
+    """
+    Translated Label for questions that are no longer applicable 
+    """
+    notApplicableQuestions: [String!]
+
+
+    
     old: Any 
     oldTranslated: Any
     new: Any

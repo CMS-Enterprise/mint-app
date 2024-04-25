@@ -432,7 +432,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   communicationMethodOther: {
     gqlField: 'communicationMethodOther',
     goField: 'CommunicationMethodOther',
-    dbField: 'communication_method',
+    dbField: 'communication_method_other',
     label: 'Please specify',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,

@@ -61,7 +61,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     gqlField: 'mustFinishDts',
     goField: 'MustFinishDts',
     dbField: 'must_finish_dts',
-    label: 'Must finish by',
+    label: 'Must be ready by',
     sublabel: 'mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER

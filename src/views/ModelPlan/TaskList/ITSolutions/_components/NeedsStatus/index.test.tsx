@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-
-import { OpSolutionStatus } from 'types/graphql-global-types';
+import { OpSolutionStatus } from 'gql/gen/graphql';
 
 import OperationalNeedsStatusTag from '.';
 

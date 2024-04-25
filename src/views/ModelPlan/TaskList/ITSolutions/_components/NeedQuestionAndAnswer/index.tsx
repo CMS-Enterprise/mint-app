@@ -1,21 +1,18 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/client';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import {
+  GetOperationalNeedAnswerQuery,
+  GetOperationalNeedQuery,
+  GetOperationalSolutionQuery,
+  useGetOperationalNeedAnswerQuery,
+  useGetOperationalNeedQuery
+} from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import operationalNeedMap, { NeedMap } from 'data/operationalNeedMap';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
-import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
-import {
-  GetOperationalNeed as GetOperationalNeedType,
-  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
-  GetOperationalNeedVariables
-} from 'queries/ITSolutions/types/GetOperationalNeed';
-import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'queries/ITSolutions/types/GetOperationalNeedAnswer';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'queries/ITSolutions/types/GetOperationalSolution';
 
 import OperationalNeedRemovalModal from '../OperationalNeedRemovalModal';
 import SolutionCard from '../SolutionCard';
@@ -23,6 +20,9 @@ import SolutionCard from '../SolutionCard';
 import InfoToggle from './_component/InfoToggle';
 
 import './index.scss';
+
+type GetOperationalNeedOperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalNeedAnswerModelPlanType = GetOperationalNeedAnswerQuery['modelPlan'];
 
 // Function to format operational need answers for both single and multipart answers
 const formatOperationalNeedAnswers = (needConfig: NeedMap, data: any) => {
@@ -74,12 +74,14 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
+type OperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
+
 type NeedQuestionAndAnswerProps = {
   className?: string;
   operationalNeedID: string;
   modelID: string;
   expanded?: boolean;
-  solution?: GetOperationalSolutionType; // Solution passed as prop if want to render a SolutionCard beneath the need question
+  solution?: OperationalSolutionType; // Solution passed as prop if want to render a SolutionCard beneath the need question
   isRenderingOnSolutionsDetails?: boolean;
   renderSolutionCardLinks?: boolean;
 };
@@ -97,10 +99,7 @@ const NeedQuestionAndAnswer = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch operational need answer to question
-  const { data: need, loading } = useQuery<
-    GetOperationalNeedType,
-    GetOperationalNeedVariables
-  >(GetOperationalNeed, {
+  const { data: need, loading } = useGetOperationalNeedQuery({
     variables: {
       id: operationalNeedID,
       includeNotNeeded: false
@@ -157,8 +156,7 @@ const NeedQuestionAndAnswer = ({
 
   // Because of the dynamic nature of the input and return schema, having a standard TS type isn't applicable
   // Maybe reasearch into this further for better type safety
-  const { data, loading: answerLoading } = useQuery(
-    GetOperationalNeedAnswer,
+  const { data, loading: answerLoading } = useGetOperationalNeedAnswerQuery(
     queryVariables
   );
 

@@ -2,16 +2,17 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Grid, Icon, Tag } from '@trussworks/react-uswds';
 import classnames from 'classnames';
-import { GetFavorites_modelPlanCollection as FavoritesModelType } from 'gql/gen/types/GetFavorites';
+import { GetFavoritesQuery, TeamRole } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
-import { TeamRole } from 'types/graphql-global-types';
 import { formatDateUtc } from 'utils/date';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
 import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus';
 
 import './index.scss';
+
+type FavoritesModelType = GetFavoritesQuery['modelPlanCollection'][0];
 
 type FavoriteCardProps = {
   className?: string;

@@ -16,18 +16,22 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field } from 'formik';
+import {
+  GetOperationalNeedQuery,
+  OperationalSolutionKey
+} from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType } from 'queries/ITSolutions/types/GetOperationalNeed';
-import { OperationalSolutionKey } from 'types/graphql-global-types';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import './index.scss';
+
+type GetOperationalNeedSolutionsType = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
 
 type CheckboxCardProps = {
   className?: string;
@@ -63,7 +67,7 @@ const CheckboxCard = ({
     selectedSolution,
     renderModal,
     loading: modalLoading
-  } = useModalSolutionState(solution.key);
+  } = useModalSolutionState(solution.key!);
 
   const { helpSolutions, loading } = useHelpSolution();
 
@@ -72,7 +76,11 @@ const CheckboxCard = ({
     ? `it-solutions-${solution?.nameOther?.toLowerCase().replaceAll(' ', '-')}`
     : `it-solutions-${solution?.key?.toLowerCase().replace('_', '-')}`;
 
-  const solutionMap = findSolutionByKey(solution.key, helpSolutions);
+  const solutionMap = findSolutionByKey(solution.key!, helpSolutions);
+
+  const primaryContact = solutionMap?.pointsOfContact?.find(
+    contact => contact.isPrimary
+  );
 
   const detailRoute = solutionMap?.route
     ? `${initLocation}${location.search}${
@@ -245,24 +253,22 @@ const CheckboxCard = ({
             </div>
           )}
 
-          {solutionMap?.pointsOfContact?.[0].name ? (
+          {primaryContact ? (
             <Grid
               tablet={{ col: 12 }}
               className={classNames({ 'margin-bottom-2': solution.name })}
             >
               <p className="text-bold margin-bottom-0">{t('contact')}</p>
 
-              <p className="margin-y-0">
-                {solutionMap?.pointsOfContact[0].name}
-              </p>
+              <p className="margin-y-0">{primaryContact.name}</p>
 
               <Link
                 aria-label={h('contactInfo.sendAnEmail')}
                 className="line-height-body-5 display-flex flex-align-center"
-                href={`mailto:${solutionMap?.pointsOfContact[0].email}`}
+                href={`mailto:${primaryContact.email}`}
                 target="_blank"
               >
-                <div>{solutionMap?.pointsOfContact[0].email}</div>
+                <div>{primaryContact.email}</div>
               </Link>
             </Grid>
           ) : (

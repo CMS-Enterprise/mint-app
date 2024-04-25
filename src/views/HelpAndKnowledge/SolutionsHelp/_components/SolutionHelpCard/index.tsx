@@ -34,6 +34,10 @@ const SolutionHelpCard = ({
     returnObjects: true
   });
 
+  const primaryContact = solution?.pointsOfContact?.find(
+    contact => contact.isPrimary
+  );
+
   const location = useLocation();
 
   return (
@@ -84,9 +88,7 @@ const SolutionHelpCard = ({
             >
               <p className="text-bold margin-bottom-0">{t('contact')}</p>
 
-              <p className="margin-y-0">
-                {solution?.pointsOfContact?.[0]?.name}
-              </p>
+              <p className="margin-y-0">{primaryContact?.name}</p>
             </Grid>
           </div>
 

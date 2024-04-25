@@ -12,29 +12,14 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// ExportLabel is the resolver for the exportLabel field.
-func (r *translationFieldResolver) ExportLabel(ctx context.Context, obj *models.TranslationField) (*string, error) {
-	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
-}
-
 // TableReference is the resolver for the tableReference field.
 func (r *translationFieldResolver) TableReference(ctx context.Context, obj *models.TranslationField) (*string, error) {
 	panic(fmt.Errorf("not implemented: TableReference - tableReference"))
 }
 
-// ExportLabel is the resolver for the exportLabel field.
-func (r *translationFieldWithOptionsResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithOptions) (*string, error) {
-	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
-}
-
 // TableReference is the resolver for the tableReference field.
 func (r *translationFieldWithOptionsResolver) TableReference(ctx context.Context, obj *models.TranslationFieldWithOptions) (*string, error) {
 	panic(fmt.Errorf("not implemented: TableReference - tableReference"))
-}
-
-// ExportLabel is the resolver for the exportLabel field.
-func (r *translationFieldWithOptionsAndChildrenResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (*string, error) {
-	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
 }
 
 // TableReference is the resolver for the tableReference field.
@@ -52,29 +37,14 @@ func (r *translationFieldWithOptionsAndChildrenResolver) ChildRelation(ctx conte
 	return resultMap, nil
 }
 
-// ExportLabel is the resolver for the exportLabel field.
-func (r *translationFieldWithOptionsAndParentResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithOptionsAndParent) (*string, error) {
-	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
-}
-
 // TableReference is the resolver for the tableReference field.
 func (r *translationFieldWithOptionsAndParentResolver) TableReference(ctx context.Context, obj *models.TranslationFieldWithOptionsAndParent) (*string, error) {
 	panic(fmt.Errorf("not implemented: TableReference - tableReference"))
 }
 
-// ExportLabel is the resolver for the exportLabel field.
-func (r *translationFieldWithParentResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithParent) (*string, error) {
-	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
-}
-
 // TableReference is the resolver for the tableReference field.
 func (r *translationFieldWithParentResolver) TableReference(ctx context.Context, obj *models.TranslationFieldWithParent) (*string, error) {
 	panic(fmt.Errorf("not implemented: TableReference - tableReference"))
-}
-
-// ExportLabel is the resolver for the exportLabel field.
-func (r *translationFieldWithParentAndChildrenResolver) ExportLabel(ctx context.Context, obj *models.TranslationFieldWithParentAndChildren) (*string, error) {
-	panic(fmt.Errorf("not implemented: ExportLabel - exportLabel"))
 }
 
 // TableReference is the resolver for the tableReference field.
@@ -128,3 +98,10 @@ type translationFieldWithOptionsAndChildrenResolver struct{ *Resolver }
 type translationFieldWithOptionsAndParentResolver struct{ *Resolver }
 type translationFieldWithParentResolver struct{ *Resolver }
 type translationFieldWithParentAndChildrenResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.

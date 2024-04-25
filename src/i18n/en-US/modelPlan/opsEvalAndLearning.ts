@@ -64,7 +64,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       true: 'Yes',
       false: 'No'
     },
-    filterGroups: [ModelViewFilter.CBOSC]
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   helpdeskUseNote: {
     gqlField: 'helpdeskUseNote',
@@ -75,7 +75,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'helpdeskUse',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    filterGroups: [ModelViewFilter.CBOSC]
+    filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   contractorSupport: {
     gqlField: 'contractorSupport',
@@ -185,7 +185,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
         () => opsEvalAndLearning.fileNamingConventions
       ]
     },
-    filterGroups: [ModelViewFilter.IDDOC]
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.IPC]
   },
   iddocSupportNote: {
     gqlField: 'iddocSupportNote',
@@ -196,7 +196,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'iddocSupport',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    filterGroups: [ModelViewFilter.IDDOC]
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.IPC]
   },
   technicalContactsIdentified: {
     gqlField: 'technicalContactsIdentified',
@@ -572,7 +572,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'riskAdjustPerformance'
-    }
+    },
+    filterGroups: [ModelViewFilter.CMMI]
   },
   riskAdjustPayments: {
     gqlField: 'riskAdjustPayments',
@@ -607,7 +608,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'riskAdjustPayments'
-    }
+    },
+    filterGroups: [ModelViewFilter.CMMI]
   },
   riskAdjustNote: {
     gqlField: 'riskAdjustNote',
@@ -748,6 +750,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     hideRelatedQuestionAlert: true,
+    disconnectedLabel: `questionNotApplicableCCW`,
     options: {
       YES_EVALUATION: 'Yes, for evaluation',
       YES__IMPLEMENTATION: 'Yes, for implementation',
@@ -803,6 +806,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
+    disconnectedLabel: `questionNotApplicableQuality`,
     multiSelectLabel: 'Selected data',
     options: {
       SITE_VISITS: 'Site visits',

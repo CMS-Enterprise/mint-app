@@ -38,9 +38,9 @@ export const formatListValues = <
 };
 
 /*
-    Util for prepping data to listOtherItems prop of ReadOnlySection
-    Using translation config instead of raw data allows us to ensure a predetermined order of render
-  */
+  Util for prepping data to listOtherItems prop of ReadOnlySection
+  Using translation config instead of raw data allows us to ensure a predetermined order of render
+*/
 export const formatListOtherValues = <
   T extends string | keyof T,
   C extends string | keyof C
@@ -96,9 +96,10 @@ export const formatListOtherValues = <
     });
 };
 
-/* Util for prepping optionsLabels translation data to formatListTooltips prop of ReadOnlySection
-    Using translation config instead of raw data allows us to ensure a predetermined order of render
-  */
+/*  
+  Util for prepping optionsLabels translation data to formatListTooltips prop of ReadOnlySection
+  Using translation config instead of raw data allows us to ensure a predetermined order of render
+*/
 export const formatListTooltips = <
   T extends string | keyof T,
   C extends string | keyof C
@@ -118,9 +119,9 @@ export const formatListTooltips = <
 };
 
 /*
-    Util for getting related child questions that do not need to be rendered
-    Using to render a toggle alert to show list of questions
-  */
+  Util for getting related child questions that do not need to be rendered
+  Using to render a toggle alert to show list of questions
+*/
 export const getRelatedUneededQuestions = <
   T extends string | keyof T,
   C extends string | keyof C
@@ -139,9 +140,10 @@ export const getRelatedUneededQuestions = <
   )
     return null;
 
-  // Creating to arrays to hold values of needed and unneeded hidden questions
-  // For instances like `providerOverlap` where the multiple parent evaluations triggers the same rendered question
-  // Allows to remove dupe neededRelations
+  /* Creating to arrays to hold values of needed and unneeded hidden questions
+     For instances like `providerOverlap` where the multiple parent evaluations triggers the same rendered question
+     Allows to remove dupe neededRelations
+  */
   let unneededRelations: string[] = [];
   const neededRelations: string[] = [];
 
@@ -192,9 +194,9 @@ export const getRelatedUneededQuestions = <
 };
 
 /*
-    Util for comparing closures of parent/child
-    Allows to map and conditionally hide/render child based on parent value
-  */
+  Util for comparing closures of parent/child
+  Allows to map and conditionally hide/render child based on parent value
+*/
 export const checkIfParentContainsChildClosure = <
   T extends string | keyof T,
   C extends string | keyof C
@@ -218,9 +220,7 @@ export const checkIfParentContainsChildClosure = <
   });
 };
 
-/*
-    Util for checking if question should not be rendered based on parent's answer/condition
-  */
+// Util for checking if question should not be rendered based on parent's answer/condition
 export const isHiddenByParentCondition = <
   T extends string | keyof T,
   C extends string | keyof C
@@ -228,7 +228,13 @@ export const isHiddenByParentCondition = <
   config: TranslationConfigType<T, C> | undefined,
   values: any
 ): boolean => {
-  if (!config || !isTranslationFieldPropertiesWithParent(config)) return false;
+  if (
+    !config ||
+    !values ||
+    (!isTranslationFieldPropertiesWithParent(config) &&
+      !isTranslationFieldPropertiesWithParentAndChildren(config))
+  )
+    return false;
 
   // Typescript is not inferring the parent config type, but we know it has options with children
   const parentConfig = config.parentRelation() as TranslationFieldPropertiesWithOptionsAndChildren<
@@ -263,9 +269,40 @@ export const isHiddenByParentCondition = <
 
   return !checkIfParentContainsChildClosure(parentValue, parentConfig, config);
 };
-/*
-  Util to get any configurations that contain the specified filter group value
-*/
+
+// Checks if config is both a parent and a child.  Hide children if grandparent hides the parent
+export const isHiddenByGrandParentCondition = <
+  T extends string | keyof T,
+  C extends string | keyof C
+>(
+  config: TranslationConfigType<T, C>,
+  values: any
+): boolean => {
+  if (
+    isTranslationFieldPropertiesWithParentAndChildren(config) ||
+    isTranslationFieldPropertiesWithParent(config)
+  ) {
+    const parentConfig = config.parentRelation();
+
+    if (
+      isTranslationFieldPropertiesWithParentAndChildren(parentConfig) ||
+      isTranslationFieldPropertiesWithParent(parentConfig)
+    ) {
+      const grandParentConfig = parentConfig.parentRelation();
+
+      if (isHiddenByParentCondition(grandParentConfig, values)) {
+        return true;
+      }
+    }
+
+    if (isHiddenByParentCondition(parentConfig, values)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+// Util to get any configurations that contain the specified filter group value
 export const getFilterGroupInfo = <
   T extends string | keyof T,
   C extends string | keyof C

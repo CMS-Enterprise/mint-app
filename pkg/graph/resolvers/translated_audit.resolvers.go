@@ -23,9 +23,24 @@ func (r *translatedAuditResolver) TranslatedFields(ctx context.Context, obj *mod
 	return TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, obj.ID)
 }
 
+// NotApplicableQuestions is the resolver for the notApplicableQuestions field.
+func (r *translatedAuditFieldResolver) NotApplicableQuestions(ctx context.Context, obj *models.TranslatedAuditField) ([]string, error) {
+	if obj.NotApplicableQuestions == nil {
+		return nil, nil
+	}
+
+	return *obj.NotApplicableQuestions, nil
+}
+
 // TranslatedAudit returns generated.TranslatedAuditResolver implementation.
 func (r *Resolver) TranslatedAudit() generated.TranslatedAuditResolver {
 	return &translatedAuditResolver{r}
 }
 
+// TranslatedAuditField returns generated.TranslatedAuditFieldResolver implementation.
+func (r *Resolver) TranslatedAuditField() generated.TranslatedAuditFieldResolver {
+	return &translatedAuditFieldResolver{r}
+}
+
 type translatedAuditResolver struct{ *Resolver }
+type translatedAuditFieldResolver struct{ *Resolver }

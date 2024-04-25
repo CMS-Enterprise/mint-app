@@ -10,6 +10,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+//Changes (Testing) Assert that every go tag is correct? Is this possible? Example, on plan basics demo_code had extra quotes, and the notes field mapped to demo_code, so the translation was weird
+
 // assertTranslationFields will iterate through all fields in a translation and make sure that they are populated correctly and valid
 func assertTranslationFields(t *testing.T, translation Translation) {
 	// Get the type & value of the object
@@ -156,7 +158,6 @@ func assertTranslationFieldWithParentAndChildren(t *testing.T, field reflect.Str
 // assertTFieldBase asserts that all fields of a translation are filled out appropriately when they are expected
 func assertTFieldBase(t *testing.T, field reflect.StructField, base models.TranslationFieldBase) {
 
-	// assert.NotNil(t, base)
 	assert.NotZero(t, base, "issue for field %s", field.Name)
 
 	assert.NotZero(t, base.GqlField, "issue for field %s", field.Name)
@@ -164,26 +165,37 @@ func assertTFieldBase(t *testing.T, field reflect.StructField, base models.Trans
 	assert.NotZero(t, base.DbField, "issue for field %s", field.Name)
 	assert.NotZero(t, base.Label, "issue for field %s", field.Name)
 
-	// Changes: (Translations), assert
-	// assert.NotZero(t, base.ReadOnlyLabel)
-	// assert.NotZero(t, base.SubLabel)
-	// assert.NotZero(t, base.MultiSelectLabel)
+	assertStringPointerNilOrNotEmpty(t, base.ReadOnlyLabel, field)
+
+	assertStringPointerNilOrNotEmpty(t, base.SubLabel, field)
+
+	assertStringPointerNilOrNotEmpty(t, base.MultiSelectLabel, field)
+
 	assertStringPointerNilOrNotEmpty(t, base.ReadOnlyLabel, field)
 	assertStringPointerNilOrNotEmpty(t, base.SubLabel, field)
 	assertStringPointerNilOrNotEmpty(t, base.MultiSelectLabel, field)
 
-	// assert.NotZero(t, base.IsArray)
+	// assert.NotZero(t, base.IsArray) // not zero doesn't work for bool because false is zero
 
 	assert.NotZero(t, base.DataType)
 	assert.NotZero(t, base.FormType, "issue for field %s. Value: %s", field.Name)
 
-	// Changes: (Translations) how should we assert bools here? False is the NotZero state... so  we might not be able to assert anything about bools that aren't pointers
-	// assert.NotZero(t, base.IsNote)
-	// assert.NotZero(t, base.IsOtherType)
+	//base.IsOtherType // Other types don't require a parent field or parent reference label. Sometimes the label is sufficient in and of itself
+	if base.IsNote {
+		someParentDefined := base.OtherParentField != nil || base.ParentReferencesLabel != nil
+
+		assert.True(t, someParentDefined)
+		if base.OtherParentField != nil {
+			assert.NotEqualValues(t, "", *base.OtherParentField, "OtherParentField %s is an empty string, a value was expected", field.Name)
+		} else if base.ParentReferencesLabel != nil {
+			assert.NotEqualValues(t, "", *base.ParentReferencesLabel, "ParentReferencesLabel %s is an empty string, a value was expected", field.Name)
+		} else {
+			// Changes: (Testing)
+			assert.Failf(t, "Other Parent field and Parent References Label are both undefined.", " Field %v,IsNote %v, IsOther %v", field.Name, base.IsNote, base.IsOtherType)
+		}
+	}
 
 	assertStringPointerNilOrNotEmpty(t, base.OtherParentField, field)
-	// assert.NotZero(t, base.OtherParentField, "issue for field %s", field.Name)
-	// assert.NotZero(t, base.ParentReferencesLabel, "issue for field %s", field.Name)
 	assertStringPointerNilOrNotEmpty(t, base.ParentReferencesLabel, field)
 
 }
@@ -206,7 +218,6 @@ func assertTFieldWithParent(t *testing.T, field reflect.StructField, translation
 	assert.True(t, hasParent)
 
 	assert.NotZero(t, parent, "field %s. Doesn't have parent", field.Name)
-	// Changes: (Translations) ensure that the parent is correct too? should we run through the test like above? Recursive?
 
 }
 

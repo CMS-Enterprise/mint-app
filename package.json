@@ -45,9 +45,8 @@
     "@types/sinon": "^10.0.16",
     "@types/text-encoding": "^0.0.39",
     "@uswds/uswds": "^3.4.1",
-    "apollo": "^2.34",
     "apollo-upload-client": "^17.0.0",
-    "axios": "^1.6.7",
+    "axios": "^1.6.8",
     "classnames": "^2.5.1",
     "cross-fetch": "^3.1.5",
     "cypress-file-upload": "^5.0.8",
@@ -103,10 +102,9 @@
     "lint:fix": "eslint --fix '**/*.{ts,tsx}'",
     "cypress:open": "cypress open",
     "cypress:run": "DEBUG=cypress:server:util:process_profiler cypress run",
-    "generate": "graphql-codegen && apollo client:codegen --passthroughCustomScalars --target typescript  --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
+    "generate": "graphql-codegen --config codegen.ts",
     "storybook": "storybook dev -p 6006 -s public",
-    "build-storybook": "storybook build -s public",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "build-storybook": "storybook build -s public"
   },
   "nyc": {
     "reporter": [
@@ -137,6 +135,7 @@
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/client-preset": "4.1.0",
     "@graphql-codegen/introspection": "4.0.2",
+    "@graphql-codegen/typed-document-node": "^5.0.6",
     "@storybook/addon-actions": "^7.6.16",
     "@storybook/addon-controls": "^7.6.16",
     "@storybook/addon-essentials": "^7.6.16",
@@ -186,7 +185,7 @@
     "storybook-addon-apollo-client": "^5.0.0",
     "text-encoding": "^0.7.0",
     "ts-loader": "^7.0.5",
-    "vite": "^4.5.2",
+    "vite": "^4.5.3",
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^0.34.1",

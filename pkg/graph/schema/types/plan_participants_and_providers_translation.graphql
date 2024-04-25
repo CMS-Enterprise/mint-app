@@ -33,7 +33,7 @@ type PlanParticipantsAndProvidersTranslation {
   participantRemovedFrequencyOther: TranslationField! @goTag(key: "db", value: "participant_removed_frequency_other")
   participantRemovedFrequencyNote: TranslationField! @goTag(key: "db", value: "participant_removed_frequency_note")
   communicationMethod: TranslationFieldWithOptions! @goTag(key: "db", value: "communication_method")
-  communicationMethodOther: TranslationField! @goTag(key: "db", value: "communication_method")
+  communicationMethodOther: TranslationField! @goTag(key: "db", value: "communication_method_other")
   communicationNote: TranslationField! @goTag(key: "db", value: "communication_note")
   riskType: TranslationFieldWithOptions! @goTag(key: "db", value: "risk_type")
   riskOther: TranslationField! @goTag(key: "db", value: "risk_other")

@@ -5,26 +5,26 @@ import { Accordion, Button, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   DiscussionUserRole,
+  GetModelPlanDiscussionsQuery,
+  PlanDiscussionCreateInput,
   useCreateModelPlanDiscussionMutation,
   useCreateModelPlanReplyMutation,
   useGetModelPlanDiscussionsQuery
 } from 'gql/gen/graphql';
-import {
-  GetModelPlanDiscussions_modelPlan_discussions as DiscussionType,
-  GetModelPlanDiscussions_modelPlan_discussions_replies as ReplyType
-} from 'gql/gen/types/GetModelPlanDiscussions';
 
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
-import { PlanDiscussionCreateInput } from 'types/graphql-global-types';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
 import QuestionAndReply from './QuestionAndReply';
 
 import './index.scss';
+
+type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
+type ReplyType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 export type DiscussionsProps = {
   modelID: string;

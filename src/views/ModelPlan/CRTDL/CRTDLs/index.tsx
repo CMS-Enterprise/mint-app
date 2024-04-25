@@ -10,8 +10,10 @@ import {
   Icon,
   Link as TrussLink
 } from '@trussworks/react-uswds';
-import { useGetModelPlanBaseQuery } from 'gql/gen/graphql';
-import { GetModelPlanBase_modelPlan as ModelPlanType } from 'gql/gen/types/GetModelPlanBase';
+import {
+  GetModelPlanBaseQuery,
+  useGetModelPlanBaseQuery
+} from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -21,6 +23,8 @@ import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
 
 import PlanCRTDLsTable from './table';
+
+type ModelPlanType = GetModelPlanBaseQuery['modelPlan'];
 
 type CRTDLStatusType = 'success' | 'error';
 
