@@ -10,12 +10,16 @@ exports[`RecentChanges > matches snapshot 1`] = `
     >
       Recent changes
     </h3>
-    <span
-      aria-valuetext="Loading"
-      class="mint-spinner"
-      data-testid="spinner"
-      role="progressbar"
-    />
+    <div
+      class="padding-y-4 padding-left-10"
+    >
+      <span
+        aria-valuetext="Loading"
+        class="mint-spinner"
+        data-testid="spinner"
+        role="progressbar"
+      />
+    </div>
     <a
       class="usa-link display-flex flex-align-center"
       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/change-history"
