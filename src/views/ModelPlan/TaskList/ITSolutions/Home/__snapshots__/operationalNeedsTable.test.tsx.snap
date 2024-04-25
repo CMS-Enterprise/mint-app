@@ -78,12 +78,43 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
             role="row"
           >
             <th
-              aria-sort="ascending"
+              aria-sort="none"
               class="table-header"
               colspan="1"
               role="columnheader"
               scope="col"
               style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: .5em; width: auto;"
+            >
+              <button
+                class="usa-button usa-button--unstyled position-relative"
+                style="cursor: pointer;"
+                title="Toggle SortBy"
+                type="button"
+              >
+                	Model Plan section
+                <svg
+                  class="usa-icon margin-left-05 position-absolute"
+                  data-testid="caret--sort"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                  />
+                </svg>
+              </button>
+            </th>
+            <th
+              aria-sort="ascending"
+              class="table-header"
+              colspan="1"
+              role="columnheader"
+              scope="col"
+              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -114,38 +145,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
               colspan="1"
               role="columnheader"
               scope="col"
-              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
-            >
-              <button
-                class="usa-button usa-button--unstyled position-relative"
-                style="cursor: pointer;"
-                title="Toggle SortBy"
-                type="button"
-              >
-                	Model Plan section
-                <svg
-                  class="usa-icon margin-left-05 position-absolute"
-                  data-testid="caret--sort"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
-                  />
-                </svg>
-              </button>
-            </th>
-            <th
-              aria-sort="none"
-              class="table-header"
-              colspan="1"
-              role="columnheader"
-              scope="col"
-              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
+              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: 170px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -176,7 +176,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
               colspan="1"
               role="columnheader"
               scope="col"
-              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
+              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -213,14 +213,14 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
               scope="row"
               style="padding-left: 0px; border-bottom: 1px solid black; white-space: normal;"
             >
-              Recruit participants
+              Participants and providers
             </th>
             <td
               class=""
               role="cell"
               style="padding-left: 0px; white-space: normal; max-width: 275px; border-bottom: 1px solid black;"
             >
-              Participants and providers
+              Recruit participants
             </td>
             <td
               class=""

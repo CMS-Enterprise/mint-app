@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Grid } from '@trussworks/react-uswds';
-import { useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
-import { GetNotifications_currentUser_notifications_notifications_activity as NotificationActivityType } from 'gql/gen/types/GetNotifications';
+import { Activity, useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
 
 import { AvatarCircle } from 'components/shared/Avatar';
 import MentionTextArea from 'components/shared/MentionTextArea';
@@ -20,6 +19,8 @@ import {
   isTaggedInDiscussionReply
 } from './_utils';
 import DailyDigest from './DailyDigest';
+
+type NotificationActivityType = Activity;
 
 export type IndividualNotificationProps = {
   index?: number;

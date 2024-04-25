@@ -2,8 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Icon, Link, Tag } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { DiscussionUserRole } from 'gql/gen/graphql';
-import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'gql/gen/types/GetModelPlanDiscussions';
+import {
+  DiscussionUserRole,
+  GetModelPlanDiscussionsQuery
+} from 'gql/gen/graphql';
 import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -12,6 +14,8 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import FormatDiscussion from 'views/ModelPlan/Discussions/FormatDiscussion';
 
 import './index.scss';
+
+type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
 
 export type FooterItemType = {
   heading: string;

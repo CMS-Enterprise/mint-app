@@ -6,7 +6,6 @@ Displays relevant operational need question and answers
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
 import {
   Button,
   CardGroup,
@@ -15,6 +14,13 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import { Form, Formik, FormikProps } from 'formik';
+import {
+  GetOperationalNeedQuery,
+  OperationalNeedKey,
+  useCreateOperationalSolutionMutation,
+  useGetOperationalNeedQuery,
+  useUpdateOperationalSolutionMutation
+} from 'gql/gen/graphql';
 import { partition } from 'lodash';
 
 import Breadcrumbs from 'components/Breadcrumbs';
@@ -24,24 +30,6 @@ import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import CreateOperationalSolution from 'queries/ITSolutions/CreateOperationalSolution';
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
-import {
-  CreateOperationalSolution as CreateOperationalSolutionType,
-  CreateOperationalSolutionVariables
-} from 'queries/ITSolutions/types/CreateOperationalSolution';
-import {
-  GetOperationalNeed as GetOperationalNeedType,
-  GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType,
-  GetOperationalNeed_operationalNeed_solutions as GetOperationalNeedSolutionsType,
-  GetOperationalNeedVariables
-} from 'queries/ITSolutions/types/GetOperationalNeed';
-import {
-  UpdateOperationalSolution as UpdateOperationalSolutionType,
-  UpdateOperationalSolutionVariables
-} from 'queries/ITSolutions/types/UpdateOperationalSolution';
-import UpdateOperationalSolution from 'queries/ITSolutions/UpdateOperationalSolution';
-import { OperationalNeedKey } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
@@ -49,6 +37,9 @@ import NotFound from 'views/NotFound';
 import CheckboxCard from '../_components/CheckboxCard';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
+
+type GetOperationalNeedOperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalNeedSolutionsType = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
 
 // Passing in operationalNeed to Formik instead of array of solutions
 // Fomik does not take an array structure
@@ -101,10 +92,7 @@ const SelectSolutions = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading, error } = useQuery<
-    GetOperationalNeedType,
-    GetOperationalNeedVariables
-  >(GetOperationalNeed, {
+  const { data, loading, error } = useGetOperationalNeedQuery({
     variables: {
       id: operationalNeedID,
       includeNotNeeded: true
@@ -113,15 +101,9 @@ const SelectSolutions = () => {
 
   const operationalNeed = data?.operationalNeed || initialValues;
 
-  const [createSolution] = useMutation<
-    CreateOperationalSolutionType,
-    CreateOperationalSolutionVariables
-  >(CreateOperationalSolution);
+  const [createSolution] = useCreateOperationalSolutionMutation();
 
-  const [updateSolution] = useMutation<
-    UpdateOperationalSolutionType,
-    UpdateOperationalSolutionVariables
-  >(UpdateOperationalSolution);
+  const [updateSolution] = useUpdateOperationalSolutionMutation();
 
   // Cycles and updates all solutions on a need
   const handleFormSubmit = async (

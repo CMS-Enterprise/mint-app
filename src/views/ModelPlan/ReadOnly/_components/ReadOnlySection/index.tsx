@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
-import { TranslationFormType } from 'gql/gen/graphql';
+import { TranslationDataType, TranslationFormType } from 'gql/gen/graphql';
 
 import Alert from 'components/shared/Alert';
 import CollapsableLink from 'components/shared/CollapsableLink';
@@ -10,9 +10,11 @@ import {
   isTranslationFieldProperties,
   isTranslationFieldPropertiesWithOptions,
   isTranslationFieldPropertiesWithOptionsAndChildren,
+  isTranslationFieldPropertiesWithParentAndChildren,
   TranslationConfigType,
   TranslationFieldPropertiesWithOptions
 } from 'types/translation';
+import { formatDateUtc } from 'utils/date';
 
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
 
@@ -24,6 +26,7 @@ import {
   getFilterGroupInfo,
   getRelatedUneededQuestions,
   isEmpty,
+  isHiddenByGrandParentCondition,
   isHiddenByParentCondition
 } from './util';
 
@@ -65,7 +68,10 @@ const ReadOnlySection = <
     return null;
   }
 
-  if (isHiddenByParentCondition(config, values)) {
+  if (
+    isHiddenByParentCondition(config, values) ||
+    isHiddenByGrandParentCondition(config, values)
+  ) {
     return null;
   }
 
@@ -154,7 +160,12 @@ const RenderReadonlyValue = <
     !isTranslationFieldPropertiesWithOptions(config) &&
     !config.isArray
   ) {
-    return <SingleValue value={value} />;
+    return (
+      <SingleValue
+        value={value}
+        isDate={config.dataType === TranslationDataType.DATE}
+      />
+    );
   }
 
   // Renders a single value with options (radio)
@@ -195,13 +206,25 @@ export const NoAddtionalInfo = ({ other }: { other?: boolean }) => {
 };
 
 export const SingleValue = ({
-  value
+  value,
+  isDate
 }: {
   value: string | null | undefined;
+  isDate: boolean;
 }) => {
+  const formattedValue = () => {
+    if (isEmpty(value)) {
+      return <NoAddtionalInfo />;
+    }
+    if (isDate && value) {
+      return formatDateUtc(value, 'MM/dd/yyyy');
+    }
+    return value;
+  };
+
   return (
     <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
-      {!isEmpty(value) ? value : <NoAddtionalInfo />}
+      {formattedValue()}
     </div>
   );
 };
@@ -371,6 +394,7 @@ export const RelatedUnneededQuestions = <
   id,
   config,
   value,
+  values,
   valuesToCheck,
   childrenToCheck,
   hideAlert
@@ -378,15 +402,29 @@ export const RelatedUnneededQuestions = <
   id: string;
   config: TranslationConfigType<T, C>;
   value: any;
+  values?: any;
   valuesToCheck?: T[]; // If only want to check unneeded children for a specific value of the parent
   childrenToCheck?: (string | undefined)[];
   hideAlert?: boolean;
 }) => {
   const { t: readOnlyT } = useTranslation('generalReadOnly');
 
-  const relatedConditions = isTranslationFieldPropertiesWithOptions(config)
+  let relatedConditions = isTranslationFieldPropertiesWithOptions(config)
     ? getRelatedUneededQuestions(config, value, valuesToCheck, childrenToCheck)
     : [];
+
+  // If config is parent and child, check if is hidden by parent, and then get all the child questions
+  if (
+    isTranslationFieldPropertiesWithParentAndChildren(config) &&
+    isHiddenByParentCondition(config, values)
+  ) {
+    relatedConditions = getRelatedUneededQuestions(
+      config,
+      [],
+      valuesToCheck,
+      childrenToCheck
+    );
+  }
 
   if (!relatedConditions?.length || hideAlert) {
     return null;
@@ -403,7 +441,7 @@ export const RelatedUnneededQuestions = <
     <>
       <Alert type="info" noIcon className="margin-bottom-3">
         {isTranslationFieldPropertiesWithOptionsAndChildren(config) &&
-        config.disconnectedChildren
+        (config.disconnectedChildren || config.disconnectedLabel)
           ? // Render a disconnected translations text
             readOnlyT(disconnectedLabel, {
               count: relatedConditions.length,
@@ -429,7 +467,10 @@ export const RelatedUnneededQuestions = <
       >
         <ul className="margin-y-0">
           {relatedConditions.map(question => (
-            <li key={question} className="text-bold margin-bottom-1">
+            <li
+              key={question}
+              className="text-bold margin-bottom-1 line-height-sans-4"
+            >
               {question}
             </li>
           ))}

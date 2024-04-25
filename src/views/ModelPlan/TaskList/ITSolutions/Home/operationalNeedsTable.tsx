@@ -17,10 +17,13 @@ import {
   useSortBy,
   useTable
 } from 'react-table';
-import { useQuery } from '@apollo/client';
 import { Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { OperationalSolutionKey } from 'gql/gen/graphql';
+import {
+  GetOperationalNeedsQuery,
+  OperationalSolutionKey,
+  useGetOperationalNeedsQuery
+} from 'gql/gen/graphql';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -32,12 +35,6 @@ import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
 import operationalNeedMap from 'data/operationalNeedMap';
-import GetOperationalNeeds from 'queries/ITSolutions/GetOperationalNeeds';
-import {
-  GetOperationalNeeds as GetOperationalNeedsType,
-  GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType,
-  GetOperationalNeedsVariables
-} from 'queries/ITSolutions/types/GetOperationalNeeds';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
 import {
@@ -58,6 +55,8 @@ import {
   returnActionLinks,
   returnActionText
 } from '../util';
+
+type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
 
 export interface GetOperationalNeedsTableType
   extends GetOperationalNeedsOperationalNeedsType {
@@ -89,10 +88,7 @@ const OperationalNeedsTable = ({
   const { t: subtasksT } = useTranslation('operationalSolutionSubtasks');
   const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
 
-  const { data, loading, error } = useQuery<
-    GetOperationalNeedsType,
-    GetOperationalNeedsVariables
-  >(GetOperationalNeeds, {
+  const { data, loading, error } = useGetOperationalNeedsQuery({
     variables: {
       id: modelID
     }
@@ -134,10 +130,6 @@ const OperationalNeedsTable = ({
 
   const needsColumns = useMemo<Column<any>[]>(() => {
     return [
-      {
-        Header: operationalNeedsT<string>('name.label'),
-        accessor: 'needName'
-      },
       {
         Header: solutionsT<string>('name.label'),
         accessor: ({ name, nameOther, otherHeader }: any) => {
@@ -184,6 +176,10 @@ const OperationalNeedsTable = ({
           }
           return value;
         }
+      },
+      {
+        Header: operationalNeedsT<string>('name.label'),
+        accessor: 'needName'
       },
       {
         Header: solutionsT<string>('mustFinishDts.label'),
@@ -253,10 +249,6 @@ const OperationalNeedsTable = ({
   const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
     return [
       {
-        Header: operationalNeedsT<string>('name.label'),
-        accessor: 'name'
-      },
-      {
         Header: operationalNeedsT<string>('section.label'),
         accessor: 'section',
         Cell: ({
@@ -273,6 +265,10 @@ const OperationalNeedsTable = ({
           }
           return '';
         }
+      },
+      {
+        Header: operationalNeedsT<string>('name.label'),
+        accessor: 'name'
       },
       {
         Header: operationalNeedsT<string>('needed.label'),
@@ -443,11 +439,15 @@ const OperationalNeedsTable = ({
                     className="table-header"
                     scope="col"
                     style={{
-                      minWidth: '138px',
+                      minWidth: index !== 3 ? '138px' : '',
                       paddingBottom: '.5rem',
                       position: 'relative',
                       paddingLeft: index === 0 ? '.5em' : '0px',
-                      width: index === 5 ? '235px' : 'auto'
+                      width:
+                        (index === 5 && '235px') ||
+                        (index === 2 && '170px') ||
+                        (index === 3 && type !== 'possibleNeeds' && '100px') ||
+                        'auto'
                     }}
                   >
                     <button

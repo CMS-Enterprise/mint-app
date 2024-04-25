@@ -7,8 +7,13 @@ import {
   screen,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import { GetModelSummaryDocument } from 'gql/gen/graphql';
-import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'gql/gen/types/GetModelSummary';
+import {
+  GetModelSummaryDocument,
+  GetModelSummaryQuery,
+  KeyCharacteristic,
+  ModelStatus,
+  TeamRole
+} from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -21,15 +26,12 @@ import modelPlan from 'i18n/en-US/modelPlan/modelPlan';
 import opsEvalAndLearning from 'i18n/en-US/modelPlan/opsEvalAndLearning';
 import participantsAndProviders from 'i18n/en-US/modelPlan/participantsAndProviders';
 import payments from 'i18n/en-US/modelPlan/payments';
-import {
-  KeyCharacteristic,
-  ModelStatus,
-  TeamRole
-} from 'types/graphql-global-types';
 import { TranslationPlan } from 'types/translation';
 import ReadOnly from 'views/ModelPlan/ReadOnly';
 
 import { getAllFilterViewQuestions } from '.';
+
+type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
 
 const mockData: GetModelSummaryTypes = {
   __typename: 'ModelPlan',

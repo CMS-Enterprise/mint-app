@@ -1,12 +1,11 @@
 import GetPossibleSolutions from 'gql/apolloGQL/Solutions/GetPossibleSolutions';
-import { OperationalSolutionKey } from 'gql/gen/graphql';
-
-import GetOperationalNeed from 'queries/ITSolutions/GetOperationalNeed';
-import GetOperationalNeedAnswer from 'queries/ITSolutions/GetOperationalNeedAnswer';
 import {
+  GetOperationalNeedAnswerDocument,
+  GetOperationalNeedDocument,
   OperationalNeedKey,
+  OperationalSolutionKey,
   OpSolutionStatus
-} from 'types/graphql-global-types';
+} from 'gql/gen/graphql';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
@@ -18,7 +17,8 @@ export const pointsOfContact = [
     name: 'John Mint',
     email: 'john.mint@oddball.io',
     isTeam: false,
-    role: 'Project lead'
+    role: 'Project lead',
+    isPrimary: true
   }
 ];
 
@@ -47,7 +47,8 @@ export const possibleSolutionsMock = [
                 name: '4Inn/Aco',
                 email: '4inn.mint@oddball.io',
                 isTeam: true,
-                role: ''
+                role: '',
+                isPrimary: true
               }
             ]
           },
@@ -62,7 +63,8 @@ export const possibleSolutionsMock = [
                 name: 'Brandon Bee',
                 email: 'bee.mint@oddball.io',
                 isTeam: false,
-                role: 'CMMI Government Task Lead'
+                role: 'CMMI Government Task Lead',
+                isPrimary: true
               }
             ]
           },
@@ -77,7 +79,8 @@ export const possibleSolutionsMock = [
                 name: 'Alicia Thomas',
                 email: 'at.mint@oddball.io',
                 isTeam: false,
-                role: 'Beneficiary Listening Session Point of Contact'
+                role: 'Beneficiary Listening Session Point of Contact',
+                isPrimary: true
               }
             ]
           }
@@ -90,7 +93,7 @@ export const possibleSolutionsMock = [
 export const needQuestionAndAnswerMock = [
   {
     request: {
-      query: GetOperationalNeed,
+      query: GetOperationalNeedDocument,
       variables: {
         id: operationalNeedID,
         includeNotNeeded: false
@@ -133,7 +136,7 @@ export const needQuestionAndAnswerMock = [
   },
   {
     request: {
-      query: GetOperationalNeedAnswer,
+      query: GetOperationalNeedAnswerDocument,
       skip: false,
       variables: {
         id: modelID,
@@ -192,7 +195,7 @@ export const needQuestionAndAnswerMock = [
 export const operationalNeedMock = (includeNotNeeded: boolean = false) => [
   {
     request: {
-      query: GetOperationalNeed,
+      query: GetOperationalNeedDocument,
       variables: {
         id: operationalNeedID,
         includeNotNeeded

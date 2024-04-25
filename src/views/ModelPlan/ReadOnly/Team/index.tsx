@@ -1,14 +1,18 @@
 import React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, Grid, Icon, Link } from '@trussworks/react-uswds';
-import { useGetModelCollaboratorsQuery } from 'gql/gen/graphql';
-import { GetModelCollaborators_modelPlan_collaborators as CollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
+import {
+  GetModelCollaboratorsQuery,
+  TeamRole,
+  useGetModelCollaboratorsQuery
+} from 'gql/gen/graphql';
 
-import { TeamRole } from 'types/graphql-global-types';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
+
+type CollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 const MemberCards = ({ collaborator }: { collaborator: CollaboratorsType }) => {
   const { t: collaboratorsT } = useTranslation('collaborators');
@@ -120,9 +124,6 @@ const ReadOnlyTeamInfo = ({
       className="read-only-model-plan--team-info"
       data-testid="read-only-model-plan--team-info"
     >
-      <h2 className="margin-top-0 margin-bottom-4">
-        <Trans i18nKey="modelSummary:navigation.team" />
-      </h2>
       {isViewingFilteredView ? (
         <>
           <FilteredViewGroupings

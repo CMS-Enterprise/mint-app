@@ -3,10 +3,10 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import {
+  GetModelCollaboratorsQuery,
   GetModelPlanQuery,
   useArchiveModelPlanMutation
 } from 'gql/gen/graphql';
-import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -22,6 +22,7 @@ import RecentChanges from 'views/ModelPlan/ChangeHistory/components/RecentChange
 import { StatusMessageType } from '../..';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
+type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 const TaskListSideNav = ({
   modelPlan,

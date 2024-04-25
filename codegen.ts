@@ -12,7 +12,6 @@ const config: CodegenConfig = {
         'typescript-react-apollo',
         {
           'typed-document-node': {
-            addTypename: false,
             transformUnderscore: false,
             documentVariablePrefix: 'Typed',
             fragmentVariablePrefix: 'Typed'

@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import classnames from 'classnames';
-import { GetCrtdLsQuery } from 'gql/gen/graphql';
-import {
-  GetModelSummary_modelPlan_collaborators as CollaboratorsType,
-  GetModelSummary_modelPlan_generalCharacteristics as CharacteristicsType
-} from 'gql/gen/types/GetModelSummary';
+import { GetCrtdLsQuery, GetModelSummaryQuery } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
 import CollapsableLink from 'components/shared/CollapsableLink';
@@ -15,6 +11,9 @@ import {
   DescriptionTerm
 } from 'components/shared/DescriptionGroup';
 import { formatDateLocal } from 'utils/date';
+
+type CollaboratorsType = GetModelSummaryQuery['modelPlan']['collaborators'][0];
+type CharacteristicsType = GetModelSummaryQuery['modelPlan']['generalCharacteristics'];
 
 type CRTDLsTypes =
   | GetCrtdLsQuery['modelPlan']['crs'][0]

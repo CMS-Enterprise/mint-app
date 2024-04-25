@@ -1,11 +1,12 @@
-import { TeamRole } from 'gql/gen/graphql';
-import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
+import { GetModelCollaboratorsQuery, TeamRole } from 'gql/gen/graphql';
 
 import {
   collaboratorsOrderedByModelLeads,
   getUserInitials,
   returnValidLetter
 } from './modelPlan';
+
+type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 describe('model plan util', () => {
   it('return valid user initials', () => {

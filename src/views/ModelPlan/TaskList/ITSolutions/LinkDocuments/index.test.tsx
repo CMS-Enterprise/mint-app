@@ -6,6 +6,10 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import {
+  GetOperationalSolutionDocument,
+  OpSolutionStatus
+} from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -14,8 +18,6 @@ import {
   possibleSolutionsMock
 } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import GetOperationalSolution from 'queries/ITSolutions/GetOperationalSolution';
-import { OpSolutionStatus } from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 import setup from 'utils/testing/setup';
 import documentMocks from 'views/ModelPlan/Documents/index.test';
@@ -69,7 +71,7 @@ const operationalSolution = {
 const operationalSolutionMocks = [
   {
     request: {
-      query: GetOperationalSolution,
+      query: GetOperationalSolutionDocument,
       variables: {
         id: operationalSolutionID
       }

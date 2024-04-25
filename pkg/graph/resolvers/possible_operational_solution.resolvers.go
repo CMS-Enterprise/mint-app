@@ -17,6 +17,13 @@ func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Contex
 	return PossibleOperationalSolutionContactsGetByPossibleSolutionID(ctx, obj.ID)
 }
 
+// PrimaryContact is the resolver for the primaryContact field.
+func (r *possibleOperationalSolutionResolver) PrimaryContact(ctx context.Context, obj *models.PossibleOperationalSolution) (*models.PossibleOperationalSolutionContact, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return r.store.PossibleOperationalSolutionPrimaryContactGetByPossibleSolutionID(r.store, logger, obj.ID)
+}
+
 // PossibleOperationalSolutions is the resolver for the possibleOperationalSolutions field.
 func (r *queryResolver) PossibleOperationalSolutions(ctx context.Context) ([]*models.PossibleOperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)

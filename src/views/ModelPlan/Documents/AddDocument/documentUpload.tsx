@@ -1,10 +1,13 @@
 import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import { Button, Label } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { DocumentType } from 'gql/gen/graphql';
+import {
+  DocumentType,
+  useCreateDocumentSolutionLinksMutation,
+  useUploadNewPlanDocumentMutation
+} from 'gql/gen/graphql';
 
 import BooleanRadio from 'components/BooleanRadioForm';
 import FileUpload from 'components/FileUpload';
@@ -18,10 +21,6 @@ import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { UploadNewPlanDocument as UploadNewPlanDocumentType } from 'queries/Documents/types/UploadNewPlanDocument';
-import UploadNewPlanDocument from 'queries/Documents/UploadNewPlanDocument';
-import CreateDocumentSolutionLinks from 'queries/ITSolutions/CreateDocumentSolutionLinks';
-import { CreateDocumentSolutionLinksVariables } from 'queries/ITSolutions/types/CreateDocumentSolutionLinks';
 import { FileUploadForm, LinkingDocumentFormTypes } from 'types/files';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
@@ -53,9 +52,7 @@ const DocumentUpload = ({
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const [uploadFile, uploadFileStatus] = useMutation<UploadNewPlanDocumentType>(
-    UploadNewPlanDocument
-  );
+  const [uploadFile, uploadFileStatus] = useUploadNewPlanDocumentMutation();
 
   const messageOnNextPage = (message: string, fileName: string) =>
     showMessageOnNextPage(
@@ -69,11 +66,7 @@ const DocumentUpload = ({
       </Alert>
     );
 
-  const [
-    createSolutionLinks
-  ] = useMutation<CreateDocumentSolutionLinksVariables>(
-    CreateDocumentSolutionLinks
-  );
+  const [createSolutionLinks] = useCreateDocumentSolutionLinksMutation();
 
   // Uploads the document to s3 bucket and create document on BE
   const onSubmit = (values: FileUploadForm | LinkingDocumentFormTypes) => {
@@ -85,8 +78,8 @@ const DocumentUpload = ({
           input: {
             modelPlanID: modelID,
             fileData: file,
-            restricted: values.restricted,
-            documentType: values.documentType,
+            restricted: values.restricted!,
+            documentType: values.documentType!,
             otherTypeDescription: values.otherTypeDescription,
             optionalNotes: values.optionalNotes
           }
