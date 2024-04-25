@@ -87,7 +87,7 @@ type TranslatedAuditField {
     """
     Translated Label for questions that are no longer applicable 
     """
-    notApplicableQuestions: [String!]!
+    notApplicableQuestions: [String!]
 
 
     

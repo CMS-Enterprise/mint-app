@@ -3324,7 +3324,7 @@ export type TranslatedAuditField = {
   new?: Maybe<Scalars['Any']['output']>;
   newTranslated?: Maybe<Scalars['Any']['output']>;
   /** Translated Label for questions that are no longer applicable  */
-  notApplicableQuestions: Array<Scalars['String']['output']>;
+  notApplicableQuestions?: Maybe<Array<Scalars['String']['output']>>;
   old?: Maybe<Scalars['Any']['output']>;
   oldTranslated?: Maybe<Scalars['Any']['output']>;
   /** Specifies if this is a specific category of question. Needed for conditionally rendering note details etc */

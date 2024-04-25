@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -26,7 +25,11 @@ func (r *translatedAuditResolver) TranslatedFields(ctx context.Context, obj *mod
 
 // NotApplicableQuestions is the resolver for the notApplicableQuestions field.
 func (r *translatedAuditFieldResolver) NotApplicableQuestions(ctx context.Context, obj *models.TranslatedAuditField) ([]string, error) {
-	panic(fmt.Errorf("not implemented: NotApplicableQuestions - notApplicableQuestions"))
+	if obj.NotApplicableQuestions == nil {
+		return nil, nil
+	}
+
+	return *obj.NotApplicableQuestions, nil
 }
 
 // TranslatedAudit returns generated.TranslatedAuditResolver implementation.
