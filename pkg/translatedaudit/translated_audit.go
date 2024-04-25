@@ -173,7 +173,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		translatedAudit.TranslatedAudit = change
 
 		for fieldName, field := range audit.Fields {
-
+			//  Changes: (Translations) consider removing plan from the function
 			transField, err := translateField(fieldName, field, audit, actorAccount, operation, plan, translationMap)
 			if err != nil {
 				fmt.Printf("issue translating field (%s) for plan %s ", fieldName, plan.ModelName)
@@ -194,32 +194,87 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 	// Set default values in case of missing translation
 	// Changes: (Translations) We should handle a nil / empty case what should we do in that case?
 	translatedLabel := fieldName
-	translatedOld := field.Old
-	translatedNew := field.New
-	changeType := getChangeType(field.Old, field.New)
+	var referencesLabel *string
+	old := field.Old
+	new := field.New
+	translatedOld := old
+	translatedNew := new
+	changeType := getChangeType(old, new)
+	var formType *models.TranslationFormType
+	var dataType *models.TranslationDataType
+	var conditionals *pq.StringArray
+	var questionType *models.TranslationQuestionType
+	// Changes: (Translations) We need to distinguish if the answer is for an other / note field. The label in that case is really the parent's label or the specific text for that type.
+
+	// Changes: (Translations) Handle if the change made a question not necessary // Changes: (Structure) How should we structure this? Field MetaData? Or base level implementation information?
 
 	translationInterface := translationMap[fieldName]
 	if translationInterface != nil {
 
 		translatedLabel = translationInterface.GetLabel()
+		referencesLabel = translationInterface.GetReferencesLabel(translationMap)
+		//Changes: (Translations) update this to handle if notes, or preferences.
+
+		tForm := translationInterface.GetFormType()
+		tData := translationInterface.GetDataType()
+		formType = &tForm
+		dataType = &tData
+		questionType = translationInterface.GetQuestionType()
+
+		if tData == models.TDTBoolean { // clean t or f to true or false
+			old = sanitizeAuditBoolValue(old)
+			new = sanitizeAuditBoolValue(new)
+
+		}
+
+		//Changes: (Translations) refactor this
+		oldStr, oldIsString := old.(string)
+		if oldIsString {
+			oldSlice, oldIsSlice := isArray(oldStr)
+			if oldIsSlice {
+				old = oldSlice
+			} else {
+				old = oldStr
+			}
+		}
+		newStr, newIsString := new.(string)
+		if newIsString {
+			newSlice, newIsSlice := isArray(newStr)
+			if newIsSlice {
+				new = newSlice
+			} else {
+				new = newStr
+			}
+		}
+
 		options, hasOptions := translationInterface.GetOptions()
 		if hasOptions {
-			translatedOld = translateValue(field.Old, options)
-			translatedNew = translateValue(field.New, options)
+			translatedOld = translateValue(old, options)
+			translatedNew = translateValue(new, options)
 		} else {
-			translatedOld = field.Old
-			translatedNew = field.New
+			translatedOld = old
+			translatedNew = new
+		}
+
+		children, hasChildren := translationInterface.GetChildren()
+		if hasChildren {
+			conditionals = checkChildConditionals(old, new, children)
 		}
 	}
 	translatedField := models.NewTranslatedAuditField(constants.GetSystemAccountUUID(),
 		fieldName,
 		translatedLabel,
-		field.Old,
+		old,
 		translatedOld,
-		field.New,
+		new,
 		translatedNew,
+		dataType,
+		formType,
 	)
 	translatedField.ChangeType = changeType
+	translatedField.NotApplicableQuestions = conditionals
+	translatedField.QuestionType = questionType
+	translatedField.ReferenceLabel = referencesLabel
 
 	// change.MetaDataRaw = nil //Changes: (Meta) This should be specific to the type of change...
 
@@ -245,36 +300,44 @@ func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType
 	return models.AFCUpdated
 }
 
+func translateStrSlice(strSlice []string, options map[string]interface{}) pq.StringArray {
+	// Changes: (Translations) Determine if we can serialize a generic interface? it makes a weird artifact in the GQL
+	//   "{\"Mandatory national\",\"Other\"}",
+	transArray := pq.StringArray{}
+	for _, str := range strSlice {
+		translated := translateValueSingle(str, options)
+		transArray = append(transArray, translated)
+	}
+
+	return transArray
+	// Changes: (Translations) revisit this, even using generic array results in escape characters in GQL...
+	// genArray := pq.GenericArray{transArray}
+
+}
+
 // translateValue takes a given value and maps it to a human readable value.
 // It checks in the value is an array, and if so it translates each value to a human readable form
 func translateValue(value interface{}, options map[string]interface{}) interface{} {
 
+	if value == nil {
+		return nil
+	}
 	// Changes: (Translations) Check if value is nil, don't need to translate that.
 	// Changes: (Translations) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
 	// strSlice, isSlice := value.([]string)
 	str, isString := value.(string)
-	if !isString {
-		return value
-	}
 
-	strSlice, isSlice := isArray(str)
+	// strSlice, isSlice := isArray(str)
+	strSlice, isSlice := value.(pq.StringArray)
 
 	if isSlice {
-		// transArray := []string{}
-		// Changes: (Translations) Determine if we can serialize a generic interface? it makes a weird artifact in the GQL
-		//   "{\"Mandatory national\",\"Other\"}",
-		transArray := pq.StringArray{}
-		// transArray := []interface{}{}
-		for _, str := range strSlice {
-			translated := translateValueSingle(str, options)
-			transArray = append(transArray, translated)
-		}
-		// Changes: (Translations) revisit this, even using generic array results in escape characters in GQL...
-		// genArray := pq.GenericArray{transArray}
+		transArray := translateStrSlice(strSlice, options)
 		return transArray
 	}
 	// str, isString := value.(string)
 	if isString {
+		// Changes: (Translations) Revisit this issue here, we need the value to be stringified properly. Or provide a column type that is string or string array
+
 		return translateValueSingle(str, options)
 	}
 	// Changes: (Translations)  Should we handle the case where we can't translate it more?
@@ -294,7 +357,7 @@ func translateValueSingle(value string, options map[string]interface{}) string {
 }
 
 // isArray checks if a String begins with { and ends with }. If so, it is an array
-func isArray(str string) ([]string, bool) {
+func isArray(str string) (pq.StringArray, bool) {
 	// Define a regular expression to match the array format
 	arrayRegex := regexp.MustCompile(`^\{.*\}$`)
 
@@ -310,7 +373,7 @@ func isArray(str string) ([]string, bool) {
 
 // extractArrayValues extracts array values from a string representation
 // Changes: (Translations)  Verify the extraction, perhaps we can combine with earlier function?
-func extractArrayValues(str string) []string {
+func extractArrayValues(str string) pq.StringArray {
 	// Define a regular expression to match the array format
 	arrayRegex := regexp.MustCompile(`\{(.+?)\}`)
 
@@ -375,4 +438,16 @@ func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAud
 
 	}
 	return retTranslatedAuditsWithFields, nil
+}
+
+// sanitizeAuditBoolValue sanitizes raw audit data and does some preliminary translation data, ex translating a t or f character to true or false
+func sanitizeAuditBoolValue(value interface{}) interface{} {
+	if value == "t" {
+		return "true"
+	}
+	if value == "f" {
+		return "false"
+	}
+	return value
+
 }

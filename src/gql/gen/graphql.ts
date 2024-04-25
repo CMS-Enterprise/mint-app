@@ -3314,8 +3314,10 @@ export type TranslatedAuditField = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  dataType?: Maybe<TranslationDataType>;
   fieldName: Scalars['String']['output'];
   fieldNameTranslated: Scalars['String']['output'];
+  formType?: Maybe<TranslationFormType>;
   id: Scalars['UUID']['output'];
   metaData: TranslatedAuditFieldMetaData;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
@@ -3323,8 +3325,14 @@ export type TranslatedAuditField = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   new?: Maybe<Scalars['Any']['output']>;
   newTranslated?: Maybe<Scalars['Any']['output']>;
+  /** Translated Label for questions that are no longer applicable  */
+  notApplicableQuestions?: Maybe<Array<Scalars['String']['output']>>;
   old?: Maybe<Scalars['Any']['output']>;
   oldTranslated?: Maybe<Scalars['Any']['output']>;
+  /** Specifies if this is a specific category of question. Needed for conditionally rendering note details etc */
+  questionType?: Maybe<TranslationQuestionType>;
+  /** The label for the parent question that this question refers to */
+  referenceLabel?: Maybe<Scalars['String']['output']>;
   translatedAuditID: Scalars['UUID']['output'];
 };
 
@@ -3519,6 +3527,11 @@ export enum TranslationFormType {
   SELECT = 'SELECT',
   TEXT = 'TEXT',
   TEXTAREA = 'TEXTAREA'
+}
+
+export enum TranslationQuestionType {
+  NOTE = 'NOTE',
+  OTHER = 'OTHER'
 }
 
 export enum TriStateAnswer {
