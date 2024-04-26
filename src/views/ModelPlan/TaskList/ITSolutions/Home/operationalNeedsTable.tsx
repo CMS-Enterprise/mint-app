@@ -249,6 +249,10 @@ const OperationalNeedsTable = ({
   const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
     return [
       {
+        Header: operationalNeedsT<string>('name.label'),
+        accessor: 'name'
+      },
+      {
         Header: operationalNeedsT<string>('section.label'),
         accessor: 'section',
         Cell: ({
@@ -266,10 +270,7 @@ const OperationalNeedsTable = ({
           return '';
         }
       },
-      {
-        Header: operationalNeedsT<string>('name.label'),
-        accessor: 'name'
-      },
+
       {
         Header: operationalNeedsT<string>('needed.label'),
         accessor: 'status',
