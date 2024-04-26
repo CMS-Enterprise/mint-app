@@ -1,7 +1,7 @@
 SELECT
     id,
     user_id,
-    agreed,
+    v2_agreed,
     agreed_dts,
     created_by,
     created_dts,

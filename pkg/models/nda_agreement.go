@@ -10,7 +10,7 @@ import (
 type NDAAgreement struct {
 	// baseStruct
 	UserID    uuid.UUID  `json:"userID" db:"user_id"`
-	Agreed    bool       `json:"agreed" db:"agreed"`
+	Agreed    bool       `json:"agreed" db:"v2_agreed"`
 	AgreedDts *time.Time `json:"agreedDts" db:"agreed_dts"`
 
 	ID          uuid.UUID  `json:"id" db:"id"`
