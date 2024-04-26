@@ -22,6 +22,26 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
+// TranslateAudit translates a single audit to a translated audit and stores it in the translated audit table in the database.
+func TranslateAudit(
+	ctx context.Context,
+	store *storage.Store,
+	logger *zap.Logger,
+	auditID int) (*models.TranslatedAuditWithTranslatedFields, error) {
+
+	//Changes: (Job) Implement this to translate a single audit, we also need to figure out what model plan this is based on the audit id
+
+	/*
+		1. Get Audit (with ModelPlanID?)
+		2. Run the Translation Job
+		3. Save
+		4. Should we delete the processing job here? Or elsewhere? Should the id actually be the id of the processing entry? That way we can save it and update here?
+
+	*/
+
+	return nil, nil
+}
+
 // TranslateAuditsForModelPlan gets all changes for a model plan and related sections in a time period,
 // It groups the changes by actor, and a debounced time period. It will then save this record to the database
 func TranslateAuditsForModelPlan(

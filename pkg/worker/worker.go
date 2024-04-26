@@ -32,7 +32,27 @@ const (
 	emailQueue string = "email"
 )
 
-// Work creates, configues, and starts worker
+const (
+	// translateAuditBatchJobName is the name of the batch job for translating audits
+	translateAuditBatchJobName string = "TranslateAuditBatchJob"
+
+	// translateAuditBatchJobSuccessName is the name of the job that is called when a group of translate Audit Jobs is completed
+	translateAuditBatchJobSuccessName string = "TranslateAuditBatchJobSuccess"
+
+	// translateAuditCronJobName is the name of the job called that initiates the translate audit batch job
+	translateAuditCronJobName string = "TranslateAuditCronJob"
+
+	// translateAuditJobName is the name of the job that creates a translated audit from an audit
+	translateAuditJobName string = "TranslateAuditJob"
+)
+
+//Changes: (Job) If possible define all jobs like this so they can be referenced. To do that, they can't be receivers though...
+// var TranslateAuditJob = JobWrapper{
+// 	Name: "TranslateAuditJob",
+// 	Job:  ,
+// }
+
+// Work creates, configures, and starts worker
 func (w *Worker) Work() {
 	if !w.ProcessJobs {
 		return
@@ -40,7 +60,7 @@ func (w *Worker) Work() {
 
 	mgr := faktory_worker.NewManager()
 
-	// Setup Monager
+	// Setup Manager
 	mgr.Concurrency = w.Connections
 
 	// pull jobs from these queues, in this order of precedence
@@ -57,6 +77,11 @@ func (w *Worker) Work() {
 	mgr.Register("DigestEmailBatchJobSuccess", w.DigestEmailBatchJobSuccess)
 	mgr.Register("DigestEmailJob", w.DigestEmailJob)
 	mgr.Register("AggregatedDigestEmailJob", w.AggregatedDigestEmailJob)
+
+	mgr.Register(translateAuditCronJobName, w.TranslateAuditCronJob)
+	mgr.Register(translateAuditBatchJobName, w.TranslateAuditBatchJob)
+	mgr.Register(translateAuditBatchJobSuccessName, w.TranslateAuditBatchJobSuccess)
+	mgr.Register(translateAuditJobName, w.TranslateAuditJob)
 
 	/**********************
 	* //Future Enhancement
