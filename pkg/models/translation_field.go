@@ -11,6 +11,7 @@ const (
 	TDTDate    TranslationDataType = "DATE"
 	TDTEnum    TranslationDataType = "ENUM"
 	TDTObject  TranslationDataType = "OBJECT"
+	TDTUuid    TranslationDataType = "UUID"
 )
 
 // Represents the FORM type of the translation field

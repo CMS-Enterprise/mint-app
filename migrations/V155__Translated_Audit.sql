@@ -70,7 +70,8 @@ CREATE TYPE  TRANSLATION_DATA_TYPE AS ENUM (
     'BOOLEAN',
     'DATE',
     'ENUM',
-    'OBJECT'
+    'OBJECT',
+    'UUID'
 );
 COMMENT ON TYPE TRANSLATION_DATA_TYPE IS 'Represents the data type of the translation field';
 
