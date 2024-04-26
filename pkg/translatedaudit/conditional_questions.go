@@ -24,6 +24,11 @@ func checkChildConditionals(old interface{}, new interface{}, childrenMap map[st
 	if oldIsSlice {
 		oldChildren = getAllChildren(oldStrSlice, childrenMap)
 	}
+
+	oldStrPQ, oldIsPqStringArray := old.(pq.StringArray)
+	if oldIsPqStringArray {
+		oldChildren = getAllChildren(oldStrPQ, childrenMap)
+	}
 	if len(oldChildren) < 1 { // There are no questions that no longer apply
 		return nil
 	}
@@ -38,6 +43,10 @@ func checkChildConditionals(old interface{}, new interface{}, childrenMap map[st
 	newStrSlice, newIsSlice := new.([]string)
 	if newIsSlice {
 		newChildren = getAllChildren(newStrSlice, childrenMap)
+	}
+	newStrPQ, newIsPqStringArray := new.(pq.StringArray)
+	if newIsPqStringArray {
+		newChildren = getAllChildren(newStrPQ, childrenMap)
 	}
 
 	newChildExists := len(newChildren) > 0
