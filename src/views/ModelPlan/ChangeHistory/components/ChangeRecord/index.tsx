@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Card } from '@trussworks/react-uswds';
-import { GetChangeHistoryQuery } from 'gql/gen/graphql';
+import {
+  GetChangeHistoryQuery,
+  TranslationDataType,
+  TranslationQuestionType
+} from 'gql/gen/graphql';
 
 import { AvatarCircle } from 'components/shared/Avatar';
 import CollapsableLink from 'components/shared/CollapsableLink';
@@ -29,17 +33,49 @@ const SingleChange = ({ change }: SingleChangeProps) => {
     <div className="margin-bottom-2 margin-top-neg-1" key={change.id}>
       <div className="display-flex">
         <span className="text-bold margin-right-05">
-          {change.fieldNameTranslated}
+          {change.questionType !== TranslationQuestionType.NOTE &&
+            change.fieldNameTranslated}
+
+          {change.referenceLabel &&
+          change.questionType === TranslationQuestionType.NOTE ? (
+            <span className="text-bold">
+              {t('noteFor')}
+              <span className="text-italic">{change.referenceLabel}</span>
+            </span>
+          ) : (
+            <></>
+          )}
         </span>
         {t(`changeType.${change.changeType}`)}
       </div>
 
       <div className="change-record__answer margin-y-1">
-        <RenderValue value={change.newTranslated} />
+        <RenderValue
+          value={change.newTranslated}
+          dataType={change.dataType}
+          referenceLabel={change.referenceLabel}
+          questionType={change.questionType}
+        />
+
         {change.oldTranslated && (
           <>
             <div className="text-bold padding-y-105">{t('previousAnswer')}</div>
-            <RenderValue value={change.oldTranslated} />
+            <RenderValue
+              value={change.oldTranslated}
+              dataType={change.dataType}
+              referenceLabel={change.referenceLabel}
+              questionType={change.questionType}
+            />
+          </>
+        )}
+
+        {!!change.notApplicableQuestions?.length && (
+          <>
+            <div className="text-bold padding-y-105">{t('notApplicable')}</div>
+            <RenderValue
+              value={change.notApplicableQuestions}
+              dataType={change.dataType}
+            />
           </>
         )}
       </div>
@@ -48,7 +84,9 @@ const SingleChange = ({ change }: SingleChangeProps) => {
 };
 
 // Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array
-export const parseArray = (value: string) => {
+export const parseArray = (value: string | string[]) => {
+  if (Array.isArray(value)) return value;
+
   const formattedString = value.replace(/{/g, '[').replace(/}/g, ']');
 
   try {
@@ -59,20 +97,84 @@ export const parseArray = (value: string) => {
 };
 
 // Render a single value, either as a string or as a list of strings
-const RenderValue = ({ value }: { value: string }) => {
+const RenderValue = ({
+  value,
+  dataType,
+  referenceLabel,
+  questionType
+}: {
+  value: string | string[];
+  dataType: TranslationDataType | null | undefined;
+  referenceLabel?: string | null | undefined;
+  questionType?: TranslationQuestionType | null | undefined;
+}) => {
+  const { t } = useTranslation('changeHistory');
+
+  const parentQuestion =
+    referenceLabel && questionType === TranslationQuestionType.OTHER ? (
+      <div className="text-italic padding-bottom-1">
+        ({t('followUp')}
+        {referenceLabel})
+      </div>
+    ) : null;
+
   const parsedValue = parseArray(value);
 
   if (Array.isArray(parsedValue)) {
     return (
-      <ul className="padding-left-3 margin-top-1">
-        {parsedValue.map((val, index) => (
-          <li key={val}>{val}</li>
-        ))}
-      </ul>
+      <>
+        {parentQuestion}
+        <ul className="padding-left-3 margin-top-1">
+          {parsedValue.map((val, index) => (
+            <li key={val}>{val}</li>
+          ))}
+        </ul>
+      </>
     );
   }
 
-  return <span>{value}</span>;
+  if (dataType === TranslationDataType.DATE && typeof value === 'string') {
+    return (
+      <>
+        {parentQuestion}
+        <span>{formatDateUtc(value.replace(' ', 'T'), 'MM/dd/yyyy')}</span>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {parentQuestion}
+      <span>{value}</span>
+    </>
+  );
+};
+
+const ChangedQuestion = ({ change }: SingleChangeProps) => {
+  const { t } = useTranslation('changeHistory');
+
+  if (change.referenceLabel) {
+    if (change.questionType === TranslationQuestionType.OTHER) {
+      return (
+        <>
+          {change.fieldNameTranslated}
+          <div className="text-italic">
+            ({t('followUp')}
+            {change.referenceLabel})
+          </div>
+        </>
+      );
+    }
+    if (change.questionType === TranslationQuestionType.NOTE) {
+      return (
+        <span>
+          {t('noteFor')}
+          <span className="text-italic">{change.referenceLabel}</span>
+        </span>
+      );
+    }
+  }
+  return <>{change.fieldNameTranslated}</>;
 };
 
 // Render a single change record, showing the actor, the date, and the fields that were changed
@@ -109,7 +211,9 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
       {!isOpen && (
         <ul className="margin-top-05 margin-bottom-1 margin-left-4">
           {changeRecord.translatedFields.map(change => (
-            <li key={change.id}>{change.fieldNameTranslated}</li>
+            <li key={change.id}>
+              <ChangedQuestion change={change} />
+            </li>
           ))}
         </ul>
       )}

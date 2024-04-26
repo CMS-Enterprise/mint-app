@@ -140,6 +140,7 @@ type PlanCollaboratorCreateInput struct {
 // Represents plan collaborator translation data
 type PlanCollaboratorTranslation struct {
 	Username  models.TranslationField            `json:"username" db:"user_account.username"`
+	UserID    models.TranslationField            `json:"userID" db:"user_id"`
 	TeamRoles models.TranslationFieldWithOptions `json:"teamRoles" db:"team_roles"`
 }
 

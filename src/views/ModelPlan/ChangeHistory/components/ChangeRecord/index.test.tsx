@@ -20,10 +20,6 @@ describe('ChangeRecord', () => {
         oldTranslated: null,
         new: 'READY',
         newTranslated: 'Ready',
-        metaData: {
-          version: 0,
-          __typename: 'TranslatedAuditFieldMetaBaseStruct'
-        },
         __typename: 'TranslatedAuditField'
       }
     ],

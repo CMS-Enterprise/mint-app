@@ -24,12 +24,16 @@ const changeHistory = {
     UPDATED: 'updated'
   },
   previousAnswer: 'Previous answer',
+  notApplicable:
+    'Because of this change, the following question(s) are no longer applicable:',
   recentChanges: 'Recent changes',
   viewChangeHistory: 'View change history',
   noChanges:
     'There are no changes to show at this time. When a change is made to this Model Plan, it will appear here.',
   changesSinceRelease:
-    'This Model Plan was created before the release of Change history. Because of this, you can only view changes made since [Release date].'
+    'This Model Plan was created before the release of Change history. Because of this, you can only view changes made since [Release date].',
+  followUp: 'Follow-up to ',
+  noteFor: 'Note for '
 };
 
 export default changeHistory;
