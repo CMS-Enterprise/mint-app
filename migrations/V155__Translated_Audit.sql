@@ -71,6 +71,7 @@ CREATE TYPE  TRANSLATION_DATA_TYPE AS ENUM (
     'DATE',
     'ENUM',
     'OBJECT'
+    'UUID'
 );
 COMMENT ON TYPE TRANSLATION_DATA_TYPE IS 'Represents the data type of the translation field';
 

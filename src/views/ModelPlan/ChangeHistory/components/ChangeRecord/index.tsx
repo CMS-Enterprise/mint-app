@@ -124,7 +124,7 @@ const RenderValue = ({
     return (
       <>
         {parentQuestion}
-        <ul className="padding-left-3 margin-top-1">
+        <ul className="padding-left-3 margin-y-0">
           {parsedValue.map((val, index) => (
             <li key={val}>{val}</li>
           ))}
