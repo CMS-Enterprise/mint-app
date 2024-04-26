@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
+import { ModelStatus } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
-import { ModelStatus } from 'types/graphql-global-types';
 import { formatDateLocal } from 'utils/date';
 
 type TaskListStatusProps = {

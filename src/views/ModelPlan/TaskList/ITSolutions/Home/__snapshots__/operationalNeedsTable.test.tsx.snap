@@ -145,7 +145,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
               colspan="1"
               role="columnheader"
               scope="col"
-              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
+              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: 170px;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"
@@ -176,7 +176,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
               colspan="1"
               role="columnheader"
               scope="col"
-              style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
+              style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
             >
               <button
                 class="usa-button usa-button--unstyled position-relative"

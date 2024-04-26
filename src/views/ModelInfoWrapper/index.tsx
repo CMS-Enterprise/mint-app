@@ -7,10 +7,10 @@ import React, { createContext, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   GetModelPlanBaseQuery,
+  ModelStatus,
   useGetModelPlanBaseQuery
 } from 'gql/gen/graphql';
 
-import { ModelStatus } from 'types/graphql-global-types';
 import { isUUID } from 'utils/modelPlan';
 
 type ModelInfoWrapperProps = {

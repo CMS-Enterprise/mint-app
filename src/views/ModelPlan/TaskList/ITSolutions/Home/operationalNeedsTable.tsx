@@ -20,10 +20,10 @@ import {
 import { Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
+  GetOperationalNeedsQuery,
   OperationalSolutionKey,
   useGetOperationalNeedsQuery
 } from 'gql/gen/graphql';
-import { GetOperationalNeeds_modelPlan_operationalNeeds as GetOperationalNeedsOperationalNeedsType } from 'gql/gen/types/GetOperationalNeeds';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -55,6 +55,8 @@ import {
   returnActionLinks,
   returnActionText
 } from '../util';
+
+type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
 
 export interface GetOperationalNeedsTableType
   extends GetOperationalNeedsOperationalNeedsType {
@@ -129,10 +131,6 @@ const OperationalNeedsTable = ({
   const needsColumns = useMemo<Column<any>[]>(() => {
     return [
       {
-        Header: operationalNeedsT<string>('name.label'),
-        accessor: 'needName'
-      },
-      {
         Header: solutionsT<string>('name.label'),
         accessor: ({ name, nameOther, otherHeader }: any) => {
           if (!name && !nameOther) {
@@ -178,6 +176,10 @@ const OperationalNeedsTable = ({
           }
           return value;
         }
+      },
+      {
+        Header: operationalNeedsT<string>('name.label'),
+        accessor: 'needName'
       },
       {
         Header: solutionsT<string>('mustFinishDts.label'),
@@ -268,6 +270,7 @@ const OperationalNeedsTable = ({
           return '';
         }
       },
+
       {
         Header: operationalNeedsT<string>('needed.label'),
         accessor: 'status',
@@ -437,11 +440,15 @@ const OperationalNeedsTable = ({
                     className="table-header"
                     scope="col"
                     style={{
-                      minWidth: '138px',
+                      minWidth: index !== 3 ? '138px' : '',
                       paddingBottom: '.5rem',
                       position: 'relative',
                       paddingLeft: index === 0 ? '.5em' : '0px',
-                      width: index === 5 ? '235px' : 'auto'
+                      width:
+                        (index === 5 && '235px') ||
+                        (index === 2 && '170px') ||
+                        (index === 3 && type !== 'possibleNeeds' && '100px') ||
+                        'auto'
                     }}
                   >
                     <button

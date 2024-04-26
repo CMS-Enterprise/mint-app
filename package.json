@@ -100,10 +100,9 @@
     "lint:fix": "eslint --fix '**/*.{ts,tsx}'",
     "cypress:open": "cypress open",
     "cypress:run": "DEBUG=cypress:server:util:process_profiler cypress run",
-    "generate": "graphql-codegen  --passthroughCustomScalars --target typescript  --tagName=gql --addTypename --globalTypesFile=src/types/graphql-global-types.ts types",
+    "generate": "graphql-codegen --config codegen.ts",
     "storybook": "storybook dev -p 6006 -s public",
-    "build-storybook": "storybook build -s public",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "build-storybook": "storybook build -s public"
   },
   "nyc": {
     "reporter": [
@@ -134,6 +133,7 @@
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/client-preset": "4.1.0",
     "@graphql-codegen/introspection": "4.0.2",
+    "@graphql-codegen/typed-document-node": "^5.0.6",
     "@storybook/addon-actions": "^7.6.16",
     "@storybook/addon-controls": "^7.6.16",
     "@storybook/addon-essentials": "^7.6.16",

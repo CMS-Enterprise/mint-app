@@ -3,10 +3,10 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import {
+  GetModelCollaboratorsQuery,
   GetModelPlanQuery,
   useArchiveModelPlanMutation
 } from 'gql/gen/graphql';
-import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'gql/gen/types/GetModelCollaborators';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
@@ -20,6 +20,7 @@ import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 import { StatusMessageType } from '../..';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
+type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 const TaskListSideNav = ({
   modelPlan,

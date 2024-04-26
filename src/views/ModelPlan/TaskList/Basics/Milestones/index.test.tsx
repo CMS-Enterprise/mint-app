@@ -2,9 +2,11 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { GetMilestonesDocument, GetMilestonesQuery } from 'gql/gen/graphql';
-
-import { TaskStatus } from 'types/graphql-global-types';
+import {
+  GetMilestonesDocument,
+  GetMilestonesQuery,
+  TaskStatus
+} from 'gql/gen/graphql';
 
 import Milestones from './index';
 

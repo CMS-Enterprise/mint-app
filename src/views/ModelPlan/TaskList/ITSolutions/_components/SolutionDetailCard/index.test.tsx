@@ -6,17 +6,17 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import { GetOperationalSolution_operationalSolution as GetOperationalSolutionType } from 'gql/gen/types/GetOperationalSolution';
+import {
+  GetOperationalSolutionQuery,
+  OperationalSolutionKey,
+  OpSolutionStatus
+} from 'gql/gen/graphql';
 
 import {
   needQuestionAndAnswerMock,
   possibleSolutionsMock
 } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
-import {
-  OperationalSolutionKey,
-  OpSolutionStatus
-} from 'types/graphql-global-types';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import SolutionDetailCard from '.';
@@ -24,6 +24,8 @@ import SolutionDetailCard from '.';
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 const operationalSolutionID = '786f6717-f718-4657-8df9-58ec9bca5c1c';
+
+type GetOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 const solution: GetOperationalSolutionType = {
   __typename: 'OperationalSolution',

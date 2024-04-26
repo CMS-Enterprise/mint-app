@@ -8,14 +8,14 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import { GetClearanceStatusesDocument } from 'gql/gen/graphql';
+import {
+  GetClearanceStatusesDocument,
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'gql/gen/graphql';
 import Sinon from 'sinon';
 
 import { benficiaryMocks } from 'data/mock/readonly';
-import {
-  PrepareForClearanceStatus,
-  TaskStatus
-} from 'types/graphql-global-types';
 import setup from 'utils/testing/setup';
 
 import { initialPrepareForClearanceValues } from '../Checklist';

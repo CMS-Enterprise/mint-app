@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import { TaskStatus } from 'types/graphql-global-types';
+import { TaskStatus } from 'gql/gen/graphql';
 
 import TitleAndStatus from './index';
 

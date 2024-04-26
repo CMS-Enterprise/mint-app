@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
+  GetOperationalNeedAnswerQuery,
+  GetOperationalNeedQuery,
   GetOperationalSolutionQuery,
   useGetOperationalNeedAnswerQuery,
   useGetOperationalNeedQuery
 } from 'gql/gen/graphql';
-import { GetOperationalNeed_operationalNeed as GetOperationalNeedOperationalNeedType } from 'gql/gen/types/GetOperationalNeed';
-import { GetOperationalNeedAnswer_modelPlan as GetOperationalNeedAnswerModelPlanType } from 'gql/gen/types/GetOperationalNeedAnswer';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
@@ -20,6 +20,9 @@ import SolutionCard from '../SolutionCard';
 import InfoToggle from './_component/InfoToggle';
 
 import './index.scss';
+
+type GetOperationalNeedOperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalNeedAnswerModelPlanType = GetOperationalNeedAnswerQuery['modelPlan'];
 
 // Function to format operational need answers for both single and multipart answers
 const formatOperationalNeedAnswers = (needConfig: NeedMap, data: any) => {

@@ -368,7 +368,7 @@ exports[`SolutionDetailsCard > matches snapshot 1`] = `
             <p
               class="margin-0 text-bold"
             >
-              Must finish by
+              Must be ready by
             </p>
             <p
               class="margin-y-1"

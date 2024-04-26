@@ -9,6 +9,7 @@ import {
   waitForElementToBeRemoved,
   within
 } from '@testing-library/react';
+import { ModelStatus } from 'gql/gen/graphql';
 import i18next from 'i18next';
 import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
@@ -20,7 +21,6 @@ import {
   modelID,
   summaryMock
 } from 'data/mock/readonly';
-import { ModelStatus } from 'types/graphql-global-types';
 
 import ReadOnly, { getValidFilterViewParam } from './index';
 
