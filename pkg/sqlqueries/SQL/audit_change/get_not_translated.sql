@@ -28,6 +28,9 @@ SELECT
         END
     ) AS model_plan_id
     
+    
 FROM audit.change
 INNER JOIN audit.table_config ON audit.table_config.id = audit.change.table_id
-WHERE audit.change.id = :id
+LEFT JOIN public.translated_audit_queue AS tQueue ON audit.change.id = tQueue.change_id
+LEFT JOIN public.translated_audit AS tAudit ON audit.change.id = tAudit.change_id
+WHERE tQueue.ID IS NULL && tAudit.ID IS NULL; -- Get all audits that don't have an entry in the translated table or the queue

@@ -7,6 +7,7 @@ const (
 	TPSQueued       TranslatedAuditQueueStatusType = "QUEUED"
 	TPSNotProcessed TranslatedAuditQueueStatusType = "NOT_PROCESSED"
 	TPSProcessed    TranslatedAuditQueueStatusType = "PROCESSED"
+	TPSProcessing   TranslatedAuditQueueStatusType = "PROCESSING"
 	TPSFailed       TranslatedAuditQueueStatusType = "FAILED"
 )
 
