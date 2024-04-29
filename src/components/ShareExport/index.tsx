@@ -154,7 +154,7 @@ const ShareExportModal = ({
     <Button
       type="button"
       key={route}
-      className="mint-nav__link share-export-modal__nav usa-button--unstyled position-relative width-fit-content margin-x-neg-2 padding-x-2 margin-bottom-neg-1 padding-bottom-1 display-flex flex-align-stretch"
+      className="mint-nav__link share-export-modal__nav usa-button--unstyled position-relative width-fit-content margin-x-neg-2 padding-x-2 margin-bottom-neg-05 padding-bottom-05 display-flex flex-align-stretch"
       onClick={() => setIsActive(route)}
       data-testid={`${route}-button`}
     >
