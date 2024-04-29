@@ -28,7 +28,30 @@ func TranslateAudit(
 	store *storage.Store,
 	logger *zap.Logger,
 	auditID int) (*models.TranslatedAuditWithTranslatedFields, error) {
+	auditWithModelPlan, err := storage.AuditChangeWithModelPlanGetByID(store, logger, auditID)
+	if err != nil {
+		return nil, err
+	}
 
+	// Changes: (Job) Should we just fetch the model name when we get the ID as well? it's just this use case...
+	plan, err := store.ModelPlanGetByID(store, logger, auditWithModelPlan.ModelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	translatedAuditWithFields, err := genericAuditTranslation(ctx, store, plan, &auditWithModelPlan.AuditChange)
+	if err != nil {
+		return nil, fmt.Errorf("issue translating audit. %w", err)
+	}
+
+	retTranslatedChanges, err := saveTranslatedAuditAndFields(store, translatedAuditWithFields)
+	if err != nil {
+		return nil, fmt.Errorf("issue saving translated audit. %w", err)
+	}
+
+	// retTranslatedChanges, err := storage.TranslatedAuditChangeCreateCollection(store, translatedChanges)
+
+	return retTranslatedChanges, err
 	//Changes: (Job) Implement this to translate a single audit, we also need to figure out what model plan this is based on the audit id
 
 	/*
@@ -38,8 +61,6 @@ func TranslateAudit(
 		4. Should we delete the processing job here? Or elsewhere? Should the id actually be the id of the processing entry? That way we can save it and update here?
 
 	*/
-
-	return nil, nil
 }
 
 // TranslateAuditsForModelPlan gets all changes for a model plan and related sections in a time period,
@@ -66,7 +87,7 @@ func TranslateAuditsForModelPlan(
 		return nil, fmt.Errorf("issue analyzing model plan change set for time start %s to time end %s. Error : %w", timeStart, timeEnd, err)
 	}
 
-	retTranslatedChanges, err := saveTranslatedAuditAndFields(store, translatedChanges)
+	retTranslatedChanges, err := saveTranslatedAuditsAndFields(store, translatedChanges)
 	if err != nil {
 		return nil, fmt.Errorf("issue saving model plan change set for time start %s to time end %s. Error : %w", timeStart, timeEnd, err)
 	}
@@ -99,35 +120,35 @@ func translateChangeSet(
 	beneficiariesAudits := groupedAudits["plan_beneficiaries"]
 
 	// Translate all audits
-	planChangesTranslated, err := genericAuditTranslation(ctx, store, plan, planAudits)
+	planChangesTranslated, err := genericAuditCollectionTranslation(ctx, store, plan, planAudits)
 	if err != nil {
 		return nil, err
 	}
-	partsAndProviderChangesTranslated, err := genericAuditTranslation(ctx, store, plan, partsProvidersAudits)
+	partsAndProviderChangesTranslated, err := genericAuditCollectionTranslation(ctx, store, plan, partsProvidersAudits)
 	if err != nil {
 		return nil, err
 	}
-	basicsChangesTranslated, err := genericAuditTranslation(ctx, store, plan, basicsAudits)
+	basicsChangesTranslated, err := genericAuditCollectionTranslation(ctx, store, plan, basicsAudits)
 	if err != nil {
 		return nil, err
 	}
-	paymentsChangesTranslated, err := genericAuditTranslation(ctx, store, plan, paymentsAudits)
+	paymentsChangesTranslated, err := genericAuditCollectionTranslation(ctx, store, plan, paymentsAudits)
 	if err != nil {
 		return nil, err
 	}
-	opsEvalAndLearningChangesTranslated, err := genericAuditTranslation(ctx, store, plan, opsEvalAndLearningAudits)
+	opsEvalAndLearningChangesTranslated, err := genericAuditCollectionTranslation(ctx, store, plan, opsEvalAndLearningAudits)
 	if err != nil {
 		return nil, err
 	}
-	generalCharacteristicsChangesTranslated, err := genericAuditTranslation(ctx, store, plan, generalCharacteristicsAudits)
+	generalCharacteristicsChangesTranslated, err := genericAuditCollectionTranslation(ctx, store, plan, generalCharacteristicsAudits)
 	if err != nil {
 		return nil, err
 	}
-	collaboratorChangesTranslated, err := genericAuditTranslation(ctx, store, plan, collaboratorAudits)
+	collaboratorChangesTranslated, err := genericAuditCollectionTranslation(ctx, store, plan, collaboratorAudits)
 	if err != nil {
 		return nil, err
 	}
-	beneficiariesChangesTranslated, err := genericAuditTranslation(ctx, store, plan, beneficiariesAudits)
+	beneficiariesChangesTranslated, err := genericAuditCollectionTranslation(ctx, store, plan, beneficiariesAudits)
 	if err != nil {
 		return nil, err
 	}
@@ -144,9 +165,59 @@ func translateChangeSet(
 	return combinedChanges, nil
 
 }
+func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audit *models.AuditChange) (*models.TranslatedAuditWithTranslatedFields, error) {
+	//Changes: (Translations) Note, it might be more appropriate to fetch the model plan each time. Note, this is not as efficient as grouping first,
+	// but it works with having the job translate one audit at a time
+	trans, err := mappings.GetTranslation(audit.TableName)
+	if err != nil {
+		return nil, fmt.Errorf("unable to get translation for %s , err : %w", audit.TableName, err)
+	}
+	translationMap, err := trans.ToMap() // Changes: (Translations)  Maybe make this return the map from the library?
+	if err != nil {
+		return nil, fmt.Errorf("unable to convert translation for %s to a map, err : %w", trans.TableName(), err)
+	}
 
-// genericAuditTranslation provides an entry point to translate every audit change generically
-func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.TranslatedAuditWithTranslatedFields, error) {
+	actorAccount, err := audit.ModifiedByUserAccount(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("issue getting actor for audit  (%d) for plan %s, while attempting humanization. Err: %w ", audit.ID, plan.ModelName, err)
+	}
+	operation, isValidOperation := GetDatabaseOperation(audit.Action)
+	if !isValidOperation {
+
+		return nil, fmt.Errorf("issue converting operation to valid DB operation for audit  (%d) for plan %s, while attempting humanization. Provided value was %s ", audit.ID, plan.ModelName, audit.Action)
+	}
+	translatedAudit := models.TranslatedAuditWithTranslatedFields{
+		TranslatedFields: []*models.TranslatedAuditField{},
+	}
+	change := models.NewTranslatedAuditChange( //  Changes: (Translations)  extract this logic to another function
+		constants.GetSystemAccountUUID(),
+		audit.ModifiedBy,
+		actorAccount.CommonName,
+		plan.ID,
+		plan.ModelName,
+		audit.ModifiedDts,
+		audit.TableName,
+		audit.TableID,
+		audit.ID,
+		audit.PrimaryKey,
+		operation,
+	)
+	translatedAudit.TranslatedAudit = change
+
+	for fieldName, field := range audit.Fields {
+		//  Changes: (Translations) consider removing plan from the function
+		transField, err := translateField(fieldName, field, audit, actorAccount, operation, plan, translationMap)
+		if err != nil {
+			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, plan.ModelName, err)
+		}
+		translatedAudit.TranslatedFields = append(translatedAudit.TranslatedFields, transField)
+
+	}
+	return &translatedAudit, nil
+}
+
+// genericAuditCollectionTranslation provides an entry point to translate every audit change generically
+func genericAuditCollectionTranslation(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audits []*models.AuditChange) ([]*models.TranslatedAuditWithTranslatedFields, error) {
 
 	if len(audits) == 0 {
 		return nil, nil
@@ -164,8 +235,9 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		return nil, fmt.Errorf("unable to convert translation for %s to a map, err : %w", trans.TableName(), err)
 	}
 	for _, audit := range audits {
+		// Changes: (Job) Refactor this to just use the generic Audit Translation Call in this loop.
 
-		actorAccount, err := audit.ModifiedByUserAccount(ctx)
+		actorAccount, err := audit.ModifiedByUserAccount(ctx) // Changes: (Job) This will fail in factory without a worker, unless the ctx already has the loader.
 		if err != nil {
 			fmt.Printf("issue getting actor for audit  (%d) for plan %s, while attempting humanization ", audit.ID, plan.ModelName)
 			continue
@@ -415,40 +487,49 @@ func extractArrayValues(str string) pq.StringArray {
 }
 
 // saveTranslatedAuditAndFields is a helper method to save a change with it's related fields at the same time
-func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAudits []*models.TranslatedAuditWithTranslatedFields) ([]*models.TranslatedAuditWithTranslatedFields, error) {
+func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAudit *models.TranslatedAuditWithTranslatedFields) (*models.TranslatedAuditWithTranslatedFields, error) {
+	retTranslated, err := sqlutils.WithTransaction[models.TranslatedAuditWithTranslatedFields](tp, func(tx *sqlx.Tx) (*models.TranslatedAuditWithTranslatedFields, error) {
+
+		change, err := storage.TranslatedAuditCreate(tx, &translatedAudit.TranslatedAudit)
+		if err != nil {
+			return nil, err
+		}
+		if change == nil {
+			return nil, fmt.Errorf("translated change not created as expected.Err: %w", err)
+		}
+		retTranslated := models.TranslatedAuditWithTranslatedFields{
+			TranslatedAudit: *change,
+		}
+
+		for _, translatedAuditField := range translatedAudit.TranslatedFields {
+			// Changes: (Serialization) Combine this with the storage message loop
+			translatedAuditField.TranslatedAuditID = retTranslated.ID
+		}
+
+		retTranslatedFields, err := storage.TranslatedAuditFieldCreateCollection(tx, translatedAudit.TranslatedFields)
+		if err != nil {
+			return nil, fmt.Errorf("translated change fields not created as expected. Err: %w", err)
+		}
+
+		retTranslated.TranslatedFields = retTranslatedFields
+		return &retTranslated, nil
+
+	})
+	if err != nil {
+		return nil, err
+	}
+	return retTranslated, nil
+}
+
+// saveTranslatedAuditsAndFields is a helper method to save a change with it's related fields at the same time
+func saveTranslatedAuditsAndFields(tp sqlutils.TransactionPreparer, translatedAudits []*models.TranslatedAuditWithTranslatedFields) ([]*models.TranslatedAuditWithTranslatedFields, error) {
 
 	retTranslatedAuditsWithFields := []*models.TranslatedAuditWithTranslatedFields{}
 
 	// Changes: (Serialization) Figure out how we want to error. Should each change and field be it's own transaction? That way if it fails, we still save other  changes? That's probably best
 	for _, translatedAudit := range translatedAudits {
 
-		retTranslated, err := sqlutils.WithTransaction[models.TranslatedAuditWithTranslatedFields](tp, func(tx *sqlx.Tx) (*models.TranslatedAuditWithTranslatedFields, error) {
-
-			change, err := storage.TranslatedAuditCreate(tx, &translatedAudit.TranslatedAudit)
-			if err != nil {
-				return nil, err
-			}
-			if change == nil {
-				return nil, fmt.Errorf("translated change not created as expected.Err: %w", err)
-			}
-			retTranslated := models.TranslatedAuditWithTranslatedFields{
-				TranslatedAudit: *change,
-			}
-
-			for _, translatedAuditField := range translatedAudit.TranslatedFields {
-				// Changes: (Serialization) Combine this with the storage message loop
-				translatedAuditField.TranslatedAuditID = retTranslated.ID
-			}
-
-			retTranslatedFields, err := storage.TranslatedAuditFieldCreateCollection(tx, translatedAudit.TranslatedFields)
-			if err != nil {
-				return nil, fmt.Errorf("translated change fields not created as expected. Err: %w", err)
-			}
-
-			retTranslated.TranslatedFields = retTranslatedFields
-			return &retTranslated, nil
-
-		})
+		retTranslated, err := saveTranslatedAuditAndFields(tp, translatedAudit)
 		if err != nil {
 			return nil, err
 			// Changes: (Serialization)  Figure out, if one audit fails translation, should the whole job fail? Or should we just fail

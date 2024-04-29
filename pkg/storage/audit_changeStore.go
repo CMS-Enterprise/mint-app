@@ -152,10 +152,28 @@ func AuditChangeCollectionGetByModelPlanIDandTimeRange(
 		"time_end":      timeEnd,
 	}
 
-	humanizedAuditCollection, procErr := sqlutils.SelectProcedure[models.AuditChange](np, sqlqueries.AuditChange.CollectionGetByModelPlanIDAndDateRange, arg)
+	auditCollection, procErr := sqlutils.SelectProcedure[models.AuditChange](np, sqlqueries.AuditChange.CollectionGetByModelPlanIDAndDateRange, arg)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue getting audit collection by model_plan_id (%s) for  date range (%s -- %s)  : %w", modelPlanID, timeStart, timeEnd, procErr)
 	}
-	return humanizedAuditCollection, nil
+	return auditCollection, nil
+
+}
+
+func AuditChangeWithModelPlanGetByID(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	auditID int,
+) (*models.AuditChangeWithModelPlanID, error) {
+
+	arg := map[string]interface{}{
+		"audit_id": auditID,
+	}
+
+	auditChangeWithModelPlan, procErr := sqlutils.GetProcedure[models.AuditChangeWithModelPlanID](np, sqlqueries.AuditChange.GetByAuditIDWithModelPlanID, arg)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue getting audit change by audit_id (%v): %w", auditID, procErr)
+	}
+	return auditChangeWithModelPlan, nil
 
 }

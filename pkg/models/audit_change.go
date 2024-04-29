@@ -34,6 +34,10 @@ type AuditChange struct {
 	ModifiedBy  uuid.UUID   `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts time.Time   `json:"modifiedDts" db:"modified_dts"`
 }
+type AuditChangeWithModelPlanID struct {
+	AuditChange
+	modelPlanRelation
+}
 
 // AuditFields is a map of changes by field name from the database
 type AuditFields map[string]AuditField
