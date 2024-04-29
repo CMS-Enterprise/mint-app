@@ -154,22 +154,27 @@ const ShareExportModal = ({
     <Button
       type="button"
       key={route}
-      className={classNames(
-        'mint-nav__link share-export-modal__nav usa-button--unstyled position-relative width-fit-content',
-        {
-          'share-export-modal__active': isActive === route,
-          'text-base-dark': isActive !== route
-        }
-      )}
+      className="mint-nav__link share-export-modal__nav usa-button--unstyled position-relative width-fit-content margin-x-neg-2 padding-x-2 margin-bottom-neg-1 padding-bottom-1 display-flex flex-align-stretch"
       onClick={() => setIsActive(route)}
       data-testid={`${route}-button`}
     >
-      <p
-        className="usa-logo__text mint-nav__label"
-        aria-label={generalReadOnlyT(`modal.${route}`)}
+      <div
+        className={classNames('display-flex', {
+          'share-export-modal__active': isActive === route
+        })}
       >
-        {generalReadOnlyT(`modal.${route}`)}
-      </p>
+        <p
+          className={classNames(
+            'usa-logo__text mint-nav__label flex-align-self-center',
+            {
+              'text-base-dark': isActive !== route
+            }
+          )}
+          aria-label={generalReadOnlyT(`modal.${route}`)}
+        >
+          {generalReadOnlyT(`modal.${route}`)}
+        </p>
+      </div>
     </Button>
   ));
 
