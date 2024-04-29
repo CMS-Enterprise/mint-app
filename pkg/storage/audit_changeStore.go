@@ -177,3 +177,15 @@ func AuditChangeWithModelPlanGetByID(
 	return auditChangeWithModelPlan, nil
 
 }
+
+// AuditChangeGetNotProcessed returns all audit changes that have yet to be processed in the processing queue
+func AuditChangeGetNotProcessed(
+	np sqlutils.NamedPreparer,
+	_ zap.Logger,
+) ([]*models.AuditChangeWithModelPlanID, error) {
+	auditChangeWithModelPlan, procErr := sqlutils.SelectProcedure[models.AuditChangeWithModelPlanID](np, sqlqueries.AuditChange.GetByAuditIDWithModelPlanID, nil)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue getting unprocessed audit changes err: %w", procErr)
+	}
+	return auditChangeWithModelPlan, nil
+}

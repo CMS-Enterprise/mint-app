@@ -2,13 +2,14 @@ package worker
 
 import (
 	"context"
-	"time"
+	"fmt"
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/constants"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
@@ -20,11 +21,11 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 	dayToAnalyze := args[0]
 
 	//Changes: (Job) get all audits that 1. aren't  In the processing table, 2. aren't  in the translated table 3. Are after a certan date?
-	audits, err := storage.AuditChangeCollectionGetByModelPlanIDandTimeRange(w.Store, w.Logger, uuid.Nil, time.Now(), time.Now())
+	unProcessed, err := storage.AuditChangeGetNotProcessed(w.Store, *w.Logger)
 	if err != nil {
 		return err
 	}
-	w.Logger.Info("audits fetched for translating", zap.Any("audits", audits))
+	w.Logger.Info("audits fetched for translating", zap.Any("audits", unProcessed))
 
 	//Update the new processing table
 
@@ -38,8 +39,16 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 		batch.Success.Queue = criticalQueue
 
 		return batch.Jobs(func() error {
-			for _, audit := range audits {
-				job := faktory.NewJob(translateAuditJobName, audit.ID)
+			for _, audit := range unProcessed {
+
+				queueEntry := models.NewTranslatedAuditQueueEntry(constants.GetSystemAccountUUID(), audit.ID)
+
+				retQueueEntry, err := storage.TranslatedAuditQueueCreate(w.Store, queueEntry)
+				if err != nil {
+					return fmt.Errorf("issue saving translatedAuditQueueEntry for audit %v", audit.ID)
+				}
+
+				job := faktory.NewJob(translateAuditJobName, audit.ID, retQueueEntry.ID)
 				job.Queue = criticalQueue
 				err = batch.Push(job)
 				if err != nil {
