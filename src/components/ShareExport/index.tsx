@@ -151,26 +151,26 @@ const ShareExportModal = ({
 
   // Custom modal navigation for Share/Export
   const primaryLinks = navElement.map(route => (
-    <div className="mint-nav margin-left-neg-2" key={route}>
-      <Button
-        type="button"
-        className="mint-nav__link padding-bottom-0 padding-top-2 margin-x-1 padding-x-1 share-export-modal__nav usa-button--unstyled position-relative width-auto"
-        onClick={() => setIsActive(route)}
-        data-testid={`${route}-button`}
+    <Button
+      type="button"
+      key={route}
+      className={classNames(
+        'mint-nav__link share-export-modal__nav usa-button--unstyled position-relative width-fit-content',
+        {
+          'share-export-modal__active': isActive === route,
+          'text-base-dark': isActive !== route
+        }
+      )}
+      onClick={() => setIsActive(route)}
+      data-testid={`${route}-button`}
+    >
+      <p
+        className="usa-logo__text mint-nav__label"
+        aria-label={generalReadOnlyT(`modal.${route}`)}
       >
-        <em
-          className={classNames(
-            'usa-logo__text mint-nav__label padding-bottom-2',
-            {
-              'share-export-modal__active': isActive === route
-            }
-          )}
-          aria-label={generalReadOnlyT(`modal.${route}`)}
-        >
-          {generalReadOnlyT(`modal.${route}`)}
-        </em>
-      </Button>
-    </div>
+        {generalReadOnlyT(`modal.${route}`)}
+      </p>
+    </Button>
   ));
 
   const FilterGroupSelect = ({ id }: { id: string }) => {
@@ -454,6 +454,7 @@ const ShareExportModal = ({
         aria-label={generalReadOnlyT('label')}
         data-testid="share-export-navigation-bar"
         className="border-base-lighter display-flex width-full padding-x-4 border-bottom-2px"
+        style={{ gap: '2rem' }}
       >
         {primaryLinks}
 
