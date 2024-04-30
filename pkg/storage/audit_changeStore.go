@@ -167,7 +167,7 @@ func AuditChangeWithModelPlanGetByID(
 ) (*models.AuditChangeWithModelPlanID, error) {
 
 	arg := map[string]interface{}{
-		"audit_id": auditID,
+		"id": auditID,
 	}
 
 	auditChangeWithModelPlan, procErr := sqlutils.GetProcedure[models.AuditChangeWithModelPlanID](np, sqlqueries.AuditChange.GetByAuditIDWithModelPlanID, arg)

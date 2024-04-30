@@ -17,11 +17,20 @@ var translatedAuditQueueUpdateSQL string
 //go:embed SQL/translated_audit_queue/get_by_id.sql
 var translatedAuditQueueGetByIDSQL string
 
-// translatedAuditQueueGetByIDSQL gets potential new entries from the db
-// It specifically checks for audits that don't have a translation or a queue entry
+// translatedAuditEntriesToQueueSQL returns all queue entries that are ready to be queued id
 //
-//go:embed SQL/translated_audit_queue/get_new_entries.sql
-var translatedAuditQueueGetNewEntriesSQL string
+//go:embed SQL/translated_audit_queue/get_entries_to_queue.sql
+var translatedAuditEntriesToQueueSQL string
+
+// translatedAuditQueueGetByIDSQL gets entries from the db that are already queued
+//
+//go:embed SQL/translated_audit_queue/get_queued_entries.sql
+var translatedAuditQueueGetQueuedEntriesSQL string
+
+// dangerousTranslatedAuditQueueQueueAllEntriesSQL sets all entries set as new to queued. Should only be used locally
+//
+//go:embed SQL/translated_audit_queue/dangerous_queue_all_available.sql
+var dangerousTranslatedAuditQueueQueueAllEntriesSQL string
 
 // translatedAuditQueueScripts holds all the relevant SQL related to Translated Audit changes
 type translatedAuditQueueScripts struct {
@@ -34,14 +43,22 @@ type translatedAuditQueueScripts struct {
 	// Holds the SQL query to return a translatedAuditQueue  object by it's ID
 	GetByID string
 
-	// Holds the SQL query to return potential translatedAuditQueue objects (Ones that aren't written)
-	GetNewEntries string
+	// Holds the SQL query to return entries from the db that are already queued
+	GetQueuedEntries string
+
+	// Holds the SQL query to return entries from the db that are ready to be queued
+	GetEntriesToQueue string
+
+	// Holds the SQL query to queue all available entries and return the updated entries
+	DANGEROUSQueueAllEntries string
 }
 
 // TranslatedAuditQueue holds all the SQL scrips related to the translatedAuditQueue Entity
 var TranslatedAuditQueue = translatedAuditQueueScripts{
-	Create:        translatedAuditQueueCreateSQL,
-	Update:        translatedAuditQueueUpdateSQL,
-	GetByID:       translatedAuditQueueGetByIDSQL,
-	GetNewEntries: translatedAuditQueueGetNewEntriesSQL,
+	Create:                   translatedAuditQueueCreateSQL,
+	Update:                   translatedAuditQueueUpdateSQL,
+	GetByID:                  translatedAuditQueueGetByIDSQL,
+	GetQueuedEntries:         translatedAuditQueueGetQueuedEntriesSQL,
+	GetEntriesToQueue:        translatedAuditEntriesToQueueSQL,
+	DANGEROUSQueueAllEntries: dangerousTranslatedAuditQueueQueueAllEntriesSQL,
 }

@@ -36,6 +36,28 @@ func TranslatedAuditQueueGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*mode
 	return translatedAuditQueue, nil
 }
 
+// TranslatedAuditQueueGetEntriesToQueue returns a translatedAuditQueue entries that are ready to be queued
+func TranslatedAuditQueueGetEntriesToQueue(np sqlutils.NamedPreparer) ([]*models.TranslatedAuditQueue, error) {
+
+	arg := map[string]interface{}{}
+	translatedAuditQueue, procErr := sqlutils.SelectProcedure[models.TranslatedAuditQueue](np, sqlqueries.TranslatedAuditQueue.GetEntriesToQueue, arg)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue getting translated audit queue objects that are ready to queue  : %w", procErr)
+	}
+	return translatedAuditQueue, nil
+}
+
+// TranslatedAuditQueueGetQueued returns a translatedAuditQueue entries that are already queued
+func TranslatedAuditQueueGetQueued(np sqlutils.NamedPreparer) ([]*models.TranslatedAuditQueue, error) {
+
+	arg := map[string]interface{}{}
+	translatedAuditQueue, procErr := sqlutils.SelectProcedure[models.TranslatedAuditQueue](np, sqlqueries.TranslatedAuditQueue.GetQueuedEntries, arg)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue getting translated audit queue objects that are already  queued  : %w", procErr)
+	}
+	return translatedAuditQueue, nil
+}
+
 // TranslatedAuditQueueUpdate updates a TranslatedAuditQueue record in the database
 func TranslatedAuditQueueUpdate(
 	np sqlutils.NamedPreparer,
