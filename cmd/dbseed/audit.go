@@ -189,20 +189,20 @@ func (s *Seeder) queueAllTranslatedAuditChanges() {
 	arg := map[string]interface{}{}
 
 	queued, _ := sqlutils.SelectProcedure[models.TranslatedAuditQueue](s.Config.Store, sqlqueries.TranslatedAuditQueue.DANGEROUSQueueAllEntries, arg)
-	fmt.Printf("queued %d entries", len(queued))
+	fmt.Printf("queued %d entries \r\n", len(queued))
 
 }
 
 func (s *Seeder) translateAllQueuedTranslatedAudits() {
 	queuedObjects, err := storage.TranslatedAuditQueueGetQueued(s.Config.Store)
 	if err != nil {
-		fmt.Printf("issue getting queued Objects to translate")
+		fmt.Printf("issue getting queued Objects to translate \r\n")
 	}
 
 	for _, queued := range queuedObjects {
 		translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, s.Config.Logger, queued.ChangeID, queued.ID)
 		if translationErr != nil {
-			fmt.Print(fmt.Errorf("error getting queued objects to translate, %w", translationErr))
+			fmt.Println(fmt.Errorf("error getting queued objects to translate, %w", translationErr))
 		}
 	}
 }
@@ -210,13 +210,13 @@ func (s *Seeder) translateAllQueuedTranslatedAudits() {
 func (s *Seeder) translateNextQueuedTranslatedAudit() {
 	queuedObjects, err := storage.TranslatedAuditQueueGetQueued(s.Config.Store)
 	if err != nil {
-		fmt.Printf("issue getting queued Objects to translate")
+		fmt.Printf("issue getting queued Objects to translate \r\n")
 	}
 	if len(queuedObjects) > 1 {
 		queued := queuedObjects[0]
 		translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, s.Config.Logger, queued.ChangeID, queued.ID)
 		if translationErr != nil {
-			fmt.Print(fmt.Errorf("error getting queued objects to translate, %w", translationErr))
+			fmt.Println(fmt.Errorf("error getting queued objects to translate, %w ", translationErr))
 		}
 	}
 
