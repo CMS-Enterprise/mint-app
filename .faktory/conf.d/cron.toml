@@ -3,3 +3,8 @@
   [cron.job]
     type = "DailyDigestCronJob"
     queue = "critical"
+[[cron]]
+  schedule = "*/2 * * * *"
+  [cron.job]
+    type = "TranslateAuditCronJob"
+    queue = "critical"
