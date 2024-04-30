@@ -1374,6 +1374,7 @@ export const opsEvalAndLearningMisc = {
   qualityReadonly: 'Quality',
   reportingTiming: 'Data sharing timing and frequency',
   dataCollectionTiming: 'Data collection timing and frequency',
+  qualityReportTiming: 'Quality reporting timing and frequency',
   dataReadonly: 'Data Sharing, Collection, and Reporting Timing and Frequency',
   testing: 'Testing'
 };
