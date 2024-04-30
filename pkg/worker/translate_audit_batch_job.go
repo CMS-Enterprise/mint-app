@@ -7,6 +7,7 @@ import (
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/jmoiron/sqlx"
+	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -50,6 +51,8 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 				// Wrap everything in a transaction, so if the job doesn't push, the queue entry doesn't get updated, (so it will be picked up in another job)
 				_, err := sqlutils.WithTransaction[models.TranslatedAuditQueue](w.Store, func(tx *sqlx.Tx) (*models.TranslatedAuditQueue, error) {
 					queueObj.Status = models.TPSQueued
+					//Changes: (Job) clean up logging, this is not needed, perhaps set it to debug?
+					w.Logger.Info("queuing job for translated audit.", zap.Any("queue entry", queueObj))
 
 					retQueueEntry, err := storage.TranslatedAuditQueueUpdate(w.Store, w.Logger, queueObj)
 					if err != nil {
@@ -63,9 +66,13 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 					if err != nil {
 						return nil, err
 					}
+					//Changes: (Job) clean up logging, this is not needed, perhaps set it to debug?
+					w.Logger.Error(" Finished queuing job.", zap.Any("queue entry", retQueueEntry))
 					return retQueueEntry, nil
 				})
 				if err != nil {
+					//Changes: (Job) clean up logging, this is not needed, perhaps set it to debug?
+					w.Logger.Error(" error with job for translated audit.", zap.Any("queue entry", queueObj))
 					return err
 				}
 
