@@ -18,9 +18,9 @@ import (
 // args[0]
 // Changes: (Job) fill out the param specs
 func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}) error {
-	dayToAnalyze := args[0]
 
-	//Changes: (Job) get all audits that 1. aren't  In the processing table, 2. aren't  in the translated table 3. Are after a certan date?
+	//Changes: (Job) get all audits that 1. aren't  In the processing table, 2. aren't  in the translated table 3. Are after a certain date?
+	//Changes: (Job) The scheduled job gets and writes all entries to the DB, another piece creates the factory job and updates the status to show the thing is enqueued. It starts with a new status.
 	unProcessed, err := storage.AuditChangeGetNotProcessed(w.Store, *w.Logger)
 	if err != nil {
 		return err
@@ -35,11 +35,12 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 	return helper.With(func(cl *faktory.Client) error {
 		batch := faktory.NewBatch(cl)
 		batch.Description = "Translate models"
-		batch.Success = faktory.NewJob(translateAuditBatchJobSuccessName, dayToAnalyze)
+		batch.Success = faktory.NewJob(translateAuditBatchJobSuccessName)
 		batch.Success.Queue = criticalQueue
 
 		return batch.Jobs(func() error {
 			for _, audit := range unProcessed {
+				//Changes: (Job) What if anything should move to the translated audit package?
 
 				queueEntry := models.NewTranslatedAuditQueueEntry(constants.GetSystemAccountUUID(), audit.ID)
 

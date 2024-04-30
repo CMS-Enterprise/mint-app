@@ -47,7 +47,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) err
 	}
 	// NOTE,  this will apply to audits not associated with a model plan, we need to handle those here as well.
 
-	// Changes (Job) Note, we should perhaps wrap updating the audit, and the final updating of the queue item in a transation
+	// Changes (Job) Note, we should perhaps wrap updating the audit, and the final updating of the queue item in a transaction
 	// ALSO! Only grab queue items that are either queued, or set to retry? Should we set up a max retry?
 	_, translateErr := translatedaudit.TranslateAudit(ctx, w.Store, w.Logger, auditID)
 	if translateErr != nil {

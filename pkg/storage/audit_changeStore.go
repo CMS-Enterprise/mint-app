@@ -183,7 +183,7 @@ func AuditChangeGetNotProcessed(
 	np sqlutils.NamedPreparer,
 	_ zap.Logger,
 ) ([]*models.AuditChangeWithModelPlanID, error) {
-	auditChangeWithModelPlan, procErr := sqlutils.SelectProcedure[models.AuditChangeWithModelPlanID](np, sqlqueries.AuditChange.GetByAuditIDWithModelPlanID, nil)
+	auditChangeWithModelPlan, procErr := sqlutils.SelectProcedure[models.AuditChangeWithModelPlanID](np, sqlqueries.AuditChange.GetNotTranslated, nil)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue getting unprocessed audit changes err: %w", procErr)
 	}
