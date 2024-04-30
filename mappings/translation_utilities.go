@@ -1,6 +1,8 @@
 package mappings
 
-import "fmt"
+import (
+	"github.com/cmsgov/mint-app/pkg/models"
+)
 
 // GetTranslation allows programmatic access to return a translation for a given table name
 func GetTranslation(tableName string) (Translation, error) {
@@ -24,8 +26,29 @@ func GetTranslation(tableName string) (Translation, error) {
 		return PlanBeneficiariesTranslation()
 
 	default:
-		return nil, fmt.Errorf("no translation for table: %s ", tableName)
+		ut := UnknownTranslation{
+			tableName: tableName,
+		}
+		return &ut, nil
+
+		// Changes: (Translations) Decide how we want to handle when no translation is found, idempotent? Or just don't translate?
+		// return nil, fmt.Errorf("no translation for table: %s ", tableName)
 
 	}
 
+}
+
+// UnknownTranslation is the default translation returned when there isn't a translation. This effectively just lets the raw data be returned in liu of a translation
+type UnknownTranslation struct {
+	tableName string
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (ut *UnknownTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return map[string]models.ITranslationField{}, nil
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (ut *UnknownTranslation) TableName() string {
+	return ut.tableName
 }
