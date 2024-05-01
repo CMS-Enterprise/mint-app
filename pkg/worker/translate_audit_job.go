@@ -16,15 +16,7 @@ import (
 // Changes: (Job) fill out the param specs. Should this be the id of the processing queue instead?
 func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (returnedError error) {
 	// Changes: (Job) add a recover function to each job in case there is an issue
-	defer func() {
-		if r := recover(); r != nil {
-			if w.Logger != nil {
-				w.Logger.Error("panic in the audit translation job", zap.Any("recover", r))
-			}
-			returnedError = fmt.Errorf("panic in the audit translation job, %v", r)
-			fmt.Println("Recovered in f", r)
-		}
-	}()
+	// defer apperrors.RecoverPanicAsErrorFunction(&returnedError)
 	// fmt.Printf("translating audit job reached. Args %v", args)
 	w.Logger.Info("translating job reached.", zap.Any("args", args))
 	if len(args) < 2 {

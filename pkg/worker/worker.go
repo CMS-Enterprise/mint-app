@@ -81,10 +81,10 @@ func (w *Worker) Work() {
 	mgr.Register("DigestEmailJob", w.DigestEmailJob)
 	mgr.Register("AggregatedDigestEmailJob", w.AggregatedDigestEmailJob)
 
-	mgr.Register(translateAuditCronJobName, w.TranslateAuditCronJob)
-	mgr.Register(translateAuditBatchJobName, w.TranslateAuditBatchJob)
-	mgr.Register(translateAuditBatchJobSuccessName, w.TranslateAuditBatchJobSuccess)
-	mgr.Register(translateAuditJobName, w.TranslateAuditJob)
+	mgr.Register(translateAuditCronJobName, JobWithPanicProtection(w.TranslateAuditCronJob))
+	mgr.Register(translateAuditBatchJobName, JobWithPanicProtection(w.TranslateAuditBatchJob))
+	mgr.Register(translateAuditBatchJobSuccessName, JobWithPanicProtection(w.TranslateAuditBatchJobSuccess))
+	mgr.Register(translateAuditJobName, JobWithPanicProtection(w.TranslateAuditJob))
 
 	/**********************
 	* //Future Enhancement
