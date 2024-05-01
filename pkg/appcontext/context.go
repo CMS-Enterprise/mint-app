@@ -85,6 +85,7 @@ func EnhancedJWT(c context.Context) *authentication.EnhancedJwt {
 
 // UserAccountService returns a GetUserAccountFromDBFunc that is decorating the context
 func UserAccountService(ctx context.Context) authentication.GetUserAccountFromDBFunc {
+	// Changes: (Job) Update this to return an error or nil
 	return ctx.Value(userAccountServiceKey).(authentication.GetUserAccountFromDBFunc)
 }
 

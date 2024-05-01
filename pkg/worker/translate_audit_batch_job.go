@@ -28,7 +28,7 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 		return err
 	}
 
-	w.Logger.Info("queue entries to create jobs for fetched")
+	w.Logger.Debug("queue entries to create jobs for fetched")
 
 	// Changes: (Job) Update each queue entry individually as a transaction. If the job wasn't successfully created, rollback the transaction.
 	// We want to make sure that this doesn't happen multiple times.
@@ -42,7 +42,7 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 		batch := faktory.NewBatch(cl)
 		batch.Description = "Translate models"
 		batch.Success = faktory.NewJob(translateAuditBatchJobSuccessName)
-		batch.Success.Queue = criticalQueue
+		batch.Success.Queue = defaultQueue
 
 		return batch.Jobs(func() error {
 			for _, queueObj := range readyToQueueEntries {
@@ -52,7 +52,7 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 				_, err := sqlutils.WithTransaction[models.TranslatedAuditQueue](w.Store, func(tx *sqlx.Tx) (*models.TranslatedAuditQueue, error) {
 					queueObj.Status = models.TPSQueued
 					//Changes: (Job) clean up logging, this is not needed, perhaps set it to debug?
-					w.Logger.Info("queuing job for translated audit.", zap.Any("queue entry", queueObj))
+					w.Logger.Debug("queuing job for translated audit.", zap.Any("queue entry", queueObj))
 
 					retQueueEntry, err := storage.TranslatedAuditQueueUpdate(w.Store, w.Logger, queueObj)
 					if err != nil {
@@ -61,13 +61,14 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 
 					// Changes (Job) Do we want to just put the id of the queue?
 					job := faktory.NewJob(translateAuditJobName, retQueueEntry.ChangeID, retQueueEntry.ID)
-					job.Queue = criticalQueue
+					// job.Queue = criticalQueue
+					job.Queue = auditTranslateQueue
 					err = batch.Push(job)
 					if err != nil {
 						return nil, err
 					}
 					//Changes: (Job) clean up logging, this is not needed, perhaps set it to debug?
-					w.Logger.Error(" Finished queuing job.", zap.Any("queue entry", retQueueEntry))
+					w.Logger.Debug(" Finished queuing job.", zap.Any("queue entry", retQueueEntry))
 					return retQueueEntry, nil
 				})
 				if err != nil {
@@ -77,6 +78,7 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 				}
 
 			}
+			w.Logger.Debug("done batching translation jobs")
 			return nil
 		})
 	})

@@ -30,6 +30,9 @@ const (
 
 	// emailQueue the email queue in Faktory
 	emailQueue string = "email"
+
+	// auditTranslateQueue the audit translation queue in Faktory
+	auditTranslateQueue string = "auditTranslation"
 )
 
 const (
@@ -64,7 +67,7 @@ func (w *Worker) Work() {
 	mgr.Concurrency = w.Connections
 
 	// pull jobs from these queues, in this order of precedence
-	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, emailQueue)
+	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
 
 	// register jobs here
 	mgr.Register("DailyDigestCronJob", w.DigestCronJob)

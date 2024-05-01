@@ -177,7 +177,9 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		return nil, fmt.Errorf("unable to convert translation for %s to a map, err : %w", trans.TableName(), err)
 	}
 
-	actorAccount, err := audit.ModifiedByUserAccount(ctx)
+	// actorAccount, err := audit.ModifiedByUserAccount(ctx)
+	//Changes: (Job) Revisit this, as it might be nil!
+	actorAccount, err := storage.UserAccountGetByID(store, audit.ModifiedBy)
 	if err != nil {
 		return nil, fmt.Errorf("issue getting actor for audit  (%d) for plan %s, while attempting humanization. Err: %w ", audit.ID, plan.ModelName, err)
 	}

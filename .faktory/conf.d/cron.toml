@@ -4,7 +4,7 @@
     type = "DailyDigestCronJob"
     queue = "critical"
 [[cron]]
-  schedule = "*/2 * * * *"
+  schedule = "* * * * *"
   [cron.job]
     type = "TranslateAuditCronJob"
     queue = "critical"
