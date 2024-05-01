@@ -92,7 +92,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note stateholders
           </div>
@@ -119,7 +119,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -146,7 +146,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note help desk
           </div>
@@ -220,7 +220,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Support how
           </div>
@@ -247,7 +247,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for support
           </div>
@@ -279,7 +279,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -306,7 +306,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note iddoc support
           </div>
@@ -333,7 +333,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
             <span
@@ -368,7 +368,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for contacts
           </div>
@@ -395,7 +395,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -422,7 +422,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for participants
           </div>
@@ -454,7 +454,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             ICD owner
           </div>
@@ -481,7 +481,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           />
         </div>
       </div>
@@ -514,7 +514,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             UAT needs
           </div>
@@ -541,7 +541,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             STC needs
           </div>
@@ -568,7 +568,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Testing timelines
           </div>
@@ -595,7 +595,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for testing
           </div>
@@ -668,7 +668,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             File
           </div>
@@ -695,7 +695,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Every week
           </div>
@@ -722,7 +722,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Full time
           </div>
@@ -749,7 +749,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -776,7 +776,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -803,7 +803,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -830,7 +830,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -857,7 +857,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             PDF
           </div>
@@ -884,7 +884,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for monitoring
           </div>
@@ -911,7 +911,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes, and we will reconcile actual performance against it
           </div>
@@ -938,7 +938,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for benchmark
           </div>
@@ -965,7 +965,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -992,7 +992,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for computing
           </div>
@@ -1027,7 +1027,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -1055,7 +1055,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -1095,7 +1095,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -1123,7 +1123,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -1155,7 +1155,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for risk 
           </div>
@@ -1190,7 +1190,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -1218,7 +1218,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -1258,7 +1258,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -1286,7 +1286,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -1318,7 +1318,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for appeal
           </div>
@@ -1392,7 +1392,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for approach
           </div>
@@ -1466,7 +1466,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for involvement
           </div>
@@ -1546,7 +1546,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for data mon
           </div>
@@ -1626,7 +1626,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for data to send
           </div>
@@ -1653,7 +1653,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -1680,7 +1680,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for cclf
           </div>
@@ -1733,7 +1733,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Yes
             </div>
@@ -1760,7 +1760,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Note for ccw
             </div>
@@ -1787,7 +1787,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Yes
               <span
@@ -1822,7 +1822,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Note for app to send
             </div>
@@ -1849,7 +1849,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Yes
             </div>
@@ -1876,7 +1876,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Note for ccw disctro
             </div>
@@ -1957,7 +1957,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Note for develop measures
             </div>
@@ -1990,7 +1990,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               quality note
             </div>
@@ -2021,7 +2021,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for app to send
           </div>
@@ -2121,7 +2121,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for data freq
           </div>
@@ -2216,7 +2216,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for data freq
           </div>
@@ -2273,7 +2273,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for qual report
           </div>
@@ -2397,7 +2397,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for learning system
           </div>
@@ -2424,7 +2424,7 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Some challenges
           </div>
