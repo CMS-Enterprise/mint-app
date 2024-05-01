@@ -420,9 +420,12 @@ const DataSharing = () => {
                     scrollElement="qualityReportingStarts"
                     error={!!flatErrors.qualityReportingStarts}
                   >
+                    <strong>
+                      {opsEvalAndLearningMiscT('qualityReportTiming')}
+                    </strong>
                     <Label
                       htmlFor="ops-eval-and-learning-data-reporting-starts"
-                      className="margin-top-2"
+                      className="text-normal margin-top-2"
                     >
                       {opsEvalAndLearningT('qualityReportingStarts.label')}
                     </Label>
