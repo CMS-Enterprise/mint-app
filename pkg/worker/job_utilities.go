@@ -12,7 +12,7 @@ import (
 func JobWithPanicProtection(jobFunc faktory_worker.Perform) faktory_worker.Perform {
 	return func(ctx context.Context, args ...interface{}) (returnedError error) {
 		defer apperrors.RecoverPanicAsErrorFunction(&returnedError)
-		jobErr := jobFunc(ctx, args)
+		jobErr := jobFunc(ctx, args...)
 		if jobErr != nil {
 			return jobErr
 		}
