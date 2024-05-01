@@ -48,7 +48,7 @@ const NDABanner = ({ collapsable, landing, className }: NDABannerType) => {
                       iconPosition="left"
                       toggleClassName="margin-bottom-2"
                     >
-                      <p>
+                      <p className="margin-y-0">
                         <span className="text-bold">{t('caveat')}</span>{' '}
                         <span>{t('body')}</span>
                       </p>
