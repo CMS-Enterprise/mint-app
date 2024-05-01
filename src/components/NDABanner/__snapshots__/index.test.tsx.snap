@@ -48,10 +48,18 @@ exports[`NDA Banner Component > matches snapshot 1`] = `
                   <h3
                     class="margin-0"
                   >
-                    Pre-Decisional: Information not releasable to the public unless authorized by law.
+                    CMS confidential information—for official use only—not to be disseminated.
                   </h3>
                   <p>
-                    This information has not been publicly disclosed and may be privileged and confidential. It is for internal government use only and must not be disseminated, distributed, or copied to persons not authorized to receive the information. Unauthorized disclosure may result in prosecution to the full extent of the law.
+                    <span
+                      class="text-bold"
+                    >
+                      INFORMATION NOT RELEASABLE TO THE PUBLIC UNLESS AUTHORIZED BY LAW:
+                    </span>
+                     
+                    <span>
+                      This information has not been publicly disclosed and may be privileged and confidential. It is for internal government use only and must not be disseminated, distributed, or copied to persons not authorized to receive the information. Unauthorized disclosure may result in prosecution to the full extent of the law.
+                    </span>
                   </p>
                 </div>
               </div>
