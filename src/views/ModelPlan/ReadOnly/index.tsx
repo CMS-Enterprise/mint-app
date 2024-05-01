@@ -29,6 +29,7 @@ import { isAssessment, isMAC } from 'utils/user';
 import NotFound from 'views/NotFound';
 import PrintPDFWrapper from 'views/PrintPDFWrapper';
 
+import NDABanner from '../../../components/NDABanner';
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import { StatusMessageType } from '../TaskList';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
@@ -411,6 +412,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         className="model-plan-read-only"
         data-testid="model-plan-read-only"
       >
+        <NDABanner collapsable />
         <Modal
           isOpen={isFilterViewModalOpen}
           closeModal={() => setIsFilterViewModalOpen(false)}
