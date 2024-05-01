@@ -112,7 +112,7 @@ describe('The Collaborator/Team Member Form', () => {
       });
     });
 
-    cy.contains('button', 'Yes, remove team member').click();
+    cy.contains('button', 'Remove team member').click();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {

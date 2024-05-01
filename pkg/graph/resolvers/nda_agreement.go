@@ -22,8 +22,8 @@ func NDAAgreementGetByUserID(logger *zap.Logger, principal authentication.Princi
 	if nda == nil {
 		info.Agreed = false
 	} else {
-		info.Agreed = nda.Agreed
-		info.AgreedDts = nda.AgreedDts
+		info.Agreed = nda.V2Agreed
+		info.AgreedDts = nda.V2AgreedDts
 	}
 
 	return &info, err
@@ -45,11 +45,11 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, agree bool, principal authen
 		existing.ModifiedBy = &user.ID
 	}
 
-	if !existing.Agreed && agree { //If not currently agreed, set agreeDts to now
+	if !existing.V2Agreed && agree { //If not currently agreed, set agreeDts to now
 		now := time.Now()
-		existing.AgreedDts = &now
+		existing.V2AgreedDts = &now
 	}
-	existing.Agreed = agree
+	existing.V2Agreed = agree
 	info := model.NDAInfo{}
 
 	if existing.ID == uuid.Nil {
@@ -58,8 +58,8 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, agree bool, principal authen
 		if err2 != nil {
 			return nil, err2
 		}
-		info.Agreed = new.Agreed
-		info.AgreedDts = new.AgreedDts
+		info.Agreed = new.V2Agreed
+		info.AgreedDts = new.V2AgreedDts
 
 	} else {
 
@@ -68,8 +68,8 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, agree bool, principal authen
 		if err3 != nil {
 			return nil, err3
 		}
-		info.Agreed = update.Agreed
-		info.AgreedDts = update.AgreedDts
+		info.Agreed = update.V2Agreed
+		info.AgreedDts = update.V2AgreedDts
 
 	}
 

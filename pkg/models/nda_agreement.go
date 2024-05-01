@@ -9,9 +9,11 @@ import (
 // NDAAgreement represents an NDAAgreement saved in the database
 type NDAAgreement struct {
 	// baseStruct
-	UserID    uuid.UUID  `json:"userID" db:"user_id"`
-	Agreed    bool       `json:"agreed" db:"agreed"`
-	AgreedDts *time.Time `json:"agreedDts" db:"agreed_dts"`
+	UserID      uuid.UUID  `json:"userID" db:"user_id"`
+	V1Agreed    bool       `json:"v1Agreed" db:"v1_agreed"`
+	V1AgreedDts *time.Time `json:"v1AgreedDts" db:"v1_agreed_dts"`
+	V2Agreed    bool       `json:"v2Agreed" db:"v2_agreed"`
+	V2AgreedDts *time.Time `json:"v2AgreedDts" db:"v2_agreed_dts"`
 
 	ID          uuid.UUID  `json:"id" db:"id"`
 	CreatedBy   uuid.UUID  `json:"createdBy" db:"created_by"`
