@@ -1,8 +1,10 @@
 SELECT
     id,
     user_id,
-    agreed,
-    agreed_dts,
+    v1_agreed,
+    v1_agreed_dts,
+    v2_agreed,
+    v2_agreed_dts,
     created_by,
     created_dts,
     modified_by,

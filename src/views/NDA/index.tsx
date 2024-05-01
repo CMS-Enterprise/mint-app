@@ -52,8 +52,8 @@ const NDA = () => {
       <GridContainer>
         <Grid desktop={{ col: 9 }}>
           <h1>{t('header')}</h1>
-          <p className="line-height-body-6">{t('body')}</p>
-
+          <span className="text-bold">{t('caveat')}</span>{' '}
+          <span className="line-height-body-6">{t('body')}</span>
           {acceptedNDA?.agreed && acceptedNDA?.agreedDts ? (
             <div data-testid="accepted-nda">
               <Alert
