@@ -1,6 +1,8 @@
 package mappings
 
 import (
+	"fmt"
+
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -21,18 +23,18 @@ func GetTranslation(tableName string) (Translation, error) {
 	case "plan_general_characteristics":
 		return PlanGeneralCharacteristicsTranslation()
 	case "plan_collaborator":
-		return PlanCollaboratorsTranslation()
+		return PlanCollaboratorTranslation()
 	case "plan_beneficiaries":
 		return PlanBeneficiariesTranslation()
 
 	default:
-		ut := UnknownTranslation{
-			tableName: tableName,
-		}
-		return &ut, nil
+		// ut := UnknownTranslation{
+		// 	tableName: tableName,
+		// }
+		// return &ut, nil
 
 		// Changes: (Translations) Decide how we want to handle when no translation is found, idempotent? Or just don't translate?
-		// return nil, fmt.Errorf("no translation for table: %s ", tableName)
+		return nil, fmt.Errorf("no translation for table: %s ", tableName)
 
 	}
 
