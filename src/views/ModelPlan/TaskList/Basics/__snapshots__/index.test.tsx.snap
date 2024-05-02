@@ -149,7 +149,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                       class="usa-input"
                       data-testid="textInput"
                       id="plan-basics-model-name"
-                      maxlength="50"
+                      maxlength="200"
                       name="modelName"
                       value="My excellent plan that I just initiated"
                     />
@@ -1538,7 +1538,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                       class="usa-input"
                       data-testid="textInput"
                       id="plan-basics-model-name"
-                      maxlength="50"
+                      maxlength="200"
                       name="modelName"
                       value="My excellent plan that I just initiated"
                     />
