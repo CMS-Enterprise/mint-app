@@ -18,6 +18,8 @@ import { filterGroups } from 'views/ModelPlan/ReadOnly/_components/FilterView/Bo
 import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus';
 import NotFound from 'views/NotFound';
 
+import NDABanner from '../NDABanner';
+
 type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
 
 const PDFSummary = ({
@@ -50,6 +52,7 @@ const PDFSummary = ({
 
   const Summary = (
     <div className={classNames(className)}>
+      <NDABanner collapsable={false} />
       <SummaryBox
         className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
         data-testid="read-only-model-summary"
