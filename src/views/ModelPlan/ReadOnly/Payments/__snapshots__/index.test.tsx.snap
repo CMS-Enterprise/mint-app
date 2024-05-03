@@ -77,7 +77,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Funding source note
           </div>
@@ -136,7 +136,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Funding r note
           </div>
@@ -195,7 +195,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Pay specification
           </div>
@@ -222,7 +222,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Recipient note
           </div>
@@ -281,7 +281,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Pay type note
           </div>
@@ -351,7 +351,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Pay claims note
             </div>
@@ -378,7 +378,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Yes
             </div>
@@ -405,7 +405,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               FFSS Note
             </div>
@@ -432,7 +432,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Yes
             </div>
@@ -459,7 +459,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Change medicare note
             </div>
@@ -486,7 +486,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Yes
               <span
@@ -521,7 +521,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Affect payer note
             </div>
@@ -548,7 +548,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Differ pay model
             </div>
@@ -575,7 +575,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Yes
             </div>
@@ -602,7 +602,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Creating dependencies note
             </div>
@@ -629,7 +629,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Yes
             </div>
@@ -656,7 +656,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Need claims note
             </div>
@@ -683,7 +683,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Yes
             </div>
@@ -710,7 +710,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Yes
             </div>
@@ -800,7 +800,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Cost sharing note
             </div>
@@ -881,7 +881,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Non claims note
             </div>
@@ -917,7 +917,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Payments per cycle note
             </div>
@@ -947,7 +947,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Shared systems note
             </div>
@@ -977,7 +977,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               </p>
             </div>
             <div
-              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
             >
               Contractor planning note
             </div>
@@ -1005,7 +1005,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             High level
           </div>
@@ -1032,7 +1032,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Expected complexity note
           </div>
@@ -1089,7 +1089,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             claim note
           </div>
@@ -1116,7 +1116,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
             <span
@@ -1151,7 +1151,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Payment mechanisms note
           </div>
@@ -1210,7 +1210,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Payment frequency note
           </div>
@@ -1237,7 +1237,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -1264,7 +1264,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Will recover note
           </div>
@@ -1291,7 +1291,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -1318,7 +1318,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Anticipate note
           </div>
@@ -1383,7 +1383,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Reconciliation note
           </div>
@@ -1448,7 +1448,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Demand and Recoupment note
           </div>
@@ -1475,7 +1475,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             06/03/2022
           </div>
@@ -1502,7 +1502,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for payment start date
           </div>

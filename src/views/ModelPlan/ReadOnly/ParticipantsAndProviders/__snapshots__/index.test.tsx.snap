@@ -116,7 +116,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Participant note
           </div>
@@ -143,7 +143,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -170,7 +170,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Parts in model
           </div>
@@ -197,7 +197,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             App level
           </div>
@@ -232,7 +232,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 0
               </div>
@@ -260,7 +260,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Fairly confident
               </div>
@@ -292,7 +292,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Confidence note
           </div>
@@ -319,7 +319,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Not applicable
           </div>
@@ -349,7 +349,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Recruitment note
           </div>
@@ -417,7 +417,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note selection
           </div>
@@ -488,7 +488,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             My note
           </div>
@@ -559,7 +559,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Second note
           </div>
@@ -627,7 +627,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Comm note
           </div>
@@ -689,7 +689,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note risk
           </div>
@@ -716,7 +716,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -743,7 +743,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             My risk change ntoe
           </div>
@@ -807,7 +807,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </span>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
             <ul
@@ -862,7 +862,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Notes
           </div>
@@ -889,7 +889,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -916,7 +916,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Coornidate work note
           </div>
@@ -951,7 +951,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -979,7 +979,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Yes
               </div>
@@ -1052,7 +1052,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Track note
           </div>
@@ -1114,7 +1114,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note for particpants
           </div>
@@ -1185,7 +1185,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note freq
           </div>
@@ -1247,7 +1247,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Add note
           </div>
@@ -1309,7 +1309,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note leave
           </div>
@@ -1380,7 +1380,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note freq removal
           </div>
@@ -1407,7 +1407,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             No
           </div>
@@ -1479,7 +1479,7 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Overlap note
           </div>

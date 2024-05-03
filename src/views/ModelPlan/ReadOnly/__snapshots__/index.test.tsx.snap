@@ -722,7 +722,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                   </p>
                                 </div>
                                 <div
-                                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                                 >
                                   State & Community-Based
                                   <span
@@ -994,7 +994,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               </p>
                             </div>
                             <div
-                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                             >
                               There is not enough candy
                             </div>
@@ -1021,7 +1021,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               </p>
                             </div>
                             <div
-                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                             >
                               To get more candy
                             </div>
@@ -1048,7 +1048,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               </p>
                             </div>
                             <div
-                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                             >
                               The great candy machine
                             </div>
@@ -1075,7 +1075,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               </p>
                             </div>
                             <div
-                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                             >
                               The machine doesn't work yet
                             </div>
@@ -1290,7 +1290,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             </p>
                           </div>
                           <div
-                            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                           >
                             No
                           </div>
@@ -1313,7 +1313,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             </p>
                           </div>
                           <div
-                            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                           >
                             This can't be phased in
                           </div>

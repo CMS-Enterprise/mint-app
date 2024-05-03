@@ -219,7 +219,7 @@ export const SingleValue = ({
   };
 
   return (
-    <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+    <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word">
       {formattedValue()}
     </div>
   );
@@ -269,7 +269,7 @@ export const RadioValue = <
   }
 
   return (
-    <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line">
+    <div className="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word">
       {!isEmpty(value) && config.options[value as T]}
 
       {/* Renders a tooltip if mapped to the selected radio value */}
