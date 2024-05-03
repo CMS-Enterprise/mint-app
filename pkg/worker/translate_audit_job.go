@@ -12,7 +12,7 @@ import (
 )
 
 // TranslateAuditJob is the job to translate an individual audit into an analyzed audit, and note that the translation is done in the processing table
-// args[0] the id of the audit (int, but float in faktory)
+// args[0] the id of the audit change (int, but float in faktory)
 // args[0] the id of the queue (UUID)
 func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (returnedError error) {
 	// Changes: (Job) the job is wrapped in panic protection when it is registered, BUT it won't update the queue on a panic. See if we can also defer the panic here, and if so, does that override the parent recover?
