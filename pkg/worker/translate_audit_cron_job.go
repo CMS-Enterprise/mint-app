@@ -16,8 +16,7 @@ func (w *Worker) TranslateAuditCronJob(ctx context.Context, args ...interface{})
 
 	now := time.Now()
 
-	// Changes: (Job) fill out the params needed here, there is an error if there aren't any args, but we don't really need them
-
+	// Note, this function doesn't need a param, adding so it can be distinguished from another batch job call
 	return helper.With(func(cl *faktory.Client) error {
 		job := faktory.NewJob(translateAuditBatchJobName, now)
 		job.Queue = criticalQueue

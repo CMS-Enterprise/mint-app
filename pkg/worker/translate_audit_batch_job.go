@@ -16,13 +16,8 @@ import (
 
 // TranslateAuditCronJob is the job the cron schedule calls
 // TranslateAuditBatchJob batches all the TranslateAuditJobs. When all are complete it will fire a callback
-// args[0]
-// Changes: (Job) fill out the param specs
+// args are not currently being used.
 func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}) error {
-
-	//Changes: (Job) get all audits that 1. aren't  In the processing table, 2. aren't  in the translated table 3. Are after a certain date?
-	//Changes: (Job) The scheduled job gets and writes all entries to the DB, another piece creates the factory job and updates the status to show the thing is enqueued. It starts with a new status.
-
 	readyToQueueEntries, err := storage.TranslatedAuditQueueGetEntriesToQueue(w.Store)
 	if err != nil {
 		return err
@@ -40,9 +35,9 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 
 // QueueTranslatedAuditJob takes a given queueObj and creates a job as part of the provided batch
 func QueueTranslatedAuditJob(w *Worker, batch *faktory.Batch, queueObj *models.TranslatedAuditQueue) (*models.TranslatedAuditQueue, error) {
+	// Wrap everything in a transaction, so if the job doesn't push, the queue entry doesn't get updated, (so it will be picked up in another job)
 	return sqlutils.WithTransaction[models.TranslatedAuditQueue](w.Store, func(tx *sqlx.Tx) (*models.TranslatedAuditQueue, error) {
 		queueObj.Status = models.TPSQueued
-		//Changes: (Job) clean up logging, this is not needed, perhaps set it to debug?
 		w.Logger.Debug("queuing job for translated audit.", zap.Any("queue entry", queueObj))
 
 		retQueueEntry, err := storage.TranslatedAuditQueueUpdate(w.Store, w.Logger, queueObj)
@@ -57,7 +52,7 @@ func QueueTranslatedAuditJob(w *Worker, batch *faktory.Batch, queueObj *models.T
 		if err != nil {
 			return nil, err
 		}
-		//Changes: (Job) clean up logging, this is not needed, perhaps set it to debug?
+
 		w.Logger.Debug(" Finished queuing job.", zap.Any("queue entry", retQueueEntry))
 		return retQueueEntry, nil
 	})
@@ -74,9 +69,6 @@ func CreateTranslatedAuditBatch(w *Worker, cl *faktory.Client, queueObjects []*m
 
 	err := batch.Jobs(func() error {
 		for _, queueObj := range queueObjects {
-			//Changes: (Job) What if anything should move to the translated audit package?
-
-			// Wrap everything in a transaction, so if the job doesn't push, the queue entry doesn't get updated, (so it will be picked up in another job)
 			_, err := QueueTranslatedAuditJob(w, batch, queueObj)
 			if err != nil {
 				err = fmt.Errorf(" error with job for translated audit. queueID %v, changeID %v. Err %w", queueObj.ID, queueObj.ChangeID, err)
@@ -96,6 +88,6 @@ func CreateTranslatedAuditBatch(w *Worker, cl *faktory.Client, queueObjects []*m
 
 // TranslateAuditBatchJobSuccess is the call back that gets called when the TranslatedAuditBatchJob Completes
 func (w *Worker) TranslateAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
-	// TODO: Add notification here if wanted in the future
+	//  Add notification here if wanted in the future
 	return nil
 }

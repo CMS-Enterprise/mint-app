@@ -1,8 +1,11 @@
 package worker
 
 import (
+	"fmt"
+
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
+	"github.com/google/uuid"
 )
 
 func (suite *WorkerSuite) TestTranslateAuditBatchJob() {
@@ -11,8 +14,6 @@ func (suite *WorkerSuite) TestTranslateAuditBatchJob() {
 		Store:  suite.testConfigs.Store,
 		Logger: suite.testConfigs.Logger,
 	}
-
-	// Changes (Job) Assert that you can parse the job params.
 
 	pool, err := faktory.NewPool(10)
 	suite.NoError(err)
@@ -50,6 +51,15 @@ func (suite *WorkerSuite) TestTranslateAuditBatchJob() {
 			currentJob, err3 := cl.Fetch(auditTranslateQueue)
 			suite.NoError(err3)
 			suite.NotNil(currentJob)
+			suite.Len(currentJob.Args, 2)
+			if len(currentJob.Args) == 2 {
+				suite.IsType(float64(0), currentJob.Args[0], "the translated audit job is not a float64, it is type %T", currentJob.Args[0])
+
+				suite.IsType("string", currentJob.Args[1], "the translated audit job is not a string, it is type %T", currentJob.Args[0])
+				_, err4 := uuid.Parse(fmt.Sprint(currentJob.Args[1]))
+				suite.NoError(err4, "%v, cannot be parsed to a UUID", currentJob.Args[1])
+
+			}
 
 			//complete job
 			err3 = cl.Ack(currentJob.Jid)
