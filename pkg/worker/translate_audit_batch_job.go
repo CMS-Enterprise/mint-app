@@ -70,7 +70,7 @@ func CreateTranslatedAuditBatch(w *Worker, cl *faktory.Client, queueObjects []*m
 	batch := faktory.NewBatch(cl)
 	batch.Description = "Translate models"
 	batch.Success = faktory.NewJob(translateAuditBatchJobSuccessName)
-	batch.Success.Queue = defaultQueue
+	batch.Success.Queue = criticalQueue
 
 	err := batch.Jobs(func() error {
 		for _, queueObj := range queueObjects {
