@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 
@@ -31,6 +32,12 @@ func (r *mutationResolver) UpdateCustomOperationalNeedByID(ctx context.Context, 
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
 	return OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
+}
+
+// LastModifiedDts is the resolver for the lastModifiedDts field.
+func (r *operationalNeedResolver) LastModifiedDts(ctx context.Context, obj *models.OperationalNeed) (*time.Time, error) {
+	logger := appcontext.ZLogger(ctx)
+	return OperationalNeedMostRecentTrackingData(logger, obj.ID, r.store)
 }
 
 // OperationalNeed is the resolver for the operationalNeed field.

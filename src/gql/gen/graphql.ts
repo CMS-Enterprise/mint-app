@@ -1049,6 +1049,7 @@ export type OperationalNeed = {
   createdDts: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
   key?: Maybe<OperationalNeedKey>;
+  lastModifiedDts?: Maybe<Scalars['Time']['output']>;
   modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
