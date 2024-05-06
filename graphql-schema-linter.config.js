@@ -34,6 +34,7 @@ module.exports = {
       'PlanOpsEvalAndLearningTranslation',
       'PlanPaymentsTranslation',
       'PlanCollaboratorTranslation',
+      'PlanDiscussionsTranslation',
       'TranslationFieldWithParent',
       'TranslationFieldWithOptionsAndChildren',
       'TranslationFieldWithOptionsAndParent',

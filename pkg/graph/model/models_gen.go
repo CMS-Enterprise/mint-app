@@ -151,6 +151,13 @@ type PlanDiscussionCreateInput struct {
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
 
+// Represents plan discussions translation data
+type PlanDiscussionsTranslation struct {
+	UserRole            models.TranslationFieldWithOptions `json:"userRole" db:"user_role"`
+	UserRoleDescription models.TranslationField            `json:"userRoleDescription" db:"user_role_description"`
+	Content             models.TranslationField            `json:"content" db:"content"`
+}
+
 // PlanDocumentInput
 type PlanDocumentInput struct {
 	ModelPlanID          uuid.UUID           `json:"modelPlanID"`
