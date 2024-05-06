@@ -40,6 +40,7 @@ module.exports = {
       'PlanDocumentsTranslation',
       'PossibleOperationalNeedTranslation',
       'PossibleOperationalSolutionTranslation',
+      'OperationalSolutionSubtaskTranslation',
       'TranslationFieldWithParent',
       'TranslationFieldWithOptionsAndChildren',
       'TranslationFieldWithOptionsAndParent',

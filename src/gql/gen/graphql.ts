@@ -1227,6 +1227,13 @@ export enum OperationalSolutionSubtaskStatus {
   TODO = 'TODO'
 }
 
+/** Represents operational solution subtask translation data */
+export type OperationalSolutionSubtaskTranslation = {
+  __typename: 'OperationalSolutionSubtaskTranslation';
+  name: TranslationField;
+  status: TranslationFieldWithOptions;
+};
+
 export enum OverlapType {
   NO = 'NO',
   YES_NEED_POLICIES = 'YES_NEED_POLICIES',

@@ -49,6 +49,12 @@ type NDAInfo struct {
 	AgreedDts *time.Time `json:"agreedDts,omitempty"`
 }
 
+// Represents operational solution subtask translation data
+type OperationalSolutionSubtaskTranslation struct {
+	Name   models.TranslationField            `json:"name" db:"name"`
+	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
+}
+
 // Represents plan basics translation data
 type PlanBasicsTranslation struct {
 	ModelCategory             models.TranslationFieldWithOptions `json:"modelCategory" db:"model_category"`
