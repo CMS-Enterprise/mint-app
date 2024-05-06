@@ -1,0 +1,9 @@
+"""
+Represents plan discussions translation data
+"""
+
+type PlanDiscussionsTranslation {
+    userRole: TranslationFieldWithOptions! @goTag(key: "db", value: "user_role")
+    userRoleDescription: TranslationField! @goTag(key: "db", value: "user_role_description")
+    content: TranslationField! @goTag(key: "db", value: "content")
+}

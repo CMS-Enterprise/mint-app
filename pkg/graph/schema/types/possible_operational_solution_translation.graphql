@@ -1,0 +1,16 @@
+"""
+Represents possible operational solution translation data
+"""
+
+type PossibleOperationalSolutionTranslation {
+    name: TranslationField! @goTag(key: "db", value: "name")
+    nameOther: TranslationField! @goTag(key: "db", value: "name_other")
+    otherHeader: TranslationField! @goTag(key: "db", value: "other_header")
+    pocName: TranslationField! @goTag(key: "db", value: "poc_name")
+    pocEmail: TranslationField! @goTag(key: "db", value: "poc_email")
+    mustStartDts: TranslationField! @goTag(key: "db", value: "must_start_dts")
+    mustFinishDts: TranslationField! @goTag(key: "db", value: "must_finish_dts")
+    needed: TranslationFieldWithOptions! @goTag(key: "db", value: "needed")
+    key: TranslationFieldWithOptions! @goTag(key: "db", value: "key")
+    status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+}

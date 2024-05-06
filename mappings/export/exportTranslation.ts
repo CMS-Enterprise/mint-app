@@ -8,11 +8,19 @@ import * as fs from 'fs';
 import basics from '../../src/i18n/en-US/modelPlan/basics';
 import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
 import collaborators from '../../src/i18n/en-US/modelPlan/collaborators';
+import crs from '../../src/i18n/en-US/modelPlan/crs';
+import discussions from '../../src/i18n/en-US/modelPlan/discussions';
+import documents from '../../src/i18n/en-US/modelPlan/documents';
 import generalCharacteristics from '../../src/i18n/en-US/modelPlan/generalCharacteristics';
 import modelPlan from '../../src/i18n/en-US/modelPlan/modelPlan';
+import operationalNeeds from '../../src/i18n/en-US/modelPlan/operationalNeeds';
+import subtasks from '../../src/i18n/en-US/modelPlan/operationalSolutionSubtasks';
 import opsEvalAndLearning from '../../src/i18n/en-US/modelPlan/opsEvalAndLearning';
 import participantsAndProviders from '../../src/i18n/en-US/modelPlan/participantsAndProviders';
 import payments from '../../src/i18n/en-US/modelPlan/payments';
+import replies from '../../src/i18n/en-US/modelPlan/replies';
+import operationalSolutions from '../../src/i18n/en-US/modelPlan/solutions';
+import tdls from '../../src/i18n/en-US/modelPlan/tdls';
 import { getKeys } from '../../src/types/translation';
 
 import { processDataMapping } from './util';
@@ -25,7 +33,15 @@ export const translationSections = {
   plan_beneficiaries: beneficiaries,
   plan_ops_eval_and_learning: opsEvalAndLearning,
   plan_payments: payments,
-  plan_collaborator: collaborators
+  plan_collaborator: collaborators,
+  plan_discussion: discussions,
+  discussion_reply: replies,
+  plan_document: documents,
+  plan_cr: crs,
+  plan_tdl: tdls,
+  possible_operational_need: operationalNeeds,
+  operational_solution: operationalSolutions,
+  operational_solution_subtask: subtasks
 };
 
 export const parseTypscriptToJSON = (translations: any, outputFile: string) => {
