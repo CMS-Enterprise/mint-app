@@ -103,5 +103,24 @@ func (drt *DiscussionReplyTranslation) TableName() string {
 // ToMap translates this translation to a map, satisfying the Translation interface
 func (drt *DiscussionReplyTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*drt)
+}
 
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pct *PlanCRsTranslation) TableName() string {
+	return "plan_cr"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pct *PlanCRsTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pct)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (ptt *PlanTDLsTranslation) TableName() string {
+	return "plan_tdl"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (ptt *PlanTDLsTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*ptt)
 }
