@@ -2834,6 +2834,15 @@ export type PlanTdlCreateInput = {
   title: Scalars['String']['input'];
 };
 
+/** Represents plan tdl translation data */
+export type PlanTdLsTranslation = {
+  __typename: 'PlanTDLsTranslation';
+  dateInitiated: TranslationField;
+  idNumber: TranslationField;
+  note?: Maybe<TranslationField>;
+  title: TranslationField;
+};
+
 export type PossibleOperationalNeed = {
   __typename: 'PossibleOperationalNeed';
   createdBy: Scalars['UUID']['output'];

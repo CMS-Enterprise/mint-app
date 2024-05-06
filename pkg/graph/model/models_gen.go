@@ -531,6 +531,14 @@ type PlanTDLCreateInput struct {
 	Note          *string   `json:"note,omitempty"`
 }
 
+// Represents plan tdl translation data
+type PlanTDLsTranslation struct {
+	IDNumber      models.TranslationField  `json:"idNumber" db:"id_number"`
+	Title         models.TranslationField  `json:"title" db:"title"`
+	DateInitiated models.TranslationField  `json:"dateInitiated" db:"date_initiated"`
+	Note          *models.TranslationField `json:"note,omitempty" db:"note"`
+}
+
 type PrepareForClearance struct {
 	Status             PrepareForClearanceStatus `json:"status"`
 	LatestClearanceDts *time.Time                `json:"latestClearanceDts,omitempty"`
