@@ -45,7 +45,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             New track of an existing model
           </div>
@@ -72,7 +72,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Accountable Care Organizations (ACOs): General Information
           </div>
@@ -99,7 +99,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -126,7 +126,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             We think it is right
           </div>
@@ -197,7 +197,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             <em
               class="text-base"
@@ -237,7 +237,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             THIS IS A NEW NOTE
           </div>
@@ -264,7 +264,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -344,7 +344,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             It is a condition
           </div>
@@ -371,7 +371,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Precondition note
           </div>
@@ -398,7 +398,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
             <span
@@ -433,7 +433,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Tracks note
           </div>
@@ -507,7 +507,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             State note
           </div>
@@ -572,7 +572,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             asdfasd
           </div>
@@ -700,7 +700,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             test
           </div>
@@ -730,7 +730,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Collect bids note
           </div>
@@ -760,7 +760,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Manage enrollment note
           </div>
@@ -790,7 +790,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Contract updated note
           </div>
@@ -817,7 +817,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
             <span
@@ -852,7 +852,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Care note
           </div>
@@ -879,7 +879,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
             <span
@@ -914,7 +914,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Additional services note
           </div>
@@ -941,7 +941,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
             <span
@@ -978,7 +978,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             frwegqergqgrqwg planContractUpdatedNote
           </div>
@@ -1005,7 +1005,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -1150,7 +1150,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Geography note
           </div>
@@ -1177,7 +1177,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
           </div>
@@ -1204,7 +1204,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Participation options note
           </div>
@@ -1317,7 +1317,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             We will need agreements
           </div>
@@ -1344,7 +1344,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
             <span
@@ -1379,7 +1379,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             My rulemaking note
           </div>
@@ -1453,7 +1453,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Allowance note
           </div>
@@ -1480,7 +1480,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
             <ul
@@ -1526,7 +1526,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             My waiver note
           </div>

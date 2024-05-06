@@ -348,7 +348,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'dataMonitoringFileOther',
     goField: 'DataMonitoringFileOther',
     dbField: 'data_monitoring_file_other',
-    label: 'What types of responses?',
+    label: 'Please specify',
     dataType: 'string',
     formType: 'text',
     isOtherType: true,

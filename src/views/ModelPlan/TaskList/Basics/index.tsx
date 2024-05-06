@@ -264,7 +264,7 @@ const BasicsContent = () => {
                           <Field
                             as={TextInput}
                             id="plan-basics-model-name"
-                            maxLength={50}
+                            maxLength={200}
                             name="modelName"
                           />
                         </FieldGroup>
