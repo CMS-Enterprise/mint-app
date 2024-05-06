@@ -1,0 +1,11 @@
+"""
+Represents possible operational need translation data
+"""
+
+type PossibleOperationalNeedTranslation {
+    name: TranslationField! @goTag(key: "db", value: "name")
+    nameOther: TranslationField @goTag(key: "db", value: "name_other")
+    key: TranslationFieldWithOptions! @goTag(key: "db", value: "key")
+    needed: TranslationFieldWithOptions! @goTag(key: "db", value: "needed")
+    section: TranslationFieldWithOptions @goTag(key: "db", value: "section")
+}

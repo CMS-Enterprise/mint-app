@@ -188,6 +188,17 @@ type PlanDocumentLinkInput struct {
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
 
+// Represents plan documents translation data
+type PlanDocumentsTranslation struct {
+	IsLink               models.TranslationField            `json:"isLink" db:"is_link"`
+	URL                  models.TranslationField            `json:"url" db:"url"`
+	Name                 models.TranslationField            `json:"name" db:"name"`
+	DocumentType         models.TranslationFieldWithOptions `json:"documentType" db:"document_type"`
+	OtherTypeDescription *models.TranslationField           `json:"otherTypeDescription,omitempty" db:"other_type_description"`
+	Restricted           models.TranslationFieldWithOptions `json:"restricted" db:"restricted"`
+	OptionalNotes        *models.TranslationField           `json:"optionalNotes,omitempty" db:"optional_notes"`
+}
+
 // Represents plan general characteristics translation data
 type PlanGeneralCharacteristicsTranslation struct {
 	IsNewModel                                    models.TranslationFieldWithOptionsAndChildren `json:"isNewModel" db:"is_new_model"`
@@ -537,6 +548,15 @@ type PlanTDLsTranslation struct {
 	Title         models.TranslationField  `json:"title" db:"title"`
 	DateInitiated models.TranslationField  `json:"dateInitiated" db:"date_initiated"`
 	Note          *models.TranslationField `json:"note,omitempty" db:"note"`
+}
+
+// Represents possible operational need translation data
+type PossibleOperationalNeedTranslation struct {
+	Name      models.TranslationField             `json:"name" db:"name"`
+	NameOther *models.TranslationField            `json:"nameOther,omitempty" db:"name_other"`
+	Key       models.TranslationFieldWithOptions  `json:"key" db:"key"`
+	Needed    models.TranslationFieldWithOptions  `json:"needed" db:"needed"`
+	Section   *models.TranslationFieldWithOptions `json:"section,omitempty" db:"section"`
 }
 
 type PrepareForClearance struct {

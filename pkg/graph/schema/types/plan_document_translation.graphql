@@ -1,0 +1,13 @@
+"""
+Represents plan documents translation data
+"""
+
+type PlanDocumentsTranslation {
+    isLink: TranslationField! @goTag(key: "db", value: "is_link")
+    url: TranslationField! @goTag(key: "db", value: "url")
+    name: TranslationField! @goTag(key: "db", value: "name")
+    documentType: TranslationFieldWithOptions! @goTag(key: "db", value: "document_type")
+    otherTypeDescription: TranslationField @goTag(key: "db", value: "other_type_description")
+    restricted: TranslationFieldWithOptions! @goTag(key: "db", value: "restricted")
+    optionalNotes: TranslationField @goTag(key: "db", value: "optional_notes")
+}

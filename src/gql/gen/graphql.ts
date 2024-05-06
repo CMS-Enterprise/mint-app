@@ -1714,6 +1714,18 @@ export type PlanDocumentSolutionLink = {
   solutionID: Scalars['UUID']['output'];
 };
 
+/** Represents plan documents translation data */
+export type PlanDocumentsTranslation = {
+  __typename: 'PlanDocumentsTranslation';
+  documentType: TranslationFieldWithOptions;
+  isLink: TranslationField;
+  name: TranslationField;
+  optionalNotes?: Maybe<TranslationField>;
+  otherTypeDescription?: Maybe<TranslationField>;
+  restricted: TranslationFieldWithOptions;
+  url: TranslationField;
+};
+
 export type PlanFavorite = {
   __typename: 'PlanFavorite';
   createdBy: Scalars['UUID']['output'];
@@ -2856,6 +2868,16 @@ export type PossibleOperationalNeed = {
   name: Scalars['String']['output'];
   possibleSolutions: Array<PossibleOperationalSolution>;
   section?: Maybe<TaskListSection>;
+};
+
+/** Represents possible operational need translation data */
+export type PossibleOperationalNeedTranslation = {
+  __typename: 'PossibleOperationalNeedTranslation';
+  key: TranslationFieldWithOptions;
+  name: TranslationField;
+  nameOther?: Maybe<TranslationField>;
+  needed: TranslationFieldWithOptions;
+  section?: Maybe<TranslationFieldWithOptions>;
 };
 
 export type PossibleOperationalSolution = {
