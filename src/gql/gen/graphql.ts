@@ -1575,6 +1575,16 @@ export type PlanCrCreateInput = {
   title: Scalars['String']['input'];
 };
 
+/** Represents plan cr translation data */
+export type PlanCRsTranslation = {
+  __typename: 'PlanCRsTranslation';
+  dateImplemented?: Maybe<TranslationField>;
+  dateInitiated: TranslationField;
+  idNumber: TranslationField;
+  note?: Maybe<TranslationField>;
+  title: TranslationField;
+};
+
 /** PlanCollaborator represents a collaborator on a plan */
 export type PlanCollaborator = {
   __typename: 'PlanCollaborator';

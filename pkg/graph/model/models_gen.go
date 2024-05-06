@@ -130,6 +130,15 @@ type PlanCRCreateInput struct {
 	Note            *string   `json:"note,omitempty"`
 }
 
+// Represents plan cr translation data
+type PlanCRsTranslation struct {
+	IDNumber        models.TranslationField  `json:"idNumber" db:"id_number"`
+	Title           models.TranslationField  `json:"title" db:"title"`
+	DateInitiated   models.TranslationField  `json:"dateInitiated" db:"date_initiated"`
+	DateImplemented *models.TranslationField `json:"dateImplemented,omitempty" db:"date_implemented"`
+	Note            *models.TranslationField `json:"note,omitempty" db:"note"`
+}
+
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 type PlanCollaboratorCreateInput struct {
 	ModelPlanID uuid.UUID         `json:"modelPlanID"`
