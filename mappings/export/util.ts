@@ -25,7 +25,7 @@ export const translationSections = {
   plan_beneficiaries: beneficiaries,
   plan_ops_eval_and_learning: opsEvalAndLearning,
   plan_payments: payments,
-  plan_collaborators: collaborators
+  plan_collaborator: collaborators
 };
 
 export const unneededFields: string[] = [

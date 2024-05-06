@@ -10,10 +10,10 @@ import (
 
 //Changes (ChChCh Changes!) Update export file name to not be plural so it matches db tables
 
-//go:embed translation/plan_collaborators.json
+//go:embed translation/plan_collaborator.json
 var collaboratorJSON []byte
 
-func PlanCollaboratorsTranslation() (*model.PlanCollaboratorTranslation, error) {
+func PlanCollaboratorTranslation() (*model.PlanCollaboratorTranslation, error) {
 	var translation model.PlanCollaboratorTranslation
 	err := json.Unmarshal(collaboratorJSON, &translation)
 	if err != nil {

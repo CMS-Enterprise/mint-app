@@ -162,3 +162,7 @@ Faktory Docs:
         })
       }
       ```
+
+      ## Existing Jobs [doc](../pkg/worker/jobs.md)
+      1. [Analyzed Audit](../pkg/worker/jobs.md#analyzed-audit)
+      2. [Translated Audit](../pkg/worker/jobs.md#audit-translation)
