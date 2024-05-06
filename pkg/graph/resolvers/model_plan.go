@@ -181,12 +181,16 @@ func sendModelPlanCreatedEmail(
 	if err != nil {
 		return err
 	}
+	createdByAccount, err := modelPlan.CreatedByUserAccount(ctx)
+	if err != nil {
+		return fmt.Errorf("unable to get the user account for the user who created the model. err %w", err)
+	}
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanCreatedBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
-		UserName:      modelPlan.CreatedByUserAccount(ctx).CommonName,
+		UserName:      createdByAccount.CommonName,
 	})
 	if err != nil {
 		return err
@@ -398,7 +402,11 @@ func ModelPlanShare(
 	for _, collaborator := range planCollaborators {
 		for _, role := range collaborator.TeamRoles {
 			if role == string(models.TeamRoleModelLead) {
-				modelLeads = append(modelLeads, collaborator.UserAccount(ctx).CommonName)
+				collabAccount, accountErr := collaborator.UserAccount(ctx)
+				if accountErr != nil {
+					return false, fmt.Errorf("failed to get model lead collaborator user account for model_plan_share")
+				}
+				modelLeads = append(modelLeads, collabAccount.CommonName)
 				break
 			}
 		}
