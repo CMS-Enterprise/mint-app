@@ -7,5 +7,5 @@ type PossibleOperationalNeedTranslation {
     nameOther: TranslationField @goTag(key: "db", value: "name_other")
     key: TranslationFieldWithOptions! @goTag(key: "db", value: "key")
     needed: TranslationFieldWithOptions! @goTag(key: "db", value: "needed")
-    section: TranslationFieldWithOptions @goTag(key: "db", value: "section")
+    section: TranslationFieldWithOptions! @goTag(key: "db", value: "section")
 }

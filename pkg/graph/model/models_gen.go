@@ -136,7 +136,7 @@ type PlanCRsTranslation struct {
 	Title           models.TranslationField  `json:"title" db:"title"`
 	DateInitiated   models.TranslationField  `json:"dateInitiated" db:"date_initiated"`
 	DateImplemented *models.TranslationField `json:"dateImplemented,omitempty" db:"date_implemented"`
-	Note            *models.TranslationField `json:"note,omitempty" db:"note"`
+	Note            models.TranslationField  `json:"note" db:"note"`
 }
 
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
@@ -544,19 +544,33 @@ type PlanTDLCreateInput struct {
 
 // Represents plan tdl translation data
 type PlanTDLsTranslation struct {
-	IDNumber      models.TranslationField  `json:"idNumber" db:"id_number"`
-	Title         models.TranslationField  `json:"title" db:"title"`
-	DateInitiated models.TranslationField  `json:"dateInitiated" db:"date_initiated"`
-	Note          *models.TranslationField `json:"note,omitempty" db:"note"`
+	IDNumber      models.TranslationField `json:"idNumber" db:"id_number"`
+	Title         models.TranslationField `json:"title" db:"title"`
+	DateInitiated models.TranslationField `json:"dateInitiated" db:"date_initiated"`
+	Note          models.TranslationField `json:"note" db:"note"`
 }
 
 // Represents possible operational need translation data
 type PossibleOperationalNeedTranslation struct {
-	Name      models.TranslationField             `json:"name" db:"name"`
-	NameOther *models.TranslationField            `json:"nameOther,omitempty" db:"name_other"`
-	Key       models.TranslationFieldWithOptions  `json:"key" db:"key"`
-	Needed    models.TranslationFieldWithOptions  `json:"needed" db:"needed"`
-	Section   *models.TranslationFieldWithOptions `json:"section,omitempty" db:"section"`
+	Name      models.TranslationField            `json:"name" db:"name"`
+	NameOther *models.TranslationField           `json:"nameOther,omitempty" db:"name_other"`
+	Key       models.TranslationFieldWithOptions `json:"key" db:"key"`
+	Needed    models.TranslationFieldWithOptions `json:"needed" db:"needed"`
+	Section   models.TranslationFieldWithOptions `json:"section" db:"section"`
+}
+
+// Represents possible operational solution translation data
+type PossibleOperationalSolutionTranslation struct {
+	Name          models.TranslationField            `json:"name" db:"name"`
+	NameOther     models.TranslationField            `json:"nameOther" db:"name_other"`
+	OtherHeader   models.TranslationField            `json:"otherHeader" db:"other_header"`
+	PocName       models.TranslationField            `json:"pocName" db:"poc_name"`
+	PocEmail      models.TranslationField            `json:"pocEmail" db:"poc_email"`
+	MustStartDts  models.TranslationField            `json:"mustStartDts" db:"must_start_dts"`
+	MustFinishDts models.TranslationField            `json:"mustFinishDts" db:"must_finish_dts"`
+	Needed        models.TranslationFieldWithOptions `json:"needed" db:"needed"`
+	Key           models.TranslationFieldWithOptions `json:"key" db:"key"`
+	Status        models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
 type PrepareForClearance struct {

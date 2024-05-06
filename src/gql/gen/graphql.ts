@@ -1581,7 +1581,7 @@ export type PlanCRsTranslation = {
   dateImplemented?: Maybe<TranslationField>;
   dateInitiated: TranslationField;
   idNumber: TranslationField;
-  note?: Maybe<TranslationField>;
+  note: TranslationField;
   title: TranslationField;
 };
 
@@ -2851,7 +2851,7 @@ export type PlanTdLsTranslation = {
   __typename: 'PlanTDLsTranslation';
   dateInitiated: TranslationField;
   idNumber: TranslationField;
-  note?: Maybe<TranslationField>;
+  note: TranslationField;
   title: TranslationField;
 };
 
@@ -2877,7 +2877,7 @@ export type PossibleOperationalNeedTranslation = {
   name: TranslationField;
   nameOther?: Maybe<TranslationField>;
   needed: TranslationFieldWithOptions;
-  section?: Maybe<TranslationFieldWithOptions>;
+  section: TranslationFieldWithOptions;
 };
 
 export type PossibleOperationalSolution = {
@@ -2913,6 +2913,21 @@ export type PossibleOperationalSolutionContact = {
   name: Scalars['String']['output'];
   possibleOperationalSolutionID: Scalars['Int']['output'];
   role?: Maybe<Scalars['String']['output']>;
+};
+
+/** Represents possible operational solution translation data */
+export type PossibleOperationalSolutionTranslation = {
+  __typename: 'PossibleOperationalSolutionTranslation';
+  key: TranslationFieldWithOptions;
+  mustFinishDts: TranslationField;
+  mustStartDts: TranslationField;
+  name: TranslationField;
+  nameOther: TranslationField;
+  needed: TranslationFieldWithOptions;
+  otherHeader: TranslationField;
+  pocEmail: TranslationField;
+  pocName: TranslationField;
+  status: TranslationFieldWithOptions;
 };
 
 export type PrepareForClearance = {

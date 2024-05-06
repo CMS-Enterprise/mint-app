@@ -39,6 +39,7 @@ module.exports = {
       'PlanTDLsTranslation',
       'PlanDocumentsTranslation',
       'PossibleOperationalNeedTranslation',
+      'PossibleOperationalSolutionTranslation',
       'TranslationFieldWithParent',
       'TranslationFieldWithOptionsAndChildren',
       'TranslationFieldWithOptionsAndParent',
