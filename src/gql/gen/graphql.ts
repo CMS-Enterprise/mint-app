@@ -373,6 +373,14 @@ export type DiscussionReplyCreateInput = {
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents discussion reply translation data */
+export type DiscussionReplyTranslation = {
+  __typename: 'DiscussionReplyTranslation';
+  content: TranslationField;
+  userRole: TranslationFieldWithOptions;
+  userRoleDescription: TranslationField;
+};
+
 export type DiscussionRoleSelection = {
   __typename: 'DiscussionRoleSelection';
   userRole: DiscussionUserRole;
@@ -1227,6 +1235,13 @@ export enum OperationalSolutionSubtaskStatus {
   TODO = 'TODO'
 }
 
+/** Represents operational solution subtask translation data */
+export type OperationalSolutionSubtaskTranslation = {
+  __typename: 'OperationalSolutionSubtaskTranslation';
+  name: TranslationField;
+  status: TranslationFieldWithOptions;
+};
+
 export enum OverlapType {
   NO = 'NO',
   YES_NEED_POLICIES = 'YES_NEED_POLICIES',
@@ -1575,6 +1590,16 @@ export type PlanCrCreateInput = {
   title: Scalars['String']['input'];
 };
 
+/** Represents plan cr translation data */
+export type PlanCRsTranslation = {
+  __typename: 'PlanCRsTranslation';
+  dateImplemented?: Maybe<TranslationField>;
+  dateInitiated: TranslationField;
+  idNumber: TranslationField;
+  note: TranslationField;
+  title: TranslationField;
+};
+
 /** PlanCollaborator represents a collaborator on a plan */
 export type PlanCollaborator = {
   __typename: 'PlanCollaborator';
@@ -1629,6 +1654,14 @@ export type PlanDiscussionCreateInput = {
   modelPlanID: Scalars['UUID']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents plan discussions translation data */
+export type PlanDiscussionsTranslation = {
+  __typename: 'PlanDiscussionsTranslation';
+  content: TranslationField;
+  userRole: TranslationFieldWithOptions;
+  userRoleDescription: TranslationField;
 };
 
 /** PlanDocument represents a document on a plan */
@@ -1694,6 +1727,18 @@ export type PlanDocumentSolutionLink = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   solutionID: Scalars['UUID']['output'];
+};
+
+/** Represents plan documents translation data */
+export type PlanDocumentsTranslation = {
+  __typename: 'PlanDocumentsTranslation';
+  documentType: TranslationFieldWithOptions;
+  isLink: TranslationField;
+  name: TranslationField;
+  optionalNotes?: Maybe<TranslationField>;
+  otherTypeDescription?: Maybe<TranslationField>;
+  restricted: TranslationFieldWithOptions;
+  url: TranslationField;
 };
 
 export type PlanFavorite = {
@@ -2816,6 +2861,15 @@ export type PlanTdlCreateInput = {
   title: Scalars['String']['input'];
 };
 
+/** Represents plan tdl translation data */
+export type PlanTdLsTranslation = {
+  __typename: 'PlanTDLsTranslation';
+  dateInitiated: TranslationField;
+  idNumber: TranslationField;
+  note: TranslationField;
+  title: TranslationField;
+};
+
 export type PossibleOperationalNeed = {
   __typename: 'PossibleOperationalNeed';
   createdBy: Scalars['UUID']['output'];
@@ -2829,6 +2883,16 @@ export type PossibleOperationalNeed = {
   name: Scalars['String']['output'];
   possibleSolutions: Array<PossibleOperationalSolution>;
   section?: Maybe<TaskListSection>;
+};
+
+/** Represents possible operational need translation data */
+export type PossibleOperationalNeedTranslation = {
+  __typename: 'PossibleOperationalNeedTranslation';
+  key: TranslationFieldWithOptions;
+  name: TranslationField;
+  nameOther?: Maybe<TranslationField>;
+  needed: TranslationFieldWithOptions;
+  section: TranslationFieldWithOptions;
 };
 
 export type PossibleOperationalSolution = {
@@ -2864,6 +2928,21 @@ export type PossibleOperationalSolutionContact = {
   name: Scalars['String']['output'];
   possibleOperationalSolutionID: Scalars['Int']['output'];
   role?: Maybe<Scalars['String']['output']>;
+};
+
+/** Represents possible operational solution translation data */
+export type PossibleOperationalSolutionTranslation = {
+  __typename: 'PossibleOperationalSolutionTranslation';
+  key: TranslationFieldWithOptions;
+  mustFinishDts: TranslationField;
+  mustStartDts: TranslationField;
+  name: TranslationField;
+  nameOther: TranslationField;
+  needed: TranslationFieldWithOptions;
+  otherHeader: TranslationField;
+  pocEmail: TranslationField;
+  pocName: TranslationField;
+  status: TranslationFieldWithOptions;
 };
 
 export type PrepareForClearance = {
