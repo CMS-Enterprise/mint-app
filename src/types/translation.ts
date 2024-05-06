@@ -20,6 +20,7 @@ import {
   DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
+  DiscussionReplyTranslation,
   DiscussionUserRole,
   DocumentType,
   EvaluationApproachType,
@@ -940,6 +941,26 @@ type TranslationDiscussionsGQL = Omit<
 */
 export type TranslationDiscussions = {
   [K in keyof TranslationDiscussionsGQL]: TranslationDiscussionsForm[K]; // FE form type
+};
+
+// Discussions
+export type TranslationRepliesForm = {
+  userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
+  userRoleDescription: TranslationFieldProperties;
+  content: TranslationFieldProperties;
+};
+
+type TranslationRepliesGQL = Omit<
+  DiscussionReplyTranslation, // graphql gen type
+  '__typename'
+>;
+
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationReplies = {
+  [K in keyof TranslationRepliesGQL]: TranslationRepliesForm[K]; // FE form type
 };
 
 // CRs

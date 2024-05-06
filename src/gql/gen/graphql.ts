@@ -373,6 +373,14 @@ export type DiscussionReplyCreateInput = {
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents discussion reply translation data */
+export type DiscussionReplyTranslation = {
+  __typename: 'DiscussionReplyTranslation';
+  content: TranslationField;
+  userRole: TranslationFieldWithOptions;
+  userRoleDescription: TranslationField;
+};
+
 export type DiscussionRoleSelection = {
   __typename: 'DiscussionRoleSelection';
   userRole: DiscussionUserRole;

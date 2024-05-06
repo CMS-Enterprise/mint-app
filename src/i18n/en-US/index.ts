@@ -36,6 +36,7 @@ import {
   participantsAndProvidersMisc
 } from './modelPlan/participantsAndProviders';
 import { payments, paymentsMisc } from './modelPlan/payments';
+import replies from './modelPlan/replies';
 import solutions from './modelPlan/solutions';
 import tdls from './modelPlan/tdls';
 import filterView from './readOnly/filterView';
@@ -109,6 +110,7 @@ const enUS = {
   collaboratorsMisc,
   discussions,
   discussionsMisc,
+  replies,
   crs,
   tdls,
   crtdlsMisc,
