@@ -2887,8 +2887,8 @@ export type PlanTdlCreateInput = {
 };
 
 /** Represents plan tdl translation data */
-export type PlanTdLsTranslation = {
-  __typename: 'PlanTDLsTranslation';
+export type PlanTdlTranslation = {
+  __typename: 'PlanTDLTranslation';
   dateInitiated: TranslationField;
   idNumber: TranslationField;
   note: TranslationField;

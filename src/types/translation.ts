@@ -64,7 +64,7 @@ import {
   PlanOpsEvalAndLearningTranslation,
   PlanParticipantsAndProvidersTranslation,
   PlanPaymentsTranslation,
-  PlanTdLsTranslation,
+  PlanTdlTranslation,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
@@ -994,7 +994,7 @@ export type TranslationTDLsForm = {
 };
 
 type TranslationTDLsGQL = Omit<
-  PlanTdLsTranslation, // graphql gen type
+  PlanTdlTranslation, // graphql gen type
   '__typename'
 >;
 

@@ -579,7 +579,7 @@ type PlanTDLCreateInput struct {
 }
 
 // Represents plan tdl translation data
-type PlanTDLsTranslation struct {
+type PlanTDLTranslation struct {
 	IDNumber      models.TranslationField `json:"idNumber" db:"id_number"`
 	Title         models.TranslationField `json:"title" db:"title"`
 	DateInitiated models.TranslationField `json:"dateInitiated" db:"date_initiated"`

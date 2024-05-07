@@ -116,12 +116,12 @@ func (pct *PlanCRTranslation) ToMap() (map[string]models.ITranslationField, erro
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (ptt *PlanTDLsTranslation) TableName() string {
+func (ptt *PlanTDLTranslation) TableName() string {
 	return "plan_tdl"
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
-func (ptt *PlanTDLsTranslation) ToMap() (map[string]models.ITranslationField, error) {
+func (ptt *PlanTDLTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*ptt)
 }
 

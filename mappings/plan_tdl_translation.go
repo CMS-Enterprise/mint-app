@@ -12,8 +12,8 @@ import (
 var planTDlJSON []byte
 
 // PlanTDLTranslation Provides the translation for Plan CR
-func PlanTDLTranslation() (*model.PlanTDLsTranslation, error) {
-	var translation model.PlanTDLsTranslation
+func PlanTDLTranslation() (*model.PlanTDLTranslation, error) {
+	var translation model.PlanTDLTranslation
 	err := json.Unmarshal(planTDlJSON, &translation)
 	if err != nil {
 		fmt.Println("Error unmarshalling JSON:", err)
