@@ -8,95 +8,106 @@ import PageHeading from 'components/PageHeading';
 import ExternalLink from '../ExternalLink';
 
 type ExternalLinkModalTypes = {
-  isOpen: boolean;
-  closeModal: () => void;
   url: string;
+  buttonText: string;
 };
 
-const ExternalLinkModal = ({
-  isOpen,
-  closeModal,
-  url
-}: ExternalLinkModalTypes) => {
+const ExternalLinkWithModal = ({ url, buttonText }: ExternalLinkModalTypes) => {
   const { t: externalT } = useTranslation('externalLinkModal');
   const [showFullUrl, setShowFullUrl] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const hostname = url !== '' && new URL(url).hostname;
 
   return (
-    <Modal
-      isOpen={isOpen}
-      closeModal={closeModal}
-      className="external-link-modal maxw-mobile-lg"
-    >
-      <PageHeading
-        headingLevel="h3"
-        className="margin-top-neg-2 margin-bottom-2"
+    <>
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        className="external-link-modal maxw-mobile-lg"
       >
-        {externalT('heading')}
-      </PageHeading>
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-2"
+        >
+          {externalT('heading')}
+        </PageHeading>
 
-      <p className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-1">
-        {externalT('redirectingCopy')}
-      </p>
-      <p className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-1 text-base-dark">
-        “{hostname}”
-      </p>
+        <p className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-1">
+          {externalT('redirectingCopy')}
+        </p>
+        <p className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-1 text-base-dark">
+          “{hostname}”
+        </p>
 
-      <p className="font-body-md margin-top-0 margin-bottom-1 line-height-sans-4">
-        {externalT('notConfident')}
-      </p>
+        <p className="font-body-md margin-top-0 margin-bottom-1 line-height-sans-4">
+          {externalT('notConfident')}
+        </p>
 
-      <div className="margin-bottom-3">
+        <div className="margin-bottom-3">
+          <Button
+            type="button"
+            className="margin-bottom-1"
+            unstyled
+            onClick={() => setShowFullUrl(!showFullUrl)}
+          >
+            <span
+              className={`display-flex flex-align-center ${
+                showFullUrl ? 'text-bold' : ''
+              }`}
+            >
+              {showFullUrl ? <Icon.ExpandMore /> : <Icon.NavigateNext />}
+              {externalT('viewFullURL')}
+            </span>
+          </Button>
+
+          {showFullUrl && (
+            <div className="margin-left-05 border-left-05 border-base-dark">
+              <p
+                className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-1 margin-left-1"
+                style={{ overflowWrap: 'break-word' }}
+              >
+                {url}
+              </p>
+            </div>
+          )}
+        </div>
+
+        <ExternalLink
+          className="usa-button text-white"
+          href={url}
+          variant="unstyled"
+        >
+          {externalT('continueButton')}
+        </ExternalLink>
+
         <Button
           type="button"
-          className="margin-bottom-1"
+          className="margin-left-2"
           unstyled
-          onClick={() => setShowFullUrl(!showFullUrl)}
+          onClick={() => {
+            setShowFullUrl(false);
+            setIsModalOpen(false);
+          }}
         >
-          <span
-            className={`display-flex flex-align-center ${
-              showFullUrl ? 'text-bold' : ''
-            }`}
-          >
-            {showFullUrl ? <Icon.ExpandMore /> : <Icon.NavigateNext />}
-            {externalT('viewFullURL')}
-          </span>
+          {externalT('returnButton')}
         </Button>
-
-        {showFullUrl && (
-          <div className="margin-left-05 border-left-05 border-base-dark">
-            <p
-              className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-1 margin-left-1"
-              style={{ overflowWrap: 'break-word' }}
-            >
-              {url}
-            </p>
-          </div>
-        )}
-      </div>
-
-      <ExternalLink
-        className="usa-button text-white"
-        href={url}
-        variant="unstyled"
-      >
-        {externalT('continueButton')}
-      </ExternalLink>
-
+      </Modal>
       <Button
         type="button"
-        className="margin-left-2"
         unstyled
+        className="margin-right-2"
         onClick={() => {
-          setShowFullUrl(false);
-          closeModal();
+          setIsModalOpen(true);
         }}
       >
-        {externalT('returnButton')}
+        <span className="display-flex flex-align-center">
+          {buttonText}
+          <Icon.Launch />
+        </span>
       </Button>
-    </Modal>
+    </>
   );
 };
 
-export default ExternalLinkModal;
+export default ExternalLinkWithModal;
