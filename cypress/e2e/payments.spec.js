@@ -3,7 +3,7 @@ describe('The Model Plan Payment Form', () => {
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
   });
 
-  it('completes a Model Plan Ops Eval and Learning form', () => {
+  it('completes a Model Plan Payment form', () => {
     cy.clickPlanTableByName('Empty Plan');
 
     // Clicks the Payment tasklist item
