@@ -111,21 +111,25 @@ const BasicsContent = () => {
   useEffect(() => {
     if (!isModalOpen && modelID) {
       const unblock = history.block(destination => {
+        // Don't call mutation if attempting to access a locked section
+        if (destination.pathname.includes('locked-task-list-section')) {
+          unblock();
+          history.push({
+            pathname: destination.pathname,
+            state: destination.state
+          });
+          return false;
+        }
+
+        if (destination.pathname === location.pathname) {
+          return false;
+        }
+
         if (!formikRef.current?.values.modelName) {
           formikRef?.current?.setFieldError(
             'modelName',
             'Enter the Model name'
           );
-          return false;
-        }
-
-        // Don't call mutation if attempting to access a locked section
-        if (destination.pathname.includes('locked-task-list-section')) {
-          history.push(destination.pathname);
-          return false;
-        }
-
-        if (destination.pathname === location.pathname) {
           return false;
         }
 
