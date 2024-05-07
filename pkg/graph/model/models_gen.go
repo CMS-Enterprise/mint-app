@@ -196,8 +196,8 @@ type PlanDiscussionCreateInput struct {
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
 
-// Represents plan discussions translation data
-type PlanDiscussionsTranslation struct {
+// Represents plan discussion translation data
+type PlanDiscussionTranslation struct {
 	UserRole            models.TranslationFieldWithOptions `json:"userRole" db:"user_role"`
 	UserRoleDescription models.TranslationField            `json:"userRoleDescription" db:"user_role_description"`
 	Content             models.TranslationField            `json:"content" db:"content"`

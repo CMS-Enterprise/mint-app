@@ -12,8 +12,8 @@ import (
 var discussionJSON []byte
 
 // PlanDiscussionTranslation Provides the translation for Plan Discussion
-func PlanDiscussionTranslation() (*model.PlanDiscussionsTranslation, error) {
-	var translation model.PlanDiscussionsTranslation
+func PlanDiscussionTranslation() (*model.PlanDiscussionTranslation, error) {
+	var translation model.PlanDiscussionTranslation
 	err := json.Unmarshal(discussionJSON, &translation)
 	if err != nil {
 		fmt.Println("Error unmarshalling JSON:", err)

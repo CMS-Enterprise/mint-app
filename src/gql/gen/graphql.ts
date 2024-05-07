@@ -1681,9 +1681,9 @@ export type PlanDiscussionCreateInput = {
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Represents plan discussions translation data */
-export type PlanDiscussionsTranslation = {
-  __typename: 'PlanDiscussionsTranslation';
+/** Represents plan discussion translation data */
+export type PlanDiscussionTranslation = {
+  __typename: 'PlanDiscussionTranslation';
   content: TranslationField;
   userRole: TranslationFieldWithOptions;
   userRoleDescription: TranslationField;

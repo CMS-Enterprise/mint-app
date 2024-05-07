@@ -34,7 +34,7 @@ module.exports = {
       'PlanOpsEvalAndLearningTranslation',
       'PlanPaymentsTranslation',
       'PlanCollaboratorTranslation',
-      'PlanDiscussionsTranslation',
+      'PlanDiscussionTranslation',
       'DiscussionReplyTranslation',
       'PlanCRsTranslation',
       'PlanTDLsTranslation',

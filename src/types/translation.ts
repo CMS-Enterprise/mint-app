@@ -58,7 +58,7 @@ import {
   PlanBeneficiariesTranslation,
   PlanCollaboratorTranslation,
   PlanCRsTranslation,
-  PlanDiscussionsTranslation,
+  PlanDiscussionTranslation,
   PlanDocumentsTranslation,
   PlanGeneralCharacteristicsTranslation,
   PlanOpsEvalAndLearningTranslation,
@@ -931,7 +931,7 @@ export type TranslationDiscussionsForm = {
 };
 
 type TranslationDiscussionsGQL = Omit<
-  PlanDiscussionsTranslation, // graphql gen type
+  PlanDiscussionTranslation, // graphql gen type
   '__typename'
 >;
 

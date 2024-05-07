@@ -86,12 +86,12 @@ func (tpp *ModelPlanTranslation) ToMap() (map[string]models.ITranslationField, e
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pdt *PlanDiscussionsTranslation) TableName() string {
+func (pdt *PlanDiscussionTranslation) TableName() string {
 	return "plan_discussion"
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
-func (pdt *PlanDiscussionsTranslation) ToMap() (map[string]models.ITranslationField, error) {
+func (pdt *PlanDiscussionTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*pdt)
 }
 
