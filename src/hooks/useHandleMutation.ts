@@ -58,7 +58,11 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
       const unblock = history.block(destination => {
         // Don't call mutation if attempting to access a locked section
         if (destination.pathname.includes('locked-task-list-section')) {
-          history.push(destination.pathname);
+          unblock();
+          history.push({
+            pathname: destination.pathname,
+            state: destination.state
+          });
           return false;
         }
 
