@@ -5,19 +5,19 @@
 
 import basics from '../../src/i18n/en-US/modelPlan/basics';
 import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
-import collaborators from '../../src/i18n/en-US/modelPlan/collaborators';
+import collaborator from '../../src/i18n/en-US/modelPlan/collaborators';
 import crs from '../../src/i18n/en-US/modelPlan/crs';
-import discussions from '../../src/i18n/en-US/modelPlan/discussions';
-import documents from '../../src/i18n/en-US/modelPlan/documents';
+import discussion from '../../src/i18n/en-US/modelPlan/discussions';
+import document from '../../src/i18n/en-US/modelPlan/documents';
 import generalCharacteristics from '../../src/i18n/en-US/modelPlan/generalCharacteristics';
 import modelPlan from '../../src/i18n/en-US/modelPlan/modelPlan';
-import operationalNeeds from '../../src/i18n/en-US/modelPlan/operationalNeeds';
-import subtasks from '../../src/i18n/en-US/modelPlan/operationalSolutionSubtasks';
+import operationalNeed from '../../src/i18n/en-US/modelPlan/operationalNeeds';
+import subtask from '../../src/i18n/en-US/modelPlan/operationalSolutionSubtasks';
 import opsEvalAndLearning from '../../src/i18n/en-US/modelPlan/opsEvalAndLearning';
 import participantsAndProviders from '../../src/i18n/en-US/modelPlan/participantsAndProviders';
 import payments from '../../src/i18n/en-US/modelPlan/payments';
-import replies from '../../src/i18n/en-US/modelPlan/replies';
-import operationalSolutions from '../../src/i18n/en-US/modelPlan/solutions';
+import reply from '../../src/i18n/en-US/modelPlan/replies';
+import operationalSolution from '../../src/i18n/en-US/modelPlan/solutions';
 import tdls from '../../src/i18n/en-US/modelPlan/tdls';
 import {
   getKeys,
@@ -33,15 +33,15 @@ export const translationSections = {
   plan_beneficiaries: beneficiaries,
   plan_ops_eval_and_learning: opsEvalAndLearning,
   plan_payments: payments,
-  plan_collaborator: collaborators,
-  plan_discussion: discussions,
-  discussion_reply: replies,
-  plan_document: documents,
+  plan_collaborator: collaborator,
+  plan_discussion: discussion,
+  discussion_reply: reply,
+  plan_document: document,
   plan_cr: crs,
   plan_tdl: tdls,
-  operational_need: operationalNeeds,
-  operational_solution: operationalSolutions,
-  operational_solution_subtask: subtasks
+  operational_need: operationalNeed,
+  operational_solution: operationalSolution,
+  operational_solution_subtask: subtask
 };
 
 export const unneededFields: string[] = [
