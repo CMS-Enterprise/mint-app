@@ -1,8 +1,8 @@
 """
-Represents possible operational solution translation data
+Represents operational solution translation data
 """
 
-type PossibleOperationalSolutionTranslation {
+type OperationalSolutionTranslation {
     name: TranslationField! @goTag(key: "db", value: "name")
     nameOther: TranslationField! @goTag(key: "db", value: "name_other")
     otherHeader: TranslationField! @goTag(key: "db", value: "other_header")
