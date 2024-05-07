@@ -29,7 +29,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import ExternalLinkWithModal from 'components/shared/ExternalLinkModal';
+import ExternalLinkWithModal from 'components/shared/ExternalLinkWithModal';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
