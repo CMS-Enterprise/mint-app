@@ -907,6 +907,7 @@ export type TranslationPayments = {
 // Collaborators
 export type TranslationCollaboratorsForm = {
   teamRoles: TranslationFieldPropertiesWithOptions<TeamRole>;
+  userID: TranslationFieldProperties;
   username: TranslationFieldProperties;
 };
 

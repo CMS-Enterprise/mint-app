@@ -6,6 +6,15 @@ import {
 } from '../../../gql/gen/graphql';
 
 export const collaborators: TranslationCollaborators = {
+  userID: {
+    gqlField: 'userID',
+    goField: 'UserID',
+    dbField: 'user_id',
+    label: 'User ID',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.TEXT,
+    tableReference: 'user_account'
+  },
   username: {
     gqlField: 'username',
     goField: 'Username',
