@@ -39,9 +39,11 @@ import {
   MonitoringFileType,
   NonClaimsBasedPayType,
   OperationalNeedKey,
+  OperationalNeedTranslation,
   OperationalSolutionKey,
   OperationalSolutionSubtaskStatus,
   OperationalSolutionSubtaskTranslation,
+  OperationalSolutionTranslation,
   OpSolutionStatus,
   OverlapType,
   ParticipantCommunicationType,
@@ -63,8 +65,6 @@ import {
   PlanParticipantsAndProvidersTranslation,
   PlanPaymentsTranslation,
   PlanTdLsTranslation,
-  PossibleOperationalNeedTranslation,
-  PossibleOperationalSolutionTranslation,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
@@ -1040,7 +1040,7 @@ export type TranslationOperationalNeedsForm = {
 };
 
 type TranslationOperationalNeedsGQL = Omit<
-  PossibleOperationalNeedTranslation, // graphql gen type
+  OperationalNeedTranslation, // graphql gen type
   '__typename'
 >;
 
@@ -1067,7 +1067,7 @@ export type TranslationOperationalSolutionsForm = {
 };
 
 type TranslationOperationalSolutionsGQL = Omit<
-  PossibleOperationalSolutionTranslation, // graphql gen type
+  OperationalSolutionTranslation, // graphql gen type
   '__typename'
 >;
 

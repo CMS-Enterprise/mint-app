@@ -1135,6 +1135,16 @@ export enum OperationalNeedKey {
   VET_PROVIDERS_FOR_PROGRAM_INTEGRITY = 'VET_PROVIDERS_FOR_PROGRAM_INTEGRITY'
 }
 
+/** Represents operational need translation data */
+export type OperationalNeedTranslation = {
+  __typename: 'OperationalNeedTranslation';
+  key: TranslationFieldWithOptions;
+  name: TranslationField;
+  nameOther?: Maybe<TranslationField>;
+  needed: TranslationFieldWithOptions;
+  section: TranslationFieldWithOptions;
+};
+
 export type OperationalSolution = {
   __typename: 'OperationalSolution';
   createdBy: Scalars['UUID']['output'];
@@ -1239,6 +1249,21 @@ export enum OperationalSolutionSubtaskStatus {
 export type OperationalSolutionSubtaskTranslation = {
   __typename: 'OperationalSolutionSubtaskTranslation';
   name: TranslationField;
+  status: TranslationFieldWithOptions;
+};
+
+/** Represents operational solution translation data */
+export type OperationalSolutionTranslation = {
+  __typename: 'OperationalSolutionTranslation';
+  key: TranslationFieldWithOptions;
+  mustFinishDts: TranslationField;
+  mustStartDts: TranslationField;
+  name: TranslationField;
+  nameOther: TranslationField;
+  needed: TranslationFieldWithOptions;
+  otherHeader: TranslationField;
+  pocEmail: TranslationField;
+  pocName: TranslationField;
   status: TranslationFieldWithOptions;
 };
 
@@ -2885,16 +2910,6 @@ export type PossibleOperationalNeed = {
   section?: Maybe<TaskListSection>;
 };
 
-/** Represents possible operational need translation data */
-export type PossibleOperationalNeedTranslation = {
-  __typename: 'PossibleOperationalNeedTranslation';
-  key: TranslationFieldWithOptions;
-  name: TranslationField;
-  nameOther?: Maybe<TranslationField>;
-  needed: TranslationFieldWithOptions;
-  section: TranslationFieldWithOptions;
-};
-
 export type PossibleOperationalSolution = {
   __typename: 'PossibleOperationalSolution';
   createdBy: Scalars['UUID']['output'];
@@ -2928,21 +2943,6 @@ export type PossibleOperationalSolutionContact = {
   name: Scalars['String']['output'];
   possibleOperationalSolutionID: Scalars['Int']['output'];
   role?: Maybe<Scalars['String']['output']>;
-};
-
-/** Represents possible operational solution translation data */
-export type PossibleOperationalSolutionTranslation = {
-  __typename: 'PossibleOperationalSolutionTranslation';
-  key: TranslationFieldWithOptions;
-  mustFinishDts: TranslationField;
-  mustStartDts: TranslationField;
-  name: TranslationField;
-  nameOther: TranslationField;
-  needed: TranslationFieldWithOptions;
-  otherHeader: TranslationField;
-  pocEmail: TranslationField;
-  pocName: TranslationField;
-  status: TranslationFieldWithOptions;
 };
 
 export type PrepareForClearance = {
