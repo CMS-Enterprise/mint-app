@@ -29,6 +29,8 @@ func GetTranslation(tableName string) (Translation, error) {
 		return PlanCollaboratorTranslation()
 	case "plan_beneficiaries":
 		return PlanBeneficiariesTranslation()
+	case "plan_document":
+		return PlanDocumentTranslation()
 
 	default:
 		// ut := UnknownTranslation{

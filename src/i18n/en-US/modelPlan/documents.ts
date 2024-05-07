@@ -10,7 +10,7 @@ export const documents: TranslationDocuments = {
     gqlField: 'isLink',
     goField: 'IsLink',
     dbField: 'is_link',
-    label: '',
+    label: 'Is this a link to a document?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     options: {
