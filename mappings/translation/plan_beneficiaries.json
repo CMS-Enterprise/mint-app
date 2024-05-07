@@ -5,6 +5,7 @@
     "dbField": "beneficiaries",
     "label": "Who are the beneficiaries of this model? Select all that apply.",
     "readonlyLabel": "Who are the beneficiaries of this model?",
+    "exportLabel": "Who are the beneficiaries of this model?",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
     "multiSelectLabel": "Selected groups",
@@ -30,7 +31,8 @@
     "label": "Please describe the disease-specific groups this model will impact.",
     "dataType": "STRING",
     "formType": "TEXT",
-    "isOtherType": true
+    "isOtherType": true,
+    "otherParentField": "beneficiaries"
   },
   "beneficiariesOther": {
     "gqlField": "beneficiariesOther",
@@ -39,7 +41,8 @@
     "label": "Please describe the other groups this model will impact.",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "isOtherType": true
+    "isOtherType": true,
+    "otherParentField": "beneficiaries"
   },
   "beneficiariesNote": {
     "gqlField": "beneficiariesNote",
@@ -157,6 +160,7 @@
     "dbField": "beneficiary_selection_method",
     "label": "How will you choose beneficiaries? Select all that apply.",
     "readonlyLabel": "How will you choose beneficiaries?",
+    "exportLabel": "How will you choose beneficiaries?",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
     "multiSelectLabel": "Selected methods",
