@@ -1754,9 +1754,9 @@ export type PlanDocumentSolutionLink = {
   solutionID: Scalars['UUID']['output'];
 };
 
-/** Represents plan documents translation data */
-export type PlanDocumentsTranslation = {
-  __typename: 'PlanDocumentsTranslation';
+/** Represents plan document translation data */
+export type PlanDocumentTranslation = {
+  __typename: 'PlanDocumentTranslation';
   documentType: TranslationFieldWithOptions;
   isLink: TranslationField;
   name: TranslationField;

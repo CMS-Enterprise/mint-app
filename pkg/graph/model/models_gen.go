@@ -224,8 +224,8 @@ type PlanDocumentLinkInput struct {
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
 
-// Represents plan documents translation data
-type PlanDocumentsTranslation struct {
+// Represents plan document translation data
+type PlanDocumentTranslation struct {
 	IsLink               models.TranslationField            `json:"isLink" db:"is_link"`
 	URL                  models.TranslationField            `json:"url" db:"url"`
 	Name                 models.TranslationField            `json:"name" db:"name"`
