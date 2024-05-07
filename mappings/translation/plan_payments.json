@@ -5,6 +5,7 @@
     "dbField": "funding_source",
     "label": "What will be the funding source for payments? Select all that apply.",
     "readonlyLabel": "What will be the funding source for payments?",
+    "exportLabel": "What will be the funding source for payments?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "options": {
@@ -41,7 +42,8 @@
     "label": "Please describe the funding source.",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "isOtherType": true
+    "isOtherType": true,
+    "otherParentField": "funding_source"
   },
   "fundingSourceNote": {
     "gqlField": "fundingSourceNote",
@@ -59,6 +61,7 @@
     "dbField": "funding_source_r",
     "label": "What is the funding source for reconciliation or other expenditures? Select all that apply.",
     "readonlyLabel": "What is the funding source for reconciliation or other expenditures?",
+    "exportLabel": "What is the funding source for reconciliation or other expenditures?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "options": {
@@ -95,7 +98,8 @@
     "label": "Please describe the funding source.",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "isOtherType": true
+    "isOtherType": true,
+    "otherParentField": "funding_source_r"
   },
   "fundingSourceRNote": {
     "gqlField": "fundingSourceRNote",
@@ -113,6 +117,7 @@
     "dbField": "pay_recipients",
     "label": "Who will you pay? Select all that apply.",
     "readonlyLabel": "Who will you pay?",
+    "exportLabel": "Who will you pay?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "options": {

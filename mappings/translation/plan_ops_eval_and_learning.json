@@ -235,6 +235,7 @@
           "dbField": "data_monitoring_file_types",
           "label": "What types of files? Select all that apply.",
           "readonlyLabel": "What types of files?",
+          "exportLabel": "What types of files?",
           "dataType": "ENUM",
           "formType": "CHECKBOX",
           "options": {
@@ -568,6 +569,7 @@
     "dbField": "data_monitoring_file_types",
     "label": "What types of files? Select all that apply.",
     "readonlyLabel": "What types of files?",
+    "exportLabel": "What types of files?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "options": {
@@ -595,7 +597,7 @@
     "gqlField": "dataMonitoringFileOther",
     "goField": "DataMonitoringFileOther",
     "dbField": "data_monitoring_file_other",
-    "label": "What types of responses?",
+    "label": "Please specify",
     "dataType": "STRING",
     "formType": "TEXT",
     "isOtherType": true,
@@ -975,6 +977,7 @@
     "dbField": "evaluation_approaches",
     "label": "What type of evaluation approach are you considering? Select all that apply.",
     "readonlyLabel": "What type of evaluation approach are you considering?",
+    "exportLabel": "What type of evaluation approach are you considering?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "options": {
@@ -1126,6 +1129,7 @@
     "label": "What data do you need to monitor the model? Select all that apply.",
     "readonlyLabel": "What data do you need to monitor the model?",
     "sublabel": "If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.",
+    "exportLabel": "What data do you need to monitor the model?",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
     "multiSelectLabel": "Selected data",
@@ -1207,7 +1211,8 @@
     "label": "What other data do you need to monitor?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "isOtherType": true
+    "isOtherType": true,
+    "otherParentField": "data_needed_for_monitoring"
   },
   "dataNeededForMonitoringNote": {
     "gqlField": "dataNeededForMonitoringNote",
@@ -1225,6 +1230,7 @@
     "dbField": "data_to_send_particicipants",
     "label": "What data will you send to participants? Select all that apply.",
     "readonlyLabel": "What data will you send to participants?",
+    "exportLabel": "What data will you send to participants?",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
     "options": {
@@ -1419,6 +1425,7 @@
       "label": "What data do you need to monitor the model? Select all that apply.",
       "readonlyLabel": "What data do you need to monitor the model?",
       "sublabel": "If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.",
+      "exportLabel": "What data do you need to monitor the model?",
       "dataType": "ENUM",
       "formType": "MULTISELECT",
       "multiSelectLabel": "Selected data",
@@ -1467,6 +1474,7 @@
       "label": "What data do you need to monitor the model? Select all that apply.",
       "readonlyLabel": "What data do you need to monitor the model?",
       "sublabel": "If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.",
+      "exportLabel": "What data do you need to monitor the model?",
       "dataType": "ENUM",
       "formType": "MULTISELECT",
       "multiSelectLabel": "Selected data",

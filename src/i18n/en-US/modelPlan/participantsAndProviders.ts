@@ -15,6 +15,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participants',
     label: 'Who are the participants? Select all that apply.',
     readonlyLabel: 'Who are the participants?',
+    exportLabel: 'Who are the participants?',
     multiSelectLabel: 'Selected participants',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
@@ -75,6 +76,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
+    otherParentField: 'participants',
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,
@@ -91,6 +93,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
+    otherParentField: 'participants',
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,
@@ -261,6 +264,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'selection_method',
     label: 'How will you select participants? Select all that apply.',
     readonlyLabel: 'How will you select participants?',
+    exportLabel: 'How will you select participants?',
     multiSelectLabel: 'Selected participants',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
@@ -551,6 +555,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'participantRequireFinancialGuaranteeOther'
     },
     isOtherType: true,
+    otherParentField: 'participantRequireFinancialGuarantee',
     filterGroups: [ModelViewFilter.IPC]
   },
   participantRequireFinancialGuaranteeOther: {
@@ -774,6 +779,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     sublabel:
       'Please include details on decision points, timing, and implications of adding them to the model in an additional note.',
     readonlyLabel: 'How will you decide to add providers?',
+    exportLabel: 'How will you decide to add providers?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'How will you add providers?',
@@ -822,6 +828,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_leave_method',
     label: 'Can providers leave the model? Select all that apply.',
     readonlyLabel: 'Can providers leave the model?',
+    exportLabel: 'Can providers leave the model?',
     sublabel:
       'Please include details on decision points, timing, and implications of leaving the model in an additional note.',
     dataType: TranslationDataType.ENUM,

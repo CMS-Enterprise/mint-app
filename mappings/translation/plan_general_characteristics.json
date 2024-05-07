@@ -369,6 +369,7 @@
     "dbField": "agency_or_state_help",
     "label": "Will another Agency or State help design/operate the model? Select all that apply.",
     "readonlyLabel": "Will another Agency or State help design/operate the model?",
+    "exportLabel": "Will another Agency or State help design/operate the model?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "options": {
@@ -430,6 +431,7 @@
     "dbField": "key_characteristics",
     "label": "What are the model key characteristics? Select all that apply.",
     "readonlyLabel": "What are the model key characteristics?",
+    "exportLabel": "What are the model key characteristics?",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
     "multiSelectLabel": "Selected key characteristics",
@@ -561,6 +563,7 @@
       "dbField": "key_characteristics",
       "label": "What are the model key characteristics? Select all that apply.",
       "readonlyLabel": "What are the model key characteristics?",
+      "exportLabel": "What are the model key characteristics?",
       "dataType": "ENUM",
       "formType": "MULTISELECT",
       "multiSelectLabel": "Selected key characteristics",
@@ -606,6 +609,7 @@
       "dbField": "key_characteristics",
       "label": "What are the model key characteristics? Select all that apply.",
       "readonlyLabel": "What are the model key characteristics?",
+      "exportLabel": "What are the model key characteristics?",
       "dataType": "ENUM",
       "formType": "MULTISELECT",
       "multiSelectLabel": "Selected key characteristics",
@@ -651,6 +655,7 @@
       "dbField": "key_characteristics",
       "label": "What are the model key characteristics? Select all that apply.",
       "readonlyLabel": "What are the model key characteristics?",
+      "exportLabel": "What are the model key characteristics?",
       "dataType": "ENUM",
       "formType": "MULTISELECT",
       "multiSelectLabel": "Selected key characteristics",
@@ -814,6 +819,7 @@
                 "dataType": "ENUM",
                 "formType": "MULTISELECT",
                 "isOtherType": true,
+                "otherParentField": "geographiesTargetedTypes",
                 "options": {
                   "AL": "AL - Alabama",
                   "AK": "AK - Alaska",
@@ -943,6 +949,7 @@
                 "dataType": "ENUM",
                 "formType": "CHECKBOX",
                 "isOtherType": true,
+                "otherParentField": "geographiesTargetedTypes",
                 "options": {
                   "CBSA": "Core-based statistical areas (CBSAs)",
                   "HRR": "Hospital Referral Regions (HRR)",
@@ -1004,6 +1011,7 @@
           "dataType": "ENUM",
           "formType": "MULTISELECT",
           "isOtherType": true,
+          "otherParentField": "geographiesTargetedTypes",
           "options": {
             "AL": "AL - Alabama",
             "AK": "AK - Alaska",
@@ -1133,6 +1141,7 @@
           "dataType": "ENUM",
           "formType": "CHECKBOX",
           "isOtherType": true,
+          "otherParentField": "geographiesTargetedTypes",
           "options": {
             "CBSA": "Core-based statistical areas (CBSAs)",
             "HRR": "Hospital Referral Regions (HRR)",
@@ -1151,6 +1160,7 @@
     "dataType": "ENUM",
     "formType": "MULTISELECT",
     "isOtherType": true,
+    "otherParentField": "geographies_targeted_types",
     "options": {
       "AL": "AL - Alabama",
       "AK": "AK - Alaska",
@@ -1291,6 +1301,7 @@
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "isOtherType": true,
+    "otherParentField": "geographies_targeted_types",
     "options": {
       "CBSA": "Core-based statistical areas (CBSAs)",
       "HRR": "Hospital Referral Regions (HRR)",
@@ -1485,7 +1496,8 @@
     "label": "Which rule do you anticipate using and what is the target date of display for that regulation?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "isOtherType": true
+    "isOtherType": true,
+    "otherParentField": "rulemaking_required"
   },
   "rulemakingRequiredNote": {
     "gqlField": "rulemakingRequiredNote",
@@ -1550,6 +1562,7 @@
     "dbField": "waivers_required_types",
     "label": "Which types of waivers are required? Select all that apply.",
     "readonlyLabel": "Which types of waivers are required?",
+    "exportLabel": "Which types of waivers are required?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "isOtherType": true,

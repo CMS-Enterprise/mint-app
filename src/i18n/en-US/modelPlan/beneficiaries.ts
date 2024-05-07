@@ -15,6 +15,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiaries',
     label: 'Who are the beneficiaries of this model? Select all that apply.',
     readonlyLabel: 'Who are the beneficiaries of this model?',
+    exportLabel: 'Who are the beneficiaries of this model?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'Selected groups',
@@ -48,6 +49,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     isOtherType: true,
+    otherParentField: 'beneficiaries',
     filterGroups: [ModelViewFilter.MDM]
   },
   beneficiariesOther: {
@@ -58,6 +60,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
+    otherParentField: 'beneficiaries',
     filterGroups: [ModelViewFilter.MDM]
   },
   beneficiariesNote: {
@@ -205,6 +208,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dbField: 'beneficiary_selection_method',
     label: 'How will you choose beneficiaries? Select all that apply.',
     readonlyLabel: 'How will you choose beneficiaries?',
+    exportLabel: 'How will you choose beneficiaries?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'Selected methods',

@@ -5,6 +5,7 @@
     "dbField": "participants",
     "label": "Who are the participants? Select all that apply.",
     "readonlyLabel": "Who are the participants?",
+    "exportLabel": "Who are the participants?",
     "multiSelectLabel": "Selected participants",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
@@ -43,7 +44,8 @@
     "label": "Please describe how states will engage with your model.",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "isOtherType": true
+    "isOtherType": true,
+    "otherParentField": "participants"
   },
   "participantsOther": {
     "gqlField": "participantsOther",
@@ -52,7 +54,8 @@
     "label": "Please describe the other participants engaging with this model",
     "dataType": "STRING",
     "formType": "TEXTAREA",
-    "isOtherType": true
+    "isOtherType": true,
+    "otherParentField": "participants"
   },
   "participantsNote": {
     "gqlField": "participantsNote",
@@ -173,6 +176,7 @@
     "dbField": "selection_method",
     "label": "How will you select participants? Select all that apply.",
     "readonlyLabel": "How will you select participants?",
+    "exportLabel": "How will you select participants?",
     "multiSelectLabel": "Selected participants",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
@@ -417,7 +421,8 @@
       "ESCROW": "Escrow",
       "OTHER": "Other"
     },
-    "isOtherType": true
+    "isOtherType": true,
+    "otherParentField": "participant_require_financial_guarantee"
   },
   "participantRequireFinancialGuaranteeOther": {
     "gqlField": "participantRequireFinancialGuaranteeOther",
@@ -663,6 +668,7 @@
     "label": "How will you decide to add providers? Select all that apply.",
     "sublabel": "Please include details on decision points, timing, and implications of adding them to the model in an additional note.",
     "readonlyLabel": "How will you decide to add providers?",
+    "exportLabel": "How will you decide to add providers?",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
     "multiSelectLabel": "How will you add providers?",
@@ -701,6 +707,7 @@
     "dbField": "provider_leave_method",
     "label": "Can providers leave the model? Select all that apply.",
     "readonlyLabel": "Can providers leave the model?",
+    "exportLabel": "Can providers leave the model?",
     "sublabel": "Please include details on decision points, timing, and implications of leaving the model in an additional note.",
     "dataType": "ENUM",
     "formType": "CHECKBOX",

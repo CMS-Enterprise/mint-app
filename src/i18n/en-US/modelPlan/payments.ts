@@ -16,6 +16,7 @@ export const payments: TranslationPayments = {
     label:
       'What will be the funding source for payments? Select all that apply.',
     readonlyLabel: 'What will be the funding source for payments?',
+    exportLabel: 'What will be the funding source for payments?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     options: {
@@ -81,6 +82,7 @@ export const payments: TranslationPayments = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
+    otherParentField: 'fundingSource',
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -109,6 +111,8 @@ export const payments: TranslationPayments = {
     label:
       'What is the funding source for reconciliation or other expenditures? Select all that apply.',
     readonlyLabel:
+      'What is the funding source for reconciliation or other expenditures?',
+    exportLabel:
       'What is the funding source for reconciliation or other expenditures?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
@@ -175,6 +179,7 @@ export const payments: TranslationPayments = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
+    otherParentField: 'fundingSourceR',
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -202,6 +207,7 @@ export const payments: TranslationPayments = {
     dbField: 'pay_recipients',
     label: 'Who will you pay? Select all that apply.',
     readonlyLabel: 'Who will you pay?',
+    exportLabel: 'Who will you pay?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     options: {
