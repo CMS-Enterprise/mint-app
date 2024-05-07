@@ -248,3 +248,6 @@ useable
 searchability
 Autosave
 autosave
+translated_audit_queue
+translatedaudit
+audit.if_Modified

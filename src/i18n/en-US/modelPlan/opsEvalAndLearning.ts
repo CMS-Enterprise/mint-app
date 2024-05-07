@@ -347,6 +347,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_monitoring_file_types',
     label: 'What types of files? Select all that apply.',
     readonlyLabel: 'What types of files?',
+    exportLabel: 'What types of files?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     isPageStart: true,
@@ -368,7 +369,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'dataMonitoringFileOther',
     goField: 'DataMonitoringFileOther',
     dbField: 'data_monitoring_file_other',
-    label: 'What types of responses?',
+    label: 'Please specify',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     isOtherType: true,
@@ -706,6 +707,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label:
       'What type of evaluation approach are you considering? Select all that apply.',
     readonlyLabel: 'What type of evaluation approach are you considering?',
+    exportLabel: 'What type of evaluation approach are you considering?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     isPageStart: true,
@@ -804,6 +806,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'What data do you need to monitor the model?',
     sublabel:
       'If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.',
+    exportLabel: 'What data do you need to monitor the model?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     disconnectedLabel: `questionNotApplicableQuality`,
@@ -846,6 +849,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
+    otherParentField: 'dataNeededForMonitoring',
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataNeededForMonitoringNote: {
@@ -865,6 +869,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_to_send_particicipants',
     label: 'What data will you send to participants? Select all that apply.',
     readonlyLabel: 'What data will you send to participants?',
+    exportLabel: 'What data will you send to participants?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     options: {

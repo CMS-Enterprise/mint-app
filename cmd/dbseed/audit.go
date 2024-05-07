@@ -12,8 +12,10 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage"
-	humanizedaudit "github.com/cmsgov/mint-app/pkg/translatedaudit"
+	"github.com/cmsgov/mint-app/pkg/translatedaudit"
 )
 
 // analyzeAuditCommand is an entry point for analyzing audits for all model plans
@@ -61,6 +63,51 @@ var translateAuditsCommand = &cobra.Command{
 	},
 }
 
+var queueAllTranslatedAuditChangesCommand = &cobra.Command{
+	Use:   "queueTranslation",
+	Short: "Enqueues all audit translations",
+
+	Run: func(cmd *cobra.Command, args []string) {
+
+		fmt.Printf("Ran the queue Translation command : %s", cmd.Use)
+		seeder := newDefaultSeeder(viperConfig)
+		seeder.queueAllTranslatedAuditChanges()
+	},
+}
+var translateAllQueuedTranslatedAuditChangesCommand = &cobra.Command{
+	Use:   "translateQueue",
+	Short: "Translates all enqueued audit translation queue entries",
+
+	Run: func(cmd *cobra.Command, args []string) {
+
+		fmt.Printf("Ran the translate  Queue command : %s", cmd.Use)
+		seeder := newDefaultSeeder(viperConfig)
+		seeder.translateAllQueuedTranslatedAudits()
+	},
+}
+var translateNextQueuedTranslatedAuditChangesCommand = &cobra.Command{
+	Use:   "translateNextQueue",
+	Short: "Translates next enqueued audit translation queue entries",
+
+	Run: func(cmd *cobra.Command, args []string) {
+
+		fmt.Printf("Ran the translate next Queued Translation command : %s", cmd.Use)
+		seeder := newDefaultSeeder(viperConfig)
+		seeder.translateNextQueuedTranslatedAudit()
+	},
+}
+var queueAndProcessAllTranslatedAuditChangesCommand = &cobra.Command{
+	Use:   "queueAndProcessTranslation",
+	Short: "Enqueues and processes all audit translations",
+
+	Run: func(cmd *cobra.Command, args []string) {
+
+		fmt.Printf("Ran the queue Translation command : %s", cmd.Use)
+		seeder := newDefaultSeeder(viperConfig)
+		seeder.queueAndProcessAllTranslatedAuditQueueEntries()
+	},
+}
+
 // humanizeModelPlanChanges humanizes all audit changes
 func humanizeModelPlanChanges(minutes int) {
 	seeder := newDefaultSeeder(viperConfig)
@@ -80,7 +127,7 @@ func (s *Seeder) HumanizeModelPlanChanges(minutes int) {
 		panic(fmt.Errorf("couldn't retrieve model plan collection"))
 	}
 	for _, plan := range modelPlans {
-		_, err := humanizedaudit.TranslateAuditsForModelPlan(s.Config.Context, s.Config.Store, s.Config.Logger, timeStart, timeEnd, plan.ID)
+		_, err := translatedaudit.TranslateAuditsForModelPlan(s.Config.Context, s.Config.Store, s.Config.Logger, timeStart, timeEnd, plan.ID)
 		if err != nil {
 			fmt.Printf("issue humanizing audits for model plan '%s'. err %v", plan.ModelName, err)
 		}
@@ -135,4 +182,47 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 		}
 	}
 
+}
+
+func (s *Seeder) queueAllTranslatedAuditChanges() {
+
+	arg := map[string]interface{}{}
+
+	queued, _ := sqlutils.SelectProcedure[models.TranslatedAuditQueue](s.Config.Store, sqlqueries.TranslatedAuditQueue.DANGEROUSQueueAllEntries, arg)
+	fmt.Printf("queued %d entries \r\n", len(queued))
+
+}
+
+func (s *Seeder) translateAllQueuedTranslatedAudits() {
+	queuedObjects, err := storage.TranslatedAuditQueueGetQueued(s.Config.Store)
+	if err != nil {
+		fmt.Printf("issue getting queued Objects to translate \r\n")
+	}
+
+	for _, queued := range queuedObjects {
+		translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, s.Config.Logger, queued.ChangeID, queued.ID)
+		if translationErr != nil {
+			fmt.Println(fmt.Errorf("error getting queued objects to translate, %w", translationErr))
+		}
+	}
+}
+
+func (s *Seeder) translateNextQueuedTranslatedAudit() {
+	queuedObjects, err := storage.TranslatedAuditQueueGetQueued(s.Config.Store)
+	if err != nil {
+		fmt.Printf("issue getting queued Objects to translate \r\n")
+	}
+	if len(queuedObjects) > 1 {
+		queued := queuedObjects[0]
+		translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, s.Config.Logger, queued.ChangeID, queued.ID)
+		if translationErr != nil {
+			fmt.Println(fmt.Errorf("error getting queued objects to translate, %w ", translationErr))
+		}
+	}
+
+}
+
+func (s *Seeder) queueAndProcessAllTranslatedAuditQueueEntries() {
+	s.queueAllTranslatedAuditChanges()
+	s.translateAllQueuedTranslatedAudits()
 }

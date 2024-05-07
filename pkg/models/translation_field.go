@@ -11,7 +11,7 @@ const (
 	TDTDate    TranslationDataType = "DATE"
 	TDTEnum    TranslationDataType = "ENUM"
 	TDTObject  TranslationDataType = "OBJECT"
-	TDTUUID    TranslationDataType = "UUID"
+	TDTUuid    TranslationDataType = "UUID"
 )
 
 // Represents the FORM type of the translation field
@@ -60,7 +60,8 @@ type TranslationFieldBase struct {
 	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
 	ParentReferencesLabel *string `json:"parentReferencesLabel"`
 	// Labels specifically for export/change history.  Takes priority over all other labels
-	ExportLabel *string `json:"exportLabel"`
+	ExportLabel    *string `json:"exportLabel"`
+	TableReference *string `json:"tableReference"`
 }
 
 // GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Export only Label, then the parent label, then label

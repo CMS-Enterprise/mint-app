@@ -10,8 +10,7 @@ CREATE TABLE translated_audit (
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
     actor_id UUID NOT NULL REFERENCES user_account(id), --foreign key to user table
     actor_name ZERO_STRING NOT NULL, --foreign key to user table
-    -- change_id BIGINT UNIQUE NOT NULL REFERENCES audit.change(id), --foreign key to user table
-    change_id BIGINT NOT NULL REFERENCES audit.change(id), --foreign key to user table
+    change_id BIGINT UNIQUE NOT NULL REFERENCES audit.change(id), --foreign key to user table
     date TIMESTAMP NOT NULL, 
     table_id INTEGER REFERENCES audit.table_config(id), --foreign key to the audit table
     table_name ZERO_STRING NOT NULL, --potentially normalize this, wouldn't need to store, but useful?
@@ -26,7 +25,6 @@ CREATE TABLE translated_audit (
     modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
 );
--- Changes: (Serialization) Turn on unique change record constrain
 
 -- Changes: (Serialization) Decide if we want to normalize the references that duplicate data, eg, actor_name, model_name etc. All of this is technically already in the audit.change table...
 
@@ -70,7 +68,7 @@ CREATE TYPE  TRANSLATION_DATA_TYPE AS ENUM (
     'BOOLEAN',
     'DATE',
     'ENUM',
-    'OBJECT'
+    'OBJECT',
     'UUID'
 );
 COMMENT ON TYPE TRANSLATION_DATA_TYPE IS 'Represents the data type of the translation field';

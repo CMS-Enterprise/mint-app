@@ -8,7 +8,7 @@ import (
 )
 
 func TestPlanCollaboratorsTranslation(t *testing.T) {
-	translation, err := PlanCollaboratorsTranslation()
+	translation, err := PlanCollaboratorTranslation()
 
 	assert.NoError(t, err)
 	assert.NotNil(t, translation)
@@ -20,7 +20,7 @@ func TestPlanCollaboratorsTranslation(t *testing.T) {
 }
 
 func TestPlanCollaboratorsTranslationVerifyFieldsArePopulated(t *testing.T) {
-	translation, err := PlanCollaboratorsTranslation()
+	translation, err := PlanCollaboratorTranslation()
 	assert.NoError(t, err)
 	assert.NotNil(t, translation)
 

@@ -373,6 +373,14 @@ export type DiscussionReplyCreateInput = {
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents discussion reply translation data */
+export type DiscussionReplyTranslation = {
+  __typename: 'DiscussionReplyTranslation';
+  content: TranslationField;
+  userRole: TranslationFieldWithOptions;
+  userRoleDescription: TranslationField;
+};
+
 export type DiscussionRoleSelection = {
   __typename: 'DiscussionRoleSelection';
   userRole: DiscussionUserRole;
@@ -1127,6 +1135,16 @@ export enum OperationalNeedKey {
   VET_PROVIDERS_FOR_PROGRAM_INTEGRITY = 'VET_PROVIDERS_FOR_PROGRAM_INTEGRITY'
 }
 
+/** Represents operational need translation data */
+export type OperationalNeedTranslation = {
+  __typename: 'OperationalNeedTranslation';
+  key: TranslationFieldWithOptions;
+  name: TranslationField;
+  nameOther?: Maybe<TranslationField>;
+  needed: TranslationFieldWithOptions;
+  section: TranslationFieldWithOptions;
+};
+
 export type OperationalSolution = {
   __typename: 'OperationalSolution';
   createdBy: Scalars['UUID']['output'];
@@ -1226,6 +1244,28 @@ export enum OperationalSolutionSubtaskStatus {
   IN_PROGRESS = 'IN_PROGRESS',
   TODO = 'TODO'
 }
+
+/** Represents operational solution subtask translation data */
+export type OperationalSolutionSubtaskTranslation = {
+  __typename: 'OperationalSolutionSubtaskTranslation';
+  name: TranslationField;
+  status: TranslationFieldWithOptions;
+};
+
+/** Represents operational solution translation data */
+export type OperationalSolutionTranslation = {
+  __typename: 'OperationalSolutionTranslation';
+  key: TranslationFieldWithOptions;
+  mustFinishDts: TranslationField;
+  mustStartDts: TranslationField;
+  name: TranslationField;
+  nameOther: TranslationField;
+  needed: TranslationFieldWithOptions;
+  otherHeader: TranslationField;
+  pocEmail: TranslationField;
+  pocName: TranslationField;
+  status: TranslationFieldWithOptions;
+};
 
 export enum OverlapType {
   NO = 'NO',
@@ -1575,6 +1615,16 @@ export type PlanCrCreateInput = {
   title: Scalars['String']['input'];
 };
 
+/** Represents plan cr translation data */
+export type PlanCRsTranslation = {
+  __typename: 'PlanCRsTranslation';
+  dateImplemented?: Maybe<TranslationField>;
+  dateInitiated: TranslationField;
+  idNumber: TranslationField;
+  note: TranslationField;
+  title: TranslationField;
+};
+
 /** PlanCollaborator represents a collaborator on a plan */
 export type PlanCollaborator = {
   __typename: 'PlanCollaborator';
@@ -1630,6 +1680,14 @@ export type PlanDiscussionCreateInput = {
   modelPlanID: Scalars['UUID']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents plan discussions translation data */
+export type PlanDiscussionsTranslation = {
+  __typename: 'PlanDiscussionsTranslation';
+  content: TranslationField;
+  userRole: TranslationFieldWithOptions;
+  userRoleDescription: TranslationField;
 };
 
 /** PlanDocument represents a document on a plan */
@@ -1695,6 +1753,18 @@ export type PlanDocumentSolutionLink = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   solutionID: Scalars['UUID']['output'];
+};
+
+/** Represents plan documents translation data */
+export type PlanDocumentsTranslation = {
+  __typename: 'PlanDocumentsTranslation';
+  documentType: TranslationFieldWithOptions;
+  isLink: TranslationField;
+  name: TranslationField;
+  optionalNotes?: Maybe<TranslationField>;
+  otherTypeDescription?: Maybe<TranslationField>;
+  restricted: TranslationFieldWithOptions;
+  url: TranslationField;
 };
 
 export type PlanFavorite = {
@@ -2815,6 +2885,15 @@ export type PlanTdlCreateInput = {
   modelPlanID: Scalars['UUID']['input'];
   note?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
+};
+
+/** Represents plan tdl translation data */
+export type PlanTdLsTranslation = {
+  __typename: 'PlanTDLsTranslation';
+  dateInitiated: TranslationField;
+  idNumber: TranslationField;
+  note: TranslationField;
+  title: TranslationField;
 };
 
 export type PossibleOperationalNeed = {

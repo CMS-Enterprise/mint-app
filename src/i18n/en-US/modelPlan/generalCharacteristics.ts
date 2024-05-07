@@ -285,6 +285,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Will another Agency or State help design/operate the model? Select all that apply.',
     readonlyLabel:
       'Will another Agency or State help design/operate the model?',
+    exportLabel: 'Will another Agency or State help design/operate the model?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     isPageStart: true,
@@ -355,6 +356,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'key_characteristics',
     label: 'What are the model key characteristics? Select all that apply.',
     readonlyLabel: 'What are the model key characteristics?',
+    exportLabel: 'What are the model key characteristics?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     multiSelectLabel: 'Selected key characteristics',
@@ -645,6 +647,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
     isOtherType: true,
+    otherParentField: 'geographiesTargetedTypes',
     options: {
       AL: 'AL - Alabama',
       AK: 'AK - Alaska',
@@ -774,6 +777,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     isOtherType: true,
+    otherParentField: 'geographiesTargetedTypes',
     options: {
       CBSA: 'Core-based statistical areas (CBSAs)',
       HRR: 'Hospital Referral Regions (HRR)',
@@ -946,6 +950,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     isOtherType: true,
+    otherParentField: 'rulemakingRequired',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   rulemakingRequiredNote: {
@@ -1022,6 +1027,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'waivers_required_types',
     label: 'Which types of waivers are required? Select all that apply.',
     readonlyLabel: 'Which types of waivers are required?',
+    exportLabel: 'Which types of waivers are required?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     isOtherType: true,

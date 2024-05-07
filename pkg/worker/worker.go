@@ -30,9 +30,32 @@ const (
 
 	// emailQueue the email queue in Faktory
 	emailQueue string = "email"
+
+	// auditTranslateQueue the audit translation queue in Faktory
+	auditTranslateQueue string = "auditTranslation"
 )
 
-// Work creates, configues, and starts worker
+const (
+	// translateAuditBatchJobName is the name of the batch job for translating audits
+	translateAuditBatchJobName string = "TranslateAuditBatchJob"
+
+	// translateAuditBatchJobSuccessName is the name of the job that is called when a group of translate Audit Jobs is completed
+	translateAuditBatchJobSuccessName string = "TranslateAuditBatchJobSuccess"
+
+	// translateAuditCronJobName is the name of the job called that initiates the translate audit batch job
+	translateAuditCronJobName string = "TranslateAuditCronJob"
+
+	// translateAuditJobName is the name of the job that creates a translated audit from an audit
+	translateAuditJobName string = "TranslateAuditJob"
+)
+
+//Changes: (Job) If possible define all jobs like this so they can be referenced. To do that, they can't be receivers though...
+// var TranslateAuditJob = JobWrapper{
+// 	Name: "TranslateAuditJob",
+// 	Job:  ,
+// }
+
+// Work creates, configures, and starts worker
 func (w *Worker) Work() {
 	if !w.ProcessJobs {
 		return
@@ -40,11 +63,11 @@ func (w *Worker) Work() {
 
 	mgr := faktory_worker.NewManager()
 
-	// Setup Monager
+	// Setup Manager
 	mgr.Concurrency = w.Connections
 
 	// pull jobs from these queues, in this order of precedence
-	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, emailQueue)
+	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
 
 	// register jobs here
 	mgr.Register("DailyDigestCronJob", w.DigestCronJob)
@@ -57,6 +80,11 @@ func (w *Worker) Work() {
 	mgr.Register("DigestEmailBatchJobSuccess", w.DigestEmailBatchJobSuccess)
 	mgr.Register("DigestEmailJob", w.DigestEmailJob)
 	mgr.Register("AggregatedDigestEmailJob", w.AggregatedDigestEmailJob)
+
+	mgr.Register(translateAuditCronJobName, JobWithPanicProtection(w.TranslateAuditCronJob))
+	mgr.Register(translateAuditBatchJobName, JobWithPanicProtection(w.TranslateAuditBatchJob))
+	mgr.Register(translateAuditBatchJobSuccessName, JobWithPanicProtection(w.TranslateAuditBatchJobSuccess))
+	mgr.Register(translateAuditJobName, JobWithPanicProtection(w.TranslateAuditJob))
 
 	/**********************
 	* //Future Enhancement

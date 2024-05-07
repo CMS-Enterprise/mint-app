@@ -27,6 +27,13 @@ type DiscussionReplyCreateInput struct {
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
 
+// Represents discussion reply translation data
+type DiscussionReplyTranslation struct {
+	UserRole            models.TranslationFieldWithOptions `json:"userRole" db:"user_role"`
+	UserRoleDescription models.TranslationField            `json:"userRoleDescription" db:"user_role_description"`
+	Content             models.TranslationField            `json:"content" db:"content"`
+}
+
 // The current user's Launch Darkly key
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
@@ -47,6 +54,35 @@ type ModelPlanTranslation struct {
 type NDAInfo struct {
 	Agreed    bool       `json:"agreed"`
 	AgreedDts *time.Time `json:"agreedDts,omitempty"`
+}
+
+// Represents operational need translation data
+type OperationalNeedTranslation struct {
+	Name      models.TranslationField            `json:"name" db:"name"`
+	NameOther *models.TranslationField           `json:"nameOther,omitempty" db:"name_other"`
+	Key       models.TranslationFieldWithOptions `json:"key" db:"key"`
+	Needed    models.TranslationFieldWithOptions `json:"needed" db:"needed"`
+	Section   models.TranslationFieldWithOptions `json:"section" db:"section"`
+}
+
+// Represents operational solution subtask translation data
+type OperationalSolutionSubtaskTranslation struct {
+	Name   models.TranslationField            `json:"name" db:"name"`
+	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
+}
+
+// Represents operational solution translation data
+type OperationalSolutionTranslation struct {
+	Name          models.TranslationField            `json:"name" db:"name"`
+	NameOther     models.TranslationField            `json:"nameOther" db:"name_other"`
+	OtherHeader   models.TranslationField            `json:"otherHeader" db:"other_header"`
+	PocName       models.TranslationField            `json:"pocName" db:"poc_name"`
+	PocEmail      models.TranslationField            `json:"pocEmail" db:"poc_email"`
+	MustStartDts  models.TranslationField            `json:"mustStartDts" db:"must_start_dts"`
+	MustFinishDts models.TranslationField            `json:"mustFinishDts" db:"must_finish_dts"`
+	Needed        models.TranslationFieldWithOptions `json:"needed" db:"needed"`
+	Key           models.TranslationFieldWithOptions `json:"key" db:"key"`
+	Status        models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
 // Represents plan basics translation data
@@ -130,6 +166,15 @@ type PlanCRCreateInput struct {
 	Note            *string   `json:"note,omitempty"`
 }
 
+// Represents plan cr translation data
+type PlanCRsTranslation struct {
+	IDNumber        models.TranslationField  `json:"idNumber" db:"id_number"`
+	Title           models.TranslationField  `json:"title" db:"title"`
+	DateInitiated   models.TranslationField  `json:"dateInitiated" db:"date_initiated"`
+	DateImplemented *models.TranslationField `json:"dateImplemented,omitempty" db:"date_implemented"`
+	Note            models.TranslationField  `json:"note" db:"note"`
+}
+
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 type PlanCollaboratorCreateInput struct {
 	ModelPlanID uuid.UUID         `json:"modelPlanID"`
@@ -152,6 +197,13 @@ type PlanDiscussionCreateInput struct {
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
 
+// Represents plan discussions translation data
+type PlanDiscussionsTranslation struct {
+	UserRole            models.TranslationFieldWithOptions `json:"userRole" db:"user_role"`
+	UserRoleDescription models.TranslationField            `json:"userRoleDescription" db:"user_role_description"`
+	Content             models.TranslationField            `json:"content" db:"content"`
+}
+
 // PlanDocumentInput
 type PlanDocumentInput struct {
 	ModelPlanID          uuid.UUID           `json:"modelPlanID"`
@@ -171,6 +223,17 @@ type PlanDocumentLinkInput struct {
 	Restricted           bool                `json:"restricted"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
+}
+
+// Represents plan documents translation data
+type PlanDocumentsTranslation struct {
+	IsLink               models.TranslationField            `json:"isLink" db:"is_link"`
+	URL                  models.TranslationField            `json:"url" db:"url"`
+	Name                 models.TranslationField            `json:"name" db:"name"`
+	DocumentType         models.TranslationFieldWithOptions `json:"documentType" db:"document_type"`
+	OtherTypeDescription *models.TranslationField           `json:"otherTypeDescription,omitempty" db:"other_type_description"`
+	Restricted           models.TranslationFieldWithOptions `json:"restricted" db:"restricted"`
+	OptionalNotes        *models.TranslationField           `json:"optionalNotes,omitempty" db:"optional_notes"`
 }
 
 // Represents plan general characteristics translation data
@@ -514,6 +577,14 @@ type PlanTDLCreateInput struct {
 	DateInitiated time.Time `json:"dateInitiated"`
 	Title         string    `json:"title"`
 	Note          *string   `json:"note,omitempty"`
+}
+
+// Represents plan tdl translation data
+type PlanTDLsTranslation struct {
+	IDNumber      models.TranslationField `json:"idNumber" db:"id_number"`
+	Title         models.TranslationField `json:"title" db:"title"`
+	DateInitiated models.TranslationField `json:"dateInitiated" db:"date_initiated"`
+	Note          models.TranslationField `json:"note" db:"note"`
 }
 
 type PrepareForClearance struct {

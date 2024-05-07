@@ -20,6 +20,7 @@ import {
   DataFullTimeOrIncrementalType,
   DataStartsType,
   DataToSendParticipantsType,
+  DiscussionReplyTranslation,
   DiscussionUserRole,
   DocumentType,
   EvaluationApproachType,
@@ -38,8 +39,11 @@ import {
   MonitoringFileType,
   NonClaimsBasedPayType,
   OperationalNeedKey,
+  OperationalNeedTranslation,
   OperationalSolutionKey,
   OperationalSolutionSubtaskStatus,
+  OperationalSolutionSubtaskTranslation,
+  OperationalSolutionTranslation,
   OpSolutionStatus,
   OverlapType,
   ParticipantCommunicationType,
@@ -53,10 +57,14 @@ import {
   PlanBasicsTranslation,
   PlanBeneficiariesTranslation,
   PlanCollaboratorTranslation,
+  PlanCRsTranslation,
+  PlanDiscussionsTranslation,
+  PlanDocumentsTranslation,
   PlanGeneralCharacteristicsTranslation,
   PlanOpsEvalAndLearningTranslation,
   PlanParticipantsAndProvidersTranslation,
   PlanPaymentsTranslation,
+  PlanTdLsTranslation,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
@@ -917,14 +925,47 @@ export type TranslationCollaborators = {
 };
 
 // Discussions
-export type TranslationDiscussions = {
+export type TranslationDiscussionsForm = {
   userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
   userRoleDescription: TranslationFieldProperties;
   content: TranslationFieldProperties;
 };
 
+type TranslationDiscussionsGQL = Omit<
+  PlanDiscussionsTranslation, // graphql gen type
+  '__typename'
+>;
+
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationDiscussions = {
+  [K in keyof TranslationDiscussionsGQL]: TranslationDiscussionsForm[K]; // FE form type
+};
+
+// Discussions
+export type TranslationRepliesForm = {
+  userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
+  userRoleDescription: TranslationFieldProperties;
+  content: TranslationFieldProperties;
+};
+
+type TranslationRepliesGQL = Omit<
+  DiscussionReplyTranslation, // graphql gen type
+  '__typename'
+>;
+
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationReplies = {
+  [K in keyof TranslationRepliesGQL]: TranslationRepliesForm[K]; // FE form type
+};
+
 // CRs
-export type TranslationCRs = {
+export type TranslationCRsForm = {
   idNumber: TranslationFieldProperties;
   dateInitiated: TranslationFieldProperties;
   dateImplemented: TranslationFieldProperties;
@@ -932,16 +973,42 @@ export type TranslationCRs = {
   note: TranslationFieldProperties;
 };
 
+type TranslationCRsGQL = Omit<
+  PlanCRsTranslation, // graphql gen type
+  '__typename'
+>;
+
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationCRs = {
+  [K in keyof TranslationCRsGQL]: TranslationCRsForm[K]; // FE form type
+};
+
 // TDLs
-export type TranslationTDLs = {
+export type TranslationTDLsForm = {
   idNumber: TranslationFieldProperties;
   dateInitiated: TranslationFieldProperties;
   title: TranslationFieldProperties;
   note: TranslationFieldProperties;
 };
 
+type TranslationTDLsGQL = Omit<
+  PlanTdLsTranslation, // graphql gen type
+  '__typename'
+>;
+
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationTDLs = {
+  [K in keyof TranslationTDLsGQL]: TranslationTDLsForm[K]; // FE form type
+};
+
 // Documents
-export type TranslationDocuments = {
+export type TranslationDocumentsForm = {
   isLink: TranslationFieldPropertiesWithOptions<Bool>;
   url: TranslationFieldProperties;
   name: TranslationFieldProperties;
@@ -951,8 +1018,21 @@ export type TranslationDocuments = {
   otherTypeDescription: TranslationFieldProperties;
 };
 
+type TranslationDocumentsGQL = Omit<
+  PlanDocumentsTranslation, // graphql gen type
+  '__typename'
+>;
+
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationDocuments = {
+  [K in keyof TranslationDocumentsGQL]: TranslationDocumentsForm[K]; // FE form type
+};
+
 // Operational Need
-export type TranslationOperationalNeeds = {
+export type TranslationOperationalNeedsForm = {
   name: TranslationFieldProperties;
   nameOther: TranslationFieldProperties;
   key: TranslationFieldPropertiesWithOptions<OperationalNeedKey>;
@@ -960,8 +1040,21 @@ export type TranslationOperationalNeeds = {
   section: TranslationFieldPropertiesWithOptions<TaskListSection>;
 };
 
+type TranslationOperationalNeedsGQL = Omit<
+  OperationalNeedTranslation, // graphql gen type
+  '__typename'
+>;
+
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationOperationalNeeds = {
+  [K in keyof TranslationOperationalNeedsGQL]: TranslationOperationalNeedsForm[K]; // FE form type
+};
+
 // Operational Solution
-export type TranslationOperationalSolutions = {
+export type TranslationOperationalSolutionsForm = {
   name: TranslationFieldProperties;
   nameOther: TranslationFieldProperties;
   key: TranslationFieldPropertiesWithOptions<OperationalSolutionKey>;
@@ -974,10 +1067,36 @@ export type TranslationOperationalSolutions = {
   status: TranslationFieldPropertiesWithOptions<OpSolutionStatus>;
 };
 
+type TranslationOperationalSolutionsGQL = Omit<
+  OperationalSolutionTranslation, // graphql gen type
+  '__typename'
+>;
+
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationOperationalSolutions = {
+  [K in keyof TranslationOperationalSolutionsGQL]: TranslationOperationalSolutionsForm[K]; // FE form type
+};
+
 // Operational Solution Subtasks
-export type TranslationOperationalSolutionSubtasks = {
+export type TranslationOperationalSolutionSubtasksForm = {
   name: TranslationFieldProperties;
   status: TranslationFieldPropertiesWithOptions<OperationalSolutionSubtaskStatus>;
+};
+
+type TranslationOperationalSolutionSubtasksGQL = Omit<
+  OperationalSolutionSubtaskTranslation, // graphql gen type
+  '__typename'
+>;
+
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationOperationalSolutionSubtasks = {
+  [K in keyof TranslationOperationalSolutionSubtasksGQL]: TranslationOperationalSolutionSubtasksForm[K]; // FE form type
 };
 
 export type TranslationPlan = {
