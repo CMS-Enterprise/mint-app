@@ -8,7 +8,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 )
 
-//go:embed translation/plan_Discussion.json
+//go:embed translation/plan_discussion.json
 var discussionJSON []byte
 
 // PlanDiscussionTranslation Provides the translation for Plan Discussion
