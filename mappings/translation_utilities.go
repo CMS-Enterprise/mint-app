@@ -39,6 +39,10 @@ func GetTranslation(tableName string) (Translation, error) {
 		return OperationalSolutionSubtaskTranslation()
 	case "plan_discussion":
 		return PlanDiscussionTranslation()
+	case "discussion_reply":
+		return DiscussionReplyTranslation()
+	case "plan_cr":
+		return PlanCRTranslation()
 
 	default:
 		// ut := UnknownTranslation{
