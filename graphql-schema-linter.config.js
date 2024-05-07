@@ -36,7 +36,7 @@ module.exports = {
       'PlanCollaboratorTranslation',
       'PlanDiscussionTranslation',
       'DiscussionReplyTranslation',
-      'PlanCRsTranslation',
+      'PlanCRTranslation',
       'PlanTDLsTranslation',
       'PlanDocumentsTranslation',
       'OperationalNeedTranslation',

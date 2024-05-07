@@ -167,7 +167,7 @@ type PlanCRCreateInput struct {
 }
 
 // Represents plan cr translation data
-type PlanCRsTranslation struct {
+type PlanCRTranslation struct {
 	IDNumber        models.TranslationField  `json:"idNumber" db:"id_number"`
 	Title           models.TranslationField  `json:"title" db:"title"`
 	DateInitiated   models.TranslationField  `json:"dateInitiated" db:"date_initiated"`
