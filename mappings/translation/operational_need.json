@@ -20,7 +20,7 @@
     "gqlField": "key",
     "goField": "Key",
     "dbField": "key",
-    "label": "",
+    "label": "The key representing the type of operational need.",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "options": {

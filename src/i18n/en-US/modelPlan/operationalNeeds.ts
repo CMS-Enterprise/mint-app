@@ -27,7 +27,7 @@ const operationalNeeds: TranslationOperationalNeeds = {
     gqlField: 'key',
     goField: 'Key',
     dbField: 'key',
-    label: '',
+    label: 'The key representing the type of operational need.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     options: {

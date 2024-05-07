@@ -39,7 +39,7 @@ export const translationSections = {
   plan_document: documents,
   plan_cr: crs,
   plan_tdl: tdls,
-  possible_operational_need: operationalNeeds,
+  operational_need: operationalNeeds,
   operational_solution: operationalSolutions,
   operational_solution_subtask: subtasks
 };
