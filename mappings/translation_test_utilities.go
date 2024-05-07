@@ -165,15 +165,9 @@ func assertTFieldBase(t *testing.T, field reflect.StructField, base models.Trans
 	assert.NotZero(t, base.DbField, "issue for field %s", field.Name)
 	assert.NotZero(t, base.Label, "issue for field %s", field.Name)
 
-	assertStringPointerNilOrNotEmpty(t, base.ReadOnlyLabel, field)
-
-	assertStringPointerNilOrNotEmpty(t, base.SubLabel, field)
-
-	assertStringPointerNilOrNotEmpty(t, base.MultiSelectLabel, field)
-
-	assertStringPointerNilOrNotEmpty(t, base.ReadOnlyLabel, field)
-	assertStringPointerNilOrNotEmpty(t, base.SubLabel, field)
-	assertStringPointerNilOrNotEmpty(t, base.MultiSelectLabel, field)
+	assertStringPointerNilOrNotEmpty(t, base.ReadOnlyLabel, "ReadOnlyLabel", field)
+	assertStringPointerNilOrNotEmpty(t, base.SubLabel, "SubLabel", field)
+	assertStringPointerNilOrNotEmpty(t, base.MultiSelectLabel, "MultiSelectLabel", field)
 
 	// assert.NotZero(t, base.IsArray) // not zero doesn't work for bool because false is zero
 
@@ -195,8 +189,8 @@ func assertTFieldBase(t *testing.T, field reflect.StructField, base models.Trans
 		}
 	}
 
-	assertStringPointerNilOrNotEmpty(t, base.OtherParentField, field)
-	assertStringPointerNilOrNotEmpty(t, base.ParentReferencesLabel, field)
+	assertStringPointerNilOrNotEmpty(t, base.OtherParentField, "OtherParentField", field)
+	assertStringPointerNilOrNotEmpty(t, base.ParentReferencesLabel, "ParentReferencesLabel", field)
 
 }
 
@@ -237,11 +231,11 @@ func assertTFieldWithChildren(t *testing.T, field reflect.StructField, translati
 }
 
 // assertStringPointerNilOrNotEmpty requires a non empty string if a string pointer is not nil
-func assertStringPointerNilOrNotEmpty(t *testing.T, value *string, field reflect.StructField) {
+func assertStringPointerNilOrNotEmpty(t *testing.T, value *string, sectionName string, field reflect.StructField) {
 	if value == nil {
 		return
 	}
 
-	assert.NotEqualValues(t, "", *value, "field %s is an empty string, a value was expected", field.Name)
+	assert.NotEqualValues(t, "", *value, "field %s, section %s, is an empty string, a value was expected", field.Name, sectionName)
 
 }
