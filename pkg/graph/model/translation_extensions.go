@@ -134,3 +134,33 @@ func (pdt *PlanDocumentsTranslation) TableName() string {
 func (pdt *PlanDocumentsTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*pdt)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pot *PossibleOperationalNeedTranslation) TableName() string {
+	return "possible_operational_need"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pot *PossibleOperationalNeedTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pot)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pos *PossibleOperationalSolutionTranslation) TableName() string {
+	return "possible_operational_solution"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pos *PossibleOperationalSolutionTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pos)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (ost *OperationalSolutionSubtaskTranslation) TableName() string {
+	return "operational_solution_subtask"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (ost *OperationalSolutionSubtaskTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*ost)
+}
