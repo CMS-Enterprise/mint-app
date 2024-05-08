@@ -173,6 +173,7 @@ export const basics: TranslationBasics = {
     goField: 'ModelTypeOther',
     dbField: 'model_type_other',
     label: 'Please specify',
+    exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     isOtherType: true,

@@ -145,6 +145,7 @@ describe('exportTranslation Util', () => {
         goField: 'ModelTypeOther',
         dbField: 'model_type_other',
         label: 'Please specify',
+        exportLabel: 'Please specify other',
         dataType: 'STRING',
         formType: 'TEXTAREA',
         isOtherType: true,
