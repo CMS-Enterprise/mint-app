@@ -5,7 +5,7 @@ type PlanBasicsTranslation {
   modelCategory: TranslationFieldWithOptions! @goTag(key: "db", value: "model_category")
   additionalModelCategories: TranslationFieldWithOptions! @goTag(key: "db", value: "additional_model_categories")
   demoCode: TranslationField! @goTag(key: "db", value: "demo_code")
-  amsModelID: TranslationField! @goTag(key: "db", value: "ams_model_ID")
+  amsModelID: TranslationField! @goTag(key: "db", value: "ams_model_id")
   cmsCenters: TranslationFieldWithOptions! @goTag(key: "db", value: "cms_centers")
   cmmiGroups: TranslationFieldWithOptions! @goTag(key: "db", value: "cmmi_groups")
   modelType: TranslationFieldWithOptions! @goTag(key: "db", value: "model_type")

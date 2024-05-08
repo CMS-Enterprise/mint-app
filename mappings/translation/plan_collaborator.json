@@ -1,4 +1,13 @@
 {
+  "userID": {
+    "gqlField": "userID",
+    "goField": "UserID",
+    "dbField": "user_id",
+    "label": "User ID",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "tableReference": "user_account"
+  },
   "username": {
     "gqlField": "username",
     "goField": "Username",

@@ -7,12 +7,10 @@ export default gql(/* GraphQL */ `
       tableName
       date
       action
-
+      actorName
       translatedFields {
         id
       }
-
-      actorName
     }
   }
 `);

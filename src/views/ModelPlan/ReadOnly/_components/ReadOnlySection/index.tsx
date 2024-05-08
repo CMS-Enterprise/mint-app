@@ -358,9 +358,7 @@ const ListItems = <T extends string | keyof T, C extends string | keyof C>({
   );
 };
 
-/*
-  Renders a nested list item.  If no value exists, render <NoAddtionalInfo />
-*/
+// Renders a nested list item.  If no value exists, render <NoAddtionalInfo />
 const ListOtherItem = ({
   index,
   listOtherItems

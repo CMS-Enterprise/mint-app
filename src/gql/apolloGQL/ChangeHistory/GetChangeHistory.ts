@@ -7,26 +7,21 @@ export default gql(/* GraphQL */ `
       tableName
       date
       action
-
+      actorName
       translatedFields {
         id
-
         changeType
+        dataType
         fieldName
         fieldNameTranslated
+        referenceLabel
+        questionType
+        notApplicableQuestions
         old
         oldTranslated
         new
         newTranslated
-
-        metaData {
-          ... on TranslatedAuditFieldMetaBaseStruct {
-            version
-          }
-        }
       }
-
-      actorName
     }
   }
 `);
