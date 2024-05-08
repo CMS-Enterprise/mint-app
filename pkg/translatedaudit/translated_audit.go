@@ -209,7 +209,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 
 	for fieldName, field := range audit.Fields {
 		//  Changes: (Translations) consider removing plan from the function
-		transField, err := translateField(fieldName, field, audit, actorAccount, operation, plan, translationMap)
+		transField, err := translateField(store, fieldName, field, audit, actorAccount, operation, plan, translationMap)
 		if err != nil {
 			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, plan.ModelName, err)
 		}
@@ -269,7 +269,7 @@ func genericAuditCollectionTranslation(ctx context.Context, store *storage.Store
 
 		for fieldName, field := range audit.Fields {
 			//  Changes: (Translations) consider removing plan from the function
-			transField, err := translateField(fieldName, field, audit, actorAccount, operation, plan, translationMap)
+			transField, err := translateField(store, fieldName, field, audit, actorAccount, operation, plan, translationMap)
 			if err != nil {
 				fmt.Printf("issue translating field (%s) for plan %s ", fieldName, plan.ModelName)
 				continue
@@ -284,7 +284,15 @@ func genericAuditCollectionTranslation(ctx context.Context, store *storage.Store
 	return changes, nil
 }
 
-func translateField(fieldName string, field models.AuditField, audit *models.AuditChange, actorAccount *authentication.UserAccount, operation models.DatabaseOperation, modelPlan *models.ModelPlan, translationMap map[string]models.ITranslationField) (*models.TranslatedAuditField, error) {
+func translateField(
+	store *storage.Store,
+	fieldName string,
+	field models.AuditField,
+	audit *models.AuditChange,
+	actorAccount *authentication.UserAccount,
+	operation models.DatabaseOperation,
+	modelPlan *models.ModelPlan,
+	translationMap map[string]models.ITranslationField) (*models.TranslatedAuditField, error) {
 
 	// Set default values in case of missing translation
 	// Changes: (Translations) We should handle a nil / empty case what should we do in that case?
@@ -343,9 +351,16 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		}
 
 		options, hasOptions := translationInterface.GetOptions()
+		tableReference, hasTableReference := translationInterface.GetTableReference()
+		//Changes: (fk) look to update the unit tests, we don't want a foreign key relation to be overridden with options.
+		// ALSO! consider if there are any places with an array of foreign keys, I think we don't have that anymore
 		if hasOptions {
 			translatedOld = translateValue(old, options)
 			translatedNew = translateValue(new, options)
+		} else if hasTableReference {
+			translatedOld = translateForeignKey(nil, old, tableReference)
+			translatedNew = translateForeignKey(nil, new, tableReference)
+
 		} else {
 			translatedOld = old
 			translatedNew = new
@@ -553,5 +568,33 @@ func sanitizeAuditBoolValue(value interface{}) interface{} {
 		return "false"
 	}
 	return value
+
+}
+
+func translateForeignKey(store *storage.Store, value interface{}, tableReference string) interface{} {
+	if value == nil {
+		return nil
+	}
+
+	//Changes: (fk) Refactor this, and handle errors etc
+	if tableReference == "user_account" {
+		uuid, isUUID := value.(uuid.UUID)
+		if isUUID {
+			account, err := storage.UserAccountGetByID(store, uuid)
+			if err != nil {
+				return account.CommonName
+			}
+		}
+
+	}
+
+	//Changes: (fk) Move this to it's own file
+	// Update to switch on the table name to get a translation per table
+	// for now assume that we will only need the same sort of translation every time for these field
+	getForeignKeyTranslation(store)
+	return nil
+}
+
+func getForeignKeyTranslation(store *storage.Store) {
 
 }
