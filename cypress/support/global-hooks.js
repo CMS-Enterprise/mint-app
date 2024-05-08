@@ -1,4 +1,4 @@
-beforeEach(() => {
+before(() => {
   cy.exec('scripts/dev db:clean', {
     timeout: 120000,
     failOnNonZeroExit: false
