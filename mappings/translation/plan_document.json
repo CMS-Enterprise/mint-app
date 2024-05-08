@@ -3,7 +3,7 @@
     "gqlField": "isLink",
     "goField": "IsLink",
     "dbField": "is_link",
-    "label": "",
+    "label": "Is this a link to a document?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
     "options": {

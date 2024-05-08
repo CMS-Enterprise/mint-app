@@ -29,7 +29,6 @@
     "goField": "PocName",
     "dbField": "poc_name",
     "label": "Point of contact",
-    "sublabel": "",
     "dataType": "STRING",
     "formType": "TEXT"
   },
@@ -63,7 +62,7 @@
     "gqlField": "needed",
     "goField": "Needed",
     "dbField": "needed",
-    "label": "",
+    "label": "Is the solution needed?",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",
     "options": {

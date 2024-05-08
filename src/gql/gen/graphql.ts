@@ -1616,8 +1616,8 @@ export type PlanCrCreateInput = {
 };
 
 /** Represents plan cr translation data */
-export type PlanCRsTranslation = {
-  __typename: 'PlanCRsTranslation';
+export type PlanCrTranslation = {
+  __typename: 'PlanCRTranslation';
   dateImplemented?: Maybe<TranslationField>;
   dateInitiated: TranslationField;
   idNumber: TranslationField;
@@ -1682,9 +1682,9 @@ export type PlanDiscussionCreateInput = {
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Represents plan discussions translation data */
-export type PlanDiscussionsTranslation = {
-  __typename: 'PlanDiscussionsTranslation';
+/** Represents plan discussion translation data */
+export type PlanDiscussionTranslation = {
+  __typename: 'PlanDiscussionTranslation';
   content: TranslationField;
   userRole: TranslationFieldWithOptions;
   userRoleDescription: TranslationField;
@@ -1755,9 +1755,9 @@ export type PlanDocumentSolutionLink = {
   solutionID: Scalars['UUID']['output'];
 };
 
-/** Represents plan documents translation data */
-export type PlanDocumentsTranslation = {
-  __typename: 'PlanDocumentsTranslation';
+/** Represents plan document translation data */
+export type PlanDocumentTranslation = {
+  __typename: 'PlanDocumentTranslation';
   documentType: TranslationFieldWithOptions;
   isLink: TranslationField;
   name: TranslationField;
@@ -2888,8 +2888,8 @@ export type PlanTdlCreateInput = {
 };
 
 /** Represents plan tdl translation data */
-export type PlanTdLsTranslation = {
-  __typename: 'PlanTDLsTranslation';
+export type PlanTdlTranslation = {
+  __typename: 'PlanTDLTranslation';
   dateInitiated: TranslationField;
   idNumber: TranslationField;
   note: TranslationField;

@@ -36,7 +36,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     goField: 'PocName',
     dbField: 'poc_name',
     label: 'Point of contact',
-    sublabel: '',
+    // sublabel: '',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT
   },
@@ -70,7 +70,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     gqlField: 'needed',
     goField: 'Needed',
     dbField: 'needed',
-    label: '',
+    label: 'Is the solution needed?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
     options: {

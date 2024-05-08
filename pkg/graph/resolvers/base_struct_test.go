@@ -5,7 +5,8 @@ import "github.com/cmsgov/mint-app/pkg/models"
 func (suite *ResolverSuite) TestCreatedByUserAccount() {
 	plan := suite.createModelPlan("My Test plan")
 	colab := suite.createPlanCollaborator(plan, "FRND", []models.TeamRole{models.TeamRoleEvaluation})
-	createdAccount := colab.CreatedByUserAccount(suite.testConfigs.Context) //the same as the config test principal
+	createdAccount, err := colab.CreatedByUserAccount(suite.testConfigs.Context) //the same as the config test principal
+	suite.NoError(err)
 
 	suite.Equal(suite.testConfigs.Principal.UserAccount, createdAccount)
 }
@@ -16,7 +17,8 @@ func (suite *ResolverSuite) TestModifiedByUserAccount() {
 	plan := suite.createModelPlan("My Test plan")
 	colab := suite.createPlanCollaborator(plan, "FRND", []models.TeamRole{models.TeamRoleEvaluation})
 
-	nilModifiedAccount := colab.ModifiedByUserAccount(suite.testConfigs.Context)
+	nilModifiedAccount, err := colab.ModifiedByUserAccount(suite.testConfigs.Context)
+	suite.NoError(err)
 	suite.Nil(nilModifiedAccount)
 
 	updatedCollab, err := PlanCollaboratorUpdate(
@@ -27,7 +29,8 @@ func (suite *ResolverSuite) TestModifiedByUserAccount() {
 		suite.testConfigs.Store,
 	)
 	suite.NoError(err)
-	modifiedAccount := updatedCollab.ModifiedByUserAccount(suite.testConfigs.Context)
+	modifiedAccount, err := updatedCollab.ModifiedByUserAccount(suite.testConfigs.Context)
+	suite.NoError(err)
 
 	suite.Equal(updaterPrincipal.UserAccount, modifiedAccount)
 }

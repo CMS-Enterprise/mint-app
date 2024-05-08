@@ -167,7 +167,7 @@ type PlanCRCreateInput struct {
 }
 
 // Represents plan cr translation data
-type PlanCRsTranslation struct {
+type PlanCRTranslation struct {
 	IDNumber        models.TranslationField  `json:"idNumber" db:"id_number"`
 	Title           models.TranslationField  `json:"title" db:"title"`
 	DateInitiated   models.TranslationField  `json:"dateInitiated" db:"date_initiated"`
@@ -197,8 +197,8 @@ type PlanDiscussionCreateInput struct {
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
 }
 
-// Represents plan discussions translation data
-type PlanDiscussionsTranslation struct {
+// Represents plan discussion translation data
+type PlanDiscussionTranslation struct {
 	UserRole            models.TranslationFieldWithOptions `json:"userRole" db:"user_role"`
 	UserRoleDescription models.TranslationField            `json:"userRoleDescription" db:"user_role_description"`
 	Content             models.TranslationField            `json:"content" db:"content"`
@@ -225,8 +225,8 @@ type PlanDocumentLinkInput struct {
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
 
-// Represents plan documents translation data
-type PlanDocumentsTranslation struct {
+// Represents plan document translation data
+type PlanDocumentTranslation struct {
 	IsLink               models.TranslationField            `json:"isLink" db:"is_link"`
 	URL                  models.TranslationField            `json:"url" db:"url"`
 	Name                 models.TranslationField            `json:"name" db:"name"`
@@ -580,7 +580,7 @@ type PlanTDLCreateInput struct {
 }
 
 // Represents plan tdl translation data
-type PlanTDLsTranslation struct {
+type PlanTDLTranslation struct {
 	IDNumber      models.TranslationField `json:"idNumber" db:"id_number"`
 	Title         models.TranslationField `json:"title" db:"title"`
 	DateInitiated models.TranslationField `json:"dateInitiated" db:"date_initiated"`

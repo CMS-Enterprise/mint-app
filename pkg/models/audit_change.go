@@ -5,6 +5,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -90,7 +91,10 @@ func (a *AuditFields) Scan(src interface{}) error {
 // ModifiedByUserAccount returns the user account of the user who created the struct from the DB using the UserAccount service
 func (ac *AuditChange) ModifiedByUserAccount(ctx context.Context) (*authentication.UserAccount, error) { //TODO should this be moved to a shared struct? This isn't a base struct
 
-	service := appcontext.UserAccountService(ctx)
+	service, err := appcontext.UserAccountService(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("unable to get modified by user account, there is an issue with the user account service. err %w", err)
+	}
 	account, err := service(ctx, ac.ModifiedBy)
 	return account, err
 

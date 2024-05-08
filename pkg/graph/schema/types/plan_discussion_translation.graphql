@@ -1,8 +1,8 @@
 """
-Represents plan discussions translation data
+Represents plan discussion translation data
 """
 
-type PlanDiscussionsTranslation {
+type PlanDiscussionTranslation {
     userRole: TranslationFieldWithOptions! @goTag(key: "db", value: "user_role")
     userRoleDescription: TranslationField! @goTag(key: "db", value: "user_role_description")
     content: TranslationField! @goTag(key: "db", value: "content")

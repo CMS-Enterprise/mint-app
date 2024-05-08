@@ -1,8 +1,8 @@
 """
-Represents plan documents translation data
+Represents plan document translation data
 """
 
-type PlanDocumentsTranslation {
+type PlanDocumentTranslation {
     isLink: TranslationField! @goTag(key: "db", value: "is_link")
     url: TranslationField! @goTag(key: "db", value: "url")
     name: TranslationField! @goTag(key: "db", value: "name")

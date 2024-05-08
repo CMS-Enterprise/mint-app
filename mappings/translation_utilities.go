@@ -6,6 +6,9 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+// Changes: (Translations) Could all translation live in a exported map? At least the name and the json string? We could reduce the number of functions
+// however, having them separate enable much more granular testing.
+
 // GetTranslation allows programmatic access to return a translation for a given table name
 func GetTranslation(tableName string) (Translation, error) {
 
@@ -26,6 +29,22 @@ func GetTranslation(tableName string) (Translation, error) {
 		return PlanCollaboratorTranslation()
 	case "plan_beneficiaries":
 		return PlanBeneficiariesTranslation()
+	case "plan_document":
+		return PlanDocumentTranslation()
+	case "operational_need":
+		return OperationalNeedTranslation()
+	case "operational_solution":
+		return OperationalSolutionTranslation()
+	case "operational_solution_subtask":
+		return OperationalSolutionSubtaskTranslation()
+	case "plan_discussion":
+		return PlanDiscussionTranslation()
+	case "discussion_reply":
+		return DiscussionReplyTranslation()
+	case "plan_cr":
+		return PlanCRTranslation()
+	case "plan_tdl":
+		return PlanTDLTranslation()
 
 	default:
 		// ut := UnknownTranslation{

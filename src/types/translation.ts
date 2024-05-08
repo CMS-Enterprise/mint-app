@@ -57,14 +57,14 @@ import {
   PlanBasicsTranslation,
   PlanBeneficiariesTranslation,
   PlanCollaboratorTranslation,
-  PlanCRsTranslation,
-  PlanDiscussionsTranslation,
-  PlanDocumentsTranslation,
+  PlanCrTranslation,
+  PlanDiscussionTranslation,
+  PlanDocumentTranslation,
   PlanGeneralCharacteristicsTranslation,
   PlanOpsEvalAndLearningTranslation,
   PlanParticipantsAndProvidersTranslation,
   PlanPaymentsTranslation,
-  PlanTdLsTranslation,
+  PlanTdlTranslation,
   ProviderAddType,
   ProviderLeaveType,
   RecruitmentType,
@@ -932,7 +932,7 @@ export type TranslationDiscussionsForm = {
 };
 
 type TranslationDiscussionsGQL = Omit<
-  PlanDiscussionsTranslation, // graphql gen type
+  PlanDiscussionTranslation, // graphql gen type
   '__typename'
 >;
 
@@ -974,7 +974,7 @@ export type TranslationCRsForm = {
 };
 
 type TranslationCRsGQL = Omit<
-  PlanCRsTranslation, // graphql gen type
+  PlanCrTranslation, // graphql gen type
   '__typename'
 >;
 
@@ -995,7 +995,7 @@ export type TranslationTDLsForm = {
 };
 
 type TranslationTDLsGQL = Omit<
-  PlanTdLsTranslation, // graphql gen type
+  PlanTdlTranslation, // graphql gen type
   '__typename'
 >;
 
@@ -1019,7 +1019,7 @@ export type TranslationDocumentsForm = {
 };
 
 type TranslationDocumentsGQL = Omit<
-  PlanDocumentsTranslation, // graphql gen type
+  PlanDocumentTranslation, // graphql gen type
   '__typename'
 >;
 

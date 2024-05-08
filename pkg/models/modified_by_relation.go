@@ -2,6 +2,7 @@ package models
 
 import (
 	"context"
+	"fmt"
 
 	"time"
 
@@ -19,14 +20,19 @@ type modifiedByRelation struct {
 }
 
 // ModifiedByUserAccount returns the user account of the user who created the struct from the DB using the UserAccount service
-func (mbr *modifiedByRelation) ModifiedByUserAccount(ctx context.Context) *authentication.UserAccount {
+func (mbr *modifiedByRelation) ModifiedByUserAccount(ctx context.Context) (*authentication.UserAccount, error) {
 
 	if mbr.ModifiedBy == nil {
-		return nil
+		return nil, nil
 	}
-	service := appcontext.UserAccountService(ctx)
-	// Changes: (ChChCh Changes!) Consider making this return an error? Also check if the service is empty or not first...
-	account, _ := service(ctx, *mbr.ModifiedBy)
-	return account
+	service, err := appcontext.UserAccountService(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("unable to get modified by user account, there is an issue with the user account service. err %w", err)
+	}
+	account, err := service(ctx, *mbr.ModifiedBy)
+	if err != nil {
+		return nil, err
+	}
+	return account, nil
 
 }

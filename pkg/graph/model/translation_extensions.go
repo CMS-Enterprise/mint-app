@@ -84,3 +84,83 @@ func (tpp *ModelPlanTranslation) TableName() string {
 func (tpp *ModelPlanTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*tpp)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pdt *PlanDiscussionTranslation) TableName() string {
+	return "plan_discussion"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pdt *PlanDiscussionTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pdt)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (drt *DiscussionReplyTranslation) TableName() string {
+	return "discussion_reply"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (drt *DiscussionReplyTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*drt)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pct *PlanCRTranslation) TableName() string {
+	return "plan_cr"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pct *PlanCRTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pct)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (ptt *PlanTDLTranslation) TableName() string {
+	return "plan_tdl"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (ptt *PlanTDLTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*ptt)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pdt *PlanDocumentTranslation) TableName() string {
+	return "plan_document"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pdt *PlanDocumentTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pdt)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (ont *OperationalNeedTranslation) TableName() string {
+	return "operational_need"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (ont *OperationalNeedTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*ont)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (ost *OperationalSolutionTranslation) TableName() string {
+	return "operational_solution"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (ost *OperationalSolutionTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*ost)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (ost *OperationalSolutionSubtaskTranslation) TableName() string {
+	return "operational_solution_subtask"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (ost *OperationalSolutionSubtaskTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*ost)
+}
