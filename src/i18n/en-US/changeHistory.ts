@@ -6,6 +6,8 @@ const changeHistory = {
     'made {{count}} change in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   change_other:
     'made {{count}} changes in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
+  planCreate:
+    'created {{plan_name}} <datetime>on {{date}} at {{time}}</datetime>',
   sections: {
     model_plan: 'Model plan',
     plan_basics: 'Model basics',
@@ -14,7 +16,15 @@ const changeHistory = {
     plan_beneficiaries: 'Beneficiaries',
     plan_ops_eval_and_learning: 'Operations, evaluation, and learning',
     plan_payments: 'Payments',
-    plan_collaborator: 'Model team'
+    plan_collaborator: 'Model team',
+    plan_discussion: 'Discussions',
+    discussion_reply: 'Replies',
+    plan_document: 'Documents',
+    plan_cr: 'CRs',
+    plan_tdl: 'TDLs',
+    operational_need: 'Operational needs',
+    operational_solution: 'Operational solutions',
+    operational_solution_subtask: 'Operational solution subtasks'
   },
   showDetails: 'Show details',
   hideDetails: 'Hide details',

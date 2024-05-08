@@ -177,11 +177,82 @@ const ChangedQuestion = ({ change }: SingleChangeProps) => {
   return <>{change.fieldNameTranslated}</>;
 };
 
+type ChangeType =
+  | 'New plan'
+  | 'Status update'
+  | 'Task list status update'
+  | 'Team update'
+  | 'Discussion update'
+  | 'Document update'
+  | 'Operational need create'
+  | 'Standard update';
+
+export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
+  if (
+    change.tableName === 'model_plan' &&
+    change.translatedFields.find(
+      field => field.fieldName === 'status' && field.old === null
+    )
+  ) {
+    return 'New plan';
+  }
+  if (
+    change.tableName === 'model_plan' &&
+    change.translatedFields.find(
+      field => field.fieldName === 'status' && field.old !== null
+    )
+  ) {
+    return 'Status update';
+  }
+  if (
+    change.tableName !== 'model_plan' &&
+    change.translatedFields.find(field => field.fieldName === 'status')
+  ) {
+    return 'Task list status update';
+  }
+  if (change.tableName === 'plan_collaborator') {
+    return 'Team update';
+  }
+  if (change.tableName === 'plan_discussion') {
+    return 'Discussion update';
+  }
+  if (change.tableName === 'plan_document') {
+    return 'Document update';
+  }
+  if (
+    change.tableName === 'operational_need' &&
+    change.translatedFields.length === 0
+  ) {
+    return 'Operational need create';
+  }
+  return 'Standard update';
+};
+
+export const isInitialCreatedSection = (
+  change: ChangeRecordType,
+  changeType: ChangeType
+): boolean =>
+  !!(
+    (changeType === 'Task list status update' &&
+      change.translatedFields.find(
+        field => field.fieldName === 'status' && field.old === null
+      )) ||
+    identifyChangeType(change) === 'Operational need create'
+  );
+
 // Render a single change record, showing the actor, the date, and the fields that were changed
 const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
   const { t } = useTranslation('changeHistory');
 
   const [isOpen, setOpen] = useState<boolean>(false);
+
+  const changeRecordType = identifyChangeType(changeRecord);
+
+  const showMoreData: boolean = changeRecordType === 'Standard update';
+
+  if (isInitialCreatedSection(changeRecord, changeRecordType)) {
+    return null;
+  }
 
   return (
     <Card className="change-record">
@@ -192,23 +263,42 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
         />
         <span>
           <span className="text-bold">{changeRecord.actorName} </span>
-          <Trans
-            i18nKey="changeHistory:change"
-            count={changeRecord.translatedFields.length}
-            values={{
-              count: changeRecord.translatedFields.length,
-              section: t(`sections.${changeRecord.tableName}`),
-              date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-              time: formatTime(changeRecord.date)
-            }}
-            components={{
-              datetime: <span />
-            }}
-          />
+
+          {changeRecordType === 'New plan' && (
+            <Trans
+              i18nKey="changeHistory:planCreate"
+              values={{
+                plan_name: changeRecord.translatedFields.find(
+                  field => field.fieldName === 'model_name'
+                )?.new,
+                date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                time: formatTime(changeRecord.date)
+              }}
+              components={{
+                datetime: <span />
+              }}
+            />
+          )}
+
+          {changeRecordType === 'Standard update' && (
+            <Trans
+              i18nKey="changeHistory:change"
+              count={changeRecord.translatedFields.length}
+              values={{
+                count: changeRecord.translatedFields.length,
+                section: t(`sections.${changeRecord.tableName}`),
+                date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                time: formatTime(changeRecord.date)
+              }}
+              components={{
+                datetime: <span />
+              }}
+            />
+          )}
         </span>
       </div>
 
-      {!isOpen && (
+      {!isOpen && showMoreData && (
         <ul className="margin-top-05 margin-bottom-1 margin-left-4">
           {changeRecord.translatedFields.map(change => (
             <li key={change.id}>
@@ -218,21 +308,23 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
         </ul>
       )}
 
-      <CollapsableLink
-        className="margin-left-6"
-        id={changeRecord.id}
-        label={t('showDetails')}
-        closeLabel={t('hideDetails')}
-        labelPosition="bottom"
-        setParentOpen={setOpen}
-        styleLeftBar={false}
-      >
-        <div className="margin-bottom-neg-1">
-          {changeRecord.translatedFields.map(change => (
-            <SingleChange change={change} key={change.id} />
-          ))}
-        </div>
-      </CollapsableLink>
+      {showMoreData && (
+        <CollapsableLink
+          className="margin-left-6"
+          id={changeRecord.id}
+          label={t('showDetails')}
+          closeLabel={t('hideDetails')}
+          labelPosition="bottom"
+          setParentOpen={setOpen}
+          styleLeftBar={false}
+        >
+          <div className="margin-bottom-neg-1">
+            {changeRecord.translatedFields.map(change => (
+              <SingleChange change={change} key={change.id} />
+            ))}
+          </div>
+        </CollapsableLink>
+      )}
     </Card>
   );
 };
