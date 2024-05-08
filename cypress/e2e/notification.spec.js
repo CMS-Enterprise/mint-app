@@ -1,6 +1,7 @@
 describe('Notification Center', () => {
   it('navigates through the Notification page', () => {
     cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/');
     cy.clickPlanTableByName('Empty Plan');
 
     cy.contains('button', 'Start a discussion').click();
@@ -85,6 +86,7 @@ describe('Notification Center', () => {
 
   it('navigates to see Daily Digest notification', () => {
     cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/');
     cy.get('[data-testid="navmenu__notification"]').first().click();
     cy.url().should('include', '/notifications');
 
@@ -105,6 +107,7 @@ describe('Notification Center', () => {
 
   it('navigates to see Notification Settings', () => {
     cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/');
 
     cy.get('[data-testid="navmenu__notification"]').first().click();
 
@@ -133,6 +136,7 @@ describe('Notification Center', () => {
 
   it('testing New Discussion Reply Notification', () => {
     cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/');
     cy.clickPlanTableByName('Empty Plan');
 
     // New Discussion Reply test
@@ -173,6 +177,7 @@ describe('Notification Center', () => {
 
   it('testing Adding Collaborator Notification', () => {
     cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/');
     cy.clickPlanTableByName('Empty Plan');
 
     // Add SF13 as a collaborator
@@ -203,7 +208,8 @@ describe('Notification Center', () => {
     cy.logout();
 
     // Login as SF13
-    cy.localLogin({ name: 'SF13', role: 'MINT_USER_NONPROD' });
+    cy.localLogin({ name: 'SF13' });
+    cy.visit('/');
 
     cy.get('[data-testid="navmenu__notification"]').first().click();
 

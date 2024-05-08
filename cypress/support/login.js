@@ -34,28 +34,30 @@ Cypress.Commands.add('login', () => {
 Cypress.Commands.add(
   'localLogin',
   ({ name, role = 'MINT_USER_NONPROD', nda }) => {
-    // Adding an extended timeout here to give Vite enough time to compile sass on it's first run
-    cy.visit('/login', { timeout: 120000 });
+    cy.session([name, role, nda], () => {
+      // Adding an extended timeout here to give Vite enough time to compile sass on it's first run
+      cy.visit('/login', { timeout: 120000 });
 
-    cy.get('[data-testid="LocalAuth-Visit"]').click();
-    cy.get('[data-testid="LocalAuth-EUA"]').type(name);
+      cy.get('[data-testid="LocalAuth-Visit"]').click();
+      cy.get('[data-testid="LocalAuth-EUA"]').type(name);
 
-    if (role) {
-      cy.get(`input[value="${role}"]`).check();
-    }
-    cy.get('[data-testid="LocalAuth-Submit"]').click();
+      if (role) {
+        cy.get(`input[value="${role}"]`).check();
+      }
+      cy.get('[data-testid="LocalAuth-Submit"]').click();
 
-    if (!nda) {
-      cy.get('#nda-check').check({ force: true }).should('be.checked');
+      if (!nda) {
+        cy.get('#nda-check').check({ force: true }).should('be.checked');
 
-      cy.get('#nda-submit').click();
-    } else {
-      cy.get('#nda-alert').should('contain.text', 'Accepted on');
+        cy.get('#nda-submit').click();
+      } else {
+        cy.get('#nda-alert').should('contain.text', 'Accepted on');
 
-      cy.get('[data-testid="nda-continue"]').click();
-    }
+        cy.get('[data-testid="nda-continue"]').click();
+      }
 
-    cy.url().should('eq', 'http://localhost:3005/');
+      cy.url().should('eq', 'http://localhost:3005/');
+    });
   }
 );
 
