@@ -32,6 +32,10 @@ func TranslateAudit(
 	if err != nil {
 		return nil, err
 	}
+	if auditWithModelPlan.TableName == "user_account_preferences" {
+		// Changes: (Translations) Expand this logic, we don't want to make the job retry if it is a table we don't care about translating ( like this one which doesn't have a model plan)
+		return nil, nil
+	}
 
 	// Changes: (Job) Should we just fetch the model name when we get the ID as well? it's just this use case...
 	plan, err := store.ModelPlanGetByID(store, logger, auditWithModelPlan.ModelPlanID)
@@ -358,8 +362,16 @@ func translateField(
 			translatedOld = translateValue(old, options)
 			translatedNew = translateValue(new, options)
 		} else if hasTableReference {
-			translatedOld = translateForeignKey(nil, old, tableReference)
-			translatedNew = translateForeignKey(nil, new, tableReference)
+			translatedOldFK, err := translateForeignKey(store, old, tableReference)
+			if err != nil {
+				return nil, err
+			}
+			translatedOld = translatedOldFK
+			translatedNewFK, err := translateForeignKey(store, new, tableReference)
+			if err != nil {
+				return nil, err
+			}
+			translatedNew = translatedNewFK
 
 		} else {
 			translatedOld = old
@@ -412,6 +424,7 @@ func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType
 
 func translateStrSlice(strSlice []string, options map[string]interface{}) pq.StringArray {
 	// Changes: (Translations) Determine if we can serialize a generic interface? it makes a weird artifact in the GQL
+	// Changes: (Translations) Determine why team_roles for plan collaborator serializes with extra escaped characters
 	//   "{\"Mandatory national\",\"Other\"}",
 	transArray := pq.StringArray{}
 	for _, str := range strSlice {
@@ -568,33 +581,5 @@ func sanitizeAuditBoolValue(value interface{}) interface{} {
 		return "false"
 	}
 	return value
-
-}
-
-func translateForeignKey(store *storage.Store, value interface{}, tableReference string) interface{} {
-	if value == nil {
-		return nil
-	}
-
-	//Changes: (fk) Refactor this, and handle errors etc
-	if tableReference == "user_account" {
-		uuid, isUUID := value.(uuid.UUID)
-		if isUUID {
-			account, err := storage.UserAccountGetByID(store, uuid)
-			if err != nil {
-				return account.CommonName
-			}
-		}
-
-	}
-
-	//Changes: (fk) Move this to it's own file
-	// Update to switch on the table name to get a translation per table
-	// for now assume that we will only need the same sort of translation every time for these field
-	getForeignKeyTranslation(store)
-	return nil
-}
-
-func getForeignKeyTranslation(store *storage.Store) {
 
 }
