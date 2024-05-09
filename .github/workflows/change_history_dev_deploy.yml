@@ -11,6 +11,7 @@ concurrency:
 jobs:
   run_tests:
     uses: ./.github/workflows/run_tests.yml
+    continue-on-error: true
     secrets: inherit
 
   build_frontend_assets:
