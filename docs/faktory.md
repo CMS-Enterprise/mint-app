@@ -23,6 +23,8 @@ s
 
 1. `7419` - A `TCP` connection that the [Faktory Worker Protocol (FWP)](https://github.com/contribsys/faktory/blob/main/docs/protocol-specification.md) server listens on.
 2. `7420` - The Web UI.
+  - The web UI is  accessible in deployed environments as well. You just need to look up the DNS name (A Record) from the load balancer in AWS. You will still need the `FAKTORY_PASSWORD` to view the UI.
+    
 
 ### 🎛 Environment Variables
 Faktory Server:
@@ -94,7 +96,30 @@ export FAKTORY_PROCESS_JOBS=true
 - Ensure that tests are run in the `testing` environment `APP_ENV=testing scripts/dev test:go`
 
 ### 🚀 Production
-**TODO:** Update when production config is finalized
+#### **CRON Jobs:** 
+   For local testing, the cron job is configured in `cron.toml`. However in deployed environments, the TOML is represented as a base64 encoded environment variable (`FAKTORY_CRON_TOML_BASE64`). To add the new cron job, `1.` Decode the current TOML from BASE64 `2.` Update the TOML to include the new cron job configuration `3.` Encode the updated TOML to BASE64. `4.` Upload the updated ENV file to the correct environment, and update the service (either update the service and force a new deployment, or trigger the pipeline)
+
+   You can use the command line tool `base64` to encode and decode the string, or use a GUI tool. If you encrypt a file to use as the base64 string, make sure you first decode the existing TOML. The local `cron.toml` doesn't necessarily match what is deployed.
+
+   ```
+    "aGVsbG8K" | base64 --decode  
+    hello
+
+    echo Why hello there | base64 
+    V2h5CmhlbGxvCnRoZXJlCg==
+
+    for a file
+    base64 -i .faktory/conf.d/cron.toml
+    W1tjcm9uXV0KICBzY2hlZHVsZSA9ICIqLzUgKiAqICogKiIKICBbY3Jvbi5qb2JdCiAgICB0eXBlID0gIkRhaWx5RGlnZXN0Q3JvbkpvYiIKICAgIHF1ZXVlID0gImNyaXRpY2FsIgo=
+   ```
+
+#### Redis:
+In deployed environments the Redis location is configured through the `REDIS_URL` environment variable.
+
+#### License:
+The Faktory license is provided through the `FAKTORY_LICENSE` environment variable.
+
+
 Faktory Docs:
 - [ECS](https://github.com/contribsys/faktory/wiki/AWS-ECS)
 - [Installation](https://github.com/contribsys/faktory/wiki/Ent-Installation)
