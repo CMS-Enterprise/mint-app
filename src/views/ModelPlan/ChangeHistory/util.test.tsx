@@ -172,7 +172,7 @@ describe('util.tsx', () => {
     ];
     expect(separateStatusChanges(changes)).toEqual([
       {
-        id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802-status',
+        id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
         tableName: 'plan_basics',
         date: '2024-04-22T13:55:13.725192Z',
         action: DatabaseOperation.INSERT,
@@ -180,7 +180,7 @@ describe('util.tsx', () => {
           {
             id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
             changeType: AuditFieldChangeType.ANSWERED,
-            fieldName: 'status',
+            fieldName: 'model_type',
             fieldNameTranslated: 'Model Plan status',
             old: null,
             oldTranslated: null,
@@ -193,7 +193,7 @@ describe('util.tsx', () => {
         __typename: 'TranslatedAudit'
       },
       {
-        id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+        id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802-status',
         tableName: 'plan_basics',
         date: '2024-04-22T13:55:13.725192Z',
         action: DatabaseOperation.INSERT,
@@ -201,7 +201,7 @@ describe('util.tsx', () => {
           {
             id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
             changeType: AuditFieldChangeType.ANSWERED,
-            fieldName: 'model_type',
+            fieldName: 'status',
             fieldNameTranslated: 'Model Plan status',
             old: null,
             oldTranslated: null,

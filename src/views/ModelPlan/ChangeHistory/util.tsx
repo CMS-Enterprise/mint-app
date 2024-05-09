@@ -128,14 +128,6 @@ export const separateStatusChanges = (
       return;
     }
 
-    // Split the status change from the other changes and create a new change record
-    const statusChange = { ...change };
-    statusChange.id = `${change.id}-status`; // Change the id to be unique
-    const translatedFields = [...change.translatedFields];
-    // Split the status change from the other changes
-    statusChange.translatedFields = [translatedFields[statusIndex]];
-    filteredStatusChanges.push(statusChange);
-
     // Create a new change record for the other changes without the status change
     const otherChanges = { ...change };
     const otherTranslatedFields = [...change.translatedFields];
@@ -143,6 +135,14 @@ export const separateStatusChanges = (
     otherTranslatedFields.splice(statusIndex, 1);
     otherChanges.translatedFields = otherTranslatedFields;
     filteredStatusChanges.push(otherChanges);
+
+    // Split the status change from the other changes and create a new change record
+    const statusChange = { ...change };
+    statusChange.id = `${change.id}-status`; // Change the id to be unique
+    const translatedFields = [...change.translatedFields];
+    // Split the status change from the other changes
+    statusChange.translatedFields = [translatedFields[statusIndex]];
+    filteredStatusChanges.push(statusChange);
   });
   return filteredStatusChanges;
 };
