@@ -1,6 +1,10 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { AuditFieldChangeType, DatabaseOperation } from 'gql/gen/graphql';
+import {
+  AuditFieldChangeType,
+  DatabaseOperation,
+  TranslationDataType
+} from 'gql/gen/graphql';
 
 import ChangeRecord, { ChangeRecordType } from './index';
 
@@ -14,8 +18,12 @@ describe('ChangeRecord', () => {
       {
         id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
         changeType: AuditFieldChangeType.ANSWERED,
+        dataType: TranslationDataType.BOOLEAN,
         fieldName: 'model_type',
         fieldNameTranslated: 'Model type',
+        referenceLabel: null,
+        questionType: null,
+        notApplicableQuestions: null,
         old: null,
         oldTranslated: null,
         new: 'READY',

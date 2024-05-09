@@ -90,7 +90,7 @@ type PlanBasicsTranslation struct {
 	ModelCategory             models.TranslationFieldWithOptions `json:"modelCategory" db:"model_category"`
 	AdditionalModelCategories models.TranslationFieldWithOptions `json:"additionalModelCategories" db:"additional_model_categories"`
 	DemoCode                  models.TranslationField            `json:"demoCode" db:"demo_code"`
-	AmsModelID                models.TranslationField            `json:"amsModelID" db:"ams_model_ID"`
+	AmsModelID                models.TranslationField            `json:"amsModelID" db:"ams_model_id"`
 	CmsCenters                models.TranslationFieldWithOptions `json:"cmsCenters" db:"cms_centers"`
 	CmmiGroups                models.TranslationFieldWithOptions `json:"cmmiGroups" db:"cmmi_groups"`
 	ModelType                 models.TranslationFieldWithOptions `json:"modelType" db:"model_type"`

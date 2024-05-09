@@ -13,11 +13,7 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import ChangeRecord from './components/ChangeRecord';
-import {
-  extractReadyForReviewChanges,
-  separateStatusChanges,
-  sortCreateChangeFirst
-} from './util';
+import { sortAllChanges } from './util';
 
 const ChangeHistory = () => {
   const { t } = useTranslation('changeHistory');
@@ -36,23 +32,7 @@ const ChangeHistory = () => {
 
   const changes = [...(data?.translatedAuditCollection || [])];
 
-  const changesSortedByDate = changes?.sort((a, b) =>
-    b.date.localeCompare(a.date)
-  );
-
-  const changesWithStatusSeparation = separateStatusChanges(
-    changesSortedByDate
-  );
-
-  const changesSortedWithCreateFirst = changesWithStatusSeparation.sort(
-    sortCreateChangeFirst
-  );
-
-  const changesWithoutReadyForReview = extractReadyForReviewChanges(
-    changesSortedWithCreateFirst
-  );
-
-  const sortedChanges = changesWithoutReadyForReview;
+  const sortedChanges = sortAllChanges(changes);
 
   if (error) {
     return <NotFound />;

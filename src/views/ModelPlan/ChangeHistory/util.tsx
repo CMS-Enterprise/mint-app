@@ -133,9 +133,7 @@ export const separateStatusChanges = (
     statusChange.id = `${change.id}-status`; // Change the id to be unique
     const translatedFields = [...change.translatedFields];
     // Split the status change from the other changes
-    translatedFields?.splice(0, statusIndex);
-    translatedFields?.splice(statusIndex + 1);
-    statusChange.translatedFields = translatedFields;
+    statusChange.translatedFields = [translatedFields[statusIndex]];
     filteredStatusChanges.push(statusChange);
 
     // Create a new change record for the other changes without the status change
@@ -228,4 +226,24 @@ export const isHiddenRecord = (changeRecord: ChangeRecordType): boolean => {
         field => field.fieldName === hiddenField.field
       ).length > 0
   );
+};
+
+export const sortAllChanges = (changes: ChangeRecordType[]) => {
+  const changesSortedByDate = changes?.sort((a, b) =>
+    b.date.localeCompare(a.date)
+  );
+
+  const changesWithStatusSeparation = separateStatusChanges(
+    changesSortedByDate
+  );
+
+  const changesSortedWithCreateFirst = changesWithStatusSeparation.sort(
+    sortCreateChangeFirst
+  );
+
+  const changesWithoutReadyForReview = extractReadyForReviewChanges(
+    changesSortedWithCreateFirst
+  );
+
+  return changesWithoutReadyForReview;
 };
