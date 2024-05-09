@@ -8,6 +8,11 @@ on:
         type: boolean
         required: false
         default: false
+      continue_on_error:
+        description: 'Continue workflow on error'
+        type: boolean
+        required: false
+        default: false
 
 env:
   GIT_HASH: ${{ github.sha }}
@@ -327,6 +332,7 @@ jobs:
   client_test:
     if: ${{ inputs.skip_tests == false }}
     runs-on: ubuntu-latest
+    continue-on-error: ${{ inputs.continue_on_error }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
