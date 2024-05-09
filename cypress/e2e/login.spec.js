@@ -50,6 +50,10 @@ describe('Logging in', () => {
     cy.localLogin({ name: 'MINT', role: 'MINT MAC Users' });
     cy.visit('/');
 
+    cy.get('[data-testid="page-loading"]').should('not.exist');
+    cy.get('[data-testid="scrollable-table-container"]', {
+      timeout: 20000
+    }).should('exist');
     cy.get('h2', { timeout: 20000 }).should('have.text', 'Upcoming models');
   });
 });
