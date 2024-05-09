@@ -29,7 +29,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import ExternalLinkModal from 'components/shared/ExternalLinkModal';
+import ExternalLinkWithModal from 'components/shared/ExternalLinkWithModal';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
@@ -171,8 +171,6 @@ export const Table = ({
   const { documentType: documentTypeConfig } = usePlanTranslation('documents');
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isExternalLinkModalOpen, setExternalLinkModalOpen] = useState(false);
-  const [externalLinkUrl, setExternalLinkUrl] = useState('');
   const [fileToRemove, setFileToRemove] = useState<GetDocumentType>(
     {} as GetDocumentType
   );
@@ -415,20 +413,10 @@ export const Table = ({
                     </span>
                   </Button>
                 ) : (
-                  <Button
-                    type="button"
-                    unstyled
-                    className="margin-right-2"
-                    onClick={() => {
-                      setExternalLinkUrl(row.original.url);
-                      setExternalLinkModalOpen(true);
-                    }}
-                  >
-                    <span className="display-flex flex-align-center">
-                      {t('documentTable.visit')}
-                      <Icon.Launch />
-                    </span>
-                  </Button>
+                  <ExternalLinkWithModal
+                    url={row.original.url}
+                    buttonText={t('documentTable.visit')}
+                  />
                 )}
                 {hasEditAccess && !linkedDocs && (
                   <Button
@@ -498,11 +486,6 @@ export const Table = ({
   return (
     <div className="model-plan-table" data-testid="model-plan-documents-table">
       {renderModal()}
-      <ExternalLinkModal
-        isOpen={isExternalLinkModalOpen}
-        closeModal={() => setExternalLinkModalOpen(false)}
-        url={externalLinkUrl}
-      />
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
