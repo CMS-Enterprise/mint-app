@@ -48,6 +48,7 @@ describe('Logging in', () => {
 
   it('logs in with local MAC', () => {
     cy.localLogin({ name: 'MINT', role: 'MINT MAC Users' });
+    cy.visit('/');
 
     cy.get('h2', { timeout: 20000 }).should('have.text', 'Upcoming models');
   });
