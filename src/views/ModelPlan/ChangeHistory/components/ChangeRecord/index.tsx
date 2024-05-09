@@ -12,6 +12,13 @@ import { AvatarCircle } from 'components/shared/Avatar';
 import CollapsableLink from 'components/shared/CollapsableLink';
 import { formatDateUtc, formatTime } from 'utils/date';
 
+import {
+  identifyChangeType,
+  isHiddenRecord,
+  isInitialCreatedSection,
+  parseArray
+} from '../../util';
+
 import './index.scss';
 
 export type ChangeRecordType = NonNullable<
@@ -82,19 +89,6 @@ const SingleChange = ({ change }: SingleChangeProps) => {
       </div>
     </div>
   );
-};
-
-// Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array
-export const parseArray = (value: string | string[]) => {
-  if (Array.isArray(value)) return value;
-
-  const formattedString = value.replace(/{/g, '[').replace(/}/g, ']');
-
-  try {
-    return JSON.parse(formattedString);
-  } catch {
-    return value;
-  }
 };
 
 // Render a single value, either as a string or as a list of strings
@@ -178,86 +172,6 @@ const ChangedQuestion = ({ change }: SingleChangeProps) => {
   return <>{change.fieldNameTranslated}</>;
 };
 
-type ChangeType =
-  | 'New plan'
-  | 'Status update'
-  | 'Task list status update'
-  | 'Team update'
-  | 'Discussion update'
-  | 'Document update'
-  | 'Operational need create'
-  | 'Standard update';
-
-export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
-  if (
-    change.tableName === 'model_plan' &&
-    change.translatedFields.find(
-      field => field.fieldName === 'status' && field.old === null
-    )
-  ) {
-    return 'New plan';
-  }
-  if (
-    change.tableName === 'model_plan' &&
-    change.translatedFields.find(
-      field => field.fieldName === 'status' && field.old !== null
-    )
-  ) {
-    return 'Status update';
-  }
-  if (
-    change.tableName !== 'model_plan' &&
-    change.translatedFields.find(field => field.fieldName === 'status')
-  ) {
-    return 'Task list status update';
-  }
-  if (change.tableName === 'plan_collaborator') {
-    return 'Team update';
-  }
-  if (change.tableName === 'plan_discussion') {
-    return 'Discussion update';
-  }
-  if (change.tableName === 'plan_document') {
-    return 'Document update';
-  }
-  if (
-    change.tableName === 'operational_need' &&
-    change.translatedFields.length === 0
-  ) {
-    return 'Operational need create';
-  }
-  return 'Standard update';
-};
-
-export const isInitialCreatedSection = (
-  change: ChangeRecordType,
-  changeType: ChangeType
-): boolean =>
-  !!(
-    (changeType === 'Task list status update' &&
-      change.translatedFields.find(
-        field => field.fieldName === 'status' && field.old === null
-      )) ||
-    identifyChangeType(change) === 'Operational need create'
-  );
-
-const isHiddenRecord = (changeRecord: ChangeRecordType): boolean => {
-  const hiddenFields = [
-    {
-      table: 'operational_need',
-      field: 'needed'
-    }
-  ];
-
-  return !!hiddenFields.find(
-    hiddenField =>
-      hiddenField.table === changeRecord.tableName &&
-      changeRecord.translatedFields.filter(
-        field => field.fieldName === hiddenField.field
-      ).length > 0
-  );
-};
-
 // Render a single change record, showing the actor, the date, and the fields that were changed
 const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
   const { t } = useTranslation('changeHistory');
@@ -325,13 +239,27 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
           {changeRecordType === 'Team update' &&
             (() => {
+              const teamChange = (teamType: string | undefined) =>
+                teamType === 'REMOVED' ? 'oldTranslated' : 'newTranslated';
+
               const teamChangeType = changeRecord.translatedFields.find(
                 field => field.fieldName === 'team_roles'
               )?.changeType;
 
               const collaborator = changeRecord.translatedFields.find(
                 field => field.fieldName === 'user_id'
-              )?.newTranslated;
+              )?.[teamChange(teamChangeType)];
+
+              const role = changeRecord.translatedFields.find(
+                field => field.fieldName === 'team_roles'
+              )?.[teamChange(teamChangeType)];
+
+              const formattedRoles = (inputString: string) => {
+                return inputString
+                  .replace(/{|}|\\|"|'/g, '')
+                  .split(',')
+                  .join(', ');
+              };
 
               return (
                 <Trans
@@ -339,6 +267,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                   values={{
                     action: t(`teamChangeType.${teamChangeType}`),
                     collaborator,
+                    role: !!role && `[${formattedRoles(role)}]`,
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}
