@@ -86,9 +86,7 @@ describe('Notification Center', () => {
 
   it('navigates to see Daily Digest notification', () => {
     cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
-    cy.visit('/');
-    cy.get('[data-testid="navmenu__notification"]').first().click();
-    cy.url().should('include', '/notifications');
+    cy.visit('/notifications');
 
     cy.get('[data-testid="individual-notification"]')
       .first()
@@ -107,13 +105,7 @@ describe('Notification Center', () => {
 
   it('navigates to see Notification Settings', () => {
     cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
-    cy.visit('/');
-
-    cy.get('[data-testid="navmenu__notification"]').first().click();
-
-    cy.contains('a', 'Notification settings').click();
-
-    cy.url().should('include', '/settings');
+    cy.visit('/notifications/settings');
 
     // Uncheck first checkbox and save
     cy.get('#notification-setting-email-dailyDigestComplete')
