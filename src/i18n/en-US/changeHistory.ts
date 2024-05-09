@@ -8,6 +8,14 @@ const changeHistory = {
     'made {{count}} changes in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   planCreate:
     'created {{plan_name}} <datetime>on {{date}} at {{time}}</datetime>',
+  taskStatusUpdate:
+    'marked {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
+  teamANSWERED:
+    '{{action}} {{collaborator}} to the model team <datetime>on {{date}} at {{time}}</datetime>',
+  teamUPDATED:
+    '{{action}} {{collaborator}}’s role to {{role}} <datetime>on {{date}} at {{time}}</datetime>',
+  teamREMOVED:
+    '{{action}} {{collaborator}} from the model team <datetime>on {{date}} at {{time}}</datetime>',
   sections: {
     model_plan: 'Model plan',
     plan_basics: 'Model basics',
@@ -22,12 +30,19 @@ const changeHistory = {
     plan_document: 'Documents',
     plan_cr: 'CRs',
     plan_tdl: 'TDLs',
-    operational_need: 'Operational needs',
-    operational_solution: 'Operational solutions',
-    operational_solution_subtask: 'Operational solution subtasks'
+    operational_need: 'Operational solutions and implementation status tracker',
+    operational_solution:
+      'Operational solutions and implementation status tracker',
+    operational_solution_subtask:
+      'Operational solutions and implementation status tracker'
   },
   showDetails: 'Show details',
   hideDetails: 'Hide details',
+  teamChangeType: {
+    ANSWERED: 'added',
+    REMOVED: 'removed',
+    UPDATED: 'updated'
+  },
   changeType: {
     ANSWERED: 'answered',
     REMOVED: 'removed',

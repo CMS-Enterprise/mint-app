@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Card } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import {
   GetChangeHistoryQuery,
   TranslationDataType,
@@ -240,6 +241,23 @@ export const isInitialCreatedSection = (
     identifyChangeType(change) === 'Operational need create'
   );
 
+const isHiddenRecord = (changeRecord: ChangeRecordType): boolean => {
+  const hiddenFields = [
+    {
+      table: 'operational_need',
+      field: 'needed'
+    }
+  ];
+
+  return !!hiddenFields.find(
+    hiddenField =>
+      hiddenField.table === changeRecord.tableName &&
+      changeRecord.translatedFields.filter(
+        field => field.fieldName === hiddenField.field
+      ).length > 0
+  );
+};
+
 // Render a single change record, showing the actor, the date, and the fields that were changed
 const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
   const { t } = useTranslation('changeHistory');
@@ -250,13 +268,21 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
   const showMoreData: boolean = changeRecordType === 'Standard update';
 
-  if (isInitialCreatedSection(changeRecord, changeRecordType)) {
+  if (
+    isInitialCreatedSection(changeRecord, changeRecordType) ||
+    isHiddenRecord(changeRecord) ||
+    changeRecord.translatedFields.length === 0
+  ) {
     return null;
   }
 
   return (
     <Card className="change-record">
-      <div className="display-flex flex-align-center">
+      <div
+        className={classNames('display-flex flex-align-center', {
+          'padding-0': !showMoreData
+        })}
+      >
         <AvatarCircle
           user={changeRecord.actorName}
           className="margin-right-1"
@@ -279,6 +305,49 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               }}
             />
           )}
+
+          {changeRecordType === 'Task list status update' && (
+            <Trans
+              i18nKey="changeHistory:taskStatusUpdate"
+              values={{
+                section: t(`sections.${changeRecord.tableName}`),
+                status: changeRecord.translatedFields.find(
+                  field => field.fieldName === 'status'
+                )?.newTranslated,
+                date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                time: formatTime(changeRecord.date)
+              }}
+              components={{
+                datetime: <span />
+              }}
+            />
+          )}
+
+          {changeRecordType === 'Team update' &&
+            (() => {
+              const teamChangeType = changeRecord.translatedFields.find(
+                field => field.fieldName === 'team_roles'
+              )?.changeType;
+
+              const collaborator = changeRecord.translatedFields.find(
+                field => field.fieldName === 'user_id'
+              )?.newTranslated;
+
+              return (
+                <Trans
+                  i18nKey={`changeHistory:team${teamChangeType}`}
+                  values={{
+                    action: t(`teamChangeType.${teamChangeType}`),
+                    collaborator,
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
 
           {changeRecordType === 'Standard update' && (
             <Trans
