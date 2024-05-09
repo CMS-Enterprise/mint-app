@@ -47,7 +47,7 @@ describe('Logging in', () => {
   });
 
   it('logs in with local MAC', () => {
-    cy.localLogin({ name: 'MINT', role: 'MINT MAC Users' });
+    cy.localLogin({ name: 'MACU', role: 'MINT MAC Users' });
     cy.visit('/');
 
     cy.get('[data-testid="page-loading"]').should('not.exist');
