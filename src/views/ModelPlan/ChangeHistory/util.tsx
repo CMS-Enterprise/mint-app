@@ -133,7 +133,8 @@ export const separateStatusChanges = (
     statusChange.id = `${change.id}-status`; // Change the id to be unique
     const translatedFields = [...change.translatedFields];
     // Split the status change from the other changes
-    translatedFields?.splice(0, statusIndex).splice(statusIndex + 1);
+    translatedFields?.splice(0, statusIndex);
+    translatedFields?.splice(statusIndex + 1);
     statusChange.translatedFields = translatedFields;
     filteredStatusChanges.push(statusChange);
 
