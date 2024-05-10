@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
-
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
@@ -75,11 +73,6 @@ func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON st
 	return planSlice, nil
 }
 
-type ModelPlanTrackingDate struct {
-	ID           string    `db:"id"`
-	TrackingDate time.Time `db:"tracking_date"`
-}
-
 // ModelPlanTrackingDateGetByModelPlanIDLOADER returns the most recent tracking dates for a series of model plans
 func (s *Store) ModelPlanTrackingDateGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) (
 	map[string]time.Time,
@@ -113,8 +106,6 @@ func (s *Store) ModelPlanTrackingDateGetByModelPlanIDLOADER(logger *zap.Logger, 
 			continue
 		}
 
-		println("--TEST-- trackingDate: ", trackingDate.String())
-		spew.Dump(id)
 		trackingDates[id] = trackingDate
 	}
 	if err := rows.Err(); err != nil {

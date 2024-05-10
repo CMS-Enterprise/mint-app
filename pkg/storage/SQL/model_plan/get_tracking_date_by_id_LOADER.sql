@@ -1,7 +1,9 @@
 WITH QUERIED_IDS AS (
     -- Translate the input JSON array to a table
     SELECT id
-    FROM JSON_TO_RECORDSET(:paramTableJSON)
+    FROM
+        JSON_TO_RECORDSET(:paramTableJSON)
+        AS x(id UUID) --noqa
 ),
 
 LATEST_DATES AS (

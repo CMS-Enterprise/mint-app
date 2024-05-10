@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/davecgh/go-spew/spew"
-
 	"github.com/graph-gophers/dataloader"
 	"go.uber.org/zap"
 
@@ -31,19 +29,15 @@ func (loaders *DataLoaders) GetModelPlanTrackingDateByModelPlanID(ctx context.Co
 	trackingDates, _ := dr.Store.ModelPlanTrackingDateGetByModelPlanIDLOADER(logger, marshaledParams)
 
 	// RETURN IN THE SAME ORDER REQUESTED
-	spew.Dump(trackingDates)
-
 	output := make([]*dataloader.Result, len(keys))
 	for index, key := range keys {
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 			resKey := fmt.Sprint(ck.Args["id"])
-			println("Searching for key ", resKey)
-
 			if planDate, ok := trackingDates[resKey]; ok {
 				output[index] = &dataloader.Result{Data: &planDate, Error: nil}
 			} else {
-				err := fmt.Errorf("tracking date not found for id %s", key.String())
+				err := fmt.Errorf("tracking date not found for id %s", resKey)
 				output[index] = &dataloader.Result{Data: nil, Error: err}
 			}
 		} else {
