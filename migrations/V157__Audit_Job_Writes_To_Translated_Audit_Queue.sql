@@ -49,9 +49,13 @@ BEGIN
     h_new= hstore(NEW.*);
     h_old= hstore(OLD.*);
 
-    diff_keys = (akeys(h_new - insert_cols)); --these are the keys to subract from all the keys on insert or deleted
+    diff_keys = (akeys(h_new - insert_cols)); --these are the keys to subtract from all the keys on insert or deleted
     IF TG_OP = 'INSERT' OR TG_OP = 'DELETE' THEN
+        IF insert_cols = '{*}' THEN 
+            h_changed = (h_new - h_old) - array_append(excluded_cols, pkey_f); --remove matching values and primary key
+        ELSE
         h_changed = (h_new -h_old) -diff_keys; --remove matching values, and only  show specific columns for insert /delete
+        END IF;
     ELSE
         h_changed = (h_new - h_old) - excluded_cols; --remove matching values and excluded columns
     END If;
