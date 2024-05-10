@@ -2,8 +2,8 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Card, Grid, Icon } from '@trussworks/react-uswds';
 import {
-  GetRecentChangesQuery,
-  useGetRecentChangesQuery
+  GetChangeHistoryQuery,
+  useGetChangeHistoryQuery
 } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -12,10 +12,12 @@ import { AvatarCircle } from 'components/shared/Avatar';
 import Spinner from 'components/Spinner';
 import { formatDateUtc, formatTime } from 'utils/date';
 
+import { sortAllChanges } from '../../util';
+
 import './index.scss';
 
 export type ChangeRecordType = NonNullable<
-  GetRecentChangesQuery['translatedAuditCollection']
+  GetChangeHistoryQuery['translatedAuditCollection']
 >[0];
 
 type ChangeRecordProps = {
@@ -59,7 +61,7 @@ export const MiniChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 const RecentChanges = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('changeHistory');
 
-  const { data, loading } = useGetRecentChangesQuery({
+  const { data, loading } = useGetChangeHistoryQuery({
     variables: {
       modelPlanID: modelID
     }
@@ -67,9 +69,7 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
 
   const changes = [...(data?.translatedAuditCollection || [])];
 
-  const changesSortedByDate = changes
-    ?.sort((a, b) => b.date.localeCompare(a.date))
-    .slice(0, 3);
+  const sortedChanges = sortAllChanges(changes).slice(0, 3);
 
   return (
     <div className="margin-bottom-6">
@@ -81,13 +81,13 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
         </div>
       ) : (
         <>
-          {changesSortedByDate.length === 0 && (
+          {sortedChanges.length === 0 && (
             <Alert type="info" slim className="margin-bottom-2">
               {t('noChanges')}
             </Alert>
           )}
 
-          {changesSortedByDate.map(changeRecord => (
+          {sortedChanges.map(changeRecord => (
             <MiniChangeRecord
               changeRecord={changeRecord}
               key={changeRecord.id}

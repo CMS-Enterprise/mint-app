@@ -76,7 +76,7 @@ describe('exportTranslation Util', () => {
       amsModelID: {
         gqlField: 'amsModelID',
         goField: 'AmsModelID',
-        dbField: 'ams_model_ID',
+        dbField: 'ams_model_id',
         label: 'Model ID',
         dataType: 'STRING',
         formType: 'TEXTAREA'

@@ -1,8 +1,12 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { AuditFieldChangeType, DatabaseOperation } from 'gql/gen/graphql';
+import {
+  AuditFieldChangeType,
+  DatabaseOperation,
+  TranslationDataType
+} from 'gql/gen/graphql';
 
-import ChangeRecord, { ChangeRecordType, parseArray } from './index';
+import ChangeRecord, { ChangeRecordType } from './index';
 
 describe('ChangeRecord', () => {
   const mockChangeRecord: ChangeRecordType = {
@@ -14,8 +18,12 @@ describe('ChangeRecord', () => {
       {
         id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
         changeType: AuditFieldChangeType.ANSWERED,
-        fieldName: 'status',
-        fieldNameTranslated: 'Model Plan status',
+        dataType: TranslationDataType.BOOLEAN,
+        fieldName: 'model_type',
+        fieldNameTranslated: 'Model type',
+        referenceLabel: null,
+        questionType: null,
+        notApplicableQuestions: null,
         old: null,
         oldTranslated: null,
         new: 'READY',
@@ -42,7 +50,7 @@ describe('ChangeRecord', () => {
     const { getByText } = render(
       <ChangeRecord changeRecord={mockChangeRecord} />
     );
-    expect(getByText('Model Plan status')).toBeInTheDocument();
+    expect(getByText('Model type')).toBeInTheDocument();
   });
 
   it('toggles details when "showDetails" and "hideDetails" are clicked', () => {
@@ -64,19 +72,5 @@ describe('ChangeRecord', () => {
       <ChangeRecord changeRecord={mockChangeRecord} />
     );
     expect(asFragment()).toMatchSnapshot();
-  });
-});
-
-describe('parseArray', () => {
-  it('should replace curly braces with square brackets and parse as JSON', () => {
-    const input = '{"One","Two","Three"}';
-    const output = parseArray(input);
-    expect(output).toEqual(['One', 'Two', 'Three']);
-  });
-
-  it('should return the original value if JSON parsing fails', () => {
-    const input = 'not a json string';
-    const output = parseArray(input);
-    expect(output).toEqual('not a json string');
   });
 });

@@ -6,6 +6,16 @@ const changeHistory = {
     'made {{count}} change in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   change_other:
     'made {{count}} changes in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
+  planCreate:
+    'created {{plan_name}} <datetime>on {{date}} at {{time}}</datetime>',
+  taskStatusUpdate:
+    'marked {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
+  teamANSWERED:
+    '{{action}} {{collaborator}} to the model team <datetime>on {{date}} at {{time}}</datetime>',
+  teamUPDATED:
+    '{{action}} {{collaborator}}’s role to {{role}} <datetime>on {{date}} at {{time}}</datetime>',
+  teamREMOVED:
+    '{{action}} {{collaborator}} from the model team <datetime>on {{date}} at {{time}}</datetime>',
   sections: {
     model_plan: 'Model plan',
     plan_basics: 'Model basics',
@@ -14,10 +24,25 @@ const changeHistory = {
     plan_beneficiaries: 'Beneficiaries',
     plan_ops_eval_and_learning: 'Operations, evaluation, and learning',
     plan_payments: 'Payments',
-    plan_collaborator: 'Model team'
+    plan_collaborator: 'Model team',
+    plan_discussion: 'Discussions',
+    discussion_reply: 'Replies',
+    plan_document: 'Documents',
+    plan_cr: 'CRs',
+    plan_tdl: 'TDLs',
+    operational_need: 'Operational solutions and implementation status tracker',
+    operational_solution:
+      'Operational solutions and implementation status tracker',
+    operational_solution_subtask:
+      'Operational solutions and implementation status tracker'
   },
   showDetails: 'Show details',
   hideDetails: 'Hide details',
+  teamChangeType: {
+    ANSWERED: 'added',
+    REMOVED: 'removed',
+    UPDATED: 'updated'
+  },
   changeType: {
     ANSWERED: 'answered',
     REMOVED: 'removed',

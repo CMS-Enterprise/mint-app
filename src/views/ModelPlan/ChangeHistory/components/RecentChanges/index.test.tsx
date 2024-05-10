@@ -2,14 +2,19 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { DatabaseOperation, GetRecentChangesDocument } from 'gql/gen/graphql';
+import {
+  AuditFieldChangeType,
+  DatabaseOperation,
+  GetChangeHistoryDocument,
+  TranslationDataType
+} from 'gql/gen/graphql';
 
 import RecentChanges from '.';
 
 const mocks = [
   {
     request: {
-      query: GetRecentChangesDocument,
+      query: GetChangeHistoryDocument,
       variables: {
         modelPlanID: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905'
       }
@@ -25,6 +30,17 @@ const mocks = [
             translatedFields: [
               {
                 id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+                changeType: AuditFieldChangeType.ANSWERED,
+                dataType: TranslationDataType.BOOLEAN,
+                fieldName: 'model_type',
+                fieldNameTranslated: 'Model type',
+                referenceLabel: null,
+                questionType: null,
+                notApplicableQuestions: null,
+                old: null,
+                oldTranslated: null,
+                new: 'READY',
+                newTranslated: 'Ready',
                 __typename: 'TranslatedAuditField'
               }
             ],
