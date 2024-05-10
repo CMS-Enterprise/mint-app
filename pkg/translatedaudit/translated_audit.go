@@ -32,6 +32,10 @@ func TranslateAudit(
 	if err != nil {
 		return nil, err
 	}
+	if auditWithModelPlan.TableName == "user_account_preferences" {
+		// Changes: (Translations) Expand this logic, we don't want to make the job retry if it is a table we don't care about translating ( like this one which doesn't have a model plan)
+		return nil, nil
+	}
 
 	// Changes: (Job) Should we just fetch the model name when we get the ID as well? it's just this use case...
 	plan, err := store.ModelPlanGetByID(store, logger, auditWithModelPlan.ModelPlanID)
@@ -209,7 +213,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 
 	for fieldName, field := range audit.Fields {
 		//  Changes: (Translations) consider removing plan from the function
-		transField, err := translateField(fieldName, field, audit, actorAccount, operation, plan, translationMap)
+		transField, err := translateField(store, fieldName, field, audit, actorAccount, operation, plan, translationMap)
 		if err != nil {
 			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, plan.ModelName, err)
 		}
@@ -269,7 +273,7 @@ func genericAuditCollectionTranslation(ctx context.Context, store *storage.Store
 
 		for fieldName, field := range audit.Fields {
 			//  Changes: (Translations) consider removing plan from the function
-			transField, err := translateField(fieldName, field, audit, actorAccount, operation, plan, translationMap)
+			transField, err := translateField(store, fieldName, field, audit, actorAccount, operation, plan, translationMap)
 			if err != nil {
 				fmt.Printf("issue translating field (%s) for plan %s ", fieldName, plan.ModelName)
 				continue
@@ -284,7 +288,15 @@ func genericAuditCollectionTranslation(ctx context.Context, store *storage.Store
 	return changes, nil
 }
 
-func translateField(fieldName string, field models.AuditField, audit *models.AuditChange, actorAccount *authentication.UserAccount, operation models.DatabaseOperation, modelPlan *models.ModelPlan, translationMap map[string]models.ITranslationField) (*models.TranslatedAuditField, error) {
+func translateField(
+	store *storage.Store,
+	fieldName string,
+	field models.AuditField,
+	audit *models.AuditChange,
+	actorAccount *authentication.UserAccount,
+	operation models.DatabaseOperation,
+	modelPlan *models.ModelPlan,
+	translationMap map[string]models.ITranslationField) (*models.TranslatedAuditField, error) {
 
 	// Set default values in case of missing translation
 	// Changes: (Translations) We should handle a nil / empty case what should we do in that case?
@@ -343,9 +355,24 @@ func translateField(fieldName string, field models.AuditField, audit *models.Aud
 		}
 
 		options, hasOptions := translationInterface.GetOptions()
+		tableReference, hasTableReference := translationInterface.GetTableReference()
+		//Changes: (fk) look to update the unit tests, we don't want a foreign key relation to be overridden with options.
+		// ALSO! consider if there are any places with an array of foreign keys, I think we don't have that anymore
 		if hasOptions {
 			translatedOld = translateValue(old, options)
 			translatedNew = translateValue(new, options)
+		} else if hasTableReference {
+			translatedOldFK, err := translateForeignKey(store, old, tableReference)
+			if err != nil {
+				return nil, err
+			}
+			translatedOld = translatedOldFK
+			translatedNewFK, err := translateForeignKey(store, new, tableReference)
+			if err != nil {
+				return nil, err
+			}
+			translatedNew = translatedNewFK
+
 		} else {
 			translatedOld = old
 			translatedNew = new
@@ -397,6 +424,7 @@ func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType
 
 func translateStrSlice(strSlice []string, options map[string]interface{}) pq.StringArray {
 	// Changes: (Translations) Determine if we can serialize a generic interface? it makes a weird artifact in the GQL
+	// Changes: (Translations) Determine why team_roles for plan collaborator serializes with extra escaped characters
 	//   "{\"Mandatory national\",\"Other\"}",
 	transArray := pq.StringArray{}
 	for _, str := range strSlice {

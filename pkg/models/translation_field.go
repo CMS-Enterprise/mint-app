@@ -117,6 +117,15 @@ func (tfb TranslationFieldBase) GetQuestionType() *TranslationQuestionType {
 	return nil
 
 }
+func (tfb TranslationFieldBase) GetTableReference() (string, bool) {
+	if tfb.TableReference == nil {
+		return "", false
+	}
+
+	// Changes: (fk) Make this return a type enum instead of a string, for possible table references
+	return *tfb.TableReference, true
+
+}
 
 // TranslationFieldWithOptions Represents a TranslationField that has options
 type TranslationFieldWithOptions struct {
@@ -147,6 +156,8 @@ type ITranslationField interface {
 	//Changes: (Translations) Note, the children could be other types (Eg with options, or with parent), but this allows us to have a typed deserialization
 
 	GetQuestionType() *TranslationQuestionType
+
+	GetTableReference() (string, bool)
 }
 
 //Changes: (Translations) Define the Translation Parent better
