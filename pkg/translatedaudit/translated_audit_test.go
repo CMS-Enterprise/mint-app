@@ -8,6 +8,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 func TestHumanizeAuditsForModelPlan(t *testing.T) {
@@ -86,7 +87,8 @@ func TestTranslateField(t *testing.T) {
 	plan := models.ModelPlan{}
 
 	t.Run("Form Type is present when there is a translation", func(t *testing.T) {
-		translatedField, err := translateField(translationFieldKey, testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		var store *storage.Store //nil store
+		translatedField, err := translateField(store, translationFieldKey, testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
 		assert.NoError(t, err)
 		assert.NotNil(t, translatedField.FormType)
 		assert.NotNil(t, translatedField.FormType)
@@ -101,7 +103,8 @@ func TestTranslateField(t *testing.T) {
 	})
 
 	t.Run("Form Type is not present when there is not a translation", func(t *testing.T) {
-		translatedField, err := translateField("there is no translation for this", testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		var store *storage.Store //nil store
+		translatedField, err := translateField(store, "there is no translation for this", testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
 		assert.NoError(t, err)
 		assert.Nil(t, translatedField.FormType)
 		assert.Nil(t, translatedField.FormType)
