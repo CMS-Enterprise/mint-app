@@ -42,7 +42,7 @@ export const MiniChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               i18nKey="changeHistory:change"
               count={changeRecord.translatedFields.length || 1}
               values={{
-                count: changeRecord.translatedFields.length,
+                count: changeRecord.translatedFields.length || 1,
                 section: t(`sections.${changeRecord.tableName}`),
                 date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                 time: formatTime(changeRecord.date)

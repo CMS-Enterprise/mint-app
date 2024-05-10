@@ -110,6 +110,14 @@ export const separateStatusChanges = (
   const filteredStatusChanges: ChangeRecordType[] = [];
 
   changes.forEach(change => {
+    if (
+      !isTranslationTaskListTable(change.tableName) &&
+      change.tableName !== 'model_plan'
+    ) {
+      filteredStatusChanges.push(change);
+      return;
+    }
+
     // Find the index of the status field
     const statusIndex = change.translatedFields.findIndex(
       field => field.fieldName === 'status'
@@ -214,6 +222,7 @@ export const isInitialCreatedSection = (
     identifyChangeType(change) === 'Operational need create'
   );
 
+// Some fields exist in translation/audit data, but are not displayed in the change history
 export const isHiddenRecord = (changeRecord: ChangeRecordType): boolean => {
   const hiddenFields = [
     {

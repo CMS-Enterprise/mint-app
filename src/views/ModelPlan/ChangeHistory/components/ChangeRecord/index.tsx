@@ -10,6 +10,7 @@ import {
 
 import { AvatarCircle } from 'components/shared/Avatar';
 import CollapsableLink from 'components/shared/CollapsableLink';
+import MentionTextArea from 'components/shared/MentionTextArea';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
@@ -279,16 +280,30 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
             })()}
 
           {changeRecordType === 'Discussion update' && (
-            <Trans
-              i18nKey={`changeHistory:${changeRecord.tableName}ANSWERED`}
-              values={{
-                date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                time: formatTime(changeRecord.date)
-              }}
-              components={{
-                datetime: <span />
-              }}
-            />
+            <>
+              <Trans
+                i18nKey={`changeHistory:${changeRecord.tableName}ANSWERED`}
+                values={{
+                  date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                  time: formatTime(changeRecord.date)
+                }}
+                components={{
+                  datetime: <span />
+                }}
+              />
+              <ul className="padding-left-4 margin-top-1">
+                <li>
+                  <MentionTextArea
+                    className="text-base-darkest"
+                    id={`mention-${changeRecord.id}`}
+                    editable={false}
+                    initialContent={
+                      changeRecord.translatedFields[0].newTranslated
+                    }
+                  />
+                </li>
+              </ul>
+            </>
           )}
 
           {changeRecordType === 'Standard update' && (
