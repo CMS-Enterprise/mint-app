@@ -18,4 +18,10 @@ WHERE name IN (
     'plan_tdl',
     'plan_collaborator'
 );
---Changes (table) update this to remove it_tools as a table, and add user_account and insert all fields at insert
+
+/* Enable Auditing for user account table*/
+SELECT audit.AUDIT_TABLE('public', 'user_account', 'id',  NULL, '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{*}'::TEXT[]);
+
+
+/* remove it_tools table config as the table no longer exists*/
+DELETE FROM audit.table_config WHERE name = 'plan_it_tools';
