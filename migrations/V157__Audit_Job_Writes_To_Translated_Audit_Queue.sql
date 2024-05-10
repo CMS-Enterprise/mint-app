@@ -129,4 +129,4 @@ $audit_table$ LANGUAGE plpgsql
 SECURITY DEFINER --Run trigger as the creator of the trigger
 SET search_path = pg_catalog, public;
 
-COMMENT ON FUNCTION audit.if_modified IS 'This trigger function is responsible for writing entries to the audit.change, and the translated_audit_queue if a record set has been modified. It will look for a diff between the old and new values, and if so write an entry. It starts with hStores to do the diff comparison, but converts the changes to a jsonB that has the name of the field, as well as the old and new values.';
+COMMENT ON FUNCTION audit.if_modified IS 'This trigger function is responsible for writing entries to the audit.change, and the translated_audit_queue if a record set has been modified. It will look for a diff between the old and new values, and if so write an entry. It starts with hStores to do the diff comparison, but converts the changes to a jsonB that has the name of the field, as well as the old and new values. If a table is configured with insert columns *, it will insert every column except the primary key and those that were explicitly marked to ignore.';
