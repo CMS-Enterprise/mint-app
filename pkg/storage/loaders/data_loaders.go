@@ -27,6 +27,7 @@ type DataLoaders struct {
 	ExistingModelLinkNameLoader    *WrappedDataLoader
 	ExistingModelLoader            *WrappedDataLoader
 	ModelPlanLoader                *WrappedDataLoader
+	ModelPlanTrackingDateLoader    *WrappedDataLoader
 
 	PossibleOperationSolutionContactLoader *WrappedDataLoader
 
@@ -65,6 +66,7 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.ExistingModelLinkNameLoader = newWrappedDataLoader(loaders.GetExistingModelLinkNamesByModelPlanIDAndFieldName)
 	loaders.ExistingModelLoader = newWrappedDataLoader(loaders.GetExistingModelByModelPlanID)
 	loaders.ModelPlanLoader = newWrappedDataLoader(loaders.GetModelPlanByModelPlanID)
+	loaders.ModelPlanTrackingDateLoader = newWrappedDataLoader(loaders.GetModelPlanTrackingDateByModelPlanID)
 
 	loaders.PossibleOperationSolutionContactLoader = newWrappedDataLoader(loaders.PossibleOperationalSolutionContactsGetByPossibleSolutionID)
 

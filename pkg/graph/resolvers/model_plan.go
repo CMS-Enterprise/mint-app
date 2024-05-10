@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/cmsgov/mint-app/pkg/notifications"
 
@@ -245,6 +246,24 @@ func ModelPlanGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPla
 	}
 
 	return result.(*models.ModelPlan), nil
+}
+
+// ModelPlanTrackingDateGetByIDLOADER implements resolver logic to get Model Plan
+// Tracking Date by a model plan ID using a data loader
+func ModelPlanTrackingDateGetByIDLOADER(ctx context.Context, id uuid.UUID) (*time.Time, error) {
+	allLoaders := loaders.Loaders(ctx)
+	planTrackingDateLoader := allLoaders.ModelPlanTrackingDateLoader
+	key := loaders.NewKeyArgs()
+	key.Args["id"] = id
+
+	thunk := planTrackingDateLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result.(*time.Time), nil
 }
 
 // ModelPlanGetSampleModel returns the sample model plan

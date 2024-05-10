@@ -16,7 +16,6 @@ type OperationalNeed {
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
-  lastModifiedDts: Time
 }
 
 extend type Query {

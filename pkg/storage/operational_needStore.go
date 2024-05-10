@@ -1,8 +1,6 @@
 package storage
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -40,9 +38,6 @@ var operationalNeedInsertAllPossibleSQL string
 
 //go:embed SQL/operational_need/insert_or_update_other.sql
 var operationalNeedInsertOrUpdateOtherSQL string
-
-//go:embed SQL/operational_need/most_recent_tracking_date.sql
-var mostRecentTrackingDate string
 
 // OperationalNeedCollectionGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan
 func (s *Store) OperationalNeedCollectionGetByModelPlanID(
@@ -158,28 +153,6 @@ func (s *Store) OperationalNeedGetByModelPlanIDAndOtherType(
 		return nil, err
 	}
 	return &need, nil
-}
-
-func (s *Store) OperationalNeedMostRecentTrackingData(_ *zap.Logger, operationalNeedID uuid.UUID) (*time.Time, error) {
-
-	result := time.Time{}
-
-	stmt, err := s.db.PrepareNamed(mostRecentTrackingDate)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-		"operational_need_id": operationalNeedID,
-	}
-
-	err = stmt.Get(&result, arg)
-	if err != nil {
-		return nil, err
-	}
-
-	return &result, nil
 }
 
 // OperationalNeedGetByID returns an Operational Need by its ID

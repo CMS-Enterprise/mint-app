@@ -4,6 +4,9 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"time"
+
+	"github.com/davecgh/go-spew/spew"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -45,6 +48,9 @@ var modelPlanDeleteByID string
 //go:embed SQL/model_plan/get_by_id_LOADER.sql
 var modelPlanGetByIDLoaderSQL string
 
+//go:embed SQL/model_plan/get_tracking_date_by_id_LOADER.sql
+var modelPlanTrackingDateGetByIDLoaderSQL string
+
 // ModelPlanGetByModelPlanIDLOADER returns the model plan for a slice of ids
 func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
 
@@ -67,6 +73,55 @@ func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON st
 	}
 
 	return planSlice, nil
+}
+
+type ModelPlanTrackingDate struct {
+	ID           string    `db:"id"`
+	TrackingDate time.Time `db:"tracking_date"`
+}
+
+// ModelPlanTrackingDateGetByModelPlanIDLOADER returns the most recent tracking dates for a series of model plans
+func (s *Store) ModelPlanTrackingDateGetByModelPlanIDLOADER(logger *zap.Logger, paramTableJSON string) (
+	map[string]time.Time,
+	error,
+) {
+	var trackingDates = make(map[string]time.Time)
+
+	stmt, err := s.db.PrepareNamed(modelPlanTrackingDateGetByIDLoaderSQL)
+	if err != nil {
+		logger.Error("Failed to prepare SQL statement", zap.Error(err))
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	rows, err := stmt.Queryx(arg)
+	if err != nil {
+		logger.Error("Failed to execute query", zap.Error(err))
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var id string
+		var trackingDate time.Time
+		if err := rows.Scan(&id, &trackingDate); err != nil {
+			logger.Error("Failed to scan row", zap.Error(err))
+			continue
+		}
+
+		println("--TEST-- trackingDate: ", trackingDate.String())
+		spew.Dump(id)
+		trackingDates[id] = trackingDate
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return trackingDates, nil
 }
 
 // ModelPlanCreate creates a model plan using a transaction

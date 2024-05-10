@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 
@@ -111,6 +112,11 @@ func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPl
 // OperationalNeeds is the resolver for the operationalNeeds field.
 func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
 	return OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
+}
+
+// LastModifiedDts is the resolver for the lastModifiedDts field.
+func (r *modelPlanResolver) LastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error) {
+	return ModelPlanTrackingDateGetByIDLOADER(ctx, obj.ID)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.

@@ -566,6 +566,7 @@ export type ModelPlan = {
   id: Scalars['UUID']['output'];
   isCollaborator: Scalars['Boolean']['output'];
   isFavorite: Scalars['Boolean']['output'];
+  lastModifiedDts: Scalars['Time']['output'];
   modelName: Scalars['String']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -1049,7 +1050,6 @@ export type OperationalNeed = {
   createdDts: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
   key?: Maybe<OperationalNeedKey>;
-  lastModifiedDts?: Maybe<Scalars['Time']['output']>;
   modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;

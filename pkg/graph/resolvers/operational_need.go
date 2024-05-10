@@ -2,7 +2,6 @@ package resolvers
 
 import (
 	"context"
-	"time"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -62,11 +61,6 @@ func OperationalNeedInsertOrUpdateCustom(logger *zap.Logger, modelPlanID uuid.UU
 
 	return store.OperationalNeedInsertOrUpdateOther(logger, existing, customNeedType)
 
-}
-
-// OperationalNeedMostRecentTrackingData returns the most recent tracking date by operational need ID
-func OperationalNeedMostRecentTrackingData(logger *zap.Logger, operationNeedID uuid.UUID, store *storage.Store) (*time.Time, error) {
-	return store.OperationalNeedMostRecentTrackingData(logger, operationNeedID)
 }
 
 // OperationalNeedCustomUpdateByID updates an Operational Need by it's ID. Note, we don't allow updating a need type, except customNeedTypes
