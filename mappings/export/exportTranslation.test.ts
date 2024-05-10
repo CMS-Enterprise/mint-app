@@ -342,10 +342,10 @@ describe('exportTranslation Util', () => {
         dataType: 'ENUM',
         formType: 'CHECKBOX',
         options: {
-          READY: 'Ready',
-          IN_PROGRESS: 'In progress',
-          READY_FOR_REVIEW: 'Ready for review',
-          READY_FOR_CLEARANCE: 'Ready for clearance'
+          READY: 'ready',
+          IN_PROGRESS: 'in progress',
+          READY_FOR_REVIEW: 'ready for review',
+          READY_FOR_CLEARANCE: 'ready for clearance'
         },
         hideFromReadonly: true
       }

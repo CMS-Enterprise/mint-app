@@ -16,6 +16,10 @@ const changeHistory = {
     '{{action}} {{collaborator}}’s role to {{role}} <datetime>on {{date}} at {{time}}</datetime>',
   teamREMOVED:
     '{{action}} {{collaborator}} from the model team <datetime>on {{date}} at {{time}}</datetime>',
+  plan_discussionANSWERED:
+    'started a Discussion <datetime>on {{date}} at {{time}}</datetime>',
+  discusssion_replyANSWERED:
+    'replied to a Discussion <datetime>on {{date}} at {{time}}</datetime>',
   sections: {
     model_plan: 'Model plan',
     plan_basics: 'Model basics',

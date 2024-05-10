@@ -180,7 +180,10 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'Team update';
   }
 
-  if (change.tableName === 'plan_discussion') {
+  if (
+    change.tableName === 'plan_discussion' ||
+    change.tableName === 'discussion_reply'
+  ) {
     return 'Discussion update';
   }
 

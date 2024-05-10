@@ -40,7 +40,7 @@ export const MiniChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
             {changeRecord.actorName}{' '}
             <Trans
               i18nKey="changeHistory:change"
-              count={changeRecord.translatedFields.length}
+              count={changeRecord.translatedFields.length || 1}
               values={{
                 count: changeRecord.translatedFields.length,
                 section: t(`sections.${changeRecord.tableName}`),

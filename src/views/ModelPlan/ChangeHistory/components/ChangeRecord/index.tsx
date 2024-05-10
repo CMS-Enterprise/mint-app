@@ -278,6 +278,19 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {changeRecordType === 'Discussion update' && (
+            <Trans
+              i18nKey={`changeHistory:${changeRecord.tableName}ANSWERED`}
+              values={{
+                date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                time: formatTime(changeRecord.date)
+              }}
+              components={{
+                datetime: <span />
+              }}
+            />
+          )}
+
           {changeRecordType === 'Standard update' && (
             <Trans
               i18nKey="changeHistory:change"
