@@ -18,6 +18,15 @@ const (
 	DBOpTruncate DatabaseOperation = "TRUNCATE"
 )
 
+// TranslatedAuditMetaDataType represents the possible types of TranslatedAuditMetaData. This data is used to deserialize the meta data in the JSONb field in the database
+type TranslatedAuditMetaDataType string
+
+// these are all the possible values of a TranslatedAuditMetaDataType
+const (
+	TAMetaGeneric TranslatedAuditMetaDataType = "GENERIC"
+	TAMetaBase    TranslatedAuditMetaDataType = "BASE"
+)
+
 // TranslatedAuditWithTranslatedFields is a struct that is used to group a translated audit change with the representative fields. It is meant to be used as a convenience grouping
 type TranslatedAuditWithTranslatedFields struct {
 	TranslatedAudit
@@ -39,8 +48,9 @@ type TranslatedAudit struct {
 	ActorName string    `json:"actorName" db:"actor_name"` //Changes (Structure) Maybe normalize this?
 	ChangeID  int       `json:"changeID" db:"change_id"`
 
-	MetaDataRaw interface{}             `db:"meta_data"`
-	MetaData    TranslatedAuditMetaData `json:"metaData"`
+	MetaDataRaw  interface{}                 `db:"meta_data"`
+	MetaDataType TranslatedAuditMetaDataType `db:"meta_data_type"`
+	MetaData     TranslatedAuditMetaData     `json:"metaData"`
 }
 
 // NewTranslatedAuditChange
@@ -58,7 +68,7 @@ func NewTranslatedAuditChange(
 	action DatabaseOperation,
 ) TranslatedAudit {
 	version := 0
-	genericMeta := NewTranslatedAuditMetaBaseStruct(tableName, version)
+	baseMeta := NewTranslatedAuditMetaBaseStruct(tableName, version)
 	return TranslatedAudit{
 		baseStruct:        NewBaseStruct(createdBy),
 		ActorID:           actorID,
@@ -72,7 +82,8 @@ func NewTranslatedAuditChange(
 		PrimaryKey:        primaryKey,
 		Action:            action,
 
-		MetaData: &genericMeta,
+		MetaData:     &baseMeta,
+		MetaDataType: TAMetaBase,
 	}
 
 }
@@ -80,7 +91,7 @@ func NewTranslatedAuditChange(
 // ParseMetaData parses raw MetaData into Typed meta data per the provided struct
 func (tac *TranslatedAudit) ParseMetaData() error {
 
-	meta, err := parseRawTranslatedAuditMetaData(tac.TableName, tac.MetaDataRaw)
+	meta, err := parseRawTranslatedAuditMetaData(tac.MetaDataType, tac.MetaDataRaw)
 	if err != nil {
 		return err
 	}

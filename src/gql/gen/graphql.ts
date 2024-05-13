@@ -3400,6 +3400,7 @@ export type TranslatedAudit = {
   date: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
   metaData: TranslatedAuditMetaData;
+  metaDataType: TranslatedAuditMetaDataType;
   modelName: Scalars['String']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -3454,7 +3455,20 @@ export type TranslatedAuditMetaBaseStruct = {
 };
 
 /** TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit */
-export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct;
+export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaGeneric;
+
+export enum TranslatedAuditMetaDataType {
+  BASE = 'BASE',
+  GENERIC = 'GENERIC'
+}
+
+export type TranslatedAuditMetaGeneric = {
+  __typename: 'TranslatedAuditMetaGeneric';
+  relation: Scalars['String']['output'];
+  relationContent: Scalars['String']['output'];
+  tableName?: Maybe<Scalars['String']['output']>;
+  version: Scalars['Int']['output'];
+};
 
 /** Represents the data type of the translation field */
 export enum TranslationDataType {

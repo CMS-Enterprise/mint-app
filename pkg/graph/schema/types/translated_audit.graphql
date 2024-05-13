@@ -1,13 +1,23 @@
 """
 TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit
 """
-union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct 
+union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaGeneric
 
 
 type TranslatedAuditMetaBaseStruct {
     version: Int!
     tableName: String
 
+}
+type TranslatedAuditMetaGeneric {
+    version: Int!
+    tableName: String
+    relation: String!
+    relationContent: String!
+}
+enum TranslatedAuditMetaDataType {
+    GENERIC
+    BASE
 }
 
 enum DatabaseOperation {
@@ -35,6 +45,7 @@ type TranslatedAudit {
     actorID: UUID!
     actorName: String!  #Changes: (Serialization) This could live in the actor account, but this is meant to facilitate search
     changeID: Int! # This points to a specific audit change.
+    metaDataType: TranslatedAuditMetaDataType! #The type of meta data stored in this record
     metaData: TranslatedAuditMetaData!
 
     """

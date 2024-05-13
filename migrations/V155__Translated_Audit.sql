@@ -5,6 +5,12 @@ CREATE TYPE DATABASE_OPERATION AS ENUM (
 COMMENT ON TYPE DATABASE_OPERATION IS 'The possible types of operations that can cause an audit entry.
 Currently they are represented in the audit.change table as the first letter of the action EG I, D, U, T.';
 
+CREATE TYPE TRANSLATED_AUDIT_META_DATA_TYPE AS ENUM (
+    'BASE', 'GENERIC'
+);
+
+COMMENT ON TYPE TRANSLATED_AUDIT_META_DATA_TYPE IS 'The possible meta data types that can be stored on a translated audit entry';
+
 CREATE TABLE translated_audit (
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
@@ -18,6 +24,7 @@ CREATE TABLE translated_audit (
     primary_key UUID NOT NULL,
     action DATABASE_OPERATION NOT NULL, 
 
+    meta_data_type TRANSLATED_AUDIT_META_DATA_TYPE NOT NULL, -- This could be whatever
     meta_data JSONB NOT NULL, -- This could be whatever
     model_name ZERO_STRING NOT NULL,
     created_by UUID NOT NULL REFERENCES user_account(id),

@@ -9,6 +9,7 @@ SELECT
     table_name,
     primary_key,
     action,
+    meta_data_type,
     meta_data,
     model_name,
     created_by,
