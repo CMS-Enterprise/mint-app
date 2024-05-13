@@ -14,10 +14,12 @@ type TranslatedAuditMetaGeneric struct {
 }
 
 // NewTranslatedAuditMetaGeneric creates a New TranslatedAuditMetaGeneric
-func NewTranslatedAuditMetaGeneric(tableName string, version int) TranslatedAuditMetaGeneric {
+func NewTranslatedAuditMetaGeneric(tableName string, version int, relation string, relationContent string) TranslatedAuditMetaGeneric {
 
 	return TranslatedAuditMetaGeneric{
 		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(tableName, version),
+		Relation:                      relation,
+		RelationContent:               relationContent,
 	}
 }
 

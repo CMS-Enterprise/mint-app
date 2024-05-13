@@ -220,6 +220,12 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		translatedAudit.TranslatedFields = append(translatedAudit.TranslatedFields, transField)
 
 	}
+
+	metaData, err := TranslatedAuditMetaData(ctx, store, audit)
+	if err != nil {
+		return nil, fmt.Errorf("unable to translate meta data. err %w", err)
+	}
+	translatedAudit.MetaData = metaData
 	return &translatedAudit, nil
 }
 
