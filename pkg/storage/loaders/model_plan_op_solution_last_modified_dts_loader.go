@@ -37,7 +37,7 @@ func (loaders *DataLoaders) GetModelPlanOpSolutionLastModifiedDtsByModelPlanID(
 		return nil
 	}
 
-	trackingDates, err2 := dr.Store.ModelPlanTrackingDateGetByModelPlanIDLOADER(logger, marshaledParams)
+	trackingDates, err2 := dr.Store.ModelPlanOpSolutionLastModifiedDtsGetByModelPlanIDLOADER(logger, marshaledParams)
 	if err2 != nil {
 		logger.Error(
 			"issue getting tracking dates for data loader in Model Plan Op Solution Last Modified Dts",
