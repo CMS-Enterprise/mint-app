@@ -19,9 +19,5 @@ WHERE name IN (
     'plan_collaborator'
 );
 
-/* Enable Auditing for user account table*/
-SELECT audit.AUDIT_TABLE('public', 'user_account', 'id',  NULL, '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{*}'::TEXT[]);
-
-
 /* remove it_tools table config as the table no longer exists*/
 DELETE FROM audit.table_config WHERE name = 'plan_it_tools';
