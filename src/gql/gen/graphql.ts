@@ -566,12 +566,12 @@ export type ModelPlan = {
   id: Scalars['UUID']['output'];
   isCollaborator: Scalars['Boolean']['output'];
   isFavorite: Scalars['Boolean']['output'];
-  lastModifiedDts: Scalars['Time']['output'];
   modelName: Scalars['String']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   nameHistory: Array<Scalars['String']['output']>;
+  opSolutionLastModifiedDts: Scalars['Time']['output'];
   operationalNeeds: Array<OperationalNeed>;
   opsEvalAndLearning: PlanOpsEvalAndLearning;
   participantsAndProviders: PlanParticipantsAndProviders;

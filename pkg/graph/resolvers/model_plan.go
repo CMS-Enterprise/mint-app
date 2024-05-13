@@ -248,9 +248,9 @@ func ModelPlanGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPla
 	return result.(*models.ModelPlan), nil
 }
 
-// ModelPlanTrackingDateGetByIDLOADER implements resolver logic to get Model Plan
-// Tracking Date by a model plan ID using a data loader
-func ModelPlanTrackingDateGetByIDLOADER(ctx context.Context, id uuid.UUID) (*time.Time, error) {
+// ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER implements resolver logic to get Model Plan
+// Operational Solution Last Modified Dts by a model plan ID using a data loader
+func ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx context.Context, id uuid.UUID) (*time.Time, error) {
 	allLoaders := loaders.Loaders(ctx)
 	planTrackingDateLoader := allLoaders.ModelPlanTrackingDateLoader
 	key := loaders.NewKeyArgs()
@@ -263,7 +263,12 @@ func ModelPlanTrackingDateGetByIDLOADER(ctx context.Context, id uuid.UUID) (*tim
 		return nil, err
 	}
 
-	return result.(*time.Time), nil
+	convertedTime, timeConvertedOk := result.(*time.Time)
+	if !timeConvertedOk {
+		return nil, fmt.Errorf("failed to convert time from loader")
+	}
+
+	return convertedTime, nil
 }
 
 // ModelPlanGetSampleModel returns the sample model plan

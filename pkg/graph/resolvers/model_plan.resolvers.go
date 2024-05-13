@@ -114,9 +114,9 @@ func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.Mo
 	return OperationalNeedCollectionGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
-// LastModifiedDts is the resolver for the lastModifiedDts field.
-func (r *modelPlanResolver) LastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error) {
-	return ModelPlanTrackingDateGetByIDLOADER(ctx, obj.ID)
+// OpSolutionLastModifiedDts is the resolver for the opSolutionLastModifiedDts field.
+func (r *modelPlanResolver) OpSolutionLastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error) {
+	return ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx, obj.ID)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.

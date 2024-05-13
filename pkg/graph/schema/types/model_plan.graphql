@@ -68,7 +68,7 @@ type ModelPlan {
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
-  lastModifiedDts: Time!
+  opSolutionLastModifiedDts: Time!
 }
 
 """

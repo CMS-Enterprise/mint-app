@@ -263,34 +263,34 @@ type ComplexityRoot struct {
 	}
 
 	ModelPlan struct {
-		Abbreviation             func(childComplexity int) int
-		Archived                 func(childComplexity int) int
-		Basics                   func(childComplexity int) int
-		Beneficiaries            func(childComplexity int) int
-		Collaborators            func(childComplexity int) int
-		CreatedBy                func(childComplexity int) int
-		CreatedByUserAccount     func(childComplexity int) int
-		CreatedDts               func(childComplexity int) int
-		Crs                      func(childComplexity int) int
-		Discussions              func(childComplexity int) int
-		Documents                func(childComplexity int) int
-		GeneralCharacteristics   func(childComplexity int) int
-		ID                       func(childComplexity int) int
-		IsCollaborator           func(childComplexity int) int
-		IsFavorite               func(childComplexity int) int
-		LastModifiedDts          func(childComplexity int) int
-		ModelName                func(childComplexity int) int
-		ModifiedBy               func(childComplexity int) int
-		ModifiedByUserAccount    func(childComplexity int) int
-		ModifiedDts              func(childComplexity int) int
-		NameHistory              func(childComplexity int, sort models.SortDirection) int
-		OperationalNeeds         func(childComplexity int) int
-		OpsEvalAndLearning       func(childComplexity int) int
-		ParticipantsAndProviders func(childComplexity int) int
-		Payments                 func(childComplexity int) int
-		PrepareForClearance      func(childComplexity int) int
-		Status                   func(childComplexity int) int
-		Tdls                     func(childComplexity int) int
+		Abbreviation              func(childComplexity int) int
+		Archived                  func(childComplexity int) int
+		Basics                    func(childComplexity int) int
+		Beneficiaries             func(childComplexity int) int
+		Collaborators             func(childComplexity int) int
+		CreatedBy                 func(childComplexity int) int
+		CreatedByUserAccount      func(childComplexity int) int
+		CreatedDts                func(childComplexity int) int
+		Crs                       func(childComplexity int) int
+		Discussions               func(childComplexity int) int
+		Documents                 func(childComplexity int) int
+		GeneralCharacteristics    func(childComplexity int) int
+		ID                        func(childComplexity int) int
+		IsCollaborator            func(childComplexity int) int
+		IsFavorite                func(childComplexity int) int
+		ModelName                 func(childComplexity int) int
+		ModifiedBy                func(childComplexity int) int
+		ModifiedByUserAccount     func(childComplexity int) int
+		ModifiedDts               func(childComplexity int) int
+		NameHistory               func(childComplexity int, sort models.SortDirection) int
+		OpSolutionLastModifiedDts func(childComplexity int) int
+		OperationalNeeds          func(childComplexity int) int
+		OpsEvalAndLearning        func(childComplexity int) int
+		ParticipantsAndProviders  func(childComplexity int) int
+		Payments                  func(childComplexity int) int
+		PrepareForClearance       func(childComplexity int) int
+		Status                    func(childComplexity int) int
+		Tdls                      func(childComplexity int) int
 	}
 
 	ModelPlanSharedActivityMeta struct {
@@ -1248,7 +1248,7 @@ type ModelPlanResolver interface {
 	PrepareForClearance(ctx context.Context, obj *models.ModelPlan) (*model.PrepareForClearance, error)
 	NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error)
 	OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error)
-	LastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error)
+	OpSolutionLastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error)
 }
 type ModelPlanSharedActivityMetaResolver interface {
 	ModelPlan(ctx context.Context, obj *models.ModelPlanSharedActivityMeta) (*models.ModelPlan, error)
@@ -2464,13 +2464,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.IsFavorite(childComplexity), true
 
-	case "ModelPlan.lastModifiedDts":
-		if e.complexity.ModelPlan.LastModifiedDts == nil {
-			break
-		}
-
-		return e.complexity.ModelPlan.LastModifiedDts(childComplexity), true
-
 	case "ModelPlan.modelName":
 		if e.complexity.ModelPlan.ModelName == nil {
 			break
@@ -2510,6 +2503,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.NameHistory(childComplexity, args["sort"].(models.SortDirection)), true
+
+	case "ModelPlan.opSolutionLastModifiedDts":
+		if e.complexity.ModelPlan.OpSolutionLastModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.OpSolutionLastModifiedDts(childComplexity), true
 
 	case "ModelPlan.operationalNeeds":
 		if e.complexity.ModelPlan.OperationalNeeds == nil {
@@ -8971,7 +8971,7 @@ type ModelPlan {
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
-  lastModifiedDts: Time!
+  opSolutionLastModifiedDts: Time!
 }
 
 """
@@ -13727,8 +13727,8 @@ func (ec *executionContext) fieldContext_AddedAsCollaboratorMeta_modelPlan(ctx c
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			case "operationalNeeds":
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			case "lastModifiedDts":
-				return ec.fieldContext_ModelPlan_lastModifiedDts(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -20874,8 +20874,8 @@ func (ec *executionContext) fieldContext_ModelPlan_operationalNeeds(ctx context.
 	return fc, nil
 }
 
-func (ec *executionContext) _ModelPlan_lastModifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ModelPlan_lastModifiedDts(ctx, field)
+func (ec *executionContext) _ModelPlan_opSolutionLastModifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -20888,7 +20888,7 @@ func (ec *executionContext) _ModelPlan_lastModifiedDts(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().LastModifiedDts(rctx, obj)
+		return ec.resolvers.ModelPlan().OpSolutionLastModifiedDts(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -20905,7 +20905,7 @@ func (ec *executionContext) _ModelPlan_lastModifiedDts(ctx context.Context, fiel
 	return ec.marshalNTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_ModelPlan_lastModifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "ModelPlan",
 		Field:      field,
@@ -21143,8 +21143,8 @@ func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_modelPlan(c
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			case "operationalNeeds":
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			case "lastModifiedDts":
-				return ec.fieldContext_ModelPlan_lastModifiedDts(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -21504,8 +21504,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			case "operationalNeeds":
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			case "lastModifiedDts":
-				return ec.fieldContext_ModelPlan_lastModifiedDts(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -21641,8 +21641,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			case "operationalNeeds":
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			case "lastModifiedDts":
-				return ec.fieldContext_ModelPlan_lastModifiedDts(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -26649,8 +26649,8 @@ func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_modelP
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			case "operationalNeeds":
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			case "lastModifiedDts":
-				return ec.fieldContext_ModelPlan_lastModifiedDts(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -36951,8 +36951,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_currentModel
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			case "operationalNeeds":
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			case "lastModifiedDts":
-				return ec.fieldContext_ModelPlan_lastModifiedDts(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -55319,8 +55319,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			case "operationalNeeds":
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			case "lastModifiedDts":
-				return ec.fieldContext_ModelPlan_lastModifiedDts(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -55456,8 +55456,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			case "operationalNeeds":
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			case "lastModifiedDts":
-				return ec.fieldContext_ModelPlan_lastModifiedDts(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -58399,8 +58399,8 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_mod
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			case "operationalNeeds":
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			case "lastModifiedDts":
-				return ec.fieldContext_ModelPlan_lastModifiedDts(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -58907,8 +58907,8 @@ func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_mode
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			case "operationalNeeds":
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
-			case "lastModifiedDts":
-				return ec.fieldContext_ModelPlan_lastModifiedDts(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -66693,7 +66693,7 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-		case "lastModifiedDts":
+		case "opSolutionLastModifiedDts":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -66702,7 +66702,7 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._ModelPlan_lastModifiedDts(ctx, field, obj)
+				res = ec._ModelPlan_opSolutionLastModifiedDts(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
