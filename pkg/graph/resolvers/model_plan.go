@@ -252,7 +252,7 @@ func ModelPlanGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPla
 // Operational Solution Last Modified Dts by a model plan ID using a data loader
 func ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx context.Context, id uuid.UUID) (*time.Time, error) {
 	allLoaders := loaders.Loaders(ctx)
-	planTrackingDateLoader := allLoaders.ModelPlanTrackingDateLoader
+	planTrackingDateLoader := allLoaders.ModelPlanOpSolutionLastModifiedDtsLoader
 	key := loaders.NewKeyArgs()
 	key.Args["id"] = id
 
