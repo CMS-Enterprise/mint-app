@@ -57,6 +57,7 @@ type TranslatedAuditField struct {
 
 	MetaDataRaw interface{}                  `db:"meta_data"`
 	MetaData    TranslatedAuditFieldMetaData `json:"metaData"`
+	// Changes: (Structure) Revisit meta Data. Give it the same treatment as the translated audit table, or perhaps remove it from the fields table if it is completely not needed?
 }
 
 // NewTranslatedAuditField

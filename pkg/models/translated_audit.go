@@ -48,9 +48,9 @@ type TranslatedAudit struct {
 	ActorName string    `json:"actorName" db:"actor_name"` //Changes (Structure) Maybe normalize this?
 	ChangeID  int       `json:"changeID" db:"change_id"`
 
-	MetaDataRaw  interface{}                 `db:"meta_data"`
-	MetaDataType TranslatedAuditMetaDataType `db:"meta_data_type"`
-	MetaData     TranslatedAuditMetaData     `json:"metaData"`
+	MetaDataRaw  interface{}                  `db:"meta_data"`
+	MetaDataType *TranslatedAuditMetaDataType `db:"meta_data_type"`
+	MetaData     TranslatedAuditMetaData      `json:"metaData"`
 }
 
 // NewTranslatedAuditChange
@@ -67,8 +67,8 @@ func NewTranslatedAuditChange(
 	primaryKey uuid.UUID,
 	action DatabaseOperation,
 ) TranslatedAudit {
-	version := 0
-	baseMeta := NewTranslatedAuditMetaBaseStruct(tableName, version)
+	// version := 0
+	// baseMeta := NewTranslatedAuditMetaBaseStruct(tableName, version)
 	return TranslatedAudit{
 		baseStruct:        NewBaseStruct(createdBy),
 		ActorID:           actorID,
@@ -82,8 +82,8 @@ func NewTranslatedAuditChange(
 		PrimaryKey:        primaryKey,
 		Action:            action,
 
-		MetaData:     &baseMeta,
-		MetaDataType: TAMetaBase,
+		// MetaData:     &baseMeta,
+		// MetaDataType: TAMetaBase,
 	}
 
 }

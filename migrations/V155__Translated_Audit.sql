@@ -24,14 +24,24 @@ CREATE TABLE translated_audit (
     primary_key UUID NOT NULL,
     action DATABASE_OPERATION NOT NULL, 
 
-    meta_data_type TRANSLATED_AUDIT_META_DATA_TYPE NOT NULL, -- This could be whatever
-    meta_data JSONB NOT NULL, -- This could be whatever
+    meta_data_type TRANSLATED_AUDIT_META_DATA_TYPE,
+    meta_data JSONB, 
     model_name ZERO_STRING NOT NULL,
     created_by UUID NOT NULL REFERENCES user_account(id),
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
 );
+
+
+ALTER TABLE translated_audit
+ADD CONSTRAINT meta_data_type_requires_meta_data CHECK (
+    (meta_data_type IS NOT NULL AND meta_data IS NOT NULL)
+    OR
+    (meta_data_type IS NULL AND meta_data IS NULL)
+);
+
+COMMENT ON CONSTRAINT meta_data_type_requires_meta_data ON translated_audit IS 'This requires that either the meta data and the meta data type or null, or they are both not null';
 
 -- Changes: (Serialization) Decide if we want to normalize the references that duplicate data, eg, actor_name, model_name etc. All of this is technically already in the audit.change table...
 

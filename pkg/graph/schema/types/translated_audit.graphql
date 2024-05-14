@@ -6,12 +6,11 @@ union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditM
 
 type TranslatedAuditMetaBaseStruct {
     version: Int!
-    tableName: String
-
+    tableName: String!
 }
 type TranslatedAuditMetaGeneric {
     version: Int!
-    tableName: String
+    tableName: String!
     relation: String!
     relationContent: String!
 }
@@ -44,9 +43,18 @@ type TranslatedAudit {
 
     actorID: UUID!
     actorName: String!  #Changes: (Serialization) This could live in the actor account, but this is meant to facilitate search
+    """
+    The id of the audit.Change record that was translated.
+    """
     changeID: Int! # This points to a specific audit change.
-    metaDataType: TranslatedAuditMetaDataType! #The type of meta data stored in this record
-    metaData: TranslatedAuditMetaData!
+    """
+    The type of meta data that is stored for this record
+    """
+    metaDataType: TranslatedAuditMetaDataType 
+    """
+    The actual meta data stored for this record
+    """
+    metaData: TranslatedAuditMetaData
 
     """
     The specific fields that were changed by the transaction
