@@ -1,4 +1,8 @@
-import { GetChangeHistoryQuery } from 'gql/gen/graphql';
+import {
+  GetChangeHistoryQuery,
+  TranslatedAuditMetaData,
+  TranslatedAuditMetaGeneric
+} from 'gql/gen/graphql';
 
 export type ChangeRecordType = NonNullable<
   GetChangeHistoryQuery['translatedAuditCollection']
@@ -54,6 +58,14 @@ export const isTranslationTaskListTable = (
     'plan_ops_eval_and_learning',
     'plan_payments'
   ].includes(tableName);
+};
+
+// Type guard to check union type
+export const isDiscussionReplyWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaGeneric => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaGeneric';
 };
 
 // Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array

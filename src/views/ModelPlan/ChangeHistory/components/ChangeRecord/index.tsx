@@ -16,6 +16,7 @@ import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
   identifyChangeType,
+  isDiscussionReplyWithMetaData,
   isHiddenRecord,
   isInitialCreatedSection,
   parseArray
@@ -57,6 +58,7 @@ const SingleChange = ({ change, changeType }: SingleChangeProps) => {
             <></>
           )}
         </span>
+
         {changeType !== DatabaseOperation.DELETE &&
           t(`changeType.${change.changeType}`)}
       </div>
@@ -214,9 +216,9 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
       >
         <AvatarCircle
           user={changeRecord.actorName}
-          className="margin-right-1"
+          className="margin-right-1 flex-align-self-start"
         />
-        <span>
+        <span className="padding-top-05">
           <span className="text-bold">{changeRecord.actorName} </span>
 
           {changeRecordType === 'New plan' && (
@@ -374,7 +376,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
           {changeRecordType === 'Discussion update' && (
             <>
               <Trans
-                i18nKey={`changeHistory:${changeRecord.tableName}ANSWERED`}
+                i18nKey={`changeHistory:${changeRecord.tableName}Answered`}
                 values={{
                   date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                   time: formatTime(changeRecord.date)
@@ -383,10 +385,23 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                   datetime: <span />
                 }}
               />
-              <ul className="padding-left-4 margin-top-1">
+              <ul
+                className={classNames(
+                  {
+                    'change-record__discussion-expanded': isOpen,
+                    'padding-left-4': !isOpen,
+                    'margin-bottom-0':
+                      changeRecord.tableName === 'plan_discussion'
+                  },
+                  'margin-top-1'
+                )}
+              >
                 <li>
                   <MentionTextArea
-                    className="text-base-darkest"
+                    className={classNames('text-base-darkest', {
+                      'margin-bottom-0':
+                        changeRecord.tableName === 'plan_discussion'
+                    })}
                     id={`mention-${changeRecord.id}`}
                     editable={false}
                     initialContent={
@@ -397,6 +412,31 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                   />
                 </li>
               </ul>
+
+              {changeRecord.tableName === 'discussion_reply' && (
+                <CollapsableLink
+                  id={changeRecord.id}
+                  label={t('showDetails')}
+                  closeLabel={t('hideDetails')}
+                  labelPosition="bottom"
+                  setParentOpen={setOpen}
+                  styleLeftBar={false}
+                >
+                  <div className="margin-bottom-neg-1 padding-left-4 change-record__answer margin-top-neg-2">
+                    <MentionTextArea
+                      className="text-base-darkest"
+                      id={`mention-${changeRecord.id}`}
+                      editable={false}
+                      initialContent={
+                        changeRecord?.metaData &&
+                        isDiscussionReplyWithMetaData(changeRecord?.metaData)
+                          ? changeRecord?.metaData.relationContent
+                          : ''
+                      }
+                    />
+                  </div>
+                </CollapsableLink>
+              )}
             </>
           )}
 

@@ -16,9 +16,9 @@ const changeHistory = {
     '{{action}} {{collaborator}}’s role to {{role}} <datetime>on {{date}} at {{time}}</datetime>',
   teamREMOVED:
     '{{action}} {{collaborator}} from the model team <datetime>on {{date}} at {{time}}</datetime>',
-  plan_discussionANSWERED:
+  plan_discussionAnswered:
     'started a Discussion <datetime>on {{date}} at {{time}}</datetime>',
-  discussion_replyANSWERED:
+  discussion_replyAnswered:
     'replied to a Discussion <datetime>on {{date}} at {{time}}</datetime>',
   documentUpdate:
     '{{action}} {{documentName}}{{isLink}} {{toFrom}} Documents <datetime>on {{date}} at {{time}}</datetime>',
