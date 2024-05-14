@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Card } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
+  DatabaseOperation,
   GetChangeHistoryQuery,
   TranslationDataType,
   TranslationQuestionType
@@ -32,10 +33,11 @@ type ChangeRecordProps = {
 
 type SingleChangeProps = {
   change: ChangeRecordType['translatedFields'][0];
+  changeType: DatabaseOperation;
 };
 
 // Render a single change record, showing the field name, the change type, and the old and new values
-const SingleChange = ({ change }: SingleChangeProps) => {
+const SingleChange = ({ change, changeType }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   return (
@@ -55,7 +57,8 @@ const SingleChange = ({ change }: SingleChangeProps) => {
             <></>
           )}
         </span>
-        {t(`changeType.${change.changeType}`)}
+        {changeType !== DatabaseOperation.DELETE &&
+          t(`changeType.${change.changeType}`)}
       </div>
 
       <div className="change-record__answer margin-y-1">
@@ -68,7 +71,11 @@ const SingleChange = ({ change }: SingleChangeProps) => {
 
         {change.oldTranslated && (
           <>
-            <div className="text-bold padding-y-105">{t('previousAnswer')}</div>
+            {changeType !== DatabaseOperation.DELETE && (
+              <div className="text-bold padding-y-105">
+                {t('previousAnswer')}
+              </div>
+            )}
             <RenderValue
               value={change.oldTranslated}
               dataType={change.dataType}
@@ -146,7 +153,7 @@ const RenderValue = ({
   );
 };
 
-const ChangedQuestion = ({ change }: SingleChangeProps) => {
+const ChangedQuestion = ({ change, changeType }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   if (change.referenceLabel) {
@@ -170,6 +177,7 @@ const ChangedQuestion = ({ change }: SingleChangeProps) => {
       );
     }
   }
+
   return <>{change.fieldNameTranslated}</>;
 };
 
@@ -181,7 +189,13 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
   const changeRecordType = identifyChangeType(changeRecord);
 
-  const showMoreData: boolean = changeRecordType === 'Standard update';
+  const showMoreData: boolean =
+    changeRecordType === 'Standard update' ||
+    changeRecordType === 'CR update' ||
+    changeRecordType === 'TDL update' ||
+    changeRecordType === 'Document update';
+
+  const renderList: boolean = changeRecordType === 'Standard update';
 
   if (
     isInitialCreatedSection(changeRecord, changeRecordType) ||
@@ -279,6 +293,84 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {changeRecordType === 'Document update' &&
+            (() => {
+              const documentType =
+                changeRecord.translatedFields.find(
+                  field => field.fieldName === 'is_link'
+                )?.newTranslated === 'true'
+                  ? ' link'
+                  : '';
+
+              const documentChange = (docType: string | undefined) =>
+                docType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
+
+              const updateType = (change: ChangeRecordType) => {
+                if (change.action === 'INSERT') {
+                  if (documentType === ' link') {
+                    return 'added';
+                  }
+                  return 'uploaded';
+                }
+                if (change.action === 'DELETE') {
+                  return 'removed';
+                }
+                return '';
+              };
+
+              const documentName = changeRecord.translatedFields.find(
+                field => field.fieldName === 'file_name'
+              )?.[documentChange(changeRecord.action)];
+
+              return (
+                <Trans
+                  i18nKey="changeHistory:documentUpdate"
+                  values={{
+                    isLink: documentType,
+                    action: t(`documentChangeType.${updateType(changeRecord)}`),
+                    documentName,
+                    toFrom: changeRecord.action === 'INSERT' ? 'to' : 'from',
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {(changeRecordType === 'CR update' ||
+            changeRecordType === 'TDL update') &&
+            (() => {
+              const crTdlType =
+                changeRecord.tableName === 'plan_cr' ? 'CRs' : 'TDLs';
+
+              const crTdlChange = (actionType: DatabaseOperation) =>
+                actionType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
+
+              const crTdlName = changeRecord.translatedFields.find(
+                field => field.fieldName === 'id_number'
+              )?.[crTdlChange(changeRecord.action)];
+
+              return (
+                <Trans
+                  i18nKey="changeHistory:crTdlUpdate"
+                  values={{
+                    action: t(`auditUpdateTye.${changeRecord.action}`),
+                    crTdlName,
+                    crTdlType,
+                    toFrom: t(`toFromIn.${changeRecord.action}`),
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
           {changeRecordType === 'Discussion update' && (
             <>
               <Trans
@@ -298,7 +390,9 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                     id={`mention-${changeRecord.id}`}
                     editable={false}
                     initialContent={
-                      changeRecord.translatedFields[0].newTranslated
+                      changeRecord.translatedFields.find(
+                        field => field.fieldName === 'content'
+                      )?.newTranslated
                     }
                   />
                 </li>
@@ -324,11 +418,14 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
         </span>
       </div>
 
-      {!isOpen && showMoreData && (
+      {!isOpen && renderList && (
         <ul className="margin-top-05 margin-bottom-1 margin-left-4">
           {changeRecord.translatedFields.map(change => (
             <li key={change.id}>
-              <ChangedQuestion change={change} />
+              <ChangedQuestion
+                change={change}
+                changeType={changeRecord.action}
+              />
             </li>
           ))}
         </ul>
@@ -346,7 +443,11 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
         >
           <div className="margin-bottom-neg-1">
             {changeRecord.translatedFields.map(change => (
-              <SingleChange change={change} key={change.id} />
+              <SingleChange
+                change={change}
+                key={change.id}
+                changeType={changeRecord.action}
+              />
             ))}
           </div>
         </CollapsableLink>

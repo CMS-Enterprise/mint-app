@@ -12,6 +12,8 @@ export type ChangeType =
   | 'Team update'
   | 'Discussion update'
   | 'Document update'
+  | 'CR update'
+  | 'TDL update'
   | 'Operational need create'
   | 'Standard update';
 
@@ -56,6 +58,8 @@ export const isTranslationTaskListTable = (
 
 // Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array
 export const parseArray = (value: string | string[]) => {
+  if (!value) return '';
+
   if (Array.isArray(value)) return value;
 
   const formattedString = value.replace(/{/g, '[').replace(/}/g, ']');
@@ -199,6 +203,14 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'Document update';
   }
 
+  if (change.tableName === 'plan_cr') {
+    return 'CR update';
+  }
+
+  if (change.tableName === 'plan_tdl') {
+    return 'TDL update';
+  }
+
   // If the change is an operational need create/no translatedFields, return 'Operational need create'
   if (
     change.tableName === 'operational_need' &&
@@ -227,16 +239,14 @@ export const isHiddenRecord = (changeRecord: ChangeRecordType): boolean => {
   const hiddenFields = [
     {
       table: 'operational_need',
-      field: 'needed'
+      type: 'INSERT'
     }
   ];
 
   return !!hiddenFields.find(
     hiddenField =>
       hiddenField.table === changeRecord.tableName &&
-      changeRecord.translatedFields.filter(
-        field => field.fieldName === hiddenField.field
-      ).length > 0
+      changeRecord.action === hiddenField.type
   );
 };
 
