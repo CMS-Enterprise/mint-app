@@ -2,7 +2,8 @@ import { aliasQuery } from '../support/graphql-test-utils';
 
 describe('The Model Plan Ops Eval and Learning Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/');
 
     cy.intercept('POST', '/api/graph/query', req => {
       aliasQuery(req, 'GetModelPlan');

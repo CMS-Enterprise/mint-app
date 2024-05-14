@@ -1,6 +1,7 @@
 describe('Notification Center', () => {
   it('navigates through the Notification page', () => {
     cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/');
     cy.clickPlanTableByName('Empty Plan');
 
     cy.contains('button', 'Start a discussion').click();
@@ -11,40 +12,36 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Save discussion').should('be.disabled');
 
-    cy.get('#user-role').should('not.be.disabled');
-
-    cy.get('#user-role').select('None of the above');
+    cy.get('#user-role').should('not.be.disabled').select('None of the above');
 
     cy.get('#user-role-description')
       .type('Designer')
       .should('have.value', 'Designer');
 
-    cy.get('#mention-editor').type('@ana');
-    cy.get('#JTTC').contains('Anabelle Jerde (JTTC)').click();
-    cy.get('#mention-editor').type('First Notification');
-    cy.get('#mention-editor').should(
-      'have.text',
-      '@Anabelle Jerde (JTTC) First Notification'
-    );
+    cy.get('#mention-editor')
+      .type('@ana')
+      .contains('Anabelle Jerde (JTTC)')
+      .click();
+    cy.get('#mention-editor')
+      .type('First Notification')
+      .should('have.text', '@Anabelle Jerde (JTTC) First Notification');
 
     cy.contains('button', 'Save discussion').click();
 
     // Second notification
     cy.contains('button', 'Start a discussion').click();
 
-    cy.get('#user-role').should('not.be.disabled');
-
-    cy.get('#user-role').select('None of the above');
+    cy.get('#user-role').should('not.be.disabled').select('None of the above');
 
     cy.get('#user-role-description').should('have.value', 'Designer');
 
-    cy.get('#mention-editor').type('@ana');
-    cy.get('#JTTC').contains('Anabelle Jerde (JTTC)').click();
-    cy.get('#mention-editor').type('Second Notification');
-    cy.get('#mention-editor').should(
-      'have.text',
-      '@Anabelle Jerde (JTTC) Second Notification'
-    );
+    cy.get('#mention-editor')
+      .type('@ana')
+      .contains('Anabelle Jerde (JTTC)')
+      .click();
+    cy.get('#mention-editor')
+      .type('Second Notification')
+      .should('have.text', '@Anabelle Jerde (JTTC) Second Notification');
 
     cy.contains('button', 'Save discussion').click();
 
@@ -61,9 +58,8 @@ describe('Notification Center', () => {
       'exist'
     );
 
-    cy.get('[data-testid="individual-notification"]').should('have.length', 2);
-
     cy.get('[data-testid="individual-notification"]')
+      .should('have.length', 2)
       .first()
       .find('button', 'View Discussion')
       .click();
@@ -109,22 +105,18 @@ describe('Notification Center', () => {
 
   it('navigates to see Notification Settings', () => {
     cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
-    cy.visit('/notifications');
-
-    // Notification Settings Test
-    cy.contains('a', 'Notification settings').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/settings/);
-    });
+    cy.visit('/notifications/settings');
 
     // Uncheck first checkbox and save
-    cy.get('form').within(() => {
-      cy.get('#notification-setting-email-dailyDigestComplete').uncheck({
+    cy.get('#notification-setting-email-dailyDigestComplete')
+      .should('be.checked')
+      .uncheck({
         force: true
       });
-      cy.root().submit();
-    });
+
+    cy.contains('button', 'Save').click();
+
+    cy.get('[data-testid="success-collaborator-alert"').should('exist');
 
     cy.contains('a', 'Notification settings').click();
 
@@ -136,35 +128,12 @@ describe('Notification Center', () => {
 
   it('testing New Discussion Reply Notification', () => {
     cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/');
     cy.clickPlanTableByName('Empty Plan');
 
-    // Create a discussion to start things off
-    cy.contains('button', 'Start a discussion').click();
-
-    cy.contains('h1', 'Start a discussion');
-
-    cy.contains('button', 'Save discussion').should('be.disabled');
-
-    cy.get('#user-role').should('not.be.disabled');
-
-    cy.get('#user-role').select('None of the above');
-
-    cy.get('#user-role-description')
-      .type('Designer')
-      .should('have.value', 'Designer');
-
-    cy.get('#mention-editor').type('@ana');
-    cy.get('#JTTC').contains('Anabelle Jerde (JTTC)').click();
-    cy.get('#mention-editor').type('First Notification');
-    cy.get('#mention-editor').should(
-      'have.text',
-      '@Anabelle Jerde (JTTC) First Notification'
-    );
-
-    cy.contains('button', 'Save discussion').click();
-
     // New Discussion Reply test
-    cy.contains('button', 'Reply').click();
+    cy.contains('button', 'View discussions').click();
+    cy.contains('button', 'Reply').first().click();
 
     cy.contains('label', 'Type your reply');
 
@@ -181,8 +150,9 @@ describe('Notification Center', () => {
       'exist'
     );
 
-    cy.get('[data-testid="individual-notification"]').should('have.length', 2);
+    cy.get('[data-testid="individual-notification"]').should('have.length', 3);
 
+    // Checking that marking as read works
     cy.get('[data-testid="individual-notification"]')
       .first()
       .find('button', 'View Discussion')
@@ -199,6 +169,7 @@ describe('Notification Center', () => {
 
   it('testing Adding Collaborator Notification', () => {
     cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.visit('/');
     cy.clickPlanTableByName('Empty Plan');
 
     // Add SF13 as a collaborator
@@ -229,7 +200,8 @@ describe('Notification Center', () => {
     cy.logout();
 
     // Login as SF13
-    cy.localLogin({ name: 'SF13', role: 'MINT_USER_NONPROD' });
+    cy.localLogin({ name: 'SF13' });
+    cy.visit('/');
 
     cy.get('[data-testid="navmenu__notification"]').first().click();
 
