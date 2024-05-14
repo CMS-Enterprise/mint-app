@@ -49,9 +49,13 @@ BEGIN
     h_new= hstore(NEW.*);
     h_old= hstore(OLD.*);
 
-    diff_keys = (akeys(h_new - insert_cols)); --these are the keys to subract from all the keys on insert or deleted
+    diff_keys = (akeys(h_new - insert_cols)); --these are the keys to subtract from all the keys on insert or deleted
     IF TG_OP = 'INSERT' OR TG_OP = 'DELETE' THEN
+        IF insert_cols = '{*}' THEN 
+            h_changed = (h_new - h_old) - array_append(excluded_cols, pkey_f); --remove matching values and primary key
+        ELSE
         h_changed = (h_new -h_old) -diff_keys; --remove matching values, and only  show specific columns for insert /delete
+        END IF;
     ELSE
         h_changed = (h_new - h_old) - excluded_cols; --remove matching values and excluded columns
     END If;
@@ -125,4 +129,4 @@ $audit_table$ LANGUAGE plpgsql
 SECURITY DEFINER --Run trigger as the creator of the trigger
 SET search_path = pg_catalog, public;
 
-COMMENT ON FUNCTION audit.if_modified IS 'This trigger function is responsible for writing entries to the audit.change, and the translated_audit_queue if a record set has been modified. It will look for a diff between the old and new values, and if so write an entry. It starts with hStores to do the diff comparison, but converts the changes to a jsonB that has the name of the field, as well as the old and new values.';
+COMMENT ON FUNCTION audit.if_modified IS 'This trigger function is responsible for writing entries to the audit.change, and the translated_audit_queue if a record set has been modified. It will look for a diff between the old and new values, and if so write an entry. It starts with hStores to do the diff comparison, but converts the changes to a jsonB that has the name of the field, as well as the old and new values. If a table is configured with insert columns *, it will insert every column except the primary key and those that were explicitly marked to ignore.';
