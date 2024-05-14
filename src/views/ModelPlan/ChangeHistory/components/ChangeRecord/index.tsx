@@ -125,6 +125,7 @@ const RenderValue = ({
 
   const parsedValue = parseArray(value);
 
+  // If the data type is an array, render the array as a list and parent question
   if (Array.isArray(parsedValue)) {
     return (
       <>
@@ -138,6 +139,7 @@ const RenderValue = ({
     );
   }
 
+  // If the data type is a date, format the date and parent question
   if (dataType === TranslationDataType.DATE && typeof value === 'string') {
     return (
       <>
@@ -155,6 +157,7 @@ const RenderValue = ({
   );
 };
 
+// Renders the questions changes before collapse link is clicked, as well as a note or follow-up question is present
 const ChangedQuestion = ({ change, changeType }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
