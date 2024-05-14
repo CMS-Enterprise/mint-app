@@ -61,9 +61,12 @@ func (hmb *TranslatedAuditMetaBaseStruct) Scan(src interface{}) error {
 }
 
 // parseRawTranslatedAuditMetaData conditionally parses meta data from JSON to a specific meta data type
-func parseRawTranslatedAuditMetaData(metaDataType string, rawMetaDataJSON interface{}) (TranslatedAuditMetaData, error) {
+func parseRawTranslatedAuditMetaData(metaDataType *TranslatedAuditMetaDataType, rawMetaDataJSON interface{}) (TranslatedAuditMetaData, error) {
 	//Changes: (Meta) Figure out how we distinguish meta data type. This should be specific to a field / table, but that isn't here..... \
 	// We might need to partially deserialize this to a map, then cast to a type? OR! We could store more data about it in another column.
+	if metaDataType == nil {
+		return nil, nil
+	}
 
 	var rawData []byte
 
@@ -79,16 +82,28 @@ func parseRawTranslatedAuditMetaData(metaDataType string, rawMetaDataJSON interf
 		return nil, fmt.Errorf("unsupported type for TranslatedAuditField Meta Data: %T", rawMetaDataJSON)
 	}
 
-	switch metaDataType {
+	// Add on additional types if they get added.
+	switch *metaDataType {
+	case TAMetaBase:
+		{
+			// Return a default implementation or handle unsupported types
+			meta := TranslatedAuditMetaBaseStruct{}
+			if err := json.Unmarshal(rawData, &meta); err != nil {
+				return nil, err
+			}
+			return &meta, nil
+		}
+	case TAMetaGeneric:
+		{
+			meta := TranslatedAuditMetaGeneric{}
+			if err := json.Unmarshal(rawData, &meta); err != nil {
+				return nil, err
+			}
+			return &meta, nil
+		}
 
 	default:
-		// Return a default implementation or handle unsupported types
-		meta := TranslatedAuditMetaBaseStruct{}
-		if err := json.Unmarshal(rawData, &meta); err != nil {
-			return nil, err
-		}
-		return &meta, nil
-		// return nil, fmt.Errorf("unsupported table type: %s", tableName)
+		return nil, fmt.Errorf("metaDataType %s is not supported. There is no defined deserialization method", *metaDataType)
 	}
 
 }

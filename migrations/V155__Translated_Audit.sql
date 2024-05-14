@@ -5,6 +5,12 @@ CREATE TYPE DATABASE_OPERATION AS ENUM (
 COMMENT ON TYPE DATABASE_OPERATION IS 'The possible types of operations that can cause an audit entry.
 Currently they are represented in the audit.change table as the first letter of the action EG I, D, U, T.';
 
+CREATE TYPE TRANSLATED_AUDIT_META_DATA_TYPE AS ENUM (
+    'BASE', 'GENERIC'
+);
+
+COMMENT ON TYPE TRANSLATED_AUDIT_META_DATA_TYPE IS 'The possible meta data types that can be stored on a translated audit entry';
+
 CREATE TABLE translated_audit (
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
@@ -18,13 +24,24 @@ CREATE TABLE translated_audit (
     primary_key UUID NOT NULL,
     action DATABASE_OPERATION NOT NULL, 
 
-    meta_data JSONB NOT NULL, -- This could be whatever
+    meta_data_type TRANSLATED_AUDIT_META_DATA_TYPE,
+    meta_data JSONB, 
     model_name ZERO_STRING NOT NULL,
     created_by UUID NOT NULL REFERENCES user_account(id),
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
 );
+
+
+ALTER TABLE translated_audit
+ADD CONSTRAINT meta_data_type_requires_meta_data CHECK (
+    (meta_data_type IS NOT NULL AND meta_data IS NOT NULL)
+    OR
+    (meta_data_type IS NULL AND meta_data IS NULL)
+);
+
+COMMENT ON CONSTRAINT meta_data_type_requires_meta_data ON translated_audit IS 'This requires that either the meta data and the meta data type or null, or they are both not null';
 
 -- Changes: (Serialization) Decide if we want to normalize the references that duplicate data, eg, actor_name, model_name etc. All of this is technically already in the audit.change table...
 

@@ -9,6 +9,7 @@ INSERT INTO translated_audit(
     table_name,
     primary_key,
     action,
+    meta_data_type,
     meta_data,
     model_name,
     created_by
@@ -24,6 +25,7 @@ VALUES (
     :table_name,
     :primary_key,
     :action,
+    :meta_data_type,
     :meta_data,
     :model_name,
     :created_by
@@ -39,6 +41,7 @@ table_id,
 table_name,
 primary_key,
 action,
+meta_data_type,
 meta_data,
 model_name,
 created_by,
