@@ -3393,13 +3393,17 @@ export type TranslatedAudit = {
   action: DatabaseOperation;
   actorID: Scalars['UUID']['output'];
   actorName: Scalars['String']['output'];
+  /** The id of the audit.Change record that was translated. */
   changeID: Scalars['Int']['output'];
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   date: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
-  metaData: TranslatedAuditMetaData;
+  /** The actual meta data stored for this record */
+  metaData?: Maybe<TranslatedAuditMetaData>;
+  /** The type of meta data that is stored for this record */
+  metaDataType?: Maybe<TranslatedAuditMetaDataType>;
   modelName: Scalars['String']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -3449,12 +3453,25 @@ export type TranslatedAuditFieldMetaData = TranslatedAuditFieldMetaBaseStruct;
 
 export type TranslatedAuditMetaBaseStruct = {
   __typename: 'TranslatedAuditMetaBaseStruct';
-  tableName?: Maybe<Scalars['String']['output']>;
+  tableName: Scalars['String']['output'];
   version: Scalars['Int']['output'];
 };
 
 /** TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit */
-export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct;
+export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaGeneric;
+
+export enum TranslatedAuditMetaDataType {
+  BASE = 'BASE',
+  GENERIC = 'GENERIC'
+}
+
+export type TranslatedAuditMetaGeneric = {
+  __typename: 'TranslatedAuditMetaGeneric';
+  relation: Scalars['String']['output'];
+  relationContent: Scalars['String']['output'];
+  tableName: Scalars['String']['output'];
+  version: Scalars['Int']['output'];
+};
 
 /** Represents the data type of the translation field */
 export enum TranslationDataType {

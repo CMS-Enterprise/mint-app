@@ -17,7 +17,9 @@ func TranslatedAuditCreate(np sqlutils.NamedPreparer, translatedAudit *models.Tr
 	}
 
 	// Set the raw data as the humanizedAuditChangeData
-	translatedAudit.MetaDataRaw = translatedAudit.MetaData
+	if translatedAudit.MetaData != nil {
+		translatedAudit.MetaDataRaw = &translatedAudit.MetaData
+	}
 
 	retHumanizedChange, procError := sqlutils.GetProcedure[models.TranslatedAudit](np, sqlqueries.TranslatedAudit.Create, translatedAudit)
 	if procError != nil {

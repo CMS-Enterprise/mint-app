@@ -220,6 +220,15 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		translatedAudit.TranslatedFields = append(translatedAudit.TranslatedFields, transField)
 
 	}
+
+	// Changes: (Translations) refactor this, perhaps this should be a receiver method on the translated audit? That way we set if not nil, instead of the default implementation?
+	metaData, metaDataType, err := TranslatedAuditMetaData(ctx, store, audit)
+	if err != nil {
+		return nil, fmt.Errorf("unable to translate meta data. err %w", err)
+	}
+	translatedAudit.MetaData = metaData
+	translatedAudit.MetaDataType = metaDataType
+
 	return &translatedAudit, nil
 }
 
