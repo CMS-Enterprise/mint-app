@@ -484,7 +484,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                     <SideNav
                       subComponents={subComponents}
                       isHelpArticle={isHelpArticle}
-                      openFilterModal={() => setIsFilterViewModalOpen(true)}
                     />
                   </Grid>
                 )}
