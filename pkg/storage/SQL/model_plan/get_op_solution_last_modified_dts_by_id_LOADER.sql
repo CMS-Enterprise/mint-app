@@ -39,21 +39,13 @@ LATEST_DATES AS (
 
     SELECT
         operational_need.model_plan_id,
-        GREATEST(MAX(plan_document_solution_link.modified_dts), MAX(plan_document_solution_link.created_dts)) AS latest_date
+        GREATEST(MAX(plan_document_solution_link.modified_dts), MAX(plan_document_solution_link.created_dts),MAX(plan_document.created_dts), MAX(plan_document.modified_dts)) AS latest_date
     FROM plan_document_solution_link
+    INNER JOIN plan_document ON plan_document.id = plan_document_solution_link.document_id
     INNER JOIN operational_solution ON operational_solution.id = plan_document_solution_link.solution_id
     INNER JOIN operational_need ON operational_need.id = operational_solution.operational_need_id
     WHERE operational_need.model_plan_id IN (SELECT id FROM QUERIED_IDS)
     GROUP BY operational_need.model_plan_id
-
-    UNION ALL
-
-    SELECT
-        plan_document.model_plan_id,
-        GREATEST(MAX(plan_document.modified_dts), MAX(plan_document.created_dts)) AS latest_date
-    FROM plan_document
-    WHERE plan_document.model_plan_id IN (SELECT id FROM QUERIED_IDS)
-    GROUP BY plan_document.model_plan_id
 )
 
 SELECT

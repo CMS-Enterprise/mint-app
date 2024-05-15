@@ -26,7 +26,14 @@ func (loaders *DataLoaders) GetModelPlanOpSolutionLastModifiedDtsByModelPlanID(
 			"issue converting keys for data loader in Model Plan Op Solution Last Modified Dts",
 			zap.Error(*err),
 		)
-		return nil
+
+		return []*dataloader.Result{{
+			Data: nil,
+			Error: fmt.Errorf(
+				"issue converting keys for data loader in Model Plan Op Solution Last Modified Dts, %w",
+				*err,
+			),
+		}}
 	}
 	marshaledParams, err := arrayCK.ToJSONArray()
 	if err != nil {
@@ -34,7 +41,14 @@ func (loaders *DataLoaders) GetModelPlanOpSolutionLastModifiedDtsByModelPlanID(
 			"issue converting keys to JSON for data loader in Model Plan Op Solution Last Modified Dts",
 			zap.Error(*err),
 		)
-		return nil
+
+		return []*dataloader.Result{{
+			Data: nil,
+			Error: fmt.Errorf(
+				"issue converting keys to JSON for data loader in Model Plan Op Solution Last Modified Dts, %w",
+				*err,
+			),
+		}}
 	}
 
 	trackingDates, err2 := dr.Store.ModelPlanOpSolutionLastModifiedDtsGetByModelPlanIDLOADER(logger, marshaledParams)
@@ -43,7 +57,14 @@ func (loaders *DataLoaders) GetModelPlanOpSolutionLastModifiedDtsByModelPlanID(
 			"issue getting tracking dates for data loader in Model Plan Op Solution Last Modified Dts",
 			zap.Error(err2),
 		)
-		return nil
+
+		return []*dataloader.Result{{
+			Data: nil,
+			Error: fmt.Errorf(
+				"issue getting tracking dates for data loader in Model Plan Op Solution Last Modified Dts, %w",
+				err2,
+			),
+		}}
 	}
 
 	// RETURN IN THE SAME ORDER REQUESTED

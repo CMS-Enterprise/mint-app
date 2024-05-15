@@ -164,6 +164,7 @@ func (suite *ResolverSuite) TestModelPlanDataLoader() {
 	suite.NoError(err)
 
 }
+
 func verifyModelPlanLoader(ctx context.Context, modelPlanID uuid.UUID) error {
 
 	plan, err := ModelPlanGetByIDLOADER(ctx, modelPlanID)
@@ -173,6 +174,35 @@ func verifyModelPlanLoader(ctx context.Context, modelPlanID uuid.UUID) error {
 
 	if modelPlanID != plan.ID {
 		return fmt.Errorf("model Plan returned model plan ID %s, expected %s", plan.ID, modelPlanID)
+	}
+	return nil
+}
+
+func (suite *ResolverSuite) TestModelPlanOpSolutionLastModifiedDtsDataLoaderSimpleCreationDts() {
+	plan := suite.createModelPlan("Plan For Plan 1")
+	expectedDts := plan.CreatedDts
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyModelPlanOpSolutionLastModifiedDtsLoader(ctx, plan.ID, expectedDts)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+}
+
+func verifyModelPlanOpSolutionLastModifiedDtsLoader(ctx context.Context, modelPlanID uuid.UUID, expectedDts time.Time) error {
+
+	dts, err := ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if dts == nil {
+		return fmt.Errorf("model plan returned nil dts")
+	}
+
+	if !expectedDts.Equal(*dts) {
+		return fmt.Errorf("model plan returned last modified dts %s, expected %s", dts, expectedDts)
 	}
 	return nil
 }
