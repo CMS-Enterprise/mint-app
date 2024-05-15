@@ -317,7 +317,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
       '[data-testid="group-filter-banner"]'
     );
 
-    element?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    element?.scrollIntoView(true);
   };
 
   const Summary = (
