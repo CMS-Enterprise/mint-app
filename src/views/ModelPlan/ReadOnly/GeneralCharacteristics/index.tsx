@@ -108,7 +108,9 @@ const ReadOnlyGeneralCharacteristics = ({
       )}
 
       {loading && !data ? (
-        <PageLoading />
+        <div className="height-viewport">
+          <PageLoading />
+        </div>
       ) : (
         <ReadOnlyBody
           data={formattedGeneralCharacteristicsData}

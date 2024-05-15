@@ -296,7 +296,13 @@ const ReadOnlyOpsEvalAndLearning = ({
         </p>
       )}
 
-      {loading && !data ? <PageLoading /> : renderContent()}
+      {loading && !data ? (
+        <div className="height-viewport">
+          <PageLoading />
+        </div>
+      ) : (
+        renderContent()
+      )}
     </div>
   );
 };
