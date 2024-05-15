@@ -376,72 +376,80 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
-          {changeRecordType === 'Discussion update' && (
-            <>
-              <Trans
-                i18nKey={`changeHistory:${changeRecord.tableName}Answered`}
-                values={{
-                  date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                  time: formatTime(changeRecord.date)
-                }}
-                components={{
-                  datetime: <span />
-                }}
-              />
-              <ul
-                className={classNames(
-                  {
-                    'change-record__discussion-expanded': isOpen,
-                    'padding-left-4': !isOpen,
-                    'margin-bottom-0':
-                      changeRecord.tableName === 'plan_discussion'
-                  },
-                  'margin-top-1'
-                )}
-              >
-                <li>
-                  <MentionTextArea
-                    className={classNames('text-base-darkest', {
-                      'margin-bottom-0':
-                        changeRecord.tableName === 'plan_discussion'
-                    })}
-                    id={`mention-${changeRecord.id}`}
-                    editable={false}
-                    initialContent={
-                      changeRecord.translatedFields.find(
-                        field => field.fieldName === 'content'
-                      )?.newTranslated
-                    }
-                  />
-                </li>
-              </ul>
+          {changeRecordType === 'Discussion update' &&
+            (() => {
+              const metaDiscussion =
+                changeRecord?.metaData &&
+                isDiscussionReplyWithMetaData(changeRecord?.metaData)
+                  ? changeRecord?.metaData.relationContent
+                  : '';
 
-              {changeRecord.tableName === 'discussion_reply' && (
-                <CollapsableLink
-                  id={changeRecord.id}
-                  label={t('showDetails')}
-                  closeLabel={t('hideDetails')}
-                  labelPosition="bottom"
-                  setParentOpen={setOpen}
-                  styleLeftBar={false}
-                >
-                  <div className="margin-bottom-neg-1 padding-left-4 change-record__answer margin-top-neg-2">
-                    <MentionTextArea
-                      className="text-base-darkest"
-                      id={`mention-${changeRecord.id}`}
-                      editable={false}
-                      initialContent={
-                        changeRecord?.metaData &&
-                        isDiscussionReplyWithMetaData(changeRecord?.metaData)
-                          ? changeRecord?.metaData.relationContent
-                          : ''
-                      }
-                    />
-                  </div>
-                </CollapsableLink>
-              )}
-            </>
-          )}
+              const content = changeRecord.translatedFields.find(
+                field => field.fieldName === 'content'
+              )?.newTranslated;
+
+              return (
+                <>
+                  <Trans
+                    i18nKey={`changeHistory:${changeRecord.tableName}Answered`}
+                    values={{
+                      date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                      time: formatTime(changeRecord.date)
+                    }}
+                    components={{
+                      datetime: <span />
+                    }}
+                  />
+                  <ul
+                    className={classNames(
+                      {
+                        'change-record__discussion-expanded': isOpen,
+                        'padding-left-4': !isOpen,
+                        'margin-bottom-0':
+                          changeRecord.tableName === 'plan_discussion'
+                      },
+                      'margin-top-1'
+                    )}
+                  >
+                    <li>
+                      <MentionTextArea
+                        className={classNames('text-base-darkest', {
+                          'margin-bottom-0':
+                            changeRecord.tableName === 'plan_discussion'
+                        })}
+                        id={`mention-${changeRecord.id}`}
+                        editable={false}
+                        initialContent={
+                          changeRecord.tableName === 'discussion_reply'
+                            ? metaDiscussion
+                            : content
+                        }
+                      />
+                    </li>
+                  </ul>
+
+                  {changeRecord.tableName === 'discussion_reply' && (
+                    <CollapsableLink
+                      id={changeRecord.id}
+                      label={t('showDetails')}
+                      closeLabel={t('hideDetails')}
+                      labelPosition="bottom"
+                      setParentOpen={setOpen}
+                      styleLeftBar={false}
+                    >
+                      <div className="margin-bottom-neg-1 padding-left-3 change-record__answer margin-top-neg-2">
+                        <MentionTextArea
+                          className="text-base-darkest"
+                          id={`mention-${changeRecord.id}`}
+                          editable={false}
+                          initialContent={content}
+                        />
+                      </div>
+                    </CollapsableLink>
+                  )}
+                </>
+              );
+            })()}
 
           {changeRecordType === 'Standard update' && (
             <Trans
@@ -476,7 +484,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
       {showMoreData && (
         <CollapsableLink
-          className="margin-left-6"
+          className="margin-left-5"
           id={changeRecord.id}
           label={t('showDetails')}
           closeLabel={t('hideDetails')}
