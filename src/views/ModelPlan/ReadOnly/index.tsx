@@ -465,7 +465,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           {ModelWarning}
         </GridContainer>
 
-        <SectionWrapper className="model-plan__body-content margin-top-4">
+        <SectionWrapper
+          className="model-plan__body-content margin-top-4"
+          id="scroll-element"
+        >
           <GridContainer>
             {isViewingFilteredGroup ? (
               <FilteredViewBodyContent
