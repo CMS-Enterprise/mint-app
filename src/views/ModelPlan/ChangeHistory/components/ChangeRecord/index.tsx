@@ -42,7 +42,7 @@ const SingleChange = ({ change, changeType }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   return (
-    <div className="margin-bottom-2 margin-top-neg-1" key={change.id}>
+    <div className="margin-bottom-2" key={change.id}>
       <div className="display-flex">
         <span className="text-bold margin-right-05">
           {change.questionType !== TranslationQuestionType.NOTE &&
@@ -194,11 +194,13 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
   const changeRecordType = identifyChangeType(changeRecord);
 
-  const showMoreData: boolean =
-    changeRecordType === 'Standard update' ||
+  const uploadAudit: boolean =
     changeRecordType === 'CR update' ||
     changeRecordType === 'TDL update' ||
     changeRecordType === 'Document update';
+
+  const showMoreData: boolean =
+    uploadAudit || changeRecordType === 'Standard update';
 
   const renderList: boolean = changeRecordType === 'Standard update';
 
@@ -221,7 +223,14 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
           user={changeRecord.actorName}
           className="margin-right-1 flex-align-self-start"
         />
-        <span className="padding-top-05">
+        <span
+          className={classNames(
+            {
+              'padding-bottom-1': uploadAudit && !isOpen
+            },
+            'padding-top-05'
+          )}
+        >
           <span className="text-bold">{changeRecord.actorName} </span>
 
           {changeRecordType === 'New plan' && (
@@ -303,7 +312,10 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               const documentType =
                 changeRecord.translatedFields.find(
                   field => field.fieldName === 'is_link'
-                )?.newTranslated === 'true'
+                )?.newTranslated === 'true' ||
+                changeRecord.translatedFields.find(
+                  field => field.fieldName === 'is_link'
+                )?.oldTranslated === 'true'
                   ? ' link'
                   : '';
 
@@ -348,9 +360,6 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
           {(changeRecordType === 'CR update' ||
             changeRecordType === 'TDL update') &&
             (() => {
-              const crTdlType =
-                changeRecord.tableName === 'plan_cr' ? 'CRs' : 'TDLs';
-
               const crTdlChange = (actionType: DatabaseOperation) =>
                 actionType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
 
@@ -364,7 +373,6 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                   values={{
                     action: t(`auditUpdateTye.${changeRecord.action}`),
                     crTdlName,
-                    crTdlType,
                     toFrom: t(`toFromIn.${changeRecord.action}`),
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
@@ -403,20 +411,17 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                   <ul
                     className={classNames(
                       {
-                        'change-record__discussion-expanded': isOpen,
-                        'padding-left-4': !isOpen,
-                        'margin-bottom-0':
-                          changeRecord.tableName === 'plan_discussion'
+                        'change-record__discussion-expanded margin-bottom-2': isOpen,
+                        'padding-left-4': !isOpen
                       },
-                      'margin-top-1'
+                      'margin-y-1'
                     )}
                   >
                     <li>
                       <MentionTextArea
-                        className={classNames('text-base-darkest', {
-                          'margin-bottom-0':
-                            changeRecord.tableName === 'plan_discussion'
-                        })}
+                        className={classNames(
+                          'text-base-darkest margin-bottom-0'
+                        )}
                         id={`mention-${changeRecord.id}`}
                         editable={false}
                         initialContent={
