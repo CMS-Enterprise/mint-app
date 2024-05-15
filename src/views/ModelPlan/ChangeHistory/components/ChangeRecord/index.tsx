@@ -182,14 +182,6 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
   const showMoreData: boolean = changeRecordType === 'Standard update';
 
-  if (
-    isInitialCreatedSection(changeRecord, changeRecordType) ||
-    isHiddenRecord(changeRecord) ||
-    changeRecord.translatedFields.length === 0
-  ) {
-    return null;
-  }
-
   return (
     <Card className="change-record">
       <div

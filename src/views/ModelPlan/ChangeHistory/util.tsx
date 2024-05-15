@@ -228,6 +228,15 @@ export const isHiddenRecord = (changeRecord: ChangeRecordType): boolean => {
   );
 };
 
+// Removes changes that are not needed for the change history.  Used to get accurate page count of audits
+const removeUnneededAudits = (changes: ChangeRecordType[]) =>
+  changes.filter(
+    change =>
+      !isInitialCreatedSection(change, identifyChangeType(change)) &&
+      !isHiddenRecord(change) &&
+      change.translatedFields.length !== 0
+  );
+
 export const sortAllChanges = (changes: ChangeRecordType[]) => {
   const changesSortedByDate = changes?.sort((a, b) =>
     b.date.localeCompare(a.date)
@@ -245,5 +254,9 @@ export const sortAllChanges = (changes: ChangeRecordType[]) => {
     changesSortedWithCreateFirst
   );
 
-  return changesWithoutReadyForReview;
+  const changesWithoutUnneededAudits = removeUnneededAudits(
+    changesWithoutReadyForReview
+  );
+
+  return changesWithoutUnneededAudits;
 };
