@@ -312,14 +312,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     return <NotFound />;
   }
 
-  const scrollToTheFilterBanner = () => {
-    const element = document.querySelector(
-      '[data-testid="group-filter-banner"]'
-    );
-
-    element?.scrollIntoView(true);
-  };
-
   const Summary = (
     <SummaryBox
       className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
@@ -492,7 +484,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                     <SideNav
                       subComponents={subComponents}
                       isHelpArticle={isHelpArticle}
-                      clickHandler={scrollToTheFilterBanner}
                     />
                   </Grid>
                 )}
