@@ -12,13 +12,15 @@ interface SideNavProps {
   isHelpArticle: boolean | undefined;
   solutionNavigation?: boolean;
   paramActive?: boolean;
+  clickHandler?: () => void;
 }
 
 const SideNav = ({
   subComponents,
   isHelpArticle,
   solutionNavigation,
-  paramActive
+  paramActive,
+  clickHandler
 }: SideNavProps) => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('helpAndKnowledge');
@@ -44,6 +46,7 @@ const SideNav = ({
         }}
         activeClassName="usa-current"
         className={key === 'it-solutions' ? 'nav-group-border' : ''}
+        onClick={clickHandler}
       >
         {translationKey(`navigation.${key}`)}
       </NavLink>
