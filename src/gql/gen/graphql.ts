@@ -571,6 +571,7 @@ export type ModelPlan = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   nameHistory: Array<Scalars['String']['output']>;
+  opSolutionLastModifiedDts: Scalars['Time']['output'];
   operationalNeeds: Array<OperationalNeed>;
   opsEvalAndLearning: PlanOpsEvalAndLearning;
   participantsAndProviders: PlanParticipantsAndProviders;
