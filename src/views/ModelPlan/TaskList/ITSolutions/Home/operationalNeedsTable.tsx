@@ -295,11 +295,6 @@ const OperationalNeedsTable = ({
     ];
   }, [opSolutionsMiscT, operationalNeedsT, modelID]);
 
-  // Swap the solution and need positions if readonly filter view
-  if (filterSolutions) {
-    [needsColumns[0], needsColumns[1]] = [needsColumns[1], needsColumns[0]];
-  }
-
   const sortColumn = type === 'needs' && !filterSolutions ? 'needName' : 'name';
   const initialSort = useMemo(() => [{ id: sortColumn, asc: true }], [
     sortColumn
