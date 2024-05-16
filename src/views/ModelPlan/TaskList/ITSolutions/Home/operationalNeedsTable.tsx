@@ -131,7 +131,7 @@ const OperationalNeedsTable = ({
   const needsColumns = useMemo<Column<any>[]>(() => {
     return [
       {
-        Header: solutionsT<string>('name.label'),
+        Header: solutionsT('name.label'),
         accessor: ({ name, nameOther, otherHeader }: any) => {
           if (!name && !nameOther) {
             return opSolutionsMiscT('itSolutionsTable.selectSolution');
@@ -178,11 +178,11 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: operationalNeedsT<string>('name.label'),
+        Header: operationalNeedsT('name.label'),
         accessor: 'needName'
       },
       {
-        Header: solutionsT<string>('mustFinishDts.label'),
+        Header: solutionsT('mustFinishDts.label'),
         accessor: ({ mustFinishDts }: any) => {
           if (mustFinishDts) {
             return formatDateUtc(mustFinishDts, 'MM/dd/yyyy');
@@ -191,7 +191,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: subtasksT<string>('name.exportLabel'),
+        Header: subtasksT('name.exportLabel'),
         accessor: 'operationalSolutionSubtasks',
         Cell: ({
           row,
@@ -207,7 +207,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: solutionsT<string>('status.exportLabel'),
+        Header: solutionsT('status.exportLabel'),
         accessor: 'status',
         Cell: ({
           row,
@@ -220,7 +220,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: opSolutionsMiscT<string>('itSolutionsTable.actions'),
+        Header: opSolutionsMiscT('itSolutionsTable.actions'),
         accessor: ({ status }: CellProps<GetOperationalNeedsTableType>) => {
           return returnActionText(status);
         },
@@ -249,11 +249,11 @@ const OperationalNeedsTable = ({
   const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
     return [
       {
-        Header: operationalNeedsT<string>('name.label'),
+        Header: operationalNeedsT('name.label'),
         accessor: 'name'
       },
       {
-        Header: operationalNeedsT<string>('section.label'),
+        Header: operationalNeedsT('section.label'),
         accessor: 'section',
         Cell: ({
           row,
@@ -272,7 +272,7 @@ const OperationalNeedsTable = ({
       },
 
       {
-        Header: operationalNeedsT<string>('needed.label'),
+        Header: operationalNeedsT('needed.label'),
         accessor: 'status',
         Cell: ({
           row,
@@ -285,7 +285,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: opSolutionsMiscT<string>('itSolutionsTable.actions'),
+        Header: opSolutionsMiscT('itSolutionsTable.actions'),
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
@@ -396,26 +396,27 @@ const OperationalNeedsTable = ({
       className={classNames(className, 'model-plan-table')}
       data-testid={`${type}-table`}
     >
+      {/* TODO: Need to remove global filter on print PDF */}
       {!hideGlobalFilter && (
-        <div className="mint-header__basic">
-          <GlobalClientFilter
-            setGlobalFilter={setGlobalFilter}
-            tableID={opSolutionsMiscT('itSolutionsTable.id')}
-            tableName={opSolutionsMiscT('itSolutionsTable.title')}
-            className="margin-bottom-4 width-mobile-lg maxw-full"
-          />
-        </div>
-      )}
+        <>
+          <div className="mint-header__basic">
+            <GlobalClientFilter
+              setGlobalFilter={setGlobalFilter}
+              tableID={opSolutionsMiscT('itSolutionsTable.id')}
+              tableName={opSolutionsMiscT('itSolutionsTable.title')}
+              className="margin-bottom-4 width-mobile-lg maxw-full"
+            />
+          </div>
 
-      {!hideGlobalFilter && (
-        <TableResults
-          globalFilter={state.globalFilter}
-          pageIndex={state.pageIndex}
-          pageSize={state.pageSize}
-          filteredRowLength={page.length}
-          rowLength={operationalNeeds.length}
-          className="margin-bottom-4"
-        />
+          <TableResults
+            globalFilter={state.globalFilter}
+            pageIndex={state.pageIndex}
+            pageSize={state.pageSize}
+            filteredRowLength={page.length}
+            rowLength={operationalNeeds.length}
+            className="margin-bottom-4"
+          />
+        </>
       )}
 
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
