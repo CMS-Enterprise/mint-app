@@ -22,6 +22,18 @@ export default gql(/* GraphQL */ `
         new
         newTranslated
       }
+      metaData {
+        ... on TranslatedAuditMetaBaseStruct {
+          version
+          tableName
+        }
+        ... on TranslatedAuditMetaGeneric {
+          version
+          tableName
+          relation
+          relationContent
+        }
+      }
     }
   }
 `);

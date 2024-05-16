@@ -1,4 +1,8 @@
-import { GetChangeHistoryQuery } from 'gql/gen/graphql';
+import {
+  GetChangeHistoryQuery,
+  TranslatedAuditMetaData,
+  TranslatedAuditMetaGeneric
+} from 'gql/gen/graphql';
 
 export type ChangeRecordType = NonNullable<
   GetChangeHistoryQuery['translatedAuditCollection']
@@ -12,6 +16,8 @@ export type ChangeType =
   | 'Team update'
   | 'Discussion update'
   | 'Document update'
+  | 'CR update'
+  | 'TDL update'
   | 'Operational need create'
   | 'Standard update';
 
@@ -54,8 +60,18 @@ export const isTranslationTaskListTable = (
   ].includes(tableName);
 };
 
+// Type guard to check union type
+export const isDiscussionReplyWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaGeneric => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaGeneric';
+};
+
 // Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array
 export const parseArray = (value: string | string[]) => {
+  if (!value) return '';
+
   if (Array.isArray(value)) return value;
 
   const formattedString = value.replace(/{/g, '[').replace(/}/g, ']');
@@ -110,6 +126,14 @@ export const separateStatusChanges = (
   const filteredStatusChanges: ChangeRecordType[] = [];
 
   changes.forEach(change => {
+    if (
+      !isTranslationTaskListTable(change.tableName) &&
+      change.tableName !== 'model_plan'
+    ) {
+      filteredStatusChanges.push(change);
+      return;
+    }
+
     // Find the index of the status field
     const statusIndex = change.translatedFields.findIndex(
       field => field.fieldName === 'status'
@@ -180,12 +204,23 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'Team update';
   }
 
-  if (change.tableName === 'plan_discussion') {
+  if (
+    change.tableName === 'plan_discussion' ||
+    change.tableName === 'discussion_reply'
+  ) {
     return 'Discussion update';
   }
 
   if (change.tableName === 'plan_document') {
     return 'Document update';
+  }
+
+  if (change.tableName === 'plan_cr') {
+    return 'CR update';
+  }
+
+  if (change.tableName === 'plan_tdl') {
+    return 'TDL update';
   }
 
   // If the change is an operational need create/no translatedFields, return 'Operational need create'
@@ -211,20 +246,19 @@ export const isInitialCreatedSection = (
     identifyChangeType(change) === 'Operational need create'
   );
 
+// Some fields exist in translation/audit data, but are not displayed in the change history
 export const isHiddenRecord = (changeRecord: ChangeRecordType): boolean => {
   const hiddenFields = [
     {
       table: 'operational_need',
-      field: 'needed'
+      type: 'INSERT'
     }
   ];
 
   return !!hiddenFields.find(
     hiddenField =>
       hiddenField.table === changeRecord.tableName &&
-      changeRecord.translatedFields.filter(
-        field => field.fieldName === hiddenField.field
-      ).length > 0
+      changeRecord.action === hiddenField.type
   );
 };
 

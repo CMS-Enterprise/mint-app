@@ -16,6 +16,14 @@ const changeHistory = {
     '{{action}} {{collaborator}}’s role to {{role}} <datetime>on {{date}} at {{time}}</datetime>',
   teamREMOVED:
     '{{action}} {{collaborator}} from the model team <datetime>on {{date}} at {{time}}</datetime>',
+  plan_discussionAnswered:
+    'started a Discussion <datetime>on {{date}} at {{time}}</datetime>',
+  discussion_replyAnswered:
+    'replied to a Discussion <datetime>on {{date}} at {{time}}</datetime>',
+  documentUpdate:
+    '{{action}} {{documentName}}{{isLink}} {{toFrom}} Documents <datetime>on {{date}} at {{time}}</datetime>',
+  crTdlUpdate:
+    '{{action}} {{crTdlName}} {{toFrom}} FFS CRs and TDLs <datetime>on {{date}} at {{time}}</datetime>',
   sections: {
     model_plan: 'Model plan',
     plan_basics: 'Model basics',
@@ -38,6 +46,21 @@ const changeHistory = {
   },
   showDetails: 'Show details',
   hideDetails: 'Hide details',
+  auditUpdateTye: {
+    INSERT: 'added',
+    DELETE: 'removed',
+    UPDATE: 'updated'
+  },
+  toFromIn: {
+    INSERT: 'to',
+    DELETE: 'from',
+    UPDATE: 'in'
+  },
+  documentChangeType: {
+    uploaded: 'uploaded',
+    removed: 'removed',
+    added: 'added'
+  },
   teamChangeType: {
     ANSWERED: 'added',
     REMOVED: 'removed',
