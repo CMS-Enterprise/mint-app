@@ -398,7 +398,6 @@ const OperationalNeedsTable = ({
       className={classNames(className, 'model-plan-table')}
       data-testid={`${type}-table`}
     >
-      {/* TODO: Need to remove global filter on print PDF */}
       {!hideGlobalFilter && !isExportingPDF && (
         <>
           <div className="mint-header__basic">
