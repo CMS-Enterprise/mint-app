@@ -72,6 +72,7 @@ type OperationalNeedsTableProps = {
   hideGlobalFilter?: boolean;
   filterSolutions?: OperationalSolutionKey[];
   className?: string;
+  isExportingPDF?: boolean;
 };
 
 const OperationalNeedsTable = ({
@@ -81,7 +82,8 @@ const OperationalNeedsTable = ({
   readOnly,
   hideGlobalFilter,
   filterSolutions,
-  className
+  className,
+  isExportingPDF
 }: OperationalNeedsTableProps) => {
   const { t: operationalNeedsT } = useTranslation('operationalNeeds');
   const { t: solutionsT } = useTranslation('solutions');
@@ -124,7 +126,7 @@ const OperationalNeedsTable = ({
 
   const hiddenTableColumns = [...(hiddenColumns || [])];
 
-  if (!hasEditAccess) {
+  if (!hasEditAccess || isExportingPDF) {
     hiddenTableColumns.push('Actions');
   }
 
@@ -397,7 +399,7 @@ const OperationalNeedsTable = ({
       data-testid={`${type}-table`}
     >
       {/* TODO: Need to remove global filter on print PDF */}
-      {!hideGlobalFilter && (
+      {!hideGlobalFilter && !isExportingPDF && (
         <>
           <div className="mint-header__basic">
             <GlobalClientFilter
