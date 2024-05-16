@@ -74,7 +74,7 @@ var translateNextQueuedTranslatedAuditChangesCommand = &cobra.Command{
 	},
 }
 var queueAndProcessAllTranslatedAuditChangesCommand = &cobra.Command{
-	Use:   "queueAndProcessTranslation",
+	Use:   "translate",
 	Short: "Enqueues and processes all audit translations",
 
 	Run: func(cmd *cobra.Command, args []string) {
