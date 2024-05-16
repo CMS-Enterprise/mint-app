@@ -44,6 +44,7 @@ export const translationSections = {
   operational_solution_subtask: subtask
 };
 
+// Fields that are not needed by BE
 export const unneededFields: string[] = [
   'filterGroups',
   'tags',
@@ -83,6 +84,7 @@ export const mapOtherParentFieldToDBField = (
 
     const filteredObj = filterUnneededField(fieldObj, unneededFields);
 
+    // If 'otherParentField' exists, replace gql field with dbField
     if (filteredObj.otherParentField) {
       const parentObj = planSection[
         filteredObj.otherParentField as keyof TranslationPlanSection
@@ -90,6 +92,7 @@ export const mapOtherParentFieldToDBField = (
       filteredObj.otherParentField = parentObj.dbField;
     }
 
+    // If 'parentRelation' exists, call the closure and filter out unneeded fields from parent
     if (filteredObj.parentRelation) {
       const parentObj = { ...filteredObj.parentRelation() };
       delete parentObj.childRelation;
@@ -99,6 +102,7 @@ export const mapOtherParentFieldToDBField = (
       );
     }
 
+    // If 'childRelation' exists, call the closure on each option that contains a child and filter out unneeded fields from children
     if (filteredObj.childRelation) {
       getKeys(filteredObj.childRelation).forEach(option => {
         const parentOption = filteredObj.childRelation[option];

@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Card } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
+  DatabaseOperation,
   GetChangeHistoryQuery,
   TranslationDataType,
   TranslationQuestionType
@@ -10,10 +11,12 @@ import {
 
 import { AvatarCircle } from 'components/shared/Avatar';
 import CollapsableLink from 'components/shared/CollapsableLink';
+import MentionTextArea from 'components/shared/MentionTextArea';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
   identifyChangeType,
+  isDiscussionReplyWithMetaData,
   isHiddenRecord,
   isInitialCreatedSection,
   parseArray
@@ -31,14 +34,15 @@ type ChangeRecordProps = {
 
 type SingleChangeProps = {
   change: ChangeRecordType['translatedFields'][0];
+  changeType: DatabaseOperation;
 };
 
 // Render a single change record, showing the field name, the change type, and the old and new values
-const SingleChange = ({ change }: SingleChangeProps) => {
+const SingleChange = ({ change, changeType }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   return (
-    <div className="margin-bottom-2 margin-top-neg-1" key={change.id}>
+    <div className="margin-bottom-2" key={change.id}>
       <div className="display-flex">
         <span className="text-bold margin-right-05">
           {change.questionType !== TranslationQuestionType.NOTE &&
@@ -54,7 +58,9 @@ const SingleChange = ({ change }: SingleChangeProps) => {
             <></>
           )}
         </span>
-        {t(`changeType.${change.changeType}`)}
+
+        {changeType !== DatabaseOperation.DELETE &&
+          t(`changeType.${change.changeType}`)}
       </div>
 
       <div className="change-record__answer margin-y-1">
@@ -67,7 +73,11 @@ const SingleChange = ({ change }: SingleChangeProps) => {
 
         {change.oldTranslated && (
           <>
-            <div className="text-bold padding-y-105">{t('previousAnswer')}</div>
+            {changeType !== DatabaseOperation.DELETE && (
+              <div className="text-bold padding-y-105">
+                {t('previousAnswer')}
+              </div>
+            )}
             <RenderValue
               value={change.oldTranslated}
               dataType={change.dataType}
@@ -115,6 +125,7 @@ const RenderValue = ({
 
   const parsedValue = parseArray(value);
 
+  // If the data type is an array, render the array as a list and parent question
   if (Array.isArray(parsedValue)) {
     return (
       <>
@@ -128,6 +139,7 @@ const RenderValue = ({
     );
   }
 
+  // If the data type is a date, format the date and parent question
   if (dataType === TranslationDataType.DATE && typeof value === 'string') {
     return (
       <>
@@ -145,7 +157,8 @@ const RenderValue = ({
   );
 };
 
-const ChangedQuestion = ({ change }: SingleChangeProps) => {
+// Renders the questions changes before collapse link is clicked, as well as a note or follow-up question is present
+const ChangedQuestion = ({ change, changeType }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   if (change.referenceLabel) {
@@ -169,6 +182,7 @@ const ChangedQuestion = ({ change }: SingleChangeProps) => {
       );
     }
   }
+
   return <>{change.fieldNameTranslated}</>;
 };
 
@@ -180,7 +194,15 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
   const changeRecordType = identifyChangeType(changeRecord);
 
-  const showMoreData: boolean = changeRecordType === 'Standard update';
+  const uploadAudit: boolean =
+    changeRecordType === 'CR update' ||
+    changeRecordType === 'TDL update' ||
+    changeRecordType === 'Document update';
+
+  const showMoreData: boolean =
+    uploadAudit || changeRecordType === 'Standard update';
+
+  const renderList: boolean = changeRecordType === 'Standard update';
 
   return (
     <Card className="change-record">
@@ -191,9 +213,16 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
       >
         <AvatarCircle
           user={changeRecord.actorName}
-          className="margin-right-1"
+          className="margin-right-1 flex-align-self-start"
         />
-        <span>
+        <span
+          className={classNames(
+            {
+              'padding-bottom-1': uploadAudit && !isOpen
+            },
+            'padding-top-05'
+          )}
+        >
           <span className="text-bold">{changeRecord.actorName} </span>
 
           {changeRecordType === 'New plan' && (
@@ -270,6 +299,155 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {changeRecordType === 'Document update' &&
+            (() => {
+              const documentType =
+                changeRecord.translatedFields.find(
+                  field => field.fieldName === 'is_link'
+                )?.newTranslated === 'true' ||
+                changeRecord.translatedFields.find(
+                  field => field.fieldName === 'is_link'
+                )?.oldTranslated === 'true'
+                  ? ' link'
+                  : '';
+
+              const documentChange = (docType: string | undefined) =>
+                docType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
+
+              const updateType = (change: ChangeRecordType) => {
+                if (change.action === 'INSERT') {
+                  if (documentType === ' link') {
+                    return 'added';
+                  }
+                  return 'uploaded';
+                }
+                if (change.action === 'DELETE') {
+                  return 'removed';
+                }
+                return '';
+              };
+
+              const documentName = changeRecord.translatedFields.find(
+                field => field.fieldName === 'file_name'
+              )?.[documentChange(changeRecord.action)];
+
+              return (
+                <Trans
+                  i18nKey="changeHistory:documentUpdate"
+                  values={{
+                    isLink: documentType,
+                    action: t(`documentChangeType.${updateType(changeRecord)}`),
+                    documentName,
+                    toFrom: changeRecord.action === 'INSERT' ? 'to' : 'from',
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {(changeRecordType === 'CR update' ||
+            changeRecordType === 'TDL update') &&
+            (() => {
+              const crTdlChange = (actionType: DatabaseOperation) =>
+                actionType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
+
+              const crTdlName = changeRecord.translatedFields.find(
+                field => field.fieldName === 'id_number'
+              )?.[crTdlChange(changeRecord.action)];
+
+              return (
+                <Trans
+                  i18nKey="changeHistory:crTdlUpdate"
+                  values={{
+                    action: t(`auditUpdateTye.${changeRecord.action}`),
+                    crTdlName,
+                    toFrom: t(`toFromIn.${changeRecord.action}`),
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {changeRecordType === 'Discussion update' &&
+            (() => {
+              const metaDiscussion =
+                changeRecord?.metaData &&
+                isDiscussionReplyWithMetaData(changeRecord?.metaData)
+                  ? changeRecord?.metaData.relationContent
+                  : '';
+
+              const content = changeRecord.translatedFields.find(
+                field => field.fieldName === 'content'
+              )?.newTranslated;
+
+              return (
+                <>
+                  <Trans
+                    i18nKey={`changeHistory:${changeRecord.tableName}Answered`}
+                    values={{
+                      date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                      time: formatTime(changeRecord.date)
+                    }}
+                    components={{
+                      datetime: <span />
+                    }}
+                  />
+                  <ul
+                    className={classNames(
+                      {
+                        'change-record__discussion-expanded margin-bottom-2': isOpen,
+                        'padding-left-4': !isOpen
+                      },
+                      'margin-y-1'
+                    )}
+                  >
+                    <li>
+                      <MentionTextArea
+                        className={classNames(
+                          'text-base-darkest margin-bottom-0'
+                        )}
+                        id={`mention-${changeRecord.id}`}
+                        editable={false}
+                        initialContent={
+                          changeRecord.tableName === 'discussion_reply'
+                            ? metaDiscussion
+                            : content
+                        }
+                      />
+                    </li>
+                  </ul>
+
+                  {changeRecord.tableName === 'discussion_reply' && (
+                    <CollapsableLink
+                      id={changeRecord.id}
+                      label={t('showDetails')}
+                      closeLabel={t('hideDetails')}
+                      labelPosition="bottom"
+                      setParentOpen={setOpen}
+                      styleLeftBar={false}
+                    >
+                      <div className="margin-bottom-neg-1 padding-left-3 change-record__answer margin-top-neg-2">
+                        <MentionTextArea
+                          className="text-base-darkest"
+                          id={`mention-${changeRecord.id}`}
+                          editable={false}
+                          initialContent={content}
+                        />
+                      </div>
+                    </CollapsableLink>
+                  )}
+                </>
+              );
+            })()}
+
           {changeRecordType === 'Standard update' && (
             <Trans
               i18nKey="changeHistory:change"
@@ -288,11 +466,14 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
         </span>
       </div>
 
-      {!isOpen && showMoreData && (
+      {!isOpen && renderList && (
         <ul className="margin-top-05 margin-bottom-1 margin-left-4">
           {changeRecord.translatedFields.map(change => (
             <li key={change.id}>
-              <ChangedQuestion change={change} />
+              <ChangedQuestion
+                change={change}
+                changeType={changeRecord.action}
+              />
             </li>
           ))}
         </ul>
@@ -300,7 +481,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
       {showMoreData && (
         <CollapsableLink
-          className="margin-left-6"
+          className="margin-left-5"
           id={changeRecord.id}
           label={t('showDetails')}
           closeLabel={t('hideDetails')}
@@ -310,7 +491,11 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
         >
           <div className="margin-bottom-neg-1">
             {changeRecord.translatedFields.map(change => (
-              <SingleChange change={change} key={change.id} />
+              <SingleChange
+                change={change}
+                key={change.id}
+                changeType={changeRecord.action}
+              />
             ))}
           </div>
         </CollapsableLink>
