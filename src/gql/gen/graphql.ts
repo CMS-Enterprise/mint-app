@@ -3458,12 +3458,23 @@ export type TranslatedAuditMetaBaseStruct = {
 };
 
 /** TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit */
-export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaGeneric;
+export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaDiscussionReply | TranslatedAuditMetaGeneric;
 
 export enum TranslatedAuditMetaDataType {
   BASE = 'BASE',
+  DISCUSSION_REPLY = 'DISCUSSION_REPLY',
   GENERIC = 'GENERIC'
 }
+
+/** TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a translated audit is for a discussion reply */
+export type TranslatedAuditMetaDiscussionReply = {
+  __typename: 'TranslatedAuditMetaDiscussionReply';
+  discussionContent: Scalars['String']['output'];
+  discussionID: Scalars['UUID']['output'];
+  numberOfReplies: Scalars['Int']['output'];
+  tableName: Scalars['String']['output'];
+  version: Scalars['Int']['output'];
+};
 
 export type TranslatedAuditMetaGeneric = {
   __typename: 'TranslatedAuditMetaGeneric';
