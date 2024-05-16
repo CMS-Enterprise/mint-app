@@ -3517,6 +3517,7 @@ export type TranslationFieldWithOptions = {
   dbField: Scalars['String']['output'];
   /** Labels specifically for export/change history.  Takes priority over all other labels */
   exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
   formType: TranslationFormType;
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
@@ -3545,6 +3546,7 @@ export type TranslationFieldWithOptionsAndChildren = {
   dbField: Scalars['String']['output'];
   /** Labels specifically for export/change history.  Takes priority over all other labels */
   exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
   formType: TranslationFormType;
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
@@ -3572,6 +3574,7 @@ export type TranslationFieldWithOptionsAndParent = {
   dbField: Scalars['String']['output'];
   /** Labels specifically for export/change history.  Takes priority over all other labels */
   exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
   formType: TranslationFormType;
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
@@ -3628,6 +3631,7 @@ export type TranslationFieldWithParentAndChildren = {
   dbField: Scalars['String']['output'];
   /** Labels specifically for export/change history.  Takes priority over all other labels */
   exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
   formType: TranslationFormType;
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];

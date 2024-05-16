@@ -149,6 +149,7 @@ export type TranslationOptions<T extends keyof T | string> = Omit<
   optionsLabels?: Partial<Record<T, string>>; // Sub labels to be rendered directly underneath options
   tooltips?: Partial<Record<T, string>>; // Information to be rendered inside a tooltip
   optionsRelatedInfo?: Partial<Record<T, string>>; // T values should/could be a subset of the keys of enum values
+  exportOptions?: Partial<Record<T, string>>; // Export options for ChangeHistory
 };
 
 /*
