@@ -1,12 +1,9 @@
 package resolvers
 
 import (
-	"time"
-
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/translatedaudit"
 )
 
 func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAuditID() {
@@ -56,16 +53,15 @@ func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAud
 	suite.NoError(err)
 	suite.NotNil(updatedPP)
 
-	today := time.Now()
-	yesterday := today.AddDate(0, 0, -1)
+	retTranslatedAuditsWithFields := suite.dangerousQueueAndTranslateAllAudits()
 
-	retTranslatedAuditsWithFields, changeErr := translatedaudit.TranslateAuditsForModelPlan(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, yesterday, today, plan.ID)
-	suite.NoError(changeErr)
 	suite.NotNil(retTranslatedAuditsWithFields)
 	suite.GreaterOrEqual(len(retTranslatedAuditsWithFields), 2) // Make sure there are at least 2 changes, and two fields
-
+	if len(retTranslatedAuditsWithFields) < 2 {
+		suite.Fail("there are not at least 2 audits for this model")
+	}
 	change1 := retTranslatedAuditsWithFields[0]
-	change1FieldCount := len(change1.TranslatedFields)
+	change1FieldCount := len(change1.TranslatedFields) //CHANGES: NIL REFERENCE PANIC??
 	suite.Greater(change1FieldCount, 0)
 
 	change2 := retTranslatedAuditsWithFields[1]

@@ -88,7 +88,8 @@ func TestTranslateField(t *testing.T) {
 
 	t.Run("Form Type is present when there is a translation", func(t *testing.T) {
 		var store *storage.Store //nil store
-		translatedField, err := translateField(store, translationFieldKey, testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		translatedField, wasTranslated, err := translateField(store, translationFieldKey, testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		assert.True(t, wasTranslated)
 		assert.NoError(t, err)
 		assert.NotNil(t, translatedField.FormType)
 		assert.NotNil(t, translatedField.FormType)
@@ -104,7 +105,8 @@ func TestTranslateField(t *testing.T) {
 
 	t.Run("Form Type is not present when there is not a translation", func(t *testing.T) {
 		var store *storage.Store //nil store
-		translatedField, err := translateField(store, "there is no translation for this", testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		translatedField, wasTranslated, err := translateField(store, "there is no translation for this", testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		assert.False(t, wasTranslated)
 		assert.NoError(t, err)
 		assert.Nil(t, translatedField.FormType)
 		assert.Nil(t, translatedField.FormType)
