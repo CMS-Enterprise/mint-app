@@ -112,7 +112,6 @@ const ShareExportModal = ({
     'discussions',
     'documents',
     'crs-and-tdl'
-    // 'it-solutions'
   ];
 
   // Composes components to render to PDF
