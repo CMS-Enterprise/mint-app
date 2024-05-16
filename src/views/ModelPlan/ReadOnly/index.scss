@@ -38,16 +38,7 @@
   .sticky-nav {
     align-self: start;
     position: sticky;
-    top: 68px;
-    padding-top: 1rem;
-
-    &__collaborator {
-      top: 4rem !important;
-    }
-
-    @media screen and (min-width: $desktop) {
-      margin-top: -1rem;
-    }
+    top: 100px;
   }
 
   .model-plan__model-leads__wrapper {

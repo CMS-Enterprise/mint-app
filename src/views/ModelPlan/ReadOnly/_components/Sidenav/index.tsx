@@ -30,14 +30,18 @@ const SideNav = ({
       '[data-testid="group-filter-banner"'
     )?.clientHeight!;
 
-    // element is the SectionWrapper component, everything below the ModelWarning
+    // `element` is the SectionWrapper component, everything below the ModelWarning
     const element = document.querySelector('#scroll-element')!;
 
-    // find the margin-top value of the element
+    // Find the margin-top value of the element
     const marginTopValue = parseFloat(
       window.getComputedStyle(element).marginTop
     );
+
+    // Find the top of the element
     const { top } = element?.getBoundingClientRect()!;
+
+    // Calculate all the things
     const distanceFromTopOfPage =
       top + window.scrollY - filterBannerHeight - marginTopValue;
     window.scroll(0, distanceFromTopOfPage);
