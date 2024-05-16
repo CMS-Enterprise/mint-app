@@ -434,7 +434,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
           data-testid="grid"
         >
           <div
-            class="desktop:grid-col-3 padding-right-4 sticky-nav sticky-nav__collaborator"
+            class="desktop:grid-col-3 padding-right-4 sticky-nav"
             data-testid="grid"
           >
             <div
@@ -1323,7 +1323,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="desktop:grid-col-4 sticky-nav sticky-nav__collaborator"
+                    class="desktop:grid-col-4 sticky-nav"
                     data-testid="grid"
                   >
                     <div
