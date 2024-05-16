@@ -104,7 +104,7 @@ const ShareExportModal = ({
   const [shareModelPlan, { loading }] = useMutation(CreateShareModelPlan);
 
   // Return an object containing the contents of all readonly task list sections
-  const AllReadonlyComponents = ReadOnlyComponents(modelID, false);
+  const AllReadonlyComponents = ReadOnlyComponents(modelID);
 
   // Readonly section that do not need to be rendered in PDF
   const excludedComponents: string[] = [

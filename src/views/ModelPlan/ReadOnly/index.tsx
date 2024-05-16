@@ -92,7 +92,7 @@ const listOfSubpageKey: string[] = [
 
 export const ReadOnlyComponents = (
   modelID: string,
-  isHelpArticle: boolean | undefined
+  isHelpArticle?: boolean
 ): subComponentsProps => {
   return {
     'model-basics': {
