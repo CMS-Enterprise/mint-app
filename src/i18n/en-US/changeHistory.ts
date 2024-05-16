@@ -34,10 +34,10 @@ const changeHistory = {
     plan_payments: 'Payments',
     plan_collaborator: 'Model team',
     plan_discussion: 'Discussions',
-    discussion_reply: 'Replies',
+    discussion_reply: 'Discussions',
     plan_document: 'Documents',
-    plan_cr: 'CRs',
-    plan_tdl: 'TDLs',
+    plan_cr: 'FFS CRs and TDLs',
+    plan_tdl: 'FFS CRs and TDLs',
     operational_need: 'Operational solutions and implementation status tracker',
     operational_solution:
       'Operational solutions and implementation status tracker',

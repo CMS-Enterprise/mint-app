@@ -272,25 +272,23 @@ const removeUnneededAudits = (changes: ChangeRecordType[]) =>
   );
 
 export const sortAllChanges = (changes: ChangeRecordType[]) => {
-  const changesSortedByDate = changes?.sort((a, b) =>
-    b.date.localeCompare(a.date)
-  );
-
-  const changesWithStatusSeparation = separateStatusChanges(
-    changesSortedByDate
-  );
-
-  const changesSortedWithCreateFirst = changesWithStatusSeparation.sort(
-    sortCreateChangeFirst
-  );
+  const changesWithStatusSeparation = separateStatusChanges(changes);
 
   const changesWithoutReadyForReview = extractReadyForReviewChanges(
-    changesSortedWithCreateFirst
+    changesWithStatusSeparation
   );
 
   const changesWithoutUnneededAudits = removeUnneededAudits(
     changesWithoutReadyForReview
   );
 
-  return changesWithoutUnneededAudits;
+  const changesSortedByDate = changesWithoutUnneededAudits?.sort((a, b) =>
+    b.date.localeCompare(a.date)
+  );
+
+  const changesSortedWithCreateFirst = changesSortedByDate.sort(
+    sortCreateChangeFirst
+  );
+
+  return changesSortedWithCreateFirst;
 };

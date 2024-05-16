@@ -42,12 +42,14 @@ const ChangeHistory = () => {
     pageNumber === 0 || Number.isNaN(pageNumber) ? 0 : pageNumber - 1;
 
   const itemsPerPage = 10;
+
   const [itemOffset, setItemOffset] = useState(
     (pageNumber * itemsPerPage) % sortedChanges.length
   );
   const endOffset = itemOffset + itemsPerPage;
 
   const currentItems = sortedChanges.slice(itemOffset, endOffset);
+
   const pageCount = Math.ceil(sortedChanges.length / itemsPerPage);
 
   // Invoke when user click to request another page.
@@ -56,6 +58,7 @@ const ChangeHistory = () => {
     setPageOffset(newOffset);
     window.scrollTo(0, 0);
   };
+
   // Resets page offset when route or query changes
   useEffect(() => {
     setItemOffset((pageNumber * itemsPerPage) % sortedChanges.length);
@@ -117,33 +120,32 @@ const ChangeHistory = () => {
               <ChangeRecord changeRecord={changeRecord} key={changeRecord.id} />
             ))}
 
-            {pageCount > 1 && (
-              <ReactPaginate
-                breakLabel="..."
-                breakClassName="usa-pagination__item usa-pagination__overflow"
-                nextLabel="Next >"
-                containerClassName="mint-pagination usa-pagination usa-pagination__list"
-                previousLinkClassName={
-                  itemOffset === 0
-                    ? 'display-none'
-                    : 'usa-pagination__link usa-pagination__previous-page prev-page'
-                }
-                nextLinkClassName={
-                  itemOffset / itemsPerPage === pageCount - 1
-                    ? 'display-none'
-                    : 'usa-pagination__link usa-pagination__previous-page next-page'
-                }
-                disabledClassName="pagination__link--disabled"
-                activeClassName="usa-current"
-                activeLinkClassName="usa-current"
-                pageClassName="usa-pagination__item"
-                pageLinkClassName="usa-pagination__button"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="< Previous"
-              />
-            )}
+            <ReactPaginate
+              breakLabel="..."
+              breakClassName="usa-pagination__item usa-pagination__overflow"
+              nextLabel="Next >"
+              containerClassName="mint-pagination usa-pagination usa-pagination__list"
+              previousLinkClassName={
+                itemOffset === 0
+                  ? 'display-none'
+                  : 'usa-pagination__link usa-pagination__previous-page prev-page'
+              }
+              nextLinkClassName={
+                pageOffset / itemsPerPage === pageCount - 1
+                  ? 'display-none'
+                  : 'usa-pagination__link usa-pagination__previous-page next-page'
+              }
+              disabledClassName="pagination__link--disabled"
+              activeClassName="usa-current"
+              activeLinkClassName="usa-current"
+              pageClassName="usa-pagination__item"
+              pageLinkClassName="usa-pagination__button"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={pageCount}
+              previousLabel="< Previous"
+              renderOnZeroPageCount={null}
+            />
           </>
         )}
       </GridContainer>

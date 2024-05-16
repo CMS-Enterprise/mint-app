@@ -2,6 +2,7 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Card, Grid, Icon } from '@trussworks/react-uswds';
 import {
+  DatabaseOperation,
   GetChangeHistoryQuery,
   useGetChangeHistoryQuery
 } from 'gql/gen/graphql';
@@ -28,6 +29,12 @@ type ChangeRecordProps = {
 export const MiniChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
   const { t } = useTranslation('changeHistory');
 
+  const changeCount =
+    changeRecord.action === DatabaseOperation.INSERT ||
+    changeRecord.action === DatabaseOperation.DELETE
+      ? 1
+      : changeRecord.translatedFields.length || 1;
+
   return (
     <Card className="mini-change-record">
       <Grid row className="padding-2">
@@ -40,9 +47,9 @@ export const MiniChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
             {changeRecord.actorName}{' '}
             <Trans
               i18nKey="changeHistory:change"
-              count={changeRecord.translatedFields.length || 1}
+              count={changeCount}
               values={{
-                count: changeRecord.translatedFields.length || 1,
+                count: changeCount,
                 section: t(`sections.${changeRecord.tableName}`),
                 date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                 time: formatTime(changeRecord.date)

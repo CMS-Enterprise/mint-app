@@ -17,8 +17,6 @@ import { formatDateUtc, formatTime } from 'utils/date';
 import {
   identifyChangeType,
   isDiscussionReplyWithMetaData,
-  isHiddenRecord,
-  isInitialCreatedSection,
   parseArray
 } from '../../util';
 
