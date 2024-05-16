@@ -27,6 +27,7 @@ import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
 import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 import { groupOptions } from 'views/ModelPlan/ReadOnly/_components/FilterView/util';
+import ReadOnlyOperationalNeeds from 'views/ModelPlan/ReadOnly/OperationalNeeds';
 import { StatusMessageType } from 'views/ModelPlan/TaskList';
 import { PrintPDFContext } from 'views/PrintPDFWrapper';
 
@@ -111,7 +112,8 @@ const ShareExportModal = ({
     'team',
     'discussions',
     'documents',
-    'crs-and-tdl'
+    'crs-and-tdl',
+    'it-solutions'
   ];
 
   // Composes components to render to PDF
@@ -142,6 +144,12 @@ const ShareExportModal = ({
                   {AllReadonlyComponents[component].component}
                 </div>
               ))}
+            <div className="margin-top-6">
+              <ReadOnlyOperationalNeeds
+                modelID={modelID}
+                isExportingPDF={exportPDF}
+              />
+            </div>
           </>
         )}
       </GridContainer>
