@@ -3,7 +3,8 @@ import verifyStatus from '../support/verifyRequestStatus';
 
 describe('The Model Plan Prepare for Clearance Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/');
 
     cy.intercept('POST', '/api/graph/query', req => {
       aliasQuery(req, 'GetModelPlan');
