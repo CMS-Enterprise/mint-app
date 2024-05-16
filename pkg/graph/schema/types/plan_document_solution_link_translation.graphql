@@ -1,0 +1,7 @@
+"""
+Represents document solution link translation data
+"""
+
+type PlanDocumentSolutionLinkTranslation {
+    solutionID: TranslationField! @goTag(key: "db", value: "solution_id")
+}

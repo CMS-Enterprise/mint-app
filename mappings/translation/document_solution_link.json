@@ -1,0 +1,10 @@
+{
+  "solutionID": {
+    "gqlField": "solutionID",
+    "goField": "SolutionID",
+    "dbField": "solution_id",
+    "label": "Solution ID",
+    "dataType": "STRING",
+    "formType": "TEXT"
+  }
+}

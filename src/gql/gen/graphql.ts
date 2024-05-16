@@ -470,6 +470,12 @@ export type ExistingModelLink = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
 };
 
+/** Represents exsiting model link translation data */
+export type ExistingModelLinkTranslation = {
+  __typename: 'ExistingModelLinkTranslation';
+  exsitingModelID: TranslationField;
+};
+
 export type ExistingModelLinks = {
   __typename: 'ExistingModelLinks';
   fieldName: ExisitingModelLinkFieldType;
@@ -1753,6 +1759,12 @@ export type PlanDocumentSolutionLink = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   solutionID: Scalars['UUID']['output'];
+};
+
+/** Represents document solution link translation data */
+export type PlanDocumentSolutionLinkTranslation = {
+  __typename: 'PlanDocumentSolutionLinkTranslation';
+  solutionID: TranslationField;
 };
 
 /** Represents plan document translation data */
