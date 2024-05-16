@@ -423,6 +423,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
     <div
       class="mint-section model-plan__body-content margin-top-4"
       data-testid="section-wrapper"
+      id="scroll-element"
     >
       <div
         class="grid-container"
