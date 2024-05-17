@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { useParams } from 'react-router-dom';
@@ -37,32 +37,19 @@ const ChangeHistory = () => {
 
   const [pageOffset, setPageOffset] = useState(0);
 
-  let pageNumber = pageOffset;
-  pageNumber =
-    pageNumber === 0 || Number.isNaN(pageNumber) ? 0 : pageNumber - 1;
-
+  // Pagination Configuration
   const itemsPerPage = 10;
-
-  const [itemOffset, setItemOffset] = useState(
-    (pageNumber * itemsPerPage) % sortedChanges.length
-  );
-  const endOffset = itemOffset + itemsPerPage;
-
-  const currentItems = sortedChanges.slice(itemOffset, endOffset);
-
-  const pageCount = Math.ceil(sortedChanges.length / itemsPerPage);
+  const endOffset = pageOffset + itemsPerPage;
+  const currentItems = sortedChanges?.slice(pageOffset, endOffset);
+  const pageCount = sortedChanges
+    ? Math.ceil(sortedChanges.length / itemsPerPage)
+    : 1;
 
   // Invoke when user click to request another page.
   const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % sortedChanges?.length;
     setPageOffset(newOffset);
-    window.scrollTo(0, 0);
   };
-
-  // Resets page offset when route or query changes
-  useEffect(() => {
-    setItemOffset((pageNumber * itemsPerPage) % sortedChanges.length);
-  }, [pageNumber, setItemOffset, sortedChanges]);
 
   if (error) {
     return <NotFound />;
@@ -120,32 +107,34 @@ const ChangeHistory = () => {
               <ChangeRecord changeRecord={changeRecord} key={changeRecord.id} />
             ))}
 
-            <ReactPaginate
-              breakLabel="..."
-              breakClassName="usa-pagination__item usa-pagination__overflow"
-              nextLabel="Next >"
-              containerClassName="mint-pagination usa-pagination usa-pagination__list"
-              previousLinkClassName={
-                itemOffset === 0
-                  ? 'display-none'
-                  : 'usa-pagination__link usa-pagination__previous-page prev-page'
-              }
-              nextLinkClassName={
-                pageOffset / itemsPerPage === pageCount - 1
-                  ? 'display-none'
-                  : 'usa-pagination__link usa-pagination__previous-page next-page'
-              }
-              disabledClassName="pagination__link--disabled"
-              activeClassName="usa-current"
-              activeLinkClassName="usa-current"
-              pageClassName="usa-pagination__item"
-              pageLinkClassName="usa-pagination__button"
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={5}
-              pageCount={pageCount}
-              previousLabel="< Previous"
-              renderOnZeroPageCount={null}
-            />
+            {pageCount > 1 && (
+              <ReactPaginate
+                breakLabel="..."
+                breakClassName="usa-pagination__item usa-pagination__overflow"
+                nextLabel="Next >"
+                containerClassName="mint-pagination usa-pagination usa-pagination__list"
+                previousLinkClassName={
+                  pageOffset === 0
+                    ? 'display-none'
+                    : 'usa-pagination__link usa-pagination__previous-page prev-page'
+                }
+                nextLinkClassName={
+                  pageOffset / itemsPerPage === pageCount - 1
+                    ? 'display-none'
+                    : 'usa-pagination__link usa-pagination__previous-page next-page'
+                }
+                disabledClassName="pagination__link--disabled"
+                activeClassName="usa-current"
+                activeLinkClassName="usa-current"
+                pageClassName="usa-pagination__item"
+                pageLinkClassName="usa-pagination__button"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={pageCount}
+                previousLabel="< Previous"
+                renderOnZeroPageCount={null}
+              />
+            )}
           </>
         )}
       </GridContainer>
