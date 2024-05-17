@@ -104,6 +104,7 @@ type TranslationFieldWithOptions {
   """
   tableReference: String
   options: Map!
+  exportOptions: Map
 }
 
 """
@@ -180,6 +181,7 @@ type TranslationFieldWithOptionsAndChildren {
   """
   tableReference: String
   options: Map!
+  exportOptions: Map
   childRelation: Map!
 }
 
@@ -219,6 +221,7 @@ type TranslationFieldWithOptionsAndParent {
   """
   tableReference: String
   options: Map!
+  exportOptions: Map
   parentRelation: TranslationFieldWithOptionsAndChildren!
 }
 
@@ -258,6 +261,7 @@ type TranslationFieldWithParentAndChildren {
   """
   tableReference: String
   options: Map!
+  exportOptions: Map
   parentRelation: TranslationFieldWithOptionsAndChildren!
   childRelation: Map!
 }

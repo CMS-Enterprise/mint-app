@@ -34,6 +34,11 @@ type DiscussionReplyTranslation struct {
 	Content             models.TranslationField            `json:"content" db:"content"`
 }
 
+// Represents exsiting model link translation data
+type ExistingModelLinkTranslation struct {
+	ExsitingModelID models.TranslationField `json:"exsitingModelID" db:"existing_model_id"`
+}
+
 // The current user's Launch Darkly key
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
@@ -223,6 +228,11 @@ type PlanDocumentLinkInput struct {
 	Restricted           bool                `json:"restricted"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
+}
+
+// Represents document solution link translation data
+type PlanDocumentSolutionLinkTranslation struct {
+	SolutionID models.TranslationField `json:"solutionID" db:"solution_id"`
 }
 
 // Represents plan document translation data

@@ -470,6 +470,12 @@ export type ExistingModelLink = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
 };
 
+/** Represents exsiting model link translation data */
+export type ExistingModelLinkTranslation = {
+  __typename: 'ExistingModelLinkTranslation';
+  exsitingModelID: TranslationField;
+};
+
 export type ExistingModelLinks = {
   __typename: 'ExistingModelLinks';
   fieldName: ExisitingModelLinkFieldType;
@@ -1753,6 +1759,12 @@ export type PlanDocumentSolutionLink = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   solutionID: Scalars['UUID']['output'];
+};
+
+/** Represents document solution link translation data */
+export type PlanDocumentSolutionLinkTranslation = {
+  __typename: 'PlanDocumentSolutionLinkTranslation';
+  solutionID: TranslationField;
 };
 
 /** Represents plan document translation data */
@@ -3528,6 +3540,7 @@ export type TranslationFieldWithOptions = {
   dbField: Scalars['String']['output'];
   /** Labels specifically for export/change history.  Takes priority over all other labels */
   exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
   formType: TranslationFormType;
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
@@ -3556,6 +3569,7 @@ export type TranslationFieldWithOptionsAndChildren = {
   dbField: Scalars['String']['output'];
   /** Labels specifically for export/change history.  Takes priority over all other labels */
   exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
   formType: TranslationFormType;
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
@@ -3583,6 +3597,7 @@ export type TranslationFieldWithOptionsAndParent = {
   dbField: Scalars['String']['output'];
   /** Labels specifically for export/change history.  Takes priority over all other labels */
   exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
   formType: TranslationFormType;
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
@@ -3639,6 +3654,7 @@ export type TranslationFieldWithParentAndChildren = {
   dbField: Scalars['String']['output'];
   /** Labels specifically for export/change history.  Takes priority over all other labels */
   exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
   formType: TranslationFormType;
   goField: Scalars['String']['output'];
   gqlField: Scalars['String']['output'];
