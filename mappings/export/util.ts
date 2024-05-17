@@ -9,6 +9,8 @@ import collaborator from '../../src/i18n/en-US/modelPlan/collaborators';
 import crs from '../../src/i18n/en-US/modelPlan/crs';
 import discussion from '../../src/i18n/en-US/modelPlan/discussions';
 import document from '../../src/i18n/en-US/modelPlan/documents';
+import documentSolutionLink from '../../src/i18n/en-US/modelPlan/documentSolutionLink';
+import existingModelLink from '../../src/i18n/en-US/modelPlan/existingModelLink';
 import generalCharacteristics from '../../src/i18n/en-US/modelPlan/generalCharacteristics';
 import modelPlan from '../../src/i18n/en-US/modelPlan/modelPlan';
 import operationalNeed from '../../src/i18n/en-US/modelPlan/operationalNeeds';
@@ -41,9 +43,12 @@ export const translationSections = {
   plan_tdl: tdls,
   operational_need: operationalNeed,
   operational_solution: operationalSolution,
-  operational_solution_subtask: subtask
+  operational_solution_subtask: subtask,
+  existing_model_link: existingModelLink,
+  document_solution_link: documentSolutionLink
 };
 
+// Fields that are not needed by BE
 export const unneededFields: string[] = [
   'filterGroups',
   'tags',
@@ -83,6 +88,7 @@ export const mapOtherParentFieldToDBField = (
 
     const filteredObj = filterUnneededField(fieldObj, unneededFields);
 
+    // If 'otherParentField' exists, replace gql field with dbField
     if (filteredObj.otherParentField) {
       const parentObj = planSection[
         filteredObj.otherParentField as keyof TranslationPlanSection
@@ -90,6 +96,7 @@ export const mapOtherParentFieldToDBField = (
       filteredObj.otherParentField = parentObj.dbField;
     }
 
+    // If 'parentRelation' exists, call the closure and filter out unneeded fields from parent
     if (filteredObj.parentRelation) {
       const parentObj = { ...filteredObj.parentRelation() };
       delete parentObj.childRelation;
@@ -99,6 +106,7 @@ export const mapOtherParentFieldToDBField = (
       );
     }
 
+    // If 'childRelation' exists, call the closure on each option that contains a child and filter out unneeded fields from children
     if (filteredObj.childRelation) {
       getKeys(filteredObj.childRelation).forEach(option => {
         const parentOption = filteredObj.childRelation[option];

@@ -70,11 +70,16 @@ export const documents: TranslationDocuments = {
     label: 'Does this document contain cost information?',
     sublabel:
       'Cost information would include any content relating to budget, funding, cost, or other monetary considerations.',
+    exportLabel: 'Visibility',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    exportOptions: {
+      true: 'Restricted',
+      false: 'All'
     }
   },
   optionalNotes: {

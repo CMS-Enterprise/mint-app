@@ -11,6 +11,8 @@ import collaborators from '../../src/i18n/en-US/modelPlan/collaborators';
 import crs from '../../src/i18n/en-US/modelPlan/crs';
 import discussions from '../../src/i18n/en-US/modelPlan/discussions';
 import documents from '../../src/i18n/en-US/modelPlan/documents';
+import documentSolutionLink from '../../src/i18n/en-US/modelPlan/documentSolutionLink';
+import existingModelLink from '../../src/i18n/en-US/modelPlan/existingModelLink';
 import generalCharacteristics from '../../src/i18n/en-US/modelPlan/generalCharacteristics';
 import modelPlan from '../../src/i18n/en-US/modelPlan/modelPlan';
 import operationalNeeds from '../../src/i18n/en-US/modelPlan/operationalNeeds';
@@ -41,7 +43,9 @@ export const translationSections = {
   plan_tdl: tdls,
   operational_need: operationalNeeds,
   operational_solution: operationalSolutions,
-  operational_solution_subtask: subtasks
+  operational_solution_subtask: subtasks,
+  existing_model_link: existingModelLink,
+  document_solution_link: documentSolutionLink
 };
 
 export const parseTypscriptToJSON = (translations: any, outputFile: string) => {
