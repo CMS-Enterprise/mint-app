@@ -143,92 +143,89 @@ func translateField(
 
 	// Set default values in case of missing translation
 	// Changes: (Translations) We should handle a nil / empty case what should we do in that case?
-	translatedLabel := fieldName
-	var referencesLabel *string
+
 	old := field.Old
 	new := field.New
 	translatedOld := old
 	translatedNew := new
 	changeType := getChangeType(old, new)
-	var formType *models.TranslationFormType
-	var dataType *models.TranslationDataType
-	var conditionals *pq.StringArray
-	var questionType *models.TranslationQuestionType
-	var wasTranslated bool //defaults to false
+
+	var conditionals *pq.StringArray //TODO: can we make the function that checks return this instead of instantiating here?
+
 	// Changes: (Translations) We need to distinguish if the answer is for an other / note field. The label in that case is really the parent's label or the specific text for that type.
 
 	// Changes: (Translations) Handle if the change made a question not necessary // Changes: (Structure) How should we structure this? Field MetaData? Or base level implementation information?
 
 	translationInterface := translationMap[fieldName]
-	if translationInterface != nil {
-
-		translatedLabel = translationInterface.GetLabel()
-		referencesLabel = translationInterface.GetReferencesLabel(translationMap)
-		//Changes: (Translations) update this to handle if notes, or preferences.
-
-		tForm := translationInterface.GetFormType()
-		tData := translationInterface.GetDataType()
-		formType = &tForm
-		dataType = &tData
-		questionType = translationInterface.GetQuestionType()
-
-		if tData == models.TDTBoolean { // clean t or f to true or false
-			old = sanitizeAuditBoolValue(old)
-			new = sanitizeAuditBoolValue(new)
-
-		}
-
-		//Changes: (Translations) refactor this
-		oldStr, oldIsString := old.(string)
-		if oldIsString {
-			oldSlice, oldIsSlice := isArray(oldStr)
-			if oldIsSlice {
-				old = oldSlice
-			} else {
-				old = oldStr
-			}
-		}
-		newStr, newIsString := new.(string)
-		if newIsString {
-			newSlice, newIsSlice := isArray(newStr)
-			if newIsSlice {
-				new = newSlice
-			} else {
-				new = newStr
-			}
-		}
-
-		options, hasOptions := translationInterface.GetOptions()
-		tableReference, hasTableReference := translationInterface.GetTableReference()
-		//Changes: (fk) look to update the unit tests, we don't want a foreign key relation to be overridden with options.
-		// ALSO! consider if there are any places with an array of foreign keys, I think we don't have that anymore
-		if hasOptions {
-			translatedOld = translateValue(old, options)
-			translatedNew = translateValue(new, options)
-		} else if hasTableReference {
-			translatedOldFK, err := translateForeignKey(store, old, tableReference)
-			if err != nil {
-				return nil, false, err
-			}
-			translatedOld = translatedOldFK
-			translatedNewFK, err := translateForeignKey(store, new, tableReference)
-			if err != nil {
-				return nil, false, err
-			}
-			translatedNew = translatedNewFK
-
-		} else {
-			translatedOld = old
-			translatedNew = new
-		}
-
-		children, hasChildren := translationInterface.GetChildren()
-		if hasChildren {
-			conditionals = checkChildConditionals(old, new, children)
-		}
-		wasTranslated = true
-		//Changes: (Translations) refactor this, we should just return nil if
+	if translationInterface == nil {
+		// Only save and translate fields that have a translation, if it doesn't exist, skip
+		return nil, false, nil
 	}
+
+	translatedLabel := translationInterface.GetLabel()
+	referencesLabel := translationInterface.GetReferencesLabel(translationMap)
+	//Changes: (Translations) update this to handle if notes, or preferences.
+
+	formType := translationInterface.GetFormType()
+	dataType := translationInterface.GetDataType()
+
+	questionType := translationInterface.GetQuestionType()
+
+	if dataType == models.TDTBoolean { // clean t or f to true or false
+		old = sanitizeAuditBoolValue(old)
+		new = sanitizeAuditBoolValue(new)
+
+	}
+
+	//Changes: (Translations) refactor this
+	oldStr, oldIsString := old.(string)
+	if oldIsString {
+		oldSlice, oldIsSlice := isArray(oldStr)
+		if oldIsSlice {
+			old = oldSlice
+		} else {
+			old = oldStr
+		}
+	}
+	newStr, newIsString := new.(string)
+	if newIsString {
+		newSlice, newIsSlice := isArray(newStr)
+		if newIsSlice {
+			new = newSlice
+		} else {
+			new = newStr
+		}
+	}
+
+	options, hasOptions := translationInterface.GetOptions()
+	tableReference, hasTableReference := translationInterface.GetTableReference()
+	//Changes: (fk) look to update the unit tests, we don't want a foreign key relation to be overridden with options.
+	// ALSO! consider if there are any places with an array of foreign keys, I think we don't have that anymore
+	if hasOptions {
+		translatedOld = translateValue(old, options)
+		translatedNew = translateValue(new, options)
+	} else if hasTableReference {
+		translatedOldFK, err := translateForeignKey(store, old, tableReference)
+		if err != nil {
+			return nil, false, err
+		}
+		translatedOld = translatedOldFK
+		translatedNewFK, err := translateForeignKey(store, new, tableReference)
+		if err != nil {
+			return nil, false, err
+		}
+		translatedNew = translatedNewFK
+
+	} else {
+		translatedOld = old
+		translatedNew = new
+	}
+
+	children, hasChildren := translationInterface.GetChildren()
+	if hasChildren {
+		conditionals = checkChildConditionals(old, new, children)
+	}
+
 	translatedField := models.NewTranslatedAuditField(constants.GetSystemAccountUUID(),
 		fieldName,
 		translatedLabel,
@@ -236,8 +233,8 @@ func translateField(
 		translatedOld,
 		new,
 		translatedNew,
-		dataType,
-		formType,
+		&dataType,
+		&formType,
 	)
 	translatedField.ChangeType = changeType
 	translatedField.NotApplicableQuestions = conditionals
@@ -246,7 +243,7 @@ func translateField(
 
 	// change.MetaDataRaw = nil //Changes: (Meta) This should be specific to the type of change...
 
-	return &translatedField, wasTranslated, nil
+	return &translatedField, true, nil
 
 }
 
