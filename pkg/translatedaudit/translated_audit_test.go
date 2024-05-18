@@ -92,7 +92,7 @@ func TestTranslateField(t *testing.T) {
 		assert.True(t, wasTranslated)
 		assert.NoError(t, err)
 		assert.NotNil(t, translatedField.FormType)
-		assert.NotNil(t, translatedField.FormType)
+		assert.NotNil(t, translatedField.DataType)
 
 		if translatedField.FormType != nil {
 			assert.EqualValues(t, testTranslation.FormType, *translatedField.FormType)
