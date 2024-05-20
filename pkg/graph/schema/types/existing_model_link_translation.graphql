@@ -1,0 +1,7 @@
+"""
+Represents exsiting model link translation data
+"""
+
+type ExistingModelLinkTranslation {
+    exsitingModelID: TranslationField! @goTag(key: "db", value: "existing_model_id")
+}

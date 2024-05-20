@@ -14,6 +14,12 @@ type PlanDiscussion struct {
 	IsAssessment        bool                `json:"isAssessment" db:"is_assessment"`
 }
 
+// PlanDiscussionWithNumberOfReplies is a convenience struct to return a plan discussion with a count of the number of discussion replies in one method
+type PlanDiscussionWithNumberOfReplies struct {
+	PlanDiscussion
+	NumberOfReplies int `json:"numberOfReplies" db:"number_of_replies"`
+}
+
 // NewPlanDiscussion returns a New PlanDiscussion with a status of UNANSWERED
 func NewPlanDiscussion(
 	principal uuid.UUID,

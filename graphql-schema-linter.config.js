@@ -42,6 +42,8 @@ module.exports = {
       'OperationalNeedTranslation',
       'OperationalSolutionTranslation',
       'OperationalSolutionSubtaskTranslation',
+      'PlanDocumentSolutionLinkTranslation',
+      'ExistingModelLinkTranslation',
       'TranslationFieldWithParent',
       'TranslationFieldWithOptionsAndChildren',
       'TranslationFieldWithOptionsAndParent',

@@ -49,15 +49,16 @@ BEGIN
     h_new= hstore(NEW.*);
     h_old= hstore(OLD.*);
 
-    diff_keys = (akeys(h_new - insert_cols)); --these are the keys to subtract from all the keys on insert or deleted
+
     IF TG_OP = 'INSERT' OR TG_OP = 'DELETE' THEN
         IF insert_cols = '{*}' THEN 
-            h_changed = (h_new - h_old) - array_append(excluded_cols, pkey_f); --remove matching values and primary key
+            h_changed = (h_new - h_old) - array_cat(excluded_cols, ARRAY[pkey_f, fkey_f]);  -- Removed unchanged (matching) values and columns configured as the primary or foreign key
         ELSE
-        h_changed = (h_new -h_old) -diff_keys; --remove matching values, and only  show specific columns for insert /delete
+        diff_keys = (akeys(h_new - insert_cols)); --These are the keys that have changed that are not configured to be shown on insert. They are used to subtract from all the keys on insert or delete to show only the configured columns
+        h_changed = (h_new -h_old) -diff_keys; --Removed unchanged (matching) values, and only  show specific columns for insert /delete
         END IF;
     ELSE
-        h_changed = (h_new - h_old) - excluded_cols; --remove matching values and excluded columns
+        h_changed = (h_new - h_old) - excluded_cols; --Removed unchanged (matching) values and columns explicitly set to be excluded
     END If;
 
     IF TG_OP = 'UPDATE' AND h_changed = hstore('') THEN
@@ -98,7 +99,7 @@ BEGIN
         BEGIN
             deleted_user_uuid = COALESCE(current_setting('app.current_user',TRUE),'00000000-0000-0000-0000-000000000000'); --Try to get user from variable, if not will default to unknown
             EXCEPTION
-                WHEN OTHERS THEN RAISE NOTICE 'yep, there was an issue';
+                WHEN OTHERS THEN RAISE NOTICE 'there was an issue getting the user id for this delete operation';
         END;
         audit_row.modified_by = deleted_user_uuid;
         audit_row.primary_key = h_old -> pkey_f; --New is null

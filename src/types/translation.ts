@@ -24,6 +24,7 @@ import {
   DiscussionUserRole,
   DocumentType,
   EvaluationApproachType,
+  ExistingModelLinkTranslation,
   FrequencyType,
   FundingSource,
   GainshareArrangementEligibility,
@@ -59,6 +60,7 @@ import {
   PlanCollaboratorTranslation,
   PlanCrTranslation,
   PlanDiscussionTranslation,
+  PlanDocumentSolutionLinkTranslation,
   PlanDocumentTranslation,
   PlanGeneralCharacteristicsTranslation,
   PlanOpsEvalAndLearningTranslation,
@@ -149,6 +151,7 @@ export type TranslationOptions<T extends keyof T | string> = Omit<
   optionsLabels?: Partial<Record<T, string>>; // Sub labels to be rendered directly underneath options
   tooltips?: Partial<Record<T, string>>; // Information to be rendered inside a tooltip
   optionsRelatedInfo?: Partial<Record<T, string>>; // T values should/could be a subset of the keys of enum values
+  exportOptions?: Partial<Record<T, string>>; // Export options for ChangeHistory
 };
 
 /*
@@ -1097,6 +1100,42 @@ type TranslationOperationalSolutionSubtasksGQL = Omit<
 */
 export type TranslationOperationalSolutionSubtasks = {
   [K in keyof TranslationOperationalSolutionSubtasksGQL]: TranslationOperationalSolutionSubtasksForm[K]; // FE form type
+};
+
+// Document Solution Link - Change History purposes only
+export type TranslationDocumentSolutionLinkForm = {
+  solutionID: TranslationFieldProperties;
+};
+
+type TranslationDocumentSolutionLinkGQL = Omit<
+  PlanDocumentSolutionLinkTranslation, // graphql gen type
+  '__typename'
+>;
+
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationDocumentSolutionLink = {
+  [K in keyof TranslationDocumentSolutionLinkGQL]: TranslationDocumentSolutionLinkForm[K]; // FE form type
+};
+
+// Existing Model Link - Change History purposes only
+export type TranslationExistingModelLinkForm = {
+  exsitingModelID: TranslationFieldProperties;
+};
+
+type TranslationExistingModelLinkGQL = Omit<
+  ExistingModelLinkTranslation, // graphql gen type
+  '__typename'
+>;
+
+/* 
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationExistingModelLink = {
+  [K in keyof TranslationExistingModelLinkGQL]: TranslationExistingModelLinkForm[K]; // FE form type
 };
 
 export type TranslationPlan = {

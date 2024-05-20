@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/google/uuid"
@@ -39,29 +38,7 @@ func analyzeModelPlanForAnalyzedAudit() {
 
 }
 
-// translateAuditsCommand is an entry point for analyzing audits for all model plans
-var translateAuditsCommand = &cobra.Command{
-	Use:   "translate",
-	Short: "Converts Audits to translated audits",
-	Long:  "This uses the humanized audit package to translate and flatten analyzed audits",
-	Run: func(cmd *cobra.Command, args []string) {
-
-		fmt.Printf("Ran the Humanize Command with command : %s", cmd.Use)
-		minutes := 60
-		if len(args) > 0 {
-			minuteString := args[0]
-			if minuteString != "" {
-				if intValue, err := strconv.Atoi(minuteString); err == nil {
-					minutes = intValue
-				}
-
-			}
-		}
-
-		humanizeModelPlanChanges(minutes)
-
-	},
-}
+//Changes: (Utility) Make this only have one translate command for simplicity. It can take params to change the behavior
 
 var queueAllTranslatedAuditChangesCommand = &cobra.Command{
 	Use:   "queueTranslation",
@@ -97,7 +74,7 @@ var translateNextQueuedTranslatedAuditChangesCommand = &cobra.Command{
 	},
 }
 var queueAndProcessAllTranslatedAuditChangesCommand = &cobra.Command{
-	Use:   "queueAndProcessTranslation",
+	Use:   "translate",
 	Short: "Enqueues and processes all audit translations",
 
 	Run: func(cmd *cobra.Command, args []string) {
@@ -106,33 +83,6 @@ var queueAndProcessAllTranslatedAuditChangesCommand = &cobra.Command{
 		seeder := newDefaultSeeder(viperConfig)
 		seeder.queueAndProcessAllTranslatedAuditQueueEntries()
 	},
-}
-
-// humanizeModelPlanChanges humanizes all audit changes
-func humanizeModelPlanChanges(minutes int) {
-	seeder := newDefaultSeeder(viperConfig)
-
-	seeder.HumanizeModelPlanChanges(minutes)
-
-}
-
-// HumanizeModelPlanChanges humanizes model plans for a give time range
-func (s *Seeder) HumanizeModelPlanChanges(minutes int) {
-	timeEnd := time.Now()
-	timeStart := timeEnd.Add((time.Minute * -time.Duration(minutes)))
-
-	// Step 1. Get all model plans
-	modelPlans, err := s.Config.Store.ModelPlanCollection(s.Config.Logger, false)
-	if err != nil {
-		panic(fmt.Errorf("couldn't retrieve model plan collection"))
-	}
-	for _, plan := range modelPlans {
-		_, err := translatedaudit.TranslateAuditsForModelPlan(s.Config.Context, s.Config.Store, s.Config.Logger, timeStart, timeEnd, plan.ID)
-		if err != nil {
-			fmt.Printf("issue humanizing audits for model plan '%s'. err %v", plan.ModelName, err)
-		}
-	}
-
 }
 
 // CreateAnalyzedAuditData uses the seeder to generate analyzed audits. It will make one record for all changes just seeded
@@ -200,7 +150,7 @@ func (s *Seeder) translateAllQueuedTranslatedAudits() {
 	}
 
 	for _, queued := range queuedObjects {
-		translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, s.Config.Logger, queued.ChangeID, queued.ID)
+		_, translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, s.Config.Logger, queued.ChangeID, queued.ID)
 		if translationErr != nil {
 			fmt.Println(fmt.Errorf("error getting queued objects to translate, %w", translationErr))
 		}
@@ -214,7 +164,7 @@ func (s *Seeder) translateNextQueuedTranslatedAudit() {
 	}
 	if len(queuedObjects) > 1 {
 		queued := queuedObjects[0]
-		translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, s.Config.Logger, queued.ChangeID, queued.ID)
+		_, translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, s.Config.Logger, queued.ChangeID, queued.ID)
 		if translationErr != nil {
 			fmt.Println(fmt.Errorf("error getting queued objects to translate, %w ", translationErr))
 		}

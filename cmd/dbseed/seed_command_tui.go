@@ -82,10 +82,7 @@ func newSeedCommandTuiModel() seedCommandTuiModel {
 				CommandName: "Analyze Audits",
 				CommandRun:  func() { analyzeAuditCommand.Run(analyzeAuditCommand, []string{}) },
 			},
-			genericCommandOption{
-				CommandName: "Translate Audits",
-				CommandRun:  func() { translateAuditsCommand.Run(translateAuditsCommand, []string{}) },
-			},
+
 			genericCommandOption{
 				CommandName: "Queue Audits",
 				CommandRun:  func() { queueAllTranslatedAuditChangesCommand.Run(queueAllTranslatedAuditChangesCommand, []string{}) },
