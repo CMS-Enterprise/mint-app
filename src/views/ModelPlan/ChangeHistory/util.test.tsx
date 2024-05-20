@@ -5,10 +5,10 @@ import {
   ChangeType,
   extractReadyForReviewChanges,
   identifyChangeType,
-  isHiddenRecord,
   isInitialCreatedSection,
   isTranslationTaskListTable,
   parseArray,
+  removedHiddenFields,
   separateStatusChanges,
   sortCreateChangeFirst
 } from './util';
@@ -270,28 +270,30 @@ describe('util.tsx', () => {
   });
 
   // Test for isHiddenRecord
-  test('isHiddenRecord', () => {
-    const changeRecord: ChangeRecordType = {
-      id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-      tableName: 'operational_need',
-      date: '2024-04-22T13:55:13.725192Z',
-      action: DatabaseOperation.INSERT,
-      translatedFields: [
-        {
-          id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
-          changeType: AuditFieldChangeType.ANSWERED,
-          fieldName: 'needed',
-          fieldNameTranslated: 'Model Plan status',
-          old: null,
-          oldTranslated: null,
-          new: 'READY',
-          newTranslated: 'Ready',
-          __typename: 'TranslatedAuditField'
-        }
-      ],
-      actorName: 'MINT Doe',
-      __typename: 'TranslatedAudit'
-    };
-    expect(isHiddenRecord(changeRecord)).toBe(true);
+  test('removedHiddenFields', () => {
+    const changeRecords: ChangeRecordType[] = [
+      {
+        id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+        tableName: 'operational_need',
+        date: '2024-04-22T13:55:13.725192Z',
+        action: DatabaseOperation.INSERT,
+        translatedFields: [
+          {
+            id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+            changeType: AuditFieldChangeType.ANSWERED,
+            fieldName: 'needed',
+            fieldNameTranslated: 'Model Plan status',
+            old: null,
+            oldTranslated: null,
+            new: 'READY',
+            newTranslated: 'Ready',
+            __typename: 'TranslatedAuditField'
+          }
+        ],
+        actorName: 'MINT Doe',
+        __typename: 'TranslatedAudit'
+      }
+    ];
+    expect(removedHiddenFields(changeRecords)).toBe(true);
   });
 });

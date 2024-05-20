@@ -19,7 +19,7 @@ const operationalNeeds: TranslationOperationalNeeds = {
     goField: 'NameOther',
     dbField: 'name_other',
     label: 'What operational need are you solving?',
-    exportLabel: 'Operational need',
+    exportLabel: 'Custom operational need',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT
   },

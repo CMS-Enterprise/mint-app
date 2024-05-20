@@ -17,7 +17,8 @@ import { formatDateUtc, formatTime } from 'utils/date';
 import {
   identifyChangeType,
   isDiscussionReplyWithMetaData,
-  parseArray
+  parseArray,
+  TranslationTables
 } from '../../util';
 
 import './index.scss';
@@ -33,10 +34,11 @@ type ChangeRecordProps = {
 type SingleChangeProps = {
   change: ChangeRecordType['translatedFields'][0];
   changeType: DatabaseOperation;
+  tableName: TranslationTables;
 };
 
 // Render a single change record, showing the field name, the change type, and the old and new values
-const SingleChange = ({ change, changeType }: SingleChangeProps) => {
+const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   return (
@@ -57,8 +59,15 @@ const SingleChange = ({ change, changeType }: SingleChangeProps) => {
           )}
         </span>
 
-        {changeType !== DatabaseOperation.DELETE &&
-          t(`changeType.${change.changeType}`)}
+        {(() => {
+          if (tableName === 'operational_need' && changeType === 'INSERT') {
+            return <>{t(`changeType.CREATED`)}</>;
+          }
+          if (changeType !== DatabaseOperation.DELETE) {
+            return <>{t(`changeType.${change.changeType}`)}</>;
+          }
+          return <></>;
+        })()}
       </div>
 
       <div className="change-record__answer margin-y-1">
@@ -156,7 +165,11 @@ const RenderValue = ({
 };
 
 // Renders the questions changes before collapse link is clicked, as well as a note or follow-up question is present
-const ChangedQuestion = ({ change, changeType }: SingleChangeProps) => {
+const ChangedQuestion = ({
+  change,
+  changeType,
+  tableName
+}: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   if (change.referenceLabel) {
@@ -471,6 +484,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               <ChangedQuestion
                 change={change}
                 changeType={changeRecord.action}
+                tableName={changeRecord.tableName as TranslationTables}
               />
             </li>
           ))}
@@ -493,6 +507,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                 change={change}
                 key={change.id}
                 changeType={changeRecord.action}
+                tableName={changeRecord.tableName as TranslationTables}
               />
             ))}
           </div>

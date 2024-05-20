@@ -68,6 +68,44 @@ export const isDiscussionReplyWithMetaData = (
   return data.__typename === 'TranslatedAuditMetaGeneric';
 };
 
+type HiddenFieldTypes = {
+  table: TranslationTables;
+  fields: string[];
+};
+
+// Fields that are not displayed in the change history
+const hiddenFields: HiddenFieldTypes[] = [
+  {
+    table: 'operational_need',
+    fields: ['needed', 'need_type', 'model_plan_id']
+  },
+  {
+    table: 'operational_solution',
+    fields: ['operational_need_id', 'solution_type', 'is_other']
+  },
+  {
+    table: 'plan_document',
+    fields: [
+      'model_plan_id',
+      'virus_scanned',
+      'file_key',
+      'file_name',
+      'file_size',
+      'bucket',
+      'file_type',
+      'virus_clean'
+    ]
+  },
+  {
+    table: 'plan_cr',
+    fields: ['model_plan_id']
+  },
+  {
+    table: 'plan_tdl',
+    fields: ['model_plan_id']
+  }
+];
+
 // Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array
 export const parseArray = (value: string | string[]) => {
   if (!value) return '';
@@ -246,20 +284,28 @@ export const isInitialCreatedSection = (
     identifyChangeType(change) === 'Operational need create'
   );
 
-// Some fields exist in translation/audit data, but are not displayed in the change history
-export const isHiddenRecord = (changeRecord: ChangeRecordType): boolean => {
-  const hiddenFields = [
-    {
-      table: 'operational_need',
-      type: 'INSERT'
-    }
-  ];
+// Some fields exist in translation/audit data, but are not displayed in the change history. Filter out these fields
+export const removedHiddenFields = (
+  changeRecords: ChangeRecordType[]
+): ChangeRecordType[] => {
+  const filteredChangeRecords: ChangeRecordType[] = [];
 
-  return !!hiddenFields.find(
-    hiddenField =>
-      hiddenField.table === changeRecord.tableName &&
-      changeRecord.action === hiddenField.type
-  );
+  changeRecords.forEach(changeRecord => {
+    const filteredChangeRecord = { ...changeRecord };
+    const filteredFields = [...filteredChangeRecord.translatedFields];
+
+    filteredChangeRecord.translatedFields = filteredFields.filter(
+      field =>
+        !hiddenFields.find(
+          hiddenField =>
+            hiddenField.table === changeRecord.tableName &&
+            hiddenField.fields.includes(field.fieldName)
+        )
+    );
+
+    filteredChangeRecords.push(filteredChangeRecord);
+  });
+  return filteredChangeRecords;
 };
 
 // Removes changes that are not needed for the change history.  Used to get accurate page count of audits
@@ -267,15 +313,18 @@ const removeUnneededAudits = (changes: ChangeRecordType[]) =>
   changes.filter(
     change =>
       !isInitialCreatedSection(change, identifyChangeType(change)) &&
-      !isHiddenRecord(change) &&
       change.translatedFields.length !== 0
   );
 
 export const sortAllChanges = (changes: ChangeRecordType[]) => {
   const changesWithStatusSeparation = separateStatusChanges(changes);
 
-  const changesWithoutReadyForReview = extractReadyForReviewChanges(
+  const removedHiddenChangeFields = removedHiddenFields(
     changesWithStatusSeparation
+  );
+
+  const changesWithoutReadyForReview = extractReadyForReviewChanges(
+    removedHiddenChangeFields
   );
 
   const changesWithoutUnneededAudits = removeUnneededAudits(

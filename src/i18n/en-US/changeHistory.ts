@@ -67,6 +67,7 @@ const changeHistory = {
     UPDATED: 'updated'
   },
   changeType: {
+    CREATED: 'created',
     ANSWERED: 'answered',
     REMOVED: 'removed',
     UPDATED: 'updated'
