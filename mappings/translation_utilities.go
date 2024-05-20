@@ -45,6 +45,10 @@ func GetTranslation(tableName string) (Translation, error) {
 		return PlanCRTranslation()
 	case "plan_tdl":
 		return PlanTDLTranslation()
+	case "existing_model_link":
+		return ExistingModelLinkTranslation()
+	case "plan_document_solution_link":
+		return PlanDocumentSolutionLinkTranslation()
 
 	default:
 		// ut := UnknownTranslation{
