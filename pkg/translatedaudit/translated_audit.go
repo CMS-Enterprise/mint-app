@@ -254,9 +254,6 @@ func translateField(
 
 // getChangeType interprets the change that happened on a field to characterize it as an AuditFieldChangeType
 func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType {
-	//Changes: (Meta) Revisit this, make sure we handle all cases. Can this every be called for a field that has no answer? What about on insert? Or do we only have answer on insert if non-null?
-	// return models.AFCAnswered
-
 	if new == nil || new == "{}" {
 		if old == nil || old == "{}" {
 			//Changes: (Meta) Revisit this, is this possible?
