@@ -190,7 +190,7 @@ const ReadOnlyModelBasics = ({
 
               <Grid row gap>
                 <Grid
-                  desktop={{ col: 6 }}
+                  col={6}
                   className={classNames({
                     'padding-bottom-2': isTablet
                   })}
@@ -205,7 +205,7 @@ const ReadOnlyModelBasics = ({
                     </div>
                   )}
                 </Grid>
-                <Grid desktop={{ col: 6 }}>
+                <Grid col={6}>
                   <p className="text-bold margin-top-0 margin-bottom-1">
                     {basicsT('demoCode.label')}
                   </p>
