@@ -36,7 +36,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 	}
 	w.Logger.Debug("translating audit", zap.Any("auditID", auditID), zap.Any("queueID", queueID))
 
-	translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, w.Logger, auditID, queueID)
+	_, translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, w.Logger, auditID, queueID)
 	if translationErr != nil {
 		return translationErr
 	}

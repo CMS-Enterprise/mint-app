@@ -72,7 +72,6 @@ func init() {
 	viperConfig.AutomaticEnv()
 	rootCmd.AddCommand(seedCmd)
 	rootCmd.AddCommand(analyzeAuditCommand)
-	rootCmd.AddCommand(translateAuditsCommand)
 	rootCmd.AddCommand(cleanCmd)
 	rootCmd.AddCommand(translationExportCmd)
 
