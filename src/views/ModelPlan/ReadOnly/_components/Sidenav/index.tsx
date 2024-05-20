@@ -12,20 +12,40 @@ interface SideNavProps {
   isHelpArticle: boolean | undefined;
   solutionNavigation?: boolean;
   paramActive?: boolean;
-  openFilterModal?: () => void;
 }
 
 const SideNav = ({
   subComponents,
   isHelpArticle,
   solutionNavigation,
-  paramActive,
-  openFilterModal
+  paramActive
 }: SideNavProps) => {
-  const { t } = useTranslation('modelSummary');
-  const { t: h } = useTranslation('helpAndKnowledge');
+  const { t: modelSumamryT } = useTranslation('modelSummary');
+  const { t: helpAndKnowledgeT } = useTranslation('helpAndKnowledge');
 
-  const translationKey = solutionNavigation ? h : t;
+  const translationKey = solutionNavigation ? helpAndKnowledgeT : modelSumamryT;
+
+  const scrollToAboveReadOnlyBodyContent = () => {
+    const filterBannerHeight = document.querySelector(
+      '[data-testid="group-filter-banner"'
+    )?.clientHeight!;
+
+    // `element` is the SectionWrapper component, everything below the ModelWarning
+    const element = document.querySelector('#scroll-element')!;
+
+    // Find the margin-top value of the element
+    const marginTopValue = parseFloat(
+      window.getComputedStyle(element).marginTop
+    );
+
+    // Find the top of the element
+    const { top } = element?.getBoundingClientRect()!;
+
+    // Calculate all the things
+    const distanceFromTopOfPage =
+      top + window.scrollY - filterBannerHeight - marginTopValue;
+    window.scroll(0, distanceFromTopOfPage);
+  };
 
   // Mapping of all sub navigation links
   const subNavigationLinks: React.ReactNode[] = Object.keys(subComponents).map(
@@ -46,6 +66,7 @@ const SideNav = ({
         }}
         activeClassName="usa-current"
         className={key === 'it-solutions' ? 'nav-group-border' : ''}
+        onClick={scrollToAboveReadOnlyBodyContent}
       >
         {translationKey(`navigation.${key}`)}
       </NavLink>

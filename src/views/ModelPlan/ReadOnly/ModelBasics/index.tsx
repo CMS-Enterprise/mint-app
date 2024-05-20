@@ -140,7 +140,9 @@ const ReadOnlyModelBasics = ({
       )}
 
       {loading && !data ? (
-        <PageLoading testId="basics-page-loading" />
+        <div className="height-viewport">
+          <PageLoading />
+        </div>
       ) : (
         <>
           <ReadOnlySection

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/cmsgov/mint-app/pkg/notifications"
 
@@ -245,6 +246,29 @@ func ModelPlanGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPla
 	}
 
 	return result.(*models.ModelPlan), nil
+}
+
+// ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER implements resolver logic to get Model Plan
+// Operational Solution Last Modified Dts by a model plan ID using a data loader
+func ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx context.Context, id uuid.UUID) (*time.Time, error) {
+	allLoaders := loaders.Loaders(ctx)
+	planTrackingDateLoader := allLoaders.ModelPlanOpSolutionLastModifiedDtsLoader
+	key := loaders.NewKeyArgs()
+	key.Args["id"] = id
+
+	thunk := planTrackingDateLoader.Loader.Load(ctx, key)
+	result, err := thunk()
+
+	if err != nil {
+		return nil, err
+	}
+
+	convertedTime, timeConvertedOk := result.(*time.Time)
+	if !timeConvertedOk {
+		return nil, fmt.Errorf("failed to convert time from loader")
+	}
+
+	return convertedTime, nil
 }
 
 // ModelPlanGetSampleModel returns the sample model plan
