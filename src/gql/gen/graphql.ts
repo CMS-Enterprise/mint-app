@@ -187,6 +187,8 @@ export type AuditChange = {
 export enum AuditFieldChangeType {
   ANSWERED = 'ANSWERED',
   REMOVED = 'REMOVED',
+  /** This type should not appear for all intents and purposes. It shows up if a value changes from null to empty array or vice versa. */
+  UNCHANGED = 'UNCHANGED',
   UPDATED = 'UPDATED'
 }
 

@@ -149,6 +149,11 @@ func translateField(
 	translatedOld := old
 	translatedNew := new
 	changeType := getChangeType(old, new)
+	if changeType == models.AFCUnchanged {
+		// Changes: (Translations) revisit this paradigm.
+		// If a field is actually unchanged (null to empty array or v versa), don't write an entry.
+		return nil, false, nil
+	}
 
 	var conditionals *pq.StringArray //TODO: can we make the function that checks return this instead of instantiating here?
 
@@ -255,7 +260,7 @@ func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType
 	if new == nil || new == "{}" {
 		if old == nil || old == "{}" {
 			//Changes: (Meta) Revisit this, is this possible?
-			return ""
+			return models.AFCUnchanged
 		}
 		return models.AFCRemoved
 	}

@@ -23,6 +23,8 @@ const (
 	AFCAnswered AuditFieldChangeType = "ANSWERED"
 	AFCUpdated  AuditFieldChangeType = "UPDATED"
 	AFCRemoved  AuditFieldChangeType = "REMOVED"
+	// This is a type that should not be seen on the frontend. It is possible for it to appear if a value gets changed from null to an empty array, so we expose the type here.
+	AFCUnchanged AuditFieldChangeType = "UNCHANGED"
 )
 
 type TranslationQuestionType string
