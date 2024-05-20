@@ -8,7 +8,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 )
 
-//go:embed translation/existing_model_link.json
+//go:embed translation/plan_document_solution_link.json
 var PlanDocumentSolutionLinkTranslationJSON []byte
 
 func PlanDocumentSolutionLinkTranslation() (*model.PlanDocumentSolutionLinkTranslation, error) {
