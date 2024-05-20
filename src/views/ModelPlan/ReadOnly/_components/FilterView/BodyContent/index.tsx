@@ -115,10 +115,7 @@ const BodyContent = ({
             type="needs"
             readOnly
             hideGlobalFilter
-            hiddenColumns={[
-              opSolutionsMiscT('itSolutionsTable.subtasks'),
-              opSolutionsMiscT('itSolutionsTable.actions')
-            ]}
+            hiddenColumns={[opSolutionsMiscT('itSolutionsTable.actions')]}
             filterSolutions={filteredGroupSolutions[filteredView]}
           />
         </div>
