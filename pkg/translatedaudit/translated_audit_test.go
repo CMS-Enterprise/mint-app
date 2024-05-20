@@ -120,4 +120,17 @@ func TestTranslateField(t *testing.T) {
 
 	})
 
+	t.Run("When a field is unchanged, there is no translation field ", func(t *testing.T) {
+		unchangedAuditField := models.AuditField{
+			Old: nil,
+			New: "{}",
+		}
+		var store *storage.Store //nil store
+		translatedField, wasTranslated, err := translateField(store, "there is no translation for this", unchangedAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		assert.False(t, wasTranslated)
+		assert.Nil(t, (translatedField))
+		assert.NoError(t, err)
+
+	})
+
 }
