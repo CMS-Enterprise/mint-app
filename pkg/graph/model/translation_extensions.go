@@ -174,3 +174,13 @@ func (emt *ExistingModelLinkTranslation) TableName() string {
 func (emt *ExistingModelLinkTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*emt)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (pdt *PlanDocumentSolutionLinkTranslation) TableName() string {
+	return "plan_document_solution_link"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (pdt *PlanDocumentSolutionLinkTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*pdt)
+}
