@@ -1,9 +1,9 @@
 {
-  "exsitingModelID": {
-    "gqlField": "exsitingModelID",
-    "goField": "ExsitingModelID",
-    "dbField": "exsiting_model_id",
-    "label": "Exsiting Model ID",
+  "existingModelID": {
+    "gqlField": "existingModelID",
+    "goField": "ExistingModelID",
+    "dbField": "existing_model_id",
+    "label": "Existing Model ID",
     "dataType": "STRING",
     "formType": "TEXT"
   }

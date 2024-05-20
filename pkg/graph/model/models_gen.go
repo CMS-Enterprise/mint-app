@@ -34,9 +34,9 @@ type DiscussionReplyTranslation struct {
 	Content             models.TranslationField            `json:"content" db:"content"`
 }
 
-// Represents exsiting model link translation data
+// Represents existing model link translation data
 type ExistingModelLinkTranslation struct {
-	ExsitingModelID models.TranslationField `json:"exsitingModelID" db:"existing_model_id"`
+	ExistingModelID models.TranslationField `json:"existingModelID" db:"existing_model_id"`
 }
 
 // The current user's Launch Darkly key

@@ -164,3 +164,13 @@ func (ost *OperationalSolutionSubtaskTranslation) TableName() string {
 func (ost *OperationalSolutionSubtaskTranslation) ToMap() (map[string]models.ITranslationField, error) {
 	return models.StructToTranslationMap(*ost)
 }
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (emt *ExistingModelLinkTranslation) TableName() string {
+	return "existing_model_link"
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (emt *ExistingModelLinkTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*emt)
+}

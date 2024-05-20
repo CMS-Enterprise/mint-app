@@ -470,10 +470,10 @@ export type ExistingModelLink = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
 };
 
-/** Represents exsiting model link translation data */
+/** Represents existing model link translation data */
 export type ExistingModelLinkTranslation = {
   __typename: 'ExistingModelLinkTranslation';
-  exsitingModelID: TranslationField;
+  existingModelID: TranslationField;
 };
 
 export type ExistingModelLinks = {
@@ -3967,7 +3967,7 @@ export type GetChangeHistoryQueryVariables = Exact<{
 }>;
 
 
-export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: string, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType?: TranslationDataType | null, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: string } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: string, relation: string, relationContent: string } | null }> | null };
+export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: string, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType?: TranslationDataType | null, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: string } | { __typename: 'TranslatedAuditMetaDiscussionReply' } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: string, relation: string, relationContent: string } | null }> | null };
 
 export type CreateModelPlanCollaboratorMutationVariables = Exact<{
   input: PlanCollaboratorCreateInput;

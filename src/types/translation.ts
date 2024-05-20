@@ -1122,7 +1122,7 @@ export type TranslationDocumentSolutionLink = {
 
 // Existing Model Link - Change History purposes only
 export type TranslationExistingModelLinkForm = {
-  exsitingModelID: TranslationFieldProperties;
+  existingModelID: TranslationFieldProperties;
 };
 
 type TranslationExistingModelLinkGQL = Omit<
