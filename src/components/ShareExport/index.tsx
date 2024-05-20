@@ -145,10 +145,7 @@ const ShareExportModal = ({
                 </div>
               ))}
             <div className="margin-top-6">
-              <ReadOnlyOperationalNeeds
-                modelID={modelID}
-                isExportingPDF={exportPDF}
-              />
+              <ReadOnlyOperationalNeeds modelID={modelID} />
             </div>
           </>
         )}

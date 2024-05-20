@@ -12,13 +12,7 @@ import { NotFoundPartial } from 'views/NotFound';
 
 type OperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
 
-const ReadOnlyOperationalNeeds = ({
-  modelID,
-  isExportingPDF
-}: {
-  modelID: string;
-  isExportingPDF?: boolean;
-}) => {
+const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('opSolutionsMisc');
 
   const { data, loading, error } = useGetOperationalNeedsQuery({
@@ -53,12 +47,7 @@ const ReadOnlyOperationalNeeds = ({
         )}
       </div>
 
-      <OperationalNeedsTable
-        modelID={modelID}
-        type="needs"
-        readOnly
-        isExportingPDF={isExportingPDF}
-      />
+      <OperationalNeedsTable modelID={modelID} type="needs" readOnly />
     </div>
   );
 };

@@ -5,7 +5,7 @@ Table component for rendering both Other Operational Needs and Operational Need 
 Queries operationalNeeds which contains possible needs and needs
 Can render table of type GetOperationalNeeds_modelPlan_operationalNeeds or GetOperationalNeeds_modelPlan_operationalNeeds_solutions_solutions
 */
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import {
@@ -45,6 +45,7 @@ import {
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
 import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { PrintPDFContext } from 'views/PrintPDFWrapper';
 
 import OperationalNeedsStatusTag, {
   OperationalNeedsSolutionsStatus
@@ -72,7 +73,6 @@ type OperationalNeedsTableProps = {
   hideGlobalFilter?: boolean;
   filterSolutions?: OperationalSolutionKey[];
   className?: string;
-  isExportingPDF?: boolean;
 };
 
 const OperationalNeedsTable = ({
@@ -82,8 +82,7 @@ const OperationalNeedsTable = ({
   readOnly,
   hideGlobalFilter,
   filterSolutions,
-  className,
-  isExportingPDF
+  className
 }: OperationalNeedsTableProps) => {
   const { t: operationalNeedsT } = useTranslation('operationalNeeds');
   const { t: solutionsT } = useTranslation('solutions');
@@ -97,6 +96,9 @@ const OperationalNeedsTable = ({
   });
 
   const flags = useFlags();
+
+  // isPrintPDF is a boolean that is set to true when the user is printing the PDF
+  const { isPrintPDF } = useContext(PrintPDFContext);
 
   // Memoized function to return/filter possible needs and needed solutions
   const operationalNeeds = useMemo(() => {
@@ -126,7 +128,7 @@ const OperationalNeedsTable = ({
 
   const hiddenTableColumns = [...(hiddenColumns || [])];
 
-  if (!hasEditAccess || isExportingPDF) {
+  if (!hasEditAccess || isPrintPDF) {
     hiddenTableColumns.push('Actions');
   }
 
@@ -398,7 +400,7 @@ const OperationalNeedsTable = ({
       className={classNames(className, 'model-plan-table')}
       data-testid={`${type}-table`}
     >
-      {!hideGlobalFilter && !isExportingPDF && (
+      {!hideGlobalFilter && !isPrintPDF && (
         <>
           <div className="mint-header__basic">
             <GlobalClientFilter
