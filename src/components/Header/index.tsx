@@ -210,7 +210,6 @@ export const Header = ({ children }: HeaderProps) => {
       </header>
       {isLoggedIn && pathname !== '/pre-decisional-notice' && (
         <NavigationBar
-          // className="position-sticky top-0 z-100 bg-white shadow-2 border-top-light"
           className={classnames(
             'position-sticky top-0 z-100 bg-white shadow-2',
             {
