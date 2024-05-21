@@ -12,7 +12,7 @@ const changeHistory = {
   taskStatusUpdate:
     'marked {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
   teamANSWERED:
-    '{{action}} {{collaborator}} to the model team <datetime>on {{date}} at {{time}}</datetime>',
+    '{{action}} {{collaborator}} as {{role}} to the model team <datetime>on {{date}} at {{time}}</datetime>',
   teamUPDATED:
     '{{action}} {{collaborator}}’s role to {{role}} <datetime>on {{date}} at {{time}}</datetime>',
   teamREMOVED:
