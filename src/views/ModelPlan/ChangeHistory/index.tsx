@@ -145,6 +145,7 @@ const ChangeHistory = () => {
                 pageRangeDisplayed={5}
                 pageCount={pageCount}
                 previousLabel="< Previous"
+                onClick={() => window.scrollTo(0, 0)}
                 renderOnZeroPageCount={null}
               />
             )}
