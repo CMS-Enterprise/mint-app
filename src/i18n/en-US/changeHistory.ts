@@ -57,6 +57,9 @@ const changeHistory = {
   },
   showDetails: 'Show details',
   hideDetails: 'Hide details',
+  resultsInfo: 'Showing {{-resultsNum}} of {{-count}} change {{-query}}',
+  resultsInfo_other:
+    'Showing {{-resultsNum}} - {{-count}} of {{-total}} changes {{-query}}',
   auditUpdateTye: {
     INSERT: 'added',
     DELETE: 'removed',

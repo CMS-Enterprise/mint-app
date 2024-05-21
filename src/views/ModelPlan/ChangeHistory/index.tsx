@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { useLocation, useParams } from 'react-router-dom';
-import { GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
+import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import { useGetChangeHistoryQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -10,11 +10,13 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
+import GlobalClientFilter from 'components/TableFilter';
+import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import ChangeRecord from './components/ChangeRecord';
-import { sortAllChanges } from './util';
+import { ChangeRecordType, sortAllChanges } from './util';
 
 type LocationProps = {
   state: {
@@ -48,17 +50,78 @@ const ChangeHistory = () => {
 
   const [pageOffset, setPageOffset] = useState(0);
 
+  const searchAudits = useCallback(
+    (query: string, audits: ChangeRecordType[]): ChangeRecordType[] => {
+      return audits.filter(audit => {
+        const lowerCaseQuery = query.toLowerCase();
+
+        const translatedFieldsMatchQuery = audit.translatedFields.filter(
+          field =>
+            field.fieldNameTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+            field.newTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+            field.oldTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+            field.referenceLabel?.toLowerCase().includes(lowerCaseQuery)
+        );
+
+        if (audit.actorName.toLowerCase().includes(lowerCaseQuery)) {
+          return true;
+        }
+        if (
+          formatDateUtc(audit.date.replace(' ', 'T'), 'MM/dd/yyyy').includes(
+            lowerCaseQuery
+          )
+        ) {
+          return true;
+        }
+        if (
+          t(`sections:${audit.tableName}`)
+            .toLowerCase()
+            .includes(lowerCaseQuery)
+        ) {
+          return true;
+        }
+        if (translatedFieldsMatchQuery.length > 0) {
+          return true;
+        }
+        return false;
+      });
+    },
+    [t]
+  );
+
+  const [query, setQuery] = useState<string>('');
+  const [resultsNum, setResultsNum] = useState<number>(0);
+
+  const [queryAudits, setQueryAudits] = useState<ChangeRecordType[]>(
+    sortedChanges
+  );
+
+  //  If no query, return all solutions, otherwise, matching query solutions
+  useEffect(() => {
+    if (query.trim()) {
+      const filteredAudits = searchAudits(query, sortedChanges);
+      setQueryAudits(filteredAudits);
+      setResultsNum(filteredAudits.length);
+    } else {
+      setQueryAudits(sortedChanges);
+    }
+    setPageOffset(0);
+  }, [query, searchAudits, setPageOffset]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const availableChanges = query ? queryAudits : sortedChanges;
+
   // Pagination Configuration
   const itemsPerPage = 10;
   const endOffset = pageOffset + itemsPerPage;
-  const currentItems = sortedChanges?.slice(pageOffset, endOffset);
-  const pageCount = sortedChanges
-    ? Math.ceil(sortedChanges.length / itemsPerPage)
+  const currentItems = availableChanges?.slice(pageOffset, endOffset);
+  const pageCount = availableChanges
+    ? Math.ceil(availableChanges.length / itemsPerPage)
     : 1;
 
   // Invoke when user click to request another page.
   const handlePageClick = (event: { selected: number }) => {
-    const newOffset = (event.selected * itemsPerPage) % sortedChanges?.length;
+    const newOffset =
+      (event.selected * itemsPerPage) % availableChanges?.length;
     setPageOffset(newOffset);
   };
 
@@ -110,6 +173,37 @@ const ChangeHistory = () => {
           <PageLoading />
         ) : (
           <>
+            <div className="margin-bottom-2">
+              <Grid tablet={{ col: 6 }}>
+                <GlobalClientFilter
+                  setGlobalFilter={setQuery}
+                  tableID="table-id"
+                  tableName="table-name"
+                  className="width-full maxw-none margin-bottom-3"
+                />
+              </Grid>
+
+              {query && (
+                <div className="display-flex">
+                  <p className="margin-y-0">
+                    {t('resultsInfo', {
+                      resultsNum:
+                        availableChanges.length > 0
+                          ? (pageOffset / itemsPerPage) * 10 + 1
+                          : (pageOffset / itemsPerPage) * 10,
+                      count:
+                        (pageOffset / itemsPerPage) * 10 + currentItems?.length,
+                      total: resultsNum,
+                      query: 'for'
+                    })}
+                    {query && (
+                      <span className="text-bold">{` "${query}"`}</span>
+                    )}
+                  </p>
+                </div>
+              )}
+            </div>
+
             {sortedChanges.length === 0 && (
               <Alert type="info" slim className="margin-bottom-2">
                 {t('noChanges')}
@@ -146,6 +240,7 @@ const ChangeHistory = () => {
                 pageCount={pageCount}
                 previousLabel="< Previous"
                 onClick={() => window.scrollTo(0, 0)}
+                forcePage={pageOffset / itemsPerPage}
                 renderOnZeroPageCount={null}
               />
             )}
