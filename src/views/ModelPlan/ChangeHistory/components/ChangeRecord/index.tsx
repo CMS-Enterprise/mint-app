@@ -209,6 +209,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
     changeRecordType === 'CR update' ||
     changeRecordType === 'TDL update' ||
     changeRecordType === 'Subtask update' ||
+    changeRecordType === 'Operational need update' ||
     changeRecordType === 'Document update';
 
   const showMoreData: boolean =
@@ -404,6 +405,23 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                     action: t(`auditUpdateTye.${changeRecord.action}`),
                     subtaskName,
                     solutionName: 'Temp Solution',
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {changeRecordType === 'Operational need update' &&
+            (() => {
+              return (
+                <Trans
+                  i18nKey="changeHistory:needUpdate"
+                  values={{
+                    action: t(`auditUpdateTye.${changeRecord.action}`),
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}

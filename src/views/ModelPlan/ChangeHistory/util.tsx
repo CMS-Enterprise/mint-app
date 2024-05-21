@@ -20,6 +20,7 @@ export type ChangeType =
   | 'TDL update'
   | 'Subtask update'
   | 'Operational need create'
+  | 'Operational need update'
   | 'Standard update';
 
 export type TranslationTables =
@@ -267,11 +268,11 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
   }
 
   // If the change is an operational need create/no translatedFields, return 'Operational need create'
-  if (
-    change.tableName === 'operational_need' &&
-    change.translatedFields.length === 0
-  ) {
-    return 'Operational need create';
+  if (change.tableName === 'operational_need') {
+    if (change.translatedFields.length === 0) {
+      return 'Operational need create';
+    }
+    return 'Operational need update';
   }
 
   return 'Standard update';
