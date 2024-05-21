@@ -195,7 +195,6 @@ export const Header = ({ children }: HeaderProps) => {
           <div className="usa-nav__inner">
             {isLoggedIn ? (
               <NavigationBar
-                isMobile={isMobile}
                 toggle={setIsMobileSideNavExpanded}
                 signout={signout}
                 userName={userName}

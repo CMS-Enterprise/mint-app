@@ -53,7 +53,6 @@ describe('The NavigationBar component', () => {
       <MemoryRouter initialEntries={['/']}>
         <MockedProvider mocks={notificationsMock} addTypename={false}>
           <NavigationBar
-            isMobile
             toggle={() => !null}
             signout={() => null}
             userName="A11Y"
@@ -70,7 +69,6 @@ describe('The NavigationBar component', () => {
       <MemoryRouter initialEntries={['/system/making-a-request']}>
         <MockedProvider mocks={notificationsMock} addTypename={false}>
           <NavigationBar
-            isMobile
             toggle={() => !null}
             signout={() => null}
             userName="A11Y"

@@ -6,10 +6,11 @@ import classNames from 'classnames';
 import { useGetPollNotificationsQuery } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+
 import './index.scss';
 
 export type NavigationProps = {
-  isMobile?: boolean;
   signout: () => void;
   toggle: (active: boolean) => void;
   userName: string;
@@ -32,7 +33,6 @@ export const navLinks = () => [
 ];
 
 const NavigationBar = ({
-  isMobile,
   signout,
   toggle,
   userName,
@@ -41,6 +41,8 @@ const NavigationBar = ({
   const { t } = useTranslation();
 
   const flags = useFlags();
+
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
   const { data } = useGetPollNotificationsQuery({
     pollInterval: 5000
