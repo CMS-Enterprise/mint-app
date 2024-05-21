@@ -3,6 +3,7 @@ package translatedaudit
 import (
 	"context"
 	"fmt"
+	"strconv"
 
 	"github.com/google/uuid"
 
@@ -30,12 +31,18 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value interf
 	case "operational_solution":
 		{
 			return getOperationalSolutionForeignKeyReference(ctx, store, value)
-
 		}
 	case "plan_document":
 		{
 			return getPlanDocumentForeignKeyReference(ctx, store, value)
-
+		}
+	case "model_plan":
+		{
+			return getModelPlanForeignKeyReference(ctx, store, value)
+		}
+	case "existing_model":
+		{
+			return getExistingModelForeignKeyReference(ctx, store, value)
 		}
 	default:
 		return nil, fmt.Errorf("there is no configured method to return the table reference for %s", tableReference)
@@ -82,6 +89,28 @@ func parseInterfaceToUUID(val interface{}) (uuid.UUID, error) {
 
 }
 
+// parseInterfaceToInt is a utility value to try and cast an interface to an int
+// it first attempts to parse the value directly to a int, and then while try to parse a string to int
+// If neither is possible, it will return -1 and an error
+func parseInterfaceToInt(val interface{}) (int, error) {
+	intKey, isInt := val.(int)
+	if isInt {
+		return intKey, nil
+	}
+
+	stringKey, isString := val.(string)
+	if isString {
+		parsedInt, err := strconv.Atoi(stringKey)
+		if err != nil {
+			return -1, fmt.Errorf("unable to parse string to Int. err %w", err)
+		}
+		return parsedInt, nil
+	}
+
+	return -1, fmt.Errorf("there was an issue casting the provided value (%v) to Int. It is of type %T", val, val)
+
+}
+
 // getOperationalSolutionForeignKeyReference returns a translation for an operational solution foreign key reference
 func getOperationalSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
 	// cast interface to UUID
@@ -117,19 +146,66 @@ func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Stor
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
-		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the operational solution reference. err %w", err)
+		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the plan document reference. err %w", err)
 	}
 	logger := appcontext.ZLogger(ctx)
 
 	// get the document
 	document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, uuidKey)
 	if err != nil {
-		return "", fmt.Errorf("there was an issue translating the operational solution foreign key reference. err %w", err)
+		return "", fmt.Errorf("there was an issue translating the plan document foreign key reference. err %w", err)
 	}
 
 	if document == nil {
-		return "", fmt.Errorf("the solution for %s was not returned for this foreign key translation", uuidKey)
+		return "", fmt.Errorf("the plan document for %s was not returned for this foreign key translation", uuidKey)
 	}
 
+	//Changes: (fk) Revisit this, do we need to return something besides FileName? Perhaps a link? Name is probably good, but verify
+
 	return document.FileName, nil
+}
+func getModelPlanForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+	// cast interface to UUID
+	uuidKey, err := parseInterfaceToUUID(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the model plan reference. err %w", err)
+	}
+	logger := appcontext.ZLogger(ctx)
+
+	// get the plan
+	plan, err := store.ModelPlanGetByID(store, logger, uuidKey)
+
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the model plan foreign key reference. err %w", err)
+	}
+
+	if plan == nil {
+		return "", fmt.Errorf("the model plan for %s was not returned for this foreign key translation", uuidKey)
+	}
+
+	return plan.ModelName, nil
+}
+
+func getExistingModelForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+	// cast interface to int
+	id, err := parseInterfaceToInt(key)
+	if err != nil {
+		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the existing model reference. err %w", err)
+	}
+	logger := appcontext.ZLogger(ctx)
+
+	// get the plan
+
+	existingModel, err := storage.ExistingModelGetByID(store, logger, id)
+
+	if err != nil {
+		return "", fmt.Errorf("there was an issue translating the existing model foreign key reference. err %w", err)
+	}
+
+	if existingModel == nil {
+		return "", fmt.Errorf("the existing model for %v was not returned for this foreign key translation", id)
+	}
+
+	//Changes: (fk) is this the correct value to translate to here?
+	return existingModel.ModelName, nil
 }
