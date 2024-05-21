@@ -106,9 +106,10 @@ export const Header = ({ children }: HeaderProps) => {
         className={classnames('usa-header mint-header', {
           'bg-primary-darker': isLanding,
           'shadow-2':
-            pathname === '/pre-decisional-notice' ||
-            pathname === '/signin' ||
-            isMobile
+            !isLanding &&
+            (pathname === '/pre-decisional-notice' ||
+              pathname === '/signin' ||
+              isMobile)
         })}
         role="banner"
         ref={navbarRef}

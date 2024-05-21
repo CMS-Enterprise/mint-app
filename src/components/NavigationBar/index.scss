@@ -7,7 +7,10 @@
 
 .usa-nav__primary-item {
   .mint-nav {
-    display: flex;
+    @media (min-width: $desktop) {
+      display: flex;
+    }
+
 
     &__item {
       display: flex;
@@ -24,15 +27,17 @@
 
       &:hover {
         &:after {
-          background-color: $mint-blue;
-          border-radius: 0;
-          content: "";
-          display: block;
-          position: absolute;
-          height: 0.25rem;
-          left: 1rem;
-          right: 1rem;
-          bottom: 0;
+          @media (min-width: $desktop) {
+            background-color: $mint-blue;
+            border-radius: 0;
+            content: "";
+            display: block;
+            position: absolute;
+            height: 0.25rem;
+            left: 1rem;
+            right: 1rem;
+            bottom: 0;
+          }
         }
       }
     }
@@ -69,13 +74,19 @@
       &:after {
         background-color: $mint-blue;
         border-radius: 0;
-        content: "";
+        content: '';
         display: block;
         position: absolute;
-        height: 0.25rem;
         left: 1rem;
         right: 1rem;
+        height: 0.25rem;
         bottom: 0;
+
+        @media (max-width: $desktop) {
+          height: 1.5rem;
+          top: 0.8rem;
+          left: 0;
+        }
       }
     }
   }
@@ -91,7 +102,6 @@
         }
       }
     }
-    // dont have these styles if it is desktop
 
     &:first-child {
       a {
