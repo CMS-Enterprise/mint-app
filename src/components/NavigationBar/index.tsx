@@ -155,12 +155,10 @@ const NavigationBar = ({
           onClick={() => expandMobileSideNav(false)}
           mobileExpanded={isMobile}
           aria-label="Primary navigation"
-          className={classNames(
-            {
-              'navigation-link': flags.notificationsEnabled
-            },
-            'width-full'
-          )}
+          className={classNames({
+            'navigation-link': flags.notificationsEnabled,
+            'width-full': !isMobile
+          })}
           items={navItems}
         />
       </GridContainer>
