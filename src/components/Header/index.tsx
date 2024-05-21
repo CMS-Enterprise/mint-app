@@ -31,12 +31,14 @@ export const Header = ({ children }: HeaderProps) => {
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
-  const isLanding: boolean = pathname === '/' && !authState?.isAuthenticated;
+  const isLoggedIn = authState?.isAuthenticated;
+
+  const isLanding: boolean = pathname === '/' && !isLoggedIn;
   const isGetAccess: boolean = pathname === '/how-to-get-access';
 
   useEffect(() => {
     let isMounted = true;
-    if (authState?.isAuthenticated) {
+    if (isLoggedIn) {
       oktaAuth.getUser().then((info: any) => {
         if (isMounted) {
           setUserName(info.name);
@@ -47,7 +49,7 @@ export const Header = ({ children }: HeaderProps) => {
     return () => {
       isMounted = false;
     };
-  }, [authState, oktaAuth]);
+  }, [isLoggedIn, oktaAuth]);
 
   useEffect(() => {
     const handleClick = (e: Event) => {
@@ -131,7 +133,7 @@ export const Header = ({ children }: HeaderProps) => {
             </em>
           </Link>
         </div>
-        {authState?.isAuthenticated ? (
+        {isLoggedIn ? (
           <div>
             <div className="navbar--container mint-nav__user">
               <div className="mint-header__user">{userName}</div>
@@ -178,7 +180,7 @@ export const Header = ({ children }: HeaderProps) => {
         )}
       </div>
 
-      {authState?.isAuthenticated && pathname !== '/pre-decisional-notice' && (
+      {isLoggedIn && pathname !== '/pre-decisional-notice' && (
         <NavigationBar
           toggle={setIsMobileSideNavExpanded}
           signout={signout}
@@ -196,7 +198,7 @@ export const Header = ({ children }: HeaderProps) => {
       <div ref={mobileSideNav} className={mobileSideNavClasses}>
         <div className="usa-nav__inner">
           {children}
-          {authState?.isAuthenticated ? (
+          {isLoggedIn ? (
             <NavigationBar
               mobile
               toggle={setIsMobileSideNavExpanded}
