@@ -78,7 +78,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
           questionType={change.questionType}
         />
 
-        {change.oldTranslated && (
+        {change.old && (
           <>
             {changeType !== DatabaseOperation.DELETE && (
               <div className="text-bold padding-y-105">
@@ -208,6 +208,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
   const uploadAudit: boolean =
     changeRecordType === 'CR update' ||
     changeRecordType === 'TDL update' ||
+    changeRecordType === 'Subtask update' ||
     changeRecordType === 'Document update';
 
   const showMoreData: boolean =
@@ -377,6 +378,32 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                     action: t(`auditUpdateTye.${changeRecord.action}`),
                     crTdlName,
                     toFrom: t(`toFromIn.${changeRecord.action}`),
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {changeRecordType === 'Subtask update' &&
+            (() => {
+              const subtaskChange = (actionType: DatabaseOperation) =>
+                actionType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
+
+              const subtaskName = changeRecord.translatedFields.find(
+                field => field.fieldName === 'name'
+              )?.[subtaskChange(changeRecord.action)];
+
+              return (
+                <Trans
+                  i18nKey="changeHistory:subtaskUpdate"
+                  values={{
+                    action: t(`auditUpdateTye.${changeRecord.action}`),
+                    subtaskName,
+                    solutionName: 'Temp Solution',
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}

@@ -49,6 +49,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
+import dirtyInput from 'utils/formDiff';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -133,12 +134,23 @@ const BasicsContent = () => {
           return false;
         }
 
+        const { id: updateId } = formikRef?.current?.initialValues;
+        const basicsId = formikRef?.current?.values.basics.id;
+
+        const changes = dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        );
+
+        const basicsChanges = dirtyInput(
+          formikRef?.current?.initialValues.basics,
+          formikRef?.current?.values.basics
+        );
+
         const {
-          id: updateId,
           modelName: updateModelName,
-          abbreviation: updateAbbreviation,
-          basics: updateBasics
-        } = formikRef.current?.values;
+          abbreviation: updateAbbreviation
+        } = changes;
 
         update({
           variables: {
@@ -147,15 +159,8 @@ const BasicsContent = () => {
               modelName: updateModelName,
               abbreviation: updateAbbreviation
             },
-            basicsId: updateBasics.id,
-            basicsChanges: {
-              demoCode: updateBasics.demoCode,
-              amsModelID: updateBasics.amsModelID,
-              modelCategory: updateBasics.modelCategory,
-              additionalModelCategories: updateBasics.additionalModelCategories,
-              cmsCenters: updateBasics.cmsCenters,
-              cmmiGroups: updateBasics.cmmiGroups
-            }
+            basicsId,
+            basicsChanges
           }
         })
           .then(response => {

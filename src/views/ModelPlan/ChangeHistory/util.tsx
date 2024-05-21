@@ -18,6 +18,7 @@ export type ChangeType =
   | 'Document update'
   | 'CR update'
   | 'TDL update'
+  | 'Subtask update'
   | 'Operational need create'
   | 'Standard update';
 
@@ -259,6 +260,10 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
 
   if (change.tableName === 'plan_tdl') {
     return 'TDL update';
+  }
+
+  if (change.tableName === 'operational_solution_subtask') {
+    return 'Subtask update';
   }
 
   // If the change is an operational need create/no translatedFields, return 'Operational need create'
