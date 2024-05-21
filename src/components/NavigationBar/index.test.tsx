@@ -54,6 +54,7 @@ describe('The NavigationBar component', () => {
         <MockedProvider mocks={notificationsMock} addTypename={false}>
           <NavigationBar
             expandMobileSideNav={() => !null}
+            isMobile
             signout={() => null}
             userName="A11Y"
           />
@@ -70,6 +71,7 @@ describe('The NavigationBar component', () => {
         <MockedProvider mocks={notificationsMock} addTypename={false}>
           <NavigationBar
             expandMobileSideNav={() => !null}
+            isMobile
             signout={() => null}
             userName="A11Y"
           />
