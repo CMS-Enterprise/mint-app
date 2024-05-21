@@ -33,6 +33,10 @@ const SideNav = ({
     // `element` is the SectionWrapper component, everything below the ModelWarning
     const element = document.querySelector('#scroll-element')!;
 
+    if (!element) {
+      return;
+    }
+
     // Find the margin-top value of the element
     const marginTopValue = parseFloat(
       window.getComputedStyle(element).marginTop
