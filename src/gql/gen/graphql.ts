@@ -475,7 +475,9 @@ export type ExistingModelLink = {
 /** Represents existing model link translation data */
 export type ExistingModelLinkTranslation = {
   __typename: 'ExistingModelLinkTranslation';
+  currentModelPlanID: TranslationField;
   existingModelID: TranslationField;
+  fieldName: TranslationFieldWithOptions;
 };
 
 export type ExistingModelLinks = {

@@ -24,6 +24,7 @@ import {
   DiscussionUserRole,
   DocumentType,
   EvaluationApproachType,
+  ExisitingModelLinkFieldType,
   ExistingModelLinkTranslation,
   FrequencyType,
   FundingSource,
@@ -1124,6 +1125,8 @@ export type TranslationDocumentSolutionLink = {
 // Existing Model Link - Change History purposes only
 export type TranslationExistingModelLinkForm = {
   existingModelID: TranslationFieldProperties;
+  currentModelPlanID: TranslationFieldProperties;
+  fieldName: TranslationFieldPropertiesWithOptions<ExisitingModelLinkFieldType>;
 };
 
 type TranslationExistingModelLinkGQL = Omit<
