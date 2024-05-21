@@ -280,7 +280,8 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
             />
           )}
 
-          {changeRecordType === 'Task list status update' && (
+          {(changeRecordType === 'Task list status update' ||
+            changeRecordType === 'Status update') && (
             <Trans
               i18nKey="changeHistory:taskStatusUpdate"
               values={{
