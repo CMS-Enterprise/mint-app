@@ -45,9 +45,10 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
     <div className="margin-bottom-2" key={change.id}>
       <div className="display-flex">
         <span className="text-bold margin-right-05">
+          {/* If change is not a note */}
           {change.questionType !== TranslationQuestionType.NOTE &&
             change.fieldNameTranslated}
-
+          {/* If the change is note type and pertains to multiple questions */}
           {change.referenceLabel &&
           change.questionType === TranslationQuestionType.NOTE ? (
             <span className="text-bold">
@@ -55,22 +56,30 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
               <span className="text-italic">{change.referenceLabel}</span>
             </span>
           ) : (
-            <></>
-          )}
+            <span />
+          )}{' '}
+          {(() => {
+            // If the change is an insert, render created text rather than answered/updated, etc.
+            if (tableName === 'operational_need' && changeType === 'INSERT') {
+              return (
+                <span className="text-normal">{t(`changeType.CREATED`)}</span>
+              );
+            }
+            // Render the change type - answered, removed, updated
+            if (changeType !== DatabaseOperation.DELETE) {
+              return (
+                <span className="text-normal">
+                  {t(`changeType.${change.changeType}`)}
+                </span>
+              );
+            }
+            return <span />;
+          })()}
         </span>
-
-        {(() => {
-          if (tableName === 'operational_need' && changeType === 'INSERT') {
-            return <>{t(`changeType.CREATED`)}</>;
-          }
-          if (changeType !== DatabaseOperation.DELETE) {
-            return <>{t(`changeType.${change.changeType}`)}</>;
-          }
-          return <></>;
-        })()}
       </div>
 
       <div className="change-record__answer margin-y-1">
+        {/* Renders the new value of a change record */}
         <RenderValue
           value={change.newTranslated}
           dataType={change.dataType}
@@ -78,6 +87,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
           questionType={change.questionType}
         />
 
+        {/* Renders the old value of a change record */}
         {change.old && (
           <>
             {changeType !== DatabaseOperation.DELETE && (
@@ -97,6 +107,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
           </>
         )}
 
+        {/* Render addtional information of the new answers have questions that are no longer applicable */}
         {!!change.notApplicableQuestions?.length && (
           <>
             <div className="text-bold padding-y-105">{t('notApplicable')}</div>
@@ -127,6 +138,7 @@ const RenderValue = ({
 }) => {
   const { t } = useTranslation('changeHistory');
 
+  // Contains the label and parent question if the change record is a follow-up/OTHER type
   const parentQuestion =
     referenceLabel && questionType === TranslationQuestionType.OTHER ? (
       <div className="text-italic padding-bottom-1">
@@ -177,7 +189,9 @@ const ChangedQuestion = ({
 }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
+  // If the change contains a reference label, render the field name with the reference label
   if (change.referenceLabel) {
+    // Type OTHER
     if (change.questionType === TranslationQuestionType.OTHER) {
       return (
         <>
@@ -189,6 +203,7 @@ const ChangedQuestion = ({
         </>
       );
     }
+    // Type NOTE
     if (change.questionType === TranslationQuestionType.NOTE) {
       return (
         <span>
@@ -199,6 +214,7 @@ const ChangedQuestion = ({
     }
   }
 
+  // Normal translated field
   return <>{change.fieldNameTranslated}</>;
 };
 
@@ -208,8 +224,10 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
   const [isOpen, setOpen] = useState<boolean>(false);
 
+  // Identify the type of change record
   const changeRecordType = identifyChangeType(changeRecord);
 
+  // Change record types that generate table insertions into the db.  These types should be expanded to show more data
   const uploadAudit: boolean =
     changeRecordType === 'CR update' ||
     changeRecordType === 'TDL update' ||
@@ -218,9 +236,11 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
     changeRecordType === 'Operational need update' ||
     changeRecordType === 'Document update';
 
+  // Determine if the change record should be expanded to show more data
   const showMoreData: boolean =
     uploadAudit || changeRecordType === 'Standard update';
 
+  // Determines if the change record should show a list of translated fields before expanding
   const renderList: boolean = changeRecordType === 'Standard update';
 
   return (
