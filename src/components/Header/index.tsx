@@ -188,7 +188,6 @@ export const Header = ({ children }: HeaderProps) => {
         />
       )}
 
-      <div className="grid-container mint-header--desktop ">{children}</div>
       <div
         className={classnames('usa-overlay', {
           'is-visible': isMobileSideNavExpanded
@@ -197,7 +196,6 @@ export const Header = ({ children }: HeaderProps) => {
       {/* Mobile Display */}
       <div ref={mobileSideNav} className={mobileSideNavClasses}>
         <div className="usa-nav__inner">
-          {children}
           {isLoggedIn ? (
             <NavigationBar
               mobile
