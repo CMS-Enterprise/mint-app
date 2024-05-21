@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -54,6 +55,11 @@ func (r *newDiscussionRepliedActivityMetaResolver) Discussion(ctx context.Contex
 func (r *newDiscussionRepliedActivityMetaResolver) Reply(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.DiscussionReply, error) {
 	logger := appcontext.ZLogger(ctx)
 	return DiscussionReplyGetByID(ctx, r.store, logger, obj.ReplyID)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
+func (r *newModelPlanActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.NewModelPlanActivityMeta) (*models.ModelPlan, error) {
+	panic(fmt.Errorf("not implemented: ModelPlan - modelPlan"))
 }
 
 // ModelPlan is the resolver for the modelPlan field.
@@ -107,6 +113,11 @@ func (r *Resolver) NewDiscussionRepliedActivityMeta() generated.NewDiscussionRep
 	return &newDiscussionRepliedActivityMetaResolver{r}
 }
 
+// NewModelPlanActivityMeta returns generated.NewModelPlanActivityMetaResolver implementation.
+func (r *Resolver) NewModelPlanActivityMeta() generated.NewModelPlanActivityMetaResolver {
+	return &newModelPlanActivityMetaResolver{r}
+}
+
 // TaggedInDiscussionReplyActivityMeta returns generated.TaggedInDiscussionReplyActivityMetaResolver implementation.
 func (r *Resolver) TaggedInDiscussionReplyActivityMeta() generated.TaggedInDiscussionReplyActivityMetaResolver {
 	return &taggedInDiscussionReplyActivityMetaResolver{r}
@@ -122,5 +133,6 @@ type addedAsCollaboratorMetaResolver struct{ *Resolver }
 type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
 type modelPlanSharedActivityMetaResolver struct{ *Resolver }
 type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }
+type newModelPlanActivityMetaResolver struct{ *Resolver }
 type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
 type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }
