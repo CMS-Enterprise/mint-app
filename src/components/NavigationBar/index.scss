@@ -1,4 +1,5 @@
 @use 'colors' as *;
+@use 'viewports' as *;
 
 .usa-nav {
     margin-left: -1em
@@ -6,7 +7,7 @@
 
 .usa-nav__primary-item {
 
-   
+
     .mint-nav {
         display: flex;
 
@@ -20,13 +21,13 @@
 
         &__link {
             color: #565C65;
-            padding: 1em;  
-            
+            padding: 1em;
+
         }
 
         &__notification {
             color: #565C65;
-            padding: 1em; 
+            padding: 1em;
         }
 
         &__current {
@@ -40,10 +41,10 @@
             margin-top: 2em
         };
 
-        a {   
+        a {
             &:visited {
                 color: #565C65
-            }             
+            }
         }
 
         .usa-current {
@@ -60,13 +61,26 @@
     .usa-nav__primary-item {
         &:last-child {
             margin-left: auto;
+            a {
+                  @media screen and (max-width: $tablet) {
+                      margin-right: -16px;
+                  }
+            }
         }
-    
+        // dont have these styles if it is desktop
+
+        &:first-child {
+            a {
+                @media screen and (max-width: $tablet) {
+                    margin-left: -16px;
+                }
+            }
+        }
     }
 }
 
 .align-right {
-    margin-left: auto;  
+    margin-left: auto;
 }
 
 .border-top-light {
