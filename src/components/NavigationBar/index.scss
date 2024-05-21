@@ -97,7 +97,7 @@
     &:last-child {
       margin-left: auto;
       a {
-        @media screen and (max-width: $tablet) {
+        @media screen and (min-width: $desktop) {
           margin-right: -16px;
         }
       }
@@ -105,7 +105,7 @@
 
     &:first-child {
       a {
-        @media screen and (max-width: $tablet) {
+        @media screen and (min-width: $desktop) {
           margin-left: -16px;
         }
       }
