@@ -146,9 +146,7 @@ const NavigationBar = ({
     <nav
       aria-label={t('header:navigation')}
       data-testid="navigation-bar"
-      className={classNames(className, {
-        'border-top-light': !isMobile
-      })}
+      className={className}
     >
       <GridContainer>
         <PrimaryNav
