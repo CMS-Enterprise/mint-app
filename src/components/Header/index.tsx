@@ -104,7 +104,11 @@ export const Header = ({ children }: HeaderProps) => {
     <>
       <header
         className={classnames('usa-header mint-header', {
-          'bg-primary-darker shadow-none': isLanding
+          'bg-primary-darker': isLanding,
+          'shadow-2':
+            pathname === '/pre-decisional-notice' ||
+            pathname === '/signin' ||
+            isMobile
         })}
         role="banner"
         ref={navbarRef}
@@ -191,7 +195,7 @@ export const Header = ({ children }: HeaderProps) => {
           <div className="usa-nav__inner">
             {isLoggedIn ? (
               <NavigationBar
-                mobile
+                isMobile={isMobile}
                 toggle={setIsMobileSideNavExpanded}
                 signout={signout}
                 userName={userName}
@@ -209,7 +213,7 @@ export const Header = ({ children }: HeaderProps) => {
           toggle={setIsMobileSideNavExpanded}
           signout={signout}
           userName={userName}
-          className="position-sticky top-0 z-top bg-white shadow-2"
+          className="position-sticky top-0 z-100 bg-white shadow-2"
         />
       )}
     </>

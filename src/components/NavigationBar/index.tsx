@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { Icon, PrimaryNav } from '@trussworks/react-uswds';
+import { GridContainer, Icon, PrimaryNav } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useGetPollNotificationsQuery } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -9,7 +9,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import './index.scss';
 
 export type NavigationProps = {
-  mobile?: boolean;
+  isMobile?: boolean;
   signout: () => void;
   toggle: (active: boolean) => void;
   userName: string;
@@ -32,7 +32,7 @@ export const navLinks = () => [
 ];
 
 const NavigationBar = ({
-  mobile,
+  isMobile,
   signout,
   toggle,
   userName,
@@ -74,8 +74,8 @@ const NavigationBar = ({
         to="/notifications"
         activeClassName="usa-current"
         className={classNames(
-          { 'align-right': !mobile },
-          'mint-nav__link margin-right-neg-4 display-flex flex-align-center'
+          { 'align-right': !isMobile },
+          'mint-nav__link  display-flex flex-align-center'
         )}
         onClick={() => toggle(false)}
         data-testid="navmenu__notification"
@@ -138,7 +138,7 @@ const NavigationBar = ({
     </div>
   );
 
-  const navItems = mobile
+  const navItems = isMobile
     ? navItemsWithNotification.concat(userLinks)
     : navItemsWithNotification;
 
@@ -146,13 +146,14 @@ const NavigationBar = ({
     <nav
       aria-label={t('header:navigation')}
       data-testid="navigation-bar"
-      // className="border-top-light"
-      className={classNames('border-top-light', className)}
+      className={classNames(className, {
+        'border-top-light': !isMobile
+      })}
     >
-      <div className="grid-container">
+      <GridContainer>
         <PrimaryNav
           onClick={() => toggle(false)}
-          mobileExpanded={mobile}
+          mobileExpanded={isMobile}
           aria-label="Primary navigation"
           className={classNames(
             {
@@ -162,7 +163,7 @@ const NavigationBar = ({
           )}
           items={navItems}
         />
-      </div>
+      </GridContainer>
     </nav>
   );
 };
