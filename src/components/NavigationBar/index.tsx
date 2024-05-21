@@ -12,7 +12,7 @@ import './index.scss';
 
 export type NavigationProps = {
   signout: () => void;
-  toggle: (active: boolean) => void;
+  expandMobileSideNav: (active: boolean) => void;
   userName: string;
   className?: string;
 };
@@ -34,7 +34,7 @@ export const navLinks = () => [
 
 const NavigationBar = ({
   signout,
-  toggle,
+  expandMobileSideNav,
   userName,
   className
 }: NavigationProps) => {
@@ -57,7 +57,7 @@ const NavigationBar = ({
         to={route.link}
         activeClassName="usa-current"
         className="mint-nav__link"
-        onClick={() => toggle(false)}
+        onClick={() => expandMobileSideNav(false)}
         exact={route.link === '/'}
       >
         <em
@@ -79,7 +79,7 @@ const NavigationBar = ({
           { 'align-right': !isMobile },
           'mint-nav__link  display-flex flex-align-center'
         )}
-        onClick={() => toggle(false)}
+        onClick={() => expandMobileSideNav(false)}
         data-testid="navmenu__notification"
       >
         <div
@@ -154,7 +154,7 @@ const NavigationBar = ({
     >
       <GridContainer>
         <PrimaryNav
-          onClick={() => toggle(false)}
+          onClick={() => expandMobileSideNav(false)}
           mobileExpanded={isMobile}
           aria-label="Primary navigation"
           className={classNames(

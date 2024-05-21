@@ -195,7 +195,7 @@ export const Header = ({ children }: HeaderProps) => {
           <div className="usa-nav__inner">
             {isLoggedIn ? (
               <NavigationBar
-                toggle={setIsMobileSideNavExpanded}
+                expandMobileSideNav={setIsMobileSideNavExpanded}
                 signout={signout}
                 userName={userName}
               />
@@ -209,10 +209,10 @@ export const Header = ({ children }: HeaderProps) => {
       </header>
       {isLoggedIn && pathname !== '/pre-decisional-notice' && (
         <NavigationBar
-          toggle={setIsMobileSideNavExpanded}
+          className="position-sticky top-0 z-100 bg-white shadow-2"
+          expandMobileSideNav={setIsMobileSideNavExpanded}
           signout={signout}
           userName={userName}
-          className="position-sticky top-0 z-100 bg-white shadow-2"
         />
       )}
     </>
