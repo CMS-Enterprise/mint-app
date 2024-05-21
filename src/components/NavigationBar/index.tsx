@@ -16,7 +16,7 @@ export type NavigationProps = {
   className?: string;
 };
 
-export const navLinks = () => [
+export const navLinks = [
   {
     link: '/',
     label: 'home'
@@ -49,7 +49,7 @@ const NavigationBar = ({
   const hasNotifications = !!data?.currentUser.notifications
     .numUnreadNotifications;
 
-  const primaryLinks = navLinks().map(route => (
+  const primaryLinks = navLinks.map(route => (
     <div className="mint-nav" key={route.label}>
       <NavLink
         to={route.link}

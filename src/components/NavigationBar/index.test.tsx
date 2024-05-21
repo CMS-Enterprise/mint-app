@@ -81,7 +81,7 @@ describe('The NavigationBar component', () => {
 
     const { t } = useTranslation();
 
-    navLinks().forEach(route => {
+    navLinks.forEach(route => {
       const linkTitle = t(`header:${route.label}`);
       expect(getByText(linkTitle)).toBeInTheDocument();
     });
