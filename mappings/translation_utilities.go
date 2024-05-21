@@ -49,7 +49,6 @@ func GetTranslation(tableName string) (Translation, error) {
 		return ExistingModelLinkTranslation()
 	case "plan_document_solution_link":
 		return PlanDocumentSolutionLinkTranslation()
-
 	default:
 		// ut := UnknownTranslation{
 		// 	tableName: tableName,

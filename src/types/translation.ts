@@ -1105,6 +1105,7 @@ export type TranslationOperationalSolutionSubtasks = {
 // Document Solution Link - Change History purposes only
 export type TranslationDocumentSolutionLinkForm = {
   solutionID: TranslationFieldProperties;
+  documentID: TranslationFieldProperties;
 };
 
 type TranslationDocumentSolutionLinkGQL = Omit<

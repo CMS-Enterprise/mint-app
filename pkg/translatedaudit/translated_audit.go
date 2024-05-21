@@ -107,7 +107,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 
 	for fieldName, field := range audit.Fields {
 		//  Changes: (Translations) consider removing plan from the function
-		transField, wasTranslated, tErr := translateField(store, fieldName, field, audit, actorAccount, operation, plan, translationMap)
+		transField, wasTranslated, tErr := translateField(ctx, store, fieldName, field, audit, actorAccount, operation, plan, translationMap)
 
 		if tErr != nil {
 			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, plan.ModelName, err)
@@ -132,6 +132,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 
 // translateField translates a given audit field. It returns the translated audit, as well as a bool to signify if it was translated or not
 func translateField(
+	ctx context.Context,
 	store *storage.Store,
 	fieldName string,
 	field models.AuditField,
@@ -210,12 +211,12 @@ func translateField(
 		translatedOld = translateValue(old, options)
 		translatedNew = translateValue(new, options)
 	} else if hasTableReference {
-		translatedOldFK, err := translateForeignKey(store, old, tableReference)
+		translatedOldFK, err := translateForeignKey(ctx, store, old, tableReference)
 		if err != nil {
 			return nil, false, err
 		}
 		translatedOld = translatedOldFK
-		translatedNewFK, err := translateForeignKey(store, new, tableReference)
+		translatedNewFK, err := translateForeignKey(ctx, store, new, tableReference)
 		if err != nil {
 			return nil, false, err
 		}

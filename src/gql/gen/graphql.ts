@@ -1766,6 +1766,7 @@ export type PlanDocumentSolutionLink = {
 /** Represents document solution link translation data */
 export type PlanDocumentSolutionLinkTranslation = {
   __typename: 'PlanDocumentSolutionLinkTranslation';
+  documentID: TranslationField;
   solutionID: TranslationField;
 };
 

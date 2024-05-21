@@ -7,6 +7,7 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/upload"
 
 	"github.com/google/uuid"
@@ -67,6 +68,28 @@ func (s *Store) PlanDocumentCreate(
 	}
 
 	return retDoc, nil
+}
+
+// PlanDocumentGetByIDNoS3Check gets a plan document object by id
+func PlanDocumentGetByIDNoS3Check(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	id uuid.UUID,
+) (*models.PlanDocument, error) {
+
+	stmt, err := np.PrepareNamed(planDocumentGetByIDSQL)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	var document models.PlanDocument
+	err = stmt.Get(&document, utilitySQL.CreateIDQueryMap(id))
+	if err != nil {
+		return nil, err
+	}
+
+	return &document, nil
 }
 
 // PlanDocumentRead reads a plan document object by id

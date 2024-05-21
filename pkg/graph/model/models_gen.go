@@ -233,6 +233,7 @@ type PlanDocumentLinkInput struct {
 // Represents document solution link translation data
 type PlanDocumentSolutionLinkTranslation struct {
 	SolutionID models.TranslationField `json:"solutionID" db:"solution_id"`
+	DocumentID models.TranslationField `json:"documentID" db:"document_id"`
 }
 
 // Represents plan document translation data
