@@ -82,7 +82,9 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
           <>
             {changeType !== DatabaseOperation.DELETE && (
               <div className="text-bold padding-y-105">
-                {t('previousAnswer')}
+                {change.questionType === TranslationQuestionType.NOTE
+                  ? t('previousNote')
+                  : t('previousAnswer')}
               </div>
             )}
             <RenderValue
@@ -90,6 +92,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
               dataType={change.dataType}
               referenceLabel={change.referenceLabel}
               questionType={change.questionType}
+              previous={!!change.old}
             />
           </>
         )}
@@ -113,12 +116,14 @@ const RenderValue = ({
   value,
   dataType,
   referenceLabel,
-  questionType
+  questionType,
+  previous = false
 }: {
   value: string | string[];
   dataType: TranslationDataType | null | undefined;
   referenceLabel?: string | null | undefined;
   questionType?: TranslationQuestionType | null | undefined;
+  previous?: boolean;
 }) => {
   const { t } = useTranslation('changeHistory');
 
@@ -158,7 +163,7 @@ const RenderValue = ({
 
   return (
     <>
-      {parentQuestion}
+      {!previous && parentQuestion}
       <span>{value}</span>
     </>
   );
@@ -405,7 +410,26 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                   values={{
                     action: t(`auditUpdateTye.${changeRecord.action}`),
                     subtaskName,
-                    solutionName: 'Temp Solution',
+                    solutionName: 'Temp Solution', // TODO: Replace with actual solution name
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {changeRecordType === 'Document solution link update' &&
+            (() => {
+              return (
+                <Trans
+                  i18nKey="changeHistory:documentSolutionLinkUpdate"
+                  values={{
+                    action: t(`documentLinkType.${changeRecord.action}`),
+                    documentName: 'Temp document', // TODO: replace with actual document name
+                    solutionName: 'Temp solution', // TODO: replace with actual solution name
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}
@@ -422,8 +446,8 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                 <Trans
                   i18nKey="changeHistory:solutionCreate"
                   values={{
-                    solutionName: 'Temp solution',
-                    needName: 'Temp need',
+                    solutionName: 'Temp solution', // TODO: replace with actual solution name
+                    needName: 'Temp need', // TODO: replace with actual need name
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}
@@ -441,8 +465,8 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                   i18nKey="changeHistory:solutionUpdate"
                   values={{
                     action: t(`auditUpdateTye.${changeRecord.action}`),
-                    solutionName: 'Temp Solution',
-                    needName: 'Temp need',
+                    solutionName: 'Temp Solution', // TODO: replace with actual solution name
+                    needName: 'Temp need', // TODO: replace with actual need name
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}

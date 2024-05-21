@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import { useGetChangeHistoryQuery } from 'gql/gen/graphql';
 
@@ -16,8 +16,19 @@ import NotFound from 'views/NotFound';
 import ChangeRecord from './components/ChangeRecord';
 import { sortAllChanges } from './util';
 
+type LocationProps = {
+  state: {
+    from: string;
+  };
+  from?: string;
+};
+
 const ChangeHistory = () => {
   const { t } = useTranslation('changeHistory');
+
+  const { state } = useLocation<LocationProps>();
+
+  const fromReadView = state?.from === 'readview';
 
   const { modelID } = useParams<{
     modelID: string;
@@ -64,11 +75,13 @@ const ChangeHistory = () => {
         <GridContainer>
           <div className="display-flex flex-justify">
             <UswdsReactLink
-              to={`/models/${modelID}/task-list`}
+              to={`/models/${modelID}/${
+                fromReadView ? 'read-only' : 'task-list'
+              }`}
               className="display-flex flex-align-center margin-bottom-4"
             >
               <Icon.ArrowBack className="text-primary margin-right-1" />
-              {t('back')}
+              {fromReadView ? t('backToReadView') : t('back')}
             </UswdsReactLink>
           </div>
 

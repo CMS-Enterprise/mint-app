@@ -2,6 +2,7 @@ const changeHistory = {
   heading: 'Change history',
   subheading: 'for {{modelName}}',
   back: 'Back to the task list',
+  backToReadView: 'Back to the Read view',
   change:
     'made {{count}} change in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   change_other:
@@ -26,6 +27,8 @@ const changeHistory = {
     '{{action}} {{crTdlName}} {{toFrom}} FFS CRs and TDLs <datetime>on {{date}} at {{time}}</datetime>',
   subtaskUpdate:
     '{{action}} {{subtaskName}} for {{solutionName}} <datetime>on {{date}} at {{time}}</datetime>',
+  documentSolutionLinkUpdate:
+    '{{documentName}} {{action}} {{toFrom}} {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   solutionCreate:
     'addded solution {{solutionName}} to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   solutionUpdate:
@@ -69,6 +72,10 @@ const changeHistory = {
     removed: 'removed',
     added: 'added'
   },
+  documentLinkType: {
+    INSERT: 'connected',
+    DELETE: 'removed'
+  },
   teamChangeType: {
     ANSWERED: 'added',
     REMOVED: 'removed',
@@ -81,6 +88,7 @@ const changeHistory = {
     UPDATED: 'updated'
   },
   previousAnswer: 'Previous answer',
+  previousNote: 'Previous note',
   notApplicable:
     'Because of this change, the following question(s) are no longer applicable:',
   recentChanges: 'Recent changes',
