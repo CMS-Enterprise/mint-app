@@ -11,7 +11,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import GlobalClientFilter from 'components/TableFilter';
-import { formatDateUtc } from 'utils/date';
+import { formatDateUtc, formatTime } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
@@ -66,13 +66,16 @@ const ChangeHistory = () => {
         if (audit.actorName.toLowerCase().includes(lowerCaseQuery)) {
           return true;
         }
+
         if (
-          formatDateUtc(audit.date.replace(' ', 'T'), 'MM/dd/yyyy').includes(
-            lowerCaseQuery
-          )
+          formatDateUtc(audit.date.replace(' ', 'T'), 'MMMM d, yyyy')
+            .toLowerCase()
+            .includes(lowerCaseQuery) ||
+          formatTime(audit.date).toLowerCase().includes(lowerCaseQuery)
         ) {
           return true;
         }
+
         if (
           t(`sections:${audit.tableName}`)
             .toLowerCase()
@@ -80,6 +83,7 @@ const ChangeHistory = () => {
         ) {
           return true;
         }
+
         if (translatedFieldsMatchQuery.length > 0) {
           return true;
         }
