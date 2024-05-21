@@ -26,6 +26,10 @@ const changeHistory = {
     '{{action}} {{crTdlName}} {{toFrom}} FFS CRs and TDLs <datetime>on {{date}} at {{time}}</datetime>',
   subtaskUpdate:
     '{{action}} {{subtaskName}} for {{solutionName}} <datetime>on {{date}} at {{time}}</datetime>',
+  solutionCreate:
+    'addded solution {{solutionName}} to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+  solutionUpdate:
+    '{{action}} {{needName}} solution: {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   needUpdate:
     '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   sections: {

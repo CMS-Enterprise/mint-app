@@ -209,6 +209,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
     changeRecordType === 'CR update' ||
     changeRecordType === 'TDL update' ||
     changeRecordType === 'Subtask update' ||
+    changeRecordType === 'Operational solution update' ||
     changeRecordType === 'Operational need update' ||
     changeRecordType === 'Document update';
 
@@ -405,6 +406,43 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                     action: t(`auditUpdateTye.${changeRecord.action}`),
                     subtaskName,
                     solutionName: 'Temp Solution',
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {changeRecordType === 'Operational solution create' &&
+            (() => {
+              return (
+                <Trans
+                  i18nKey="changeHistory:solutionCreate"
+                  values={{
+                    solutionName: 'Temp solution',
+                    needName: 'Temp need',
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {changeRecordType === 'Operational solution update' &&
+            (() => {
+              return (
+                <Trans
+                  i18nKey="changeHistory:solutionUpdate"
+                  values={{
+                    action: t(`auditUpdateTye.${changeRecord.action}`),
+                    solutionName: 'Temp Solution',
+                    needName: 'Temp need',
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}

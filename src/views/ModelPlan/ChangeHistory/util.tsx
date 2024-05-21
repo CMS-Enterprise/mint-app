@@ -19,6 +19,8 @@ export type ChangeType =
   | 'CR update'
   | 'TDL update'
   | 'Subtask update'
+  | 'Operational solution create'
+  | 'Operational solution update'
   | 'Operational need create'
   | 'Operational need update'
   | 'Standard update';
@@ -265,6 +267,14 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
 
   if (change.tableName === 'operational_solution_subtask') {
     return 'Subtask update';
+  }
+
+  // If the change is an operational solution create/no translatedFields, return 'Operational solution create'
+  if (change.tableName === 'operational_solution') {
+    if (change.action === 'INSERT') {
+      return 'Operational solution create';
+    }
+    return 'Operational solution update';
   }
 
   // If the change is an operational need create/no translatedFields, return 'Operational need create'
