@@ -12,7 +12,8 @@ export type NavigationProps = {
   mobile?: boolean;
   signout: () => void;
   toggle: (active: boolean) => void;
-  userName?: string;
+  userName: string;
+  className?: string;
 };
 
 export const navLinks = () => [
@@ -34,7 +35,8 @@ const NavigationBar = ({
   mobile,
   signout,
   toggle,
-  userName
+  userName,
+  className
 }: NavigationProps) => {
   const { t } = useTranslation();
 
@@ -144,7 +146,8 @@ const NavigationBar = ({
     <nav
       aria-label={t('header:navigation')}
       data-testid="navigation-bar"
-      className="border-top-light"
+      // className="border-top-light"
+      className={classNames('border-top-light', className)}
     >
       <div className="grid-container">
         <PrimaryNav
