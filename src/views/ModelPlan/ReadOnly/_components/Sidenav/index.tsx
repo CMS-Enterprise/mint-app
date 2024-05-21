@@ -43,7 +43,7 @@ const SideNav = ({
     );
 
     // Find the top of the element
-    const { top } = element?.getBoundingClientRect()!;
+    const { top } = element?.getBoundingClientRect() || 0;
 
     // Calculate all the things
     const distanceFromTopOfPage =
