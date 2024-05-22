@@ -6,7 +6,7 @@ import { render, waitFor } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import { GetPollNotificationsDocument } from 'gql/gen/graphql';
 
-import { Header } from './index';
+import Header from './index';
 
 const notificationsMock = [
   {

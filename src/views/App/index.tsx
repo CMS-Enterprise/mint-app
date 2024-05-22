@@ -12,7 +12,6 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Footer from 'components/Footer';
 import Header from 'components/Header';
-import GaryHeader from 'components/Header/GaryHeader';
 import PageWrapper from 'components/PageWrapper';
 import { MessageProvider } from 'hooks/useMessage';
 import usePrevLocation from 'hooks/usePrevious';
@@ -255,8 +254,7 @@ const App = () => {
                               <TimeOutWrapper>
                                 <NavContextProvider>
                                   <PageWrapper>
-                                    {/* <Header /> */}
-                                    <GaryHeader />
+                                    <Header />
                                     <TaskListBannerAlert />
                                     <AppRoutes />
                                     <Footer />
