@@ -85,15 +85,4 @@ describe('The Header component', () => {
       });
     });
   });
-
-  test.skip('displays children', () => {
-    const component = shallow(
-      <MockedProvider mocks={notificationsMock} addTypename={false}>
-        <Header>
-          <div className="test-class-name" />
-        </Header>
-      </MockedProvider>
-    );
-    expect(component.find('.test-class-name').exists()).toBe(true);
-  });
 });

@@ -13,11 +13,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import './index.scss';
 
-type HeaderProps = {
-  children?: React.ReactNode | React.ReactNodeArray;
-};
-
-export const Header = ({ children }: HeaderProps) => {
+export const Header = () => {
   const { authState, oktaAuth } = useOktaAuth();
   const { pathname } = useLocation();
   const { t } = useTranslation();
@@ -91,10 +87,6 @@ export const Header = ({ children }: HeaderProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const mobileSideNavClasses = classnames('usa-nav', 'sidenav-mobile', {
-    'is-visible': isMobileSideNavExpanded
-  });
-
   const signout = () => {
     localStorage.removeItem(localAuthStorageKey);
     oktaAuth.signOut();
@@ -125,18 +117,20 @@ export const Header = ({ children }: HeaderProps) => {
           })}
         >
           <div
-            className={`usa-logo site-logo ${isMobile ? '' : 'margin-y-4'}`}
+            className={classnames('usa-logo site-logo', {
+              'margin-y-4': isMobile
+            })}
             id="logo"
           >
             <Link to="/">
-              <em
+              <span
                 className={classnames('usa-logo__text heading', {
                   'text-white': isLanding
                 })}
                 aria-label={t('header:returnHome')}
               >
                 {t('general:appName')}
-              </em>
+              </span>
             </Link>
           </div>
           {isLoggedIn ? (
@@ -192,7 +186,12 @@ export const Header = ({ children }: HeaderProps) => {
           })}
         />
         {/* Mobile Display */}
-        <div ref={mobileSideNav} className={mobileSideNavClasses}>
+        <div
+          ref={mobileSideNav}
+          className={classnames('usa-nav', 'sidenav-mobile', {
+            'is-visible': isMobileSideNavExpanded
+          })}
+        >
           <div className="usa-nav__inner">
             {isLoggedIn ? (
               <NavigationBar
