@@ -18,7 +18,6 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 
 	})
 
-	//Changes: (Testing) Create a unit test to fetch operational solution. We want to avoid calling the resolver package here to avoid an import cycle issue.
 	suite.Run("operational_solution returns an OperationalSolution", func() {
 		plan := suite.createModelPlan("test plan")
 		need := suite.createOperationalNeed(plan.ID, "To test operational solution translations")
