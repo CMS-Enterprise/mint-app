@@ -22,8 +22,12 @@
 
     &__link {
       color: #565c65;
-      padding: 1em;
+      padding: 1.25rem 1rem !important;
       position: relative;
+
+      @media screen and (min-width: $desktop) {
+        padding: 1rem
+      }
 
       &:hover {
         &:after {
@@ -84,8 +88,9 @@
 
         @media (max-width: $desktop) {
           height: 1.5rem;
-          top: 0.8rem;
+          top: 1rem;
           left: 0;
+          border-radius: 99rem;
         }
       }
     }
