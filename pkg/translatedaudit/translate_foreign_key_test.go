@@ -17,30 +17,34 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 	})
 
 	//Changes: (Testing) Create a unit test to fetch operational solution. We want to avoid calling the resolver package here to avoid an import cycle issue.
-	// suite.Run("operational_solution returns an OperationalSolution", func() {
+	suite.Run("operational_solution returns an OperationalSolution", func() {
+		plan := suite.createModelPlan("test plan")
+		need := suite.createOperationalNeed(plan.ID, "To test operational solution translations")
+		solName := "make a unit test"
+		sol := suite.createOperationalSolution(need.ID, solName)
 
-	// 	tableName := "operational_solution"
+		tableName := "operational_solution"
 
-	// 	translatedPrincipal, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal.UserAccount.ID.String(), tableName)
-	// 	suite.NoError(err)
-	// 	suite.EqualValues(suite.testConfigs.Principal.UserAccount.CommonName, translatedPrincipal)
+		translatedSolution, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, sol.ID.String(), tableName)
+		suite.NoError(err)
+		suite.EqualValues(solName, translatedSolution)
 
-	// })
+	})
 	suite.Run("unknown table returns an error", func() {
 
 		tableName := "unknown_fake_table"
-		translatedPrincipal, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal.UserAccount.ID.String(), tableName)
+		translation, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal.UserAccount.ID.String(), tableName)
 		suite.Error(err)
-		suite.EqualValues(uuid.Nil, translatedPrincipal)
+		suite.Nil(translation)
 
 	})
 
 	suite.Run("nil store returns an error", func() {
 
 		tableName := "user_account"
-		translatedPrincipal, err := translateForeignKey(suite.testConfigs.Context, nil, suite.testConfigs.Principal.UserAccount.ID.String(), tableName)
+		translation, err := translateForeignKey(suite.testConfigs.Context, nil, suite.testConfigs.Principal.UserAccount.ID.String(), tableName)
 		suite.Error(err)
-		suite.EqualValues(uuid.Nil, translatedPrincipal)
+		suite.Nil(translation)
 
 	})
 
