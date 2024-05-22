@@ -126,6 +126,18 @@ export const parseArray = (value: string | string[]) => {
   }
 };
 
+// Sorts the changes based on the sort option
+export const handleSortOptions = (
+  auditChanges: ChangeRecordType[],
+  sort: 'newest' | 'oldest'
+) => {
+  if (sort === 'newest') {
+    return [...auditChanges].sort((a, b) => b.date.localeCompare(a.date));
+  }
+
+  return [...auditChanges].sort((a, b) => a.date.localeCompare(b.date));
+};
+
 // Sorts the changes so that new plans are first
 export const sortCreateChangeFirst = (
   a: ChangeRecordType,

@@ -87,6 +87,11 @@ const changeHistory = {
     REMOVED: 'removed',
     UPDATED: 'updated'
   },
+  sort: {
+    label: 'Sort',
+    newest: 'Newest changes',
+    oldest: 'Oldest changes'
+  },
   previousAnswer: 'Previous answer',
   previousNote: 'Previous note',
   notApplicable:
