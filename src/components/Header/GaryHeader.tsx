@@ -133,7 +133,9 @@ const GaryHeader = () => {
               {!isMobile && (
                 <UswdsReactLink
                   to="/how-to-get-access"
-                  className="landing__access-link margin-right-2"
+                  className={classnames('landing__access-link margin-right-2', {
+                    'text-base-darker': !isLanding
+                  })}
                 >
                   {t('landing:getAccess')}
                 </UswdsReactLink>
