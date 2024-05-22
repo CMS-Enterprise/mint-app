@@ -70,7 +70,7 @@ const GaryHeader = () => {
       {/* Header with logo and user links */}
       <header
         className={classnames('usa-header mint-header bg-white', {
-          'position-sticky top-0 shadow-2': isMobile,
+          'position-sticky top-0 shadow-2': isMobile && !isLanding,
           'bg-primary-darker': isLanding,
           'shadow-2':
             !isLanding &&
@@ -85,14 +85,11 @@ const GaryHeader = () => {
         <div
           className={classnames(
             'grid-container mint-header__basic display-flex flex-justify flex-align-center',
-            {
-              'padding-x-0': isMobile,
-              'margin-top-2': isLanding
-            }
+            { 'margin-top-2': isLanding }
           )}
         >
           <div
-            className={classnames('usa-logo site-logo', {
+            className={classnames('usa-logo site-logo margin-x-0', {
               'margin-y-4': !isMobile
             })}
             id="logo"
