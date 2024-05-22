@@ -119,14 +119,16 @@ const NavigationBar = ({
 
   const userLinks = (
     <div className="mint-nav__signout-container">
-      <div className="mint-nav__user margin-bottom-1">{userName}</div>
+      <div className="mint-nav__user margin-bottom-1 padding-x-0">
+        {userName}
+      </div>
       <NavLink
         to="/"
+        className="signout-link padding-0"
         onClick={e => {
           e.preventDefault();
           signout();
         }}
-        className="signout-link"
       >
         <em
           className="usa-logo__text text-underline"
