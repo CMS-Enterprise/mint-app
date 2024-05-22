@@ -21,7 +21,7 @@ func (suite *TAuditSuite) SetupTest() {
 	suite.NoError(err)
 }
 
-func TestNotificationsSuite(t *testing.T) {
+func TestTranslatedAuditSuite(t *testing.T) {
 	auditSuite := new(TAuditSuite)
 	auditSuite.testConfigs = testconfig.GetDefaultTestConfigs(useraccounthelperstestconfigs.GetTestPrincipal)
 

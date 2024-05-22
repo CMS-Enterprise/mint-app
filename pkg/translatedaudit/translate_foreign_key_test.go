@@ -1,6 +1,8 @@
 package translatedaudit
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/constants"
@@ -28,6 +30,40 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 		translatedSolution, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, sol.ID.String(), tableName)
 		suite.NoError(err)
 		suite.EqualValues(solName, translatedSolution)
+
+	})
+
+	suite.Run("existing model returns an existing model", func() {
+		existingID := 100001
+		existingName := "Advance Payment ACO Model"
+		tableName := "existing_model"
+
+		translatedExisting, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, fmt.Sprint(existingID), tableName)
+		suite.NoError(err)
+		suite.EqualValues(existingName, translatedExisting)
+
+	})
+
+	suite.Run("model_plan returns an ModelPlan", func() {
+		planName := "test plan"
+		plan := suite.createModelPlan(planName)
+		tableName := "model_plan"
+
+		translatedPlan, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, plan.ID.String(), tableName)
+		suite.NoError(err)
+		suite.EqualValues(planName, translatedPlan)
+
+	})
+	suite.Run("plan_document returns an Plan Document", func() {
+		planName := "test plan"
+		plan := suite.createModelPlan(planName)
+		docName := "testing Doc link"
+		doc := suite.createPlanDocument(plan.ID, docName)
+		tableName := "plan_document"
+
+		translatedDoc, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, doc.ID.String(), tableName)
+		suite.NoError(err)
+		suite.EqualValues(docName, translatedDoc)
 
 	})
 	suite.Run("unknown table returns an error", func() {
