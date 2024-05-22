@@ -1,0 +1,173 @@
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, useLocation } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
+import { GovBanner, Icon, NavMenuButton } from '@trussworks/react-uswds';
+import classnames from 'classnames';
+
+import UswdsReactLink from 'components/LinkWrapper';
+import NavigationBar from 'components/NavigationBar';
+import { localAuthStorageKey } from 'constants/localAuth';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+
+import { NavContext } from './navContext';
+
+import './header.scss';
+
+const GaryHeader = () => {
+  const { authState, oktaAuth } = useOktaAuth();
+  const { pathname } = useLocation();
+  const { t } = useTranslation();
+  const [userName, setUserName] = useState('');
+
+  const { isMobileSideNavExpanded, setIsMobileSideNavExpanded } = useContext(
+    NavContext
+  );
+
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
+
+  // Setting variables
+  const isLoggedIn = authState?.isAuthenticated;
+  const isLanding: boolean = pathname === '/' && !isLoggedIn;
+  const isGetAccess: boolean = pathname === '/how-to-get-access';
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isLoggedIn) {
+      oktaAuth.getUser().then((info: any) => {
+        if (isMounted) {
+          setUserName(info.name);
+        }
+      });
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isLoggedIn, oktaAuth]);
+
+  const signout = () => {
+    localStorage.removeItem(localAuthStorageKey);
+    oktaAuth.signOut();
+  };
+
+  return (
+    <>
+      {/* Dark overlay when mobile nav is expanded */}
+      <div
+        className={classnames('usa-overlay', {
+          'is-visible': isMobileSideNavExpanded
+        })}
+      />
+
+      {/* Gov Banner */}
+      <GovBanner
+        className={classnames({
+          'landing-gov-banner bg-base-darkest': isLanding
+        })}
+      />
+
+      {/* Header with logo and user links */}
+      <header
+        className={classnames('usa-header mint-header bg-white', {
+          'position-sticky top-0 shadow-2': isMobile,
+          'bg-primary-darker': isLanding,
+          'shadow-2':
+            !isLanding &&
+            (pathname === '/pre-decisional-notice' ||
+              pathname === '/signin' ||
+              isGetAccess ||
+              isMobile)
+        })}
+        role="banner"
+      >
+        {/* ref={navbarRef} */}
+        <div
+          className={classnames(
+            'grid-container mint-header__basic display-flex flex-justify flex-align-center',
+            {
+              'padding-x-0': isMobile
+            }
+          )}
+        >
+          <div
+            className={classnames('usa-logo site-logo', {
+              'margin-y-4': !isMobile
+            })}
+            id="logo"
+          >
+            <Link to="/">
+              <em
+                className={classnames('usa-logo__text ', {
+                  'text-white': isLanding
+                })}
+                aria-label={t('header:returnHome')}
+              >
+                {t('general:appName')}
+              </em>
+            </Link>
+          </div>
+          {isLoggedIn ? (
+            <>
+              {!isMobile && (
+                <div className="navbar--container mint-nav__user display-flex flex-align-center">
+                  <div className="mint-header__user">{userName}</div>
+                  <div>&nbsp; | &nbsp;</div>
+                  <button
+                    type="button"
+                    className="usa-button usa-button--unstyled"
+                    data-testid="signout-link"
+                    aria-expanded="false"
+                    aria-controls="sign-out"
+                    onClick={signout}
+                  >
+                    {t('header:signOut')}
+                  </button>
+                </div>
+              )}
+              <NavMenuButton
+                onClick={() => setIsMobileSideNavExpanded(true)}
+                label={<Icon.Menu size={3} />}
+              />
+            </>
+          ) : (
+            <div className="display-flex">
+              {!isMobile && (
+                <UswdsReactLink
+                  to="/how-to-get-access"
+                  className="landing__access-link margin-right-2 margin-top-1"
+                >
+                  {t('landing:getAccess')}
+                </UswdsReactLink>
+              )}
+              <Link
+                className={classnames('mint-header__nav-link margin-right-2', {
+                  'text-white radius-md border padding-y-105': isLanding,
+                  'text-white radius-md border padding-y-105 bg-primary': isGetAccess
+                })}
+                to="/signin"
+              >
+                {t('header:signIn')}
+              </Link>
+            </div>
+          )}
+        </div>
+      </header>
+      {isLoggedIn && pathname !== '/pre-decisional-notice' && (
+        <NavigationBar
+          className={classnames(
+            'position-sticky top-0 z-100 bg-white shadow-2',
+            {
+              'border-top-light': !isMobile
+            }
+          )}
+          expandMobileSideNav={setIsMobileSideNavExpanded}
+          signout={signout}
+          userName={userName}
+        />
+      )}
+    </>
+  );
+};
+
+export default GaryHeader;
