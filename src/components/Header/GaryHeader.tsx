@@ -84,8 +84,11 @@ const GaryHeader = () => {
         {/* ref={navbarRef} */}
         <div
           className={classnames(
-            'grid-container mint-header__basic display-flex flex-justify flex-align-center',
-            { 'margin-top-2': isLanding }
+            'grid-container display-flex flex-justify flex-align-center',
+            {
+              'margin-top-2': isLanding,
+              'padding-right-0': isLoggedIn
+            }
           )}
         >
           <div
