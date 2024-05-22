@@ -204,8 +204,8 @@ export const Header = () => {
             )}
             <Link
               className={classnames('mint-header__nav-link margin-right-2', {
-                'text-white radius-md border padding-y-105': isLanding,
-                'text-white radius-md border padding-y-105 bg-primary': isGetAccess
+                'text-white radius-md border padding-y-105 padding-x-1': isLanding,
+                'text-white radius-md border padding-y-105 padding-x-1 bg-primary': isGetAccess
               })}
               to="/signin"
             >

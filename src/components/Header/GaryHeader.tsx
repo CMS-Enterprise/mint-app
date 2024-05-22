@@ -86,7 +86,8 @@ const GaryHeader = () => {
           className={classnames(
             'grid-container mint-header__basic display-flex flex-justify flex-align-center',
             {
-              'padding-x-0': isMobile
+              'padding-x-0': isMobile,
+              'margin-top-2': isLanding
             }
           )}
         >
@@ -131,20 +132,23 @@ const GaryHeader = () => {
               />
             </>
           ) : (
-            <div className="display-flex">
+            <div className="display-flex flex-align-center">
               {!isMobile && (
                 <UswdsReactLink
                   to="/how-to-get-access"
-                  className="landing__access-link margin-right-2 margin-top-1"
+                  className="landing__access-link margin-right-2"
                 >
                   {t('landing:getAccess')}
                 </UswdsReactLink>
               )}
               <Link
-                className={classnames('mint-header__nav-link margin-right-2', {
-                  'text-white radius-md border padding-y-105': isLanding,
-                  'text-white radius-md border padding-y-105 bg-primary': isGetAccess
-                })}
+                className={classnames(
+                  'mint-header__nav-link  radius-md padding-y-105 padding-x-2',
+                  {
+                    'text-white border': isLanding,
+                    'text-base-darker': !isLanding
+                  }
+                )}
                 to="/signin"
               >
                 {t('header:signIn')}
