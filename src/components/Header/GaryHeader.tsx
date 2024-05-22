@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
@@ -9,6 +9,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import NavigationBar from 'components/NavigationBar';
 import { localAuthStorageKey } from 'constants/localAuth';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useOutsideClick from 'hooks/useOutsideClick';
 
 import { NavContext } from './navContext';
 
@@ -20,6 +21,7 @@ const GaryHeader = () => {
   const { t } = useTranslation();
   const [userName, setUserName] = useState('');
 
+  const mobileNavRef = useRef<HTMLDivElement | null>(null);
   const { isMobileSideNavExpanded, setIsMobileSideNavExpanded } = useContext(
     NavContext
   );
@@ -30,6 +32,9 @@ const GaryHeader = () => {
   const isLoggedIn = authState?.isAuthenticated;
   const isLanding: boolean = pathname === '/' && !isLoggedIn;
   const isGetAccess: boolean = pathname === '/how-to-get-access';
+
+  // Detects click outside mobile navigation and close mobile nav
+  useOutsideClick(mobileNavRef, () => setIsMobileSideNavExpanded(false));
 
   useEffect(() => {
     let isMounted = true;
@@ -56,7 +61,7 @@ const GaryHeader = () => {
       {/* Dark overlay when mobile nav is expanded */}
       <div
         className={classnames('usa-overlay', {
-          'is-visible': isMobileSideNavExpanded
+          'is-visible': isMobileSideNavExpanded && isMobile
         })}
       />
 
@@ -81,7 +86,6 @@ const GaryHeader = () => {
         })}
         role="banner"
       >
-        {/* ref={navbarRef} */}
         <div
           className={classnames(
             'grid-container display-flex flex-justify flex-align-center',
@@ -178,7 +182,7 @@ const GaryHeader = () => {
       {/* Mobile Nav that slides in */}
       {isMobile && (
         <div
-          // ref={mobileSideNav}
+          ref={mobileNavRef}
           className={classnames('usa-nav', 'sidenav-mobile', {
             'is-visible': isMobileSideNavExpanded
           })}
