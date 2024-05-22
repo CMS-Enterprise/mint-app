@@ -131,25 +131,38 @@ export const handleSortOptions = (
   auditChanges: ChangeRecordType[],
   sort: 'newest' | 'oldest'
 ) => {
+  let sortedChanges: ChangeRecordType[] = [];
   if (sort === 'newest') {
-    return [...auditChanges].sort((a, b) => b.date.localeCompare(a.date));
+    sortedChanges = [...auditChanges].sort((a, b) =>
+      b.date.localeCompare(a.date)
+    );
+    // Sorts the changes so that new plans are first
+    sortedChanges = sortCreateChangeFirst(sortedChanges, 'desc');
+  } else if (sort === 'oldest') {
+    sortedChanges = [...auditChanges].sort((a, b) =>
+      a.date.localeCompare(b.date)
+    );
+    // Sorts the changes so that new plans are first
+    sortedChanges = sortCreateChangeFirst(sortedChanges, 'asc');
   }
 
-  return [...auditChanges].sort((a, b) => a.date.localeCompare(b.date));
+  return sortedChanges;
 };
 
 // Sorts the changes so that new plans are first
 export const sortCreateChangeFirst = (
-  a: ChangeRecordType,
-  b: ChangeRecordType
+  changes: ChangeRecordType[],
+  direction: 'asc' | 'desc'
 ) => {
-  const aType = identifyChangeType(a);
-  const bType = identifyChangeType(b);
+  return changes.sort((a: ChangeRecordType, b: ChangeRecordType) => {
+    const aType = identifyChangeType(a);
+    const bType = identifyChangeType(b);
 
-  if (aType === 'New plan') return 1;
-  if (bType === 'New plan') return -1;
+    if (aType === 'New plan') return direction === 'asc' ? -1 : 1;
+    if (bType === 'New plan') return direction === 'asc' ? 1 : -1;
 
-  return 0;
+    return 0;
+  });
 };
 
 const readyForReviewFields = [
@@ -368,8 +381,9 @@ export const sortAllChanges = (changes: ChangeRecordType[]) => {
     b.date.localeCompare(a.date)
   );
 
-  const changesSortedWithCreateFirst = changesSortedByDate.sort(
-    sortCreateChangeFirst
+  const changesSortedWithCreateFirst = sortCreateChangeFirst(
+    changesSortedByDate,
+    'desc'
   );
 
   return changesSortedWithCreateFirst;
