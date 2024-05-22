@@ -157,6 +157,8 @@ const GaryHeader = () => {
           )}
         </div>
       </header>
+
+      {/* Desktop Navigation Bar */}
       {isLoggedIn && pathname !== '/pre-decisional-notice' && (
         <NavigationBar
           className={classnames(
@@ -169,6 +171,23 @@ const GaryHeader = () => {
           signout={signout}
           userName={userName}
         />
+      )}
+
+      {/* Mobile Nav that slides in */}
+      {isMobile && (
+        <div
+          // ref={mobileSideNav}
+          className={classnames('usa-nav', 'sidenav-mobile', {
+            'is-visible': isMobileSideNavExpanded
+          })}
+        >
+          <NavigationBar
+            isMobile={isMobile}
+            expandMobileSideNav={setIsMobileSideNavExpanded}
+            signout={signout}
+            userName={userName}
+          />
+        </div>
       )}
     </>
   );
