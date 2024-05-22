@@ -10,11 +10,12 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
+import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import ChangeRecord from './components/ChangeRecord';
-import { sortAllChanges } from './util';
+import { sortAllChanges, sortChangesByDay } from './util';
 
 type LocationProps = {
   state: {
@@ -61,6 +62,9 @@ const ChangeHistory = () => {
     const newOffset = (event.selected * itemsPerPage) % sortedChanges?.length;
     setPageOffset(newOffset);
   };
+
+  // Group changes by day
+  const changesByDay = sortChangesByDay(currentItems);
 
   if (error) {
     return <NotFound />;
@@ -116,9 +120,22 @@ const ChangeHistory = () => {
               </Alert>
             )}
 
-            {currentItems.map(changeRecord => (
-              <ChangeRecord changeRecord={changeRecord} key={changeRecord.id} />
-            ))}
+            {/* Renders the day grouping, then maps over that day's changes */}
+            {Object.keys(changesByDay).map(day => {
+              return (
+                <div key={day}>
+                  <h3 className="margin-y-4">
+                    {formatDateUtc(day, 'MMMM d, yyyy')}
+                  </h3>
+                  {changesByDay[day].map(changeRecord => (
+                    <ChangeRecord
+                      changeRecord={changeRecord}
+                      key={changeRecord.id}
+                    />
+                  ))}
+                </div>
+              );
+            })}
 
             {pageCount > 1 && (
               <ReactPaginate

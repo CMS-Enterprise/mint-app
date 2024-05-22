@@ -329,6 +329,21 @@ export const removedHiddenFields = (
   return filteredChangeRecords;
 };
 
+// Sorts the changes by day - { day: [changes] }
+export const sortChangesByDay = (changes: ChangeRecordType[]) => {
+  const sortedChanges: { [key: string]: ChangeRecordType[] } = {};
+
+  changes.forEach(change => {
+    const date = change.date.split('T')[0];
+    if (!sortedChanges[date]) {
+      sortedChanges[date] = [];
+    }
+    sortedChanges[date].push(change);
+  });
+
+  return sortedChanges;
+};
+
 // Removes changes that are not needed for the change history.  Used to get accurate page count of audits
 const removeUnneededAudits = (changes: ChangeRecordType[]) =>
   changes.filter(
