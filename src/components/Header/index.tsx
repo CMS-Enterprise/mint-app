@@ -111,81 +111,13 @@ export const Header = () => {
             'landing-gov-banner bg-base-darkest': isLanding
           })}
         />
-        <div
-          className={classnames('grid-container mint-header__basic', {
-            'margin-top-2': isLanding
-          })}
-        >
-          <div
-            className={classnames('usa-logo site-logo', {
-              'margin-y-4': isMobile
-            })}
-            id="logo"
-          >
-            <Link to="/">
-              <span
-                className={classnames('usa-logo__text heading', {
-                  'text-white': isLanding
-                })}
-                aria-label={t('header:returnHome')}
-              >
-                {t('general:appName')}
-              </span>
-            </Link>
-          </div>
-          {isLoggedIn ? (
-            <div>
-              <div className="navbar--container mint-nav__user">
-                <div className="mint-header__user">{userName}</div>
-                <div>&nbsp; | &nbsp;</div>
-                <button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  data-testid="signout-link"
-                  aria-expanded="false"
-                  aria-controls="sign-out"
-                  onClick={signout}
-                >
-                  {t('header:signOut')}
-                </button>
-              </div>
-              <button
-                type="button"
-                className="usa-menu-btn"
-                onClick={() => setIsMobileSideNavExpanded(true)}
-              >
-                <Icon.Menu size={3} />
-              </button>
-            </div>
-          ) : (
-            <div className="display-flex">
-              {!isMobile && (
-                <UswdsReactLink
-                  to="/how-to-get-access"
-                  className="landing__access-link margin-right-2 margin-top-1"
-                >
-                  {t('landing:getAccess')}
-                </UswdsReactLink>
-              )}
-              <Link
-                className={classnames('mint-header__nav-link margin-right-2', {
-                  'text-white radius-md border padding-y-105': isLanding,
-                  'text-white radius-md border padding-y-105 bg-primary': isGetAccess
-                })}
-                to="/signin"
-              >
-                {t('header:signIn')}
-              </Link>
-            </div>
-          )}
-        </div>
 
         <div
           className={classnames('usa-overlay', {
             'is-visible': isMobileSideNavExpanded
           })}
         />
-        {/* Mobile Display */}
+        {/* Mobile Nav that slides in */}
         <div
           ref={mobileSideNav}
           className={classnames('usa-nav', 'sidenav-mobile', {
@@ -208,6 +140,80 @@ export const Header = () => {
           </div>
         </div>
       </header>
+      <div
+        className={classnames(
+          'bg-white z-100 width-full grid-container mint-header__basic',
+          {
+            'margin-top-2': isLanding,
+            'position-sticky top-0 z-100 padding-x-0': isMobile
+          }
+        )}
+      >
+        <div
+          className={classnames('usa-logo site-logo', {
+            'margin-y-4': !isMobile
+          })}
+          id="logo"
+        >
+          <Link to="/">
+            <span
+              className={classnames('usa-logo__text heading', {
+                'text-white': isLanding
+              })}
+              aria-label={t('header:returnHome')}
+            >
+              {t('general:appName')}
+            </span>
+          </Link>
+        </div>
+        {isLoggedIn ? (
+          <>
+            {!isMobile && (
+              <div className="navbar--container mint-nav__user display-flex">
+                <div className="mint-header__user">{userName}</div>
+                <div>&nbsp; | &nbsp;</div>
+                <button
+                  type="button"
+                  className="usa-button usa-button--unstyled"
+                  data-testid="signout-link"
+                  aria-expanded="false"
+                  aria-controls="sign-out"
+                  onClick={signout}
+                >
+                  {t('header:signOut')}
+                </button>
+              </div>
+            )}
+            <button
+              type="button"
+              className="usa-menu-btn"
+              onClick={() => setIsMobileSideNavExpanded(true)}
+            >
+              <Icon.Menu size={3} />
+            </button>
+          </>
+        ) : (
+          <div className="display-flex">
+            {!isMobile && (
+              <UswdsReactLink
+                to="/how-to-get-access"
+                className="landing__access-link margin-right-2 margin-top-1"
+              >
+                {t('landing:getAccess')}
+              </UswdsReactLink>
+            )}
+            <Link
+              className={classnames('mint-header__nav-link margin-right-2', {
+                'text-white radius-md border padding-y-105': isLanding,
+                'text-white radius-md border padding-y-105 bg-primary': isGetAccess
+              })}
+              to="/signin"
+            >
+              {t('header:signIn')}
+            </Link>
+          </div>
+        )}
+      </div>
       {isLoggedIn && pathname !== '/pre-decisional-notice' && (
         <NavigationBar
           className={classnames(
