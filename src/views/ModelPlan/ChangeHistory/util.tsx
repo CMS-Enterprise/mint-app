@@ -128,20 +128,16 @@ export const parseArray = (value: string | string[]) => {
 
 // Sorts the changes based on the sort option
 export const handleSortOptions = (
-  auditChanges: ChangeRecordType[],
+  changes: ChangeRecordType[],
   sort: 'newest' | 'oldest'
 ) => {
   let sortedChanges: ChangeRecordType[] = [];
   if (sort === 'newest') {
-    sortedChanges = [...auditChanges].sort((a, b) =>
-      b.date.localeCompare(a.date)
-    );
+    sortedChanges = [...changes].sort((a, b) => b.date.localeCompare(a.date));
     // Sorts the changes so that new plans are first
     sortedChanges = sortCreateChangeFirst(sortedChanges, 'desc');
   } else if (sort === 'oldest') {
-    sortedChanges = [...auditChanges].sort((a, b) =>
-      a.date.localeCompare(b.date)
-    );
+    sortedChanges = [...changes].sort((a, b) => a.date.localeCompare(b.date));
     // Sorts the changes so that new plans are first
     sortedChanges = sortCreateChangeFirst(sortedChanges, 'asc');
   }
