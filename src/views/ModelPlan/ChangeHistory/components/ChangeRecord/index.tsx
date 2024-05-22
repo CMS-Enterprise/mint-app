@@ -91,12 +91,13 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
         {change.old && (
           <>
             {changeType !== DatabaseOperation.DELETE && (
-              <div className="text-bold padding-y-105">
+              <div className={classNames('text-bold padding-y-105')}>
                 {change.questionType === TranslationQuestionType.NOTE
                   ? t('previousNote')
                   : t('previousAnswer')}
               </div>
             )}
+
             <RenderValue
               value={change.oldTranslated}
               dataType={change.dataType}
@@ -147,6 +148,7 @@ const RenderValue = ({
       </div>
     ) : null;
 
+  // Replaces curly braces with square brackets and attempts to parse the value as JSON
   const parsedValue = parseArray(value);
 
   // If the data type is an array, render the array as a list and parent question
