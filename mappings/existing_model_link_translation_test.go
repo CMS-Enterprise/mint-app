@@ -5,6 +5,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 func TestExistingModelLinkTranslation(t *testing.T) {
@@ -29,4 +31,17 @@ func TestExistingModelLinkTranslationVerifyFieldsArePopulated(t *testing.T) {
 
 	assertTranslationFields(t, translation)
 
+}
+
+func TestExistingModelLinkTranslationCoverage(t *testing.T) {
+	translation, err := ExistingModelLinkTranslation()
+
+	assert.NoError(t, err)
+	assert.NotNil(t, translation)
+
+	tMap, err := translation.ToMap()
+	assert.NoError(t, err)
+	assert.NotNil(t, tMap)
+
+	assertTranslationStructCoverage(t, tMap, models.ExistingModelLink{}, taskListStructExcludeFields)
 }
