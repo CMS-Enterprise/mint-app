@@ -18,7 +18,12 @@ export type ChangeType =
   | 'Document update'
   | 'CR update'
   | 'TDL update'
+  | 'Subtask update'
+  | 'Document solution link update'
+  | 'Operational solution create'
+  | 'Operational solution update'
   | 'Operational need create'
+  | 'Operational need update'
   | 'Standard update';
 
 export type TranslationTables =
@@ -67,6 +72,44 @@ export const isDiscussionReplyWithMetaData = (
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'TranslatedAuditMetaGeneric';
 };
+
+type HiddenFieldTypes = {
+  table: TranslationTables;
+  fields: string[];
+};
+
+// Fields that are not displayed in the change history
+const hiddenFields: HiddenFieldTypes[] = [
+  {
+    table: 'operational_need',
+    fields: ['needed', 'need_type', 'model_plan_id']
+  },
+  {
+    table: 'operational_solution',
+    fields: ['operational_need_id', 'solution_type', 'is_other']
+  },
+  {
+    table: 'plan_document',
+    fields: [
+      'model_plan_id',
+      'virus_scanned',
+      'file_key',
+      'file_name',
+      'file_size',
+      'bucket',
+      'file_type',
+      'virus_clean'
+    ]
+  },
+  {
+    table: 'plan_cr',
+    fields: ['model_plan_id']
+  },
+  {
+    table: 'plan_tdl',
+    fields: ['model_plan_id']
+  }
+];
 
 // Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array
 export const parseArray = (value: string | string[]) => {
@@ -223,12 +266,28 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'TDL update';
   }
 
+  if (change.tableName === 'operational_solution_subtask') {
+    return 'Subtask update';
+  }
+
+  if (change.tableName === 'document_solution_link') {
+    return 'Document solution link update';
+  }
+
+  // If the change is an operational solution create/no translatedFields, return 'Operational solution create'
+  if (change.tableName === 'operational_solution') {
+    if (change.action === 'INSERT') {
+      return 'Operational solution create';
+    }
+    return 'Operational solution update';
+  }
+
   // If the change is an operational need create/no translatedFields, return 'Operational need create'
-  if (
-    change.tableName === 'operational_need' &&
-    change.translatedFields.length === 0
-  ) {
-    return 'Operational need create';
+  if (change.tableName === 'operational_need') {
+    if (change.translatedFields.length === 0) {
+      return 'Operational need create';
+    }
+    return 'Operational need update';
   }
 
   return 'Standard update';
@@ -246,38 +305,60 @@ export const isInitialCreatedSection = (
     identifyChangeType(change) === 'Operational need create'
   );
 
-// Some fields exist in translation/audit data, but are not displayed in the change history
-export const isHiddenRecord = (changeRecord: ChangeRecordType): boolean => {
-  const hiddenFields = [
-    {
-      table: 'operational_need',
-      type: 'INSERT'
-    }
-  ];
+// Some fields exist in translation/audit data, but are not displayed in the change history. Filter out these fields
+export const removedHiddenFields = (
+  changeRecords: ChangeRecordType[]
+): ChangeRecordType[] => {
+  const filteredChangeRecords: ChangeRecordType[] = [];
 
-  return !!hiddenFields.find(
-    hiddenField =>
-      hiddenField.table === changeRecord.tableName &&
-      changeRecord.action === hiddenField.type
-  );
+  changeRecords.forEach(changeRecord => {
+    const filteredChangeRecord = { ...changeRecord };
+    const filteredFields = [...filteredChangeRecord.translatedFields];
+
+    filteredChangeRecord.translatedFields = filteredFields.filter(
+      field =>
+        !hiddenFields.find(
+          hiddenField =>
+            hiddenField.table === changeRecord.tableName &&
+            hiddenField.fields.includes(field.fieldName)
+        )
+    );
+
+    filteredChangeRecords.push(filteredChangeRecord);
+  });
+  return filteredChangeRecords;
 };
 
+// Removes changes that are not needed for the change history.  Used to get accurate page count of audits
+const removeUnneededAudits = (changes: ChangeRecordType[]) =>
+  changes.filter(
+    change =>
+      !isInitialCreatedSection(change, identifyChangeType(change)) &&
+      change.translatedFields.length !== 0
+  );
+
 export const sortAllChanges = (changes: ChangeRecordType[]) => {
-  const changesSortedByDate = changes?.sort((a, b) =>
-    b.date.localeCompare(a.date)
-  );
+  const changesWithStatusSeparation = separateStatusChanges(changes);
 
-  const changesWithStatusSeparation = separateStatusChanges(
-    changesSortedByDate
-  );
-
-  const changesSortedWithCreateFirst = changesWithStatusSeparation.sort(
-    sortCreateChangeFirst
+  const removedHiddenChangeFields = removedHiddenFields(
+    changesWithStatusSeparation
   );
 
   const changesWithoutReadyForReview = extractReadyForReviewChanges(
-    changesSortedWithCreateFirst
+    removedHiddenChangeFields
   );
 
-  return changesWithoutReadyForReview;
+  const changesWithoutUnneededAudits = removeUnneededAudits(
+    changesWithoutReadyForReview
+  );
+
+  const changesSortedByDate = changesWithoutUnneededAudits?.sort((a, b) =>
+    b.date.localeCompare(a.date)
+  );
+
+  const changesSortedWithCreateFirst = changesSortedByDate.sort(
+    sortCreateChangeFirst
+  );
+
+  return changesSortedWithCreateFirst;
 };

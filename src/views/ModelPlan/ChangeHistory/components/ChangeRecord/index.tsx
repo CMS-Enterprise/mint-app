@@ -17,9 +17,8 @@ import { formatDateUtc, formatTime } from 'utils/date';
 import {
   identifyChangeType,
   isDiscussionReplyWithMetaData,
-  isHiddenRecord,
-  isInitialCreatedSection,
-  parseArray
+  parseArray,
+  TranslationTables
 } from '../../util';
 
 import './index.scss';
@@ -35,19 +34,21 @@ type ChangeRecordProps = {
 type SingleChangeProps = {
   change: ChangeRecordType['translatedFields'][0];
   changeType: DatabaseOperation;
+  tableName: TranslationTables;
 };
 
 // Render a single change record, showing the field name, the change type, and the old and new values
-const SingleChange = ({ change, changeType }: SingleChangeProps) => {
+const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   return (
     <div className="margin-bottom-2" key={change.id}>
       <div className="display-flex">
         <span className="text-bold margin-right-05">
+          {/* If change is not a note */}
           {change.questionType !== TranslationQuestionType.NOTE &&
             change.fieldNameTranslated}
-
+          {/* If the change is note type and pertains to multiple questions */}
           {change.referenceLabel &&
           change.questionType === TranslationQuestionType.NOTE ? (
             <span className="text-bold">
@@ -55,15 +56,30 @@ const SingleChange = ({ change, changeType }: SingleChangeProps) => {
               <span className="text-italic">{change.referenceLabel}</span>
             </span>
           ) : (
-            <></>
-          )}
+            <span />
+          )}{' '}
+          {(() => {
+            // If the change is an insert, render created text rather than answered/updated, etc.
+            if (tableName === 'operational_need' && changeType === 'INSERT') {
+              return (
+                <span className="text-normal">{t(`changeType.CREATED`)}</span>
+              );
+            }
+            // Render the change type - answered, removed, updated
+            if (changeType !== DatabaseOperation.DELETE) {
+              return (
+                <span className="text-normal">
+                  {t(`changeType.${change.changeType}`)}
+                </span>
+              );
+            }
+            return <span />;
+          })()}
         </span>
-
-        {changeType !== DatabaseOperation.DELETE &&
-          t(`changeType.${change.changeType}`)}
       </div>
 
       <div className="change-record__answer margin-y-1">
+        {/* Renders the new value of a change record */}
         <RenderValue
           value={change.newTranslated}
           dataType={change.dataType}
@@ -71,11 +87,14 @@ const SingleChange = ({ change, changeType }: SingleChangeProps) => {
           questionType={change.questionType}
         />
 
-        {change.oldTranslated && (
+        {/* Renders the old value of a change record */}
+        {change.old && (
           <>
             {changeType !== DatabaseOperation.DELETE && (
               <div className="text-bold padding-y-105">
-                {t('previousAnswer')}
+                {change.questionType === TranslationQuestionType.NOTE
+                  ? t('previousNote')
+                  : t('previousAnswer')}
               </div>
             )}
             <RenderValue
@@ -83,10 +102,12 @@ const SingleChange = ({ change, changeType }: SingleChangeProps) => {
               dataType={change.dataType}
               referenceLabel={change.referenceLabel}
               questionType={change.questionType}
+              previous={!!change.old}
             />
           </>
         )}
 
+        {/* Render addtional information of the new answers have questions that are no longer applicable */}
         {!!change.notApplicableQuestions?.length && (
           <>
             <div className="text-bold padding-y-105">{t('notApplicable')}</div>
@@ -106,15 +127,18 @@ const RenderValue = ({
   value,
   dataType,
   referenceLabel,
-  questionType
+  questionType,
+  previous = false
 }: {
   value: string | string[];
   dataType: TranslationDataType | null | undefined;
   referenceLabel?: string | null | undefined;
   questionType?: TranslationQuestionType | null | undefined;
+  previous?: boolean;
 }) => {
   const { t } = useTranslation('changeHistory');
 
+  // Contains the label and parent question if the change record is a follow-up/OTHER type
   const parentQuestion =
     referenceLabel && questionType === TranslationQuestionType.OTHER ? (
       <div className="text-italic padding-bottom-1">
@@ -151,17 +175,23 @@ const RenderValue = ({
 
   return (
     <>
-      {parentQuestion}
+      {!previous && parentQuestion}
       <span>{value}</span>
     </>
   );
 };
 
 // Renders the questions changes before collapse link is clicked, as well as a note or follow-up question is present
-const ChangedQuestion = ({ change, changeType }: SingleChangeProps) => {
+const ChangedQuestion = ({
+  change,
+  changeType,
+  tableName
+}: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
+  // If the change contains a reference label, render the field name with the reference label
   if (change.referenceLabel) {
+    // Type OTHER
     if (change.questionType === TranslationQuestionType.OTHER) {
       return (
         <>
@@ -173,6 +203,7 @@ const ChangedQuestion = ({ change, changeType }: SingleChangeProps) => {
         </>
       );
     }
+    // Type NOTE
     if (change.questionType === TranslationQuestionType.NOTE) {
       return (
         <span>
@@ -183,6 +214,7 @@ const ChangedQuestion = ({ change, changeType }: SingleChangeProps) => {
     }
   }
 
+  // Normal translated field
   return <>{change.fieldNameTranslated}</>;
 };
 
@@ -192,25 +224,24 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
   const [isOpen, setOpen] = useState<boolean>(false);
 
+  // Identify the type of change record
   const changeRecordType = identifyChangeType(changeRecord);
 
+  // Change record types that generate table insertions into the db.  These types should be expanded to show more data
   const uploadAudit: boolean =
     changeRecordType === 'CR update' ||
     changeRecordType === 'TDL update' ||
+    changeRecordType === 'Subtask update' ||
+    changeRecordType === 'Operational solution update' ||
+    changeRecordType === 'Operational need update' ||
     changeRecordType === 'Document update';
 
+  // Determine if the change record should be expanded to show more data
   const showMoreData: boolean =
     uploadAudit || changeRecordType === 'Standard update';
 
+  // Determines if the change record should show a list of translated fields before expanding
   const renderList: boolean = changeRecordType === 'Standard update';
-
-  if (
-    isInitialCreatedSection(changeRecord, changeRecordType) ||
-    isHiddenRecord(changeRecord) ||
-    changeRecord.translatedFields.length === 0
-  ) {
-    return null;
-  }
 
   return (
     <Card className="change-record">
@@ -249,7 +280,8 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
             />
           )}
 
-          {changeRecordType === 'Task list status update' && (
+          {(changeRecordType === 'Task list status update' ||
+            changeRecordType === 'Status update') && (
             <Trans
               i18nKey="changeHistory:taskStatusUpdate"
               values={{
@@ -384,6 +416,105 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {changeRecordType === 'Subtask update' &&
+            (() => {
+              const subtaskChange = (actionType: DatabaseOperation) =>
+                actionType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
+
+              const subtaskName = changeRecord.translatedFields.find(
+                field => field.fieldName === 'name'
+              )?.[subtaskChange(changeRecord.action)];
+
+              return (
+                <Trans
+                  i18nKey="changeHistory:subtaskUpdate"
+                  values={{
+                    action: t(`auditUpdateTye.${changeRecord.action}`),
+                    subtaskName,
+                    solutionName: 'Temp Solution', // TODO: Replace with actual solution name
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {changeRecordType === 'Document solution link update' &&
+            (() => {
+              return (
+                <Trans
+                  i18nKey="changeHistory:documentSolutionLinkUpdate"
+                  values={{
+                    action: t(`documentLinkType.${changeRecord.action}`),
+                    documentName: 'Temp document', // TODO: replace with actual document name
+                    solutionName: 'Temp solution', // TODO: replace with actual solution name
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {changeRecordType === 'Operational solution create' &&
+            (() => {
+              return (
+                <Trans
+                  i18nKey="changeHistory:solutionCreate"
+                  values={{
+                    solutionName: 'Temp solution', // TODO: replace with actual solution name
+                    needName: 'Temp need', // TODO: replace with actual need name
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {changeRecordType === 'Operational solution update' &&
+            (() => {
+              return (
+                <Trans
+                  i18nKey="changeHistory:solutionUpdate"
+                  values={{
+                    action: t(`auditUpdateTye.${changeRecord.action}`),
+                    solutionName: 'Temp Solution', // TODO: replace with actual solution name
+                    needName: 'Temp need', // TODO: replace with actual need name
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {changeRecordType === 'Operational need update' &&
+            (() => {
+              return (
+                <Trans
+                  i18nKey="changeHistory:needUpdate"
+                  values={{
+                    action: t(`auditUpdateTye.${changeRecord.action}`),
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
           {changeRecordType === 'Discussion update' &&
             (() => {
               const metaDiscussion =
@@ -481,6 +612,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               <ChangedQuestion
                 change={change}
                 changeType={changeRecord.action}
+                tableName={changeRecord.tableName as TranslationTables}
               />
             </li>
           ))}
@@ -503,6 +635,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                 change={change}
                 key={change.id}
                 changeType={changeRecord.action}
+                tableName={changeRecord.tableName as TranslationTables}
               />
             ))}
           </div>

@@ -2,6 +2,7 @@ const changeHistory = {
   heading: 'Change history',
   subheading: 'for {{modelName}}',
   back: 'Back to the task list',
+  backToReadView: 'Back to the Read view',
   change:
     'made {{count}} change in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   change_other:
@@ -11,7 +12,7 @@ const changeHistory = {
   taskStatusUpdate:
     'marked {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
   teamANSWERED:
-    '{{action}} {{collaborator}} to the model team <datetime>on {{date}} at {{time}}</datetime>',
+    '{{action}} {{collaborator}} as {{role}} to the model team <datetime>on {{date}} at {{time}}</datetime>',
   teamUPDATED:
     '{{action}} {{collaborator}}’s role to {{role}} <datetime>on {{date}} at {{time}}</datetime>',
   teamREMOVED:
@@ -24,6 +25,16 @@ const changeHistory = {
     '{{action}} {{documentName}}{{isLink}} {{toFrom}} Documents <datetime>on {{date}} at {{time}}</datetime>',
   crTdlUpdate:
     '{{action}} {{crTdlName}} {{toFrom}} FFS CRs and TDLs <datetime>on {{date}} at {{time}}</datetime>',
+  subtaskUpdate:
+    '{{action}} {{subtaskName}} for {{solutionName}} <datetime>on {{date}} at {{time}}</datetime>',
+  documentSolutionLinkUpdate:
+    '{{documentName}} {{action}} {{toFrom}} {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+  solutionCreate:
+    'addded solution {{solutionName}} to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+  solutionUpdate:
+    '{{action}} {{needName}} solution: {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+  needUpdate:
+    '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   sections: {
     model_plan: 'Model plan',
     plan_basics: 'Model basics',
@@ -34,10 +45,10 @@ const changeHistory = {
     plan_payments: 'Payments',
     plan_collaborator: 'Model team',
     plan_discussion: 'Discussions',
-    discussion_reply: 'Replies',
+    discussion_reply: 'Discussions',
     plan_document: 'Documents',
-    plan_cr: 'CRs',
-    plan_tdl: 'TDLs',
+    plan_cr: 'FFS CRs and TDLs',
+    plan_tdl: 'FFS CRs and TDLs',
     operational_need: 'Operational solutions and implementation status tracker',
     operational_solution:
       'Operational solutions and implementation status tracker',
@@ -61,17 +72,23 @@ const changeHistory = {
     removed: 'removed',
     added: 'added'
   },
+  documentLinkType: {
+    INSERT: 'connected',
+    DELETE: 'removed'
+  },
   teamChangeType: {
     ANSWERED: 'added',
     REMOVED: 'removed',
     UPDATED: 'updated'
   },
   changeType: {
+    CREATED: 'created',
     ANSWERED: 'answered',
     REMOVED: 'removed',
     UPDATED: 'updated'
   },
   previousAnswer: 'Previous answer',
+  previousNote: 'Previous note',
   notApplicable:
     'Because of this change, the following question(s) are no longer applicable:',
   recentChanges: 'Recent changes',

@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
+import { useLocation, useParams } from 'react-router-dom';
 import { GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import { useGetChangeHistoryQuery } from 'gql/gen/graphql';
 
@@ -15,8 +16,19 @@ import NotFound from 'views/NotFound';
 import ChangeRecord from './components/ChangeRecord';
 import { sortAllChanges } from './util';
 
+type LocationProps = {
+  state: {
+    from: string;
+  };
+  from?: string;
+};
+
 const ChangeHistory = () => {
   const { t } = useTranslation('changeHistory');
+
+  const { state } = useLocation<LocationProps>();
+
+  const fromReadView = state?.from === 'readview';
 
   const { modelID } = useParams<{
     modelID: string;
@@ -34,6 +46,22 @@ const ChangeHistory = () => {
 
   const sortedChanges = sortAllChanges(changes);
 
+  const [pageOffset, setPageOffset] = useState(0);
+
+  // Pagination Configuration
+  const itemsPerPage = 10;
+  const endOffset = pageOffset + itemsPerPage;
+  const currentItems = sortedChanges?.slice(pageOffset, endOffset);
+  const pageCount = sortedChanges
+    ? Math.ceil(sortedChanges.length / itemsPerPage)
+    : 1;
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event: { selected: number }) => {
+    const newOffset = (event.selected * itemsPerPage) % sortedChanges?.length;
+    setPageOffset(newOffset);
+  };
+
   if (error) {
     return <NotFound />;
   }
@@ -47,11 +75,13 @@ const ChangeHistory = () => {
         <GridContainer>
           <div className="display-flex flex-justify">
             <UswdsReactLink
-              to={`/models/${modelID}/task-list`}
+              to={`/models/${modelID}/${
+                fromReadView ? 'read-only' : 'task-list'
+              }`}
               className="display-flex flex-align-center margin-bottom-4"
             >
               <Icon.ArrowBack className="text-primary margin-right-1" />
-              {t('back')}
+              {fromReadView ? t('backToReadView') : t('back')}
             </UswdsReactLink>
           </div>
 
@@ -86,9 +116,39 @@ const ChangeHistory = () => {
               </Alert>
             )}
 
-            {sortedChanges.map(changeRecord => (
+            {currentItems.map(changeRecord => (
               <ChangeRecord changeRecord={changeRecord} key={changeRecord.id} />
             ))}
+
+            {pageCount > 1 && (
+              <ReactPaginate
+                breakLabel="..."
+                breakClassName="usa-pagination__item usa-pagination__overflow"
+                nextLabel="Next >"
+                containerClassName="mint-pagination usa-pagination usa-pagination__list"
+                previousLinkClassName={
+                  pageOffset === 0
+                    ? 'display-none'
+                    : 'usa-pagination__link usa-pagination__previous-page prev-page'
+                }
+                nextLinkClassName={
+                  pageOffset / itemsPerPage === pageCount - 1
+                    ? 'display-none'
+                    : 'usa-pagination__link usa-pagination__previous-page next-page'
+                }
+                disabledClassName="pagination__link--disabled"
+                activeClassName="usa-current"
+                activeLinkClassName="usa-current"
+                pageClassName="usa-pagination__item"
+                pageLinkClassName="usa-pagination__button"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={pageCount}
+                previousLabel="< Previous"
+                onClick={() => window.scrollTo(0, 0)}
+                renderOnZeroPageCount={null}
+              />
+            )}
           </>
         )}
       </GridContainer>
