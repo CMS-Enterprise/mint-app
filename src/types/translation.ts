@@ -24,6 +24,7 @@ import {
   DiscussionUserRole,
   DocumentType,
   EvaluationApproachType,
+  ExisitingModelLinkFieldType,
   ExistingModelLinkTranslation,
   FrequencyType,
   FundingSource,
@@ -1105,6 +1106,7 @@ export type TranslationOperationalSolutionSubtasks = {
 // Document Solution Link - Change History purposes only
 export type TranslationDocumentSolutionLinkForm = {
   solutionID: TranslationFieldProperties;
+  documentID: TranslationFieldProperties;
 };
 
 type TranslationDocumentSolutionLinkGQL = Omit<
@@ -1122,7 +1124,9 @@ export type TranslationDocumentSolutionLink = {
 
 // Existing Model Link - Change History purposes only
 export type TranslationExistingModelLinkForm = {
-  exsitingModelID: TranslationFieldProperties;
+  existingModelID: TranslationFieldProperties;
+  currentModelPlanID: TranslationFieldProperties;
+  fieldName: TranslationFieldPropertiesWithOptions<ExisitingModelLinkFieldType>;
 };
 
 type TranslationExistingModelLinkGQL = Omit<

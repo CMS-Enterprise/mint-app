@@ -2,6 +2,7 @@
 package translatedaudit
 
 import (
+	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -86,9 +87,12 @@ func TestTranslateField(t *testing.T) {
 	}
 	plan := models.ModelPlan{}
 
+	// Changes: (Testing) Consider converting this to a testify suite, so we can pass a full store and context
+	ctx := context.Background()
+
 	t.Run("Form Type is present when there is a translation", func(t *testing.T) {
 		var store *storage.Store //nil store
-		translatedField, wasTranslated, err := translateField(store, translationFieldKey, testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		translatedField, wasTranslated, err := translateField(ctx, store, translationFieldKey, testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
 		assert.True(t, wasTranslated)
 		assert.NoError(t, err)
 		assert.NotNil(t, translatedField.FormType)
@@ -113,11 +117,45 @@ func TestTranslateField(t *testing.T) {
 	// })
 	t.Run("When there is not a translation, there is no translation field ", func(t *testing.T) {
 		var store *storage.Store //nil store
-		translatedField, wasTranslated, err := translateField(store, "there is no translation for this", testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		translatedField, wasTranslated, err := translateField(ctx, store, "there is no translation for this", testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
 		assert.False(t, wasTranslated)
 		assert.Nil(t, (translatedField))
 		assert.NoError(t, err)
 
 	})
 
+	t.Run("When a field is unchanged, there is no translation field ", func(t *testing.T) {
+		unchangedAuditField := models.AuditField{
+			Old: nil,
+			New: "{}",
+		}
+		var store *storage.Store //nil store
+		translatedField, wasTranslated, err := translateField(ctx, store, "there is no translation for this", unchangedAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		assert.False(t, wasTranslated)
+		assert.Nil(t, (translatedField))
+		assert.NoError(t, err)
+
+	})
+
+}
+
+func TestGetChangeType(t *testing.T) {
+	var old interface{}
+	new := "{}"
+	ct := getChangeType(old, new)
+	assert.EqualValues(t, models.AFCUnchanged, ct)
+
+	new = "hello"
+	ct = getChangeType(old, new)
+	assert.EqualValues(t, models.AFCAnswered, ct)
+
+	old = "hello"
+	new = "hello again"
+	ct = getChangeType(old, new)
+	assert.EqualValues(t, models.AFCUpdated, ct)
+
+	old = "hello again"
+	var nilNew interface{}
+	ct = getChangeType(old, nilNew)
+	assert.EqualValues(t, models.AFCRemoved, ct)
 }

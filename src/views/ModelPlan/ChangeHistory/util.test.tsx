@@ -294,6 +294,16 @@ describe('util.tsx', () => {
         __typename: 'TranslatedAudit'
       }
     ];
-    expect(removedHiddenFields(changeRecords)).toBe(true);
+    expect(removedHiddenFields(changeRecords)).toStrictEqual([
+      {
+        id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+        tableName: 'operational_need',
+        date: '2024-04-22T13:55:13.725192Z',
+        action: DatabaseOperation.INSERT,
+        translatedFields: [],
+        actorName: 'MINT Doe',
+        __typename: 'TranslatedAudit'
+      }
+    ]);
   });
 });

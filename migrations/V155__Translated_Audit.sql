@@ -72,7 +72,7 @@ COMMENT ON COLUMN translated_audit.modified_dts IS 'Timestamp with time zone ind
 -- Changes: (Serialization) Ensure that we only allow one entry in a time span per user. We wouldn't want to have multiple for that range
 
 CREATE TYPE AUDIT_FIELD_CHANGE_TYPE AS ENUM (
-    'ANSWERED', 'UPDATED', 'REMOVED'
+    'ANSWERED', 'UPDATED', 'REMOVED', 'UNCHANGED'
 );
 
 COMMENT ON TYPE AUDIT_FIELD_CHANGE_TYPE IS 'An interpretation of what action happened on a database operation';

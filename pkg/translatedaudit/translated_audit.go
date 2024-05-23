@@ -107,7 +107,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 
 	for fieldName, field := range audit.Fields {
 		//  Changes: (Translations) consider removing plan from the function
-		transField, wasTranslated, tErr := translateField(store, fieldName, field, audit, actorAccount, operation, plan, translationMap)
+		transField, wasTranslated, tErr := translateField(ctx, store, fieldName, field, audit, actorAccount, operation, plan, translationMap)
 
 		if tErr != nil {
 			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, plan.ModelName, err)
@@ -132,6 +132,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 
 // translateField translates a given audit field. It returns the translated audit, as well as a bool to signify if it was translated or not
 func translateField(
+	ctx context.Context,
 	store *storage.Store,
 	fieldName string,
 	field models.AuditField,
@@ -149,6 +150,11 @@ func translateField(
 	translatedOld := old
 	translatedNew := new
 	changeType := getChangeType(old, new)
+	if changeType == models.AFCUnchanged {
+		// Changes: (Translations) revisit this paradigm.
+		// If a field is actually unchanged (null to empty array or v versa), don't write an entry.
+		return nil, false, nil
+	}
 
 	var conditionals *pq.StringArray //TODO: can we make the function that checks return this instead of instantiating here?
 
@@ -205,12 +211,12 @@ func translateField(
 		translatedOld = translateValue(old, options)
 		translatedNew = translateValue(new, options)
 	} else if hasTableReference {
-		translatedOldFK, err := translateForeignKey(store, old, tableReference)
+		translatedOldFK, err := translateForeignKey(ctx, store, old, tableReference)
 		if err != nil {
 			return nil, false, err
 		}
 		translatedOld = translatedOldFK
-		translatedNewFK, err := translateForeignKey(store, new, tableReference)
+		translatedNewFK, err := translateForeignKey(ctx, store, new, tableReference)
 		if err != nil {
 			return nil, false, err
 		}
@@ -249,13 +255,10 @@ func translateField(
 
 // getChangeType interprets the change that happened on a field to characterize it as an AuditFieldChangeType
 func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType {
-	//Changes: (Meta) Revisit this, make sure we handle all cases. Can this every be called for a field that has no answer? What about on insert? Or do we only have answer on insert if non-null?
-	// return models.AFCAnswered
-
 	if new == nil || new == "{}" {
 		if old == nil || old == "{}" {
 			//Changes: (Meta) Revisit this, is this possible?
-			return ""
+			return models.AFCUnchanged
 		}
 		return models.AFCRemoved
 	}

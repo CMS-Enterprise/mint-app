@@ -127,27 +127,25 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                   <div
                     class="height-2 border-left-2px border-base-light margin-right-2 "
                   />
-                  <div>
-                    <a
-                      class="usa-link display-flex flex-align-center"
-                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+                  <a
+                    class="usa-link display-flex flex-align-center"
+                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+                  >
+                    <svg
+                      class="usa-icon margin-right-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        class="usa-icon margin-right-1"
-                        focusable="false"
-                        height="1em"
-                        role="img"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                        />
-                      </svg>
-                      Edit Model Plan
-                    </a>
-                  </div>
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                      />
+                    </svg>
+                    Edit Model Plan
+                  </a>
                 </div>
               </div>
             </div>
