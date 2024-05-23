@@ -270,6 +270,16 @@ const ChangeHistory = () => {
               </Grid>
             </div>
 
+            {auditChanges.length === 0 && query && (
+              <Alert
+                type="info"
+                className="margin-bottom-2"
+                heading={t('noResults.heading')}
+              >
+                {t('noResults.body')}
+              </Alert>
+            )}
+
             {auditChanges.length === 0 && !query && (
               <Alert type="info" slim className="margin-bottom-2">
                 {t('noChanges')}
