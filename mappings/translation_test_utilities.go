@@ -10,6 +10,15 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+// the tag db is what is used to convert a struct to it's relevant DB field
+const tagDBName = "db"
+
+// baseStructExcludeFields these are shared excluded fields that don't need to have a translation
+var baseStructExcludeFields []string = []string{"ID", "CreatedBy", "CreatedDts", "ModifiedBy", "ModifiedDts"}
+
+// taskListStructExcludeFields are the fields that aren't needed to be translated for most task list sections
+var taskListStructExcludeFields []string = append(baseStructExcludeFields, "ModelPlanID")
+
 //Changes (Testing) Assert that every go tag is correct? Is this possible? Example, on plan basics demo_code had extra quotes, and the notes field mapped to demo_code, so the translation was weird
 
 // assertTranslationFields will iterate through all fields in a translation and make sure that they are populated correctly and valid
@@ -47,7 +56,7 @@ func assertTranslationFieldData(t *testing.T, field reflect.StructField, value r
 
 	kind := value.Kind()
 	if kind == reflect.Ptr {
-
+		// Changes: (Testing) Update these, we shouldn't have empty flows, we should fail if not a struct
 		fmt.Print("found a pointer")
 	}
 	switch kind {
@@ -238,4 +247,91 @@ func assertStringPointerNilOrNotEmpty(t *testing.T, value *string, sectionName s
 
 	assert.NotEqualValues(t, "", *value, "field %s, section %s, is an empty string, a value was expected", field.Name, sectionName)
 
+}
+
+// assertTranslationStructCoverage loops through every field in a struct, it asserts that every field has a translation except for explicitly excluded fields
+func assertTranslationStructCoverage(t *testing.T, translationMap map[string]models.ITranslationField, sourceStruct any, excludeFields []string) {
+
+	v := reflect.ValueOf(sourceStruct)
+	typ := v.Type()
+	kind := typ.Kind()
+
+	if kind == reflect.Ptr {
+		// Dereference the pointer to get the underlying value
+		v = v.Elem()
+		typ = v.Type()
+		kind = typ.Kind()
+	}
+
+	// // Structs are the only type this function can work with
+	if kind != reflect.Struct {
+		t.Errorf("%s is not a struct", typ)
+		t.FailNow()
+	}
+	// reflect.vi
+	iterateTranslationFieldCoverage(t, translationMap, v, excludeFields)
+
+	// for i := 0; i < typ.NumField(); i++ {
+	// 	// Get the field
+	// 	field := typ.Field(i)
+	// 	//Changes: (Testing) This gets embedded structs, not the fields on the embedded structs, revisit!
+	// 	// value := v.Field(i)
+	// 	// translationKey := field.Name
+
+	// 	// Get the DB tag! That is needed for
+	// 	translationKey := field.Tag.Get(tagDBName)
+	// 	if translationKey == "" {
+	// 		// If tag was not found fail?
+	// 		//Changes: Revisit this
+	// 		t.Fail()
+	// 	}
+
+	// 	// TODO: Check if this is an excluded field
+	// 	translationInterface := translationMap[translationKey]
+	// 	assert.NotNil(t, translationInterface, "field (%s, tag %s) is expected to have a translation, but it is missing. Please add the translation according to the documentation, or exclude it if needed.", field.Name, translationKey)
+	// }
+
+}
+
+func iterateTranslationFieldCoverage(t *testing.T, translationMap map[string]models.ITranslationField, v reflect.Value, excludeFields []string) {
+	typ := v.Type()
+
+	for i := 0; i < typ.NumField(); i++ {
+		field := typ.Field(i)
+		value := v.Field(i)
+
+		// Check if this field is excluded
+		if isExcluded(field.Name, excludeFields) {
+			continue
+		}
+
+		// Check if the field is an embedded struct
+		if field.Anonymous {
+			// Changes: (Testing) should we limit recursion depth here?
+			iterateTranslationFieldCoverage(t, translationMap, value, excludeFields)
+			continue
+		}
+
+		// Get the DB tag
+		translationKey := field.Tag.Get(tagDBName)
+		if translationKey == "" {
+			// If tag was not found, fail
+			t.Errorf("field %s does not have a db tag", field.Name)
+			t.FailNow()
+		}
+
+		// Check if the translation exists in the map
+		translationInterface := translationMap[translationKey]
+		assert.NotNil(t, translationInterface, "field (%s, tag %s) is expected to have a translation, but it is missing. Please add the translation according to the documentation, or exclude it if needed.", field.Name, translationKey)
+	}
+
+}
+
+func isExcluded(fieldName string, excludeFields []string) bool {
+	for _, excludedField := range excludeFields {
+		if fieldName == excludedField {
+			return true
+		}
+	}
+	return false
 }
