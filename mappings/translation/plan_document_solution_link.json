@@ -1,0 +1,20 @@
+{
+  "solutionID": {
+    "gqlField": "solutionID",
+    "goField": "SolutionID",
+    "dbField": "solution_id",
+    "label": "Solution ID",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "tableReference": "operational_solution"
+  },
+  "documentID": {
+    "gqlField": "documentID",
+    "goField": "documentID",
+    "dbField": "document_id",
+    "label": "Document ID",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "tableReference": "plan_document"
+  }
+}

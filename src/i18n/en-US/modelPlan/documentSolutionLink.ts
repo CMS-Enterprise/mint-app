@@ -12,7 +12,17 @@ export const documentSolutionLink: TranslationDocumentSolutionLink = {
     dbField: 'solution_id',
     label: 'Solution ID',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    tableReference: 'operational_solution'
+  },
+  documentID: {
+    gqlField: 'documentID',
+    goField: 'documentID',
+    dbField: 'document_id',
+    label: 'Document ID',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    tableReference: 'plan_document'
   }
 };
 

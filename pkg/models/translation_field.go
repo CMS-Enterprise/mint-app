@@ -157,6 +157,7 @@ type ITranslationField interface {
 
 	GetQuestionType() *TranslationQuestionType
 
+	// GetTableReference returns the table that a translation references.
 	GetTableReference() (string, bool)
 }
 

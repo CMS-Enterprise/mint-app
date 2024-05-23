@@ -1,10 +1,32 @@
 {
-  "exsitingModelID": {
-    "gqlField": "exsitingModelID",
-    "goField": "ExsitingModelID",
-    "dbField": "exsiting_model_id",
-    "label": "Exsiting Model ID",
+  "existingModelID": {
+    "gqlField": "existingModelID",
+    "goField": "ExistingModelID",
+    "dbField": "existing_model_id",
+    "label": "Existing Model ID",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "tableReference": "existing_model"
+  },
+  "currentModelPlanID": {
+    "gqlField": "currentModelPlanID",
+    "goField": "currentModelPlanID",
+    "dbField": "current_model_plan_id",
+    "label": "Current Model Plan ID",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "tableReference": "model_plan"
+  },
+  "fieldName": {
+    "gqlField": "fieldName",
+    "goField": "FieldName",
+    "dbField": "field_name",
+    "label": "What question is this link for?",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "options": {
+      "GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH": "Which existing models does your proposed track/model most closely resemble?",
+      "GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH": "Which existing models is participation in a precondition for participation in this model?"
+    }
   }
 }

@@ -4,6 +4,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 
 	_ "embed"
 )
@@ -13,6 +14,11 @@ var existingModelCollectionGetSQL string
 
 //go:embed SQL/existing_model/get_by_id_LOADER.sql
 var existingModelGetByModelPlanIDLoaderSQL string
+
+//go:embed SQL/existing_model/get_by_id.sql
+var existingModelGetByByIDSQL string
+
+// Changes: Move this to the sql queries package
 
 // ExistingModelGetByIDLOADER returns the existing model for a slice of model plan ids
 func (s *Store) ExistingModelGetByIDLOADER(
@@ -59,4 +65,22 @@ func (s *Store) ExistingModelCollectionGet(_ *zap.Logger) ([]*models.ExistingMod
 	}
 
 	return existingModels, nil
+}
+
+// ExistingModelGetByID returns the existing model for a single model plan id
+func ExistingModelGetByID(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	id int,
+) (*models.ExistingModel, error) {
+
+	arg := map[string]interface{}{
+		"id": id,
+	}
+	existingModel, err := sqlutils.GetProcedure[models.ExistingModel](np, existingModelGetByByIDSQL, arg)
+	if err != nil {
+		return nil, err
+	}
+
+	return existingModel, nil
 }

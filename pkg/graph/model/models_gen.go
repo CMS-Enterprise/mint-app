@@ -34,9 +34,11 @@ type DiscussionReplyTranslation struct {
 	Content             models.TranslationField            `json:"content" db:"content"`
 }
 
-// Represents exsiting model link translation data
+// Represents existing model link translation data
 type ExistingModelLinkTranslation struct {
-	ExsitingModelID models.TranslationField `json:"exsitingModelID" db:"existing_model_id"`
+	ExistingModelID    models.TranslationField            `json:"existingModelID" db:"existing_model_id"`
+	CurrentModelPlanID models.TranslationField            `json:"currentModelPlanID" db:"current_model_plan_id"`
+	FieldName          models.TranslationFieldWithOptions `json:"fieldName" db:"field_name"`
 }
 
 // The current user's Launch Darkly key
@@ -233,6 +235,7 @@ type PlanDocumentLinkInput struct {
 // Represents document solution link translation data
 type PlanDocumentSolutionLinkTranslation struct {
 	SolutionID models.TranslationField `json:"solutionID" db:"solution_id"`
+	DocumentID models.TranslationField `json:"documentID" db:"document_id"`
 }
 
 // Represents plan document translation data

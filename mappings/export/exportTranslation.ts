@@ -45,7 +45,7 @@ export const translationSections = {
   operational_solution: operationalSolutions,
   operational_solution_subtask: subtasks,
   existing_model_link: existingModelLink,
-  document_solution_link: documentSolutionLink
+  plan_document_solution_link: documentSolutionLink
 };
 
 export const parseTypscriptToJSON = (translations: any, outputFile: string) => {

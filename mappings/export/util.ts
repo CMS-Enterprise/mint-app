@@ -45,7 +45,7 @@ export const translationSections = {
   operational_solution: operationalSolution,
   operational_solution_subtask: subtask,
   existing_model_link: existingModelLink,
-  document_solution_link: documentSolutionLink
+  plan_document_solution_link: documentSolutionLink
 };
 
 // Fields that are not needed by BE

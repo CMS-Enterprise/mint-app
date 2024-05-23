@@ -51,8 +51,19 @@ BEGIN
 
 
     IF TG_OP = 'INSERT' OR TG_OP = 'DELETE' THEN
-        IF insert_cols = '{*}' THEN 
-            h_changed = (h_new - h_old) - array_cat(excluded_cols, ARRAY[pkey_f, fkey_f]);  -- Removed unchanged (matching) values and columns configured as the primary or foreign key
+        IF insert_cols && '{"*"}' THEN  -- Check if insert cols includes asterisk
+
+            -- Check if insert cols include foreign key
+            IF NOT fkey_f = ANY(insert_cols) THEN
+            excluded_cols = array_append(excluded_cols, fkey_f);
+            END IF;
+
+            -- Check if insert cols include primary key, if not, exclude
+            IF NOT pkey_f = ANY(insert_cols) THEN
+            excluded_cols = array_append(excluded_cols, pkey_f);
+            END IF;
+
+            h_changed = (h_new - h_old) - excluded_cols;  -- Removed unchanged (matching) values and columns configured as the primary or foreign key
         ELSE
         diff_keys = (akeys(h_new - insert_cols)); --These are the keys that have changed that are not configured to be shown on insert. They are used to subtract from all the keys on insert or delete to show only the configured columns
         h_changed = (h_new -h_old) -diff_keys; --Removed unchanged (matching) values, and only  show specific columns for insert /delete
@@ -130,4 +141,7 @@ $audit_table$ LANGUAGE plpgsql
 SECURITY DEFINER --Run trigger as the creator of the trigger
 SET search_path = pg_catalog, public;
 
-COMMENT ON FUNCTION audit.if_modified IS 'This trigger function is responsible for writing entries to the audit.change, and the translated_audit_queue if a record set has been modified. It will look for a diff between the old and new values, and if so write an entry. It starts with hStores to do the diff comparison, but converts the changes to a jsonB that has the name of the field, as well as the old and new values. If a table is configured with insert columns *, it will insert every column except the primary key and those that were explicitly marked to ignore.';
+COMMENT ON FUNCTION audit.if_modified IS 'This trigger function is responsible for writing entries to the audit.change, and the translated_audit_queue if a record set has been modified. It will look for a diff between the old and new values, and if so write an entry.
+It starts with hStores to do the diff comparison, but converts the changes to a jsonB that has the name of the field, as well as the old and new values.
+If a table is configured with insert columns *, it will insert every column except the primary key and those that were explicitly marked to ignore.
+You can still list foreign and primary key fields to explicitly insert them as needed. Notably, this is needed for document solution link';
