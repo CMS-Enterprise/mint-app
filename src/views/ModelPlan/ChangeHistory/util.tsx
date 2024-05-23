@@ -65,14 +65,6 @@ export const isTranslationTaskListTable = (
   ].includes(tableName);
 };
 
-// Type guard to check union type
-export const isDiscussionReplyWithMetaData = (
-  data: TranslatedAuditMetaData
-): data is TranslatedAuditMetaGeneric => {
-  /* eslint no-underscore-dangle: 0 */
-  return data.__typename === 'TranslatedAuditMetaGeneric';
-};
-
 type HiddenFieldTypes = {
   table: TranslationTables;
   fields: string[];
@@ -110,6 +102,14 @@ const hiddenFields: HiddenFieldTypes[] = [
     fields: ['model_plan_id']
   }
 ];
+
+// Type guard to check union type
+export const isDiscussionReplyWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaGeneric => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaGeneric';
+};
 
 // Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array
 export const parseArray = (value: string | string[]) => {

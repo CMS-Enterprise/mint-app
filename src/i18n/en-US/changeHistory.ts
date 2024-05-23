@@ -26,7 +26,7 @@ const changeHistory = {
   crTdlUpdate:
     '{{action}} {{crTdlName}} {{toFrom}} FFS CRs and TDLs <datetime>on {{date}} at {{time}}</datetime>',
   subtaskUpdate:
-    '{{action}} {{subtaskName}} for {{solutionName}} <datetime>on {{date}} at {{time}}</datetime>',
+    '{{action}} {{subtaskName}} to {{solutionName}} <datetime>on {{date}} at {{time}}</datetime>',
   documentSolutionLinkUpdate:
     '{{documentName}} {{action}} {{toFrom}} {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   solutionCreate:
@@ -57,9 +57,9 @@ const changeHistory = {
   },
   showDetails: 'Show details',
   hideDetails: 'Hide details',
-  resultsInfo: 'Showing {{-resultsNum}} of {{-count}} change {{-query}}',
+  resultsInfo: 'Showing {{-resultsNum}} of {{-count}} result {{-query}}',
   resultsInfo_other:
-    'Showing {{-resultsNum}} - {{-count}} of {{-total}} changes {{-query}}',
+    'Showing {{-resultsNum}} - {{-count}} of {{-total}} results {{-query}}',
   auditUpdateTye: {
     INSERT: 'added',
     DELETE: 'removed',

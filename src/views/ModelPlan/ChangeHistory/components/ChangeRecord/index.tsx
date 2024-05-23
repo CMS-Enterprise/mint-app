@@ -234,6 +234,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
     changeRecordType === 'CR update' ||
     changeRecordType === 'TDL update' ||
     changeRecordType === 'Subtask update' ||
+    changeRecordType === 'Operational solution create' ||
     changeRecordType === 'Operational solution update' ||
     changeRecordType === 'Operational need update' ||
     changeRecordType === 'Document update';
