@@ -56,19 +56,6 @@ export type TranslationTaskListTable =
   | 'plan_ops_eval_and_learning'
   | 'plan_payments';
 
-export const isTranslationTaskListTable = (
-  tableName: string
-): tableName is TranslationTaskListTable => {
-  return [
-    'plan_basics',
-    'plan_general_characteristics',
-    'plan_participants_and_providers',
-    'plan_beneficiaries',
-    'plan_ops_eval_and_learning',
-    'plan_payments'
-  ].includes(tableName);
-};
-
 type HiddenFieldTypes = {
   table: TranslationTables;
   fields: string[];
@@ -106,6 +93,19 @@ const hiddenFields: HiddenFieldTypes[] = [
     fields: ['model_plan_id']
   }
 ];
+
+export const isTranslationTaskListTable = (
+  tableName: string
+): tableName is TranslationTaskListTable => {
+  return [
+    'plan_basics',
+    'plan_general_characteristics',
+    'plan_participants_and_providers',
+    'plan_beneficiaries',
+    'plan_ops_eval_and_learning',
+    'plan_payments'
+  ].includes(tableName);
+};
 
 // Type guard to check union type
 export const isDiscussionReplyWithMetaData = (
