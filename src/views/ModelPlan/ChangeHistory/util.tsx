@@ -3,6 +3,9 @@ import {
   TranslatedAuditMetaData,
   TranslatedAuditMetaGeneric
 } from 'gql/gen/graphql';
+import i18next from 'i18next';
+
+import { formatDateUtc, formatTime } from 'utils/date';
 
 export type ChangeRecordType = NonNullable<
   GetChangeHistoryQuery['translatedAuditCollection']
@@ -126,18 +129,39 @@ export const parseArray = (value: string | string[]) => {
   }
 };
 
+// Sorts the changes based on the sort option
+export const handleSortOptions = (
+  changes: ChangeRecordType[],
+  sort: 'newest' | 'oldest'
+) => {
+  let sortedChanges: ChangeRecordType[] = [];
+  if (sort === 'newest') {
+    sortedChanges = [...changes].sort((a, b) => b.date.localeCompare(a.date));
+    // Sorts the changes so that new plans are first
+    sortedChanges = sortCreateChangeFirst(sortedChanges, 'desc');
+  } else if (sort === 'oldest') {
+    sortedChanges = [...changes].sort((a, b) => a.date.localeCompare(b.date));
+    // Sorts the changes so that new plans are first
+    sortedChanges = sortCreateChangeFirst(sortedChanges, 'asc');
+  }
+
+  return sortedChanges;
+};
+
 // Sorts the changes so that new plans are first
 export const sortCreateChangeFirst = (
-  a: ChangeRecordType,
-  b: ChangeRecordType
+  changes: ChangeRecordType[],
+  direction: 'asc' | 'desc'
 ) => {
-  const aType = identifyChangeType(a);
-  const bType = identifyChangeType(b);
+  return changes.sort((a: ChangeRecordType, b: ChangeRecordType) => {
+    const aType = identifyChangeType(a);
+    const bType = identifyChangeType(b);
 
-  if (aType === 'New plan') return 1;
-  if (bType === 'New plan') return -1;
+    if (aType === 'New plan') return direction === 'asc' ? -1 : 1;
+    if (bType === 'New plan') return direction === 'asc' ? 1 : -1;
 
-  return 0;
+    return 0;
+  });
 };
 
 const readyForReviewFields = [
@@ -160,6 +184,50 @@ export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
   });
 
   return filteredReviewChanges;
+};
+
+export const filterQueryAudits = (
+  queryString: string,
+  audits: ChangeRecordType[]
+): ChangeRecordType[] => {
+  return audits.filter(audit => {
+    const lowerCaseQuery = queryString.toLowerCase();
+
+    const translatedFieldsMatchQuery = audit.translatedFields.filter(
+      field =>
+        field.fieldNameTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+        field.newTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+        field.oldTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+        field.referenceLabel?.toLowerCase().includes(lowerCaseQuery)
+    );
+
+    if (audit.actorName.toLowerCase().includes(lowerCaseQuery)) {
+      return true;
+    }
+
+    if (
+      formatDateUtc(audit.date.replace(' ', 'T'), 'MMMM d, yyyy')
+        .toLowerCase()
+        .includes(lowerCaseQuery) ||
+      formatTime(audit.date).toLowerCase().includes(lowerCaseQuery)
+    ) {
+      return true;
+    }
+
+    if (
+      i18next
+        .t(`changeHistory:sections:${audit.tableName}`)
+        .toLowerCase()
+        .includes(lowerCaseQuery)
+    ) {
+      return true;
+    }
+
+    if (translatedFieldsMatchQuery.length > 0) {
+      return true;
+    }
+    return false;
+  });
 };
 
 // Extracts status changes from the list of changes and separates them from other changes
@@ -356,8 +424,9 @@ export const sortAllChanges = (changes: ChangeRecordType[]) => {
     b.date.localeCompare(a.date)
   );
 
-  const changesSortedWithCreateFirst = changesSortedByDate.sort(
-    sortCreateChangeFirst
+  const changesSortedWithCreateFirst = sortCreateChangeFirst(
+    changesSortedByDate,
+    'desc'
   );
 
   return changesSortedWithCreateFirst;

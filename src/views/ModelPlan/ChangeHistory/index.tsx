@@ -1,8 +1,21 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { useLocation, useParams } from 'react-router-dom';
-import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
+import {
+  Grid,
+  GridContainer,
+  Icon,
+  Label,
+  Select,
+  SummaryBox
+} from '@trussworks/react-uswds';
 import { useGetChangeHistoryQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -11,12 +24,12 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import GlobalClientFilter from 'components/TableFilter';
-import { formatDateUtc, formatTime } from 'utils/date';
+import i18n from 'i18n';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import ChangeRecord from './components/ChangeRecord';
-import { ChangeRecordType, sortAllChanges } from './util';
+import { filterQueryAudits, handleSortOptions, sortAllChanges } from './util';
 
 type LocationProps = {
   state: {
@@ -24,6 +37,22 @@ type LocationProps = {
   };
   from?: string;
 };
+
+type SortProps = {
+  value: 'newest' | 'oldest';
+  label: string;
+};
+
+const sortOptions: SortProps[] = [
+  {
+    value: 'newest',
+    label: i18n.t('changeHistory:sort.newest')
+  },
+  {
+    value: 'oldest',
+    label: i18n.t('changeHistory:sort.oldest')
+  }
+];
 
 const ChangeHistory = () => {
   const { t } = useTranslation('changeHistory');
@@ -48,86 +77,68 @@ const ChangeHistory = () => {
 
   const sortedChanges = sortAllChanges(changes);
 
+  const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
+
+  const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
+
   const [pageOffset, setPageOffset] = useState(0);
 
-  const searchAudits = useCallback(
-    (query: string, audits: ChangeRecordType[]): ChangeRecordType[] => {
-      return audits.filter(audit => {
-        const lowerCaseQuery = query.toLowerCase();
+  // Pagination Configuration
+  const itemsPerPage = 10;
 
-        const translatedFieldsMatchQuery = audit.translatedFields.filter(
-          field =>
-            field.fieldNameTranslated?.toLowerCase().includes(lowerCaseQuery) ||
-            field.newTranslated?.toLowerCase().includes(lowerCaseQuery) ||
-            field.oldTranslated?.toLowerCase().includes(lowerCaseQuery) ||
-            field.referenceLabel?.toLowerCase().includes(lowerCaseQuery)
-        );
+  const endOffset = pageOffset + itemsPerPage;
 
-        if (audit.actorName.toLowerCase().includes(lowerCaseQuery)) {
-          return true;
-        }
-
-        if (
-          formatDateUtc(audit.date.replace(' ', 'T'), 'MMMM d, yyyy')
-            .toLowerCase()
-            .includes(lowerCaseQuery) ||
-          formatTime(audit.date).toLowerCase().includes(lowerCaseQuery)
-        ) {
-          return true;
-        }
-
-        if (
-          t(`sections:${audit.tableName}`)
-            .toLowerCase()
-            .includes(lowerCaseQuery)
-        ) {
-          return true;
-        }
-
-        if (translatedFieldsMatchQuery.length > 0) {
-          return true;
-        }
-        return false;
-      });
-    },
-    [t]
+  const [currentItems, setCurrentItems] = useState(
+    auditChanges.slice(pageOffset, endOffset)
   );
 
+  const [pageCount, setPageCount] = useState(
+    auditChanges ? Math.ceil(auditChanges.length / itemsPerPage) : 1
+  );
+
+  // Search/query configuration
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
 
-  const [queryAudits, setQueryAudits] = useState<ChangeRecordType[]>(
-    sortedChanges
-  );
+  const searchAudits = useCallback(filterQueryAudits, []);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
     if (query.trim()) {
-      const filteredAudits = searchAudits(query, sortedChanges);
-      setQueryAudits(filteredAudits);
+      const filteredAudits = searchAudits(query, auditChanges);
+      setAuditChanges(filteredAudits);
       setResultsNum(filteredAudits.length);
     } else {
-      setQueryAudits(sortedChanges);
+      setAuditChanges(handleSortOptions(sortedChanges, sort));
     }
     setPageOffset(0);
   }, [query, searchAudits, setPageOffset]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const availableChanges = query ? queryAudits : sortedChanges;
+  // Update the audit changes when the data is loaded.
+  useEffect(() => {
+    if (!loading) {
+      setAuditChanges([...sortedChanges]);
+    }
+  }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Pagination Configuration
-  const itemsPerPage = 10;
-  const endOffset = pageOffset + itemsPerPage;
-  const currentItems = availableChanges?.slice(pageOffset, endOffset);
-  const pageCount = availableChanges
-    ? Math.ceil(availableChanges.length / itemsPerPage)
-    : 1;
+  // Update the current items when the page offset changes.
+  useEffect(() => {
+    setCurrentItems(auditChanges.slice(pageOffset, endOffset));
+    setPageCount(
+      auditChanges ? Math.ceil(auditChanges.length / itemsPerPage) : 1
+    );
+  }, [auditChanges, endOffset, pageOffset]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event: { selected: number }) => {
-    const newOffset =
-      (event.selected * itemsPerPage) % availableChanges?.length;
+    const newOffset = (event.selected * itemsPerPage) % auditChanges?.length;
     setPageOffset(newOffset);
   };
+
+  // Sort the changes when the sort option changes.
+  useEffect(() => {
+    setAuditChanges(handleSortOptions(auditChanges, sort));
+  }, [sort]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (error) {
     return <NotFound />;
@@ -178,37 +189,75 @@ const ChangeHistory = () => {
         ) : (
           <>
             <div className="margin-top-2 margin-bottom-6">
-              <Grid tablet={{ col: 6 }}>
-                <GlobalClientFilter
-                  setGlobalFilter={setQuery}
-                  tableID="table-id"
-                  tableName="table-name"
-                  className="width-mobile-lg maxw-none margin-bottom-3"
-                />
-              </Grid>
+              <Grid row>
+                <Grid tablet={{ col: 6 }}>
+                  <GlobalClientFilter
+                    setGlobalFilter={setQuery}
+                    tableID="table-id"
+                    tableName="table-name"
+                    className="width-mobile-lg maxw-none margin-bottom-3"
+                  />
 
-              {query && (
-                <div className="display-flex">
-                  <p className="margin-y-0">
-                    {t('resultsInfo', {
-                      resultsNum:
-                        availableChanges.length > 0
-                          ? (pageOffset / itemsPerPage) * 10 + 1
-                          : (pageOffset / itemsPerPage) * 10,
-                      count:
-                        (pageOffset / itemsPerPage) * 10 + currentItems?.length,
-                      total: resultsNum,
-                      query: 'for'
-                    })}
-                    {query && (
-                      <span className="text-bold">{` "${query}"`}</span>
-                    )}
-                  </p>
-                </div>
-              )}
+                  {query && (
+                    <div className="display-flex">
+                      <p className="margin-y-0">
+                        {t('resultsInfo', {
+                          resultsNum:
+                            auditChanges.length > 0
+                              ? (pageOffset / itemsPerPage) * 10 + 1
+                              : (pageOffset / itemsPerPage) * 10,
+                          count:
+                            (pageOffset / itemsPerPage) * 10 +
+                            currentItems?.length,
+                          total: resultsNum,
+                          query: 'for'
+                        })}
+                        {query && (
+                          <span className="text-bold">{` "${query}"`}</span>
+                        )}
+                      </p>
+                    </div>
+                  )}
+                </Grid>
+
+                <Grid tablet={{ col: 6 }}>
+                  <div
+                    className="margin-left-auto display-flex"
+                    style={{ maxWidth: '13rem' }}
+                  >
+                    <Label
+                      htmlFor="sort"
+                      className="text-normal margin-top-1 margin-right-1"
+                    >
+                      {t('sort.label')}
+                    </Label>
+
+                    <Select
+                      id="sort"
+                      className="margin-bottom-2 margin-top-0"
+                      name="sort"
+                      value={sort}
+                      onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                        setSort(e.target.value as SortProps['value']);
+                      }}
+                    >
+                      {sortOptions.map(option => {
+                        return (
+                          <option
+                            key={`sort-${option.value}`}
+                            value={option.value}
+                          >
+                            {option.label}
+                          </option>
+                        );
+                      })}
+                    </Select>
+                  </div>
+                </Grid>
+              </Grid>
             </div>
 
-            {sortedChanges.length === 0 && (
+            {auditChanges.length === 0 && !query && (
               <Alert type="info" slim className="margin-bottom-2">
                 {t('noChanges')}
               </Alert>

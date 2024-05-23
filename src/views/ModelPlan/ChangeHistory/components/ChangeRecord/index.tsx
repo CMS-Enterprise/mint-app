@@ -267,6 +267,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
         >
           <span className="text-bold">{changeRecord.actorName} </span>
 
+          {/* New Plan audit */}
           {changeRecordType === 'New plan' && (
             <Trans
               i18nKey="changeHistory:planCreate"
@@ -283,6 +284,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
             />
           )}
 
+          {/* Task list and status audits */}
           {(changeRecordType === 'Task list status update' ||
             changeRecordType === 'Status update') && (
             <Trans
@@ -301,6 +303,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
             />
           )}
 
+          {/* Team audits */}
           {changeRecordType === 'Team update' &&
             (() => {
               const teamChange = (teamType: string | undefined) =>
@@ -342,6 +345,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {/* Document audits */}
           {changeRecordType === 'Document update' &&
             (() => {
               const documentType =
@@ -392,6 +396,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {/* CR and TDL audits */}
           {(changeRecordType === 'CR update' ||
             changeRecordType === 'TDL update') &&
             (() => {
@@ -419,6 +424,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {/* Subtask audits */}
           {changeRecordType === 'Subtask update' &&
             (() => {
               const subtaskChange = (actionType: DatabaseOperation) =>
@@ -445,6 +451,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {/* Document solution link audits */}
           {changeRecordType === 'Document solution link update' &&
             (() => {
               return (
@@ -464,6 +471,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {/* Operational solution create audits */}
           {changeRecordType === 'Operational solution create' &&
             (() => {
               return (
@@ -482,6 +490,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {/* Operations soltutiin update audits */}
           {changeRecordType === 'Operational solution update' &&
             (() => {
               return (
@@ -501,6 +510,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {/* Operational need update audits */}
           {changeRecordType === 'Operational need update' &&
             (() => {
               return (
@@ -518,6 +528,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {/* Discussion audits */}
           {changeRecordType === 'Discussion update' &&
             (() => {
               const metaDiscussion =
@@ -590,6 +601,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
+          {/* Standard update audits */}
           {changeRecordType === 'Standard update' && (
             <Trans
               i18nKey="changeHistory:change"
