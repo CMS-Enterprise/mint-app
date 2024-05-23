@@ -5,10 +5,12 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 func TestParticipantsAndProvidersTranslation(t *testing.T) {
-	translation, err := ParticipantsAndProvidersTranslation()
+	translation, err := PlanParticipantsAndProvidersTranslation()
 
 	assert.NoError(t, err)
 	assert.NotNil(t, translation)
@@ -20,7 +22,7 @@ func TestParticipantsAndProvidersTranslation(t *testing.T) {
 }
 
 func TestParticipantsAndProvidersTranslationVerifyFieldsArePopulated(t *testing.T) {
-	translation, err := ParticipantsAndProvidersTranslation()
+	translation, err := PlanParticipantsAndProvidersTranslation()
 	assert.NoError(t, err)
 	assert.NotNil(t, translation)
 
@@ -29,4 +31,17 @@ func TestParticipantsAndProvidersTranslationVerifyFieldsArePopulated(t *testing.
 
 	assertTranslationFields(t, translation)
 
+}
+
+func TestPlanParticipantsAndProvidersTranslationCoverage(t *testing.T) {
+	translation, err := PlanParticipantsAndProvidersTranslation()
+
+	assert.NoError(t, err)
+	assert.NotNil(t, translation)
+
+	tMap, err := translation.ToMap()
+	assert.NoError(t, err)
+	assert.NotNil(t, tMap)
+
+	assertTranslationStructCoverage(t, tMap, models.PlanParticipantsAndProviders{}, taskListStructExcludeFields)
 }
