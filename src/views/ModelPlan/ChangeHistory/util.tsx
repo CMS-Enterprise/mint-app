@@ -1,7 +1,8 @@
 import {
   GetChangeHistoryQuery,
   TranslatedAuditMetaData,
-  TranslatedAuditMetaGeneric
+  TranslatedAuditMetaGeneric,
+  TranslationDataType
 } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
@@ -193,27 +194,50 @@ export const filterQueryAudits = (
   return audits.filter(audit => {
     const lowerCaseQuery = queryString.toLowerCase();
 
-    const translatedFieldsMatchQuery = audit.translatedFields.filter(
-      field =>
+    const translatedFieldsMatchQuery = audit.translatedFields.filter(field => {
+      if (
         field.fieldNameTranslated?.toLowerCase().includes(lowerCaseQuery) ||
         field.newTranslated?.toLowerCase().includes(lowerCaseQuery) ||
         field.oldTranslated?.toLowerCase().includes(lowerCaseQuery) ||
         field.referenceLabel?.toLowerCase().includes(lowerCaseQuery)
-    );
+      ) {
+        return true;
+      }
 
+      // Parsing date of audit data to check if it matches the query
+      if (field.dataType === TranslationDataType.DATE) {
+        if (
+          formatDateUtc(field.newTranslated?.replace(' ', 'T'), 'MM/dd/yyyy')
+            .toLowerCase()
+            .includes(lowerCaseQuery) ||
+          formatDateUtc(field.oldTranslated?.replace(' ', 'T'), 'MM/dd/yyyy')
+            .toLowerCase()
+            .includes(lowerCaseQuery)
+        ) {
+          return true;
+        }
+      }
+      return false;
+    });
+
+    // Check if the actor name matches the query
     if (audit.actorName.toLowerCase().includes(lowerCaseQuery)) {
       return true;
     }
 
+    // Check if the date of the audit entry matches the query
     if (
       formatDateUtc(audit.date.replace(' ', 'T'), 'MMMM d, yyyy')
         .toLowerCase()
         .includes(lowerCaseQuery) ||
-      formatTime(audit.date).toLowerCase().includes(lowerCaseQuery)
+      formatTime(audit.date.replace(' ', 'T'))
+        .toLowerCase()
+        .includes(lowerCaseQuery)
     ) {
       return true;
     }
 
+    // Check if the section name matches the query
     if (
       i18next
         .t(`changeHistory:sections:${audit.tableName}`)
@@ -226,6 +250,7 @@ export const filterQueryAudits = (
     if (translatedFieldsMatchQuery.length > 0) {
       return true;
     }
+
     return false;
   });
 };

@@ -44,11 +44,13 @@ type LocationProps = {
   from?: string;
 };
 
+// Sort options type for the select dropdown
 type SortProps = {
   value: 'newest' | 'oldest';
   label: string;
 };
 
+// Sort options for the select dropdown
 const sortOptions: SortProps[] = [
   {
     value: 'newest',
@@ -83,31 +85,36 @@ const ChangeHistory = () => {
 
   const sortedChanges = sortAllChanges(changes);
 
+  // Contains sort state of select options
   const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
 
+  // Contains the sorted changes based on select/sort option
   const [sortedAudits, setSortedAudits] = useState([...sortedChanges]);
 
+  // Contains the current set of changes to display, including search and sort
   const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
-
-  const [pageOffset, setPageOffset] = useState(0);
 
   // Pagination Configuration
   const itemsPerPage = 10;
 
-  const endOffset = pageOffset + itemsPerPage;
+  const [pageOffset, setPageOffset] = useState(0);
 
-  const [currentItems, setCurrentItems] = useState(
-    auditChanges.slice(pageOffset, endOffset)
-  );
+  const endOffset = pageOffset + itemsPerPage;
 
   const [pageCount, setPageCount] = useState(
     auditChanges ? Math.ceil(auditChanges.length / itemsPerPage) : 1
+  );
+
+  // Current items to dsiplay on the current page - contains search and sort data
+  const [currentItems, setCurrentItems] = useState(
+    auditChanges.slice(pageOffset, endOffset)
   );
 
   // Search/query configuration
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
 
+  // searchAudits is a function to filter audits based on query
   const searchAudits = useCallback(filterQueryAudits, []);
 
   //  If no query, return all solutions, otherwise, matching query solutions
@@ -117,8 +124,10 @@ const ChangeHistory = () => {
       setAuditChanges(filteredAudits);
       setResultsNum(filteredAudits.length);
     } else {
+      // Sets the default audits if no query present
       setAuditChanges(sortedAudits);
     }
+    // Return the page to the first page when the query changes
     setPageOffset(0);
   }, [query, searchAudits, setPageOffset]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -159,6 +168,7 @@ const ChangeHistory = () => {
 
   return (
     <MainContent>
+      {/* Summary banner */}
       <SummaryBox
         className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
         data-testid="read-only-model-summary"
@@ -204,15 +214,17 @@ const ChangeHistory = () => {
             <div className="margin-top-2 margin-bottom-4">
               <Grid row>
                 <Grid tablet={{ col: 6 }}>
+                  {/* Search bar */}
                   <GlobalClientFilter
                     setGlobalFilter={setQuery}
                     tableID="table-id"
                     tableName="table-name"
-                    className="width-mobile-lg maxw-none margin-bottom-3 padding-top-1"
+                    className="width-full maxw-mobile-lg margin-bottom-3 padding-top-1"
                   />
 
+                  {/* Results text */}
                   {query && (
-                    <div className="display-flex">
+                    <div className="display-flex padding-bottom-2">
                       <p className="margin-y-0">
                         {t('resultsInfo', {
                           resultsNum:
@@ -233,6 +245,7 @@ const ChangeHistory = () => {
                   )}
                 </Grid>
 
+                {/* Select sort display */}
                 <Grid tablet={{ col: 6 }}>
                   <div
                     className="margin-left-auto display-flex"
@@ -270,6 +283,7 @@ const ChangeHistory = () => {
               </Grid>
             </div>
 
+            {/* No results from query */}
             {auditChanges.length === 0 && query && (
               <Alert
                 type="info"
@@ -280,6 +294,7 @@ const ChangeHistory = () => {
               </Alert>
             )}
 
+            {/* No audits alert */}
             {auditChanges.length === 0 && !query && (
               <Alert type="info" slim className="margin-bottom-2">
                 {t('noChanges')}
@@ -303,6 +318,7 @@ const ChangeHistory = () => {
               );
             })}
 
+            {/* Pagination */}
             {pageCount > 1 && (
               <ReactPaginate
                 breakLabel="..."
