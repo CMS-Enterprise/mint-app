@@ -37,7 +37,7 @@ export const MiniChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
   return (
     <Card className="mini-change-record">
-      <Grid row className="padding-2">
+      <Grid row className="padding-2" style={{ wordWrap: 'break-word' }}>
         <Grid tablet={{ col: 2 }}>
           <AvatarCircle user={changeRecord.actorName} />
         </Grid>
