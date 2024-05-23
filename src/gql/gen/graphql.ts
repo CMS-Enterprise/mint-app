@@ -379,6 +379,7 @@ export type DiscussionReplyCreateInput = {
 export type DiscussionReplyTranslation = {
   __typename: 'DiscussionReplyTranslation';
   content: TranslationField;
+  isAssessment: TranslationField;
   userRole: TranslationFieldWithOptions;
   userRoleDescription: TranslationField;
 };

@@ -43,6 +43,14 @@ export const replies: TranslationReplies = {
       'To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA
+  },
+  isAssessment: {
+    gqlField: 'isAssessment',
+    goField: 'IsAssessment',
+    dbField: 'is_assessment',
+    label: 'Is the user an assessment user?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.BOOLEAN
   }
 };
 

@@ -953,6 +953,7 @@ export type TranslationRepliesForm = {
   userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
   userRoleDescription: TranslationFieldProperties;
   content: TranslationFieldProperties;
+  isAssessment: TranslationFieldProperties;
 };
 
 type TranslationRepliesGQL = Omit<
