@@ -188,14 +188,14 @@ const ChangeHistory = () => {
           <PageLoading />
         ) : (
           <>
-            <div className="margin-top-2 margin-bottom-6">
+            <div className="margin-top-2 margin-bottom-4">
               <Grid row>
                 <Grid tablet={{ col: 6 }}>
                   <GlobalClientFilter
                     setGlobalFilter={setQuery}
                     tableID="table-id"
                     tableName="table-name"
-                    className="width-mobile-lg maxw-none margin-bottom-3"
+                    className="width-mobile-lg maxw-none margin-bottom-3 padding-top-1"
                   />
 
                   {query && (
