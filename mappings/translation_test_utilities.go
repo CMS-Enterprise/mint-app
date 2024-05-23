@@ -335,3 +335,9 @@ func isExcluded(fieldName string, excludeFields []string) bool {
 	}
 	return false
 }
+
+// TestAssertTranslationStructCoverage asserts that this test function is functioning as expected
+func TestAssertTranslationStructCoverage(t *testing.T) {
+	//Changes: (Testing) Update this to test correctly
+
+}
