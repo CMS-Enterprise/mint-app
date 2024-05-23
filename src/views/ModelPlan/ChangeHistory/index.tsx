@@ -226,17 +226,20 @@ const ChangeHistory = () => {
                   {query && (
                     <div className="display-flex padding-bottom-2">
                       <p className="margin-y-0">
-                        {t('resultsInfo', {
-                          resultsNum:
-                            auditChanges.length > 0
-                              ? (pageOffset / itemsPerPage) * 10 + 1
-                              : (pageOffset / itemsPerPage) * 10,
-                          count:
-                            (pageOffset / itemsPerPage) * 10 +
-                            currentItems?.length,
-                          total: resultsNum,
-                          query: 'for'
-                        })}
+                        {auditChanges.length > itemsPerPage
+                          ? t('resultsInfo', {
+                              resultsNum: (pageOffset / itemsPerPage) * 10 + 1,
+                              count:
+                                (pageOffset / itemsPerPage) * 10 +
+                                currentItems?.length,
+                              total: resultsNum,
+                              query: 'for'
+                            })
+                          : t('resultsNoInfo', {
+                              resultsNum: auditChanges.length,
+                              count: auditChanges.length,
+                              query: 'for'
+                            })}
                         {query && (
                           <span className="text-bold">{` "${query}"`}</span>
                         )}

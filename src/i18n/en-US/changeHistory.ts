@@ -60,6 +60,8 @@ const changeHistory = {
   resultsInfo: 'Showing {{-resultsNum}} of {{-count}} result {{-query}}',
   resultsInfo_other:
     'Showing {{-resultsNum}} - {{-count}} of {{-total}} results {{-query}}',
+  resultsNoInfo: 'Showing {{-resultsNum}} result {{-query}}',
+  resultsNoInfo_other: 'Showing {{-resultsNum}} results {{-query}}',
   noResults: {
     heading: 'There are no results that match you search.',
     body: 'Please double-check you search and try again.'
