@@ -85,6 +85,8 @@ const ChangeHistory = () => {
 
   const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
 
+  const [sortedAudits, setSortedAudits] = useState([...sortedChanges]);
+
   const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
 
   const [pageOffset, setPageOffset] = useState(0);
@@ -111,11 +113,11 @@ const ChangeHistory = () => {
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
     if (query.trim()) {
-      const filteredAudits = searchAudits(query, auditChanges);
+      const filteredAudits = searchAudits(query, sortedAudits);
       setAuditChanges(filteredAudits);
       setResultsNum(filteredAudits.length);
     } else {
-      setAuditChanges(handleSortOptions(sortedChanges, sort));
+      setAuditChanges(sortedAudits);
     }
     setPageOffset(0);
   }, [query, searchAudits, setPageOffset]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -124,6 +126,7 @@ const ChangeHistory = () => {
   useEffect(() => {
     if (!loading) {
       setAuditChanges([...sortedChanges]);
+      setSortedAudits([...sortedChanges]);
     }
   }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -144,6 +147,7 @@ const ChangeHistory = () => {
   // Sort the changes when the sort option changes.
   useEffect(() => {
     setAuditChanges(handleSortOptions(auditChanges, sort));
+    setSortedAudits(handleSortOptions(sortedChanges, sort));
   }, [sort]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Group changes by day
