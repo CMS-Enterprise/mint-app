@@ -25,15 +25,12 @@ const changeHistory = {
     '{{action}} {{documentName}}{{isLink}} {{toFrom}} Documents <datetime>on {{date}} at {{time}}</datetime>',
   crTdlUpdate:
     '{{action}} {{crTdlName}} {{toFrom}} FFS CRs and TDLs <datetime>on {{date}} at {{time}}</datetime>',
-  subtaskUpdate:
-    '{{action}} {{subtaskName}} to {{solutionName}} <datetime>on {{date}} at {{time}}</datetime>',
   documentSolutionLinkUpdate:
     '{{documentName}} {{action}} {{toFrom}} {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   solutionCreate:
     'addded {{-count}} solutions to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
-  // solutionUpdate:
-  // '{{action}} {{needName}} solution: {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   solutionUpdate: '{{needName}} solution {{action}}: {{solutionName}}',
+  subtaskUpdate: 'Subtask {{action}} for {{needName}}: {{solutionName}}',
   needUpdate:
     '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   sections: {
@@ -67,7 +64,7 @@ const changeHistory = {
     heading: 'There are no results that match you search.',
     body: 'Please double-check you search and try again.'
   },
-  auditUpdateTye: {
+  auditUpdateType: {
     INSERT: 'added',
     DELETE: 'removed',
     UPDATE: 'updated'

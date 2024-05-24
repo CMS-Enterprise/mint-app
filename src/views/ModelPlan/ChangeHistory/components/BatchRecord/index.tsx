@@ -13,7 +13,7 @@ import { AvatarCircle } from 'components/shared/Avatar';
 import CollapsableLink from 'components/shared/CollapsableLink';
 import { formatDateUtc, formatTime } from 'utils/date';
 
-import { parseArray } from '../../util';
+import { batchedTables, parseArray } from '../../util';
 
 import '../ChangeRecord/index.scss';
 
@@ -36,18 +36,35 @@ const SolutionChanges = ({ change }: SingleChangeProps) => {
   return (
     <div className="margin-bottom-2 margin-top-neg-05" key={change.id}>
       <div className="text-bold margin-right-05">
-        Recruit participants{' '}
-        <span className="text-normal">
-          solution {t(`auditUpdateTye.${change.action}`)}
-        </span>{' '}
-        : Contractor
+        {/* Operational solution header */}
+        {change.tableName === 'operational_solution' && (
+          <>
+            Recruit participants{' '}
+            <span className="text-normal">
+              solution {t(`auditUpdateType.${change.action}`)}
+            </span>{' '}
+            : Contractor
+          </>
+        )}
+
+        {/* Subtask header */}
+        {change.tableName === 'operational_solution_subtask' && (
+          <>
+            <span className="text-normal">
+              Subtask {t(`auditUpdateType.${change.action}`)} for
+            </span>{' '}
+            Recruit participants: Contractor
+          </>
+        )}
       </div>
 
       <div className="change-record__answer margin-y-1">
         {(() => {
           return change.translatedFields.map(field => (
             <div key={field.id}>
-              <span>{field.fieldNameTranslated}: </span>
+              {field.newTranslated && (
+                <span>{field.fieldNameTranslated}: </span>
+              )}
               <RenderValue
                 value={field.newTranslated}
                 dataType={field.dataType}
@@ -61,11 +78,12 @@ const SolutionChanges = ({ change }: SingleChangeProps) => {
         {(() => {
           return (
             <>
-              {change.action !== DatabaseOperation.DELETE && (
-                <div className="text-bold padding-y-105">
-                  {t('previousDetails')}
-                </div>
-              )}
+              {change.action !== DatabaseOperation.DELETE &&
+                !!change.translatedFields.find(field => field.old) && (
+                  <div className="text-bold padding-y-105">
+                    {t('previousDetails')}
+                  </div>
+                )}
               {change.translatedFields.map(field => {
                 if (!field.old) return <div key={field.id} />;
                 return (
@@ -160,7 +178,8 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
 
   // Determine if the change record should be expanded to show more data
   const showMoreData: boolean =
-    changeRecords[0].action !== DatabaseOperation.INSERT;
+    changeRecords[0].action !== DatabaseOperation.INSERT ||
+    changeRecords[0].tableName !== 'operational_solution';
 
   return (
     <Card className="change-record">
@@ -192,17 +211,34 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
         <ul className="margin-top-1 margin-bottom-1 margin-left-4">
           {changeRecords.map(change => (
             <li key={change.id}>
-              <Trans
-                i18nKey="changeHistory:solutionUpdate"
-                values={{
-                  action: t(`auditUpdateTye.${change.action}`),
-                  needName: 'Recruit participants', // TODO: change to dynamic value
-                  solutionName: 'Contractor' // TODO: change to dynamic value
-                }}
-                components={{
-                  datetime: <span />
-                }}
-              />
+              {changeRecords[0].tableName === 'operational_solution' && (
+                <Trans
+                  i18nKey="changeHistory:solutionUpdate"
+                  values={{
+                    action: t(`auditUpdateType.${change.action}`),
+                    needName: 'Recruit participants', // TODO: change to dynamic value
+                    solutionName: 'Contractor' // TODO: change to dynamic value
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              )}
+
+              {changeRecords[0].tableName ===
+                'operational_solution_subtask' && (
+                <Trans
+                  i18nKey="changeHistory:subtaskUpdate"
+                  values={{
+                    action: t(`auditUpdateType.${change.action}`),
+                    needName: 'Recruit participants', // TODO: change to dynamic value
+                    solutionName: 'Contractor' // TODO: change to dynamic value
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              )}
             </li>
           ))}
         </ul>
@@ -219,7 +255,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
           styleLeftBar={false}
         >
           <div className="margin-bottom-neg-1">
-            {changeRecords[0].tableName === 'operational_solution' &&
+            {batchedTables.includes(changeRecords[0].tableName) &&
               (() => {
                 return changeRecords.map(change => (
                   <SolutionChanges change={change} key={change.id} />

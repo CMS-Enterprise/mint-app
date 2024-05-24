@@ -13,7 +13,7 @@ import { AvatarCircle } from 'components/shared/Avatar';
 import Spinner from 'components/Spinner';
 import { formatDateUtc, formatTime } from 'utils/date';
 
-import { sortAllChanges } from '../../util';
+import { batchedTables, sortAllChanges } from '../../util';
 
 import './index.scss';
 
@@ -35,7 +35,7 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
     changeCount +=
       changeRecord.action === DatabaseOperation.INSERT ||
       changeRecord.action === DatabaseOperation.DELETE ||
-      changeRecord.tableName === 'operational_solution'
+      batchedTables.includes(changeRecord.tableName)
         ? 1
         : changeRecord.translatedFields.length || 1;
   });

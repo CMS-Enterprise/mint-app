@@ -414,7 +414,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                 <Trans
                   i18nKey="changeHistory:crTdlUpdate"
                   values={{
-                    action: t(`auditUpdateTye.${changeRecord.action}`),
+                    action: t(`auditUpdateType.${changeRecord.action}`),
                     crTdlName,
                     toFrom: t(`toFromIn.${changeRecord.action}`),
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
@@ -441,7 +441,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                 <Trans
                   i18nKey="changeHistory:subtaskUpdate"
                   values={{
-                    action: t(`auditUpdateTye.${changeRecord.action}`),
+                    action: t(`auditUpdateType.${changeRecord.action}`),
                     subtaskName,
                     solutionName: 'Temp Solution', // TODO: Replace with actual solution name
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
@@ -502,7 +502,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                 <Trans
                   i18nKey="changeHistory:solutionUpdate"
                   values={{
-                    action: t(`auditUpdateTye.${changeRecord.action}`),
+                    action: t(`auditUpdateType.${changeRecord.action}`),
                     solutionName: 'Temp Solution', // TODO: replace with actual solution name
                     needName: 'Temp need', // TODO: replace with actual need name
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
@@ -522,7 +522,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                 <Trans
                   i18nKey="changeHistory:needUpdate"
                   values={{
-                    action: t(`auditUpdateTye.${changeRecord.action}`),
+                    action: t(`auditUpdateType.${changeRecord.action}`),
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}
