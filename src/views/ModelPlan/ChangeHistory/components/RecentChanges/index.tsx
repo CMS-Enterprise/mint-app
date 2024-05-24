@@ -34,7 +34,8 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
   changeRecords.forEach(changeRecord => {
     changeCount +=
       changeRecord.action === DatabaseOperation.INSERT ||
-      changeRecord.action === DatabaseOperation.DELETE
+      changeRecord.action === DatabaseOperation.DELETE ||
+      changeRecord.tableName === 'operational_solution'
         ? 1
         : changeRecord.translatedFields.length || 1;
   });
