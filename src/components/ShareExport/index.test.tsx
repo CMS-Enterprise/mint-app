@@ -77,49 +77,24 @@ describe('ShareExportModal', () => {
 
   it('matches the snapshot', async () => {
     const { asFragment, getByText } = render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
-      >
-        <VerboseMockedProvider
-          mocks={[...allMocks, ...summaryMock]}
-          addTypename={false}
+      <Provider store={store}>
+        <MemoryRouter
+          initialEntries={[`/models/${modelID}/read-only/model-basics`]}
         >
-          <Route path="/models/:modelID/read-only/model-basics">
-            <ShareExportModal
-              modelID={modelID}
-              closeModal={() => null}
-              setStatusMessage={() => null}
-            />
-          </Route>
-        </VerboseMockedProvider>
-      </MemoryRouter>
-    );
-
-    await waitFor(() => {
-      expect(getByText('Testing Model Summary')).toBeInTheDocument();
-    });
-
-    expect(asFragment()).toMatchSnapshot();
-  });
-
-  it('matches the snapshot', async () => {
-    const { asFragment, getByText } = render(
-      <MemoryRouter
-        initialEntries={[`/models/${modelID}/read-only/model-basics`]}
-      >
-        <VerboseMockedProvider
-          mocks={[...allMocks, ...summaryMock]}
-          addTypename={false}
-        >
-          <Route path="/models/:modelID/read-only/model-basics">
-            <ShareExportModal
-              modelID={modelID}
-              closeModal={() => null}
-              setStatusMessage={() => null}
-            />
-          </Route>
-        </VerboseMockedProvider>
-      </MemoryRouter>
+          <VerboseMockedProvider
+            mocks={[...allMocks, ...summaryMock]}
+            addTypename={false}
+          >
+            <Route path="/models/:modelID/read-only/model-basics">
+              <ShareExportModal
+                modelID={modelID}
+                closeModal={() => null}
+                setStatusMessage={() => null}
+              />
+            </Route>
+          </VerboseMockedProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     await waitFor(() => {
