@@ -46,7 +46,7 @@ const SolutionChanges = ({ change }: SingleChangeProps) => {
       <div className="change-record__answer margin-y-1">
         {(() => {
           return change.translatedFields.map(field => (
-            <div>
+            <div key={field.id}>
               <span>{field.fieldNameTranslated}: </span>
               <RenderValue
                 value={field.newTranslated}
@@ -59,31 +59,34 @@ const SolutionChanges = ({ change }: SingleChangeProps) => {
         })()}
 
         {(() => {
-          if (!change.translatedFields.find(field => field.old)) return <></>;
-          return change.translatedFields.map(field => {
-            if (!field.old) return <></>;
-            return (
-              <div>
-                {field.old && (
-                  <>
-                    {change.action !== DatabaseOperation.DELETE && (
-                      <div className="text-bold padding-y-105">
-                        {t('previousDetails')}
-                      </div>
+          return (
+            <>
+              {change.action !== DatabaseOperation.DELETE && (
+                <div className="text-bold padding-y-105">
+                  {t('previousDetails')}
+                </div>
+              )}
+              {change.translatedFields.map(field => {
+                if (!field.old) return <div key={field.id} />;
+                return (
+                  <div key={field.id}>
+                    {field.old && (
+                      <>
+                        <span>{field.fieldNameTranslated}: </span>
+                        <RenderValue
+                          value={field.oldTranslated}
+                          dataType={field.dataType}
+                          referenceLabel={field.referenceLabel}
+                          questionType={field.questionType}
+                          previous={!!field.old}
+                        />
+                      </>
                     )}
-                    <span>{field.fieldNameTranslated}: </span>
-                    <RenderValue
-                      value={field.oldTranslated}
-                      dataType={field.dataType}
-                      referenceLabel={field.referenceLabel}
-                      questionType={field.questionType}
-                      previous={!!field.old}
-                    />
-                  </>
-                )}
-              </div>
-            );
-          });
+                  </div>
+                );
+              })}
+            </>
+          );
         })()}
       </div>
     </div>

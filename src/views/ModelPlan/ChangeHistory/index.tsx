@@ -15,7 +15,7 @@ import NotFound from 'views/NotFound';
 
 import BatchRecord from './components/BatchRecord';
 import ChangeRecord from './components/ChangeRecord';
-import { sortAllChanges } from './util';
+import { batchedTables, sortAllChanges } from './util';
 
 type LocationProps = {
   state: {
@@ -118,17 +118,17 @@ const ChangeHistory = () => {
             )}
 
             {currentItems.map(changeRecords => {
-              if (changeRecords.length === 1) {
+              if (batchedTables.includes(changeRecords[0].tableName)) {
                 return (
-                  <ChangeRecord
-                    changeRecord={changeRecords[0]}
+                  <BatchRecord
+                    changeRecords={changeRecords}
                     key={changeRecords[0].id}
                   />
                 );
               }
               return (
-                <BatchRecord
-                  changeRecords={changeRecords}
+                <ChangeRecord
+                  changeRecord={changeRecords[0]}
                   key={changeRecords[0].id}
                 />
               );

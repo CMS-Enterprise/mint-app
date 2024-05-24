@@ -22,37 +22,41 @@ export type ChangeRecordType = NonNullable<
 >[0];
 
 type ChangeRecordProps = {
-  changeRecord: ChangeRecordType;
+  changeRecords: ChangeRecordType[];
 };
 
 // Render a single min change record, showing the actor name, the section, the date, and the time
-export const MiniChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
+export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
   const { t } = useTranslation('changeHistory');
 
-  const changeCount =
-    changeRecord.action === DatabaseOperation.INSERT ||
-    changeRecord.action === DatabaseOperation.DELETE
-      ? 1
-      : changeRecord.translatedFields.length || 1;
+  let changeCount = 0;
+
+  changeRecords.forEach(changeRecord => {
+    changeCount +=
+      changeRecord.action === DatabaseOperation.INSERT ||
+      changeRecord.action === DatabaseOperation.DELETE
+        ? 1
+        : changeRecord.translatedFields.length || 1;
+  });
 
   return (
     <Card className="mini-change-record">
       <Grid row className="padding-2">
         <Grid tablet={{ col: 2 }}>
-          <AvatarCircle user={changeRecord.actorName} />
+          <AvatarCircle user={changeRecords[0].actorName} />
         </Grid>
 
         <Grid tablet={{ col: 10 }}>
           <div className="padding-left-05">
-            {changeRecord.actorName}{' '}
+            {changeRecords[0].actorName}{' '}
             <Trans
               i18nKey="changeHistory:change"
               count={changeCount}
               values={{
                 count: changeCount,
-                section: t(`sections.${changeRecord.tableName}`),
-                date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                time: formatTime(changeRecord.date)
+                section: t(`sections.${changeRecords[0].tableName}`),
+                date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
+                time: formatTime(changeRecords[0].date)
               }}
               components={{
                 datetime: <span className="text-base" />
@@ -94,10 +98,10 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
             </Alert>
           )}
 
-          {sortedChanges.map(changeRecord => (
+          {sortedChanges.map(changeRecords => (
             <MiniChangeRecord
-              changeRecord={changeRecord}
-              key={changeRecord.id}
+              changeRecords={changeRecords}
+              key={changeRecords[0].id}
             />
           ))}
         </>

@@ -532,12 +532,6 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                 field => field.fieldName === 'content'
               )?.newTranslated;
 
-              if (changeRecord.tableName === 'discussion_reply') {
-                console.log('content', content);
-                console.log('metaDiscussion', metaDiscussion);
-                console.log(changeRecord);
-              }
-
               return (
                 <>
                   <Trans

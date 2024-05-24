@@ -121,7 +121,7 @@ const hiddenFields: HiddenFieldTypes[] = [
   }
 ];
 
-const batchedTables: string[] = [
+export const batchedTables: string[] = [
   'operational_solution',
   'operational_need',
   'operational_solution_subtask'
