@@ -1149,7 +1149,9 @@ export enum OperationalNeedKey {
 /** Represents operational need translation data */
 export type OperationalNeedTranslation = {
   __typename: 'OperationalNeedTranslation';
+  /** Key comes from the possible operational need table. It is not returned in an audit */
   key: TranslationFieldWithOptions;
+  /** Name comes from the possible operational need table. It is not returned in an audit */
   name: TranslationField;
   nameOther?: Maybe<TranslationField>;
   needed: TranslationFieldWithOptions;

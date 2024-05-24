@@ -35,6 +35,16 @@ func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *m
 		metaData, err := DiscussionReplyMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.ModifiedDts)
 		metaDataType := models.TAMetaDiscussionReply
 		return metaData, &metaDataType, err
+		// Changes: (Meta) Add meta data for Operational Needs
+		// a. Need name
+		// i. Maybe key? (probably not needed)
+		// 	Name other too?
+
+		// Changes: (Meta) Add meta data for Operational Solution
+		// a. Solution name
+		// i. Maybe key? (probably not needed)
+		// 	Name other too?
+		// number of subtasks?
 
 	default:
 		// Tables that aren't configured to generate meta data will return nil

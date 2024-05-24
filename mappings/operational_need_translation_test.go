@@ -42,6 +42,7 @@ func TestOperationalNeedTranslationCoverage(t *testing.T) {
 	tMap, err := translation.ToMap()
 	assert.NoError(t, err)
 	assert.NotNil(t, tMap)
+	excludedFields := append(taskListStructExcludeFields, "NeedType")
 
-	assertTranslationStructCoverage(t, tMap, models.OperationalNeed{}, taskListStructExcludeFields)
+	assertTranslationStructCoverage(t, tMap, models.OperationalNeed{}, excludedFields)
 }
