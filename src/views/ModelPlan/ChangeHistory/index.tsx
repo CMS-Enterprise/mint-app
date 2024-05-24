@@ -13,6 +13,7 @@ import Alert from 'components/shared/Alert';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
+import BatchRecord from './components/BatchRecord';
 import ChangeRecord from './components/ChangeRecord';
 import { sortAllChanges } from './util';
 
@@ -116,9 +117,22 @@ const ChangeHistory = () => {
               </Alert>
             )}
 
-            {currentItems.map(changeRecord => (
-              <ChangeRecord changeRecord={changeRecord} key={changeRecord.id} />
-            ))}
+            {currentItems.map(changeRecords => {
+              if (changeRecords.length === 1) {
+                return (
+                  <ChangeRecord
+                    changeRecord={changeRecords[0]}
+                    key={changeRecords[0].id}
+                  />
+                );
+              }
+              return (
+                <BatchRecord
+                  changeRecords={changeRecords}
+                  key={changeRecords[0].id}
+                />
+              );
+            })}
 
             {pageCount > 1 && (
               <ReactPaginate

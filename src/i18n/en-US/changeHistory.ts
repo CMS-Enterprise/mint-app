@@ -30,9 +30,10 @@ const changeHistory = {
   documentSolutionLinkUpdate:
     '{{documentName}} {{action}} {{toFrom}} {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   solutionCreate:
-    'addded solution {{solutionName}} to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
-  solutionUpdate:
-    '{{action}} {{needName}} solution: {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+    'addded {{-count}} solutions to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+  // solutionUpdate:
+  // '{{action}} {{needName}} solution: {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+  solutionUpdate: '{{needName}} solution {{action}}: {{solutionName}}',
   needUpdate:
     '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   sections: {

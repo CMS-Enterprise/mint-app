@@ -241,7 +241,9 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
     uploadAudit || changeRecordType === 'Standard update';
 
   // Determines if the change record should show a list of translated fields before expanding
-  const renderList: boolean = changeRecordType === 'Standard update';
+  const renderList: boolean =
+    changeRecordType === 'Standard update' ||
+    changeRecordType === 'Operational solution create';
 
   return (
     <Card className="change-record">
@@ -466,7 +468,9 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               return (
                 <Trans
                   i18nKey="changeHistory:solutionCreate"
+                  count={changeRecord.translatedFields.length}
                   values={{
+                    count: changeRecord.translatedFields.length,
                     solutionName: 'Temp solution', // TODO: replace with actual solution name
                     needName: 'Temp need', // TODO: replace with actual need name
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),

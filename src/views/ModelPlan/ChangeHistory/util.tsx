@@ -3,10 +3,20 @@ import {
   TranslatedAuditMetaData,
   TranslatedAuditMetaGeneric
 } from 'gql/gen/graphql';
+import { DateTime } from 'luxon';
 
 export type ChangeRecordType = NonNullable<
   GetChangeHistoryQuery['translatedAuditCollection']
 >[0];
+
+type TranslatedFieldType = ChangeRecordType['translatedFields'][0] & {
+  childFields?: ChangeRecordType['translatedFields'][0][];
+};
+
+export type ChangeRecordExtendedType = Omit<
+  ChangeRecordType,
+  'translatedFields'
+> & { translatedFields: TranslatedFieldType };
 
 // Identifies the type of change
 export type ChangeType =
@@ -109,6 +119,12 @@ const hiddenFields: HiddenFieldTypes[] = [
     table: 'plan_tdl',
     fields: ['model_plan_id']
   }
+];
+
+const batchedTables: string[] = [
+  'operational_solution',
+  'operational_need',
+  'operational_solution_subtask'
 ];
 
 // Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array
@@ -329,6 +345,38 @@ export const removedHiddenFields = (
   return filteredChangeRecords;
 };
 
+export const groupBatchedChanges = (changes: ChangeRecordType[]) => {
+  const sharedChanges: Record<string, ChangeRecordType[]> = {};
+
+  changes.forEach(change => {
+    const sharedInsertTime = DateTime.fromISO(change.date).toLocaleString(
+      DateTime.DATETIME_FULL_WITH_SECONDS
+    );
+
+    if (
+      (change.translatedFields.find(field => field.fieldName === 'status') &&
+        isTranslationTaskListTable(change.tableName)) ||
+      !batchedTables.includes(change.tableName)
+    ) {
+      sharedChanges[`${sharedInsertTime}-status`] = [change];
+      return;
+    }
+
+    if (!sharedChanges[sharedInsertTime]) {
+      sharedChanges[sharedInsertTime] = [change];
+    } else {
+      sharedChanges[sharedInsertTime].push(change);
+    }
+  });
+
+  const mergedChanges: ChangeRecordType[][] = [];
+
+  Object.values(sharedChanges).forEach((change, i) => {
+    mergedChanges.push([...change]);
+  });
+  return mergedChanges;
+};
+
 // Removes changes that are not needed for the change history.  Used to get accurate page count of audits
 const removeUnneededAudits = (changes: ChangeRecordType[]) =>
   changes.filter(
@@ -360,5 +408,9 @@ export const sortAllChanges = (changes: ChangeRecordType[]) => {
     sortCreateChangeFirst
   );
 
-  return changesSortedWithCreateFirst;
+  const changesGroupedByTime = groupBatchedChanges(
+    changesSortedWithCreateFirst
+  );
+
+  return changesGroupedByTime;
 };
