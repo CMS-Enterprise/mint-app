@@ -34,8 +34,7 @@ const SolutionChanges = ({ change }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   return (
-    <div className="margin-bottom-2" key={change.id}>
-      {/* <div className="display-flex"> */}
+    <div className="margin-bottom-2 margin-top-neg-05" key={change.id}>
       <div className="text-bold margin-right-05">
         Recruit participants{' '}
         <span className="text-normal">
@@ -69,9 +68,7 @@ const SolutionChanges = ({ change }: SingleChangeProps) => {
                   <>
                     {change.action !== DatabaseOperation.DELETE && (
                       <div className="text-bold padding-y-105">
-                        {field.questionType === TranslationQuestionType.NOTE
-                          ? t('previousNote')
-                          : t('previousAnswer')}
+                        {t('previousDetails')}
                       </div>
                     )}
                     <span>{field.fieldNameTranslated}: </span>
@@ -189,7 +186,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
       </div>
 
       {!isOpen && (
-        <ul className="margin-top-05 margin-bottom-1 margin-left-4">
+        <ul className="margin-top-1 margin-bottom-1 margin-left-4">
           {changeRecords.map(change => (
             <li key={change.id}>
               <Trans

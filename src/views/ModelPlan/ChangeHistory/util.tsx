@@ -1,7 +1,7 @@
 import {
   GetChangeHistoryQuery,
   TranslatedAuditMetaData,
-  TranslatedAuditMetaGeneric
+  TranslatedAuditMetaDiscussionReply
 } from 'gql/gen/graphql';
 import { DateTime } from 'luxon';
 
@@ -78,9 +78,9 @@ export const isTranslationTaskListTable = (
 // Type guard to check union type
 export const isDiscussionReplyWithMetaData = (
   data: TranslatedAuditMetaData
-): data is TranslatedAuditMetaGeneric => {
+): data is TranslatedAuditMetaDiscussionReply => {
   /* eslint no-underscore-dangle: 0 */
-  return data.__typename === 'TranslatedAuditMetaGeneric';
+  return data.__typename === 'TranslatedAuditMetaDiscussionReply';
 };
 
 type HiddenFieldTypes = {

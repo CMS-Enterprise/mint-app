@@ -90,6 +90,7 @@ const changeHistory = {
   },
   previousAnswer: 'Previous answer',
   previousNote: 'Previous note',
+  previousDetails: 'Previous details',
   notApplicable:
     'Because of this change, the following question(s) are no longer applicable:',
   recentChanges: 'Recent changes',

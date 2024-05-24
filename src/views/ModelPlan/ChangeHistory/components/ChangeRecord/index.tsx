@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Card } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { table } from 'console';
 import {
   DatabaseOperation,
   GetChangeHistoryQuery,
@@ -524,12 +525,18 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               const metaDiscussion =
                 changeRecord?.metaData &&
                 isDiscussionReplyWithMetaData(changeRecord?.metaData)
-                  ? changeRecord?.metaData.relationContent
+                  ? changeRecord?.metaData.discussionContent
                   : '';
 
               const content = changeRecord.translatedFields.find(
                 field => field.fieldName === 'content'
               )?.newTranslated;
+
+              if (changeRecord.tableName === 'discussion_reply') {
+                console.log('content', content);
+                console.log('metaDiscussion', metaDiscussion);
+                console.log(changeRecord);
+              }
 
               return (
                 <>
