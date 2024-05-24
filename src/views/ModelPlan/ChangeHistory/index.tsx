@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Grid,
   GridContainer,
@@ -75,6 +75,17 @@ const ChangeHistory = () => {
     modelID: string;
   }>();
 
+  const location = useLocation();
+  const history = useHistory();
+
+  const searchParams = new URLSearchParams(history.location.search);
+
+  const params = new URLSearchParams(location.search);
+
+  const pageParam = params.get('page');
+  const queryParam = params.get('query');
+  const sortParam = params.get('sort') as SortProps['value'];
+
   const { modelName } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useGetChangeHistoryQuery({
@@ -88,7 +99,9 @@ const ChangeHistory = () => {
   const sortedChanges = sortAllChanges(changes);
 
   // Contains sort state of select options
-  const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
+  const [sort, setSort] = useState<SortProps['value']>(
+    sortParam || sortOptions[0].value
+  );
 
   // Contains the sorted changes based on select/sort option
   const [sortedAudits, setSortedAudits] = useState([...sortedChanges]);
@@ -99,7 +112,9 @@ const ChangeHistory = () => {
   // Pagination Configuration
   const itemsPerPage = 10;
 
-  const [pageOffset, setPageOffset] = useState(0);
+  const [pageOffset, setPageOffset] = useState(
+    Number.isNaN(Number(pageParam)) ? 0 : Number(pageParam)
+  );
 
   const endOffset = pageOffset + itemsPerPage;
 
@@ -123,12 +138,25 @@ const ChangeHistory = () => {
   useEffect(() => {
     if (query.trim()) {
       const filteredAudits = searchAudits(query, sortedAudits);
+
       setAuditChanges(filteredAudits);
       setResultsNum(filteredAudits.length);
     } else {
       // Sets the default audits if no query present
       setAuditChanges(sortedAudits);
     }
+
+    if (!loading) {
+      // Update the URL's query parameters
+      if (query) {
+        searchParams.set('query', query);
+      } else {
+        // Delete the 'query' parameter
+        searchParams.delete('query');
+      }
+      history.push({ search: searchParams.toString() });
+    }
+
     // Return the page to the first page when the query changes
     setPageOffset(0);
   }, [query, searchAudits, setPageOffset]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -138,6 +166,13 @@ const ChangeHistory = () => {
     if (!loading) {
       setAuditChanges([...sortedChanges]);
       setSortedAudits([...sortedChanges]);
+
+      // Set the query based on the query parameter
+      setQuery(queryParam || '');
+
+      // Set the page offset based on the page parameter
+      const newOffset = pageParam ? (Number(pageParam) - 1) * itemsPerPage : 0;
+      setPageOffset(newOffset);
     }
   }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -153,6 +188,8 @@ const ChangeHistory = () => {
   const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % auditChanges?.length;
     setPageOffset(newOffset);
+    searchParams.set('page', (newOffset / itemsPerPage + 1).toString());
+    history.push({ search: searchParams.toString() });
   };
 
   // Sort the changes when the sort option changes.
@@ -222,6 +259,7 @@ const ChangeHistory = () => {
                     tableID="table-id"
                     tableName="table-name"
                     className="width-full maxw-mobile-lg margin-bottom-3 padding-top-1"
+                    initialFilter={queryParam || ''}
                   />
 
                   {/* Results text */}
@@ -270,6 +308,8 @@ const ChangeHistory = () => {
                       value={sort}
                       onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                         setSort(e.target.value as SortProps['value']);
+                        searchParams.set('sort', e.target.value);
+                        history.push({ search: searchParams.toString() });
                       }}
                     >
                       {sortOptions.map(option => {
