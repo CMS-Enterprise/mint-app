@@ -1,22 +1,17 @@
 import {
   GetChangeHistoryQuery,
   TranslatedAuditMetaData,
-  TranslatedAuditMetaDiscussionReply
+  TranslatedAuditMetaDiscussionReply,
+  TranslationDataType
 } from 'gql/gen/graphql';
+import i18next from 'i18next';
 import { DateTime } from 'luxon';
+
+import { formatDateUtc, formatTime } from 'utils/date';
 
 export type ChangeRecordType = NonNullable<
   GetChangeHistoryQuery['translatedAuditCollection']
 >[0];
-
-type TranslatedFieldType = ChangeRecordType['translatedFields'][0] & {
-  childFields?: ChangeRecordType['translatedFields'][0][];
-};
-
-export type ChangeRecordExtendedType = Omit<
-  ChangeRecordType,
-  'translatedFields'
-> & { translatedFields: TranslatedFieldType };
 
 // Identifies the type of change
 export type ChangeType =
@@ -142,18 +137,43 @@ export const parseArray = (value: string | string[]) => {
   }
 };
 
+// Sorts the changes based on the sort option
+export const handleSortOptions = (
+  changes: ChangeRecordType[][],
+  sort: 'newest' | 'oldest'
+) => {
+  let sortedChanges: ChangeRecordType[][] = [];
+  if (sort === 'newest') {
+    sortedChanges = [...changes].sort((a, b) =>
+      b[0].date.localeCompare(a[0].date)
+    );
+    // Sorts the changes so that new plans are first
+    sortedChanges = sortCreateChangeFirst(sortedChanges, 'desc');
+  } else if (sort === 'oldest') {
+    sortedChanges = [...changes].sort((a, b) =>
+      a[0].date.localeCompare(b[0].date)
+    );
+    // Sorts the changes so that new plans are first
+    sortedChanges = sortCreateChangeFirst(sortedChanges, 'asc');
+  }
+
+  return sortedChanges;
+};
+
 // Sorts the changes so that new plans are first
 export const sortCreateChangeFirst = (
-  a: ChangeRecordType,
-  b: ChangeRecordType
+  changes: ChangeRecordType[][],
+  direction: 'asc' | 'desc'
 ) => {
-  const aType = identifyChangeType(a);
-  const bType = identifyChangeType(b);
+  return changes.sort((a: ChangeRecordType[], b: ChangeRecordType[]) => {
+    const aType = identifyChangeType(a[0]);
+    const bType = identifyChangeType(b[0]);
 
-  if (aType === 'New plan') return 1;
-  if (bType === 'New plan') return -1;
+    if (aType === 'New plan') return direction === 'asc' ? -1 : 1;
+    if (bType === 'New plan') return direction === 'asc' ? 1 : -1;
 
-  return 0;
+    return 0;
+  });
 };
 
 const readyForReviewFields = [
@@ -176,6 +196,89 @@ export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
   });
 
   return filteredReviewChanges;
+};
+
+export const filterQueryAudits = (
+  queryString: string,
+  groupedAudits: ChangeRecordType[][]
+): ChangeRecordType[][] => {
+  return groupedAudits.filter(audits => {
+    const filteredAudits = audits.filter(audit => {
+      const lowerCaseQuery = queryString.toLowerCase();
+
+      const translatedFieldsMatchQuery = audit.translatedFields.filter(
+        field => {
+          if (
+            field.fieldNameTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+            field.newTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+            field.oldTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+            field.referenceLabel?.toLowerCase().includes(lowerCaseQuery)
+          ) {
+            return true;
+          }
+
+          // Parsing date of audit data to check if it matches the query
+          if (field.dataType === TranslationDataType.DATE) {
+            if (
+              formatDateUtc(
+                field.newTranslated?.replace(' ', 'T'),
+                'MM/dd/yyyy'
+              )
+                .toLowerCase()
+                .includes(lowerCaseQuery) ||
+              formatDateUtc(
+                field.oldTranslated?.replace(' ', 'T'),
+                'MM/dd/yyyy'
+              )
+                .toLowerCase()
+                .includes(lowerCaseQuery)
+            ) {
+              return true;
+            }
+          }
+          return false;
+        }
+      );
+
+      // Check if the actor name matches the query
+      if (audit.actorName.toLowerCase().includes(lowerCaseQuery)) {
+        return true;
+      }
+
+      // Check if the date of the audit entry matches the query
+      if (
+        formatDateUtc(audit.date.replace(' ', 'T'), 'MMMM d, yyyy')
+          .toLowerCase()
+          .includes(lowerCaseQuery) ||
+        formatTime(audit.date.replace(' ', 'T'))
+          .toLowerCase()
+          .includes(lowerCaseQuery)
+      ) {
+        return true;
+      }
+
+      // Check if the section name matches the query
+      if (
+        i18next
+          .t(`changeHistory:sections:${audit.tableName}`)
+          .toLowerCase()
+          .includes(lowerCaseQuery)
+      ) {
+        return true;
+      }
+
+      if (translatedFieldsMatchQuery.length > 0) {
+        return true;
+      }
+
+      return false;
+    });
+
+    if (filteredAudits.length > 0) {
+      return true;
+    }
+    return false;
+  });
 };
 
 // Extracts status changes from the list of changes and separates them from other changes
@@ -353,19 +456,14 @@ export const groupBatchedChanges = (changes: ChangeRecordType[]) => {
       DateTime.DATETIME_FULL_WITH_SECONDS
     );
 
-    if (
-      (change.translatedFields.find(field => field.fieldName === 'status') &&
-        isTranslationTaskListTable(change.tableName)) ||
-      !batchedTables.includes(change.tableName)
-    ) {
-      sharedChanges[`${sharedInsertTime}-status`] = [change];
-      return;
-    }
-
-    if (!sharedChanges[sharedInsertTime]) {
-      sharedChanges[sharedInsertTime] = [change];
+    if (batchedTables.includes(change.tableName)) {
+      if (!sharedChanges[sharedInsertTime]) {
+        sharedChanges[sharedInsertTime] = [change];
+      } else {
+        sharedChanges[sharedInsertTime].push(change);
+      }
     } else {
-      sharedChanges[sharedInsertTime].push(change);
+      sharedChanges[`${sharedInsertTime}-${change.id}`] = [change];
     }
   });
 
@@ -375,6 +473,21 @@ export const groupBatchedChanges = (changes: ChangeRecordType[]) => {
     mergedChanges.push([...change]);
   });
   return mergedChanges;
+};
+
+// Sorts the changes by day - { day: [changes] }
+export const sortChangesByDay = (changes: ChangeRecordType[][]) => {
+  const sortedChanges: { [key: string]: ChangeRecordType[][] } = {};
+
+  changes.forEach(change => {
+    const date = change[0].date.split('T')[0];
+    if (!sortedChanges[date]) {
+      sortedChanges[date] = [];
+    }
+    sortedChanges[date].push(change);
+  });
+
+  return sortedChanges;
 };
 
 // Removes changes that are not needed for the change history.  Used to get accurate page count of audits
@@ -404,13 +517,12 @@ export const sortAllChanges = (changes: ChangeRecordType[]) => {
     b.date.localeCompare(a.date)
   );
 
-  const changesSortedWithCreateFirst = changesSortedByDate.sort(
-    sortCreateChangeFirst
+  const changesGroupedByTime = groupBatchedChanges(changesSortedByDate);
+
+  const changesSortedWithCreateFirst = sortCreateChangeFirst(
+    changesGroupedByTime,
+    'desc'
   );
 
-  const changesGroupedByTime = groupBatchedChanges(
-    changesSortedWithCreateFirst
-  );
-
-  return changesGroupedByTime;
+  return changesSortedWithCreateFirst;
 };
