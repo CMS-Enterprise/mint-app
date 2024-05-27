@@ -1,10 +1,11 @@
 module github.com/cmsgov/mint-app
 
 go 1.21
+toolchain go1.22.2
 
 require (
 	github.com/99designs/gqlgen v0.17.38
-	github.com/aws/aws-sdk-go v1.53.5
+	github.com/aws/aws-sdk-go v1.53.10
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
 	github.com/go-openapi/errors v0.22.0
 	github.com/go-openapi/swag v0.23.0
@@ -31,7 +32,7 @@ require github.com/gorilla/websocket v1.5.1
 require github.com/xhit/go-simple-mail/v2 v2.16.0
 
 require (
-	github.com/contribsys/faktory v1.8.0
+	github.com/contribsys/faktory v1.9.0
 	github.com/launchdarkly/go-sdk-common/v3 v3.1.0
 	github.com/launchdarkly/go-server-sdk/v6 v6.2.0
 	golang.org/x/net v0.25.0
@@ -66,7 +67,7 @@ require (
 require (
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc // indirect
-	github.com/contribsys/faktory_worker_go v1.6.1
+	github.com/contribsys/faktory_worker_go v1.7.0
 	github.com/cpuguy83/go-md2man/v2 v2.0.3 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.2.0 // indirect
