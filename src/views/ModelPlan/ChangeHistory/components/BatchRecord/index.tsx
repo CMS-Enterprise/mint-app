@@ -231,6 +231,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                   i18nKey="changeHistory:subtaskUpdate"
                   values={{
                     action: t(`auditUpdateType.${change.action}`),
+                    forFrom: t(`forFrom.${change.action}`),
                     needName: 'Recruit participants', // TODO: change to dynamic value
                     solutionName: 'Contractor' // TODO: change to dynamic value
                   }}

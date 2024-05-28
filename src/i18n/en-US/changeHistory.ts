@@ -30,7 +30,8 @@ const changeHistory = {
   solutionCreate:
     'addded {{-count}} solutions to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   solutionUpdate: '{{needName}} solution {{action}}: {{solutionName}}',
-  subtaskUpdate: 'Subtask {{action}} for {{needName}}: {{solutionName}}',
+  subtaskUpdate:
+    'Subtask {{action}} {{forFrom}} {{needName}}: {{solutionName}}',
   needUpdate:
     '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   sections: {
@@ -55,11 +56,11 @@ const changeHistory = {
   },
   showDetails: 'Show details',
   hideDetails: 'Hide details',
-  resultsInfo: 'Showing {{-resultsNum}} of {{-count}} result {{-query}}',
+  resultsInfo: 'Showing {{resultsNum}} of {{count}} result {{query}}',
   resultsInfo_other:
-    'Showing {{-resultsNum}} - {{-count}} of {{-total}} results {{-query}}',
-  resultsNoInfo: 'Showing {{-resultsNum}} result {{-query}}',
-  resultsNoInfo_other: 'Showing {{-resultsNum}} results {{-query}}',
+    'Showing {{resultsNum}} - {{count}} of {{total}} results {{query}}',
+  resultsNoInfo: 'Showing {{resultsNum}} result {{query}}',
+  resultsNoInfo_other: 'Showing {{resultsNum}} results {{query}}',
   noResults: {
     heading: 'There are no results that match you search.',
     body: 'Please double-check you search and try again.'
@@ -68,11 +69,6 @@ const changeHistory = {
     INSERT: 'added',
     DELETE: 'removed',
     UPDATE: 'updated'
-  },
-  toFromIn: {
-    INSERT: 'to',
-    DELETE: 'from',
-    UPDATE: 'in'
   },
   documentChangeType: {
     uploaded: 'uploaded',
@@ -93,6 +89,21 @@ const changeHistory = {
     ANSWERED: 'answered',
     REMOVED: 'removed',
     UPDATED: 'updated'
+  },
+  toFromIn: {
+    INSERT: 'to',
+    DELETE: 'from',
+    UPDATE: 'in'
+  },
+  toFrom: {
+    INSERT: 'to',
+    DELETE: 'from',
+    UPDATE: 'to'
+  },
+  forFrom: {
+    DELETE: 'from',
+    UPDATE: 'for',
+    INSERT: 'for'
   },
   sort: {
     label: 'Sort',

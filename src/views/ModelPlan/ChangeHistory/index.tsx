@@ -370,7 +370,7 @@ const ChangeHistory = () => {
                 breakLabel="..."
                 breakClassName="usa-pagination__item usa-pagination__overflow"
                 nextLabel="Next >"
-                containerClassName="mint-pagination usa-pagination usa-pagination__list"
+                containerClassName="mint-pagination usa-pagination usa-pagination__list margin-top-2"
                 previousLinkClassName={
                   pageOffset === 0
                     ? 'display-none'

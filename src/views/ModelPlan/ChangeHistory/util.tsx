@@ -389,7 +389,7 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'Subtask update';
   }
 
-  if (change.tableName === 'document_solution_link') {
+  if (change.tableName === 'plan_document_solution_link') {
     return 'Document solution link update';
   }
 

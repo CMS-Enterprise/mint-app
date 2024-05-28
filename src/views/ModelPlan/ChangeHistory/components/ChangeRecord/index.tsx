@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Card } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { table } from 'console';
 import {
   DatabaseOperation,
   GetChangeHistoryQuery,
@@ -388,7 +387,28 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                     isLink: documentType,
                     action: t(`documentChangeType.${updateType(changeRecord)}`),
                     documentName,
-                    toFrom: changeRecord.action === 'INSERT' ? 'to' : 'from',
+                    toFrom: t(`toFrom.${changeRecord.action}`),
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {/* Document solution link audits */}
+          {changeRecordType === 'Document solution link update' &&
+            (() => {
+              return (
+                <Trans
+                  i18nKey="changeHistory:documentSolutionLinkUpdate"
+                  values={{
+                    action: t(`documentLinkType.${changeRecord.action}`),
+                    toFrom: t(`toFrom.${changeRecord.action}`),
+                    documentName: 'Temp document', // TODO: replace with actual document name
+                    solutionName: 'Temp solution', // TODO: replace with actual solution name
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}
@@ -444,26 +464,6 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                     action: t(`auditUpdateType.${changeRecord.action}`),
                     subtaskName,
                     solutionName: 'Temp Solution', // TODO: Replace with actual solution name
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
-          {/* Document solution link audits */}
-          {changeRecordType === 'Document solution link update' &&
-            (() => {
-              return (
-                <Trans
-                  i18nKey="changeHistory:documentSolutionLinkUpdate"
-                  values={{
-                    action: t(`documentLinkType.${changeRecord.action}`),
-                    documentName: 'Temp document', // TODO: replace with actual document name
-                    solutionName: 'Temp solution', // TODO: replace with actual solution name
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}
