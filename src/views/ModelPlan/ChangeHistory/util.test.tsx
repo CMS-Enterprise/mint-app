@@ -16,49 +16,53 @@ import {
   sortCreateChangeFirst
 } from './util';
 
-const sortData: ChangeRecordType[] = [
-  {
-    id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-    tableName: 'operational_need',
-    date: '2024-04-22T13:55:13.725192Z',
-    action: DatabaseOperation.INSERT,
-    translatedFields: [
-      {
-        id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
-        changeType: AuditFieldChangeType.ANSWERED,
-        fieldName: 'needed',
-        fieldNameTranslated: 'Model Plan status',
-        old: null,
-        oldTranslated: null,
-        new: 'READY',
-        newTranslated: 'Ready',
-        __typename: 'TranslatedAuditField'
-      }
-    ],
-    actorName: 'Cosmo Kramer',
-    __typename: 'TranslatedAudit'
-  },
-  {
-    id: 'e9e1129d-2317-4acd-8d2b-7ca37b33452',
-    tableName: 'operational_need',
-    date: '2024-05-22T13:55:13.725192Z',
-    action: DatabaseOperation.INSERT,
-    translatedFields: [
-      {
-        id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
-        changeType: AuditFieldChangeType.ANSWERED,
-        fieldName: 'needed',
-        fieldNameTranslated: 'Model Plan status',
-        old: null,
-        oldTranslated: null,
-        new: 'READY',
-        newTranslated: 'Ready',
-        __typename: 'TranslatedAuditField'
-      }
-    ],
-    actorName: 'MINT Doe',
-    __typename: 'TranslatedAudit'
-  }
+const sortData: ChangeRecordType[][] = [
+  [
+    {
+      id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+      tableName: 'operational_need',
+      date: '2024-04-22T13:55:13.725192Z',
+      action: DatabaseOperation.INSERT,
+      translatedFields: [
+        {
+          id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.ANSWERED,
+          fieldName: 'needed',
+          fieldNameTranslated: 'Model Plan status',
+          old: null,
+          oldTranslated: null,
+          new: 'READY',
+          newTranslated: 'Ready',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      actorName: 'Cosmo Kramer',
+      __typename: 'TranslatedAudit'
+    }
+  ],
+  [
+    {
+      id: 'e9e1129d-2317-4acd-8d2b-7ca37b33452',
+      tableName: 'operational_need',
+      date: '2024-05-22T13:55:13.725192Z',
+      action: DatabaseOperation.INSERT,
+      translatedFields: [
+        {
+          id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.ANSWERED,
+          fieldName: 'needed',
+          fieldNameTranslated: 'Model Plan status',
+          old: null,
+          oldTranslated: null,
+          new: 'READY',
+          newTranslated: 'Ready',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      actorName: 'MINT Doe',
+      __typename: 'TranslatedAudit'
+    }
+  ]
 ];
 
 describe('util.tsx', () => {
@@ -76,49 +80,53 @@ describe('util.tsx', () => {
 
   // Test for sortCreateChangeFirst
   it('sortCreateChangeFirst', () => {
-    const changes: ChangeRecordType[] = [
-      {
-        id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-        tableName: 'plan_basics',
-        date: '2024-04-22T13:55:13.725192Z',
-        action: DatabaseOperation.INSERT,
-        translatedFields: [
-          {
-            id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
-            changeType: AuditFieldChangeType.ANSWERED,
-            fieldName: 'status',
-            fieldNameTranslated: 'Model Plan status',
-            old: null,
-            oldTranslated: null,
-            new: 'READY',
-            newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField'
-          }
-        ],
-        actorName: 'MINT Doe',
-        __typename: 'TranslatedAudit'
-      },
-      {
-        id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-        tableName: 'model_plan',
-        date: '2024-05-22T13:55:13.725192Z',
-        action: DatabaseOperation.INSERT,
-        translatedFields: [
-          {
-            id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
-            changeType: AuditFieldChangeType.ANSWERED,
-            fieldName: 'status',
-            fieldNameTranslated: 'Model Plan status',
-            old: null,
-            oldTranslated: null,
-            new: 'READY',
-            newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField'
-          }
-        ],
-        actorName: 'MINT Doe',
-        __typename: 'TranslatedAudit'
-      }
+    const changes: ChangeRecordType[][] = [
+      [
+        {
+          id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+          tableName: 'plan_basics',
+          date: '2024-04-22T13:55:13.725192Z',
+          action: DatabaseOperation.INSERT,
+          translatedFields: [
+            {
+              id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+              changeType: AuditFieldChangeType.ANSWERED,
+              fieldName: 'status',
+              fieldNameTranslated: 'Model Plan status',
+              old: null,
+              oldTranslated: null,
+              new: 'READY',
+              newTranslated: 'Ready',
+              __typename: 'TranslatedAuditField'
+            }
+          ],
+          actorName: 'MINT Doe',
+          __typename: 'TranslatedAudit'
+        }
+      ],
+      [
+        {
+          id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+          tableName: 'model_plan',
+          date: '2024-05-22T13:55:13.725192Z',
+          action: DatabaseOperation.INSERT,
+          translatedFields: [
+            {
+              id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+              changeType: AuditFieldChangeType.ANSWERED,
+              fieldName: 'status',
+              fieldNameTranslated: 'Model Plan status',
+              old: null,
+              oldTranslated: null,
+              new: 'READY',
+              newTranslated: 'Ready',
+              __typename: 'TranslatedAuditField'
+            }
+          ],
+          actorName: 'MINT Doe',
+          __typename: 'TranslatedAudit'
+        }
+      ]
     ];
 
     expect(sortCreateChangeFirst([...changes], 'asc')).toStrictEqual([
@@ -367,50 +375,54 @@ describe('util.tsx', () => {
 
     const expected = {
       '2024-04-22': [
-        {
-          id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-          tableName: 'operational_need',
-          date: '2024-04-22T13:55:13.725192Z',
-          action: DatabaseOperation.INSERT,
-          translatedFields: [
-            {
-              id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
-              changeType: AuditFieldChangeType.ANSWERED,
-              fieldName: 'needed',
-              fieldNameTranslated: 'Model Plan status',
-              old: null,
-              oldTranslated: null,
-              new: 'READY',
-              newTranslated: 'Ready',
-              __typename: 'TranslatedAuditField'
-            }
-          ],
-          actorName: 'Cosmo Kramer',
-          __typename: 'TranslatedAudit'
-        }
+        [
+          {
+            id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+            tableName: 'operational_need',
+            date: '2024-04-22T13:55:13.725192Z',
+            action: DatabaseOperation.INSERT,
+            translatedFields: [
+              {
+                id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+                changeType: AuditFieldChangeType.ANSWERED,
+                fieldName: 'needed',
+                fieldNameTranslated: 'Model Plan status',
+                old: null,
+                oldTranslated: null,
+                new: 'READY',
+                newTranslated: 'Ready',
+                __typename: 'TranslatedAuditField'
+              }
+            ],
+            actorName: 'Cosmo Kramer',
+            __typename: 'TranslatedAudit'
+          }
+        ]
       ],
       '2024-05-22': [
-        {
-          id: 'e9e1129d-2317-4acd-8d2b-7ca37b33452',
-          tableName: 'operational_need',
-          date: '2024-05-22T13:55:13.725192Z',
-          action: DatabaseOperation.INSERT,
-          translatedFields: [
-            {
-              id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
-              changeType: AuditFieldChangeType.ANSWERED,
-              fieldName: 'needed',
-              fieldNameTranslated: 'Model Plan status',
-              old: null,
-              oldTranslated: null,
-              new: 'READY',
-              newTranslated: 'Ready',
-              __typename: 'TranslatedAuditField'
-            }
-          ],
-          actorName: 'MINT Doe',
-          __typename: 'TranslatedAudit'
-        }
+        [
+          {
+            id: 'e9e1129d-2317-4acd-8d2b-7ca37b33452',
+            tableName: 'operational_need',
+            date: '2024-05-22T13:55:13.725192Z',
+            action: DatabaseOperation.INSERT,
+            translatedFields: [
+              {
+                id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+                changeType: AuditFieldChangeType.ANSWERED,
+                fieldName: 'needed',
+                fieldNameTranslated: 'Model Plan status',
+                old: null,
+                oldTranslated: null,
+                new: 'READY',
+                newTranslated: 'Ready',
+                __typename: 'TranslatedAuditField'
+              }
+            ],
+            actorName: 'MINT Doe',
+            __typename: 'TranslatedAudit'
+          }
+        ]
       ]
     };
 

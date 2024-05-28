@@ -476,7 +476,9 @@ export const groupBatchedChanges = (changes: ChangeRecordType[]) => {
 };
 
 // Sorts the changes by day - { day: [changes] }
-export const sortChangesByDay = (changes: ChangeRecordType[][]) => {
+export const sortChangesByDay = (
+  changes: ChangeRecordType[][]
+): { [key: string]: ChangeRecordType[][] } => {
   const sortedChanges: { [key: string]: ChangeRecordType[][] } = {};
 
   changes.forEach(change => {
