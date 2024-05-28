@@ -117,10 +117,40 @@ const hiddenFields: HiddenFieldTypes[] = [
 ];
 
 export const batchedTables: string[] = [
+  'plan_document',
   'operational_solution',
   'operational_need',
   'operational_solution_subtask'
 ];
+
+export const documentChange = (docType: string | undefined) =>
+  docType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
+
+export const documentName = (change: ChangeRecordType) =>
+  change.translatedFields.find(field => field.fieldName === 'file_name')?.[
+    documentChange(change.action)
+  ];
+
+export const documentType = (change: ChangeRecordType) =>
+  change.translatedFields.find(field => field.fieldName === 'is_link')
+    ?.newTranslated === 'true' ||
+  change.translatedFields.find(field => field.fieldName === 'is_link')
+    ?.oldTranslated === 'true'
+    ? ' link'
+    : '';
+
+export const documentUpdateType = (change: ChangeRecordType) => {
+  if (change.action === 'INSERT') {
+    if (documentType(change) === ' link') {
+      return 'added';
+    }
+    return 'uploaded';
+  }
+  if (change.action === 'DELETE') {
+    return 'removed';
+  }
+  return '';
+};
 
 // Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array
 export const parseArray = (value: string | string[]) => {

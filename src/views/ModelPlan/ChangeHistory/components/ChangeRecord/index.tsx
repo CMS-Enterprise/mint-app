@@ -80,7 +80,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
 
       <div className="change-record__answer margin-y-1">
         {/* Renders the new value of a change record */}
-        <RenderValue
+        <RenderChangeValue
           value={change.newTranslated}
           dataType={change.dataType}
           referenceLabel={change.referenceLabel}
@@ -98,7 +98,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
               </div>
             )}
 
-            <RenderValue
+            <RenderChangeValue
               value={change.oldTranslated}
               dataType={change.dataType}
               referenceLabel={change.referenceLabel}
@@ -112,7 +112,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
         {!!change.notApplicableQuestions?.length && (
           <>
             <div className="text-bold padding-y-105">{t('notApplicable')}</div>
-            <RenderValue
+            <RenderChangeValue
               value={change.notApplicableQuestions}
               dataType={change.dataType}
             />
@@ -124,7 +124,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
 };
 
 // Render a single value, either as a string or as a list of strings
-const RenderValue = ({
+export const RenderChangeValue = ({
   value,
   dataType,
   referenceLabel,
@@ -236,8 +236,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
     changeRecordType === 'Subtask update' ||
     changeRecordType === 'Operational solution create' ||
     changeRecordType === 'Operational solution update' ||
-    changeRecordType === 'Operational need update' ||
-    changeRecordType === 'Document update';
+    changeRecordType === 'Operational need update';
 
   // Determine if the change record should be expanded to show more data
   const showMoreData: boolean =
@@ -337,57 +336,6 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                     action: t(`teamChangeType.${teamChangeType}`),
                     collaborator,
                     role: !!role && `[${formattedRoles(role)}]`,
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
-          {/* Document audits */}
-          {changeRecordType === 'Document update' &&
-            (() => {
-              const documentType =
-                changeRecord.translatedFields.find(
-                  field => field.fieldName === 'is_link'
-                )?.newTranslated === 'true' ||
-                changeRecord.translatedFields.find(
-                  field => field.fieldName === 'is_link'
-                )?.oldTranslated === 'true'
-                  ? ' link'
-                  : '';
-
-              const documentChange = (docType: string | undefined) =>
-                docType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
-
-              const updateType = (change: ChangeRecordType) => {
-                if (change.action === 'INSERT') {
-                  if (documentType === ' link') {
-                    return 'added';
-                  }
-                  return 'uploaded';
-                }
-                if (change.action === 'DELETE') {
-                  return 'removed';
-                }
-                return '';
-              };
-
-              const documentName = changeRecord.translatedFields.find(
-                field => field.fieldName === 'file_name'
-              )?.[documentChange(changeRecord.action)];
-
-              return (
-                <Trans
-                  i18nKey="changeHistory:documentUpdate"
-                  values={{
-                    isLink: documentType,
-                    action: t(`documentChangeType.${updateType(changeRecord)}`),
-                    documentName,
-                    toFrom: t(`toFrom.${changeRecord.action}`),
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}

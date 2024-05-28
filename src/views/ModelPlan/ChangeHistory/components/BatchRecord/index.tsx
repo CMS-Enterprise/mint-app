@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Card } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import {
-  DatabaseOperation,
-  GetChangeHistoryQuery,
-  TranslationDataType,
-  TranslationQuestionType
-} from 'gql/gen/graphql';
+import { DatabaseOperation, GetChangeHistoryQuery } from 'gql/gen/graphql';
 
 import { AvatarCircle } from 'components/shared/Avatar';
 import CollapsableLink from 'components/shared/CollapsableLink';
 import { formatDateUtc, formatTime } from 'utils/date';
 
-import { batchedTables, parseArray } from '../../util';
+import {
+  batchedTables,
+  documentName,
+  documentType,
+  documentUpdateType
+} from '../../util';
+import { RenderChangeValue } from '../ChangeRecord';
 
 import '../ChangeRecord/index.scss';
 
@@ -25,17 +26,38 @@ type ChangeRecordProps = {
   changeRecords: ChangeRecordType[];
 };
 
-type SingleChangeProps = {
+type BatchChangeProps = {
   change: ChangeRecordType;
 };
 
 // Render a single change record, showing the field name, the change type, and the old and new values
-const SolutionChanges = ({ change }: SingleChangeProps) => {
+const BatchChanges = ({ change }: BatchChangeProps) => {
   const { t } = useTranslation('changeHistory');
 
   return (
-    <div className="margin-bottom-2 margin-top-neg-05" key={change.id}>
+    <div
+      className={classNames('margin-bottom-2 margin-top-neg-05')}
+      key={change.id}
+    >
       <div className="text-bold margin-right-05">
+        {/* Documents header */}
+        {change.tableName === 'plan_document' && (
+          <Trans
+            i18nKey="changeHistory:documentUpdate"
+            values={{
+              isLink: documentType(change),
+              action: t(`documentChangeType.${documentUpdateType(change)}`),
+              documentName: documentName(change),
+              toFrom: t(`toFrom.${change.action}`),
+              date: formatDateUtc(change.date, 'MMMM d, yyyy'),
+              time: formatTime(change.date)
+            }}
+            components={{
+              datetime: <span />
+            }}
+          />
+        )}
+
         {/* Operational solution header */}
         {change.tableName === 'operational_solution' && (
           <>
@@ -65,7 +87,7 @@ const SolutionChanges = ({ change }: SingleChangeProps) => {
               {field.newTranslated && (
                 <span>{field.fieldNameTranslated}: </span>
               )}
-              <RenderValue
+              <RenderChangeValue
                 value={field.newTranslated}
                 dataType={field.dataType}
                 referenceLabel={field.referenceLabel}
@@ -91,7 +113,7 @@ const SolutionChanges = ({ change }: SingleChangeProps) => {
                     {field.old && (
                       <>
                         <span>{field.fieldNameTranslated}: </span>
-                        <RenderValue
+                        <RenderChangeValue
                           value={field.oldTranslated}
                           dataType={field.dataType}
                           referenceLabel={field.referenceLabel}
@@ -108,65 +130,6 @@ const SolutionChanges = ({ change }: SingleChangeProps) => {
         })()}
       </div>
     </div>
-  );
-};
-
-// Render a single value, either as a string or as a list of strings
-const RenderValue = ({
-  value,
-  dataType,
-  referenceLabel,
-  questionType,
-  previous = false
-}: {
-  value: string | string[];
-  dataType: TranslationDataType | null | undefined;
-  referenceLabel?: string | null | undefined;
-  questionType?: TranslationQuestionType | null | undefined;
-  previous?: boolean;
-}) => {
-  const { t } = useTranslation('changeHistory');
-
-  // Contains the label and parent question if the change record is a follow-up/OTHER type
-  const parentQuestion =
-    referenceLabel && questionType === TranslationQuestionType.OTHER ? (
-      <div className="text-italic padding-bottom-1">
-        ({t('followUp')}
-        {referenceLabel})
-      </div>
-    ) : null;
-
-  const parsedValue = parseArray(value);
-
-  // If the data type is an array, render the array as a list and parent question
-  if (Array.isArray(parsedValue)) {
-    return (
-      <>
-        {parentQuestion}
-        <ul className="padding-left-3 margin-y-0">
-          {parsedValue.map((val, index) => (
-            <li key={val}>{val}</li>
-          ))}
-        </ul>
-      </>
-    );
-  }
-
-  // If the data type is a date, format the date and parent question
-  if (dataType === TranslationDataType.DATE && typeof value === 'string') {
-    return (
-      <>
-        {parentQuestion}
-        <span>{formatDateUtc(value.replace(' ', 'T'), 'MM/dd/yyyy')}</span>
-      </>
-    );
-  }
-
-  return (
-    <>
-      {!previous && parentQuestion}
-      <span>{value}</span>
-    </>
   );
 };
 
@@ -211,6 +174,34 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
         <ul className="margin-top-1 margin-bottom-1 margin-left-4">
           {changeRecords.map(change => (
             <li key={change.id}>
+              {/* Document audits */}
+              {changeRecords[0].tableName === 'plan_document' &&
+                (() => {
+                  return (
+                    <Trans
+                      i18nKey="changeHistory:documentUpdate"
+                      values={{
+                        isLink: documentType(changeRecords[0]),
+                        action: t(
+                          `documentChangeType.${documentUpdateType(
+                            changeRecords[0]
+                          )}`
+                        ),
+                        documentName: documentName(changeRecords[0]),
+                        toFrom: t(`toFrom.${changeRecords[0].action}`),
+                        date: formatDateUtc(
+                          changeRecords[0].date,
+                          'MMMM d, yyyy'
+                        ),
+                        time: formatTime(changeRecords[0].date)
+                      }}
+                      components={{
+                        datetime: <span />
+                      }}
+                    />
+                  );
+                })()}
+
               {changeRecords[0].tableName === 'operational_solution' && (
                 <Trans
                   i18nKey="changeHistory:solutionUpdate"
@@ -259,7 +250,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
             {batchedTables.includes(changeRecords[0].tableName) &&
               (() => {
                 return changeRecords.map(change => (
-                  <SolutionChanges change={change} key={change.id} />
+                  <BatchChanges change={change} key={change.id} />
                 ));
               })()}
           </div>
