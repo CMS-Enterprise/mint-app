@@ -287,7 +287,6 @@ func iterateTranslationFieldCoverage(t *testing.T, translationMap map[string]mod
 
 		// Check if the field is an embedded struct
 		if field.Anonymous {
-			// Changes: (Testing) should we limit recursion depth here?
 			iterateTranslationFieldCoverage(t, translationMap, value, excludeFields)
 			continue
 		}
@@ -314,10 +313,4 @@ func isExcluded(fieldName string, excludeFields []string) bool {
 		}
 	}
 	return false
-}
-
-// TestAssertTranslationStructCoverage asserts that this test function is functioning as expected
-func TestAssertTranslationStructCoverage(t *testing.T) {
-	//Changes: (Testing) Update this to test correctly
-
 }
