@@ -135,6 +135,17 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
+		_, err = notifications.ActivityNewModelPlanCreate(
+			ctx,
+			tx,
+			principal.Account().ID,
+			plan.ID,
+			loaders.UserNotificationPreferencesGetByUserID,
+		)
+		if err != nil {
+			return nil, err
+		}
+
 		return createdPlan, nil
 	})
 	if err != nil {
