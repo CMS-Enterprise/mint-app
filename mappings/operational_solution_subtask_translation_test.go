@@ -42,6 +42,7 @@ func TestOperationalSolutionSubtaskTranslationCoverage(t *testing.T) {
 	tMap, err := translation.ToMap()
 	assert.NoError(t, err)
 	assert.NotNil(t, tMap)
+	excludedFields := append(taskListStructExcludeFields, "SolutionID")
 
-	assertTranslationStructCoverage(t, tMap, models.OperationalSolutionSubtask{}, taskListStructExcludeFields)
+	assertTranslationStructCoverage(t, tMap, models.OperationalSolutionSubtask{}, excludedFields)
 }

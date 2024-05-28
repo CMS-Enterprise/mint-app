@@ -46,6 +46,11 @@ func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *m
 		// 	Name other too?
 		// number of subtasks?
 
+		// Changes: (Meta) Add meta data for Operational Solution Subtask
+		// 1. Operational Solution info (from ID)
+		// 2. Need information?
+		// 3. other?
+
 	default:
 		// Tables that aren't configured to generate meta data will return nil
 		return nil, nil, nil
