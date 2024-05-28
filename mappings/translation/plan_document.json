@@ -20,12 +20,20 @@
     "dataType": "STRING",
     "formType": "TEXT"
   },
-  "name": {
-    "gqlField": "name",
-    "goField": "name",
-    "dbField": "name",
-    "label": "File name",
-    "sublabel": "Enter a name for your document.",
+  "fileName": {
+    "gqlField": "fileName",
+    "goField": "FileName",
+    "dbField": "file_name",
+    "label": "File Name",
+    "sublabel": "Enter a Name for your document.",
+    "dataType": "STRING",
+    "formType": "TEXT"
+  },
+  "fileType": {
+    "gqlField": "fileType",
+    "goField": "FileType",
+    "dbField": "file_yype",
+    "label": "File Type",
     "dataType": "STRING",
     "formType": "TEXT"
   },
@@ -46,10 +54,10 @@
       "OTHER": "Other"
     }
   },
-  "otherTypeDescription": {
-    "gqlField": "otherTypeDescription",
-    "goField": "OtherTypeDescription",
-    "dbField": "other_type_description",
+  "otherType": {
+    "gqlField": "otherType",
+    "goField": "OtherType",
+    "dbField": "other_type",
     "label": "What kind of document is this?",
     "dataType": "STRING",
     "formType": "TEXT"

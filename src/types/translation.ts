@@ -1017,11 +1017,12 @@ export type TranslationTDLs = {
 export type TranslationDocumentsForm = {
   isLink: TranslationFieldPropertiesWithOptions<Bool>;
   url: TranslationFieldProperties;
-  name: TranslationFieldProperties;
+  fileName: TranslationFieldProperties;
   restricted: TranslationFieldPropertiesWithOptions<Bool>;
   documentType: TranslationFieldPropertiesWithOptions<DocumentType>;
   optionalNotes: TranslationFieldProperties;
-  otherTypeDescription: TranslationFieldProperties;
+  otherType: TranslationFieldProperties;
+  fileType: TranslationFieldProperties;
 };
 
 type TranslationDocumentsGQL = Omit<

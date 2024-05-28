@@ -1783,10 +1783,11 @@ export type PlanDocumentSolutionLinkTranslation = {
 export type PlanDocumentTranslation = {
   __typename: 'PlanDocumentTranslation';
   documentType: TranslationFieldWithOptions;
+  fileName: TranslationField;
+  fileType?: Maybe<TranslationField>;
   isLink: TranslationField;
-  name: TranslationField;
   optionalNotes?: Maybe<TranslationField>;
-  otherTypeDescription?: Maybe<TranslationField>;
+  otherType?: Maybe<TranslationField>;
   restricted: TranslationFieldWithOptions;
   url: TranslationField;
 };

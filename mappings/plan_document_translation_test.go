@@ -42,6 +42,17 @@ func TestPlanDocumentTranslationCoverage(t *testing.T) {
 	tMap, err := translation.ToMap()
 	assert.NoError(t, err)
 	assert.NotNil(t, tMap)
+	/*
+		These Fields aren't desired for translation
+		FileSize
+		VirusScanned
+		VirusClean
+		DeletedAt
+		Bucket
+		FileKey
+	*/
 
-	assertTranslationStructCoverage(t, tMap, models.PlanDocument{}, taskListStructExcludeFields)
+	excludedFields := append(taskListStructExcludeFields, "FileSize", "VirusScanned", "VirusClean", "DeletedAt", "Bucket", "FileKey")
+
+	assertTranslationStructCoverage(t, tMap, models.PlanDocument{}, excludedFields)
 }

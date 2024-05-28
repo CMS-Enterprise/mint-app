@@ -5,9 +5,10 @@ Represents plan document translation data
 type PlanDocumentTranslation {
     isLink: TranslationField! @goTag(key: "db", value: "is_link")
     url: TranslationField! @goTag(key: "db", value: "url")
-    name: TranslationField! @goTag(key: "db", value: "name")
+    fileName: TranslationField! @goTag(key: "db", value: "file_name")
     documentType: TranslationFieldWithOptions! @goTag(key: "db", value: "document_type")
-    otherTypeDescription: TranslationField @goTag(key: "db", value: "other_type_description")
+    otherType: TranslationField @goTag(key: "db", value: "other_type")
+    fileType: TranslationField @goTag(key: "db", value: "file_type")
     restricted: TranslationFieldWithOptions! @goTag(key: "db", value: "restricted")
     optionalNotes: TranslationField @goTag(key: "db", value: "optional_notes")
 }

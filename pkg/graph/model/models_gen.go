@@ -247,13 +247,14 @@ type PlanDocumentSolutionLinkTranslation struct {
 
 // Represents plan document translation data
 type PlanDocumentTranslation struct {
-	IsLink               models.TranslationField            `json:"isLink" db:"is_link"`
-	URL                  models.TranslationField            `json:"url" db:"url"`
-	Name                 models.TranslationField            `json:"name" db:"name"`
-	DocumentType         models.TranslationFieldWithOptions `json:"documentType" db:"document_type"`
-	OtherTypeDescription *models.TranslationField           `json:"otherTypeDescription,omitempty" db:"other_type_description"`
-	Restricted           models.TranslationFieldWithOptions `json:"restricted" db:"restricted"`
-	OptionalNotes        *models.TranslationField           `json:"optionalNotes,omitempty" db:"optional_notes"`
+	IsLink        models.TranslationField            `json:"isLink" db:"is_link"`
+	URL           models.TranslationField            `json:"url" db:"url"`
+	FileName      models.TranslationField            `json:"fileName" db:"file_name"`
+	DocumentType  models.TranslationFieldWithOptions `json:"documentType" db:"document_type"`
+	OtherType     *models.TranslationField           `json:"otherType,omitempty" db:"other_type"`
+	FileType      *models.TranslationField           `json:"fileType,omitempty" db:"file_type"`
+	Restricted    models.TranslationFieldWithOptions `json:"restricted" db:"restricted"`
+	OptionalNotes *models.TranslationField           `json:"optionalNotes,omitempty" db:"optional_notes"`
 }
 
 // Represents plan general characteristics translation data
