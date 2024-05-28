@@ -1,6 +1,10 @@
 -- TURN off constraint to require a primary contact
 ALTER TABLE possible_operational_solution_contact DISABLE TRIGGER trg_ensure_primary_contact;
 
+-- ALTER TABLE possible_operational_solution_contact DROP CONSTRAINT idx_unique_primary_contact_per_solution;
+DROP INDEX idx_unique_primary_contact_per_solution;
+
+
 WITH PrimaryContacts AS (
     SELECT
         'INNOVATION'AS sol_key,
@@ -100,7 +104,7 @@ WITH PrimaryContacts AS (
 ),
 
 removedPOCs AS (
-
+-- Remove current primary points of contacts, set them as not primary
     UPDATE possible_operational_solution_contact
     SET
         is_primary = FALSE,
@@ -109,17 +113,33 @@ removedPOCs AS (
     FROM PrimaryContacts AS pc
     INNER JOIN possible_operational_solution AS pos ON pos.sol_key::TEXT = pc.sol_key
     INNER JOIN possible_operational_solution_contact AS poc ON pos.sol_key::TEXT = pc.sol_key AND poc.is_primary = TRUE
+),
+
+primaryContactWithSol AS (
+-- Get possible solution information for the provided contacts
+    SELECT
+        pc.contact_name,
+        pc.is_primary,
+        pc.sol_key,
+        pos.id AS solution_id,
+        '00000001-0001-0001-0001-000000000001' AS modified_by,
+        now() AS modified_dts
+    FROM PrimaryContacts AS pc
+    INNER JOIN possible_operational_solution AS pos ON pos.sol_key = pc.sol_key::OPERATIONAL_SOLUTION_KEY
 )
 
-
-
+-- set the provided contacts as primary contacts
 UPDATE possible_operational_solution_contact
 SET
     is_primary = pc.is_primary,
     modified_by = '00000001-0001-0001-0001-000000000001',
     modified_dts = now()
-FROM PrimaryContacts AS pc
-INNER JOIN possible_operational_solution AS pos ON pos.sol_key::TEXT = pc.sol_key
-INNER JOIN possible_operational_solution_contact AS poc ON pc.contact_name = poc.name AND pos.sol_key::TEXT = pc.sol_key
-WHERE possible_operational_solution_contact.id = poc.id
-RETURNING *;
+FROM primaryContactWithSol AS pc
+WHERE possible_operational_solution_contact.name = pc.contact_name AND possible_operational_solution_contact.possible_operational_solution_id = pc.solution_id;
+
+ALTER TABLE possible_operational_solution_contact ENABLE TRIGGER trg_ensure_primary_contact;
+
+-- Partial Unique Index ensuring only one contact is set at a time
+CREATE UNIQUE INDEX idx_unique_primary_contact_per_solution
+ON possible_operational_solution_contact (possible_operational_solution_id)
+WHERE is_primary = TRUE;
