@@ -27,13 +27,14 @@ const SideNav = ({
 
   const scrollToAboveReadOnlyBodyContent = () => {
     const filterBannerHeight = document.querySelector(
-      '[data-testid="group-filter-banner"'
-    )?.clientHeight!;
+      '[data-testid="group-filter-banner"]'
+    )?.clientHeight;
 
     // `element` is the SectionWrapper component, everything below the ModelWarning
     const element = document.querySelector('#scroll-element')!;
 
-    if (!element) {
+    // if the element or filterBannerHeight is undefined, abort!
+    if (!element || !filterBannerHeight) {
       return;
     }
 
