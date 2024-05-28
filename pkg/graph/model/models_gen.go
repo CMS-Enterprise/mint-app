@@ -490,7 +490,7 @@ type PlanParticipantsAndProvidersTranslation struct {
 	ParticipantsIdsOther                      models.TranslationField                       `json:"participantsIdsOther" db:"participants_ids_other"`
 	ParticipantsIDSNote                       models.TranslationField                       `json:"participantsIDSNote" db:"participants_ids_note"`
 	ProviderAdditionFrequency                 models.TranslationFieldWithOptions            `json:"providerAdditionFrequency" db:"provider_addition_frequency"`
-	ProviderAdditionFrequencyContinually      models.TranslationField                       `json:"providerAdditionFrequencyContinually" db:"provide_addition_frequency_continually"`
+	ProviderAdditionFrequencyContinually      models.TranslationField                       `json:"providerAdditionFrequencyContinually" db:"provider_addition_frequency_continually"`
 	ProviderAdditionFrequencyOther            models.TranslationField                       `json:"providerAdditionFrequencyOther" db:"provider_addition_frequency_other"`
 	ProviderAdditionFrequencyNote             models.TranslationField                       `json:"providerAdditionFrequencyNote" db:"provider_addition_frequency_note"`
 	ProviderAddMethod                         models.TranslationFieldWithOptions            `json:"providerAddMethod" db:"provider_add_method"`
@@ -500,7 +500,7 @@ type PlanParticipantsAndProvidersTranslation struct {
 	ProviderLeaveMethodOther                  models.TranslationField                       `json:"providerLeaveMethodOther" db:"provider_leave_method_other"`
 	ProviderLeaveMethodNote                   models.TranslationField                       `json:"providerLeaveMethodNote" db:"provider_leave_method_note"`
 	ProviderRemovalFrequency                  models.TranslationFieldWithOptions            `json:"providerRemovalFrequency" db:"provider_removal_frequency"`
-	ProviderRemovalFrequencyContinually       models.TranslationField                       `json:"providerRemovalFrequencyContinually" db:"provide_removal_frequency_continually"`
+	ProviderRemovalFrequencyContinually       models.TranslationField                       `json:"providerRemovalFrequencyContinually" db:"provider_removal_frequency_continually"`
 	ProviderRemovalFrequencyOther             models.TranslationField                       `json:"providerRemovalFrequencyOther" db:"provider_removal_frequency_other"`
 	ProviderRemovalFrequencyNote              models.TranslationField                       `json:"providerRemovalFrequencyNote" db:"provider_removal_frequency_note"`
 	ProviderOverlap                           models.TranslationFieldWithOptionsAndChildren `json:"providerOverlap" db:"provider_overlap"`
