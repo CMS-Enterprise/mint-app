@@ -91,7 +91,7 @@ const hiddenFields: HiddenFieldTypes[] = [
   },
   {
     table: 'operational_solution',
-    fields: ['operational_need_id', 'solution_type', 'is_other']
+    fields: ['operational_need_id', 'solution_type', 'is_other', 'needed']
   },
   {
     table: 'plan_document',
@@ -120,7 +120,8 @@ export const batchedTables: string[] = [
   'plan_document',
   'operational_solution',
   'operational_need',
-  'operational_solution_subtask'
+  'operational_solution_subtask',
+  'plan_document_solution_link'
 ];
 
 export const documentChange = (docType: string | undefined) =>

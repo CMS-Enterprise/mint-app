@@ -42,18 +42,38 @@ const BatchChanges = ({ change }: BatchChangeProps) => {
       <div className="text-bold margin-right-05">
         {/* Documents header */}
         {change.tableName === 'plan_document' && (
+          <div className="text-normal">
+            <Trans
+              i18nKey="changeHistory:documentUpdate"
+              values={{
+                isLink: documentType(change),
+                action: t(`documentChangeType.${documentUpdateType(change)}`),
+                documentName: documentName(change),
+                toFrom: t(`toFrom.${change.action}`),
+                date: formatDateUtc(change.date, 'MMMM d, yyyy'),
+                time: formatTime(change.date)
+              }}
+              components={{
+                datetime: <span />,
+                bold: <span className="text-bold" />
+              }}
+            />
+          </div>
+        )}
+
+        {change.tableName === 'plan_document_solution_link' && (
           <Trans
-            i18nKey="changeHistory:documentUpdate"
+            i18nKey="changeHistory:documentSolutionLinkUpdate"
             values={{
-              isLink: documentType(change),
-              action: t(`documentChangeType.${documentUpdateType(change)}`),
-              documentName: documentName(change),
+              action: t(`documentLinkType.${change.action}`),
               toFrom: t(`toFrom.${change.action}`),
+              documentName: 'Temp document', // TODO: replace with actual document name
+              solutionName: 'Temp solution', // TODO: replace with actual solution name
               date: formatDateUtc(change.date, 'MMMM d, yyyy'),
               time: formatTime(change.date)
             }}
             components={{
-              datetime: <span />
+              normal: <span className="text-normal" />
             }}
           />
         )}
@@ -139,10 +159,10 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
 
   const [isOpen, setOpen] = useState<boolean>(false);
 
-  // Determine if the change record should be expanded to show more data
-  const showMoreData: boolean =
-    changeRecords[0].action !== DatabaseOperation.INSERT ||
-    changeRecords[0].tableName !== 'operational_solution';
+  // // Determine if the change record should be expanded to show more data
+  // const showMoreData: boolean =
+  //   changeRecords[0].action !== DatabaseOperation.INSERT ||
+  //   changeRecords[0].tableName !== 'operational_solution';
 
   return (
     <Card className="change-record">
@@ -196,7 +216,34 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                         time: formatTime(changeRecords[0].date)
                       }}
                       components={{
-                        datetime: <span />
+                        datetime: <span />,
+                        bold: <></>
+                      }}
+                    />
+                  );
+                })()}
+
+              {/* Document solution link audits */}
+              {changeRecords[0].tableName === 'plan_document_solution_link' &&
+                (() => {
+                  return (
+                    <Trans
+                      i18nKey="changeHistory:documentSolutionLinkUpdate"
+                      values={{
+                        action: t(
+                          `documentLinkType.${changeRecords[0].action}`
+                        ),
+                        toFrom: t(`toFrom.${changeRecords[0].action}`),
+                        documentName: 'Temp document', // TODO: replace with actual document name
+                        solutionName: 'Temp solution', // TODO: replace with actual solution name
+                        date: formatDateUtc(
+                          changeRecords[0].date,
+                          'MMMM d, yyyy'
+                        ),
+                        time: formatTime(changeRecords[0].date)
+                      }}
+                      components={{
+                        normal: <></>
                       }}
                     />
                   );
@@ -236,26 +283,24 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
         </ul>
       )}
 
-      {showMoreData && (
-        <CollapsableLink
-          className="margin-left-5"
-          id={changeRecords[0].id}
-          label={t('showDetails')}
-          closeLabel={t('hideDetails')}
-          labelPosition="bottom"
-          setParentOpen={setOpen}
-          styleLeftBar={false}
-        >
-          <div className="margin-bottom-neg-1">
-            {batchedTables.includes(changeRecords[0].tableName) &&
-              (() => {
-                return changeRecords.map(change => (
-                  <BatchChanges change={change} key={change.id} />
-                ));
-              })()}
-          </div>
-        </CollapsableLink>
-      )}
+      <CollapsableLink
+        className="margin-left-5"
+        id={changeRecords[0].id}
+        label={t('showDetails')}
+        closeLabel={t('hideDetails')}
+        labelPosition="bottom"
+        setParentOpen={setOpen}
+        styleLeftBar={false}
+      >
+        <div className="margin-bottom-neg-1">
+          {batchedTables.includes(changeRecords[0].tableName) &&
+            (() => {
+              return changeRecords.map(change => (
+                <BatchChanges change={change} key={change.id} />
+              ));
+            })()}
+        </div>
+      </CollapsableLink>
     </Card>
   );
 };

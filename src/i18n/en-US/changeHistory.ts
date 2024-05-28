@@ -22,11 +22,11 @@ const changeHistory = {
   discussion_replyAnswered:
     'replied to a Discussion <datetime>on {{date}} at {{time}}</datetime>',
   documentUpdate:
-    '{{action}} {{documentName}}{{isLink}} {{toFrom}} Documents <datetime>on {{date}} at {{time}}</datetime>',
+    '<bold>{{documentName}}</bold> {{isLink}} {{action}} {{toFrom}} Documents',
   crTdlUpdate:
     '{{action}} {{crTdlName}} {{toFrom}} FFS CRs and TDLs <datetime>on {{date}} at {{time}}</datetime>',
   documentSolutionLinkUpdate:
-    '{{documentName}} {{action}} {{toFrom}} {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+    '{{documentName}} {{action}} <normal>{{toFrom}}</normal> {{solutionName}}',
   solutionCreate:
     'addded {{-count}} solutions to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   solutionUpdate: '{{needName}} solution {{action}}: {{solutionName}}',
@@ -52,6 +52,8 @@ const changeHistory = {
     operational_solution:
       'Operational solutions and implementation status tracker',
     operational_solution_subtask:
+      'Operational solutions and implementation status tracker',
+    plan_document_solution_link:
       'Operational solutions and implementation status tracker'
   },
   showDetails: 'Show details',
