@@ -67,21 +67,18 @@ const sortOptions: SortProps[] = [
 const ChangeHistory = () => {
   const { t } = useTranslation('changeHistory');
 
-  const { state } = useLocation<LocationProps>();
-
-  const fromReadView = state?.from === 'readview';
-
   const { modelID } = useParams<{
     modelID: string;
   }>();
 
-  const location = useLocation();
+  const { state } = useLocation<LocationProps>();
+
+  const fromReadView = state?.from === 'readview';
+
   const history = useHistory();
 
-  const searchParams = new URLSearchParams(history.location.search);
-
-  const params = new URLSearchParams(location.search);
-
+  // Query parameters
+  const params = new URLSearchParams(history.location.search);
   const pageParam = params.get('page');
   const queryParam = params.get('query');
   const sortParam = params.get('sort') as SortProps['value'];
@@ -98,26 +95,23 @@ const ChangeHistory = () => {
 
   const sortedChanges = sortAllChanges(changes);
 
-  // Contains sort state of select options
-  const [sort, setSort] = useState<SortProps['value']>(
-    sortParam || sortOptions[0].value
-  );
-
   // Contains the sorted changes based on select/sort option
   const [sortedAudits, setSortedAudits] = useState([...sortedChanges]);
 
   // Contains the current set of changes to display, including search and sort
   const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
 
+  // Contains sort state of select options
+  const [sort, setSort] = useState<SortProps['value']>(
+    sortParam || sortOptions[0].value
+  );
+
   // Pagination Configuration
   const itemsPerPage = 10;
-
   const [pageOffset, setPageOffset] = useState(
     Number.isNaN(Number(pageParam)) ? 0 : Number(pageParam)
   );
-
   const endOffset = pageOffset + itemsPerPage;
-
   const [pageCount, setPageCount] = useState(
     auditChanges ? Math.ceil(auditChanges.length / itemsPerPage) : 1
   );
@@ -131,13 +125,13 @@ const ChangeHistory = () => {
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
 
-  // searchAudits is a function to filter audits based on query
-  const searchAudits = useCallback(filterQueryAudits, []);
+  // searchChanges is a function to filter audits based on query
+  const searchChanges = useCallback(filterQueryAudits, []);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
     if (query.trim()) {
-      const filteredAudits = searchAudits(query, sortedAudits);
+      const filteredAudits = searchChanges(query, sortedAudits);
 
       setAuditChanges(filteredAudits);
       setResultsNum(filteredAudits.length);
@@ -149,17 +143,17 @@ const ChangeHistory = () => {
     if (!loading) {
       // Update the URL's query parameters
       if (query) {
-        searchParams.set('query', query);
+        params.set('query', query);
       } else {
         // Delete the 'query' parameter
-        searchParams.delete('query');
+        params.delete('query');
       }
-      history.push({ search: searchParams.toString() });
+      history.push({ search: params.toString() });
     }
 
     // Return the page to the first page when the query changes
     setPageOffset(0);
-  }, [query, searchAudits, setPageOffset]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [query, searchChanges, setPageOffset]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update the audit changes when the data is loaded.
   useEffect(() => {
@@ -188,8 +182,8 @@ const ChangeHistory = () => {
   const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % auditChanges?.length;
     setPageOffset(newOffset);
-    searchParams.set('page', (newOffset / itemsPerPage + 1).toString());
-    history.push({ search: searchParams.toString() });
+    params.set('page', (newOffset / itemsPerPage + 1).toString());
+    history.push({ search: params.toString() });
   };
 
   // Sort the changes when the sort option changes.
@@ -308,8 +302,8 @@ const ChangeHistory = () => {
                       value={sort}
                       onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                         setSort(e.target.value as SortProps['value']);
-                        searchParams.set('sort', e.target.value);
-                        history.push({ search: searchParams.toString() });
+                        params.set('sort', e.target.value);
+                        history.push({ search: params.toString() });
                       }}
                     >
                       {sortOptions.map(option => {
