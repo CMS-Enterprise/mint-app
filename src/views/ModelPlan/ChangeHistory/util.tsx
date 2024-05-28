@@ -108,10 +108,6 @@ const hiddenFields: HiddenFieldTypes[] = [
     ]
   },
   {
-    table: 'plan_document_solution_link',
-    fields: ['solution_id']
-  },
-  {
     table: 'plan_cr',
     fields: ['model_plan_id']
   },
@@ -129,6 +125,13 @@ export const batchedTables: string[] = [
   'plan_document_solution_link'
 ];
 
+export const connectedFields: HiddenFieldTypes[] = [
+  {
+    table: 'plan_document_solution_link',
+    fields: ['document_id']
+  }
+];
+
 export const documentChange = (docType: string | undefined) =>
   docType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
 
@@ -144,6 +147,12 @@ export const documentType = (change: ChangeRecordType) =>
     ?.oldTranslated === 'true'
     ? ' link'
     : '';
+
+export const getSolutionName = (change: ChangeRecordType) =>
+  change.translatedFields.find(field => field.fieldName === 'solution_id')
+    ?.newTranslated ||
+  change.translatedFields.find(field => field.fieldName === 'solution_id')
+    ?.oldTranslated;
 
 export const documentUpdateType = (change: ChangeRecordType) => {
   if (change.action === 'INSERT') {
@@ -484,30 +493,30 @@ export const removedHiddenFields = (
   return filteredChangeRecords;
 };
 
+// Groups changes that are within 1 second of each other
 export const groupBatchedChanges = (changes: ChangeRecordType[]) => {
-  const sharedChanges: Record<string, ChangeRecordType[]> = {};
+  const mergedChanges = [...changes].reduce(
+    (acc: ChangeRecordType[][], change) => {
+      const date = new Date(change.date);
+      const lastGroup = acc[acc.length - 1];
 
-  changes.forEach(change => {
-    const sharedInsertTime = DateTime.fromISO(change.date).toLocaleString(
-      DateTime.DATETIME_FULL_WITH_SECONDS
-    );
-
-    if (batchedTables.includes(change.tableName)) {
-      if (!sharedChanges[sharedInsertTime]) {
-        sharedChanges[sharedInsertTime] = [change];
+      if (
+        !lastGroup ||
+        Math.abs(
+          date.getTime() -
+            new Date(lastGroup[lastGroup.length - 1].date).getTime()
+        ) > 1000
+      ) {
+        acc.push([change]);
       } else {
-        sharedChanges[sharedInsertTime].push(change);
+        lastGroup.push(change);
       }
-    } else {
-      sharedChanges[`${sharedInsertTime}-${change.id}`] = [change];
-    }
-  });
 
-  const mergedChanges: ChangeRecordType[][] = [];
+      return acc;
+    },
+    []
+  );
 
-  Object.values(sharedChanges).forEach((change, i) => {
-    mergedChanges.push([...change]);
-  });
   return mergedChanges;
 };
 

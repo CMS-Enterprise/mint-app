@@ -10,9 +10,11 @@ import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
   batchedTables,
+  connectedFields,
   documentName,
   documentType,
-  documentUpdateType
+  documentUpdateType,
+  getSolutionName
 } from '../../util';
 import { RenderChangeValue } from '../ChangeRecord';
 
@@ -28,11 +30,28 @@ type ChangeRecordProps = {
 
 type BatchChangeProps = {
   change: ChangeRecordType;
+  connected: boolean;
 };
 
 // Render a single change record, showing the field name, the change type, and the old and new values
-const BatchChanges = ({ change }: BatchChangeProps) => {
+const BatchChanges = ({ change, connected }: BatchChangeProps) => {
   const { t } = useTranslation('changeHistory');
+
+  let fieldsToMap: ChangeRecordType['translatedFields'][0][] =
+    change.translatedFields;
+
+  // If the change is connected to another table, only show the fields that are connected
+  if (connected) {
+    const connectedConfig = connectedFields.find(
+      connection => connection.table === change.tableName
+    );
+
+    if (connectedConfig) {
+      fieldsToMap = change.translatedFields.filter(field =>
+        connectedConfig.fields.includes(field.fieldName)
+      );
+    }
+  }
 
   return (
     <div
@@ -61,13 +80,14 @@ const BatchChanges = ({ change }: BatchChangeProps) => {
           </div>
         )}
 
+        {/* Document solution link header */}
         {change.tableName === 'plan_document_solution_link' && (
           <Trans
             i18nKey="changeHistory:documentSolutionLinkUpdate"
             values={{
               action: t(`documentLinkType.${change.action}`),
               toFrom: t(`toFrom.${change.action}`),
-              solutionName: 'Temp solution', // TODO: replace with actual solution name
+              solutionName: getSolutionName(change),
               date: formatDateUtc(change.date, 'MMMM d, yyyy'),
               time: formatTime(change.date)
             }}
@@ -101,7 +121,7 @@ const BatchChanges = ({ change }: BatchChangeProps) => {
 
       <div className="change-record__answer margin-y-1">
         {(() => {
-          return change.translatedFields.map(field => (
+          return fieldsToMap.map(field => (
             <div key={field.id}>
               {field.newTranslated && (
                 <span>{field.fieldNameTranslated}: </span>
@@ -120,13 +140,15 @@ const BatchChanges = ({ change }: BatchChangeProps) => {
           return (
             <>
               {change.action !== DatabaseOperation.DELETE &&
-                !!change.translatedFields.find(field => field.old) && (
+                !!fieldsToMap.find(field => field.old) && (
                   <div className="text-bold padding-y-105">
                     {t('previousDetails')}
                   </div>
                 )}
-              {change.translatedFields.map(field => {
+
+              {fieldsToMap.map(field => {
                 if (!field.old) return <div key={field.id} />;
+
                 return (
                   <div key={field.id}>
                     {field.old && (
@@ -229,29 +251,26 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
 
               {/* Document solution link audits */}
               {changeRecords[index].tableName ===
-                'plan_document_solution_link' &&
-                (() => {
-                  return (
-                    <Trans
-                      i18nKey="changeHistory:documentSolutionLinkUpdate"
-                      values={{
-                        action: t(
-                          `documentLinkType.${changeRecords[index].action}`
-                        ),
-                        toFrom: t(`toFrom.${changeRecords[index].action}`),
-                        solutionName: 'Temp solution', // TODO: replace with actual solution name
-                        date: formatDateUtc(
-                          changeRecords[index].date,
-                          'MMMM d, yyyy'
-                        ),
-                        time: formatTime(changeRecords[index].date)
-                      }}
-                      components={{
-                        normal: <></>
-                      }}
-                    />
-                  );
-                })()}
+                'plan_document_solution_link' && (
+                <Trans
+                  i18nKey="changeHistory:documentSolutionLinkUpdate"
+                  values={{
+                    action: t(
+                      `documentLinkType.${changeRecords[index].action}`
+                    ),
+                    toFrom: t(`toFrom.${changeRecords[index].action}`),
+                    solutionName: getSolutionName(changeRecords[index]),
+                    date: formatDateUtc(
+                      changeRecords[index].date,
+                      'MMMM d, yyyy'
+                    ),
+                    time: formatTime(changeRecords[index].date)
+                  }}
+                  components={{
+                    normal: <></>
+                  }}
+                />
+              )}
 
               {changeRecords[index].tableName === 'operational_solution' && (
                 <Trans
@@ -300,7 +319,11 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
           {batchedTables.includes(changeRecords[0].tableName) &&
             (() => {
               return changeRecords.map(change => (
-                <BatchChanges change={change} key={change.id} />
+                <BatchChanges
+                  change={change}
+                  connected={changeRecords.length > 1}
+                  key={change.id}
+                />
               ));
             })()}
         </div>
