@@ -30,7 +30,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'What existing model is this a track of?',
     dataType: TranslationDataType.NUMBER,
     formType: TranslationFormType.TEXT,
-    tableReference: 'existing_model'
+    tableReference: 'existing_model',
+    hideFromReadonly: true
   },
   currentModelPlanID: {
     gqlField: 'currentModelPlanID',
@@ -39,7 +40,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'What model is this a track of?',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
-    tableReference: 'model_plan'
+    tableReference: 'model_plan',
+    hideFromReadonly: true
   },
   existingModel: {
     gqlField: 'existingModel',
