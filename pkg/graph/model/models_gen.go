@@ -259,7 +259,10 @@ type PlanDocumentTranslation struct {
 
 // Represents plan general characteristics translation data
 type PlanGeneralCharacteristicsTranslation struct {
-	IsNewModel                                    models.TranslationFieldWithOptionsAndChildren `json:"isNewModel" db:"is_new_model"`
+	IsNewModel         models.TranslationFieldWithOptionsAndChildren `json:"isNewModel" db:"is_new_model"`
+	CurrentModelPlanID *models.TranslationField                      `json:"currentModelPlanID,omitempty" db:"current_model_plan_id"`
+	ExistingModelID    *models.TranslationField                      `json:"existingModelID,omitempty" db:"existing_model_id"`
+	// Existing model doesn't exist in the database, it is returned based on if there is a current model plan ID or current model plan ID returned
 	ExistingModel                                 models.TranslationFieldWithParent             `json:"existingModel" db:"existing_model"`
 	ResemblesExistingModel                        models.TranslationFieldWithOptionsAndChildren `json:"resemblesExistingModel" db:"resembles_existing_model"`
 	ResemblesExistingModelWhyHow                  models.TranslationField                       `json:"resemblesExistingModelWhyHow" db:"resembles_existing_model_why_how"`

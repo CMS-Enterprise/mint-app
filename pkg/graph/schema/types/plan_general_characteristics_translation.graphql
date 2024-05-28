@@ -4,6 +4,11 @@ Represents plan general characteristics translation data
 type PlanGeneralCharacteristicsTranslation {
   # Page 1
   isNewModel: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "is_new_model")
+  currentModelPlanID:TranslationField  @goTag(key: "db", value: "current_model_plan_id")
+  existingModelID:TranslationField  @goTag(key: "db", value: "existing_model_id")
+  """
+  Existing model doesn't exist in the database, it is returned based on if there is a current model plan ID or current model plan ID returned
+  """
   existingModel: TranslationFieldWithParent! @goTag(key: "db", value: "existing_model")
   resemblesExistingModel: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "resembles_existing_model")
   resemblesExistingModelWhyHow: TranslationField! @goTag(key: "db", value: "resembles_existing_model_why_how")

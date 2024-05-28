@@ -344,6 +344,8 @@ export type TranslationBasics = {
 export type TranslationGeneralCharacteristicsForm = {
   isNewModel: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   existingModel: TranslationFieldPropertiesWithParent<Bool>;
+  existingModelID: TranslationFieldProperties;
+  currentModelPlanID: TranslationFieldProperties;
   resemblesExistingModel: TranslationFieldPropertiesWithOptionsAndChildren<YesNoOtherType>;
   resemblesExistingModelWhyHow: TranslationFieldProperties;
   resemblesExistingModelHow: TranslationFieldPropertiesWithParent<YesNoOtherType>;

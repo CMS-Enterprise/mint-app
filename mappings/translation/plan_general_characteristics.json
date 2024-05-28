@@ -24,6 +24,24 @@
       ]
     }
   },
+  "existingModelID": {
+    "gqlField": "existingModelID",
+    "goField": "ExistingModelID",
+    "dbField": "existing_model_id",
+    "label": "What existing model is this a track of?",
+    "dataType": "NUMBER",
+    "formType": "TEXT",
+    "tableReference": "existing_model"
+  },
+  "currentModelPlanID": {
+    "gqlField": "currentModelPlanID",
+    "goField": "CurrentModelPlanID",
+    "dbField": "current_model_plan_id",
+    "label": "What model is this a track of?",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "tableReference": "model_plan"
+  },
   "existingModel": {
     "gqlField": "existingModel",
     "goField": "ExistingModel",

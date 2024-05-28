@@ -2016,7 +2016,10 @@ export type PlanGeneralCharacteristicsTranslation = {
   communityPartnersInvolved: TranslationFieldWithOptions;
   communityPartnersInvolvedDescription: TranslationField;
   communityPartnersInvolvedNote: TranslationField;
+  currentModelPlanID?: Maybe<TranslationField>;
+  /** Existing model doesn't exist in the database, it is returned based on if there is a current model plan ID or current model plan ID returned */
   existingModel: TranslationFieldWithParent;
+  existingModelID?: Maybe<TranslationField>;
   geographiesRegionTypes: TranslationFieldWithOptionsAndParent;
   geographiesStatesAndTerritories: TranslationFieldWithOptionsAndParent;
   geographiesTargeted: TranslationFieldWithOptionsAndChildren;
