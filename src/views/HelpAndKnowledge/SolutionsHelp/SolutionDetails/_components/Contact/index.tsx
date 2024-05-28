@@ -79,10 +79,9 @@ export const Contact = ({
             'points-of-contact',
             closeRoute || solutionHelpRoute
           )}
-          className="display-flex flex-align-center"
         >
           {t('moreContacts')}
-          <Icon.ArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" style={{ top: '2px' }} />
         </UswdsReactLink>
       )}
     </div>

@@ -17,6 +17,14 @@ const GatheringInfoAlert = ({ solution }: { solution: HelpSolutionType }) => {
     }
   );
 
+  const contactName = solution.alertPrimaryContact
+    ? solution.pointsOfContact?.find(contact => contact.isPrimary)?.name
+    : 'the MINT Team';
+
+  const contactEmail = solution.alertPrimaryContact
+    ? solution.pointsOfContact?.find(contact => contact.isPrimary)?.email
+    : 'MINTTeam@cms.hhs.gov';
+
   return (
     <Alert
       type="info"
@@ -25,11 +33,20 @@ const GatheringInfoAlert = ({ solution }: { solution: HelpSolutionType }) => {
       }`}
       className="line-height-body-5"
     >
-      <Trans i18nKey="gatheringInfoAlert.description">
-        In the meantime, contact the MINT Team at{' '}
-        <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
-          MINTTeam@cms.hhs.gov
-        </ExternalLink>{' '}
+      <Trans
+        i18nKey="helpAndKnowledge:gatheringInfoAlert.description"
+        values={{
+          user: contactName,
+          email: contactEmail
+        }}
+        components={{
+          emailLink: (
+            <ExternalLink href={`mailto:${contactEmail}`}>
+              {contactEmail}
+            </ExternalLink>
+          )
+        }}
+      >
         {timelineConfig?.description
           ? timelineConfig.description
           : t('gatheringInfoAlert.description2')}

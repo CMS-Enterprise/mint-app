@@ -674,7 +674,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CPI 
             >
               MINTTeam@cms.hhs.gov
             </a>
-             if you have any questions.
+            .
           </span>
         </p>
       </div>
@@ -1086,7 +1086,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Elec
             >
               MINTTeam@cms.hhs.gov
             </a>
-             if you have any questions.
+            .
           </span>
         </p>
       </div>
@@ -1428,7 +1428,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
             >
               MINTTeam@cms.hhs.gov
             </a>
-              and they will help you connect with Center for Medicare (CM).
+            .
           </span>
         </p>
       </div>
@@ -1764,17 +1764,15 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Inte
           class="usa-alert__text"
         >
           <span>
-            In the meantime, contact the MINT Team at 
+            In the meantime, contact  at 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="mailto:MINTTeam@cms.hhs.gov"
+              href="mailto:undefined"
               rel="noopener noreferrer"
               target="_blank"
-            >
-              MINTTeam@cms.hhs.gov
-            </a>
-             if you have any questions.
+            />
+            .
           </span>
         </p>
       </div>
@@ -2161,7 +2159,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Medi
             >
               MINTTeam@cms.hhs.gov
             </a>
-              if your model will use MARx or if you have any questions. 
+            .
           </span>
         </p>
       </div>

@@ -42,7 +42,7 @@ exports[`Operation Solution Contact > matches snapshot 1`] = `
       </svg>
     </a>
     <a
-      class="usa-link display-flex flex-align-center"
+      class="usa-link"
       href="/help-and-knowledge/operational-solutions?solution=accountable-care-organization&section=points-of-contact"
     >
       More points of contact
@@ -51,6 +51,7 @@ exports[`Operation Solution Contact > matches snapshot 1`] = `
         focusable="false"
         height="1em"
         role="img"
+        style="top: 2px;"
         viewBox="0 0 24 24"
         width="1em"
         xmlns="http://www.w3.org/2000/svg"
