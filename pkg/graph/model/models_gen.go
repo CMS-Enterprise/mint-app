@@ -83,16 +83,19 @@ type OperationalSolutionSubtaskTranslation struct {
 
 // Represents operational solution translation data
 type OperationalSolutionTranslation struct {
-	Name          models.TranslationField            `json:"name" db:"name"`
+	// Name comes from the possible operational solution table. It is not returned in an audit
+	Name          models.TranslationField            `json:"name" db:"sol_name"`
 	NameOther     models.TranslationField            `json:"nameOther" db:"name_other"`
+	IsOther       models.TranslationFieldWithOptions `json:"isOther" db:"is_other"`
 	OtherHeader   models.TranslationField            `json:"otherHeader" db:"other_header"`
 	PocName       models.TranslationField            `json:"pocName" db:"poc_name"`
 	PocEmail      models.TranslationField            `json:"pocEmail" db:"poc_email"`
 	MustStartDts  models.TranslationField            `json:"mustStartDts" db:"must_start_dts"`
 	MustFinishDts models.TranslationField            `json:"mustFinishDts" db:"must_finish_dts"`
 	Needed        models.TranslationFieldWithOptions `json:"needed" db:"needed"`
-	Key           models.TranslationFieldWithOptions `json:"key" db:"key"`
-	Status        models.TranslationFieldWithOptions `json:"status" db:"status"`
+	// Key comes from the possible operational solution table. It is not returned in an audit
+	Key    models.TranslationFieldWithOptions `json:"key" db:"sol_key"`
+	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
 // Represents plan basics translation data

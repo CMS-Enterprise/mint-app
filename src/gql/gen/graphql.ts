@@ -1268,9 +1268,12 @@ export type OperationalSolutionSubtaskTranslation = {
 /** Represents operational solution translation data */
 export type OperationalSolutionTranslation = {
   __typename: 'OperationalSolutionTranslation';
+  isOther: TranslationFieldWithOptions;
+  /** Key comes from the possible operational solution table. It is not returned in an audit */
   key: TranslationFieldWithOptions;
   mustFinishDts: TranslationField;
   mustStartDts: TranslationField;
+  /** Name comes from the possible operational solution table. It is not returned in an audit */
   name: TranslationField;
   nameOther: TranslationField;
   needed: TranslationFieldWithOptions;

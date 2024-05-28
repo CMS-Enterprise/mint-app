@@ -268,28 +268,8 @@ func assertTranslationStructCoverage(t *testing.T, translationMap map[string]mod
 		t.Errorf("%s is not a struct", typ)
 		t.FailNow()
 	}
-	// reflect.vi
+
 	iterateTranslationFieldCoverage(t, translationMap, v, excludeFields)
-
-	// for i := 0; i < typ.NumField(); i++ {
-	// 	// Get the field
-	// 	field := typ.Field(i)
-	// 	//Changes: (Testing) This gets embedded structs, not the fields on the embedded structs, revisit!
-	// 	// value := v.Field(i)
-	// 	// translationKey := field.Name
-
-	// 	// Get the DB tag! That is needed for
-	// 	translationKey := field.Tag.Get(tagDBName)
-	// 	if translationKey == "" {
-	// 		// If tag was not found fail?
-	// 		//Changes: Revisit this
-	// 		t.Fail()
-	// 	}
-
-	// 	// TODO: Check if this is an excluded field
-	// 	translationInterface := translationMap[translationKey]
-	// 	assert.NotNil(t, translationInterface, "field (%s, tag %s) is expected to have a translation, but it is missing. Please add the translation according to the documentation, or exclude it if needed.", field.Name, translationKey)
-	// }
 
 }
 

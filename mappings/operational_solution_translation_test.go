@@ -42,6 +42,13 @@ func TestOperationalSolutionTranslationCoverage(t *testing.T) {
 	tMap, err := translation.ToMap()
 	assert.NoError(t, err)
 	assert.NotNil(t, tMap)
+	/*
+		Operational NeedID is captured in metadata
+		SolutionType is captured in MetaData
+		IsCommonSolution isn't a database field, but data returned in the query
 
-	assertTranslationStructCoverage(t, tMap, models.OperationalSolution{}, taskListStructExcludeFields)
+	*/
+	excludedFields := append(taskListStructExcludeFields, "OperationalNeedID", "SolutionType", "IsCommonSolution")
+
+	assertTranslationStructCoverage(t, tMap, models.OperationalSolution{}, excludedFields)
 }

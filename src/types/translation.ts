@@ -1070,6 +1070,7 @@ export type TranslationOperationalSolutionsForm = {
   pocEmail: TranslationFieldProperties;
   needed: TranslationFieldPropertiesWithOptions<Bool>;
   status: TranslationFieldPropertiesWithOptions<OpSolutionStatus>;
+  isOther: TranslationFieldPropertiesWithOptions<Bool>;
 };
 
 type TranslationOperationalSolutionsGQL = Omit<
