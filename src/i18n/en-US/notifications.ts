@@ -75,17 +75,44 @@ const notifications = {
   settings: {
     heading: 'Notification settings',
     subHeading:
-      'You will be notified in-app for the following events and can choose to opt-out of receiving emails below.',
+      'Choose whether you would like to receive notifications via email, in the MINT application, or both.',
     notification: 'Notification',
     email: 'Email',
     inApp: 'In-app',
+    sections: {
+      basicNotifications: {
+        heading: 'Basic notifications',
+        subHeading:
+          'You will always receive basic notifications in-app, but may opt out of receiving them via email.'
+        // configurations: {
+        //   dailyDigestComplete:
+        //     'Daily digest of changes to the models I’m following',
+        //   addedAsCollaborator:
+        //     'When I’m added as a collaborator to a Model Plan',
+        //   taggedInDiscussion: 'When I’m tagged in a discussion',
+        //   newDiscussionReply: 'When someone replies to a discussion I started',
+        //   modelPlanShared: 'When someone shares a Model Plan with me'
+        // }
+      },
+      additionalNotifications: {
+        heading: 'Additional notifications'
+        // configurations: {
+        //   modelCreation: 'When a new Model Plan is created',
+        //   dateChanges: 'When a model dates change',
+        //   whichModel: 'Which model'
+        // }
+      }
+    },
     configurations: {
       dailyDigestComplete:
-        'Daily digest of the models I’m following when something changes',
+        'Daily digest of changes to the models I’m following',
       addedAsCollaborator: 'When I’m added as a collaborator to a Model Plan',
       taggedInDiscussion: 'When I’m tagged in a discussion',
       newDiscussionReply: 'When someone replies to a discussion I started',
       modelPlanShared: 'When someone shares a Model Plan with me'
+      // modelCreation: 'When a new Model Plan is created',
+      // dateChanges: 'When a model dates change',
+      // whichModel: 'Which model'
     },
     save: 'Save',
     dontUpdate: 'Don’t update and return to previous page',

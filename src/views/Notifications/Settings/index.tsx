@@ -42,7 +42,9 @@ const NotificationSettings = () => {
   const notificationSettings: Record<
     keyof NotificationSettingsFormType,
     string
-  > = notificationsT('settings.configurations', { returnObjects: true });
+  > = notificationsT('settings.configurations', {
+    returnObjects: true
+  });
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
 
@@ -167,15 +169,34 @@ const NotificationSettings = () => {
                 <>
                   <Grid row>
                     <Grid mobile={{ col: 6 }}>
-                      <h3>{notificationsT('settings.notification')}</h3>
+                      <h3 className="margin-bottom-3 padding-bottom-105 border-bottom border-ink">
+                        {notificationsT('settings.notification')}
+                      </h3>
                     </Grid>
 
                     <Grid mobile={{ col: 3 }}>
-                      <h3>{notificationsT('settings.email')}</h3>
+                      <h3 className="margin-bottom-3 padding-bottom-105 border-bottom border-ink">
+                        {notificationsT('settings.email')}
+                      </h3>
                     </Grid>
 
                     <Grid mobile={{ col: 3 }}>
-                      <h3>{notificationsT('settings.inApp')}</h3>
+                      <h3 className="margin-bottom-3 padding-bottom-105 border-bottom border-ink">
+                        {notificationsT('settings.inApp')}
+                      </h3>
+                    </Grid>
+
+                    <Grid mobile={{ col: 6 }}>
+                      <h4 className="margin-top-0 margin-bottom-1">
+                        {notificationsT(
+                          'settings.sections.basicNotifications.heading'
+                        )}
+                      </h4>
+                      <p className="margin-top-0 margin-bottom-2 text-base-dark">
+                        {notificationsT(
+                          'settings.sections.basicNotifications.subHeading'
+                        )}
+                      </p>
                     </Grid>
                   </Grid>
 
@@ -189,7 +210,7 @@ const NotificationSettings = () => {
                         return (
                           <Grid row key={setting}>
                             <Grid mobile={{ col: 6 }}>
-                              <p className="text-wrap">
+                              <p className="text-wrap margin-top-0 margin-bottom-2">
                                 {notificationSettings[setting]}
                               </p>
                             </Grid>
