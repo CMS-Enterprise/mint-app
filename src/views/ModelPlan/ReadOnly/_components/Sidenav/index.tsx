@@ -47,7 +47,8 @@ const SideNav = ({
 
     // Calculate all the things
     const distanceFromTopOfPage =
-      top + window.scrollY - filterBannerHeight - marginTopValue;
+      // 55 is the height of the sticky header
+      top + window.scrollY - filterBannerHeight - marginTopValue - 55;
     window.scroll(0, distanceFromTopOfPage);
   };
 
