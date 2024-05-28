@@ -1,8 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { useLocation, useParams } from 'react-router-dom';
-import { GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
+import {
+  Grid,
+  GridContainer,
+  Icon,
+  Label,
+  Select,
+  SummaryBox
+} from '@trussworks/react-uswds';
 import { useGetChangeHistoryQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -10,11 +23,19 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
+import GlobalClientFilter from 'components/TableFilter';
+import i18n from 'i18n';
+import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import ChangeRecord from './components/ChangeRecord';
-import { sortAllChanges } from './util';
+import {
+  filterQueryAudits,
+  handleSortOptions,
+  sortAllChanges,
+  sortChangesByDay
+} from './util';
 
 type LocationProps = {
   state: {
@@ -22,6 +43,24 @@ type LocationProps = {
   };
   from?: string;
 };
+
+// Sort options type for the select dropdown
+type SortProps = {
+  value: 'newest' | 'oldest';
+  label: string;
+};
+
+// Sort options for the select dropdown
+const sortOptions: SortProps[] = [
+  {
+    value: 'newest',
+    label: i18n.t('changeHistory:sort.newest')
+  },
+  {
+    value: 'oldest',
+    label: i18n.t('changeHistory:sort.oldest')
+  }
+];
 
 const ChangeHistory = () => {
   const { t } = useTranslation('changeHistory');
@@ -46,21 +85,82 @@ const ChangeHistory = () => {
 
   const sortedChanges = sortAllChanges(changes);
 
-  const [pageOffset, setPageOffset] = useState(0);
+  // Contains sort state of select options
+  const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
+
+  // Contains the sorted changes based on select/sort option
+  const [sortedAudits, setSortedAudits] = useState([...sortedChanges]);
+
+  // Contains the current set of changes to display, including search and sort
+  const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
 
   // Pagination Configuration
   const itemsPerPage = 10;
+
+  const [pageOffset, setPageOffset] = useState(0);
+
   const endOffset = pageOffset + itemsPerPage;
-  const currentItems = sortedChanges?.slice(pageOffset, endOffset);
-  const pageCount = sortedChanges
-    ? Math.ceil(sortedChanges.length / itemsPerPage)
-    : 1;
+
+  const [pageCount, setPageCount] = useState(
+    auditChanges ? Math.ceil(auditChanges.length / itemsPerPage) : 1
+  );
+
+  // Current items to dsiplay on the current page - contains search and sort data
+  const [currentItems, setCurrentItems] = useState(
+    auditChanges.slice(pageOffset, endOffset)
+  );
+
+  // Search/query configuration
+  const [query, setQuery] = useState<string>('');
+  const [resultsNum, setResultsNum] = useState<number>(0);
+
+  // searchAudits is a function to filter audits based on query
+  const searchAudits = useCallback(filterQueryAudits, []);
+
+  //  If no query, return all solutions, otherwise, matching query solutions
+  useEffect(() => {
+    if (query.trim()) {
+      const filteredAudits = searchAudits(query, sortedAudits);
+      setAuditChanges(filteredAudits);
+      setResultsNum(filteredAudits.length);
+    } else {
+      // Sets the default audits if no query present
+      setAuditChanges(sortedAudits);
+    }
+    // Return the page to the first page when the query changes
+    setPageOffset(0);
+  }, [query, searchAudits, setPageOffset]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Update the audit changes when the data is loaded.
+  useEffect(() => {
+    if (!loading) {
+      setAuditChanges([...sortedChanges]);
+      setSortedAudits([...sortedChanges]);
+    }
+  }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Update the current items when the page offset changes.
+  useEffect(() => {
+    setCurrentItems(auditChanges.slice(pageOffset, endOffset));
+    setPageCount(
+      auditChanges ? Math.ceil(auditChanges.length / itemsPerPage) : 1
+    );
+  }, [auditChanges, endOffset, pageOffset]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event: { selected: number }) => {
-    const newOffset = (event.selected * itemsPerPage) % sortedChanges?.length;
+    const newOffset = (event.selected * itemsPerPage) % auditChanges?.length;
     setPageOffset(newOffset);
   };
+
+  // Sort the changes when the sort option changes.
+  useEffect(() => {
+    setAuditChanges(handleSortOptions(auditChanges, sort));
+    setSortedAudits(handleSortOptions(sortedChanges, sort));
+  }, [sort]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Group changes by day
+  const changesByDay = sortChangesByDay(currentItems);
 
   if (error) {
     return <NotFound />;
@@ -68,6 +168,7 @@ const ChangeHistory = () => {
 
   return (
     <MainContent>
+      {/* Summary banner */}
       <SummaryBox
         className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
         data-testid="read-only-model-summary"
@@ -110,16 +211,117 @@ const ChangeHistory = () => {
           <PageLoading />
         ) : (
           <>
-            {sortedChanges.length === 0 && (
+            <div className="margin-top-2 margin-bottom-4">
+              <Grid row>
+                <Grid tablet={{ col: 6 }}>
+                  {/* Search bar */}
+                  <GlobalClientFilter
+                    setGlobalFilter={setQuery}
+                    tableID="table-id"
+                    tableName="table-name"
+                    className="width-full maxw-mobile-lg margin-bottom-3 padding-top-1"
+                  />
+
+                  {/* Results text */}
+                  {query && (
+                    <div className="display-flex padding-bottom-2">
+                      <p className="margin-y-0">
+                        {auditChanges.length > itemsPerPage
+                          ? t('resultsInfo', {
+                              resultsNum: (pageOffset / itemsPerPage) * 10 + 1,
+                              count:
+                                (pageOffset / itemsPerPage) * 10 +
+                                currentItems?.length,
+                              total: resultsNum,
+                              query: 'for'
+                            })
+                          : t('resultsNoInfo', {
+                              resultsNum: auditChanges.length,
+                              count: auditChanges.length,
+                              query: 'for'
+                            })}
+                        {query && (
+                          <span className="text-bold">{` "${query}"`}</span>
+                        )}
+                      </p>
+                    </div>
+                  )}
+                </Grid>
+
+                {/* Select sort display */}
+                <Grid tablet={{ col: 6 }}>
+                  <div
+                    className="margin-left-auto display-flex"
+                    style={{ maxWidth: '13rem' }}
+                  >
+                    <Label
+                      htmlFor="sort"
+                      className="text-normal margin-top-1 margin-right-1"
+                    >
+                      {t('sort.label')}
+                    </Label>
+
+                    <Select
+                      id="sort"
+                      className="margin-bottom-2 margin-top-0"
+                      name="sort"
+                      value={sort}
+                      onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                        setSort(e.target.value as SortProps['value']);
+                      }}
+                    >
+                      {sortOptions.map(option => {
+                        return (
+                          <option
+                            key={`sort-${option.value}`}
+                            value={option.value}
+                          >
+                            {option.label}
+                          </option>
+                        );
+                      })}
+                    </Select>
+                  </div>
+                </Grid>
+              </Grid>
+            </div>
+
+            {/* No results from query */}
+            {auditChanges.length === 0 && query && (
+              <Alert
+                type="info"
+                className="margin-bottom-2"
+                heading={t('noResults.heading')}
+              >
+                {t('noResults.body')}
+              </Alert>
+            )}
+
+            {/* No audits alert */}
+            {auditChanges.length === 0 && !query && (
               <Alert type="info" slim className="margin-bottom-2">
                 {t('noChanges')}
               </Alert>
             )}
 
-            {currentItems.map(changeRecord => (
-              <ChangeRecord changeRecord={changeRecord} key={changeRecord.id} />
-            ))}
+            {/* Renders the day grouping, then maps over that day's changes */}
+            {Object.keys(changesByDay).map(day => {
+              return (
+                <div key={day}>
+                  <h3 className="margin-y-4">
+                    {formatDateUtc(day, 'MMMM d, yyyy')}
+                  </h3>
+                  {changesByDay[day].map(changeRecord => (
+                    <ChangeRecord
+                      changeRecord={changeRecord}
+                      key={changeRecord.id}
+                    />
+                  ))}
+                </div>
+              );
+            })}
 
+            {/* Pagination */}
             {pageCount > 1 && (
               <ReactPaginate
                 breakLabel="..."
@@ -146,6 +348,7 @@ const ChangeHistory = () => {
                 pageCount={pageCount}
                 previousLabel="< Previous"
                 onClick={() => window.scrollTo(0, 0)}
+                forcePage={pageOffset / itemsPerPage}
                 renderOnZeroPageCount={null}
               />
             )}

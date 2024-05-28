@@ -26,7 +26,7 @@ const changeHistory = {
   crTdlUpdate:
     '{{action}} {{crTdlName}} {{toFrom}} FFS CRs and TDLs <datetime>on {{date}} at {{time}}</datetime>',
   subtaskUpdate:
-    '{{action}} {{subtaskName}} for {{solutionName}} <datetime>on {{date}} at {{time}}</datetime>',
+    '{{action}} {{subtaskName}} to {{solutionName}} <datetime>on {{date}} at {{time}}</datetime>',
   documentSolutionLinkUpdate:
     '{{documentName}} {{action}} {{toFrom}} {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   solutionCreate:
@@ -57,6 +57,15 @@ const changeHistory = {
   },
   showDetails: 'Show details',
   hideDetails: 'Hide details',
+  resultsInfo: 'Showing {{-resultsNum}} of {{-count}} result {{-query}}',
+  resultsInfo_other:
+    'Showing {{-resultsNum}} - {{-count}} of {{-total}} results {{-query}}',
+  resultsNoInfo: 'Showing {{-resultsNum}} result {{-query}}',
+  resultsNoInfo_other: 'Showing {{-resultsNum}} results {{-query}}',
+  noResults: {
+    heading: 'There are no results that match you search.',
+    body: 'Please double-check you search and try again.'
+  },
   auditUpdateTye: {
     INSERT: 'added',
     DELETE: 'removed',
@@ -86,6 +95,11 @@ const changeHistory = {
     ANSWERED: 'answered',
     REMOVED: 'removed',
     UPDATED: 'updated'
+  },
+  sort: {
+    label: 'Sort',
+    newest: 'Newest changes',
+    oldest: 'Oldest changes'
   },
   previousAnswer: 'Previous answer',
   previousNote: 'Previous note',

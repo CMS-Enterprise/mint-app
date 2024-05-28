@@ -1,8 +1,12 @@
 import {
   GetChangeHistoryQuery,
   TranslatedAuditMetaData,
-  TranslatedAuditMetaGeneric
+  TranslatedAuditMetaGeneric,
+  TranslationDataType
 } from 'gql/gen/graphql';
+import i18next from 'i18next';
+
+import { formatDateUtc, formatTime } from 'utils/date';
 
 export type ChangeRecordType = NonNullable<
   GetChangeHistoryQuery['translatedAuditCollection']
@@ -52,27 +56,6 @@ export type TranslationTaskListTable =
   | 'plan_ops_eval_and_learning'
   | 'plan_payments';
 
-export const isTranslationTaskListTable = (
-  tableName: string
-): tableName is TranslationTaskListTable => {
-  return [
-    'plan_basics',
-    'plan_general_characteristics',
-    'plan_participants_and_providers',
-    'plan_beneficiaries',
-    'plan_ops_eval_and_learning',
-    'plan_payments'
-  ].includes(tableName);
-};
-
-// Type guard to check union type
-export const isDiscussionReplyWithMetaData = (
-  data: TranslatedAuditMetaData
-): data is TranslatedAuditMetaGeneric => {
-  /* eslint no-underscore-dangle: 0 */
-  return data.__typename === 'TranslatedAuditMetaGeneric';
-};
-
 type HiddenFieldTypes = {
   table: TranslationTables;
   fields: string[];
@@ -111,6 +94,27 @@ const hiddenFields: HiddenFieldTypes[] = [
   }
 ];
 
+export const isTranslationTaskListTable = (
+  tableName: string
+): tableName is TranslationTaskListTable => {
+  return [
+    'plan_basics',
+    'plan_general_characteristics',
+    'plan_participants_and_providers',
+    'plan_beneficiaries',
+    'plan_ops_eval_and_learning',
+    'plan_payments'
+  ].includes(tableName);
+};
+
+// Type guard to check union type
+export const isDiscussionReplyWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaGeneric => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaGeneric';
+};
+
 // Replaces curly braces with square brackets and attempts to parse the value as JSON.  This may change as BE may be able to returned a parsed array
 export const parseArray = (value: string | string[]) => {
   if (!value) return '';
@@ -126,18 +130,39 @@ export const parseArray = (value: string | string[]) => {
   }
 };
 
+// Sorts the changes based on the sort option
+export const handleSortOptions = (
+  changes: ChangeRecordType[],
+  sort: 'newest' | 'oldest'
+) => {
+  let sortedChanges: ChangeRecordType[] = [];
+  if (sort === 'newest') {
+    sortedChanges = [...changes].sort((a, b) => b.date.localeCompare(a.date));
+    // Sorts the changes so that new plans are first
+    sortedChanges = sortCreateChangeFirst(sortedChanges, 'desc');
+  } else if (sort === 'oldest') {
+    sortedChanges = [...changes].sort((a, b) => a.date.localeCompare(b.date));
+    // Sorts the changes so that new plans are first
+    sortedChanges = sortCreateChangeFirst(sortedChanges, 'asc');
+  }
+
+  return sortedChanges;
+};
+
 // Sorts the changes so that new plans are first
 export const sortCreateChangeFirst = (
-  a: ChangeRecordType,
-  b: ChangeRecordType
+  changes: ChangeRecordType[],
+  direction: 'asc' | 'desc'
 ) => {
-  const aType = identifyChangeType(a);
-  const bType = identifyChangeType(b);
+  return changes.sort((a: ChangeRecordType, b: ChangeRecordType) => {
+    const aType = identifyChangeType(a);
+    const bType = identifyChangeType(b);
 
-  if (aType === 'New plan') return 1;
-  if (bType === 'New plan') return -1;
+    if (aType === 'New plan') return direction === 'asc' ? -1 : 1;
+    if (bType === 'New plan') return direction === 'asc' ? 1 : -1;
 
-  return 0;
+    return 0;
+  });
 };
 
 const readyForReviewFields = [
@@ -160,6 +185,74 @@ export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
   });
 
   return filteredReviewChanges;
+};
+
+export const filterQueryAudits = (
+  queryString: string,
+  audits: ChangeRecordType[]
+): ChangeRecordType[] => {
+  return audits.filter(audit => {
+    const lowerCaseQuery = queryString.toLowerCase();
+
+    const translatedFieldsMatchQuery = audit.translatedFields.filter(field => {
+      if (
+        field.fieldNameTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+        field.newTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+        field.oldTranslated?.toLowerCase().includes(lowerCaseQuery) ||
+        field.referenceLabel?.toLowerCase().includes(lowerCaseQuery)
+      ) {
+        return true;
+      }
+
+      // Parsing date of audit data to check if it matches the query
+      if (field.dataType === TranslationDataType.DATE) {
+        if (
+          formatDateUtc(field.newTranslated?.replace(' ', 'T'), 'MM/dd/yyyy')
+            .toLowerCase()
+            .includes(lowerCaseQuery) ||
+          formatDateUtc(field.oldTranslated?.replace(' ', 'T'), 'MM/dd/yyyy')
+            .toLowerCase()
+            .includes(lowerCaseQuery)
+        ) {
+          return true;
+        }
+      }
+      return false;
+    });
+
+    // Check if the actor name matches the query
+    if (audit.actorName.toLowerCase().includes(lowerCaseQuery)) {
+      return true;
+    }
+
+    // Check if the date of the audit entry matches the query
+    if (
+      formatDateUtc(audit.date.replace(' ', 'T'), 'MMMM d, yyyy')
+        .toLowerCase()
+        .includes(lowerCaseQuery) ||
+      formatTime(audit.date.replace(' ', 'T'))
+        .toLowerCase()
+        .includes(lowerCaseQuery)
+    ) {
+      return true;
+    }
+
+    // Check if the section name matches the query
+    if (
+      i18next
+        .t(`changeHistory:sections:${audit.tableName}`)
+        .toLowerCase()
+        .includes(lowerCaseQuery)
+    ) {
+      return true;
+    }
+
+    if (translatedFieldsMatchQuery.length > 0) {
+      return true;
+    }
+
+    return false;
+  });
 };
 
 // Extracts status changes from the list of changes and separates them from other changes
@@ -329,6 +422,21 @@ export const removedHiddenFields = (
   return filteredChangeRecords;
 };
 
+// Sorts the changes by day - { day: [changes] }
+export const sortChangesByDay = (changes: ChangeRecordType[]) => {
+  const sortedChanges: { [key: string]: ChangeRecordType[] } = {};
+
+  changes.forEach(change => {
+    const date = change.date.split('T')[0];
+    if (!sortedChanges[date]) {
+      sortedChanges[date] = [];
+    }
+    sortedChanges[date].push(change);
+  });
+
+  return sortedChanges;
+};
+
 // Removes changes that are not needed for the change history.  Used to get accurate page count of audits
 const removeUnneededAudits = (changes: ChangeRecordType[]) =>
   changes.filter(
@@ -356,8 +464,9 @@ export const sortAllChanges = (changes: ChangeRecordType[]) => {
     b.date.localeCompare(a.date)
   );
 
-  const changesSortedWithCreateFirst = changesSortedByDate.sort(
-    sortCreateChangeFirst
+  const changesSortedWithCreateFirst = sortCreateChangeFirst(
+    changesSortedByDate,
+    'desc'
   );
 
   return changesSortedWithCreateFirst;

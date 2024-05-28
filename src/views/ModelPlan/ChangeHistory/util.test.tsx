@@ -4,77 +4,131 @@ import {
   ChangeRecordType,
   ChangeType,
   extractReadyForReviewChanges,
+  filterQueryAudits,
+  handleSortOptions,
   identifyChangeType,
   isInitialCreatedSection,
   isTranslationTaskListTable,
   parseArray,
   removedHiddenFields,
   separateStatusChanges,
+  sortChangesByDay,
   sortCreateChangeFirst
 } from './util';
 
+const sortData: ChangeRecordType[] = [
+  {
+    id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+    tableName: 'operational_need',
+    date: '2024-04-22T13:55:13.725192Z',
+    action: DatabaseOperation.INSERT,
+    translatedFields: [
+      {
+        id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+        changeType: AuditFieldChangeType.ANSWERED,
+        fieldName: 'needed',
+        fieldNameTranslated: 'Model Plan status',
+        old: null,
+        oldTranslated: null,
+        new: 'READY',
+        newTranslated: 'Ready',
+        __typename: 'TranslatedAuditField'
+      }
+    ],
+    actorName: 'Cosmo Kramer',
+    __typename: 'TranslatedAudit'
+  },
+  {
+    id: 'e9e1129d-2317-4acd-8d2b-7ca37b33452',
+    tableName: 'operational_need',
+    date: '2024-05-22T13:55:13.725192Z',
+    action: DatabaseOperation.INSERT,
+    translatedFields: [
+      {
+        id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+        changeType: AuditFieldChangeType.ANSWERED,
+        fieldName: 'needed',
+        fieldNameTranslated: 'Model Plan status',
+        old: null,
+        oldTranslated: null,
+        new: 'READY',
+        newTranslated: 'Ready',
+        __typename: 'TranslatedAuditField'
+      }
+    ],
+    actorName: 'MINT Doe',
+    __typename: 'TranslatedAudit'
+  }
+];
+
 describe('util.tsx', () => {
   // Test for isTranslationTaskListTable
-  test('isTranslationTaskListTable', () => {
+  it('isTranslationTaskListTable', () => {
     expect(isTranslationTaskListTable('plan_basics')).toBe(true);
     expect(isTranslationTaskListTable('invalid_table')).toBe(false);
   });
 
   // Test for parseArray
-  test('parseArray', () => {
+  it('parseArray', () => {
     expect(parseArray('{1,2,3}')).toEqual([1, 2, 3]);
     expect(parseArray('invalid')).toBe('invalid');
   });
 
   // Test for sortCreateChangeFirst
-  test('sortCreateChangeFirst', () => {
-    const a: ChangeRecordType = {
-      id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-      tableName: 'plan_basics',
-      date: '2024-04-22T13:55:13.725192Z',
-      action: DatabaseOperation.INSERT,
-      translatedFields: [
-        {
-          id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
-          changeType: AuditFieldChangeType.ANSWERED,
-          fieldName: 'status',
-          fieldNameTranslated: 'Model Plan status',
-          old: null,
-          oldTranslated: null,
-          new: 'READY',
-          newTranslated: 'Ready',
-          __typename: 'TranslatedAuditField'
-        }
-      ],
-      actorName: 'MINT Doe',
-      __typename: 'TranslatedAudit'
-    };
-    const b: ChangeRecordType = {
-      id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-      tableName: 'model_plan',
-      date: '2024-04-22T13:55:13.725192Z',
-      action: DatabaseOperation.INSERT,
-      translatedFields: [
-        {
-          id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
-          changeType: AuditFieldChangeType.ANSWERED,
-          fieldName: 'status',
-          fieldNameTranslated: 'Model Plan status',
-          old: null,
-          oldTranslated: null,
-          new: 'READY',
-          newTranslated: 'Ready',
-          __typename: 'TranslatedAuditField'
-        }
-      ],
-      actorName: 'MINT Doe',
-      __typename: 'TranslatedAudit'
-    };
-    expect(sortCreateChangeFirst(a, b)).toBe(-1);
+  it('sortCreateChangeFirst', () => {
+    const changes: ChangeRecordType[] = [
+      {
+        id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+        tableName: 'plan_basics',
+        date: '2024-04-22T13:55:13.725192Z',
+        action: DatabaseOperation.INSERT,
+        translatedFields: [
+          {
+            id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+            changeType: AuditFieldChangeType.ANSWERED,
+            fieldName: 'status',
+            fieldNameTranslated: 'Model Plan status',
+            old: null,
+            oldTranslated: null,
+            new: 'READY',
+            newTranslated: 'Ready',
+            __typename: 'TranslatedAuditField'
+          }
+        ],
+        actorName: 'MINT Doe',
+        __typename: 'TranslatedAudit'
+      },
+      {
+        id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+        tableName: 'model_plan',
+        date: '2024-05-22T13:55:13.725192Z',
+        action: DatabaseOperation.INSERT,
+        translatedFields: [
+          {
+            id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+            changeType: AuditFieldChangeType.ANSWERED,
+            fieldName: 'status',
+            fieldNameTranslated: 'Model Plan status',
+            old: null,
+            oldTranslated: null,
+            new: 'READY',
+            newTranslated: 'Ready',
+            __typename: 'TranslatedAuditField'
+          }
+        ],
+        actorName: 'MINT Doe',
+        __typename: 'TranslatedAudit'
+      }
+    ];
+
+    expect(sortCreateChangeFirst([...changes], 'asc')).toStrictEqual([
+      changes[1],
+      changes[0]
+    ]);
   });
 
   // Test for extractReadyForReviewChanges
-  test('extractReadyForReviewChanges', () => {
+  it('extractReadyForReviewChanges', () => {
     const changes: ChangeRecordType[] = [
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
@@ -135,7 +189,7 @@ describe('util.tsx', () => {
   });
 
   // Test for separateStatusChanges
-  test('separateStatusChanges', () => {
+  it('separateStatusChanges', () => {
     const changes: ChangeRecordType[] = [
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
@@ -217,7 +271,7 @@ describe('util.tsx', () => {
   });
 
   // Test for identifyChangeType
-  test('identifyChangeType', () => {
+  it('identifyChangeType', () => {
     const change: ChangeRecordType = {
       id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
       tableName: 'plan_basics',
@@ -243,7 +297,7 @@ describe('util.tsx', () => {
   });
 
   // Test for isInitialCreatedSection
-  test('isInitialCreatedSection', () => {
+  it('isInitialCreatedSection', () => {
     const change: ChangeRecordType = {
       id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
       tableName: 'plan_basics',
@@ -270,7 +324,7 @@ describe('util.tsx', () => {
   });
 
   // Test for isHiddenRecord
-  test('removedHiddenFields', () => {
+  it('removedHiddenFields', () => {
     const changeRecords: ChangeRecordType[] = [
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
@@ -305,5 +359,95 @@ describe('util.tsx', () => {
         __typename: 'TranslatedAudit'
       }
     ]);
+  });
+
+  // Test for sortChangesByDay - Sorts the changes by day - { day: [changes] }
+  it('should sort changes by day', () => {
+    const changes = [...sortData];
+
+    const expected = {
+      '2024-04-22': [
+        {
+          id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+          tableName: 'operational_need',
+          date: '2024-04-22T13:55:13.725192Z',
+          action: DatabaseOperation.INSERT,
+          translatedFields: [
+            {
+              id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+              changeType: AuditFieldChangeType.ANSWERED,
+              fieldName: 'needed',
+              fieldNameTranslated: 'Model Plan status',
+              old: null,
+              oldTranslated: null,
+              new: 'READY',
+              newTranslated: 'Ready',
+              __typename: 'TranslatedAuditField'
+            }
+          ],
+          actorName: 'Cosmo Kramer',
+          __typename: 'TranslatedAudit'
+        }
+      ],
+      '2024-05-22': [
+        {
+          id: 'e9e1129d-2317-4acd-8d2b-7ca37b33452',
+          tableName: 'operational_need',
+          date: '2024-05-22T13:55:13.725192Z',
+          action: DatabaseOperation.INSERT,
+          translatedFields: [
+            {
+              id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+              changeType: AuditFieldChangeType.ANSWERED,
+              fieldName: 'needed',
+              fieldNameTranslated: 'Model Plan status',
+              old: null,
+              oldTranslated: null,
+              new: 'READY',
+              newTranslated: 'Ready',
+              __typename: 'TranslatedAuditField'
+            }
+          ],
+          actorName: 'MINT Doe',
+          __typename: 'TranslatedAudit'
+        }
+      ]
+    };
+
+    expect(sortChangesByDay(changes)).toEqual(expected);
+  });
+
+  it('should sort changes from newest to oldest', () => {
+    const changes = [...sortData];
+
+    expect(handleSortOptions([...changes], 'newest')).toEqual([
+      changes[1],
+      changes[0]
+    ]);
+
+    expect(handleSortOptions([...changes], 'oldest')).toEqual([
+      changes[0],
+      changes[1]
+    ]);
+  });
+
+  it('should filter audits based on query string', () => {
+    const changes = [...sortData];
+
+    // Testing with query string for user
+    const queryString = 'Cosmo';
+    expect(filterQueryAudits(queryString, changes)).toEqual([changes[0]]);
+
+    // Testing with translated table name
+    const queryString2 = 'Operational';
+    expect(filterQueryAudits(queryString2, changes)).toEqual(changes);
+
+    // Testing with date
+    const queryString3 = 'May 22, 2024';
+    expect(filterQueryAudits(queryString3, changes)).toEqual([changes[1]]);
+
+    // Testing with translated field name
+    const queryString4 = 'Ready';
+    expect(filterQueryAudits(queryString4, changes)).toEqual(changes);
   });
 });
