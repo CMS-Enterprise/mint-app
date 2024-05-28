@@ -26,7 +26,7 @@ const changeHistory = {
   crTdlUpdate:
     '{{action}} {{crTdlName}} {{toFrom}} FFS CRs and TDLs <datetime>on {{date}} at {{time}}</datetime>',
   documentSolutionLinkUpdate:
-    '{{documentName}} {{action}} <normal>{{toFrom}}</normal> {{solutionName}}',
+    'Document {{action}} <normal>{{toFrom}}</normal> {{solutionName}}',
   solutionCreate:
     'addded {{-count}} solutions to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   solutionUpdate: '{{needName}} solution {{action}}: {{solutionName}}',

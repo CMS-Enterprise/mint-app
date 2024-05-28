@@ -47,7 +47,8 @@ export type TranslationTables =
   | 'plan_tdl'
   | 'operational_need'
   | 'operational_solution'
-  | 'operational_solution_subtask';
+  | 'operational_solution_subtask'
+  | 'plan_document_solution_link';
 
 export type TranslationTaskListTable =
   | 'plan_basics'
@@ -105,6 +106,10 @@ const hiddenFields: HiddenFieldTypes[] = [
       'file_type',
       'virus_clean'
     ]
+  },
+  {
+    table: 'plan_document_solution_link',
+    fields: ['solution_id']
   },
   {
     table: 'plan_cr',

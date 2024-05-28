@@ -48,7 +48,7 @@ const BatchChanges = ({ change }: BatchChangeProps) => {
               values={{
                 isLink: documentType(change),
                 action: t(`documentChangeType.${documentUpdateType(change)}`),
-                documentName: documentName(change),
+                documentName: documentName(change) || 'Temp document',
                 toFrom: t(`toFrom.${change.action}`),
                 date: formatDateUtc(change.date, 'MMMM d, yyyy'),
                 time: formatTime(change.date)
@@ -67,7 +67,6 @@ const BatchChanges = ({ change }: BatchChangeProps) => {
             values={{
               action: t(`documentLinkType.${change.action}`),
               toFrom: t(`toFrom.${change.action}`),
-              documentName: 'Temp document', // TODO: replace with actual document name
               solutionName: 'Temp solution', // TODO: replace with actual solution name
               date: formatDateUtc(change.date, 'MMMM d, yyyy'),
               time: formatTime(change.date)
@@ -159,10 +158,14 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
 
   const [isOpen, setOpen] = useState<boolean>(false);
 
-  // // Determine if the change record should be expanded to show more data
-  // const showMoreData: boolean =
-  //   changeRecords[0].action !== DatabaseOperation.INSERT ||
-  //   changeRecords[0].tableName !== 'operational_solution';
+  // Use solution document link as the table name if it's a batch of solution document links
+  const isSolutionDocumentLinkBatch: boolean = !!changeRecords.find(change => {
+    return change.tableName === 'plan_document_solution_link';
+  });
+
+  const tableName: string = isSolutionDocumentLinkBatch
+    ? 'plan_document_solution_link'
+    : changeRecords[0].tableName;
 
   return (
     <Card className="change-record">
@@ -179,7 +182,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
             count={changeRecords.length}
             values={{
               count: changeRecords.length,
-              section: t(`sections.${changeRecords[0].tableName}`),
+              section: t(`sections.${tableName}`),
               date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
               time: formatTime(changeRecords[0].date)
             }}
@@ -192,28 +195,29 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
 
       {!isOpen && (
         <ul className="margin-top-1 margin-bottom-1 margin-left-4">
-          {changeRecords.map(change => (
+          {changeRecords.map((change, index) => (
             <li key={change.id}>
               {/* Document audits */}
-              {changeRecords[0].tableName === 'plan_document' &&
+              {changeRecords[index].tableName === 'plan_document' &&
                 (() => {
                   return (
                     <Trans
                       i18nKey="changeHistory:documentUpdate"
                       values={{
-                        isLink: documentType(changeRecords[0]),
+                        isLink: documentType(changeRecords[index]),
                         action: t(
                           `documentChangeType.${documentUpdateType(
-                            changeRecords[0]
+                            changeRecords[index]
                           )}`
                         ),
-                        documentName: documentName(changeRecords[0]),
-                        toFrom: t(`toFrom.${changeRecords[0].action}`),
+                        documentName:
+                          documentName(changeRecords[index]) || 'Temp document',
+                        toFrom: t(`toFrom.${changeRecords[index].action}`),
                         date: formatDateUtc(
-                          changeRecords[0].date,
+                          changeRecords[index].date,
                           'MMMM d, yyyy'
                         ),
-                        time: formatTime(changeRecords[0].date)
+                        time: formatTime(changeRecords[index].date)
                       }}
                       components={{
                         datetime: <span />,
@@ -224,23 +228,23 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                 })()}
 
               {/* Document solution link audits */}
-              {changeRecords[0].tableName === 'plan_document_solution_link' &&
+              {changeRecords[index].tableName ===
+                'plan_document_solution_link' &&
                 (() => {
                   return (
                     <Trans
                       i18nKey="changeHistory:documentSolutionLinkUpdate"
                       values={{
                         action: t(
-                          `documentLinkType.${changeRecords[0].action}`
+                          `documentLinkType.${changeRecords[index].action}`
                         ),
-                        toFrom: t(`toFrom.${changeRecords[0].action}`),
-                        documentName: 'Temp document', // TODO: replace with actual document name
+                        toFrom: t(`toFrom.${changeRecords[index].action}`),
                         solutionName: 'Temp solution', // TODO: replace with actual solution name
                         date: formatDateUtc(
-                          changeRecords[0].date,
+                          changeRecords[index].date,
                           'MMMM d, yyyy'
                         ),
-                        time: formatTime(changeRecords[0].date)
+                        time: formatTime(changeRecords[index].date)
                       }}
                       components={{
                         normal: <></>
@@ -249,7 +253,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                   );
                 })()}
 
-              {changeRecords[0].tableName === 'operational_solution' && (
+              {changeRecords[index].tableName === 'operational_solution' && (
                 <Trans
                   i18nKey="changeHistory:solutionUpdate"
                   values={{
@@ -263,7 +267,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                 />
               )}
 
-              {changeRecords[0].tableName ===
+              {changeRecords[index].tableName ===
                 'operational_solution_subtask' && (
                 <Trans
                   i18nKey="changeHistory:subtaskUpdate"
