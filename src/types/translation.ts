@@ -933,6 +933,7 @@ export type TranslationDiscussionsForm = {
   userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
   userRoleDescription: TranslationFieldProperties;
   content: TranslationFieldProperties;
+  isAssessment: TranslationFieldPropertiesWithOptions<Bool>;
 };
 
 type TranslationDiscussionsGQL = Omit<
@@ -953,7 +954,7 @@ export type TranslationRepliesForm = {
   userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
   userRoleDescription: TranslationFieldProperties;
   content: TranslationFieldProperties;
-  isAssessment: TranslationFieldProperties;
+  isAssessment: TranslationFieldPropertiesWithOptions<Bool>;
 };
 
 type TranslationRepliesGQL = Omit<

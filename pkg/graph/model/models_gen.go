@@ -32,7 +32,7 @@ type DiscussionReplyTranslation struct {
 	UserRole            models.TranslationFieldWithOptions `json:"userRole" db:"user_role"`
 	UserRoleDescription models.TranslationField            `json:"userRoleDescription" db:"user_role_description"`
 	Content             models.TranslationField            `json:"content" db:"content"`
-	IsAssessment        models.TranslationField            `json:"isAssessment" db:"is_assessment"`
+	IsAssessment        models.TranslationFieldWithOptions `json:"isAssessment" db:"is_assessment"`
 }
 
 // Represents existing model link translation data
@@ -215,6 +215,7 @@ type PlanDiscussionTranslation struct {
 	UserRole            models.TranslationFieldWithOptions `json:"userRole" db:"user_role"`
 	UserRoleDescription models.TranslationField            `json:"userRoleDescription" db:"user_role_description"`
 	Content             models.TranslationField            `json:"content" db:"content"`
+	IsAssessment        models.TranslationField            `json:"isAssessment" db:"is_assessment"`
 }
 
 // PlanDocumentInput

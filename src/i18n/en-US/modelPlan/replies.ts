@@ -50,7 +50,11 @@ export const replies: TranslationReplies = {
     dbField: 'is_assessment',
     label: 'Is the user an assessment user?',
     dataType: TranslationDataType.BOOLEAN,
-    formType: TranslationFormType.BOOLEAN
+    formType: TranslationFormType.BOOLEAN,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
   }
 };
 

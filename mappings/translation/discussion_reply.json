@@ -42,6 +42,10 @@
     "dbField": "is_assessment",
     "label": "Is the user an assessment user?",
     "dataType": "BOOLEAN",
-    "formType": "BOOLEAN"
+    "formType": "BOOLEAN",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
   }
 }
