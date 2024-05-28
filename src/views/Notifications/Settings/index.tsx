@@ -10,7 +10,8 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  Icon
+  Icon,
+  Select
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
@@ -45,6 +46,11 @@ const NotificationSettings = () => {
   > = notificationsT('settings.configurations', {
     returnObjects: true
   });
+
+  const modelTypes = notificationsT(
+    'settings.additionalConfigurations.whichModelTypes',
+    { returnObjects: true }
+  );
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
 
@@ -163,7 +169,12 @@ const NotificationSettings = () => {
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<NotificationSettingsFormType>) => {
-              const { values, handleSubmit, dirty } = formikProps;
+              const {
+                values,
+                handleSubmit,
+                dirty,
+                setFieldValue
+              } = formikProps;
 
               return (
                 <>
@@ -187,12 +198,12 @@ const NotificationSettings = () => {
                     </Grid>
 
                     <Grid mobile={{ col: 6 }}>
-                      <h4 className="margin-top-0 margin-bottom-1">
+                      <h4 className="margin-top-0 margin-bottom-05">
                         {notificationsT(
                           'settings.sections.basicNotifications.heading'
                         )}
                       </h4>
-                      <p className="margin-top-0 margin-bottom-2 text-base-dark">
+                      <p className="margin-top-0 margin-bottom-1 text-base-dark">
                         {notificationsT(
                           'settings.sections.basicNotifications.subHeading'
                         )}
@@ -210,7 +221,7 @@ const NotificationSettings = () => {
                         return (
                           <Grid row key={setting}>
                             <Grid mobile={{ col: 6 }}>
-                              <p className="text-wrap margin-top-0 margin-bottom-2">
+                              <p className="text-wrap margin-y-105">
                                 {notificationSettings[setting]}
                               </p>
                             </Grid>
@@ -246,6 +257,128 @@ const NotificationSettings = () => {
                           </Grid>
                         );
                       })}
+
+                      {/* Additional Notification Section */}
+                      <Grid row>
+                        <Grid mobile={{ col: 12 }}>
+                          <h4 className="margin-top-5 margin-bottom-0">
+                            {notificationsT(
+                              'settings.sections.additionalNotifications.heading'
+                            )}
+                          </h4>
+                        </Grid>
+
+                        <Grid mobile={{ col: 6 }}>
+                          <p className="text-wrap margin-y-105">
+                            {notificationsT(
+                              'settings.additionalConfigurations.modelCreation'
+                            )}
+                          </p>
+                        </Grid>
+                        <Grid mobile={{ col: 3 }}>
+                          <Field
+                            as={Checkbox}
+                            id="notification-setting-email-newModelPlan"
+                            data-testid="notification-setting-email-newModelPlan"
+                            className="padding-left-2"
+                            name="newModelPlan"
+                            value={UserNotificationPreferenceFlag.EMAIL}
+                            // TODO: fix this
+                            // checked={values?.newModelPlan.includes(
+                            //   UserNotificationPreferenceFlag.EMAIL
+                            // )}
+                          />
+                        </Grid>
+
+                        <Grid mobile={{ col: 3 }}>
+                          <Field
+                            as={Checkbox}
+                            id="notification-setting-in-app-newModelPlan"
+                            data-testid="notification-setting-in-app-newModelPlan"
+                            className="padding-left-2"
+                            name="newModelPlan"
+                            value={UserNotificationPreferenceFlag.IN_APP}
+                            // TODO: fix this
+                            // checked={values?.[setting].includes(
+                            //   UserNotificationPreferenceFlag.IN_APP
+                            // )}
+                          />
+                        </Grid>
+
+                        {/* Dates Change */}
+                        <Grid mobile={{ col: 6 }}>
+                          <p className="text-wrap margin-y-105">
+                            {notificationsT(
+                              'settings.additionalConfigurations.dateChanges'
+                            )}
+                          </p>
+                        </Grid>
+                        <Grid mobile={{ col: 3 }}>
+                          <Field
+                            as={Checkbox}
+                            id="notification-setting-email-dateChanges"
+                            data-testid="notification-setting-email-dateChanges"
+                            className="padding-left-2"
+                            name="dateChanges"
+                            value={UserNotificationPreferenceFlag.EMAIL}
+                            disabled
+                            // TODO: fix this
+                            // checked={values?.dateChanges.includes(
+                            //   UserNotificationPreferenceFlag.EMAIL
+                            // )}
+                          />
+                        </Grid>
+
+                        <Grid mobile={{ col: 3 }}>
+                          <Field
+                            as={Checkbox}
+                            id="notification-setting-in-app-dateChanges"
+                            data-testid="notification-setting-in-app-dateChanges"
+                            className="padding-left-2"
+                            name="dateChanges"
+                            value={UserNotificationPreferenceFlag.IN_APP}
+                            disabled
+                            // TODO: fix this
+                            // checked={values?.[setting].includes(
+                            //   UserNotificationPreferenceFlag.IN_APP
+                            // )}
+                          />
+                        </Grid>
+
+                        {/* Which Model Dropdown */}
+                        <Grid mobile={{ col: 6 }}>
+                          <div className="margin-left-3">
+                            <p className="text-wrap margin-top-0 margin-bottom-1">
+                              {notificationsT(
+                                'settings.additionalConfigurations.whichModel'
+                              )}
+                            </p>
+                            <Field
+                              as={Select}
+                              id="notification-setting-which-model"
+                              name="whichModel"
+                              // Deal wtih this disabled field in the other ticket
+                              disabled
+                              // TODO: default value to be missing if field is disabled, but if it is selected, then default is 'all'
+                              // value={values.whichModel || 'all'}
+
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                setFieldValue('whichModel', e.target.value);
+                              }}
+                            >
+                              {getKeys(modelTypes).map(type => {
+                                return (
+                                  <option key={type} value={type}>
+                                    {modelTypes[type]}
+                                  </option>
+                                );
+                              })}
+                            </Field>
+                          </div>
+                        </Grid>
+                      </Grid>
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button type="submit" disabled={!dirty}>

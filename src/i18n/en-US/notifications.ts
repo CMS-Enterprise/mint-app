@@ -110,9 +110,16 @@ const notifications = {
       taggedInDiscussion: 'When I’m tagged in a discussion',
       newDiscussionReply: 'When someone replies to a discussion I started',
       modelPlanShared: 'When someone shares a Model Plan with me'
-      // modelCreation: 'When a new Model Plan is created',
-      // dateChanges: 'When a model dates change',
-      // whichModel: 'Which model'
+    },
+    additionalConfigurations: {
+      modelCreation: 'When a new Model Plan is created',
+      dateChanges: 'When model dates change',
+      whichModel: 'Which models?',
+      whichModelTypes: {
+        all: 'All models',
+        following: 'Models I’m following',
+        mine: 'My Model Plans'
+      }
     },
     save: 'Save',
     dontUpdate: 'Don’t update and return to previous page',
