@@ -61,7 +61,8 @@ const NotificationSettings = () => {
     addedAsCollaborator,
     taggedInDiscussion,
     newDiscussionReply,
-    modelPlanShared
+    modelPlanShared,
+    newModelPlan
   } = (data?.currentUser.notificationPreferences ||
     {}) as GetNotifcationSettingsType;
 
@@ -273,9 +274,9 @@ const NotificationSettings = () => {
                             name="newModelPlan"
                             value={UserNotificationPreferenceFlag.EMAIL}
                             // TODO: fix this
-                            // checked={values?.newModelPlan.includes(
-                            //   UserNotificationPreferenceFlag.EMAIL
-                            // )}
+                            checked={values?.newModelPlan.includes(
+                              UserNotificationPreferenceFlag.EMAIL
+                            )}
                           />
                         </Grid>
 
@@ -288,9 +289,9 @@ const NotificationSettings = () => {
                             name="newModelPlan"
                             value={UserNotificationPreferenceFlag.IN_APP}
                             // TODO: fix this
-                            // checked={values?.[setting].includes(
-                            //   UserNotificationPreferenceFlag.IN_APP
-                            // )}
+                            checked={values?.newModelPlan.includes(
+                              UserNotificationPreferenceFlag.IN_APP
+                            )}
                           />
                         </Grid>
                       </Grid>
