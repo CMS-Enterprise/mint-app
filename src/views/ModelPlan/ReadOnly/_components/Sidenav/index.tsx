@@ -26,11 +26,12 @@ const SideNav = ({
   const translationKey = solutionNavigation ? helpAndKnowledgeT : modelSumamryT;
 
   const scrollToAboveReadOnlyBodyContent = () => {
+    // the height of the filter banner
     const filterBannerHeight = document.querySelector(
       '[data-testid="group-filter-banner"]'
     )?.clientHeight;
 
-    // `element` is the SectionWrapper component, everything below the ModelWarning
+    // `scroll-element` is the SectionWrapper component, everything below the ModelWarning
     const element = document.querySelector('#scroll-element');
 
     // the height of the h2 element
@@ -38,7 +39,7 @@ const SideNav = ({
       '[data-scroll-to-element="heading"]'
     )?.clientHeight;
 
-    // if the element or filterBannerHeight is undefined, abort!
+    // if the element, filterBannerHeight, or heightOfHeading is undefined or null, abort!
     if (!element || !filterBannerHeight || !heightOfHeading) {
       return;
     }
