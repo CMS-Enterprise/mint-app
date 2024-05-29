@@ -6,7 +6,7 @@ const operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks = {
     goField: 'Name',
     dbField: 'name',
     label: 'Subtask name',
-    exportLabel: 'Subtask',
+    exportLabel: 'Subtasks',
     dataType: 'string',
     formType: 'text'
   },
