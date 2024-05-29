@@ -20,10 +20,7 @@ const TitleAndStatus = ({
 }: TitleAndStatusProps) => {
   return (
     <div className="display-flex flex-justify flex-align-start">
-      <h2
-        className="margin-top-0 margin-bottom-4"
-        data-scroll-to-element="heading"
-      >
+      <h2 className="margin-top-0 margin-bottom-4">
         {clearance ? clearanceTitle : heading}
       </h2>
       <div>
