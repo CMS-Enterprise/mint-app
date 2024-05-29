@@ -40,7 +40,7 @@ export const documents: TranslationDocuments = {
   fileType: {
     gqlField: 'fileType',
     goField: 'FileType',
-    dbField: 'file_yype',
+    dbField: 'file_type',
     label: 'File Type',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT
