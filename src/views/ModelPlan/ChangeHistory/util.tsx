@@ -5,7 +5,6 @@ import {
   TranslationDataType
 } from 'gql/gen/graphql';
 import i18next from 'i18next';
-import { DateTime } from 'luxon';
 
 import { formatDateUtc, formatTime } from 'utils/date';
 
@@ -100,7 +99,6 @@ const hiddenFields: HiddenFieldTypes[] = [
       'model_plan_id',
       'virus_scanned',
       'file_key',
-      'file_name',
       'file_size',
       'bucket',
       'file_type',
