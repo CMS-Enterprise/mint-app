@@ -26,8 +26,8 @@ type OperationalSolutionSubtask struct {
 	baseStruct
 	solutionRelation
 
-	Name   string                           `json:"name"`
-	Status OperationalSolutionSubtaskStatus `json:"status"`
+	Name   string                           `json:"name" db:"name"`
+	Status OperationalSolutionSubtaskStatus `json:"status" db:"status"`
 }
 
 // NewOperationalSolutionSubtask is a constructor to create an instance of OperationalSolutionSubtask

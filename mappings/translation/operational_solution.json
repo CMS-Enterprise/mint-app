@@ -7,6 +7,18 @@
     "dataType": "STRING",
     "formType": "TEXT"
   },
+  "isOther": {
+    "gqlField": "isOther",
+    "goField": "isOther",
+    "dbField": "is_other_",
+    "label": "Is this a solution considered an other option?",
+    "dataType": "BOOLEAN",
+    "formType": "BOOLEAN",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
   "nameOther": {
     "gqlField": "nameOther",
     "goField": "NameOther",

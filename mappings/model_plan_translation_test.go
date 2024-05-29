@@ -9,8 +9,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func TestPlanOpsEvalAndLearningTranslation(t *testing.T) {
-	translation, err := PlanOpsEvalAndLearningTranslation()
+func TestModelPlanTranslation(t *testing.T) {
+	translation, err := ModelPlanTranslation()
 
 	assert.NoError(t, err)
 	assert.NotNil(t, translation)
@@ -21,8 +21,8 @@ func TestPlanOpsEvalAndLearningTranslation(t *testing.T) {
 
 }
 
-func TestPlanOpsEvalAndLearningTranslationVerifyFieldsArePopulated(t *testing.T) {
-	translation, err := PlanOpsEvalAndLearningTranslation()
+func TestModelPlanTranslationVerifyFieldsArePopulated(t *testing.T) {
+	translation, err := ModelPlanTranslation()
 	assert.NoError(t, err)
 	assert.NotNil(t, translation)
 
@@ -33,8 +33,8 @@ func TestPlanOpsEvalAndLearningTranslationVerifyFieldsArePopulated(t *testing.T)
 
 }
 
-func TestPlanOpsEvalAndLearningTranslationCoverage(t *testing.T) {
-	translation, err := PlanOpsEvalAndLearningTranslation()
+func TestModelPlanTranslationCoverage(t *testing.T) {
+	translation, err := ModelPlanTranslation()
 
 	assert.NoError(t, err)
 	assert.NotNil(t, translation)
@@ -43,5 +43,5 @@ func TestPlanOpsEvalAndLearningTranslationCoverage(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, tMap)
 
-	assertTranslationStructCoverage(t, tMap, models.PlanOpsEvalAndLearning{}, taskListStructExcludeFields)
+	assertTranslationStructCoverage(t, tMap, models.ModelPlan{}, taskListStructExcludeFields)
 }

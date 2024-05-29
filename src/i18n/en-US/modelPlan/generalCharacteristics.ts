@@ -23,6 +23,26 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     filterGroups: [ModelViewFilter.IPC]
   },
+  existingModelID: {
+    gqlField: 'existingModelID',
+    goField: 'ExistingModelID',
+    dbField: 'existing_model_id',
+    label: 'What existing model is this a track of?',
+    dataType: TranslationDataType.NUMBER,
+    formType: TranslationFormType.TEXT,
+    tableReference: 'existing_model',
+    hideFromReadonly: true
+  },
+  currentModelPlanID: {
+    gqlField: 'currentModelPlanID',
+    goField: 'CurrentModelPlanID',
+    dbField: 'current_model_plan_id',
+    label: 'What model is this a track of?',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.TEXT,
+    tableReference: 'model_plan',
+    hideFromReadonly: true
+  },
   existingModel: {
     gqlField: 'existingModel',
     goField: 'ExistingModel',
