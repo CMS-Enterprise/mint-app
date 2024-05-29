@@ -31,10 +31,15 @@ const SideNav = ({
     )?.clientHeight;
 
     // `element` is the SectionWrapper component, everything below the ModelWarning
-    const element = document.querySelector('#scroll-element')!;
+    const element = document.querySelector('#scroll-element');
+
+    // the height of the h2 element
+    const heightOfHeading = document.querySelector(
+      '[data-scroll-to-element="heading"]'
+    )?.clientHeight;
 
     // if the element or filterBannerHeight is undefined, abort!
-    if (!element || !filterBannerHeight) {
+    if (!element || !filterBannerHeight || !heightOfHeading) {
       return;
     }
 
@@ -44,12 +49,15 @@ const SideNav = ({
     );
 
     // Find the top of the element
-    const { top } = element?.getBoundingClientRect() || 0;
+    const { top } = element.getBoundingClientRect();
 
     // Calculate all the things
     const distanceFromTopOfPage =
-      // 55 is the height of the sticky header
-      top + window.scrollY - filterBannerHeight - marginTopValue - 55;
+      top +
+      window.scrollY -
+      filterBannerHeight -
+      marginTopValue -
+      heightOfHeading;
     window.scroll(0, distanceFromTopOfPage);
   };
 
