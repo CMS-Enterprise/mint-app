@@ -26,41 +26,43 @@ const SideNav = ({
   const translationKey = solutionNavigation ? helpAndKnowledgeT : modelSumamryT;
 
   const scrollToAboveReadOnlyBodyContent = () => {
-    // the height of the filter banner
-    const filterBannerHeight = document.querySelector(
-      '[data-testid="group-filter-banner"]'
-    )?.clientHeight;
+    setTimeout(() => {
+      // the height of the filter banner
+      const filterBannerHeight = document.querySelector(
+        '[data-testid="group-filter-banner"]'
+      )?.clientHeight;
 
-    // the height of navigation bar
-    const navBarHeight = document.querySelector(
-      '[data-testid="navigation-bar"]'
-    )?.clientHeight;
+      // the height of navigation bar
+      const navBarHeight = document.querySelector(
+        '[data-testid="navigation-bar"]'
+      )?.clientHeight;
 
-    // `scroll-element` is the SectionWrapper component, everything below the ModelWarning
-    const scrollElement = document.querySelector('#scroll-element');
+      // `scroll-element` is the SectionWrapper component, everything below the ModelWarning
+      const scrollElement = document.querySelector('#scroll-element');
 
-    // if the element, filterBannerHeight, or navBarHeight is undefined or null, abort!
-    if (!scrollElement || !filterBannerHeight || !navBarHeight) {
-      return;
-    }
+      // if the element, filterBannerHeight, or navBarHeight is undefined or null, abort!
+      if (!scrollElement || !filterBannerHeight || !navBarHeight) {
+        return;
+      }
 
-    // Find the margin-top value of the scroll element
-    const marginOfScrollElement = parseFloat(
-      window.getComputedStyle(scrollElement).marginTop
-    );
+      // Find the margin-top value of the scroll element
+      const marginOfScrollElement = parseFloat(
+        window.getComputedStyle(scrollElement).marginTop
+      );
 
-    // Find the top of the scroll element
-    const { top } = scrollElement.getBoundingClientRect();
+      // Find the top of the scroll element
+      const { top } = scrollElement.getBoundingClientRect();
 
-    // Calculate all the things
-    const distanceFromTopOfPage =
-      top +
-      window.scrollY -
-      filterBannerHeight -
-      navBarHeight -
-      marginOfScrollElement;
+      // Calculate all the things
+      const distanceFromTopOfPage =
+        top +
+        window.scrollY -
+        filterBannerHeight -
+        navBarHeight -
+        marginOfScrollElement;
 
-    window.scroll(0, distanceFromTopOfPage);
+      window.scroll(0, distanceFromTopOfPage);
+    }, 0);
   };
 
   // Mapping of all sub navigation links
