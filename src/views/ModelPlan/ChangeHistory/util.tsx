@@ -498,6 +498,7 @@ export const groupBatchedChanges = (changes: ChangeRecordType[]) => {
       const date = new Date(change.date);
       const lastGroup = acc[acc.length - 1];
 
+      // If the last group is empty or the date of the change is more than 1 second from the last change, create a new group
       if (
         !lastGroup ||
         Math.abs(
