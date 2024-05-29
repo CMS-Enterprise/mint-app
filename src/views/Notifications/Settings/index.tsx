@@ -10,8 +10,7 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  Icon,
-  Select
+  Icon
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
@@ -46,13 +45,6 @@ const NotificationSettings = () => {
   > = notificationsT('settings.configurations', {
     returnObjects: true
   });
-
-  const modelTypes: Record<string, string> = notificationsT(
-    'settings.additionalConfigurations.whichModelTypes',
-    {
-      returnObjects: true
-    }
-  );
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
 
@@ -171,12 +163,7 @@ const NotificationSettings = () => {
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<NotificationSettingsFormType>) => {
-              const {
-                values,
-                handleSubmit,
-                dirty,
-                setFieldValue
-              } = formikProps;
+              const { values, handleSubmit, dirty } = formikProps;
 
               return (
                 <>
@@ -305,80 +292,6 @@ const NotificationSettings = () => {
                             //   UserNotificationPreferenceFlag.IN_APP
                             // )}
                           />
-                        </Grid>
-
-                        {/* Dates Change */}
-                        <Grid mobile={{ col: 6 }}>
-                          <p className="text-wrap margin-y-105">
-                            {notificationsT(
-                              'settings.additionalConfigurations.dateChanges'
-                            )}
-                          </p>
-                        </Grid>
-                        <Grid mobile={{ col: 3 }}>
-                          <Field
-                            as={Checkbox}
-                            id="notification-setting-email-dateChanges"
-                            data-testid="notification-setting-email-dateChanges"
-                            className="padding-left-2"
-                            name="dateChanges"
-                            value={UserNotificationPreferenceFlag.EMAIL}
-                            disabled
-                            // TODO: fix this
-                            // checked={values?.dateChanges.includes(
-                            //   UserNotificationPreferenceFlag.EMAIL
-                            // )}
-                          />
-                        </Grid>
-
-                        <Grid mobile={{ col: 3 }}>
-                          <Field
-                            as={Checkbox}
-                            id="notification-setting-in-app-dateChanges"
-                            data-testid="notification-setting-in-app-dateChanges"
-                            className="padding-left-2"
-                            name="dateChanges"
-                            value={UserNotificationPreferenceFlag.IN_APP}
-                            disabled
-                            // TODO: fix this
-                            // checked={values?.[setting].includes(
-                            //   UserNotificationPreferenceFlag.IN_APP
-                            // )}
-                          />
-                        </Grid>
-
-                        {/* Which Model Dropdown */}
-                        <Grid mobile={{ col: 6 }}>
-                          <div className="margin-left-3">
-                            <p className="text-wrap margin-top-0 margin-bottom-1">
-                              {notificationsT(
-                                'settings.additionalConfigurations.whichModel'
-                              )}
-                            </p>
-                            <Field
-                              as={Select}
-                              id="notification-setting-which-model"
-                              name="whichModel"
-                              // Deal wtih this disabled field in the other ticket
-                              disabled
-                              // TODO: default value to be missing if field is disabled, but if it is selected, then default is 'all'
-                              // value={values.whichModel || 'all'}
-
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                setFieldValue('whichModel', e.target.value);
-                              }}
-                            >
-                              {getKeys(modelTypes).map(type => {
-                                return (
-                                  <option key={type} value={type}>
-                                    {modelTypes[type]}
-                                  </option>
-                                );
-                              })}
-                            </Field>
-                          </div>
                         </Grid>
                       </Grid>
 
