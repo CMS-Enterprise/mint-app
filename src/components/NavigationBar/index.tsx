@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { Icon, PrimaryNav } from '@trussworks/react-uswds';
+import { GridContainer, Icon, PrimaryNav } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useGetPollNotificationsQuery } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -9,13 +9,14 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import './index.scss';
 
 export type NavigationProps = {
-  mobile?: boolean;
+  isMobile?: boolean;
   signout: () => void;
-  toggle: (active: boolean) => void;
-  userName?: string;
+  expandMobileSideNav: (active: boolean) => void;
+  userName: string;
+  className?: string;
 };
 
-export const navLinks = () => [
+export const navLinks = [
   {
     link: '/',
     label: 'home'
@@ -31,10 +32,11 @@ export const navLinks = () => [
 ];
 
 const NavigationBar = ({
-  mobile,
+  isMobile,
   signout,
-  toggle,
-  userName
+  expandMobileSideNav,
+  userName,
+  className
 }: NavigationProps) => {
   const { t } = useTranslation();
 
@@ -47,13 +49,13 @@ const NavigationBar = ({
   const hasNotifications = !!data?.currentUser.notifications
     .numUnreadNotifications;
 
-  const primaryLinks = navLinks().map(route => (
+  const primaryLinks = navLinks.map(route => (
     <div className="mint-nav" key={route.label}>
       <NavLink
         to={route.link}
         activeClassName="usa-current"
         className="mint-nav__link"
-        onClick={() => toggle(false)}
+        onClick={() => expandMobileSideNav(false)}
         exact={route.link === '/'}
       >
         <em
@@ -72,10 +74,10 @@ const NavigationBar = ({
         to="/notifications"
         activeClassName="usa-current"
         className={classNames(
-          { 'align-right': !mobile },
-          'mint-nav__link margin-right-neg-4 display-flex flex-align-center'
+          { 'align-right': !isMobile },
+          'mint-nav__link  display-flex flex-align-center'
         )}
-        onClick={() => toggle(false)}
+        onClick={() => expandMobileSideNav(false)}
         data-testid="navmenu__notification"
       >
         <div
@@ -117,14 +119,16 @@ const NavigationBar = ({
 
   const userLinks = (
     <div className="mint-nav__signout-container">
-      <div className="mint-nav__user margin-bottom-1">{userName}</div>
+      <div className="mint-nav__user margin-bottom-1 padding-x-0">
+        {userName}
+      </div>
       <NavLink
         to="/"
+        className="signout-link padding-0"
         onClick={e => {
           e.preventDefault();
           signout();
         }}
-        className="signout-link"
       >
         <em
           className="usa-logo__text text-underline"
@@ -136,7 +140,7 @@ const NavigationBar = ({
     </div>
   );
 
-  const navItems = mobile
+  const navItems = isMobile
     ? navItemsWithNotification.concat(userLinks)
     : navItemsWithNotification;
 
@@ -144,22 +148,20 @@ const NavigationBar = ({
     <nav
       aria-label={t('header:navigation')}
       data-testid="navigation-bar"
-      className="border-top-light"
+      className={className}
     >
-      <div className="grid-container">
+      <GridContainer>
         <PrimaryNav
-          onClick={() => toggle(false)}
-          mobileExpanded={mobile}
+          onClick={() => expandMobileSideNav(false)}
+          mobileExpanded={isMobile}
           aria-label="Primary navigation"
-          className={classNames(
-            {
-              'navigation-link': flags.notificationsEnabled
-            },
-            'width-full'
-          )}
+          className={classNames({
+            'navigation-link': flags.notificationsEnabled,
+            'width-full': !isMobile
+          })}
           items={navItems}
         />
-      </div>
+      </GridContainer>
     </nav>
   );
 };
