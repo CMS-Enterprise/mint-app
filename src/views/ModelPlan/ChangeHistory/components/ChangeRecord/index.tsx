@@ -58,23 +58,12 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
           ) : (
             <span />
           )}{' '}
-          {(() => {
-            // If the change is an insert, render created text rather than answered/updated, etc.
-            if (tableName === 'operational_need' && changeType === 'INSERT') {
-              return (
-                <span className="text-normal">{t(`changeType.CREATED`)}</span>
-              );
-            }
-            // Render the change type - answered, removed, updated
-            if (changeType !== DatabaseOperation.DELETE) {
-              return (
-                <span className="text-normal">
-                  {t(`changeType.${change.changeType}`)}
-                </span>
-              );
-            }
-            return <span />;
-          })()}
+          {/* Post text action - updated, created, removed, etc */}
+          <ActionText
+            change={change}
+            changeType={changeType}
+            tableName={tableName}
+          />
         </span>
       </div>
 
@@ -121,6 +110,29 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
       </div>
     </div>
   );
+};
+
+export const ActionText = ({
+  change,
+  changeType,
+  tableName
+}: SingleChangeProps) => {
+  const { t } = useTranslation('changeHistory');
+
+  // If the change is an insert, render created text rather than answered/updated, etc.
+  if (tableName === 'operational_need' && changeType === 'INSERT') {
+    return <span className="text-normal">{t(`changeType.CREATED`)}</span>;
+  }
+  // Render the change type - answered, removed, updated
+  if (changeType !== DatabaseOperation.DELETE) {
+    return (
+      <span className="text-normal">
+        {t(`changeType.${change.changeType}`)}
+      </span>
+    );
+  }
+
+  return <span />;
 };
 
 // Render a single value, either as a string or as a list of strings
@@ -217,7 +229,19 @@ const ChangedQuestion = ({
   }
 
   // Normal translated field
-  return <>{change.fieldNameTranslated}</>;
+  return (
+    <>
+      {change.fieldNameTranslated}{' '}
+      {/* Post text action - updated, created, removed, etc */}
+      {tableName === 'operational_need' && (
+        <ActionText
+          change={change}
+          changeType={changeType}
+          tableName={tableName}
+        />
+      )}
+    </>
+  );
 };
 
 // Render a single change record, showing the actor, the date, and the fields that were changed
@@ -233,9 +257,6 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
   const uploadAudit: boolean =
     changeRecordType === 'CR update' ||
     changeRecordType === 'TDL update' ||
-    changeRecordType === 'Subtask update' ||
-    changeRecordType === 'Operational solution create' ||
-    changeRecordType === 'Operational solution update' ||
     changeRecordType === 'Operational need update';
 
   // Determine if the change record should be expanded to show more data
@@ -245,7 +266,8 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
   // Determines if the change record should show a list of translated fields before expanding
   const renderList: boolean =
     changeRecordType === 'Standard update' ||
-    changeRecordType === 'Operational solution create';
+    changeRecordType === 'Operational need update' ||
+    changeRecordType === 'Operational need create';
 
   return (
     <Card className="change-record">
@@ -346,27 +368,6 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
-          {/* Document solution link audits */}
-          {changeRecordType === 'Document solution link update' &&
-            (() => {
-              return (
-                <Trans
-                  i18nKey="changeHistory:documentSolutionLinkUpdate"
-                  values={{
-                    action: t(`documentLinkType.${changeRecord.action}`),
-                    toFrom: t(`toFrom.${changeRecord.action}`),
-                    documentName: 'Temp document', // TODO: replace with actual document name
-                    solutionName: 'Temp solution', // TODO: replace with actual solution name
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
           {/* CR and TDL audits */}
           {(changeRecordType === 'CR update' ||
             changeRecordType === 'TDL update') &&
@@ -395,92 +396,6 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               );
             })()}
 
-          {/* Subtask audits */}
-          {changeRecordType === 'Subtask update' &&
-            (() => {
-              const subtaskChange = (actionType: DatabaseOperation) =>
-                actionType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
-
-              const subtaskName = changeRecord.translatedFields.find(
-                field => field.fieldName === 'name'
-              )?.[subtaskChange(changeRecord.action)];
-
-              return (
-                <Trans
-                  i18nKey="changeHistory:subtaskUpdate"
-                  values={{
-                    action: t(`auditUpdateType.${changeRecord.action}`),
-                    subtaskName,
-                    solutionName: 'Temp Solution', // TODO: Replace with actual solution name
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
-          {/* Operational solution create audits */}
-          {changeRecordType === 'Operational solution create' &&
-            (() => {
-              return (
-                <Trans
-                  i18nKey="changeHistory:solutionCreate"
-                  count={changeRecord.translatedFields.length}
-                  values={{
-                    count: changeRecord.translatedFields.length,
-                    solutionName: 'Temp solution', // TODO: replace with actual solution name
-                    needName: 'Temp need', // TODO: replace with actual need name
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
-          {/* Operations soltutiin update audits */}
-          {changeRecordType === 'Operational solution update' &&
-            (() => {
-              return (
-                <Trans
-                  i18nKey="changeHistory:solutionUpdate"
-                  values={{
-                    action: t(`auditUpdateType.${changeRecord.action}`),
-                    solutionName: 'Temp Solution', // TODO: replace with actual solution name
-                    needName: 'Temp need', // TODO: replace with actual need name
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
-          {/* Operational need update audits */}
-          {changeRecordType === 'Operational need update' &&
-            (() => {
-              return (
-                <Trans
-                  i18nKey="changeHistory:needUpdate"
-                  values={{
-                    action: t(`auditUpdateType.${changeRecord.action}`),
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
           {/* Discussion audits */}
           {changeRecordType === 'Discussion update' &&
             (() => {
@@ -493,6 +408,12 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               const content = changeRecord.translatedFields.find(
                 field => field.fieldName === 'content'
               )?.newTranslated;
+
+              const replyCount =
+                changeRecord?.metaData &&
+                isDiscussionReplyWithMetaData(changeRecord?.metaData)
+                  ? changeRecord?.metaData.numberOfReplies
+                  : 0;
 
               return (
                 <>
@@ -541,6 +462,13 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                       styleLeftBar={false}
                     >
                       <div className="margin-bottom-neg-1 padding-left-3 change-record__answer margin-top-neg-2">
+                        {replyCount && (
+                          <div className="padding-bottom-1 text-italic">
+                            {t('replyCount', {
+                              count: replyCount
+                            })}
+                          </div>
+                        )}
                         <MentionTextArea
                           className="text-base-darkest"
                           id={`mention-${changeRecord.id}`}
@@ -555,7 +483,8 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
             })()}
 
           {/* Standard update audits */}
-          {changeRecordType === 'Standard update' && (
+          {(changeRecordType === 'Standard update' ||
+            changeRecordType === 'Operational need update') && (
             <Trans
               i18nKey="changeHistory:change"
               count={changeRecord.translatedFields.length}

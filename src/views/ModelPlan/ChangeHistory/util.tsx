@@ -120,7 +120,7 @@ const hiddenFields: HiddenFieldTypes[] = [
 export const batchedTables: string[] = [
   'plan_document',
   'operational_solution',
-  'operational_need',
+  // 'operational_need',
   'operational_solution_subtask',
   'plan_document_solution_link'
 ];
