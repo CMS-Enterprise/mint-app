@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -33,11 +32,6 @@ func (r *translatedAuditFieldResolver) NotApplicableQuestions(ctx context.Contex
 	return *obj.NotApplicableQuestions, nil
 }
 
-// Name is the resolver for the name field.
-func (r *translatedAuditMetaOperationalNeedResolver) Name(ctx context.Context, obj *models.TranslatedAuditMetaOperationalNeed) (string, error) {
-	panic(fmt.Errorf("not implemented: Name - name"))
-}
-
 // TranslatedAudit returns generated.TranslatedAuditResolver implementation.
 func (r *Resolver) TranslatedAudit() generated.TranslatedAuditResolver {
 	return &translatedAuditResolver{r}
@@ -48,11 +42,5 @@ func (r *Resolver) TranslatedAuditField() generated.TranslatedAuditFieldResolver
 	return &translatedAuditFieldResolver{r}
 }
 
-// TranslatedAuditMetaOperationalNeed returns generated.TranslatedAuditMetaOperationalNeedResolver implementation.
-func (r *Resolver) TranslatedAuditMetaOperationalNeed() generated.TranslatedAuditMetaOperationalNeedResolver {
-	return &translatedAuditMetaOperationalNeedResolver{r}
-}
-
 type translatedAuditResolver struct{ *Resolver }
 type translatedAuditFieldResolver struct{ *Resolver }
-type translatedAuditMetaOperationalNeedResolver struct{ *Resolver }

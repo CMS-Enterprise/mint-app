@@ -6,7 +6,7 @@ COMMENT ON TYPE DATABASE_OPERATION IS 'The possible types of operations that can
 Currently they are represented in the audit.change table as the first letter of the action EG I, D, U, T.';
 
 CREATE TYPE TRANSLATED_AUDIT_META_DATA_TYPE AS ENUM (
-    'BASE', 'GENERIC', 'DISCUSSION_REPLY', 'OPERATIONAL_NEED'
+    'BASE', 'GENERIC', 'DISCUSSION_REPLY', 'OPERATIONAL_NEED', 'OPERATIONAL_SOLUTION'
 );
 
 COMMENT ON TYPE TRANSLATED_AUDIT_META_DATA_TYPE IS 'The possible meta data types that can be stored on a translated audit entry';
