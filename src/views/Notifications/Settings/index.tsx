@@ -47,9 +47,11 @@ const NotificationSettings = () => {
     returnObjects: true
   });
 
-  const modelTypes = notificationsT(
+  const modelTypes: Record<string, string> = notificationsT(
     'settings.additionalConfigurations.whichModelTypes',
-    { returnObjects: true }
+    {
+      returnObjects: true
+    }
   );
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
@@ -180,19 +182,19 @@ const NotificationSettings = () => {
                 <>
                   <Grid row>
                     <Grid mobile={{ col: 6 }}>
-                      <h3 className="margin-bottom-3 padding-bottom-105 border-bottom border-ink">
+                      <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
                         {notificationsT('settings.notification')}
                       </h3>
                     </Grid>
 
                     <Grid mobile={{ col: 3 }}>
-                      <h3 className="margin-bottom-3 padding-bottom-105 border-bottom border-ink">
+                      <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
                         {notificationsT('settings.email')}
                       </h3>
                     </Grid>
 
                     <Grid mobile={{ col: 3 }}>
-                      <h3 className="margin-bottom-3 padding-bottom-105 border-bottom border-ink">
+                      <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
                         {notificationsT('settings.inApp')}
                       </h3>
                     </Grid>
