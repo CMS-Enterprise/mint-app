@@ -31,34 +31,35 @@ const SideNav = ({
       '[data-testid="group-filter-banner"]'
     )?.clientHeight;
 
-    // `scroll-element` is the SectionWrapper component, everything below the ModelWarning
-    const element = document.querySelector('#scroll-element');
-
-    // the height of the h2 element
-    const heightOfHeading = document.querySelector(
-      '[data-scroll-to-element="heading"]'
+    // the height of navigation bar
+    const navBarHeight = document.querySelector(
+      '[data-testid="navigation-bar"]'
     )?.clientHeight;
 
-    // if the element, filterBannerHeight, or heightOfHeading is undefined or null, abort!
-    if (!element || !filterBannerHeight || !heightOfHeading) {
+    // `scroll-element` is the SectionWrapper component, everything below the ModelWarning
+    const scrollElement = document.querySelector('#scroll-element');
+
+    // if the element, filterBannerHeight, or navBarHeight is undefined or null, abort!
+    if (!scrollElement || !filterBannerHeight || !navBarHeight) {
       return;
     }
 
-    // Find the margin-top value of the element
-    const marginTopValue = parseFloat(
-      window.getComputedStyle(element).marginTop
+    // Find the margin-top value of the scroll element
+    const marginOfScrollElement = parseFloat(
+      window.getComputedStyle(scrollElement).marginTop
     );
 
-    // Find the top of the element
-    const { top } = element.getBoundingClientRect();
+    // Find the top of the scroll element
+    const { top } = scrollElement.getBoundingClientRect();
 
     // Calculate all the things
     const distanceFromTopOfPage =
       top +
       window.scrollY -
       filterBannerHeight -
-      marginTopValue -
-      heightOfHeading;
+      navBarHeight -
+      marginOfScrollElement;
+
     window.scroll(0, distanceFromTopOfPage);
   };
 
