@@ -26,6 +26,7 @@ const (
 	TAMetaGeneric         TranslatedAuditMetaDataType = "GENERIC"
 	TAMetaBase            TranslatedAuditMetaDataType = "BASE"
 	TAMetaDiscussionReply TranslatedAuditMetaDataType = "DISCUSSION_REPLY"
+	TAMetaOperationalNeed TranslatedAuditMetaDataType = "OPERATIONAL_NEED"
 )
 
 // TranslatedAuditWithTranslatedFields is a struct that is used to group a translated audit change with the representative fields. It is meant to be used as a convenience grouping
