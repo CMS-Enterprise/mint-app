@@ -14,6 +14,7 @@ type TranslatedAuditMetaOperationalSolution struct {
 	SolutionName     string `json:"solutionName"`
 	NumberOfSubtasks int    `json:"numberOfSubtasks"`
 	SolutionIsOther  bool   `json:"isOther"`
+	// Changes: (Meta) do we need the otherHeader in the meta data as well?
 }
 
 // NewTranslatedAuditMetaOperationalSolution creates a New TranslatedAuditMetaOperationalSolution
