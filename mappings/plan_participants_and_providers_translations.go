@@ -11,8 +11,8 @@ import (
 //go:embed translation/plan_participants_and_providers.json
 var partsAndProvidersTranslationJSON []byte
 
-// ParticipantsAndProvidersTranslation Provides the translation for Participants and Providers
-func ParticipantsAndProvidersTranslation() (*model.PlanParticipantsAndProvidersTranslation, error) {
+// PlanParticipantsAndProvidersTranslation Provides the translation for Participants and Providers
+func PlanParticipantsAndProvidersTranslation() (*model.PlanParticipantsAndProvidersTranslation, error) {
 	var participantsTranslation model.PlanParticipantsAndProvidersTranslation
 	err := json.Unmarshal(partsAndProvidersTranslationJSON, &participantsTranslation)
 	if err != nil {

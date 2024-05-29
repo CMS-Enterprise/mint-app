@@ -32,6 +32,7 @@ type DiscussionReplyTranslation struct {
 	UserRole            models.TranslationFieldWithOptions `json:"userRole" db:"user_role"`
 	UserRoleDescription models.TranslationField            `json:"userRoleDescription" db:"user_role_description"`
 	Content             models.TranslationField            `json:"content" db:"content"`
+	IsAssessment        models.TranslationFieldWithOptions `json:"isAssessment" db:"is_assessment"`
 }
 
 // Represents existing model link translation data
@@ -65,11 +66,13 @@ type NDAInfo struct {
 
 // Represents operational need translation data
 type OperationalNeedTranslation struct {
-	Name      models.TranslationField            `json:"name" db:"name"`
-	NameOther *models.TranslationField           `json:"nameOther,omitempty" db:"name_other"`
-	Key       models.TranslationFieldWithOptions `json:"key" db:"key"`
-	Needed    models.TranslationFieldWithOptions `json:"needed" db:"needed"`
-	Section   models.TranslationFieldWithOptions `json:"section" db:"section"`
+	// Name comes from the possible operational need table. It is not returned in an audit
+	Name      models.TranslationField  `json:"name" db:"need_name"`
+	NameOther *models.TranslationField `json:"nameOther,omitempty" db:"name_other"`
+	// Key comes from the possible operational need table. It is not returned in an audit
+	Key     models.TranslationFieldWithOptions `json:"key" db:"need_key"`
+	Needed  models.TranslationFieldWithOptions `json:"needed" db:"needed"`
+	Section models.TranslationFieldWithOptions `json:"section" db:"section"`
 }
 
 // Represents operational solution subtask translation data
@@ -80,16 +83,19 @@ type OperationalSolutionSubtaskTranslation struct {
 
 // Represents operational solution translation data
 type OperationalSolutionTranslation struct {
-	Name          models.TranslationField            `json:"name" db:"name"`
+	// Name comes from the possible operational solution table. It is not returned in an audit
+	Name          models.TranslationField            `json:"name" db:"sol_name"`
 	NameOther     models.TranslationField            `json:"nameOther" db:"name_other"`
+	IsOther       models.TranslationFieldWithOptions `json:"isOther" db:"is_other"`
 	OtherHeader   models.TranslationField            `json:"otherHeader" db:"other_header"`
 	PocName       models.TranslationField            `json:"pocName" db:"poc_name"`
 	PocEmail      models.TranslationField            `json:"pocEmail" db:"poc_email"`
 	MustStartDts  models.TranslationField            `json:"mustStartDts" db:"must_start_dts"`
 	MustFinishDts models.TranslationField            `json:"mustFinishDts" db:"must_finish_dts"`
 	Needed        models.TranslationFieldWithOptions `json:"needed" db:"needed"`
-	Key           models.TranslationFieldWithOptions `json:"key" db:"key"`
-	Status        models.TranslationFieldWithOptions `json:"status" db:"status"`
+	// Key comes from the possible operational solution table. It is not returned in an audit
+	Key    models.TranslationFieldWithOptions `json:"key" db:"sol_key"`
+	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
 // Represents plan basics translation data
@@ -209,6 +215,7 @@ type PlanDiscussionTranslation struct {
 	UserRole            models.TranslationFieldWithOptions `json:"userRole" db:"user_role"`
 	UserRoleDescription models.TranslationField            `json:"userRoleDescription" db:"user_role_description"`
 	Content             models.TranslationField            `json:"content" db:"content"`
+	IsAssessment        models.TranslationField            `json:"isAssessment" db:"is_assessment"`
 }
 
 // PlanDocumentInput
@@ -240,18 +247,22 @@ type PlanDocumentSolutionLinkTranslation struct {
 
 // Represents plan document translation data
 type PlanDocumentTranslation struct {
-	IsLink               models.TranslationField            `json:"isLink" db:"is_link"`
-	URL                  models.TranslationField            `json:"url" db:"url"`
-	Name                 models.TranslationField            `json:"name" db:"name"`
-	DocumentType         models.TranslationFieldWithOptions `json:"documentType" db:"document_type"`
-	OtherTypeDescription *models.TranslationField           `json:"otherTypeDescription,omitempty" db:"other_type_description"`
-	Restricted           models.TranslationFieldWithOptions `json:"restricted" db:"restricted"`
-	OptionalNotes        *models.TranslationField           `json:"optionalNotes,omitempty" db:"optional_notes"`
+	IsLink        models.TranslationField            `json:"isLink" db:"is_link"`
+	URL           models.TranslationField            `json:"url" db:"url"`
+	FileName      models.TranslationField            `json:"fileName" db:"file_name"`
+	DocumentType  models.TranslationFieldWithOptions `json:"documentType" db:"document_type"`
+	OtherType     *models.TranslationField           `json:"otherType,omitempty" db:"other_type"`
+	FileType      *models.TranslationField           `json:"fileType,omitempty" db:"file_type"`
+	Restricted    models.TranslationFieldWithOptions `json:"restricted" db:"restricted"`
+	OptionalNotes *models.TranslationField           `json:"optionalNotes,omitempty" db:"optional_notes"`
 }
 
 // Represents plan general characteristics translation data
 type PlanGeneralCharacteristicsTranslation struct {
-	IsNewModel                                    models.TranslationFieldWithOptionsAndChildren `json:"isNewModel" db:"is_new_model"`
+	IsNewModel         models.TranslationFieldWithOptionsAndChildren `json:"isNewModel" db:"is_new_model"`
+	CurrentModelPlanID *models.TranslationField                      `json:"currentModelPlanID,omitempty" db:"current_model_plan_id"`
+	ExistingModelID    *models.TranslationField                      `json:"existingModelID,omitempty" db:"existing_model_id"`
+	// Existing model doesn't exist in the database, it is returned based on if there is a current model plan ID or current model plan ID returned
 	ExistingModel                                 models.TranslationFieldWithParent             `json:"existingModel" db:"existing_model"`
 	ResemblesExistingModel                        models.TranslationFieldWithOptionsAndChildren `json:"resemblesExistingModel" db:"resembles_existing_model"`
 	ResemblesExistingModelWhyHow                  models.TranslationField                       `json:"resemblesExistingModelWhyHow" db:"resembles_existing_model_why_how"`
@@ -479,7 +490,7 @@ type PlanParticipantsAndProvidersTranslation struct {
 	ParticipantsIdsOther                      models.TranslationField                       `json:"participantsIdsOther" db:"participants_ids_other"`
 	ParticipantsIDSNote                       models.TranslationField                       `json:"participantsIDSNote" db:"participants_ids_note"`
 	ProviderAdditionFrequency                 models.TranslationFieldWithOptions            `json:"providerAdditionFrequency" db:"provider_addition_frequency"`
-	ProviderAdditionFrequencyContinually      models.TranslationField                       `json:"providerAdditionFrequencyContinually" db:"provide_addition_frequency_continually"`
+	ProviderAdditionFrequencyContinually      models.TranslationField                       `json:"providerAdditionFrequencyContinually" db:"provider_addition_frequency_continually"`
 	ProviderAdditionFrequencyOther            models.TranslationField                       `json:"providerAdditionFrequencyOther" db:"provider_addition_frequency_other"`
 	ProviderAdditionFrequencyNote             models.TranslationField                       `json:"providerAdditionFrequencyNote" db:"provider_addition_frequency_note"`
 	ProviderAddMethod                         models.TranslationFieldWithOptions            `json:"providerAddMethod" db:"provider_add_method"`
@@ -489,7 +500,7 @@ type PlanParticipantsAndProvidersTranslation struct {
 	ProviderLeaveMethodOther                  models.TranslationField                       `json:"providerLeaveMethodOther" db:"provider_leave_method_other"`
 	ProviderLeaveMethodNote                   models.TranslationField                       `json:"providerLeaveMethodNote" db:"provider_leave_method_note"`
 	ProviderRemovalFrequency                  models.TranslationFieldWithOptions            `json:"providerRemovalFrequency" db:"provider_removal_frequency"`
-	ProviderRemovalFrequencyContinually       models.TranslationField                       `json:"providerRemovalFrequencyContinually" db:"provide_removal_frequency_continually"`
+	ProviderRemovalFrequencyContinually       models.TranslationField                       `json:"providerRemovalFrequencyContinually" db:"provider_removal_frequency_continually"`
 	ProviderRemovalFrequencyOther             models.TranslationField                       `json:"providerRemovalFrequencyOther" db:"provider_removal_frequency_other"`
 	ProviderRemovalFrequencyNote              models.TranslationField                       `json:"providerRemovalFrequencyNote" db:"provider_removal_frequency_note"`
 	ProviderOverlap                           models.TranslationFieldWithOptionsAndChildren `json:"providerOverlap" db:"provider_overlap"`

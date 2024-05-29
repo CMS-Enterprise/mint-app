@@ -379,6 +379,7 @@ export type DiscussionReplyCreateInput = {
 export type DiscussionReplyTranslation = {
   __typename: 'DiscussionReplyTranslation';
   content: TranslationField;
+  isAssessment: TranslationFieldWithOptions;
   userRole: TranslationFieldWithOptions;
   userRoleDescription: TranslationField;
 };
@@ -1148,7 +1149,9 @@ export enum OperationalNeedKey {
 /** Represents operational need translation data */
 export type OperationalNeedTranslation = {
   __typename: 'OperationalNeedTranslation';
+  /** Key comes from the possible operational need table. It is not returned in an audit */
   key: TranslationFieldWithOptions;
+  /** Name comes from the possible operational need table. It is not returned in an audit */
   name: TranslationField;
   nameOther?: Maybe<TranslationField>;
   needed: TranslationFieldWithOptions;
@@ -1265,9 +1268,12 @@ export type OperationalSolutionSubtaskTranslation = {
 /** Represents operational solution translation data */
 export type OperationalSolutionTranslation = {
   __typename: 'OperationalSolutionTranslation';
+  isOther: TranslationFieldWithOptions;
+  /** Key comes from the possible operational solution table. It is not returned in an audit */
   key: TranslationFieldWithOptions;
   mustFinishDts: TranslationField;
   mustStartDts: TranslationField;
+  /** Name comes from the possible operational solution table. It is not returned in an audit */
   name: TranslationField;
   nameOther: TranslationField;
   needed: TranslationFieldWithOptions;
@@ -1696,6 +1702,7 @@ export type PlanDiscussionCreateInput = {
 export type PlanDiscussionTranslation = {
   __typename: 'PlanDiscussionTranslation';
   content: TranslationField;
+  isAssessment: TranslationField;
   userRole: TranslationFieldWithOptions;
   userRoleDescription: TranslationField;
 };
@@ -1776,10 +1783,11 @@ export type PlanDocumentSolutionLinkTranslation = {
 export type PlanDocumentTranslation = {
   __typename: 'PlanDocumentTranslation';
   documentType: TranslationFieldWithOptions;
+  fileName: TranslationField;
+  fileType?: Maybe<TranslationField>;
   isLink: TranslationField;
-  name: TranslationField;
   optionalNotes?: Maybe<TranslationField>;
-  otherTypeDescription?: Maybe<TranslationField>;
+  otherType?: Maybe<TranslationField>;
   restricted: TranslationFieldWithOptions;
   url: TranslationField;
 };
@@ -2008,7 +2016,10 @@ export type PlanGeneralCharacteristicsTranslation = {
   communityPartnersInvolved: TranslationFieldWithOptions;
   communityPartnersInvolvedDescription: TranslationField;
   communityPartnersInvolvedNote: TranslationField;
+  currentModelPlanID?: Maybe<TranslationField>;
+  /** Existing model doesn't exist in the database, it is returned based on if there is a current model plan ID or current model plan ID returned */
   existingModel: TranslationFieldWithParent;
+  existingModelID?: Maybe<TranslationField>;
   geographiesRegionTypes: TranslationFieldWithOptionsAndParent;
   geographiesStatesAndTerritories: TranslationFieldWithOptionsAndParent;
   geographiesTargeted: TranslationFieldWithOptionsAndChildren;

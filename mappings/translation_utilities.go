@@ -16,7 +16,7 @@ func GetTranslation(tableName string) (Translation, error) {
 	case "model_plan":
 		return ModelPlanTranslation()
 	case "plan_participants_and_providers":
-		return ParticipantsAndProvidersTranslation()
+		return PlanParticipantsAndProvidersTranslation()
 	case "plan_basics":
 		return PlanBasicsTranslation()
 	case "plan_payments":

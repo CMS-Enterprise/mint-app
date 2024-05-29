@@ -14,6 +14,18 @@ const operationalSolutions: TranslationOperationalSolutions = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT
   },
+  isOther: {
+    gqlField: 'isOther',
+    goField: 'isOther',
+    dbField: 'is_other_',
+    label: 'Is this a solution considered an other option?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.BOOLEAN,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
   nameOther: {
     gqlField: 'nameOther',
     goField: 'NameOther',

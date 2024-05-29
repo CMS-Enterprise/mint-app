@@ -28,12 +28,20 @@ export const documents: TranslationDocuments = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT
   },
-  name: {
-    gqlField: 'name',
-    goField: 'name',
-    dbField: 'name',
-    label: 'File name',
-    sublabel: 'Enter a name for your document.',
+  fileName: {
+    gqlField: 'fileName',
+    goField: 'FileName',
+    dbField: 'file_name',
+    label: 'File Name',
+    sublabel: 'Enter a Name for your document.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT
+  },
+  fileType: {
+    gqlField: 'fileType',
+    goField: 'FileType',
+    dbField: 'file_type',
+    label: 'File Type',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT
   },
@@ -55,10 +63,10 @@ export const documents: TranslationDocuments = {
       OTHER: 'Other'
     }
   },
-  otherTypeDescription: {
-    gqlField: 'otherTypeDescription',
-    goField: 'OtherTypeDescription',
-    dbField: 'other_type_description',
+  otherType: {
+    gqlField: 'otherType',
+    goField: 'OtherType',
+    dbField: 'other_type',
     label: 'What kind of document is this?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT

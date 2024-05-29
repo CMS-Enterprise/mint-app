@@ -3,9 +3,15 @@ Represents operational need translation data
 """
 
 type OperationalNeedTranslation {
-    name: TranslationField! @goTag(key: "db", value: "name")
+    """
+    Name comes from the possible operational need table. It is not returned in an audit
+    """
+    name: TranslationField! @goTag(key: "db", value: "need_name")
     nameOther: TranslationField @goTag(key: "db", value: "name_other")
-    key: TranslationFieldWithOptions! @goTag(key: "db", value: "key")
+    """
+    Key comes from the possible operational need table. It is not returned in an audit
+    """
+    key: TranslationFieldWithOptions! @goTag(key: "db", value: "need_key")
     needed: TranslationFieldWithOptions! @goTag(key: "db", value: "needed")
     section: TranslationFieldWithOptions! @goTag(key: "db", value: "section")
 }

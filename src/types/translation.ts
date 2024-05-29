@@ -344,6 +344,8 @@ export type TranslationBasics = {
 export type TranslationGeneralCharacteristicsForm = {
   isNewModel: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   existingModel: TranslationFieldPropertiesWithParent<Bool>;
+  existingModelID: TranslationFieldProperties;
+  currentModelPlanID: TranslationFieldProperties;
   resemblesExistingModel: TranslationFieldPropertiesWithOptionsAndChildren<YesNoOtherType>;
   resemblesExistingModelWhyHow: TranslationFieldProperties;
   resemblesExistingModelHow: TranslationFieldPropertiesWithParent<YesNoOtherType>;
@@ -933,6 +935,7 @@ export type TranslationDiscussionsForm = {
   userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
   userRoleDescription: TranslationFieldProperties;
   content: TranslationFieldProperties;
+  isAssessment: TranslationFieldPropertiesWithOptions<Bool>;
 };
 
 type TranslationDiscussionsGQL = Omit<
@@ -953,6 +956,7 @@ export type TranslationRepliesForm = {
   userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
   userRoleDescription: TranslationFieldProperties;
   content: TranslationFieldProperties;
+  isAssessment: TranslationFieldPropertiesWithOptions<Bool>;
 };
 
 type TranslationRepliesGQL = Omit<
@@ -1015,11 +1019,12 @@ export type TranslationTDLs = {
 export type TranslationDocumentsForm = {
   isLink: TranslationFieldPropertiesWithOptions<Bool>;
   url: TranslationFieldProperties;
-  name: TranslationFieldProperties;
+  fileName: TranslationFieldProperties;
   restricted: TranslationFieldPropertiesWithOptions<Bool>;
   documentType: TranslationFieldPropertiesWithOptions<DocumentType>;
   optionalNotes: TranslationFieldProperties;
-  otherTypeDescription: TranslationFieldProperties;
+  otherType: TranslationFieldProperties;
+  fileType: TranslationFieldProperties;
 };
 
 type TranslationDocumentsGQL = Omit<
@@ -1069,6 +1074,7 @@ export type TranslationOperationalSolutionsForm = {
   pocEmail: TranslationFieldProperties;
   needed: TranslationFieldPropertiesWithOptions<Bool>;
   status: TranslationFieldPropertiesWithOptions<OpSolutionStatus>;
+  isOther: TranslationFieldPropertiesWithOptions<Bool>;
 };
 
 type TranslationOperationalSolutionsGQL = Omit<

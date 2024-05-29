@@ -59,7 +59,7 @@ type PlanParticipantsAndProvidersTranslation {
 
   #Page 5
   providerAdditionFrequency: TranslationFieldWithOptions! @goTag(key: "db", value: "provider_addition_frequency")
-  providerAdditionFrequencyContinually: TranslationField! @goTag(key: "db", value: "provide_addition_frequency_continually")
+  providerAdditionFrequencyContinually: TranslationField! @goTag(key: "db", value: "provider_addition_frequency_continually")
   providerAdditionFrequencyOther: TranslationField! @goTag(key: "db", value: "provider_addition_frequency_other")
   providerAdditionFrequencyNote: TranslationField! @goTag(key: "db", value: "provider_addition_frequency_note")
   providerAddMethod: TranslationFieldWithOptions! @goTag(key: "db", value: "provider_add_method")
@@ -69,7 +69,7 @@ type PlanParticipantsAndProvidersTranslation {
   providerLeaveMethodOther: TranslationField! @goTag(key: "db", value: "provider_leave_method_other")
   providerLeaveMethodNote: TranslationField! @goTag(key: "db", value: "provider_leave_method_note")
   providerRemovalFrequency: TranslationFieldWithOptions! @goTag(key: "db", value: "provider_removal_frequency")
-  providerRemovalFrequencyContinually: TranslationField! @goTag(key: "db", value: "provide_removal_frequency_continually")
+  providerRemovalFrequencyContinually: TranslationField! @goTag(key: "db", value: "provider_removal_frequency_continually")
   providerRemovalFrequencyOther: TranslationField! @goTag(key: "db", value: "provider_removal_frequency_other")
   providerRemovalFrequencyNote: TranslationField! @goTag(key: "db", value: "provider_removal_frequency_note")
   providerOverlap: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "provider_overlap")
