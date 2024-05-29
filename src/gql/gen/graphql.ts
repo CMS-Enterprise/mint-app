@@ -3532,6 +3532,7 @@ export type TranslatedAuditMetaOperationalSolution = {
   numberOfSubtasks: Scalars['Int']['output'];
   solutionIsOther: Scalars['Boolean']['output'];
   solutionName: Scalars['String']['output'];
+  solutionOtherHeader?: Maybe<Scalars['String']['output']>;
   tableName: Scalars['String']['output'];
   version: Scalars['Int']['output'];
 };
@@ -3544,6 +3545,7 @@ export type TranslatedAuditMetaOperationalSolutionSubtask = {
   numberOfSubtasks: Scalars['Int']['output'];
   solutionIsOther: Scalars['Boolean']['output'];
   solutionName: Scalars['String']['output'];
+  solutionOtherHeader?: Maybe<Scalars['String']['output']>;
   subtaskName: Scalars['String']['output'];
   tableName: Scalars['String']['output'];
   version: Scalars['Int']['output'];

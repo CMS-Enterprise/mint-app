@@ -11,21 +11,23 @@ import (
 // TranslatedAuditMetaOperationalSolutionSubtask represents the data about an operational need to render an operational need human readable.
 type TranslatedAuditMetaOperationalSolutionSubtask struct {
 	TranslatedAuditMetaBaseStruct
-	NeedName         string `json:"needName"`
-	NeedIsOther      bool   `json:"needIsOther"`
-	SolutionName     string `json:"solutionName"`
-	NumberOfSubtasks int    `json:"numberOfSubtasks"`
-	SolutionIsOther  bool   `json:"isOther"`
-	SubtaskName      string `json:"subtaskName"`
+	NeedName            string  `json:"needName"`
+	NeedIsOther         bool    `json:"needIsOther"`
+	SolutionName        string  `json:"solutionName"`
+	SolutionOtherHeader *string `json:"solutionOtherHeader"`
+	NumberOfSubtasks    int     `json:"numberOfSubtasks"`
+	SolutionIsOther     bool    `json:"isOther"`
+	SubtaskName         string  `json:"subtaskName"`
 	// Changes: (Meta) do we need the otherHeader in the meta data as well?
 }
 
 // NewTranslatedAuditMetaOperationalSolutionSubtask creates a New TranslatedAuditMetaOperationalSolutionSubtask
-func NewTranslatedAuditMetaOperationalSolutionSubtask(tableName string, version int, solutionName string, solIsOther bool, numSubtasks int, needName string, needIsOther bool, subtaskName string) TranslatedAuditMetaOperationalSolutionSubtask {
+func NewTranslatedAuditMetaOperationalSolutionSubtask(tableName string, version int, solutionName string, solutionOtherHeader *string, solIsOther bool, numSubtasks int, needName string, needIsOther bool, subtaskName string) TranslatedAuditMetaOperationalSolutionSubtask {
 
 	return TranslatedAuditMetaOperationalSolutionSubtask{
 		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(tableName, version),
 		SolutionName:                  solutionName,
+		SolutionOtherHeader:           solutionOtherHeader,
 		SolutionIsOther:               solIsOther,
 		NumberOfSubtasks:              numSubtasks,
 		NeedName:                      needName,
