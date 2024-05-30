@@ -2042,7 +2042,6 @@ export type PlanGeneralCharacteristicsTranslation = {
   participationInModelPrecondition: TranslationFieldWithOptionsAndChildren;
   participationInModelPreconditionNote: TranslationField;
   participationInModelPreconditionOtherOption: TranslationField;
-  participationInModelPreconditionOtherSelected: TranslationFieldWithOptions;
   participationInModelPreconditionOtherSpecify: TranslationField;
   participationInModelPreconditionWhich: TranslationFieldWithOptionsAndParent;
   participationInModelPreconditionWhyHow: TranslationFieldWithParent;
@@ -2058,7 +2057,6 @@ export type PlanGeneralCharacteristicsTranslation = {
   resemblesExistingModelHow: TranslationFieldWithParent;
   resemblesExistingModelNote: TranslationField;
   resemblesExistingModelOtherOption: TranslationField;
-  resemblesExistingModelOtherSelected: TranslationFieldWithOptions;
   resemblesExistingModelOtherSpecify: TranslationField;
   resemblesExistingModelWhich: TranslationFieldWithOptionsAndParent;
   resemblesExistingModelWhyHow: TranslationField;
