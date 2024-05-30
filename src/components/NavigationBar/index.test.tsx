@@ -53,8 +53,8 @@ describe('The NavigationBar component', () => {
       <MemoryRouter initialEntries={['/']}>
         <MockedProvider mocks={notificationsMock} addTypename={false}>
           <NavigationBar
-            mobile
-            toggle={() => !null}
+            expandMobileSideNav={() => !null}
+            isMobile
             signout={() => null}
             userName="A11Y"
           />
@@ -70,8 +70,8 @@ describe('The NavigationBar component', () => {
       <MemoryRouter initialEntries={['/system/making-a-request']}>
         <MockedProvider mocks={notificationsMock} addTypename={false}>
           <NavigationBar
-            mobile
-            toggle={() => !null}
+            expandMobileSideNav={() => !null}
+            isMobile
             signout={() => null}
             userName="A11Y"
           />
@@ -81,7 +81,7 @@ describe('The NavigationBar component', () => {
 
     const { t } = useTranslation();
 
-    navLinks().forEach(route => {
+    navLinks.forEach(route => {
       const linkTitle = t(`header:${route.label}`);
       expect(getByText(linkTitle)).toBeInTheDocument();
     });

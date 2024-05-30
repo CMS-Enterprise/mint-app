@@ -149,7 +149,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
           </div>
         </div>
         <div
-          class="position-sticky z-100 top-0 bg-primary-darker text-white padding-105"
+          class="position-sticky z-100 bg-primary-darker text-white padding-105 group-filter-banner"
           data-testid="group-filter-banner"
         >
           <div

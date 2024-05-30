@@ -124,7 +124,7 @@ const SolutionDetailsModal = ({
         contentLabel={t('ariaLabel')}
         appElement={document.getElementById('root')! as HTMLElement}
       >
-        <div data-testid="operational-solution-modal" id="scroll-element">
+        <div data-testid="operational-solution-modal">
           <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
             <button
               type="button"

@@ -136,7 +136,6 @@ button:disabled {
   transition: all 0.2s ease-in-out;
   background-color: #fff;
   color: #000;
-  z-index: 100;
 
   &:focus {
     transform: translateY(0%);
