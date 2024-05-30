@@ -274,7 +274,6 @@ const NotificationSettings = () => {
                             className="padding-left-2"
                             name="newModelPlan"
                             value={UserNotificationPreferenceFlag.EMAIL}
-                            // TODO: fix this
                             checked={values?.newModelPlan.includes(
                               UserNotificationPreferenceFlag.EMAIL
                             )}
@@ -289,7 +288,6 @@ const NotificationSettings = () => {
                             className="padding-left-2"
                             name="newModelPlan"
                             value={UserNotificationPreferenceFlag.IN_APP}
-                            // TODO: fix this
                             checked={values?.newModelPlan.includes(
                               UserNotificationPreferenceFlag.IN_APP
                             )}
