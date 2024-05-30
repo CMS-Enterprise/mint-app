@@ -1133,9 +1133,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             />
             <div
               class=""
-            />
-            <div
-              class=""
             >
               <div
                 class="desktop:grid-col-12"
@@ -1235,9 +1232,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
             </div>
-            <div
-              class=""
-            />
             <div
               class=""
             />
@@ -10230,9 +10224,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
             />
             <div
               class=""
-            />
-            <div
-              class=""
             >
               <div
                 class="desktop:grid-col-12"
@@ -10332,9 +10323,6 @@ exports[`ShareExportModal > matches the snapshot 2`] = `
                 </div>
               </div>
             </div>
-            <div
-              class=""
-            />
             <div
               class=""
             />
