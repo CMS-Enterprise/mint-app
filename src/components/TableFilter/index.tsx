@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { FilterValue, useAsyncDebounce } from 'react-table';
 import { Button, Form, Icon, Label, TextInput } from '@trussworks/react-uswds';
 import classnames from 'classnames';
-import { init } from 'i18next';
 
 import './index.scss';
 
