@@ -213,6 +213,11 @@ func assertTFieldOptions(t *testing.T, field reflect.StructField, translation mo
 
 	count := len(options)
 	assert.GreaterOrEqual(t, count, 1, "field %s. Doesn't have options. There are %i options.", field.Name, count)
+	for key, option := range options {
+		// translated field is a zero string. If you only translate one option and it is "", it will fail to insert in the database
+		assert.NotEqual(t, option, "", "field %s, option for %s is an empty string, which is not allowed", field.Name, key)
+
+	}
 
 }
 
