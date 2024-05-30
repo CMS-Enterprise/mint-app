@@ -114,7 +114,8 @@ const NotificationSettings = () => {
     addedAsCollaborator: addedAsCollaborator ?? [],
     taggedInDiscussion: taggedInDiscussion ?? [],
     newDiscussionReply: newDiscussionReply ?? [],
-    modelPlanShared: modelPlanShared ?? []
+    modelPlanShared: modelPlanShared ?? [],
+    newModelPlan: newModelPlan ?? []
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
