@@ -136,7 +136,10 @@ const IndividualNotification = ({
                         );
                       });
                     }
-                    if (isSharedActivity(metaData)) {
+                    if (
+                      isSharedActivity(metaData) ||
+                      isNewModelPlan(metaData)
+                    ) {
                       handleMarkAsRead(() => {
                         history.push(
                           `/models/${metaData.modelPlanID}/read-only`
