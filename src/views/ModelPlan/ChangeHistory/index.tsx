@@ -145,6 +145,7 @@ const ChangeHistory = () => {
       } else {
         // Delete the 'query' parameter
         params.delete('query');
+        params.delete('page');
       }
       history.push({ search: params.toString() });
     }
@@ -158,18 +159,19 @@ const ChangeHistory = () => {
     if (!loading) {
       setAuditChanges([...sortedChanges]);
       setSortedAudits([...sortedChanges]);
+      // setSortedAudits(
+      //   handleSortOptions([...sortedChanges], sortParam || sortOptions[0].value)
+      // );
       setSort(sortParam || sortOptions[0].value);
 
       setTimeout(() => {
         // Set the query based on the query parameter
         setQuery(queryParam || '');
-
-        // Set the page offset based on the page parameter
-        const newOffset = pageParam
-          ? (Number(pageParam) - 1) * itemsPerPage
-          : 0;
-        setPageOffset(newOffset);
       }, 0);
+
+      // Set the page offset based on the page parameter
+      const newOffset = pageParam ? (Number(pageParam) - 1) * itemsPerPage : 0;
+      setPageOffset(newOffset);
     }
   }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 

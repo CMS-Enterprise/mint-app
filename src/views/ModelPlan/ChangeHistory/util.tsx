@@ -299,6 +299,16 @@ export const filterQueryAudits = (
     const filteredAudits = audits.filter(audit => {
       const lowerCaseQuery = queryString.toLowerCase();
 
+      const metaDataMatch =
+        audit.metaData &&
+        Object.values(audit.metaData).find(
+          field =>
+            typeof field === 'string' &&
+            field?.toLowerCase().includes(lowerCaseQuery)
+        );
+
+      if (metaDataMatch) return true;
+
       const translatedFieldsMatchQuery = audit.translatedFields.filter(
         field => {
           if (
