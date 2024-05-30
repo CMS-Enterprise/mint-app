@@ -2,7 +2,6 @@ package notifications
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -17,7 +16,8 @@ func ActivityNewModelPlanCreate(
 	np sqlutils.NamedPreparer,
 	actorID uuid.UUID,
 	modelPlanID uuid.UUID,
-	getPreferencesFunc GetUserNotificationPreferencesFunc) (*models.Activity, error) {
+	userAccountPrefs []*models.UserAccountNotificationPreferences,
+) (*models.Activity, error) {
 
 	activity := models.NewNewModelPlanMetaActivity(actorID, modelPlanID)
 
@@ -26,16 +26,11 @@ func ActivityNewModelPlanCreate(
 		return nil, actErr
 	}
 
-	// TODO: Which user IDs should be passed here? (1/2)
-	pref, err := getPreferencesFunc(ctx, uuid.Nil)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get user notification preference, Notification not created %w", err)
-	}
-
-	// TODO: Which user IDs should be passed here? (2/2)
-	_, err = userNotificationCreate(ctx, np, retActivity, uuid.Nil, pref.AddedAsCollaborator)
-	if err != nil {
-		return nil, err
+	for _, pref := range userAccountPrefs {
+		_, err := userNotificationCreate(ctx, np, retActivity, pref.UserID, pref.NewModelPlanNotification)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return retActivity, nil

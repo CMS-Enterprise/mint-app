@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -59,7 +58,7 @@ func (r *newDiscussionRepliedActivityMetaResolver) Reply(ctx context.Context, ob
 
 // ModelPlan is the resolver for the modelPlan field.
 func (r *newModelPlanActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.NewModelPlanActivityMeta) (*models.ModelPlan, error) {
-	panic(fmt.Errorf("not implemented: ModelPlan - modelPlan"))
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
 // ModelPlan is the resolver for the modelPlan field.

@@ -41,6 +41,9 @@ func ModelPlanCreate(
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.ModelPlan, error) {
 
+	var newModelPlanEmailPrefs []*models.UserAccountNotificationPreferences
+	var newModelPlanInAppPrefs []*models.UserAccountNotificationPreferences
+
 	newPlan, err := sqlutils.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 		plan := models.NewModelPlan(principal.Account().ID, modelName)
 
@@ -135,12 +138,19 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
+		notifPreferences, err := store.UserAccountNotificationPreferencesNewModelPlan(tx)
+		if err != nil {
+			return nil, err
+		}
+
+		newModelPlanEmailPrefs, newModelPlanInAppPrefs = models.FilterNotificationPreferences(notifPreferences)
+
 		_, err = notifications.ActivityNewModelPlanCreate(
 			ctx,
 			tx,
 			principal.Account().ID,
 			plan.ID,
-			loaders.UserNotificationPreferencesGetByUserID,
+			newModelPlanInAppPrefs,
 		)
 		if err != nil {
 			return nil, err
@@ -161,6 +171,8 @@ func ModelPlanCreate(
 				addressBook,
 				addressBook.MINTTeamEmail,
 				newPlan,
+				false,
+				uuid.Nil,
 			)
 			if sendEmailErr != nil {
 				logger.Error("failed to send model plan created email to dev team", zap.String(
@@ -169,6 +181,27 @@ func ModelPlanCreate(
 				), zap.Error(sendEmailErr))
 			}
 		}()
+
+		for _, emailPref := range newModelPlanEmailPrefs {
+			go func(emailPref *models.UserAccountNotificationPreferences) {
+				sendEmailErr := sendModelPlanCreatedEmail(
+					ctx,
+					emailService,
+					emailTemplateService,
+					addressBook,
+					emailPref.Email,
+					newPlan,
+					true,
+					emailPref.UserID,
+				)
+				if sendEmailErr != nil {
+					logger.Error("failed to send model plan created email to user", zap.String(
+						"createdPlanID",
+						newPlan.ID.String(),
+					), zap.Error(sendEmailErr))
+				}
+			}(emailPref)
+		}
 	}
 
 	return newPlan, err
@@ -181,6 +214,8 @@ func sendModelPlanCreatedEmail(
 	addressBook email.AddressBook,
 	receiverEmail string,
 	modelPlan *models.ModelPlan,
+	showFooter bool,
+	userID uuid.UUID,
 ) error {
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanCreatedTemplateName)
 	if err != nil {
@@ -199,6 +234,8 @@ func sendModelPlanCreatedEmail(
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
 		UserName:      modelPlan.CreatedByUserAccount(ctx).CommonName,
+		ShowFooter:    showFooter,
+		UserID:        userID.String(),
 	})
 	if err != nil {
 		return err
