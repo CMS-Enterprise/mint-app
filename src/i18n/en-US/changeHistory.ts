@@ -69,6 +69,8 @@ const changeHistory = {
     heading: 'There are no results that match you search.',
     body: 'Please double-check you search and try again.'
   },
+  solution: 'solution',
+  subtask: 'Subtask',
   auditUpdateType: {
     INSERT: 'added',
     DELETE: 'removed',

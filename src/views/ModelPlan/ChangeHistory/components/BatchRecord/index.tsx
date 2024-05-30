@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Card } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { DatabaseOperation, GetChangeHistoryQuery } from 'gql/gen/graphql';
+import {
+  AuditFieldChangeType,
+  DatabaseOperation,
+  GetChangeHistoryQuery,
+  TranslatedAuditField,
+  TranslationDataType,
+  TranslationQuestionType
+} from 'gql/gen/graphql';
 
 import { AvatarCircle } from 'components/shared/Avatar';
 import CollapsableLink from 'components/shared/CollapsableLink';
@@ -14,7 +21,10 @@ import {
   documentName,
   documentType,
   documentUpdateType,
-  getSolutionName
+  getOperationalMetadata,
+  getSolutionName,
+  getSolutionOperationStatus,
+  isOperationalSolutionWithMetaData
 } from '../../util';
 import { RenderChangeValue } from '../ChangeRecord';
 
@@ -53,6 +63,11 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
     }
   }
 
+  const databaseAction =
+    change.tableName === 'operational_solution'
+      ? getSolutionOperationStatus(change)
+      : change.action;
+
   return (
     <div
       className={classNames('margin-bottom-2 margin-top-neg-05')}
@@ -68,7 +83,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                 isLink: documentType(change),
                 action: t(`documentChangeType.${documentUpdateType(change)}`),
                 documentName: documentName(change) || 'Temp document',
-                toFrom: t(`toFrom.${change.action}`),
+                toFrom: t(`toFrom.${databaseAction}`),
                 date: formatDateUtc(change.date, 'MMMM d, yyyy'),
                 time: formatTime(change.date)
               }}
@@ -85,8 +100,8 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
           <Trans
             i18nKey="changeHistory:documentSolutionLinkUpdate"
             values={{
-              action: t(`documentLinkType.${change.action}`),
-              toFrom: t(`toFrom.${change.action}`),
+              action: t(`documentLinkType.${databaseAction}`),
+              toFrom: t(`toFrom.${databaseAction}`),
               solutionName: getSolutionName(change),
               date: formatDateUtc(change.date, 'MMMM d, yyyy'),
               time: formatTime(change.date)
@@ -98,25 +113,77 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         )}
 
         {/* Operational solution header */}
-        {change.tableName === 'operational_solution' && (
-          <>
-            Recruit participants{' '}
-            <span className="text-normal">
-              solution {t(`auditUpdateType.${change.action}`)}
-            </span>{' '}
-            : Contractor
-          </>
-        )}
+        {change.tableName === 'operational_solution' &&
+          (() => {
+            const solutionName = getOperationalMetadata(
+              'solution',
+              change?.metaData,
+              'solutionName'
+            );
+
+            const needName = getOperationalMetadata(
+              'solution',
+              change?.metaData,
+              'needName'
+            );
+
+            fieldsToMap =
+              change.metaData &&
+              isOperationalSolutionWithMetaData(change.metaData)
+                ? [
+                    {
+                      __typename: 'TranslatedAuditField',
+                      changeType: AuditFieldChangeType.REMOVED,
+                      dataType: TranslationDataType.NUMBER,
+                      fieldName: 'numberOfSubtasks',
+                      fieldNameTranslated: 'Subtasks',
+                      id: '1',
+                      new: null,
+                      newTranslated: null,
+                      notApplicableQuestions: null,
+                      old: change.metaData.numberOfSubtasks,
+                      oldTranslated: change.metaData.numberOfSubtasks,
+                      questionType: null,
+                      referenceLabel: null
+                    }
+                  ]
+                : fieldsToMap;
+
+            return (
+              <>
+                {needName}{' '}
+                <span className="text-normal">
+                  {t('solution')} {t(`auditUpdateType.${databaseAction}`)}
+                </span>{' '}
+                : {solutionName}
+              </>
+            );
+          })()}
 
         {/* Subtask header */}
-        {change.tableName === 'operational_solution_subtask' && (
-          <>
-            <span className="text-normal">
-              Subtask {t(`auditUpdateType.${change.action}`)} for
-            </span>{' '}
-            Recruit participants: Contractor
-          </>
-        )}
+        {change.tableName === 'operational_solution_subtask' &&
+          (() => {
+            const solutionName = getOperationalMetadata(
+              'subtask',
+              change?.metaData,
+              'solutionName'
+            );
+
+            const needName = getOperationalMetadata(
+              'subtask',
+              change?.metaData,
+              'needName'
+            );
+
+            return (
+              <>
+                <span className="text-normal">
+                  {t('subtask')} {t(`auditUpdateType.${databaseAction}`)} for
+                </span>{' '}
+                {needName}: {solutionName}
+              </>
+            );
+          })()}
       </div>
 
       <div className="change-record__answer margin-y-1">
@@ -139,7 +206,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
         {(() => {
           return (
             <>
-              {change.action !== DatabaseOperation.DELETE &&
+              {databaseAction !== DatabaseOperation.DELETE &&
                 !!fieldsToMap.find(field => field.old) && (
                   <div className="text-bold padding-y-105">
                     {t('previousDetails')}
@@ -217,29 +284,23 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
 
       {!isOpen && (
         <ul className="margin-top-1 margin-bottom-1 margin-left-4">
-          {changeRecords.map((change, index) => (
+          {changeRecords.map(change => (
             <li key={change.id}>
               {/* Document audits */}
-              {changeRecords[index].tableName === 'plan_document' &&
+              {change.tableName === 'plan_document' &&
                 (() => {
                   return (
                     <Trans
                       i18nKey="changeHistory:documentUpdate"
                       values={{
-                        isLink: documentType(changeRecords[index]),
+                        isLink: documentType(change),
                         action: t(
-                          `documentChangeType.${documentUpdateType(
-                            changeRecords[index]
-                          )}`
+                          `documentChangeType.${documentUpdateType(change)}`
                         ),
-                        documentName:
-                          documentName(changeRecords[index]) || 'Temp document',
-                        toFrom: t(`toFrom.${changeRecords[index].action}`),
-                        date: formatDateUtc(
-                          changeRecords[index].date,
-                          'MMMM d, yyyy'
-                        ),
-                        time: formatTime(changeRecords[index].date)
+                        documentName: documentName(change) || 'Temp document',
+                        toFrom: t(`toFrom.${change.action}`),
+                        date: formatDateUtc(change.date, 'MMMM d, yyyy'),
+                        time: formatTime(change.date)
                       }}
                       components={{
                         datetime: <span />,
@@ -248,23 +309,16 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                     />
                   );
                 })()}
-
               {/* Document solution link audits */}
-              {changeRecords[index].tableName ===
-                'plan_document_solution_link' && (
+              {change.tableName === 'plan_document_solution_link' && (
                 <Trans
                   i18nKey="changeHistory:documentSolutionLinkUpdate"
                   values={{
-                    action: t(
-                      `documentLinkType.${changeRecords[index].action}`
-                    ),
-                    toFrom: t(`toFrom.${changeRecords[index].action}`),
-                    solutionName: getSolutionName(changeRecords[index]),
-                    date: formatDateUtc(
-                      changeRecords[index].date,
-                      'MMMM d, yyyy'
-                    ),
-                    time: formatTime(changeRecords[index].date)
+                    action: t(`documentLinkType.${change.action}`),
+                    toFrom: t(`toFrom.${change.action}`),
+                    solutionName: getSolutionName(change),
+                    date: formatDateUtc(change.date, 'MMMM d, yyyy'),
+                    time: formatTime(change.date)
                   }}
                   components={{
                     normal: <></>
@@ -272,35 +326,68 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                 />
               )}
 
-              {changeRecords[index].tableName === 'operational_solution' && (
-                <Trans
-                  i18nKey="changeHistory:solutionUpdate"
-                  values={{
-                    action: t(`auditUpdateType.${change.action}`),
-                    needName: 'Recruit participants', // TODO: change to dynamic value
-                    solutionName: 'Contractor' // TODO: change to dynamic value
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              )}
+              {change.tableName === 'operational_solution' &&
+                (() => {
+                  const solutionName = getOperationalMetadata(
+                    'solution',
+                    change?.metaData,
+                    'solutionName'
+                  );
 
-              {changeRecords[index].tableName ===
-                'operational_solution_subtask' && (
-                <Trans
-                  i18nKey="changeHistory:subtaskUpdate"
-                  values={{
-                    action: t(`auditUpdateType.${change.action}`),
-                    forFrom: t(`forFrom.${change.action}`),
-                    needName: 'Recruit participants', // TODO: change to dynamic value
-                    solutionName: 'Contractor' // TODO: change to dynamic value
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              )}
+                  const needName = getOperationalMetadata(
+                    'solution',
+                    change?.metaData,
+                    'needName'
+                  );
+
+                  return (
+                    <Trans
+                      i18nKey="changeHistory:solutionUpdate"
+                      values={{
+                        action: t(
+                          `auditUpdateType.${getSolutionOperationStatus(
+                            change
+                          )}`
+                        ),
+                        needName,
+                        solutionName
+                      }}
+                      components={{
+                        datetime: <span />
+                      }}
+                    />
+                  );
+                })()}
+
+              {change.tableName === 'operational_solution_subtask' &&
+                (() => {
+                  const solutionName = getOperationalMetadata(
+                    'subtask',
+                    change?.metaData,
+                    'solutionName'
+                  );
+
+                  const needName = getOperationalMetadata(
+                    'subtask',
+                    change?.metaData,
+                    'needName'
+                  );
+
+                  return (
+                    <Trans
+                      i18nKey="changeHistory:subtaskUpdate"
+                      values={{
+                        action: t(`auditUpdateType.${change.action}`),
+                        forFrom: t(`forFrom.${change.action}`),
+                        needName,
+                        solutionName
+                      }}
+                      components={{
+                        datetime: <span />
+                      }}
+                    />
+                  );
+                })()}
             </li>
           ))}
         </ul>

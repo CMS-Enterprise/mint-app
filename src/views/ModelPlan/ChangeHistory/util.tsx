@@ -1,7 +1,10 @@
 import {
+  DatabaseOperation,
   GetChangeHistoryQuery,
   TranslatedAuditMetaData,
   TranslatedAuditMetaDiscussionReply,
+  TranslatedAuditMetaOperationalSolution,
+  TranslatedAuditMetaOperationalSolutionSubtask,
   TranslationDataType
 } from 'gql/gen/graphql';
 import i18next from 'i18next';
@@ -78,6 +81,22 @@ export const isDiscussionReplyWithMetaData = (
   return data.__typename === 'TranslatedAuditMetaDiscussionReply';
 };
 
+// Type guard to check union type
+export const isOperationalSolutionWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaOperationalSolution => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaOperationalSolution';
+};
+
+// Type guard to check union type
+export const isSubtaskWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaOperationalSolutionSubtask => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaOperationalSolutionSubtask';
+};
+
 type HiddenFieldTypes = {
   table: TranslationTables;
   fields: string[];
@@ -91,7 +110,7 @@ const hiddenFields: HiddenFieldTypes[] = [
   },
   {
     table: 'operational_solution',
-    fields: ['operational_need_id', 'solution_type', 'is_other', 'needed']
+    fields: ['operational_need_id', 'solution_type', 'is_other']
   },
   {
     table: 'plan_document',
@@ -118,9 +137,9 @@ const hiddenFields: HiddenFieldTypes[] = [
 export const batchedTables: string[] = [
   'plan_document',
   'operational_solution',
-  // 'operational_need',
   'operational_solution_subtask',
-  'plan_document_solution_link'
+  'plan_document_solution_link',
+  'existing_model_link'
 ];
 
 export const connectedFields: HiddenFieldTypes[] = [
@@ -129,6 +148,33 @@ export const connectedFields: HiddenFieldTypes[] = [
     fields: ['document_id']
   }
 ];
+
+export const getOperationalMetadata = (
+  type: 'solution' | 'subtask',
+  metaData: TranslatedAuditMetaData | undefined | null,
+  fieldName: 'solutionName' | 'needName'
+) => {
+  if (type === 'solution') {
+    return metaData && isOperationalSolutionWithMetaData(metaData)
+      ? metaData[fieldName]
+      : '';
+  }
+
+  if (type === 'subtask') {
+    return metaData && isSubtaskWithMetaData(metaData)
+      ? metaData[fieldName]
+      : '';
+  }
+  return '';
+};
+
+export const getSolutionOperationStatus = (
+  change: ChangeRecordType
+): DatabaseOperation =>
+  change.translatedFields.find(field => field.fieldName === 'needed')?.new ===
+  'false'
+    ? DatabaseOperation.DELETE
+    : change.action;
 
 export const documentChange = (docType: string | undefined) =>
   docType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
@@ -170,6 +216,8 @@ export const parseArray = (value: string | string[]) => {
   if (!value) return '';
 
   if (Array.isArray(value)) return value;
+
+  if (Number.isInteger(value)) return value;
 
   const formattedString = value.replace(/{/g, '[').replace(/}/g, ']');
 
