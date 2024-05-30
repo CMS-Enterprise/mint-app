@@ -154,10 +154,12 @@ export const connectedFields: HiddenFieldTypes[] = [
 export const getOperationalMetadata = (
   type: 'solution' | 'subtask',
   metaData: TranslatedAuditMetaData | undefined | null,
-  fieldName: 'solutionName' | 'needName'
+  fieldName: 'solutionName' | 'needName' | 'subtaskName'
 ) => {
   if (type === 'solution') {
-    return metaData && isOperationalSolutionWithMetaData(metaData)
+    return metaData &&
+      isOperationalSolutionWithMetaData(metaData) &&
+      fieldName !== 'subtaskName'
       ? metaData[fieldName]
       : '';
   }

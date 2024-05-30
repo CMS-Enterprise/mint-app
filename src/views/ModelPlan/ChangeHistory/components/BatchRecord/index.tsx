@@ -74,25 +74,35 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
     >
       <div className="text-bold margin-right-05">
         {/* Documents header */}
-        {change.tableName === 'plan_document' && (
-          <div className="text-normal">
-            <Trans
-              i18nKey="changeHistory:documentUpdate"
-              values={{
-                isLink: documentType(change),
-                action: t(`documentChangeType.${documentUpdateType(change)}`),
-                documentName: documentName(change) || 'Temp document',
-                toFrom: t(`toFrom.${databaseAction}`),
-                date: formatDateUtc(change.date, 'MMMM d, yyyy'),
-                time: formatTime(change.date)
-              }}
-              components={{
-                datetime: <span />,
-                bold: <span className="text-bold" />
-              }}
-            />
-          </div>
-        )}
+        {change.tableName === 'plan_document' &&
+          (() => {
+            // Remove the 'file_name' field from the fields to map - already in header, doesnt need to be in changes
+            fieldsToMap = fieldsToMap.filter(
+              field => field.fieldName !== 'file_name'
+            );
+
+            return (
+              <div className="text-normal">
+                <Trans
+                  i18nKey="changeHistory:documentUpdate"
+                  values={{
+                    isLink: documentType(change),
+                    action: t(
+                      `documentChangeType.${documentUpdateType(change)}`
+                    ),
+                    documentName: documentName(change) || 'Temp document',
+                    toFrom: t(`toFrom.${databaseAction}`),
+                    date: formatDateUtc(change.date, 'MMMM d, yyyy'),
+                    time: formatTime(change.date)
+                  }}
+                  components={{
+                    datetime: <span />,
+                    bold: <span className="text-bold" />
+                  }}
+                />
+              </div>
+            );
+          })()}
 
         {/* Document solution link header */}
         {change.tableName === 'plan_document_solution_link' && (
@@ -174,10 +184,10 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               'solutionName'
             );
 
-            const needName = getOperationalMetadata(
+            const subtaskName = getOperationalMetadata(
               'subtask',
               change?.metaData,
-              'needName'
+              'subtaskName'
             );
 
             return (
@@ -185,7 +195,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                 <span className="text-normal">
                   {t('subtask')} {t(`auditUpdateType.${databaseAction}`)} for
                 </span>{' '}
-                {needName}: {solutionName}
+                {solutionName}: {subtaskName}
               </>
             );
           })()}
