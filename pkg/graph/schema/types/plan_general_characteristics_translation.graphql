@@ -20,7 +20,6 @@ type PlanGeneralCharacteristicsTranslation {
   participationInModelPrecondition: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "participation_in_model_precondition")
   participationInModelPreconditionWhyHow: TranslationFieldWithParent! @goTag(key: "db", value: "participation_in_model_precondition_why_how")
   participationInModelPreconditionOtherSpecify: TranslationField! @goTag(key: "db", value: "participation_in_model_precondition_other_specify")
-
   participationInModelPreconditionOtherOption: TranslationField! @goTag(key: "db", value: "participation_in_model_precondition_other_option")
   participationInModelPreconditionNote: TranslationField! @goTag(key: "db", value: "participation_in_model_precondition_note")
   participationInModelPreconditionWhich: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "participation_in_model_precondition_which")
