@@ -24,7 +24,6 @@ import DailyDigest from './DailyDigest';
 type NotificationActivityType = Activity;
 
 export type IndividualNotificationProps = {
-  index?: number;
   id: string;
   isRead: boolean;
   createdDts: string;
@@ -32,7 +31,6 @@ export type IndividualNotificationProps = {
 };
 
 const IndividualNotification = ({
-  index = 0,
   id,
   isRead,
   createdDts,
