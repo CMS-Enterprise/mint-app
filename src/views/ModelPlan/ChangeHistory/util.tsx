@@ -142,6 +142,8 @@ export const batchedTables: string[] = [
   'existing_model_link'
 ];
 
+export const nonBatchedTables: string[] = ['model_plan', 'plan_collaborator'];
+
 export const connectedFields: HiddenFieldTypes[] = [
   {
     table: 'plan_document_solution_link',
@@ -549,6 +551,7 @@ export const groupBatchedChanges = (changes: ChangeRecordType[]) => {
       // If the last group is empty or the date of the change is more than 1 second from the last change, create a new group
       if (
         !lastGroup ||
+        nonBatchedTables.includes(change.tableName) ||
         Math.abs(
           date.getTime() -
             new Date(lastGroup[lastGroup.length - 1].date).getTime()

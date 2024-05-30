@@ -129,6 +129,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 
             fieldsToMap =
               change.metaData &&
+              databaseAction === DatabaseOperation.DELETE &&
               isOperationalSolutionWithMetaData(change.metaData)
                 ? [
                     {

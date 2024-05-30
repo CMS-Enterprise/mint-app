@@ -102,9 +102,7 @@ const ChangeHistory = () => {
   const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
 
   // Contains sort state of select options
-  const [sort, setSort] = useState<SortProps['value']>(
-    sortParam || sortOptions[0].value
-  );
+  const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
 
   // Pagination Configuration
   const itemsPerPage = 10;
@@ -160,13 +158,18 @@ const ChangeHistory = () => {
     if (!loading) {
       setAuditChanges([...sortedChanges]);
       setSortedAudits([...sortedChanges]);
+      setSort(sortParam || sortOptions[0].value);
 
-      // Set the query based on the query parameter
-      setQuery(queryParam || '');
+      setTimeout(() => {
+        // Set the query based on the query parameter
+        setQuery(queryParam || '');
 
-      // Set the page offset based on the page parameter
-      const newOffset = pageParam ? (Number(pageParam) - 1) * itemsPerPage : 0;
-      setPageOffset(newOffset);
+        // Set the page offset based on the page parameter
+        const newOffset = pageParam
+          ? (Number(pageParam) - 1) * itemsPerPage
+          : 0;
+        setPageOffset(newOffset);
+      }, 0);
     }
   }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 

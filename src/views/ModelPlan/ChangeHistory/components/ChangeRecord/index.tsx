@@ -412,7 +412,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               const replyCount =
                 changeRecord?.metaData &&
                 isDiscussionReplyWithMetaData(changeRecord?.metaData)
-                  ? changeRecord?.metaData.numberOfReplies
+                  ? changeRecord?.metaData.numberOfReplies - 1
                   : 0;
 
               return (
@@ -462,7 +462,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                       styleLeftBar={false}
                     >
                       <div className="margin-bottom-neg-1 padding-left-3 change-record__answer margin-top-neg-2">
-                        {replyCount && (
+                        {replyCount > 0 && (
                           <div className="padding-bottom-1 text-italic">
                             {t('replyCount', {
                               count: replyCount
