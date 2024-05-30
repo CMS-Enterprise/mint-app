@@ -2951,6 +2951,7 @@ export type UserNotificationPreferencesChanges = {
   dailyDigestComplete?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   newDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  newModelPlan?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   taggedInDiscussion?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   taggedInDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
 };

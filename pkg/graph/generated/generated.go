@@ -11660,7 +11660,7 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
 
   modelPlanShared: [UserNotificationPreferenceFlag!]
 
-
+  newModelPlan: [UserNotificationPreferenceFlag!]
 }
 
 extend type Mutation {
