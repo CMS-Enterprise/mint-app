@@ -2939,6 +2939,7 @@ export type UserNotificationPreferences = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   newDiscussionReply: Array<UserNotificationPreferenceFlag>;
+  newModelPlan: Array<UserNotificationPreferenceFlag>;
   taggedInDiscussion: Array<UserNotificationPreferenceFlag>;
   taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>;
   userID: Scalars['UUID']['output'];

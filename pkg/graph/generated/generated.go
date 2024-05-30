@@ -1194,6 +1194,7 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount   func(childComplexity int) int
 		ModifiedDts             func(childComplexity int) int
 		NewDiscussionReply      func(childComplexity int) int
+		NewModelPlan            func(childComplexity int) int
 		TaggedInDiscussion      func(childComplexity int) int
 		TaggedInDiscussionReply func(childComplexity int) int
 		UserID                  func(childComplexity int) int
@@ -1520,6 +1521,7 @@ type UserNotificationPreferencesResolver interface {
 	TaggedInDiscussionReply(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	NewDiscussionReply(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	ModelPlanShared(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+	NewModelPlan(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 }
 
 type executableSchema struct {
@@ -8418,6 +8420,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserNotificationPreferences.NewDiscussionReply(childComplexity), true
 
+	case "UserNotificationPreferences.newModelPlan":
+		if e.complexity.UserNotificationPreferences.NewModelPlan == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.NewModelPlan(childComplexity), true
+
 	case "UserNotificationPreferences.taggedInDiscussion":
 		if e.complexity.UserNotificationPreferences.TaggedInDiscussion == nil {
 			break
@@ -11620,6 +11629,8 @@ type UserNotificationPreferences {
   newDiscussionReply: [UserNotificationPreferenceFlag!]!
 
   modelPlanShared: [UserNotificationPreferenceFlag!]!
+
+  newModelPlan: [UserNotificationPreferenceFlag!]!
 
 
   createdBy: UUID!
@@ -15876,6 +15887,8 @@ func (ec *executionContext) fieldContext_CurrentUser_notificationPreferences(ctx
 				return ec.fieldContext_UserNotificationPreferences_newDiscussionReply(ctx, field)
 			case "modelPlanShared":
 				return ec.fieldContext_UserNotificationPreferences_modelPlanShared(ctx, field)
+			case "newModelPlan":
+				return ec.fieldContext_UserNotificationPreferences_newModelPlan(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -26356,6 +26369,8 @@ func (ec *executionContext) fieldContext_Mutation_updateUserNotificationPreferen
 				return ec.fieldContext_UserNotificationPreferences_newDiscussionReply(ctx, field)
 			case "modelPlanShared":
 				return ec.fieldContext_UserNotificationPreferences_modelPlanShared(ctx, field)
+			case "newModelPlan":
+				return ec.fieldContext_UserNotificationPreferences_newModelPlan(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -61336,6 +61351,50 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_modelPlanSh
 	return fc, nil
 }
 
+func (ec *executionContext) _UserNotificationPreferences_newModelPlan(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_newModelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.UserNotificationPreferences().NewModelPlan(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.UserNotificationPreferenceFlag)
+	fc.Result = res
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_newModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UserNotificationPreferenceFlag does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _UserNotificationPreferences_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 	if err != nil {
@@ -75870,6 +75929,42 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 					}
 				}()
 				res = ec._UserNotificationPreferences_modelPlanShared(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "newModelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_newModelPlan(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}

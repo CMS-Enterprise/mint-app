@@ -27,6 +27,7 @@ import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
 import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 import { groupOptions } from 'views/ModelPlan/ReadOnly/_components/FilterView/util';
+import ReadOnlyOperationalNeeds from 'views/ModelPlan/ReadOnly/OperationalNeeds';
 import { StatusMessageType } from 'views/ModelPlan/TaskList';
 import { PrintPDFContext } from 'views/PrintPDFWrapper';
 
@@ -104,7 +105,7 @@ const ShareExportModal = ({
   const [shareModelPlan, { loading }] = useMutation(CreateShareModelPlan);
 
   // Return an object containing the contents of all readonly task list sections
-  const AllReadonlyComponents = ReadOnlyComponents(modelID, false);
+  const AllReadonlyComponents = ReadOnlyComponents(modelID);
 
   // Readonly section that do not need to be rendered in PDF
   const excludedComponents: string[] = [
@@ -143,6 +144,9 @@ const ShareExportModal = ({
                   {AllReadonlyComponents[component].component}
                 </div>
               ))}
+            <div className="margin-top-6">
+              <ReadOnlyOperationalNeeds modelID={modelID} />
+            </div>
           </>
         )}
       </GridContainer>

@@ -25,6 +25,9 @@ var userAccountInsertByUsername string
 //go:embed SQL/user_account/update_by_username.sql
 var userAccountUpdateByUsername string
 
+//go:embed SQL/user_account/get_notification_preferences_new_model_plan.sql
+var userAccountGetByNotificationPreferences string
+
 // UserAccountGetByUsername gets a user account by a give username
 func UserAccountGetByUsername(np sqlutils.NamedPreparer, username string) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}

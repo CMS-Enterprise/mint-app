@@ -10,9 +10,9 @@ import (
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
-// ActivityNewModelPlanMetaCreate creates an activity for when a new model plan is created.
+// ActivityNewModelPlanCreate creates an activity for when a new model plan is created.
 // It also creates all the relevant notifications
-func ActivityNewModelPlanMetaCreate(
+func ActivityNewModelPlanCreate(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	actorID uuid.UUID,
