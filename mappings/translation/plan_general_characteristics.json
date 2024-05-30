@@ -31,7 +31,8 @@
     "label": "What existing model is this a track of?",
     "dataType": "NUMBER",
     "formType": "TEXT",
-    "tableReference": "existing_model"
+    "tableReference": "existing_model",
+    "hideFromReadonly": true
   },
   "currentModelPlanID": {
     "gqlField": "currentModelPlanID",
@@ -40,7 +41,8 @@
     "label": "What model is this a track of?",
     "dataType": "UUID",
     "formType": "TEXT",
-    "tableReference": "model_plan"
+    "tableReference": "model_plan",
+    "hideFromReadonly": true
   },
   "existingModel": {
     "gqlField": "existingModel",
@@ -186,19 +188,6 @@
     "formType": "TEXT",
     "isOtherType": true,
     "otherParentField": "resembles_existing_model"
-  },
-  "resemblesExistingModelOtherSelected": {
-    "gqlField": "resemblesExistingModelOtherSelected",
-    "goField": "ResemblesExistingModelOtherSelected",
-    "dbField": "resembles_existing_model_other_selected",
-    "label": "unused",
-    "dataType": "BOOLEAN",
-    "formType": "RADIO",
-    "isOtherType": true,
-    "options": {
-      "true": "",
-      "false": ""
-    }
   },
   "resemblesExistingModelOtherOption": {
     "gqlField": "resemblesExistingModelOtherOption",

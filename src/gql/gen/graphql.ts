@@ -2058,7 +2058,6 @@ export type PlanGeneralCharacteristicsTranslation = {
   resemblesExistingModelHow: TranslationFieldWithParent;
   resemblesExistingModelNote: TranslationField;
   resemblesExistingModelOtherOption: TranslationField;
-  resemblesExistingModelOtherSelected: TranslationFieldWithOptions;
   resemblesExistingModelOtherSpecify: TranslationField;
   resemblesExistingModelWhich: TranslationFieldWithOptionsAndParent;
   resemblesExistingModelWhyHow: TranslationField;

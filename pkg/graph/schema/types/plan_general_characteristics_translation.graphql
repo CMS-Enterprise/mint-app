@@ -13,7 +13,6 @@ type PlanGeneralCharacteristicsTranslation {
   resemblesExistingModel: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "resembles_existing_model")
   resemblesExistingModelWhyHow: TranslationField! @goTag(key: "db", value: "resembles_existing_model_why_how")
   resemblesExistingModelOtherSpecify: TranslationField! @goTag(key: "db", value: "resembles_existing_model_other_specify")
-  resemblesExistingModelOtherSelected: TranslationFieldWithOptions! @goTag(key: "db", value: "resembles_existing_model_other_selected")
   resemblesExistingModelOtherOption: TranslationField! @goTag(key: "db", value: "resembles_existing_model_other_option")
   resemblesExistingModelHow: TranslationFieldWithParent! @goTag(key: "db", value: "resembles_existing_model_how")
   resemblesExistingModelNote: TranslationField! @goTag(key: "db", value: "resembles_existing_model_note")

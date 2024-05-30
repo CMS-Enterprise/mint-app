@@ -267,7 +267,6 @@ type PlanGeneralCharacteristicsTranslation struct {
 	ResemblesExistingModel                        models.TranslationFieldWithOptionsAndChildren `json:"resemblesExistingModel" db:"resembles_existing_model"`
 	ResemblesExistingModelWhyHow                  models.TranslationField                       `json:"resemblesExistingModelWhyHow" db:"resembles_existing_model_why_how"`
 	ResemblesExistingModelOtherSpecify            models.TranslationField                       `json:"resemblesExistingModelOtherSpecify" db:"resembles_existing_model_other_specify"`
-	ResemblesExistingModelOtherSelected           models.TranslationFieldWithOptions            `json:"resemblesExistingModelOtherSelected" db:"resembles_existing_model_other_selected"`
 	ResemblesExistingModelOtherOption             models.TranslationField                       `json:"resemblesExistingModelOtherOption" db:"resembles_existing_model_other_option"`
 	ResemblesExistingModelHow                     models.TranslationFieldWithParent             `json:"resemblesExistingModelHow" db:"resembles_existing_model_how"`
 	ResemblesExistingModelNote                    models.TranslationField                       `json:"resemblesExistingModelNote" db:"resembles_existing_model_note"`

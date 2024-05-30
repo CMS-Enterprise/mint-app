@@ -43,5 +43,8 @@ func TestPlanGeneralCharacteristicsTranslationCoverage(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, tMap)
 
-	assertTranslationStructCoverage(t, tMap, models.PlanGeneralCharacteristics{}, taskListStructExcludeFields)
+	excludedFields := append(taskListStructExcludeFields, "ResemblesExistingModelOtherSelected")
+	// ResemblesExistingModelOtherSelected is not translated on the frontend at all, it isn't needed as a translation
+
+	assertTranslationStructCoverage(t, tMap, models.PlanGeneralCharacteristics{}, excludedFields)
 }

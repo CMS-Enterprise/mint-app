@@ -129,20 +129,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isOtherType: true,
     otherParentField: 'resemblesExistingModel'
   },
-  // Not rendered in any form/ui
-  resemblesExistingModelOtherSelected: {
-    gqlField: 'resemblesExistingModelOtherSelected',
-    goField: 'ResemblesExistingModelOtherSelected',
-    dbField: 'resembles_existing_model_other_selected',
-    label: 'unused', // Changes: (Translations) Revisit this. This label is not used on the FE, or BE, but an empty string is not allowed on the type
-    dataType: TranslationDataType.BOOLEAN,
-    formType: TranslationFormType.RADIO,
-    isOtherType: true,
-    options: {
-      true: '',
-      false: ''
-    }
-  },
   resemblesExistingModelOtherOption: {
     gqlField: 'resemblesExistingModelOtherOption',
     goField: 'ResemblesExistingModelOtherOption',

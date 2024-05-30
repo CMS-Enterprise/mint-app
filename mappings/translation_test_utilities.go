@@ -209,6 +209,7 @@ func assertTFieldOptions(t *testing.T, field reflect.StructField, translation mo
 	assert.True(t, hasOptions)
 
 	assert.NotZero(t, options, "field %s. Doesn't have options", field.Name)
+	//Changes: (Testing) assert that no option is an empty string. That should not be allowed, as the translated field is a zero string. If you only translate one option and it is nil, it will fail
 
 	count := len(options)
 	assert.GreaterOrEqual(t, count, 1, "field %s. Doesn't have options. There are %i options.", field.Name, count)
