@@ -285,19 +285,6 @@
       "Other": "Other"
     }
   },
-  "participationInModelPreconditionOtherSelected": {
-    "gqlField": "participationInModelPreconditionOtherSelected",
-    "goField": "ParticipationInModelPreconditionOtherSelected",
-    "dbField": "participation_in_model_precondition_other_selected",
-    "label": "unused",
-    "dataType": "BOOLEAN",
-    "formType": "RADIO",
-    "isOtherType": true,
-    "options": {
-      "true": "",
-      "false": ""
-    }
-  },
   "participationInModelPreconditionOtherOption": {
     "gqlField": "participationInModelPreconditionOtherOption",
     "goField": "ParticipationInModelPreconditionOtherOption",
