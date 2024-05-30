@@ -21,6 +21,7 @@ type TranslatedAuditMetaData interface {
 
 // TranslatedAuditMetaBaseStruct represents the shared data in common between all HumanizedAuditChanges
 type TranslatedAuditMetaBaseStruct struct {
+	// Changes: (Meta) do we actually need table name here? What about version? Are these doing anything?
 	TableName string `json:"tableName"`
 	Version   int    `json:"id"`
 }
@@ -104,6 +105,30 @@ func parseRawTranslatedAuditMetaData(metaDataType *TranslatedAuditMetaDataType, 
 	case TAMetaDiscussionReply:
 		{
 			meta := TranslatedAuditMetaDiscussionReply{}
+			if err := json.Unmarshal(rawData, &meta); err != nil {
+				return nil, err
+			}
+			return &meta, nil
+		}
+	case TAMetaOperationalNeed:
+		{
+			meta := TranslatedAuditMetaOperationalNeed{}
+			if err := json.Unmarshal(rawData, &meta); err != nil {
+				return nil, err
+			}
+			return &meta, nil
+		}
+	case TAMetaOperationalSolution:
+		{
+			meta := TranslatedAuditMetaOperationalSolution{}
+			if err := json.Unmarshal(rawData, &meta); err != nil {
+				return nil, err
+			}
+			return &meta, nil
+		}
+	case TAMetaOperationalSolutionSubtask:
+		{
+			meta := TranslatedAuditMetaOperationalSolutionSubtask{}
 			if err := json.Unmarshal(rawData, &meta); err != nil {
 				return nil, err
 			}

@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
-// TranslatedAuditMetaDiscussionReply represents the shared data in common between all HumanizedAuditChanges
+// TranslatedAuditMetaDiscussionReply represents the content needed to make a discussion reply meta data readable.
 type TranslatedAuditMetaDiscussionReply struct {
 	TranslatedAuditMetaBaseStruct
 	discussionRelation

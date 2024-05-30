@@ -7,7 +7,7 @@ import _ "embed"
 //go:embed SQL/translated_audit/create.sql
 var translatedAuditCreateSQL string
 
-// translatedAuditCollectionGetByModelPlanID returns all translated changed for a given model plan id
+// translatedAuditCollectionGetByModelPlanID returns all translated changed for a given model plan id. It returns in order from newest to oldest.
 //
 //go:embed SQL/translated_audit/collection_get_by_model_plan_ids.sql
 var translatedAuditCollectionGetByModelPlanID string
@@ -17,7 +17,7 @@ type translatedAuditScripts struct {
 	// Holds the SQL query to create a translatedAuditChange
 	Create string
 
-	// Holds the SQL query to return all translatedAuditChanges for a given ModelPlanID
+	// Holds the SQL query to return all translatedAuditChanges for a given ModelPlanID. It returns in order from newest to oldest.
 	CollectionGetByModelPlanID string
 }
 

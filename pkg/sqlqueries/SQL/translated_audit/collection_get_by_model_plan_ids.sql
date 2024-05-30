@@ -17,4 +17,5 @@ SELECT
     modified_by,
     modified_dts
 FROM translated_audit
-WHERE model_plan_id = :model_plan_id;
+WHERE model_plan_id = :model_plan_id
+ORDER BY change_id DESC;
