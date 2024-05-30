@@ -6,9 +6,7 @@ import {
   AuditFieldChangeType,
   DatabaseOperation,
   GetChangeHistoryQuery,
-  TranslatedAuditField,
-  TranslationDataType,
-  TranslationQuestionType
+  TranslationDataType
 } from 'gql/gen/graphql';
 
 import { AvatarCircle } from 'components/shared/Avatar';
@@ -63,6 +61,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
     }
   }
 
+  // Get the action change, if it's a solution operation - check 'needed' value to get the correct action
   const databaseAction =
     change.tableName === 'operational_solution'
       ? getSolutionOperationStatus(change)
@@ -187,6 +186,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
           })()}
       </div>
 
+      {/* Render the fields that were changed */}
       <div className="change-record__answer margin-y-1">
         {(() => {
           return fieldsToMap.map(field => (
@@ -204,6 +204,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
           ));
         })()}
 
+        {/* Render previous details/values */}
         {(() => {
           return (
             <>
@@ -253,6 +254,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
     return change.tableName === 'plan_document_solution_link';
   });
 
+  // Use the first table name in the batch as the table name, unless it's a batch of solution document links
   const tableName: string = isSolutionDocumentLinkBatch
     ? 'plan_document_solution_link'
     : changeRecords[0].tableName;
@@ -327,6 +329,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                 />
               )}
 
+              {/* Operational solution audits */}
               {change.tableName === 'operational_solution' &&
                 (() => {
                   const solutionName = getOperationalMetadata(
@@ -360,6 +363,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                   );
                 })()}
 
+              {/* Operational solution subtask audits */}
               {change.tableName === 'operational_solution_subtask' &&
                 (() => {
                   const solutionName = getOperationalMetadata(

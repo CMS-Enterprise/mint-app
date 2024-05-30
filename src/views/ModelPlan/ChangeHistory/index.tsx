@@ -159,6 +159,8 @@ const ChangeHistory = () => {
     if (!loading) {
       setAuditChanges([...sortedChanges]);
       setSortedAudits([...sortedChanges]);
+
+      // Set the sort based on the sort query parameter or default value
       setSort(sortParam || sortOptions[0].value);
 
       setTimeout(() => {

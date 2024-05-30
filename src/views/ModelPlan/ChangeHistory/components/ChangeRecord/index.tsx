@@ -112,6 +112,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
   );
 };
 
+// Render the action type of a change record - answered, removed, updated, etc.
 export const ActionText = ({
   change,
   changeType,
