@@ -2042,7 +2042,6 @@ export type PlanGeneralCharacteristicsTranslation = {
   participationInModelPrecondition: TranslationFieldWithOptionsAndChildren;
   participationInModelPreconditionNote: TranslationField;
   participationInModelPreconditionOtherOption: TranslationField;
-  participationInModelPreconditionOtherSelected: TranslationFieldWithOptions;
   participationInModelPreconditionOtherSpecify: TranslationField;
   participationInModelPreconditionWhich: TranslationFieldWithOptionsAndParent;
   participationInModelPreconditionWhyHow: TranslationFieldWithParent;

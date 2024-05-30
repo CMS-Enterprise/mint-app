@@ -202,20 +202,6 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       Other: 'participationInModelPreconditionOtherOption'
     }
   },
-  // Not rendered in any form/ui
-  participationInModelPreconditionOtherSelected: {
-    gqlField: 'participationInModelPreconditionOtherSelected',
-    goField: 'ParticipationInModelPreconditionOtherSelected',
-    dbField: 'participation_in_model_precondition_other_selected',
-    label: 'unused', // Changes: (Translations) Revisit this. This label is not used on the FE, or BE, but an empty string is not allowed on the type
-    dataType: TranslationDataType.BOOLEAN,
-    formType: TranslationFormType.RADIO,
-    isOtherType: true,
-    options: {
-      true: '',
-      false: ''
-    }
-  },
   participationInModelPreconditionOtherOption: {
     gqlField: 'participationInModelPreconditionOtherOption',
     goField: 'ParticipationInModelPreconditionOtherOption',
