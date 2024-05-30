@@ -126,6 +126,11 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               'needName'
             );
 
+            // Remove the 'needed' field from the fields to map
+            fieldsToMap = fieldsToMap.filter(
+              field => field.fieldName !== 'needed'
+            );
+
             fieldsToMap =
               change.metaData &&
               databaseAction === DatabaseOperation.DELETE &&
