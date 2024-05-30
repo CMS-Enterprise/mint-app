@@ -118,6 +118,14 @@ export const activityText = (data: MetaDataType) => {
       />
     );
   }
+  if (isNewModelPlan(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.newDiscussionReply.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
+    );
+  }
   return '';
 };
 
@@ -178,6 +186,14 @@ export const ActivityCTA = ({
       <>
         <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.cta.show" />
         <Icon.ExpandMore className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+  if (isNewModelPlan(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.newModelPlan.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
   }

@@ -35,6 +35,10 @@ const notifications = {
       taggedInDiscussionReply: {
         text: ' tagged you in a discussion reply for {{-modelName}}.',
         cta: 'View discussion'
+      },
+      newModelPlan: {
+        text: ' created a Model Plan: {{-modelName}}.',
+        cta: 'View Model Plan'
       }
     },
     dailyDigest: {
