@@ -22,19 +22,20 @@ const changeHistory = {
   discussion_replyAnswered:
     'replied to a Discussion <datetime>on {{date}} at {{time}}</datetime>',
   documentUpdate:
-    '{{action}} {{documentName}}{{isLink}} {{toFrom}} Documents <datetime>on {{date}} at {{time}}</datetime>',
+    '<bold>{{documentName}}</bold> {{isLink}} {{action}} {{toFrom}} Documents',
   crTdlUpdate:
     '{{action}} {{crTdlName}} {{toFrom}} FFS CRs and TDLs <datetime>on {{date}} at {{time}}</datetime>',
-  subtaskUpdate:
-    '{{action}} {{subtaskName}} to {{solutionName}} <datetime>on {{date}} at {{time}}</datetime>',
   documentSolutionLinkUpdate:
-    '{{documentName}} {{action}} {{toFrom}} {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+    'Document {{action}} <normal>{{toFrom}}</normal> {{solutionName}}',
   solutionCreate:
-    'addded solution {{solutionName}} to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
-  solutionUpdate:
-    '{{action}} {{needName}} solution: {{solutionName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+    'addded {{-count}} solutions to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+  solutionUpdate: '{{needName}} solution {{action}}: {{solutionName}}',
+  subtaskUpdate:
+    'Subtask {{action}} {{forFrom}} {{needName}}: {{solutionName}}',
   needUpdate:
     '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
+  replyCount: '{{count}} earlier reply not shown',
+  replyCount_other: '{{count}} earlier replies not shown',
   sections: {
     model_plan: 'Model plan',
     plan_basics: 'Model basics',
@@ -53,28 +54,27 @@ const changeHistory = {
     operational_solution:
       'Operational solutions and implementation status tracker',
     operational_solution_subtask:
+      'Operational solutions and implementation status tracker',
+    plan_document_solution_link:
       'Operational solutions and implementation status tracker'
   },
   showDetails: 'Show details',
   hideDetails: 'Hide details',
-  resultsInfo: 'Showing {{-resultsNum}} of {{-count}} result {{-query}}',
+  resultsInfo: 'Showing {{resultsNum}} of {{count}} result {{query}}',
   resultsInfo_other:
-    'Showing {{-resultsNum}} - {{-count}} of {{-total}} results {{-query}}',
-  resultsNoInfo: 'Showing {{-resultsNum}} result {{-query}}',
-  resultsNoInfo_other: 'Showing {{-resultsNum}} results {{-query}}',
+    'Showing {{resultsNum}} - {{count}} of {{total}} results {{query}}',
+  resultsNoInfo: 'Showing {{resultsNum}} result {{query}}',
+  resultsNoInfo_other: 'Showing {{resultsNum}} results {{query}}',
   noResults: {
     heading: 'There are no results that match you search.',
     body: 'Please double-check you search and try again.'
   },
-  auditUpdateTye: {
+  solution: 'solution',
+  subtask: 'Subtask',
+  auditUpdateType: {
     INSERT: 'added',
     DELETE: 'removed',
     UPDATE: 'updated'
-  },
-  toFromIn: {
-    INSERT: 'to',
-    DELETE: 'from',
-    UPDATE: 'in'
   },
   documentChangeType: {
     uploaded: 'uploaded',
@@ -96,6 +96,21 @@ const changeHistory = {
     REMOVED: 'removed',
     UPDATED: 'updated'
   },
+  toFromIn: {
+    INSERT: 'to',
+    DELETE: 'from',
+    UPDATE: 'in'
+  },
+  toFrom: {
+    INSERT: 'to',
+    DELETE: 'from',
+    UPDATE: 'to'
+  },
+  forFrom: {
+    DELETE: 'from',
+    UPDATE: 'for',
+    INSERT: 'for'
+  },
   sort: {
     label: 'Sort',
     newest: 'Newest changes',
@@ -103,6 +118,7 @@ const changeHistory = {
   },
   previousAnswer: 'Previous answer',
   previousNote: 'Previous note',
+  previousDetails: 'Previous details',
   notApplicable:
     'Because of this change, the following question(s) are no longer applicable:',
   recentChanges: 'Recent changes',

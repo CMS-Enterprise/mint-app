@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
-import { useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Grid,
   GridContainer,
@@ -29,8 +29,10 @@ import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
+import BatchRecord from './components/BatchRecord';
 import ChangeRecord from './components/ChangeRecord';
 import {
+  batchedTables,
   filterQueryAudits,
   handleSortOptions,
   sortAllChanges,
@@ -65,13 +67,21 @@ const sortOptions: SortProps[] = [
 const ChangeHistory = () => {
   const { t } = useTranslation('changeHistory');
 
+  const { modelID } = useParams<{
+    modelID: string;
+  }>();
+
   const { state } = useLocation<LocationProps>();
 
   const fromReadView = state?.from === 'readview';
 
-  const { modelID } = useParams<{
-    modelID: string;
-  }>();
+  const history = useHistory();
+
+  // Query parameters
+  const params = new URLSearchParams(history.location.search);
+  const pageParam = params.get('page');
+  const queryParam = params.get('query');
+  const sortParam = params.get('sort') as SortProps['value'];
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -85,22 +95,21 @@ const ChangeHistory = () => {
 
   const sortedChanges = sortAllChanges(changes);
 
-  // Contains sort state of select options
-  const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
-
   // Contains the sorted changes based on select/sort option
   const [sortedAudits, setSortedAudits] = useState([...sortedChanges]);
 
   // Contains the current set of changes to display, including search and sort
   const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
 
+  // Contains sort state of select options
+  const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
+
   // Pagination Configuration
   const itemsPerPage = 10;
-
-  const [pageOffset, setPageOffset] = useState(0);
-
+  const [pageOffset, setPageOffset] = useState(
+    Number.isNaN(Number(pageParam)) ? 0 : Number(pageParam)
+  );
   const endOffset = pageOffset + itemsPerPage;
-
   const [pageCount, setPageCount] = useState(
     auditChanges ? Math.ceil(auditChanges.length / itemsPerPage) : 1
   );
@@ -114,28 +123,54 @@ const ChangeHistory = () => {
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
 
-  // searchAudits is a function to filter audits based on query
-  const searchAudits = useCallback(filterQueryAudits, []);
+  // searchChanges is a function to filter audits based on query
+  const searchChanges = useCallback(filterQueryAudits, []);
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
     if (query.trim()) {
-      const filteredAudits = searchAudits(query, sortedAudits);
+      const filteredAudits = searchChanges(query, sortedAudits);
+
       setAuditChanges(filteredAudits);
       setResultsNum(filteredAudits.length);
     } else {
       // Sets the default audits if no query present
       setAuditChanges(sortedAudits);
     }
+
+    if (!loading) {
+      // Update the URL's query parameters
+      if (query) {
+        params.set('query', query);
+      } else {
+        // Delete the 'query' parameter
+        params.delete('query');
+      }
+      params.delete('page');
+      history.push({ search: params.toString() });
+    }
+
     // Return the page to the first page when the query changes
     setPageOffset(0);
-  }, [query, searchAudits, setPageOffset]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [query, searchChanges, setPageOffset]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update the audit changes when the data is loaded.
   useEffect(() => {
     if (!loading) {
       setAuditChanges([...sortedChanges]);
       setSortedAudits([...sortedChanges]);
+
+      // Set the sort based on the sort query parameter or default value
+      setSort(sortParam || sortOptions[0].value);
+
+      setTimeout(() => {
+        // Set the query based on the query parameter
+        setQuery(queryParam || '');
+      }, 0);
+
+      // Set the page offset based on the page parameter
+      const newOffset = pageParam ? (Number(pageParam) - 1) * itemsPerPage : 0;
+      setPageOffset(newOffset);
     }
   }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -151,6 +186,8 @@ const ChangeHistory = () => {
   const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % auditChanges?.length;
     setPageOffset(newOffset);
+    params.set('page', (newOffset / itemsPerPage + 1).toString());
+    history.push({ search: params.toString() });
   };
 
   // Sort the changes when the sort option changes.
@@ -220,6 +257,7 @@ const ChangeHistory = () => {
                     tableID="table-id"
                     tableName="table-name"
                     className="width-full maxw-mobile-lg margin-bottom-3 padding-top-1"
+                    initialFilter={queryParam || ''}
                   />
 
                   {/* Results text */}
@@ -268,6 +306,8 @@ const ChangeHistory = () => {
                       value={sort}
                       onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                         setSort(e.target.value as SortProps['value']);
+                        params.set('sort', e.target.value);
+                        history.push({ search: params.toString() });
                       }}
                     >
                       {sortOptions.map(option => {
@@ -285,7 +325,6 @@ const ChangeHistory = () => {
                 </Grid>
               </Grid>
             </div>
-
             {/* No results from query */}
             {auditChanges.length === 0 && query && (
               <Alert
@@ -296,7 +335,6 @@ const ChangeHistory = () => {
                 {t('noResults.body')}
               </Alert>
             )}
-
             {/* No audits alert */}
             {auditChanges.length === 0 && !query && (
               <Alert type="info" slim className="margin-bottom-2">
@@ -311,23 +349,32 @@ const ChangeHistory = () => {
                   <h3 className="margin-y-4">
                     {formatDateUtc(day, 'MMMM d, yyyy')}
                   </h3>
-                  {changesByDay[day].map(changeRecord => (
-                    <ChangeRecord
-                      changeRecord={changeRecord}
-                      key={changeRecord.id}
-                    />
-                  ))}
+                  {changesByDay[day].map(changeRecords => {
+                    if (batchedTables.includes(changeRecords[0].tableName)) {
+                      return (
+                        <BatchRecord
+                          changeRecords={changeRecords}
+                          key={changeRecords[0].id}
+                        />
+                      );
+                    }
+                    return (
+                      <ChangeRecord
+                        changeRecord={changeRecords[0]}
+                        key={changeRecords[0].id}
+                      />
+                    );
+                  })}
                 </div>
               );
             })}
-
             {/* Pagination */}
             {pageCount > 1 && (
               <ReactPaginate
                 breakLabel="..."
                 breakClassName="usa-pagination__item usa-pagination__overflow"
                 nextLabel="Next >"
-                containerClassName="mint-pagination usa-pagination usa-pagination__list"
+                containerClassName="mint-pagination usa-pagination usa-pagination__list margin-top-2"
                 previousLinkClassName={
                   pageOffset === 0
                     ? 'display-none'

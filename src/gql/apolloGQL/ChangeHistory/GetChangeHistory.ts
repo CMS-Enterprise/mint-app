@@ -33,13 +33,39 @@ export default gql(/* GraphQL */ `
           relation
           relationContent
         }
-
         ... on TranslatedAuditMetaDiscussionReply {
           version
           tableName
           discussionID
           discussionContent
           numberOfReplies
+        }
+        ... on TranslatedAuditMetaOperationalNeed {
+          version
+          tableName
+          needName
+          isOther
+        }
+        ... on TranslatedAuditMetaOperationalSolution {
+          version
+          tableName
+          needName
+          needIsOther
+          solutionName
+          solutionOtherHeader
+          solutionIsOther
+          numberOfSubtasks
+        }
+        ... on TranslatedAuditMetaOperationalSolutionSubtask {
+          version
+          tableName
+          needName
+          needIsOther
+          solutionName
+          numberOfSubtasks
+          solutionOtherHeader
+          solutionIsOther
+          subtaskName
         }
       }
     }

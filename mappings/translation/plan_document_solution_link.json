@@ -3,7 +3,7 @@
     "gqlField": "solutionID",
     "goField": "SolutionID",
     "dbField": "solution_id",
-    "label": "Solution ID",
+    "label": "Solution",
     "dataType": "STRING",
     "formType": "TEXT",
     "tableReference": "operational_solution"
@@ -12,7 +12,7 @@
     "gqlField": "documentID",
     "goField": "documentID",
     "dbField": "document_id",
-    "label": "Document ID",
+    "label": "Document",
     "dataType": "STRING",
     "formType": "TEXT",
     "tableReference": "plan_document"
