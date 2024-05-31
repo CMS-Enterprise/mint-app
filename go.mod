@@ -1,6 +1,6 @@
 module github.com/cmsgov/mint-app
 
-go 1.22.3
+go 1.22
 
 require (
 	github.com/99designs/gqlgen v0.17.38
