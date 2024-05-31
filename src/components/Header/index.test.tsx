@@ -6,7 +6,7 @@ import { render, waitFor } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import { GetPollNotificationsDocument } from 'gql/gen/graphql';
 
-import { Header } from './index';
+import Header from './index';
 
 const notificationsMock = [
   {
@@ -84,16 +84,5 @@ describe('The Header component', () => {
         done();
       });
     });
-  });
-
-  test.skip('displays children', () => {
-    const component = shallow(
-      <MockedProvider mocks={notificationsMock} addTypename={false}>
-        <Header>
-          <div className="test-class-name" />
-        </Header>
-      </MockedProvider>
-    );
-    expect(component.find('.test-class-name').exists()).toBe(true);
   });
 });
