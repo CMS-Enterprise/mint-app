@@ -42,7 +42,6 @@ func ModelPlanCreate(
 ) (*models.ModelPlan, error) {
 
 	var newModelPlanEmailPrefs []*models.UserAccountNotificationPreferences
-	var newModelPlanInAppPrefs []*models.UserAccountNotificationPreferences
 
 	newPlan, err := sqlutils.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 		plan := models.NewModelPlan(principal.Account().ID, modelName)
@@ -143,14 +142,14 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		newModelPlanEmailPrefs, newModelPlanInAppPrefs = models.FilterNotificationPreferences(notifPreferences)
+		newModelPlanEmailPrefs, _ = models.FilterNotificationPreferences(notifPreferences)
 
 		_, err = notifications.ActivityNewModelPlanCreate(
 			ctx,
 			tx,
 			principal.Account().ID,
 			plan.ID,
-			newModelPlanInAppPrefs,
+			notifPreferences,
 		)
 		if err != nil {
 			return nil, err

@@ -10,5 +10,7 @@ SELECT
     modified_by,
     modified_dts
 FROM public.user_notification
-WHERE user_id = :user_id
+WHERE
+    user_id = :user_id
+    AND in_app_sent = TRUE -- Don't show notifications that are not sent in app (i.e. email-only)
 ORDER BY created_dts DESC;
