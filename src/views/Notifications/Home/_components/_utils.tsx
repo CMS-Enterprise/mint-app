@@ -121,7 +121,7 @@ export const activityText = (data: MetaDataType) => {
   if (isNewModelPlan(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.newDiscussionReply.text"
+        i18nKey="notifications:index.activityType.newModelPlan.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
