@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "12156539-0c12-430a-a4c6-2ff44cb8ca68",
+		"_postman_id": "2768f499-6418-47c7-afbd-bc6df44baa68",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20435042"
@@ -2164,7 +2164,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2174,7 +2175,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query currentUser {\n  currentUser {\n    notificationPreferences {\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n      }\n    }\n  }\n\n",
+								"query": "query currentUser {\n  currentUser {\n    notificationPreferences {\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n        newModelPlan\n      }\n    }\n  }\n\n",
 								"variables": ""
 							}
 						},
@@ -2302,7 +2303,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2312,7 +2314,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: [EMAIL,IN_APP]\n    \n    addedAsCollaborator: [EMAIL,IN_APP]\n\n    taggedInDiscussion:[IN_APP]\n\n    taggedInDiscussionReply:[EMAIL,IN_APP]\n\n    newDiscussionReply: [EMAIL,IN_APP]\n\n    modelPlanShared: [EMAIL,IN_APP]\n\n    \n\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n      \n    }\n}\n",
+								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: [EMAIL,IN_APP]\n    \n    addedAsCollaborator: [EMAIL,IN_APP]\n\n    taggedInDiscussion:[IN_APP]\n\n    taggedInDiscussionReply:[EMAIL,IN_APP]\n\n    newDiscussionReply: [EMAIL,IN_APP]\n\n    modelPlanShared: [EMAIL,IN_APP]\n\n    newModelPlan: [EMAIL, IN_APP]\n\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n        newModelPlan\n    }\n}\n",
 								"variables": ""
 							}
 						},
