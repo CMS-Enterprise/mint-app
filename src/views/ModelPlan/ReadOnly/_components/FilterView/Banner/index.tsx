@@ -27,7 +27,7 @@ const FilterViewBanner = ({
 
   return (
     <div
-      className="position-sticky z-100 top-0 bg-primary-darker text-white padding-105"
+      className="position-sticky z-100 bg-primary-darker text-white padding-105 group-filter-banner"
       data-testid="group-filter-banner"
     >
       <GridContainer>

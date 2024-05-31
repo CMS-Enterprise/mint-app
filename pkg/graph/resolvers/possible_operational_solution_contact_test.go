@@ -61,7 +61,7 @@ func (suite *ResolverSuite) TestPossibleOperationalSolutionPrimaryContactGetByPo
 	suite.NoError(err)
 	suite.NotNil(contact)
 	suite.Equal(1, contact.PossibleOperationalSolutionID)
-	suite.Equal("Nora Fleming", contact.Name)
+	suite.Equal("4i/ACO-OS Team", contact.Name)
 
 	return nil
 }
