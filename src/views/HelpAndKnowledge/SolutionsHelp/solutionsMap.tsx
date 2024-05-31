@@ -113,6 +113,7 @@ export interface HelpSolutionBaseType {
   subCategories?: OperationalSolutionSubCategories[];
   acronym?: string;
   name: string;
+  alertPrimaryContact?: boolean; // Alert primary contact with missing info
   systemOwner?: SystemOwnerType;
   contractors?: SystemOwnerType[];
   components: ModalSolutionComponentType;
@@ -498,6 +499,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
         'Enterprise Architecture and Data Group, Division of Enterprise Information Management Services',
       system: 'Office of Information Technology'
     },
+    alertPrimaryContact: true,
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
