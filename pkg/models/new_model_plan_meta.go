@@ -29,6 +29,7 @@ func NewNewModelPlanMetaActivity(actorID uuid.UUID, modelPlanID uuid.UUID) *Acti
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID),
 		ActorID:      actorID,
+		EntityID:     modelPlanID,
 		ActivityType: ActivityNewModelPlan,
 		MetaData:     newNewModelPlanMeta(modelPlanID),
 	}
