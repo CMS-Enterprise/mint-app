@@ -85,7 +85,7 @@ describe('Notification Center', () => {
   });
 
   it('navigates to see Daily Digest notification', () => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications');
 
     cy.get('[data-testid="individual-notification"]')
@@ -104,7 +104,7 @@ describe('Notification Center', () => {
   });
 
   it('navigates to see Notification Settings', () => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
 
     // Uncheck first checkbox and save
@@ -168,7 +168,7 @@ describe('Notification Center', () => {
   });
 
   it('testing Adding Collaborator Notification', () => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
+    cy.localLogin({ name: 'MINT' });
     cy.visit('/');
     cy.clickPlanTableByName('Empty Plan');
 
@@ -212,5 +212,42 @@ describe('Notification Center', () => {
     cy.contains('button', 'Start collaborating').click();
 
     cy.url().should('include', '/task-list');
+  });
+
+  it('testing Adding Collaborator Notification', () => {
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/notifications/settings');
+
+    // Check the new model plan in-app checkbox
+    cy.get('[data-testid="notification-setting-in-app-newModelPlan"]')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.contains('button', 'Save').click();
+
+    // Navigate back to home to start a new model plan
+    cy.get('[aria-label="Home"]').click();
+    cy.url().should('include', '/');
+
+    cy.contains('a', 'Start a new Model Plan').click();
+    cy.contains('h1', 'Start a new model plan');
+    cy.get('[data-testid="continue-link"]').click();
+
+    cy.get('#new-plan-model-name')
+      .type('Cypress Model Plan')
+      .should('have.value', 'Cypress Model Plan');
+
+    cy.contains('button', 'Next').click();
+
+    // Navigate back to Notification Center
+    cy.get('[data-testid="navmenu__notification"]').first().click();
+
+    // New Model Plan Notification is
+    cy.get('[data-testid="individual-notification"]').contains(
+      'MINT Doe created a Model Plan: Cypress Model Plan.'
+    );
   });
 });
