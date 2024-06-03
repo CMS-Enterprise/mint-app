@@ -119,6 +119,7 @@ const NotificationSettings = () => {
   useEffect(() => {
     if (newModelPlan && params.get('unsubscribe_email')) {
       if (!newModelPlan.includes(UserNotificationPreferenceFlag.EMAIL)) {
+        params.delete('unsubscribe_email');
         showMessage(
           <>
             <Alert
@@ -140,6 +141,7 @@ const NotificationSettings = () => {
         } else {
           changes = { newModelPlan: [] };
         }
+        params.delete('unsubscribe_email');
         update({ variables: { changes } })
           .then(response => {
             if (!response?.errors) {
