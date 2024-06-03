@@ -122,7 +122,7 @@ const NotificationSettings = () => {
           <Alert
             type="error"
             slim
-            data-testid="success-alert"
+            data-testid="error-alert"
             className="margin-y-4"
           >
             {notificationsT(

@@ -214,12 +214,19 @@ describe('Notification Center', () => {
     cy.url().should('include', '/task-list');
   });
 
-  it('testing Adding Collaborator Notification', () => {
+  it.only('testing New Model Plan Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
 
     // Check the new model plan in-app checkbox
     cy.get('[data-testid="notification-setting-in-app-newModelPlan"]')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.get('[data-testid="notification-setting-email-newModelPlan"]')
       .should('not.be.disabled')
       .should('be.not.checked')
       .check({
@@ -245,9 +252,25 @@ describe('Notification Center', () => {
     // Navigate back to Notification Center
     cy.get('[data-testid="navmenu__notification"]').first().click();
 
-    // New Model Plan Notification is
     cy.get('[data-testid="individual-notification"]').contains(
       'MINT Doe created a Model Plan: Cypress Model Plan.'
+    );
+
+    // Unsubscribe via email link
+    cy.visit('/notifications/settings?unsubscribe_email=NEW_MODEL_PLAN');
+
+    cy.get('[data-testid="notification-setting-email-newModelPlan"]').should(
+      'be.not.checked'
+    );
+
+    cy.get('[data-testid="success-alert"]').contains(
+      'You have successfully unsubscribed from email notifications when a new Model Plan is created.'
+    );
+
+    cy.visit('/notifications/settings?unsubscribe_email=NEW_MODEL_PLAN');
+
+    cy.get('[data-testid="error-alert"]').contains(
+      'You are already unsubscribed from email notifications when a new Model Plan is created.'
     );
   });
 });
