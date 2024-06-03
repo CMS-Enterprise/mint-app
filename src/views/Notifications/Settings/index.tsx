@@ -116,10 +116,10 @@ const NotificationSettings = () => {
       });
   };
 
+  // Unsubscribe from email
   useEffect(() => {
     if (newModelPlan && params.get('unsubscribe_email')) {
       if (!newModelPlan.includes(UserNotificationPreferenceFlag.EMAIL)) {
-        params.delete('unsubscribe_email');
         showMessage(
           <>
             <Alert
@@ -134,6 +134,10 @@ const NotificationSettings = () => {
             </Alert>
           </>
         );
+        params.delete('unsubscribe_email');
+        history.replace({
+          search: params.toString()
+        });
       } else {
         let changes;
         if (newModelPlan.includes(UserNotificationPreferenceFlag.IN_APP)) {
@@ -142,6 +146,9 @@ const NotificationSettings = () => {
           changes = { newModelPlan: [] };
         }
         params.delete('unsubscribe_email');
+        history.replace({
+          search: params.toString()
+        });
         update({ variables: { changes } })
           .then(response => {
             if (!response?.errors) {

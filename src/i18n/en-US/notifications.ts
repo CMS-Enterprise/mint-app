@@ -118,11 +118,11 @@ const notifications = {
       'An error occurred while saving your notification settings. Please try again.',
     unsubscribedMessage: {
       success:
-        'You have successfully unsubscribed from email notifications when a new Model Plan is created.',
+        'You have successfully unsubscribed from email notifications {{-notificationType}}.',
       error:
         'There was an error unsubscribing. Please try again. If the error persists, try again at a later date.',
       alreadyUnsubscribed:
-        'You are already unsubscribed from email notifications when a new Model Plan is created.'
+        'You are already unsubscribed from email notifications {{-notificationType}}.'
     }
   }
 };
