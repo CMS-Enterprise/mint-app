@@ -97,16 +97,14 @@ const NotificationSettings = () => {
       .then(response => {
         if (!response?.errors) {
           showMessageOnNextPage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="success-alert"
-                className="margin-y-4"
-              >
-                {notificationsT('settings.successMessage')}
-              </Alert>
-            </>
+            <Alert
+              type="success"
+              slim
+              data-testid="success-alert"
+              className="margin-y-4"
+            >
+              {notificationsT('settings.successMessage')}
+            </Alert>
           );
           history.push('/notifications');
         }
