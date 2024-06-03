@@ -102,7 +102,7 @@ const notifications = {
       modelPlanShared: 'When someone shares a Model Plan with me'
     },
     additionalConfigurations: {
-      modelCreation: 'When a new Model Plan is created',
+      newModelPlan: 'When a new Model Plan is created',
       dateChanges: 'When model dates change',
       whichModel: 'Which models?',
       whichModelTypes: {
@@ -120,7 +120,9 @@ const notifications = {
       success:
         'You have successfully unsubscribed from email notifications when a new Model Plan is created.',
       error:
-        'There was an error unsubscribing. Please try again. If the error persists, try again at a later date.'
+        'There was an error unsubscribing. Please try again. If the error persists, try again at a later date.',
+      alreadyUnsubscribed:
+        'You are already unsubscribed from email notifications when a new Model Plan is created.'
     }
   }
 };
