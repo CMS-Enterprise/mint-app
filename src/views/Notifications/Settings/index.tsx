@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -23,6 +23,7 @@ import {
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formDiff';
@@ -48,9 +49,15 @@ const NotificationSettings = () => {
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
 
-  const { showMessageOnNextPage } = useMessage();
+  const { showMessage, showMessageOnNextPage } = useMessage();
 
   const history = useHistory();
+  const { message } = useMessage();
+  const location = useLocation();
+  // const params = new URLSearchParams(location.search);
+  const params = useMemo(() => new URLSearchParams(location.search), [
+    location.search
+  ]);
 
   const [mutationError, setMutationError] = useState<string>('');
 
@@ -97,7 +104,7 @@ const NotificationSettings = () => {
                 data-testid="success-collaborator-alert"
                 className="margin-y-4"
               >
-                {notificationsT('settings.success')}
+                {notificationsT('settings.successMessage')}
               </Alert>
             </>
           );
@@ -105,9 +112,36 @@ const NotificationSettings = () => {
         }
       })
       .catch(() => {
-        setMutationError(notificationsT('settings.error'));
+        setMutationError(notificationsT('settings.errorMessage'));
       });
   };
+
+  useEffect(() => {
+    if (params.get('unsubscribe_email')) {
+      update({ variables: { changes: { newModelPlan: [] } } })
+        .then(response => {
+          if (!response?.errors) {
+            showMessage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="success-collaborator-alert"
+                  className="margin-y-4"
+                >
+                  {notificationsT('settings.unsubscribedMessage.success')}
+                </Alert>
+              </>
+            );
+          }
+        })
+        .catch(() => {
+          setMutationError(
+            notificationsT('settings.unsubscribedMessage.error')
+          );
+        });
+    }
+  }, [notificationsT, params, showMessage, update]);
 
   const initialValues: NotificationSettingsFormType = {
     dailyDigestComplete: dailyDigestComplete ?? [],
@@ -142,6 +176,7 @@ const NotificationSettings = () => {
             </Breadcrumb>
           </BreadcrumbBar>
 
+          {message && <Expire delay={45000}>{message}</Expire>}
           {mutationError && (
             <Alert type="error" slim className="margin-y-4" headingLevel="h4">
               {mutationError}
