@@ -118,7 +118,6 @@ const NotificationSettings = () => {
 
   useEffect(() => {
     if (newModelPlan && params.get('unsubscribe_email')) {
-      // console.log(params.get('unsubscribe_email'));
       if (!newModelPlan.includes(UserNotificationPreferenceFlag.EMAIL)) {
         showMessage(
           <>
@@ -134,36 +133,36 @@ const NotificationSettings = () => {
             </Alert>
           </>
         );
-        return;
-      }
-      let changes;
-      if (newModelPlan.includes(UserNotificationPreferenceFlag.IN_APP)) {
-        changes = { newModelPlan: [UserNotificationPreferenceFlag.IN_APP] };
       } else {
-        changes = { newModelPlan: [] };
-      }
-      update({ variables: { changes } })
-        .then(response => {
-          if (!response?.errors) {
-            showMessage(
-              <>
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="success-alert"
-                  className="margin-y-4"
-                >
-                  {notificationsT('settings.unsubscribedMessage.success')}
-                </Alert>
-              </>
+        let changes;
+        if (newModelPlan.includes(UserNotificationPreferenceFlag.IN_APP)) {
+          changes = { newModelPlan: [UserNotificationPreferenceFlag.IN_APP] };
+        } else {
+          changes = { newModelPlan: [] };
+        }
+        update({ variables: { changes } })
+          .then(response => {
+            if (!response?.errors) {
+              showMessage(
+                <>
+                  <Alert
+                    type="success"
+                    slim
+                    data-testid="success-alert"
+                    className="margin-y-4"
+                  >
+                    {notificationsT('settings.unsubscribedMessage.success')}
+                  </Alert>
+                </>
+              );
+            }
+          })
+          .catch(() => {
+            setMutationError(
+              notificationsT('settings.unsubscribedMessage.error')
             );
-          }
-        })
-        .catch(() => {
-          setMutationError(
-            notificationsT('settings.unsubscribedMessage.error')
-          );
-        });
+          });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newModelPlan]);
