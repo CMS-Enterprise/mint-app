@@ -121,23 +121,24 @@ const NotificationSettings = () => {
     if (newModelPlan && params.get('unsubscribe_email')) {
       if (!newModelPlan.includes(UserNotificationPreferenceFlag.EMAIL)) {
         showMessage(
-          <>
-            <Alert
-              type="error"
-              slim
-              data-testid="success-alert"
-              className="margin-y-4"
-            >
-              {notificationsT(
-                'settings.unsubscribedMessage.alreadyUnsubscribed'
-              )}
-            </Alert>
-          </>
+          <Alert
+            type="error"
+            slim
+            data-testid="success-alert"
+            className="margin-y-4"
+          >
+            {notificationsT(
+              'settings.unsubscribedMessage.alreadyUnsubscribed',
+              {
+                notificationType: notificationsT(
+                  `settings.unsubscribedMessage.activityType.${params.get(
+                    'unsubscribe_email'
+                  )}`
+                )
+              }
+            )}
+          </Alert>
         );
-        params.delete('unsubscribe_email');
-        history.replace({
-          search: params.toString()
-        });
       } else {
         let changes;
         if (newModelPlan.includes(UserNotificationPreferenceFlag.IN_APP)) {
@@ -145,10 +146,7 @@ const NotificationSettings = () => {
         } else {
           changes = { newModelPlan: [] };
         }
-        params.delete('unsubscribe_email');
-        history.replace({
-          search: params.toString()
-        });
+
         update({ variables: { changes } })
           .then(response => {
             if (!response?.errors) {
@@ -160,7 +158,13 @@ const NotificationSettings = () => {
                     data-testid="success-alert"
                     className="margin-y-4"
                   >
-                    {notificationsT('settings.unsubscribedMessage.success')}
+                    {notificationsT('settings.unsubscribedMessage.success', {
+                      notificationType: notificationsT(
+                        `settings.unsubscribedMessage.activityType.${params.get(
+                          'unsubscribe_email'
+                        )}`
+                      )
+                    })}
                   </Alert>
                 </>
               );
@@ -170,6 +174,12 @@ const NotificationSettings = () => {
             setMutationError(
               notificationsT('settings.unsubscribedMessage.error')
             );
+          })
+          .then(() => {
+            params.delete('unsubscribe_email');
+            history.replace({
+              search: params.toString()
+            });
           });
       }
     }
@@ -330,7 +340,7 @@ const NotificationSettings = () => {
                         <Grid mobile={{ col: 6 }}>
                           <p className="text-wrap margin-y-105">
                             {notificationsT(
-                              'settings.additionalConfigurations.newModelPlan'
+                              'settings.additionalConfigurations.NEW_MODEL_PLAN'
                             )}
                           </p>
                         </Grid>

@@ -9,34 +9,34 @@ const notifications = {
         'You’re all up-to-date on notifications. Check back later for updates.'
     },
     activityType: {
-      addedAsCollaborator: {
+      ADDED_AS_COLLABORATOR: {
         text: ' added you to the team for {{-modelName}}.',
         cta: 'Start collaborating'
       },
-      dailyDigestComplete: {
+      DAILY_DIGEST_COMPLETE: {
         text: ' sent your daily digest.',
         cta: {
           show: 'View digest',
           hide: 'Hide digest'
         }
       },
-      modelPlanShared: {
+      MODEL_PLAN_SHARED: {
         text: ' shared {{-modelName}} with you.',
         cta: 'View Model Plan'
       },
-      newDiscussionReply: {
+      NEW_DISCUSSION_REPLY: {
         text: ' replied to your discussion for {{-modelName}}.',
         cta: 'View discussion'
       },
-      taggedInDiscussion: {
+      TAGGED_IN_DISCUSSION: {
         text: ' tagged you in a discussion for {{-modelName}}.',
         cta: 'View discussion'
       },
-      taggedInDiscussionReply: {
+      TAGGED_IN_DISCUSSION_REPLY: {
         text: ' tagged you in a discussion reply for {{-modelName}}.',
         cta: 'View discussion'
       },
-      newModelPlan: {
+      NEW_MODEL_PLAN: {
         text: ' created a Model Plan: {{-modelName}}.',
         cta: 'View Model Plan'
       }
@@ -102,7 +102,7 @@ const notifications = {
       modelPlanShared: 'When someone shares a Model Plan with me'
     },
     additionalConfigurations: {
-      newModelPlan: 'When a new Model Plan is created',
+      NEW_MODEL_PLAN: 'When a new Model Plan is created',
       dateChanges: 'When model dates change',
       whichModel: 'Which models?',
       whichModelTypes: {
@@ -122,7 +122,10 @@ const notifications = {
       error:
         'There was an error unsubscribing. Please try again. If the error persists, try again at a later date.',
       alreadyUnsubscribed:
-        'You are already unsubscribed from email notifications {{-notificationType}}.'
+        'You are already unsubscribed from email notifications {{-notificationType}}.',
+      activityType: {
+        NEW_MODEL_PLAN: 'when a new Model Plan is created'
+      }
     }
   }
 };
