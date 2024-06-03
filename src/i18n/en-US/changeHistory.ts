@@ -33,7 +33,7 @@ const changeHistory = {
     'addded {{-count}} solutions to {{needName}} in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   solutionUpdate: '{{needName}} solution {{action}}: {{solutionName}}',
   subtaskUpdate:
-    'Subtask {{action}} {{forFrom}} {{needName}}: {{solutionName}}',
+    'Subtask {{action}} {{forFrom}} <bold>{{solutionName}}: {{needName}}</bold>',
   needUpdate:
     '{{action}} a custom operation need in Operational solutions and implementation status tracker <datetime>on {{date}} at {{time}}</datetime>',
   replyCount: '{{count}} earlier reply not shown',

@@ -71,7 +71,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
       className={classNames('margin-bottom-2 margin-top-neg-05')}
       key={change.id}
     >
-      <div className="text-bold margin-right-05">
+      <div className="margin-right-05">
         {/* Documents header */}
         {change.tableName === 'plan_document' &&
           (() => {
@@ -81,43 +81,43 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
             );
 
             return (
-              <div className="text-normal">
-                <Trans
-                  i18nKey="changeHistory:documentBatchUpdate"
-                  values={{
-                    isLink: documentType(change),
-                    action: t(
-                      `documentChangeType.${documentUpdateType(change)}`
-                    ),
-                    documentName: documentName(change) || 'Temp document',
-                    toFrom: t(`toFrom.${databaseAction}`),
-                    date: formatDateUtc(change.date, 'MMMM d, yyyy'),
-                    time: formatTime(change.date)
-                  }}
-                  components={{
-                    datetime: <span />,
-                    bold: <span className="text-bold" />
-                  }}
-                />
-              </div>
+              //   <div className="text-normal">
+              <Trans
+                i18nKey="changeHistory:documentBatchUpdate"
+                values={{
+                  isLink: documentType(change),
+                  action: t(`documentChangeType.${documentUpdateType(change)}`),
+                  documentName: documentName(change) || 'Temp document',
+                  toFrom: t(`toFrom.${databaseAction}`),
+                  date: formatDateUtc(change.date, 'MMMM d, yyyy'),
+                  time: formatTime(change.date)
+                }}
+                components={{
+                  datetime: <span />,
+                  bold: <span className="text-bold" />
+                }}
+              />
+              //   </div>
             );
           })()}
 
         {/* Document solution link header */}
         {change.tableName === 'plan_document_solution_link' && (
-          <Trans
-            i18nKey="changeHistory:documentSolutionLinkUpdate"
-            values={{
-              action: t(`documentLinkType.${databaseAction}`),
-              toFrom: t(`toFrom.${databaseAction}`),
-              solutionName: getSolutionName(change),
-              date: formatDateUtc(change.date, 'MMMM d, yyyy'),
-              time: formatTime(change.date)
-            }}
-            components={{
-              normal: <span className="text-normal" />
-            }}
-          />
+          <div className="text-bold">
+            <Trans
+              i18nKey="changeHistory:documentSolutionLinkUpdate"
+              values={{
+                action: t(`documentLinkType.${databaseAction}`),
+                toFrom: t(`toFrom.${databaseAction}`),
+                solutionName: getSolutionName(change),
+                date: formatDateUtc(change.date, 'MMMM d, yyyy'),
+                time: formatTime(change.date)
+              }}
+              components={{
+                normal: <span className="text-normal" />
+              }}
+            />
+          </div>
         )}
 
         {/* Operational solution header */}
@@ -165,13 +165,13 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                 : fieldsToMap;
 
             return (
-              <>
+              <div className="text-bold">
                 {needName}{' '}
                 <span className="text-normal">
                   {t('solution')} {t(`auditUpdateType.${databaseAction}`)}
                 </span>{' '}
                 : {solutionName}
-              </>
+              </div>
             );
           })()}
 
@@ -184,19 +184,50 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               'solutionName'
             );
 
+            const needName = getOperationalMetadata(
+              'subtask',
+              change?.metaData,
+              'needName'
+            );
+
             const subtaskName = getOperationalMetadata(
               'subtask',
               change?.metaData,
               'subtaskName'
             );
 
+            if (!fieldsToMap.find(field => field.fieldName === 'name')) {
+              fieldsToMap.unshift({
+                __typename: 'TranslatedAuditField',
+                changeType: AuditFieldChangeType.UPDATED,
+                dataType: TranslationDataType.STRING,
+                fieldName: 'name',
+                fieldNameTranslated: 'Subtask',
+                id: '1',
+                new: null,
+                newTranslated: subtaskName,
+                notApplicableQuestions: null,
+                old: null,
+                oldTranslated: null,
+                questionType: null,
+                referenceLabel: null
+              });
+            }
+
             return (
-              <>
-                <span className="text-normal">
-                  {t('subtask')} {t(`auditUpdateType.${databaseAction}`)} for
-                </span>{' '}
-                {solutionName}: {subtaskName}
-              </>
+              <Trans
+                i18nKey="changeHistory:subtaskUpdate"
+                values={{
+                  action: t(`auditUpdateType.${change.action}`),
+                  forFrom: t(`forFrom.${change.action}`),
+                  needName,
+                  solutionName
+                }}
+                components={{
+                  datetime: <span />,
+                  bold: <span className="text-bold" />
+                }}
+              />
             );
           })()}
       </div>
@@ -403,7 +434,8 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                         solutionName
                       }}
                       components={{
-                        datetime: <span />
+                        datetime: <span />,
+                        bold: <span className="text-normal" />
                       }}
                     />
                   );
