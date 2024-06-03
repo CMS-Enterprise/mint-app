@@ -76,6 +76,9 @@ func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, o
 		opSolutionWithSubtasks.NumberOfSubtasks,
 		opNeed.GetName(),
 		opNeed.GetIsOther(),
+		opSolutionWithSubtasks.Status,
+		opSolutionWithSubtasks.MustStartDts,
+		opSolutionWithSubtasks.MustFinishDts,
 	)
 	metaType := models.TAMetaOperationalSolution
 

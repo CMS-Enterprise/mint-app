@@ -4,22 +4,28 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"errors"
+	"time"
 )
 
 // TranslatedAuditMetaOperationalSolution represents the data about an operational need to render an operational need human readable.
 type TranslatedAuditMetaOperationalSolution struct {
 	TranslatedAuditMetaBaseStruct
-	NeedName            string  `json:"needName"`
-	NeedIsOther         bool    `json:"needIsOther"`
-	SolutionName        string  `json:"solutionName"`
-	SolutionOtherHeader *string `json:"solutionOtherHeader"`
-	NumberOfSubtasks    int     `json:"numberOfSubtasks"`
-	SolutionIsOther     bool    `json:"isOther"`
-	// Changes: (Meta) do we need the otherHeader in the meta data as well?
+	NeedName            string     `json:"needName"`
+	NeedIsOther         bool       `json:"needIsOther"`
+	SolutionName        string     `json:"solutionName"`
+	SolutionOtherHeader *string    `json:"solutionOtherHeader"`
+	NumberOfSubtasks    int        `json:"numberOfSubtasks"`
+	SolutionIsOther     bool       `json:"isOther"`
+	SolutionStatus      string     `json:"solutionStatus"`
+	SolutionMustStart   *time.Time `json:"solutionMustStart"`
+	SolutionMustFinish  *time.Time `json:"solutionMustFinish"`
 }
 
 // NewTranslatedAuditMetaOperationalSolution creates a New TranslatedAuditMetaOperationalSolution
-func NewTranslatedAuditMetaOperationalSolution(tableName string, version int, solutionName string, solutionOtherHeader *string, solIsOther bool, numSubtasks int, needName string, needIsOther bool) TranslatedAuditMetaOperationalSolution {
+func NewTranslatedAuditMetaOperationalSolution(tableName string, version int, solutionName string, solutionOtherHeader *string, solIsOther bool, numSubtasks int, needName string, needIsOther bool, solStatus OpSolutionStatus,
+	solMustStart *time.Time,
+	solMustFinish *time.Time,
+) TranslatedAuditMetaOperationalSolution {
 
 	return TranslatedAuditMetaOperationalSolution{
 		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(tableName, version),
@@ -29,6 +35,9 @@ func NewTranslatedAuditMetaOperationalSolution(tableName string, version int, so
 		NumberOfSubtasks:              numSubtasks,
 		NeedName:                      needName,
 		NeedIsOther:                   needIsOther,
+		SolutionStatus:                string(solStatus),
+		SolutionMustStart:             solMustStart,
+		SolutionMustFinish:            solMustFinish,
 	}
 }
 
