@@ -101,7 +101,7 @@ const NotificationSettings = () => {
               <Alert
                 type="success"
                 slim
-                data-testid="success-collaborator-alert"
+                data-testid="success-alert"
                 className="margin-y-4"
               >
                 {notificationsT('settings.successMessage')}
@@ -117,8 +117,32 @@ const NotificationSettings = () => {
   };
 
   useEffect(() => {
-    if (params.get('unsubscribe_email')) {
-      update({ variables: { changes: { newModelPlan: [] } } })
+    if (newModelPlan && params.get('unsubscribe_email')) {
+      // console.log(params.get('unsubscribe_email'));
+      if (!newModelPlan.includes(UserNotificationPreferenceFlag.EMAIL)) {
+        showMessage(
+          <>
+            <Alert
+              type="error"
+              slim
+              data-testid="success-alert"
+              className="margin-y-4"
+            >
+              {notificationsT(
+                'settings.unsubscribedMessage.alreadyUnsubscribed'
+              )}
+            </Alert>
+          </>
+        );
+        return;
+      }
+      let changes;
+      if (newModelPlan.includes(UserNotificationPreferenceFlag.IN_APP)) {
+        changes = { newModelPlan: [UserNotificationPreferenceFlag.IN_APP] };
+      } else {
+        changes = { newModelPlan: [] };
+      }
+      update({ variables: { changes } })
         .then(response => {
           if (!response?.errors) {
             showMessage(
@@ -126,7 +150,7 @@ const NotificationSettings = () => {
                 <Alert
                   type="success"
                   slim
-                  data-testid="success-collaborator-alert"
+                  data-testid="success-alert"
                   className="margin-y-4"
                 >
                   {notificationsT('settings.unsubscribedMessage.success')}
@@ -141,7 +165,8 @@ const NotificationSettings = () => {
           );
         });
     }
-  }, [notificationsT, params, showMessage, update]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newModelPlan]);
 
   const initialValues: NotificationSettingsFormType = {
     dailyDigestComplete: dailyDigestComplete ?? [],
@@ -297,7 +322,7 @@ const NotificationSettings = () => {
                         <Grid mobile={{ col: 6 }}>
                           <p className="text-wrap margin-y-105">
                             {notificationsT(
-                              'settings.additionalConfigurations.modelCreation'
+                              'settings.additionalConfigurations.newModelPlan'
                             )}
                           </p>
                         </Grid>
