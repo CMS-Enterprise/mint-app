@@ -14,6 +14,7 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
+  ActivityType,
   GetNotificationSettingsQuery,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
@@ -54,10 +55,11 @@ const NotificationSettings = () => {
   const history = useHistory();
   const { message } = useMessage();
   const location = useLocation();
-  // const params = new URLSearchParams(location.search);
+
   const params = useMemo(() => new URLSearchParams(location.search), [
     location.search
   ]);
+  const unsubscribeEmailParams = params.get('unsubscribe_email');
 
   const [mutationError, setMutationError] = useState<string>('');
 
@@ -116,40 +118,46 @@ const NotificationSettings = () => {
 
   // Unsubscribe from email
   useEffect(() => {
-    if (newModelPlan && params.get('unsubscribe_email')) {
-      if (!newModelPlan.includes(UserNotificationPreferenceFlag.EMAIL)) {
-        showMessage(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-y-4"
-          >
-            {notificationsT(
-              'settings.unsubscribedMessage.alreadyUnsubscribed',
-              {
-                notificationType: notificationsT(
-                  `settings.unsubscribedMessage.activityType.${params.get(
-                    'unsubscribe_email'
-                  )}`
-                )
-              }
-            )}
-          </Alert>
-        );
-      } else {
-        let changes;
-        if (newModelPlan.includes(UserNotificationPreferenceFlag.IN_APP)) {
-          changes = { newModelPlan: [UserNotificationPreferenceFlag.IN_APP] };
+    if (
+      unsubscribeEmailParams &&
+      Object.keys(ActivityType).includes(unsubscribeEmailParams)
+    ) {
+      if (
+        newModelPlan &&
+        unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN
+      ) {
+        if (!newModelPlan.includes(UserNotificationPreferenceFlag.EMAIL)) {
+          showMessage(
+            <Alert
+              type="error"
+              slim
+              data-testid="error-alert"
+              className="margin-y-4"
+            >
+              {notificationsT(
+                'settings.unsubscribedMessage.alreadyUnsubscribed',
+                {
+                  notificationType: notificationsT(
+                    `settings.unsubscribedMessage.activityType.${params.get(
+                      'unsubscribe_email'
+                    )}`
+                  )
+                }
+              )}
+            </Alert>
+          );
         } else {
-          changes = { newModelPlan: [] };
-        }
+          let changes;
+          if (newModelPlan.includes(UserNotificationPreferenceFlag.IN_APP)) {
+            changes = { newModelPlan: [UserNotificationPreferenceFlag.IN_APP] };
+          } else {
+            changes = { newModelPlan: [] };
+          }
 
-        update({ variables: { changes } })
-          .then(response => {
-            if (!response?.errors) {
-              showMessage(
-                <>
+          update({ variables: { changes } })
+            .then(response => {
+              if (!response?.errors) {
+                showMessage(
                   <Alert
                     type="success"
                     slim
@@ -164,21 +172,21 @@ const NotificationSettings = () => {
                       )
                     })}
                   </Alert>
-                </>
+                );
+              }
+            })
+            .catch(() => {
+              setMutationError(
+                notificationsT('settings.unsubscribedMessage.error')
               );
-            }
-          })
-          .catch(() => {
-            setMutationError(
-              notificationsT('settings.unsubscribedMessage.error')
-            );
-          })
-          .then(() => {
-            params.delete('unsubscribe_email');
-            history.replace({
-              search: params.toString()
+            })
+            .then(() => {
+              params.delete('unsubscribe_email');
+              history.replace({
+                search: params.toString()
+              });
             });
-          });
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
