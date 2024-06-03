@@ -1,4 +1,5 @@
 import {
+  AuditFieldChangeType,
   DatabaseOperation,
   GetChangeHistoryQuery,
   TranslatedAuditMetaData,
@@ -134,15 +135,36 @@ const hiddenFields: HiddenFieldTypes[] = [
   }
 ];
 
+// Tables where similar audits are batched together
 export const batchedTables: string[] = [
-  'plan_document',
   'operational_solution',
   'operational_solution_subtask',
   'plan_document_solution_link',
   'existing_model_link'
 ];
 
-export const nonBatchedTables: string[] = ['model_plan', 'plan_collaborator'];
+// Tables where audits are batch with a different table
+export const doubleBatchedTables: string[] = [
+  'plan_document',
+  'plan_document_solution_link'
+  // 'plan_general_characteristics',
+  // 'existing_model_link'
+];
+
+// // Tables where audits combined as if the same audit.  - ex: Page 1 general characteristics
+// export const renderBatchAsSingle: string[] = ['plan_general_characteristics'];
+
+// Fields that require their own batch - not to be batch with anything else
+export const skipBatchByField: Record<string, string[]> = {
+  status: [
+    'plan_basics',
+    'plan_general_characteristics',
+    'plan_participants_and_providers',
+    'plan_beneficiaries',
+    'plan_ops_eval_and_learning',
+    'plan_payments'
+  ]
+};
 
 export const connectedFields: HiddenFieldTypes[] = [
   {
@@ -150,6 +172,99 @@ export const connectedFields: HiddenFieldTypes[] = [
     fields: ['document_id']
   }
 ];
+
+// Determines if the batch component should render
+export const shouldRenderExistingLinkBatch = (
+  changeRecords: ChangeRecordType[]
+) => batchedTables.includes(changeRecords[0].tableName);
+// && !changeRecords.find(change => renderBatchAsSingle.includes(change.tableName));
+
+// // Return only desired change where the batch is renderBatchAsSingle
+// export const shouldRenderExistingLinkBatchAsSingle = (
+//   changeRecords: ChangeRecordType[]
+// ) =>
+//   changeRecords.length > 1 &&
+//   changeRecords.every(change => doubleBatchedTables.includes(change.tableName));
+
+// export const condenseExistingLinkBatchAsSingle = (
+//   changeRecords: ChangeRecordType[]
+// ) => {
+//   const { parentChange, linkedTableChanges } = [...changeRecords].reduce(
+//     (acc: Record<string, ChangeRecordType[]>, change) => {
+//       if (renderBatchAsSingle.includes(change.tableName)) {
+//         const parentChangeRecord = { ...change };
+//         const parentTranslatedFields = [...change.translatedFields];
+//         parentChangeRecord.translatedFields = parentTranslatedFields;
+//         acc.parentChange.push(parentChangeRecord);
+//       } else {
+//         acc.linkedTableChanges.push(change);
+//       }
+//       return acc;
+//     },
+//     { parentChange: [], linkedTableChanges: [] }
+//   );
+
+//   if (parentChange.length === 0) {
+//     parentChange.push({
+//       id: changeRecords[0].id,
+//       tableName: 'existing_model_link',
+//       date: changeRecords[0].date,
+//       action: DatabaseOperation.INSERT,
+//       actorName: changeRecords[0].actorName,
+//       translatedFields: [],
+//       metaData: null,
+//       __typename: 'TranslatedAudit'
+//     });
+//   }
+
+//   const linkedTableChangesToMerge: Record<string, string[]> = {};
+
+//   // const isRemoving = linkedTableChanges[0].action === DatabaseOperation.DELETE;
+
+//   // console.log(linkedTableChanges);
+
+//   linkedTableChanges.forEach(change => {
+//     const questionName =
+//       change.translatedFields.find(field => field.fieldName === 'field_name')
+//         ?.newTranslated ||
+//       change.translatedFields.find(field => field.fieldName === 'field_name')
+//         ?.oldTranslated;
+
+//     const questionAnswer =
+//       change.translatedFields.find(
+//         field => field.fieldName === 'existing_model_id'
+//       )?.newTranslated ||
+//       change.translatedFields.find(
+//         field => field.fieldName === 'existing_model_id'
+//       )?.oldTranslated;
+
+//     if (!linkedTableChangesToMerge[questionName]) {
+//       linkedTableChangesToMerge[questionName] = [questionAnswer];
+//     } else {
+//       linkedTableChangesToMerge[questionName].push(questionAnswer);
+//     }
+//   });
+
+//   Object.keys(linkedTableChangesToMerge).forEach((question, index) => {
+//     parentChange[0].translatedFields.push({
+//       id: linkedTableChanges[index].id,
+//       changeType: AuditFieldChangeType.UPDATED,
+//       dataType: TranslationDataType.STRING,
+//       fieldName: 'field_name',
+//       fieldNameTranslated: question,
+//       referenceLabel: null,
+//       questionType: null,
+//       notApplicableQuestions: null,
+//       old: null,
+//       oldTranslated: null,
+//       new: 'answers',
+//       newTranslated: linkedTableChangesToMerge[question].join(', '),
+//       __typename: 'TranslatedAuditField'
+//     });
+//   });
+
+//   return parentChange;
+// };
 
 export const getOperationalMetadata = (
   type: 'solution' | 'subtask',
@@ -174,11 +289,21 @@ export const getOperationalMetadata = (
 
 export const getSolutionOperationStatus = (
   change: ChangeRecordType
-): DatabaseOperation =>
-  change.translatedFields.find(field => field.fieldName === 'needed')?.new ===
-  'false'
-    ? DatabaseOperation.DELETE
-    : change.action;
+): DatabaseOperation => {
+  if (
+    change.translatedFields.find(field => field.fieldName === 'needed')?.new ===
+    'false'
+  ) {
+    return DatabaseOperation.DELETE;
+  }
+  if (
+    change.translatedFields.find(field => field.fieldName === 'needed')?.new ===
+    'true'
+  ) {
+    return DatabaseOperation.INSERT;
+  }
+  return change.action;
+};
 
 export const documentChange = (docType: string | undefined) =>
   docType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
@@ -556,14 +681,38 @@ export const removedHiddenFields = (
 // Groups changes that are within 1 second of each other
 export const groupBatchedChanges = (changes: ChangeRecordType[]) => {
   const mergedChanges = [...changes].reduce(
-    (acc: ChangeRecordType[][], change) => {
+    (acc: ChangeRecordType[][], change, currentIndex) => {
       const date = new Date(change.date);
       const lastGroup = acc[acc.length - 1];
+
+      // Returns a string array of list of existing batched tablenames prior to this change
+      const prevousGroups = lastGroup?.map(group => group.tableName) || [];
+
+      let canBatch = false;
+
+      // If change belongs to a batch for a single table, group all together
+      // OR if two tables should be group together, batch them - Documents, Document Solution Link
+      if (
+        batchedTables.includes(change.tableName) ||
+        (doubleBatchedTables.includes(change.tableName) &&
+          doubleBatchedTables.some(item => prevousGroups.includes(item)))
+      ) {
+        canBatch = true;
+      }
+
+      // If the change is a status change, do not batch with other changes
+      if (
+        skipBatchByField[change.translatedFields[0].fieldName]?.includes(
+          change.tableName
+        )
+      ) {
+        canBatch = false;
+      }
 
       // If the last group is empty or the date of the change is more than 1 second from the last change, create a new group
       if (
         !lastGroup ||
-        nonBatchedTables.includes(change.tableName) ||
+        !canBatch ||
         Math.abs(
           date.getTime() -
             new Date(lastGroup[lastGroup.length - 1].date).getTime()

@@ -21,8 +21,10 @@ const changeHistory = {
     'started a Discussion <datetime>on {{date}} at {{time}}</datetime>',
   discussion_replyAnswered:
     'replied to a Discussion <datetime>on {{date}} at {{time}}</datetime>',
+  documentBatchUpdate:
+    '<bold>{{documentName}}</bold> {{isLink}} {{action}} {{toFrom}} <bold>Documents</bold>',
   documentUpdate:
-    '<bold>{{documentName}}</bold> {{isLink}} {{action}} {{toFrom}} Documents',
+    '{{action}} {{documentName}}{{isLink}} {{toFrom}} Documents <datetime>on {{date}} at {{time}}</datetime>',
   crTdlUpdate:
     '{{action}} {{crTdlName}} {{toFrom}} FFS CRs and TDLs <datetime>on {{date}} at {{time}}</datetime>',
   documentSolutionLinkUpdate:
@@ -50,6 +52,7 @@ const changeHistory = {
     plan_document: 'Documents',
     plan_cr: 'FFS CRs and TDLs',
     plan_tdl: 'FFS CRs and TDLs',
+    existing_model_link: 'General characteristics',
     operational_need: 'Operational solutions and implementation status tracker',
     operational_solution:
       'Operational solutions and implementation status tracker',

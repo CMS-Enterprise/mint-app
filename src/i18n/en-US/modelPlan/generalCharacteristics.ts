@@ -136,7 +136,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'resemblesExistingModelWhich'
   },
   resemblesExistingModelNote: {
     gqlField: 'resemblesExistingModelNote',

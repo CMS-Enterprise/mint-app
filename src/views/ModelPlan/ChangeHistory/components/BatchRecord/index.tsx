@@ -14,7 +14,6 @@ import CollapsableLink from 'components/shared/CollapsableLink';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
-  batchedTables,
   connectedFields,
   documentName,
   documentType,
@@ -84,7 +83,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
             return (
               <div className="text-normal">
                 <Trans
-                  i18nKey="changeHistory:documentUpdate"
+                  i18nKey="changeHistory:documentBatchUpdate"
                   values={{
                     isLink: documentType(change),
                     action: t(
@@ -141,6 +140,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               field => field.fieldName !== 'needed'
             );
 
+            // Added metadata fields as translated fields when the database method is DELETE
             fieldsToMap =
               change.metaData &&
               databaseAction === DatabaseOperation.DELETE &&
@@ -309,7 +309,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                 (() => {
                   return (
                     <Trans
-                      i18nKey="changeHistory:documentUpdate"
+                      i18nKey="changeHistory:documentBatchUpdate"
                       values={{
                         isLink: documentType(change),
                         action: t(
@@ -423,16 +423,13 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
         styleLeftBar={false}
       >
         <div className="margin-bottom-neg-1">
-          {batchedTables.includes(changeRecords[0].tableName) &&
-            (() => {
-              return changeRecords.map(change => (
-                <BatchChanges
-                  change={change}
-                  connected={changeRecords.length > 1}
-                  key={change.id}
-                />
-              ));
-            })()}
+          {changeRecords.map(change => (
+            <BatchChanges
+              change={change}
+              connected={changeRecords.length > 1}
+              key={change.id}
+            />
+          ))}
         </div>
       </CollapsableLink>
     </Card>

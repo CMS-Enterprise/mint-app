@@ -215,7 +215,7 @@ const LinkDocument = ({
 
                   <FieldGroup scrollElement="name" error={!!flatErrors.name}>
                     <Label htmlFor="FileUpload-LinkFileName">
-                      {documentsT('name.label')}
+                      {documentsT('fileName.label')}
                       <RequiredAsterisk />
                     </Label>
 
@@ -224,7 +224,7 @@ const LinkDocument = ({
                       hint
                       className="text-normal text-base margin-y-1"
                     >
-                      {documentsT('name.sublabel')}
+                      {documentsT('fileName.sublabel')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.name}</FieldErrorMsg>

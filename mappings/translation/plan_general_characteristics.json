@@ -196,7 +196,8 @@
     "label": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXT",
-    "isOtherType": true
+    "isOtherType": true,
+    "otherParentField": "resembles_existing_model_which"
   },
   "resemblesExistingModelNote": {
     "gqlField": "resemblesExistingModelNote",

@@ -32,9 +32,11 @@ import NotFound from 'views/NotFound';
 import BatchRecord from './components/BatchRecord';
 import ChangeRecord from './components/ChangeRecord';
 import {
-  batchedTables,
+  // condenseExistingLinkBatchAsSingle,
   filterQueryAudits,
   handleSortOptions,
+  shouldRenderExistingLinkBatch,
+  // shouldRenderExistingLinkBatchAsSingle,
   sortAllChanges,
   sortChangesByDay
 } from './util';
@@ -350,7 +352,8 @@ const ChangeHistory = () => {
                     {formatDateUtc(day, 'MMMM d, yyyy')}
                   </h3>
                   {changesByDay[day].map(changeRecords => {
-                    if (batchedTables.includes(changeRecords[0].tableName)) {
+                    // If the change is a batch, render as a batch
+                    if (shouldRenderExistingLinkBatch(changeRecords)) {
                       return (
                         <BatchRecord
                           changeRecords={changeRecords}
@@ -358,10 +361,26 @@ const ChangeHistory = () => {
                         />
                       );
                     }
+
+                    const singleChange = [...changeRecords];
+
+                    // if (shouldRenderExistingLinkBatchAsSingle(changeRecords)) {
+                    //   const parentChange = condenseExistingLinkBatchAsSingle(
+                    //     singleChange
+                    //   );
+
+                    //   return (
+                    //     <ChangeRecord
+                    //       changeRecord={parentChange[0]}
+                    //       key={parentChange[0].id}
+                    //     />
+                    //   );
+                    // }
+
                     return (
                       <ChangeRecord
-                        changeRecord={changeRecords[0]}
-                        key={changeRecords[0].id}
+                        changeRecord={singleChange[0]}
+                        key={singleChange[0].id}
                       />
                     );
                   })}

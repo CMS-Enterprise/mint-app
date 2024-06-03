@@ -258,6 +258,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
   const uploadAudit: boolean =
     changeRecordType === 'CR update' ||
     changeRecordType === 'TDL update' ||
+    changeRecordType === 'Document update' ||
     changeRecordType === 'Operational need update';
 
   // Determine if the change record should be expanded to show more data
@@ -359,6 +360,56 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                     action: t(`teamChangeType.${teamChangeType}`),
                     collaborator,
                     role: !!role && `[${formattedRoles(role)}]`,
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {changeRecordType === 'Document update' &&
+            (() => {
+              const documentType =
+                changeRecord.translatedFields.find(
+                  field => field.fieldName === 'is_link'
+                )?.newTranslated === 'true' ||
+                changeRecord.translatedFields.find(
+                  field => field.fieldName === 'is_link'
+                )?.oldTranslated === 'true'
+                  ? ' link'
+                  : '';
+
+              const documentChange = (docType: string | undefined) =>
+                docType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
+
+              const updateType = (change: ChangeRecordType) => {
+                if (change.action === 'INSERT') {
+                  if (documentType === ' link') {
+                    return 'added';
+                  }
+                  return 'uploaded';
+                }
+                if (change.action === 'DELETE') {
+                  return 'removed';
+                }
+                return '';
+              };
+
+              const documentName = changeRecord.translatedFields.find(
+                field => field.fieldName === 'file_name'
+              )?.[documentChange(changeRecord.action)];
+
+              return (
+                <Trans
+                  i18nKey="changeHistory:documentUpdate"
+                  values={{
+                    isLink: documentType,
+                    action: t(`documentChangeType.${updateType(changeRecord)}`),
+                    documentName,
+                    toFrom: changeRecord.action === 'INSERT' ? 'to' : 'from',
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}
