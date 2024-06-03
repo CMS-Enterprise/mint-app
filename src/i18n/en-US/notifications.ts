@@ -88,23 +88,9 @@ const notifications = {
         heading: 'Basic notifications',
         subHeading:
           'You will always receive basic notifications in-app, but may opt out of receiving them via email.'
-        // configurations: {
-        //   dailyDigestComplete:
-        //     'Daily digest of changes to the models I’m following',
-        //   addedAsCollaborator:
-        //     'When I’m added as a collaborator to a Model Plan',
-        //   taggedInDiscussion: 'When I’m tagged in a discussion',
-        //   newDiscussionReply: 'When someone replies to a discussion I started',
-        //   modelPlanShared: 'When someone shares a Model Plan with me'
-        // }
       },
       additionalNotifications: {
         heading: 'Additional notifications'
-        // configurations: {
-        //   modelCreation: 'When a new Model Plan is created',
-        //   dateChanges: 'When a model dates change',
-        //   whichModel: 'Which model'
-        // }
       }
     },
     configurations: {
@@ -127,9 +113,15 @@ const notifications = {
     },
     save: 'Save',
     dontUpdate: 'Don’t update and return to previous page',
-    success: 'Success! Your notification settings have been updated.',
-    error:
-      'An error occurred while saving your notification settings. Please try again.'
+    successMessage: 'Success! Your notification settings have been updated.',
+    errorMessage:
+      'An error occurred while saving your notification settings. Please try again.',
+    unsubscribedMessage: {
+      success:
+        'You have successfully unsubscribed from email notifications when a new Model Plan is created.',
+      error:
+        'There was an error unsubscribing. Please try again. If the error persists, try again at a later date.'
+    }
   }
 };
 
