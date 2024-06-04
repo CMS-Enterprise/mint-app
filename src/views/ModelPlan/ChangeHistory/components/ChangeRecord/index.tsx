@@ -197,7 +197,7 @@ export const RenderChangeValue = ({
 };
 
 // Renders the questions changes before collapse link is clicked, as well as a note or follow-up question is present
-const ChangedQuestion = ({
+export const ChangedQuestion = ({
   change,
   changeType,
   tableName

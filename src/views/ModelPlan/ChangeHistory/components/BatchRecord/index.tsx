@@ -14,6 +14,7 @@ import CollapsableLink from 'components/shared/CollapsableLink';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
+  condenseLinkingTableChanges,
   connectedFields,
   documentName,
   documentType,
@@ -21,7 +22,9 @@ import {
   getOperationalMetadata,
   getSolutionName,
   getSolutionOperationStatus,
-  isOperationalSolutionWithMetaData
+  isLinkingTable,
+  isOperationalSolutionWithMetaData,
+  linkingTableQuestions
 } from '../../util';
 import { RenderChangeValue } from '../ChangeRecord';
 
@@ -72,6 +75,19 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
       key={change.id}
     >
       <div className="margin-right-05">
+        {/* Existing model link header */}
+        {change.tableName === 'existing_model_link' &&
+          (() => {
+            return (
+              <span className="text-bold">
+                {change.metaData?.tableName}{' '}
+                <span className="text-normal">
+                  {t('auditUpdateType.UPDATE')}
+                </span>
+              </span>
+            );
+          })()}
+
         {/* Documents header */}
         {change.tableName === 'plan_document' &&
           (() => {
@@ -81,7 +97,6 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
             );
 
             return (
-              //   <div className="text-normal">
               <Trans
                 i18nKey="changeHistory:documentBatchUpdate"
                 values={{
@@ -97,7 +112,6 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                   bold: <span className="text-bold" />
                 }}
               />
-              //   </div>
             );
           })()}
 
@@ -235,11 +249,26 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
       {/* Render the fields that were changed */}
       <div className="change-record__answer margin-y-1">
         {(() => {
+          // If the table is a linking table, show the fields in a list
+          if (isLinkingTable(change.tableName)) {
+            return (
+              <ul className="padding-left-3">
+                {fieldsToMap.map(field => (
+                  <li>
+                    {t(`linkUpdateType.${field.newTranslated}`)}:{' '}
+                    {field.fieldNameTranslated}
+                  </li>
+                ))}
+              </ul>
+            );
+          }
+
           return fieldsToMap.map(field => (
             <div key={field.id}>
               {field.newTranslated && (
                 <span>{field.fieldNameTranslated}: </span>
               )}
+
               <RenderChangeValue
                 value={field.newTranslated}
                 dataType={field.dataType}
@@ -252,8 +281,12 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 
         {/* Render previous details/values */}
         {(() => {
+          // If the table is a linking table, don't show previous details
+          if (isLinkingTable(change.tableName)) return <></>;
+
           return (
             <>
+              {/* If the database action is not DELETE and there are fields with old values, show the previous details header */}
               {databaseAction !== DatabaseOperation.DELETE &&
                 !!fieldsToMap.find(field => field.old) && (
                   <div className="text-bold padding-y-105">
@@ -305,6 +338,11 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
     ? 'plan_document_solution_link'
     : changeRecords[0].tableName;
 
+  // If the table is a linking table, condense the changes to show only the relevant fields
+  const batchRecords = isLinkingTable(tableName)
+    ? condenseLinkingTableChanges(changeRecords)
+    : changeRecords;
+
   return (
     <Card className="change-record">
       <div className={classNames('display-flex flex-align-center')}>
@@ -319,7 +357,9 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
             i18nKey="changeHistory:change"
             count={changeRecords.length}
             values={{
-              count: changeRecords.length,
+              count: isLinkingTable(tableName)
+                ? linkingTableQuestions(changeRecords).length
+                : changeRecords.length,
               section: t(`sections.${tableName}`),
               date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
               time: formatTime(changeRecords[0].date)
@@ -333,10 +373,16 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
 
       {!isOpen && (
         <ul className="margin-top-1 margin-bottom-1 margin-left-4">
-          {changeRecords.map(change => (
+          {batchRecords.map(change => (
             <li key={change.id}>
+              {/* Existing link audits */}
+              {tableName === 'existing_model_link' &&
+                (() => {
+                  return <span>{change.metaData?.tableName}</span>;
+                })()}
+
               {/* Document audits */}
-              {change.tableName === 'plan_document' &&
+              {tableName === 'plan_document' &&
                 (() => {
                   return (
                     <Trans
@@ -358,8 +404,9 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                     />
                   );
                 })()}
+
               {/* Document solution link audits */}
-              {change.tableName === 'plan_document_solution_link' && (
+              {tableName === 'plan_document_solution_link' && (
                 <Trans
                   i18nKey="changeHistory:documentSolutionLinkUpdate"
                   values={{
@@ -376,7 +423,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
               )}
 
               {/* Operational solution audits */}
-              {change.tableName === 'operational_solution' &&
+              {tableName === 'operational_solution' &&
                 (() => {
                   const solutionName = getOperationalMetadata(
                     'solution',
@@ -410,7 +457,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                 })()}
 
               {/* Operational solution subtask audits */}
-              {change.tableName === 'operational_solution_subtask' &&
+              {tableName === 'operational_solution_subtask' &&
                 (() => {
                   const solutionName = getOperationalMetadata(
                     'subtask',
@@ -455,7 +502,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
         styleLeftBar={false}
       >
         <div className="margin-bottom-neg-1">
-          {changeRecords.map(change => (
+          {batchRecords.map(change => (
             <BatchChanges
               change={change}
               connected={changeRecords.length > 1}

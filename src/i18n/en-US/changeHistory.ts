@@ -79,6 +79,10 @@ const changeHistory = {
     DELETE: 'removed',
     UPDATE: 'updated'
   },
+  linkUpdateType: {
+    INSERT: 'Added',
+    DELETE: 'Removed'
+  },
   documentChangeType: {
     uploaded: 'uploaded',
     removed: 'removed',

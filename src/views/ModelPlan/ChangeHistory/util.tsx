@@ -1,7 +1,9 @@
 import {
   AuditFieldChangeType,
   DatabaseOperation,
+  ExisitingModelLinkFieldType,
   GetChangeHistoryQuery,
+  TranslatedAuditMetaBaseStruct,
   TranslatedAuditMetaData,
   TranslatedAuditMetaDiscussionReply,
   TranslatedAuditMetaOperationalSolution,
@@ -51,7 +53,8 @@ export type TranslationTables =
   | 'operational_need'
   | 'operational_solution'
   | 'operational_solution_subtask'
-  | 'plan_document_solution_link';
+  | 'plan_document_solution_link'
+  | 'existing_model_link';
 
 export type TranslationTaskListTable =
   | 'plan_basics'
@@ -172,6 +175,96 @@ export const connectedFields: HiddenFieldTypes[] = [
     fields: ['document_id']
   }
 ];
+
+export const linkingTables = ['existing_model_link'];
+
+// Determines if the table is a linking table
+export const isLinkingTable = (tableName: string): boolean =>
+  linkingTables.includes(tableName);
+
+// Gets the linking table questions, in array, used to get audit count length
+export const linkingTableQuestions = (
+  changeRecords: ChangeRecordType[]
+): string[] => {
+  const changeQuestions = changeRecords.map(
+    change =>
+      change.translatedFields.find(record => record.fieldName === 'field_name')
+        ?.newTranslated ||
+      change.translatedFields.find(record => record.fieldName === 'field_name')
+        ?.oldTranslated
+  );
+
+  // Removes duplicate questions, more accurate able to list changed questions
+  const uniqueChangeQuestions = Array.from(new Set(changeQuestions));
+
+  return uniqueChangeQuestions;
+};
+
+// Condenses the linking table changes into a single change record per question
+export const condenseLinkingTableChanges = (changes: ChangeRecordType[]) => {
+  const condensedChanges: Record<
+    ExisitingModelLinkFieldType,
+    ChangeRecordType[]
+  > = {} as Record<ExisitingModelLinkFieldType, ChangeRecordType[]>;
+
+  changes.forEach(change => {
+    const questionChange = change.translatedFields.find(
+      record => record.fieldName === 'field_name'
+    );
+
+    const answerChange = change.translatedFields.find(
+      record => record.fieldName === 'existing_model_id'
+    );
+
+    const question =
+      (questionChange?.new as ExisitingModelLinkFieldType) ||
+      (questionChange?.old as ExisitingModelLinkFieldType);
+
+    if (!questionChange || !answerChange) return;
+
+    // If the question does not exist in the condensed changes, create a new change record
+    if (!condensedChanges[question]) {
+      const newChange = { ...change };
+
+      // Setting the question as metadata for all the related existing link changes
+      newChange.metaData = {
+        tableName:
+          questionChange?.newTranslated || questionChange?.oldTranslated
+      } as TranslatedAuditMetaBaseStruct;
+
+      // Using the question translated field as the base object to merge in existing link data
+      const newTranslated = { ...answerChange };
+
+      // Changes the fieldNameTranslated using the tranlated field from newTranslated
+      newTranslated.fieldNameTranslated =
+        newTranslated.newTranslated || newTranslated.oldTranslated;
+
+      // Setting the changeType of the field as the value
+      newTranslated.newTranslated = change.action;
+
+      newChange.translatedFields = [newTranslated];
+      condensedChanges[question] = [newChange];
+    } else {
+      // Using the question translated field as the base object to merge in existing link data
+      const newTranslated = { ...answerChange };
+
+      // Changes the fieldNameTranslated using the tranlated field from newTranslated
+      newTranslated.fieldNameTranslated =
+        newTranslated.newTranslated || newTranslated.oldTranslated;
+
+      // Setting the changeType of the field as the value
+      newTranslated.newTranslated = change.action;
+
+      condensedChanges[question][0].translatedFields.push(newTranslated);
+    }
+  });
+
+  const flattenedChanges = Object.values(condensedChanges).map(
+    change => change[0]
+  );
+
+  return flattenedChanges;
+};
 
 // Determines if the batch component should render
 export const shouldRenderExistingLinkBatch = (
@@ -691,13 +784,21 @@ export const groupBatchedChanges = (changes: ChangeRecordType[]) => {
       let canBatch = false;
 
       // If change belongs to a batch for a single table, group all together
+      if (batchedTables.includes(change.tableName)) {
+        if (prevousGroups.includes(change.tableName)) {
+          canBatch = true;
+        } else {
+          canBatch = false;
+        }
+      }
+
       // OR if two tables should be group together, batch them - Documents, Document Solution Link
-      if (
-        batchedTables.includes(change.tableName) ||
-        (doubleBatchedTables.includes(change.tableName) &&
-          doubleBatchedTables.some(item => prevousGroups.includes(item)))
-      ) {
-        canBatch = true;
+      if (doubleBatchedTables.includes(change.tableName)) {
+        if (doubleBatchedTables.some(item => prevousGroups.includes(item))) {
+          canBatch = true;
+        } else {
+          canBatch = false;
+        }
       }
 
       // If the change is a status change, do not batch with other changes
