@@ -545,18 +545,22 @@ export const filterQueryAudits = (
             return true;
           }
 
+          const dateFormatType = datesWithNoDay.includes(field.fieldName)
+            ? 'MMMM yyyy'
+            : 'MM/dd/yyyy';
+
           // Parsing date of audit data to check if it matches the query
           if (field.dataType === TranslationDataType.DATE) {
             if (
               formatDateUtc(
                 field.newTranslated?.replace(' ', 'T'),
-                'MM/dd/yyyy'
+                dateFormatType
               )
                 .toLowerCase()
                 .includes(lowerCaseQuery) ||
               formatDateUtc(
                 field.oldTranslated?.replace(' ', 'T'),
-                'MM/dd/yyyy'
+                dateFormatType
               )
                 .toLowerCase()
                 .includes(lowerCaseQuery)
