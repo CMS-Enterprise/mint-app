@@ -56,7 +56,8 @@ func (suite *TAuditSuite) TestOperationalSolutionMetaDataGet() {
 	needName := "To test operational solution meta data"
 	need := suite.createOperationalNeed(plan.ID, needName)
 	solName := "make a unit test"
-	mustFinish := time.Now().UTC()
+	// we round to the micro second, because when the data is serialized to the db in meta data, it rounds to micro seconds
+	mustFinish := time.Now().UTC().Round(time.Microsecond)
 	mustStart := mustFinish.Add(-24 * time.Hour)
 	solStatus := models.OpSAtRisk
 	solOtherHeader := models.StringPointer("hooray! It's the other header!")
