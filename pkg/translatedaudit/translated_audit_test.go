@@ -12,7 +12,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-func TestHumanizeAuditsForModelPlan(t *testing.T) {
+func TestTranslateAuditsForModelPlan(t *testing.T) {
 	//Changes: (ChChCh Changes!) This should really happen in this package, testing in the resolver package for now just for simplicity for a POC
 
 }
