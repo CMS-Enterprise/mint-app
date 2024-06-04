@@ -294,7 +294,7 @@
     "dataType": "STRING",
     "formType": "TEXT",
     "isOtherType": true,
-    "otherParentField": "participation_in_model_precondition_which"
+    "parentReferencesLabel": "Which models require participation as a precondition for participation in this model?"
   },
   "participationInModelPreconditionWhyHow": {
     "gqlField": "participationInModelPreconditionWhyHow",

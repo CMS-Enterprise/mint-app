@@ -13,7 +13,12 @@ import { AvatarCircle } from 'components/shared/Avatar';
 import Spinner from 'components/Spinner';
 import { formatDateUtc, formatTime } from 'utils/date';
 
-import { batchedTables, sortAllChanges } from '../../util';
+import {
+  batchedTables,
+  isLinkingTable,
+  linkingTableQuestions,
+  sortAllChanges
+} from '../../util';
 
 import './index.scss';
 
@@ -39,6 +44,10 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
         ? 1
         : changeRecord.translatedFields.length || 1;
   });
+
+  if (isLinkingTable(changeRecords[0].tableName)) {
+    changeCount = linkingTableQuestions(changeRecords).length;
+  }
 
   return (
     <Card className="mini-change-record">

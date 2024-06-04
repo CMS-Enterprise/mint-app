@@ -382,7 +382,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                 })()}
 
               {/* Document audits */}
-              {tableName === 'plan_document' &&
+              {change.tableName === 'plan_document' &&
                 (() => {
                   return (
                     <Trans
@@ -406,7 +406,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                 })()}
 
               {/* Document solution link audits */}
-              {tableName === 'plan_document_solution_link' && (
+              {change.tableName === 'plan_document_solution_link' && (
                 <Trans
                   i18nKey="changeHistory:documentSolutionLinkUpdate"
                   values={{
@@ -423,7 +423,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
               )}
 
               {/* Operational solution audits */}
-              {tableName === 'operational_solution' &&
+              {change.tableName === 'operational_solution' &&
                 (() => {
                   const solutionName = getOperationalMetadata(
                     'solution',
@@ -457,7 +457,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                 })()}
 
               {/* Operational solution subtask audits */}
-              {tableName === 'operational_solution_subtask' &&
+              {change.tableName === 'operational_solution_subtask' &&
                 (() => {
                   const solutionName = getOperationalMetadata(
                     'subtask',

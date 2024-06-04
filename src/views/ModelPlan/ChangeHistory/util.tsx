@@ -1,5 +1,4 @@
 import {
-  AuditFieldChangeType,
   DatabaseOperation,
   ExisitingModelLinkFieldType,
   GetChangeHistoryQuery,
@@ -212,9 +211,13 @@ export const condenseLinkingTableChanges = (changes: ChangeRecordType[]) => {
       record => record.fieldName === 'field_name'
     );
 
-    const answerChange = change.translatedFields.find(
-      record => record.fieldName === 'existing_model_id'
-    );
+    const answerChange =
+      change.translatedFields.find(
+        record => record.fieldName === 'existing_model_id'
+      ) ||
+      change.translatedFields.find(
+        record => record.fieldName === 'current_model_plan_id'
+      );
 
     const question =
       (questionChange?.new as ExisitingModelLinkFieldType) ||
