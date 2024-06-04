@@ -123,10 +123,14 @@ const NotificationSettings = () => {
       Object.keys(ActivityType).includes(unsubscribeEmailParams)
     ) {
       if (
-        newModelPlan &&
+        newModelPlan?.length &&
         unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN
       ) {
-        if (!newModelPlan.includes(UserNotificationPreferenceFlag.EMAIL)) {
+        const hasEmailNotifications = newModelPlan.includes(
+          UserNotificationPreferenceFlag.EMAIL
+        );
+
+        if (!hasEmailNotifications) {
           showMessage(
             <Alert
               type="error"
@@ -135,24 +139,19 @@ const NotificationSettings = () => {
               className="margin-y-4"
             >
               {notificationsT(
-                'settings.unsubscribedMessage.alreadyUnsubscribed',
-                {
-                  notificationType: notificationsT(
-                    `settings.unsubscribedMessage.activityType.${params.get(
-                      'unsubscribe_email'
-                    )}`
-                  )
-                }
+                'settings.unsubscribedMessage.alreadyUnsubscribed'
               )}
             </Alert>
           );
-        } else {
-          let changes;
-          if (newModelPlan.includes(UserNotificationPreferenceFlag.IN_APP)) {
-            changes = { newModelPlan: [UserNotificationPreferenceFlag.IN_APP] };
-          } else {
-            changes = { newModelPlan: [] };
-          }
+        } else if (params.get('unsubscribe_email')) {
+          const hasInAppNotifications = newModelPlan.includes(
+            UserNotificationPreferenceFlag.IN_APP
+          );
+          const changes = {
+            newModelPlan: hasInAppNotifications
+              ? [UserNotificationPreferenceFlag.IN_APP]
+              : []
+          };
 
           update({ variables: { changes } })
             .then(response => {
@@ -166,9 +165,7 @@ const NotificationSettings = () => {
                   >
                     {notificationsT('settings.unsubscribedMessage.success', {
                       notificationType: notificationsT(
-                        `settings.unsubscribedMessage.activityType.${params.get(
-                          'unsubscribe_email'
-                        )}`
+                        'settings.unsubscribedMessage.alreadyUnsubscribed'
                       )
                     })}
                   </Alert>
@@ -179,27 +176,36 @@ const NotificationSettings = () => {
               setMutationError(
                 notificationsT('settings.unsubscribedMessage.error')
               );
-            })
-            .then(() => {
-              params.delete('unsubscribe_email');
-              history.replace({
-                search: params.toString()
-              });
             });
         }
+
+        params.delete('unsubscribe_email');
+        history.replace({ search: params.toString() });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newModelPlan]);
 
-  const initialValues: NotificationSettingsFormType = {
-    dailyDigestComplete: dailyDigestComplete ?? [],
-    addedAsCollaborator: addedAsCollaborator ?? [],
-    taggedInDiscussion: taggedInDiscussion ?? [],
-    newDiscussionReply: newDiscussionReply ?? [],
-    modelPlanShared: modelPlanShared ?? [],
-    newModelPlan: newModelPlan ?? []
-  };
+  // useMemo(() => {}, []);
+
+  const initialValues: NotificationSettingsFormType = useMemo(() => {
+    // if(newModelPlan.includes)
+    return {
+      dailyDigestComplete: dailyDigestComplete ?? [],
+      addedAsCollaborator: addedAsCollaborator ?? [],
+      taggedInDiscussion: taggedInDiscussion ?? [],
+      newDiscussionReply: newDiscussionReply ?? [],
+      modelPlanShared: modelPlanShared ?? [],
+      newModelPlan: newModelPlan ?? []
+    };
+  }, [
+    dailyDigestComplete,
+    addedAsCollaborator,
+    taggedInDiscussion,
+    newDiscussionReply,
+    modelPlanShared,
+    newModelPlan
+  ]);
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
     return <NotFoundPartial />;
