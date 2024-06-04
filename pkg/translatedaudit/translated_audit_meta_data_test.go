@@ -104,6 +104,78 @@ func (suite *TAuditSuite) TestOperationalSolutionMetaDataGet() {
 }
 
 func (suite *TAuditSuite) TestOperationalSolutionSubtaskMetaDataGet() {
+
+	plan := suite.createModelPlan("test plan")
+	needName := "To test operational solution meta data"
+	need := suite.createOperationalNeed(plan.ID, needName)
+	solName := "make a unit test"
+	mustFinish := time.Now().UTC()
+	mustStart := mustFinish.Add(-24 * time.Hour)
+	solStatus := models.OpSAtRisk
+	solOtherHeader := models.StringPointer("hooray! It's the other header!")
+	sol := suite.createOperationalSolution(need.ID, solName, func(os *models.OperationalSolution) {
+		os.MustStartDts = &mustStart
+		os.MustFinishDts = &mustFinish
+		os.Status = solStatus
+		os.OtherHeader = solOtherHeader
+	})
+
+	subtaskNameNew := "hooray! a subtaskNew"
+	subtaskNameNewForChanges := "hooray! a subtaskNewForChanges"
+	subtaskNameOldForChanges := "hooray! a subtaskOldForChanges"
+	subtaskStatus := models.OperationalSolutionSubtaskStatusDone
+
+	subTask := suite.createOperationalSolutionSubtask(sol.ID, subtaskNameNew, &subtaskStatus)
+	operation := models.DBOpInsert
+	changes := models.AuditFields{
+		"name": models.AuditField{
+			New: subtaskNameNewForChanges,
+			Old: subtaskNameOldForChanges,
+		},
+	}
+	emptyChanges := models.AuditFields{}
+	// the test function makes a custom solution
+	needIsOther := true
+	solIsOther := true
+
+	metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID.String(), sol.ID.String(), changes, operation)
+
+	suite.NoError(err)
+	suite.NotNil(metaData)
+
+	//Changes: (Testing) expand this
+	suite.EqualValues(needName, metaData.NeedName)
+	suite.EqualValues(needIsOther, metaData.NeedIsOther)
+	suite.EqualValues(1, metaData.NumberOfSubtasks)
+
+	suite.EqualValues(solName, metaData.SolutionName)
+
+	suite.EqualValues(solIsOther, metaData.SolutionIsOther)
+	suite.EqualValues(solOtherHeader, metaData.SolutionOtherHeader)
+
+	tableName := "operational_solution_subtask"
+	suite.EqualValues(tableName, metaData.TableName)
+	suite.EqualValues(0, metaData.Version)
+
+	//Assert it gets the name from the changes object
+	suite.EqualValues(subtaskNameNewForChanges, metaData.SubtaskName)
+
+	suite.Run("A delete or truncate without a name in the changes object will error", func() {
+		// operation =
+		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID.String(), sol.ID.String(), emptyChanges, models.DBOpDelete)
+
+		suite.Error(err)
+		suite.Nil(metaData)
+	})
+	suite.Run("An update without a name in the changes object will fetch from DB", func() {
+		// operation =
+		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID.String(), sol.ID.String(), emptyChanges, models.DBOpUpdate)
+
+		suite.NoError(err)
+		suite.NotNil(metaData)
+		suite.EqualValues(subtaskNameNew, metaData.SubtaskName)
+	})
+
 }
 
 func (suite *TAuditSuite) TestTranslatedAuditMetaData() {

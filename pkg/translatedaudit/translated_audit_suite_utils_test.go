@@ -47,6 +47,25 @@ func (suite *TAuditSuite) createOperationalSolution(operationalNeedID uuid.UUID,
 	return retSol
 }
 
+// createOperationalSolutionSubtask creates an operational solution subtask using the store. It is just for testing
+func (suite *TAuditSuite) createOperationalSolutionSubtask(solutionID uuid.UUID, subtaskName string, subtaskStatus *models.OperationalSolutionSubtaskStatus) *models.OperationalSolutionSubtask {
+
+	if subtaskStatus == nil {
+		status := models.OperationalSolutionSubtaskStatusTodo
+		subtaskStatus = &status
+	}
+
+	subtaskToCreate := models.NewOperationalSolutionSubtask(suite.testConfigs.Principal.UserAccount.ID, uuid.New(), solutionID, subtaskName, *subtaskStatus)
+
+	retSubTaskList, err := suite.testConfigs.Store.OperationalSolutionSubtasksCreate(suite.testConfigs.Logger, []*models.OperationalSolutionSubtask{subtaskToCreate})
+	suite.NoError(err)
+	if suite.Len(retSubTaskList, 1) {
+		return retSubTaskList[0]
+	}
+
+	return nil
+}
+
 // createPlanDocument creates a test plan document for testing
 func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName string) *models.PlanDocument {
 
