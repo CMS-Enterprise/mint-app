@@ -42,7 +42,6 @@ func (suite *TAuditSuite) TestOperationalNeedMetaDataGet() {
 	suite.NoError(err)
 	suite.NotNil(metaData)
 
-	//Changes: (Testing) expand this
 	suite.EqualValues(needName, metaData.NeedName)
 	suite.EqualValues(needIsOther, metaData.IsOther)
 
@@ -80,7 +79,6 @@ func (suite *TAuditSuite) TestOperationalSolutionMetaDataGet() {
 		suite.EqualValues(models.TAMetaOperationalSolution, *metaDataType)
 	}
 
-	//Changes: (Testing) expand this
 	suite.EqualValues(needName, metaData.NeedName)
 	suite.EqualValues(needIsOther, metaData.NeedIsOther)
 	suite.EqualValues(0, metaData.NumberOfSubtasks)
@@ -143,7 +141,6 @@ func (suite *TAuditSuite) TestOperationalSolutionSubtaskMetaDataGet() {
 	suite.NoError(err)
 	suite.NotNil(metaData)
 
-	//Changes: (Testing) expand this
 	suite.EqualValues(needName, metaData.NeedName)
 	suite.EqualValues(needIsOther, metaData.NeedIsOther)
 	suite.EqualValues(1, metaData.NumberOfSubtasks)
@@ -161,14 +158,13 @@ func (suite *TAuditSuite) TestOperationalSolutionSubtaskMetaDataGet() {
 	suite.EqualValues(subtaskNameNewForChanges, metaData.SubtaskName)
 
 	suite.Run("A delete or truncate without a name in the changes object will error", func() {
-		// operation =
 		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID.String(), sol.ID.String(), emptyChanges, models.DBOpDelete)
 
 		suite.Error(err)
 		suite.Nil(metaData)
 	})
 	suite.Run("An update without a name in the changes object will fetch from DB", func() {
-		// operation =
+
 		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID.String(), sol.ID.String(), emptyChanges, models.DBOpUpdate)
 
 		suite.NoError(err)
@@ -176,7 +172,4 @@ func (suite *TAuditSuite) TestOperationalSolutionSubtaskMetaDataGet() {
 		suite.EqualValues(subtaskNameNew, metaData.SubtaskName)
 	})
 
-}
-
-func (suite *TAuditSuite) TestTranslatedAuditMetaData() {
 }
