@@ -171,7 +171,6 @@ func ModelPlanCreate(
 				addressBook.MINTTeamEmail,
 				newPlan,
 				false,
-				uuid.Nil,
 			)
 			if sendEmailErr != nil {
 				logger.Error("failed to send model plan created email to dev team", zap.String(
@@ -191,7 +190,6 @@ func ModelPlanCreate(
 					emailPref.Email,
 					newPlan,
 					true,
-					emailPref.UserID,
 				)
 				if sendEmailErr != nil {
 					logger.Error("failed to send model plan created email to user", zap.String(
@@ -214,7 +212,6 @@ func sendModelPlanCreatedEmail(
 	receiverEmail string,
 	modelPlan *models.ModelPlan,
 	showFooter bool,
-	userID uuid.UUID,
 ) error {
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanCreatedTemplateName)
 	if err != nil {
@@ -234,7 +231,6 @@ func sendModelPlanCreatedEmail(
 		ModelID:       modelPlan.GetModelPlanID().String(),
 		UserName:      modelPlan.CreatedByUserAccount(ctx).CommonName,
 		ShowFooter:    showFooter,
-		UserID:        userID.String(),
 	})
 	if err != nil {
 		return err

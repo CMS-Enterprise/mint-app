@@ -45,7 +45,7 @@ func DefaultUserNotificationPreferencesFlags() []UserNotificationPreferenceFlag 
 	return []UserNotificationPreferenceFlag{UserNotificationPreferenceInApp, UserNotificationPreferenceEmail}
 }
 
-// EmptyUserNotificationPreferencesFlags returns empty Preferences flags for any user, defaulting to all turned on.
+// EmptyUserNotificationPreferencesFlags returns empty Preferences flags for any user, defaulting to all turned off.
 func EmptyUserNotificationPreferencesFlags() []UserNotificationPreferenceFlag {
 	return []UserNotificationPreferenceFlag{}
 }

@@ -12,5 +12,4 @@ type ModelPlanCreatedBodyContent struct {
 	ModelID       string
 	UserName      string
 	ShowFooter    bool
-	UserID        string
 }
