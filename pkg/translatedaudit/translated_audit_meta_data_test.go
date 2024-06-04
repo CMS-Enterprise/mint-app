@@ -2,6 +2,8 @@ package translatedaudit
 
 import (
 	"time"
+
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 func (suite *TAuditSuite) TestDiscussionReplyMetaDataGet() {
@@ -22,25 +24,69 @@ func (suite *TAuditSuite) TestDiscussionReplyMetaDataGet() {
 	suite.EqualValues(discussion.ID, metaData.DiscussionID)
 	suite.EqualValues(numReplies, metaData.NumberOfReplies)
 
-	suite.EqualValues("discussion_reply", metaData.TableName)
+	tableName := "discussion_reply"
+	suite.EqualValues(tableName, metaData.TableName)
 	suite.EqualValues(0, metaData.Version)
 
 }
 
-// OperationalNeedMetaDataGet uses the provided information to generate metadata needed for any operational need audits
-func (suite *TAuditSuite) OperationalNeedMetaDataGet() {
+func (suite *TAuditSuite) TestOperationalNeedMetaDataGet() {
 
 }
 
-// OperationalSolutionMetaDataGet uses the provided information to generate metadata needed for any operational solution audits
-func (suite *TAuditSuite) OperationalSolutionMetaDataGet() {
+func (suite *TAuditSuite) TestOperationalSolutionMetaDataGet() {
+	plan := suite.createModelPlan("test plan")
+	needName := "To test operational solution meta data"
+	need := suite.createOperationalNeed(plan.ID, needName)
+	solName := "make a unit test"
+	mustFinish := time.Now().UTC()
+	mustStart := mustFinish.Add(-24 * time.Hour)
+	solStatus := models.OpSAtRisk
+	solOtherHeader := models.StringPointer("hooray! It's the other header!")
+	sol := suite.createOperationalSolution(need.ID, solName, func(os *models.OperationalSolution) {
+		os.MustStartDts = &mustStart
+		os.MustFinishDts = &mustFinish
+		os.Status = solStatus
+		os.OtherHeader = solOtherHeader
+	})
+	// the test function makes a custom solution
+	needIsOther := true
+	solIsOther := true
+
+	metaData, metaDataType, err := OperationalSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, sol.ID.String())
+
+	suite.NoError(err)
+	suite.NotNil(metaData)
+
+	if suite.NotNil(metaDataType) {
+		suite.EqualValues(models.TAMetaOperationalSolution, *metaDataType)
+	}
+
+	//Changes: (Testing) expand this
+	suite.EqualValues(needName, metaData.NeedName)
+	suite.EqualValues(needIsOther, metaData.NeedIsOther)
+	suite.EqualValues(0, metaData.NumberOfSubtasks)
+
+	suite.EqualValues(solName, metaData.SolutionName)
+	if suite.NotNil(metaData.SolutionMustFinish) {
+		suite.EqualValues(mustFinish, metaData.SolutionMustFinish.UTC())
+	}
+
+	if suite.NotNil(metaData.SolutionMustStart) {
+		suite.EqualValues(mustStart, metaData.SolutionMustStart.UTC())
+	}
+	suite.EqualValues(solStatus, metaData.SolutionStatus)
+	suite.EqualValues(solIsOther, metaData.SolutionIsOther)
+	suite.EqualValues(solOtherHeader, metaData.SolutionOtherHeader)
+
+	tableName := "operational_solution"
+	suite.EqualValues(tableName, metaData.TableName)
+	suite.EqualValues(0, metaData.Version)
 
 }
 
-// OperationalSolutionSubtaskMetaDataGet uses the provided information to generate metadata needed for any operational solution subtask audits.
-// it checks if there is a name in the changes, and if so it sets that in the meta data, otherwise it will fetch it from the table record
-func (suite *TAuditSuite) OperationalSolutionSubtaskMetaDataGet() {
+func (suite *TAuditSuite) TestOperationalSolutionSubtaskMetaDataGet() {
 }
 
-func (suite *TAuditSuite) TranslatedAuditMetaData() {
+func (suite *TAuditSuite) TestTranslatedAuditMetaData() {
 }

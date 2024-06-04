@@ -33,10 +33,14 @@ func (suite *TAuditSuite) createOperationalNeed(modelPlanID uuid.UUID, customNee
 }
 
 // createOperationalSolution creates an operational solution using the store. It is just for testing
-func (suite *TAuditSuite) createOperationalSolution(operationalNeedID uuid.UUID, customSolution string) *models.OperationalSolution {
+func (suite *TAuditSuite) createOperationalSolution(operationalNeedID uuid.UUID, customSolution string, preHooks ...func(*models.OperationalSolution)) *models.OperationalSolution {
 
 	solToCreate := models.NewOperationalSolution(suite.testConfigs.Principal.UserAccount.ID, operationalNeedID)
 	solToCreate.NameOther = &customSolution
+	for _, preHook := range preHooks {
+		preHook(solToCreate)
+
+	}
 
 	retSol, err := suite.testConfigs.Store.OperationalSolutionInsert(suite.testConfigs.Logger, solToCreate, nil)
 	suite.NoError(err)
