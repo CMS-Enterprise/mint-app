@@ -31,6 +31,24 @@ func (suite *TAuditSuite) TestDiscussionReplyMetaDataGet() {
 }
 
 func (suite *TAuditSuite) TestOperationalNeedMetaDataGet() {
+	plan := suite.createModelPlan("test plan")
+	needName := "To test operational solution meta data"
+	need := suite.createOperationalNeed(plan.ID, needName)
+
+	// the test function makes a custom solution
+	needIsOther := true
+	metaData, err := OperationalNeedMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, need.ID.String())
+
+	suite.NoError(err)
+	suite.NotNil(metaData)
+
+	//Changes: (Testing) expand this
+	suite.EqualValues(needName, metaData.NeedName)
+	suite.EqualValues(needIsOther, metaData.IsOther)
+
+	tableName := "operational_need"
+	suite.EqualValues(tableName, metaData.TableName)
+	suite.EqualValues(0, metaData.Version)
 
 }
 
