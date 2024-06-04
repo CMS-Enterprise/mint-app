@@ -100,6 +100,8 @@ export const isSubtaskWithMetaData = (
   return data.__typename === 'TranslatedAuditMetaOperationalSolutionSubtask';
 };
 
+export const datesWithNoDay: string[] = ['date_implemented'];
+
 type HiddenFieldTypes = {
   table: TranslationTables;
   fields: string[];

@@ -269,12 +269,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                 <span>{field.fieldNameTranslated}: </span>
               )}
 
-              <RenderChangeValue
-                value={field.newTranslated}
-                dataType={field.dataType}
-                referenceLabel={field.referenceLabel}
-                questionType={field.questionType}
-              />
+              <RenderChangeValue change={field} valueType="newTranslated" />
             </div>
           ));
         })()}
@@ -303,10 +298,8 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                       <>
                         <span>{field.fieldNameTranslated}: </span>
                         <RenderChangeValue
-                          value={field.oldTranslated}
-                          dataType={field.dataType}
-                          referenceLabel={field.referenceLabel}
-                          questionType={field.questionType}
+                          change={field}
+                          valueType="oldTranslated"
                           previous={!!field.old}
                         />
                       </>

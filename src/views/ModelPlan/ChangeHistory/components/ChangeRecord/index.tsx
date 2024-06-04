@@ -15,6 +15,7 @@ import MentionTextArea from 'components/shared/MentionTextArea';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
+  datesWithNoDay,
   identifyChangeType,
   isDiscussionReplyWithMetaData,
   parseArray,
@@ -69,12 +70,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
 
       <div className="change-record__answer margin-y-1">
         {/* Renders the new value of a change record */}
-        <RenderChangeValue
-          value={change.newTranslated}
-          dataType={change.dataType}
-          referenceLabel={change.referenceLabel}
-          questionType={change.questionType}
-        />
+        <RenderChangeValue change={change} valueType="newTranslated" />
 
         {/* Renders the old value of a change record */}
         {change.old && (
@@ -88,10 +84,8 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
             )}
 
             <RenderChangeValue
-              value={change.oldTranslated}
-              dataType={change.dataType}
-              referenceLabel={change.referenceLabel}
-              questionType={change.questionType}
+              change={change}
+              valueType="oldTranslated"
               previous={!!change.old}
             />
           </>
@@ -102,8 +96,8 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
           <>
             <div className="text-bold padding-y-105">{t('notApplicable')}</div>
             <RenderChangeValue
-              value={change.notApplicableQuestions}
-              dataType={change.dataType}
+              valueType="notApplicableQuestions"
+              change={change}
             />
           </>
         )}
@@ -138,26 +132,25 @@ export const ActionText = ({
 
 // Render a single value, either as a string or as a list of strings
 export const RenderChangeValue = ({
-  value,
-  dataType,
-  referenceLabel,
-  questionType,
+  change,
+  valueType,
   previous = false
 }: {
-  value: string | string[];
-  dataType: TranslationDataType | null | undefined;
-  referenceLabel?: string | null | undefined;
-  questionType?: TranslationQuestionType | null | undefined;
+  change: ChangeRecordType['translatedFields'][0];
+  valueType: 'oldTranslated' | 'newTranslated' | 'notApplicableQuestions';
   previous?: boolean;
 }) => {
   const { t } = useTranslation('changeHistory');
 
+  const value = change[valueType];
+
   // Contains the label and parent question if the change record is a follow-up/OTHER type
   const parentQuestion =
-    referenceLabel && questionType === TranslationQuestionType.OTHER ? (
+    change.referenceLabel &&
+    change.questionType === TranslationQuestionType.OTHER ? (
       <div className="text-italic padding-bottom-1">
         ({t('followUp')}
-        {referenceLabel})
+        {change.referenceLabel})
       </div>
     ) : null;
 
@@ -179,11 +172,18 @@ export const RenderChangeValue = ({
   }
 
   // If the data type is a date, format the date and parent question
-  if (dataType === TranslationDataType.DATE && typeof value === 'string') {
+  if (
+    change.dataType === TranslationDataType.DATE &&
+    typeof value === 'string'
+  ) {
     return (
       <>
         {parentQuestion}
-        <span>{formatDateUtc(value.replace(' ', 'T'), 'MM/dd/yyyy')}</span>
+        <span>
+          {datesWithNoDay.includes(change.fieldName)
+            ? formatDateUtc(value.replace(' ', 'T'), 'MMMM yyyy')
+            : formatDateUtc(value.replace(' ', 'T'), 'MM/dd/yyyy')}
+        </span>
       </>
     );
   }
