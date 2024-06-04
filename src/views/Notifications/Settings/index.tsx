@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
@@ -61,8 +61,6 @@ const NotificationSettings = () => {
   ]);
   const unsubscribeEmailParams = params.get('unsubscribe_email');
 
-  const [mutationError, setMutationError] = useState<string>('');
-
   const { data, loading, error } = useGetNotificationSettingsQuery();
 
   const {
@@ -112,7 +110,16 @@ const NotificationSettings = () => {
         }
       })
       .catch(() => {
-        setMutationError(notificationsT('settings.errorMessage'));
+        showMessage(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-y-4"
+          >
+            {notificationsT('settings.errorMessage')}
+          </Alert>
+        );
       });
   };
 
@@ -122,7 +129,16 @@ const NotificationSettings = () => {
     if (!unsubscribeEmailParams) return;
     // if params are not valid
     if (!Object.keys(ActivityType).includes(unsubscribeEmailParams)) {
-      setMutationError(notificationsT('settings.unsubscribedMessage.error'));
+      showMessage(
+        <Alert
+          type="error"
+          slim
+          data-testid="error-alert"
+          className="margin-y-4"
+        >
+          {notificationsT('settings.unsubscribedMessage.error')}
+        </Alert>
+      );
     }
 
     // Unsubscribe from New Model Plan email notifications
@@ -166,18 +182,35 @@ const NotificationSettings = () => {
             }
           })
           .catch(() => {
-            setMutationError(
-              notificationsT('settings.unsubscribedMessage.error')
+            showMessage(
+              <Alert
+                type="error"
+                slim
+                data-testid="error-alert"
+                className="margin-y-4"
+              >
+                {notificationsT('settings.unsubscribedMessage.error')}
+              </Alert>
             );
           });
       } else {
         // Already unsubscribed to new model plan email notifications
-        setMutationError(
-          notificationsT('settings.unsubscribedMessage.alreadyUnsubscribed', {
-            notificationType: notificationsT(
-              `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
-            )
-          })
+        showMessage(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-y-4"
+          >
+            {notificationsT(
+              'settings.unsubscribedMessage.alreadyUnsubscribed',
+              {
+                notificationType: notificationsT(
+                  `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+                )
+              }
+            )}
+          </Alert>
         );
       }
 
@@ -228,11 +261,6 @@ const NotificationSettings = () => {
           </BreadcrumbBar>
 
           {message && <Expire delay={45000}>{message}</Expire>}
-          {mutationError && (
-            <Alert type="error" slim className="margin-y-4" headingLevel="h4">
-              {mutationError}
-            </Alert>
-          )}
 
           <PageHeading className="margin-top-4 margin-bottom-2">
             {notificationsT('settings.heading')}
