@@ -118,94 +118,90 @@ const NotificationSettings = () => {
 
   // Unsubscribe from email
   useEffect(() => {
-    if (
-      unsubscribeEmailParams &&
-      Object.keys(ActivityType).includes(unsubscribeEmailParams)
-    ) {
-      if (
-        newModelPlan?.length &&
-        unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN
-      ) {
-        const hasEmailNotifications = newModelPlan.includes(
-          UserNotificationPreferenceFlag.EMAIL
-        );
-
-        if (!hasEmailNotifications) {
-          showMessage(
-            <Alert
-              type="error"
-              slim
-              data-testid="error-alert"
-              className="margin-y-4"
-            >
-              {notificationsT(
-                'settings.unsubscribedMessage.alreadyUnsubscribed'
-              )}
-            </Alert>
-          );
-        } else if (params.get('unsubscribe_email')) {
-          const hasInAppNotifications = newModelPlan.includes(
-            UserNotificationPreferenceFlag.IN_APP
-          );
-          const changes = {
-            newModelPlan: hasInAppNotifications
-              ? [UserNotificationPreferenceFlag.IN_APP]
-              : []
-          };
-
-          update({ variables: { changes } })
-            .then(response => {
-              if (!response?.errors) {
-                showMessage(
-                  <Alert
-                    type="success"
-                    slim
-                    data-testid="success-alert"
-                    className="margin-y-4"
-                  >
-                    {notificationsT('settings.unsubscribedMessage.success', {
-                      notificationType: notificationsT(
-                        'settings.unsubscribedMessage.alreadyUnsubscribed'
-                      )
-                    })}
-                  </Alert>
-                );
-              }
-            })
-            .catch(() => {
-              setMutationError(
-                notificationsT('settings.unsubscribedMessage.error')
-              );
-            });
-        }
-
-        params.delete('unsubscribe_email');
-        history.replace({ search: params.toString() });
-      }
+    // if no unsubscribe email params, then abort
+    if (!unsubscribeEmailParams) return;
+    // if params are not valid
+    if (!Object.keys(ActivityType).includes(unsubscribeEmailParams)) {
+      setMutationError(notificationsT('settings.unsubscribedMessage.error'));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newModelPlan]);
 
-  // useMemo(() => {}, []);
+    // Unsubscribe from New Model Plan email notifications
+    if (
+      newModelPlan?.length &&
+      unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN
+    ) {
+      const hasEmailNotifications = newModelPlan.includes(
+        UserNotificationPreferenceFlag.EMAIL
+      );
 
-  const initialValues: NotificationSettingsFormType = useMemo(() => {
-    // if(newModelPlan.includes)
-    return {
-      dailyDigestComplete: dailyDigestComplete ?? [],
-      addedAsCollaborator: addedAsCollaborator ?? [],
-      taggedInDiscussion: taggedInDiscussion ?? [],
-      newDiscussionReply: newDiscussionReply ?? [],
-      modelPlanShared: modelPlanShared ?? [],
-      newModelPlan: newModelPlan ?? []
-    };
+      // if user has email notifications, then proceeed to unsubscribe
+      if (hasEmailNotifications) {
+        const hasInAppNotifications = newModelPlan.includes(
+          UserNotificationPreferenceFlag.IN_APP
+        );
+        // Adjust payload if in-app notifications are enabled
+        const changes = {
+          newModelPlan: hasInAppNotifications
+            ? [UserNotificationPreferenceFlag.IN_APP]
+            : []
+        };
+
+        update({ variables: { changes } })
+          .then(response => {
+            if (!response?.errors) {
+              showMessage(
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="success-alert"
+                  className="margin-y-4"
+                >
+                  {notificationsT('settings.unsubscribedMessage.success', {
+                    notificationType: notificationsT(
+                      `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+                    )
+                  })}
+                </Alert>
+              );
+            }
+          })
+          .catch(() => {
+            setMutationError(
+              notificationsT('settings.unsubscribedMessage.error')
+            );
+          });
+      } else {
+        // Already unsubscribed to new model plan email notifications
+        setMutationError(
+          notificationsT('settings.unsubscribedMessage.alreadyUnsubscribed', {
+            notificationType: notificationsT(
+              `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+            )
+          })
+        );
+      }
+
+      params.delete('unsubscribe_email');
+      history.replace({ search: params.toString() });
+    }
   }, [
-    dailyDigestComplete,
-    addedAsCollaborator,
-    taggedInDiscussion,
-    newDiscussionReply,
-    modelPlanShared,
-    newModelPlan
+    history,
+    newModelPlan,
+    notificationsT,
+    params,
+    showMessage,
+    unsubscribeEmailParams,
+    update
   ]);
+
+  const initialValues: NotificationSettingsFormType = {
+    dailyDigestComplete: dailyDigestComplete ?? [],
+    addedAsCollaborator: addedAsCollaborator ?? [],
+    taggedInDiscussion: taggedInDiscussion ?? [],
+    newDiscussionReply: newDiscussionReply ?? [],
+    modelPlanShared: modelPlanShared ?? [],
+    newModelPlan: newModelPlan ?? []
+  };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
     return <NotFoundPartial />;
