@@ -1,10 +1,10 @@
 module github.com/cmsgov/mint-app
 
-go 1.21
+go 1.22.3
 
 require (
 	github.com/99designs/gqlgen v0.17.38
-	github.com/aws/aws-sdk-go v1.53.0
+	github.com/aws/aws-sdk-go v1.53.5
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
 	github.com/go-openapi/errors v0.22.0
 	github.com/go-openapi/swag v0.23.0
@@ -21,7 +21,7 @@ require (
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.9.0
-	github.com/vektah/gqlparser/v2 v2.5.11
+	github.com/vektah/gqlparser/v2 v2.5.12
 	go.uber.org/zap v1.27.0
 	golang.org/x/sync v0.7.0
 )
