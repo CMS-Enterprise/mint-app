@@ -3529,8 +3529,11 @@ export type TranslatedAuditMetaOperationalSolution = {
   needName: Scalars['String']['output'];
   numberOfSubtasks: Scalars['Int']['output'];
   solutionIsOther: Scalars['Boolean']['output'];
+  solutionMustFinish?: Maybe<Scalars['Time']['output']>;
+  solutionMustStart?: Maybe<Scalars['Time']['output']>;
   solutionName: Scalars['String']['output'];
   solutionOtherHeader?: Maybe<Scalars['String']['output']>;
+  solutionStatus: Scalars['String']['output'];
   tableName: Scalars['String']['output'];
   version: Scalars['Int']['output'];
 };

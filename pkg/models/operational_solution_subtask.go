@@ -33,7 +33,7 @@ type OperationalSolutionSubtask struct {
 // NewOperationalSolutionSubtask is a constructor to create an instance of OperationalSolutionSubtask
 func NewOperationalSolutionSubtask(
 	createdBy uuid.UUID,
-	ID uuid.UUID,
+	ID uuid.UUID, //TODO: This ID is not being used. Refactor.
 	solutionID uuid.UUID,
 	name string,
 	status OperationalSolutionSubtaskStatus,
