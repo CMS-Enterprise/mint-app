@@ -48,6 +48,9 @@ type TranslatedAuditMetaOperationalSolution {
     numberOfSubtasks: Int!
     needName: String!
     needIsOther: Boolean!
+    solutionStatus: String!
+    solutionMustStart: Time
+    solutionMustFinish: Time
 }
 """
 TranslatedAuditMetaOperationalSolutionSubtask is the meta data type that is provided when a translated audit is for an operational solution subtask

@@ -5,6 +5,7 @@ import (
 	"github.com/guregu/null/zero"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // CreateModelPlan creates a model plan using the store. It doesn't do this in a transaction, and doesn't make
@@ -32,14 +33,37 @@ func (suite *TAuditSuite) createOperationalNeed(modelPlanID uuid.UUID, customNee
 }
 
 // createOperationalSolution creates an operational solution using the store. It is just for testing
-func (suite *TAuditSuite) createOperationalSolution(operationalNeedID uuid.UUID, customSolution string) *models.OperationalSolution {
+func (suite *TAuditSuite) createOperationalSolution(operationalNeedID uuid.UUID, customSolution string, preHooks ...func(*models.OperationalSolution)) *models.OperationalSolution {
 
 	solToCreate := models.NewOperationalSolution(suite.testConfigs.Principal.UserAccount.ID, operationalNeedID)
 	solToCreate.NameOther = &customSolution
+	for _, preHook := range preHooks {
+		preHook(solToCreate)
+
+	}
 
 	retSol, err := suite.testConfigs.Store.OperationalSolutionInsert(suite.testConfigs.Logger, solToCreate, nil)
 	suite.NoError(err)
 	return retSol
+}
+
+// createOperationalSolutionSubtask creates an operational solution subtask using the store. It is just for testing
+func (suite *TAuditSuite) createOperationalSolutionSubtask(solutionID uuid.UUID, subtaskName string, subtaskStatus *models.OperationalSolutionSubtaskStatus) *models.OperationalSolutionSubtask {
+
+	if subtaskStatus == nil {
+		status := models.OperationalSolutionSubtaskStatusTodo
+		subtaskStatus = &status
+	}
+
+	subtaskToCreate := models.NewOperationalSolutionSubtask(suite.testConfigs.Principal.UserAccount.ID, uuid.New(), solutionID, subtaskName, *subtaskStatus)
+
+	retSubTaskList, err := suite.testConfigs.Store.OperationalSolutionSubtasksCreate(suite.testConfigs.Logger, []*models.OperationalSolutionSubtask{subtaskToCreate})
+	suite.NoError(err)
+	if suite.Len(retSubTaskList, 1) {
+		return retSubTaskList[0]
+	}
+
+	return nil
 }
 
 // createPlanDocument creates a test plan document for testing
@@ -62,5 +86,46 @@ func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName str
 	retDocument, err := suite.testConfigs.Store.PlanDocumentCreate(suite.testConfigs.Logger, suite.testConfigs.Principal.UserAccount.ID.String(), document)
 	suite.NoError(err)
 	return retDocument
+
+}
+
+// createPlanDiscussion creates a test plan discussion for testing. It doesn't go through normal resolver procedures (eg there are no tags)
+func (suite *TAuditSuite) createPlanDiscussion(modelPlanID uuid.UUID, content string) *models.PlanDiscussion {
+
+	discussionUserRole := models.DiscussionRoleMintTeam
+	taggedContent, err := models.NewTaggedContentFromString(content)
+	suite.NoError(err)
+
+	discussion := models.NewPlanDiscussion(suite.testConfigs.Principal.UserAccount.ID,
+		false, modelPlanID,
+		models.TaggedHTML(taggedContent),
+		&discussionUserRole,
+		nil,
+	)
+
+	retDisc, err := suite.testConfigs.Store.PlanDiscussionCreate(suite.testConfigs.Logger, discussion, suite.testConfigs.Store)
+
+	suite.NoError(err)
+	return retDisc
+}
+
+// createDiscussionReply creates a test  discussion reply for testing
+func (suite *TAuditSuite) createDiscussionReply(discussionID uuid.UUID, content string) *models.DiscussionReply {
+
+	discussionUserRole := models.DiscussionRoleMintTeam
+	taggedContent, err := models.NewTaggedContentFromString(content)
+	suite.NoError(err)
+
+	discussionReply := models.NewDiscussionReply(suite.testConfigs.Principal.UserAccount.ID,
+		false, discussionID,
+		models.TaggedHTML(taggedContent),
+		&discussionUserRole,
+		nil,
+	)
+
+	retReply, err := storage.DiscussionReplyCreate(suite.testConfigs.Logger, discussionReply, suite.testConfigs.Store)
+
+	suite.NoError(err)
+	return retReply
 
 }

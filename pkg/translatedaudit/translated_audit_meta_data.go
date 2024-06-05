@@ -47,24 +47,24 @@ func OperationalNeedMetaDataGet(ctx context.Context, store *storage.Store, opNee
 }
 
 // OperationalSolutionMetaDataGet uses the provided information to generate metadata needed for any operational solution audits
-func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, opSolutionID interface{}) (*models.TranslatedAuditMetaOperationalSolution, error) {
+func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, opSolutionID interface{}) (*models.TranslatedAuditMetaOperationalSolution, *models.TranslatedAuditMetaDataType, error) {
 	logger := appcontext.ZLogger(ctx)
 	opSolutionUUID, err := parseInterfaceToUUID(opSolutionID)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionUUID)
 	if err != nil {
-		return nil, fmt.Errorf("unable to get operational solution with num of Subtasks for operational solution audit metadata. err %w", err)
+		return nil, nil, fmt.Errorf("unable to get operational solution with num of Subtasks for operational solution audit metadata. err %w", err)
 	}
 
 	opNeed, err := store.OperationalNeedGetByID(logger, opSolutionWithSubtasks.OperationalNeedID)
 	if err != nil {
-		return nil, fmt.Errorf("unable to get operational need for operational solution audit metadata. err %w", err)
+		return nil, nil, fmt.Errorf("unable to get operational need for operational solution audit metadata. err %w", err)
 	}
 
 	if err != nil {
-		return nil, fmt.Errorf("unable to get operational need for operational solution audit metadata. err %w", err)
+		return nil, nil, fmt.Errorf("unable to get operational need for operational solution audit metadata. err %w", err)
 	}
 
 	metaNeed := models.NewTranslatedAuditMetaOperationalSolution(
@@ -76,25 +76,51 @@ func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, o
 		opSolutionWithSubtasks.NumberOfSubtasks,
 		opNeed.GetName(),
 		opNeed.GetIsOther(),
+		opSolutionWithSubtasks.Status,
+		opSolutionWithSubtasks.MustStartDts,
+		opSolutionWithSubtasks.MustFinishDts,
 	)
+	metaType := models.TAMetaOperationalSolution
 
-	return &metaNeed, nil
+	return &metaNeed, &metaType, nil
 
 }
 
-// OperationalSolutionSubtaskMetaDataGet uses the provided information to generate metadata needed for any operational solution subtask audits
-func OperationalSolutionSubtaskMetaDataGet(ctx context.Context, store *storage.Store, opSolutionSubtaskID interface{}) (*models.TranslatedAuditMetaOperationalSolutionSubtask, error) {
+// OperationalSolutionSubtaskMetaDataGet uses the provided information to generate metadata needed for any operational solution subtask audits.
+// it checks if there is a name in the changes, and if so it sets that in the meta data, otherwise it will fetch it from the table record
+func OperationalSolutionSubtaskMetaDataGet(ctx context.Context, store *storage.Store, opSolutionSubtaskID interface{}, opSolutionID interface{}, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaOperationalSolutionSubtask, error) {
 	logger := appcontext.ZLogger(ctx)
-	opSolutionSubtaskUUID, err := parseInterfaceToUUID(opSolutionSubtaskID)
+
+	opSolutionUUID, err := parseInterfaceToUUID(opSolutionID)
 	if err != nil {
 		return nil, err
 	}
-	opSolSubtask, err := store.OperationalSolutionSubtaskGetByID(logger, opSolutionSubtaskUUID)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get operational solution subtask operational solution subtask audit metadata. err %w", err)
+	var subtaskName string
+	nameChange, fieldPresent := changesFields["name"]
+	if fieldPresent {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			subtaskName = fmt.Sprint(nameChange.Old)
+		} else {
+			subtaskName = fmt.Sprint(nameChange.New)
+		}
+
+	} else {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			return nil, fmt.Errorf("there wasn't a name present for this subtask, unable to generate subtask metadata. Subtask %v", opSolutionSubtaskID)
+		}
+		opSolutionSubtaskUUID, err2 := parseInterfaceToUUID(opSolutionSubtaskID)
+		if err2 != nil {
+			return nil, err2
+		}
+		// Insert or update statements mean the subtask exists and can be fetched
+		opSolSubtask, err3 := store.OperationalSolutionSubtaskGetByID(logger, opSolutionSubtaskUUID)
+		if err != nil {
+			return nil, fmt.Errorf("unable to get operational solution subtask operational solution subtask audit metadata. err %w", err3)
+		}
+		subtaskName = opSolSubtask.Name
 	}
 
-	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolSubtask.SolutionID)
+	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionUUID)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get operational solution with num of Subtasks for operational solution subtask audit metadata. err %w", err)
 	}
@@ -117,17 +143,18 @@ func OperationalSolutionSubtaskMetaDataGet(ctx context.Context, store *storage.S
 		opSolutionWithSubtasks.NumberOfSubtasks,
 		opNeed.GetName(),
 		opNeed.GetIsOther(),
-		opSolSubtask.Name,
+		subtaskName,
 	)
 
 	return &metaNeed, nil
 
 }
 
-func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *models.AuditChange) (models.TranslatedAuditMetaData, *models.TranslatedAuditMetaDataType, error) {
+func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *models.AuditChange, operation models.DatabaseOperation) (models.TranslatedAuditMetaData, *models.TranslatedAuditMetaDataType, error) {
 	// Changes: (ChChCh Changes!) Consider, do we need to handle if something is deleted differently? There might not be fetch-able information...
 	switch audit.TableName {
 	// Changes: (Meta) add unit tests for these.
+	// Changes: (Testing) add a test for each of these.
 	case "discussion_reply":
 		metaData, err := DiscussionReplyMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.ModifiedDts)
 		metaDataType := models.TAMetaDiscussionReply
@@ -137,11 +164,10 @@ func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *m
 		metaDataType := models.TAMetaOperationalNeed
 		return metaData, &metaDataType, err
 	case "operational_solution":
-		metaData, err := OperationalSolutionMetaDataGet(ctx, store, audit.PrimaryKey)
-		metaDataType := models.TAMetaOperationalSolution
-		return metaData, &metaDataType, err
+		metaData, metaDataType, err := OperationalSolutionMetaDataGet(ctx, store, audit.PrimaryKey)
+		return metaData, metaDataType, err
 	case "operational_solution_subtask":
-		metaData, err := OperationalSolutionSubtaskMetaDataGet(ctx, store, audit.PrimaryKey)
+		metaData, err := OperationalSolutionSubtaskMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.Fields, operation)
 		metaDataType := models.TAMetaOperationalSolutionSubtask
 		return metaData, &metaDataType, err
 

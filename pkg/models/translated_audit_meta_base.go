@@ -23,7 +23,7 @@ type TranslatedAuditMetaData interface {
 type TranslatedAuditMetaBaseStruct struct {
 	// Changes: (Meta) do we actually need table name here? What about version? Are these doing anything?
 	TableName string `json:"tableName"`
-	Version   int    `json:"id"`
+	Version   int    `json:"version"`
 }
 
 // NewTranslatedAuditMetaBaseStruct creates a New TranslatedAuditMetaBaseStruct
