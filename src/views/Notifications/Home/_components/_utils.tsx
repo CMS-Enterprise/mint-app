@@ -8,6 +8,7 @@ import {
   DailyDigestCompleteActivityMeta,
   ModelPlanSharedActivityMeta,
   NewDiscussionRepliedActivityMeta,
+  NewModelPlanActivityMeta,
   TaggedInDiscussionReplyActivityMeta,
   TaggedInPlanDiscussionActivityMeta
 } from 'gql/gen/graphql';
@@ -18,92 +19,64 @@ type MetaDataType =
   | DailyDigestCompleteActivityMeta
   | NewDiscussionRepliedActivityMeta
   | ModelPlanSharedActivityMeta
-  | AddedAsCollaboratorMeta;
+  | AddedAsCollaboratorMeta
+  | NewModelPlanActivityMeta;
 
 // Type guard to check union type
 export const isTaggedInDiscussion = (
-  data:
-    | TaggedInDiscussionReplyActivityMeta
-    | TaggedInPlanDiscussionActivityMeta
-    | DailyDigestCompleteActivityMeta
-    | NewDiscussionRepliedActivityMeta
-    | ModelPlanSharedActivityMeta
-    | AddedAsCollaboratorMeta
+  data: MetaDataType
 ): data is TaggedInPlanDiscussionActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'TaggedInPlanDiscussionActivityMeta';
 };
 
 export const isTaggedInDiscussionReply = (
-  data:
-    | TaggedInDiscussionReplyActivityMeta
-    | TaggedInPlanDiscussionActivityMeta
-    | DailyDigestCompleteActivityMeta
-    | NewDiscussionRepliedActivityMeta
-    | ModelPlanSharedActivityMeta
-    | AddedAsCollaboratorMeta
+  data: MetaDataType
 ): data is TaggedInDiscussionReplyActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'TaggedInDiscussionReplyActivityMeta';
 };
 
 export const isDailyDigest = (
-  data:
-    | TaggedInDiscussionReplyActivityMeta
-    | TaggedInPlanDiscussionActivityMeta
-    | DailyDigestCompleteActivityMeta
-    | NewDiscussionRepliedActivityMeta
-    | ModelPlanSharedActivityMeta
-    | AddedAsCollaboratorMeta
+  data: MetaDataType
 ): data is DailyDigestCompleteActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'DailyDigestCompleteActivityMeta';
 };
 
 export const isNewDiscussionReply = (
-  data:
-    | TaggedInDiscussionReplyActivityMeta
-    | TaggedInPlanDiscussionActivityMeta
-    | DailyDigestCompleteActivityMeta
-    | NewDiscussionRepliedActivityMeta
-    | ModelPlanSharedActivityMeta
-    | AddedAsCollaboratorMeta
+  data: MetaDataType
 ): data is NewDiscussionRepliedActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'NewDiscussionRepliedActivityMeta';
 };
 
 export const isSharedActivity = (
-  data:
-    | TaggedInDiscussionReplyActivityMeta
-    | TaggedInPlanDiscussionActivityMeta
-    | DailyDigestCompleteActivityMeta
-    | NewDiscussionRepliedActivityMeta
-    | ModelPlanSharedActivityMeta
-    | AddedAsCollaboratorMeta
+  data: MetaDataType
 ): data is ModelPlanSharedActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'ModelPlanSharedActivityMeta';
 };
 
 export const isAddingCollaborator = (
-  data:
-    | TaggedInDiscussionReplyActivityMeta
-    | TaggedInPlanDiscussionActivityMeta
-    | DailyDigestCompleteActivityMeta
-    | NewDiscussionRepliedActivityMeta
-    | ModelPlanSharedActivityMeta
-    | AddedAsCollaboratorMeta
+  data: MetaDataType
 ): data is AddedAsCollaboratorMeta => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'AddedAsCollaboratorMeta';
+};
+
+export const isNewModelPlan = (
+  data: MetaDataType
+): data is NewModelPlanActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'NewModelPlanActivityMeta';
 };
 
 export const activityText = (data: MetaDataType) => {
   if (isTaggedInDiscussion(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.taggedInDiscussion.text"
+        i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
@@ -111,20 +84,20 @@ export const activityText = (data: MetaDataType) => {
   if (isTaggedInDiscussionReply(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.taggedInDiscussionReply.text"
+        i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
   }
   if (isDailyDigest(data)) {
     return (
-      <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.text" />
+      <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.text" />
     );
   }
   if (isSharedActivity(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.modelPlanShared.text"
+        i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
@@ -132,7 +105,7 @@ export const activityText = (data: MetaDataType) => {
   if (isAddingCollaborator(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.addedAsCollaborator.text"
+        i18nKey="notifications:index.activityType.ADDED_AS_COLLABORATOR.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
@@ -140,7 +113,15 @@ export const activityText = (data: MetaDataType) => {
   if (isNewDiscussionReply(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.newDiscussionReply.text"
+        i18nKey="notifications:index.activityType.NEW_DISCUSSION_REPLY.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
+    );
+  }
+  if (isNewModelPlan(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.NEW_MODEL_PLAN.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
@@ -158,7 +139,7 @@ export const ActivityCTA = ({
   if (isTaggedInDiscussion(data)) {
     return (
       <>
-        <Trans i18nKey="notifications:index.activityType.taggedInDiscussion.cta" />
+        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
@@ -166,7 +147,7 @@ export const ActivityCTA = ({
   if (isTaggedInDiscussionReply(data)) {
     return (
       <>
-        <Trans i18nKey="notifications:index.activityType.taggedInDiscussionReply.cta" />
+        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
@@ -174,7 +155,7 @@ export const ActivityCTA = ({
   if (isNewDiscussionReply(data)) {
     return (
       <>
-        <Trans i18nKey="notifications:index.activityType.newDiscussionReply.cta" />
+        <Trans i18nKey="notifications:index.activityType.NEW_DISCUSSION_REPLY.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
@@ -182,7 +163,7 @@ export const ActivityCTA = ({
   if (isSharedActivity(data)) {
     return (
       <>
-        <Trans i18nKey="notifications:index.activityType.modelPlanShared.cta" />
+        <Trans i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
@@ -190,7 +171,7 @@ export const ActivityCTA = ({
   if (isAddingCollaborator(data)) {
     return (
       <>
-        <Trans i18nKey="notifications:index.activityType.addedAsCollaborator.cta" />
+        <Trans i18nKey="notifications:index.activityType.ADDED_AS_COLLABORATOR.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
@@ -198,13 +179,21 @@ export const ActivityCTA = ({
   if (isDailyDigest(data)) {
     return isExpanded ? (
       <>
-        <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.cta.hide" />
+        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.hide" />
         <Icon.ExpandLess className="margin-left-1" aria-hidden />
       </>
     ) : (
       <>
-        <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.cta.show" />
+        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.show" />
         <Icon.ExpandMore className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+  if (isNewModelPlan(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.NEW_MODEL_PLAN.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
   }

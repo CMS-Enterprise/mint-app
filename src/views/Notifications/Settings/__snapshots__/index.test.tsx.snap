@@ -66,7 +66,7 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
         <p
           class="margin-bottom-6 font-body-lg line-height-sans-4"
         >
-          You will be notified in-app for the following events and can choose to opt-out of receiving emails below.
+          Choose whether you would like to receive notifications via email, in the MINT application, or both.
         </p>
         <div
           class="grid-row"
@@ -76,7 +76,9 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
             class="mobile:grid-col-6"
             data-testid="grid"
           >
-            <h3>
+            <h3
+              class="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink"
+            >
               Notification
             </h3>
           </div>
@@ -84,7 +86,9 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
             class="mobile:grid-col-3"
             data-testid="grid"
           >
-            <h3>
+            <h3
+              class="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink"
+            >
               Email
             </h3>
           </div>
@@ -92,9 +96,26 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
             class="mobile:grid-col-3"
             data-testid="grid"
           >
-            <h3>
+            <h3
+              class="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink"
+            >
               In-app
             </h3>
+          </div>
+          <div
+            class="mobile:grid-col-6"
+            data-testid="grid"
+          >
+            <h4
+              class="margin-top-0 margin-bottom-05"
+            >
+              Basic notifications
+            </h4>
+            <p
+              class="margin-top-0 margin-bottom-1 text-base-dark"
+            >
+              You will always receive basic notifications in-app, but may opt out of receiving them via email.
+            </p>
           </div>
         </div>
         <form
@@ -113,9 +134,9 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                 data-testid="grid"
               >
                 <p
-                  class="text-wrap"
+                  class="text-wrap margin-y-105"
                 >
-                  Daily digest of the models I’m following when something changes
+                  Daily digest of changes to the models I’m following
                 </p>
               </div>
               <div
@@ -173,7 +194,7 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                 data-testid="grid"
               >
                 <p
-                  class="text-wrap"
+                  class="text-wrap margin-y-105"
                 >
                   When I’m added as a collaborator to a Model Plan
                 </p>
@@ -233,7 +254,7 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                 data-testid="grid"
               >
                 <p
-                  class="text-wrap"
+                  class="text-wrap margin-y-105"
                 >
                   When I’m tagged in a discussion
                 </p>
@@ -293,7 +314,7 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                 data-testid="grid"
               >
                 <p
-                  class="text-wrap"
+                  class="text-wrap margin-y-105"
                 >
                   When someone replies to a discussion I started
                 </p>
@@ -353,7 +374,7 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                 data-testid="grid"
               >
                 <p
-                  class="text-wrap"
+                  class="text-wrap margin-y-105"
                 >
                   When someone shares a Model Plan with me
                 </p>
@@ -400,6 +421,75 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                   <label
                     class="usa-checkbox__label"
                     for="notification-setting-in-app-modelPlanShared"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="grid-row"
+              data-testid="grid"
+            >
+              <div
+                class="mobile:grid-col-12"
+                data-testid="grid"
+              >
+                <h4
+                  class="margin-top-5 margin-bottom-0"
+                >
+                  Additional notifications
+                </h4>
+              </div>
+              <div
+                class="mobile:grid-col-6"
+                data-testid="grid"
+              >
+                <p
+                  class="text-wrap margin-y-105"
+                >
+                  When a new Model Plan is created
+                </p>
+              </div>
+              <div
+                class="mobile:grid-col-3"
+                data-testid="grid"
+              >
+                <div
+                  class="usa-checkbox padding-left-2"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    data-testid="notification-setting-email-newModelPlan"
+                    id="notification-setting-email-newModelPlan"
+                    name="newModelPlan"
+                    type="checkbox"
+                    value="EMAIL"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="notification-setting-email-newModelPlan"
+                  />
+                </div>
+              </div>
+              <div
+                class="mobile:grid-col-3"
+                data-testid="grid"
+              >
+                <div
+                  class="usa-checkbox padding-left-2"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    data-testid="notification-setting-in-app-newModelPlan"
+                    id="notification-setting-in-app-newModelPlan"
+                    name="newModelPlan"
+                    type="checkbox"
+                    value="IN_APP"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="notification-setting-in-app-newModelPlan"
                   />
                 </div>
               </div>
