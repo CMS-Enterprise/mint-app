@@ -111,7 +111,7 @@ const AddCustomSolution = () => {
   const handleFormSubmit = async (
     formikValues: CustomOperationalSolutionFormType
   ) => {
-    const { nameOther, pocName, pocEmail, otherHeader } = formikValues;
+    const { nameOther, pocName, pocEmail } = formikValues;
 
     let updateMutation;
 
@@ -124,8 +124,7 @@ const AddCustomSolution = () => {
             solutionType: selectedSolution || null,
             changes: {
               needed: true,
-              nameOther: !selectedSolution ? nameOther : null,
-              otherHeader: selectedSolution ? otherHeader : null,
+              nameOther,
               status: OpSolutionStatus.NOT_STARTED,
               pocEmail,
               pocName
@@ -139,8 +138,7 @@ const AddCustomSolution = () => {
             id: operationalSolutionID,
             changes: {
               needed: customOperationalSolution.needed,
-              nameOther: !selectedSolution ? nameOther : null,
-              otherHeader: selectedSolution ? otherHeader : null,
+              nameOther,
               pocEmail,
               pocName
             }
@@ -249,7 +247,7 @@ const AddCustomSolution = () => {
                   {(
                     formikProps: FormikProps<CustomOperationalSolutionFormType>
                   ) => {
-                    const { errors, handleSubmit, values } = formikProps;
+                    const { errors, handleSubmit, values, dirty } = formikProps;
 
                     const flatErrors = flattenErrors(errors);
                     return (
@@ -285,56 +283,29 @@ const AddCustomSolution = () => {
                             </h3>
                           )}
                           <Fieldset disabled={!!error || loading}>
-                            {selectedSolution === null ? (
-                              <FieldGroup
-                                scrollElement="nameOther"
-                                error={!!flatErrors.nameOther}
-                                className="margin-top-3"
-                              >
-                                <Label htmlFor="it-solution-custom-name-other">
-                                  {solutionsT('nameOther.label')}
-                                  <RequiredAsterisk />
-                                </Label>
+                            <FieldGroup
+                              scrollElement="nameOther"
+                              error={!!flatErrors.nameOther}
+                              className="margin-top-3"
+                            >
+                              <Label htmlFor="it-solution-custom-name-other">
+                                {solutionsT('nameOther.label')}
+                                <RequiredAsterisk />
+                              </Label>
 
-                                <FieldErrorMsg>
-                                  {flatErrors.nameOther}
-                                </FieldErrorMsg>
+                              <FieldErrorMsg>
+                                {flatErrors.nameOther}
+                              </FieldErrorMsg>
 
-                                <Field
-                                  as={TextInput}
-                                  id="it-solution-custom-name-other"
-                                  data-testid="it-solution-custom-name-other"
-                                  maxLength={50}
-                                  name="nameOther"
-                                  value={values.nameOther || ''}
-                                />
-                              </FieldGroup>
-                            ) : (
-                              <FieldGroup
-                                scrollElement="otherHeader"
-                                error={!!flatErrors.otherHeader}
-                                className="margin-top-3"
-                              >
-                                <Label htmlFor="it-solution-other-header">
-                                  {/* Other Header */}
-                                  {solutionsT('otherHeader.label')}
-                                  <RequiredAsterisk />
-                                </Label>
-
-                                <FieldErrorMsg>
-                                  {flatErrors.otherHeader}
-                                </FieldErrorMsg>
-
-                                <Field
-                                  as={TextInput}
-                                  id="it-solution-other-header"
-                                  data-testid="it-solution-other-header"
-                                  maxLength={50}
-                                  name="otherHeader"
-                                  value={values.otherHeader || ''}
-                                />
-                              </FieldGroup>
-                            )}
+                              <Field
+                                as={TextInput}
+                                id="it-solution-custom-name-other"
+                                data-testid="it-solution-custom-name-other"
+                                maxLength={50}
+                                name="nameOther"
+                                value={values.nameOther || ''}
+                              />
+                            </FieldGroup>
 
                             <FieldGroup
                               scrollElement="pocName"
@@ -394,11 +365,7 @@ const AddCustomSolution = () => {
                                 type="submit"
                                 className="margin-bottom-1"
                                 id="submit-custom-solution"
-                                disabled={
-                                  selectedSolution === null
-                                    ? !values.nameOther
-                                    : !values.otherHeader
-                                }
+                                disabled={!dirty || !values.nameOther}
                               >
                                 {operationalSolutionID
                                   ? t('updateSolutionDetails')
