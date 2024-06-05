@@ -243,7 +243,15 @@ func sendModelPlanCreatedEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, []string{}, receiverEmails, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+		oddmail.WithBCC(receiverEmails),
+	)
 	if err != nil {
 		return err
 	}
