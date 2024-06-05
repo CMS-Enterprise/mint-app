@@ -116,7 +116,7 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Save').click();
 
-    cy.get('[data-testid="success-collaborator-alert"').should('exist');
+    cy.get('[data-testid="success-alert"').should('exist');
 
     cy.contains('a', 'Notification settings').click();
 
