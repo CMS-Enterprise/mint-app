@@ -214,7 +214,7 @@ describe('Notification Center', () => {
     cy.url().should('include', '/task-list');
   });
 
-  it.only('testing New Model Plan Notification', () => {
+  it('testing New Model Plan Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
 
