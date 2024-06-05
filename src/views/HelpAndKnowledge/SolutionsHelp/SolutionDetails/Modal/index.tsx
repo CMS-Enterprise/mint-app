@@ -164,7 +164,7 @@ const SolutionDetailsModal = ({
                     paramActive
                   />
 
-                  <Contact contact={primaryContact} />
+                  <Contact contact={primaryContact} closeRoute={closeRoute} />
 
                   <Alert
                     type="info"

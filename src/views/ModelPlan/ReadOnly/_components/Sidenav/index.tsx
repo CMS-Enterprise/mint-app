@@ -26,25 +26,43 @@ const SideNav = ({
   const translationKey = solutionNavigation ? helpAndKnowledgeT : modelSumamryT;
 
   const scrollToAboveReadOnlyBodyContent = () => {
-    const filterBannerHeight = document.querySelector(
-      '[data-testid="group-filter-banner"'
-    )?.clientHeight!;
+    setTimeout(() => {
+      // the height of the filter banner
+      const filterBannerHeight = document.querySelector(
+        '[data-testid="group-filter-banner"]'
+      )?.clientHeight;
 
-    // `element` is the SectionWrapper component, everything below the ModelWarning
-    const element = document.querySelector('#scroll-element')!;
+      // the height of navigation bar
+      const navBarHeight = document.querySelector(
+        '[data-testid="navigation-bar"]'
+      )?.clientHeight;
 
-    // Find the margin-top value of the element
-    const marginTopValue = parseFloat(
-      window.getComputedStyle(element).marginTop
-    );
+      // `scroll-element` is the SectionWrapper component, everything below the ModelWarning
+      const scrollElement = document.querySelector('#scroll-element');
 
-    // Find the top of the element
-    const { top } = element?.getBoundingClientRect()!;
+      // if the element, filterBannerHeight, or navBarHeight is undefined or null, abort!
+      if (!scrollElement || !filterBannerHeight || !navBarHeight) {
+        return;
+      }
 
-    // Calculate all the things
-    const distanceFromTopOfPage =
-      top + window.scrollY - filterBannerHeight - marginTopValue;
-    window.scroll(0, distanceFromTopOfPage);
+      // Find the margin-top value of the scroll element
+      const marginOfScrollElement = parseFloat(
+        window.getComputedStyle(scrollElement).marginTop
+      );
+
+      // Find the top of the scroll element
+      const { top } = scrollElement.getBoundingClientRect();
+
+      // Calculate all the things
+      const distanceFromTopOfPage =
+        top +
+        window.scrollY -
+        filterBannerHeight -
+        navBarHeight -
+        marginOfScrollElement;
+
+      window.scroll(0, distanceFromTopOfPage);
+    }, 0);
   };
 
   // Mapping of all sub navigation links
