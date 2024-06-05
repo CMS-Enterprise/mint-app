@@ -6,6 +6,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/samber/lo"
+
 	"github.com/cmsgov/mint-app/pkg/notifications"
 
 	"github.com/google/uuid"
@@ -168,7 +170,7 @@ func ModelPlanCreate(
 				emailService,
 				emailTemplateService,
 				addressBook,
-				addressBook.MINTTeamEmail,
+				[]string{addressBook.MINTTeamEmail},
 				newPlan,
 				false,
 			)
@@ -180,25 +182,30 @@ func ModelPlanCreate(
 			}
 		}()
 
-		for _, emailPref := range newModelPlanEmailPrefs {
-			go func(emailPref *models.UserAccountNotificationPreferences) {
-				sendEmailErr := sendModelPlanCreatedEmail(
-					ctx,
-					emailService,
-					emailTemplateService,
-					addressBook,
-					emailPref.Email,
-					newPlan,
-					true,
-				)
-				if sendEmailErr != nil {
-					logger.Error("failed to send model plan created email to user", zap.String(
-						"createdPlanID",
-						newPlan.ID.String(),
-					), zap.Error(sendEmailErr))
-				}
-			}(emailPref)
-		}
+		receiverEmails := lo.Map(
+			newModelPlanEmailPrefs,
+			func(pref *models.UserAccountNotificationPreferences, _ int) string {
+				return pref.Email
+			},
+		)
+
+		go func() {
+			sendEmailErr := sendModelPlanCreatedEmail(
+				ctx,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				receiverEmails,
+				newPlan,
+				true,
+			)
+			if sendEmailErr != nil {
+				logger.Error("failed to send model plan created email to user", zap.String(
+					"createdPlanID",
+					newPlan.ID.String(),
+				), zap.Error(sendEmailErr))
+			}
+		}()
 	}
 
 	return newPlan, err
@@ -209,7 +216,7 @@ func sendModelPlanCreatedEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
-	receiverEmail string,
+	receiverEmails []string,
 	modelPlan *models.ModelPlan,
 	showFooter bool,
 ) error {
@@ -236,7 +243,7 @@ func sendModelPlanCreatedEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(addressBook.DefaultSender, []string{}, receiverEmails, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}
