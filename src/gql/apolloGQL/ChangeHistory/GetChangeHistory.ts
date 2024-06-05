@@ -55,6 +55,9 @@ export default gql(/* GraphQL */ `
           solutionOtherHeader
           solutionIsOther
           numberOfSubtasks
+          solutionStatus
+          solutionMustStart
+          solutionMustFinish
         }
         ... on TranslatedAuditMetaOperationalSolutionSubtask {
           version

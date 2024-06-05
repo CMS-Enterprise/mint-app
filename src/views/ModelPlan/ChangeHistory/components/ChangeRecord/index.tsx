@@ -163,7 +163,7 @@ export const RenderChangeValue = ({
       <>
         {parentQuestion}
         <ul className="padding-left-3 margin-y-0">
-          {parsedValue.map((val, index) => (
+          {parsedValue.map(val => (
             <li key={val}>{val}</li>
           ))}
         </ul>

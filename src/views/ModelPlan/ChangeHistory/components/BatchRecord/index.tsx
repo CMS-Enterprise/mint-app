@@ -155,28 +155,112 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
             );
 
             // Added metadata fields as translated fields when the database method is DELETE
-            fieldsToMap =
+            if (
               change.metaData &&
-              databaseAction === DatabaseOperation.DELETE &&
               isOperationalSolutionWithMetaData(change.metaData)
-                ? [
-                    {
-                      __typename: 'TranslatedAuditField',
-                      changeType: AuditFieldChangeType.REMOVED,
-                      dataType: TranslationDataType.NUMBER,
-                      fieldName: 'numberOfSubtasks',
-                      fieldNameTranslated: 'Subtasks',
-                      id: '1',
-                      new: null,
-                      newTranslated: null,
-                      notApplicableQuestions: null,
-                      old: change.metaData.numberOfSubtasks,
-                      oldTranslated: change.metaData.numberOfSubtasks,
-                      questionType: null,
-                      referenceLabel: null
-                    }
-                  ]
-                : fieldsToMap;
+            ) {
+              // If solution needed/INSERT, and the status field is unchanged/not present, add it/metadata status to the translated fields
+              if (
+                databaseAction === DatabaseOperation.INSERT &&
+                change.translatedFields.find(
+                  field => field.fieldName === 'status'
+                ) === undefined
+              ) {
+                fieldsToMap = [
+                  {
+                    __typename: 'TranslatedAuditField',
+                    changeType: AuditFieldChangeType.ANSWERED,
+                    dataType: TranslationDataType.ENUM,
+                    fieldName: 'status',
+                    fieldNameTranslated: 'Status',
+                    id: '1',
+                    new: change.metaData.solutionStatus,
+                    newTranslated: change.metaData.solutionStatus,
+                    notApplicableQuestions: null,
+                    old: null,
+                    oldTranslated: null,
+                    questionType: null,
+                    referenceLabel: null
+                  }
+                ];
+              }
+
+              // If solution not needed/DELETE, add all the solution metadata fields to the translated fields
+              if (databaseAction === DatabaseOperation.DELETE) {
+                fieldsToMap = [
+                  {
+                    __typename: 'TranslatedAuditField',
+                    changeType: AuditFieldChangeType.REMOVED,
+                    dataType: TranslationDataType.NUMBER,
+                    fieldName: 'numberOfSubtasks',
+                    fieldNameTranslated: 'Subtasks',
+                    id: '1',
+                    new: null,
+                    newTranslated: null,
+                    notApplicableQuestions: null,
+                    old: change.metaData.numberOfSubtasks,
+                    oldTranslated: change.metaData.numberOfSubtasks,
+                    questionType: null,
+                    referenceLabel: null
+                  },
+                  {
+                    __typename: 'TranslatedAuditField',
+                    changeType: AuditFieldChangeType.REMOVED,
+                    dataType: TranslationDataType.ENUM,
+                    fieldName: 'status',
+                    fieldNameTranslated: 'Status',
+                    id: '2',
+                    new: null,
+                    newTranslated: null,
+                    notApplicableQuestions: null,
+                    old: change.metaData.solutionStatus,
+                    oldTranslated: change.metaData.solutionStatus,
+                    questionType: null,
+                    referenceLabel: null
+                  },
+                  {
+                    __typename: 'TranslatedAuditField',
+                    changeType: AuditFieldChangeType.REMOVED,
+                    dataType: TranslationDataType.NUMBER,
+                    fieldName: 'must_start_dts',
+                    fieldNameTranslated: 'Must start by',
+                    id: '3',
+                    new: null,
+                    newTranslated: null,
+                    notApplicableQuestions: null,
+                    old: change.metaData.solutionMustStart,
+                    oldTranslated: change.metaData.solutionMustStart
+                      ? formatDateUtc(
+                          change.metaData.solutionMustStart.replace(' ', 'T'),
+                          'MM/dd/yyyy'
+                        )
+                      : '',
+                    questionType: null,
+                    referenceLabel: null
+                  },
+                  {
+                    __typename: 'TranslatedAuditField',
+                    changeType: AuditFieldChangeType.REMOVED,
+                    dataType: TranslationDataType.NUMBER,
+                    fieldName: 'must_finish_dts',
+                    fieldNameTranslated: 'Must finish by',
+                    id: '4',
+                    new: null,
+                    newTranslated: null,
+                    notApplicableQuestions: null,
+                    old: change.metaData.solutionMustFinish,
+                    oldTranslated: change.metaData.solutionMustFinish
+                      ? formatDateUtc(
+                          change.metaData.solutionMustFinish.replace(' ', 'T'),
+                          'MM/dd/yyyy'
+                        )
+                      : '',
+                    questionType: null,
+                    referenceLabel: null
+                  }
+                ];
+              }
+            }
 
             return (
               <div className="text-bold">
@@ -210,6 +294,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               'subtaskName'
             );
 
+            // Add the subtask name to the fields to map if it's not already there
             if (!fieldsToMap.find(field => field.fieldName === 'name')) {
               fieldsToMap.unshift({
                 __typename: 'TranslatedAuditField',

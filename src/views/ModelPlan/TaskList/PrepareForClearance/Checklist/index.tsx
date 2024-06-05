@@ -34,8 +34,7 @@ import {
   useUpdateClearanceCharacteristicsMutation,
   useUpdateClearanceOpsEvalAndLearningMutation,
   useUpdateClearanceParticipantsAndProvidersMutation,
-  useUpdateClearancePaymentsMutation,
-  useUpdatePrepareForClearanceMutation
+  useUpdateClearancePaymentsMutation
 } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
