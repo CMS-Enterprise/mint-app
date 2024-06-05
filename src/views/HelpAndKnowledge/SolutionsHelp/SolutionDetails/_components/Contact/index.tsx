@@ -13,7 +13,13 @@ import { formatQueryParam } from '../../Modal';
 
 import './index.scss';
 
-export const Contact = ({ contact }: { contact?: SolutionContactType }) => {
+export const Contact = ({
+  contact,
+  closeRoute
+}: {
+  contact?: SolutionContactType;
+  closeRoute?: string;
+}) => {
   const { t } = useTranslation('helpAndKnowledge');
   const { t: h } = useTranslation('generalReadOnly');
 
@@ -71,12 +77,11 @@ export const Contact = ({ contact }: { contact?: SolutionContactType }) => {
           to={formatQueryParam(
             paramValues,
             'points-of-contact',
-            solutionHelpRoute
+            closeRoute || solutionHelpRoute
           )}
-          className="display-flex flex-align-center"
         >
           {t('moreContacts')}
-          <Icon.ArrowForward className="margin-left-1" />
+          <Icon.ArrowForward className="margin-left-1" style={{ top: '2px' }} />
         </UswdsReactLink>
       )}
     </div>

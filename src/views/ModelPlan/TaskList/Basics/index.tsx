@@ -323,7 +323,7 @@ const BasicsContent = () => {
                           <Field
                             as={TextInput}
                             id="plan-basics-model-name"
-                            maxLength={50}
+                            maxLength={200}
                             name="modelName"
                           />
                         </FieldGroup>
@@ -463,7 +463,7 @@ const BasicsContent = () => {
                                         ModelCategory.TO_BE_DETERMINED && (
                                         <Tooltip
                                           label={
-                                            modelCategoryConfig.optionsLabels?.[
+                                            modelCategoryConfig.tooltips?.[
                                               key
                                             ] || ''
                                           }
@@ -549,7 +549,7 @@ const BasicsContent = () => {
                                         <Tooltip
                                           label={
                                             additionalModelCategoriesConfig
-                                              .optionsLabels?.[group] || ''
+                                              .tooltips?.[group] || ''
                                           }
                                           position="right"
                                         >

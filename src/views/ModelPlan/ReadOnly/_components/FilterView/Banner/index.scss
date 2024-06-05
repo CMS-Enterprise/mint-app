@@ -12,3 +12,11 @@
     padding-left: 1rem;
   }
 }
+
+.group-filter-banner {
+  top: 48px;
+
+  @media screen and (min-width: $desktop) {
+    top: 55px;
+  }
+}

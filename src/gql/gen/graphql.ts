@@ -393,10 +393,11 @@ export type DiscussionRoleSelection = {
 export enum DiscussionUserRole {
   CMS_SYSTEM_SERVICE_TEAM = 'CMS_SYSTEM_SERVICE_TEAM',
   IT_ARCHITECT = 'IT_ARCHITECT',
+  IT_LEAD = 'IT_LEAD',
   LEADERSHIP = 'LEADERSHIP',
   MEDICARE_ADMINISTRATIVE_CONTRACTOR = 'MEDICARE_ADMINISTRATIVE_CONTRACTOR',
   MINT_TEAM = 'MINT_TEAM',
-  MODEL_IT_LEAD = 'MODEL_IT_LEAD',
+  MODEL_LEAD = 'MODEL_LEAD',
   MODEL_TEAM = 'MODEL_TEAM',
   NONE_OF_THE_ABOVE = 'NONE_OF_THE_ABOVE',
   SHARED_SYSTEM_MAINTAINER = 'SHARED_SYSTEM_MAINTAINER'
@@ -607,6 +608,7 @@ export type ModelPlan = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   nameHistory: Array<Scalars['String']['output']>;
+  opSolutionLastModifiedDts: Scalars['Time']['output'];
   operationalNeeds: Array<OperationalNeed>;
   opsEvalAndLearning: PlanOpsEvalAndLearning;
   participantsAndProviders: PlanParticipantsAndProviders;

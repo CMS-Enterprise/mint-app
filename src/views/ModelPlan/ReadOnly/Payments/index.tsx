@@ -191,7 +191,9 @@ const ReadOnlyPayments = ({
       )}
 
       {loading && !data ? (
-        <PageLoading />
+        <div className="height-viewport">
+          <PageLoading />
+        </div>
       ) : (
         <>
           {/* First few sections of Payments data that can be automated */}

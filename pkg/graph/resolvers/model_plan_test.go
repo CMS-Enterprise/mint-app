@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"time"
@@ -164,6 +165,7 @@ func (suite *ResolverSuite) TestModelPlanDataLoader() {
 	suite.NoError(err)
 
 }
+
 func verifyModelPlanLoader(ctx context.Context, modelPlanID uuid.UUID) error {
 
 	plan, err := ModelPlanGetByIDLOADER(ctx, modelPlanID)
@@ -173,6 +175,127 @@ func verifyModelPlanLoader(ctx context.Context, modelPlanID uuid.UUID) error {
 
 	if modelPlanID != plan.ID {
 		return fmt.Errorf("model Plan returned model plan ID %s, expected %s", plan.ID, modelPlanID)
+	}
+	return nil
+}
+
+func (suite *ResolverSuite) TestModelPlanOpSolutionLastModifiedDtsDataLoaderSimpleCreationDts() {
+	plan := suite.createModelPlan("Plan For Plan 1")
+	expectedDts := plan.CreatedDts
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyModelPlanOpSolutionLastModifiedDtsLoader(ctx, plan.ID, expectedDts)
+	})
+	err := g.Wait()
+	suite.NoError(err)
+}
+
+func (suite *ResolverSuite) TestModelPlanOpSolutionLastModifiedDtsDataLoader() {
+	dummyFileReader := bytes.NewReader([]byte("Some test file contents"))
+
+	// Create a model plan
+	plan := suite.createModelPlan("Plan with Documents")
+	document, err := suite.createTestPlanDocument(plan, dummyFileReader)
+	suite.NoError(err)
+
+	operationalNeeds, err := OperationalNeedCollectionGetByModelPlanID(
+		suite.testConfigs.Logger,
+		plan.ID,
+		suite.testConfigs.Store,
+	)
+	suite.NoError(err)
+	suite.GreaterOrEqual(len(operationalNeeds), 1)
+
+	err = suite.verifyModelPlanTrackingDate(plan, operationalNeeds[0].CreatedDts)
+	suite.NoError(err)
+
+	// Create another model plan to create additional unrelated operational needs
+	plan2 := suite.createModelPlan("Alternate Plan with Documents")
+	_, err = suite.createTestPlanDocument(plan2, dummyFileReader)
+	suite.NoError(err)
+
+	// Confirm that the original plan's tracking date is unchanged
+	err = suite.verifyModelPlanTrackingDate(plan, operationalNeeds[0].CreatedDts)
+	suite.NoError(err)
+
+	// Create an operational need for the plan
+	needType := models.OpNKAcquireALearnCont
+	solType := models.OpSKOutlookMailbox
+
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(
+		suite.testConfigs.Logger,
+		plan.ID,
+		needType,
+	)
+	suite.NoError(err)
+
+	changes := map[string]interface{}{}
+	changes["needed"] = false
+
+	// Create a solution for the plan
+	sol, err := OperationalSolutionCreate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		need.ID,
+		&solType,
+		changes,
+		suite.testConfigs.Principal,
+	)
+	suite.NoError(err)
+	suite.NotNil(sol)
+
+	err = suite.verifyModelPlanTrackingDate(plan, sol.CreatedDts)
+	suite.NoError(err)
+
+	// Create a subtask for the solution
+	opSolSubtask := suite.createOperationalSolutionSubtaskWithSolution(sol)
+
+	err = suite.verifyModelPlanTrackingDate(plan, opSolSubtask.CreatedDts)
+	suite.NoError(err)
+
+	documentSolLinks, err := PlanDocumentSolutionLinksCreate(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		sol.ID,
+		[]uuid.UUID{document.ID},
+		suite.testConfigs.Principal,
+	)
+	suite.NoError(err)
+	suite.Len(documentSolLinks, 1)
+
+	err = suite.verifyModelPlanTrackingDate(plan, documentSolLinks[0].CreatedDts)
+	suite.NoError(err)
+}
+
+func (suite *ResolverSuite) verifyModelPlanTrackingDate(
+	plan *models.ModelPlan,
+	expectedDate time.Time,
+) error {
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyModelPlanOpSolutionLastModifiedDtsLoader(ctx, plan.ID, expectedDate)
+	})
+	return g.Wait()
+}
+
+func verifyModelPlanOpSolutionLastModifiedDtsLoader(ctx context.Context, modelPlanID uuid.UUID, expectedDts time.Time) error {
+
+	dts, err := ModelPlanOpSolutionLastModifiedDtsGetByIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	if dts == nil {
+		return fmt.Errorf("model plan returned nil dts")
+	}
+
+	if !expectedDts.Equal(*dts) {
+		return fmt.Errorf("model plan returned last modified dts %s, expected %s", dts, expectedDts)
 	}
 	return nil
 }

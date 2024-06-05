@@ -1,6 +1,6 @@
 describe('Filter Group in Read Only Sections', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+    cy.localLogin({ name: 'MINT' });
   });
 
   it('Viewing the CCW filtered group view', () => {

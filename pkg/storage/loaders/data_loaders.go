@@ -18,15 +18,16 @@ type DataLoaders struct {
 	DiscussionLoader      *WrappedDataLoader
 	DiscussionReplyLoader *WrappedDataLoader
 
-	OperationalNeedLoader          *WrappedDataLoader
-	OperationSolutionLoader        *WrappedDataLoader
-	OperationSolutionSubtaskLoader *WrappedDataLoader
-	UserAccountLoader              *WrappedDataLoader
-	DataReader                     *DataReader
-	ExistingModelLinkLoader        *WrappedDataLoader
-	ExistingModelLinkNameLoader    *WrappedDataLoader
-	ExistingModelLoader            *WrappedDataLoader
-	ModelPlanLoader                *WrappedDataLoader
+	OperationalNeedLoader                    *WrappedDataLoader
+	OperationSolutionLoader                  *WrappedDataLoader
+	OperationSolutionSubtaskLoader           *WrappedDataLoader
+	UserAccountLoader                        *WrappedDataLoader
+	DataReader                               *DataReader
+	ExistingModelLinkLoader                  *WrappedDataLoader
+	ExistingModelLinkNameLoader              *WrappedDataLoader
+	ExistingModelLoader                      *WrappedDataLoader
+	ModelPlanLoader                          *WrappedDataLoader
+	ModelPlanOpSolutionLastModifiedDtsLoader *WrappedDataLoader
 
 	PossibleOperationSolutionContactLoader *WrappedDataLoader
 
@@ -67,6 +68,7 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.ExistingModelLinkNameLoader = newWrappedDataLoader(loaders.GetExistingModelLinkNamesByModelPlanIDAndFieldName)
 	loaders.ExistingModelLoader = newWrappedDataLoader(loaders.GetExistingModelByModelPlanID)
 	loaders.ModelPlanLoader = newWrappedDataLoader(loaders.GetModelPlanByModelPlanID)
+	loaders.ModelPlanOpSolutionLastModifiedDtsLoader = newWrappedDataLoader(loaders.GetModelPlanOpSolutionLastModifiedDtsByModelPlanID)
 
 	loaders.PossibleOperationSolutionContactLoader = newWrappedDataLoader(loaders.PossibleOperationalSolutionContactsGetByPossibleSolutionID)
 

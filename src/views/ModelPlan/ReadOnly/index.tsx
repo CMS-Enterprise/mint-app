@@ -29,6 +29,7 @@ import { isAssessment, isMAC } from 'utils/user';
 import NotFound from 'views/NotFound';
 import PrintPDFWrapper from 'views/PrintPDFWrapper';
 
+import NDABanner from '../../../components/NDABanner';
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import { StatusMessageType } from '../TaskList';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
@@ -91,7 +92,7 @@ const listOfSubpageKey: string[] = [
 
 export const ReadOnlyComponents = (
   modelID: string,
-  isHelpArticle: boolean | undefined
+  isHelpArticle?: boolean
 ): subComponentsProps => {
   return {
     'model-basics': {
@@ -411,6 +412,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         className="model-plan-read-only"
         data-testid="model-plan-read-only"
       >
+        <NDABanner collapsable />
         <Modal
           isOpen={isFilterViewModalOpen}
           closeModal={() => setIsFilterViewModalOpen(false)}
@@ -463,7 +465,10 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           {ModelWarning}
         </GridContainer>
 
-        <SectionWrapper className="model-plan__body-content margin-top-4">
+        <SectionWrapper
+          className="model-plan__body-content margin-top-4"
+          id="scroll-element"
+        >
           <GridContainer>
             {isViewingFilteredGroup ? (
               <FilteredViewBodyContent
@@ -475,14 +480,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                 {!isMobile && (
                   <Grid
                     desktop={{ col: 3 }}
-                    className={classnames('padding-right-4 sticky-nav', {
-                      'sticky-nav__collaborator': hasEditAccess
-                    })}
+                    className="padding-right-4 sticky-nav"
                   >
                     <SideNav
                       subComponents={subComponents}
                       isHelpArticle={isHelpArticle}
-                      openFilterModal={() => setIsFilterViewModalOpen(true)}
                     />
                   </Grid>
                 )}
@@ -511,8 +513,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                             <Grid
                               desktop={{ col: 4 }}
                               className={classnames({
-                                'sticky-nav': !isMobile,
-                                'sticky-nav__collaborator': hasEditAccess
+                                'sticky-nav': !isMobile
                               })}
                             >
                               <ContactInfo

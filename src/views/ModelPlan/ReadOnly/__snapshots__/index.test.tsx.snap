@@ -10,6 +10,88 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
     tabindex="-1"
   >
     <div
+      class="usa-summary-box padding-x-0 padding-bottom-2 padding-top-105 border-0"
+      data-testid="summary-box"
+    >
+      <div
+        class="usa-summary-box__body"
+      >
+        <div
+          class="usa-summary-box__text"
+        >
+          <main
+            class="mint-main-content"
+            id="main-content"
+            role="main"
+            tabindex="-1"
+          >
+            <div
+              class="grid-container"
+              data-testid="gridContainer"
+            >
+              <div
+                class="desktop:grid-col-12"
+                data-testid="grid"
+              >
+                <div
+                  class="display-flex"
+                >
+                  <svg
+                    class="usa-icon usa-icon--size-4 minw-4"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                    />
+                  </svg>
+                  <div
+                    class="margin-left-105"
+                  >
+                    <h3
+                      class="margin-0 margin-bottom-1"
+                    >
+                      CMS confidential information—for official use only—not to be disseminated.
+                    </h3>
+                    <div
+                      class="mint-collapsable-link"
+                    >
+                      <button
+                        aria-controls="pre-decisional-collapse"
+                        aria-expanded="false"
+                        class="usa-button usa-button--unstyled mint-no-print"
+                        data-testid="collapsable-link"
+                        type="button"
+                      >
+                        Read more
+                        <svg
+                          class="usa-icon top-05 margin-right-05"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+    <div
       class="usa-summary-box padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
       data-testid="read-only-model-summary"
     >
@@ -184,7 +266,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="position-sticky z-100 top-0 bg-primary-darker text-white padding-105"
+      class="position-sticky z-100 bg-primary-darker text-white padding-105 group-filter-banner"
       data-testid="group-filter-banner"
     >
       <div
@@ -339,6 +421,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
     <div
       class="mint-section model-plan__body-content margin-top-4"
       data-testid="section-wrapper"
+      id="scroll-element"
     >
       <div
         class="grid-container"
@@ -349,7 +432,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
           data-testid="grid"
         >
           <div
-            class="desktop:grid-col-3 padding-right-4 sticky-nav sticky-nav__collaborator"
+            class="desktop:grid-col-3 padding-right-4 sticky-nav"
             data-testid="grid"
           >
             <div
@@ -638,7 +721,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                                   </p>
                                 </div>
                                 <div
-                                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                                 >
                                   State & Community-Based
                                   <span
@@ -910,7 +993,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               </p>
                             </div>
                             <div
-                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                             >
                               There is not enough candy
                             </div>
@@ -937,7 +1020,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               </p>
                             </div>
                             <div
-                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                             >
                               To get more candy
                             </div>
@@ -964,7 +1047,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               </p>
                             </div>
                             <div
-                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                             >
                               The great candy machine
                             </div>
@@ -991,7 +1074,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                               </p>
                             </div>
                             <div
-                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                             >
                               The machine doesn't work yet
                             </div>
@@ -1206,7 +1289,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             </p>
                           </div>
                           <div
-                            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                           >
                             No
                           </div>
@@ -1229,7 +1312,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                             </p>
                           </div>
                           <div
-                            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                           >
                             This can't be phased in
                           </div>
@@ -1238,7 +1321,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="desktop:grid-col-4 sticky-nav sticky-nav__collaborator"
+                    class="desktop:grid-col-4 sticky-nav"
                     data-testid="grid"
                   >
                     <div
