@@ -23,17 +23,22 @@ const NDABanner = ({ collapsable, landing, className }: NDABannerType) => {
 
   const HeadingLevel = React.createElement(
     landing ? 'h4' : 'h3',
-    { className: 'margin-0' },
+    { className: 'margin-0 margin-bottom-1' },
     t('header')
   );
 
   return (
-    <SummaryBox className={classNames('padding-1 border-0', className)}>
+    <SummaryBox
+      className={classNames(
+        'padding-x-0 padding-bottom-2 padding-top-105 border-0',
+        className
+      )}
+    >
       <SummaryBoxContent>
         <MainContent>
           <GridContainer className={classNames({ 'padding-0': landing })}>
             <Grid desktop={{ col: 12 }}>
-              <div className="display-flex padding-top-2">
+              <div className="display-flex">
                 <Icon.Info size={4} className="minw-4" />
                 <div className="margin-left-105">
                   {HeadingLevel}
@@ -46,12 +51,18 @@ const NDABanner = ({ collapsable, landing, className }: NDABannerType) => {
                       labelPosition="bottom"
                       styleLeftBar={false}
                       iconPosition="left"
-                      toggleClassName="margin-bottom-2"
+                      childClassName="margin-y-0 padding-y-0"
                     >
-                      <p className="padding-0 margin-0">{t('body')}</p>
+                      <p className="margin-top-0 margin-bottom-1">
+                        <span className="text-bold">{t('caveat')}</span>{' '}
+                        <span>{t('body')}</span>
+                      </p>
                     </CollapsableLink>
                   ) : (
-                    <p>{t('body')}</p>
+                    <p>
+                      <span className="text-bold">{t('caveat')}</span>{' '}
+                      <span>{t('body')}</span>
+                    </p>
                   )}
                 </div>
               </div>

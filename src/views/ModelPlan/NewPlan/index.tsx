@@ -125,7 +125,7 @@ const NewPlanContent = () => {
                       <Field
                         as={TextInput}
                         id="new-plan-model-name"
-                        maxLength={50}
+                        maxLength={200}
                         name="modelName"
                       />
                     </FieldGroup>

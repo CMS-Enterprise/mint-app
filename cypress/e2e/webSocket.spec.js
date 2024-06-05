@@ -2,7 +2,8 @@ import { TaskListSection } from '../../src/gql/gen/graphql';
 
 describe('Web Socket Connections', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/');
   });
 
   it('inits a ws connection and locks basics', () => {

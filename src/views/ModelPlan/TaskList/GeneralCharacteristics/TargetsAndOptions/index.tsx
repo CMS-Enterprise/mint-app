@@ -453,13 +453,12 @@ const TargetsAndOptions = () => {
                             );
                           })}
                         </FieldGroup>
-
-                        <AddNote
-                          id="plan-characteristics-geographies-targeted-note"
-                          field="geographiesTargetedNote"
-                        />
                       </>
                     )}
+                    <AddNote
+                      id="plan-characteristics-geographies-targeted-note"
+                      field="geographiesTargetedNote"
+                    />
                   </FieldGroup>
 
                   <FieldGroup

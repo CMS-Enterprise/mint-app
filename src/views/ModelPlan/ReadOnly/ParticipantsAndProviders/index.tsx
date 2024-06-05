@@ -66,7 +66,9 @@ const ReadOnlyParticipantsAndProviders = ({
       )}
 
       {loading && !data ? (
-        <PageLoading />
+        <div className="height-viewport">
+          <PageLoading />
+        </div>
       ) : (
         <ReadOnlyBody
           data={allparticipantsAndProvidersData}
