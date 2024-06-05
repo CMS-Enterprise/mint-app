@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -150,11 +152,76 @@ func OperationalSolutionSubtaskMetaDataGet(ctx context.Context, store *storage.S
 
 }
 
+// DocumentSolutionLinkMetaDataGet returns meta data information
+func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, documentSolutionLinkID uuid.UUID, opSolutionID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaDocumentSolutionLink, *models.TranslatedAuditMetaDataType, error) {
+	// Handle the fields carefully here, this is a deletable entry, so we will lose the ability to query on delete
+	logger := appcontext.ZLogger(ctx)
+
+	var documentUUID uuid.UUID
+	var documentName *string
+
+	documentIDChange, fieldPresent := changesFields["document_id"]
+	if fieldPresent {
+		var err error
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			documentUUID, err = parseInterfaceToUUID(documentIDChange.Old)
+			if err != nil {
+				return nil, nil, err
+			}
+		} else {
+			documentUUID, err = parseInterfaceToUUID(documentIDChange.New)
+			if err != nil {
+				return nil, nil, err
+			}
+		}
+		if err != nil {
+			return nil, nil, fmt.Errorf("unable to parse the document ID for this document solution link. err: %w", err)
+		}
+	}
+	// get the document
+	document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentUUID)
+	if err != nil {
+		//Changes: (Meta) Handle if the document doesn't exist. If that is the case (EG no rows in result set)
+		return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", err)
+	} else {
+		//Changes: (Meta)
+		documentName = &document.FileName
+	}
+
+	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionID)
+	if err != nil {
+		return nil, nil, fmt.Errorf("unable to get operational solution with num of Subtasks for document solution link audit metadata. err %w", err)
+	}
+
+	opNeed, err := store.OperationalNeedGetByID(logger, opSolutionWithSubtasks.OperationalNeedID)
+	if err != nil {
+		return nil, nil, fmt.Errorf("unable to get operational need for document solution link audit metadata. err %w", err)
+	}
+
+	meta := models.NewTranslatedAuditMetaDocumentSolutionLink(
+		"document_solution_link",
+		0,
+		opSolutionWithSubtasks.GetName(),
+		opSolutionWithSubtasks.OtherHeader,
+		opSolutionWithSubtasks.GetIsOther(),
+		opNeed.GetName(),
+		opNeed.GetIsOther(),
+		document.ID,
+		documentName,
+	)
+	//Changes: (Meta) We need to get other document information, and it needs to be translated.
+
+	metaType := models.TAMetaOperationalSolution
+
+	return &meta, &metaType, nil
+}
+
 func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *models.AuditChange, operation models.DatabaseOperation) (models.TranslatedAuditMetaData, *models.TranslatedAuditMetaDataType, error) {
 	// Changes: (ChChCh Changes!) Consider, do we need to handle if something is deleted differently? There might not be fetch-able information...
 	switch audit.TableName {
-	// Changes: (Meta) add unit tests for these.
 	// Changes: (Testing) add a test for each of these.
+
+	//Changes: (Meta) refactor all of these to explicitly take UUIDs, since primary and foreignKey are always UUIDs and not interfaces. We don't need to parse them
 	case "discussion_reply":
 		metaData, err := DiscussionReplyMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.ModifiedDts)
 		metaDataType := models.TAMetaDiscussionReply
@@ -170,17 +237,10 @@ func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *m
 		metaData, err := OperationalSolutionSubtaskMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.Fields, operation)
 		metaDataType := models.TAMetaOperationalSolutionSubtask
 		return metaData, &metaDataType, err
+	case "document_solution_link":
+		metaData, metaDataType, err := DocumentSolutionLinkMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.Fields, operation)
+		return metaData, metaDataType, err
 
-		// Changes: (Meta) Add meta data for Operational Solution
-		// a. Solution name
-		// i. Maybe key? (probably not needed)
-		// 	Name other too?
-		// number of subtasks?
-
-		// Changes: (Meta) Add meta data for Operational Solution Subtask
-		// 1. Operational Solution info (from ID)
-		// 2. Need information?
-		// 3. other?
 		// Changes: (Meta)
 		// Document Link
 		// 1. all the document information each time ( because )

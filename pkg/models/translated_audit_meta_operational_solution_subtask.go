@@ -16,7 +16,7 @@ type TranslatedAuditMetaOperationalSolutionSubtask struct {
 	SolutionName        string  `json:"solutionName"`
 	SolutionOtherHeader *string `json:"solutionOtherHeader"`
 	NumberOfSubtasks    int     `json:"numberOfSubtasks"`
-	SolutionIsOther     bool    `json:"isOther"`
+	SolutionIsOther     bool    `json:"solutionIsOther"`
 	SubtaskName         string  `json:"subtaskName"`
 	// Changes: (Meta) do we need the otherHeader in the meta data as well?
 }
