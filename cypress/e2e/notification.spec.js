@@ -248,9 +248,11 @@ describe('Notification Center', () => {
       .should('have.value', 'Cypress Model Plan');
 
     cy.contains('button', 'Next').click();
+    cy.url().should('include', '/collaborators');
 
     // Navigate back to Notification Center
     cy.get('[data-testid="navmenu__notification"]').first().click();
+    cy.url().should('include', '/notifications');
 
     cy.get('[data-testid="individual-notification"]').contains(
       'MINT Doe created a Model Plan: Cypress Model Plan.'
