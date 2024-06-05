@@ -70,6 +70,14 @@ export default gql(/* GraphQL */ `
                 }
                 optionalMessage
               }
+              ... on NewModelPlanActivityMeta {
+                version
+                type
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
+              }
               ... on DailyDigestCompleteActivityMeta {
                 version
                 type
