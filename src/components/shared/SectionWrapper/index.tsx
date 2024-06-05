@@ -9,6 +9,7 @@ type SectionWrapperProps = {
   border?: boolean;
   borderBottom?: boolean;
   borderTop?: boolean;
+  id?: string;
 };
 
 const SectionWrapper = ({
@@ -16,7 +17,8 @@ const SectionWrapper = ({
   children,
   border,
   borderBottom,
-  borderTop
+  borderTop,
+  id
 }: SectionWrapperProps) => {
   const classNames = classnames(
     'mint-section',
@@ -28,7 +30,7 @@ const SectionWrapper = ({
     className
   );
   return (
-    <div data-testid="section-wrapper" className={classNames}>
+    <div data-testid="section-wrapper" className={classNames} id={id}>
       {children}
     </div>
   );

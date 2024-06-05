@@ -17,10 +17,11 @@ export const replies: TranslationReplies = {
     options: {
       CMS_SYSTEM_SERVICE_TEAM: 'CMS System/Service Team',
       IT_ARCHITECT: 'IT Architect',
+      IT_LEAD: 'IT Lead',
       LEADERSHIP: 'Leadership',
       MEDICARE_ADMINISTRATIVE_CONTRACTOR: 'Medicare Administrative Contractor',
       MINT_TEAM: 'MINT Team',
-      MODEL_IT_LEAD: 'Model IT Lead',
+      MODEL_LEAD: 'Model Lead',
       MODEL_TEAM: 'Model Team',
       SHARED_SYSTEM_MAINTAINER: 'Shared System Maintainer',
       NONE_OF_THE_ABOVE: 'None of the above'

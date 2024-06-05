@@ -244,7 +244,7 @@ const App = () => {
   return (
     <>
       <div className="usa-overlay" />
-      <button type="button" className="skipnav" onClick={handleSkipNav}>
+      <button type="button" className="skipnav z-top" onClick={handleSkipNav}>
         Skip to main content
       </button>
       <BrowserRouter>

@@ -101,8 +101,8 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
     heading: 'Are you sure you want to remove {{-collaborator}}?',
     subheading:
       '​​This team member will not be able to edit this Model Plan after they have been removed.',
-    confirm: 'Yes, remove team member',
-    no: 'No, keep team member',
+    confirm: 'Remove team member',
+    no: 'Keep team member',
     remove: 'Remove'
   },
   selfModal: {

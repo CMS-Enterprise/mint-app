@@ -1,6 +1,7 @@
 describe('Email Unfollow Link', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'ABCD', role: 'MINT_USER_NONPROD' });
+    cy.localLogin({ name: 'ABCD' });
+    cy.visit('/');
   });
 
   it('follows a model plan and then unfollow via email link', () => {

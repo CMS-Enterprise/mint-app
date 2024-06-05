@@ -166,7 +166,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   Note beneficiary
                 </div>
@@ -193,7 +193,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   Yes
                   <span
@@ -228,7 +228,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   Treat note
                 </div>
@@ -255,7 +255,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   No
                 </div>
@@ -285,7 +285,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   Exclude note
                 </div>
@@ -320,7 +320,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                       </p>
                     </div>
                     <div
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                     >
                       1234
                     </div>
@@ -348,7 +348,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                       </p>
                     </div>
                     <div
-                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                     >
                       Completely confident
                     </div>
@@ -380,7 +380,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   Note of confidence
                 </div>
@@ -442,7 +442,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   Note selection
                 </div>
@@ -513,7 +513,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   Note frequency
                 </div>
@@ -584,7 +584,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   Note frequency
                 </div>
@@ -611,7 +611,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   Yes, we expect to develop policies to manage the overlaps
                 </div>
@@ -638,7 +638,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   Note overlap
                 </div>
@@ -709,7 +709,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   </p>
                 </div>
                 <div
-                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                  class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                 >
                   Precedence note
                 </div>
