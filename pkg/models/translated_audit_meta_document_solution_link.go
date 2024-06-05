@@ -19,8 +19,18 @@ type TranslatedAuditMetaDocumentSolutionLink struct {
 	SolutionOtherHeader *string `json:"solutionOtherHeader"`
 	SolutionIsOther     bool    `json:"solutionIsOther"`
 
-	DocumentID   uuid.UUID `json:"documentID"`
-	DocumentName *string   `json:"documentName"`
+	DocumentID         uuid.UUID `json:"documentID"`
+	DocumentName       *string   `json:"documentName"`
+	DocumentType       *string   `json:"documentType"`
+	DocumentVisibility *string   `json:"documentVisibility"`
+	// Changes: (Meta) if required add what other solutions documents were connected
+}
+
+func (tam *TranslatedAuditMetaDocumentSolutionLink) SetOptionalDocumentFields(documentName string, documentType string, documentVisibility string) {
+	tam.DocumentName = &documentName
+	tam.DocumentType = &documentType
+	tam.DocumentVisibility = &documentVisibility
+
 }
 
 // NewTranslatedAuditMetaDocumentSolutionLink creates a New TranslatedAuditMetaDocumentSolutionLink
@@ -34,7 +44,6 @@ func NewTranslatedAuditMetaDocumentSolutionLink(tableName string,
 	needIsOther bool,
 
 	documentID uuid.UUID,
-	documentName *string,
 ) TranslatedAuditMetaDocumentSolutionLink {
 
 	return TranslatedAuditMetaDocumentSolutionLink{
@@ -45,8 +54,7 @@ func NewTranslatedAuditMetaDocumentSolutionLink(tableName string,
 		NeedName:                      needName,
 		NeedIsOther:                   needIsOther,
 
-		DocumentName: documentName,
-		DocumentID:   documentID,
+		DocumentID: documentID,
 	}
 }
 

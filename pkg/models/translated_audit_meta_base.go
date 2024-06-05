@@ -134,6 +134,14 @@ func parseRawTranslatedAuditMetaData(metaDataType *TranslatedAuditMetaDataType, 
 			}
 			return &meta, nil
 		}
+	case TAMetaDocumentSolutionLink:
+		{
+			meta := TranslatedAuditMetaDocumentSolutionLink{}
+			if err := json.Unmarshal(rawData, &meta); err != nil {
+				return nil, err
+			}
+			return &meta, nil
+		}
 
 	default:
 		return nil, fmt.Errorf("metaDataType %s is not supported. There is no defined deserialization method", *metaDataType)

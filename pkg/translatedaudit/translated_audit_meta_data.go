@@ -158,7 +158,6 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	logger := appcontext.ZLogger(ctx)
 
 	var documentUUID uuid.UUID
-	var documentName *string
 
 	documentIDChange, fieldPresent := changesFields["document_id"]
 	if fieldPresent {
@@ -183,10 +182,11 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	if err != nil {
 		//Changes: (Meta) Handle if the document doesn't exist. If that is the case (EG no rows in result set)
 		return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", err)
-	} else {
-		//Changes: (Meta)
-		documentName = &document.FileName
 	}
+	// else {
+	// 	//Changes: (Meta)
+	// 	documentName = &document.FileName
+	// }
 
 	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionID)
 	if err != nil {
@@ -206,12 +206,16 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 		opSolutionWithSubtasks.GetIsOther(),
 		opNeed.GetName(),
 		opNeed.GetIsOther(),
-		document.ID,
-		documentName,
+		documentUUID,
 	)
+	if document != nil {
+		// Changes: (Meta) all these document fields will also need to be translated
+		meta.SetOptionalDocumentFields(document.FileName, string(document.DocumentType), fmt.Sprint(document.Restricted))
+	}
+
 	//Changes: (Meta) We need to get other document information, and it needs to be translated.
 
-	metaType := models.TAMetaOperationalSolution
+	metaType := models.TAMetaDocumentSolutionLink
 
 	return &meta, &metaType, nil
 }
@@ -237,7 +241,7 @@ func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *m
 		metaData, err := OperationalSolutionSubtaskMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.Fields, operation)
 		metaDataType := models.TAMetaOperationalSolutionSubtask
 		return metaData, &metaDataType, err
-	case "document_solution_link":
+	case "plan_document_solution_link":
 		metaData, metaDataType, err := DocumentSolutionLinkMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.Fields, operation)
 		return metaData, metaDataType, err
 
