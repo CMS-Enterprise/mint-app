@@ -63,6 +63,22 @@ func (hmb TranslatedAuditMetaDocumentSolutionLink) isAuditMetaData() {}
 
 // Value allows us to satisfy the valuer interface so we can write to the database
 func (hmb TranslatedAuditMetaDocumentSolutionLink) Value() (driver.Value, error) {
+	//Changes: (Meta) should we see about leaving out null values when we serialize to save database space? Would that create an issue?, currently null values still get serialized
+	/*
+		{
+			"version": 0,
+			"needName": "To eat Ice Cream",
+			"tableName": "document_solution_link",
+			"documentID": "106cc0b8-2249-4503-8b46-e075904b5f76",
+			"needIsOther": true,
+			"documentName": null,
+			"documentType": null,
+			"solutionName": "My special solution 2",
+			"solutionIsOther": true,
+			"documentVisibility": null,
+			"solutionOtherHeader": "The Happy Helper Team"
+		}
+	*/
 	j, err := json.Marshal(hmb)
 	return j, err
 }

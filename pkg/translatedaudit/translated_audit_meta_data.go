@@ -180,13 +180,13 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	// get the document
 	document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentUUID)
 	if err != nil {
-		//Changes: (Meta) Handle if the document doesn't exist. If that is the case (EG no rows in result set)
-		return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", err)
+		if err.Error() != "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
+			//Changes: (Meta) Handle if the document doesn't exist. If that is the case (EG no rows in result set)
+			return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", err)
+		}
 	}
-	// else {
-	// 	//Changes: (Meta)
-	// 	documentName = &document.FileName
-	// }
+
+	// 	//Changes: (Meta) should we check for the error differently? see if it is a wrapped error?
 
 	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionID)
 	if err != nil {

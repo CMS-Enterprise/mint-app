@@ -142,27 +142,31 @@ func getOperationalSolutionForeignKeyReference(ctx context.Context, store *stora
 	return solution.ID.String(), nil
 }
 
-func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
-		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the plan document reference. err %w", err)
+		return nil, fmt.Errorf("unable to convert the provided key to a UUID to get the plan document reference. err %w", err)
 	}
 	logger := appcontext.ZLogger(ctx)
 
 	// get the document
 	document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, uuidKey)
 	if err != nil {
-		return "", fmt.Errorf("there was an issue translating the plan document foreign key reference. err %w", err)
+		if err.Error() != "sql: no rows in result set" {
+			// Expect There To Be Null results, only error for other store errors
+			return nil, fmt.Errorf("there was an issue getting the plan document  foreign key reference . err %w", err)
+		}
 	}
 
 	if document == nil {
-		return "", fmt.Errorf("the plan document for %s was not returned for this foreign key translation", uuidKey)
+		// a document can be deleted and then translated, in that case, don't translate the value, but don't fail
+		return nil, nil
 	}
 
 	//Changes: (fk) Revisit this, do we need to return something besides FileName? Perhaps a link? Name is probably good, but verify
 
-	return document.FileName, nil
+	return &document.FileName, nil
 }
 func getModelPlanForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
 	// cast interface to UUID

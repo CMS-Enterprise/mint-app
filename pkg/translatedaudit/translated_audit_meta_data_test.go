@@ -174,3 +174,7 @@ func (suite *TAuditSuite) TestOperationalSolutionSubtaskMetaDataGet() {
 	})
 
 }
+
+func (suite *TAuditSuite) TestDocumentSolutionLinkMetaDataGet() {
+
+}
