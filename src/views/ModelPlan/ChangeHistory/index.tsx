@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +24,6 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
-import GlobalClientFilter from 'components/TableFilter';
 import i18n from 'i18n';
 import { formatDateUtc } from 'utils/date';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -31,12 +31,11 @@ import NotFound from 'views/NotFound';
 
 import BatchRecord from './components/BatchRecord';
 import ChangeRecord from './components/ChangeRecord';
+import Search from './components/Search';
 import {
-  // condenseExistingLinkBatchAsSingle,
   filterQueryAudits,
   handleSortOptions,
   shouldRenderExistingLinkBatch,
-  // shouldRenderExistingLinkBatchAsSingle,
   sortAllChanges,
   sortChangesByDay
 } from './util';
@@ -93,18 +92,22 @@ const ChangeHistory = () => {
     }
   });
 
-  const changes = [...(data?.translatedAuditCollection || [])];
+  const sortedChanges = useMemo(() => {
+    const changes = [...(data?.translatedAuditCollection || [])];
 
-  const sortedChanges = sortAllChanges(changes);
+    return sortAllChanges(changes);
+  }, [data?.translatedAuditCollection]);
 
   // Contains the sorted changes based on select/sort option
   const [sortedAudits, setSortedAudits] = useState([...sortedChanges]);
-
   // Contains the current set of changes to display, including search and sort
   const [auditChanges, setAuditChanges] = useState([...sortedChanges]);
-
-  // Contains sort state of select options
+  // Contains sort state of select option dropdown
   const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
+
+  // Search/query configuration
+  const [query, setQuery] = useState<string>('');
+  const [resultsNum, setResultsNum] = useState<number>(0);
 
   // Pagination Configuration
   const itemsPerPage = 10;
@@ -121,10 +124,6 @@ const ChangeHistory = () => {
     auditChanges.slice(pageOffset, endOffset)
   );
 
-  // Search/query configuration
-  const [query, setQuery] = useState<string>('');
-  const [resultsNum, setResultsNum] = useState<number>(0);
-
   // searchChanges is a function to filter audits based on query
   const searchChanges = useCallback(filterQueryAudits, []);
 
@@ -133,6 +132,7 @@ const ChangeHistory = () => {
     if (query.trim()) {
       const filteredAudits = searchChanges(query, sortedAudits);
 
+      // Sets audit changes based on the filtered audits
       setAuditChanges(filteredAudits);
       setResultsNum(filteredAudits.length);
     } else {
@@ -199,7 +199,9 @@ const ChangeHistory = () => {
   }, [sort]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Group changes by day
-  const changesByDay = sortChangesByDay(currentItems);
+  const changesByDay = useMemo(() => sortChangesByDay(currentItems), [
+    currentItems
+  ]);
 
   if (error) {
     return <NotFound />;
@@ -253,39 +255,16 @@ const ChangeHistory = () => {
             <div className="margin-top-2 margin-bottom-4">
               <Grid row>
                 <Grid tablet={{ col: 6 }}>
-                  {/* Search bar */}
-                  <GlobalClientFilter
-                    setGlobalFilter={setQuery}
-                    tableID="table-id"
-                    tableName="table-name"
-                    className="width-full maxw-mobile-lg margin-bottom-3 padding-top-1"
-                    initialFilter={queryParam || ''}
+                  {/* Search bar and results info */}
+                  <Search
+                    query={query}
+                    resultsNum={resultsNum}
+                    itemsPerPage={itemsPerPage}
+                    pageOffset={pageOffset}
+                    setQuery={setQuery}
+                    results={auditChanges}
+                    currentResults={currentItems}
                   />
-
-                  {/* Results text */}
-                  {query && (
-                    <div className="display-flex padding-bottom-2">
-                      <p className="margin-y-0">
-                        {auditChanges.length > itemsPerPage
-                          ? t('resultsInfo', {
-                              resultsNum: (pageOffset / itemsPerPage) * 10 + 1,
-                              count:
-                                (pageOffset / itemsPerPage) * 10 +
-                                currentItems?.length,
-                              total: resultsNum,
-                              query: 'for'
-                            })
-                          : t('resultsNoInfo', {
-                              resultsNum: auditChanges.length,
-                              count: auditChanges.length,
-                              query: 'for'
-                            })}
-                        {query && (
-                          <span className="text-bold">{` "${query}"`}</span>
-                        )}
-                      </p>
-                    </div>
-                  )}
                 </Grid>
 
                 {/* Select sort display */}
@@ -327,6 +306,7 @@ const ChangeHistory = () => {
                 </Grid>
               </Grid>
             </div>
+
             {/* No results from query */}
             {auditChanges.length === 0 && query && (
               <Alert
@@ -337,6 +317,7 @@ const ChangeHistory = () => {
                 {t('noResults.body')}
               </Alert>
             )}
+
             {/* No audits alert */}
             {auditChanges.length === 0 && !query && (
               <Alert type="info" slim className="margin-bottom-2">
@@ -362,31 +343,18 @@ const ChangeHistory = () => {
                       );
                     }
 
-                    const singleChange = [...changeRecords];
-
-                    // if (shouldRenderExistingLinkBatchAsSingle(changeRecords)) {
-                    //   const parentChange = condenseExistingLinkBatchAsSingle(
-                    //     singleChange
-                    //   );
-
-                    //   return (
-                    //     <ChangeRecord
-                    //       changeRecord={parentChange[0]}
-                    //       key={parentChange[0].id}
-                    //     />
-                    //   );
-                    // }
-
+                    // Otherwise, render as a single change
                     return (
                       <ChangeRecord
-                        changeRecord={singleChange[0]}
-                        key={singleChange[0].id}
+                        changeRecord={changeRecords[0]}
+                        key={changeRecords[0].id}
                       />
                     );
                   })}
                 </div>
               );
             })}
+
             {/* Pagination */}
             {pageCount > 1 && (
               <ReactPaginate

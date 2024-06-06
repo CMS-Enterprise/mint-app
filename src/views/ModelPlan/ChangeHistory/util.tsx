@@ -151,12 +151,7 @@ export const batchedTables: string[] = [
 export const doubleBatchedTables: string[] = [
   'plan_document',
   'plan_document_solution_link'
-  // 'plan_general_characteristics',
-  // 'existing_model_link'
 ];
-
-// // Tables where audits combined as if the same audit.  - ex: Page 1 general characteristics
-// export const renderBatchAsSingle: string[] = ['plan_general_characteristics'];
 
 // Fields that require their own batch - not to be batch with anything else
 export const skipBatchByField: Record<string, string[]> = {
@@ -170,6 +165,7 @@ export const skipBatchByField: Record<string, string[]> = {
   ]
 };
 
+// Fields that are connected to other tables
 export const connectedFields: HiddenFieldTypes[] = [
   {
     table: 'plan_document_solution_link',
@@ -275,95 +271,8 @@ export const condenseLinkingTableChanges = (changes: ChangeRecordType[]) => {
 export const shouldRenderExistingLinkBatch = (
   changeRecords: ChangeRecordType[]
 ) => batchedTables.includes(changeRecords[0].tableName);
-// && !changeRecords.find(change => renderBatchAsSingle.includes(change.tableName));
 
-// // Return only desired change where the batch is renderBatchAsSingle
-// export const shouldRenderExistingLinkBatchAsSingle = (
-//   changeRecords: ChangeRecordType[]
-// ) =>
-//   changeRecords.length > 1 &&
-//   changeRecords.every(change => doubleBatchedTables.includes(change.tableName));
-
-// export const condenseExistingLinkBatchAsSingle = (
-//   changeRecords: ChangeRecordType[]
-// ) => {
-//   const { parentChange, linkedTableChanges } = [...changeRecords].reduce(
-//     (acc: Record<string, ChangeRecordType[]>, change) => {
-//       if (renderBatchAsSingle.includes(change.tableName)) {
-//         const parentChangeRecord = { ...change };
-//         const parentTranslatedFields = [...change.translatedFields];
-//         parentChangeRecord.translatedFields = parentTranslatedFields;
-//         acc.parentChange.push(parentChangeRecord);
-//       } else {
-//         acc.linkedTableChanges.push(change);
-//       }
-//       return acc;
-//     },
-//     { parentChange: [], linkedTableChanges: [] }
-//   );
-
-//   if (parentChange.length === 0) {
-//     parentChange.push({
-//       id: changeRecords[0].id,
-//       tableName: 'existing_model_link',
-//       date: changeRecords[0].date,
-//       action: DatabaseOperation.INSERT,
-//       actorName: changeRecords[0].actorName,
-//       translatedFields: [],
-//       metaData: null,
-//       __typename: 'TranslatedAudit'
-//     });
-//   }
-
-//   const linkedTableChangesToMerge: Record<string, string[]> = {};
-
-//   // const isRemoving = linkedTableChanges[0].action === DatabaseOperation.DELETE;
-
-//   // console.log(linkedTableChanges);
-
-//   linkedTableChanges.forEach(change => {
-//     const questionName =
-//       change.translatedFields.find(field => field.fieldName === 'field_name')
-//         ?.newTranslated ||
-//       change.translatedFields.find(field => field.fieldName === 'field_name')
-//         ?.oldTranslated;
-
-//     const questionAnswer =
-//       change.translatedFields.find(
-//         field => field.fieldName === 'existing_model_id'
-//       )?.newTranslated ||
-//       change.translatedFields.find(
-//         field => field.fieldName === 'existing_model_id'
-//       )?.oldTranslated;
-
-//     if (!linkedTableChangesToMerge[questionName]) {
-//       linkedTableChangesToMerge[questionName] = [questionAnswer];
-//     } else {
-//       linkedTableChangesToMerge[questionName].push(questionAnswer);
-//     }
-//   });
-
-//   Object.keys(linkedTableChangesToMerge).forEach((question, index) => {
-//     parentChange[0].translatedFields.push({
-//       id: linkedTableChanges[index].id,
-//       changeType: AuditFieldChangeType.UPDATED,
-//       dataType: TranslationDataType.STRING,
-//       fieldName: 'field_name',
-//       fieldNameTranslated: question,
-//       referenceLabel: null,
-//       questionType: null,
-//       notApplicableQuestions: null,
-//       old: null,
-//       oldTranslated: null,
-//       new: 'answers',
-//       newTranslated: linkedTableChangesToMerge[question].join(', '),
-//       __typename: 'TranslatedAuditField'
-//     });
-//   });
-
-//   return parentChange;
-// };
-
+// Returns metadata for both subtasks and solutions
 export const getOperationalMetadata = (
   type: 'solution' | 'subtask',
   metaData: TranslatedAuditMetaData | undefined | null,
@@ -385,6 +294,11 @@ export const getOperationalMetadata = (
   return '';
 };
 
+/* 
+  Returns the operation status of the solution.  
+  Solutions are not deleted, they are marked as not needed/needed
+  Mimics the database operation based on the neeeded property
+*/
 export const getSolutionOperationStatus = (
   change: ChangeRecordType
 ): DatabaseOperation => {
@@ -403,9 +317,11 @@ export const getSolutionOperationStatus = (
   return change.action;
 };
 
+// Looks at the database operation to determine if the new or old value is needed
 export const documentChange = (docType: string | undefined) =>
   docType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
 
+// Returns the document name based on the action
 export const documentName = (change: ChangeRecordType) =>
   change.translatedFields.find(field => field.fieldName === 'file_name')?.[
     documentChange(change.action)
