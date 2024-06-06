@@ -19,28 +19,6 @@ type CreateOperationalSolutionSubtaskInput struct {
 	Status models.OperationalSolutionSubtaskStatus `json:"status"`
 }
 
-type DateChange struct {
-	IsChanged     bool       `json:"isChanged"`
-	Field         string     `json:"field"`
-	IsRange       bool       `json:"isRange"`
-	OldDate       *time.Time `json:"oldDate,omitempty"`
-	NewDate       *time.Time `json:"newDate,omitempty"`
-	OldRangeStart *time.Time `json:"oldRangeStart,omitempty"`
-	OldRangeEnd   *time.Time `json:"oldRangeEnd,omitempty"`
-	NewRangeStart *time.Time `json:"newRangeStart,omitempty"`
-	NewRangeEnd   *time.Time `json:"newRangeEnd,omitempty"`
-}
-
-type DatesChangedActivityMeta struct {
-	Version     int                 `json:"version"`
-	Type        models.ActivityType `json:"type"`
-	ModelPlanID uuid.UUID           `json:"modelPlanID"`
-	ModelPlan   *models.ModelPlan   `json:"modelPlan"`
-	DateChanges []*DateChange       `json:"dateChanges"`
-}
-
-func (DatesChangedActivityMeta) IsActivityMetaData() {}
-
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
