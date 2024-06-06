@@ -1,4 +1,5 @@
 import {
+  AuditFieldChangeType,
   DatabaseOperation,
   ExisitingModelLinkFieldType,
   GetChangeHistoryQuery,
@@ -16,6 +17,11 @@ import { formatDateUtc, formatTime } from 'utils/date';
 export type ChangeRecordType = NonNullable<
   GetChangeHistoryQuery['translatedAuditCollection']
 >[0];
+
+type HiddenFieldTypes = {
+  table: TranslationTables;
+  fields: string[];
+};
 
 // Identifies the type of change
 export type ChangeType =
@@ -101,11 +107,6 @@ export const isSubtaskWithMetaData = (
 };
 
 export const datesWithNoDay: string[] = ['date_implemented'];
-
-type HiddenFieldTypes = {
-  table: TranslationTables;
-  fields: string[];
-};
 
 // Fields that are not displayed in the change history
 const hiddenFields: HiddenFieldTypes[] = [
@@ -198,7 +199,9 @@ export const linkingTableQuestions = (
 };
 
 // Condenses the linking table changes into a single change record per question
-export const condenseLinkingTableChanges = (changes: ChangeRecordType[]) => {
+export const condenseLinkingTableChanges = (
+  changes: ChangeRecordType[]
+): ChangeRecordType[] => {
   const condensedChanges: Record<
     ExisitingModelLinkFieldType,
     ChangeRecordType[]
@@ -270,14 +273,14 @@ export const condenseLinkingTableChanges = (changes: ChangeRecordType[]) => {
 // Determines if the batch component should render
 export const shouldRenderExistingLinkBatch = (
   changeRecords: ChangeRecordType[]
-) => batchedTables.includes(changeRecords[0].tableName);
+): boolean => batchedTables.includes(changeRecords[0].tableName);
 
 // Returns metadata for both subtasks and solutions
 export const getOperationalMetadata = (
   type: 'solution' | 'subtask',
   metaData: TranslatedAuditMetaData | undefined | null,
   fieldName: 'solutionName' | 'needName' | 'subtaskName'
-) => {
+): string => {
   if (type === 'solution') {
     return metaData &&
       isOperationalSolutionWithMetaData(metaData) &&
@@ -810,4 +813,105 @@ export const sortAllChanges = (changes: ChangeRecordType[]) => {
   );
 
   return changesSortedWithCreateFirst;
+};
+
+// Returns pseudo translated fields for the operational solution from its metadata
+export const solutionInsertFields = (
+  metaData: TranslatedAuditMetaOperationalSolution
+): ChangeRecordType['translatedFields'] => {
+  return [
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.ANSWERED,
+      dataType: TranslationDataType.ENUM,
+      fieldName: 'status',
+      fieldNameTranslated: 'Status',
+      id: '1',
+      new: metaData.solutionStatus,
+      newTranslated: metaData.solutionStatus,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
+      questionType: null,
+      referenceLabel: null
+    }
+  ];
+};
+
+// Returns pseudo translated fields for the operational solution from its metadata
+export const solutionDeleteFields = (
+  metaData: TranslatedAuditMetaOperationalSolution
+): ChangeRecordType['translatedFields'] => {
+  return [
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'numberOfSubtasks',
+      fieldNameTranslated: 'Subtasks',
+      id: '1',
+      new: null,
+      newTranslated: null,
+      notApplicableQuestions: null,
+      old: metaData.numberOfSubtasks,
+      oldTranslated: metaData.numberOfSubtasks,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.ENUM,
+      fieldName: 'status',
+      fieldNameTranslated: 'Status',
+      id: '2',
+      new: null,
+      newTranslated: null,
+      notApplicableQuestions: null,
+      old: metaData.solutionStatus,
+      oldTranslated: metaData.solutionStatus,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'must_start_dts',
+      fieldNameTranslated: 'Must start by',
+      id: '3',
+      new: null,
+      newTranslated: null,
+      notApplicableQuestions: null,
+      old: metaData.solutionMustStart,
+      oldTranslated: metaData.solutionMustStart
+        ? formatDateUtc(
+            metaData.solutionMustStart.replace(' ', 'T'),
+            'MM/dd/yyyy'
+          )
+        : '',
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'must_finish_dts',
+      fieldNameTranslated: 'Must finish by',
+      id: '4',
+      new: null,
+      newTranslated: null,
+      notApplicableQuestions: null,
+      old: metaData.solutionMustFinish,
+      oldTranslated: metaData.solutionMustFinish
+        ? formatDateUtc(
+            metaData.solutionMustFinish.replace(' ', 'T'),
+            'MM/dd/yyyy'
+          )
+        : '',
+      questionType: null,
+      referenceLabel: null
+    }
+  ];
 };
