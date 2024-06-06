@@ -39,8 +39,47 @@ const DatesChanged = ({
       <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-3">
         {basicsMiscT('highLevelTimeline')}
       </PageHeading>
-      {/* DATES HERE */}
 
+      {dateChanges.map(
+        ({
+          field,
+          isChanged,
+          isRange,
+          newDate,
+          newRangeStart,
+          newRangeEnd,
+          oldDate,
+          oldRangeStart,
+          oldRangeEnd
+        }) => {
+          return (
+            <div>
+              <p className="text-bold margin-y-0">{field}</p>
+              {isRange ? (
+                // isRange code here
+                <div>
+                  <p className="margin-y-0">
+                    {oldRangeStart} - {oldRangeEnd}
+                  </p>
+                  <p className="margin-y-0">
+                    {newRangeStart} - {newRangeEnd}
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <span
+                    className={`margin-y-0 ${
+                      isChanged ? 'text-error text-strike text-italic' : ''
+                    }`}
+                  >
+                    {oldDate} {isChanged && newDate}
+                  </span>
+                </div>
+              )}
+            </div>
+          );
+        }
+      )}
       <UswdsReactLink to={`/models/${modelPlanID}/read-only`}>
         {notificationsT('index.datesChanged.cta')}
       </UswdsReactLink>
