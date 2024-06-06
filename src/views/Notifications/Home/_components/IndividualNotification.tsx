@@ -13,6 +13,7 @@ import {
   activityText,
   isAddingCollaborator,
   isDailyDigest,
+  isDateChanged,
   isNewDiscussionReply,
   isSharedActivity,
   isTaggedInDiscussion,
@@ -96,6 +97,7 @@ const IndividualNotification = ({
                 </p>
                 {!isDailyDigest(metaData) &&
                   !isSharedActivity(metaData) &&
+                  !isDateChanged(metaData) &&
                   !isAddingCollaborator(metaData) && (
                     <MentionTextArea
                       className="notification__content text-base-darker margin-bottom-1"
