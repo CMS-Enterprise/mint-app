@@ -65,7 +65,7 @@ export const isAddingCollaborator = (
   return data.__typename === 'AddedAsCollaboratorMeta';
 };
 
-export const isDateChanged = (
+export const isDatesChanged = (
   data: MetaDataType
 ): data is DatesChangedActivityMeta => {
   /* eslint no-underscore-dangle: 0 */
@@ -86,7 +86,7 @@ export const activityText = (data: MetaDataType) => {
       <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.text" />
     );
   }
-  if (isDateChanged(data)) {
+  if (isDatesChanged(data)) {
     return (
       <Trans
         i18nKey="notifications:index.activityType.DATES_CHANGED.text"
@@ -158,7 +158,7 @@ export const ActivityCTA = ({
       </>
     );
   }
-  if (isDateChanged(data)) {
+  if (isDatesChanged(data)) {
     return isExpanded ? (
       <>
         <Trans i18nKey="notifications:index.activityType.DATES_CHANGED.cta.hide" />
