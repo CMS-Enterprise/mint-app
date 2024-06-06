@@ -73,39 +73,31 @@ export const isDateChanged = (
 };
 
 export const activityText = (data: MetaDataType) => {
-  if (isTaggedInDiscussion(data)) {
+  if (isAddingCollaborator(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.taggedInDiscussion.text"
-        values={{ modelName: data.modelPlan.modelName }}
-      />
-    );
-  }
-  if (isTaggedInDiscussionReply(data)) {
-    return (
-      <Trans
-        i18nKey="notifications:index.activityType.taggedInDiscussionReply.text"
+        i18nKey="notifications:index.activityType.ADDED_AS_COLLABORATOR.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
   }
   if (isDailyDigest(data)) {
     return (
-      <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.text" />
+      <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.text" />
+    );
+  }
+  if (isDateChanged(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.DATES_CHANGED.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
     );
   }
   if (isSharedActivity(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.modelPlanShared.text"
-        values={{ modelName: data.modelPlan.modelName }}
-      />
-    );
-  }
-  if (isAddingCollaborator(data)) {
-    return (
-      <Trans
-        i18nKey="notifications:index.activityType.addedAsCollaborator.text"
+        i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
@@ -118,14 +110,23 @@ export const activityText = (data: MetaDataType) => {
       />
     );
   }
-  if (isDateChanged(data)) {
+  if (isTaggedInDiscussion(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.newDiscussionReply.text"
+        i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
   }
+  if (isTaggedInDiscussionReply(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
+    );
+  }
+
   return '';
 };
 
@@ -139,7 +140,7 @@ export const ActivityCTA = ({
   if (isTaggedInDiscussion(data)) {
     return (
       <>
-        <Trans i18nKey="notifications:index.activityType.taggedInDiscussion.cta" />
+        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
@@ -147,7 +148,7 @@ export const ActivityCTA = ({
   if (isTaggedInDiscussionReply(data)) {
     return (
       <>
-        <Trans i18nKey="notifications:index.activityType.taggedInDiscussionReply.cta" />
+        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
@@ -163,7 +164,7 @@ export const ActivityCTA = ({
   if (isSharedActivity(data)) {
     return (
       <>
-        <Trans i18nKey="notifications:index.activityType.modelPlanShared.cta" />
+        <Trans i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
@@ -171,7 +172,7 @@ export const ActivityCTA = ({
   if (isAddingCollaborator(data)) {
     return (
       <>
-        <Trans i18nKey="notifications:index.activityType.addedAsCollaborator.cta" />
+        <Trans i18nKey="notifications:index.activityType.ADDED_AS_COLLABORATOR.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );
@@ -179,12 +180,12 @@ export const ActivityCTA = ({
   if (isDailyDigest(data)) {
     return isExpanded ? (
       <>
-        <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.cta.hide" />
+        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.hide" />
         <Icon.ExpandLess className="margin-left-1" aria-hidden />
       </>
     ) : (
       <>
-        <Trans i18nKey="notifications:index.activityType.dailyDigestComplete.cta.show" />
+        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.show" />
         <Icon.ExpandMore className="margin-left-1" aria-hidden />
       </>
     );
