@@ -77,6 +77,10 @@ const notifications = {
         ANNOUNCED: 'This model has been announced'
       },
       moreChanges: '+{{-num}} more changes'
+    },
+    datesChanged: {
+      heading: 'Dates have been updated for {{-modelName}}',
+      subheading: 'One or more dates have been updated for this model.'
     }
   },
   settings: {

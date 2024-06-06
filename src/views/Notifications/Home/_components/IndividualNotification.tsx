@@ -20,6 +20,7 @@ import {
   isTaggedInDiscussionReply
 } from './_utils';
 import DailyDigest from './DailyDigest';
+import DatesChanged from './DatesChanged';
 
 type NotificationActivityType = Activity;
 
@@ -171,6 +172,7 @@ const IndividualNotification = ({
       {isDailyDigestExpanded && isDailyDigest(metaData) && (
         <DailyDigest {...metaData} />
       )}
+      {isDatesChangedExpanded && isDatesChanged(metaData) && <DatesChanged />}
     </Grid>
   );
 };
