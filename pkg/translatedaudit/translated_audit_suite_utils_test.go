@@ -129,3 +129,18 @@ func (suite *TAuditSuite) createDiscussionReply(discussionID uuid.UUID, content 
 	return retReply
 
 }
+
+func (suite *TAuditSuite) createDocumentSolutionLink(documentID uuid.UUID, solutionID uuid.UUID) *models.PlanDocumentSolutionLink {
+
+	links := suite.createDocumentSolutionLinks([]uuid.UUID{documentID}, solutionID)
+	if suite.Len(links, 1) {
+		return links[0]
+	}
+	return nil
+}
+func (suite *TAuditSuite) createDocumentSolutionLinks(documentIDs []uuid.UUID, solutionID uuid.UUID) []*models.PlanDocumentSolutionLink {
+	links, err := suite.testConfigs.Store.PlanDocumentSolutionLinksCreate(suite.testConfigs.Logger, solutionID, documentIDs, suite.testConfigs.Principal)
+	suite.NoError(err)
+	return links
+
+}

@@ -1,6 +1,7 @@
 package translatedaudit
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -177,4 +178,76 @@ func (suite *TAuditSuite) TestOperationalSolutionSubtaskMetaDataGet() {
 
 func (suite *TAuditSuite) TestDocumentSolutionLinkMetaDataGet() {
 
+	plan := suite.createModelPlan("test plan")
+	needName := "To test operational solution meta data"
+	need := suite.createOperationalNeed(plan.ID, needName)
+	solName := "make a unit test"
+	mustFinish := time.Now().UTC()
+	mustStart := mustFinish.Add(-24 * time.Hour)
+	solStatus := models.OpSAtRisk
+	solOtherHeader := models.StringPointer("hooray! It's the other header!")
+	sol := suite.createOperationalSolution(need.ID, solName, func(os *models.OperationalSolution) {
+		os.MustStartDts = &mustStart
+		os.MustFinishDts = &mustFinish
+		os.Status = solStatus
+		os.OtherHeader = solOtherHeader
+	})
+
+	docName := "hooray! a document"
+
+	document := suite.createPlanDocument(plan.ID, docName)
+
+	link := suite.createDocumentSolutionLink(document.ID, sol.ID)
+
+	operation := models.DBOpInsert
+	changes := models.AuditFields{
+		"document_id": models.AuditField{
+			New: document.ID,
+			Old: nil,
+		},
+	}
+
+	// the test function makes a custom solution
+	needIsOther := true
+	solIsOther := true
+
+	metaData, metaDataType, err := DocumentSolutionLinkMetaDataGet(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		link.ID,
+		sol.ID,
+		changes,
+		operation)
+
+	suite.NoError(err)
+	suite.NotNil(metaData)
+	suite.NotNil(metaDataType)
+
+	suite.EqualValues(needName, metaData.NeedName)
+	suite.EqualValues(needIsOther, metaData.NeedIsOther)
+
+	suite.EqualValues(solName, metaData.SolutionName)
+
+	suite.EqualValues(solIsOther, metaData.SolutionIsOther)
+	suite.EqualValues(solOtherHeader, metaData.SolutionOtherHeader)
+
+	// Document ID is always present
+	suite.EqualValues(document.ID, metaData.DocumentID)
+
+	if suite.NotNil(metaData.DocumentName) {
+		suite.EqualValues(document.FileName, *metaData.DocumentName)
+	}
+	if suite.NotNil(metaData.DocumentType) {
+		suite.EqualValues(document.DocumentType, *metaData.DocumentType)
+	}
+	if suite.NotNil(metaData.DocumentVisibility) {
+		suite.EqualValues(fmt.Sprint(document.Restricted), *metaData.DocumentVisibility)
+	}
+
+	tableName := "document_solution_link"
+	suite.EqualValues(tableName, metaData.TableName)
+	suite.EqualValues(0, metaData.Version)
+
+	// TODO: Check error state
+	// emptyChanges := models.AuditFields{}
 }
