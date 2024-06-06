@@ -16,6 +16,9 @@ import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
   datesWithNoDay,
+  documentName,
+  documentType,
+  documentUpdateType,
   identifyChangeType,
   isDiscussionReplyWithMetaData,
   parseArray,
@@ -76,7 +79,11 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
         {change.old && (
           <>
             {changeType !== DatabaseOperation.DELETE && (
-              <div className={classNames('text-bold padding-y-105')}>
+              <div
+                className={classNames(
+                  'text-bold padding-top-105 padding-bottom-1'
+                )}
+              >
                 {change.questionType === TranslationQuestionType.NOTE
                   ? t('previousNote')
                   : t('previousAnswer')}
@@ -372,43 +379,15 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
 
           {changeRecordType === 'Document update' &&
             (() => {
-              const documentType =
-                changeRecord.translatedFields.find(
-                  field => field.fieldName === 'is_link'
-                )?.newTranslated === 'true' ||
-                changeRecord.translatedFields.find(
-                  field => field.fieldName === 'is_link'
-                )?.oldTranslated === 'true'
-                  ? ' link'
-                  : '';
-
-              const documentChange = (docType: string | undefined) =>
-                docType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
-
-              const updateType = (change: ChangeRecordType) => {
-                if (change.action === 'INSERT') {
-                  if (documentType === ' link') {
-                    return 'added';
-                  }
-                  return 'uploaded';
-                }
-                if (change.action === 'DELETE') {
-                  return 'removed';
-                }
-                return '';
-              };
-
-              const documentName = changeRecord.translatedFields.find(
-                field => field.fieldName === 'file_name'
-              )?.[documentChange(changeRecord.action)];
-
               return (
                 <Trans
                   i18nKey="changeHistory:documentUpdate"
                   values={{
-                    isLink: documentType,
-                    action: t(`documentChangeType.${updateType(changeRecord)}`),
-                    documentName,
+                    isLink: documentType(changeRecord) ? ' link' : '',
+                    action: t(
+                      `documentChangeType.${documentUpdateType(changeRecord)}`
+                    ),
+                    documentName: documentName(changeRecord),
                     toFrom: changeRecord.action === 'INSERT' ? 'to' : 'from',
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)

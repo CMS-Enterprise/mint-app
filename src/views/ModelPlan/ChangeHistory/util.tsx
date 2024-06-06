@@ -327,13 +327,14 @@ export const documentName = (change: ChangeRecordType) =>
     documentChange(change.action)
   ];
 
-export const documentType = (change: ChangeRecordType) =>
-  change.translatedFields.find(field => field.fieldName === 'is_link')
-    ?.newTranslated === 'true' ||
-  change.translatedFields.find(field => field.fieldName === 'is_link')
-    ?.oldTranslated === 'true'
-    ? ' link'
-    : '';
+// Returns the document type (link/upload)
+export const documentType = (change: ChangeRecordType): boolean =>
+  !!(
+    change.translatedFields.find(field => field.fieldName === 'is_link')
+      ?.newTranslated === 'true' ||
+    change.translatedFields.find(field => field.fieldName === 'is_link')
+      ?.oldTranslated === 'true'
+  );
 
 export const getSolutionName = (change: ChangeRecordType) =>
   change.translatedFields.find(field => field.fieldName === 'solution_id')
@@ -343,7 +344,7 @@ export const getSolutionName = (change: ChangeRecordType) =>
 
 export const documentUpdateType = (change: ChangeRecordType) => {
   if (change.action === 'INSERT') {
-    if (documentType(change) === ' link') {
+    if (documentType(change)) {
       return 'added';
     }
     return 'uploaded';

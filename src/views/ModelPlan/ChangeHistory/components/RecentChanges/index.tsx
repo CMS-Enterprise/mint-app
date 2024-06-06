@@ -36,6 +36,7 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
 
   let changeCount = 0;
 
+  // Count the number of changes in the record
   changeRecords.forEach(changeRecord => {
     changeCount +=
       changeRecord.action === DatabaseOperation.INSERT ||
@@ -45,6 +46,7 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
         : changeRecord.translatedFields.length || 1;
   });
 
+  // If the change is a linking table, count the unique number of questions
   if (isLinkingTable(changeRecords[0].tableName)) {
     changeCount = linkingTableQuestions(changeRecords).length;
   }
@@ -90,6 +92,7 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
 
   const changes = [...(data?.translatedAuditCollection || [])];
 
+  // Sort the changes and only show the first 3
   const sortedChanges = sortAllChanges(changes).slice(0, 3);
 
   return (

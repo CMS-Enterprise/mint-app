@@ -100,7 +100,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               <Trans
                 i18nKey="changeHistory:documentBatchUpdate"
                 values={{
-                  isLink: documentType(change),
+                  isLink: documentType(change) ? ' link' : '',
                   action: t(`documentChangeType.${documentUpdateType(change)}`),
                   documentName: documentName(change) || 'Temp document',
                   toFrom: t(`toFrom.${databaseAction}`),
@@ -369,7 +369,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               {/* If the database action is not DELETE and there are fields with old values, show the previous details header */}
               {databaseAction !== DatabaseOperation.DELETE &&
                 !!fieldsToMap.find(field => field.old) && (
-                  <div className="text-bold padding-y-105">
+                  <div className="text-bold padding-top-105 padding-bottom-1">
                     {t('previousDetails')}
                   </div>
                 )}
@@ -466,7 +466,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                     <Trans
                       i18nKey="changeHistory:documentBatchUpdate"
                       values={{
-                        isLink: documentType(change),
+                        isLink: documentType(change) ? ' link' : '',
                         action: t(
                           `documentChangeType.${documentUpdateType(change)}`
                         ),
