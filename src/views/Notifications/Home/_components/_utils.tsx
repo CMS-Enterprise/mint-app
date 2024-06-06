@@ -137,38 +137,6 @@ export const ActivityCTA = ({
   data: MetaDataType;
   isExpanded: boolean;
 }) => {
-  if (isTaggedInDiscussion(data)) {
-    return (
-      <>
-        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
-      </>
-    );
-  }
-  if (isTaggedInDiscussionReply(data)) {
-    return (
-      <>
-        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
-      </>
-    );
-  }
-  if (isNewDiscussionReply(data)) {
-    return (
-      <>
-        <Trans i18nKey="notifications:index.activityType.newDiscussionReply.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
-      </>
-    );
-  }
-  if (isSharedActivity(data)) {
-    return (
-      <>
-        <Trans i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
-      </>
-    );
-  }
   if (isAddingCollaborator(data)) {
     return (
       <>
@@ -190,6 +158,53 @@ export const ActivityCTA = ({
       </>
     );
   }
+  if (isDateChanged(data)) {
+    return isExpanded ? (
+      <>
+        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.hide" />
+        <Icon.ExpandLess className="margin-left-1" aria-hidden />
+      </>
+    ) : (
+      <>
+        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.show" />
+        <Icon.ExpandMore className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+  if (isSharedActivity(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+  if (isNewDiscussionReply(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.NEW_DISCUSSION_REPLY.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+
+  if (isTaggedInDiscussion(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+  if (isTaggedInDiscussionReply(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+
   return <></>;
 };
 
