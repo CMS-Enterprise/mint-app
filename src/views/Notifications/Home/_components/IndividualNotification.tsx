@@ -125,7 +125,7 @@ const IndividualNotification = ({
 
               <div className="margin-top-05 padding-left-1">
                 <p className="line-height-sans-4 margin-bottom-1 margin-top-0 ">
-                  <strong>{name}</strong>
+                  {!isDatesChanged(metaData) && <strong>{name}</strong>}
                   {activityText(metaData)}
                 </p>
                 {!isDailyDigest(metaData) &&
