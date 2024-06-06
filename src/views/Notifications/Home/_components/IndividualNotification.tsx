@@ -149,7 +149,7 @@ const IndividualNotification = ({
                   type="button"
                   unstyled
                   className="display-flex flex-align-center"
-                  onClick={() => handleClick()}
+                  onClick={handleClick}
                 >
                   <ActivityCTA
                     data={metaData}
