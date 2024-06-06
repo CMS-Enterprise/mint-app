@@ -160,23 +160,32 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	var documentUUID uuid.UUID
 
 	documentIDChange, fieldPresent := changesFields["document_id"]
-	if fieldPresent {
-		var err error
-		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-			documentUUID, err = parseInterfaceToUUID(documentIDChange.Old)
-			if err != nil {
-				return nil, nil, err
-			}
-		} else {
-			documentUUID, err = parseInterfaceToUUID(documentIDChange.New)
-			if err != nil {
-				return nil, nil, err
-			}
+	if !fieldPresent {
+		//Changes: (Testing) verify this, we could also fetch the document solution link if it isn't a delete, but shouldn't need to
+		return nil, nil, fmt.Errorf("there is no document_ID present in the changes object, this is needed for the document solution link translated audit")
+	}
+	var err error
+	if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+		if documentIDChange.Old == nil {
+			return nil, nil, fmt.Errorf("documentID was nil in the change field Old. A value was expected")
 		}
+		documentUUID, err = parseInterfaceToUUID(documentIDChange.Old)
 		if err != nil {
-			return nil, nil, fmt.Errorf("unable to parse the document ID for this document solution link. err: %w", err)
+			return nil, nil, err
+		}
+	} else {
+		if documentIDChange.New == nil {
+			return nil, nil, fmt.Errorf("documentID was nil in the change field New. A value was expected")
+		}
+		documentUUID, err = parseInterfaceToUUID(documentIDChange.New)
+		if err != nil {
+			return nil, nil, err
 		}
 	}
+	if err != nil {
+		return nil, nil, fmt.Errorf("unable to parse the document ID for this document solution link. err: %w", err)
+	}
+
 	// get the document
 	document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentUUID)
 	if err != nil {

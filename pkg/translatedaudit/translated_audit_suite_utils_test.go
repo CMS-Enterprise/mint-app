@@ -89,6 +89,11 @@ func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName str
 
 }
 
+func (suite *TAuditSuite) deleteDocument(documentID uuid.UUID) {
+	_, err := suite.testConfigs.Store.PlanDocumentDelete(suite.testConfigs.Logger, documentID, suite.testConfigs.Principal.UserAccount.ID)
+	suite.NoError(err)
+}
+
 // createPlanDiscussion creates a test plan discussion for testing. It doesn't go through normal resolver procedures (eg there are no tags)
 func (suite *TAuditSuite) createPlanDiscussion(modelPlanID uuid.UUID, content string) *models.PlanDiscussion {
 

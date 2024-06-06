@@ -221,7 +221,9 @@ func (suite *TAuditSuite) TestDocumentSolutionLinkMetaDataGet() {
 
 	suite.NoError(err)
 	suite.NotNil(metaData)
-	suite.NotNil(metaDataType)
+	if suite.NotNil(metaDataType) {
+		suite.EqualValues(models.TAMetaDocumentSolutionLink, *metaDataType)
+	}
 
 	suite.EqualValues(needName, metaData.NeedName)
 	suite.EqualValues(needIsOther, metaData.NeedIsOther)
@@ -248,6 +250,60 @@ func (suite *TAuditSuite) TestDocumentSolutionLinkMetaDataGet() {
 	suite.EqualValues(tableName, metaData.TableName)
 	suite.EqualValues(0, metaData.Version)
 
-	// TODO: Check error state
-	// emptyChanges := models.AuditFields{}
+	// Delete the document and run tests on empty state
+	suite.deleteDocument(document.ID)
+
+	suite.Run("deleted document returns doc ID, and nil other doc info", func() {
+
+		metaData, metaDataType, err := DocumentSolutionLinkMetaDataGet(
+			suite.testConfigs.Context,
+			suite.testConfigs.Store,
+			link.ID,
+			sol.ID,
+			changes,
+			operation)
+
+		suite.NoError(err)
+		suite.NotNil(metaData)
+		suite.NotNil(metaDataType)
+		// Document ID is always present
+		suite.EqualValues(document.ID, metaData.DocumentID)
+
+		// this document information should be nil
+		suite.Nil(metaData.DocumentName)
+		suite.Nil(metaData.DocumentType)
+		suite.Nil(metaData.DocumentVisibility)
+
+	})
+
+	suite.Run("deleted document fails if inappropriate change field is present, and nil other doc info", func() {
+		//changes doesn't have doc ID for the old value
+		metaData, metaDataType, err := DocumentSolutionLinkMetaDataGet(
+			suite.testConfigs.Context,
+			suite.testConfigs.Store,
+			link.ID,
+			sol.ID,
+			changes,
+			models.DBOpDelete)
+
+		suite.Error(err)
+		suite.Nil(metaData)
+		suite.Nil(metaDataType)
+	})
+
+	suite.Run("deleted document fails if inappropriate change field is present, and nil other doc info", func() {
+		//changes doesn't have doc ID for the old value
+		emptyChanges := models.AuditFields{}
+		metaData, metaDataType, err := DocumentSolutionLinkMetaDataGet(
+			suite.testConfigs.Context,
+			suite.testConfigs.Store,
+			link.ID,
+			sol.ID,
+			emptyChanges,
+			models.DBOpDelete)
+
+		suite.Error(err)
+		suite.Nil(metaData)
+		suite.Nil(metaDataType)
+	})
 }
