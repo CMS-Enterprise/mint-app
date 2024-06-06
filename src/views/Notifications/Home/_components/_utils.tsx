@@ -161,12 +161,12 @@ export const ActivityCTA = ({
   if (isDateChanged(data)) {
     return isExpanded ? (
       <>
-        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.hide" />
+        <Trans i18nKey="notifications:index.activityType.DATES_CHANGED.cta.hide" />
         <Icon.ExpandLess className="margin-left-1" aria-hidden />
       </>
     ) : (
       <>
-        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.show" />
+        <Trans i18nKey="notifications:index.activityType.DATES_CHANGED.cta.show" />
         <Icon.ExpandMore className="margin-left-1" aria-hidden />
       </>
     );
