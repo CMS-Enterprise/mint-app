@@ -80,7 +80,8 @@ const notifications = {
     },
     datesChanged: {
       heading: 'Dates have been updated for {{-modelName}}',
-      subheading: 'One or more dates have been updated for this model.'
+      subheading: 'One or more dates have been updated for this model.',
+      cta: 'View this Model Plan'
     }
   },
   settings: {
