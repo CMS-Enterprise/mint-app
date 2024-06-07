@@ -154,18 +154,6 @@ export const doubleBatchedTables: string[] = [
   'plan_document_solution_link'
 ];
 
-// Fields that require their own batch - not to be batch with anything else
-export const skipBatchByField: Record<string, string[]> = {
-  status: [
-    'plan_basics',
-    'plan_general_characteristics',
-    'plan_participants_and_providers',
-    'plan_beneficiaries',
-    'plan_ops_eval_and_learning',
-    'plan_payments'
-  ]
-};
-
 // Fields that are connected to other tables
 export const connectedFields: HiddenFieldTypes[] = [
   {
@@ -728,15 +716,6 @@ export const groupBatchedChanges = (changes: ChangeRecordType[]) => {
         } else {
           canBatch = false;
         }
-      }
-
-      // If the change is a status change, do not batch with other changes
-      if (
-        skipBatchByField[change.translatedFields[0].fieldName]?.includes(
-          change.tableName
-        )
-      ) {
-        canBatch = false;
       }
 
       // If the last group is empty or the date of the change is more than 1 second from the last change, create a new group

@@ -1,8 +1,13 @@
-import { AuditFieldChangeType, DatabaseOperation } from 'gql/gen/graphql';
+import {
+  AuditFieldChangeType,
+  DatabaseOperation,
+  TranslationDataType
+} from 'gql/gen/graphql';
 
 import {
   ChangeRecordType,
   ChangeType,
+  condenseLinkingTableChanges,
   extractReadyForReviewChanges,
   filterQueryAudits,
   groupBatchedChanges,
@@ -606,5 +611,148 @@ describe('util.tsx', () => {
     const result2 = linkingTableQuestions(changeRecords as ChangeRecordType[]);
 
     expect(result2).toEqual(['Ready', 'Name']);
+  });
+
+  it('should condense changes into a single change record per question', () => {
+    const changes = [
+      {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: 'existing_model_link',
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.INSERT,
+        actorName: 'MINT Doe',
+        translatedFields: [
+          {
+            __typename: 'TranslatedAuditField',
+            id: '8c4fe6e4-705e-4fcf-b9e0-edd035b71dd5',
+            changeType: AuditFieldChangeType.ANSWERED,
+            dataType: TranslationDataType.STRING,
+            fieldName: 'field_name',
+            fieldNameTranslated: 'What question is this link for?',
+            referenceLabel: null,
+            questionType: null,
+            notApplicableQuestions: null,
+            old: null,
+            oldTranslated: null,
+            new: 'GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH',
+            newTranslated:
+              'Which existing models does your proposed track/model most closely resemble?'
+          },
+          {
+            __typename: 'TranslatedAuditField',
+            id: '631e0ac6-1f52-4ed4-8c1e-f94fd742011f',
+            changeType: AuditFieldChangeType.ANSWERED,
+            dataType: TranslationDataType.STRING,
+            fieldName: 'existing_model_id',
+            fieldNameTranslated: 'Existing Model ID',
+            referenceLabel: null,
+            questionType: null,
+            notApplicableQuestions: null,
+            old: null,
+            oldTranslated: null,
+            new: '100109',
+            newTranslated:
+              'Accountable Care Organization Realizing Equity, Access, and Community Health Model (ACO REACH) '
+          }
+        ],
+        metaData: null
+      },
+      {
+        __typename: 'TranslatedAudit',
+        id: 'b2e38af2-caea-4b56-a53f-604685d79a46',
+        tableName: 'existing_model_link',
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.INSERT,
+        actorName: 'MINT Doe',
+        translatedFields: [
+          {
+            __typename: 'TranslatedAuditField',
+            id: 'b7dd0a66-30ff-4e55-9b23-ab7bd5564b57',
+            changeType: AuditFieldChangeType.ANSWERED,
+            dataType: TranslationDataType.STRING,
+            fieldName: 'field_name',
+            fieldNameTranslated: 'What question is this link for?',
+            referenceLabel: null,
+            questionType: null,
+            notApplicableQuestions: null,
+            old: null,
+            oldTranslated: null,
+            new: 'GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH',
+            newTranslated:
+              'Which existing models does your proposed track/model most closely resemble?'
+          },
+          {
+            __typename: 'TranslatedAuditField',
+            id: '127c0a19-9ab0-47f9-9d17-14120622163d',
+            changeType: AuditFieldChangeType.ANSWERED,
+            dataType: TranslationDataType.STRING,
+            fieldName: 'existing_model_id',
+            fieldNameTranslated: 'Existing Model ID',
+            referenceLabel: null,
+            questionType: null,
+            notApplicableQuestions: null,
+            old: null,
+            oldTranslated: null,
+            new: '100066',
+            newTranslated: 'Accountable Health Communities Model (AHC)'
+          }
+        ],
+        metaData: null
+      }
+    ];
+    const result = condenseLinkingTableChanges(changes as any);
+
+    expect(result[0].metaData?.tableName).toBe(
+      'Which existing models does your proposed track/model most closely resemble?'
+    );
+
+    expect(result).toEqual([
+      {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: 'existing_model_link',
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.INSERT,
+        actorName: 'MINT Doe',
+        translatedFields: [
+          {
+            __typename: 'TranslatedAuditField',
+            id: '631e0ac6-1f52-4ed4-8c1e-f94fd742011f',
+            changeType: AuditFieldChangeType.ANSWERED,
+            dataType: TranslationDataType.STRING,
+            fieldName: 'existing_model_id',
+            fieldNameTranslated:
+              'Accountable Care Organization Realizing Equity, Access, and Community Health Model (ACO REACH) ',
+            referenceLabel: null,
+            questionType: null,
+            notApplicableQuestions: null,
+            old: null,
+            oldTranslated: null,
+            new: '100109',
+            newTranslated: DatabaseOperation.INSERT
+          },
+          {
+            __typename: 'TranslatedAuditField',
+            id: '127c0a19-9ab0-47f9-9d17-14120622163d',
+            changeType: AuditFieldChangeType.ANSWERED,
+            dataType: TranslationDataType.STRING,
+            fieldName: 'existing_model_id',
+            fieldNameTranslated: 'Accountable Health Communities Model (AHC)',
+            referenceLabel: null,
+            questionType: null,
+            notApplicableQuestions: null,
+            old: null,
+            oldTranslated: null,
+            new: '100066',
+            newTranslated: DatabaseOperation.INSERT
+          }
+        ],
+        metaData: {
+          tableName:
+            'Which existing models does your proposed track/model most closely resemble?'
+        }
+      }
+    ]);
   });
 });
