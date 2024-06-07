@@ -488,16 +488,23 @@ func (suite *TAuditSuite) TestPlanCollaboratorMetaDataGet() {
 	collab := suite.createPlanCollaborator(plan.ID, collabUserName)
 	tableName := "plan_collaborator"
 
-	changes := models.AuditFields{
+	newChanges := models.AuditFields{
 		"user_id": models.AuditField{
 			New: suite.testConfigs.Principal.UserAccount.ID,
 			Old: nil,
 		},
 	}
+
+	oldChanges := models.AuditFields{
+		"user_id": models.AuditField{
+			New: nil,
+			Old: suite.testConfigs.Principal.UserAccount.ID,
+		},
+	}
 	emptyChanges := models.AuditFields{}
 
 	suite.Run("Collab meta data priorities data from changes set", func() {
-		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, tableName, changes, models.DBOpInsert)
+		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, tableName, newChanges, models.DBOpInsert)
 		suite.NoError(err)
 		if suite.NotNil(metaDataType) {
 			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
@@ -524,6 +531,13 @@ func (suite *TAuditSuite) TestPlanCollaboratorMetaDataGet() {
 
 	suite.Run("Collab meta data fails when field isn't present in change set for DELETE", func() {
 		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, tableName, emptyChanges, models.DBOpDelete)
+		suite.Error(err)
+		suite.Nil(metaDataType)
+
+		suite.Nil(collabMeta)
+	})
+	suite.Run("Collab meta data fails when field isn't present on the correct / NEW / OLD value", func() {
+		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, tableName, oldChanges, models.DBOpInsert)
 		suite.Error(err)
 		suite.Nil(metaDataType)
 
