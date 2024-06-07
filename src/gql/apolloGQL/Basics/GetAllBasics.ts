@@ -5,6 +5,7 @@ export default gql(/* GraphQL */ `
     modelPlan(id: $id) {
       id
       nameHistory(sort: DESC)
+      isCollaborator
       basics {
         id
         demoCode
