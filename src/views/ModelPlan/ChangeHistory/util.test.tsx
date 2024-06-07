@@ -10,6 +10,7 @@ import {
   identifyChangeType,
   isInitialCreatedSection,
   isTranslationTaskListTable,
+  linkingTableQuestions,
   parseArray,
   removedHiddenFields,
   separateStatusChanges,
@@ -468,7 +469,7 @@ describe('util.tsx', () => {
     const changes: ChangeRecordType[] = [
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-        tableName: 'operational_need',
+        tableName: 'operational_solution_subtask',
         date: '2024-04-22T13:55:23.725192Z',
         action: DatabaseOperation.INSERT,
         translatedFields: [
@@ -489,8 +490,8 @@ describe('util.tsx', () => {
       },
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b33452',
-        tableName: 'operational_need',
-        date: '2024-04-22T13:55:24.725192Z',
+        tableName: 'operational_solution_subtask',
+        date: '2024-04-22T13:55:24.625192Z',
         action: DatabaseOperation.INSERT,
         translatedFields: [
           {
@@ -510,7 +511,7 @@ describe('util.tsx', () => {
       },
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b33453',
-        tableName: 'operational_need',
+        tableName: 'operational_solution_subtask',
         date: '2024-04-22T13:59:13.725192Z',
         action: DatabaseOperation.INSERT,
         translatedFields: [
@@ -537,5 +538,73 @@ describe('util.tsx', () => {
     ];
 
     expect(groupBatchedChanges([...changes])).toEqual(expected);
+
+    // Test double batched changes
+    changes[0].tableName = 'plan_document';
+    changes[1].tableName = 'plan_document_solution_link';
+
+    const expected2: ChangeRecordType[][] = [
+      [changes[0], changes[1]],
+      [changes[2]]
+    ];
+
+    expect(groupBatchedChanges([...changes])).toEqual(expected2);
+  });
+
+  it('should return unique questions from change records', () => {
+    const changeRecords = [
+      {
+        id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
+        tableName: 'operational_need',
+        date: '2024-04-22T13:55:13.725192Z',
+        action: DatabaseOperation.INSERT,
+        translatedFields: [
+          {
+            id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+            changeType: AuditFieldChangeType.ANSWERED,
+            fieldName: 'field_name',
+            fieldNameTranslated: 'Model Plan status',
+            old: null,
+            oldTranslated: null,
+            new: 'READY',
+            newTranslated: 'Ready',
+            __typename: 'TranslatedAuditField'
+          }
+        ],
+        actorName: 'Cosmo Kramer',
+        __typename: 'TranslatedAudit'
+      },
+      {
+        id: 'e9e1129d-2317-4acd-8d2b-7ca37b33452',
+        tableName: 'operational_need',
+        date: '2024-05-22T13:55:13.725192Z',
+        action: DatabaseOperation.INSERT,
+        translatedFields: [
+          {
+            id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+            changeType: AuditFieldChangeType.ANSWERED,
+            fieldName: 'field_name',
+            fieldNameTranslated: 'Model Plan status',
+            old: null,
+            oldTranslated: null,
+            new: 'READY',
+            newTranslated: 'Ready',
+            __typename: 'TranslatedAuditField'
+          }
+        ],
+        actorName: 'MINT Doe',
+        __typename: 'TranslatedAudit'
+      }
+    ];
+
+    const result = linkingTableQuestions(changeRecords as ChangeRecordType[]);
+
+    expect(result).toEqual(['Ready']);
+
+    changeRecords[1].translatedFields[0].newTranslated = 'Name';
+
+    const result2 = linkingTableQuestions(changeRecords as ChangeRecordType[]);
+
+    expect(result2).toEqual(['Ready', 'Name']);
   });
 });
