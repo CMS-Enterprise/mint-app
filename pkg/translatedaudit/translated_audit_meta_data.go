@@ -229,6 +229,60 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	return &meta, &metaType, nil
 }
 
+func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+
+	const idNumField = "id_number"
+	var idNumber string
+	idNumberChange, fieldPresent := changesFields[idNumField]
+	if fieldPresent {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			if idNumberChange.Old == nil {
+				return nil, nil, fmt.Errorf("%s was nil in the change field Old. A value was expected", idNumField)
+			}
+			idNumber = fmt.Sprint(idNumberChange.Old)
+		} else {
+			if idNumberChange.New == nil {
+				return nil, nil, fmt.Errorf("%s was nil in the change field New. A value was expected", idNumField)
+			}
+			idNumber = fmt.Sprint(idNumberChange.New)
+		}
+	} else {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			return nil, nil, fmt.Errorf("the %s field, wasn't present on the audit change, and the data is deleted, and not queryable", idNumField)
+		}
+		switch tableName {
+		case "plan_cr":
+			logger := appcontext.ZLogger(ctx)
+			planCR, err := store.PlanCRGetByID(logger, primaryKey)
+			if err != nil {
+				return nil, nil, err
+			}
+			if planCR == nil {
+				return nil, nil, fmt.Errorf("planCR is not present in the database, but expected for this meta data")
+			}
+			idNumber = planCR.IDNumber
+		case "plan_tdl":
+			logger := appcontext.ZLogger(ctx)
+			planTDL, err := store.PlanTDLGetByID(logger, primaryKey)
+			if err != nil {
+				return nil, nil, err
+			}
+			if planTDL == nil {
+				return nil, nil, fmt.Errorf("planTDL is not present in the database, but expected for this meta data")
+			}
+			idNumber = planTDL.IDNumber
+		default:
+			return nil, nil, fmt.Errorf("unable to get plan_cr / plan_tdl meta data with this table type %s", tableName)
+		}
+
+	}
+
+	//Changes: (Meta) Should we break this into two functions?. Also should we define a specific meta data type?
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "id_number", idNumber)
+	metaType := models.TAMetaGeneric
+	return &meta, &metaType, nil
+}
+
 func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *models.AuditChange, operation models.DatabaseOperation) (models.TranslatedAuditMetaData, *models.TranslatedAuditMetaDataType, error) {
 	// Changes: (ChChCh Changes!) Consider, do we need to handle if something is deleted differently? There might not be fetch-able information...
 	switch audit.TableName {
@@ -252,6 +306,10 @@ func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *m
 		return metaData, &metaDataType, err
 	case "plan_document_solution_link":
 		metaData, metaDataType, err := DocumentSolutionLinkMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.Fields, operation)
+		return metaData, metaDataType, err
+
+	case "plan_cr", "plan_tdl":
+		metaData, metaDataType, err := PlanCrTdlMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
 		return metaData, metaDataType, err
 
 		// Changes: (Meta)

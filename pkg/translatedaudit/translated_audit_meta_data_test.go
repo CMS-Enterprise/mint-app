@@ -307,3 +307,175 @@ func (suite *TAuditSuite) TestDocumentSolutionLinkMetaDataGet() {
 		suite.Nil(metaDataType)
 	})
 }
+
+func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
+
+	plan := suite.createModelPlan("testPlan")
+	idNumberDB := "test ID number In DB"
+
+	// Make a value distinct from actual value to assert that the data can come from the field or the database
+	idNumberNew := "test ID number in New field"
+	idNumberOld := "test ID number in Old field"
+	cr := suite.createPlanCR(plan.ID, idNumberDB)
+	tdl := suite.createPlanTDL(plan.ID, idNumberDB)
+	crTable := "plan_cr"
+	tdlTable := "plan_tdl"
+	insertOperation := models.DBOpInsert
+
+	// mock the changes we'd get from an insert
+	changes := models.AuditFields{
+		"id_number": models.AuditField{
+			New: idNumberNew,
+			Old: nil,
+		},
+	}
+	changesForDelete := models.AuditFields{
+		"id_number": models.AuditField{
+			New: nil,
+			Old: idNumberOld,
+		},
+	}
+	emptyChanges := models.AuditFields{}
+
+	// Get CR MetaData
+	suite.Run("CR with id_number field present will favor that field", func() {
+		crMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, cr.ID, crTable, changes, insertOperation)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(crMetaData) {
+			suite.EqualValues("id_number", crMetaData.Relation)
+			suite.EqualValues(idNumberNew, crMetaData.RelationContent)
+		}
+	})
+	// Get TDL MetaData
+	suite.Run("TDL with id_number field present will favor that field", func() {
+		tdlMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, tdl.ID, tdlTable, changes, insertOperation)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(tdlMetaData) {
+			suite.EqualValues("id_number", tdlMetaData.Relation)
+			suite.EqualValues(idNumberNew, tdlMetaData.RelationContent)
+		}
+	})
+
+	// Test when changes aren't present in the audit fields
+	suite.Run("CR without id_number field present will fetch that field from the DB", func() {
+		// give empty changes to simulate no change data
+		crMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, cr.ID, crTable, emptyChanges, insertOperation)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(crMetaData) {
+			suite.EqualValues("id_number", crMetaData.Relation)
+			suite.EqualValues(idNumberDB, crMetaData.RelationContent)
+		}
+	})
+	suite.Run("TDL without id_number field present will fetch that field from the db", func() {
+		// give empty changes to simulate no change data
+		tdlMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, tdl.ID, tdlTable, emptyChanges, insertOperation)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(tdlMetaData) {
+			suite.EqualValues("id_number", tdlMetaData.Relation)
+			suite.EqualValues(idNumberDB, tdlMetaData.RelationContent)
+		}
+	})
+	deleteOperation := models.DBOpDelete
+
+	suite.Run("CR without id_number field present will fail if it is a delete  Operation ", func() {
+		// give empty changes to simulate no change data
+		crMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, cr.ID, crTable, emptyChanges, deleteOperation)
+		suite.Error(err)
+		suite.Nil(metaDataType)
+
+		suite.Nil(crMetaData)
+	})
+
+	suite.Run("TDL without id_number field present will fail if it is a delete Operation ", func() {
+		// give empty changes to simulate no change data
+		tdlMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, tdl.ID, tdlTable, emptyChanges, deleteOperation)
+		suite.Error(err)
+		suite.Nil(metaDataType)
+
+		suite.Nil(tdlMetaData)
+	})
+
+	//test error state, eg a delete and the change not in the field
+
+	suite.deletePlanCR(cr.ID)
+	suite.deletePlanTDL(tdl.ID)
+
+	// Get CR MetaData
+	suite.Run("CR with id_number field present for delete will favor that field", func() {
+		crMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, cr.ID, crTable, changesForDelete, deleteOperation)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(crMetaData) {
+			suite.EqualValues("id_number", crMetaData.Relation)
+			suite.EqualValues(idNumberOld, crMetaData.RelationContent)
+		}
+	})
+	// Get TDL MetaData
+	suite.Run("TDL with id_number field present for delete will favor that field", func() {
+		tdlMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, tdl.ID, tdlTable, changesForDelete, deleteOperation)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(tdlMetaData) {
+			suite.EqualValues("id_number", tdlMetaData.Relation)
+			suite.EqualValues(idNumberOld, tdlMetaData.RelationContent)
+		}
+	})
+
+	suite.Run("CR without id_number Old value will fail if it is a delete  Operation ", func() {
+
+		crMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, cr.ID, crTable, changes, deleteOperation)
+		suite.Error(err)
+		suite.Nil(metaDataType)
+
+		suite.Nil(crMetaData)
+	})
+
+	suite.Run("TDL without id_number Old value will fail if it is a delete Operation ", func() {
+
+		tdlMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, tdl.ID, tdlTable, changes, deleteOperation)
+		suite.Error(err)
+		suite.Nil(metaDataType)
+
+		suite.Nil(tdlMetaData)
+	})
+	suite.Run("CR without id_number  will fail if data should be fetch-able, but record is missing ", func() {
+		// give empty changes to simulate no change data
+		crMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, cr.ID, crTable, emptyChanges, insertOperation)
+		suite.Error(err)
+		suite.Nil(metaDataType)
+
+		suite.Nil(crMetaData)
+	})
+
+	suite.Run("TDL without id_number Old value will fail if data should be fetch-able, but record is missing", func() {
+		// give empty changes to simulate no change data
+		tdlMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, tdl.ID, tdlTable, emptyChanges, insertOperation)
+		suite.Error(err)
+		suite.Nil(metaDataType)
+
+		suite.Nil(tdlMetaData)
+	})
+
+}
