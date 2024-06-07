@@ -479,3 +479,55 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 	})
 
 }
+
+func (suite *TAuditSuite) TestPlanCollaboratorMetaDataGet() {
+	plan := suite.createModelPlan("Test Plan for collaborator Audit Meta Data")
+	collabUserName := "testCollab"
+	collabAccount, err := suite.testConfigs.GetTestPrincipal(suite.testConfigs.Store, collabUserName)
+	suite.NoError(err)
+	collab := suite.createPlanCollaborator(plan.ID, collabUserName)
+	tableName := "plan_collaborator"
+
+	changes := models.AuditFields{
+		"user_id": models.AuditField{
+			New: suite.testConfigs.Principal.UserAccount.ID,
+			Old: nil,
+		},
+	}
+	emptyChanges := models.AuditFields{}
+
+	suite.Run("Collab meta data priorities data from changes set", func() {
+		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, tableName, changes, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(collabMeta) {
+			suite.EqualValues("UserName", collabMeta.Relation)
+			suite.EqualValues(suite.testConfigs.Principal.UserAccount.CommonName, collabMeta.RelationContent)
+		}
+	})
+
+	suite.Run("Collab meta data fetches from DB when field isn't present in change set", func() {
+		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, tableName, emptyChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(collabMeta) {
+			suite.EqualValues("UserName", collabMeta.Relation)
+			suite.EqualValues(collabAccount.UserAccount.CommonName, collabMeta.RelationContent)
+		}
+	})
+
+	suite.Run("Collab meta data fails when field isn't present in change set for DELETE", func() {
+		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, tableName, emptyChanges, models.DBOpDelete)
+		suite.Error(err)
+		suite.Nil(metaDataType)
+
+		suite.Nil(collabMeta)
+	})
+
+}

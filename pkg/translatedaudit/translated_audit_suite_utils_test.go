@@ -203,3 +203,16 @@ func (suite *TAuditSuite) deletePlanCR(id uuid.UUID) *models.PlanCR {
 	suite.NoError(err)
 	return cr
 }
+
+func (suite *TAuditSuite) createPlanCollaborator(modelPlanID uuid.UUID, userName string) *models.PlanCollaborator {
+
+	collabPrinc, err := suite.testConfigs.GetTestPrincipal(suite.testConfigs.Store, userName)
+	suite.NoError(err)
+
+	roles := []models.TeamRole{models.TeamRoleModelLead, models.TeamRoleCOR}
+	collaborator := models.NewPlanCollaborator(suite.testConfigs.Principal.UserAccount.ID, modelPlanID, collabPrinc.UserAccount.ID, roles)
+
+	retCollaborator, err := suite.testConfigs.Store.PlanCollaboratorCreate(suite.testConfigs.Store, suite.testConfigs.Logger, collaborator)
+	suite.NoError(err)
+	return retCollaborator
+}

@@ -283,6 +283,55 @@ func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey 
 	return &meta, &metaType, nil
 }
 
+func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+	const userIDField = "user_id"
+	var userUUID uuid.UUID
+	userIDChange, fieldPresent := changesFields[userIDField]
+	if fieldPresent {
+		var err error
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			if userIDChange.Old == nil {
+				return nil, nil, fmt.Errorf("%s was nil in the change field Old. A value was expected", userIDField)
+			}
+			userUUID, err = parseInterfaceToUUID(userIDChange.Old)
+			if err != nil {
+				return nil, nil, err
+			}
+		} else {
+			if userIDChange.New == nil {
+				return nil, nil, fmt.Errorf("%s was nil in the change field New. A value was expected", userIDField)
+			}
+			userUUID, err = parseInterfaceToUUID(userIDChange.New)
+			if err != nil {
+				return nil, nil, err
+			}
+		}
+	} else {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			return nil, nil, fmt.Errorf("the %s field, wasn't present on the audit change, and the data is deleted, and not queryable", userIDField)
+		}
+
+		collab, err := store.PlanCollaboratorGetByID(primaryKey)
+		if err != nil {
+			return nil, nil, err
+		}
+		if collab == nil {
+			return nil, nil, fmt.Errorf("collaborator is not present in the database, but expected for this meta data")
+		}
+		userUUID = collab.UserID
+
+	}
+
+	userAccount, err := storage.UserAccountGetByID(store, userUUID)
+	if err != nil {
+		return nil, nil, fmt.Errorf("could not retrieve user account for plan collaborator audit metadata. err %w", err)
+	}
+
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "UserName", userAccount.CommonName)
+	metaType := models.TAMetaGeneric
+	return &meta, &metaType, nil
+}
+
 func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *models.AuditChange, operation models.DatabaseOperation) (models.TranslatedAuditMetaData, *models.TranslatedAuditMetaDataType, error) {
 	// Changes: (ChChCh Changes!) Consider, do we need to handle if something is deleted differently? There might not be fetch-able information...
 	switch audit.TableName {
@@ -310,6 +359,10 @@ func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *m
 
 	case "plan_cr", "plan_tdl":
 		metaData, metaDataType, err := PlanCrTdlMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
+		return metaData, metaDataType, err
+
+	case "plan_collaborator":
+		metaData, metaDataType, err := PlanCollaboratorMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
 		return metaData, metaDataType, err
 
 		// Changes: (Meta)
