@@ -332,12 +332,60 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 	return &meta, &metaType, nil
 }
 
+// PlanDocumentMetaDataGet gets meta data for a plan document translated audit entry.
+// it first checks if the field is present in the change set, and if not, will fetch the record from the database
+// by checking the change set first, we are able to set meta data for records that have already been deleted
+func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, documentID uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+	// Changes: (Meta) is file_name the only field we need here? What if it is a link? Should we fetch from the db instead? NOTE, we can't fetch that when the document is deleted however
+	const fileNameField = "file_name"
+	var fileName string
+	fileNameChange, fieldPresent := changesFields[fileNameField]
+	if fieldPresent {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			if fileNameChange.Old == nil {
+				return nil, nil, fmt.Errorf("%s was nil in the change field Old. A value was expected", fileNameField)
+			}
+			fileName = fmt.Sprint(fileNameChange.Old)
+
+		} else {
+			if fileNameChange.New == nil {
+				return nil, nil, fmt.Errorf("%s was nil in the change field New. A value was expected", fileNameField)
+			}
+			fileName = fmt.Sprint(fileNameChange.New)
+
+		}
+	} else {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			return nil, nil, fmt.Errorf("the %s field, wasn't present on the audit change, and the data is deleted, and not queryable", fileNameField)
+		}
+		logger := appcontext.ZLogger(ctx)
+		document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentID)
+		if err != nil {
+			if err.Error() != "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
+
+				return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", err)
+			}
+		}
+
+		if document == nil {
+			return nil, nil, fmt.Errorf("document is not present in the database, but expected for this meta data")
+		}
+		fileName = document.FileName
+
+	}
+
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "fileName", fileName)
+	metaType := models.TAMetaGeneric
+	return &meta, &metaType, nil
+}
+
 func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *models.AuditChange, operation models.DatabaseOperation) (models.TranslatedAuditMetaData, *models.TranslatedAuditMetaDataType, error) {
 	// Changes: (ChChCh Changes!) Consider, do we need to handle if something is deleted differently? There might not be fetch-able information...
 	switch audit.TableName {
 	// Changes: (Testing) add a test for each of these.
 
 	//Changes: (Meta) refactor all of these to explicitly take UUIDs, since primary and foreignKey are always UUIDs and not interfaces. We don't need to parse them
+	// Changes: (Meta) Audit these method signatures, refactor to have a cohesive unified signature throughout, and remove any unnecessary params
 	case "discussion_reply":
 		metaData, err := DiscussionReplyMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.ModifiedDts)
 		metaDataType := models.TAMetaDiscussionReply
@@ -356,19 +404,15 @@ func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *m
 	case "plan_document_solution_link":
 		metaData, metaDataType, err := DocumentSolutionLinkMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.Fields, operation)
 		return metaData, metaDataType, err
-
 	case "plan_cr", "plan_tdl":
 		metaData, metaDataType, err := PlanCrTdlMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
 		return metaData, metaDataType, err
-
 	case "plan_collaborator":
 		metaData, metaDataType, err := PlanCollaboratorMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
 		return metaData, metaDataType, err
-
-		// Changes: (Meta)
-		// Document Link
-		// 1. all the document information each time ( because )
-		// Solution link
+	case "plan_document":
+		metaData, metaDataType, err := PlanCollaboratorMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
+		return metaData, metaDataType, err
 
 	default:
 		// Tables that aren't configured to generate meta data will return nil
