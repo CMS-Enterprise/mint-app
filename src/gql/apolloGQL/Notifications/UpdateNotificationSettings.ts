@@ -12,6 +12,8 @@ export default gql(/* GraphQL */ `
       taggedInDiscussionReply
       newDiscussionReply
       modelPlanShared
+      datesChanged
+      datesChangedNotificationType
     }
   }
 `);

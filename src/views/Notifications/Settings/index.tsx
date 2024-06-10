@@ -59,7 +59,9 @@ const NotificationSettings = () => {
     addedAsCollaborator,
     taggedInDiscussion,
     newDiscussionReply,
-    modelPlanShared
+    modelPlanShared,
+    datesChanged,
+    datesChangedNotificationType
   } = (data?.currentUser.notificationPreferences ||
     {}) as GetNotifcationSettingsType;
 
@@ -111,7 +113,9 @@ const NotificationSettings = () => {
     addedAsCollaborator: addedAsCollaborator ?? [],
     taggedInDiscussion: taggedInDiscussion ?? [],
     newDiscussionReply: newDiscussionReply ?? [],
-    modelPlanShared: modelPlanShared ?? []
+    modelPlanShared: modelPlanShared ?? [],
+    datesChanged: datesChanged ?? [],
+    datesChangedNotificationType: datesChangedNotificationType ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
