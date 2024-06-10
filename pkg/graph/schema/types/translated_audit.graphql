@@ -89,6 +89,11 @@ type TranslatedAuditMetaDocumentSolutionLink {
     documentName: String
     documentType: String
     documentOtherType: String
+    documentNote: String
+    """
+    Document URL will only be visible if the user is a collaborator, or has assessment permission
+    """
+    documentURL: String
     documentVisibility: String
 
     

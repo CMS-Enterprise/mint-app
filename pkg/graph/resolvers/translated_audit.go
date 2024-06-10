@@ -16,6 +16,7 @@ func TranslatedAuditCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelP
 	if err != nil {
 		return nil, err
 	}
+	//Changes: (Meta) Gate the permission for privileged information here based on current users role
 
 	for _, change := range translatedAuditCollection {
 		err2 := change.ParseMetaData()
