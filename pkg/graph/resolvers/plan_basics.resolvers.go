@@ -21,6 +21,7 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, c
 	logger := appcontext.ZLogger(ctx)
 
 	return UpdatePlanBasics(
+		ctx,
 		logger,
 		id,
 		changes,

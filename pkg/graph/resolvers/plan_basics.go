@@ -7,6 +7,10 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/samber/lo"
+
+	"github.com/cmsgov/mint-app/pkg/notifications"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
@@ -21,6 +25,7 @@ import (
 
 // UpdatePlanBasics implements resolver logic to update a plan basics object
 func UpdatePlanBasics(
+	ctx context.Context,
 	logger *zap.Logger,
 	id uuid.UUID,
 	changes map[string]interface{},
@@ -45,7 +50,10 @@ func UpdatePlanBasics(
 		emailTemplateService != nil &&
 		len(addressBook.ModelPlanDateChangedRecipients) > 0 {
 		err2 := processChangedDates(
+			ctx,
 			logger,
+			store,
+			principal,
 			changes,
 			existing,
 			emailService,
@@ -71,7 +79,10 @@ func UpdatePlanBasics(
 }
 
 func processChangedDates(
+	ctx context.Context,
 	logger *zap.Logger,
+	store *storage.Store,
+	principal authentication.Principal,
 	changes map[string]interface{},
 	existing *models.PlanBasics,
 	emailService oddmail.EmailService,
@@ -87,6 +98,10 @@ func processChangedDates(
 	if len(dateChanges) > 0 {
 		go func() {
 			err2 := sendDateChangedEmails(
+				ctx,
+				logger,
+				store,
+				principal,
 				emailService,
 				emailTemplateService,
 				addressBook,
@@ -134,6 +149,10 @@ func sanitizeZeroDate(date *time.Time) *time.Time {
 }
 
 func sendDateChangedEmails(
+	ctx context.Context,
+	logger *zap.Logger,
+	store *storage.Store,
+	principal authentication.Principal,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -179,6 +198,7 @@ func sendDateChangedEmails(
 		return err
 	}
 
+	// Send the email to default recipients
 	err = emailService.Send(
 		addressBook.DefaultSender,
 		addressBook.ModelPlanDateChangedRecipients,
@@ -191,7 +211,93 @@ func sendDateChangedEmails(
 		return err
 	}
 
+	// Send the email to notification subscribers
+	userIDEmailPairs, err := getUserIDEmailSubscribersFromModelPlan(ctx, modelPlan)
+	if err != nil {
+		return err
+	}
+
+	for _, userData := range userIDEmailPairs {
+		go func() {
+			err = emailService.Send(
+				addressBook.DefaultSender,
+				[]string{userData.email},
+				nil,
+				emailSubject,
+				"text/html",
+				emailBody,
+			)
+			if err != nil {
+				logger.Error("Failed to send email notification",
+					zap.Error(err),
+					zap.String("modelPlanID", modelPlan.ID.String()),
+				)
+			}
+		}()
+	}
+
+	// Extract UserIDs from the user data
+	userIDs := lo.Map(userIDEmailPairs, func(pair userIDEmailPair, _ int) uuid.UUID {
+		return pair.userID
+	})
+
+	// Convert from email.DateChange to models.DateChange for GQL transport
+	datesChangedModels := lo.Map(dateChangeSlice, func(dc email.DateChange, _ int) models.DateChange {
+		return models.DateChange{
+			IsChanged:     dc.IsChanged,
+			Field:         dc.Field,
+			IsRange:       dc.IsRange,
+			OldDate:       dc.OldDate,
+			NewDate:       dc.NewDate,
+			OldRangeStart: dc.OldRangeStart,
+			OldRangeEnd:   dc.OldRangeEnd,
+			NewRangeStart: dc.NewRangeStart,
+			NewRangeEnd:   dc.NewRangeEnd,
+		}
+	})
+
+	_, err = notifications.ActivityDatesChangedCreate(
+		ctx,
+		store,
+		principal.Account().ID,
+		modelPlan.ID,
+		datesChangedModels,
+		userIDs,
+		loaders.UserNotificationPreferencesGetByUserID,
+	)
+	if err != nil {
+		return err
+	}
+
 	return nil
+}
+
+type userIDEmailPair struct {
+	userID uuid.UUID
+	email  string
+}
+
+func getUserIDEmailSubscribersFromModelPlan(ctx context.Context, plan *models.ModelPlan) ([]userIDEmailPair, error) {
+
+	// TODO: Modify this to utilize a proper sql query which selects the email addresses of the subscribers
+	// based on user notification preferences. This is a temporary solution to get a list of subscribers
+	// to test the email sending functionality. This technically satisfies the "My Model PLans" selection,
+	// but it is not the correct way to get the list of subscribers.
+
+	// Get the list of subscribers from the model plan
+	planCollaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, plan.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	userIDEmailPairs := lo.Map(planCollaborators, func(pc *models.PlanCollaborator, _ int) userIDEmailPair {
+		return userIDEmailPair{
+			userID: pc.UserID,
+			email:  pc.UserAccount(ctx).Email,
+		}
+	})
+
+	return userIDEmailPairs, nil
 }
 
 // PlanBasicsGetByModelPlanIDLOADER implements resolver logic to get plan basics by a model plan ID using a data loader
