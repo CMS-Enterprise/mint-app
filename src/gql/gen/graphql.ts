@@ -3515,8 +3515,11 @@ export type TranslatedAuditMetaDocumentSolutionLink = {
   documentID: Scalars['UUID']['output'];
   /** Document Name will be present if the document is still present and not deleted */
   documentName?: Maybe<Scalars['String']['output']>;
+  documentNote?: Maybe<Scalars['String']['output']>;
   documentOtherType?: Maybe<Scalars['String']['output']>;
   documentType?: Maybe<Scalars['String']['output']>;
+  /** Document URL will only be visible if the user is a collaborator, or has assessment permission */
+  documentURL?: Maybe<Scalars['String']['output']>;
   documentVisibility?: Maybe<Scalars['String']['output']>;
   needIsOther: Scalars['Boolean']['output'];
   needName: Scalars['String']['output'];
