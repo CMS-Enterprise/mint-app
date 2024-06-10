@@ -88,6 +88,7 @@ type TranslatedAuditMetaDocumentSolutionLink {
     """
     documentName: String
     documentType: String
+    documentOtherType: String
     documentVisibility: String
 
     

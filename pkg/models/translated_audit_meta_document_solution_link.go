@@ -6,6 +6,7 @@ import (
 	"errors"
 
 	"github.com/google/uuid"
+	"github.com/guregu/null/zero"
 )
 
 // Changes: (Meta) Figure out what we need here, do we need all need info? Do we need all solution info?
@@ -22,13 +23,15 @@ type TranslatedAuditMetaDocumentSolutionLink struct {
 	DocumentID         uuid.UUID `json:"documentID"`
 	DocumentName       *string   `json:"documentName"`
 	DocumentType       *string   `json:"documentType"`
+	DocumentOtherType  *string   `json:"documentOtherType"`
 	DocumentVisibility *string   `json:"documentVisibility"`
 	// Changes: (Meta) if required add what other solutions documents were connected
 }
 
-func (tam *TranslatedAuditMetaDocumentSolutionLink) SetOptionalDocumentFields(documentName string, documentType string, documentVisibility string) {
+func (tam *TranslatedAuditMetaDocumentSolutionLink) SetOptionalDocumentFields(documentName string, documentType string, documentOtherType zero.String, documentVisibility string) {
 	tam.DocumentName = &documentName
 	tam.DocumentType = &documentType
+	tam.DocumentOtherType = documentOtherType.Ptr()
 	tam.DocumentVisibility = &documentVisibility
 
 }
