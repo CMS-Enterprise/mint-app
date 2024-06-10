@@ -15,7 +15,7 @@ type TranslatedAuditMetaOperationalSolution struct {
 	SolutionName        string     `json:"solutionName"`
 	SolutionOtherHeader *string    `json:"solutionOtherHeader"`
 	NumberOfSubtasks    int        `json:"numberOfSubtasks"`
-	SolutionIsOther     bool       `json:"isOther"`
+	SolutionIsOther     bool       `json:"solutionIsOther"`
 	SolutionStatus      string     `json:"solutionStatus"`
 	SolutionMustStart   *time.Time `json:"solutionMustStart"`
 	SolutionMustFinish  *time.Time `json:"solutionMustFinish"`

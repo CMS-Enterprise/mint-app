@@ -119,6 +119,8 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 
 	}
 
+	//Changes: (Meta) Could we pass the translated fields here to save some meta data searching?
+
 	// Changes: (Translations) refactor this, perhaps this should be a receiver method on the translated audit? That way we set if not nil, instead of the default implementation?
 	metaData, metaDataType, err := TranslatedAuditMetaData(ctx, store, audit, operation)
 	if err != nil {

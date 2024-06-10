@@ -62,7 +62,11 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 
 		translatedDoc, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, doc.ID.String(), tableName)
 		suite.NoError(err)
-		suite.EqualValues(docName, translatedDoc)
+		stringTranslation, ok := translatedDoc.(*string)
+		suite.True(ok)
+		if suite.NotNil(translatedDoc) {
+			suite.EqualValues(docName, *stringTranslation)
+		}
 
 	})
 	suite.Run("unknown table returns an error", func() {
