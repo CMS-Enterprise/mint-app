@@ -11,12 +11,12 @@ type DateChange struct {
 	IsChanged     bool
 	Field         string
 	IsRange       bool
-	OldDate       time.Time
-	NewDate       time.Time
-	OldRangeStart time.Time
-	OldRangeEnd   time.Time
-	NewRangeStart time.Time
-	NewRangeEnd   time.Time
+	OldDate       *time.Time
+	NewDate       *time.Time
+	OldRangeStart *time.Time
+	OldRangeEnd   *time.Time
+	NewRangeStart *time.Time
+	NewRangeEnd   *time.Time
 }
 
 // DatesChangedActivityMeta represents the notification data that is relevant when a user changes dates in a model plan
