@@ -1536,7 +1536,6 @@ type UserNotificationPreferencesResolver interface {
 	NewDiscussionReply(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	ModelPlanShared(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	DatesChanged(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
-	DatesChangedNotificationType(ctx context.Context, obj *models.UserNotificationPreferences) (model.DatesChangedNotificationType, error)
 }
 
 type executableSchema struct {
@@ -11770,8 +11769,8 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
 
   modelPlanShared: [UserNotificationPreferenceFlag!]
 
-  datesChanged: [UserNotificationPreferenceFlag!]!
-  datesChangedNotificationType: DatesChangedNotificationType!
+  datesChanged: [UserNotificationPreferenceFlag!]
+  datesChangedNotificationType: DatesChangedNotificationType
 }
 
 extend type Mutation {
@@ -61966,7 +61965,7 @@ func (ec *executionContext) _UserNotificationPreferences_datesChangedNotificatio
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.UserNotificationPreferences().DatesChangedNotificationType(rctx, obj)
+		return obj.DatesChangedNotificationType, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -61978,17 +61977,17 @@ func (ec *executionContext) _UserNotificationPreferences_datesChangedNotificatio
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.DatesChangedNotificationType)
+	res := resTmp.(models.DatesChangedNotificationType)
 	fc.Result = res
-	return ec.marshalNDatesChangedNotificationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDatesChangedNotificationType(ctx, field.Selections, res)
+	return ec.marshalNDatesChangedNotificationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatesChangedNotificationType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserNotificationPreferences_datesChangedNotificationType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserNotificationPreferences",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type DatesChangedNotificationType does not have child fields")
 		},
@@ -76659,41 +76658,10 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "datesChangedNotificationType":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._UserNotificationPreferences_datesChangedNotificationType(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
+			out.Values[i] = ec._UserNotificationPreferences_datesChangedNotificationType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
 			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "createdBy":
 			out.Values[i] = ec._UserNotificationPreferences_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -78373,14 +78341,20 @@ func (ec *executionContext) marshalNDateChange2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	return ret
 }
 
-func (ec *executionContext) unmarshalNDatesChangedNotificationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDatesChangedNotificationType(ctx context.Context, v interface{}) (model.DatesChangedNotificationType, error) {
-	var res model.DatesChangedNotificationType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNDatesChangedNotificationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatesChangedNotificationType(ctx context.Context, v interface{}) (models.DatesChangedNotificationType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DatesChangedNotificationType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNDatesChangedNotificationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDatesChangedNotificationType(ctx context.Context, sel ast.SelectionSet, v model.DatesChangedNotificationType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNDatesChangedNotificationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatesChangedNotificationType(ctx context.Context, sel ast.SelectionSet, v models.DatesChangedNotificationType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) marshalNDiscussionReply2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v models.DiscussionReply) graphql.Marshaler {
@@ -83713,6 +83687,23 @@ func (ec *executionContext) marshalODataToSendParticipantsType2ᚕgithubᚗcom�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalODatesChangedNotificationType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatesChangedNotificationType(ctx context.Context, v interface{}) (*models.DatesChangedNotificationType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DatesChangedNotificationType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalODatesChangedNotificationType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatesChangedNotificationType(ctx context.Context, sel ast.SelectionSet, v *models.DatesChangedNotificationType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
 }
 
 func (ec *executionContext) marshalODiscussionRoleSelection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx context.Context, sel ast.SelectionSet, v *models.DiscussionRoleSelection) graphql.Marshaler {

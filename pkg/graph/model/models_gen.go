@@ -758,49 +758,6 @@ func (e DataToSendParticipantsType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type DatesChangedNotificationType string
-
-const (
-	DatesChangedNotificationTypeAllModels      DatesChangedNotificationType = "ALL_MODELS"
-	DatesChangedNotificationTypeFollowedModels DatesChangedNotificationType = "FOLLOWED_MODELS"
-	DatesChangedNotificationTypeMyModels       DatesChangedNotificationType = "MY_MODELS"
-)
-
-var AllDatesChangedNotificationType = []DatesChangedNotificationType{
-	DatesChangedNotificationTypeAllModels,
-	DatesChangedNotificationTypeFollowedModels,
-	DatesChangedNotificationTypeMyModels,
-}
-
-func (e DatesChangedNotificationType) IsValid() bool {
-	switch e {
-	case DatesChangedNotificationTypeAllModels, DatesChangedNotificationTypeFollowedModels, DatesChangedNotificationTypeMyModels:
-		return true
-	}
-	return false
-}
-
-func (e DatesChangedNotificationType) String() string {
-	return string(e)
-}
-
-func (e *DatesChangedNotificationType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = DatesChangedNotificationType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid DatesChangedNotificationType", str)
-	}
-	return nil
-}
-
-func (e DatesChangedNotificationType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type EaseOfUse string
 
 const (

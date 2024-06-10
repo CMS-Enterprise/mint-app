@@ -58,8 +58,8 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
 
   modelPlanShared: [UserNotificationPreferenceFlag!]
 
-  datesChanged: [UserNotificationPreferenceFlag!]!
-  datesChangedNotificationType: DatesChangedNotificationType!
+  datesChanged: [UserNotificationPreferenceFlag!]
+  datesChangedNotificationType: DatesChangedNotificationType
 }
 
 extend type Mutation {
