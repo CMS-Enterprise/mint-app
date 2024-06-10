@@ -411,7 +411,7 @@ func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *m
 		metaData, metaDataType, err := PlanCollaboratorMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
 		return metaData, metaDataType, err
 	case "plan_document":
-		metaData, metaDataType, err := PlanCollaboratorMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
+		metaData, metaDataType, err := PlanDocumentMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
 		return metaData, metaDataType, err
 
 	default:
