@@ -153,7 +153,7 @@ export const ActivityCTA = ({
       </>
     ) : (
       <>
-        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.show" />
+        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.view" />
         <Icon.ExpandMore className="margin-left-1" aria-hidden />
       </>
     );
@@ -166,7 +166,7 @@ export const ActivityCTA = ({
       </>
     ) : (
       <>
-        <Trans i18nKey="notifications:index.activityType.DATES_CHANGED.cta.show" />
+        <Trans i18nKey="notifications:index.activityType.DATES_CHANGED.cta.view" />
         <Icon.ExpandMore className="margin-left-1" aria-hidden />
       </>
     );
