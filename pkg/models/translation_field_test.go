@@ -179,3 +179,56 @@ func TestTranslationFieldLabel(t *testing.T) {
 	})
 
 }
+
+func TestGetOptions(t *testing.T) {
+	label := "Hooray, you got the label from the parent"
+	dbField := "db_field_name"
+	field1Key := "hooray"
+	field1Value := "value1"
+
+	field2Key := "boo"
+	field2Value := "value2"
+
+	TranslationField := TranslationFieldWithOptions{
+		TranslationFieldBase: TranslationFieldBase{
+			DbField: dbField,
+
+			Label:                 label,
+			ReadOnlyLabel:         nil,
+			SubLabel:              nil,
+			MultiSelectLabel:      nil,
+			IsArray:               false,
+			DataType:              TDTString,
+			FormType:              TFTText,
+			IsNote:                false,
+			IsOtherType:           false,
+			OtherParentField:      nil,
+			ParentReferencesLabel: nil,
+		},
+		translationOptionRelation: translationOptionRelation{
+			Options: map[string]interface{}{
+				field1Key: field1Value,
+				field2Key: field2Value,
+			},
+		},
+	}
+	assert := assert.New(t)
+
+	// Get options, assert that there are two (the regular options)
+	options, hasOptions := TranslationField.GetOptions()
+	assert.True(hasOptions)
+	assert.Len(options, 2)
+	assert.EqualValues(field1Value, options[field1Key])
+	assert.EqualValues(field2Value, options[field2Key])
+
+	field1ValueExport := "ExportOption"
+	// Add export options and assert they are retrieved
+	TranslationField.ExportOptions = map[string]interface{}{
+		field1Key: field1ValueExport,
+	}
+	options2, hasOptions2 := TranslationField.GetOptions()
+	assert.True(hasOptions2)
+	assert.Len(options2, 1)
+	assert.EqualValues(field1ValueExport, options2[field1Key])
+
+}
