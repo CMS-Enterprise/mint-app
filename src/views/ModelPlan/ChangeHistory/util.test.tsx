@@ -8,8 +8,10 @@ import {
   ChangeRecordType,
   ChangeType,
   condenseLinkingTableChanges,
+  documentUpdateType,
   extractReadyForReviewChanges,
   filterQueryAudits,
+  getSolutionOperationStatus,
   groupBatchedChanges,
   handleSortOptions,
   identifyChangeType,
@@ -436,6 +438,7 @@ describe('util.tsx', () => {
     expect(sortChangesByDay(changes)).toEqual(expected);
   });
 
+  // Test for handleSortOptions
   it('should sort changes from newest to oldest', () => {
     const changes = [...sortData];
 
@@ -470,6 +473,7 @@ describe('util.tsx', () => {
     expect(filterQueryAudits(queryString4, changes)).toEqual(changes);
   });
 
+  // Test for groupBatchedChanges
   it('should group changes that are within 1 second of each other', () => {
     const changes: ChangeRecordType[] = [
       {
@@ -556,6 +560,7 @@ describe('util.tsx', () => {
     expect(groupBatchedChanges([...changes])).toEqual(expected2);
   });
 
+  // Test for linkingTableQuestions
   it('should return unique questions from change records', () => {
     const changeRecords = [
       {
@@ -613,6 +618,7 @@ describe('util.tsx', () => {
     expect(result2).toEqual(['Ready', 'Name']);
   });
 
+  // Test for condenseLinkingTableChanges
   it('should condense changes into a single change record per question', () => {
     const changes = [
       {
@@ -701,7 +707,7 @@ describe('util.tsx', () => {
         metaData: null
       }
     ];
-    const result = condenseLinkingTableChanges(changes as any);
+    const result = condenseLinkingTableChanges(changes as ChangeRecordType[]);
 
     expect(result[0].metaData?.tableName).toBe(
       'Which existing models does your proposed track/model most closely resemble?'
@@ -754,5 +760,97 @@ describe('util.tsx', () => {
         }
       }
     ]);
+  });
+
+  // Test for getSolutionOperationStatus
+  it('should return the correct database operation based on if needed field', () => {
+    const change = {
+      __typename: 'TranslatedAudit',
+      id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+      tableName: 'operational_solution',
+      date: '2024-06-07T19:14:30.145659Z',
+      action: DatabaseOperation.UPDATE,
+      actorName: 'MINT Doe',
+      translatedFields: [
+        {
+          __typename: 'TranslatedAuditField',
+          id: '631e0ac6-1f52-4ed4-8c1e-f94fd742011f',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.STRING,
+          fieldName: 'needed',
+          fieldNameTranslated:
+            'Accountable Care Organization Realizing Equity, Access, and Community Health Model (ACO REACH) ',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: null,
+          oldTranslated: null,
+          new: 'false',
+          newTranslated: 'false'
+        }
+      ]
+    };
+
+    const result = getSolutionOperationStatus(change as ChangeRecordType);
+
+    expect(result).toEqual(DatabaseOperation.DELETE);
+
+    change.translatedFields[0].new = 'true';
+
+    const result2 = getSolutionOperationStatus(change as ChangeRecordType);
+
+    expect(result2).toEqual(DatabaseOperation.INSERT);
+
+    change.translatedFields[0].fieldName = 'other_field';
+
+    const result3 = getSolutionOperationStatus(change as ChangeRecordType);
+
+    expect(result3).toEqual(DatabaseOperation.UPDATE);
+  });
+
+  // Test for getSolutionOperationStatus
+  it('should return the correct text for document changes', () => {
+    const change = {
+      __typename: 'TranslatedAudit',
+      id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+      tableName: 'operational_solution',
+      date: '2024-06-07T19:14:30.145659Z',
+      action: DatabaseOperation.INSERT,
+      actorName: 'MINT Doe',
+      translatedFields: [
+        {
+          __typename: 'TranslatedAuditField',
+          id: '631e0ac6-1f52-4ed4-8c1e-f94fd742011f',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.STRING,
+          fieldName: 'is_link',
+          fieldNameTranslated:
+            'Accountable Care Organization Realizing Equity, Access, and Community Health Model (ACO REACH) ',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: null,
+          oldTranslated: null,
+          new: 'false',
+          newTranslated: 'true'
+        }
+      ]
+    };
+
+    const result = documentUpdateType(change as ChangeRecordType);
+
+    expect(result).toEqual('added');
+
+    change.translatedFields[0].newTranslated = 'false';
+
+    const result2 = documentUpdateType(change as ChangeRecordType);
+
+    expect(result2).toEqual('uploaded');
+
+    change.action = DatabaseOperation.DELETE;
+
+    const result3 = documentUpdateType(change as ChangeRecordType);
+
+    expect(result3).toEqual('removed');
   });
 });
