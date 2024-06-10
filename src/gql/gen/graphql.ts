@@ -2970,8 +2970,8 @@ export type UserNotificationPreferences = {
 export type UserNotificationPreferencesChanges = {
   addedAsCollaborator?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   dailyDigestComplete?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
-  datesChanged: Array<UserNotificationPreferenceFlag>;
-  datesChangedNotificationType: DatesChangedNotificationType;
+  datesChanged?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  datesChangedNotificationType?: InputMaybe<DatesChangedNotificationType>;
   modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   newDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   taggedInDiscussion?: InputMaybe<Array<UserNotificationPreferenceFlag>>;

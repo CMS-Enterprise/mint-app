@@ -22,7 +22,7 @@ type UserNotificationPreferences struct {
 	NewDiscussionReply           UserNotificationPreferenceFlags `json:"newDiscussionReply" db:"new_discussion_reply"`
 	ModelPlanShared              UserNotificationPreferenceFlags `json:"modelPlanShared" db:"model_plan_shared"`
 	DatesChanged                 UserNotificationPreferenceFlags `json:"datesChanged" db:"dates_changed"`
-	DatesChangedNotificationType DatesChangedNotificationType    `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
+	DatesChangedNotificationType *DatesChangedNotificationType   `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
 }
 
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
