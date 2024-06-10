@@ -16,7 +16,7 @@ const notifications = {
       DAILY_DIGEST_COMPLETE: {
         text: ' sent your daily digest.',
         cta: {
-          show: 'View digest',
+          view: 'View digest',
           hide: 'Hide digest'
         }
       },
