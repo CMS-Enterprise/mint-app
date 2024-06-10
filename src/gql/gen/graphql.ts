@@ -353,6 +353,12 @@ export type DatesChangedActivityMeta = {
   version: Scalars['Int']['output'];
 };
 
+export enum DatesChangedNotificationType {
+  ALL_MODELS = 'ALL_MODELS',
+  FOLLOWED_MODELS = 'FOLLOWED_MODELS',
+  MY_MODELS = 'MY_MODELS'
+}
+
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
   __typename: 'DiscussionReply';
@@ -2947,6 +2953,8 @@ export type UserNotificationPreferences = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   dailyDigestComplete: Array<UserNotificationPreferenceFlag>;
+  datesChanged: Array<UserNotificationPreferenceFlag>;
+  datesChangedNotificationType: DatesChangedNotificationType;
   id: Scalars['UUID']['output'];
   modelPlanShared: Array<UserNotificationPreferenceFlag>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
@@ -2962,6 +2970,8 @@ export type UserNotificationPreferences = {
 export type UserNotificationPreferencesChanges = {
   addedAsCollaborator?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   dailyDigestComplete?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  datesChanged: Array<UserNotificationPreferenceFlag>;
+  datesChangedNotificationType: DatesChangedNotificationType;
   modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   newDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   taggedInDiscussion?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
