@@ -219,7 +219,7 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	)
 	if document != nil {
 		// Changes: (Meta) all these document fields will also need to be translated
-		meta.SetOptionalDocumentFields(document.FileName, string(document.DocumentType), document.OtherTypeDescription, fmt.Sprint(document.Restricted))
+		meta.SetOptionalDocumentFields(document.FileName, string(document.DocumentType), document.OtherTypeDescription, document.OptionalNotes, fmt.Sprint(document.Restricted))
 	}
 
 	//Changes: (Meta) We need to get other document information, and it needs to be translated.
