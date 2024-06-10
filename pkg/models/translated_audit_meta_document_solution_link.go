@@ -25,15 +25,17 @@ type TranslatedAuditMetaDocumentSolutionLink struct {
 	DocumentType       *string   `json:"documentType"`
 	DocumentOtherType  *string   `json:"documentOtherType"`
 	DocumentNote       *string   `json:"documentNote"`
+	DocumentURL        *string   `json:"documentURL"`
 	DocumentVisibility *string   `json:"documentVisibility"`
 	// Changes: (Meta) if required add what other solutions documents were connected
 }
 
-func (tam *TranslatedAuditMetaDocumentSolutionLink) SetOptionalDocumentFields(documentName string, documentType string, documentOtherType zero.String, documentNote zero.String, documentVisibility string) {
+func (tam *TranslatedAuditMetaDocumentSolutionLink) SetOptionalDocumentFields(documentName string, documentType string, documentOtherType zero.String, documentNote zero.String, documentURL zero.String, documentVisibility string) {
 	tam.DocumentName = &documentName
 	tam.DocumentType = &documentType
 	tam.DocumentOtherType = documentOtherType.Ptr()
 	tam.DocumentNote = documentNote.Ptr()
+	tam.DocumentURL = documentURL.Ptr()
 	tam.DocumentVisibility = &documentVisibility
 
 }

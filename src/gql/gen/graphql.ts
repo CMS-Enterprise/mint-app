@@ -3518,6 +3518,8 @@ export type TranslatedAuditMetaDocumentSolutionLink = {
   documentNote?: Maybe<Scalars['String']['output']>;
   documentOtherType?: Maybe<Scalars['String']['output']>;
   documentType?: Maybe<Scalars['String']['output']>;
+  /** Document URL will only be visible if the user is a collaborator, or has assessment permission */
+  documentURL?: Maybe<Scalars['String']['output']>;
   documentVisibility?: Maybe<Scalars['String']['output']>;
   needIsOther: Scalars['Boolean']['output'];
   needName: Scalars['String']['output'];
