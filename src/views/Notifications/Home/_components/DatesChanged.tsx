@@ -54,33 +54,48 @@ const DatesChanged = ({
         }) => {
           return (
             <div>
-              <p className="text-bold margin-y-0">{field}</p>
-              {isRange ? (
-                // isRange code here
-                <div>
-                  <p className="margin-y-0">
-                    {oldRangeStart} - {oldRangeEnd}
-                  </p>
-                  <p className="margin-y-0">
-                    {newRangeStart} - {newRangeEnd}
-                  </p>
-                </div>
-              ) : (
-                <div>
-                  <span
-                    className={`margin-y-0 ${
-                      isChanged ? 'text-error text-strike text-italic' : ''
-                    }`}
-                  >
-                    {oldDate} {isChanged && newDate}
-                  </span>
-                </div>
-              )}
+              <p className="text-bold margin-y-0 line-height-sans-4">{field}</p>
+              <div className="margin-bottom-3">
+                {isRange ? (
+                  // isRange code here
+                  <>
+                    <p
+                      className={`line-height-sans-4 margin-y-0 ${
+                        isChanged ? 'text-error text-strike text-italic' : ''
+                      }`}
+                    >
+                      {oldRangeStart} - {oldRangeEnd}
+                    </p>
+                    {isChanged && (
+                      <p className="line-height-sans-4 margin-y-0">
+                        {newRangeStart} - {newRangeEnd}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <span
+                      className={`line-height-sans-4 margin-y-0 ${
+                        isChanged ? 'text-error text-strike text-italic' : ''
+                      }`}
+                    >
+                      {oldDate}
+                    </span>
+                    <span className="line-height-sans-4 margin-y-0">
+                      {' '}
+                      {isChanged && newDate}
+                    </span>
+                  </>
+                )}
+              </div>
             </div>
           );
         }
       )}
-      <UswdsReactLink to={`/models/${modelPlanID}/read-only`}>
+      <UswdsReactLink
+        to={`/models/${modelPlanID}/read-only`}
+        className="text-bold"
+      >
         {notificationsT('index.datesChanged.cta')}
       </UswdsReactLink>
     </Grid>
