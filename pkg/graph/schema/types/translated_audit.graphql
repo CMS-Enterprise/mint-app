@@ -3,6 +3,7 @@ TranslatedAuditMetaData is a type that represents all the data that can be captu
 """
 union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaGeneric | TranslatedAuditMetaDiscussionReply 
 | TranslatedAuditMetaOperationalNeed | TranslatedAuditMetaOperationalSolution | TranslatedAuditMetaOperationalSolutionSubtask
+| TranslatedAuditMetaDocumentSolutionLink
 
 
 type TranslatedAuditMetaBaseStruct {
@@ -67,6 +68,36 @@ type TranslatedAuditMetaOperationalSolutionSubtask {
     subtaskName: String!
 }
 
+"""
+TranslatedAuditMetaDocumentSolutionLink is the meta data type for a document solution link
+
+"""
+type TranslatedAuditMetaDocumentSolutionLink {
+    version: Int!
+    tableName: String!
+    solutionName: String!
+    solutionOtherHeader: String
+    solutionIsOther: Boolean!
+    needName: String!
+    needIsOther: Boolean!
+
+    # These fields are only present if the document wasn't deleted
+
+    """
+    Document Name will be present if the document is still present and not deleted
+    """
+    documentName: String
+    documentType: String
+    documentOtherType: String
+    documentVisibility: String
+
+    
+    """
+    Document ID  will always be present, regardless of if a document was deleted or not
+    """
+    documentID: UUID!
+}
+
 
 enum TranslatedAuditMetaDataType {
     GENERIC
@@ -74,7 +105,8 @@ enum TranslatedAuditMetaDataType {
     DISCUSSION_REPLY
     OPERATIONAL_NEED
     OPERATIONAL_SOLUTION
-    OPERATIONAL_SOLUTION_SUBTASK    
+    OPERATIONAL_SOLUTION_SUBTASK
+    DOCUMENT_SOLUTION_LINK
 }
 
 enum DatabaseOperation {

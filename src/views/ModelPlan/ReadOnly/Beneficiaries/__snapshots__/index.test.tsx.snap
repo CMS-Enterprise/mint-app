@@ -95,7 +95,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note beneficiary
           </div>
@@ -122,7 +122,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
             <span
@@ -157,7 +157,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Treat note
           </div>
@@ -184,7 +184,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             No
           </div>
@@ -214,7 +214,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Exclude note
           </div>
@@ -249,7 +249,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 1234
               </div>
@@ -277,7 +277,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
                 </p>
               </div>
               <div
-                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+                class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
               >
                 Completely confident
               </div>
@@ -309,7 +309,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note of confidence
           </div>
@@ -371,7 +371,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note selection
           </div>
@@ -442,7 +442,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note frequency
           </div>
@@ -513,7 +513,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note frequency
           </div>
@@ -540,7 +540,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes, we expect to develop policies to manage the overlaps
           </div>
@@ -567,7 +567,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Note overlap
           </div>
@@ -638,7 +638,7 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             </p>
           </div>
           <div
-            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line"
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Precedence note
           </div>

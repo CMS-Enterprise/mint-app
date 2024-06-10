@@ -21,6 +21,7 @@ import {
   documentUpdateType,
   identifyChangeType,
   isDiscussionReplyWithMetaData,
+  isGenericWithMetaData,
   parseArray,
   TranslationTables
 } from '../../util';
@@ -345,9 +346,11 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                 field => field.fieldName === 'team_roles'
               )?.changeType;
 
-              const collaborator = changeRecord.translatedFields.find(
-                field => field.fieldName === 'user_id'
-              )?.[teamChange(teamChangeType)];
+              const collaborator =
+                changeRecord?.metaData &&
+                isGenericWithMetaData(changeRecord?.metaData)
+                  ? changeRecord?.metaData.relationContent
+                  : '';
 
               const role = changeRecord.translatedFields.find(
                 field => field.fieldName === 'team_roles'
@@ -403,12 +406,11 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
           {(changeRecordType === 'CR update' ||
             changeRecordType === 'TDL update') &&
             (() => {
-              const crTdlChange = (actionType: DatabaseOperation) =>
-                actionType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
-
-              const crTdlName = changeRecord.translatedFields.find(
-                field => field.fieldName === 'id_number'
-              )?.[crTdlChange(changeRecord.action)];
+              const crTdlName =
+                changeRecord?.metaData &&
+                isGenericWithMetaData(changeRecord?.metaData)
+                  ? changeRecord?.metaData.relationContent
+                  : '';
 
               return (
                 <Trans

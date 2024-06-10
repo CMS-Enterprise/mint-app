@@ -6,21 +6,10 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
-
-// ExportOptions is the resolver for the exportOptions field.
-func (r *translationFieldWithOptionsResolver) ExportOptions(ctx context.Context, obj *models.TranslationFieldWithOptions) (map[string]interface{}, error) {
-	panic(fmt.Errorf("not implemented: ExportOptions - exportOptions"))
-}
-
-// ExportOptions is the resolver for the exportOptions field.
-func (r *translationFieldWithOptionsAndChildrenResolver) ExportOptions(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (map[string]interface{}, error) {
-	panic(fmt.Errorf("not implemented: ExportOptions - exportOptions"))
-}
 
 // ChildRelation is the resolver for the childRelation field.
 func (r *translationFieldWithOptionsAndChildrenResolver) ChildRelation(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (map[string]interface{}, error) {
@@ -30,16 +19,6 @@ func (r *translationFieldWithOptionsAndChildrenResolver) ChildRelation(ctx conte
 		resultMap[key] = value
 	}
 	return resultMap, nil
-}
-
-// ExportOptions is the resolver for the exportOptions field.
-func (r *translationFieldWithOptionsAndParentResolver) ExportOptions(ctx context.Context, obj *models.TranslationFieldWithOptionsAndParent) (map[string]interface{}, error) {
-	panic(fmt.Errorf("not implemented: ExportOptions - exportOptions"))
-}
-
-// ExportOptions is the resolver for the exportOptions field.
-func (r *translationFieldWithParentAndChildrenResolver) ExportOptions(ctx context.Context, obj *models.TranslationFieldWithParentAndChildren) (map[string]interface{}, error) {
-	panic(fmt.Errorf("not implemented: ExportOptions - exportOptions"))
 }
 
 // ChildRelation is the resolver for the childRelation field.
@@ -52,19 +31,9 @@ func (r *translationFieldWithParentAndChildrenResolver) ChildRelation(ctx contex
 	return resultMap, nil
 }
 
-// TranslationFieldWithOptions returns generated.TranslationFieldWithOptionsResolver implementation.
-func (r *Resolver) TranslationFieldWithOptions() generated.TranslationFieldWithOptionsResolver {
-	return &translationFieldWithOptionsResolver{r}
-}
-
 // TranslationFieldWithOptionsAndChildren returns generated.TranslationFieldWithOptionsAndChildrenResolver implementation.
 func (r *Resolver) TranslationFieldWithOptionsAndChildren() generated.TranslationFieldWithOptionsAndChildrenResolver {
 	return &translationFieldWithOptionsAndChildrenResolver{r}
-}
-
-// TranslationFieldWithOptionsAndParent returns generated.TranslationFieldWithOptionsAndParentResolver implementation.
-func (r *Resolver) TranslationFieldWithOptionsAndParent() generated.TranslationFieldWithOptionsAndParentResolver {
-	return &translationFieldWithOptionsAndParentResolver{r}
 }
 
 // TranslationFieldWithParentAndChildren returns generated.TranslationFieldWithParentAndChildrenResolver implementation.
@@ -72,7 +41,5 @@ func (r *Resolver) TranslationFieldWithParentAndChildren() generated.Translation
 	return &translationFieldWithParentAndChildrenResolver{r}
 }
 
-type translationFieldWithOptionsResolver struct{ *Resolver }
 type translationFieldWithOptionsAndChildrenResolver struct{ *Resolver }
-type translationFieldWithOptionsAndParentResolver struct{ *Resolver }
 type translationFieldWithParentAndChildrenResolver struct{ *Resolver }

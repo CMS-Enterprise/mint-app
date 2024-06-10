@@ -5,7 +5,7 @@ Table component for rendering both Other Operational Needs and Operational Need 
 Queries operationalNeeds which contains possible needs and needs
 Can render table of type GetOperationalNeeds_modelPlan_operationalNeeds or GetOperationalNeeds_modelPlan_operationalNeeds_solutions_solutions
 */
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import {
@@ -45,6 +45,7 @@ import {
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
 import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { PrintPDFContext } from 'views/PrintPDFWrapper';
 
 import OperationalNeedsStatusTag, {
   OperationalNeedsSolutionsStatus
@@ -96,6 +97,9 @@ const OperationalNeedsTable = ({
 
   const flags = useFlags();
 
+  // isPrintPDF is a boolean that is set to true when the user is printing the PDF
+  const { isPrintPDF } = useContext(PrintPDFContext);
+
   // Memoized function to return/filter possible needs and needed solutions
   const operationalNeeds = useMemo(() => {
     const needData = data?.modelPlan?.operationalNeeds
@@ -124,7 +128,7 @@ const OperationalNeedsTable = ({
 
   const hiddenTableColumns = [...(hiddenColumns || [])];
 
-  if (!hasEditAccess) {
+  if (!hasEditAccess || isPrintPDF) {
     hiddenTableColumns.push('Actions');
   }
 
@@ -249,6 +253,10 @@ const OperationalNeedsTable = ({
   const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
     return [
       {
+        Header: operationalNeedsT<string>('name.label'),
+        accessor: 'name'
+      },
+      {
         Header: operationalNeedsT<string>('section.label'),
         accessor: 'section',
         Cell: ({
@@ -266,10 +274,7 @@ const OperationalNeedsTable = ({
           return '';
         }
       },
-      {
-        Header: operationalNeedsT<string>('name.label'),
-        accessor: 'name'
-      },
+
       {
         Header: operationalNeedsT<string>('needed.label'),
         accessor: 'status',
@@ -293,11 +298,6 @@ const OperationalNeedsTable = ({
       }
     ];
   }, [opSolutionsMiscT, operationalNeedsT, modelID]);
-
-  // Swap the solution and need positions if readonly filter view
-  if (filterSolutions) {
-    [needsColumns[0], needsColumns[1]] = [needsColumns[1], needsColumns[0]];
-  }
 
   const sortColumn = type === 'needs' && !filterSolutions ? 'needName' : 'name';
   const initialSort = useMemo(() => [{ id: sortColumn, asc: true }], [
@@ -400,26 +400,26 @@ const OperationalNeedsTable = ({
       className={classNames(className, 'model-plan-table')}
       data-testid={`${type}-table`}
     >
-      {!hideGlobalFilter && (
-        <div className="mint-header__basic">
-          <GlobalClientFilter
-            setGlobalFilter={setGlobalFilter}
-            tableID={opSolutionsMiscT('itSolutionsTable.id')}
-            tableName={opSolutionsMiscT('itSolutionsTable.title')}
-            className="margin-bottom-4 width-mobile-lg maxw-full"
-          />
-        </div>
-      )}
+      {!hideGlobalFilter && !isPrintPDF && (
+        <>
+          <div className="mint-header__basic">
+            <GlobalClientFilter
+              setGlobalFilter={setGlobalFilter}
+              tableID={opSolutionsMiscT('itSolutionsTable.id')}
+              tableName={opSolutionsMiscT('itSolutionsTable.title')}
+              className="margin-bottom-4 width-mobile-lg maxw-full"
+            />
+          </div>
 
-      {!hideGlobalFilter && (
-        <TableResults
-          globalFilter={state.globalFilter}
-          pageIndex={state.pageIndex}
-          pageSize={state.pageSize}
-          filteredRowLength={page.length}
-          rowLength={operationalNeeds.length}
-          className="margin-bottom-4"
-        />
+          <TableResults
+            globalFilter={state.globalFilter}
+            pageIndex={state.pageIndex}
+            pageSize={state.pageSize}
+            filteredRowLength={page.length}
+            rowLength={operationalNeeds.length}
+            className="margin-bottom-4"
+          />
+        </>
       )}
 
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>

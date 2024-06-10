@@ -1,6 +1,7 @@
 describe('The Model Plan Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD' });
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/');
   });
 
   it('fills out model plan name and creates plan', () => {

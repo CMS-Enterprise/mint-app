@@ -187,9 +187,9 @@ const FundingSource = () => {
                 checked={values[fieldName]?.includes(trustType)}
               />
 
-              {config.optionsLabels?.[trustType] && (
+              {config.tooltips?.[trustType] && (
                 <Tooltip
-                  label={config.optionsLabels?.[trustType] || ''}
+                  label={config.tooltips?.[trustType] || ''}
                   position="right"
                   className="margin-left-05"
                 >

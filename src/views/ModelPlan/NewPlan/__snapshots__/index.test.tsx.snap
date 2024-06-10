@@ -90,7 +90,7 @@ exports[`New Model Plan page > matches snapshot 1`] = `
               class="usa-input"
               data-testid="textInput"
               id="new-plan-model-name"
-              maxlength="50"
+              maxlength="200"
               name="modelName"
               value=""
             />

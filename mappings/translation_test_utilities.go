@@ -205,6 +205,8 @@ func assertTFieldBase(t *testing.T, field reflect.StructField, base models.Trans
 
 // assertTFieldOptions asserts that a translation has options when it is supposed to
 func assertTFieldOptions(t *testing.T, field reflect.StructField, translation models.ITranslationField) {
+
+	// This asserts that it has some options it doesn't assert ExportOptions over standard options
 	options, hasOptions := translation.GetOptions()
 	assert.True(t, hasOptions)
 

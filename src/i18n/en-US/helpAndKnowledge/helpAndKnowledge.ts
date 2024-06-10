@@ -1853,7 +1853,7 @@ const helpAndKnowledge = {
   gatheringInfoAlert: {
     header: 'We’re still gathering information about ',
     description:
-      'In the meantime, contact the MINT Team at MINTTeam@cms.hhs.gov',
+      'In the meantime, contact {{-user}} at <emailLink>{{-email}}</emailLink>.',
     description2: 'if you have any questions.'
   },
 

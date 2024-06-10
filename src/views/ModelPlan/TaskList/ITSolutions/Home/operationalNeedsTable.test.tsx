@@ -76,17 +76,17 @@ describe('Operational Solutions Home', () => {
     const needed = null;
 
     const { getByText } = render(
-      <Provider store={store}>
-        <MemoryRouter
-          initialEntries={[`/models/${modelID}/task-list/it-solutions`]}
-        >
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/task-list/it-solutions`]}
+      >
+        <Provider store={store}>
           <MockedProvider mocks={returnNeeds(needed)} addTypename={false}>
             <Route path="/models/:modelID/task-list/it-solutions">
               <OperationalNeedsTable modelID={modelID} type="possibleNeeds" />
             </Route>
           </MockedProvider>
-        </MemoryRouter>
-      </Provider>
+        </Provider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -98,17 +98,17 @@ describe('Operational Solutions Home', () => {
     const needed = true;
 
     const { getByText } = render(
-      <Provider store={store}>
-        <MemoryRouter
-          initialEntries={[`/models/${modelID}/task-list/it-solutions`]}
-        >
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/task-list/it-solutions`]}
+      >
+        <Provider store={store}>
           <MockedProvider mocks={returnNeeds(needed)} addTypename={false}>
             <Route path="/models/:modelID/task-list/it-solutions">
               <OperationalNeedsTable modelID={modelID} type="needs" />
             </Route>
           </MockedProvider>
-        </MemoryRouter>
-      </Provider>
+        </Provider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {
@@ -121,17 +121,17 @@ describe('Operational Solutions Home', () => {
     const needed = null;
 
     const { asFragment, getByText } = render(
-      <Provider store={store}>
-        <MemoryRouter
-          initialEntries={[`/models/${modelID}/task-list/it-solutions`]}
-        >
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/task-list/it-solutions`]}
+      >
+        <Provider store={store}>
           <MockedProvider mocks={returnNeeds(needed)} addTypename={false}>
             <Route path="/models/:modelID/task-list/it-solutions">
               <OperationalNeedsTable modelID={modelID} type="possibleNeeds" />
             </Route>
           </MockedProvider>
-        </MemoryRouter>
-      </Provider>
+        </Provider>
+      </MemoryRouter>
     );
 
     await waitFor(() => {

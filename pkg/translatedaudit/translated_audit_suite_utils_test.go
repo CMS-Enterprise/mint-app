@@ -1,6 +1,8 @@
 package translatedaudit
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/guregu/null/zero"
 
@@ -89,6 +91,11 @@ func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName str
 
 }
 
+func (suite *TAuditSuite) deleteDocument(documentID uuid.UUID) {
+	_, err := suite.testConfigs.Store.PlanDocumentDelete(suite.testConfigs.Logger, documentID, suite.testConfigs.Principal.UserAccount.ID)
+	suite.NoError(err)
+}
+
 // createPlanDiscussion creates a test plan discussion for testing. It doesn't go through normal resolver procedures (eg there are no tags)
 func (suite *TAuditSuite) createPlanDiscussion(modelPlanID uuid.UUID, content string) *models.PlanDiscussion {
 
@@ -128,4 +135,84 @@ func (suite *TAuditSuite) createDiscussionReply(discussionID uuid.UUID, content 
 	suite.NoError(err)
 	return retReply
 
+}
+
+func (suite *TAuditSuite) createDocumentSolutionLink(documentID uuid.UUID, solutionID uuid.UUID) *models.PlanDocumentSolutionLink {
+
+	links := suite.createDocumentSolutionLinks([]uuid.UUID{documentID}, solutionID)
+	if suite.Len(links, 1) {
+		return links[0]
+	}
+	return nil
+}
+func (suite *TAuditSuite) createDocumentSolutionLinks(documentIDs []uuid.UUID, solutionID uuid.UUID) []*models.PlanDocumentSolutionLink {
+	links, err := suite.testConfigs.Store.PlanDocumentSolutionLinksCreate(suite.testConfigs.Logger, solutionID, documentIDs, suite.testConfigs.Principal)
+	suite.NoError(err)
+	return links
+
+}
+func (suite *TAuditSuite) createPlanCR(modelPlanID uuid.UUID, idNumber string, preHooks ...func(*models.PlanCR)) *models.PlanCR {
+	dateInitiated := time.Now().UTC()
+	dateImplemented := time.Now().Add(time.Hour * 48).UTC()
+	note := "My comments"
+
+	planCR := models.NewPlanCR(suite.testConfigs.Principal.UserAccount.ID, modelPlanID)
+	planCR.IDNumber = idNumber
+	planCR.DateInitiated = &dateInitiated
+	planCR.DateImplemented = &dateImplemented
+	planCR.Title = "Test CR"
+	planCR.Note = &note
+	for _, preHook := range preHooks {
+		preHook(planCR)
+	}
+
+	cr, err := suite.testConfigs.Store.PlanCRCreate(suite.testConfigs.Logger, planCR)
+	suite.NoError(err)
+
+	return cr
+
+}
+func (suite *TAuditSuite) createPlanTDL(modelPlanID uuid.UUID, idNumber string, preHooks ...func(*models.PlanTDL)) *models.PlanTDL {
+	dateInitiated := time.Now().UTC()
+
+	note := "My comments"
+
+	planTDL := models.NewPlanTDL(suite.testConfigs.Principal.UserAccount.ID, modelPlanID)
+	planTDL.IDNumber = idNumber
+	planTDL.DateInitiated = &dateInitiated
+	planTDL.Title = "Test TDL"
+	planTDL.Note = &note
+	for _, preHook := range preHooks {
+		preHook(planTDL)
+	}
+
+	tdl, err := suite.testConfigs.Store.PlanTDLCreate(suite.testConfigs.Logger, planTDL)
+	suite.NoError(err)
+
+	return tdl
+
+}
+
+func (suite *TAuditSuite) deletePlanTDL(id uuid.UUID) *models.PlanTDL {
+	tdl, err := suite.testConfigs.Store.PlanTDLDelete(suite.testConfigs.Logger, id, suite.testConfigs.Principal.UserAccount.ID)
+	suite.NoError(err)
+	return tdl
+}
+func (suite *TAuditSuite) deletePlanCR(id uuid.UUID) *models.PlanCR {
+	cr, err := suite.testConfigs.Store.PlanCRDelete(suite.testConfigs.Logger, id, suite.testConfigs.Principal.UserAccount.ID)
+	suite.NoError(err)
+	return cr
+}
+
+func (suite *TAuditSuite) createPlanCollaborator(modelPlanID uuid.UUID, userName string) *models.PlanCollaborator {
+
+	collabPrinc, err := suite.testConfigs.GetTestPrincipal(suite.testConfigs.Store, userName)
+	suite.NoError(err)
+
+	roles := []models.TeamRole{models.TeamRoleModelLead, models.TeamRoleCOR}
+	collaborator := models.NewPlanCollaborator(suite.testConfigs.Principal.UserAccount.ID, modelPlanID, collabPrinc.UserAccount.ID, roles)
+
+	retCollaborator, err := suite.testConfigs.Store.PlanCollaboratorCreate(suite.testConfigs.Store, suite.testConfigs.Logger, collaborator)
+	suite.NoError(err)
+	return retCollaborator
 }

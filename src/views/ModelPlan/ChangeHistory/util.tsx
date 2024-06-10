@@ -6,6 +6,8 @@ import {
   TranslatedAuditMetaBaseStruct,
   TranslatedAuditMetaData,
   TranslatedAuditMetaDiscussionReply,
+  TranslatedAuditMetaDocumentSolutionLink,
+  TranslatedAuditMetaGeneric,
   TranslatedAuditMetaOperationalSolution,
   TranslatedAuditMetaOperationalSolutionSubtask,
   TranslationDataType
@@ -83,6 +85,14 @@ export const isTranslationTaskListTable = (
 };
 
 // Type guard to check union type
+export const isGenericWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaGeneric => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaGeneric';
+};
+
+// Type guard to check union type
 export const isDiscussionReplyWithMetaData = (
   data: TranslatedAuditMetaData
 ): data is TranslatedAuditMetaDiscussionReply => {
@@ -104,6 +114,14 @@ export const isSubtaskWithMetaData = (
 ): data is TranslatedAuditMetaOperationalSolutionSubtask => {
   /* eslint no-underscore-dangle: 0 */
   return data.__typename === 'TranslatedAuditMetaOperationalSolutionSubtask';
+};
+
+// Type guard to check union type
+export const isSolutionDocumentLinkWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaDocumentSolutionLink => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaDocumentSolutionLink';
 };
 
 export const datesWithNoDay: string[] = ['date_implemented'];
@@ -889,6 +907,74 @@ export const solutionDeleteFields = (
             'MM/dd/yyyy'
           )
         : '',
+      questionType: null,
+      referenceLabel: null
+    }
+  ];
+};
+
+// Returns pseudo translated fields for the solution document link from its metadata
+export const solutionDocumentLinkFields = (
+  metaData: TranslatedAuditMetaDocumentSolutionLink
+): ChangeRecordType['translatedFields'] => {
+  return [
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'documentName',
+      fieldNameTranslated: 'Document',
+      id: '1',
+      new: null,
+      newTranslated: metaData.documentName,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.ENUM,
+      fieldName: 'documentType',
+      fieldNameTranslated: 'Document type',
+      id: '2',
+      new: null,
+      newTranslated: metaData.documentType,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'documentOtherType',
+      fieldNameTranslated: 'What kind of document is this?',
+      id: '3',
+      new: null,
+      newTranslated: metaData.documentOtherType,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'documentVisibility',
+      fieldNameTranslated: 'Visibility',
+      id: '4',
+      new: null,
+      newTranslated: metaData.documentVisibility,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
       questionType: null,
       referenceLabel: null
     }

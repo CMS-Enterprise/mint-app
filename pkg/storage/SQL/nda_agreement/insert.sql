@@ -1,23 +1,29 @@
 INSERT INTO public.nda_agreement(
     id,
     user_id,
-    agreed,
-    agreed_dts,
+    v1_agreed,
+    v1_agreed_dts,
+    v2_agreed,
+    v2_agreed_dts,
     created_by,
     modified_by
 )
 VALUES(
     :id,
     :user_id,
-    :agreed,
-    :agreed_dts,
+    :v1_agreed,
+    :v1_agreed_dts,
+    :v2_agreed,
+    :v2_agreed_dts,
     :created_by,
     :modified_by
 )
 RETURNING id,
 user_id,
-agreed,
-agreed_dts,
+v1_agreed,
+v1_agreed_dts,
+v2_agreed,
+v2_agreed_dts,
 created_by,
 created_dts,
 modified_by,

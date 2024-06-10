@@ -11,6 +11,7 @@ import (
 )
 
 // GetTestPrincipal either inserts a new user account record into the database, or returns the record already in the database
+// the common name of the inserted account is the username for simplicity
 func GetTestPrincipal(store *storage.Store, userName string) (*authentication.ApplicationPrincipal, error) {
 	userAccount, accErr := storage.UserAccountGetByUsername(store, userName)
 	if accErr != nil {
@@ -30,7 +31,7 @@ func GetTestPrincipal(store *storage.Store, userName string) (*authentication.Ap
 	userAccount = &authentication.UserAccount{
 		Username:    models.StringPointer(userName),
 		IsEUAID:     true,
-		CommonName:  "testTestTest",
+		CommonName:  userName,
 		Locale:      "testTestTest",
 		Email:       "testTestTest",
 		GivenName:   "testTestTest",

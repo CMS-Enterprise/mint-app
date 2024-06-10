@@ -9,6 +9,7 @@ import './index.scss';
 type CollapsableLinkProps = {
   id: string;
   className?: string;
+  childClassName?: string;
   toggleClassName?: string;
   children: React.ReactNode | React.ReactNodeArray;
   label: string;
@@ -26,6 +27,7 @@ type CollapsableLinkProps = {
 const CollapsableLink = ({
   id,
   className,
+  childClassName,
   toggleClassName,
   children,
   label,
@@ -104,6 +106,7 @@ const CollapsableLink = ({
         <div
           id={id}
           className={classNames(
+            childClassName,
             labelPosition === 'top' ? 'padding-bottom-0' : '',
             isPrintPDF ? 'padding-top-0' : '',
             styleLeftBar

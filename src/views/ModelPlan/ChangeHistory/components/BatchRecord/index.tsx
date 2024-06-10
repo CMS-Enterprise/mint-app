@@ -24,8 +24,10 @@ import {
   getSolutionOperationStatus,
   isLinkingTable,
   isOperationalSolutionWithMetaData,
+  isSolutionDocumentLinkWithMetaData,
   linkingTableQuestions,
   solutionDeleteFields,
+  solutionDocumentLinkFields,
   solutionInsertFields
 } from '../../util';
 import { RenderChangeValue } from '../ChangeRecord';
@@ -118,23 +120,34 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
           })()}
 
         {/* Document solution link header */}
-        {change.tableName === 'plan_document_solution_link' && (
-          <div className="text-bold">
-            <Trans
-              i18nKey="changeHistory:documentSolutionLinkUpdate"
-              values={{
-                action: t(`documentLinkType.${databaseAction}`),
-                toFrom: t(`toFrom.${databaseAction}`),
-                solutionName: getSolutionName(change),
-                date: formatDateUtc(change.date, 'MMMM d, yyyy'),
-                time: formatTime(change.date)
-              }}
-              components={{
-                normal: <span className="text-normal" />
-              }}
-            />
-          </div>
-        )}
+        {change.tableName === 'plan_document_solution_link' &&
+          (() => {
+            if (!connected) {
+              fieldsToMap =
+                change.metaData &&
+                isSolutionDocumentLinkWithMetaData(change.metaData)
+                  ? solutionDocumentLinkFields(change.metaData)
+                  : fieldsToMap;
+            }
+
+            return (
+              <div className="text-bold">
+                <Trans
+                  i18nKey="changeHistory:documentSolutionLinkUpdate"
+                  values={{
+                    action: t(`documentLinkType.${databaseAction}`),
+                    toFrom: t(`toFrom.${databaseAction}`),
+                    solutionName: getSolutionName(change),
+                    date: formatDateUtc(change.date, 'MMMM d, yyyy'),
+                    time: formatTime(change.date)
+                  }}
+                  components={{
+                    normal: <span className="text-normal" />
+                  }}
+                />
+              </div>
+            );
+          })()}
 
         {/* Operational solution header */}
         {change.tableName === 'operational_solution' &&
