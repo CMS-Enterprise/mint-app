@@ -6,9 +6,11 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -48,6 +50,16 @@ func (r *userNotificationPreferencesResolver) NewDiscussionReply(ctx context.Con
 // ModelPlanShared is the resolver for the modelPlanShared field.
 func (r *userNotificationPreferencesResolver) ModelPlanShared(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
 	return obj.ModelPlanShared, nil
+}
+
+// DatesChanged is the resolver for the datesChanged field.
+func (r *userNotificationPreferencesResolver) DatesChanged(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	panic(fmt.Errorf("not implemented: DatesChanged - datesChanged"))
+}
+
+// DatesChangedNotificationType is the resolver for the datesChangedNotificationType field.
+func (r *userNotificationPreferencesResolver) DatesChangedNotificationType(ctx context.Context, obj *models.UserNotificationPreferences) (model.DatesChangedNotificationType, error) {
+	panic(fmt.Errorf("not implemented: DatesChangedNotificationType - datesChangedNotificationType"))
 }
 
 // UserNotificationPreferences returns generated.UserNotificationPreferencesResolver implementation.
