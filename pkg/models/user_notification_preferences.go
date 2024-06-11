@@ -22,7 +22,7 @@ type UserNotificationPreferences struct {
 	NewDiscussionReply           UserNotificationPreferenceFlags `json:"newDiscussionReply" db:"new_discussion_reply"`
 	ModelPlanShared              UserNotificationPreferenceFlags `json:"modelPlanShared" db:"model_plan_shared"`
 	DatesChanged                 UserNotificationPreferenceFlags `json:"datesChanged" db:"dates_changed"`
-	DatesChangedNotificationType DatesChangedNotificationType    `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
+	DatesChangedNotificationType *DatesChangedNotificationType   `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
 }
 
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
@@ -37,13 +37,18 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		TaggedInDiscussionReply: DefaultUserNotificationPreferencesFlags(),
 		NewDiscussionReply:      DefaultUserNotificationPreferencesFlags(),
 		ModelPlanShared:         DefaultUserNotificationPreferencesFlags(),
-		DatesChanged:            DefaultUserNotificationPreferencesFlags(),
+		DatesChanged:            EmptyUserNotificationPreferencesFlags(),
 	}
 }
 
 // DefaultUserNotificationPreferencesFlags returns the default Preferences flag for any user, defaulting to all turned on.
 func DefaultUserNotificationPreferencesFlags() []UserNotificationPreferenceFlag {
 	return []UserNotificationPreferenceFlag{UserNotificationPreferenceInApp, UserNotificationPreferenceEmail}
+}
+
+// EmptyUserNotificationPreferencesFlags returns empty Preferences flags for any user, defaulting to all turned off.
+func EmptyUserNotificationPreferencesFlags() []UserNotificationPreferenceFlag {
+	return []UserNotificationPreferenceFlag{}
 }
 
 // UserNotificationPreferenceFlags represents an array or User Notification Preference flags

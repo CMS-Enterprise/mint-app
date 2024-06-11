@@ -7,6 +7,8 @@ SELECT
     tagged_in_discussion_reply,
     new_discussion_reply,
     model_plan_shared,
+    dates_changed,
+    dates_changed_notification_type,
     created_by,
     created_dts,
     modified_by,

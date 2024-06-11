@@ -15,6 +15,8 @@ SELECT
     UNP.tagged_in_discussion_reply,
     UNP.new_discussion_reply,
     UNP.model_plan_shared,
+    UNP.dates_changed,
+    UNP.dates_changed_notification_type,
     UNP.created_by,
     UNP.created_dts,
     UNP.modified_by,
