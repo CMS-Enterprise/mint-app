@@ -2,9 +2,12 @@ package storage
 
 import (
 	_ "embed"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -153,10 +156,10 @@ func UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authent
 func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(
 	modelPlanID uuid.UUID,
 ) (
-	[]*authentication.UserAccount,
+	[]*models.UserAccountAndNotifPreferences,
 	error,
 ) {
-	var recipients []*authentication.UserAccount
+	var recipients []*models.UserAccountAndNotifPreferences
 
 	stmt, err := s.db.PrepareNamed(userAccountGetNotificationRecipientsDatesChanged)
 	if err != nil {

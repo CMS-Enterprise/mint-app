@@ -7,9 +7,20 @@ import (
 	"github.com/google/uuid"
 )
 
+type DateChangeFieldType string
+
+const (
+	DateChangeFieldTypeCompleteIcip      DateChangeFieldType = "COMPLETE_ICIP"
+	DateChangeFieldTypeClearance         DateChangeFieldType = "CLEARANCE"
+	DateChangeFieldTypeAnnounced         DateChangeFieldType = "ANNOUNCED"
+	DateChangeFieldTypeApplications      DateChangeFieldType = "APPLICATIONS"
+	DateChangeFieldTypePerformancePeriod DateChangeFieldType = "PERFORMANCE_PERIOD"
+	DateChangeFieldTypeWrapUpEnds        DateChangeFieldType = "WRAP_UP_ENDS"
+)
+
 type DateChange struct {
 	IsChanged     bool
-	Field         string
+	Field         DateChangeFieldType
 	IsRange       bool
 	OldDate       *time.Time
 	NewDate       *time.Time

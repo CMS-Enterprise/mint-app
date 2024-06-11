@@ -188,11 +188,12 @@ func sendDateChangedEmails(
 		dateChangeSlice = append(dateChangeSlice, dateChange)
 	}
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
+	defaultRecipientEmailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
 		DateChanges:   dateChangeSlice,
+		ShowFooter:    false,
 	})
 	if err != nil {
 		return err
@@ -205,7 +206,7 @@ func sendDateChangedEmails(
 		nil,
 		emailSubject,
 		"text/html",
-		emailBody,
+		defaultRecipientEmailBody,
 	)
 	if err != nil {
 		return err
@@ -218,7 +219,35 @@ func sendDateChangedEmails(
 		return err
 	}
 
-	for _, user := range recipientUserAccounts {
+	// Create a slice of user IDs whose notification preferences include EMAIL
+	emailRecipientUserAccounts := lo.Filter(
+		recipientUserAccounts,
+		func(user *models.UserAccountAndNotifPreferences, _ int) bool {
+			return user.PreferenceFlags.SendEmail()
+		},
+	)
+
+	// Create a slice of user IDs whose notification preferences include IN_APP
+	inAppRecipientUserAccounts := lo.Filter(
+		recipientUserAccounts,
+		func(user *models.UserAccountAndNotifPreferences, _ int) bool {
+			return user.PreferenceFlags.InApp()
+		},
+	)
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		ModelName:     modelPlan.ModelName,
+		ModelID:       modelPlan.GetModelPlanID().String(),
+		DateChanges:   dateChangeSlice,
+		ShowFooter:    true,
+	})
+	if err != nil {
+		return err
+	}
+
+	// TODO: BLOCK PR: We need to inherit changes from New Model Plan PR
+	for _, user := range emailRecipientUserAccounts {
 		go func() {
 			err = emailService.Send(
 				addressBook.DefaultSender,
@@ -228,6 +257,8 @@ func sendDateChangedEmails(
 				"text/html",
 				emailBody,
 			)
+			// TODO:
+			// .WithBCC(emailRecipientAccount__Emails)
 			if err != nil {
 				logger.Error("Failed to send email notification",
 					zap.Error(err),
@@ -237,16 +268,10 @@ func sendDateChangedEmails(
 		}()
 	}
 
-	// Extract UserIDs from the user data
-	userIDs := lo.Map(recipientUserAccounts, func(user *authentication.UserAccount, _ int) uuid.UUID {
-		return user.ID
-	})
-
 	// Convert from email.DateChange to models.DateChange for GQL transport
 	datesChangedModels := lo.Map(dateChangeSlice, func(dc email.DateChange, _ int) models.DateChange {
-		return models.DateChange{
+		modelDateChange := models.DateChange{
 			IsChanged:     dc.IsChanged,
-			Field:         dc.Field,
 			IsRange:       dc.IsRange,
 			OldDate:       dc.OldDate,
 			NewDate:       dc.NewDate,
@@ -255,6 +280,25 @@ func sendDateChangedEmails(
 			NewRangeStart: dc.NewRangeStart,
 			NewRangeEnd:   dc.NewRangeEnd,
 		}
+
+		switch dc.Field {
+		case "completeICIP":
+			modelDateChange.Field = models.DateChangeFieldTypeCompleteIcip
+		case "clearance":
+			modelDateChange.Field = models.DateChangeFieldTypeClearance
+		case "announced":
+			modelDateChange.Field = models.DateChangeFieldTypeAnnounced
+		case "applications":
+			modelDateChange.Field = models.DateChangeFieldTypeApplications
+		case "performancePeriod":
+			modelDateChange.Field = models.DateChangeFieldTypePerformancePeriod
+		case "wrapUpEnds":
+			modelDateChange.Field = models.DateChangeFieldTypeWrapUpEnds
+		default:
+			logger.Error("Unknown field type", zap.String("field", dc.Field))
+		}
+
+		return modelDateChange
 	})
 
 	_, err = notifications.ActivityDatesChangedCreate(
@@ -263,7 +307,7 @@ func sendDateChangedEmails(
 		principal.Account().ID,
 		modelPlan.ID,
 		datesChangedModels,
-		userIDs,
+		inAppRecipientUserAccounts,
 		loaders.UserNotificationPreferencesGetByUserID,
 	)
 	if err != nil {
@@ -271,11 +315,6 @@ func sendDateChangedEmails(
 	}
 
 	return nil
-}
-
-type UserAccountAndNotifPreferences struct {
-	authentication.UserAccount
-	models.UserNotificationPreferences
 }
 
 // PlanBasicsGetByModelPlanIDLOADER implements resolver logic to get plan basics by a model plan ID using a data loader

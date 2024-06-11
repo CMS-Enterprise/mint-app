@@ -6,10 +6,10 @@ package resolvers
 
 import (
 	"context"
-
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
@@ -32,6 +32,11 @@ func (r *addedAsCollaboratorMetaResolver) Collaborator(ctx context.Context, obj 
 // AnalyzedAudits is the resolver for the analyzedAudits field.
 func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error) {
 	return loaders.AnalyzedAuditGetByModelPlanIDsAndDate(ctx, obj.ModelPlanIDs, obj.Date)
+}
+
+// Field is the resolver for the field field.
+func (r *dateChangeResolver) Field(ctx context.Context, obj *models.DateChange) (model.DateChangeFieldType, error) {
+	return model.DateChangeFieldType(obj.Field), nil
 }
 
 // ModelPlan is the resolver for the modelPlan field.
@@ -102,6 +107,9 @@ func (r *Resolver) DailyDigestCompleteActivityMeta() generated.DailyDigestComple
 	return &dailyDigestCompleteActivityMetaResolver{r}
 }
 
+// DateChange returns generated.DateChangeResolver implementation.
+func (r *Resolver) DateChange() generated.DateChangeResolver { return &dateChangeResolver{r} }
+
 // DatesChangedActivityMeta returns generated.DatesChangedActivityMetaResolver implementation.
 func (r *Resolver) DatesChangedActivityMeta() generated.DatesChangedActivityMetaResolver {
 	return &datesChangedActivityMetaResolver{r}
@@ -130,6 +138,7 @@ func (r *Resolver) TaggedInPlanDiscussionActivityMeta() generated.TaggedInPlanDi
 type activityResolver struct{ *Resolver }
 type addedAsCollaboratorMetaResolver struct{ *Resolver }
 type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
+type dateChangeResolver struct{ *Resolver }
 type datesChangedActivityMetaResolver struct{ *Resolver }
 type modelPlanSharedActivityMetaResolver struct{ *Resolver }
 type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }

@@ -333,7 +333,7 @@ export enum DataToSendParticipantsType {
 
 export type DateChange = {
   __typename: 'DateChange';
-  field: Scalars['String']['output'];
+  field: DateChangeFieldType;
   isChanged: Scalars['Boolean']['output'];
   isRange: Scalars['Boolean']['output'];
   newDate?: Maybe<Scalars['Time']['output']>;
@@ -343,6 +343,15 @@ export type DateChange = {
   oldRangeEnd?: Maybe<Scalars['Time']['output']>;
   oldRangeStart?: Maybe<Scalars['Time']['output']>;
 };
+
+export enum DateChangeFieldType {
+  ANNOUNCED = 'ANNOUNCED',
+  APPLICATIONS = 'APPLICATIONS',
+  CLEARANCE = 'CLEARANCE',
+  COMPLETE_ICIP = 'COMPLETE_ICIP',
+  PERFORMANCE_PERIOD = 'PERFORMANCE_PERIOD',
+  WRAP_UP_ENDS = 'WRAP_UP_ENDS'
+}
 
 export type DatesChangedActivityMeta = {
   __typename: 'DatesChangedActivityMeta';

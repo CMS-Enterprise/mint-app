@@ -47,6 +47,7 @@ type ResolverRoot interface {
 	AuditChange() AuditChangeResolver
 	CurrentUser() CurrentUserResolver
 	DailyDigestCompleteActivityMeta() DailyDigestCompleteActivityMetaResolver
+	DateChange() DateChangeResolver
 	DatesChangedActivityMeta() DatesChangedActivityMetaResolver
 	DiscussionReply() DiscussionReplyResolver
 	ExistingModelLink() ExistingModelLinkResolver
@@ -1243,6 +1244,9 @@ type CurrentUserResolver interface {
 }
 type DailyDigestCompleteActivityMetaResolver interface {
 	AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error)
+}
+type DateChangeResolver interface {
+	Field(ctx context.Context, obj *models.DateChange) (model.DateChangeFieldType, error)
 }
 type DatesChangedActivityMetaResolver interface {
 	ModelPlan(ctx context.Context, obj *models.DatesChangedActivityMeta) (*models.ModelPlan, error)
@@ -8715,6 +8719,15 @@ enum ActivityType {
   DATES_CHANGED
 }
 
+enum DateChangeFieldType {
+  COMPLETE_ICIP
+  CLEARANCE
+  ANNOUNCED
+  APPLICATIONS
+  PERFORMANCE_PERIOD
+  WRAP_UP_ENDS
+}
+
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
@@ -8782,7 +8795,7 @@ type DailyDigestCompleteActivityMeta {
 
 type DateChange {
   isChanged: Boolean!
-  field: String!
+  field: DateChangeFieldType!
   isRange: Boolean!
   oldDate: Time
   newDate: Time
@@ -16366,7 +16379,7 @@ func (ec *executionContext) _DateChange_field(ctx context.Context, field graphql
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Field, nil
+		return ec.resolvers.DateChange().Field(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -16378,19 +16391,19 @@ func (ec *executionContext) _DateChange_field(ctx context.Context, field graphql
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(model.DateChangeFieldType)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNDateChangeFieldType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDateChangeFieldType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DateChange_field(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "DateChange",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type DateChangeFieldType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -66299,17 +66312,48 @@ func (ec *executionContext) _DateChange(ctx context.Context, sel ast.SelectionSe
 		case "isChanged":
 			out.Values[i] = ec._DateChange_isChanged(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "field":
-			out.Values[i] = ec._DateChange_field(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._DateChange_field(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "isRange":
 			out.Values[i] = ec._DateChange_isRange(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "oldDate":
 			out.Values[i] = ec._DateChange_oldDate(ctx, field, obj)
@@ -78339,6 +78383,16 @@ func (ec *executionContext) marshalNDateChange2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNDateChangeFieldType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDateChangeFieldType(ctx context.Context, v interface{}) (model.DateChangeFieldType, error) {
+	var res model.DateChangeFieldType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDateChangeFieldType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDateChangeFieldType(ctx context.Context, sel ast.SelectionSet, v model.DateChangeFieldType) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNDatesChangedNotificationType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatesChangedNotificationType(ctx context.Context, v interface{}) (*models.DatesChangedNotificationType, error) {

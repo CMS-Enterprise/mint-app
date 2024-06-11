@@ -11,6 +11,15 @@ enum ActivityType {
   DATES_CHANGED
 }
 
+enum DateChangeFieldType {
+  COMPLETE_ICIP
+  CLEARANCE
+  ANNOUNCED
+  APPLICATIONS
+  PERFORMANCE_PERIOD
+  WRAP_UP_ENDS
+}
+
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
@@ -78,7 +87,7 @@ type DailyDigestCompleteActivityMeta {
 
 type DateChange {
   isChanged: Boolean!
-  field: String!
+  field: DateChangeFieldType!
   isRange: Boolean!
   oldDate: Time
   newDate: Time
