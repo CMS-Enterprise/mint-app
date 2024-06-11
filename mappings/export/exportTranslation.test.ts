@@ -44,6 +44,7 @@ describe('exportTranslation Util', () => {
         label: 'Primary model category',
         dataType: 'ENUM',
         formType: 'RADIO',
+        order: 1.01,
         options: {
           ACCOUNTABLE_CARE: 'Accountable Care',
           DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
@@ -63,6 +64,7 @@ describe('exportTranslation Util', () => {
           'If your model doesn’t fall into any additional categories, you can skip this.',
         dataType: 'STRING',
         formType: 'CHECKBOX',
+        order: 1.02,
         options: {
           ACCOUNTABLE_CARE: 'Accountable Care',
           DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
@@ -79,7 +81,8 @@ describe('exportTranslation Util', () => {
         dbField: 'ams_model_id',
         label: 'Model ID',
         dataType: 'STRING',
-        formType: 'TEXTAREA'
+        formType: 'TEXTAREA',
+        order: 1.03
       },
       demoCode: {
         gqlField: 'demoCode',
@@ -87,7 +90,8 @@ describe('exportTranslation Util', () => {
         dbField: 'demo_code',
         label: 'Demo code(s)',
         dataType: 'STRING',
-        formType: 'TEXTAREA'
+        formType: 'TEXTAREA',
+        order: 1.04
       },
       cmsCenters: {
         gqlField: 'cmsCenters',
@@ -96,6 +100,7 @@ describe('exportTranslation Util', () => {
         label: 'CMS component',
         dataType: 'ENUM',
         formType: 'CHECKBOX',
+        order: 1.05,
         options: {
           CMMI: 'Center for Medicare and Medicaid Innovation (CMMI)',
           CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY:
@@ -117,6 +122,7 @@ describe('exportTranslation Util', () => {
           'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
         dataType: 'ENUM',
         formType: 'CHECKBOX',
+        order: 1.06,
         options: {
           PATIENT_CARE_MODELS_GROUP: 'Patient Care Models Group (PCMG)',
           POLICY_AND_PROGRAMS_GROUP: 'Policy and Programs Group (PPG)',
@@ -133,6 +139,7 @@ describe('exportTranslation Util', () => {
         label: 'Model Type',
         dataType: 'ENUM',
         formType: 'CHECKBOX',
+        order: 2.01,
         options: {
           VOLUNTARY: 'Voluntary',
           MANDATORY_NATIONAL: 'Mandatory national',
@@ -148,6 +155,7 @@ describe('exportTranslation Util', () => {
         exportLabel: 'Please specify other',
         dataType: 'STRING',
         formType: 'TEXTAREA',
+        order: 2.02,
         isOtherType: true,
         otherParentField: 'model_type'
       },
@@ -157,7 +165,8 @@ describe('exportTranslation Util', () => {
         dbField: 'problem',
         label: 'Problem statement',
         dataType: 'STRING',
-        formType: 'TEXTAREA'
+        formType: 'TEXTAREA',
+        order: 2.03
       },
       goal: {
         gqlField: 'goal',
@@ -167,7 +176,8 @@ describe('exportTranslation Util', () => {
         sublabel:
           'Please include the high level goal of the program and a description of the project.',
         dataType: 'STRING',
-        formType: 'TEXTAREA'
+        formType: 'TEXTAREA',
+        order: 2.04
       },
       testInterventions: {
         gqlField: 'testInterventions',
@@ -175,7 +185,8 @@ describe('exportTranslation Util', () => {
         dbField: 'test_interventions',
         label: 'Test Interventions',
         dataType: 'STRING',
-        formType: 'TEXTAREA'
+        formType: 'TEXTAREA',
+        order: 2.05
       },
       note: {
         gqlField: 'note',
@@ -185,7 +196,8 @@ describe('exportTranslation Util', () => {
         isNote: true,
         parentReferencesLabel: 'Model basics',
         dataType: 'STRING',
-        formType: 'TEXTAREA'
+        formType: 'TEXTAREA',
+        order: 2.06
       },
       completeICIP: {
         gqlField: 'completeICIP',
@@ -193,7 +205,8 @@ describe('exportTranslation Util', () => {
         dbField: 'complete_icip',
         label: 'Complete ICIP',
         dataType: 'DATE',
-        formType: 'DATEPICKER'
+        formType: 'DATEPICKER',
+        order: 3.01
       },
       clearanceStarts: {
         gqlField: 'clearanceStarts',
@@ -201,7 +214,8 @@ describe('exportTranslation Util', () => {
         dbField: 'clearance_starts',
         label: 'Clearance start date',
         dataType: 'DATE',
-        formType: 'DATEPICKER'
+        formType: 'DATEPICKER',
+        order: 3.02
       },
       clearanceEnds: {
         gqlField: 'clearanceEnds',
@@ -209,7 +223,8 @@ describe('exportTranslation Util', () => {
         dbField: 'clearance_ends',
         label: 'Clearance end date',
         dataType: 'DATE',
-        formType: 'DATEPICKER'
+        formType: 'DATEPICKER',
+        order: 3.03
       },
       announced: {
         gqlField: 'announced',
@@ -217,7 +232,8 @@ describe('exportTranslation Util', () => {
         dbField: 'announced',
         label: 'Announce model',
         dataType: 'DATE',
-        formType: 'DATEPICKER'
+        formType: 'DATEPICKER',
+        order: 3.04
       },
       applicationsStart: {
         gqlField: 'applicationsStart',
@@ -225,7 +241,8 @@ describe('exportTranslation Util', () => {
         dbField: 'applications_starts',
         label: 'Application start date',
         dataType: 'DATE',
-        formType: 'DATEPICKER'
+        formType: 'DATEPICKER',
+        order: 3.05
       },
       applicationsEnd: {
         gqlField: 'applicationsEnd',
@@ -233,7 +250,8 @@ describe('exportTranslation Util', () => {
         dbField: 'applications_ends',
         label: 'Application end date',
         dataType: 'DATE',
-        formType: 'DATEPICKER'
+        formType: 'DATEPICKER',
+        order: 3.06
       },
       performancePeriodStarts: {
         gqlField: 'performancePeriodStarts',
@@ -241,7 +259,8 @@ describe('exportTranslation Util', () => {
         dbField: 'performance_period_starts',
         label: 'Performance start date',
         dataType: 'DATE',
-        formType: 'DATEPICKER'
+        formType: 'DATEPICKER',
+        order: 3.07
       },
       performancePeriodEnds: {
         gqlField: 'performancePeriodEnds',
@@ -249,7 +268,8 @@ describe('exportTranslation Util', () => {
         dbField: 'performance_period_ends',
         label: 'Performance end date',
         dataType: 'DATE',
-        formType: 'DATEPICKER'
+        formType: 'DATEPICKER',
+        order: 3.08
       },
       highLevelNote: {
         gqlField: 'highLevelNote',
@@ -259,7 +279,8 @@ describe('exportTranslation Util', () => {
         isNote: true,
         parentReferencesLabel: 'Timeline',
         dataType: 'STRING',
-        formType: 'TEXTAREA'
+        formType: 'TEXTAREA',
+        order: 3.09
       },
       wrapUpEnds: {
         gqlField: 'wrapUpEnds',
@@ -267,7 +288,8 @@ describe('exportTranslation Util', () => {
         dbField: 'wrap_up_ends',
         label: 'Model wrap-up end date',
         dataType: 'DATE',
-        formType: 'DATEPICKER'
+        formType: 'DATEPICKER',
+        order: 3.1
       },
       phasedIn: {
         gqlField: 'phasedIn',
@@ -279,6 +301,7 @@ describe('exportTranslation Util', () => {
           'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
         dataType: 'BOOLEAN',
         formType: 'RADIO',
+        order: 3.11,
         options: {
           true: 'Yes',
           false: 'No'
@@ -292,7 +315,8 @@ describe('exportTranslation Util', () => {
         isNote: true,
         otherParentField: 'phased_in',
         dataType: 'STRING',
-        formType: 'TEXTAREA'
+        formType: 'TEXTAREA',
+        order: 3.12
       },
       readyForReviewBy: {
         gqlField: 'readyForReviewBy',
@@ -302,6 +326,7 @@ describe('exportTranslation Util', () => {
           'This section of the Model Plan (Model basics) is ready for review.',
         dataType: 'UUID',
         formType: 'TEXT',
+        order: 3.13,
         tableReference: 'user_account',
         hideFromReadonly: true
       },
@@ -312,6 +337,7 @@ describe('exportTranslation Util', () => {
         label: 'Ready for review date',
         dataType: 'DATE',
         formType: 'DATEPICKER',
+        order: 3.14,
         hideFromReadonly: true
       },
       readyForClearanceBy: {
@@ -322,6 +348,7 @@ describe('exportTranslation Util', () => {
           'This section of the Model Plan (Model basics) is ready for clearance.',
         dataType: 'UUID',
         formType: 'TEXT',
+        order: 3.15,
         tableReference: 'user_account',
         hideFromReadonly: true
       },
@@ -332,6 +359,7 @@ describe('exportTranslation Util', () => {
         label: 'Ready for clearance date',
         dataType: 'DATE',
         formType: 'DATEPICKER',
+        order: 3.16,
         hideFromReadonly: true
       },
       status: {
@@ -341,6 +369,7 @@ describe('exportTranslation Util', () => {
         label: 'Model Plan status',
         dataType: 'ENUM',
         formType: 'CHECKBOX',
+        order: 3.17,
         options: {
           READY: 'ready',
           IN_PROGRESS: 'in progress',
