@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
   Breadcrumb,
@@ -172,11 +172,18 @@ const NotificationSettings = () => {
                   data-testid="success-alert"
                   className="margin-y-4"
                 >
-                  {notificationsT('settings.unsubscribedMessage.success', {
-                    notificationType: notificationsT(
-                      `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
-                    )
-                  })}
+                  <Trans
+                    t={notificationsT}
+                    i18nKey="settings.unsubscribedMessage.success"
+                    values={{
+                      notificationType: notificationsT(
+                        `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+                      )
+                    }}
+                    components={{
+                      bold: <strong />
+                    }}
+                  />
                 </Alert>
               );
             }
@@ -202,14 +209,18 @@ const NotificationSettings = () => {
             data-testid="error-alert"
             className="margin-y-4"
           >
-            {notificationsT(
-              'settings.unsubscribedMessage.alreadyUnsubscribed',
-              {
+            <Trans
+              t={notificationsT}
+              i18nKey="settings.unsubscribedMessage.alreadyUnsubscribed"
+              values={{
                 notificationType: notificationsT(
                   `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
                 )
-              }
-            )}
+              }}
+              components={{
+                bold: <strong />
+              }}
+            />
           </Alert>
         );
       }
