@@ -29,7 +29,7 @@
     "exportLabel": "Operational solution",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 1.02
+    "order": 1.03
   },
   "otherHeader": {
     "gqlField": "otherHeader",
@@ -38,7 +38,7 @@
     "label": "Please add a name for your solution or contractor",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 1.03
+    "order": 1.04
   },
   "pocName": {
     "gqlField": "pocName",
@@ -47,7 +47,7 @@
     "label": "Point of contact",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 1.04
+    "order": 1.05
   },
   "pocEmail": {
     "gqlField": "pocEmail",
@@ -56,7 +56,7 @@
     "label": "Email",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 1.05
+    "order": 1.06
   },
   "mustStartDts": {
     "gqlField": "mustStartDts",
@@ -66,7 +66,7 @@
     "sublabel": "mm/dd/yyyy",
     "dataType": "DATE",
     "formType": "DATEPICKER",
-    "order": 1.06
+    "order": 1.07
   },
   "mustFinishDts": {
     "gqlField": "mustFinishDts",
@@ -76,7 +76,7 @@
     "sublabel": "mm/dd/yyyy",
     "dataType": "DATE",
     "formType": "DATEPICKER",
-    "order": 1.07
+    "order": 1.08
   },
   "needed": {
     "gqlField": "needed",
@@ -85,7 +85,7 @@
     "label": "Is the solution needed?",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",
-    "order": 1.08,
+    "order": 1.09,
     "options": {
       "true": "Needed",
       "false": "Not needed"
@@ -99,7 +99,7 @@
     "sublabel": "Select an operational solution or select \"Other\" if you’ll solve this a different way.",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",
-    "order": 1.09,
+    "order": 1.1,
     "options": {
       "INNOVATION": "4innovation",
       "ACO_OS": "Accountable Care Organization - Operational System",
@@ -150,7 +150,7 @@
     "exportLabel": "Status",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",
-    "order": 1.1,
+    "order": 1.11,
     "options": {
       "NOT_STARTED": "Not started",
       "ONBOARDING": "Onboarding",

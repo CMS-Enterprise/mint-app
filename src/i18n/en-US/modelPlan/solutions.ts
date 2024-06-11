@@ -36,7 +36,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     exportLabel: 'Operational solution',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.02
+    order: 1.03
   },
   otherHeader: {
     gqlField: 'otherHeader',
@@ -45,7 +45,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     label: 'Please add a name for your solution or contractor',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.03
+    order: 1.04
   },
   pocName: {
     gqlField: 'pocName',
@@ -54,7 +54,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     label: 'Point of contact',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.04
+    order: 1.05
   },
   pocEmail: {
     gqlField: 'pocEmail',
@@ -63,7 +63,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     label: 'Email',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.05
+    order: 1.06
   },
   mustStartDts: {
     gqlField: 'mustStartDts',
@@ -73,7 +73,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     sublabel: 'mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
-    order: 1.06
+    order: 1.07
   },
   mustFinishDts: {
     gqlField: 'mustFinishDts',
@@ -83,7 +83,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     sublabel: 'mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
-    order: 1.07
+    order: 1.08
   },
   needed: {
     gqlField: 'needed',
@@ -92,7 +92,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     label: 'Is the solution needed?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
-    order: 1.08,
+    order: 1.09,
     options: {
       true: 'Needed',
       false: 'Not needed'
@@ -107,7 +107,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
       'Select an operational solution or select "Other" if you’ll solve this a different way.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
-    order: 1.09,
+    order: 1.1,
     options: {
       INNOVATION: '4innovation',
       ACO_OS: 'Accountable Care Organization - Operational System',
@@ -158,7 +158,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     exportLabel: 'Status',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
-    order: 1.1,
+    order: 1.11,
     options: {
       NOT_STARTED: 'Not started',
       ONBOARDING: 'Onboarding',
