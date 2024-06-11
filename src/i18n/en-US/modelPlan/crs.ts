@@ -13,7 +13,8 @@ export const crs: TranslationCRs = {
     label: 'ID number',
     sublabel: 'Please include the prefix. Ex. CR-123456',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.01
   },
   title: {
     gqlField: 'title',
@@ -21,7 +22,8 @@ export const crs: TranslationCRs = {
     dbField: 'title',
     label: 'CR title',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.02
   },
   dateInitiated: {
     gqlField: 'dateInitiated',
@@ -30,7 +32,8 @@ export const crs: TranslationCRs = {
     label: 'Initiated date',
     sublabel: 'mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
-    formType: TranslationFormType.DATEPICKER
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.03
   },
   dateImplemented: {
     gqlField: 'dateImplemented',
@@ -39,7 +42,8 @@ export const crs: TranslationCRs = {
     label: 'Implementation date',
     sublabel: 'For example: April 2024',
     dataType: TranslationDataType.DATE,
-    formType: TranslationFormType.SELECT
+    formType: TranslationFormType.SELECT,
+    order: 1.04
   },
   note: {
     gqlField: 'note',
@@ -49,7 +53,8 @@ export const crs: TranslationCRs = {
     sublabel:
       'Add any details about this CR that would be helpful to know at a glance',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.05
   }
 };
 

@@ -13,6 +13,7 @@ export const documentSolutionLink: TranslationDocumentSolutionLink = {
     label: 'Solution',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 1.01,
     tableReference: 'operational_solution'
   },
   documentID: {
@@ -22,6 +23,7 @@ export const documentSolutionLink: TranslationDocumentSolutionLink = {
     label: 'Document',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 1.02,
     tableReference: 'plan_document'
   }
 };
