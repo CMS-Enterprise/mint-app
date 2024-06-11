@@ -20,6 +20,7 @@ describe('exportTranslation Util', () => {
       label: 'Primary model category',
       dataType: 'ENUM',
       formType: 'RADIO',
+      order: 1.01,
       options: {
         ACCOUNTABLE_CARE: 'Accountable Care',
         DISEASE_SPECIFIC_AND_EPISODIC: 'Disease-Specific & Episode-Based',
