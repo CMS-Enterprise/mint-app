@@ -58,7 +58,15 @@ func (g GoSimpleMailService) setEmailBody(email *mail.Email, contentType string,
 }
 
 // Send uses the GoSimpleMailService to dispatch an email with the provided settings
-func (g GoSimpleMailService) Send(from string, toAddresses []string, ccAddresses []string, subject string, contentType string, body string) error {
+func (g GoSimpleMailService) Send(
+	from string,
+	toAddresses []string,
+	ccAddresses []string,
+	subject string,
+	contentType string,
+	body string,
+	opts ...EmailOption,
+) error {
 	if !g.config.GetEnabled() {
 		return nil
 	}
@@ -72,6 +80,17 @@ func (g GoSimpleMailService) Send(from string, toAddresses []string, ccAddresses
 
 	for _, ccAddress := range ccAddresses {
 		email.AddCc(ccAddress)
+	}
+
+	var options EmailOptions
+	for _, opt := range opts {
+		opt(&options)
+	}
+
+	if len(options.BccAddresses) > 0 {
+		for _, bccAddress := range options.BccAddresses {
+			email.AddBcc(bccAddress)
+		}
 	}
 
 	err := g.setEmailBody(email, contentType, body)
