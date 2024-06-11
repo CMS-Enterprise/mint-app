@@ -7,6 +7,7 @@
     "sublabel": "This will display with your name to help others identify you.",
     "dataType": "ENUM",
     "formType": "SELECT",
+    "order": 1.01,
     "options": {
       "CMS_SYSTEM_SERVICE_TEAM": "CMS System/Service Team",
       "IT_ARCHITECT": "IT Architect",
@@ -26,7 +27,8 @@
     "dbField": "user_role_description",
     "label": "Enter a short description for your role",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.02
   },
   "content": {
     "gqlField": "content",
@@ -35,7 +37,8 @@
     "label": "Type your reply",
     "sublabel": "To tag a solution team or individual, type \"@\" and begin typing the name. Then, select the team or individual from the list you wish to notify.",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.03
   },
   "isAssessment": {
     "gqlField": "isAssessment",
@@ -44,6 +47,7 @@
     "label": "Is the user an assessment user?",
     "dataType": "BOOLEAN",
     "formType": "BOOLEAN",
+    "order": 1.04,
     "options": {
       "true": "Yes",
       "false": "No"

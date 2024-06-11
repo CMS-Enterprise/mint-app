@@ -6,6 +6,7 @@
     "label": "Is this a new track of an existing model or a new model?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 1.01,
     "options": {
       "true": "New model",
       "false": "New track of an existing model"
@@ -19,7 +20,8 @@
           "label": "Which existing model?",
           "sublabel": "Start typing the name of the model",
           "dataType": "STRING",
-          "formType": "SELECT"
+          "formType": "SELECT",
+          "order": 1.04
         }
       ]
     }
@@ -31,6 +33,7 @@
     "label": "What existing model is this a track of?",
     "dataType": "NUMBER",
     "formType": "TEXT",
+    "order": 1.02,
     "tableReference": "existing_model",
     "hideFromReadonly": true
   },
@@ -41,6 +44,7 @@
     "label": "What model is this a track of?",
     "dataType": "UUID",
     "formType": "TEXT",
+    "order": 1.03,
     "tableReference": "model_plan",
     "hideFromReadonly": true
   },
@@ -52,6 +56,7 @@
     "sublabel": "Start typing the name of the model",
     "dataType": "STRING",
     "formType": "SELECT",
+    "order": 1.04,
     "parentRelation": {
       "gqlField": "isNewModel",
       "goField": "IsNewModel",
@@ -59,6 +64,7 @@
       "label": "Is this a new track of an existing model or a new model?",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
+      "order": 1.01,
       "options": {
         "true": "New model",
         "false": "New track of an existing model"
@@ -72,6 +78,7 @@
     "label": "Does your proposed track/model resemble any existing models?",
     "dataType": "ENUM",
     "formType": "RADIO",
+    "order": 1.05,
     "options": {
       "YES": "Yes",
       "NO": "No",
@@ -85,7 +92,8 @@
           "dbField": "resembles_existing_model_why_how",
           "label": "Explain why and how the model made this decision.",
           "dataType": "STRING",
-          "formType": "TEXTAREA"
+          "formType": "TEXTAREA",
+          "order": 1.06
         },
         {
           "gqlField": "resemblesExistingModelWhich",
@@ -96,6 +104,7 @@
           "multiSelectLabel": "Selected models",
           "dataType": "STRING",
           "formType": "MULTISELECT",
+          "order": 1.07,
           "isArray": true,
           "options": {
             "Other": "Other"
@@ -107,7 +116,8 @@
           "dbField": "resembles_existing_model_how",
           "label": "In what way does the new model resemble the selected model(s)?",
           "dataType": "STRING",
-          "formType": "TEXTAREA"
+          "formType": "TEXTAREA",
+          "order": 1.08
         }
       ],
       "NO": [
@@ -117,7 +127,8 @@
           "dbField": "resembles_existing_model_why_how",
           "label": "Explain why and how the model made this decision.",
           "dataType": "STRING",
-          "formType": "TEXTAREA"
+          "formType": "TEXTAREA",
+          "order": 1.06
         }
       ]
     }
@@ -128,7 +139,8 @@
     "dbField": "resembles_existing_model_why_how",
     "label": "Explain why and how the model made this decision.",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.06
   },
   "resemblesExistingModelWhich": {
     "gqlField": "resemblesExistingModelWhich",
@@ -139,6 +151,7 @@
     "multiSelectLabel": "Selected models",
     "dataType": "STRING",
     "formType": "MULTISELECT",
+    "order": 1.07,
     "isArray": true,
     "parentRelation": {
       "gqlField": "resemblesExistingModel",
@@ -147,6 +160,7 @@
       "label": "Does your proposed track/model resemble any existing models?",
       "dataType": "ENUM",
       "formType": "RADIO",
+      "order": 1.05,
       "options": {
         "YES": "Yes",
         "NO": "No",
@@ -164,6 +178,7 @@
     "label": "In what way does the new model resemble the selected model(s)?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 1.08,
     "parentRelation": {
       "gqlField": "resemblesExistingModel",
       "goField": "ResemblesExistingModel",
@@ -171,6 +186,7 @@
       "label": "Does your proposed track/model resemble any existing models?",
       "dataType": "ENUM",
       "formType": "RADIO",
+      "order": 1.05,
       "options": {
         "YES": "Yes",
         "NO": "No",
@@ -186,6 +202,7 @@
     "exportLabel": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.09,
     "isOtherType": true,
     "otherParentField": "resembles_existing_model"
   },
@@ -196,6 +213,7 @@
     "label": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.1,
     "isOtherType": true,
     "otherParentField": "resembles_existing_model_which"
   },
@@ -207,7 +225,8 @@
     "isNote": true,
     "otherParentField": "resembles_existing_model",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.11
   },
   "participationInModelPrecondition": {
     "gqlField": "participationInModelPrecondition",
@@ -216,6 +235,7 @@
     "label": "Is participation in another model a precondition for participation in this model?",
     "dataType": "ENUM",
     "formType": "RADIO",
+    "order": 1.12,
     "options": {
       "YES": "Yes",
       "NO": "No",
@@ -232,6 +252,7 @@
           "multiSelectLabel": "Selected models",
           "dataType": "STRING",
           "formType": "MULTISELECT",
+          "order": 1.14,
           "isArray": true,
           "options": {
             "Other": "Other"
@@ -243,7 +264,8 @@
           "dbField": "participation_in_model_precondition_why_how",
           "label": "Explain any details including if it is just part of the model.",
           "dataType": "STRING",
-          "formType": "TEXTAREA"
+          "formType": "TEXTAREA",
+          "order": 1.16
         }
       ]
     }
@@ -256,6 +278,7 @@
     "exportLabel": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.13,
     "isOtherType": true,
     "otherParentField": "participation_in_model_precondition"
   },
@@ -268,6 +291,7 @@
     "multiSelectLabel": "Selected models",
     "dataType": "STRING",
     "formType": "MULTISELECT",
+    "order": 1.14,
     "isArray": true,
     "parentRelation": {
       "gqlField": "participationInModelPrecondition",
@@ -276,6 +300,7 @@
       "label": "Is participation in another model a precondition for participation in this model?",
       "dataType": "ENUM",
       "formType": "RADIO",
+      "order": 1.12,
       "options": {
         "YES": "Yes",
         "NO": "No",
@@ -293,6 +318,7 @@
     "label": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.15,
     "isOtherType": true,
     "parentReferencesLabel": "Which models require participation as a precondition for participation in this model?"
   },
@@ -303,6 +329,7 @@
     "label": "Explain any details including if it is just part of the model.",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 1.16,
     "parentRelation": {
       "gqlField": "participationInModelPrecondition",
       "goField": "ParticipationInModelPrecondition",
@@ -310,6 +337,7 @@
       "label": "Is participation in another model a precondition for participation in this model?",
       "dataType": "ENUM",
       "formType": "RADIO",
+      "order": 1.12,
       "options": {
         "YES": "Yes",
         "NO": "No",
@@ -325,7 +353,8 @@
     "isNote": true,
     "otherParentField": "participation_in_model_precondition",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.17
   },
   "hasComponentsOrTracks": {
     "gqlField": "hasComponentsOrTracks",
@@ -335,6 +364,7 @@
     "readonlyLabel": "Are there different components/tracks? If so, how do the tracks differ?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 1.18,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -347,6 +377,7 @@
     "label": "How do the tracks differ?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 1.19,
     "isOtherType": true,
     "otherParentField": "has_components_or_tracks"
   },
@@ -358,7 +389,8 @@
     "isNote": true,
     "otherParentField": "has_components_or_tracks",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.2
   },
   "agencyOrStateHelp": {
     "gqlField": "agencyOrStateHelp",
@@ -369,6 +401,7 @@
     "exportLabel": "Will another Agency or State help design/operate the model?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 2.01,
     "options": {
       "YES_STATE": "Yes, we will partner with states",
       "YES_AGENCY_IDEAS": "Yes, we will get ideas from another agency",
@@ -385,6 +418,7 @@
     "exportLabel": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 2.02,
     "isOtherType": true,
     "otherParentField": "agency_or_state_help"
   },
@@ -396,7 +430,8 @@
     "isNote": true,
     "otherParentField": "agency_or_state_help",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 2.03
   },
   "alternativePaymentModelTypes": {
     "gqlField": "alternativePaymentModelTypes",
@@ -406,6 +441,7 @@
     "sublabel": "In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 2.04,
     "options": {
       "ADVANCED": "Advanced APM",
       "MIPS": "MIPS APM",
@@ -421,7 +457,8 @@
     "isNote": true,
     "otherParentField": "alternative_payment_model_types",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 2.05
   },
   "keyCharacteristics": {
     "gqlField": "keyCharacteristics",
@@ -432,6 +469,7 @@
     "exportLabel": "What are the model key characteristics?",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
+    "order": 2.06,
     "multiSelectLabel": "Selected key characteristics",
     "options": {
       "EPISODE_BASED": "Episode-Based Model",
@@ -455,6 +493,7 @@
           "label": "Will you review and collect plan bids?",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 2.09,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -467,6 +506,7 @@
           "label": "Will you manage Part C/D enrollment?",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 2.11,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -479,6 +519,7 @@
           "label": "Have you updated the plan’s contract?",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 2.13,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -493,6 +534,7 @@
           "label": "Will you review and collect plan bids?",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 2.09,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -505,6 +547,7 @@
           "label": "Will you manage Part C/D enrollment?",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 2.11,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -517,6 +560,7 @@
           "label": "Have you updated the plan’s contract?",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 2.13,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -532,6 +576,7 @@
     "label": "Please describe the other key characteristics",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 2.07,
     "isOtherType": true
   },
   "keyCharacteristicsNote": {
@@ -542,7 +587,8 @@
     "isNote": true,
     "otherParentField": "key_characteristics",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 2.08
   },
   "collectPlanBids": {
     "gqlField": "collectPlanBids",
@@ -551,6 +597,7 @@
     "label": "Will you review and collect plan bids?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 2.09,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -564,6 +611,7 @@
       "exportLabel": "What are the model key characteristics?",
       "dataType": "ENUM",
       "formType": "MULTISELECT",
+      "order": 2.06,
       "multiSelectLabel": "Selected key characteristics",
       "options": {
         "EPISODE_BASED": "Episode-Based Model",
@@ -588,7 +636,8 @@
     "isNote": true,
     "otherParentField": "collect_plan_bids",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 2.1
   },
   "managePartCDEnrollment": {
     "gqlField": "managePartCDEnrollment",
@@ -597,6 +646,7 @@
     "label": "Will you manage Part C/D enrollment?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 2.11,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -610,6 +660,7 @@
       "exportLabel": "What are the model key characteristics?",
       "dataType": "ENUM",
       "formType": "MULTISELECT",
+      "order": 2.06,
       "multiSelectLabel": "Selected key characteristics",
       "options": {
         "EPISODE_BASED": "Episode-Based Model",
@@ -634,7 +685,8 @@
     "isNote": true,
     "otherParentField": "manage_part_c_d_enrollment",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 2.12
   },
   "planContractUpdated": {
     "gqlField": "planContractUpdated",
@@ -643,6 +695,7 @@
     "label": "Have you updated the plan’s contract?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 2.13,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -656,6 +709,7 @@
       "exportLabel": "What are the model key characteristics?",
       "dataType": "ENUM",
       "formType": "MULTISELECT",
+      "order": 2.06,
       "multiSelectLabel": "Selected key characteristics",
       "options": {
         "EPISODE_BASED": "Episode-Based Model",
@@ -680,7 +734,8 @@
     "isNote": true,
     "otherParentField": "plan_contract_updated",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 2.14
   },
   "careCoordinationInvolved": {
     "gqlField": "careCoordinationInvolved",
@@ -690,6 +745,7 @@
     "readonlyLabel": "Is care coordination involved? How so?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 3.01,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -702,6 +758,7 @@
     "label": "How so?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 3.02,
     "isOtherType": true,
     "otherParentField": "care_coordination_involved"
   },
@@ -713,7 +770,8 @@
     "isNote": true,
     "otherParentField": "care_coordination_involved",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 3.03
   },
   "additionalServicesInvolved": {
     "gqlField": "additionalServicesInvolved",
@@ -723,6 +781,7 @@
     "readonlyLabel": "Are additional services involved? How so?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 3.04,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -735,6 +794,7 @@
     "label": "How so?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 3.05,
     "isOtherType": true,
     "otherParentField": "additional_services_involved"
   },
@@ -746,7 +806,8 @@
     "isNote": true,
     "otherParentField": "additional_services_involved",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 3.06
   },
   "communityPartnersInvolved": {
     "gqlField": "communityPartnersInvolved",
@@ -756,6 +817,7 @@
     "readonlyLabel": "Are community partners involved? How so?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 3.07,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -768,6 +830,7 @@
     "label": "How so?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 3.08,
     "isOtherType": true,
     "otherParentField": "community_partners_involved"
   },
@@ -779,7 +842,8 @@
     "isNote": true,
     "otherParentField": "community_partners_involved",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 3.09
   },
   "geographiesTargeted": {
     "gqlField": "geographiesTargeted",
@@ -788,6 +852,7 @@
     "label": "Is the model targeted at specific geographies?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 4.01,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -801,6 +866,7 @@
           "label": "Geography type is",
           "dataType": "ENUM",
           "formType": "CHECKBOX",
+          "order": 4.02,
           "options": {
             "STATE": "States and territories",
             "REGION": "Region",
@@ -816,6 +882,7 @@
                 "multiSelectLabel": "States and territories",
                 "dataType": "ENUM",
                 "formType": "MULTISELECT",
+                "order": 4.03,
                 "isOtherType": true,
                 "otherParentField": "geographiesTargetedTypes",
                 "options": {
@@ -946,6 +1013,7 @@
                 "label": "Geography region types",
                 "dataType": "ENUM",
                 "formType": "CHECKBOX",
+                "order": 4.04,
                 "isOtherType": true,
                 "otherParentField": "geographiesTargetedTypes",
                 "options": {
@@ -964,6 +1032,7 @@
           "label": "Geographies are applied to",
           "dataType": "ENUM",
           "formType": "CHECKBOX",
+          "order": 4.06,
           "options": {
             "BENEFICIARIES": "Beneficiaries",
             "PARTICIPANTS": "Participants",
@@ -981,6 +1050,7 @@
     "label": "Geography type is",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 4.02,
     "options": {
       "STATE": "States and territories",
       "REGION": "Region",
@@ -993,6 +1063,7 @@
       "label": "Is the model targeted at specific geographies?",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
+      "order": 4.01,
       "options": {
         "true": "Yes",
         "false": "No"
@@ -1008,6 +1079,7 @@
           "multiSelectLabel": "States and territories",
           "dataType": "ENUM",
           "formType": "MULTISELECT",
+          "order": 4.03,
           "isOtherType": true,
           "otherParentField": "geographiesTargetedTypes",
           "options": {
@@ -1138,6 +1210,7 @@
           "label": "Geography region types",
           "dataType": "ENUM",
           "formType": "CHECKBOX",
+          "order": 4.04,
           "isOtherType": true,
           "otherParentField": "geographiesTargetedTypes",
           "options": {
@@ -1157,6 +1230,7 @@
     "multiSelectLabel": "States and territories",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
+    "order": 4.03,
     "isOtherType": true,
     "otherParentField": "geographies_targeted_types",
     "options": {
@@ -1284,6 +1358,7 @@
       "label": "Geography type is",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 4.02,
       "options": {
         "STATE": "States and territories",
         "REGION": "Region",
@@ -1298,6 +1373,7 @@
     "label": "Geography region types",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 4.04,
     "isOtherType": true,
     "otherParentField": "geographies_targeted_types",
     "options": {
@@ -1312,6 +1388,7 @@
       "label": "Geography type is",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 4.02,
       "options": {
         "STATE": "States and territories",
         "REGION": "Region",
@@ -1326,6 +1403,7 @@
     "label": "Please specify what the other geography type is.",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 4.05,
     "isOtherType": true,
     "otherParentField": "geographies_targeted_types"
   },
@@ -1336,6 +1414,7 @@
     "label": "Geographies are applied to",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 4.06,
     "options": {
       "BENEFICIARIES": "Beneficiaries",
       "PARTICIPANTS": "Participants",
@@ -1349,6 +1428,7 @@
       "label": "Is the model targeted at specific geographies?",
       "dataType": "BOOLEAN",
       "formType": "RADIO",
+      "order": 4.01,
       "options": {
         "true": "Yes",
         "false": "No"
@@ -1362,6 +1442,7 @@
     "label": "Please specify what the geographies are applied to.",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 4.07,
     "isOtherType": true
   },
   "geographiesTargetedNote": {
@@ -1372,7 +1453,8 @@
     "isNote": true,
     "otherParentField": "geographies_targeted",
     "dataType": "BOOLEAN",
-    "formType": "RADIO"
+    "formType": "RADIO",
+    "order": 4.08
   },
   "participationOptions": {
     "gqlField": "participationOptions",
@@ -1381,6 +1463,7 @@
     "label": "Does the model offer different options for participation?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 4.09,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1394,7 +1477,8 @@
     "isNote": true,
     "otherParentField": "participation_options",
     "dataType": "BOOLEAN",
-    "formType": "RADIO"
+    "formType": "RADIO",
+    "order": 4.1
   },
   "agreementTypes": {
     "gqlField": "agreementTypes",
@@ -1404,6 +1488,7 @@
     "sublabel": "Note: CMMI writes, Office of General Council (OGC) approves both types of agreements",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",
+    "order": 4.11,
     "options": {
       "COOPERATIVE": "Co-Operative Agreement/Grant",
       "PARTICIPATION": "Participation Agreement",
@@ -1419,6 +1504,7 @@
           "sublabel": "depending on awardee selections or characteristics such as risk/type/size",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 4.13,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -1435,6 +1521,7 @@
     "exportLabel": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 4.12,
     "isOtherType": true,
     "otherParentField": "agreement_types"
   },
@@ -1446,6 +1533,7 @@
     "sublabel": "depending on awardee selections or characteristics such as risk/type/size",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 4.13,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1458,6 +1546,7 @@
       "sublabel": "Note: CMMI writes, Office of General Council (OGC) approves both types of agreements",
       "dataType": "BOOLEAN",
       "formType": "CHECKBOX",
+      "order": 4.11,
       "options": {
         "COOPERATIVE": "Co-Operative Agreement/Grant",
         "PARTICIPATION": "Participation Agreement",
@@ -1473,7 +1562,8 @@
     "isNote": true,
     "otherParentField": "multiple_patricipation_agreements_needed",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 4.14
   },
   "rulemakingRequired": {
     "gqlField": "rulemakingRequired",
@@ -1483,6 +1573,7 @@
     "readonlyLabel": "Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 5.01,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1495,6 +1586,7 @@
     "label": "Which rule do you anticipate using and what is the target date of display for that regulation?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 5.02,
     "isOtherType": true,
     "otherParentField": "rulemaking_required"
   },
@@ -1506,7 +1598,8 @@
     "isNote": true,
     "otherParentField": "rulemaking_required",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 5.03
   },
   "authorityAllowances": {
     "gqlField": "authorityAllowances",
@@ -1515,6 +1608,7 @@
     "label": "What authority allows CMMI to test the model?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 5.04,
     "options": {
       "ACA": "3021 Affordable Care Act (ACA)",
       "CONGRESSIONALLY_MANDATED": "Congressionally Mandated Demonstration",
@@ -1530,6 +1624,7 @@
     "exportLabel": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 5.05,
     "isOtherType": true,
     "otherParentField": "authority_allowances"
   },
@@ -1541,7 +1636,8 @@
     "isNote": true,
     "otherParentField": "authority_allowances",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 5.06
   },
   "waiversRequired": {
     "gqlField": "waiversRequired",
@@ -1551,6 +1647,7 @@
     "readonlyLabel": "Are waivers required? If so, which types of waivers?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 5.07,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1565,6 +1662,7 @@
     "exportLabel": "Which types of waivers are required?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 5.08,
     "isOtherType": true,
     "options": {
       "FRAUD_ABUSE": "Fraud and Abuse",
@@ -1585,7 +1683,8 @@
     "isNote": true,
     "otherParentField": "waivers_required",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 5.09
   },
   "readyForReviewBy": {
     "gqlField": "readyForReviewBy",
@@ -1594,6 +1693,7 @@
     "label": "This section of the Model Plan (General characteristics) is ready for review.",
     "dataType": "UUID",
     "formType": "TEXT",
+    "order": 5.1,
     "tableReference": "user_account",
     "hideFromReadonly": true
   },
@@ -1604,6 +1704,7 @@
     "label": "Ready for review date",
     "dataType": "DATE",
     "formType": "DATEPICKER",
+    "order": 5.11,
     "hideFromReadonly": true
   },
   "readyForClearanceBy": {
@@ -1613,6 +1714,7 @@
     "label": "This section of the Model Plan (General characteristics) is ready for clearance.",
     "dataType": "UUID",
     "formType": "TEXT",
+    "order": 5.12,
     "tableReference": "user_account",
     "hideFromReadonly": true
   },
@@ -1623,6 +1725,7 @@
     "label": "Ready for clearance date",
     "dataType": "DATE",
     "formType": "DATEPICKER",
+    "order": 5.13,
     "hideFromReadonly": true
   },
   "status": {
@@ -1632,6 +1735,7 @@
     "label": "Model Plan status",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 5.14,
     "options": {
       "READY": "ready",
       "IN_PROGRESS": "in progress",

@@ -6,7 +6,8 @@
     "label": "Subtask name",
     "exportLabel": "Subtasks",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.01
   },
   "status": {
     "gqlField": "status",
@@ -16,6 +17,7 @@
     "exportLabel": "Status",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 1.02,
     "options": {
       "DONE": "Done",
       "IN_PROGRESS": "In progress",

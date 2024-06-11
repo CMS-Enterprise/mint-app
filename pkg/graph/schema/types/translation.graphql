@@ -47,7 +47,7 @@ type TranslationField {
   formType: TranslationFormType!
   isNote: Boolean
   """
-  Designates the order of the question in the form
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
   """
   order: Int!
   """
@@ -88,7 +88,7 @@ type TranslationFieldWithOptions {
   formType: TranslationFormType!
   isNote: Boolean
   """
-  Designates the order of the question in the form
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
   """
   order: Int!
   """
@@ -131,7 +131,7 @@ type TranslationFieldWithParent {
   formType: TranslationFormType!
   isNote: Boolean
   """
-  Designates the order of the question in the form
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
   """
   order: Int!
   """
@@ -173,7 +173,7 @@ type TranslationFieldWithOptionsAndChildren {
   formType: TranslationFormType!
   isNote: Boolean
   """
-  Designates the order of the question in the form
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
   """
   order: Int!
   """
@@ -217,7 +217,7 @@ type TranslationFieldWithOptionsAndParent {
   formType: TranslationFormType!
   isNote: Boolean
   """
-  Designates the order of the question in the form
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
   """
   order: Int!
   """
@@ -261,7 +261,7 @@ type TranslationFieldWithParentAndChildren {
   formType: TranslationFormType!
   isNote: Boolean
   """
-  Designates the order of the question in the form
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
   """
   order: Int!
   """

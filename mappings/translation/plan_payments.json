@@ -8,6 +8,7 @@
     "exportLabel": "What will be the funding source for payments?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 1.01,
     "options": {
       "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT": "Patient Protection Affordable Care Act (Sec 3021)",
       "MEDICARE_PART_A_HI_TRUST_FUND": "Medicare Part A (HI) Trust Fund",
@@ -23,6 +24,7 @@
     "exportLabel": "Additional details for Medicare Part A (HI) Trust Fund",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.02,
     "isOtherType": true,
     "otherParentField": "funding_source"
   },
@@ -34,6 +36,7 @@
     "exportLabel": "Additional details for Medicare Part B (SMI) Trust Fund",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.03,
     "isOtherType": true,
     "otherParentField": "funding_source"
   },
@@ -45,6 +48,7 @@
     "exportLabel": "Please describe the other funding source.",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 1.04,
     "isOtherType": true,
     "otherParentField": "funding_source"
   },
@@ -56,7 +60,8 @@
     "isNote": true,
     "otherParentField": "funding_source",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.05
   },
   "fundingSourceR": {
     "gqlField": "fundingSourceR",
@@ -67,6 +72,7 @@
     "exportLabel": "What is the funding source for reconciliation or other expenditures?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 1.06,
     "options": {
       "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT": "Patient Protection Affordable Care Act (Sec 3021)",
       "MEDICARE_PART_A_HI_TRUST_FUND": "Medicare Part A (HI) Trust Fund",
@@ -82,6 +88,7 @@
     "exportLabel": "Additional details for Medicare Part A (HI) Trust Fund",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.07,
     "isOtherType": true,
     "otherParentField": "funding_source_r"
   },
@@ -93,6 +100,7 @@
     "exportLabel": "Additional details for Medicare Part B (SMI) Trust Fund",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.08,
     "isOtherType": true,
     "otherParentField": "funding_source_r"
   },
@@ -104,6 +112,7 @@
     "exportLabel": "Please describe the other funding source.",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 1.09,
     "isOtherType": true,
     "otherParentField": "funding_source_r"
   },
@@ -115,7 +124,8 @@
     "isNote": true,
     "otherParentField": "funding_source_r",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.1
   },
   "payRecipients": {
     "gqlField": "payRecipients",
@@ -126,6 +136,7 @@
     "exportLabel": "Who will you pay?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 1.11,
     "options": {
       "PROVIDERS": "Providers",
       "BENEFICIARIES": "Beneficiaries",
@@ -140,7 +151,8 @@
     "dbField": "pay_recipients_other_specification",
     "label": "Please specify who you will pay.",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.12
   },
   "payRecipientsNote": {
     "gqlField": "payRecipientsNote",
@@ -150,7 +162,8 @@
     "isNote": true,
     "otherParentField": "pay_recipients",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.13
   },
   "payType": {
     "gqlField": "payType",
@@ -160,6 +173,7 @@
     "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 1.14,
     "options": {
       "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
       "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -175,6 +189,7 @@
           "sublabel": "If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.",
           "dataType": "ENUM",
           "formType": "MULTISELECT",
+          "order": 2.01,
           "multiSelectLabel": "Selected claims-based payments",
           "options": {
             "ADJUSTMENTS_TO_FFS_PAYMENTS": "Adjustments to FFS payments",
@@ -194,7 +209,8 @@
                 "dbField": "beneficiary_cost_sharing_level_and_handling",
                 "label": "What is the intended level of beneficiary cost-sharing and how will it be handled?",
                 "dataType": "STRING",
-                "formType": "TEXTAREA"
+                "formType": "TEXTAREA",
+                "order": 4.01
               },
               {
                 "gqlField": "waiveBeneficiaryCostSharingForAnyServices",
@@ -204,6 +220,7 @@
                 "readonlyLabel": "Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model? If so, please specify which services.",
                 "dataType": "BOOLEAN",
                 "formType": "RADIO",
+                "order": 4.02,
                 "options": {
                   "true": "Yes",
                   "false": "No"
@@ -217,6 +234,7 @@
                 "sublabel": "For example, we would assess cost-sharing for the service itself, but not for an add-on payment",
                 "dataType": "BOOLEAN",
                 "formType": "RADIO",
+                "order": 4.04,
                 "options": {
                   "true": "Yes",
                   "false": "No"
@@ -232,6 +250,7 @@
           "label": "Should any model providers be excluded from existing Fee-for-Service payment systems?",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 2.04,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -245,6 +264,7 @@
           "sublabel": "If so, it might impact Critical Access Hospitals paid under Method II.",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 2.06,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -258,6 +278,7 @@
           "readonlyLabel": "Does the model affect Medicare Secondary Payer claims? How so?",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 2.08,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -269,7 +290,8 @@
           "dbField": "pay_model_differentiation",
           "label": "How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?",
           "dataType": "STRING",
-          "formType": "TEXTAREA"
+          "formType": "TEXTAREA",
+          "order": 2.11
         },
         {
           "gqlField": "creatingDependenciesBetweenServices",
@@ -279,6 +301,7 @@
           "sublabel": "Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 3.01,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -292,6 +315,7 @@
           "sublabel": "If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 3.03,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -304,6 +328,7 @@
           "label": "Will your contractor be providing data (a Third Party File) that will be used in claims processing?",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 3.05,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -316,6 +341,7 @@
           "label": "Is your contractor aware that test data will be needed, and when that test data must be available?",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 3.06,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -330,6 +356,7 @@
           "label": "Select which non-claims-based payments will you pay.",
           "dataType": "ENUM",
           "formType": "MULTISELECT",
+          "order": 5.01,
           "multiSelectLabel": "Selected non-claims-based payments",
           "options": {
             "ADVANCED_PAYMENT": "Advanced Payment",
@@ -350,7 +377,8 @@
           "dbField": "payment_calculation_owner",
           "label": "Who will calculate the non-claims based payments?",
           "dataType": "STRING",
-          "formType": "TEXT"
+          "formType": "TEXT",
+          "order": 5.04
         },
         {
           "gqlField": "numberPaymentsPerPayCycle",
@@ -359,7 +387,8 @@
           "label": "Number of payments per payment cycle",
           "sublabel": "This only applies if you are making non-claims-based payments",
           "dataType": "STRING",
-          "formType": "TEXT"
+          "formType": "TEXT",
+          "order": 5.05
         },
         {
           "gqlField": "sharedSystemsInvolvedAdditionalClaimPayment",
@@ -368,6 +397,7 @@
           "label": "Will the Shared Systems be involved for additional payment of claims?",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 5.07,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -381,6 +411,7 @@
           "sublabel": "Note: If there will be 30+ payees we recommend a contractor.",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 5.09,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -397,7 +428,8 @@
     "isNote": true,
     "otherParentField": "pay_type",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.15
   },
   "payClaims": {
     "gqlField": "payClaims",
@@ -407,6 +439,7 @@
     "sublabel": "If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
+    "order": 2.01,
     "multiSelectLabel": "Selected claims-based payments",
     "options": {
       "ADJUSTMENTS_TO_FFS_PAYMENTS": "Adjustments to FFS payments",
@@ -426,7 +459,8 @@
           "dbField": "beneficiary_cost_sharing_level_and_handling",
           "label": "What is the intended level of beneficiary cost-sharing and how will it be handled?",
           "dataType": "STRING",
-          "formType": "TEXTAREA"
+          "formType": "TEXTAREA",
+          "order": 4.01
         },
         {
           "gqlField": "waiveBeneficiaryCostSharingForAnyServices",
@@ -436,6 +470,7 @@
           "readonlyLabel": "Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model? If so, please specify which services.",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 4.02,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -449,6 +484,7 @@
           "sublabel": "For example, we would assess cost-sharing for the service itself, but not for an add-on payment",
           "dataType": "BOOLEAN",
           "formType": "RADIO",
+          "order": 4.04,
           "options": {
             "true": "Yes",
             "false": "No"
@@ -464,6 +500,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -478,6 +515,7 @@
     "label": "Please describe the other claims-based payments you will pay",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 2.02,
     "isOtherType": true
   },
   "payClaimsNote": {
@@ -488,7 +526,8 @@
     "isNote": true,
     "otherParentField": "pay_claims",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 2.03
   },
   "shouldAnyProvidersExcludedFFSSystems": {
     "gqlField": "shouldAnyProvidersExcludedFFSSystems",
@@ -497,6 +536,7 @@
     "label": "Should any model providers be excluded from existing Fee-for-Service payment systems?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 2.04,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -509,6 +549,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -524,7 +565,8 @@
     "isNote": true,
     "otherParentField": "should_any_providers_excluded_ffs_systems",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 2.05
   },
   "changesMedicarePhysicianFeeSchedule": {
     "gqlField": "changesMedicarePhysicianFeeSchedule",
@@ -534,6 +576,7 @@
     "sublabel": "If so, it might impact Critical Access Hospitals paid under Method II.",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 2.06,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -546,6 +589,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -561,7 +605,8 @@
     "isNote": true,
     "otherParentField": "changes_medicare_physician_fee_schedule",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 2.07
   },
   "affectsMedicareSecondaryPayerClaims": {
     "gqlField": "affectsMedicareSecondaryPayerClaims",
@@ -571,6 +616,7 @@
     "readonlyLabel": "Does the model affect Medicare Secondary Payer claims? How so?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 2.08,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -583,6 +629,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -597,6 +644,7 @@
     "label": "How so?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 2.09,
     "isOtherType": true,
     "otherParentField": "affects_medicare_secondary_payer_claims"
   },
@@ -608,7 +656,8 @@
     "isNote": true,
     "otherParentField": "affects_medicare_secondary_payer_claims",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 2.1
   },
   "payModelDifferentiation": {
     "gqlField": "payModelDifferentiation",
@@ -617,6 +666,7 @@
     "label": "How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 2.11,
     "parentRelation": {
       "gqlField": "payType",
       "goField": "PayType",
@@ -625,6 +675,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -640,6 +691,7 @@
     "sublabel": "Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 3.01,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -652,6 +704,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -667,7 +720,8 @@
     "isNote": true,
     "otherParentField": "creating_dependencies_between_services",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 3.02
   },
   "needsClaimsDataCollection": {
     "gqlField": "needsClaimsDataCollection",
@@ -677,6 +731,7 @@
     "sublabel": "If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 3.03,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -689,6 +744,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -704,7 +760,8 @@
     "isNote": true,
     "otherParentField": "needs_claims_data_collection",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 3.04
   },
   "providingThirdPartyFile": {
     "gqlField": "providingThirdPartyFile",
@@ -713,6 +770,7 @@
     "label": "Will your contractor be providing data (a Third Party File) that will be used in claims processing?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 3.05,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -725,6 +783,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -739,6 +798,7 @@
     "label": "Is your contractor aware that test data will be needed, and when that test data must be available?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 3.06,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -751,6 +811,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -765,6 +826,7 @@
     "label": "What is the intended level of beneficiary cost-sharing and how will it be handled?",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 4.01,
     "parentRelation": {
       "gqlField": "payClaims",
       "goField": "PayClaims",
@@ -773,6 +835,7 @@
       "sublabel": "If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "MULTISELECT",
+      "order": 2.01,
       "multiSelectLabel": "Selected claims-based payments",
       "options": {
         "ADJUSTMENTS_TO_FFS_PAYMENTS": "Adjustments to FFS payments",
@@ -794,6 +857,7 @@
     "readonlyLabel": "Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model? If so, please specify which services.",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 4.02,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -806,6 +870,7 @@
       "sublabel": "If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "MULTISELECT",
+      "order": 2.01,
       "multiSelectLabel": "Selected claims-based payments",
       "options": {
         "ADJUSTMENTS_TO_FFS_PAYMENTS": "Adjustments to FFS payments",
@@ -826,6 +891,7 @@
     "label": "Please specify which services.",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 4.03,
     "isOtherType": true,
     "otherParentField": "waive_beneficiary_cost_sharing_for_any_services"
   },
@@ -837,6 +903,7 @@
     "sublabel": "For example, we would assess cost-sharing for the service itself, but not for an add-on payment",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 4.04,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -849,6 +916,7 @@
       "sublabel": "If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "MULTISELECT",
+      "order": 2.01,
       "multiSelectLabel": "Selected claims-based payments",
       "options": {
         "ADJUSTMENTS_TO_FFS_PAYMENTS": "Adjustments to FFS payments",
@@ -870,7 +938,8 @@
     "isNote": true,
     "parentReferencesLabel": "Beneficiary cost-sharing questions",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 4.05
   },
   "nonClaimsPayments": {
     "gqlField": "nonClaimsPayments",
@@ -879,6 +948,7 @@
     "label": "Select which non-claims-based payments will you pay.",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
+    "order": 5.01,
     "multiSelectLabel": "Selected non-claims-based payments",
     "options": {
       "ADVANCED_PAYMENT": "Advanced Payment",
@@ -900,6 +970,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -914,6 +985,7 @@
     "label": "Please describe the other non-claims-based payments you will pay.",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 5.02,
     "isOtherType": true
   },
   "nonClaimsPaymentsNote": {
@@ -924,7 +996,8 @@
     "isNote": true,
     "otherParentField": "non_claims_payments",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 5.03
   },
   "paymentCalculationOwner": {
     "gqlField": "paymentCalculationOwner",
@@ -933,6 +1006,7 @@
     "label": "Who will calculate the non-claims based payments?",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 5.04,
     "parentRelation": {
       "gqlField": "payType",
       "goField": "PayType",
@@ -941,6 +1015,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -956,6 +1031,7 @@
     "sublabel": "This only applies if you are making non-claims-based payments",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 5.05,
     "parentRelation": {
       "gqlField": "payType",
       "goField": "PayType",
@@ -964,6 +1040,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -979,7 +1056,8 @@
     "isNote": true,
     "otherParentField": "number_payments_per_pay_cycle",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 5.06
   },
   "sharedSystemsInvolvedAdditionalClaimPayment": {
     "gqlField": "sharedSystemsInvolvedAdditionalClaimPayment",
@@ -988,6 +1066,7 @@
     "label": "Will the Shared Systems be involved for additional payment of claims?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 5.07,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1000,6 +1079,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -1015,7 +1095,8 @@
     "isNote": true,
     "otherParentField": "shared_systems_involved_additional_claim_payment",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 5.08
   },
   "planningToUseInnovationPaymentContractor": {
     "gqlField": "planningToUseInnovationPaymentContractor",
@@ -1025,6 +1106,7 @@
     "sublabel": "Note: If there will be 30+ payees we recommend a contractor.",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 5.09,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1037,6 +1119,7 @@
       "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
       "dataType": "ENUM",
       "formType": "CHECKBOX",
+      "order": 1.14,
       "options": {
         "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
         "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
@@ -1052,7 +1135,8 @@
     "isNote": true,
     "otherParentField": "planning_to_use_innovation_payment_contractor",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 5.1
   },
   "expectedCalculationComplexityLevel": {
     "gqlField": "expectedCalculationComplexityLevel",
@@ -1061,6 +1145,7 @@
     "label": "What level of complexity do you expect calculations to be?",
     "dataType": "ENUM",
     "formType": "RADIO",
+    "order": 6.01,
     "options": {
       "LOW": "Low level",
       "MIDDLE": "Middle level",
@@ -1075,7 +1160,8 @@
     "isNote": true,
     "otherParentField": "expected_calculation_complexity_level",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 6.02
   },
   "claimsProcessingPrecedence": {
     "gqlField": "claimsProcessingPrecedence",
@@ -1085,6 +1171,7 @@
     "readonlyLabel": "Are there any business requirement(s) that address claims processing precedence order with the other model(s)? If so, please specify.",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 6.03,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1098,6 +1185,7 @@
     "exportLabel": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 6.04,
     "isOtherType": true,
     "otherParentField": "claims_processing_precedence"
   },
@@ -1109,7 +1197,8 @@
     "isNote": true,
     "otherParentField": "claims_processing_precedence",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 6.05
   },
   "canParticipantsSelectBetweenPaymentMechanisms": {
     "gqlField": "canParticipantsSelectBetweenPaymentMechanisms",
@@ -1119,6 +1208,7 @@
     "readonlyLabel": "Will participants be allowed to select between multiple payment mechanisms? If so, please describe.",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 6.06,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1132,6 +1222,7 @@
     "exportLabel": "Please describe yes",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 6.07,
     "isOtherType": true,
     "otherParentField": "can_participants_select_between_payment_mechanisms"
   },
@@ -1143,7 +1234,8 @@
     "isNote": true,
     "otherParentField": "can_participants_select_between_payment_mechanisms",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 6.08
   },
   "anticipatedPaymentFrequency": {
     "gqlField": "anticipatedPaymentFrequency",
@@ -1152,6 +1244,7 @@
     "label": "How often do you anticipate making payments?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 6.09,
     "options": {
       "ANNUALLY": "Annually",
       "SEMIANNUALLY": "Semi-annually",
@@ -1169,6 +1262,7 @@
     "exportLabel": "Please specify continually",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 6.1,
     "isOtherType": true,
     "otherParentField": "anticipated_payment_frequency"
   },
@@ -1180,6 +1274,7 @@
     "exportLabel": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 6.11,
     "isOtherType": true,
     "otherParentField": "anticipated_payment_frequency"
   },
@@ -1191,7 +1286,8 @@
     "isNote": true,
     "otherParentField": "anticipated_payment_frequency",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 6.12
   },
   "willRecoverPayments": {
     "gqlField": "willRecoverPayments",
@@ -1200,6 +1296,7 @@
     "label": "Will you recover the payments?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 7.01,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1213,7 +1310,8 @@
     "isNote": true,
     "otherParentField": "will_recover_payments",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 7.02
   },
   "anticipateReconcilingPaymentsRetrospectively": {
     "gqlField": "anticipateReconcilingPaymentsRetrospectively",
@@ -1222,6 +1320,7 @@
     "label": "Do you anticipate reconciling payments retrospectively?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 7.03,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -1235,7 +1334,8 @@
     "isNote": true,
     "otherParentField": "anticipate_reconciling_payments_retrospectively",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 7.04
   },
   "paymentReconciliationFrequency": {
     "gqlField": "paymentReconciliationFrequency",
@@ -1244,6 +1344,7 @@
     "label": "How often are payments reconciled?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 7.05,
     "options": {
       "ANNUALLY": "Annually",
       "SEMIANNUALLY": "Semi-annually",
@@ -1261,6 +1362,7 @@
     "exportLabel": "Please specify continually",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 7.06,
     "isOtherType": true,
     "otherParentField": "payment_reconciliation_frequency"
   },
@@ -1272,6 +1374,7 @@
     "exportLabel": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 7.07,
     "isOtherType": true,
     "otherParentField": "payment_reconciliation_frequency"
   },
@@ -1283,7 +1386,8 @@
     "isNote": true,
     "otherParentField": "payment_reconciliation_frequency",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 7.08
   },
   "paymentDemandRecoupmentFrequency": {
     "gqlField": "paymentDemandRecoupmentFrequency",
@@ -1292,6 +1396,7 @@
     "label": "How frequently do you anticipate making demands/recoupments?",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 7.09,
     "options": {
       "ANNUALLY": "Annually",
       "SEMIANNUALLY": "Semi-annually",
@@ -1309,6 +1414,7 @@
     "exportLabel": "Please specify continually",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 7.1,
     "isOtherType": true,
     "otherParentField": "payment_demand_recoupment_frequency"
   },
@@ -1320,6 +1426,7 @@
     "exportLabel": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXTAREA",
+    "order": 7.11,
     "isOtherType": true,
     "otherParentField": "payment_demand_recoupment_frequency"
   },
@@ -1331,7 +1438,8 @@
     "isNote": true,
     "otherParentField": "payment_demand_recoupment_frequency",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 7.12
   },
   "paymentStartDate": {
     "gqlField": "paymentStartDate",
@@ -1341,7 +1449,8 @@
     "readonlyLabel": "When will payments start?",
     "sublabel": "Note: If you are unsure of an approximate date, please select the first day of the approximate month.",
     "dataType": "DATE",
-    "formType": "DATEPICKER"
+    "formType": "DATEPICKER",
+    "order": 7.13
   },
   "paymentStartDateNote": {
     "gqlField": "paymentStartDateNote",
@@ -1351,7 +1460,8 @@
     "isNote": true,
     "otherParentField": "payment_start_date",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 7.14
   },
   "readyForReviewBy": {
     "gqlField": "readyForReviewBy",
@@ -1360,6 +1470,7 @@
     "label": "This section of the Model Plan (Payment) is ready for review.",
     "dataType": "UUID",
     "formType": "TEXT",
+    "order": 7.15,
     "tableReference": "user_account",
     "hideFromReadonly": true
   },
@@ -1370,6 +1481,7 @@
     "label": "Ready for review date",
     "dataType": "DATE",
     "formType": "DATEPICKER",
+    "order": 7.16,
     "hideFromReadonly": true
   },
   "readyForClearanceBy": {
@@ -1379,6 +1491,7 @@
     "label": "This section of the Model Plan (Payment) is ready for clearance.",
     "dataType": "UUID",
     "formType": "TEXT",
+    "order": 7.17,
     "tableReference": "user_account",
     "hideFromReadonly": true
   },
@@ -1389,6 +1502,7 @@
     "label": "Ready for clearance date",
     "dataType": "DATE",
     "formType": "DATEPICKER",
+    "order": 7.18,
     "hideFromReadonly": true
   },
   "status": {
@@ -1398,6 +1512,7 @@
     "label": "Model Plan status",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
+    "order": 7.19,
     "options": {
       "READY": "Ready",
       "IN_PROGRESS": "In progress",

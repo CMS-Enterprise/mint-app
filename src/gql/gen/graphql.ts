@@ -3604,7 +3604,7 @@ export type TranslationField = {
   isOtherType?: Maybe<Scalars['Boolean']['output']>;
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
-  /** Designates the order of the question in the form */
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
   order: Scalars['Int']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
@@ -3634,7 +3634,7 @@ export type TranslationFieldWithOptions = {
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   options: Scalars['Map']['output'];
-  /** Designates the order of the question in the form */
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
   order: Scalars['Int']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
@@ -3665,7 +3665,7 @@ export type TranslationFieldWithOptionsAndChildren = {
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   options: Scalars['Map']['output'];
-  /** Designates the order of the question in the form */
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
   order: Scalars['Int']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
@@ -3695,7 +3695,7 @@ export type TranslationFieldWithOptionsAndParent = {
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   options: Scalars['Map']['output'];
-  /** Designates the order of the question in the form */
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
   order: Scalars['Int']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
@@ -3724,7 +3724,7 @@ export type TranslationFieldWithParent = {
   isOtherType?: Maybe<Scalars['Boolean']['output']>;
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
-  /** Designates the order of the question in the form */
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
   order: Scalars['Int']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
@@ -3756,7 +3756,7 @@ export type TranslationFieldWithParentAndChildren = {
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   options: Scalars['Map']['output'];
-  /** Designates the order of the question in the form */
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
   order: Scalars['Int']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;

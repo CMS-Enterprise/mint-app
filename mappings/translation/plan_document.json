@@ -1,4 +1,14 @@
 {
+  "fileName": {
+    "gqlField": "fileName",
+    "goField": "FileName",
+    "dbField": "file_name",
+    "label": "File Name",
+    "sublabel": "Enter a Name for your document.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.01
+  },
   "isLink": {
     "gqlField": "isLink",
     "goField": "IsLink",
@@ -6,6 +16,7 @@
     "label": "Is this a link to a document?",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 1.02,
     "options": {
       "true": "Link to document",
       "false": "Upload document"
@@ -18,16 +29,8 @@
     "label": "Link",
     "sublabel": "Paste the link for your document. Make sure it includes http:// or https://.",
     "dataType": "STRING",
-    "formType": "TEXT"
-  },
-  "fileName": {
-    "gqlField": "fileName",
-    "goField": "FileName",
-    "dbField": "file_name",
-    "label": "File Name",
-    "sublabel": "Enter a Name for your document.",
-    "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.03
   },
   "fileType": {
     "gqlField": "fileType",
@@ -35,7 +38,8 @@
     "dbField": "file_type",
     "label": "File Type",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.04
   },
   "documentType": {
     "gqlField": "documentType",
@@ -44,6 +48,7 @@
     "label": "What type of document are you uploading?",
     "dataType": "ENUM",
     "formType": "RADIO",
+    "order": 1.05,
     "options": {
       "CONCEPT_PAPER": "Concept Paper",
       "DESIGN_PARAMETERS_MEMO": "Design Parameter Memo",
@@ -60,7 +65,8 @@
     "dbField": "other_type",
     "label": "What kind of document is this?",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.06
   },
   "restricted": {
     "gqlField": "restricted",
@@ -71,6 +77,7 @@
     "exportLabel": "Visibility",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
+    "order": 1.07,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -86,6 +93,7 @@
     "dbField": "optional_notes",
     "label": "Optional notes about the document",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.08
   }
 }
