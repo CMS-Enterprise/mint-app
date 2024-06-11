@@ -15,6 +15,7 @@ const (
 	ActivityTaggedInDiscussionReply ActivityType = "TAGGED_IN_DISCUSSION_REPLY"
 	ActivityNewDiscussionReply      ActivityType = "NEW_DISCUSSION_REPLY"
 	ActivityModelPlanShared         ActivityType = "MODEL_PLAN_SHARED"
+	ActivityNewModelPlan            ActivityType = "NEW_MODEL_PLAN"
 	ActivityDatesChanged            ActivityType = "DATES_CHANGED"
 )
 

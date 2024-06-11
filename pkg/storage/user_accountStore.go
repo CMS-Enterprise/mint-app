@@ -28,6 +28,9 @@ var userAccountInsertByUsername string
 //go:embed SQL/user_account/update_by_username.sql
 var userAccountUpdateByUsername string
 
+//go:embed SQL/user_account/get_notification_preferences_new_model_plan.sql
+var userNotificationPreferencesNewModelPlan string
+
 //go:embed SQL/user_account/get_notification_recipients_dates_changed.sql
 var userAccountGetNotificationRecipientsDatesChanged string
 
@@ -102,6 +105,30 @@ func (s *Store) UserAccountGetByIDLOADER(
 	}
 
 	return userSlice, nil
+}
+
+// UserAccountNotificationPreferencesNewModelPlan gets the notification
+// preferences for a new model plan for a slice of users who have at least one
+// enabled preference
+func (s *Store) UserAccountNotificationPreferencesNewModelPlan(np sqlutils.NamedPreparer) (
+	[]*models.UserAccountNotificationPreferences,
+	error,
+) {
+
+	var userNotificationPreferences []*models.UserAccountNotificationPreferences
+
+	stmt, err := np.PrepareNamed(userNotificationPreferencesNewModelPlan)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	err = stmt.Select(&userNotificationPreferences, map[string]interface{}{})
+	if err != nil {
+		return nil, err
+	}
+
+	return userNotificationPreferences, nil
 }
 
 // UserAccountInsertByUsername creates a new user account for a given username

@@ -7,6 +7,7 @@ INSERT INTO public.user_notification_preferences(
     tagged_in_discussion_reply,
     new_discussion_reply,
     model_plan_shared,
+    new_model_plan,
     dates_changed,
     dates_changed_notification_type,
     created_by
@@ -20,6 +21,7 @@ VALUES (
     :tagged_in_discussion_reply,
     :new_discussion_reply,
     :model_plan_shared,
+    :new_model_plan,
     :dates_changed,
     :dates_changed_notification_type,
     :created_by
@@ -33,6 +35,7 @@ tagged_in_discussion,
 tagged_in_discussion_reply,
 new_discussion_reply,
 model_plan_shared,
+new_model_plan,
 dates_changed,
 dates_changed_notification_type,
 created_by,

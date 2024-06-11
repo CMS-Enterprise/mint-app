@@ -758,55 +758,6 @@ func (e DataToSendParticipantsType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type DateChangeFieldType string
-
-const (
-	DateChangeFieldTypeCompleteIcip      DateChangeFieldType = "COMPLETE_ICIP"
-	DateChangeFieldTypeClearance         DateChangeFieldType = "CLEARANCE"
-	DateChangeFieldTypeAnnounced         DateChangeFieldType = "ANNOUNCED"
-	DateChangeFieldTypeApplications      DateChangeFieldType = "APPLICATIONS"
-	DateChangeFieldTypePerformancePeriod DateChangeFieldType = "PERFORMANCE_PERIOD"
-	DateChangeFieldTypeWrapUpEnds        DateChangeFieldType = "WRAP_UP_ENDS"
-)
-
-var AllDateChangeFieldType = []DateChangeFieldType{
-	DateChangeFieldTypeCompleteIcip,
-	DateChangeFieldTypeClearance,
-	DateChangeFieldTypeAnnounced,
-	DateChangeFieldTypeApplications,
-	DateChangeFieldTypePerformancePeriod,
-	DateChangeFieldTypeWrapUpEnds,
-}
-
-func (e DateChangeFieldType) IsValid() bool {
-	switch e {
-	case DateChangeFieldTypeCompleteIcip, DateChangeFieldTypeClearance, DateChangeFieldTypeAnnounced, DateChangeFieldTypeApplications, DateChangeFieldTypePerformancePeriod, DateChangeFieldTypeWrapUpEnds:
-		return true
-	}
-	return false
-}
-
-func (e DateChangeFieldType) String() string {
-	return string(e)
-}
-
-func (e *DateChangeFieldType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = DateChangeFieldType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid DateChangeFieldType", str)
-	}
-	return nil
-}
-
-func (e DateChangeFieldType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type EaseOfUse string
 
 const (

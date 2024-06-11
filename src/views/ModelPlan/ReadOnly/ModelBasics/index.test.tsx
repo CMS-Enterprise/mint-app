@@ -1,14 +1,19 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ModelCategory } from 'gql/gen/graphql';
 import i18next from 'i18next';
+import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
 
 import { modelBasicsMocks as mocks, modelID } from 'data/mock/readonly';
 
 import ReadOnlyModelBasics from './index';
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: { euaId: 'MINT' } });
 
 describe('Read Only Model Plan Summary -- Model Basics', () => {
   // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
@@ -20,9 +25,11 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
         initialEntries={[`/models/${modelID}/read-only/model-basics`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/model-basics">
-            <ReadOnlyModelBasics modelID={modelID} />
-          </Route>
+          <Provider store={store}>
+            <Route path="/models/:modelID/read-only/model-basics">
+              <ReadOnlyModelBasics modelID={modelID} />
+            </Route>
+          </Provider>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -31,14 +38,12 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
       expect(screen.getByText('43532323')).toBeInTheDocument();
       expect(
         screen.getByText(
-          i18next.t<string>(
-            `basics:modelCategory.options.${ModelCategory.STATE_BASED}`
-          )
+          i18next.t(`basics:modelCategory.options.${ModelCategory.STATE_BASED}`)
         )
       ).toBeInTheDocument();
       expect(
         screen.getByText(
-          i18next.t<string>(
+          i18next.t(
             `basics:modelCategory.options.${ModelCategory.ACCOUNTABLE_CARE}`
           )
         )
@@ -52,9 +57,11 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
         initialEntries={[`/models/${modelID}/read-only/model-basics`]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/read-only/model-basics">
-            <ReadOnlyModelBasics modelID={modelID} />
-          </Route>
+          <Provider store={store}>
+            <Route path="/models/:modelID/read-only/model-basics">
+              <ReadOnlyModelBasics modelID={modelID} />
+            </Route>
+          </Provider>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -63,14 +70,12 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
       expect(screen.getByText('43532323')).toBeInTheDocument();
       expect(
         screen.getByText(
-          i18next.t<string>(
-            `basics:modelCategory.options.${ModelCategory.STATE_BASED}`
-          )
+          i18next.t(`basics:modelCategory.options.${ModelCategory.STATE_BASED}`)
         )
       ).toBeInTheDocument();
       expect(
         screen.getByText(
-          i18next.t<string>(
+          i18next.t(
             `basics:modelCategory.options.${ModelCategory.ACCOUNTABLE_CARE}`
           )
         )

@@ -29,7 +29,7 @@
   }
 
   .usa-alert__body {
-    padding-left: 2rem !important;
+    padding-left: 3rem !important;
   }
 
   .page-break {
@@ -57,6 +57,7 @@
 }
 
 @page {
+  margin: 0.75in;
   @bottom-left {
     content: 'Page ' counter(page) ' of ' counter(pages);
   }
