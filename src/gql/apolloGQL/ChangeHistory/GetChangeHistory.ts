@@ -54,6 +54,9 @@ export default gql(/* GraphQL */ `
           solutionName
           solutionOtherHeader
           solutionIsOther
+          solutionStatus
+          solutionMustStart
+          solutionMustFinish
           numberOfSubtasks
         }
         ... on TranslatedAuditMetaOperationalSolutionSubtask {
@@ -62,10 +65,26 @@ export default gql(/* GraphQL */ `
           needName
           needIsOther
           solutionName
-          numberOfSubtasks
           solutionOtherHeader
           solutionIsOther
           subtaskName
+          numberOfSubtasks
+        }
+        ... on TranslatedAuditMetaDocumentSolutionLink {
+          version
+          tableName
+          solutionName
+          solutionOtherHeader
+          solutionIsOther
+          needName
+          needIsOther
+          documentName
+          documentType
+          documentOtherType
+          documentVisibility
+          documentNote
+          documentURL
+          documentID
         }
       }
     }

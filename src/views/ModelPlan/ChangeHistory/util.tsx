@@ -1,8 +1,13 @@
 import {
+  AuditFieldChangeType,
   DatabaseOperation,
+  ExisitingModelLinkFieldType,
   GetChangeHistoryQuery,
+  TranslatedAuditMetaBaseStruct,
   TranslatedAuditMetaData,
   TranslatedAuditMetaDiscussionReply,
+  TranslatedAuditMetaDocumentSolutionLink,
+  TranslatedAuditMetaGeneric,
   TranslatedAuditMetaOperationalSolution,
   TranslatedAuditMetaOperationalSolutionSubtask,
   TranslationDataType
@@ -14,6 +19,11 @@ import { formatDateUtc, formatTime } from 'utils/date';
 export type ChangeRecordType = NonNullable<
   GetChangeHistoryQuery['translatedAuditCollection']
 >[0];
+
+type HiddenFieldTypes = {
+  table: TranslationTables;
+  fields: string[];
+};
 
 // Identifies the type of change
 export type ChangeType =
@@ -50,7 +60,8 @@ export type TranslationTables =
   | 'operational_need'
   | 'operational_solution'
   | 'operational_solution_subtask'
-  | 'plan_document_solution_link';
+  | 'plan_document_solution_link'
+  | 'existing_model_link';
 
 export type TranslationTaskListTable =
   | 'plan_basics'
@@ -71,6 +82,14 @@ export const isTranslationTaskListTable = (
     'plan_ops_eval_and_learning',
     'plan_payments'
   ].includes(tableName);
+};
+
+// Type guard to check union type
+export const isGenericWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaGeneric => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaGeneric';
 };
 
 // Type guard to check union type
@@ -97,10 +116,15 @@ export const isSubtaskWithMetaData = (
   return data.__typename === 'TranslatedAuditMetaOperationalSolutionSubtask';
 };
 
-type HiddenFieldTypes = {
-  table: TranslationTables;
-  fields: string[];
+// Type guard to check union type
+export const isSolutionDocumentLinkWithMetaData = (
+  data: TranslatedAuditMetaData
+): data is TranslatedAuditMetaDocumentSolutionLink => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TranslatedAuditMetaDocumentSolutionLink';
 };
+
+export const datesWithNoDay: string[] = ['date_implemented'];
 
 // Fields that are not displayed in the change history
 const hiddenFields: HiddenFieldTypes[] = [
@@ -134,16 +158,21 @@ const hiddenFields: HiddenFieldTypes[] = [
   }
 ];
 
+// Tables where similar audits are batched together
 export const batchedTables: string[] = [
-  'plan_document',
   'operational_solution',
   'operational_solution_subtask',
   'plan_document_solution_link',
   'existing_model_link'
 ];
 
-export const nonBatchedTables: string[] = ['model_plan', 'plan_collaborator'];
+// Tables where audits are batch with a different table
+export const doubleBatchedTables: string[] = [
+  'plan_document',
+  'plan_document_solution_link'
+];
 
+// Fields that are connected to other tables
 export const connectedFields: HiddenFieldTypes[] = [
   {
     table: 'plan_document_solution_link',
@@ -151,13 +180,117 @@ export const connectedFields: HiddenFieldTypes[] = [
   }
 ];
 
+export const linkingTables = ['existing_model_link'];
+
+// Determines if the table is a linking table
+export const isLinkingTable = (tableName: string): boolean =>
+  linkingTables.includes(tableName);
+
+// Gets the linking table questions, in array, used to get audit count length
+export const linkingTableQuestions = (
+  changeRecords: ChangeRecordType[]
+): string[] => {
+  const changeQuestions = changeRecords.map(
+    change =>
+      change.translatedFields.find(record => record.fieldName === 'field_name')
+        ?.newTranslated ||
+      change.translatedFields.find(record => record.fieldName === 'field_name')
+        ?.oldTranslated
+  );
+
+  // Removes duplicate questions, more accurate able to list changed questions
+  const uniqueChangeQuestions = Array.from(new Set(changeQuestions));
+
+  return uniqueChangeQuestions;
+};
+
+// Condenses the linking table changes into a single change record per question
+export const condenseLinkingTableChanges = (
+  changes: ChangeRecordType[]
+): ChangeRecordType[] => {
+  const condensedChanges: Record<
+    ExisitingModelLinkFieldType,
+    ChangeRecordType[]
+  > = {} as Record<ExisitingModelLinkFieldType, ChangeRecordType[]>;
+
+  changes.forEach(change => {
+    const questionChange = change.translatedFields.find(
+      record => record.fieldName === 'field_name'
+    );
+
+    const answerChange =
+      change.translatedFields.find(
+        record => record.fieldName === 'existing_model_id'
+      ) ||
+      change.translatedFields.find(
+        record => record.fieldName === 'current_model_plan_id'
+      );
+
+    const question =
+      (questionChange?.new as ExisitingModelLinkFieldType) ||
+      (questionChange?.old as ExisitingModelLinkFieldType);
+
+    if (!questionChange || !answerChange) return;
+
+    // If the question does not exist in the condensed changes, create a new change record
+    if (!condensedChanges[question]) {
+      const newChange = { ...change };
+
+      // Setting the question as metadata for all the related existing link changes
+      newChange.metaData = {
+        tableName:
+          questionChange?.newTranslated || questionChange?.oldTranslated
+      } as TranslatedAuditMetaBaseStruct;
+
+      // Using the question translated field as the base object to merge in existing link data
+      const newTranslated = { ...answerChange };
+
+      // Changes the fieldNameTranslated using the tranlated field from newTranslated
+      newTranslated.fieldNameTranslated =
+        newTranslated.newTranslated || newTranslated.oldTranslated;
+
+      // Setting the changeType of the field as the value
+      newTranslated.newTranslated = change.action;
+
+      newChange.translatedFields = [newTranslated];
+      condensedChanges[question] = [newChange];
+    } else {
+      // Using the question translated field as the base object to merge in existing link data
+      const newTranslated = { ...answerChange };
+
+      // Changes the fieldNameTranslated using the tranlated field from newTranslated
+      newTranslated.fieldNameTranslated =
+        newTranslated.newTranslated || newTranslated.oldTranslated;
+
+      // Setting the changeType of the field as the value
+      newTranslated.newTranslated = change.action;
+
+      condensedChanges[question][0].translatedFields.push(newTranslated);
+    }
+  });
+
+  const flattenedChanges = Object.values(condensedChanges).map(
+    change => change[0]
+  );
+
+  return flattenedChanges;
+};
+
+// Determines if the batch component should render
+export const shouldRenderExistingLinkBatch = (
+  changeRecords: ChangeRecordType[]
+): boolean => batchedTables.includes(changeRecords[0].tableName);
+
+// Returns metadata for both subtasks and solutions
 export const getOperationalMetadata = (
   type: 'solution' | 'subtask',
   metaData: TranslatedAuditMetaData | undefined | null,
-  fieldName: 'solutionName' | 'needName'
-) => {
+  fieldName: 'solutionName' | 'needName' | 'subtaskName'
+): string => {
   if (type === 'solution') {
-    return metaData && isOperationalSolutionWithMetaData(metaData)
+    return metaData &&
+      isOperationalSolutionWithMetaData(metaData) &&
+      fieldName !== 'subtaskName'
       ? metaData[fieldName]
       : '';
   }
@@ -170,29 +303,47 @@ export const getOperationalMetadata = (
   return '';
 };
 
+/* 
+  Returns the operation status of the solution.  
+  Solutions are not deleted, they are marked as not needed/needed
+  Mimics the database operation based on the neeeded property
+*/
 export const getSolutionOperationStatus = (
   change: ChangeRecordType
-): DatabaseOperation =>
-  change.translatedFields.find(field => field.fieldName === 'needed')?.new ===
-  'false'
-    ? DatabaseOperation.DELETE
-    : change.action;
+): DatabaseOperation => {
+  if (
+    change.translatedFields.find(field => field.fieldName === 'needed')?.new ===
+    'false'
+  ) {
+    return DatabaseOperation.DELETE;
+  }
+  if (
+    change.translatedFields.find(field => field.fieldName === 'needed')?.new ===
+    'true'
+  ) {
+    return DatabaseOperation.INSERT;
+  }
+  return change.action;
+};
 
+// Looks at the database operation to determine if the new or old value is needed
 export const documentChange = (docType: string | undefined) =>
   docType === 'DELETE' ? 'oldTranslated' : 'newTranslated';
 
+// Returns the document name based on the action
 export const documentName = (change: ChangeRecordType) =>
   change.translatedFields.find(field => field.fieldName === 'file_name')?.[
     documentChange(change.action)
   ];
 
-export const documentType = (change: ChangeRecordType) =>
-  change.translatedFields.find(field => field.fieldName === 'is_link')
-    ?.newTranslated === 'true' ||
-  change.translatedFields.find(field => field.fieldName === 'is_link')
-    ?.oldTranslated === 'true'
-    ? ' link'
-    : '';
+// Returns the document type (link/upload)
+export const documentType = (change: ChangeRecordType): boolean =>
+  !!(
+    change.translatedFields.find(field => field.fieldName === 'is_link')
+      ?.newTranslated === 'true' ||
+    change.translatedFields.find(field => field.fieldName === 'is_link')
+      ?.oldTranslated === 'true'
+  );
 
 export const getSolutionName = (change: ChangeRecordType) =>
   change.translatedFields.find(field => field.fieldName === 'solution_id')
@@ -202,7 +353,7 @@ export const getSolutionName = (change: ChangeRecordType) =>
 
 export const documentUpdateType = (change: ChangeRecordType) => {
   if (change.action === 'INSERT') {
-    if (documentType(change) === ' link') {
+    if (documentType(change)) {
       return 'added';
     }
     return 'uploaded';
@@ -320,18 +471,22 @@ export const filterQueryAudits = (
             return true;
           }
 
+          const dateFormatType = datesWithNoDay.includes(field.fieldName)
+            ? 'MMMM yyyy'
+            : 'MM/dd/yyyy';
+
           // Parsing date of audit data to check if it matches the query
           if (field.dataType === TranslationDataType.DATE) {
             if (
               formatDateUtc(
                 field.newTranslated?.replace(' ', 'T'),
-                'MM/dd/yyyy'
+                dateFormatType
               )
                 .toLowerCase()
                 .includes(lowerCaseQuery) ||
               formatDateUtc(
                 field.oldTranslated?.replace(' ', 'T'),
-                'MM/dd/yyyy'
+                dateFormatType
               )
                 .toLowerCase()
                 .includes(lowerCaseQuery)
@@ -554,14 +709,37 @@ export const removedHiddenFields = (
 // Groups changes that are within 1 second of each other
 export const groupBatchedChanges = (changes: ChangeRecordType[]) => {
   const mergedChanges = [...changes].reduce(
-    (acc: ChangeRecordType[][], change) => {
+    (acc: ChangeRecordType[][], change, currentIndex) => {
       const date = new Date(change.date);
       const lastGroup = acc[acc.length - 1];
+
+      // Returns a string array of list of existing batched tablenames prior to this change
+      const prevousGroups = lastGroup?.map(group => group.tableName) || [];
+
+      let canBatch = false;
+
+      // If change belongs to a batch for a single table, group all together
+      if (batchedTables.includes(change.tableName)) {
+        if (prevousGroups.includes(change.tableName)) {
+          canBatch = true;
+        } else {
+          canBatch = false;
+        }
+      }
+
+      // OR if two tables should be group together, batch them - Documents, Document Solution Link
+      if (doubleBatchedTables.includes(change.tableName)) {
+        if (doubleBatchedTables.some(item => prevousGroups.includes(item))) {
+          canBatch = true;
+        } else {
+          canBatch = false;
+        }
+      }
 
       // If the last group is empty or the date of the change is more than 1 second from the last change, create a new group
       if (
         !lastGroup ||
-        nonBatchedTables.includes(change.tableName) ||
+        !canBatch ||
         Math.abs(
           date.getTime() -
             new Date(lastGroup[lastGroup.length - 1].date).getTime()
@@ -632,4 +810,203 @@ export const sortAllChanges = (changes: ChangeRecordType[]) => {
   );
 
   return changesSortedWithCreateFirst;
+};
+
+// Returns pseudo translated fields for the operational solution from its metadata
+export const solutionInsertFields = (
+  metaData: TranslatedAuditMetaOperationalSolution
+): ChangeRecordType['translatedFields'] => {
+  return [
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.ANSWERED,
+      dataType: TranslationDataType.ENUM,
+      fieldName: 'status',
+      fieldNameTranslated: 'Status',
+      id: '1',
+      new: metaData.solutionStatus,
+      newTranslated: metaData.solutionStatus,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
+      questionType: null,
+      referenceLabel: null
+    }
+  ];
+};
+
+// Returns pseudo translated fields for the operational solution from its metadata
+export const solutionDeleteFields = (
+  metaData: TranslatedAuditMetaOperationalSolution
+): ChangeRecordType['translatedFields'] => {
+  return [
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'numberOfSubtasks',
+      fieldNameTranslated: 'Subtasks',
+      id: '1',
+      new: null,
+      newTranslated: null,
+      notApplicableQuestions: null,
+      old: metaData.numberOfSubtasks,
+      oldTranslated: metaData.numberOfSubtasks,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.ENUM,
+      fieldName: 'status',
+      fieldNameTranslated: 'Status',
+      id: '2',
+      new: null,
+      newTranslated: null,
+      notApplicableQuestions: null,
+      old: metaData.solutionStatus,
+      oldTranslated: metaData.solutionStatus,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'must_start_dts',
+      fieldNameTranslated: 'Must start by',
+      id: '3',
+      new: null,
+      newTranslated: null,
+      notApplicableQuestions: null,
+      old: metaData.solutionMustStart,
+      oldTranslated: metaData.solutionMustStart
+        ? formatDateUtc(
+            metaData.solutionMustStart.replace(' ', 'T'),
+            'MM/dd/yyyy'
+          )
+        : '',
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'must_finish_dts',
+      fieldNameTranslated: 'Must finish by',
+      id: '4',
+      new: null,
+      newTranslated: null,
+      notApplicableQuestions: null,
+      old: metaData.solutionMustFinish,
+      oldTranslated: metaData.solutionMustFinish
+        ? formatDateUtc(
+            metaData.solutionMustFinish.replace(' ', 'T'),
+            'MM/dd/yyyy'
+          )
+        : '',
+      questionType: null,
+      referenceLabel: null
+    }
+  ];
+};
+
+// Returns pseudo translated fields for the solution document link from its metadata
+export const solutionDocumentLinkFields = (
+  metaData: TranslatedAuditMetaDocumentSolutionLink
+): ChangeRecordType['translatedFields'] => {
+  return [
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'documentName',
+      fieldNameTranslated: 'Document',
+      id: '1',
+      new: null,
+      newTranslated: metaData.documentName,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'documentURL',
+      fieldNameTranslated: 'Link',
+      id: '2',
+      new: null,
+      newTranslated: metaData.documentURL,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.ENUM,
+      fieldName: 'documentType',
+      fieldNameTranslated: 'Document type',
+      id: '3',
+      new: null,
+      newTranslated: metaData.documentType,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'documentOtherType',
+      fieldNameTranslated: 'What kind of document is this?',
+      id: '4',
+      new: null,
+      newTranslated: metaData.documentOtherType,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'documentVisibility',
+      fieldNameTranslated: 'Visibility',
+      id: '5',
+      new: null,
+      newTranslated: metaData.documentVisibility,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
+      questionType: null,
+      referenceLabel: null
+    },
+    {
+      __typename: 'TranslatedAuditField',
+      changeType: AuditFieldChangeType.REMOVED,
+      dataType: TranslationDataType.NUMBER,
+      fieldName: 'documentNote',
+      fieldNameTranslated: 'Notes',
+      id: '6',
+      new: null,
+      newTranslated: metaData.documentNote,
+      notApplicableQuestions: null,
+      old: null,
+      oldTranslated: null,
+      questionType: null,
+      referenceLabel: null
+    }
+  ];
 };

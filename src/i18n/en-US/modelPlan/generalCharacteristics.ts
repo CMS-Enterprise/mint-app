@@ -136,7 +136,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    isOtherType: true
+    isOtherType: true,
+    otherParentField: 'resemblesExistingModelWhich'
   },
   resemblesExistingModelNote: {
     gqlField: 'resemblesExistingModelNote',
@@ -210,7 +211,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     isOtherType: true,
-    otherParentField: 'participationInModelPreconditionWhich'
+    parentReferencesLabel:
+      'Which models require participation as a precondition for participation in this model?'
   },
   participationInModelPreconditionWhyHow: {
     gqlField: 'participationInModelPreconditionWhyHow',
