@@ -135,6 +135,11 @@ type TranslatedAudit {
     date: Time!
     action: DatabaseOperation!
 
+    """
+	Is Confidential denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user
+    """
+    isConfidential: Boolean!
+
 
     actorID: UUID!
     actorName: String!  #Changes: (Serialization) This could live in the actor account, but this is meant to facilitate search

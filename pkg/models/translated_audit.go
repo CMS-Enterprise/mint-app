@@ -48,6 +48,8 @@ type TranslatedAudit struct {
 	PrimaryKey uuid.UUID         `json:"primaryKey" db:"primary_key"`
 	Date       time.Time         `json:"date" db:"date"`
 	Action     DatabaseOperation `json:"action" db:"action"`
+	// Is Confidential denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user
+	IsConfidential bool `json:"isConfidential" db:"is_confidential"`
 
 	ActorID   uuid.UUID `json:"actorID" db:"actor_id"`
 	ActorName string    `json:"actorName" db:"actor_name"` //Changes (Structure) Maybe normalize this?

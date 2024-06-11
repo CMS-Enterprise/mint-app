@@ -50,6 +50,7 @@ func TranslatedAuditCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelP
 
 	arg := map[string]interface{}{"model_plan_id": modelPlanID}
 
+	// Changes: (Data) verify that the user is a collaborator or assessment or not. Conditionally return confidential information if so.
 	translatedAuditCollection, procErr := sqlutils.SelectProcedure[models.TranslatedAudit](np, sqlqueries.TranslatedAudit.CollectionGetByModelPlanID, arg)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue getting translated audit collection by model_plan_id (%s)  : %w", modelPlanID, procErr)

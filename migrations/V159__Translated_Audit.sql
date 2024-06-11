@@ -23,6 +23,7 @@ CREATE TABLE translated_audit (
     -- Changes: (Translations) potentially translate the table name as well? Like we are doing for fields
     primary_key UUID NOT NULL,
     action DATABASE_OPERATION NOT NULL, 
+    is_confidential BOOLEAN NOT NULL,
 
     meta_data_type TRANSLATED_AUDIT_META_DATA_TYPE,
     meta_data JSONB, 
