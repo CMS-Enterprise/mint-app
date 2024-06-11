@@ -14,6 +14,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Is this a new track of an existing model or a new model?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 1.01,
     options: {
       true: 'New model',
       false: 'New track of an existing model'
@@ -30,6 +31,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'What existing model is this a track of?',
     dataType: TranslationDataType.NUMBER,
     formType: TranslationFormType.TEXT,
+    order: 1.02,
     tableReference: 'existing_model',
     hideFromReadonly: true
   },
@@ -40,6 +42,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'What model is this a track of?',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
+    order: 1.03,
     tableReference: 'model_plan',
     hideFromReadonly: true
   },
@@ -51,6 +54,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     sublabel: 'Start typing the name of the model',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.SELECT,
+    order: 1.04,
     parentRelation: () => generalCharacteristics.isNewModel,
     filterGroups: [ModelViewFilter.IPC]
   },
@@ -61,6 +65,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Does your proposed track/model resemble any existing models?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.RADIO,
+    order: 1.05,
     options: {
       YES: 'Yes',
       NO: 'No',
@@ -85,7 +90,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'resembles_existing_model_why_how',
     label: 'Explain why and how the model made this decision.',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.06
   },
   resemblesExistingModelWhich: {
     gqlField: 'resemblesExistingModelWhich',
@@ -97,6 +103,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     multiSelectLabel: 'Selected models',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.MULTISELECT,
+    order: 1.07,
     isArray: true,
     isModelLinks: true, // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names,
     parentRelation: () => generalCharacteristics.resemblesExistingModel,
@@ -115,6 +122,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'In what way does the new model resemble the selected model(s)?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.08,
     parentRelation: () => generalCharacteristics.resemblesExistingModel,
     filterGroups: [ModelViewFilter.IPC]
   },
@@ -126,6 +134,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 1.09,
     isOtherType: true,
     otherParentField: 'resemblesExistingModel'
   },
@@ -136,6 +145,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 1.1,
     isOtherType: true,
     otherParentField: 'resemblesExistingModelWhich'
   },
@@ -147,7 +157,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isNote: true,
     otherParentField: 'resemblesExistingModel',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.11
   },
   participationInModelPrecondition: {
     gqlField: 'participationInModelPrecondition',
@@ -157,6 +168,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Is participation in another model a precondition for participation in this model?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.RADIO,
+    order: 1.12,
     options: {
       YES: 'Yes',
       NO: 'No',
@@ -180,6 +192,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 1.13,
     isOtherType: true,
     otherParentField: 'participationInModelPrecondition'
   },
@@ -192,6 +205,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     multiSelectLabel: 'Selected models',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.MULTISELECT,
+    order: 1.14,
     isArray: true,
     isModelLinks: true, // Used to designate if a field is a ExistingModelLinks type with nested fields - ex: names
     parentRelation: () =>
@@ -210,6 +224,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 1.15,
     isOtherType: true,
     parentReferencesLabel:
       'Which models require participation as a precondition for participation in this model?'
@@ -221,6 +236,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Explain any details including if it is just part of the model.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.16,
     parentRelation: () =>
       generalCharacteristics.participationInModelPrecondition
   },
@@ -232,7 +248,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isNote: true,
     otherParentField: 'participationInModelPrecondition',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.17
   },
   hasComponentsOrTracks: {
     gqlField: 'hasComponentsOrTracks',
@@ -243,6 +260,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Are there different components/tracks? If so, how do the tracks differ?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 1.18,
     options: {
       true: 'Yes',
       false: 'No'
@@ -259,6 +277,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'How do the tracks differ?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.19,
     isOtherType: true,
     otherParentField: 'hasComponentsOrTracks',
     filterGroups: [ModelViewFilter.IPC]
@@ -271,7 +290,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isNote: true,
     otherParentField: 'hasComponentsOrTracks',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.2
   },
   agencyOrStateHelp: {
     gqlField: 'agencyOrStateHelp',
@@ -284,6 +304,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     exportLabel: 'Will another Agency or State help design/operate the model?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 2.01,
     isPageStart: true,
     options: {
       YES_STATE: 'Yes, we will partner with states',
@@ -305,6 +326,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.02,
     isOtherType: true,
     otherParentField: 'agencyOrStateHelp'
   },
@@ -316,7 +338,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isNote: true,
     otherParentField: 'agencyOrStateHelp',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.03
   },
   alternativePaymentModelTypes: {
     gqlField: 'alternativePaymentModelTypes',
@@ -328,6 +351,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 2.04,
     options: {
       ADVANCED: 'Advanced APM',
       MIPS: 'MIPS APM',
@@ -345,6 +369,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     otherParentField: 'alternativePaymentModelTypes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.05,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
   },
   keyCharacteristics: {
@@ -356,6 +381,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     exportLabel: 'What are the model key characteristics?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
+    order: 2.06,
     multiSelectLabel: 'Selected key characteristics',
     options: {
       EPISODE_BASED: 'Episode-Based Model',
@@ -398,6 +424,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please describe the other key characteristics',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 2.07,
     isOtherType: true
   },
   keyCharacteristicsNote: {
@@ -409,6 +436,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     otherParentField: 'keyCharacteristics',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.08,
     filterGroups: [
       ModelViewFilter.CMMI,
       ModelViewFilter.IDDOC,
@@ -422,6 +450,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Will you review and collect plan bids?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 2.09,
     options: {
       true: 'Yes',
       false: 'No'
@@ -436,7 +465,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isNote: true,
     otherParentField: 'collectPlanBids',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.1
   },
   managePartCDEnrollment: {
     gqlField: 'managePartCDEnrollment',
@@ -445,6 +475,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Will you manage Part C/D enrollment?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 2.11,
     options: {
       true: 'Yes',
       false: 'No'
@@ -459,7 +490,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isNote: true,
     otherParentField: 'managePartCDEnrollment',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.12
   },
   planContractUpdated: {
     gqlField: 'planContractUpdated',
@@ -468,6 +500,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Have you updated the plan’s contract?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 2.13,
     options: {
       true: 'Yes',
       false: 'No'
@@ -482,7 +515,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isNote: true,
     otherParentField: 'planContractUpdated',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.14
   },
   careCoordinationInvolved: {
     gqlField: 'careCoordinationInvolved',
@@ -492,6 +526,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     readonlyLabel: 'Is care coordination involved? How so?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 3.01,
     isPageStart: true,
     options: {
       true: 'Yes',
@@ -508,6 +543,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'How so?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.02,
     isOtherType: true,
     otherParentField: 'careCoordinationInvolved'
   },
@@ -519,7 +555,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isNote: true,
     otherParentField: 'careCoordinationInvolved',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.03
   },
   additionalServicesInvolved: {
     gqlField: 'additionalServicesInvolved',
@@ -529,6 +566,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     readonlyLabel: 'Are additional services involved? How so?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 3.04,
     options: {
       true: 'Yes',
       false: 'No'
@@ -544,6 +582,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'How so?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.05,
     isOtherType: true,
     otherParentField: 'additionalServicesInvolved'
   },
@@ -555,7 +594,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isNote: true,
     otherParentField: 'additionalServicesInvolved',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.06
   },
   communityPartnersInvolved: {
     gqlField: 'communityPartnersInvolved',
@@ -565,6 +605,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     readonlyLabel: 'Are community partners involved? How so?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 3.07,
     options: {
       true: 'Yes',
       false: 'No'
@@ -580,6 +621,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'How so?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.08,
     isOtherType: true,
     otherParentField: 'communityPartnersInvolved'
   },
@@ -591,7 +633,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isNote: true,
     otherParentField: 'communityPartnersInvolved',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.09
   },
   geographiesTargeted: {
     gqlField: 'geographiesTargeted',
@@ -600,6 +643,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Is the model targeted at specific geographies?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 4.01,
     isPageStart: true,
     options: {
       true: 'Yes',
@@ -620,6 +664,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Geography type is',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 4.02,
     options: {
       STATE: 'States and territories',
       REGION: 'Region',
@@ -643,6 +688,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     multiSelectLabel: 'States and territories',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
+    order: 4.03,
     isOtherType: true,
     otherParentField: 'geographiesTargetedTypes',
     options: {
@@ -773,6 +819,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Geography region types',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 4.04,
     isOtherType: true,
     otherParentField: 'geographiesTargetedTypes',
     options: {
@@ -790,6 +837,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify what the other geography type is.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 4.05,
     isOtherType: true,
     otherParentField: 'geographiesTargetedTypes',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -801,6 +849,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Geographies are applied to',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 4.06,
     options: {
       BENEFICIARIES: 'Beneficiaries',
       PARTICIPANTS: 'Participants',
@@ -820,6 +869,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Please specify what the geographies are applied to.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 4.07,
     isOtherType: true,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
@@ -832,6 +882,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     otherParentField: 'geographiesTargeted',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 4.08,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   participationOptions: {
@@ -841,6 +892,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Does the model offer different options for participation?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 4.09,
     options: {
       true: 'Yes',
       false: 'No'
@@ -856,6 +908,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     otherParentField: 'participationOptions',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 4.1,
     filterGroups: [ModelViewFilter.CMMI]
   },
   agreementTypes: {
@@ -867,6 +920,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Note: CMMI writes, Office of General Council (OGC) approves both types of agreements',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
+    order: 4.11,
     options: {
       COOPERATIVE: 'Co-Operative Agreement/Grant',
       PARTICIPATION: 'Participation Agreement',
@@ -890,6 +944,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 4.12,
     isOtherType: true,
     otherParentField: 'agreementTypes',
     filterGroups: [ModelViewFilter.CMMI]
@@ -903,6 +958,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'depending on awardee selections or characteristics such as risk/type/size',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 4.13,
     options: {
       true: 'Yes',
       false: 'No'
@@ -919,6 +975,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     otherParentField: 'multiplePatricipationAgreementsNeeded',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 4.14,
     filterGroups: [ModelViewFilter.CMMI]
   },
   rulemakingRequired: {
@@ -930,6 +987,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 5.01,
     options: {
       true: 'Yes',
       false: 'No'
@@ -947,6 +1005,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'Which rule do you anticipate using and what is the target date of display for that regulation?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 5.02,
     isOtherType: true,
     otherParentField: 'rulemakingRequired',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -959,7 +1018,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isNote: true,
     otherParentField: 'rulemakingRequired',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.03
   },
   authorityAllowances: {
     gqlField: 'authorityAllowances',
@@ -968,6 +1028,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'What authority allows CMMI to test the model?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 5.04,
     options: {
       ACA: '3021 Affordable Care Act (ACA)',
       CONGRESSIONALLY_MANDATED: 'Congressionally Mandated Demonstration',
@@ -988,6 +1049,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 5.05,
     isOtherType: true,
     otherParentField: 'authorityAllowances',
     filterGroups: [ModelViewFilter.CMMI]
@@ -1001,6 +1063,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     otherParentField: 'authorityAllowances',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 5.06,
     filterGroups: [ModelViewFilter.CMMI]
   },
   waiversRequired: {
@@ -1011,6 +1074,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     readonlyLabel: 'Are waivers required? If so, which types of waivers?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 5.07,
     options: {
       true: 'Yes',
       false: 'No'
@@ -1029,6 +1093,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     exportLabel: 'Which types of waivers are required?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 5.08,
     isOtherType: true,
     options: {
       FRAUD_ABUSE: 'Fraud and Abuse',
@@ -1052,6 +1117,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     otherParentField: 'waiversRequired',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 5.09,
     filterGroups: [ModelViewFilter.CMMI]
   },
   readyForReviewBy: {
@@ -1062,6 +1128,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'This section of the Model Plan (General characteristics) is ready for review.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
+    order: 5.1,
     tableReference: 'user_account',
     hideFromReadonly: true
   },
@@ -1072,6 +1139,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Ready for review date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 5.11,
     hideFromReadonly: true
   },
   readyForClearanceBy: {
@@ -1082,6 +1150,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'This section of the Model Plan (General characteristics) is ready for clearance.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
+    order: 5.12,
     tableReference: 'user_account',
     hideFromReadonly: true
   },
@@ -1092,6 +1161,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Ready for clearance date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 5.13,
     hideFromReadonly: true
   },
   status: {
@@ -1101,6 +1171,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     label: 'Model Plan status',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 5.14,
     options: {
       READY: 'ready',
       IN_PROGRESS: 'in progress',

@@ -6,6 +6,7 @@
     "label": "Solution",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.01,
     "tableReference": "operational_solution"
   },
   "documentID": {
@@ -15,6 +16,7 @@
     "label": "Document",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.02,
     "tableReference": "plan_document"
   }
 }

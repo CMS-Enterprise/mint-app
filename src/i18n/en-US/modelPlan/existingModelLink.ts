@@ -13,6 +13,7 @@ export const existingModelLink: TranslationExistingModelLink = {
     label: 'Existing Model ID',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 1.01,
     tableReference: 'existing_model'
   },
   currentModelPlanID: {
@@ -22,6 +23,7 @@ export const existingModelLink: TranslationExistingModelLink = {
     label: 'Current Model Plan ID',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 1.02,
     tableReference: 'model_plan'
   },
   fieldName: {
@@ -31,6 +33,7 @@ export const existingModelLink: TranslationExistingModelLink = {
     label: 'What question is this link for?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 1.03,
     options: {
       GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH:
         'Which existing models does your proposed track/model most closely resemble?',

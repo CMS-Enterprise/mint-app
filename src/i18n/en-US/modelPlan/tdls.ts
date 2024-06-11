@@ -13,7 +13,8 @@ export const tdls: TranslationTDLs = {
     label: 'ID number',
     sublabel: 'Please include the prefix. Ex. TDL-123456',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.01
   },
   title: {
     gqlField: 'title',
@@ -21,7 +22,8 @@ export const tdls: TranslationTDLs = {
     dbField: 'title',
     label: 'TDL title',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.02
   },
   dateInitiated: {
     gqlField: 'dateInitiated',
@@ -30,7 +32,8 @@ export const tdls: TranslationTDLs = {
     label: 'Initiated date',
     sublabel: 'mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
-    formType: TranslationFormType.DATEPICKER
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.03
   },
   note: {
     gqlField: 'note',
@@ -40,7 +43,8 @@ export const tdls: TranslationTDLs = {
     sublabel:
       'Add any details about this TDL that would be helpful to know at a glance',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.04
   }
 };
 

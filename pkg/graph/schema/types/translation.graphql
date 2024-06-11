@@ -47,6 +47,10 @@ type TranslationField {
   formType: TranslationFormType!
   isNote: Boolean
   """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Int!
+  """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """
   isOtherType: Boolean
@@ -83,6 +87,10 @@ type TranslationFieldWithOptions {
   dataType: TranslationDataType!
   formType: TranslationFormType!
   isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Int!
   """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """
@@ -123,6 +131,10 @@ type TranslationFieldWithParent {
   formType: TranslationFormType!
   isNote: Boolean
   """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Int!
+  """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """
   isOtherType: Boolean
@@ -160,6 +172,10 @@ type TranslationFieldWithOptionsAndChildren {
   dataType: TranslationDataType!
   formType: TranslationFormType!
   isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Int!
   """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """
@@ -201,6 +217,10 @@ type TranslationFieldWithOptionsAndParent {
   formType: TranslationFormType!
   isNote: Boolean
   """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Int!
+  """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """
   isOtherType: Boolean
@@ -240,6 +260,10 @@ type TranslationFieldWithParentAndChildren {
   dataType: TranslationDataType!
   formType: TranslationFormType!
   isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Int!
   """
   Is a question a followup to another that doesn't designate it's own readonly question/line
   """

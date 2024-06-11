@@ -13,6 +13,7 @@ export const collaborators: TranslationCollaborators = {
     label: 'User ID',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
+    order: 1.01,
     tableReference: 'user_account'
   },
   username: {
@@ -21,7 +22,8 @@ export const collaborators: TranslationCollaborators = {
     dbField: 'user_account.username',
     label: 'Team member name',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.SELECT
+    formType: TranslationFormType.SELECT,
+    order: 1.02
   },
   teamRoles: {
     gqlField: 'teamRoles',
@@ -30,6 +32,7 @@ export const collaborators: TranslationCollaborators = {
     label: 'Team member role(s)',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
+    order: 1.03,
     options: {
       CM_FFS_COUNTERPART: 'CM FFS counterpart',
       COR: `Contracting Officer's Representative (COR)`,
