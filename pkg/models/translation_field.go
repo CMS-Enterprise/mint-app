@@ -54,6 +54,7 @@ type TranslationFieldBase struct {
 	DataType         TranslationDataType `json:"dataType"`
 	FormType         TranslationFormType `json:"formType"`
 	IsNote           bool                `json:"isNote"`
+	Order            float64             `json:"Order"`
 	IsOtherType      bool                `json:"isOtherType"`
 	// DB field name for the parent field, used to be able to grab the parent translation
 	OtherParentField *string `json:"otherParentField"`

@@ -6,26 +6,10 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
-
-// Order is the resolver for the order field.
-func (r *translationFieldResolver) Order(ctx context.Context, obj *models.TranslationField) (int, error) {
-	panic(fmt.Errorf("not implemented: Order - order"))
-}
-
-// Order is the resolver for the order field.
-func (r *translationFieldWithOptionsResolver) Order(ctx context.Context, obj *models.TranslationFieldWithOptions) (int, error) {
-	panic(fmt.Errorf("not implemented: Order - order"))
-}
-
-// Order is the resolver for the order field.
-func (r *translationFieldWithOptionsAndChildrenResolver) Order(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (int, error) {
-	panic(fmt.Errorf("not implemented: Order - order"))
-}
 
 // ChildRelation is the resolver for the childRelation field.
 func (r *translationFieldWithOptionsAndChildrenResolver) ChildRelation(ctx context.Context, obj *models.TranslationFieldWithOptionsAndChildren) (map[string]interface{}, error) {
@@ -35,21 +19,6 @@ func (r *translationFieldWithOptionsAndChildrenResolver) ChildRelation(ctx conte
 		resultMap[key] = value
 	}
 	return resultMap, nil
-}
-
-// Order is the resolver for the order field.
-func (r *translationFieldWithOptionsAndParentResolver) Order(ctx context.Context, obj *models.TranslationFieldWithOptionsAndParent) (int, error) {
-	panic(fmt.Errorf("not implemented: Order - order"))
-}
-
-// Order is the resolver for the order field.
-func (r *translationFieldWithParentResolver) Order(ctx context.Context, obj *models.TranslationFieldWithParent) (int, error) {
-	panic(fmt.Errorf("not implemented: Order - order"))
-}
-
-// Order is the resolver for the order field.
-func (r *translationFieldWithParentAndChildrenResolver) Order(ctx context.Context, obj *models.TranslationFieldWithParentAndChildren) (int, error) {
-	panic(fmt.Errorf("not implemented: Order - order"))
 }
 
 // ChildRelation is the resolver for the childRelation field.
@@ -62,29 +31,9 @@ func (r *translationFieldWithParentAndChildrenResolver) ChildRelation(ctx contex
 	return resultMap, nil
 }
 
-// TranslationField returns generated.TranslationFieldResolver implementation.
-func (r *Resolver) TranslationField() generated.TranslationFieldResolver {
-	return &translationFieldResolver{r}
-}
-
-// TranslationFieldWithOptions returns generated.TranslationFieldWithOptionsResolver implementation.
-func (r *Resolver) TranslationFieldWithOptions() generated.TranslationFieldWithOptionsResolver {
-	return &translationFieldWithOptionsResolver{r}
-}
-
 // TranslationFieldWithOptionsAndChildren returns generated.TranslationFieldWithOptionsAndChildrenResolver implementation.
 func (r *Resolver) TranslationFieldWithOptionsAndChildren() generated.TranslationFieldWithOptionsAndChildrenResolver {
 	return &translationFieldWithOptionsAndChildrenResolver{r}
-}
-
-// TranslationFieldWithOptionsAndParent returns generated.TranslationFieldWithOptionsAndParentResolver implementation.
-func (r *Resolver) TranslationFieldWithOptionsAndParent() generated.TranslationFieldWithOptionsAndParentResolver {
-	return &translationFieldWithOptionsAndParentResolver{r}
-}
-
-// TranslationFieldWithParent returns generated.TranslationFieldWithParentResolver implementation.
-func (r *Resolver) TranslationFieldWithParent() generated.TranslationFieldWithParentResolver {
-	return &translationFieldWithParentResolver{r}
 }
 
 // TranslationFieldWithParentAndChildren returns generated.TranslationFieldWithParentAndChildrenResolver implementation.
@@ -92,9 +41,5 @@ func (r *Resolver) TranslationFieldWithParentAndChildren() generated.Translation
 	return &translationFieldWithParentAndChildrenResolver{r}
 }
 
-type translationFieldResolver struct{ *Resolver }
-type translationFieldWithOptionsResolver struct{ *Resolver }
 type translationFieldWithOptionsAndChildrenResolver struct{ *Resolver }
-type translationFieldWithOptionsAndParentResolver struct{ *Resolver }
-type translationFieldWithParentResolver struct{ *Resolver }
 type translationFieldWithParentAndChildrenResolver struct{ *Resolver }
