@@ -37,13 +37,18 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		TaggedInDiscussionReply: DefaultUserNotificationPreferencesFlags(),
 		NewDiscussionReply:      DefaultUserNotificationPreferencesFlags(),
 		ModelPlanShared:         DefaultUserNotificationPreferencesFlags(),
-		DatesChanged:            DefaultUserNotificationPreferencesFlags(),
+		DatesChanged:            EmptyUserNotificationPreferencesFlags(),
 	}
 }
 
 // DefaultUserNotificationPreferencesFlags returns the default Preferences flag for any user, defaulting to all turned on.
 func DefaultUserNotificationPreferencesFlags() []UserNotificationPreferenceFlag {
 	return []UserNotificationPreferenceFlag{UserNotificationPreferenceInApp, UserNotificationPreferenceEmail}
+}
+
+// EmptyUserNotificationPreferencesFlags returns empty Preferences flags for any user, defaulting to all turned off.
+func EmptyUserNotificationPreferencesFlags() []UserNotificationPreferenceFlag {
+	return []UserNotificationPreferenceFlag{}
 }
 
 // UserNotificationPreferenceFlags represents an array or User Notification Preference flags

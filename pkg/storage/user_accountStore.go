@@ -2,7 +2,7 @@ package storage
 
 import (
 	_ "embed"
-
+	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -24,6 +24,9 @@ var userAccountInsertByUsername string
 
 //go:embed SQL/user_account/update_by_username.sql
 var userAccountUpdateByUsername string
+
+//go:embed SQL/user_account/get_notification_recipients_dates_changed.sql
+var userAccountGetNotificationRecipientsDatesChanged string
 
 // UserAccountGetByUsername gets a user account by a give username
 func UserAccountGetByUsername(np sqlutils.NamedPreparer, username string) (*authentication.UserAccount, error) {
@@ -143,4 +146,30 @@ func UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authent
 	}
 
 	return user, nil
+}
+
+// UserAccountsGetNotificationRecipientsForDatesChanged returns a collection of
+// user accounts that should be notified of a change in model plan dates
+func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(
+	modelPlanID uuid.UUID,
+) (
+	[]*authentication.UserAccount,
+	error,
+) {
+	var recipients []*authentication.UserAccount
+
+	stmt, err := s.db.PrepareNamed(userAccountGetNotificationRecipientsDatesChanged)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := utilitySQL.CreateModelPlanIDQueryMap(modelPlanID)
+
+	err = stmt.Select(&recipients, arg)
+	if err != nil {
+		return nil, err
+	}
+
+	return recipients, nil
 }

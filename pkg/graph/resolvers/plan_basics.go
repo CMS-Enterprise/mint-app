@@ -211,17 +211,18 @@ func sendDateChangedEmails(
 		return err
 	}
 
-	// Send the email to notification subscribers
-	userIDEmailPairs, err := getUserIDEmailSubscribersFromModelPlan(ctx, modelPlan)
+	recipientUserAccounts, err := store.UserAccountsGetNotificationRecipientsForDatesChanged(modelPlan.ID)
 	if err != nil {
+		println("Error getting user accounts for in-app notifications")
+		println(err.Error())
 		return err
 	}
 
-	for _, userData := range userIDEmailPairs {
+	for _, user := range recipientUserAccounts {
 		go func() {
 			err = emailService.Send(
 				addressBook.DefaultSender,
-				[]string{userData.email},
+				[]string{user.Email},
 				nil,
 				emailSubject,
 				"text/html",
@@ -237,8 +238,8 @@ func sendDateChangedEmails(
 	}
 
 	// Extract UserIDs from the user data
-	userIDs := lo.Map(userIDEmailPairs, func(pair userIDEmailPair, _ int) uuid.UUID {
-		return pair.userID
+	userIDs := lo.Map(recipientUserAccounts, func(user *authentication.UserAccount, _ int) uuid.UUID {
+		return user.ID
 	})
 
 	// Convert from email.DateChange to models.DateChange for GQL transport
@@ -272,32 +273,9 @@ func sendDateChangedEmails(
 	return nil
 }
 
-type userIDEmailPair struct {
-	userID uuid.UUID
-	email  string
-}
-
-func getUserIDEmailSubscribersFromModelPlan(ctx context.Context, plan *models.ModelPlan) ([]userIDEmailPair, error) {
-
-	// TODO: Modify this to utilize a proper sql query which selects the email addresses of the subscribers
-	// based on user notification preferences. This is a temporary solution to get a list of subscribers
-	// to test the email sending functionality. This technically satisfies the "My Model PLans" selection,
-	// but it is not the correct way to get the list of subscribers.
-
-	// Get the list of subscribers from the model plan
-	planCollaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, plan.ID)
-	if err != nil {
-		return nil, err
-	}
-
-	userIDEmailPairs := lo.Map(planCollaborators, func(pc *models.PlanCollaborator, _ int) userIDEmailPair {
-		return userIDEmailPair{
-			userID: pc.UserID,
-			email:  pc.UserAccount(ctx).Email,
-		}
-	})
-
-	return userIDEmailPairs, nil
+type UserAccountAndNotifPreferences struct {
+	authentication.UserAccount
+	models.UserNotificationPreferences
 }
 
 // PlanBasicsGetByModelPlanIDLOADER implements resolver logic to get plan basics by a model plan ID using a data loader
