@@ -82,6 +82,8 @@ export default gql(/* GraphQL */ `
           documentType
           documentOtherType
           documentVisibility
+          documentNote
+          documentURL
           documentID
         }
       }
