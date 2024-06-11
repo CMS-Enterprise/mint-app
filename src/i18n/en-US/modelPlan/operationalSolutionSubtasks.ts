@@ -13,7 +13,8 @@ const operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks = {
     label: 'Subtask name',
     exportLabel: 'Subtasks',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.01
   },
   status: {
     gqlField: 'status',
@@ -23,6 +24,7 @@ const operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks = {
     exportLabel: 'Status',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 1.02,
     options: {
       DONE: 'Done',
       IN_PROGRESS: 'In progress',

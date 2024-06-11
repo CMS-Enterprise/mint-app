@@ -16,6 +16,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What stakeholders do you plan to communicate with?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
+    order: 1.01,
     multiSelectLabel: 'Selected stakeholders',
     options: {
       BENEFICIARIES: 'Beneficiaries',
@@ -39,6 +40,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'Please describe the other stakeholders you plan to communicate with.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.02,
     isOtherType: true,
     filterGroups: [ModelViewFilter.CBOSC]
   },
@@ -51,6 +53,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'stakeholders',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.03,
     filterGroups: [ModelViewFilter.CBOSC]
   },
   helpdeskUse: {
@@ -60,6 +63,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Do you plan to use a helpdesk?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 1.04,
     options: {
       true: 'Yes',
       false: 'No'
@@ -75,6 +79,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'helpdeskUse',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.05,
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   contractorSupport: {
@@ -84,6 +89,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What contractors will support your model?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 1.06,
     options: {
       ONE: 'One contractor to support implementation',
       MULTIPLE:
@@ -113,6 +119,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.07,
     isOtherType: true,
     otherParentField: 'contractorSupport',
     filterGroups: [
@@ -129,6 +136,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     sublabel: '(implementation, data analysis, quality, etc.)',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.08,
     parentRelation: () => opsEvalAndLearning.contractorSupport,
     filterGroups: [
       ModelViewFilter.CBOSC,
@@ -145,6 +153,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'contractorSupport',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.09,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
@@ -160,6 +169,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 1.1,
     isPageStart: true,
     readonlyHeader: 'IDDOC operations',
     options: {

@@ -13,7 +13,8 @@ export const modelPlan: TranslationModelPlan = {
     dbField: 'model_name',
     label: 'Model name',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.01
   },
   previousName: {
     gqlField: 'previousName',
@@ -21,7 +22,8 @@ export const modelPlan: TranslationModelPlan = {
     dbField: 'previous_name',
     label: 'Previous names',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.02
   },
   nameHistory: {
     gqlField: 'nameHistory',
@@ -31,6 +33,7 @@ export const modelPlan: TranslationModelPlan = {
     dataType: TranslationDataType.STRING,
     isArray: true,
     formType: TranslationFormType.TEXT,
+    order: 1.03,
     filterGroups: [
       ModelViewFilter.OACT,
       ModelViewFilter.DFSDM,
@@ -50,7 +53,8 @@ export const modelPlan: TranslationModelPlan = {
     sublabel:
       'The abbreviation, acronym, or other common name used for the model.',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.04
   },
   archived: {
     gqlField: 'archived',
@@ -59,6 +63,7 @@ export const modelPlan: TranslationModelPlan = {
     label: 'Archived',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 1.05,
     options: {
       true: 'Yes',
       false: 'No'
@@ -71,6 +76,7 @@ export const modelPlan: TranslationModelPlan = {
     label: 'What is the status of your Model Plan?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
+    order: 1.06,
     options: {
       PLAN_DRAFT: 'Draft Model Plan',
       PLAN_COMPLETE: 'Model Plan complete',
