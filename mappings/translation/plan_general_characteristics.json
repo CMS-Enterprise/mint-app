@@ -196,7 +196,8 @@
     "label": "Please specify other",
     "dataType": "STRING",
     "formType": "TEXT",
-    "isOtherType": true
+    "isOtherType": true,
+    "otherParentField": "resembles_existing_model_which"
   },
   "resemblesExistingModelNote": {
     "gqlField": "resemblesExistingModelNote",
@@ -293,7 +294,7 @@
     "dataType": "STRING",
     "formType": "TEXT",
     "isOtherType": true,
-    "otherParentField": "participation_in_model_precondition_which"
+    "parentReferencesLabel": "Which models require participation as a precondition for participation in this model?"
   },
   "participationInModelPreconditionWhyHow": {
     "gqlField": "participationInModelPreconditionWhyHow",

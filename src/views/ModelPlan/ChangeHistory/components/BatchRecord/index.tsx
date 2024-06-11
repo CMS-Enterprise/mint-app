@@ -14,7 +14,7 @@ import CollapsableLink from 'components/shared/CollapsableLink';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
-  batchedTables,
+  condenseLinkingTableChanges,
   connectedFields,
   documentName,
   documentType,
@@ -22,7 +22,13 @@ import {
   getOperationalMetadata,
   getSolutionName,
   getSolutionOperationStatus,
-  isOperationalSolutionWithMetaData
+  isLinkingTable,
+  isOperationalSolutionWithMetaData,
+  isSolutionDocumentLinkWithMetaData,
+  linkingTableQuestions,
+  solutionDeleteFields,
+  solutionDocumentLinkFields,
+  solutionInsertFields
 } from '../../util';
 import { RenderChangeValue } from '../ChangeRecord';
 
@@ -72,44 +78,76 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
       className={classNames('margin-bottom-2 margin-top-neg-05')}
       key={change.id}
     >
-      <div className="text-bold margin-right-05">
+      <div className="margin-right-05">
+        {/* Existing model link header */}
+        {change.tableName === 'existing_model_link' &&
+          (() => {
+            return (
+              <span className="text-bold">
+                {change.metaData?.tableName}{' '}
+                <span className="text-normal">
+                  {t('auditUpdateType.UPDATE')}
+                </span>
+              </span>
+            );
+          })()}
+
         {/* Documents header */}
-        {change.tableName === 'plan_document' && (
-          <div className="text-normal">
-            <Trans
-              i18nKey="changeHistory:documentUpdate"
-              values={{
-                isLink: documentType(change),
-                action: t(`documentChangeType.${documentUpdateType(change)}`),
-                documentName: documentName(change) || 'Temp document',
-                toFrom: t(`toFrom.${databaseAction}`),
-                date: formatDateUtc(change.date, 'MMMM d, yyyy'),
-                time: formatTime(change.date)
-              }}
-              components={{
-                datetime: <span />,
-                bold: <span className="text-bold" />
-              }}
-            />
-          </div>
-        )}
+        {change.tableName === 'plan_document' &&
+          (() => {
+            // Remove the 'file_name' field from the fields to map - already in header, doesnt need to be in changes
+            fieldsToMap = fieldsToMap.filter(
+              field => field.fieldName !== 'file_name'
+            );
+
+            return (
+              <Trans
+                i18nKey="changeHistory:documentBatchUpdate"
+                values={{
+                  isLink: documentType(change) ? ' link' : '',
+                  action: t(`documentChangeType.${documentUpdateType(change)}`),
+                  documentName: documentName(change) || 'Temp document',
+                  toFrom: t(`toFrom.${databaseAction}`),
+                  date: formatDateUtc(change.date, 'MMMM d, yyyy'),
+                  time: formatTime(change.date)
+                }}
+                components={{
+                  datetime: <span />,
+                  bold: <span className="text-bold" />
+                }}
+              />
+            );
+          })()}
 
         {/* Document solution link header */}
-        {change.tableName === 'plan_document_solution_link' && (
-          <Trans
-            i18nKey="changeHistory:documentSolutionLinkUpdate"
-            values={{
-              action: t(`documentLinkType.${databaseAction}`),
-              toFrom: t(`toFrom.${databaseAction}`),
-              solutionName: getSolutionName(change),
-              date: formatDateUtc(change.date, 'MMMM d, yyyy'),
-              time: formatTime(change.date)
-            }}
-            components={{
-              normal: <span className="text-normal" />
-            }}
-          />
-        )}
+        {change.tableName === 'plan_document_solution_link' &&
+          (() => {
+            if (!connected) {
+              fieldsToMap =
+                change.metaData &&
+                isSolutionDocumentLinkWithMetaData(change.metaData)
+                  ? solutionDocumentLinkFields(change.metaData)
+                  : fieldsToMap;
+            }
+
+            return (
+              <div className="text-bold">
+                <Trans
+                  i18nKey="changeHistory:documentSolutionLinkUpdate"
+                  values={{
+                    action: t(`documentLinkType.${databaseAction}`),
+                    toFrom: t(`toFrom.${databaseAction}`),
+                    solutionName: getSolutionName(change),
+                    date: formatDateUtc(change.date, 'MMMM d, yyyy'),
+                    time: formatTime(change.date)
+                  }}
+                  components={{
+                    normal: <span className="text-normal" />
+                  }}
+                />
+              </div>
+            );
+          })()}
 
         {/* Operational solution header */}
         {change.tableName === 'operational_solution' &&
@@ -131,37 +169,35 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               field => field.fieldName !== 'needed'
             );
 
-            fieldsToMap =
+            // Added metadata fields as translated fields when the database method is DELETE
+            if (
               change.metaData &&
-              databaseAction === DatabaseOperation.DELETE &&
               isOperationalSolutionWithMetaData(change.metaData)
-                ? [
-                    {
-                      __typename: 'TranslatedAuditField',
-                      changeType: AuditFieldChangeType.REMOVED,
-                      dataType: TranslationDataType.NUMBER,
-                      fieldName: 'numberOfSubtasks',
-                      fieldNameTranslated: 'Subtasks',
-                      id: '1',
-                      new: null,
-                      newTranslated: null,
-                      notApplicableQuestions: null,
-                      old: change.metaData.numberOfSubtasks,
-                      oldTranslated: change.metaData.numberOfSubtasks,
-                      questionType: null,
-                      referenceLabel: null
-                    }
-                  ]
-                : fieldsToMap;
+            ) {
+              // If solution needed/INSERT, and the status field is unchanged/not present, add it/metadata status to the translated fields
+              if (
+                databaseAction === DatabaseOperation.INSERT &&
+                change.translatedFields.find(
+                  field => field.fieldName === 'status'
+                ) === undefined
+              ) {
+                fieldsToMap = solutionInsertFields(change.metaData);
+              }
+
+              // If solution not needed/DELETE, add all the solution metadata fields to the translated fields
+              if (databaseAction === DatabaseOperation.DELETE) {
+                fieldsToMap = solutionDeleteFields(change.metaData);
+              }
+            }
 
             return (
-              <>
+              <div className="text-bold">
                 {needName}{' '}
                 <span className="text-normal">
                   {t('solution')} {t(`auditUpdateType.${databaseAction}`)}
                 </span>{' '}
                 : {solutionName}
-              </>
+              </div>
             );
           })()}
 
@@ -180,13 +216,45 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               'needName'
             );
 
+            const subtaskName = getOperationalMetadata(
+              'subtask',
+              change?.metaData,
+              'subtaskName'
+            );
+
+            // Add the subtask name to the fields to map if it's not already there
+            if (!fieldsToMap.find(field => field.fieldName === 'name')) {
+              fieldsToMap.unshift({
+                __typename: 'TranslatedAuditField',
+                changeType: AuditFieldChangeType.UPDATED,
+                dataType: TranslationDataType.STRING,
+                fieldName: 'name',
+                fieldNameTranslated: 'Subtask',
+                id: '1',
+                new: null,
+                newTranslated: subtaskName,
+                notApplicableQuestions: null,
+                old: null,
+                oldTranslated: null,
+                questionType: null,
+                referenceLabel: null
+              });
+            }
+
             return (
-              <>
-                <span className="text-normal">
-                  {t('subtask')} {t(`auditUpdateType.${databaseAction}`)} for
-                </span>{' '}
-                {needName}: {solutionName}
-              </>
+              <Trans
+                i18nKey="changeHistory:subtaskUpdate"
+                values={{
+                  action: t(`auditUpdateType.${change.action}`),
+                  forFrom: t(`forFrom.${change.action}`),
+                  needName,
+                  solutionName
+                }}
+                components={{
+                  datetime: <span />,
+                  bold: <span className="text-bold" />
+                }}
+              />
             );
           })()}
       </div>
@@ -194,28 +262,42 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
       {/* Render the fields that were changed */}
       <div className="change-record__answer margin-y-1">
         {(() => {
+          // If the table is a linking table, show the fields in a list
+          if (isLinkingTable(change.tableName)) {
+            return (
+              <ul className="padding-left-3">
+                {fieldsToMap.map(field => (
+                  <li>
+                    {t(`linkUpdateType.${field.newTranslated}`)}:{' '}
+                    {field.fieldNameTranslated}
+                  </li>
+                ))}
+              </ul>
+            );
+          }
+
           return fieldsToMap.map(field => (
             <div key={field.id}>
               {field.newTranslated && (
                 <span>{field.fieldNameTranslated}: </span>
               )}
-              <RenderChangeValue
-                value={field.newTranslated}
-                dataType={field.dataType}
-                referenceLabel={field.referenceLabel}
-                questionType={field.questionType}
-              />
+
+              <RenderChangeValue change={field} valueType="newTranslated" />
             </div>
           ));
         })()}
 
         {/* Render previous details/values */}
         {(() => {
+          // If the table is a linking table, don't show previous details
+          if (isLinkingTable(change.tableName)) return <></>;
+
           return (
             <>
+              {/* If the database action is not DELETE and there are fields with old values, show the previous details header */}
               {databaseAction !== DatabaseOperation.DELETE &&
                 !!fieldsToMap.find(field => field.old) && (
-                  <div className="text-bold padding-y-105">
+                  <div className="text-bold padding-top-105 padding-bottom-1">
                     {t('previousDetails')}
                   </div>
                 )}
@@ -229,10 +311,8 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                       <>
                         <span>{field.fieldNameTranslated}: </span>
                         <RenderChangeValue
-                          value={field.oldTranslated}
-                          dataType={field.dataType}
-                          referenceLabel={field.referenceLabel}
-                          questionType={field.questionType}
+                          change={field}
+                          valueType="oldTranslated"
                           previous={!!field.old}
                         />
                       </>
@@ -264,6 +344,11 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
     ? 'plan_document_solution_link'
     : changeRecords[0].tableName;
 
+  // If the table is a linking table, condense the changes to show only the relevant fields
+  const batchRecords = isLinkingTable(tableName)
+    ? condenseLinkingTableChanges(changeRecords)
+    : changeRecords;
+
   return (
     <Card className="change-record">
       <div className={classNames('display-flex flex-align-center')}>
@@ -278,7 +363,9 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
             i18nKey="changeHistory:change"
             count={changeRecords.length}
             values={{
-              count: changeRecords.length,
+              count: isLinkingTable(tableName)
+                ? linkingTableQuestions(changeRecords).length
+                : changeRecords.length,
               section: t(`sections.${tableName}`),
               date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
               time: formatTime(changeRecords[0].date)
@@ -292,16 +379,22 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
 
       {!isOpen && (
         <ul className="margin-top-1 margin-bottom-1 margin-left-4">
-          {changeRecords.map(change => (
+          {batchRecords.map(change => (
             <li key={change.id}>
+              {/* Existing link audits */}
+              {tableName === 'existing_model_link' &&
+                (() => {
+                  return <span>{change.metaData?.tableName}</span>;
+                })()}
+
               {/* Document audits */}
               {change.tableName === 'plan_document' &&
                 (() => {
                   return (
                     <Trans
-                      i18nKey="changeHistory:documentUpdate"
+                      i18nKey="changeHistory:documentBatchUpdate"
                       values={{
-                        isLink: documentType(change),
+                        isLink: documentType(change) ? ' link' : '',
                         action: t(
                           `documentChangeType.${documentUpdateType(change)}`
                         ),
@@ -317,6 +410,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                     />
                   );
                 })()}
+
               {/* Document solution link audits */}
               {change.tableName === 'plan_document_solution_link' && (
                 <Trans
@@ -393,7 +487,8 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                         solutionName
                       }}
                       components={{
-                        datetime: <span />
+                        datetime: <span />,
+                        bold: <span className="text-normal" />
                       }}
                     />
                   );
@@ -413,16 +508,13 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
         styleLeftBar={false}
       >
         <div className="margin-bottom-neg-1">
-          {batchedTables.includes(changeRecords[0].tableName) &&
-            (() => {
-              return changeRecords.map(change => (
-                <BatchChanges
-                  change={change}
-                  connected={changeRecords.length > 1}
-                  key={change.id}
-                />
-              ));
-            })()}
+          {batchRecords.map(change => (
+            <BatchChanges
+              change={change}
+              connected={changeRecords.length > 1}
+              key={change.id}
+            />
+          ))}
         </div>
       </CollapsableLink>
     </Card>

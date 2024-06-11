@@ -273,7 +273,7 @@ const DocumentUpload = ({
                               htmlFor="FileUpload-OtherType"
                               className="margin-bottom-1"
                             >
-                              {documentsT('otherTypeDescription.label')}
+                              {documentsT('otherType.label')}
                               <RequiredAsterisk />
                             </Label>
 

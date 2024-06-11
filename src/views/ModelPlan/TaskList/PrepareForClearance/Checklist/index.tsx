@@ -22,8 +22,19 @@ import {
   PrepareForClearanceStatus,
   TaskStatus,
   TaskStatusInput,
+  UpdateClearanceBasicsMutationFn,
+  UpdateClearanceBeneficiariesMutationFn,
+  UpdateClearanceCharacteristicsMutationFn,
+  UpdateClearanceOpsEvalAndLearningMutationFn,
+  UpdateClearanceParticipantsAndProvidersMutationFn,
+  UpdateClearancePaymentsMutationFn,
   useGetClearanceStatusesQuery,
-  useUpdatePrepareForClearanceMutation
+  useUpdateClearanceBasicsMutation,
+  useUpdateClearanceBeneficiariesMutation,
+  useUpdateClearanceCharacteristicsMutation,
+  useUpdateClearanceOpsEvalAndLearningMutation,
+  useUpdateClearanceParticipantsAndProvidersMutation,
+  useUpdateClearancePaymentsMutation
 } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -34,6 +45,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
+import dirtyInput from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 // Initial form values and types for each task-list clearance checkbox
@@ -70,6 +82,15 @@ export const initialPrepareForClearanceValues: ClearanceStatusesModelPlanFormTyp
   beneficiaries: { ...initialClearanceFormValues },
   opsEvalAndLearning: { ...initialClearanceFormValues },
   payments: { ...initialClearanceFormValues }
+};
+
+type MutationObjectType = {
+  basics: UpdateClearanceBasicsMutationFn;
+  generalCharacteristics: UpdateClearanceCharacteristicsMutationFn;
+  participantsAndProviders: UpdateClearanceParticipantsAndProvidersMutationFn;
+  beneficiaries: UpdateClearanceBeneficiariesMutationFn;
+  opsEvalAndLearning: UpdateClearanceOpsEvalAndLearningMutationFn;
+  payments: UpdateClearancePaymentsMutationFn;
 };
 
 // Function to convert any statuses that are READY, as it's not allowed in mutation
@@ -118,45 +139,56 @@ const PrepareForClearanceCheckList = ({
 
   const modelPlan = data?.modelPlan || initialPrepareForClearanceValues;
 
-  const [updatePrepareForClearance] = useUpdatePrepareForClearanceMutation();
+  // const [updatePrepareForClearance] = useUpdatePrepareForClearanceMutation();
 
-  const handleFormSubmit = (
-    formikValues: ClearanceStatusesModelPlanFormType
-  ) => {
-    const {
-      basics,
-      generalCharacteristics,
-      participantsAndProviders,
-      beneficiaries,
-      opsEvalAndLearning,
-      payments
-    } = formikValues;
-    updatePrepareForClearance({
-      variables: {
-        basicsID: basics.id,
-        basicsChanges: { status: convertReadyStatus(basics.status) },
-        characteristicsID: generalCharacteristics.id,
-        characteristicsChanges: {
-          status: convertReadyStatus(generalCharacteristics.status)
-        },
-        participantsAndProvidersID: participantsAndProviders.id,
-        participantsAndProvidersChanges: {
-          status: convertReadyStatus(participantsAndProviders.status)
-        },
-        beneficiariesID: beneficiaries.id,
-        benficiariesChanges: {
-          status: convertReadyStatus(beneficiaries.status)
-        },
-        opsEvalAndLearningID: opsEvalAndLearning.id,
-        opsEvalAndLearningChanges: {
-          status: convertReadyStatus(opsEvalAndLearning.status)
-        },
-        paymentsID: payments.id,
-        paymentsChanges: { status: convertReadyStatus(payments.status) }
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
+  const [updateBasics] = useUpdateClearanceBasicsMutation();
+
+  const [updateCharacteristics] = useUpdateClearanceCharacteristicsMutation();
+
+  const [
+    updateParticipantsAndProviders
+  ] = useUpdateClearanceParticipantsAndProvidersMutation();
+
+  const [updateBeneficiaries] = useUpdateClearanceBeneficiariesMutation();
+
+  const [
+    updateOpsEvalAndLearning
+  ] = useUpdateClearanceOpsEvalAndLearningMutation();
+
+  const [updatePayments] = useUpdateClearancePaymentsMutation();
+
+  // Object to dynamically call each task list mutation within handleFormSubmit
+  const clearanceMutations: MutationObjectType = {
+    basics: updateBasics,
+    generalCharacteristics: updateCharacteristics,
+    participantsAndProviders: updateParticipantsAndProviders,
+    beneficiaries: updateBeneficiaries,
+    opsEvalAndLearning: updateOpsEvalAndLearning,
+    payments: updatePayments
+  };
+
+  const handleFormSubmit = async () => {
+    const changes = dirtyInput(
+      formikRef?.current?.initialValues,
+      formikRef?.current?.values
+    );
+
+    await Promise.all(
+      Object.keys(changes).map(section => {
+        return clearanceMutations[section as keyof MutationObjectType]({
+          variables: {
+            id: changes[section].id,
+            changes: {
+              status: convertReadyStatus(changes[section].status)
+            }
+          }
+        });
+      })
+    )
+      .then(responses => {
+        const errors = responses?.find(result => result?.errors);
+
+        if (!errors) {
           history.push(`/models/${modelID}/task-list`);
         }
       })
@@ -203,8 +235,8 @@ const PrepareForClearanceCheckList = ({
 
       <Formik
         initialValues={modelPlan}
-        onSubmit={values => {
-          handleFormSubmit(values);
+        onSubmit={() => {
+          handleFormSubmit();
         }}
         enableReinitialize
         innerRef={formikRef}
