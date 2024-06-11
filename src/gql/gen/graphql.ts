@@ -1155,7 +1155,7 @@ export type OperationalNeedTranslation = {
   key: TranslationFieldWithOptions;
   /** Name comes from the possible operational need table. It is not returned in an audit */
   name: TranslationField;
-  nameOther?: Maybe<TranslationField>;
+  nameOther: TranslationField;
   needed: TranslationFieldWithOptions;
   section: TranslationFieldWithOptions;
 };

@@ -67,8 +67,8 @@ type NDAInfo struct {
 // Represents operational need translation data
 type OperationalNeedTranslation struct {
 	// Name comes from the possible operational need table. It is not returned in an audit
-	Name      models.TranslationField  `json:"name" db:"need_name"`
-	NameOther *models.TranslationField `json:"nameOther,omitempty" db:"name_other"`
+	Name      models.TranslationField `json:"name" db:"need_name"`
+	NameOther models.TranslationField `json:"nameOther" db:"name_other"`
 	// Key comes from the possible operational need table. It is not returned in an audit
 	Key     models.TranslationFieldWithOptions `json:"key" db:"need_key"`
 	Needed  models.TranslationFieldWithOptions `json:"needed" db:"needed"`
