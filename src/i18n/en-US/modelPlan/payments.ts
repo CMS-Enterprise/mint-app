@@ -781,7 +781,7 @@ export const payments: TranslationPayments = {
       'Will the Shared Systems be involved for additional payment of claims?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
-    order: 5.07
+    order: 5.07,
     options: {
       true: 'Yes',
       false: 'No'
@@ -863,7 +863,7 @@ export const payments: TranslationPayments = {
     otherParentField: 'expectedCalculationComplexityLevel',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 6.02,
+    order: 6.02
   },
   claimsProcessingPrecedence: {
     gqlField: 'claimsProcessingPrecedence',
@@ -905,7 +905,7 @@ export const payments: TranslationPayments = {
     otherParentField: 'claimsProcessingPrecedence',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 6.05,
+    order: 6.05
   },
   canParticipantsSelectBetweenPaymentMechanisms: {
     gqlField: 'canParticipantsSelectBetweenPaymentMechanisms',
@@ -1129,7 +1129,7 @@ export const payments: TranslationPayments = {
     otherParentField: 'paymentReconciliationFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 7.08,
+    order: 7.08
   },
   paymentDemandRecoupmentFrequency: {
     gqlField: 'paymentDemandRecoupmentFrequency',
@@ -1178,7 +1178,7 @@ export const payments: TranslationPayments = {
     otherParentField: 'paymentDemandRecoupmentFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 7.12,
+    order: 7.12
   },
   paymentStartDate: {
     gqlField: 'paymentStartDate',
@@ -1202,7 +1202,7 @@ export const payments: TranslationPayments = {
     otherParentField: 'paymentStartDate',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 7.14,
+    order: 7.14
   },
   readyForReviewBy: {
     gqlField: 'readyForReviewBy',
