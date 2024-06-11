@@ -181,11 +181,11 @@ type PlanCRCreateInput struct {
 
 // Represents plan cr translation data
 type PlanCRTranslation struct {
-	IDNumber        models.TranslationField  `json:"idNumber" db:"id_number"`
-	Title           models.TranslationField  `json:"title" db:"title"`
-	DateInitiated   models.TranslationField  `json:"dateInitiated" db:"date_initiated"`
-	DateImplemented *models.TranslationField `json:"dateImplemented,omitempty" db:"date_implemented"`
-	Note            models.TranslationField  `json:"note" db:"note"`
+	IDNumber        models.TranslationField `json:"idNumber" db:"id_number"`
+	Title           models.TranslationField `json:"title" db:"title"`
+	DateInitiated   models.TranslationField `json:"dateInitiated" db:"date_initiated"`
+	DateImplemented models.TranslationField `json:"dateImplemented" db:"date_implemented"`
+	Note            models.TranslationField `json:"note" db:"note"`
 }
 
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan

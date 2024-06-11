@@ -1636,7 +1636,7 @@ export type PlanCrCreateInput = {
 /** Represents plan cr translation data */
 export type PlanCrTranslation = {
   __typename: 'PlanCRTranslation';
-  dateImplemented?: Maybe<TranslationField>;
+  dateImplemented: TranslationField;
   dateInitiated: TranslationField;
   idNumber: TranslationField;
   note: TranslationField;
