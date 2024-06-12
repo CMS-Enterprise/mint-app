@@ -1786,10 +1786,10 @@ export type PlanDocumentTranslation = {
   __typename: 'PlanDocumentTranslation';
   documentType: TranslationFieldWithOptions;
   fileName: TranslationField;
-  fileType?: Maybe<TranslationField>;
+  fileType: TranslationField;
   isLink: TranslationField;
-  optionalNotes?: Maybe<TranslationField>;
-  otherType?: Maybe<TranslationField>;
+  optionalNotes: TranslationField;
+  otherType: TranslationField;
   restricted: TranslationFieldWithOptions;
   url: TranslationField;
 };

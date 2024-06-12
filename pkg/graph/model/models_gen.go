@@ -251,10 +251,10 @@ type PlanDocumentTranslation struct {
 	URL           models.TranslationField            `json:"url" db:"url"`
 	FileName      models.TranslationField            `json:"fileName" db:"file_name"`
 	DocumentType  models.TranslationFieldWithOptions `json:"documentType" db:"document_type"`
-	OtherType     *models.TranslationField           `json:"otherType,omitempty" db:"other_type"`
-	FileType      *models.TranslationField           `json:"fileType,omitempty" db:"file_type"`
+	OtherType     models.TranslationField            `json:"otherType" db:"other_type"`
+	FileType      models.TranslationField            `json:"fileType" db:"file_type"`
 	Restricted    models.TranslationFieldWithOptions `json:"restricted" db:"restricted"`
-	OptionalNotes *models.TranslationField           `json:"optionalNotes,omitempty" db:"optional_notes"`
+	OptionalNotes models.TranslationField            `json:"optionalNotes" db:"optional_notes"`
 }
 
 // Represents plan general characteristics translation data
