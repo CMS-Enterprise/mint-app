@@ -17,6 +17,7 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   ActivityType,
+  DatesChangedNotificationType,
   GetNotificationSettingsQuery,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
@@ -94,6 +95,18 @@ const NotificationSettings = () => {
     const changes = {
       ...dirtyInputs
     };
+
+    // if datesChangedNotificationType is not changed by user, but datesChanged is changed, then do the following logic
+    if (!changes.datesChangedNotificationType) {
+      if (changes.datesChanged?.length) {
+        // If Dates Changed notification is subscribed, then manually set datesChangedNotificationType to ALL_MODELS
+        changes.datesChangedNotificationType =
+          DatesChangedNotificationType.ALL_MODELS;
+      } else {
+        // If Dates Changed notification is unsubscribed, set datesChangedNotificationType to null
+        changes.datesChangedNotificationType = null;
+      }
+    }
 
     if (dirtyInputs.taggedInDiscussion) {
       changes.taggedInDiscussionReply = dirtyInputs.taggedInDiscussion;
@@ -515,8 +528,8 @@ const NotificationSettings = () => {
                             as={Select}
                             id="notification-setting-whichModel"
                             name="datesChangedNotificationType"
-                            value={values.datesChangedNotificationType ?? ''}
-                            disabled={values.datesChanged.length === 0}
+                            value={values.datesChangedNotificationType}
+                            disabled={!values.datesChanged.length}
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
