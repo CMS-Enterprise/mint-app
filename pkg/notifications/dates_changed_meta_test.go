@@ -30,7 +30,7 @@ func (suite *NotificationsSuite) TestActivityDatesChangedCreate() {
 		},
 	}
 
-	testRecipients := []*models.UserAccountAndNotifPreferences{
+	testRecipients := []*models.UserAccountAndNotificationPreferences{
 		{
 			UserAccount:     *receiverPrincipal.Account(),
 			PreferenceFlags: models.DefaultUserNotificationPreferencesFlags(),
