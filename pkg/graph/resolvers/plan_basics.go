@@ -301,15 +301,7 @@ func sendDateChangedEmails(
 		return modelDateChange
 	})
 
-	_, err = notifications.ActivityDatesChangedCreate(
-		ctx,
-		store,
-		principal.Account().ID,
-		modelPlan.ID,
-		datesChangedModels,
-		inAppRecipientUserAccounts,
-		loaders.UserNotificationPreferencesGetByUserID,
-	)
+	_, err = notifications.ActivityDatesChangedCreate(ctx, store, principal.Account().ID, modelPlan.ID, datesChangedModels, inAppRecipientUserAccounts)
 	if err != nil {
 		return err
 	}
