@@ -2,7 +2,6 @@ package notifications
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -10,17 +9,9 @@ import (
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
-// DatesChangedCreate creates an activity for when dates are changed on a model plan
-func DatesChangedCreate(
-	ctx context.Context,
-	np sqlutils.NamedPreparer,
-	actorID uuid.UUID,
-	modelPlanID uuid.UUID,
-	dateChanges []models.DateChange,
-	recipients []uuid.UUID,
-	getPreferencesFunc GetUserNotificationPreferencesFunc) (*models.Activity, error) {
-
-	activity := models.NewDatesChangedActivity(actorID, modelPlanID, dateChanges)
+// ActivityDatesChangedCreate creates an activity for when a model plan has its dates changed
+func ActivityDatesChangedCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, modelPlanID uuid.UUID, datesChanged []models.DateChange, recipients []*models.UserAccountAndNotificationPreferences) (*models.Activity, error) {
+	activity := models.NewDatesChangedActivity(actorID, modelPlanID, datesChanged)
 
 	retActivity, actErr := activityCreate(ctx, np, activity)
 	if actErr != nil {
@@ -28,17 +19,11 @@ func DatesChangedCreate(
 	}
 
 	for _, recipient := range recipients {
-		pref, err := getPreferencesFunc(ctx, recipient)
-		if err != nil {
-			return nil, fmt.Errorf("unable to get user notification preference, Notification not created %w", err)
-		}
-
-		_, err = userNotificationCreate(ctx, np, retActivity, recipient, pref.AddedAsCollaborator)
+		_, err := userNotificationCreate(ctx, np, retActivity, recipient.ID, recipient.PreferenceFlags)
 		if err != nil {
 			return nil, err
 		}
 	}
 
 	return retActivity, nil
-
 }
