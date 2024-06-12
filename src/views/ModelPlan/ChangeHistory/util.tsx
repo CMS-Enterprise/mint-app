@@ -84,7 +84,7 @@ export const isTranslationTaskListTable = (
   ].includes(tableName);
 };
 
-// Type guard to check union type
+// Type guard to check generic union type
 export const isGenericWithMetaData = (
   data: TranslatedAuditMetaData
 ): data is TranslatedAuditMetaGeneric => {
@@ -92,7 +92,7 @@ export const isGenericWithMetaData = (
   return data.__typename === 'TranslatedAuditMetaGeneric';
 };
 
-// Type guard to check union type
+// Type guard to check discussion or reply union type
 export const isDiscussionReplyWithMetaData = (
   data: TranslatedAuditMetaData
 ): data is TranslatedAuditMetaDiscussionReply => {
@@ -100,7 +100,7 @@ export const isDiscussionReplyWithMetaData = (
   return data.__typename === 'TranslatedAuditMetaDiscussionReply';
 };
 
-// Type guard to check union type
+// Type guard to check solution union type
 export const isOperationalSolutionWithMetaData = (
   data: TranslatedAuditMetaData
 ): data is TranslatedAuditMetaOperationalSolution => {
@@ -108,7 +108,7 @@ export const isOperationalSolutionWithMetaData = (
   return data.__typename === 'TranslatedAuditMetaOperationalSolution';
 };
 
-// Type guard to check union type
+// Type guard to check subtask union type
 export const isSubtaskWithMetaData = (
   data: TranslatedAuditMetaData
 ): data is TranslatedAuditMetaOperationalSolutionSubtask => {
@@ -116,7 +116,7 @@ export const isSubtaskWithMetaData = (
   return data.__typename === 'TranslatedAuditMetaOperationalSolutionSubtask';
 };
 
-// Type guard to check union type
+// Type guard to check solution document link union type
 export const isSolutionDocumentLinkWithMetaData = (
   data: TranslatedAuditMetaData
 ): data is TranslatedAuditMetaDocumentSolutionLink => {

@@ -122,6 +122,7 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
 
       <UswdsReactLink
         to={`/models/${modelID}/change-history`}
+        data-testid="view-change-history"
         className="display-flex flex-align-center"
       >
         <Icon.History className="margin-right-1" />
