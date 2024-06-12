@@ -451,7 +451,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'How will you communicate with participants?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
-    order: 3.08,
+    order: 3.09,
     options: {
       IT_TOOL:
         'Manage ongoing communications with participants using an IT tool',
@@ -472,7 +472,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.09,
+    order: 3.1,
     isOtherType: true,
     otherParentField: 'communicationMethod',
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
@@ -486,7 +486,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     otherParentField: 'communicationMethod',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.1,
+    order: 3.11,
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   riskType: {
@@ -496,7 +496,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'What type of risk will the participant assume?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
-    order: 3.11,
+    order: 3.12,
     options: {
       TWO_SIDED: 'Two-sided',
       ONE_SIDED: 'One-sided',
@@ -516,7 +516,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.12,
+    order: 3.13,
     isOtherType: true,
     otherParentField: 'riskType'
   },
@@ -529,7 +529,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     otherParentField: 'riskType',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.13
+    order: 3.14
   },
   willRiskChange: {
     gqlField: 'willRiskChange',
@@ -538,7 +538,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Will the risk arrangement change as the model progresses?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
-    order: 3.14,
+    order: 3.15,
     options: {
       true: 'Yes',
       false: 'No'
@@ -553,7 +553,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     otherParentField: 'willRiskChange',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.15
+    order: 3.16
   },
   participantRequireFinancialGuarantee: {
     gqlField: 'participantRequireFinancialGuarantee',
