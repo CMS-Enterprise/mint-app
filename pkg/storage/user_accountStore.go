@@ -111,11 +111,11 @@ func (s *Store) UserAccountGetByIDLOADER(
 // preferences for a new model plan for a slice of users who have at least one
 // enabled preference
 func (s *Store) UserAccountNotificationPreferencesNewModelPlan(np sqlutils.NamedPreparer) (
-	[]*models.UserAccountNotificationPreferences,
+	[]*models.UserAccountAndNotificationPreferences,
 	error,
 ) {
 
-	var userNotificationPreferences []*models.UserAccountNotificationPreferences
+	var results []*models.UserAccountAndNotificationPreferences
 
 	stmt, err := np.PrepareNamed(userNotificationPreferencesNewModelPlan)
 	if err != nil {
@@ -123,12 +123,12 @@ func (s *Store) UserAccountNotificationPreferencesNewModelPlan(np sqlutils.Named
 	}
 	defer stmt.Close()
 
-	err = stmt.Select(&userNotificationPreferences, map[string]interface{}{})
+	err = stmt.Select(&results, map[string]interface{}{})
 	if err != nil {
 		return nil, err
 	}
 
-	return userNotificationPreferences, nil
+	return results, nil
 }
 
 // UserAccountInsertByUsername creates a new user account for a given username
@@ -183,10 +183,10 @@ func UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authent
 func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(
 	modelPlanID uuid.UUID,
 ) (
-	[]*models.UserAccountAndNotifPreferences,
+	[]*models.UserAccountAndNotificationPreferences,
 	error,
 ) {
-	var recipients []*models.UserAccountAndNotifPreferences
+	var recipients []*models.UserAccountAndNotificationPreferences
 
 	stmt, err := s.db.PrepareNamed(userAccountGetNotificationRecipientsDatesChanged)
 	if err != nil {

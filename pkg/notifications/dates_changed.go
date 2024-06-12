@@ -10,7 +10,7 @@ import (
 )
 
 // ActivityDatesChangedCreate creates an activity for when a model plan has its dates changed
-func ActivityDatesChangedCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, modelPlanID uuid.UUID, datesChanged []models.DateChange, recipients []*models.UserAccountAndNotifPreferences) (*models.Activity, error) {
+func ActivityDatesChangedCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, modelPlanID uuid.UUID, datesChanged []models.DateChange, recipients []*models.UserAccountAndNotificationPreferences) (*models.Activity, error) {
 	activity := models.NewDatesChangedActivity(actorID, modelPlanID, datesChanged)
 
 	retActivity, actErr := activityCreate(ctx, np, activity)

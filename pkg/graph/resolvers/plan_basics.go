@@ -222,7 +222,7 @@ func sendDateChangedEmails(
 	// Create a slice of user IDs whose notification preferences include EMAIL
 	emailRecipientUserAccounts := lo.Filter(
 		recipientUserAccounts,
-		func(user *models.UserAccountAndNotifPreferences, _ int) bool {
+		func(user *models.UserAccountAndNotificationPreferences, _ int) bool {
 			return user.PreferenceFlags.SendEmail()
 		},
 	)
@@ -230,7 +230,7 @@ func sendDateChangedEmails(
 	// Create a slice of user IDs whose notification preferences include IN_APP
 	inAppRecipientUserAccounts := lo.Filter(
 		recipientUserAccounts,
-		func(user *models.UserAccountAndNotifPreferences, _ int) bool {
+		func(user *models.UserAccountAndNotificationPreferences, _ int) bool {
 			return user.PreferenceFlags.InApp()
 		},
 	)
