@@ -246,27 +246,28 @@ func sendDateChangedEmails(
 		return err
 	}
 
-	// TODO: BLOCK PR: We need to inherit changes from New Model Plan PR
-	for _, user := range emailRecipientUserAccounts {
-		go func() {
-			err = emailService.Send(
-				addressBook.DefaultSender,
-				[]string{user.Email},
-				nil,
-				emailSubject,
-				"text/html",
-				emailBody,
+	recipientEmails := lo.Map(emailRecipientUserAccounts, func(user *models.UserAccountAndNotificationPreferences, _ int) string {
+		return user.Email
+	})
+
+	go func() {
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			nil,
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+			oddmail.WithBCC(recipientEmails),
+		)
+
+		if err != nil {
+			logger.Error("Failed to send email notification",
+				zap.Error(err),
+				zap.String("modelPlanID", modelPlan.ID.String()),
 			)
-			// TODO:
-			// .WithBCC(emailRecipientAccount__Emails)
-			if err != nil {
-				logger.Error("Failed to send email notification",
-					zap.Error(err),
-					zap.String("modelPlanID", modelPlan.ID.String()),
-				)
-			}
-		}()
-	}
+		}
+	}()
 
 	// Convert from email.DateChange to models.DateChange for GQL transport
 	datesChangedModels := lo.Map(dateChangeSlice, func(dc email.DateChange, _ int) models.DateChange {
@@ -281,22 +282,26 @@ func sendDateChangedEmails(
 			NewRangeEnd:   dc.NewRangeEnd,
 		}
 
+		println("Field (Pre): " + dc.Field)
+
 		switch dc.Field {
-		case "completeICIP":
+		case "Complete ICIP":
 			modelDateChange.Field = models.DateChangeFieldTypeCompleteIcip
-		case "clearance":
+		case "Clearance":
 			modelDateChange.Field = models.DateChangeFieldTypeClearance
-		case "announced":
+		case "Announce model":
 			modelDateChange.Field = models.DateChangeFieldTypeAnnounced
-		case "applications":
+		case "Application period":
 			modelDateChange.Field = models.DateChangeFieldTypeApplications
-		case "performancePeriod":
+		case "Performance period":
 			modelDateChange.Field = models.DateChangeFieldTypePerformancePeriod
-		case "wrapUpEnds":
+		case "Model wrap-up end date":
 			modelDateChange.Field = models.DateChangeFieldTypeWrapUpEnds
 		default:
 			logger.Error("Unknown field type", zap.String("field", dc.Field))
 		}
+
+		println("Field (Post): " + modelDateChange.Field)
 
 		return modelDateChange
 	})
