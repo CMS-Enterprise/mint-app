@@ -32,6 +32,25 @@ export default gql(/* GraphQL */ `
                 }
                 content
               }
+              ... on DatesChangedActivityMeta {
+                version
+                type
+                modelPlan {
+                  modelName
+                }
+                modelPlanID
+                dateChanges {
+                  isChanged
+                  field
+                  isRange
+                  oldDate
+                  newDate
+                  oldRangeStart
+                  oldRangeEnd
+                  newRangeStart
+                  newRangeEnd
+                }
+              }
               ... on TaggedInPlanDiscussionActivityMeta {
                 version
                 type
