@@ -115,7 +115,7 @@ const notifications = {
     },
     additionalConfigurations: {
       NEW_MODEL_PLAN: 'When a new Model Plan is created',
-      dateChanges: 'When model dates change',
+      datesChanged: 'When model dates change',
       whichModel: 'Which models?',
       whichModelTypes: {
         all: 'All models',
