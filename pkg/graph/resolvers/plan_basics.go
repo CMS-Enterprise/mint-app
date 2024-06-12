@@ -214,8 +214,10 @@ func sendDateChangedEmails(
 
 	recipientUserAccounts, err := store.UserAccountsGetNotificationRecipientsForDatesChanged(modelPlan.ID)
 	if err != nil {
-		println("Error getting user accounts for in-app notifications")
-		println(err.Error())
+		logger.Error("Error getting user accounts for date change notifications",
+			zap.Error(err),
+			zap.String("modelPlanID", modelPlan.ID.String()),
+		)
 		return err
 	}
 
@@ -282,8 +284,6 @@ func sendDateChangedEmails(
 			NewRangeEnd:   dc.NewRangeEnd,
 		}
 
-		println("Field (Pre): " + dc.Field)
-
 		switch dc.Field {
 		case "Complete ICIP":
 			modelDateChange.Field = models.DateChangeFieldTypeCompleteIcip
@@ -300,8 +300,6 @@ func sendDateChangedEmails(
 		default:
 			logger.Error("Unknown field type", zap.String("field", dc.Field))
 		}
-
-		println("Field (Post): " + modelDateChange.Field)
 
 		return modelDateChange
 	})
