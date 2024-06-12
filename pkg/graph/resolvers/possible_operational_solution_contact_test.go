@@ -12,8 +12,7 @@ func (suite *ResolverSuite) TestPossibleOperationalSolutionContactsGetByPossible
 	contacts, err := PossibleOperationalSolutionContactsGetByPossibleSolutionID(suite.testConfigs.Context, 1)
 	suite.NoError(err)
 	suite.NotNil(contacts)
-	suite.Len(contacts, 4) //currently there are four solutions for solution 1 ( 4innovation (4i) )
-
+	suite.Len(contacts, 5) //currently there are five solutions for solution 1 ( 4innovation (4i) )
 }
 
 func (suite *ResolverSuite) TestPossibleOperationalSolutionContactsDataLoader() {
