@@ -128,6 +128,14 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 		}
 		return &meta, nil
 
+	case models.ActivityNewModelPlan:
+		// Deserialize the raw JSON into NewModelPlanActivityMeta
+		meta := models.NewModelPlanActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			return nil, err
+		}
+		return &meta, nil
+
 	case models.ActivityDatesChanged:
 		// Deserialize the raw JSON into DatesChangedActivityMeta
 		meta := models.DatesChangedActivityMeta{}

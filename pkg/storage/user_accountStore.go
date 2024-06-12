@@ -2,9 +2,12 @@ package storage
 
 import (
 	_ "embed"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -24,6 +27,9 @@ var userAccountInsertByUsername string
 
 //go:embed SQL/user_account/update_by_username.sql
 var userAccountUpdateByUsername string
+
+//go:embed SQL/user_account/get_notification_preferences_new_model_plan.sql
+var userNotificationPreferencesNewModelPlan string
 
 //go:embed SQL/user_account/get_notification_recipients_dates_changed.sql
 var userAccountGetNotificationRecipientsDatesChanged string
@@ -101,6 +107,30 @@ func (s *Store) UserAccountGetByIDLOADER(
 	return userSlice, nil
 }
 
+// UserAccountNotificationPreferencesNewModelPlan gets the notification
+// preferences for a new model plan for a slice of users who have at least one
+// enabled preference
+func (s *Store) UserAccountNotificationPreferencesNewModelPlan(np sqlutils.NamedPreparer) (
+	[]*models.UserAccountAndNotificationPreferences,
+	error,
+) {
+
+	var results []*models.UserAccountAndNotificationPreferences
+
+	stmt, err := np.PrepareNamed(userNotificationPreferencesNewModelPlan)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	err = stmt.Select(&results, map[string]interface{}{})
+	if err != nil {
+		return nil, err
+	}
+
+	return results, nil
+}
+
 // UserAccountInsertByUsername creates a new user account for a given username
 func UserAccountInsertByUsername(np sqlutils.NamedPreparer, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
 
@@ -153,10 +183,10 @@ func UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authent
 func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(
 	modelPlanID uuid.UUID,
 ) (
-	[]*authentication.UserAccount,
+	[]*models.UserAccountAndNotificationPreferences,
 	error,
 ) {
-	var recipients []*authentication.UserAccount
+	var recipients []*models.UserAccountAndNotificationPreferences
 
 	stmt, err := s.db.PrepareNamed(userAccountGetNotificationRecipientsDatesChanged)
 	if err != nil {

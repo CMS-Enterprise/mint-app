@@ -9,6 +9,7 @@ import {
   DatesChangedActivityMeta,
   ModelPlanSharedActivityMeta,
   NewDiscussionRepliedActivityMeta,
+  NewModelPlanActivityMeta,
   TaggedInDiscussionReplyActivityMeta,
   TaggedInPlanDiscussionActivityMeta
 } from 'gql/gen/graphql';
@@ -20,6 +21,7 @@ type MetaDataType =
   | NewDiscussionRepliedActivityMeta
   | ModelPlanSharedActivityMeta
   | AddedAsCollaboratorMeta
+  | NewModelPlanActivityMeta
   | DatesChangedActivityMeta;
 
 // Type guard to check union type
@@ -72,6 +74,13 @@ export const isDatesChanged = (
   return data.__typename === 'DatesChangedActivityMeta';
 };
 
+export const isNewModelPlan = (
+  data: MetaDataType
+): data is NewModelPlanActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'NewModelPlanActivityMeta';
+};
+
 export const activityText = (data: MetaDataType) => {
   if (isAddingCollaborator(data)) {
     return (
@@ -105,7 +114,15 @@ export const activityText = (data: MetaDataType) => {
   if (isNewDiscussionReply(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.newDiscussionReply.text"
+        i18nKey="notifications:index.activityType.NEW_DISCUSSION_REPLY.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
+    );
+  }
+  if (isNewModelPlan(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.NEW_MODEL_PLAN.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
@@ -158,6 +175,7 @@ export const ActivityCTA = ({
       </>
     );
   }
+
   if (isDatesChanged(data)) {
     return isExpanded ? (
       <>
@@ -171,10 +189,20 @@ export const ActivityCTA = ({
       </>
     );
   }
+
   if (isSharedActivity(data)) {
     return (
       <>
         <Trans i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+
+  if (isNewModelPlan(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.NEW_MODEL_PLAN.cta" />
         <Icon.ArrowForward className="margin-left-1" aria-hidden />
       </>
     );

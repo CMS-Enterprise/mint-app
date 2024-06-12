@@ -126,12 +126,11 @@ const NotificationsHome = () => {
 
           <div className="margin-bottom-4">
             {allNotifications?.length !== 0 &&
-              currentNotifications?.map((notification, index) => (
+              currentNotifications?.map(notification => (
                 <IndividualNotification
                   {...notification}
                   activity={notification.activity as Activity}
                   key={notification.id}
-                  index={index}
                 />
               ))}
           </div>

@@ -62,6 +62,11 @@ func (r *newDiscussionRepliedActivityMetaResolver) Reply(ctx context.Context, ob
 }
 
 // ModelPlan is the resolver for the modelPlan field.
+func (r *newModelPlanActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.NewModelPlanActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
 func (r *taggedInDiscussionReplyActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.TaggedInDiscussionReplyActivityMeta) (*models.ModelPlan, error) {
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
@@ -117,6 +122,11 @@ func (r *Resolver) NewDiscussionRepliedActivityMeta() generated.NewDiscussionRep
 	return &newDiscussionRepliedActivityMetaResolver{r}
 }
 
+// NewModelPlanActivityMeta returns generated.NewModelPlanActivityMetaResolver implementation.
+func (r *Resolver) NewModelPlanActivityMeta() generated.NewModelPlanActivityMetaResolver {
+	return &newModelPlanActivityMetaResolver{r}
+}
+
 // TaggedInDiscussionReplyActivityMeta returns generated.TaggedInDiscussionReplyActivityMetaResolver implementation.
 func (r *Resolver) TaggedInDiscussionReplyActivityMeta() generated.TaggedInDiscussionReplyActivityMetaResolver {
 	return &taggedInDiscussionReplyActivityMetaResolver{r}
@@ -133,5 +143,6 @@ type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
 type datesChangedActivityMetaResolver struct{ *Resolver }
 type modelPlanSharedActivityMetaResolver struct{ *Resolver }
 type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }
+type newModelPlanActivityMetaResolver struct{ *Resolver }
 type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
 type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }

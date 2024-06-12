@@ -188,11 +188,12 @@ func sendDateChangedEmails(
 		dateChangeSlice = append(dateChangeSlice, dateChange)
 	}
 
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
+	defaultRecipientEmailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
 		DateChanges:   dateChangeSlice,
+		ShowFooter:    false,
 	})
 	if err != nil {
 		return err
@@ -205,7 +206,7 @@ func sendDateChangedEmails(
 		nil,
 		emailSubject,
 		"text/html",
-		emailBody,
+		defaultRecipientEmailBody,
 	)
 	if err != nil {
 		return err
@@ -213,40 +214,67 @@ func sendDateChangedEmails(
 
 	recipientUserAccounts, err := store.UserAccountsGetNotificationRecipientsForDatesChanged(modelPlan.ID)
 	if err != nil {
-		println("Error getting user accounts for in-app notifications")
-		println(err.Error())
+		logger.Error("Error getting user accounts for date change notifications",
+			zap.Error(err),
+			zap.String("modelPlanID", modelPlan.ID.String()),
+		)
 		return err
 	}
 
-	for _, user := range recipientUserAccounts {
-		go func() {
-			err = emailService.Send(
-				addressBook.DefaultSender,
-				[]string{user.Email},
-				nil,
-				emailSubject,
-				"text/html",
-				emailBody,
-			)
-			if err != nil {
-				logger.Error("Failed to send email notification",
-					zap.Error(err),
-					zap.String("modelPlanID", modelPlan.ID.String()),
-				)
-			}
-		}()
+	// Create a slice of user IDs whose notification preferences include EMAIL
+	emailRecipientUserAccounts := lo.Filter(
+		recipientUserAccounts,
+		func(user *models.UserAccountAndNotificationPreferences, _ int) bool {
+			return user.PreferenceFlags.SendEmail()
+		},
+	)
+
+	// Create a slice of user IDs whose notification preferences include IN_APP
+	inAppRecipientUserAccounts := lo.Filter(
+		recipientUserAccounts,
+		func(user *models.UserAccountAndNotificationPreferences, _ int) bool {
+			return user.PreferenceFlags.InApp()
+		},
+	)
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanDateChangedBodyContent{
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		ModelName:     modelPlan.ModelName,
+		ModelID:       modelPlan.GetModelPlanID().String(),
+		DateChanges:   dateChangeSlice,
+		ShowFooter:    true,
+	})
+	if err != nil {
+		return err
 	}
 
-	// Extract UserIDs from the user data
-	userIDs := lo.Map(recipientUserAccounts, func(user *authentication.UserAccount, _ int) uuid.UUID {
-		return user.ID
+	recipientEmails := lo.Map(emailRecipientUserAccounts, func(user *models.UserAccountAndNotificationPreferences, _ int) string {
+		return user.Email
 	})
+
+	go func() {
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			nil,
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+			oddmail.WithBCC(recipientEmails),
+		)
+
+		if err != nil {
+			logger.Error("Failed to send email notification",
+				zap.Error(err),
+				zap.String("modelPlanID", modelPlan.ID.String()),
+			)
+		}
+	}()
 
 	// Convert from email.DateChange to models.DateChange for GQL transport
 	datesChangedModels := lo.Map(dateChangeSlice, func(dc email.DateChange, _ int) models.DateChange {
-		return models.DateChange{
+		modelDateChange := models.DateChange{
 			IsChanged:     dc.IsChanged,
-			Field:         dc.Field,
 			IsRange:       dc.IsRange,
 			OldDate:       dc.OldDate,
 			NewDate:       dc.NewDate,
@@ -255,27 +283,33 @@ func sendDateChangedEmails(
 			NewRangeStart: dc.NewRangeStart,
 			NewRangeEnd:   dc.NewRangeEnd,
 		}
+
+		switch dc.Field {
+		case "Complete ICIP":
+			modelDateChange.Field = models.DateChangeFieldTypeCompleteIcip
+		case "Clearance":
+			modelDateChange.Field = models.DateChangeFieldTypeClearance
+		case "Announce model":
+			modelDateChange.Field = models.DateChangeFieldTypeAnnounced
+		case "Application period":
+			modelDateChange.Field = models.DateChangeFieldTypeApplications
+		case "Performance period":
+			modelDateChange.Field = models.DateChangeFieldTypePerformancePeriod
+		case "Model wrap-up end date":
+			modelDateChange.Field = models.DateChangeFieldTypeWrapUpEnds
+		default:
+			logger.Error("Unknown field type", zap.String("field", dc.Field))
+		}
+
+		return modelDateChange
 	})
 
-	_, err = notifications.ActivityDatesChangedCreate(
-		ctx,
-		store,
-		principal.Account().ID,
-		modelPlan.ID,
-		datesChangedModels,
-		userIDs,
-		loaders.UserNotificationPreferencesGetByUserID,
-	)
+	_, err = notifications.ActivityDatesChangedCreate(ctx, store, principal.Account().ID, modelPlan.ID, datesChangedModels, inAppRecipientUserAccounts)
 	if err != nil {
 		return err
 	}
 
 	return nil
-}
-
-type UserAccountAndNotifPreferences struct {
-	authentication.UserAccount
-	models.UserNotificationPreferences
 }
 
 // PlanBasicsGetByModelPlanIDLOADER implements resolver logic to get plan basics by a model plan ID using a data loader

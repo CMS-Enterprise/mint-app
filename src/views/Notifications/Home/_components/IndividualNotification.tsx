@@ -15,6 +15,7 @@ import {
   isDailyDigest,
   isDatesChanged,
   isNewDiscussionReply,
+  isNewModelPlan,
   isSharedActivity,
   isTaggedInDiscussion,
   isTaggedInDiscussionReply
@@ -25,7 +26,6 @@ import DatesChanged from './DatesChanged';
 type NotificationActivityType = Activity;
 
 export type IndividualNotificationProps = {
-  index?: number;
   id: string;
   isRead: boolean;
   createdDts: string;
@@ -33,7 +33,6 @@ export type IndividualNotificationProps = {
 };
 
 const IndividualNotification = ({
-  index = 0,
   id,
   isRead,
   createdDts,
@@ -92,7 +91,7 @@ const IndividualNotification = ({
         history.push(`/models/${metaData.modelPlanID}/task-list`);
       });
     }
-    if (isSharedActivity(metaData)) {
+    if (isSharedActivity(metaData) || isNewModelPlan(metaData)) {
       handleMarkAsRead(() => {
         history.push(`/models/${metaData.modelPlanID}/read-only`);
       });
@@ -130,6 +129,7 @@ const IndividualNotification = ({
                   {activityText(metaData)}
                 </p>
                 {!isDailyDigest(metaData) &&
+                  !isNewModelPlan(metaData) &&
                   !isSharedActivity(metaData) &&
                   !isDatesChanged(metaData) &&
                   !isAddingCollaborator(metaData) && (

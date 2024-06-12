@@ -42,6 +42,10 @@ const notifications = {
       TAGGED_IN_DISCUSSION_REPLY: {
         text: ' tagged you in a discussion reply for {{-modelName}}.',
         cta: 'View discussion'
+      },
+      NEW_MODEL_PLAN: {
+        text: ' created a Model Plan: {{-modelName}}.',
+        cta: 'View Model Plan'
       }
     },
     dailyDigest: {
@@ -87,23 +91,54 @@ const notifications = {
   settings: {
     heading: 'Notification settings',
     subHeading:
-      'You will be notified in-app for the following events and can choose to opt-out of receiving emails below.',
+      'Choose whether you would like to receive notifications via email, in the MINT application, or both.',
     notification: 'Notification',
     email: 'Email',
     inApp: 'In-app',
+    sections: {
+      basicNotifications: {
+        heading: 'Basic notifications',
+        subHeading:
+          'You will always receive basic notifications in-app, but may opt out of receiving them via email.'
+      },
+      additionalNotifications: {
+        heading: 'Additional notifications'
+      }
+    },
     configurations: {
       dailyDigestComplete:
-        'Daily digest of the models I’m following when something changes',
+        'Daily digest of changes to the models I’m following',
       addedAsCollaborator: 'When I’m added as a collaborator to a Model Plan',
       taggedInDiscussion: 'When I’m tagged in a discussion',
       newDiscussionReply: 'When someone replies to a discussion I started',
       modelPlanShared: 'When someone shares a Model Plan with me'
     },
+    additionalConfigurations: {
+      NEW_MODEL_PLAN: 'When a new Model Plan is created',
+      dateChanges: 'When model dates change',
+      whichModel: 'Which models?',
+      whichModelTypes: {
+        all: 'All models',
+        following: 'Models I’m following',
+        mine: 'My Model Plans'
+      }
+    },
     save: 'Save',
     dontUpdate: 'Don’t update and return to previous page',
-    success: 'Success! Your notification settings have been updated.',
-    error:
-      'An error occurred while saving your notification settings. Please try again.'
+    successMessage: 'Success! Your notification settings have been updated.',
+    errorMessage:
+      'An error occurred while saving your notification settings. Please try again.',
+    unsubscribedMessage: {
+      success:
+        'You have successfully unsubscribed from email notifications <bold>{{-notificationType}}.</bold>',
+      error:
+        'There was an error unsubscribing. Please try again. If the error persists, try again at a later date.',
+      alreadyUnsubscribed:
+        'You are already unsubscribed from email notifications <bold>{{-notificationType}}.</bold>',
+      activityType: {
+        NEW_MODEL_PLAN: 'when a new Model Plan is created'
+      }
+    }
   }
 };
 

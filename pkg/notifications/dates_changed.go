@@ -10,15 +10,7 @@ import (
 )
 
 // ActivityDatesChangedCreate creates an activity for when a model plan has its dates changed
-func ActivityDatesChangedCreate(
-	ctx context.Context,
-	np sqlutils.NamedPreparer,
-	actorID uuid.UUID,
-	modelPlanID uuid.UUID,
-	datesChanged []models.DateChange,
-	receiverIDs []uuid.UUID,
-	getPreferencesFunc GetUserNotificationPreferencesFunc,
-) (*models.Activity, error) {
+func ActivityDatesChangedCreate(ctx context.Context, np sqlutils.NamedPreparer, actorID uuid.UUID, modelPlanID uuid.UUID, datesChanged []models.DateChange, recipients []*models.UserAccountAndNotificationPreferences) (*models.Activity, error) {
 	activity := models.NewDatesChangedActivity(actorID, modelPlanID, datesChanged)
 
 	retActivity, actErr := activityCreate(ctx, np, activity)
@@ -26,13 +18,8 @@ func ActivityDatesChangedCreate(
 		return nil, actErr
 	}
 
-	for _, receiverID := range receiverIDs {
-		preferences, err := getPreferencesFunc(ctx, receiverID)
-		if err != nil {
-			return nil, err
-		}
-
-		_, err = userNotificationCreate(ctx, np, retActivity, receiverID, preferences.DatesChanged)
+	for _, recipient := range recipients {
+		_, err := userNotificationCreate(ctx, np, retActivity, recipient.ID, recipient.PreferenceFlags)
 		if err != nil {
 			return nil, err
 		}
