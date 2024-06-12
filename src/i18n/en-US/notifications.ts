@@ -118,9 +118,9 @@ const notifications = {
       datesChanged: 'When model dates change',
       whichModel: 'Which models?',
       whichModelTypes: {
-        all: 'All models',
-        following: 'Models I’m following',
-        mine: 'My Model Plans'
+        ALL_MODELS: 'All models',
+        FOLLOWED_MODELS: 'Models I’m following',
+        MY_MODELS: 'My Model Plans'
       }
     },
     save: 'Save',

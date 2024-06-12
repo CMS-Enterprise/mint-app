@@ -49,6 +49,12 @@ const NotificationSettings = () => {
   > = notificationsT('settings.configurations', {
     returnObjects: true
   });
+  const whichModelType: Record<string, string> = notificationsT(
+    'settings.additionalConfigurations.whichModelTypes',
+    {
+      returnObjects: true
+    }
+  );
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
 
@@ -509,29 +515,25 @@ const NotificationSettings = () => {
                             as={Select}
                             id="notification-setting-whichModel"
                             name="datesChangedNotificationType"
-                            value={values.datesChangedNotificationType}
+                            value={values.datesChangedNotificationType ?? ''}
+                            disabled={values.datesChanged.length === 0}
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
                               setFieldValue(
-                                'dataSharingStarts',
+                                'datesChangedNotificationType',
                                 e.target.value
                               );
                             }}
                           >
-                            <option key="default-select" disabled value="">
-                              {`-${miscellaneousT('select')}-`}
-                            </option>
-
-                            {/* {getKeys(dataSharingStartsConfig.options).map(
-                              type => {
-                                return (
-                                  <option key={type} value={type}>
-                                    {dataSharingStartsConfig.options[type]}
-                                  </option>
-                                );
-                              }
-                            )} */}
+                            {/* TODO: if datesChanged.length is 0, then default to empty */}
+                            {getKeys(whichModelType).map(type => {
+                              return (
+                                <option key={type} value={type}>
+                                  {whichModelType[type]}
+                                </option>
+                              );
+                            })}
                           </Field>
                         </Grid>
                       </Grid>
