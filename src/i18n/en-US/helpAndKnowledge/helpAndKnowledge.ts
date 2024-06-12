@@ -129,7 +129,7 @@ const solutions: SolutionTType = {
         {
           header: 'Inquire about using 4i/ACO-OS',
           description:
-            'Send an email to <1>{{email}}</1> if interested in using 4i and ACO-OS for your model. Please also include Ashley Corbin and Nora Fleming on the email.'
+            'Send an email to <1>{{email}}</1> if interested in using 4i and ACO-OS for your model. Please also include Ashley Corbin on the email.'
         },
         {
           header: 'Meet with 4i/ACO-OS technical lead',
