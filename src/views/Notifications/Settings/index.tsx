@@ -514,10 +514,13 @@ const NotificationSettings = () => {
                           />
                         </Grid>
 
-                        <Grid mobile={{ col: 6 }}>
+                        <Grid
+                          className="tablet:padding-left-3"
+                          tablet={{ col: 6 }}
+                        >
                           <Label
                             htmlFor="notification-setting-whichModel"
-                            className="text-normal margin-top-2"
+                            className="text-normal margin-top-0"
                           >
                             {notificationsT(
                               'settings.additionalConfigurations.whichModel'
