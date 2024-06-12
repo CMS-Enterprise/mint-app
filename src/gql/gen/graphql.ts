@@ -3621,7 +3621,7 @@ export type UpdateNdaMutation = { __typename: 'Mutation', agreeToNDA: { __typena
 export type GetNotificationSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag>, newModelPlan: Array<UserNotificationPreferenceFlag>, datesChanged: Array<UserNotificationPreferenceFlag>, datesChangedNotificationType: DatesChangedNotificationType } } };
+export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag>, newModelPlan: Array<UserNotificationPreferenceFlag>, datesChanged: Array<UserNotificationPreferenceFlag>, datesChangedNotificationType?: DatesChangedNotificationType | null } } };
 
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3643,7 +3643,7 @@ export type UpdateNotificationSettingsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateNotificationSettingsMutation = { __typename: 'Mutation', updateUserNotificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag>, newModelPlan: Array<UserNotificationPreferenceFlag>, datesChanged: Array<UserNotificationPreferenceFlag>, datesChangedNotificationType: DatesChangedNotificationType } };
+export type UpdateNotificationSettingsMutation = { __typename: 'Mutation', updateUserNotificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag>, newModelPlan: Array<UserNotificationPreferenceFlag>, datesChanged: Array<UserNotificationPreferenceFlag>, datesChangedNotificationType?: DatesChangedNotificationType | null } };
 
 export type MarkNotificationAsReadMutationVariables = Exact<{
   notificationID: Scalars['UUID']['input'];
