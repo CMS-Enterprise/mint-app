@@ -2972,7 +2972,7 @@ export type UserNotificationPreferences = {
   createdDts: Scalars['Time']['output'];
   dailyDigestComplete: Array<UserNotificationPreferenceFlag>;
   datesChanged: Array<UserNotificationPreferenceFlag>;
-  datesChangedNotificationType: DatesChangedNotificationType;
+  datesChangedNotificationType?: Maybe<DatesChangedNotificationType>;
   id: Scalars['UUID']['output'];
   modelPlanShared: Array<UserNotificationPreferenceFlag>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;

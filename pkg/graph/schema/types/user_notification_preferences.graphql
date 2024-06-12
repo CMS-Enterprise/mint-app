@@ -32,7 +32,7 @@ type UserNotificationPreferences {
   newModelPlan: [UserNotificationPreferenceFlag!]!
 
   datesChanged: [UserNotificationPreferenceFlag!]!
-  datesChangedNotificationType: DatesChangedNotificationType!
+  datesChangedNotificationType: DatesChangedNotificationType
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
