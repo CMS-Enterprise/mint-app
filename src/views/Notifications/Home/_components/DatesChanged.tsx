@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid } from '@trussworks/react-uswds';
-import { DateChange } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
@@ -11,7 +10,17 @@ type DatesChangedProps = {
     modelName: string;
   };
   modelPlanID: string;
-  dateChanges: DateChange[];
+  dateChanges: {
+    field: string;
+    isChanged: boolean;
+    isRange: boolean;
+    newDate?: string | null;
+    newRangeStart?: string | null;
+    newRangeEnd?: string | null;
+    oldDate?: string | null;
+    oldRangeStart?: string | null;
+    oldRangeEnd?: string | null;
+  }[];
 };
 
 const DatesChanged = ({
@@ -52,9 +61,21 @@ const DatesChanged = ({
           oldRangeStart,
           oldRangeEnd
         }) => {
+          const dateOrNoDate = (date: string | undefined | null) => {
+            return (
+              date ?? (
+                <span className="text-italic">
+                  {notificationsT(`index.datesChanged.noDateEntered`)}
+                </span>
+              )
+            );
+          };
+
           return (
             <div>
-              <p className="text-bold margin-y-0 line-height-sans-4">{field}</p>
+              <p className="text-bold margin-y-0 line-height-sans-4">
+                {notificationsT(`index.datesChanged.field.${field}`)}
+              </p>
               <div className="margin-bottom-3">
                 {isRange ? (
                   // isRange code here
@@ -64,11 +85,13 @@ const DatesChanged = ({
                         isChanged ? 'text-error text-strike text-italic' : ''
                       }`}
                     >
-                      {oldRangeStart} - {oldRangeEnd}
+                      {dateOrNoDate(oldRangeStart)} -{' '}
+                      {dateOrNoDate(oldRangeEnd)}
                     </p>
                     {isChanged && (
                       <p className="line-height-sans-4 margin-y-0">
-                        {newRangeStart} - {newRangeEnd}
+                        {dateOrNoDate(newRangeStart)}-{' '}
+                        {dateOrNoDate(newRangeEnd)}
                       </p>
                     )}
                   </>
@@ -79,11 +102,11 @@ const DatesChanged = ({
                         isChanged ? 'text-error text-strike text-italic' : ''
                       }`}
                     >
-                      {oldDate}
+                      {dateOrNoDate(oldDate)}
                     </span>
                     <span className="line-height-sans-4 margin-y-0">
                       {' '}
-                      {isChanged && newDate}
+                      {isChanged && dateOrNoDate(newDate)}
                     </span>
                   </>
                 )}

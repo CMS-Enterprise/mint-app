@@ -85,7 +85,16 @@ const notifications = {
     datesChanged: {
       heading: 'Dates have been updated for {{-modelName}}',
       subheading: 'One or more dates have been updated for this model.',
-      cta: 'View this Model Plan'
+      cta: 'View this Model Plan',
+      noDateEntered: 'no date entered',
+      field: {
+        ANNOUNCED: 'Announce model',
+        APPLICATIONS: 'Application period',
+        CLEARANCE: 'Clearance',
+        COMPLETE_ICIP: 'Complete ICIP',
+        PERFORMANCE_PERIOD: 'Performance period',
+        WRAP_UP_ENDS: 'Model wrap-up end date'
+      }
     }
   },
   settings: {
