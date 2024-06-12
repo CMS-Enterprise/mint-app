@@ -67,7 +67,7 @@ const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
               ACO-OIT@cms.hhs.gov
             </ExternalLink>{' '}
             if interested in using 4i and ACO-OS for your model. Please also
-            include Ashley Corbin and Nora Fleming on the email.
+            include Ashley Corbin on the email.
           </Trans>
         </ProcessListItem>
         {/* Typescript not satified with mapping through ProcessListItems */}
