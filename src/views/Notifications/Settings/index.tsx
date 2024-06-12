@@ -10,7 +10,9 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  Icon
+  Icon,
+  Label,
+  Select
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
@@ -248,7 +250,7 @@ const NotificationSettings = () => {
     modelPlanShared: modelPlanShared ?? [],
     newModelPlan: newModelPlan ?? [],
     datesChanged: datesChanged ?? [],
-    datesChangedNotificationType: datesChangedNotificationType ?? ''
+    datesChangedNotificationType: datesChangedNotificationType ?? null
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
@@ -294,7 +296,36 @@ const NotificationSettings = () => {
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<NotificationSettingsFormType>) => {
-              const { values, handleSubmit, dirty } = formikProps;
+              const {
+                dirty,
+                handleSubmit,
+                setFieldValue,
+                values
+              } = formikProps;
+
+              type Obj = { [key: string]: any };
+
+              /**
+               * Returns an object containing the keys and values from `obj1` that also exist in `obj2`.
+               *
+               * @param obj1 - The first object to compare.
+               * @param obj2 - The second object to compare.
+               * @returns An object containing the matching keys and values from `obj1`.
+               */
+              const getMatchingKeys = (obj1: Obj, obj2: Obj): Obj =>
+                Object.keys(obj1)
+                  .filter(key =>
+                    Object.prototype.hasOwnProperty.call(obj2, key)
+                  )
+                  .reduce((acc, key) => {
+                    acc[key] = obj1[key];
+                    return acc;
+                  }, {} as Obj);
+
+              const basicNotificationKeys = getMatchingKeys(
+                values,
+                notificationSettings
+              );
 
               return (
                 <>
@@ -354,7 +385,9 @@ const NotificationSettings = () => {
                                 className="padding-left-2"
                                 name={setting}
                                 value={UserNotificationPreferenceFlag.EMAIL}
-                                checked={values?.[setting].includes(
+                                checked={basicNotificationKeys[
+                                  setting
+                                ].includes(
                                   UserNotificationPreferenceFlag.EMAIL
                                 )}
                               />
@@ -369,7 +402,9 @@ const NotificationSettings = () => {
                                 name={setting}
                                 value={UserNotificationPreferenceFlag.IN_APP}
                                 disabled
-                                checked={values?.[setting].includes(
+                                checked={basicNotificationKeys[
+                                  setting
+                                ].includes(
                                   UserNotificationPreferenceFlag.IN_APP
                                 )}
                               />
@@ -395,6 +430,7 @@ const NotificationSettings = () => {
                             )}
                           </p>
                         </Grid>
+
                         <Grid mobile={{ col: 3 }}>
                           <Field
                             as={Checkbox}
@@ -421,6 +457,82 @@ const NotificationSettings = () => {
                               UserNotificationPreferenceFlag.IN_APP
                             )}
                           />
+                        </Grid>
+
+                        <Grid mobile={{ col: 6 }}>
+                          <p className="text-wrap margin-y-105">
+                            {notificationsT(
+                              'settings.additionalConfigurations.datesChanged'
+                            )}
+                          </p>
+                        </Grid>
+
+                        <Grid mobile={{ col: 3 }}>
+                          <Field
+                            as={Checkbox}
+                            id="notification-setting-email-datesChanged"
+                            data-testid="notification-setting-email-datesChanged"
+                            className="padding-left-2"
+                            name="datesChanged"
+                            value={UserNotificationPreferenceFlag.EMAIL}
+                            checked={values?.datesChanged.includes(
+                              UserNotificationPreferenceFlag.EMAIL
+                            )}
+                          />
+                        </Grid>
+
+                        <Grid mobile={{ col: 3 }}>
+                          <Field
+                            as={Checkbox}
+                            id="notification-setting-in-app-datesChanged"
+                            data-testid="notification-setting-in-app-datesChanged"
+                            className="padding-left-2"
+                            name="datesChanged"
+                            value={UserNotificationPreferenceFlag.IN_APP}
+                            checked={values?.datesChanged.includes(
+                              UserNotificationPreferenceFlag.IN_APP
+                            )}
+                          />
+                        </Grid>
+
+                        <Grid mobile={{ col: 6 }}>
+                          <Label
+                            htmlFor="notification-setting-whichModel"
+                            className="text-normal margin-top-2"
+                          >
+                            {notificationsT(
+                              'settings.additionalConfigurations.whichModel'
+                            )}
+                          </Label>
+
+                          <Field
+                            as={Select}
+                            id="notification-setting-whichModel"
+                            name="datesChangedNotificationType"
+                            value={values.datesChangedNotificationType}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setFieldValue(
+                                'dataSharingStarts',
+                                e.target.value
+                              );
+                            }}
+                          >
+                            <option key="default-select" disabled value="">
+                              {`-${miscellaneousT('select')}-`}
+                            </option>
+
+                            {/* {getKeys(dataSharingStartsConfig.options).map(
+                              type => {
+                                return (
+                                  <option key={type} value={type}>
+                                    {dataSharingStartsConfig.options[type]}
+                                  </option>
+                                );
+                              }
+                            )} */}
+                          </Field>
                         </Grid>
                       </Grid>
 
