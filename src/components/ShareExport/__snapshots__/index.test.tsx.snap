@@ -333,7 +333,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 data-testid="grid"
               >
                 <div
-                  class="desktop:grid-col-6"
+                  class="grid-col-6"
                   data-testid="grid"
                 >
                   <p
@@ -344,7 +344,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   43532323
                 </div>
                 <div
-                  class="desktop:grid-col-6"
+                  class="grid-col-6"
                   data-testid="grid"
                 >
                   <p

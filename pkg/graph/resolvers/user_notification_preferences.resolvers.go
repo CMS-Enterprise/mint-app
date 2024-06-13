@@ -50,6 +50,11 @@ func (r *userNotificationPreferencesResolver) ModelPlanShared(ctx context.Contex
 	return obj.ModelPlanShared, nil
 }
 
+// NewModelPlan is the resolver for the newModelPlan field.
+func (r *userNotificationPreferencesResolver) NewModelPlan(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	return obj.NewModelPlan, nil
+}
+
 // UserNotificationPreferences returns generated.UserNotificationPreferencesResolver implementation.
 func (r *Resolver) UserNotificationPreferences() generated.UserNotificationPreferencesResolver {
 	return &userNotificationPreferencesResolver{r}

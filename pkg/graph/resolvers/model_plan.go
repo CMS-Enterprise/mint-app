@@ -6,6 +6,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/samber/lo"
+
 	"github.com/cmsgov/mint-app/pkg/notifications"
 
 	"github.com/google/uuid"
@@ -40,6 +42,8 @@ func ModelPlanCreate(
 	principal authentication.Principal,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.ModelPlan, error) {
+
+	var newModelPlanEmailPrefs []*models.UserAccountNotificationPreferences
 
 	newPlan, err := sqlutils.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 		plan := models.NewModelPlan(principal.Account().ID, modelName)
@@ -135,6 +139,24 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
+		notifPreferences, err := store.UserAccountNotificationPreferencesNewModelPlan(tx)
+		if err != nil {
+			return nil, err
+		}
+
+		newModelPlanEmailPrefs, _ = models.FilterNotificationPreferences(notifPreferences)
+
+		_, err = notifications.ActivityNewModelPlanCreate(
+			ctx,
+			tx,
+			principal.Account().ID,
+			plan.ID,
+			notifPreferences,
+		)
+		if err != nil {
+			return nil, err
+		}
+
 		return createdPlan, nil
 	})
 	if err != nil {
@@ -148,11 +170,37 @@ func ModelPlanCreate(
 				emailService,
 				emailTemplateService,
 				addressBook,
-				addressBook.MINTTeamEmail,
+				[]string{addressBook.MINTTeamEmail},
 				newPlan,
+				false,
 			)
 			if sendEmailErr != nil {
 				logger.Error("failed to send model plan created email to dev team", zap.String(
+					"createdPlanID",
+					newPlan.ID.String(),
+				), zap.Error(sendEmailErr))
+			}
+		}()
+
+		receiverEmails := lo.Map(
+			newModelPlanEmailPrefs,
+			func(pref *models.UserAccountNotificationPreferences, _ int) string {
+				return pref.Email
+			},
+		)
+
+		go func() {
+			sendEmailErr := sendModelPlanCreatedEmail(
+				ctx,
+				emailService,
+				emailTemplateService,
+				addressBook,
+				receiverEmails,
+				newPlan,
+				true,
+			)
+			if sendEmailErr != nil {
+				logger.Error("failed to send model plan created email to user", zap.String(
 					"createdPlanID",
 					newPlan.ID.String(),
 				), zap.Error(sendEmailErr))
@@ -168,8 +216,9 @@ func sendModelPlanCreatedEmail(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
-	receiverEmail string,
+	receiverEmails []string,
 	modelPlan *models.ModelPlan,
+	showFooter bool,
 ) error {
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanCreatedTemplateName)
 	if err != nil {
@@ -192,12 +241,21 @@ func sendModelPlanCreatedEmail(
 		ModelName:     modelPlan.ModelName,
 		ModelID:       modelPlan.GetModelPlanID().String(),
 		UserName:      createdByAccount.CommonName,
+		ShowFooter:    showFooter,
 	})
 	if err != nil {
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+		oddmail.WithBCC(receiverEmails),
+	)
 	if err != nil {
 		return err
 	}

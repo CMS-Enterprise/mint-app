@@ -238,8 +238,8 @@ const SolutionCard = ({
                     className="margin-right-2 display-flex flex-align-center"
                     to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${
                       solution.id
-                    }?selectedSolution=${
-                      solution.key || OperationalSolutionKey.OTHER_NEW_PROCESS
+                    }${
+                      solution.key ? `?selectedSolution=${solution.key}` : ''
                     }`}
                   >
                     {t('updateTheseDetails')}
@@ -253,8 +253,8 @@ const SolutionCard = ({
                       className="text-red"
                       to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${
                         solution.id
-                      }?selectedSolution=${
-                        solution.key || OperationalSolutionKey.OTHER_NEW_PROCESS
+                      }${
+                        solution.key ? `?selectedSolution=${solution.key}` : ''
                       }`}
                     >
                       {t('removeTheseDetails')}

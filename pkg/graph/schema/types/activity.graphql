@@ -8,12 +8,13 @@ enum ActivityType {
   TAGGED_IN_DISCUSSION_REPLY
   NEW_DISCUSSION_REPLY
   MODEL_PLAN_SHARED
+  NEW_MODEL_PLAN
 }
 
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | AddedAsCollaboratorMeta | ModelPlanSharedActivityMeta
+union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | AddedAsCollaboratorMeta | ModelPlanSharedActivityMeta | NewModelPlanActivityMeta
 
 type AddedAsCollaboratorMeta {
   version: Int!
@@ -72,6 +73,13 @@ type DailyDigestCompleteActivityMeta {
   analyzedAudits: [AnalyzedAudit!]!
   userID: UUID!
   date:  Time!
+}
+
+type NewModelPlanActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
 }
 
 
