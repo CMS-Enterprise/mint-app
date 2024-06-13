@@ -21,6 +21,7 @@ import {
   GetNotificationSettingsQuery,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
+  UserNotificationPreferencesChanges,
   useUpdateNotificationSettingsMutation
 } from 'gql/gen/graphql';
 
@@ -148,6 +149,47 @@ const NotificationSettings = () => {
 
   // Unsubscribe from email
   useEffect(() => {
+    const updateMutation = (changes: UserNotificationPreferencesChanges) => {
+      update({ variables: { changes } })
+        .then(response => {
+          if (!response?.errors) {
+            showMessage(
+              <Alert
+                type="success"
+                slim
+                data-testid="success-alert"
+                className="margin-y-4"
+              >
+                <Trans
+                  t={notificationsT}
+                  i18nKey="settings.unsubscribedMessage.success"
+                  values={{
+                    notificationType: notificationsT(
+                      `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+                    )
+                  }}
+                  components={{
+                    bold: <strong />
+                  }}
+                />
+              </Alert>
+            );
+          }
+        })
+        .catch(() => {
+          showMessage(
+            <Alert
+              type="error"
+              slim
+              data-testid="error-alert"
+              className="margin-y-4"
+            >
+              {notificationsT('settings.unsubscribedMessage.error')}
+            </Alert>
+          );
+        });
+    };
+
     // if no unsubscribe email params, then abort
     if (!unsubscribeEmailParams) return;
     // if params are not valid
@@ -196,63 +238,42 @@ const NotificationSettings = () => {
       (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
         unsubscribeEmailParams === ActivityType.DATES_CHANGED)
     ) {
-      const isSubscribedToNewModelPlansNotifications = newModelPlan.includes(
+      // New Model Plan variables
+      const isSubscribedModelPlanEmail = newModelPlan.includes(
         UserNotificationPreferenceFlag.EMAIL
       );
-      const subscribedToDatesChangedNotifications = datesChanged.includes(
+      const isSubscribedModelPlanInApp = newModelPlan.includes(
+        UserNotificationPreferenceFlag.IN_APP
+      );
+      // Dates Changed variables
+      const isSubscribedDatesChangedEmail = datesChanged.includes(
         UserNotificationPreferenceFlag.EMAIL
+      );
+      const isSubscribedDatesChangedInApp = datesChanged.includes(
+        UserNotificationPreferenceFlag.IN_APP
       );
 
       // if user has email notifications, then proceeed to unsubscribe
-      if (isSubscribedToNewModelPlansNotifications) {
-        const hasInAppNotifications = newModelPlan.includes(
-          UserNotificationPreferenceFlag.IN_APP
-        );
+      if (isSubscribedModelPlanEmail || isSubscribedDatesChangedEmail) {
         // Adjust payload if New Model Plan in-app notifications are enabled
-        const changes = {
-          newModelPlan: hasInAppNotifications
-            ? [UserNotificationPreferenceFlag.IN_APP]
-            : []
-        };
+        let changes;
+        if (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN) {
+          changes = {
+            newModelPlan: isSubscribedModelPlanInApp
+              ? [UserNotificationPreferenceFlag.IN_APP]
+              : []
+          };
+        }
+        if (unsubscribeEmailParams === ActivityType.DATES_CHANGED) {
+          // debugger;
 
-        update({ variables: { changes } })
-          .then(response => {
-            if (!response?.errors) {
-              showMessage(
-                <Alert
-                  type="success"
-                  slim
-                  data-testid="success-alert"
-                  className="margin-y-4"
-                >
-                  <Trans
-                    t={notificationsT}
-                    i18nKey="settings.unsubscribedMessage.success"
-                    values={{
-                      notificationType: notificationsT(
-                        `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
-                      )
-                    }}
-                    components={{
-                      bold: <strong />
-                    }}
-                  />
-                </Alert>
-              );
-            }
-          })
-          .catch(() => {
-            showMessage(
-              <Alert
-                type="error"
-                slim
-                data-testid="error-alert"
-                className="margin-y-4"
-              >
-                {notificationsT('settings.unsubscribedMessage.error')}
-              </Alert>
-            );
-          });
+          changes = {
+            datesChanged: isSubscribedDatesChangedInApp
+              ? [UserNotificationPreferenceFlag.IN_APP]
+              : []
+          };
+        }
+        if (changes) updateMutation(changes);
       } else {
         // Already unsubscribed to new model plan email notifications
         showMessage(
@@ -282,6 +303,7 @@ const NotificationSettings = () => {
       history.replace({ search: params.toString() });
     }
   }, [
+    datesChanged,
     history,
     newModelPlan,
     notificationsT,
