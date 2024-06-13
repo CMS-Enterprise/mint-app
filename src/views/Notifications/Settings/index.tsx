@@ -164,21 +164,51 @@ const NotificationSettings = () => {
       );
     }
 
+    // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
+    // then show error alert banner
+    if (!newModelPlan?.length || !datesChanged?.length) {
+      showMessage(
+        <Alert
+          type="error"
+          slim
+          data-testid="error-alert"
+          className="margin-y-4"
+        >
+          <Trans
+            t={notificationsT}
+            i18nKey="settings.unsubscribedMessage.alreadyUnsubscribed"
+            values={{
+              notificationType: notificationsT(
+                `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+              )
+            }}
+            components={{
+              bold: <strong />
+            }}
+          />
+        </Alert>
+      );
+    }
+
     // Unsubscribe from New Model Plan email notifications
     if (
-      newModelPlan?.length &&
-      unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN
+      (newModelPlan?.length || datesChanged?.length) &&
+      (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
+        unsubscribeEmailParams === ActivityType.DATES_CHANGED)
     ) {
-      const hasEmailNotifications = newModelPlan.includes(
+      const isSubscribedToNewModelPlansNotifications = newModelPlan.includes(
+        UserNotificationPreferenceFlag.EMAIL
+      );
+      const subscribedToDatesChangedNotifications = datesChanged.includes(
         UserNotificationPreferenceFlag.EMAIL
       );
 
       // if user has email notifications, then proceeed to unsubscribe
-      if (hasEmailNotifications) {
+      if (isSubscribedToNewModelPlansNotifications) {
         const hasInAppNotifications = newModelPlan.includes(
           UserNotificationPreferenceFlag.IN_APP
         );
-        // Adjust payload if in-app notifications are enabled
+        // Adjust payload if New Model Plan in-app notifications are enabled
         const changes = {
           newModelPlan: hasInAppNotifications
             ? [UserNotificationPreferenceFlag.IN_APP]

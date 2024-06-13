@@ -145,7 +145,8 @@ const notifications = {
       alreadyUnsubscribed:
         'You are already unsubscribed from email notifications <bold>{{-notificationType}}.</bold>',
       activityType: {
-        NEW_MODEL_PLAN: 'when a new Model Plan is created'
+        NEW_MODEL_PLAN: 'when a new Model Plan is created',
+        DATES_CHANGED: 'when model dates change'
       }
     }
   }
