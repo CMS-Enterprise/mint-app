@@ -93,6 +93,10 @@ func (tfb TranslationFieldBase) GetReferencesLabel(translationDictionary map[str
 
 }
 
+func (tfb TranslationFieldBase) GetFieldOrder() float64 {
+	return tfb.Order
+}
+
 // GetFormType returns the form type of a translation
 func (tfb TranslationFieldBase) GetFormType() TranslationFormType {
 	return tfb.FormType
@@ -141,6 +145,8 @@ type ITranslationField interface {
 	// Returns the label directly for the field without reference to a parent.
 	GetLabel() string
 	GetReferencesLabel(map[string]ITranslationField) *string
+
+	GetFieldOrder() float64
 
 	HasOptions() bool
 	// Returns options if a translationField has options

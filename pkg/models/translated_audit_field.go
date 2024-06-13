@@ -44,6 +44,7 @@ type TranslatedAuditField struct {
 
 	FieldName              string                   `json:"fieldName" db:"field_name"`
 	FieldNameTranslated    string                   `json:"fieldNameTranslated" db:"field_name_translated"`
+	FieldOrder             float64                  `json:"fieldOrder" db:"field_order"`
 	ReferenceLabel         *string                  `json:"referenceLabel" db:"reference_label"`
 	QuestionType           *TranslationQuestionType `json:"questionType" db:"question_type"`
 	NotApplicableQuestions *pq.StringArray          `json:"notApplicableQuestions" db:"not_applicable_questions"`
@@ -70,6 +71,7 @@ func NewTranslatedAuditField(
 
 	fieldName string,
 	fieldNameTranslated string,
+	fieldOrder float64,
 	old interface{},
 	oldTranslated interface{},
 	new interface{},
@@ -87,6 +89,7 @@ func NewTranslatedAuditField(
 
 		FieldName:           fieldName,
 		FieldNameTranslated: fieldNameTranslated,
+		FieldOrder:          fieldOrder,
 		Old:                 old,
 		OldTranslated:       oldTranslated,
 		New:                 new,

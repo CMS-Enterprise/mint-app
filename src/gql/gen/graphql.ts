@@ -3453,6 +3453,8 @@ export type TranslatedAuditField = {
   dataType?: Maybe<TranslationDataType>;
   fieldName: Scalars['String']['output'];
   fieldNameTranslated: Scalars['String']['output'];
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
+  fieldOrder: Scalars['Float']['output'];
   formType?: Maybe<TranslationFormType>;
   id: Scalars['UUID']['output'];
   metaData: TranslatedAuditFieldMetaData;
