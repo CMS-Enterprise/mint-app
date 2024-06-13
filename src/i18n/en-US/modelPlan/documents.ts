@@ -6,6 +6,16 @@ import {
 } from '../../../gql/gen/graphql';
 
 export const documents: TranslationDocuments = {
+  fileName: {
+    gqlField: 'fileName',
+    goField: 'FileName',
+    dbField: 'file_name',
+    label: 'File Name',
+    sublabel: 'Enter a Name for your document.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.01
+  },
   isLink: {
     gqlField: 'isLink',
     goField: 'IsLink',
@@ -13,6 +23,7 @@ export const documents: TranslationDocuments = {
     label: 'Is this a link to a document?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 1.02,
     options: {
       true: 'Link to document',
       false: 'Upload document'
@@ -26,16 +37,8 @@ export const documents: TranslationDocuments = {
     sublabel:
       'Paste the link for your document. Make sure it includes http:// or https://.',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
-  },
-  fileName: {
-    gqlField: 'fileName',
-    goField: 'FileName',
-    dbField: 'file_name',
-    label: 'File Name',
-    sublabel: 'Enter a Name for your document.',
-    dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.03
   },
   fileType: {
     gqlField: 'fileType',
@@ -43,7 +46,8 @@ export const documents: TranslationDocuments = {
     dbField: 'file_type',
     label: 'File Type',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.04
   },
   documentType: {
     gqlField: 'documentType',
@@ -52,6 +56,7 @@ export const documents: TranslationDocuments = {
     label: 'What type of document are you uploading?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.RADIO,
+    order: 1.05,
     options: {
       CONCEPT_PAPER: 'Concept Paper',
       DESIGN_PARAMETERS_MEMO: 'Design Parameter Memo',
@@ -69,7 +74,8 @@ export const documents: TranslationDocuments = {
     dbField: 'other_type',
     label: 'What kind of document is this?',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.06
   },
   restricted: {
     gqlField: 'restricted',
@@ -81,6 +87,7 @@ export const documents: TranslationDocuments = {
     exportLabel: 'Visibility',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 1.07,
     options: {
       true: 'Yes',
       false: 'No'
@@ -96,7 +103,8 @@ export const documents: TranslationDocuments = {
     dbField: 'optional_notes',
     label: 'Optional notes about the document',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.08
   }
 };
 

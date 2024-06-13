@@ -6,6 +6,7 @@
     "label": "User ID",
     "dataType": "UUID",
     "formType": "TEXT",
+    "order": 1.01,
     "tableReference": "user_account"
   },
   "username": {
@@ -14,7 +15,8 @@
     "dbField": "user_account.username",
     "label": "Team member name",
     "dataType": "STRING",
-    "formType": "SELECT"
+    "formType": "SELECT",
+    "order": 1.02
   },
   "teamRoles": {
     "gqlField": "teamRoles",
@@ -23,6 +25,7 @@
     "label": "Team member role(s)",
     "dataType": "ENUM",
     "formType": "SELECT",
+    "order": 1.03,
     "options": {
       "CM_FFS_COUNTERPART": "CM FFS counterpart",
       "COR": "Contracting Officer's Representative (COR)",

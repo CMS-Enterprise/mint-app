@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ed4eb987-7067-400c-8541-dbbf111a3383",
+		"_postman_id": "931d61dd-2f91-44bb-906f-89f2b8edd494",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "20320964"
@@ -2135,7 +2135,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query currentUser {\n  currentUser {\n    notifications {\n      numUnreadNotifications\n      notifications {\n        __typename\n        id\n        isRead\n        inAppSent\n        emailSent\n        activity {\n          activityType\n          entityID\n          actorID\n                    metaData {\n            __typename\n            ... on TaggedInPlanDiscussionActivityMeta{\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }      \n                discussionID\n                content\n            }\n            ... on TaggedInDiscussionReplyActivityMeta {\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }                  \n                discussionID\n                replyID\n                content\n            }\n            ... on ModelPlanSharedActivityMeta {\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }\n                optionalMessage\n            }\n            ... on NewDiscussionRepliedActivityMeta {\n                version\n                type\n                discussionID\n                replyID\n                content\n            } \n            ... on DailyDigestCompleteActivityMeta{\n                version\n                type\n                modelPlanIDs\n                date\n                analyzedAudits{\n                       id\n                        modelPlanID\n                        modelName\n                        date\n                        changes{\n                            modelPlan{\n                                oldName\n                                statusChanges\n                            }\n                            documents{\n                                count\n                            }\n                            crTdls{\n                                activity\n                            }\n                            planSections{\n                                updated\n                                readyForReview\n                                readyForClearance\n                            }\n                            modelLeads{\n                                added{\n                                    id\n                                    commonName\n                                    # userAccount{\n                                    #     id\n                                    #     email\n                                    # }\n                                }\n                            }\n                            planDiscussions{\n                                activity\n                            }\n                        }\n\n                }\n\n            }            \n          }\n          createdByUserAccount {\n            commonName\n          }\n        }\n        createdByUserAccount {\n          commonName\n        }\n      }\n    }\n  }\n}\n",
+								"query": "query currentUser {\n  currentUser {\n    notifications {\n      numUnreadNotifications\n      notifications {\n        __typename\n        id\n        isRead\n        inAppSent\n        emailSent\n        activity {\n          activityType\n          entityID\n          actorID\n                    metaData {\n            __typename\n            ... on TaggedInPlanDiscussionActivityMeta{\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }      \n                discussionID\n                content\n            }\n            ... on TaggedInDiscussionReplyActivityMeta {\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }                  \n                discussionID\n                replyID\n                content\n            }\n            ... on ModelPlanSharedActivityMeta {\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }\n                optionalMessage\n            }\n            ... on NewDiscussionRepliedActivityMeta {\n                version\n                type\n                discussionID\n                replyID\n                content\n            } \n            ... on DailyDigestCompleteActivityMeta{\n                version\n                type\n                modelPlanIDs\n                date\n                analyzedAudits{\n                       id\n                        modelPlanID\n                        modelName\n                        date\n                        changes{\n                            modelPlan{\n                                oldName\n                                statusChanges\n                            }\n                            documents{\n                                count\n                            }\n                            crTdls{\n                                activity\n                            }\n                            planSections{\n                                updated\n                                readyForReview\n                                readyForClearance\n                            }\n                            modelLeads{\n                                added{\n                                    id\n                                    commonName\n                                    # userAccount{\n                                    #     id\n                                    #     email\n                                    # }\n                                }\n                            }\n                            planDiscussions{\n                                activity\n                            }\n                        }\n\n                }\n\n            }\n            ... on NewModelPlanActivityMeta {\n                version\n                type\n                modelPlanID\n                modelPlan{\n                    modelName\n                }\n            }            \n          }\n          createdByUserAccount {\n            commonName\n          }\n        }\n        createdByUserAccount {\n          commonName\n        }\n      }\n    }\n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -2164,7 +2164,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2174,7 +2175,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query currentUser {\n  currentUser {\n    notificationPreferences {\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n      }\n    }\n  }\n\n",
+								"query": "query currentUser {\n  currentUser {\n    notificationPreferences {\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n        newModelPlan\n      }\n    }\n  }\n\n",
 								"variables": ""
 							}
 						},
@@ -2312,7 +2313,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: [EMAIL,IN_APP]\n    \n    addedAsCollaborator: [EMAIL,IN_APP]\n\n    taggedInDiscussion:[IN_APP]\n\n    taggedInDiscussionReply:[EMAIL,IN_APP]\n\n    newDiscussionReply: [EMAIL,IN_APP]\n\n    modelPlanShared: [EMAIL,IN_APP]\n\n    \n\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n      \n    }\n}\n",
+								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: [EMAIL,IN_APP]\n    \n    addedAsCollaborator: [EMAIL,IN_APP]\n\n    taggedInDiscussion:[IN_APP]\n\n    taggedInDiscussionReply:[EMAIL,IN_APP]\n\n    newDiscussionReply: [EMAIL,IN_APP]\n\n    modelPlanShared: [EMAIL,IN_APP]\n\n    newModelPlan: [EMAIL, IN_APP]\n\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n        newModelPlan\n    }\n}\n",
 								"variables": ""
 							}
 						},
@@ -2530,6 +2531,223 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "query translatedAuditCollection {\n  translatedAuditCollection(modelPlanID: \"{{modelPlanID}}\") {\n    id\n    modelName\n    tableID\n    tableName\n    primaryKey\n    date\n    action\n\n    actorID\n    actorName\n\n    changeID\n    metaDataType\n    metaData {\n    ... on TranslatedAuditMetaBaseStruct{\n            version\n            tableName\n        }\n        ... on TranslatedAuditMetaGeneric {\n            version\n            tableName\n            relation\n            relationContent\n        }        \n        ... on TranslatedAuditMetaDiscussionReply {\n            version\n            tableName\n            discussionID\n            discussionContent\n            numberOfReplies\n        }    \n        ... on TranslatedAuditMetaOperationalNeed {\n            version\n            tableName\n            needName\n            isOther\n        }    \n        ... on TranslatedAuditMetaOperationalSolution {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            solutionOtherHeader\n            solutionIsOther\n            numberOfSubtasks\n        }    \n        ... on TranslatedAuditMetaOperationalSolutionSubtask {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            numberOfSubtasks\n            solutionOtherHeader\n            solutionIsOther\n            subtaskName\n        } \n       ... on TranslatedAuditMetaDocumentSolutionLink {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            solutionOtherHeader\n            solutionIsOther\n\n            documentID\n            \n            documentName\n            documentType\n            documentOtherType\n            documentVisibility\n        }            \n    }\n\n    createdBy\n    # createdByUserAccount\n    createdDts\n    modifiedBy\n    # modifiedByUserAccount\n    modifiedDts\n\n    translatedFields {\n        fieldName\n        fieldNameTranslated\n        id\n\n        changeType\n        dataType\n        formType\n\n        referenceLabel\n        questionType\n        notApplicableQuestions\n        old\n        oldTranslated\n        new\n        newTranslated\n\n        metaData {\n        ... on TranslatedAuditFieldMetaBaseStruct{\n            version\n            }\n        }\n    }\n\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/graph/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"graph",
+								"query"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Translated Audit",
+			"item": [
+				{
+					"name": "TestChanges For Translated Changes",
+					"item": [
+						{
+							"name": "ModelPlanCreate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createModelPlan",
+											"",
+											"modelPlanID = responseData.id",
+											"basicsID = responseData.basics.id",
+											"generalCharacteristicsID = responseData.generalCharacteristics.id",
+											"participantsAndProvidersID = responseData.participantsAndProviders.id",
+											"beneficiariesID = responseData.beneficiaries.id",
+											"opsEvalAndLearningID = responseData.opsEvalAndLearning.id",
+											"modelLeadID = responseData.collaborators[0].id",
+											"paymentsID = responseData.payments.id",
+											"firstOpNeed = responseData.operationalNeeds[0].id",
+											"userID = responseData.createdByUserAccount.id",
+											"",
+											"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);",
+											"pm.collectionVariables.set(\"basicsID\", basicsID);",
+											"",
+											"pm.collectionVariables.set(\"generalCharacteristicsID\", generalCharacteristicsID);",
+											"pm.collectionVariables.set(\"participantsAndProvidersID\", participantsAndProvidersID);",
+											"pm.collectionVariables.set(\"beneficiariesID\", beneficiariesID);",
+											"pm.collectionVariables.set(\"opsEvalAndLearningID\", opsEvalAndLearningID);",
+											"pm.collectionVariables.set(\"modelLeadID\", modelLeadID);",
+											"pm.collectionVariables.set(\"paymentsID\", paymentsID);",
+											"pm.collectionVariables.set(\"operationalNeedID\", firstOpNeed);",
+											"pm.collectionVariables.set(\"userID\", userID);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    modelName\n    createdByUserAccount{\n        givenName\n        id\n    }\n    operationalNeeds {\n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        section    \n    }  \n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n    }\n    payments{\n        id\n    }\n  }\n}\n  ",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PlanBasicsUpdate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation UPDATEPlanBasics{\n  \n  updatePlanBasics(id:\"{{basicsID}}\" changes:{   \n\n    cmmiGroups : [\n        # STATE_INNOVATIONS_GROUP\n        ,PATIENT_CARE_MODELS_GROUP\n        ,POLICY_AND_PROGRAMS_GROUP\n        # ,PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP\n        ,SEAMLESS_CARE_MODELS_GROUP\n        ]\n    modelType: [VOLUNTARY, OTHER]\n    modelTypeOther: \"Test type\"\n    # problem:\" A interesting problem\"\n    goal: \" Be a good solution\"\n    testInterventions: \"A Kazoo that plays Brahms Lullaby\"\n    note: \"Notes are now cool again\"\n    status: READY_FOR_REVIEW\n    clearanceStarts: \"2023-11-18T16:28:24.26322738Z\"\n    performancePeriodStarts: \"2023-11-18T16:28:24.26322738Z\"\n  } \n  \n  \n  )\n  \n  \n  {\n   id\n   cmmiGroups\n    modelPlanID\n    modelType\n    # modelTypeOther\n    problem\n    goal\n    testInterventions\n    note\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    status \n    readyForReviewBy\n    readyForReviewDts\n    readyForClearanceBy\n    readyForClearanceDts\n    \n    \n  }\n  \n  \n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/api/graph/query",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"graph",
+										"query"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PlanParticipantsAndProvidersUpdate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: true\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: YES_NEED_POLICIES\n    # providerOverlapHierarchy:\n    # providerOverlapNote:\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/api/graph/query",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"graph",
+										"query"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PlanParticipantsAndProvidersUpdateGainshareNotApplicable",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: false\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: YES_NO_ISSUES\n    # providerOverlapHierarchy:\n    providerOverlapNote: \"Note, that changing this to Yes_No_Issues doesn't make the hierarchy question not apply. Make it null if you want to do that instead.\"\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/api/graph/query",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"graph",
+										"query"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PlanParticipantsAndProvidersUpdate OverlapNotApplicable",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: false\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: null\n    # providerOverlapHierarchy:\n    providerOverlapNote: \"Note, that changing this to null makes the hierarchy question not apply.\"\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/api/graph/query",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"graph",
+										"query"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TranslatedAuditCollectionGET NORMALIZED",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query translatedAuditCollection {\n  translatedAuditCollection(modelPlanID: \"{{modelPlanID}}\") {\n    id\n    modelName\n    tableID\n    tableName\n    primaryKey\n    date\n    action\n\n    actorID\n    actorName\n\n    changeID\n    metaDataType\n    metaData {\n    ... on TranslatedAuditMetaBaseStruct{\n            version\n            tableName\n        }\n        ... on TranslatedAuditMetaGeneric {\n            version\n            tableName\n            relation\n            relationContent\n        }        \n        ... on TranslatedAuditMetaDiscussionReply {\n            version\n            tableName\n            discussionID\n            discussionContent\n            numberOfReplies\n        }    \n        ... on TranslatedAuditMetaOperationalNeed {\n            version\n            tableName\n            needName\n            isOther\n        }    \n        ... on TranslatedAuditMetaOperationalSolution {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            solutionOtherHeader\n            solutionIsOther\n            numberOfSubtasks\n        }    \n        ... on TranslatedAuditMetaOperationalSolutionSubtask {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            numberOfSubtasks\n            solutionOtherHeader\n            solutionIsOther\n            subtaskName\n        } \n       ... on TranslatedAuditMetaDocumentSolutionLink {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            solutionOtherHeader\n            solutionIsOther\n\n            documentID\n            \n            documentName\n            documentType\n            documentOtherType\n            documentVisibility\n        }            \n    }\n\n    createdBy\n    # createdByUserAccount\n    createdDts\n    modifiedBy\n    # modifiedByUserAccount\n    modifiedDts\n\n    translatedFields {\n        fieldName\n        fieldNameTranslated\n        fieldOrder\n        id\n\n        changeType\n        dataType\n        formType\n\n        referenceLabel\n        questionType\n        notApplicableQuestions\n        old\n        oldTranslated\n        new\n        newTranslated\n\n        metaData {\n        ... on TranslatedAuditFieldMetaBaseStruct{\n            version\n            }\n        }\n    }\n\n  }\n}\n",
 								"variables": ""
 							}
 						},

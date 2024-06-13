@@ -16,6 +16,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What stakeholders do you plan to communicate with?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
+    order: 1.01,
     multiSelectLabel: 'Selected stakeholders',
     options: {
       BENEFICIARIES: 'Beneficiaries',
@@ -39,6 +40,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'Please describe the other stakeholders you plan to communicate with.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.02,
     isOtherType: true,
     filterGroups: [ModelViewFilter.CBOSC]
   },
@@ -51,6 +53,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'stakeholders',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.03,
     filterGroups: [ModelViewFilter.CBOSC]
   },
   helpdeskUse: {
@@ -60,6 +63,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Do you plan to use a helpdesk?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 1.04,
     options: {
       true: 'Yes',
       false: 'No'
@@ -75,6 +79,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'helpdeskUse',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.05,
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   contractorSupport: {
@@ -84,6 +89,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What contractors will support your model?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 1.06,
     options: {
       ONE: 'One contractor to support implementation',
       MULTIPLE:
@@ -113,6 +119,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.07,
     isOtherType: true,
     otherParentField: 'contractorSupport',
     filterGroups: [
@@ -129,6 +136,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     sublabel: '(implementation, data analysis, quality, etc.)',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.08,
     parentRelation: () => opsEvalAndLearning.contractorSupport,
     filterGroups: [
       ModelViewFilter.CBOSC,
@@ -145,6 +153,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'contractorSupport',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.09,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
@@ -160,6 +169,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 1.1,
     isPageStart: true,
     readonlyHeader: 'IDDOC operations',
     options: {
@@ -197,6 +207,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'iddocSupport',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.11,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.IPC]
   },
   technicalContactsIdentified: {
@@ -206,6 +217,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Are technical contacts identified?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 2.01,
     options: {
       true: 'Yes',
       false: 'No'
@@ -224,6 +236,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify yes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.02,
     isOtherType: true,
     otherParentField: 'technicalContactsIdentified',
     filterGroups: [ModelViewFilter.IDDOC]
@@ -237,6 +250,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'technicalContactsIdentified',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.03,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   captureParticipantInfo: {
@@ -248,6 +262,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'This means the participant record for a model would be included in the ACO-OS Entity File.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 2.04,
     options: {
       true: 'Yes',
       false: 'No'
@@ -264,6 +279,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'captureParticipantInfo',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.05,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   icdOwner: {
@@ -273,6 +289,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'ICD owner',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 2.06,
     isPageStart: true,
     readonlyHeader: 'Interface Control Document (ICD)',
     parentRelation: () => opsEvalAndLearning.iddocSupport,
@@ -285,6 +302,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Draft ICD required by',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 2.07,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -297,6 +315,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     parentReferencesLabel: 'Interface Control Document (IDC) questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.08,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -307,6 +326,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'User Acceptance Testing (UAT) – test data needs',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.01,
     isPageStart: true,
     readonlyHeader: 'Testing',
     parentRelation: () => opsEvalAndLearning.iddocSupport,
@@ -319,6 +339,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'STC – test data needs',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.02,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -329,6 +350,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Define the testing timelines',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.03,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -341,6 +363,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     parentReferencesLabel: 'Testing questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.04,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   dataMonitoringFileTypes: {
@@ -352,6 +375,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'What types of files?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 3.05,
     isPageStart: true,
     readonlyHeader: 'Data monitoring',
     options: {
@@ -375,6 +399,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 3.06,
     isOtherType: true,
     otherParentField: 'dataMonitoringFileTypes',
     filterGroups: [ModelViewFilter.IDDOC]
@@ -386,6 +411,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What types of responses?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.07,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -396,6 +422,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Frequency of files?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 3.08,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -406,6 +433,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Full time or incremental?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 4.01,
     options: {
       FULL_TIME: 'Full time',
       INCREMENTAL: 'Incremental'
@@ -420,6 +448,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Are Electronic File Transfer (EFT) and connectivity set up?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 4.02,
     options: {
       true: 'Yes',
       false: 'No'
@@ -434,6 +463,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Will unsolicited adjustments be included?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 4.03,
     options: {
       true: 'Yes',
       false: 'No'
@@ -448,6 +478,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Are data flow diagrams needed?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 4.04,
     options: {
       true: 'Yes',
       false: 'No'
@@ -464,6 +495,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'This means we would use these files for Participating and Preferred Providers.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 4.05,
     options: {
       true: 'Yes',
       false: 'No'
@@ -478,6 +510,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'File naming conventions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 4.06,
     parentRelation: () => opsEvalAndLearning.iddocSupport,
     filterGroups: [ModelViewFilter.IDDOC]
   },
@@ -490,6 +523,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     parentReferencesLabel: 'Data monitoring questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 4.07,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   benchmarkForPerformance: {
@@ -499,6 +533,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Will you establish a benchmark to capture performance?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.RADIO,
+    order: 5.01,
     isPageStart: true,
     options: {
       YES_RECONCILE: 'Yes, and we will reconcile actual performance against it',
@@ -517,6 +552,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'benchmarkForPerformance',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 5.02,
     filterGroups: [ModelViewFilter.CMMI]
   },
   computePerformanceScores: {
@@ -526,6 +562,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Will you compute performance scores?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 5.03,
     options: {
       true: 'Yes',
       false: 'No'
@@ -541,6 +578,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'computePerformanceScores',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 5.04,
     filterGroups: [ModelViewFilter.CMMI]
   },
   riskAdjustPerformance: {
@@ -551,6 +589,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'Will you make risk adjustments to performance scores?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 5.05,
     options: {
       true: 'Yes',
       false: 'No'
@@ -569,6 +608,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'Will you make risk adjustments to feedback results?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 5.06,
     options: {
       true: 'Yes',
       false: 'No'
@@ -587,6 +627,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'Will you make risk adjustments to payments?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 5.07,
     options: {
       true: 'Yes',
       false: 'No'
@@ -605,6 +646,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'Will you make risk adjustments to others?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 5.08,
     options: {
       true: 'Yes',
       false: 'No'
@@ -623,7 +665,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     isNote: true,
     parentReferencesLabel: 'Risk adjustment questions',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.09
   },
   appealPerformance: {
     gqlField: 'appealPerformance',
@@ -633,6 +676,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'Will participants be able to appeal performance scores?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 5.1,
     options: {
       true: 'Yes',
       false: 'No'
@@ -650,6 +694,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'Will participants be able to appeal feedback results?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 5.11,
     options: {
       true: 'Yes',
       false: 'No'
@@ -667,6 +712,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'Will participants be able to appeal payments?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 5.12,
     options: {
       true: 'Yes',
       false: 'No'
@@ -684,6 +730,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     readonlyLabel: 'Will participants be able to appeal others?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 5.13,
     options: {
       true: 'Yes',
       false: 'No'
@@ -701,7 +748,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     isNote: true,
     parentReferencesLabel: 'Participant appeal questions',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.14
   },
   evaluationApproaches: {
     gqlField: 'evaluationApproaches',
@@ -713,6 +761,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'What type of evaluation approach are you considering?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 6.01,
     isPageStart: true,
     options: {
       COMPARISON_MATCH: 'Identify a comparison/match group',
@@ -733,6 +782,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Please describe the other evaluation approach you are considering.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 6.02,
     isOtherType: true
   },
   evalutaionApproachNote: {
@@ -743,7 +793,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     isNote: true,
     otherParentField: 'evaluationApproaches',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 6.03
   },
   ccmInvolvment: {
     gqlField: 'ccmInvolvment',
@@ -754,6 +805,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'If you select either yes option, there will be additional questions to answer.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 6.04,
     hideRelatedQuestionAlert: true,
     disconnectedLabel: `questionNotApplicableCCW`,
     options: {
@@ -787,6 +839,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 6.05,
     isOtherType: true,
     otherParentField: 'ccmInvolvment',
     filterGroups: [ModelViewFilter.CCW]
@@ -800,6 +853,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'ccmInvolvment',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 6.06,
     filterGroups: [ModelViewFilter.CCW]
   },
   dataNeededForMonitoring: {
@@ -813,6 +867,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'What data do you need to monitor the model?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
+    order: 6.07,
     disconnectedLabel: `questionNotApplicableQuality`,
     multiSelectLabel: 'Selected data',
     options: {
@@ -852,6 +907,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What other data do you need to monitor?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 6.08,
     isOtherType: true,
     otherParentField: 'dataNeededForMonitoring',
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
@@ -865,6 +921,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'dataNeededForMonitoring',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 6.09,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataToSendParticicipants: {
@@ -876,6 +933,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'What data will you send to participants?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
+    order: 6.1,
     options: {
       BASELINE_HISTORICAL_DATA: 'Baseline/historical data',
       CLAIMS_LEVEL_DATA: 'Claims-level data',
@@ -897,6 +955,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'What other data do you need to send?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 6.11,
     isOtherType: true,
     otherParentField: 'dataToSendParticicipants',
     filterGroups: [ModelViewFilter.CMMI]
@@ -910,6 +969,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'dataToSendParticicipants',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 6.12,
     filterGroups: [ModelViewFilter.CMMI]
   },
   shareCclfData: {
@@ -920,6 +980,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 6.13,
     options: {
       true: 'Yes',
       false: 'No'
@@ -935,6 +996,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'shareCclfData',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 6.14,
     filterGroups: [ModelViewFilter.CMMI]
   },
   sendFilesBetweenCcw: {
@@ -945,6 +1007,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'Will you need to send files between the CCW and other applications?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 7.01,
     options: {
       true: 'Yes',
       false: 'No'
@@ -961,6 +1024,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'sendFilesBetweenCcw',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 7.02,
     filterGroups: [ModelViewFilter.CCW]
   },
   appToSendFilesToKnown: {
@@ -973,6 +1037,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'Do you know which applications will be on the other sides of the file transfers? If so, please specify.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 7.03,
     options: {
       true: 'Yes',
       false: 'No'
@@ -991,6 +1056,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify yes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 7.04,
     isOtherType: true,
     otherParentField: 'appToSendFilesToWhich',
     filterGroups: [ModelViewFilter.CCW]
@@ -1004,6 +1070,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'appToSendFilesToKnown',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 7.05,
     filterGroups: [ModelViewFilter.CCW]
   },
   useCcwForFileDistribiutionToParticipants: {
@@ -1014,6 +1081,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'Will you use the CCW to distribute files to and from model participants?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 7.06,
     options: {
       true: 'Yes',
       false: 'No'
@@ -1030,6 +1098,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'useCcwForFileDistribiutionToParticipants',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 7.07,
     filterGroups: [ModelViewFilter.CCW]
   },
   developNewQualityMeasures: {
@@ -1040,6 +1109,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'Do you plan to develop a new validated quality measure for your model?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 7.08,
     options: {
       true: 'Yes',
       false: 'No'
@@ -1056,6 +1126,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'developNewQualityMeasures',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 7.09,
     filterGroups: [ModelViewFilter.CMMI]
   },
   qualityPerformanceImpactsPayment: {
@@ -1065,6 +1136,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Does quality performance impact payment?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 7.1,
     options: {
       YES: 'Yes',
       NO: 'No',
@@ -1084,6 +1156,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 7.11,
     isOtherType: true,
     otherParentField: 'qualityPerformanceImpactsPayment',
     filterGroups: [ModelViewFilter.CMMI]
@@ -1097,6 +1170,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     otherParentField: 'qualityPerformanceImpactsPayment',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 7.12,
     filterGroups: [ModelViewFilter.CMMI]
   },
   dataSharingStarts: {
@@ -1108,6 +1182,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'If using ACO-OS support, SSM request to begin analysis at least 1 year before implementation',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
+    order: 8.01,
     isPageStart: true,
     readonlyHeader:
       'Data sharing, collection, and reporting timing and frequency',
@@ -1136,6 +1211,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 8.02,
     isOtherType: true,
     otherParentField: 'dataSharingStarts',
     filterGroups: [ModelViewFilter.IDDOC]
@@ -1147,6 +1223,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'How often do you anticipate sharing data?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 8.03,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'dataSharingFrequencyContinually',
@@ -1162,6 +1239,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify continually',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 8.04,
     isOtherType: true,
     otherParentField: 'dataSharingFrequency',
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
@@ -1174,6 +1252,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 8.05,
     isOtherType: true,
     otherParentField: 'dataSharingFrequency',
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
@@ -1187,6 +1266,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     parentReferencesLabel: 'Data sharing timing and frequency questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 8.06,
     filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IDDOC]
   },
   dataCollectionStarts: {
@@ -1196,6 +1276,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Data collection starts',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
+    order: 8.07,
     options: {
       DURING_APPLICATION_PERIOD: 'During application period',
       SHORTLY_BEFORE_THE_START_DATE: 'Shortly before the start date',
@@ -1221,6 +1302,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 8.08,
     isOtherType: true,
     otherParentField: 'dataCollectionStarts',
     filterGroups: [ModelViewFilter.IDDOC]
@@ -1232,6 +1314,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'How often do you anticipate collecting data?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 8.09,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'dataCollectionFrequencyContinually',
@@ -1247,6 +1330,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify continually',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 8.1,
     isOtherType: true,
     otherParentField: 'dataCollectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -1259,6 +1343,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 8.11,
     isOtherType: true,
     otherParentField: 'dataCollectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -1272,6 +1357,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     parentReferencesLabel: 'Data collection timing and frequency questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 8.12,
     filterGroups: [ModelViewFilter.CMMI]
   },
   qualityReportingStarts: {
@@ -1281,6 +1367,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Quality reporting starts',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
+    order: 8.13,
     options: {
       DURING_APPLICATION_PERIOD: 'During application period',
       SHORTLY_BEFORE_THE_START_DATE: 'Shortly before the start date',
@@ -1305,6 +1392,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 8.14,
     isOtherType: true,
     otherParentField: 'qualityReportingStarts'
   },
@@ -1316,7 +1404,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     isNote: true,
     parentReferencesLabel: 'Quality reporting timing and frequency questions',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 8.15
   },
   qualityReportingFrequency: {
     gqlField: 'qualityReportingFrequency',
@@ -1325,6 +1414,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'How frequently does quality reporting happen?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 8.16,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'qualityReportingFrequencyContinually',
@@ -1339,6 +1429,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify continually',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 8.17,
     isOtherType: true,
     otherParentField: 'qualityReportingFrequency'
   },
@@ -1350,6 +1441,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 8.18,
     isOtherType: true,
     otherParentField: 'qualityReportingFrequency'
   },
@@ -1360,6 +1452,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Will the model have a learning strategy?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 9.01,
     isPageStart: true,
     options: {
       LEARNING_CONTRACTOR:
@@ -1383,6 +1476,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 9.02,
     isOtherType: true,
     otherParentField: 'modelLearningSystems'
   },
@@ -1394,7 +1488,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     isNote: true,
     otherParentField: 'modelLearningSystems',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 9.03
   },
   anticipatedChallenges: {
     gqlField: 'anticipatedChallenges',
@@ -1406,6 +1501,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 9.04,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   readyForReviewBy: {
@@ -1416,6 +1512,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'This section of the Model Plan (Operations, evaluation, and learning) is ready for review.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
+    order: 9.05,
     tableReference: 'user_account',
     hideFromReadonly: true
   },
@@ -1426,6 +1523,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Ready for review date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 9.06,
     hideFromReadonly: true
   },
   readyForClearanceBy: {
@@ -1436,6 +1534,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       'This section of the Model Plan (Operations, evaluation, and learning) is ready for clearance.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
+    order: 9.07,
     tableReference: 'user_account',
     hideFromReadonly: true
   },
@@ -1446,6 +1545,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Ready for clearance date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 9.08,
     hideFromReadonly: true
   },
   status: {
@@ -1455,6 +1555,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Model Plan status',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 9.09,
     options: {
       READY: 'Ready',
       IN_PROGRESS: 'In progress',

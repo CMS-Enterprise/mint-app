@@ -7,8 +7,8 @@ type PlanDocumentTranslation {
     url: TranslationField! @goTag(key: "db", value: "url")
     fileName: TranslationField! @goTag(key: "db", value: "file_name")
     documentType: TranslationFieldWithOptions! @goTag(key: "db", value: "document_type")
-    otherType: TranslationField @goTag(key: "db", value: "other_type")
-    fileType: TranslationField @goTag(key: "db", value: "file_type")
+    otherType: TranslationField! @goTag(key: "db", value: "other_type")
+    fileType: TranslationField! @goTag(key: "db", value: "file_type")
     restricted: TranslationFieldWithOptions! @goTag(key: "db", value: "restricted")
-    optionalNotes: TranslationField @goTag(key: "db", value: "optional_notes")
+    optionalNotes: TranslationField! @goTag(key: "db", value: "optional_notes")
 }

@@ -179,9 +179,7 @@ const AppRoutes = () => {
         component={SubmitRequest}
       />
 
-      {flags.notificationsEnabled && (
-        <SecureRoute path="/notifications" component={Notifications} />
-      )}
+      <SecureRoute path="/notifications" component={Notifications} />
 
       {flags.changeHistoryEnabled && (
         <SecureRoute

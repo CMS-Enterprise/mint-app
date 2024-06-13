@@ -6,6 +6,6 @@ type PlanCRTranslation {
     idNumber: TranslationField! @goTag(key: "db", value: "id_number")
     title: TranslationField! @goTag(key: "db", value: "title")
     dateInitiated: TranslationField! @goTag(key: "db", value: "date_initiated")
-    dateImplemented: TranslationField @goTag(key: "db", value: "date_implemented")
+    dateImplemented: TranslationField! @goTag(key: "db", value: "date_implemented")
     note: TranslationField! @goTag(key: "db", value: "note")
 }

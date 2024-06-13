@@ -45,7 +45,8 @@ const notificationsSettingsMock = [
             modelPlanShared: [
               UserNotificationPreferenceFlag.EMAIL,
               UserNotificationPreferenceFlag.IN_APP
-            ]
+            ],
+            newModelPlan: []
           }
         }
       }
@@ -76,16 +77,27 @@ describe('Notification Settings Page', () => {
         expect(
           screen.getByTestId('notification-setting-in-app-dailyDigestComplete')
         ).toBeChecked();
+
+        expect(
+          screen.getByTestId('notification-setting-email-newModelPlan')
+        ).not.toBeChecked();
       });
 
       await user.click(
         screen.getByTestId('notification-setting-email-dailyDigestComplete')
+      );
+      await user.click(
+        screen.getByTestId('notification-setting-email-newModelPlan')
       );
 
       await waitFor(() => {
         expect(
           screen.getByTestId('notification-setting-email-dailyDigestComplete')
         ).not.toBeChecked();
+
+        expect(
+          screen.getByTestId('notification-setting-email-newModelPlan')
+        ).toBeChecked();
       });
     });
   });

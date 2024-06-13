@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -14,6 +14,7 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
+  ActivityType,
   GetNotificationSettingsQuery,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
@@ -23,6 +24,7 @@ import {
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formDiff';
@@ -42,15 +44,22 @@ const NotificationSettings = () => {
   const notificationSettings: Record<
     keyof NotificationSettingsFormType,
     string
-  > = notificationsT('settings.configurations', { returnObjects: true });
+  > = notificationsT('settings.configurations', {
+    returnObjects: true
+  });
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
 
-  const { showMessageOnNextPage } = useMessage();
+  const { showMessage, showMessageOnNextPage } = useMessage();
 
   const history = useHistory();
+  const { message } = useMessage();
+  const location = useLocation();
 
-  const [mutationError, setMutationError] = useState<string>('');
+  const params = useMemo(() => new URLSearchParams(location.search), [
+    location.search
+  ]);
+  const unsubscribeEmailParams = params.get('unsubscribe_email');
 
   const { data, loading, error } = useGetNotificationSettingsQuery();
 
@@ -59,7 +68,8 @@ const NotificationSettings = () => {
     addedAsCollaborator,
     taggedInDiscussion,
     newDiscussionReply,
-    modelPlanShared
+    modelPlanShared,
+    newModelPlan
   } = (data?.currentUser.notificationPreferences ||
     {}) as GetNotifcationSettingsType;
 
@@ -87,31 +97,154 @@ const NotificationSettings = () => {
       .then(response => {
         if (!response?.errors) {
           showMessageOnNextPage(
-            <>
-              <Alert
-                type="success"
-                slim
-                data-testid="success-collaborator-alert"
-                className="margin-y-4"
-              >
-                {notificationsT('settings.success')}
-              </Alert>
-            </>
+            <Alert
+              type="success"
+              slim
+              data-testid="success-alert"
+              className="margin-y-4"
+            >
+              {notificationsT('settings.successMessage')}
+            </Alert>
           );
           history.push('/notifications');
         }
       })
       .catch(() => {
-        setMutationError(notificationsT('settings.error'));
+        showMessage(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-y-4"
+          >
+            {notificationsT('settings.errorMessage')}
+          </Alert>
+        );
       });
   };
+
+  // Unsubscribe from email
+  useEffect(() => {
+    // if no unsubscribe email params, then abort
+    if (!unsubscribeEmailParams) return;
+    // if params are not valid
+    if (!Object.keys(ActivityType).includes(unsubscribeEmailParams)) {
+      showMessage(
+        <Alert
+          type="error"
+          slim
+          data-testid="error-alert"
+          className="margin-y-4"
+        >
+          {notificationsT('settings.unsubscribedMessage.error')}
+        </Alert>
+      );
+    }
+
+    // Unsubscribe from New Model Plan email notifications
+    if (
+      newModelPlan?.length &&
+      unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN
+    ) {
+      const hasEmailNotifications = newModelPlan.includes(
+        UserNotificationPreferenceFlag.EMAIL
+      );
+
+      // if user has email notifications, then proceeed to unsubscribe
+      if (hasEmailNotifications) {
+        const hasInAppNotifications = newModelPlan.includes(
+          UserNotificationPreferenceFlag.IN_APP
+        );
+        // Adjust payload if in-app notifications are enabled
+        const changes = {
+          newModelPlan: hasInAppNotifications
+            ? [UserNotificationPreferenceFlag.IN_APP]
+            : []
+        };
+
+        update({ variables: { changes } })
+          .then(response => {
+            if (!response?.errors) {
+              showMessage(
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="success-alert"
+                  className="margin-y-4"
+                >
+                  <Trans
+                    t={notificationsT}
+                    i18nKey="settings.unsubscribedMessage.success"
+                    values={{
+                      notificationType: notificationsT(
+                        `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+                      )
+                    }}
+                    components={{
+                      bold: <strong />
+                    }}
+                  />
+                </Alert>
+              );
+            }
+          })
+          .catch(() => {
+            showMessage(
+              <Alert
+                type="error"
+                slim
+                data-testid="error-alert"
+                className="margin-y-4"
+              >
+                {notificationsT('settings.unsubscribedMessage.error')}
+              </Alert>
+            );
+          });
+      } else {
+        // Already unsubscribed to new model plan email notifications
+        showMessage(
+          <Alert
+            type="error"
+            slim
+            data-testid="error-alert"
+            className="margin-y-4"
+          >
+            <Trans
+              t={notificationsT}
+              i18nKey="settings.unsubscribedMessage.alreadyUnsubscribed"
+              values={{
+                notificationType: notificationsT(
+                  `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+                )
+              }}
+              components={{
+                bold: <strong />
+              }}
+            />
+          </Alert>
+        );
+      }
+
+      params.delete('unsubscribe_email');
+      history.replace({ search: params.toString() });
+    }
+  }, [
+    history,
+    newModelPlan,
+    notificationsT,
+    params,
+    showMessage,
+    unsubscribeEmailParams,
+    update
+  ]);
 
   const initialValues: NotificationSettingsFormType = {
     dailyDigestComplete: dailyDigestComplete ?? [],
     addedAsCollaborator: addedAsCollaborator ?? [],
     taggedInDiscussion: taggedInDiscussion ?? [],
     newDiscussionReply: newDiscussionReply ?? [],
-    modelPlanShared: modelPlanShared ?? []
+    modelPlanShared: modelPlanShared ?? [],
+    newModelPlan: newModelPlan ?? []
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
@@ -138,11 +271,7 @@ const NotificationSettings = () => {
             </Breadcrumb>
           </BreadcrumbBar>
 
-          {mutationError && (
-            <Alert type="error" slim className="margin-y-4" headingLevel="h4">
-              {mutationError}
-            </Alert>
-          )}
+          {message && <Expire delay={45000}>{message}</Expire>}
 
           <PageHeading className="margin-top-4 margin-bottom-2">
             {notificationsT('settings.heading')}
@@ -167,15 +296,34 @@ const NotificationSettings = () => {
                 <>
                   <Grid row>
                     <Grid mobile={{ col: 6 }}>
-                      <h3>{notificationsT('settings.notification')}</h3>
+                      <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
+                        {notificationsT('settings.notification')}
+                      </h3>
                     </Grid>
 
                     <Grid mobile={{ col: 3 }}>
-                      <h3>{notificationsT('settings.email')}</h3>
+                      <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
+                        {notificationsT('settings.email')}
+                      </h3>
                     </Grid>
 
                     <Grid mobile={{ col: 3 }}>
-                      <h3>{notificationsT('settings.inApp')}</h3>
+                      <h3 className="margin-bottom-3 padding-bottom-105 margin-top-0 border-bottom border-ink">
+                        {notificationsT('settings.inApp')}
+                      </h3>
+                    </Grid>
+
+                    <Grid mobile={{ col: 6 }}>
+                      <h4 className="margin-top-0 margin-bottom-05">
+                        {notificationsT(
+                          'settings.sections.basicNotifications.heading'
+                        )}
+                      </h4>
+                      <p className="margin-top-0 margin-bottom-1 text-base-dark">
+                        {notificationsT(
+                          'settings.sections.basicNotifications.subHeading'
+                        )}
+                      </p>
                     </Grid>
                   </Grid>
 
@@ -189,7 +337,7 @@ const NotificationSettings = () => {
                         return (
                           <Grid row key={setting}>
                             <Grid mobile={{ col: 6 }}>
-                              <p className="text-wrap">
+                              <p className="text-wrap margin-y-105">
                                 {notificationSettings[setting]}
                               </p>
                             </Grid>
@@ -225,6 +373,52 @@ const NotificationSettings = () => {
                           </Grid>
                         );
                       })}
+
+                      {/* Additional Notification Section */}
+                      <Grid row>
+                        <Grid mobile={{ col: 12 }}>
+                          <h4 className="margin-top-5 margin-bottom-0">
+                            {notificationsT(
+                              'settings.sections.additionalNotifications.heading'
+                            )}
+                          </h4>
+                        </Grid>
+
+                        <Grid mobile={{ col: 6 }}>
+                          <p className="text-wrap margin-y-105">
+                            {notificationsT(
+                              'settings.additionalConfigurations.NEW_MODEL_PLAN'
+                            )}
+                          </p>
+                        </Grid>
+                        <Grid mobile={{ col: 3 }}>
+                          <Field
+                            as={Checkbox}
+                            id="notification-setting-email-newModelPlan"
+                            data-testid="notification-setting-email-newModelPlan"
+                            className="padding-left-2"
+                            name="newModelPlan"
+                            value={UserNotificationPreferenceFlag.EMAIL}
+                            checked={values?.newModelPlan.includes(
+                              UserNotificationPreferenceFlag.EMAIL
+                            )}
+                          />
+                        </Grid>
+
+                        <Grid mobile={{ col: 3 }}>
+                          <Field
+                            as={Checkbox}
+                            id="notification-setting-in-app-newModelPlan"
+                            data-testid="notification-setting-in-app-newModelPlan"
+                            className="padding-left-2"
+                            name="newModelPlan"
+                            value={UserNotificationPreferenceFlag.IN_APP}
+                            checked={values?.newModelPlan.includes(
+                              UserNotificationPreferenceFlag.IN_APP
+                            )}
+                          />
+                        </Grid>
+                      </Grid>
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button type="submit" disabled={!dirty}>

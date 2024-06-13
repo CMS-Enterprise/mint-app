@@ -200,6 +200,10 @@ type TranslatedAuditField {
     fieldName: String!
     fieldNameTranslated: String!
     """
+    Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+    """
+    fieldOrder: Float!
+    """
     The label for the parent question that this question refers to
     """
     referenceLabel: String

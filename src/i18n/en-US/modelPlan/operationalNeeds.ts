@@ -12,7 +12,8 @@ const operationalNeeds: TranslationOperationalNeeds = {
     dbField: 'name',
     label: 'Operational need',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.01
   },
   nameOther: {
     gqlField: 'nameOther',
@@ -21,7 +22,8 @@ const operationalNeeds: TranslationOperationalNeeds = {
     label: 'What operational need are you solving?',
     exportLabel: 'Custom operational need',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.02
   },
   key: {
     gqlField: 'key',
@@ -30,6 +32,7 @@ const operationalNeeds: TranslationOperationalNeeds = {
     label: 'The key representing the type of operational need.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 1.03,
     options: {
       MANAGE_CD: 'Manage Part C/D enrollment',
       REV_COL_BIDS: 'Review and collect plan bids',
@@ -73,6 +76,7 @@ const operationalNeeds: TranslationOperationalNeeds = {
     label: 'Status',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
+    order: 1.04,
     options: {
       true: 'Needed',
       false: 'Not needed'
@@ -85,6 +89,7 @@ const operationalNeeds: TranslationOperationalNeeds = {
     label: '	Model Plan section',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 1.05,
     options: {
       BASICS: 'Model Basics',
       GENERAL_CHARACTERISTICS: 'General characteristics',

@@ -6,7 +6,8 @@
     "label": "ID number",
     "sublabel": "Please include the prefix. Ex. TDL-123456",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.01
   },
   "title": {
     "gqlField": "title",
@@ -14,7 +15,8 @@
     "dbField": "title",
     "label": "TDL title",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.02
   },
   "dateInitiated": {
     "gqlField": "dateInitiated",
@@ -23,7 +25,8 @@
     "label": "Initiated date",
     "sublabel": "mm/dd/yyyy",
     "dataType": "DATE",
-    "formType": "DATEPICKER"
+    "formType": "DATEPICKER",
+    "order": 1.03
   },
   "note": {
     "gqlField": "note",
@@ -32,6 +35,7 @@
     "label": "Optional notes",
     "sublabel": "Add any details about this TDL that would be helpful to know at a glance",
     "dataType": "STRING",
-    "formType": "TEXTAREA"
+    "formType": "TEXTAREA",
+    "order": 1.04
   }
 }

@@ -14,6 +14,7 @@ export const basics: TranslationBasics = {
     label: 'Primary model category',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.RADIO,
+    order: 1.01,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'additionalModelCategories'
@@ -52,6 +53,7 @@ export const basics: TranslationBasics = {
       'If your model doesn’t fall into any additional categories, you can skip this.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.CHECKBOX,
+    order: 1.02,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'modelCategory'
@@ -87,7 +89,8 @@ export const basics: TranslationBasics = {
     dbField: 'ams_model_id',
     label: 'Model ID',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.03
   },
   demoCode: {
     gqlField: 'demoCode',
@@ -95,7 +98,8 @@ export const basics: TranslationBasics = {
     dbField: 'demo_code',
     label: 'Demo code(s)',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.04
   },
   cmsCenters: {
     gqlField: 'cmsCenters',
@@ -104,6 +108,7 @@ export const basics: TranslationBasics = {
     label: 'CMS component',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 1.05,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'cmmiGroups'
@@ -131,6 +136,7 @@ export const basics: TranslationBasics = {
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 1.06,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'cmsCenters'
@@ -152,6 +158,7 @@ export const basics: TranslationBasics = {
     label: 'Model Type',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 2.01,
     options: {
       VOLUNTARY: 'Voluntary',
       MANDATORY_NATIONAL: 'Mandatory national',
@@ -176,6 +183,7 @@ export const basics: TranslationBasics = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.02,
     isOtherType: true,
     otherParentField: 'modelType',
     filterGroups: [
@@ -191,7 +199,8 @@ export const basics: TranslationBasics = {
     dbField: 'problem',
     label: 'Problem statement',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.03
   },
   goal: {
     gqlField: 'goal',
@@ -202,6 +211,7 @@ export const basics: TranslationBasics = {
       'Please include the high level goal of the program and a description of the project.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.04,
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,
@@ -215,7 +225,8 @@ export const basics: TranslationBasics = {
     dbField: 'test_interventions',
     label: 'Test Interventions',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.05
   },
   note: {
     gqlField: 'note',
@@ -225,7 +236,8 @@ export const basics: TranslationBasics = {
     isNote: true,
     parentReferencesLabel: 'Model basics',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.06
   },
   completeICIP: {
     gqlField: 'completeICIP',
@@ -234,6 +246,7 @@ export const basics: TranslationBasics = {
     label: 'Complete ICIP',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.01,
     filterGroups: [ModelViewFilter.IPC]
   },
   clearanceStarts: {
@@ -243,6 +256,7 @@ export const basics: TranslationBasics = {
     label: 'Clearance start date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.02,
     filterGroups: [ModelViewFilter.IPC]
   },
   clearanceEnds: {
@@ -252,6 +266,7 @@ export const basics: TranslationBasics = {
     label: 'Clearance end date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.03,
     filterGroups: [ModelViewFilter.IPC]
   },
   announced: {
@@ -261,6 +276,7 @@ export const basics: TranslationBasics = {
     label: 'Announce model',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.04,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
@@ -275,6 +291,7 @@ export const basics: TranslationBasics = {
     label: 'Application start date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.05,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'applicationsEnd'
@@ -288,6 +305,7 @@ export const basics: TranslationBasics = {
     label: 'Application end date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.06,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'applicationsStart'
@@ -301,6 +319,7 @@ export const basics: TranslationBasics = {
     label: 'Performance start date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.07,
     adjacentPositioning: {
       position: 'left',
       adjacentField: 'performancePeriodEnds'
@@ -321,6 +340,7 @@ export const basics: TranslationBasics = {
     label: 'Performance end date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.08,
     adjacentPositioning: {
       position: 'right',
       adjacentField: 'performancePeriodStarts'
@@ -342,7 +362,8 @@ export const basics: TranslationBasics = {
     isNote: true,
     parentReferencesLabel: 'Timeline',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.09
   },
   wrapUpEnds: {
     gqlField: 'wrapUpEnds',
@@ -351,6 +372,7 @@ export const basics: TranslationBasics = {
     label: 'Model wrap-up end date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.1,
     filterGroups: [ModelViewFilter.IPC]
   },
   phasedIn: {
@@ -363,6 +385,7 @@ export const basics: TranslationBasics = {
       'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 3.11,
     isPageStart: true,
     options: {
       true: 'Yes',
@@ -379,6 +402,7 @@ export const basics: TranslationBasics = {
     otherParentField: 'phasedIn',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.12,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   readyForReviewBy: {
@@ -388,6 +412,7 @@ export const basics: TranslationBasics = {
     label: 'This section of the Model Plan (Model basics) is ready for review.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
+    order: 3.13,
     tableReference: 'user_account',
     hideFromReadonly: true
   },
@@ -398,6 +423,7 @@ export const basics: TranslationBasics = {
     label: 'Ready for review date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.14,
     hideFromReadonly: true
   },
   readyForClearanceBy: {
@@ -408,6 +434,7 @@ export const basics: TranslationBasics = {
       'This section of the Model Plan (Model basics) is ready for clearance.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
+    order: 3.15,
     tableReference: 'user_account',
     hideFromReadonly: true
   },
@@ -418,6 +445,7 @@ export const basics: TranslationBasics = {
     label: 'Ready for clearance date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.16,
     hideFromReadonly: true
   },
   status: {
@@ -427,6 +455,7 @@ export const basics: TranslationBasics = {
     label: 'Model Plan status',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 3.17,
     options: {
       READY: 'ready',
       IN_PROGRESS: 'in progress',
@@ -462,7 +491,9 @@ export const basicsMisc: Record<string, string> = {
   otherIdentifiersInfo1: 'These are created in ',
   otherIdentifiersInfo2: 'CMMI Analysis & Management System (AMS).',
   otherIdentifiersInfo3:
-    ' Skip these fields until your model has been added to AMS. Not all models will have demo codes.'
+    ' Skip these fields until your model has been added to AMS. Not all models will have demo codes.',
+  otherIdentifiersInfo_noEditAccess:
+    ' They will be blank until the model is added to AMS. Not all models will have demo codes.'
 };
 
 export default basics;

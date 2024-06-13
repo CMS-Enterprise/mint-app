@@ -18,6 +18,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     exportLabel: 'Who are the beneficiaries of this model?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
+    order: 1.01,
     multiSelectLabel: 'Selected groups',
     options: {
       DISEASE_SPECIFIC: 'Disease-specific',
@@ -48,6 +49,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       'Please describe the disease-specific groups this model will impact.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 1.02,
     isOtherType: true,
     otherParentField: 'beneficiaries',
     filterGroups: [ModelViewFilter.MDM]
@@ -59,6 +61,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please describe the other groups this model will impact.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.03,
     isOtherType: true,
     otherParentField: 'beneficiaries',
     filterGroups: [ModelViewFilter.MDM]
@@ -72,6 +75,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     otherParentField: 'beneficiaries',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.04,
     filterGroups: [ModelViewFilter.MDM]
   },
   treatDualElligibleDifferent: {
@@ -84,6 +88,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       'Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 1.05,
     options: {
       YES: 'Yes',
       NO: 'No',
@@ -101,6 +106,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'How so?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.06,
     isOtherType: true,
     otherParentField: 'treatDualElligibleDifferent',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -114,6 +120,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     otherParentField: 'treatDualElligibleDifferent',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.07,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   excludeCertainCharacteristics: {
@@ -126,6 +133,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       'Should beneficiaries with certain characteristics or enrollments be excluded? How so, what are the exclusionary criteria?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
+    order: 1.08,
     options: {
       YES: 'Yes',
       NO: 'No',
@@ -143,6 +151,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'What are the exclusionary criteria?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.09,
     isOtherType: true,
     otherParentField: 'excludeCertainCharacteristics',
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
@@ -156,6 +165,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     otherParentField: 'excludeCertainCharacteristics',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 1.1,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   numberPeopleImpacted: {
@@ -165,6 +175,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'How many people do you think will be impacted by this model?',
     dataType: TranslationDataType.NUMBER,
     formType: TranslationFormType.RANGEINPUT,
+    order: 2.01,
     isPageStart: true,
     adjacentPositioning: {
       position: 'left',
@@ -179,6 +190,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'What is your level of confidence on this estimate?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.RADIO,
+    order: 2.02,
     options: {
       NOT_AT_ALL: 'Not at all confident',
       SLIGHTLY: 'Slightly confident',
@@ -200,6 +212,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     otherParentField: 'numberPeopleImpacted',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.03,
     filterGroups: [ModelViewFilter.MDM]
   },
   beneficiarySelectionMethod: {
@@ -211,6 +224,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     exportLabel: 'How will you choose beneficiaries?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
+    order: 2.04,
     multiSelectLabel: 'Selected methods',
     options: {
       HISTORICAL: 'Historical claims',
@@ -233,6 +247,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Please describe the other method for choosing beneficiaries.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.05,
     isOtherType: true,
     filterGroups: [ModelViewFilter.CMMI]
   },
@@ -245,6 +260,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     otherParentField: 'beneficiarySelectionMethod',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 2.06,
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiarySelectionFrequency: {
@@ -254,6 +270,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'How frequently are beneficiaries added?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 3.01,
     isPageStart: true,
     options: frequencyOptions,
     optionsRelatedInfo: {
@@ -274,6 +291,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     exportLabel: 'Please specify continually',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 3.02,
     isOtherType: true,
     otherParentField: 'beneficiarySelectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -286,6 +304,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 3.03,
     isOtherType: true,
     otherParentField: 'beneficiarySelectionFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -299,6 +318,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     otherParentField: 'beneficiarySelectionFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 3.04,
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryRemovalFrequency: {
@@ -308,6 +328,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'How frequently are beneficiaries removed?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 3.05,
     options: frequencyOptions,
     optionsRelatedInfo: {
       ANNUALLY: '',
@@ -326,6 +347,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     exportLabel: 'Please specify continually',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 3.06,
     isOtherType: true,
     otherParentField: 'beneficiaryRemovalFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -338,6 +360,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     exportLabel: 'Please specify other',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 3.07,
     isOtherType: true,
     otherParentField: 'beneficiaryRemovalFrequency',
     filterGroups: [ModelViewFilter.CMMI]
@@ -351,6 +374,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     otherParentField: 'beneficiaryRemovalFrequency',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
+    order: 3.08,
     filterGroups: [ModelViewFilter.CMMI]
   },
   beneficiaryOverlap: {
@@ -360,6 +384,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Will the beneficiaries overlap with other models?',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.RADIO,
+    order: 3.09,
     options: {
       YES_NEED_POLICIES:
         'Yes, we expect to develop policies to manage the overlaps',
@@ -377,6 +402,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     otherParentField: 'beneficiaryOverlap',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.1,
     filterGroups: [ModelViewFilter.MDM]
   },
   precedenceRules: {
@@ -388,6 +414,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       'i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 3.11,
     options: {
       YES: 'Yes',
       NO: 'No'
@@ -406,6 +433,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     exportLabel: 'Please describe yes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.121,
     isOtherType: true,
     otherParentField: 'precedenceRules',
     filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
@@ -418,6 +446,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     exportLabel: 'Please describe no',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.13,
     isOtherType: true,
     otherParentField: 'precedenceRules',
     filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
@@ -431,6 +460,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     otherParentField: 'precedenceRules',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
+    order: 3.14,
     filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
   },
   readyForReviewBy: {
@@ -441,6 +471,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       'This section of the Model Plan (Beneficiaries) is ready for review.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
+    order: 3.15,
     tableReference: 'user_account',
     hideFromReadonly: true
   },
@@ -451,6 +482,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Ready for review date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.16,
     hideFromReadonly: true
   },
   readyForClearanceBy: {
@@ -461,6 +493,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       'This section of the Model Plan (Beneficiaries) is ready for clearance.',
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
+    order: 3.17,
     tableReference: 'user_account',
     hideFromReadonly: true
   },
@@ -471,6 +504,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Ready for clearance date',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
+    order: 3.18,
     hideFromReadonly: true
   },
   status: {
@@ -480,6 +514,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Model Plan status',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
+    order: 3.19,
     options: {
       READY: 'Ready',
       IN_PROGRESS: 'In progress',

@@ -12,7 +12,8 @@ const operationalSolutions: TranslationOperationalSolutions = {
     dbField: 'name',
     label: 'Solution',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.01
   },
   isOther: {
     gqlField: 'isOther',
@@ -21,6 +22,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     label: 'Is this a solution considered an other option?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.BOOLEAN,
+    order: 1.02,
     options: {
       true: 'Yes',
       false: 'No'
@@ -33,7 +35,8 @@ const operationalSolutions: TranslationOperationalSolutions = {
     label: 'Please add a name for your solution or contractor',
     exportLabel: 'Operational solution',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.03
   },
   otherHeader: {
     gqlField: 'otherHeader',
@@ -41,16 +44,17 @@ const operationalSolutions: TranslationOperationalSolutions = {
     dbField: 'other_header',
     label: 'Please add a name for your solution or contractor',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.04
   },
   pocName: {
     gqlField: 'pocName',
     goField: 'PocName',
     dbField: 'poc_name',
     label: 'Point of contact',
-    // sublabel: '',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.05
   },
   pocEmail: {
     gqlField: 'pocEmail',
@@ -58,7 +62,8 @@ const operationalSolutions: TranslationOperationalSolutions = {
     dbField: 'poc_email',
     label: 'Email',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.06
   },
   mustStartDts: {
     gqlField: 'mustStartDts',
@@ -67,7 +72,8 @@ const operationalSolutions: TranslationOperationalSolutions = {
     label: 'Must start by',
     sublabel: 'mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
-    formType: TranslationFormType.DATEPICKER
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.07
   },
   mustFinishDts: {
     gqlField: 'mustFinishDts',
@@ -76,7 +82,8 @@ const operationalSolutions: TranslationOperationalSolutions = {
     label: 'Must be ready by',
     sublabel: 'mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
-    formType: TranslationFormType.DATEPICKER
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.08
   },
   needed: {
     gqlField: 'needed',
@@ -85,6 +92,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     label: 'Is the solution needed?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
+    order: 1.09,
     options: {
       true: 'Needed',
       false: 'Not needed'
@@ -99,6 +107,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
       'Select an operational solution or select "Other" if you’ll solve this a different way.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
+    order: 1.1,
     options: {
       INNOVATION: '4innovation',
       ACO_OS: 'Accountable Care Organization - Operational System',
@@ -149,6 +158,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     exportLabel: 'Status',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
+    order: 1.11,
     options: {
       NOT_STARTED: 'Not started',
       ONBOARDING: 'Onboarding',

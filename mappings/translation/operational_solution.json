@@ -5,7 +5,8 @@
     "dbField": "name",
     "label": "Solution",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.01
   },
   "isOther": {
     "gqlField": "isOther",
@@ -14,6 +15,7 @@
     "label": "Is this a solution considered an other option?",
     "dataType": "BOOLEAN",
     "formType": "BOOLEAN",
+    "order": 1.02,
     "options": {
       "true": "Yes",
       "false": "No"
@@ -26,7 +28,8 @@
     "label": "Please add a name for your solution or contractor",
     "exportLabel": "Operational solution",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.03
   },
   "otherHeader": {
     "gqlField": "otherHeader",
@@ -34,7 +37,8 @@
     "dbField": "other_header",
     "label": "Please add a name for your solution or contractor",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.04
   },
   "pocName": {
     "gqlField": "pocName",
@@ -42,7 +46,8 @@
     "dbField": "poc_name",
     "label": "Point of contact",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.05
   },
   "pocEmail": {
     "gqlField": "pocEmail",
@@ -50,7 +55,8 @@
     "dbField": "poc_email",
     "label": "Email",
     "dataType": "STRING",
-    "formType": "TEXT"
+    "formType": "TEXT",
+    "order": 1.06
   },
   "mustStartDts": {
     "gqlField": "mustStartDts",
@@ -59,7 +65,8 @@
     "label": "Must start by",
     "sublabel": "mm/dd/yyyy",
     "dataType": "DATE",
-    "formType": "DATEPICKER"
+    "formType": "DATEPICKER",
+    "order": 1.07
   },
   "mustFinishDts": {
     "gqlField": "mustFinishDts",
@@ -68,7 +75,8 @@
     "label": "Must be ready by",
     "sublabel": "mm/dd/yyyy",
     "dataType": "DATE",
-    "formType": "DATEPICKER"
+    "formType": "DATEPICKER",
+    "order": 1.08
   },
   "needed": {
     "gqlField": "needed",
@@ -77,6 +85,7 @@
     "label": "Is the solution needed?",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",
+    "order": 1.09,
     "options": {
       "true": "Needed",
       "false": "Not needed"
@@ -90,6 +99,7 @@
     "sublabel": "Select an operational solution or select \"Other\" if you’ll solve this a different way.",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",
+    "order": 1.1,
     "options": {
       "INNOVATION": "4innovation",
       "ACO_OS": "Accountable Care Organization - Operational System",
@@ -140,6 +150,7 @@
     "exportLabel": "Status",
     "dataType": "BOOLEAN",
     "formType": "CHECKBOX",
+    "order": 1.11,
     "options": {
       "NOT_STARTED": "Not started",
       "ONBOARDING": "Onboarding",

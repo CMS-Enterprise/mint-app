@@ -2,10 +2,12 @@ linters-settings:
   gosec:
     # Currently excluding rule G602 due to issue slowing down execution
     # https://github.com/securego/gosec/issues/1010
+    # If we ever re-enable this rule, make sure https://github.com/securego/gosec/issues/1005 is also fixed
     excludes:
       - "G602"
   govet:
-    check-shadowing: true
+    enable:
+      - shadow
     settings:
       printf:
         funcs:
@@ -19,6 +21,12 @@ linters-settings:
     local-prefixes: github.com/cmsgov/mint-app
   revive:
     confidence: 0.1 # Default is 0.8. We want to ignore things that have an extremely low confidence level
+  exhaustive:
+    # Presence of "default" case in switch statements satisfies exhaustiveness,
+    # even if all enum members are not listed.
+    # Default: false
+    default-signifies-exhaustive: true
+
 
 linters:
   enable:
@@ -30,14 +38,22 @@ linters:
      - ineffassign
      - revive
      - staticcheck
+     - stylecheck
      - gosimple #will be deprecated in golangci-lint v2.0 in favor of staticcheck https://github.com/golangci/golangci-lint/issues/357
      - unused #will be deprecated in golangci-lint v2.0 in favor of staticcheck https://github.com/golangci/golangci-lint/issues/357
+     - exhaustive
+     - sqlclosecheck
   disable:
     - errcheck #requires patching code
 issues:
   exclude-use-default: false
+  exclude:
+    - "ST1000" # Exclude package comments from `stylecheck`
+  exclude-rules:
+    - text: 'shadow: declaration of "err" shadows declaration at'
+      linters: [ govet ]
 
 run:
   # timeout for analysis, e.g. 30s, 5m, default is 1m
-  deadline: 8m
+  timeout: 8m
   concurrency: 1

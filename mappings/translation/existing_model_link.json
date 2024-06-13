@@ -6,6 +6,7 @@
     "label": "Existing Model ID",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.01,
     "tableReference": "existing_model"
   },
   "currentModelPlanID": {
@@ -15,6 +16,7 @@
     "label": "Current Model Plan ID",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.02,
     "tableReference": "model_plan"
   },
   "fieldName": {
@@ -24,6 +26,7 @@
     "label": "What question is this link for?",
     "dataType": "STRING",
     "formType": "TEXT",
+    "order": 1.03,
     "options": {
       "GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH": "Which existing models does your proposed track/model most closely resemble?",
       "GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH": "Which existing models is participation in a precondition for participation in this model?"

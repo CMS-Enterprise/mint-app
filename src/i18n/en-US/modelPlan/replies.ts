@@ -14,6 +14,7 @@ export const replies: TranslationReplies = {
     sublabel: 'This will display with your name to help others identify you.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
+    order: 1.01,
     options: {
       CMS_SYSTEM_SERVICE_TEAM: 'CMS System/Service Team',
       IT_ARCHITECT: 'IT Architect',
@@ -33,7 +34,8 @@ export const replies: TranslationReplies = {
     dbField: 'user_role_description',
     label: 'Enter a short description for your role',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXT
+    formType: TranslationFormType.TEXT,
+    order: 1.02
   },
   content: {
     gqlField: 'content',
@@ -43,7 +45,8 @@ export const replies: TranslationReplies = {
     sublabel:
       'To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify.',
     dataType: TranslationDataType.STRING,
-    formType: TranslationFormType.TEXTAREA
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.03
   },
   isAssessment: {
     gqlField: 'isAssessment',
@@ -52,6 +55,7 @@ export const replies: TranslationReplies = {
     label: 'Is the user an assessment user?',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.BOOLEAN,
+    order: 1.04,
     options: {
       true: 'Yes',
       false: 'No'
