@@ -4,6 +4,7 @@ import { Grid } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
+import { formatDateUtc } from 'utils/date';
 
 type DatesChangedProps = {
   modelPlan: {
@@ -62,12 +63,12 @@ const DatesChanged = ({
           oldRangeEnd
         }) => {
           const dateOrNoDate = (date: string | undefined | null) => {
-            return (
-              date ?? (
-                <span className="text-italic">
-                  {notificationsT(`index.datesChanged.noDateEntered`)}
-                </span>
-              )
+            return date ? (
+              formatDateUtc(date, 'MM/dd/yyyy')
+            ) : (
+              <span className="text-italic">
+                {notificationsT(`index.datesChanged.noDateEntered`)}
+              </span>
             );
           };
 
