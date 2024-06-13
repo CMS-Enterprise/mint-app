@@ -713,6 +713,7 @@ export type Mutation = {
   updatePlanTDL: PlanTdl;
   /** Sets the notification preferences of a user. */
   updateUserNotificationPreferences: UserNotificationPreferences;
+  updateUserViewCustomization: UserViewCustomization;
   uploadNewPlanDocument: PlanDocument;
 };
 
@@ -994,6 +995,12 @@ export type MutationUpdatePlanTdlArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdateUserNotificationPreferencesArgs = {
   changes: UserNotificationPreferencesChanges;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateUserViewCustomizationArgs = {
+  input: UserViewCustomizationChanges;
 };
 
 
@@ -2485,6 +2492,7 @@ export type Query = {
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
+  userViewCustomization: UserViewCustomization;
 };
 
 
@@ -2583,6 +2591,12 @@ export type QueryTaskListSectionLocksArgs = {
 /** Query definition for the schema */
 export type QueryUserAccountArgs = {
   username: Scalars['String']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryUserViewCustomizationArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 export enum RecruitmentType {
@@ -2966,6 +2980,32 @@ export type UserNotifications = {
   /** This renders only the unread notifications */
   unreadNotifications: Array<UserNotification>;
 };
+
+export type UserViewCustomization = {
+  __typename: 'UserViewCustomization';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount: UserAccount;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  possibleOperationalSolutions?: Maybe<Array<Scalars['UUID']['output']>>;
+  userId: Scalars['UUID']['output'];
+  viewCustomization: Array<ViewCustomizationType>;
+};
+
+export type UserViewCustomizationChanges = {
+  viewCustomization: Array<ViewCustomizationType>;
+};
+
+export enum ViewCustomizationType {
+  ALL_MODEL_PLANS = 'ALL_MODEL_PLANS',
+  FOLLOWED_MODELS = 'FOLLOWED_MODELS',
+  MODELS_BY_OPERATIONAL_SOLUTION = 'MODELS_BY_OPERATIONAL_SOLUTION',
+  MODELS_WITH_CR_TDL = 'MODELS_WITH_CR_TDL',
+  MY_MODEL_PLANS = 'MY_MODEL_PLANS'
+}
 
 export enum WaiverType {
   FRAUD_ABUSE = 'FRAUD_ABUSE',
