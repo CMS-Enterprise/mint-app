@@ -829,6 +829,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'data_to_send_particicipants',
     label: 'What data will you send to participants? Select all that apply.',
     readonlyLabel: 'What data will you send to participants?',
+    multiSelectLabel: 'Selected data',
     dataType: 'enum',
     formType: 'multiSelect',
     options: {
