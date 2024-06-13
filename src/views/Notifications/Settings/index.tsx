@@ -580,6 +580,7 @@ const NotificationSettings = () => {
                           <Field
                             as={Select}
                             id="notification-setting-whichModel"
+                            data-testid="notification-setting-whichModel"
                             name="datesChangedNotificationType"
                             value={values.datesChangedNotificationType}
                             disabled={!values.datesChanged.length}

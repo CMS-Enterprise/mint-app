@@ -493,6 +493,95 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                   />
                 </div>
               </div>
+              <div
+                class="mobile:grid-col-6"
+                data-testid="grid"
+              >
+                <p
+                  class="text-wrap margin-y-105"
+                >
+                  When model dates change
+                </p>
+              </div>
+              <div
+                class="mobile:grid-col-3"
+                data-testid="grid"
+              >
+                <div
+                  class="usa-checkbox padding-left-2"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    data-testid="notification-setting-email-datesChanged"
+                    id="notification-setting-email-datesChanged"
+                    name="datesChanged"
+                    type="checkbox"
+                    value="EMAIL"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="notification-setting-email-datesChanged"
+                  />
+                </div>
+              </div>
+              <div
+                class="mobile:grid-col-3"
+                data-testid="grid"
+              >
+                <div
+                  class="usa-checkbox padding-left-2"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    data-testid="notification-setting-in-app-datesChanged"
+                    id="notification-setting-in-app-datesChanged"
+                    name="datesChanged"
+                    type="checkbox"
+                    value="IN_APP"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="notification-setting-in-app-datesChanged"
+                  />
+                </div>
+              </div>
+              <div
+                class="tablet:grid-col-6 tablet:padding-left-3"
+                data-testid="grid"
+              >
+                <label
+                  class="usa-label text-normal margin-top-0"
+                  data-testid="label"
+                  for="notification-setting-whichModel"
+                >
+                  Which models?
+                </label>
+                <select
+                  class="usa-select"
+                  data-testid="notification-setting-whichModel"
+                  disabled=""
+                  id="notification-setting-whichModel"
+                  name="datesChangedNotificationType"
+                >
+                  <option
+                    value="ALL_MODELS"
+                  >
+                    All models
+                  </option>
+                  <option
+                    value="FOLLOWED_MODELS"
+                  >
+                    Models I’m following
+                  </option>
+                  <option
+                    value="MY_MODELS"
+                  >
+                    My Model Plans
+                  </option>
+                </select>
+              </div>
             </div>
             <div
               class="margin-top-6 margin-bottom-3"
