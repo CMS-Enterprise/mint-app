@@ -125,6 +125,7 @@ CREATE TABLE translated_audit_field (
 
     field_name ZERO_STRING NOT NULL,
     field_name_translated ZERO_STRING NOT NULL,
+    field_order REAL NOT NULL,
     
     reference_label ZERO_STRING, --nullable, useful for "note" and "other" columns
     question_type TRANSLATION_QUESTION_TYPE, -- note or other
@@ -142,4 +143,6 @@ CREATE TABLE translated_audit_field (
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by UUID REFERENCES user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE
-)
+);
+
+COMMENT ON COLUMN translated_audit_field.field_order IS 'This is a decimal column that shows the page number as well as the question order in the page number by the decimal number. It is used for consistent ordering or a result set';

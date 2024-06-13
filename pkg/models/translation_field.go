@@ -54,6 +54,7 @@ type TranslationFieldBase struct {
 	DataType         TranslationDataType `json:"dataType"`
 	FormType         TranslationFormType `json:"formType"`
 	IsNote           bool                `json:"isNote"`
+	Order            float64             `json:"Order"`
 	IsOtherType      bool                `json:"isOtherType"`
 	// DB field name for the parent field, used to be able to grab the parent translation
 	OtherParentField *string `json:"otherParentField"`
@@ -90,6 +91,10 @@ func (tfb TranslationFieldBase) GetReferencesLabel(translationDictionary map[str
 	}
 	return nil
 
+}
+
+func (tfb TranslationFieldBase) GetFieldOrder() float64 {
+	return tfb.Order
 }
 
 // GetFormType returns the form type of a translation
@@ -140,6 +145,8 @@ type ITranslationField interface {
 	// Returns the label directly for the field without reference to a parent.
 	GetLabel() string
 	GetReferencesLabel(map[string]ITranslationField) *string
+
+	GetFieldOrder() float64
 
 	HasOptions() bool
 	// Returns options if a translationField has options

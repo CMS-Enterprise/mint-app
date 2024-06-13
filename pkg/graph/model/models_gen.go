@@ -67,8 +67,8 @@ type NDAInfo struct {
 // Represents operational need translation data
 type OperationalNeedTranslation struct {
 	// Name comes from the possible operational need table. It is not returned in an audit
-	Name      models.TranslationField  `json:"name" db:"need_name"`
-	NameOther *models.TranslationField `json:"nameOther,omitempty" db:"name_other"`
+	Name      models.TranslationField `json:"name" db:"need_name"`
+	NameOther models.TranslationField `json:"nameOther" db:"name_other"`
 	// Key comes from the possible operational need table. It is not returned in an audit
 	Key     models.TranslationFieldWithOptions `json:"key" db:"need_key"`
 	Needed  models.TranslationFieldWithOptions `json:"needed" db:"needed"`
@@ -181,11 +181,11 @@ type PlanCRCreateInput struct {
 
 // Represents plan cr translation data
 type PlanCRTranslation struct {
-	IDNumber        models.TranslationField  `json:"idNumber" db:"id_number"`
-	Title           models.TranslationField  `json:"title" db:"title"`
-	DateInitiated   models.TranslationField  `json:"dateInitiated" db:"date_initiated"`
-	DateImplemented *models.TranslationField `json:"dateImplemented,omitempty" db:"date_implemented"`
-	Note            models.TranslationField  `json:"note" db:"note"`
+	IDNumber        models.TranslationField `json:"idNumber" db:"id_number"`
+	Title           models.TranslationField `json:"title" db:"title"`
+	DateInitiated   models.TranslationField `json:"dateInitiated" db:"date_initiated"`
+	DateImplemented models.TranslationField `json:"dateImplemented" db:"date_implemented"`
+	Note            models.TranslationField `json:"note" db:"note"`
 }
 
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
@@ -251,17 +251,17 @@ type PlanDocumentTranslation struct {
 	URL           models.TranslationField            `json:"url" db:"url"`
 	FileName      models.TranslationField            `json:"fileName" db:"file_name"`
 	DocumentType  models.TranslationFieldWithOptions `json:"documentType" db:"document_type"`
-	OtherType     *models.TranslationField           `json:"otherType,omitempty" db:"other_type"`
-	FileType      *models.TranslationField           `json:"fileType,omitempty" db:"file_type"`
+	OtherType     models.TranslationField            `json:"otherType" db:"other_type"`
+	FileType      models.TranslationField            `json:"fileType" db:"file_type"`
 	Restricted    models.TranslationFieldWithOptions `json:"restricted" db:"restricted"`
-	OptionalNotes *models.TranslationField           `json:"optionalNotes,omitempty" db:"optional_notes"`
+	OptionalNotes models.TranslationField            `json:"optionalNotes" db:"optional_notes"`
 }
 
 // Represents plan general characteristics translation data
 type PlanGeneralCharacteristicsTranslation struct {
 	IsNewModel         models.TranslationFieldWithOptionsAndChildren `json:"isNewModel" db:"is_new_model"`
-	CurrentModelPlanID *models.TranslationField                      `json:"currentModelPlanID,omitempty" db:"current_model_plan_id"`
-	ExistingModelID    *models.TranslationField                      `json:"existingModelID,omitempty" db:"existing_model_id"`
+	CurrentModelPlanID models.TranslationField                       `json:"currentModelPlanID" db:"current_model_plan_id"`
+	ExistingModelID    models.TranslationField                       `json:"existingModelID" db:"existing_model_id"`
 	// Existing model doesn't exist in the database, it is returned based on if there is a current model plan ID or current model plan ID returned
 	ExistingModel                                models.TranslationFieldWithParent             `json:"existingModel" db:"existing_model"`
 	ResemblesExistingModel                       models.TranslationFieldWithOptionsAndChildren `json:"resemblesExistingModel" db:"resembles_existing_model"`

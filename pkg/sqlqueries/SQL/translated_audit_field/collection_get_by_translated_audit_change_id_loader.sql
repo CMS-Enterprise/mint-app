@@ -12,6 +12,7 @@ SELECT
     TAF.change_type,
     TAF.field_name,
     TAF.field_name_translated,
+    TAF.field_order,
     TAF.reference_label,
     TAF.question_type,
     TAF.not_applicable_questions,
@@ -27,4 +28,5 @@ SELECT
     TAF.modified_by,
     TAF.modified_dts
 FROM translated_audit_field AS TAF
-INNER JOIN QUERIED_IDS AS qIDs  ON TAF.translated_audit_id = qIDs.translated_audit_id;
+INNER JOIN QUERIED_IDS AS qIDs  ON TAF.translated_audit_id = qIDs.translated_audit_id
+ORDER BY TAF.field_order;

@@ -77,6 +77,7 @@ func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAud
 
 		field := fields[0]
 		suite.Equal(change1.ID, field.TranslatedAuditID)
+		suite.NotNil(field.FieldOrder)
 		return nil
 
 	})
@@ -87,6 +88,7 @@ func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAud
 		suite.Len(fields, change2FieldCount)
 		field := fields[0]
 		suite.Equal(change2.ID, field.TranslatedAuditID)
+		suite.NotNil(field.FieldOrder)
 		return nil
 	})
 	err2 := g.Wait()

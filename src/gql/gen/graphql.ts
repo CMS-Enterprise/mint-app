@@ -1164,7 +1164,7 @@ export type OperationalNeedTranslation = {
   key: TranslationFieldWithOptions;
   /** Name comes from the possible operational need table. It is not returned in an audit */
   name: TranslationField;
-  nameOther?: Maybe<TranslationField>;
+  nameOther: TranslationField;
   needed: TranslationFieldWithOptions;
   section: TranslationFieldWithOptions;
 };
@@ -1645,7 +1645,7 @@ export type PlanCrCreateInput = {
 /** Represents plan cr translation data */
 export type PlanCrTranslation = {
   __typename: 'PlanCRTranslation';
-  dateImplemented?: Maybe<TranslationField>;
+  dateImplemented: TranslationField;
   dateInitiated: TranslationField;
   idNumber: TranslationField;
   note: TranslationField;
@@ -1795,10 +1795,10 @@ export type PlanDocumentTranslation = {
   __typename: 'PlanDocumentTranslation';
   documentType: TranslationFieldWithOptions;
   fileName: TranslationField;
-  fileType?: Maybe<TranslationField>;
+  fileType: TranslationField;
   isLink: TranslationField;
-  optionalNotes?: Maybe<TranslationField>;
-  otherType?: Maybe<TranslationField>;
+  optionalNotes: TranslationField;
+  otherType: TranslationField;
   restricted: TranslationFieldWithOptions;
   url: TranslationField;
 };
@@ -2027,10 +2027,10 @@ export type PlanGeneralCharacteristicsTranslation = {
   communityPartnersInvolved: TranslationFieldWithOptions;
   communityPartnersInvolvedDescription: TranslationField;
   communityPartnersInvolvedNote: TranslationField;
-  currentModelPlanID?: Maybe<TranslationField>;
+  currentModelPlanID: TranslationField;
   /** Existing model doesn't exist in the database, it is returned based on if there is a current model plan ID or current model plan ID returned */
   existingModel: TranslationFieldWithParent;
-  existingModelID?: Maybe<TranslationField>;
+  existingModelID: TranslationField;
   geographiesRegionTypes: TranslationFieldWithOptionsAndParent;
   geographiesStatesAndTerritories: TranslationFieldWithOptionsAndParent;
   geographiesTargeted: TranslationFieldWithOptionsAndChildren;
@@ -3462,6 +3462,8 @@ export type TranslatedAuditField = {
   dataType?: Maybe<TranslationDataType>;
   fieldName: Scalars['String']['output'];
   fieldNameTranslated: Scalars['String']['output'];
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
+  fieldOrder: Scalars['Float']['output'];
   formType?: Maybe<TranslationFormType>;
   id: Scalars['UUID']['output'];
   metaData: TranslatedAuditFieldMetaData;
@@ -3614,7 +3616,7 @@ export type TranslationField = {
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
-  order: Scalars['Int']['output'];
+  order: Scalars['Float']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
   /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
@@ -3644,7 +3646,7 @@ export type TranslationFieldWithOptions = {
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   options: Scalars['Map']['output'];
   /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
-  order: Scalars['Int']['output'];
+  order: Scalars['Float']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
   /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
@@ -3675,7 +3677,7 @@ export type TranslationFieldWithOptionsAndChildren = {
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   options: Scalars['Map']['output'];
   /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
-  order: Scalars['Int']['output'];
+  order: Scalars['Float']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
   /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
@@ -3705,7 +3707,7 @@ export type TranslationFieldWithOptionsAndParent = {
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   options: Scalars['Map']['output'];
   /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
-  order: Scalars['Int']['output'];
+  order: Scalars['Float']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
   /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
@@ -3734,7 +3736,7 @@ export type TranslationFieldWithParent = {
   label: Scalars['String']['output'];
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
-  order: Scalars['Int']['output'];
+  order: Scalars['Float']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
   /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
@@ -3766,7 +3768,7 @@ export type TranslationFieldWithParentAndChildren = {
   multiSelectLabel?: Maybe<Scalars['String']['output']>;
   options: Scalars['Map']['output'];
   /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
-  order: Scalars['Int']['output'];
+  order: Scalars['Float']['output'];
   /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
   otherParentField?: Maybe<Scalars['String']['output']>;
   /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */

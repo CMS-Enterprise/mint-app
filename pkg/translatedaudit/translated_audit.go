@@ -237,6 +237,7 @@ func translateField(
 	translatedField := models.NewTranslatedAuditField(constants.GetSystemAccountUUID(),
 		fieldName,
 		translatedLabel,
+		translationInterface.GetFieldOrder(),
 		old,
 		translatedOld,
 		new,
