@@ -491,7 +491,9 @@ export const basicsMisc: Record<string, string> = {
   otherIdentifiersInfo1: 'These are created in ',
   otherIdentifiersInfo2: 'CMMI Analysis & Management System (AMS).',
   otherIdentifiersInfo3:
-    ' Skip these fields until your model has been added to AMS. Not all models will have demo codes.'
+    ' Skip these fields until your model has been added to AMS. Not all models will have demo codes.',
+  otherIdentifiersInfo_noEditAccess:
+    ' They will be blank until the model is added to AMS. Not all models will have demo codes.'
 };
 
 export default basics;

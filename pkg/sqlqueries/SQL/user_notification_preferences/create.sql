@@ -7,6 +7,7 @@ INSERT INTO public.user_notification_preferences(
     tagged_in_discussion_reply,
     new_discussion_reply,
     model_plan_shared,
+    new_model_plan,
     created_by
 )
 VALUES (
@@ -18,6 +19,7 @@ VALUES (
     :tagged_in_discussion_reply,
     :new_discussion_reply,
     :model_plan_shared,
+    :new_model_plan,
     :created_by
 )
 RETURNING
@@ -29,7 +31,8 @@ tagged_in_discussion,
 tagged_in_discussion_reply,
 new_discussion_reply,
 model_plan_shared,
+new_model_plan,
 created_by,
 created_dts,
 modified_by,
-modified_dts;    
+modified_dts;

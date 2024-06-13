@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import {
   Grid,
   Link as TrussLink,
@@ -10,12 +11,14 @@ import {
 import classNames from 'classnames';
 import { GetAllBasicsQuery, useGetAllBasicsQuery } from 'gql/gen/graphql';
 import i18next from 'i18next';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
+import { isAssessment } from 'utils/user';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -54,6 +57,11 @@ const ReadOnlyModelBasics = ({
       id: modelID
     }
   });
+
+  const flags = useFlags();
+  const isCollaborator = data?.modelPlan?.isCollaborator;
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const hasEditAccess: boolean = isCollaborator || isAssessment(groups, flags);
 
   const allBasicsData = (data?.modelPlan.basics ||
     {}) as GetAllBasicsQuery['modelPlan']['basics'];
@@ -185,12 +193,14 @@ const ReadOnlyModelBasics = ({
                   {basicsMiscT('otherIdentifiersInfo2')}
                 </span>
 
-                {basicsMiscT('otherIdentifiersInfo3')}
+                {hasEditAccess
+                  ? basicsMiscT('otherIdentifiersInfo3')
+                  : basicsMiscT('otherIdentifiersInfo_noEditAccess')}
               </p>
 
               <Grid row gap>
                 <Grid
-                  desktop={{ col: 6 }}
+                  col={6}
                   className={classNames({
                     'padding-bottom-2': isTablet
                   })}
@@ -205,7 +215,7 @@ const ReadOnlyModelBasics = ({
                     </div>
                   )}
                 </Grid>
-                <Grid desktop={{ col: 6 }}>
+                <Grid col={6}>
                   <p className="text-bold margin-top-0 margin-bottom-1">
                     {basicsT('demoCode.label')}
                   </p>

@@ -4,6 +4,14 @@
 <p>Created by {{.UserName}}</p>
 <br/>
 <p>
-  <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list">View this Model Plan in MINT</a>
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only">View this Model Plan in MINT</a>
 </p>
-<br>
+<br/>
+
+{{if .ShowFooter}}
+  <hr>
+  <br/>
+  <p>
+    You are currently subscribed to notifications about new Model Plans. If you no longer wish to receive these email notifications, please <a href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=NEW_MODEL_PLAN">unsubscribe</a> or change your <a href="{{.ClientAddress}}/notifications/settings">notification settings</a>.
+  </p>
+{{end}}
