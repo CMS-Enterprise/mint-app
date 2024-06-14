@@ -63,6 +63,7 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
             {changeRecords[0].actorName}{' '}
             <Trans
               i18nKey="changeHistory:change"
+              shouldUnescape
               count={changeCount}
               values={{
                 count: changeCount,

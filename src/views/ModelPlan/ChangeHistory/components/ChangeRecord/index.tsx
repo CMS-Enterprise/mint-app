@@ -35,6 +35,7 @@ export type ChangeRecordType = NonNullable<
 
 type ChangeRecordProps = {
   changeRecord: ChangeRecordType;
+  index: number;
 };
 
 type SingleChangeProps = {
@@ -260,7 +261,7 @@ export const ChangedQuestion = ({
 };
 
 // Render a single change record, showing the actor, the date, and the fields that were changed
-const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
+const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
   const { t } = useTranslation('changeHistory');
 
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -310,6 +311,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
           {changeRecordType === 'New plan' && (
             <Trans
               i18nKey="changeHistory:planCreate"
+              shouldUnescape
               values={{
                 plan_name: changeRecord.translatedFields.find(
                   field => field.fieldName === 'model_name'
@@ -328,6 +330,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
             changeRecordType === 'Status update') && (
             <Trans
               i18nKey="changeHistory:taskStatusUpdate"
+              shouldUnescape
               values={{
                 section: t(`sections.${changeRecord.tableName}`),
                 status: changeRecord.translatedFields.find(
@@ -372,6 +375,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               return (
                 <Trans
                   i18nKey={`changeHistory:team${teamChangeType}`}
+                  shouldUnescape
                   values={{
                     action: t(`teamChangeType.${teamChangeType}`),
                     collaborator,
@@ -391,6 +395,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               return (
                 <Trans
                   i18nKey="changeHistory:documentUpdate"
+                  shouldUnescape
                   values={{
                     isLink: documentType(changeRecord) ? ' link' : '',
                     action: t(
@@ -421,6 +426,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
               return (
                 <Trans
                   i18nKey="changeHistory:crTdlUpdate"
+                  shouldUnescape
                   values={{
                     action: t(`auditUpdateType.${changeRecord.action}`),
                     crTdlName,
@@ -458,6 +464,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
                 <>
                   <Trans
                     i18nKey={`changeHistory:${changeRecord.tableName}Answered`}
+                    shouldUnescape
                     values={{
                       date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                       time: formatTime(changeRecord.date)
@@ -526,6 +533,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
             changeRecordType === 'Operational need update') && (
             <Trans
               i18nKey="changeHistory:change"
+              shouldUnescape
               count={changeRecord.translatedFields.length}
               values={{
                 count: changeRecord.translatedFields.length,
@@ -558,7 +566,7 @@ const ChangeRecord = ({ changeRecord }: ChangeRecordProps) => {
       {showMoreData && (
         <CollapsableLink
           className="margin-left-5"
-          id={changeRecord.id}
+          id={`change-record-${index}`}
           label={t('showDetails')}
           closeLabel={t('hideDetails')}
           labelPosition="bottom"
