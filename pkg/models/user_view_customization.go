@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 )
 
 type ViewCustomizationType string
@@ -16,8 +17,7 @@ const (
 
 type UserViewCustomization struct {
 	baseStruct
-	ID                           uuid.UUID               `json:"id"`
-	UserID                       uuid.UUID               `json:"userId"`
-	ViewCustomization            []ViewCustomizationType `json:"viewCustomization"`
-	PossibleOperationalSolutions []uuid.UUID             `json:"possibleOperationalSolutions"`
+	UserID                       uuid.UUID      `json:"userId" db:"user_id"`
+	ViewCustomization            pq.StringArray `json:"viewCustomization" db:"view_customization"`
+	PossibleOperationalSolutions []uuid.UUID    `json:"possibleOperationalSolutions" db:"possible_operational_solutions"`
 }

@@ -1000,7 +1000,7 @@ export type MutationUpdateUserNotificationPreferencesArgs = {
 
 /** Mutations definition for the schema */
 export type MutationUpdateUserViewCustomizationArgs = {
-  input: UserViewCustomizationChanges;
+  changes: UserViewCustomizationChanges;
 };
 
 
@@ -2593,12 +2593,6 @@ export type QueryUserAccountArgs = {
   username: Scalars['String']['input'];
 };
 
-
-/** Query definition for the schema */
-export type QueryUserViewCustomizationArgs = {
-  id: Scalars['UUID']['input'];
-};
-
 export enum RecruitmentType {
   APPLICATION_COLLECTION_TOOL = 'APPLICATION_COLLECTION_TOOL',
   LOI = 'LOI',
@@ -2988,7 +2982,7 @@ export type UserViewCustomization = {
   createdDts: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount: UserAccount;
+  modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   possibleOperationalSolutions?: Maybe<Array<Scalars['UUID']['output']>>;
   userId: Scalars['UUID']['output'];

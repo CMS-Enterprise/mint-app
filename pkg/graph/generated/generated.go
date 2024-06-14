@@ -76,6 +76,7 @@ type ResolverRoot interface {
 	TaggedInPlanDiscussionActivityMeta() TaggedInPlanDiscussionActivityMetaResolver
 	UserNotification() UserNotificationResolver
 	UserNotificationPreferences() UserNotificationPreferencesResolver
+	UserViewCustomization() UserViewCustomizationResolver
 }
 
 type DirectiveRoot struct {
@@ -346,7 +347,7 @@ type ComplexityRoot struct {
 		UpdatePlanPayments                 func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanTdl                      func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateUserNotificationPreferences  func(childComplexity int, changes map[string]interface{}) int
-		UpdateUserViewCustomization        func(childComplexity int, input map[string]interface{}) int
+		UpdateUserViewCustomization        func(childComplexity int, changes map[string]interface{}) int
 		UploadNewPlanDocument              func(childComplexity int, input model.PlanDocumentInput) int
 	}
 
@@ -1082,7 +1083,7 @@ type ComplexityRoot struct {
 		SearchOktaUsers                   func(childComplexity int, searchTerm string) int
 		TaskListSectionLocks              func(childComplexity int, modelPlanID uuid.UUID) int
 		UserAccount                       func(childComplexity int, username string) int
-		UserViewCustomization             func(childComplexity int, id uuid.UUID) int
+		UserViewCustomization             func(childComplexity int) int
 	}
 
 	Subscription struct {
@@ -1322,7 +1323,7 @@ type MutationResolver interface {
 	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*models.UserNotification, error)
 	MarkAllNotificationsAsRead(ctx context.Context) ([]*models.UserNotification, error)
 	UpdateUserNotificationPreferences(ctx context.Context, changes map[string]interface{}) (*models.UserNotificationPreferences, error)
-	UpdateUserViewCustomization(ctx context.Context, input map[string]interface{}) (*models.UserViewCustomization, error)
+	UpdateUserViewCustomization(ctx context.Context, changes map[string]interface{}) (*models.UserViewCustomization, error)
 }
 type NewDiscussionRepliedActivityMetaResolver interface {
 	ModelPlan(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.ModelPlan, error)
@@ -1504,7 +1505,7 @@ type QueryResolver interface {
 	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error)
 	SearchOktaUsers(ctx context.Context, searchTerm string) ([]*models.UserInfo, error)
-	UserViewCustomization(ctx context.Context, id uuid.UUID) (*models.UserViewCustomization, error)
+	UserViewCustomization(ctx context.Context) (*models.UserViewCustomization, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -1539,6 +1540,9 @@ type UserNotificationPreferencesResolver interface {
 	NewDiscussionReply(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	ModelPlanShared(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	NewModelPlan(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+}
+type UserViewCustomizationResolver interface {
+	ViewCustomization(ctx context.Context, obj *models.UserViewCustomization) ([]models.ViewCustomizationType, error)
 }
 
 type executableSchema struct {
@@ -3146,7 +3150,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdateUserViewCustomization(childComplexity, args["input"].(map[string]interface{})), true
+		return e.complexity.Mutation.UpdateUserViewCustomization(childComplexity, args["changes"].(map[string]interface{})), true
 
 	case "Mutation.uploadNewPlanDocument":
 		if e.complexity.Mutation.UploadNewPlanDocument == nil {
@@ -7884,12 +7888,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		args, err := ec.field_Query_userViewCustomization_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.UserViewCustomization(childComplexity, args["id"].(uuid.UUID)), true
+		return e.complexity.Query.UserViewCustomization(childComplexity), true
 
 	case "Subscription.onLockTaskListSectionContext":
 		if e.complexity.Subscription.OnLockTaskListSectionContext == nil {
@@ -11798,7 +11797,7 @@ type UserViewCustomization {
   createdByUserAccount: UserAccount!
   createdDts: Time!
   modifiedBy: UUID
-  modifiedByUserAccount: UserAccount!
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -11807,12 +11806,12 @@ input UserViewCustomizationChanges @goModel(model: "map[string]interface{}")  {
 }
 
 extend type Query {
-  userViewCustomization(id: UUID!): UserViewCustomization!
+  userViewCustomization: UserViewCustomization!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
-  updateUserViewCustomization(input: UserViewCustomizationChanges!): UserViewCustomization!
+  updateUserViewCustomization(changes: UserViewCustomizationChanges!): UserViewCustomization!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
 }
@@ -12753,14 +12752,14 @@ func (ec *executionContext) field_Mutation_updateUserViewCustomization_args(ctx 
 	var err error
 	args := map[string]interface{}{}
 	var arg0 map[string]interface{}
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
 		arg0, err = ec.unmarshalNUserViewCustomizationChanges2map(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
+	args["changes"] = arg0
 	return args, nil
 }
 
@@ -13064,21 +13063,6 @@ func (ec *executionContext) field_Query_userAccount_args(ctx context.Context, ra
 		}
 	}
 	args["username"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Query_userViewCustomization_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
 	return args, nil
 }
 
@@ -26591,7 +26575,7 @@ func (ec *executionContext) _Mutation_updateUserViewCustomization(ctx context.Co
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateUserViewCustomization(rctx, fc.Args["input"].(map[string]interface{}))
+			return ec.resolvers.Mutation().UpdateUserViewCustomization(rctx, fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -57670,7 +57654,7 @@ func (ec *executionContext) _Query_userViewCustomization(ctx context.Context, fi
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().UserViewCustomization(rctx, fc.Args["id"].(uuid.UUID))
+			return ec.resolvers.Query().UserViewCustomization(rctx)
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
@@ -57741,17 +57725,6 @@ func (ec *executionContext) fieldContext_Query_userViewCustomization(ctx context
 			}
 			return nil, fmt.Errorf("no field named %q was found under type UserViewCustomization", field.Name)
 		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_userViewCustomization_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
 	}
 	return fc, nil
 }
@@ -62361,7 +62334,7 @@ func (ec *executionContext) _UserViewCustomization_viewCustomization(ctx context
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ViewCustomization, nil
+		return ec.resolvers.UserViewCustomization().ViewCustomization(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -62382,8 +62355,8 @@ func (ec *executionContext) fieldContext_UserViewCustomization_viewCustomization
 	fc = &graphql.FieldContext{
 		Object:     "UserViewCustomization",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type ViewCustomizationType does not have child fields")
 		},
@@ -62648,14 +62621,11 @@ func (ec *executionContext) _UserViewCustomization_modifiedByUserAccount(ctx con
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*authentication.UserAccount)
 	fc.Result = res
-	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserViewCustomization_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -77049,10 +77019,41 @@ func (ec *executionContext) _UserViewCustomization(ctx context.Context, sel ast.
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "viewCustomization":
-			out.Values[i] = ec._UserViewCustomization_viewCustomization(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserViewCustomization_viewCustomization(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "possibleOperationalSolutions":
 			out.Values[i] = ec._UserViewCustomization_possibleOperationalSolutions(ctx, field, obj)
 		case "createdBy":
@@ -77113,9 +77114,6 @@ func (ec *executionContext) _UserViewCustomization(ctx context.Context, sel ast.
 					}
 				}()
 				res = ec._UserViewCustomization_modifiedByUserAccount(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
 				return res
 			}
 

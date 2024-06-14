@@ -7,24 +7,35 @@ package resolvers
 import (
 	"context"
 
-	"github.com/google/uuid"
-
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // UpdateUserViewCustomization is the resolver for the updateUserViewCustomization field.
-func (r *mutationResolver) UpdateUserViewCustomization(ctx context.Context, input map[string]interface{}) (*models.UserViewCustomization, error) {
+func (r *mutationResolver) UpdateUserViewCustomization(ctx context.Context, changes map[string]interface{}) (*models.UserViewCustomization, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	// TODO: Should we derive ID from principal or from an input?
-	return UserViewCustomizationUpdate(logger, r.store, principal, principal.Account().ID, input)
+	return UserViewCustomizationUpdate(logger, r.store, principal, changes)
 }
 
 // UserViewCustomization is the resolver for the userViewCustomization field.
-func (r *queryResolver) UserViewCustomization(ctx context.Context, id uuid.UUID) (*models.UserViewCustomization, error) {
+func (r *queryResolver) UserViewCustomization(ctx context.Context) (*models.UserViewCustomization, error) {
 	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
 
-	return UserViewCustomizationGetByUserID(logger, r.store, id)
+	return UserViewCustomizationGetByUserID(logger, r.store, principal)
 }
+
+// ViewCustomization is the resolver for the viewCustomization field.
+func (r *userViewCustomizationResolver) ViewCustomization(ctx context.Context, obj *models.UserViewCustomization) ([]models.ViewCustomizationType, error) {
+	return models.ConvertEnums[models.ViewCustomizationType](obj.ViewCustomization), nil
+}
+
+// UserViewCustomization returns generated.UserViewCustomizationResolver implementation.
+func (r *Resolver) UserViewCustomization() generated.UserViewCustomizationResolver {
+	return &userViewCustomizationResolver{r}
+}
+
+type userViewCustomizationResolver struct{ *Resolver }

@@ -15,7 +15,7 @@ type UserViewCustomization {
   createdByUserAccount: UserAccount!
   createdDts: Time!
   modifiedBy: UUID
-  modifiedByUserAccount: UserAccount!
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -24,11 +24,11 @@ input UserViewCustomizationChanges @goModel(model: "map[string]interface{}")  {
 }
 
 extend type Query {
-  userViewCustomization(id: UUID!): UserViewCustomization!
+  userViewCustomization: UserViewCustomization!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
-  updateUserViewCustomization(input: UserViewCustomizationChanges!): UserViewCustomization!
+  updateUserViewCustomization(changes: UserViewCustomizationChanges!): UserViewCustomization!
   @hasRole(role: MINT_USER)
 }

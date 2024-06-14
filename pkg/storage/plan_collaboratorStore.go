@@ -157,3 +157,23 @@ func (s *Store) PlanCollaboratorGetByID(id uuid.UUID) (*models.PlanCollaborator,
 
 	return &collaborator, nil
 }
+
+// PlanCollaboratorGetCountByUserID returns the number of plan collaborators for a given user_id
+func (s *Store) PlanCollaboratorGetCountByUserID(userID uuid.UUID) (int, error) {
+
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCollaborator.GetCountByUserID)
+	if err != nil {
+		return 0, err
+	}
+	defer stmt.Close()
+
+	arg := utilitySQL.CreateUserIDQueryMap(userID)
+
+	var count int
+	err = stmt.Get(&count, arg)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
