@@ -46,11 +46,13 @@ func TranslatedAuditCreateCollection(np sqlutils.NamedPreparer, translatedAudits
 }
 
 // TranslatedAuditCollectionGetByModelPlanID returns all translatedAudits for a given model plan id
-func TranslatedAuditCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelPlanID uuid.UUID) ([]*models.TranslatedAudit, error) {
+func TranslatedAuditCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelPlanID uuid.UUID, hasPrivilegedAccess bool) ([]*models.TranslatedAudit, error) {
 
-	arg := map[string]interface{}{"model_plan_id": modelPlanID}
+	arg := map[string]interface{}{
+		"model_plan_id":     modelPlanID,
+		"privileged_access": hasPrivilegedAccess,
+	}
 
-	// Changes: (Data) verify that the user is a collaborator or assessment or not. Conditionally return confidential information if so.
 	translatedAuditCollection, procErr := sqlutils.SelectProcedure[models.TranslatedAudit](np, sqlqueries.TranslatedAudit.CollectionGetByModelPlanID, arg)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue getting translated audit collection by model_plan_id (%s)  : %w", modelPlanID, procErr)
