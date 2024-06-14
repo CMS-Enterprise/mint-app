@@ -148,5 +148,3 @@ CREATE TABLE translated_audit_field (
 );
 
 COMMENT ON COLUMN translated_audit_field.field_order IS 'This is a decimal column that shows the page number as well as the question order in the page number by the decimal number. It is used for consistent ordering or a result set';
-
-COMMENT ON COLUMN translated_audit.restricted IS 'This is a decimal column that shows the page number as well as the question order in the page number by the decimal number. It is used for consistent ordering or a result set';
