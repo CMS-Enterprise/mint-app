@@ -130,7 +130,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	translatedAudit.MetaDataType = metaDataType
 
 	// Changes: (Confidential) update the signature of this. Maybe return a true false? Or update?
-	retTAuditFields, err := setConfidentiality(ctx, store, &translatedAudit, operation)
+	retTAuditFields, err := setRestricted(ctx, store, &translatedAudit, operation)
 	if err != nil {
 		return nil, fmt.Errorf("there was an error translating the audit setting the confidentiality. Err %w", err)
 	}

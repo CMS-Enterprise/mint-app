@@ -10,10 +10,10 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// setConfidentiality updates a Translated Audit to set if it's confidential or not based on provided criteria
-func setConfidentiality(ctx context.Context, store *storage.Store, tAuditWithFields *models.TranslatedAuditWithTranslatedFields, operation models.DatabaseOperation) (*models.TranslatedAuditWithTranslatedFields, error) {
+// setRestricted updates a Translated Audit to set if it's restricted or not based on provided criteria
+func setRestricted(ctx context.Context, store *storage.Store, tAuditWithFields *models.TranslatedAuditWithTranslatedFields, operation models.DatabaseOperation) (*models.TranslatedAuditWithTranslatedFields, error) {
 	if tAuditWithFields == nil {
-		return nil, fmt.Errorf("translated audit is nil. It must be present to set it's confidentiality level")
+		return nil, fmt.Errorf("translated audit is nil. It must be present to set it's restriction level")
 	}
 	var err error
 	// default to false with zero state bool
@@ -23,24 +23,24 @@ func setConfidentiality(ctx context.Context, store *storage.Store, tAuditWithFie
 
 		//Changes: (Confidential) See about refactoring this. Could this all be part of the meta data function instead?
 		// Note that we don't fetch the document there. This only works because you can't update a document, so we should always expect all rows.
-		isConfidential, err = checkIfDocumentIsConfidential(tAuditWithFields, operation)
+		isConfidential, err = checkIfDocumentIsRestricted(tAuditWithFields, operation)
 
 	case "plan_document_solution_link":
-		isConfidential, err = checkIfDocumentLinkIsConfidential(tAuditWithFields, operation)
+		isConfidential, err = checkIfDocumentLinkIsRestricted(tAuditWithFields, operation)
 
 	default:
 
 	}
 	if err != nil {
-		return nil, fmt.Errorf("issue setting confidentiality, err %w", err)
+		return nil, fmt.Errorf("issue setting restriction level, err %w", err)
 	}
-	tAuditWithFields.IsConfidential = isConfidential
+	tAuditWithFields.Restricted = isConfidential
 	return tAuditWithFields, nil
 
 }
 
-// checkIfDocumentIsConfidential looks at the translated fields for a document to see if it confidential
-func checkIfDocumentIsConfidential(tAuditWithFields *models.TranslatedAuditWithTranslatedFields, operation models.DatabaseOperation) (bool, error) {
+// checkIfDocumentIsRestricted looks at the translated fields for a document to see if it should be restricted or not
+func checkIfDocumentIsRestricted(tAuditWithFields *models.TranslatedAuditWithTranslatedFields, operation models.DatabaseOperation) (bool, error) {
 	//Changes: (Confidential) See about refactoring this. Could this all be part of the meta data function instead?
 
 	restrictedField, fieldFound := lo.Find(tAuditWithFields.TranslatedFields, func(field *models.TranslatedAuditField) bool {
@@ -62,7 +62,9 @@ func checkIfDocumentIsConfidential(tAuditWithFields *models.TranslatedAuditWithT
 	return restricted, nil
 
 }
-func checkIfDocumentLinkIsConfidential(tAuditWithFields *models.TranslatedAuditWithTranslatedFields, operation models.DatabaseOperation) (bool, error) {
+
+// checkIfDocumentLinkIsRestricted looks at document data for a link if present and sets if it should be restricted or not
+func checkIfDocumentLinkIsRestricted(tAuditWithFields *models.TranslatedAuditWithTranslatedFields, operation models.DatabaseOperation) (bool, error) {
 	//Changes: (Confidential) See about refactoring this. Could this all be part of the meta data function instead?
 
 	meta, metaDataCast := tAuditWithFields.MetaData.(*models.TranslatedAuditMetaDocumentSolutionLink)

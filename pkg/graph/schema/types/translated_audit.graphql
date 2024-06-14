@@ -136,9 +136,9 @@ type TranslatedAudit {
     action: DatabaseOperation!
 
     """
-	Is Confidential denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user
+	Restricted denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user
     """
-    isConfidential: Boolean!
+    restricted: Boolean!
 
 
     actorID: UUID!

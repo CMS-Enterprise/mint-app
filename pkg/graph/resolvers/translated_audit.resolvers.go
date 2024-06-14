@@ -15,7 +15,6 @@ import (
 
 // TranslatedAuditCollection is the resolver for the translatedAuditCollection field.
 func (r *queryResolver) TranslatedAuditCollection(ctx context.Context, modelPlanID uuid.UUID) ([]*models.TranslatedAudit, error) {
-
 	// Changes (Confidential) refactor this, get logger and principal to pass to this? Or another way?
 	return TranslatedAuditCollectionGetByModelPlanID(ctx, r.store, modelPlanID)
 }

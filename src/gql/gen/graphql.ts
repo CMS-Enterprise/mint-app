@@ -3437,8 +3437,6 @@ export type TranslatedAudit = {
   createdDts: Scalars['Time']['output'];
   date: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
-  /** Is Confidential denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user */
-  isConfidential: Scalars['Boolean']['output'];
   /** The actual meta data stored for this record */
   metaData?: Maybe<TranslatedAuditMetaData>;
   /** The type of meta data that is stored for this record */
@@ -3448,6 +3446,8 @@ export type TranslatedAudit = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   primaryKey: Scalars['UUID']['output'];
+  /** Restricted denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user */
+  restricted: Scalars['Boolean']['output'];
   tableID: Scalars['Int']['output'];
   tableName: Scalars['String']['output'];
   /** The specific fields that were changed by the transaction */
