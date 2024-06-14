@@ -121,10 +121,18 @@ const AppRoutes = () => {
         to="/models/:modelID/read-view/model-basics"
       />
 
-      <Redirect
-        exact
-        from="/models/:modelID/read-only/:subinfo?"
-        to="/models/:modelID/read-view/:subinfo?"
+      {/* Wrap redirect as child of route to pass on query parameters */}
+      <Route
+        path="/models/:modelID/read-only/:subinfo?"
+        render={match => (
+          <Redirect
+            to={{
+              // /models/:modelID/read-view/:subinfo? syntax does not work with pathname prop, so we replace 'only' with 'view'
+              pathname: match.location.pathname.replace('only', 'view'),
+              search: match.location.search
+            }}
+          />
+        )}
       />
 
       <SecureRoute
