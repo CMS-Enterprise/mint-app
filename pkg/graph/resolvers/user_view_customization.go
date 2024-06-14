@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
@@ -78,7 +77,7 @@ func createAndInitializeUserViewCustomization(
 	uvcToCreate := models.UserViewCustomization{
 		UserID:                       principal.Account().ID,
 		ViewCustomization:            pq.StringArray{},
-		PossibleOperationalSolutions: []uuid.UUID{},
+		PossibleOperationalSolutions: pq.StringArray{},
 	}
 
 	customizations, err := getDefaultViewCustomizationsByRole(principal, store)
