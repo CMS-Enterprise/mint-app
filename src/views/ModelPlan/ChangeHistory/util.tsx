@@ -127,7 +127,7 @@ export const isSolutionDocumentLinkWithMetaData = (
 export const datesWithNoDay: string[] = ['date_implemented'];
 
 // Fields that are not displayed in the change history
-const hiddenFields: HiddenFieldTypes[] = [
+const unneededFields: HiddenFieldTypes[] = [
   {
     table: 'operational_need',
     fields: ['needed', 'need_type', 'model_plan_id']
@@ -140,6 +140,7 @@ const hiddenFields: HiddenFieldTypes[] = [
     table: 'plan_document',
     fields: [
       'model_plan_id',
+      'is_link',
       'virus_scanned',
       'file_key',
       'file_size',
@@ -157,6 +158,8 @@ const hiddenFields: HiddenFieldTypes[] = [
     fields: ['model_plan_id']
   }
 ];
+
+export const hiddenFields: string[] = ['is_link'];
 
 // Tables where similar audits are batched together
 export const batchedTables: string[] = [
@@ -683,7 +686,7 @@ export const isInitialCreatedSection = (
   );
 
 // Some fields exist in translation/audit data, but are not displayed in the change history. Filter out these fields
-export const removedHiddenFields = (
+export const removedUnneededFields = (
   changeRecords: ChangeRecordType[]
 ): ChangeRecordType[] => {
   const filteredChangeRecords: ChangeRecordType[] = [];
@@ -694,7 +697,7 @@ export const removedHiddenFields = (
 
     filteredChangeRecord.translatedFields = filteredFields.filter(
       field =>
-        !hiddenFields.find(
+        !unneededFields.find(
           hiddenField =>
             hiddenField.table === changeRecord.tableName &&
             hiddenField.fields.includes(field.fieldName)
@@ -786,7 +789,7 @@ const removeUnneededAudits = (changes: ChangeRecordType[]) =>
 export const sortAllChanges = (changes: ChangeRecordType[]) => {
   const changesWithStatusSeparation = separateStatusChanges(changes);
 
-  const removedHiddenChangeFields = removedHiddenFields(
+  const removedHiddenChangeFields = removedUnneededFields(
     changesWithStatusSeparation
   );
 

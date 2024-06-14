@@ -22,6 +22,7 @@ import {
   getOperationalMetadata,
   getSolutionName,
   getSolutionOperationStatus,
+  hiddenFields,
   isLinkingTable,
   isOperationalSolutionWithMetaData,
   isSolutionDocumentLinkWithMetaData,
@@ -53,6 +54,11 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 
   let fieldsToMap: ChangeRecordType['translatedFields'][0][] =
     change.translatedFields;
+
+  // Remove hidden fields from the fields to map
+  fieldsToMap = fieldsToMap.filter(
+    field => !hiddenFields.includes(field.fieldName)
+  );
 
   // If the change is connected to another table, only show the fields that are connected
   if (connected) {

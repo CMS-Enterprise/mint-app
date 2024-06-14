@@ -19,6 +19,7 @@ import {
   documentName,
   documentType,
   documentUpdateType,
+  hiddenFields,
   identifyChangeType,
   isDiscussionReplyWithMetaData,
   isGenericWithMetaData,
@@ -45,6 +46,11 @@ type SingleChangeProps = {
 // Render a single change record, showing the field name, the change type, and the old and new values
 const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
   const { t } = useTranslation('changeHistory');
+
+  // If the field name is in the hidden fields list, do not render the change record
+  if (hiddenFields.includes(change.fieldName)) {
+    return <></>;
+  }
 
   return (
     <div className="margin-bottom-2" key={change.id}>
