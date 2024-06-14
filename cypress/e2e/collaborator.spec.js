@@ -138,15 +138,15 @@ describe('The Collaborator/Team Member Form', () => {
     cy.get('[data-testid="table"] a').contains('Empty Plan').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/read-only\/model-basics/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/read-view\/model-basics/);
     });
 
     cy.get('@modelPlanURL').then(modelPlanURL => {
-      const taskList = modelPlanURL.replace('read-only', 'task-list');
+      const taskList = modelPlanURL.replace('read-view', 'task-list');
       cy.visit(taskList);
       cy.location().should(loc => {
         expect(loc.pathname).to.match(
-          /\/models\/.{36}\/read-only\/model-basics/
+          /\/models\/.{36}\/read-view\/model-basics/
         );
       });
     });
