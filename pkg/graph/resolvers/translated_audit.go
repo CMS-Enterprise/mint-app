@@ -22,13 +22,10 @@ func TranslatedAuditCollectionGetByModelPlanID(ctx context.Context, store *stora
 		//If desired, we could just return the non-privileged version on error there
 	}
 
-	//Changes: (Confidential) Update this to also do a collaborator check here, if a collaborator return all. Can we make this efficient?
 	translatedAuditCollection, err := storage.TranslatedAuditCollectionGetByModelPlanID(store, modelPlanID, hasPrivilegedAccess)
 	if err != nil {
 		return nil, err
 	}
-	//Changes: (Meta) Gate the permission for privileged information here based on current users role
-	// Changes: (Data) verify that the user is a collaborator or assessment or not. Conditionally return confidential information if so.
 
 	for _, change := range translatedAuditCollection {
 		err2 := change.ParseMetaData()
