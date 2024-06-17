@@ -234,25 +234,11 @@ const NotificationSettings = () => {
 
     // Unsubscribe from New Model Plan email notifications
     if (
-      (newModelPlan?.length || datesChanged?.length) &&
-      (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
-        unsubscribeEmailParams === ActivityType.DATES_CHANGED)
+      // not sure what this is checking for
+      // (newModelPlan?.length || datesChanged?.length) &&
+      unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
+      unsubscribeEmailParams === ActivityType.DATES_CHANGED
     ) {
-      // // New Model Plan variables
-      // const isSubscribedModelPlanEmail = newModelPlan.includes(
-      //   UserNotificationPreferenceFlag.EMAIL
-      // );
-      // const isSubscribedModelPlanInApp = newModelPlan.includes(
-      //   UserNotificationPreferenceFlag.IN_APP
-      // );
-      // // Dates Changed variables
-      // const isSubscribedDatesChangedEmail = datesChanged.includes(
-      //   UserNotificationPreferenceFlag.EMAIL
-      // );
-      // const isSubscribedDatesChangedInApp = datesChanged.includes(
-      //   UserNotificationPreferenceFlag.IN_APP
-      // );
-
       // if user has email notifications, then proceeed to unsubscribe
       if (isSubscribedModelPlanEmail || isSubscribedDatesChangedEmail) {
         let changes;
