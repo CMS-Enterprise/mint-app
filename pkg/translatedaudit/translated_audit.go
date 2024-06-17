@@ -112,7 +112,8 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		if tErr != nil {
 			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, plan.ModelName, err)
 		}
-		if !wasTranslated { //If this doesn't have a translation, don't append this to the translated field list (and don't save it)
+		if !wasTranslated {
+			//If this doesn't have a translation, don't append this to the translated field list (and don't save it)
 			continue
 		}
 		translatedAudit.TranslatedFields = append(translatedAudit.TranslatedFields, transField)
@@ -129,6 +130,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	translatedAudit.MetaData = metaData
 	translatedAudit.MetaDataType = metaDataType
 
+	//MONDAY! Look here, should we expand some responsibility and see about combining ,meta data type and restricted status? Or should we leave it as is?
 	// Changes: (Confidential) update the signature of this. Maybe return a true false? Or update?
 	retTAuditFields, err := setRestricted(ctx, store, &translatedAudit, operation)
 	if err != nil {
