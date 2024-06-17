@@ -236,6 +236,7 @@ const NotificationSettings = () => {
     if (
       // not sure what this is checking for
       // (newModelPlan?.length || datesChanged?.length) &&
+      // this may not be necessary...
       unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
       unsubscribeEmailParams === ActivityType.DATES_CHANGED
     ) {
