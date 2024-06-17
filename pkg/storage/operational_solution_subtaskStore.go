@@ -3,7 +3,6 @@ package storage
 import (
 	"database/sql"
 	_ "embed"
-	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -113,7 +112,7 @@ func (s *Store) OperationalSolutionSubtaskGetByID(
 		utilitySQL.CreateIDQueryMap(subtaskID),
 	)
 	if err != nil {
-		return nil, errors.New("could not fetch operational solution subtask by id")
+		return nil, fmt.Errorf("could not fetch operational solution subtask by id, err : %w", err)
 	}
 
 	return &subtask, err

@@ -2,6 +2,8 @@ package translatedaudit
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 	"fmt"
 	"time"
 
@@ -90,39 +92,38 @@ func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, o
 
 // OperationalSolutionSubtaskMetaDataGet uses the provided information to generate metadata needed for any operational solution subtask audits.
 // it checks if there is a name in the changes, and if so it sets that in the meta data, otherwise it will fetch it from the table record
-func OperationalSolutionSubtaskMetaDataGet(ctx context.Context, store *storage.Store, opSolutionSubtaskID interface{}, opSolutionID interface{}, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaOperationalSolutionSubtask, error) {
+func OperationalSolutionSubtaskMetaDataGet(ctx context.Context, store *storage.Store, opSolutionSubtaskID uuid.UUID, opSolutionID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaOperationalSolutionSubtask, error) {
 	logger := appcontext.ZLogger(ctx)
 
-	opSolutionUUID, err := parseInterfaceToUUID(opSolutionID)
-	if err != nil {
-		return nil, err
-	}
-	var subtaskName string
+	var subtaskName *string
 	nameChange, fieldPresent := changesFields["name"]
 	if fieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-			subtaskName = fmt.Sprint(nameChange.Old)
+			subtaskName = models.StringPointer(fmt.Sprint(nameChange.Old))
 		} else {
-			subtaskName = fmt.Sprint(nameChange.New)
+			subtaskName = models.StringPointer(fmt.Sprint(nameChange.New))
 		}
 
 	} else {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
 			return nil, fmt.Errorf("there wasn't a name present for this subtask, unable to generate subtask metadata. Subtask %v", opSolutionSubtaskID)
 		}
-		opSolutionSubtaskUUID, err2 := parseInterfaceToUUID(opSolutionSubtaskID)
-		if err2 != nil {
-			return nil, err2
+
+		// Insert or update statements mean the subtask should exist and can be fetched (unless it was deleted before the translation can occur)
+		opSolSubtask, err3 := store.OperationalSolutionSubtaskGetByID(logger, opSolutionSubtaskID)
+		if err3 != nil {
+			if !errors.Is(err3, sql.ErrNoRows) {
+				return nil, fmt.Errorf("unable to get operational solution subtask operational solution subtask audit metadata. err %w", err3)
+			} else {
+				subtaskName = nil
+			}
+		} else {
+			subtaskName = &opSolSubtask.Name
 		}
-		// Insert or update statements mean the subtask exists and can be fetched
-		opSolSubtask, err3 := store.OperationalSolutionSubtaskGetByID(logger, opSolutionSubtaskUUID)
-		if err != nil {
-			return nil, fmt.Errorf("unable to get operational solution subtask operational solution subtask audit metadata. err %w", err3)
-		}
-		subtaskName = opSolSubtask.Name
+
 	}
 
-	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionUUID)
+	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionID)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get operational solution with num of Subtasks for operational solution subtask audit metadata. err %w", err)
 	}

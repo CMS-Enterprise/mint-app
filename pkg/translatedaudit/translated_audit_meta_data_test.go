@@ -138,7 +138,7 @@ func (suite *TAuditSuite) TestOperationalSolutionSubtaskMetaDataGet() {
 	needIsOther := true
 	solIsOther := true
 
-	metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID.String(), sol.ID.String(), changes, operation)
+	metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID, sol.ID, changes, operation)
 
 	suite.NoError(err)
 	suite.NotNil(metaData)
@@ -157,21 +157,36 @@ func (suite *TAuditSuite) TestOperationalSolutionSubtaskMetaDataGet() {
 	suite.EqualValues(0, metaData.Version)
 
 	//Assert it gets the name from the changes object
-	suite.EqualValues(subtaskNameNewForChanges, metaData.SubtaskName)
+	if suite.NotNil(metaData.SubtaskName) {
+		suite.EqualValues(subtaskNameNewForChanges, *metaData.SubtaskName)
+	}
 
 	suite.Run("A delete or truncate without a name in the changes object will error", func() {
-		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID.String(), sol.ID.String(), emptyChanges, models.DBOpDelete)
+		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID, sol.ID, emptyChanges, models.DBOpDelete)
 
 		suite.Error(err)
 		suite.Nil(metaData)
 	})
 	suite.Run("An update without a name in the changes object will fetch from DB", func() {
 
-		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID.String(), sol.ID.String(), emptyChanges, models.DBOpUpdate)
+		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID, sol.ID, emptyChanges, models.DBOpUpdate)
 
 		suite.NoError(err)
 		suite.NotNil(metaData)
-		suite.EqualValues(subtaskNameNew, metaData.SubtaskName)
+		if suite.NotNil(metaData.SubtaskName) {
+			suite.EqualValues(subtaskNameNew, *metaData.SubtaskName)
+		}
+	})
+	suite.Run("An update without a name in the changes object will fetch from DB, but will not error if the value is nil", func() {
+
+		_, err := suite.testConfigs.Store.OperationalSolutionSubtaskDelete(suite.testConfigs.Logger, subTask.ID, suite.testConfigs.Principal.UserAccount.ID)
+		suite.NoError(err)
+
+		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID, sol.ID, emptyChanges, models.DBOpUpdate)
+
+		suite.NoError(err)
+		suite.NotNil(metaData)
+		suite.Nil(metaData.SubtaskName)
 	})
 
 }

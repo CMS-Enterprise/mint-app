@@ -65,7 +65,10 @@ type TranslatedAuditMetaOperationalSolutionSubtask {
     numberOfSubtasks: Int!
     needName: String!
     needIsOther: Boolean!
-    subtaskName: String!
+    """
+    The name of the subtask. If a subtask is updated, and then deleted before being translated, it is possible for this field to be nil.
+    """
+    subtaskName: String
 }
 
 """
