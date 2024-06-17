@@ -9,14 +9,16 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // TranslatedAuditCollection is the resolver for the translatedAuditCollection field.
 func (r *queryResolver) TranslatedAuditCollection(ctx context.Context, modelPlanID uuid.UUID) ([]*models.TranslatedAudit, error) {
-	// Changes (Confidential) refactor this, get logger and principal to pass to this? Or another way?
-	return TranslatedAuditCollectionGetByModelPlanID(ctx, r.store, modelPlanID)
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+	return TranslatedAuditCollectionGetByModelPlanID(ctx, r.store, logger, principal, modelPlanID)
 }
 
 // TranslatedFields is the resolver for the translatedFields field.

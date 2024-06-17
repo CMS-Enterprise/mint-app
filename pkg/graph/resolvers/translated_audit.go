@@ -5,17 +5,17 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/accesscontrol"
-	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // TranslatedAuditCollectionGetByModelPlanID returns all TranslatedAudit for a given model plan id
-func TranslatedAuditCollectionGetByModelPlanID(ctx context.Context, store *storage.Store, modelPlanID uuid.UUID) ([]*models.TranslatedAudit, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx)
+func TranslatedAuditCollectionGetByModelPlanID(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID) ([]*models.TranslatedAudit, error) {
+
 	hasPrivilegedAccess, err := accesscontrol.IsCollaboratorModelPlanID(logger, principal, store, modelPlanID)
 	if err != nil {
 		return nil, fmt.Errorf("unable to determine appropriate access level to view audit collection. err %w", err)
