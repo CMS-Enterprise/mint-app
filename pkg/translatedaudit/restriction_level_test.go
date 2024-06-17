@@ -1,34 +1,98 @@
 package translatedaudit
 
-import "github.com/cmsgov/mint-app/pkg/models"
+import (
+	"testing"
 
-func (suite *TAuditSuite) TestCheckIfDocumentIsRestricted() {
-	// tAudit := models.TranslatedAudit
+	"github.com/stretchr/testify/assert"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+)
+
+func TestCheckIfDocumentIsRestricted(t *testing.T) {
+	assert := assert.New(t)
+	t.Run("Will return true, if restricted field is present, and answer is `true` or 'true'", func(t *testing.T) {
+
+		fields := []*models.TranslatedAuditField{
+			{
+				FieldName: "restricted",
+				Old:       "true",
+			},
+		}
+		restricted, err := checkIfDocumentIsRestricted(fields, models.DBOpDelete)
+
+		assert.NoError(err)
+		assert.True(restricted)
+
+		fields[0].Old = true
+		restricted, err = checkIfDocumentIsRestricted(fields, models.DBOpDelete)
+
+		assert.NoError(err)
+		assert.True(restricted)
+	})
+
+	t.Run("Will return error, if restricted field is not present", func(t *testing.T) {
+		fields := []*models.TranslatedAuditField{
+			{
+				FieldName: "nonsense_field",
+				Old:       "true",
+				New:       "blah blah",
+			},
+		}
+		restricted, err := checkIfDocumentIsRestricted(fields, models.DBOpInsert)
+		assert.Error(err)
+		assert.False(restricted)
+
+		restricted, err = checkIfDocumentIsRestricted(fields, models.DBOpDelete)
+		assert.Error(err)
+		assert.False(restricted)
+	})
+
+	t.Run("Will return field, if restricted field is present, and relevant answer is not `true` or 'true' according to the db operation", func(t *testing.T) {
+
+		fields := []*models.TranslatedAuditField{
+			{
+				FieldName: "restricted",
+				Old:       "true",
+			},
+		}
+		restricted, err := checkIfDocumentIsRestricted(fields, models.DBOpInsert)
+
+		assert.NoError(err)
+		assert.False(restricted)
+
+		fields[0].Old = true
+		restricted, err = checkIfDocumentIsRestricted(fields, models.DBOpUpdate)
+
+		assert.NoError(err)
+		assert.False(restricted)
+	})
 }
 
-func (suite *TAuditSuite) TestCheckIfDocumentLinkIsRestricted() {
+func TestCheckIfDocumentLinkIsRestricted(t *testing.T) {
+
+	assert := assert.New(t)
 
 	falseBool := false
 	trueBool := true
 
-	suite.Run("Will return true, if link meta data is true", func() {
+	t.Run("Will return true, if link meta data is true", func(t *testing.T) {
 		docSolLinkMeta := models.TranslatedAuditMetaDocumentSolutionLink{
 			DocumentRestricted: &trueBool,
 		}
 		restricted, err := checkIfDocumentLinkIsRestricted(&docSolLinkMeta)
 
-		suite.True(restricted)
-		suite.NoError(err)
+		assert.True(restricted)
+		assert.NoError(err)
 
 	})
-	suite.Run("Will return false, if link meta data is false", func() {
+	t.Run("Will return false, if link meta data is false", func(t *testing.T) {
 		docSolLinkMeta := models.TranslatedAuditMetaDocumentSolutionLink{
 			DocumentRestricted: &falseBool,
 		}
 		restricted, err := checkIfDocumentLinkIsRestricted(&docSolLinkMeta)
 
-		suite.False(restricted)
-		suite.NoError(err)
+		assert.False(restricted)
+		assert.NoError(err)
 
 	})
 

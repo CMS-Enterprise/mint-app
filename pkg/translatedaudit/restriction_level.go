@@ -9,9 +9,9 @@ import (
 )
 
 // checkIfDocumentIsRestricted looks at the translated fields for a document to see if it should be restricted or not
-func checkIfDocumentIsRestricted(tAuditWithFields *models.TranslatedAuditWithTranslatedFields, operation models.DatabaseOperation) (bool, error) {
+func checkIfDocumentIsRestricted(tAuditFields []*models.TranslatedAuditField, operation models.DatabaseOperation) (bool, error) {
 
-	restrictedField, fieldFound := lo.Find(tAuditWithFields.TranslatedFields, func(field *models.TranslatedAuditField) bool {
+	restrictedField, fieldFound := lo.Find(tAuditFields, func(field *models.TranslatedAuditField) bool {
 		return field.FieldName == "restricted"
 	})
 	if !fieldFound {
@@ -24,7 +24,6 @@ func checkIfDocumentIsRestricted(tAuditWithFields *models.TranslatedAuditWithTra
 		restrictedValue = restrictedField.New
 	}
 
-	//Changes: (Confidential), this doesn't work good. We should just get the current data, maybe we can expand the document meta data too to do that lift?
 	restricted := (restrictedValue == true || restrictedValue == "true")
 	return restricted, nil
 

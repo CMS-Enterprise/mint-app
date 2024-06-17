@@ -458,7 +458,7 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 		if err != nil {
 			return true, err
 		}
-		isRestricted, err := checkIfDocumentIsRestricted(tAuditWithFields, operation)
+		isRestricted, err := checkIfDocumentIsRestricted(tAuditWithFields.TranslatedFields, operation)
 		if err != nil {
 			return true, err
 		}
