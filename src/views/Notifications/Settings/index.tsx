@@ -148,7 +148,7 @@ const NotificationSettings = () => {
 
   // Unsubscribe from email
   useEffect(() => {
-    const alreadyUnsubbed = () => {
+    const showAlreadyUnsubbedBanner = () => {
       showMessage(
         <Alert
           type="error"
@@ -216,7 +216,7 @@ const NotificationSettings = () => {
       unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
       !isSubscribedModelPlanEmail
     ) {
-      alreadyUnsubbed();
+      showAlreadyUnsubbedBanner();
       cleanUpParams();
       return;
     }
@@ -224,7 +224,7 @@ const NotificationSettings = () => {
       unsubscribeEmailParams === ActivityType.DATES_CHANGED &&
       !isSubscribedDatesChangedEmail
     ) {
-      alreadyUnsubbed();
+      showAlreadyUnsubbedBanner();
       cleanUpParams();
       return;
     }
