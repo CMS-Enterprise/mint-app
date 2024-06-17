@@ -40,9 +40,9 @@ func checkIfDocumentLinkIsRestricted(metaData *models.TranslatedAuditMetaDocumen
 	// default to not restricted (zero state of bool)
 	var restricted bool
 
-	if metaData.DocumentVisibility != nil {
+	if metaData.DocumentRestricted != nil {
 		// if the visibility is present, check it's value. if it is true, it is restricted
-		restricted = *metaData.DocumentVisibility == "true"
+		restricted = *metaData.DocumentRestricted
 	}
 	return restricted, nil
 

@@ -95,6 +95,7 @@ type TranslatedAuditMetaDocumentSolutionLink {
     """
     documentURL: String
     documentVisibility: String
+    documentRestricted: Boolean
 
     
     """
