@@ -176,10 +176,13 @@ const NotificationSettings = () => {
       history.replace({ search: params.toString() });
     };
 
-    // if no unsubscribe email params, then abort
+    // if loading, then abort
     if (loading) return;
+
+    // if no unsubscribe email params, then abort
     if (!unsubscribeEmailParams) return;
-    // if params are not valid
+
+    // if params are not valid, throw error
     if (!Object.keys(ActivityType).includes(unsubscribeEmailParams)) {
       showMessage(
         <Alert
