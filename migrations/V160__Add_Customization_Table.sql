@@ -8,9 +8,9 @@ CREATE TYPE VIEW_CUSTOMIZATION_TYPE AS ENUM (
 
 CREATE TABLE user_view_customization (
   id UUID PRIMARY KEY,
-  user_id UUID, /* TODO: NOT NULL REFERENCES user_account(id) */
-  view_customization VIEW_CUSTOMIZATION_TYPE[] DEFAULT NULL,
-  possible_operational_solutions UUID[] DEFAULT NULL,
+  user_id UUID NOT NULL REFERENCES user_account(id),
+  view_customization VIEW_CUSTOMIZATION_TYPE[] NOT NULL DEFAULT '{}',
+  possible_operational_solutions OPERATIONAL_SOLUTION_KEY[] NOT NULL DEFAULT '{}',
   created_by UUID NOT NULL REFERENCES user_account(id),
   created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   modified_by UUID REFERENCES user_account(id),

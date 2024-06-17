@@ -1543,7 +1543,7 @@ type UserNotificationPreferencesResolver interface {
 }
 type UserViewCustomizationResolver interface {
 	ViewCustomization(ctx context.Context, obj *models.UserViewCustomization) ([]models.ViewCustomizationType, error)
-	PossibleOperationalSolutions(ctx context.Context, obj *models.UserViewCustomization) ([]uuid.UUID, error)
+	PossibleOperationalSolutions(ctx context.Context, obj *models.UserViewCustomization) ([]models.OperationalSolutionKey, error)
 }
 
 type executableSchema struct {
@@ -11793,7 +11793,7 @@ type UserViewCustomization {
   id: UUID!
   userId: UUID!
   viewCustomization: [ViewCustomizationType!]!
-  possibleOperationalSolutions: [UUID!]
+  possibleOperationalSolutions: [OperationalSolutionKey!]!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -11802,9 +11802,9 @@ type UserViewCustomization {
   modifiedDts: Time
 }
 
-input UserViewCustomizationChanges @goModel(model: "map[string]interface{}")  {
+input UserViewCustomizationChanges @goModel(model: "map[string]interface{}") {
   viewCustomization: [ViewCustomizationType!]!
-  possibleOperationalSolutions: [UUID!]!
+  possibleOperationalSolutions: [OperationalSolutionKey!]!
 }
 
 extend type Query {
@@ -62387,11 +62387,14 @@ func (ec *executionContext) _UserViewCustomization_possibleOperationalSolutions(
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.([]uuid.UUID)
+	res := resTmp.([]models.OperationalSolutionKey)
 	fc.Result = res
-	return ec.marshalOUUID2ᚕgithubᚗcomᚋgoogleᚋuuidᚐUUIDᚄ(ctx, field.Selections, res)
+	return ec.marshalNOperationalSolutionKey2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKeyᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_UserViewCustomization_possibleOperationalSolutions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -62401,7 +62404,7 @@ func (ec *executionContext) fieldContext_UserViewCustomization_possibleOperation
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
+			return nil, errors.New("field of type OperationalSolutionKey does not have child fields")
 		},
 	}
 	return fc, nil
@@ -77066,6 +77069,9 @@ func (ec *executionContext) _UserViewCustomization(ctx context.Context, sel ast.
 					}
 				}()
 				res = ec._UserViewCustomization_possibleOperationalSolutions(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
 				return res
 			}
 
@@ -80199,6 +80205,67 @@ func (ec *executionContext) marshalNOperationalSolutionKey2githubᚗcomᚋcmsgov
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNOperationalSolutionKey2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKeyᚄ(ctx context.Context, v interface{}) ([]models.OperationalSolutionKey, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.OperationalSolutionKey, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNOperationalSolutionKey2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNOperationalSolutionKey2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKeyᚄ(ctx context.Context, sel ast.SelectionSet, v []models.OperationalSolutionKey) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNOperationalSolutionKey2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) marshalNOperationalSolutionSubtask2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionSubtaskᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.OperationalSolutionSubtask) graphql.Marshaler {

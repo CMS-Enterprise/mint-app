@@ -2984,13 +2984,13 @@ export type UserViewCustomization = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  possibleOperationalSolutions?: Maybe<Array<Scalars['UUID']['output']>>;
+  possibleOperationalSolutions: Array<OperationalSolutionKey>;
   userId: Scalars['UUID']['output'];
   viewCustomization: Array<ViewCustomizationType>;
 };
 
 export type UserViewCustomizationChanges = {
-  possibleOperationalSolutions: Array<Scalars['UUID']['input']>;
+  possibleOperationalSolutions: Array<OperationalSolutionKey>;
   viewCustomization: Array<ViewCustomizationType>;
 };
 

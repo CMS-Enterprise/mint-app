@@ -2369,7 +2369,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation updateUserViewCustomization($changes: UserViewCustomizationChanges!) {\n    updateUserViewCustomization(changes: $changes) {\n        id\n        userId\n        viewCustomization\n        possibleOperationalSolutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
-								"variables": "{\n    \"changes\": {\n        \"viewCustomization\": [\"FOLLOWED_MODELS\",\"MY_MODEL_PLANS\"],\n        \"possibleOperationalSolutions\": [\"0190276b-1590-76ff-ad55-90f0cc7d6553\"]\n    }\n}"
+								"variables": "{\n    \"changes\": {\n        \"viewCustomization\": [\"FOLLOWED_MODELS\",\"MY_MODEL_PLANS\"],\n        \"possibleOperationalSolutions\": [\"ACO_OS\"]\n    }\n}"
 							}
 						},
 						"url": {

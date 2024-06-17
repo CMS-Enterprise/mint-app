@@ -4,10 +4,8 @@ import (
 	"database/sql"
 	"errors"
 
-	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
-	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -35,7 +33,6 @@ func UserViewCustomizationGetByUserID(
 						principal,
 						store,
 						logger,
-						uvc,
 					)
 					if creationErr != nil {
 						return nil, creationErr
@@ -74,13 +71,15 @@ func createAndInitializeUserViewCustomization(
 	principal authentication.Principal,
 	store *storage.Store,
 	logger *zap.Logger,
-	uvc *models.UserViewCustomization,
 ) (*models.UserViewCustomization, error) {
 	uvcToCreate := models.UserViewCustomization{
 		UserID:                       principal.Account().ID,
 		ViewCustomization:            pq.StringArray{},
 		PossibleOperationalSolutions: pq.StringArray{},
 	}
+
+	// should be created by the user who made the query
+	uvcToCreate.CreatedBy = principal.Account().ID
 
 	customizations, err := getDefaultViewCustomizationsByRole(principal, store)
 	if err != nil {
@@ -162,22 +161,4 @@ func UserViewCustomizationUpdate(
 	}
 
 	return storage.UserViewCustomizationUpdate(store, existingUserViewCustomization)
-}
-
-// UserViewCustomizationStringToUUIDSlice converts a pq.StringArray to a []uuid.UUID
-// If the pq.StringArray is nil, it returns nil
-// If any of the strings in the pq.StringArray are not valid UUIDs (if they fail to parse from a string), uuid.Nil is returned in its place
-func UserViewCustomizationStringToUUIDSlice(logger *zap.Logger, s pq.StringArray) []uuid.UUID {
-	if s == nil {
-		return nil
-	}
-
-	return lo.Map(s, func(id string, index int) uuid.UUID {
-		u, err := uuid.Parse(id)
-		if err != nil {
-			logger.Error("error parsing possible operational solution UUID in UserViewCustomization", zap.String("id", id), zap.Error(err))
-			return uuid.Nil
-		}
-		return u
-	})
 }
