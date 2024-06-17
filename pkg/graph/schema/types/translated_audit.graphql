@@ -243,6 +243,13 @@ type TranslatedAuditFieldMetaBaseStruct {
 }
 
 extend type Query {
-    translatedAuditCollection(modelPlanID: UUID!): [TranslatedAudit!]
+    """
+    TranslatedAuditCollection returns a collection of translated audits, with access dependant on who is viewing the audits.
+    if a user has privileged access, they will see audit changes that are restricted, otherwise only unrestricted
+    Optional Params 
+        limit: this controls how many records will be returned at once. A null entry will return all records
+        offset: how many records to skip before returning results. If null, no records will be skipped.
+    """
+    translatedAuditCollection(modelPlanID: UUID!, limit: Int, offset: Int): [TranslatedAudit!]
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }  

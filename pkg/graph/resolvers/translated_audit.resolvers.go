@@ -15,10 +15,10 @@ import (
 )
 
 // TranslatedAuditCollection is the resolver for the translatedAuditCollection field.
-func (r *queryResolver) TranslatedAuditCollection(ctx context.Context, modelPlanID uuid.UUID) ([]*models.TranslatedAudit, error) {
+func (r *queryResolver) TranslatedAuditCollection(ctx context.Context, modelPlanID uuid.UUID, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	return TranslatedAuditCollectionGetByModelPlanID(ctx, r.store, logger, principal, modelPlanID)
+	return TranslatedAuditCollectionGetByModelPlanID(ctx, r.store, logger, principal, modelPlanID, limit, offset)
 }
 
 // TranslatedFields is the resolver for the translatedFields field.

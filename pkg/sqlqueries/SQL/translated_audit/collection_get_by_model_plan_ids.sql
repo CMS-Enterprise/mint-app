@@ -24,4 +24,7 @@ WHERE
         ( restricted = FALSE AND :restricted_access = FALSE ) --user does not have access to restricted audits, only show non-restricted
         OR :restricted_access = TRUE --show all audits if the user has access to restricted audits
     )
-ORDER BY change_id DESC;
+ORDER BY change_id DESC
+LIMIT
+    :limit_count
+    OFFSET :offset_count;
