@@ -123,21 +123,12 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	//Changes: (Meta) Could we pass the translated fields here to save some meta data searching?
 
 	// Changes: (Translations) refactor this, perhaps this should be a receiver method on the translated audit? That way we set if not nil, instead of the default implementation?
-	metaData, metaDataType, err := TranslatedAuditMetaData(ctx, store, audit, operation)
+	_, err = SetTranslatedAuditTableSpecificMetaData(ctx, store, &translatedAudit, audit, operation)
 	if err != nil {
-		return nil, fmt.Errorf("unable to translate meta data. err %w", err)
-	}
-	translatedAudit.MetaData = metaData
-	translatedAudit.MetaDataType = metaDataType
-
-	//MONDAY! Look here, should we expand some responsibility and see about combining ,meta data type and restricted status? Or should we leave it as is?
-	// Changes: (Confidential) update the signature of this. Maybe return a true false? Or update?
-	retTAuditFields, err := setRestricted(ctx, store, &translatedAudit, operation)
-	if err != nil {
-		return nil, fmt.Errorf("there was an error translating the audit setting the confidentiality. Err %w", err)
+		return nil, fmt.Errorf("unable to translate table specific audit data. err %w", err)
 	}
 
-	return retTAuditFields, nil
+	return &translatedAudit, nil
 }
 
 // translateField translates a given audit field. It returns the translated audit field, as well as a bool to signify if it was translated or not
