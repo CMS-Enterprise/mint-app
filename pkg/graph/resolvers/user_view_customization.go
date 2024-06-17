@@ -4,8 +4,10 @@ import (
 	"database/sql"
 	"errors"
 
+	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
+	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -101,10 +103,14 @@ func getDefaultViewCustomizationsByRole(
 ) ([]models.ViewCustomizationType, error) {
 	var customizations []models.ViewCustomizationType
 
-	if principal.AllowUSER() {
-		customizations = append(customizations, models.ViewCustomizationTypeMyModelPlans)
-	} else if principal.AllowASSESSMENT() {
-
+	// Check the user's role and return the default view customizations
+	// Note: The order of these checks is important, as a user who, for example, has AllowAssessment() will also have AllowUser()
+	// Therefore, we should check AllowUser() last
+	// See pkg/okta/authentication_middleware.go newPrincipal() for details on how role assignment works
+	if principal.AllowASSESSMENT() {
+		// Assessment users should have 1 or 2 customizations by default:
+		// 1. My Model Plans (Only present for Assessment users who are collaborators on at least one model plan)
+		// 2. All Model Plans (Always present for Assessment users)
 		userCollaborationsCount, collabCountErr := store.PlanCollaboratorGetCountByUserID(principal.Account().ID)
 		if collabCountErr != nil {
 			return nil, collabCountErr
@@ -116,8 +122,18 @@ func getDefaultViewCustomizationsByRole(
 
 		customizations = append(customizations, models.ViewCustomizationTypeAllModelPlans)
 	} else if principal.AllowMAC() {
+		// MAC users should always have 1 customization by default:
+		// 1. ModelsWithCrTdl (Always present for MAC users)
 		customizations = append(customizations, models.ViewCustomizationTypeModelsWithCrTdl)
+	} else if principal.AllowNonCMSUser() {
+		// TODO: nothing?
+	} else if principal.AllowUSER() {
+		// If the user has none of the above roles, they're just a regular user
+		// Regular users should have 1 customization by default:
+		// 1. My Model Plans (Always present for regular users)
+		customizations = append(customizations, models.ViewCustomizationTypeMyModelPlans)
 	}
+
 	return customizations, nil
 }
 
@@ -146,4 +162,22 @@ func UserViewCustomizationUpdate(
 	}
 
 	return storage.UserViewCustomizationUpdate(store, existingUserViewCustomization)
+}
+
+// UserViewCustomizationStringToUUIDSlice converts a pq.StringArray to a []uuid.UUID
+// If the pq.StringArray is nil, it returns nil
+// If any of the strings in the pq.StringArray are not valid UUIDs (if they fail to parse from a string), uuid.Nil is returned in its place
+func UserViewCustomizationStringToUUIDSlice(logger *zap.Logger, s pq.StringArray) []uuid.UUID {
+	if s == nil {
+		return nil
+	}
+
+	return lo.Map(s, func(id string, index int) uuid.UUID {
+		u, err := uuid.Parse(id)
+		if err != nil {
+			logger.Error("error parsing possible operational solution UUID in UserViewCustomization", zap.String("id", id), zap.Error(err))
+			return uuid.Nil
+		}
+		return u
+	})
 }

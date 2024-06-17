@@ -2990,6 +2990,7 @@ export type UserViewCustomization = {
 };
 
 export type UserViewCustomizationChanges = {
+  possibleOperationalSolutions: Array<Scalars['UUID']['input']>;
   viewCustomization: Array<ViewCustomizationType>;
 };
 

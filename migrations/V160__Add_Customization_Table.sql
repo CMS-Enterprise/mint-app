@@ -16,3 +16,5 @@ CREATE TABLE user_view_customization (
   modified_by UUID REFERENCES user_account(id),
   modified_dts TIMESTAMP WITH TIME ZONE
 );
+
+/* TODO: Add comments to columns */

@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "2768f499-6418-47c7-afbd-bc6df44baa68",
+		"_postman_id": "8739c393-092d-45c8-af67-1d3ca9dc6afe",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20435042"
+		"_exporter_id": "12341016"
 	},
 	"item": [
 		{
@@ -2329,6 +2329,53 @@
 								"api",
 								"graph",
 								"query"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User View Customization",
+			"item": [
+				{
+					"name": "Get Customizations",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query userViewCustomization {\n    userViewCustomization {\n        id\n        userId\n        viewCustomization\n        possibleOperationalSolutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customizations",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateUserViewCustomization($changes: UserViewCustomizationChanges!) {\n    updateUserViewCustomization(changes: $changes) {\n        id\n        userId\n        viewCustomization\n        possibleOperationalSolutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
+								"variables": "{\n    \"changes\": {\n        \"viewCustomization\": [\"FOLLOWED_MODELS\",\"MY_MODEL_PLANS\"],\n        \"possibleOperationalSolutions\": [\"0190276b-1590-76ff-ad55-90f0cc7d6553\"]\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
 							]
 						}
 					},

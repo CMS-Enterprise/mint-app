@@ -10,7 +10,7 @@ type UserViewCustomization {
   id: UUID!
   userId: UUID!
   viewCustomization: [ViewCustomizationType!]!
-  possibleOperationalSolutions: [UUID!]
+  possibleOperationalSolutions: [UUID!] # NOTE: This may change to a list of Possible Operational Solution objects, rather than just IDs
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -19,8 +19,9 @@ type UserViewCustomization {
   modifiedDts: Time
 }
 
-input UserViewCustomizationChanges @goModel(model: "map[string]interface{}")  {
+input UserViewCustomizationChanges @goModel(model: "map[string]interface{}") {
   viewCustomization: [ViewCustomizationType!]!
+  possibleOperationalSolutions: [UUID!]!
 }
 
 extend type Query {

@@ -384,6 +384,7 @@ namespace :db do
     model_plan,
     user_notification,
     activity,
+    user_view_customization,
     audit.change"
 
     puts "Cleaning database..."

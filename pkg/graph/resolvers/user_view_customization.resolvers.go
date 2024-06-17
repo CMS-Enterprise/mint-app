@@ -7,6 +7,8 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -31,6 +33,13 @@ func (r *queryResolver) UserViewCustomization(ctx context.Context) (*models.User
 // ViewCustomization is the resolver for the viewCustomization field.
 func (r *userViewCustomizationResolver) ViewCustomization(ctx context.Context, obj *models.UserViewCustomization) ([]models.ViewCustomizationType, error) {
 	return models.ConvertEnums[models.ViewCustomizationType](obj.ViewCustomization), nil
+}
+
+// PossibleOperationalSolutions is the resolver for the possibleOperationalSolutions field.
+func (r *userViewCustomizationResolver) PossibleOperationalSolutions(ctx context.Context, obj *models.UserViewCustomization) ([]uuid.UUID, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return UserViewCustomizationStringToUUIDSlice(logger, obj.PossibleOperationalSolutions), nil
 }
 
 // UserViewCustomization returns generated.UserViewCustomizationResolver implementation.
