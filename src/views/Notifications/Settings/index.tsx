@@ -301,29 +301,6 @@ const NotificationSettings = () => {
               );
             });
         }
-      } else {
-        // if already unsubscribed to new model plan email notifications
-        showMessage(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-y-4"
-          >
-            <Trans
-              t={notificationsT}
-              i18nKey="settings.unsubscribedMessage.alreadyUnsubscribed"
-              values={{
-                notificationType: notificationsT(
-                  `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
-                )
-              }}
-              components={{
-                bold: <strong />
-              }}
-            />
-          </Alert>
-        );
       }
 
       cleanUpParams();
