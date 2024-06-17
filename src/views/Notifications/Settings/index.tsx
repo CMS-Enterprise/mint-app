@@ -148,25 +148,7 @@ const NotificationSettings = () => {
 
   // Unsubscribe from email
   useEffect(() => {
-    // if no unsubscribe email params, then abort
-    if (!unsubscribeEmailParams) return;
-    // if params are not valid
-    if (!Object.keys(ActivityType).includes(unsubscribeEmailParams)) {
-      showMessage(
-        <Alert
-          type="error"
-          slim
-          data-testid="error-alert"
-          className="margin-y-4"
-        >
-          {notificationsT('settings.unsubscribedMessage.error')}
-        </Alert>
-      );
-    }
-
-    // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
-    // then show error alert banner
-    if (!newModelPlan?.length || !datesChanged?.length) {
+    const alreadyUnsubbed = () => {
       showMessage(
         <Alert
           type="error"
@@ -188,6 +170,63 @@ const NotificationSettings = () => {
           />
         </Alert>
       );
+    };
+    const cleanUpParams = () => {
+      params.delete('unsubscribe_email');
+      history.replace({ search: params.toString() });
+    };
+
+    // if no unsubscribe email params, then abort
+    if (loading) return;
+    if (!unsubscribeEmailParams) return;
+    // if params are not valid
+    if (!Object.keys(ActivityType).includes(unsubscribeEmailParams)) {
+      showMessage(
+        <Alert
+          type="error"
+          slim
+          data-testid="error-alert"
+          className="margin-y-4"
+        >
+          {notificationsT('settings.unsubscribedMessage.error')}
+        </Alert>
+      );
+      return;
+    }
+
+    // Setting variables
+    // New Model Plan variables
+    const isSubscribedModelPlanEmail = newModelPlan.includes(
+      UserNotificationPreferenceFlag.EMAIL
+    );
+    const isSubscribedModelPlanInApp = newModelPlan.includes(
+      UserNotificationPreferenceFlag.IN_APP
+    );
+    // Dates Changed variables
+    const isSubscribedDatesChangedEmail = datesChanged.includes(
+      UserNotificationPreferenceFlag.EMAIL
+    );
+    const isSubscribedDatesChangedInApp = datesChanged.includes(
+      UserNotificationPreferenceFlag.IN_APP
+    );
+
+    // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
+    // then show error alert banner
+    if (
+      unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
+      !isSubscribedModelPlanEmail
+    ) {
+      alreadyUnsubbed();
+      cleanUpParams();
+      return;
+    }
+    if (
+      unsubscribeEmailParams === ActivityType.DATES_CHANGED &&
+      !isSubscribedDatesChangedEmail
+    ) {
+      alreadyUnsubbed();
+      cleanUpParams();
+      return;
     }
 
     // Unsubscribe from New Model Plan email notifications
@@ -196,20 +235,20 @@ const NotificationSettings = () => {
       (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
         unsubscribeEmailParams === ActivityType.DATES_CHANGED)
     ) {
-      // New Model Plan variables
-      const isSubscribedModelPlanEmail = newModelPlan.includes(
-        UserNotificationPreferenceFlag.EMAIL
-      );
-      const isSubscribedModelPlanInApp = newModelPlan.includes(
-        UserNotificationPreferenceFlag.IN_APP
-      );
-      // Dates Changed variables
-      const isSubscribedDatesChangedEmail = datesChanged.includes(
-        UserNotificationPreferenceFlag.EMAIL
-      );
-      const isSubscribedDatesChangedInApp = datesChanged.includes(
-        UserNotificationPreferenceFlag.IN_APP
-      );
+      // // New Model Plan variables
+      // const isSubscribedModelPlanEmail = newModelPlan.includes(
+      //   UserNotificationPreferenceFlag.EMAIL
+      // );
+      // const isSubscribedModelPlanInApp = newModelPlan.includes(
+      //   UserNotificationPreferenceFlag.IN_APP
+      // );
+      // // Dates Changed variables
+      // const isSubscribedDatesChangedEmail = datesChanged.includes(
+      //   UserNotificationPreferenceFlag.EMAIL
+      // );
+      // const isSubscribedDatesChangedInApp = datesChanged.includes(
+      //   UserNotificationPreferenceFlag.IN_APP
+      // );
 
       // if user has email notifications, then proceeed to unsubscribe
       if (isSubscribedModelPlanEmail || isSubscribedDatesChangedEmail) {
@@ -297,12 +336,12 @@ const NotificationSettings = () => {
         );
       }
 
-      params.delete('unsubscribe_email');
-      history.replace({ search: params.toString() });
+      cleanUpParams();
     }
   }, [
     datesChanged,
     history,
+    loading,
     newModelPlan,
     notificationsT,
     params,
