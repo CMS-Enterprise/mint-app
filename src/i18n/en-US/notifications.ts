@@ -120,11 +120,11 @@ const notifications = {
       addedAsCollaborator: 'When I’m added as a collaborator to a Model Plan',
       taggedInDiscussion: 'When I’m tagged in a discussion',
       newDiscussionReply: 'When someone replies to a discussion I started',
-      modelPlanShared: 'When someone shares a Model Plan with me'
+      modelPlanShared: 'When someone shares a Model Plan with me',
+      newModelPlan: 'When a new Model Plan is created',
+      datesChanged: 'When model dates change'
     },
     additionalConfigurations: {
-      NEW_MODEL_PLAN: 'When a new Model Plan is created',
-      datesChanged: 'When model dates change',
       whichModel: 'Which models?',
       whichModelTypes: {
         ALL_MODELS: 'All models',

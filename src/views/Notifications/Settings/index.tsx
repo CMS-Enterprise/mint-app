@@ -317,7 +317,7 @@ const NotificationSettings = () => {
     modelPlanShared: modelPlanShared ?? [],
     newModelPlan: newModelPlan ?? [],
     datesChanged: datesChanged ?? [],
-    datesChangedNotificationType: datesChangedNotificationType ?? null
+    datesChangedNotificationType: datesChangedNotificationType ?? undefined
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
@@ -370,30 +370,6 @@ const NotificationSettings = () => {
                 values
               } = formikProps;
 
-              type Obj = { [key: string]: any };
-
-              /**
-               * Returns an object containing the keys and values from `obj1` that also exist in `obj2`.
-               *
-               * @param obj1 - The first object to compare.
-               * @param obj2 - The second object to compare.
-               * @returns An object containing the matching keys and values from `obj1`.
-               */
-              const getMatchingKeys = (obj1: Obj, obj2: Obj): Obj =>
-                Object.keys(obj1)
-                  .filter(key =>
-                    Object.prototype.hasOwnProperty.call(obj2, key)
-                  )
-                  .reduce((acc, key) => {
-                    acc[key] = obj1[key];
-                    return acc;
-                  }, {} as Obj);
-
-              const basicNotificationKeys = getMatchingKeys(
-                values,
-                notificationSettings
-              );
-
               return (
                 <>
                   <Grid row>
@@ -438,6 +414,16 @@ const NotificationSettings = () => {
                       {getKeys(notificationSettings).map(setting => {
                         return (
                           <Grid row key={setting}>
+                            {setting === 'newModelPlan' && (
+                              <Grid mobile={{ col: 12 }}>
+                                <h4 className="margin-top-5 margin-bottom-0">
+                                  {notificationsT(
+                                    'settings.sections.additionalNotifications.heading'
+                                  )}
+                                </h4>
+                              </Grid>
+                            )}
+
                             <Grid mobile={{ col: 6 }}>
                               <p className="text-wrap margin-y-105">
                                 {notificationSettings[setting]}
@@ -452,9 +438,7 @@ const NotificationSettings = () => {
                                 className="padding-left-2"
                                 name={setting}
                                 value={UserNotificationPreferenceFlag.EMAIL}
-                                checked={basicNotificationKeys[
-                                  setting
-                                ].includes(
+                                checked={(values?.[setting] ?? []).includes(
                                   UserNotificationPreferenceFlag.EMAIL
                                 )}
                               />
@@ -468,10 +452,11 @@ const NotificationSettings = () => {
                                 className="padding-left-2"
                                 name={setting}
                                 value={UserNotificationPreferenceFlag.IN_APP}
-                                disabled
-                                checked={basicNotificationKeys[
-                                  setting
-                                ].includes(
+                                disabled={
+                                  setting !== 'datesChanged' &&
+                                  setting !== 'newModelPlan'
+                                }
+                                checked={(values?.[setting] ?? []).includes(
                                   UserNotificationPreferenceFlag.IN_APP
                                 )}
                               />
@@ -482,86 +467,6 @@ const NotificationSettings = () => {
 
                       {/* Additional Notification Section */}
                       <Grid row>
-                        <Grid mobile={{ col: 12 }}>
-                          <h4 className="margin-top-5 margin-bottom-0">
-                            {notificationsT(
-                              'settings.sections.additionalNotifications.heading'
-                            )}
-                          </h4>
-                        </Grid>
-
-                        <Grid mobile={{ col: 6 }}>
-                          <p className="text-wrap margin-y-105">
-                            {notificationsT(
-                              'settings.additionalConfigurations.NEW_MODEL_PLAN'
-                            )}
-                          </p>
-                        </Grid>
-
-                        <Grid mobile={{ col: 3 }}>
-                          <Field
-                            as={Checkbox}
-                            id="notification-setting-email-newModelPlan"
-                            data-testid="notification-setting-email-newModelPlan"
-                            className="padding-left-2"
-                            name="newModelPlan"
-                            value={UserNotificationPreferenceFlag.EMAIL}
-                            checked={values?.newModelPlan.includes(
-                              UserNotificationPreferenceFlag.EMAIL
-                            )}
-                          />
-                        </Grid>
-
-                        <Grid mobile={{ col: 3 }}>
-                          <Field
-                            as={Checkbox}
-                            id="notification-setting-in-app-newModelPlan"
-                            data-testid="notification-setting-in-app-newModelPlan"
-                            className="padding-left-2"
-                            name="newModelPlan"
-                            value={UserNotificationPreferenceFlag.IN_APP}
-                            checked={values?.newModelPlan.includes(
-                              UserNotificationPreferenceFlag.IN_APP
-                            )}
-                          />
-                        </Grid>
-
-                        <Grid mobile={{ col: 6 }}>
-                          <p className="text-wrap margin-y-105">
-                            {notificationsT(
-                              'settings.additionalConfigurations.datesChanged'
-                            )}
-                          </p>
-                        </Grid>
-
-                        <Grid mobile={{ col: 3 }}>
-                          <Field
-                            as={Checkbox}
-                            id="notification-setting-email-datesChanged"
-                            data-testid="notification-setting-email-datesChanged"
-                            className="padding-left-2"
-                            name="datesChanged"
-                            value={UserNotificationPreferenceFlag.EMAIL}
-                            checked={values?.datesChanged.includes(
-                              UserNotificationPreferenceFlag.EMAIL
-                            )}
-                          />
-                        </Grid>
-
-                        <Grid mobile={{ col: 3 }}>
-                          <Field
-                            as={Checkbox}
-                            id="notification-setting-in-app-datesChanged"
-                            data-testid="notification-setting-in-app-datesChanged"
-                            className="padding-left-2"
-                            name="datesChanged"
-                            value={UserNotificationPreferenceFlag.IN_APP}
-                            checked={values?.datesChanged.includes(
-                              UserNotificationPreferenceFlag.IN_APP
-                            )}
-                          />
-                        </Grid>
-
                         <Grid
                           className="tablet:padding-left-3"
                           tablet={{ col: 6 }}
@@ -591,7 +496,6 @@ const NotificationSettings = () => {
                               );
                             }}
                           >
-                            {/* TODO: if datesChanged.length is 0, then default to empty */}
                             {getKeys(whichModelType).map(type => {
                               return (
                                 <option key={type} value={type}>
