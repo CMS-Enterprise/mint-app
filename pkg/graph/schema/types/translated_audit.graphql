@@ -95,6 +95,7 @@ type TranslatedAuditMetaDocumentSolutionLink {
     """
     documentURL: String
     documentVisibility: String
+    documentRestricted: Boolean
 
     
     """
@@ -134,6 +135,11 @@ type TranslatedAudit {
     
     date: Time!
     action: DatabaseOperation!
+
+    """
+	Restricted denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user
+    """
+    restricted: Boolean!
 
 
     actorID: UUID!

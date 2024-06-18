@@ -23,6 +23,7 @@ CREATE TABLE translated_audit (
     -- Changes: (Translations) potentially translate the table name as well? Like we are doing for fields
     primary_key UUID NOT NULL,
     action DATABASE_OPERATION NOT NULL, 
+    restricted BOOLEAN NOT NULL,
 
     meta_data_type TRANSLATED_AUDIT_META_DATA_TYPE,
     meta_data JSONB, 
@@ -49,6 +50,7 @@ COMMENT ON CONSTRAINT meta_data_type_requires_meta_data ON translated_audit IS '
 COMMENT ON TABLE translated_audit IS 'Table storing human-readable audit trail of changes made to model plans. There should be at most one entry per audit.change entry ';
 
 
+COMMENT ON COLUMN translated_audit.restricted IS 'This column specifies if the data should be restricted to users who have elevated permissions';
 -- Changes: (Serialization) Update these comments for the new table
 -- Comments for each column
 COMMENT ON COLUMN translated_audit.id IS 'Unique identifier for the audit trail change record.';

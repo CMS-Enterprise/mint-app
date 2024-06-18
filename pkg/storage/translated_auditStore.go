@@ -46,9 +46,12 @@ func TranslatedAuditCreateCollection(np sqlutils.NamedPreparer, translatedAudits
 }
 
 // TranslatedAuditCollectionGetByModelPlanID returns all translatedAudits for a given model plan id
-func TranslatedAuditCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelPlanID uuid.UUID) ([]*models.TranslatedAudit, error) {
+func TranslatedAuditCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelPlanID uuid.UUID, hasRestrictedAccess bool) ([]*models.TranslatedAudit, error) {
 
-	arg := map[string]interface{}{"model_plan_id": modelPlanID}
+	arg := map[string]interface{}{
+		"model_plan_id":     modelPlanID,
+		"restricted_access": hasRestrictedAccess,
+	}
 
 	translatedAuditCollection, procErr := sqlutils.SelectProcedure[models.TranslatedAudit](np, sqlqueries.TranslatedAudit.CollectionGetByModelPlanID, arg)
 	if procErr != nil {

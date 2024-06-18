@@ -9,6 +9,7 @@ SELECT
     table_name,
     primary_key,
     action,
+    restricted,
     meta_data_type,
     meta_data,
     model_name,
@@ -17,5 +18,10 @@ SELECT
     modified_by,
     modified_dts
 FROM translated_audit
-WHERE model_plan_id = :model_plan_id
+WHERE
+    model_plan_id = :model_plan_id
+    AND (
+        ( restricted = FALSE AND :restricted_access = FALSE ) --user does not have access to restricted audits, only show non-restricted
+        OR :restricted_access = TRUE --show all audits if the user has access to restricted audits
+    )
 ORDER BY change_id DESC;

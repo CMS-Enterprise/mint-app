@@ -219,7 +219,7 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	)
 	if document != nil {
 		// Changes: (Meta) all these document fields will also need to be translated
-		meta.SetOptionalDocumentFields(document.FileName, string(document.DocumentType), document.OtherTypeDescription, document.OptionalNotes, document.URL, fmt.Sprint(document.Restricted))
+		meta.SetOptionalDocumentFields(document.FileName, string(document.DocumentType), document.OtherTypeDescription, document.OptionalNotes, document.URL, fmt.Sprint(document.Restricted), document.Restricted)
 	}
 
 	//Changes: (Meta) We need to get other document information, and it needs to be translated.
@@ -379,44 +379,98 @@ func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, document
 	return &meta, &metaType, nil
 }
 
-func TranslatedAuditMetaData(ctx context.Context, store *storage.Store, audit *models.AuditChange, operation models.DatabaseOperation) (models.TranslatedAuditMetaData, *models.TranslatedAuditMetaDataType, error) {
-	// Changes: (ChChCh Changes!) Consider, do we need to handle if something is deleted differently? There might not be fetch-able information...
-	switch audit.TableName {
-	// Changes: (Testing) add a test for each of these.
+// SetTranslatedAuditTableSpecificMetaData does table specific analysis to
+// 1. Get meta data where needed
+// 2. Set the needed restriction level of an audit.
+// It returns a bool to say if anything was modified and an error if encountered
+func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage.Store, tAuditWithFields *models.TranslatedAuditWithTranslatedFields, audit *models.AuditChange, operation models.DatabaseOperation) (bool, error) {
 
+	var metaDataInterface models.TranslatedAuditMetaData
+	var metaDataTypeGlobal *models.TranslatedAuditMetaDataType
+	// the default state is not-restricted
+	var restricted bool
+	switch audit.TableName {
 	//Changes: (Meta) refactor all of these to explicitly take UUIDs, since primary and foreignKey are always UUIDs and not interfaces. We don't need to parse them
 	// Changes: (Meta) Audit these method signatures, refactor to have a cohesive unified signature throughout, and remove any unnecessary params
 	case "discussion_reply":
 		metaData, err := DiscussionReplyMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.ModifiedDts)
 		metaDataType := models.TAMetaDiscussionReply
-		return metaData, &metaDataType, err
+		metaDataInterface = metaData
+		metaDataTypeGlobal = &metaDataType
+		if err != nil {
+			return true, err
+		}
 	case "operational_need":
 		metaData, err := OperationalNeedMetaDataGet(ctx, store, audit.PrimaryKey)
 		metaDataType := models.TAMetaOperationalNeed
-		return metaData, &metaDataType, err
+		metaDataInterface = metaData
+		metaDataTypeGlobal = &metaDataType
+		if err != nil {
+			return true, err
+		}
 	case "operational_solution":
 		metaData, metaDataType, err := OperationalSolutionMetaDataGet(ctx, store, audit.PrimaryKey)
-		return metaData, metaDataType, err
+		metaDataInterface = metaData
+		metaDataTypeGlobal = metaDataType
+		if err != nil {
+			return true, err
+		}
 	case "operational_solution_subtask":
 		metaData, err := OperationalSolutionSubtaskMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.Fields, operation)
 		metaDataType := models.TAMetaOperationalSolutionSubtask
-		return metaData, &metaDataType, err
+		metaDataInterface = metaData
+		metaDataTypeGlobal = &metaDataType
+		if err != nil {
+			return true, err
+		}
 	case "plan_document_solution_link":
 		metaData, metaDataType, err := DocumentSolutionLinkMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.Fields, operation)
-		return metaData, metaDataType, err
+		metaDataInterface = metaData
+		metaDataTypeGlobal = metaDataType
+		if err != nil {
+			return true, err
+		}
+		// this looks for meta data, maybe just pass it in directly?
+		isRestricted, err := checkIfDocumentLinkIsRestricted(metaData)
+		if err != nil {
+			return true, err
+		}
+		restricted = isRestricted
+
 	case "plan_cr", "plan_tdl":
 		metaData, metaDataType, err := PlanCrTdlMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
-		return metaData, metaDataType, err
+		metaDataInterface = metaData
+		metaDataTypeGlobal = metaDataType
+		if err != nil {
+			return true, err
+		}
 	case "plan_collaborator":
 		metaData, metaDataType, err := PlanCollaboratorMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
-		return metaData, metaDataType, err
+		metaDataInterface = metaData
+		metaDataTypeGlobal = metaDataType
+		if err != nil {
+			return true, err
+		}
 	case "plan_document":
 		metaData, metaDataType, err := PlanDocumentMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
-		return metaData, metaDataType, err
-
+		metaDataInterface = metaData
+		metaDataTypeGlobal = metaDataType
+		if err != nil {
+			return true, err
+		}
+		isRestricted, err := checkIfDocumentIsRestricted(tAuditWithFields.TranslatedFields, operation)
+		if err != nil {
+			return true, err
+		}
+		restricted = isRestricted
 	default:
-		// Tables that aren't configured to generate meta data will return nil
-		return nil, nil, nil
+		// Tables that aren't configured to generate meta data, or to be restricted will return nil
+		return false, nil
 	}
 
+	tAuditWithFields.MetaData = metaDataInterface
+	tAuditWithFields.MetaDataType = metaDataTypeGlobal
+	tAuditWithFields.Restricted = restricted
+
+	return true, nil
 }

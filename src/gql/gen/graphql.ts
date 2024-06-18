@@ -3446,6 +3446,8 @@ export type TranslatedAudit = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   primaryKey: Scalars['UUID']['output'];
+  /** Restricted denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user */
+  restricted: Scalars['Boolean']['output'];
   tableID: Scalars['Int']['output'];
   tableName: Scalars['String']['output'];
   /** The specific fields that were changed by the transaction */
@@ -3528,6 +3530,7 @@ export type TranslatedAuditMetaDocumentSolutionLink = {
   documentName?: Maybe<Scalars['String']['output']>;
   documentNote?: Maybe<Scalars['String']['output']>;
   documentOtherType?: Maybe<Scalars['String']['output']>;
+  documentRestricted?: Maybe<Scalars['Boolean']['output']>;
   documentType?: Maybe<Scalars['String']['output']>;
   /** Document URL will only be visible if the user is a collaborator, or has assessment permission */
   documentURL?: Maybe<Scalars['String']['output']>;

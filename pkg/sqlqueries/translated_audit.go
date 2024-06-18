@@ -8,6 +8,7 @@ import _ "embed"
 var translatedAuditCreateSQL string
 
 // translatedAuditCollectionGetByModelPlanID returns all translated changed for a given model plan id. It returns in order from newest to oldest.
+// It uses the restricted_access param to specify if the user should see confidential docs or not
 //
 //go:embed SQL/translated_audit/collection_get_by_model_plan_ids.sql
 var translatedAuditCollectionGetByModelPlanID string

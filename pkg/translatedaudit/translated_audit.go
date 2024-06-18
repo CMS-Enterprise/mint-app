@@ -112,7 +112,8 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		if tErr != nil {
 			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, plan.ModelName, err)
 		}
-		if !wasTranslated { //If this doesn't have a translation, don't append this to the translated field list (and don't save it)
+		if !wasTranslated {
+			//If this doesn't have a translation, don't append this to the translated field list (and don't save it)
 			continue
 		}
 		translatedAudit.TranslatedFields = append(translatedAudit.TranslatedFields, transField)
@@ -121,13 +122,10 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 
 	//Changes: (Meta) Could we pass the translated fields here to save some meta data searching?
 
-	// Changes: (Translations) refactor this, perhaps this should be a receiver method on the translated audit? That way we set if not nil, instead of the default implementation?
-	metaData, metaDataType, err := TranslatedAuditMetaData(ctx, store, audit, operation)
+	_, err = SetTranslatedAuditTableSpecificMetaData(ctx, store, &translatedAudit, audit, operation)
 	if err != nil {
-		return nil, fmt.Errorf("unable to translate meta data. err %w", err)
+		return nil, fmt.Errorf("unable to translate table specific audit data. err %w", err)
 	}
-	translatedAudit.MetaData = metaData
-	translatedAudit.MetaDataType = metaDataType
 
 	return &translatedAudit, nil
 }
