@@ -3,8 +3,6 @@ package storage
 import (
 	"fmt"
 
-	"github.com/davecgh/go-spew/spew"
-
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -17,12 +15,6 @@ func UserViewCustomizationCreate(
 	np sqlutils.NamedPreparer,
 	userViewCustomization *models.UserViewCustomization,
 ) (*models.UserViewCustomization, error) {
-
-	println("==================================")
-	println("UserViewCustomizationCreate")
-	spew.Dump(userViewCustomization)
-	println("==================================")
-
 	if userViewCustomization.ID == uuid.Nil {
 		userViewCustomization.ID = uuid.New()
 	}
@@ -46,12 +38,6 @@ func UserViewCustomizationGetByUserID(
 	np sqlutils.NamedPreparer,
 	userID uuid.UUID,
 ) (*models.UserViewCustomization, error) {
-
-	println("==================================")
-	println("UserViewCustomizationGetByUserID")
-	spew.Dump(userID)
-	println("==================================")
-
 	arg := map[string]interface{}{"user_id": userID}
 
 	retUserViewCustomization, procErr := sqlutils.GetProcedure[models.UserViewCustomization](

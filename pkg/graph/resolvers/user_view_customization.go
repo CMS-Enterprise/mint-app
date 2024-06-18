@@ -15,6 +15,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
+// UserViewCustomizationGetByUserID retrieves a user view customization by user ID (using the ID from the passed in authentication.Principal object)
 func UserViewCustomizationGetByUserID(
 	logger *zap.Logger,
 	store *storage.Store,
@@ -41,17 +42,6 @@ func UserViewCustomizationGetByUserID(
 					// Assign the uvc value to avoid shadowing
 					uvc = createdUVC
 				} else {
-					return nil, err
-				}
-			}
-
-			// TODO: What is the point of ViewCustomization being nil if we always set it to a valid array on creation?
-			if uvc.ViewCustomization == nil {
-				// TODO: Refactor default view customization to a method and apply it here
-				uvc.ViewCustomization = pq.StringArray{}
-
-				uvc, err = storage.UserViewCustomizationUpdate(tx, uvc)
-				if err != nil {
 					return nil, err
 				}
 			}
@@ -96,16 +86,17 @@ func createAndInitializeUserViewCustomization(
 	return storage.UserViewCustomizationCreate(tx, &uvcToCreate)
 }
 
+// getDefaultViewCustomizationsByRole returns a default view customization slice for a principal based on their role
+//
+// Note: The order of these role checks is important. A user who, for example, has AllowAssessment() will ALSO have AllowUser()
+// Therefore, we should check AllowUser() last
+// See pkg/okta/authentication_middleware.go newPrincipal() for details on how role assignment works
 func getDefaultViewCustomizationsByRole(
 	principal authentication.Principal,
 	store *storage.Store,
 ) ([]models.ViewCustomizationType, error) {
 	var customizations []models.ViewCustomizationType
 
-	// Check the user's role and return the default view customizations
-	// Note: The order of these checks is important, as a user who, for example, has AllowAssessment() will also have AllowUser()
-	// Therefore, we should check AllowUser() last
-	// See pkg/okta/authentication_middleware.go newPrincipal() for details on how role assignment works
 	if principal.AllowASSESSMENT() {
 		// Assessment users should have 1 or 2 customizations by default:
 		// 1. My Model Plans (Only present for Assessment users who are collaborators on at least one model plan)
@@ -136,6 +127,7 @@ func getDefaultViewCustomizationsByRole(
 	return customizations, nil
 }
 
+// UserViewCustomizationUpdate handles updating a user view customization with a map of changes
 func UserViewCustomizationUpdate(
 	logger *zap.Logger,
 	store *storage.Store,

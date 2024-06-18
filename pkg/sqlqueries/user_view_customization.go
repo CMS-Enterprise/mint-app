@@ -18,17 +18,17 @@ var userViewCustomizationGetByUserIDSQL string
 var userViewCustomizationUpdateSQL string
 
 type userViewCustomizationScripts struct {
-	// Holds the SQL query to create a UserNotificationPreferences
+	// Holds the SQL query to create a UserViewCustomization
 	Create string
 
-	// Holds the SQL query for returning a UserNotificationPreferences object by User ID
+	// Holds the SQL query for returning a UserViewCustomization object by User ID
 	GetByUserID string
 
-	// Holds the SQL query for updating a User NotificationPreferences object
+	// Holds the SQL query for updating a User UserViewCustomization object
 	Update string
 }
 
-// UserViewCustomization holds all the SQL scrips related to the userViewCustomization Entity
+// UserViewCustomization holds all the SQL scrips related to the UserViewCustomization Entity
 var UserViewCustomization = userViewCustomizationScripts{
 	Create:      userViewCustomizationCreateSQL,
 	GetByUserID: userViewCustomizationGetByUserIDSQL,
