@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import {
@@ -223,11 +223,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   const isViewingFilteredGroup = filteredView !== null;
 
-  const history = useHistory();
-
-  // If no subinfo param exists, default to first subpage key
-  const defaultSection: typeof listOfSubpageKey[number] = listOfSubpageKey[0];
-
   // Used to check if user is assessment for rendering subnav to task list
   const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
@@ -302,10 +297,6 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFound />;
-  }
-
-  if (!subinfo && !isViewingFilteredGroup) {
-    history.replace(`${location.pathname}/${defaultSection}`);
   }
 
   if (!isSubpage(subinfo, flags, isHelpArticle) && !isViewingFilteredGroup) {

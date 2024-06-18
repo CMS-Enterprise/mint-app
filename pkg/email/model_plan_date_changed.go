@@ -23,4 +23,5 @@ type ModelPlanDateChangedBodyContent struct {
 	ModelName     string
 	ModelID       string
 	DateChanges   []DateChange
+	ShowFooter    bool
 }

@@ -15,13 +15,15 @@ type UserNotificationPreferences struct {
 	// The id of the user this preferences object is for
 	UserID uuid.UUID `json:"userID" db:"user_id"`
 
-	DailyDigestComplete     UserNotificationPreferenceFlags `json:"dailyDigestComplete" db:"daily_digest_complete"`
-	AddedAsCollaborator     UserNotificationPreferenceFlags `json:"addedAsCollaborator" db:"added_as_collaborator"`
-	TaggedInDiscussion      UserNotificationPreferenceFlags `json:"taggedInDiscussion" db:"tagged_in_discussion"`
-	TaggedInDiscussionReply UserNotificationPreferenceFlags `json:"taggedInDiscussionReply" db:"tagged_in_discussion_reply"`
-	NewDiscussionReply      UserNotificationPreferenceFlags `json:"newDiscussionReply" db:"new_discussion_reply"`
-	ModelPlanShared         UserNotificationPreferenceFlags `json:"modelPlanShared" db:"model_plan_shared"`
-	NewModelPlan            UserNotificationPreferenceFlags `json:"newModelPlan" db:"new_model_plan"`
+	DailyDigestComplete          UserNotificationPreferenceFlags `json:"dailyDigestComplete" db:"daily_digest_complete"`
+	AddedAsCollaborator          UserNotificationPreferenceFlags `json:"addedAsCollaborator" db:"added_as_collaborator"`
+	TaggedInDiscussion           UserNotificationPreferenceFlags `json:"taggedInDiscussion" db:"tagged_in_discussion"`
+	TaggedInDiscussionReply      UserNotificationPreferenceFlags `json:"taggedInDiscussionReply" db:"tagged_in_discussion_reply"`
+	NewDiscussionReply           UserNotificationPreferenceFlags `json:"newDiscussionReply" db:"new_discussion_reply"`
+	ModelPlanShared              UserNotificationPreferenceFlags `json:"modelPlanShared" db:"model_plan_shared"`
+	NewModelPlan                 UserNotificationPreferenceFlags `json:"newModelPlan" db:"new_model_plan"`
+	DatesChanged                 UserNotificationPreferenceFlags `json:"datesChanged" db:"dates_changed"`
+	DatesChangedNotificationType *DatesChangedNotificationType   `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
 }
 
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
@@ -37,6 +39,7 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		NewDiscussionReply:      DefaultUserNotificationPreferencesFlags(),
 		ModelPlanShared:         DefaultUserNotificationPreferencesFlags(),
 		NewModelPlan:            EmptyUserNotificationPreferencesFlags(),
+		DatesChanged:            EmptyUserNotificationPreferencesFlags(),
 	}
 }
 
@@ -62,6 +65,16 @@ type UserNotificationPreferenceFlag string
 const (
 	UserNotificationPreferenceInApp UserNotificationPreferenceFlag = "IN_APP"
 	UserNotificationPreferenceEmail UserNotificationPreferenceFlag = "EMAIL"
+)
+
+// DatesChangedNotificationType is an enum that represents the type of notification a user wants for dates changed
+type DatesChangedNotificationType string
+
+// These constants represent the possible values of a DatesChangedNotificationType
+const (
+	DatesChangedNotificationTypeAllModels      DatesChangedNotificationType = "ALL_MODELS"
+	DatesChangedNotificationTypeFollowedModels DatesChangedNotificationType = "FOLLOWED_MODELS"
+	DatesChangedNotificationTypeMyModels       DatesChangedNotificationType = "MY_MODELS"
 )
 
 // InApp translates notification preferences to a bool. True means the user desires an in app notification for this notification type

@@ -3,10 +3,11 @@ package storage
 import (
 	_ "embed"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -29,6 +30,9 @@ var userAccountUpdateByUsername string
 
 //go:embed SQL/user_account/get_notification_preferences_new_model_plan.sql
 var userNotificationPreferencesNewModelPlan string
+
+//go:embed SQL/user_account/get_notification_recipients_dates_changed.sql
+var userAccountGetNotificationRecipientsDatesChanged string
 
 // UserAccountGetByUsername gets a user account by a give username
 func UserAccountGetByUsername(np sqlutils.NamedPreparer, username string) (*authentication.UserAccount, error) {
@@ -107,11 +111,11 @@ func (s *Store) UserAccountGetByIDLOADER(
 // preferences for a new model plan for a slice of users who have at least one
 // enabled preference
 func (s *Store) UserAccountNotificationPreferencesNewModelPlan(np sqlutils.NamedPreparer) (
-	[]*models.UserAccountNotificationPreferences,
+	[]*models.UserAccountAndNotificationPreferences,
 	error,
 ) {
 
-	var userNotificationPreferences []*models.UserAccountNotificationPreferences
+	var results []*models.UserAccountAndNotificationPreferences
 
 	stmt, err := np.PrepareNamed(userNotificationPreferencesNewModelPlan)
 	if err != nil {
@@ -119,12 +123,12 @@ func (s *Store) UserAccountNotificationPreferencesNewModelPlan(np sqlutils.Named
 	}
 	defer stmt.Close()
 
-	err = stmt.Select(&userNotificationPreferences, map[string]interface{}{})
+	err = stmt.Select(&results, map[string]interface{}{})
 	if err != nil {
 		return nil, err
 	}
 
-	return userNotificationPreferences, nil
+	return results, nil
 }
 
 // UserAccountInsertByUsername creates a new user account for a given username
@@ -172,4 +176,30 @@ func UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authent
 	}
 
 	return user, nil
+}
+
+// UserAccountsGetNotificationRecipientsForDatesChanged returns a collection of
+// user accounts that should be notified of a change in model plan dates
+func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(
+	modelPlanID uuid.UUID,
+) (
+	[]*models.UserAccountAndNotificationPreferences,
+	error,
+) {
+	var recipients []*models.UserAccountAndNotificationPreferences
+
+	stmt, err := s.db.PrepareNamed(userAccountGetNotificationRecipientsDatesChanged)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := utilitySQL.CreateModelPlanIDQueryMap(modelPlanID)
+
+	err = stmt.Select(&recipients, arg)
+	if err != nil {
+		return nil, err
+	}
+
+	return recipients, nil
 }

@@ -3,6 +3,12 @@ enum UserNotificationPreferenceFlag {
   EMAIL
 }
 
+enum DatesChangedNotificationType {
+  ALL_MODELS,
+  FOLLOWED_MODELS,
+  MY_MODELS,
+}
+
 
 """
 UserNotificationPreferences represents a users preferences about what type and where to receive a notification
@@ -25,6 +31,8 @@ type UserNotificationPreferences {
 
   newModelPlan: [UserNotificationPreferenceFlag!]!
 
+  datesChanged: [UserNotificationPreferenceFlag!]!
+  datesChangedNotificationType: DatesChangedNotificationType
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -32,7 +40,6 @@ type UserNotificationPreferences {
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
-
 }
 
 
@@ -54,6 +61,9 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
   modelPlanShared: [UserNotificationPreferenceFlag!]
 
   newModelPlan: [UserNotificationPreferenceFlag!]
+
+  datesChanged: [UserNotificationPreferenceFlag!]
+  datesChangedNotificationType: DatesChangedNotificationType
 }
 
 extend type Mutation {

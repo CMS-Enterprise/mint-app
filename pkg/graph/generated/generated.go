@@ -47,6 +47,7 @@ type ResolverRoot interface {
 	AuditChange() AuditChangeResolver
 	CurrentUser() CurrentUserResolver
 	DailyDigestCompleteActivityMeta() DailyDigestCompleteActivityMetaResolver
+	DatesChangedActivityMeta() DatesChangedActivityMetaResolver
 	DiscussionReply() DiscussionReplyResolver
 	ExistingModelLink() ExistingModelLinkResolver
 	ExistingModelLinks() ExistingModelLinksResolver
@@ -191,6 +192,26 @@ type ComplexityRoot struct {
 		Type           func(childComplexity int) int
 		UserID         func(childComplexity int) int
 		Version        func(childComplexity int) int
+	}
+
+	DateChange struct {
+		Field         func(childComplexity int) int
+		IsChanged     func(childComplexity int) int
+		IsRange       func(childComplexity int) int
+		NewDate       func(childComplexity int) int
+		NewRangeEnd   func(childComplexity int) int
+		NewRangeStart func(childComplexity int) int
+		OldDate       func(childComplexity int) int
+		OldRangeEnd   func(childComplexity int) int
+		OldRangeStart func(childComplexity int) int
+	}
+
+	DatesChangedActivityMeta struct {
+		DateChanges func(childComplexity int) int
+		ModelPlan   func(childComplexity int) int
+		ModelPlanID func(childComplexity int) int
+		Type        func(childComplexity int) int
+		Version     func(childComplexity int) int
 	}
 
 	DiscussionReply struct {
@@ -1186,21 +1207,23 @@ type ComplexityRoot struct {
 	}
 
 	UserNotificationPreferences struct {
-		AddedAsCollaborator     func(childComplexity int) int
-		CreatedBy               func(childComplexity int) int
-		CreatedByUserAccount    func(childComplexity int) int
-		CreatedDts              func(childComplexity int) int
-		DailyDigestComplete     func(childComplexity int) int
-		ID                      func(childComplexity int) int
-		ModelPlanShared         func(childComplexity int) int
-		ModifiedBy              func(childComplexity int) int
-		ModifiedByUserAccount   func(childComplexity int) int
-		ModifiedDts             func(childComplexity int) int
-		NewDiscussionReply      func(childComplexity int) int
-		NewModelPlan            func(childComplexity int) int
-		TaggedInDiscussion      func(childComplexity int) int
-		TaggedInDiscussionReply func(childComplexity int) int
-		UserID                  func(childComplexity int) int
+		AddedAsCollaborator          func(childComplexity int) int
+		CreatedBy                    func(childComplexity int) int
+		CreatedByUserAccount         func(childComplexity int) int
+		CreatedDts                   func(childComplexity int) int
+		DailyDigestComplete          func(childComplexity int) int
+		DatesChanged                 func(childComplexity int) int
+		DatesChangedNotificationType func(childComplexity int) int
+		ID                           func(childComplexity int) int
+		ModelPlanShared              func(childComplexity int) int
+		ModifiedBy                   func(childComplexity int) int
+		ModifiedByUserAccount        func(childComplexity int) int
+		ModifiedDts                  func(childComplexity int) int
+		NewDiscussionReply           func(childComplexity int) int
+		NewModelPlan                 func(childComplexity int) int
+		TaggedInDiscussion           func(childComplexity int) int
+		TaggedInDiscussionReply      func(childComplexity int) int
+		UserID                       func(childComplexity int) int
 	}
 
 	UserNotifications struct {
@@ -1246,6 +1269,9 @@ type CurrentUserResolver interface {
 }
 type DailyDigestCompleteActivityMetaResolver interface {
 	AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error)
+}
+type DatesChangedActivityMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.DatesChangedActivityMeta) (*models.ModelPlan, error)
 }
 type DiscussionReplyResolver interface {
 	Content(ctx context.Context, obj *models.DiscussionReply) (*models.TaggedContent, error)
@@ -1541,6 +1567,7 @@ type UserNotificationPreferencesResolver interface {
 	NewDiscussionReply(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	ModelPlanShared(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	NewModelPlan(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+	DatesChanged(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 }
 type UserViewCustomizationResolver interface {
 	ViewCustomization(ctx context.Context, obj *models.UserViewCustomization) ([]models.ViewCustomizationType, error)
@@ -2023,6 +2050,104 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.DailyDigestCompleteActivityMeta.Version(childComplexity), true
+
+	case "DateChange.field":
+		if e.complexity.DateChange.Field == nil {
+			break
+		}
+
+		return e.complexity.DateChange.Field(childComplexity), true
+
+	case "DateChange.isChanged":
+		if e.complexity.DateChange.IsChanged == nil {
+			break
+		}
+
+		return e.complexity.DateChange.IsChanged(childComplexity), true
+
+	case "DateChange.isRange":
+		if e.complexity.DateChange.IsRange == nil {
+			break
+		}
+
+		return e.complexity.DateChange.IsRange(childComplexity), true
+
+	case "DateChange.newDate":
+		if e.complexity.DateChange.NewDate == nil {
+			break
+		}
+
+		return e.complexity.DateChange.NewDate(childComplexity), true
+
+	case "DateChange.newRangeEnd":
+		if e.complexity.DateChange.NewRangeEnd == nil {
+			break
+		}
+
+		return e.complexity.DateChange.NewRangeEnd(childComplexity), true
+
+	case "DateChange.newRangeStart":
+		if e.complexity.DateChange.NewRangeStart == nil {
+			break
+		}
+
+		return e.complexity.DateChange.NewRangeStart(childComplexity), true
+
+	case "DateChange.oldDate":
+		if e.complexity.DateChange.OldDate == nil {
+			break
+		}
+
+		return e.complexity.DateChange.OldDate(childComplexity), true
+
+	case "DateChange.oldRangeEnd":
+		if e.complexity.DateChange.OldRangeEnd == nil {
+			break
+		}
+
+		return e.complexity.DateChange.OldRangeEnd(childComplexity), true
+
+	case "DateChange.oldRangeStart":
+		if e.complexity.DateChange.OldRangeStart == nil {
+			break
+		}
+
+		return e.complexity.DateChange.OldRangeStart(childComplexity), true
+
+	case "DatesChangedActivityMeta.dateChanges":
+		if e.complexity.DatesChangedActivityMeta.DateChanges == nil {
+			break
+		}
+
+		return e.complexity.DatesChangedActivityMeta.DateChanges(childComplexity), true
+
+	case "DatesChangedActivityMeta.modelPlan":
+		if e.complexity.DatesChangedActivityMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.complexity.DatesChangedActivityMeta.ModelPlan(childComplexity), true
+
+	case "DatesChangedActivityMeta.modelPlanID":
+		if e.complexity.DatesChangedActivityMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.DatesChangedActivityMeta.ModelPlanID(childComplexity), true
+
+	case "DatesChangedActivityMeta.type":
+		if e.complexity.DatesChangedActivityMeta.Type == nil {
+			break
+		}
+
+		return e.complexity.DatesChangedActivityMeta.Type(childComplexity), true
+
+	case "DatesChangedActivityMeta.version":
+		if e.complexity.DatesChangedActivityMeta.Version == nil {
+			break
+		}
+
+		return e.complexity.DatesChangedActivityMeta.Version(childComplexity), true
 
 	case "DiscussionReply.content":
 		if e.complexity.DiscussionReply.Content == nil {
@@ -8420,6 +8545,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserNotificationPreferences.DailyDigestComplete(childComplexity), true
 
+	case "UserNotificationPreferences.datesChanged":
+		if e.complexity.UserNotificationPreferences.DatesChanged == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.DatesChanged(childComplexity), true
+
+	case "UserNotificationPreferences.datesChangedNotificationType":
+		if e.complexity.UserNotificationPreferences.DatesChangedNotificationType == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.DatesChangedNotificationType(childComplexity), true
+
 	case "UserNotificationPreferences.id":
 		if e.complexity.UserNotificationPreferences.ID == nil {
 			break
@@ -8741,12 +8880,22 @@ enum ActivityType {
   NEW_DISCUSSION_REPLY
   MODEL_PLAN_SHARED
   NEW_MODEL_PLAN
+  DATES_CHANGED
+}
+
+enum DateChangeFieldType {
+  COMPLETE_ICIP
+  CLEARANCE
+  ANNOUNCED
+  APPLICATIONS
+  PERFORMANCE_PERIOD
+  WRAP_UP_ENDS
 }
 
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | AddedAsCollaboratorMeta | ModelPlanSharedActivityMeta | NewModelPlanActivityMeta
+union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | AddedAsCollaboratorMeta | ModelPlanSharedActivityMeta | NewModelPlanActivityMeta | DatesChangedActivityMeta
 
 type AddedAsCollaboratorMeta {
   version: Int!
@@ -8798,6 +8947,7 @@ type NewDiscussionRepliedActivityMeta {
   reply: DiscussionReply!
   content: String!
 }
+
 type DailyDigestCompleteActivityMeta {
   version: Int!
   type: ActivityType!
@@ -8814,6 +8964,25 @@ type NewModelPlanActivityMeta {
   modelPlan: ModelPlan!
 }
 
+type DateChange {
+  isChanged: Boolean!
+  field: DateChangeFieldType!
+  isRange: Boolean!
+  oldDate: Time
+  newDate: Time
+  oldRangeStart: Time
+  oldRangeEnd: Time
+  newRangeStart: Time
+  newRangeEnd: Time
+}
+
+type DatesChangedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  dateChanges: [DateChange!]!
+}
 
 """
 Activity represents an event that happened in the application that could result in a notification.
@@ -11729,6 +11898,12 @@ markAllNotificationsAsRead: [UserNotification!]!
   EMAIL
 }
 
+enum DatesChangedNotificationType {
+  ALL_MODELS,
+  FOLLOWED_MODELS,
+  MY_MODELS,
+}
+
 
 """
 UserNotificationPreferences represents a users preferences about what type and where to receive a notification
@@ -11751,6 +11926,8 @@ type UserNotificationPreferences {
 
   newModelPlan: [UserNotificationPreferenceFlag!]!
 
+  datesChanged: [UserNotificationPreferenceFlag!]!
+  datesChangedNotificationType: DatesChangedNotificationType
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -11758,7 +11935,6 @@ type UserNotificationPreferences {
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
-
 }
 
 
@@ -11780,6 +11956,9 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
   modelPlanShared: [UserNotificationPreferenceFlag!]
 
   newModelPlan: [UserNotificationPreferenceFlag!]
+
+  datesChanged: [UserNotificationPreferenceFlag!]
+  datesChangedNotificationType: DatesChangedNotificationType
 }
 
 extend type Mutation {
@@ -16059,6 +16238,10 @@ func (ec *executionContext) fieldContext_CurrentUser_notificationPreferences(ctx
 				return ec.fieldContext_UserNotificationPreferences_modelPlanShared(ctx, field)
 			case "newModelPlan":
 				return ec.fieldContext_UserNotificationPreferences_newModelPlan(ctx, field)
+			case "datesChanged":
+				return ec.fieldContext_UserNotificationPreferences_datesChanged(ctx, field)
+			case "datesChangedNotificationType":
+				return ec.fieldContext_UserNotificationPreferences_datesChangedNotificationType(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -16361,6 +16544,682 @@ func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_date(ct
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateChange_isChanged(ctx context.Context, field graphql.CollectedField, obj *models.DateChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateChange_isChanged(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsChanged, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateChange_isChanged(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateChange_field(ctx context.Context, field graphql.CollectedField, obj *models.DateChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateChange_field(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Field, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.DateChangeFieldType)
+	fc.Result = res
+	return ec.marshalNDateChangeFieldType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateChangeFieldType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateChange_field(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DateChangeFieldType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateChange_isRange(ctx context.Context, field graphql.CollectedField, obj *models.DateChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateChange_isRange(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsRange, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateChange_isRange(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateChange_oldDate(ctx context.Context, field graphql.CollectedField, obj *models.DateChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateChange_oldDate(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OldDate, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateChange_oldDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateChange_newDate(ctx context.Context, field graphql.CollectedField, obj *models.DateChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateChange_newDate(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NewDate, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateChange_newDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateChange_oldRangeStart(ctx context.Context, field graphql.CollectedField, obj *models.DateChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateChange_oldRangeStart(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OldRangeStart, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateChange_oldRangeStart(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateChange_oldRangeEnd(ctx context.Context, field graphql.CollectedField, obj *models.DateChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateChange_oldRangeEnd(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OldRangeEnd, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateChange_oldRangeEnd(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateChange_newRangeStart(ctx context.Context, field graphql.CollectedField, obj *models.DateChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateChange_newRangeStart(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NewRangeStart, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateChange_newRangeStart(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DateChange_newRangeEnd(ctx context.Context, field graphql.CollectedField, obj *models.DateChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DateChange_newRangeEnd(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NewRangeEnd, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DateChange_newRangeEnd(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DateChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DatesChangedActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.DatesChangedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DatesChangedActivityMeta_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DatesChangedActivityMeta_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DatesChangedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DatesChangedActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.DatesChangedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DatesChangedActivityMeta_type(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.ActivityType)
+	fc.Result = res
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DatesChangedActivityMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DatesChangedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DatesChangedActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.DatesChangedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DatesChangedActivityMeta_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DatesChangedActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DatesChangedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DatesChangedActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.DatesChangedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DatesChangedActivityMeta_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.DatesChangedActivityMeta().ModelPlan(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DatesChangedActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DatesChangedActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DatesChangedActivityMeta_dateChanges(ctx context.Context, field graphql.CollectedField, obj *models.DatesChangedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DatesChangedActivityMeta_dateChanges(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DateChanges, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.DateChange)
+	fc.Result = res
+	return ec.marshalNDateChange2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateChangeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DatesChangedActivityMeta_dateChanges(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DatesChangedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "isChanged":
+				return ec.fieldContext_DateChange_isChanged(ctx, field)
+			case "field":
+				return ec.fieldContext_DateChange_field(ctx, field)
+			case "isRange":
+				return ec.fieldContext_DateChange_isRange(ctx, field)
+			case "oldDate":
+				return ec.fieldContext_DateChange_oldDate(ctx, field)
+			case "newDate":
+				return ec.fieldContext_DateChange_newDate(ctx, field)
+			case "oldRangeStart":
+				return ec.fieldContext_DateChange_oldRangeStart(ctx, field)
+			case "oldRangeEnd":
+				return ec.fieldContext_DateChange_oldRangeEnd(ctx, field)
+			case "newRangeStart":
+				return ec.fieldContext_DateChange_newRangeStart(ctx, field)
+			case "newRangeEnd":
+				return ec.fieldContext_DateChange_newRangeEnd(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DateChange", field.Name)
 		},
 	}
 	return fc, nil
@@ -26541,6 +27400,10 @@ func (ec *executionContext) fieldContext_Mutation_updateUserNotificationPreferen
 				return ec.fieldContext_UserNotificationPreferences_modelPlanShared(ctx, field)
 			case "newModelPlan":
 				return ec.fieldContext_UserNotificationPreferences_newModelPlan(ctx, field)
+			case "datesChanged":
+				return ec.fieldContext_UserNotificationPreferences_datesChanged(ctx, field)
+			case "datesChangedNotificationType":
+				return ec.fieldContext_UserNotificationPreferences_datesChangedNotificationType(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -61760,6 +62623,91 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_newModelPla
 	return fc, nil
 }
 
+func (ec *executionContext) _UserNotificationPreferences_datesChanged(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_datesChanged(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.UserNotificationPreferences().DatesChanged(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.UserNotificationPreferenceFlag)
+	fc.Result = res
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_datesChanged(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UserNotificationPreferenceFlag does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserNotificationPreferences_datesChangedNotificationType(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_datesChangedNotificationType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DatesChangedNotificationType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.DatesChangedNotificationType)
+	fc.Result = res
+	return ec.marshalODatesChangedNotificationType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatesChangedNotificationType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_datesChangedNotificationType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DatesChangedNotificationType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _UserNotificationPreferences_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 	if err != nil {
@@ -65328,6 +66276,11 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 			return graphql.Null
 		}
 		return ec._NewModelPlanActivityMeta(ctx, sel, obj)
+	case *models.DatesChangedActivityMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._DatesChangedActivityMeta(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
 	}
@@ -66565,6 +67518,157 @@ func (ec *executionContext) _DailyDigestCompleteActivityMeta(ctx context.Context
 			}
 		case "date":
 			out.Values[i] = ec._DailyDigestCompleteActivityMeta_date(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var dateChangeImplementors = []string{"DateChange"}
+
+func (ec *executionContext) _DateChange(ctx context.Context, sel ast.SelectionSet, obj *models.DateChange) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dateChangeImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DateChange")
+		case "isChanged":
+			out.Values[i] = ec._DateChange_isChanged(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "field":
+			out.Values[i] = ec._DateChange_field(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "isRange":
+			out.Values[i] = ec._DateChange_isRange(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "oldDate":
+			out.Values[i] = ec._DateChange_oldDate(ctx, field, obj)
+		case "newDate":
+			out.Values[i] = ec._DateChange_newDate(ctx, field, obj)
+		case "oldRangeStart":
+			out.Values[i] = ec._DateChange_oldRangeStart(ctx, field, obj)
+		case "oldRangeEnd":
+			out.Values[i] = ec._DateChange_oldRangeEnd(ctx, field, obj)
+		case "newRangeStart":
+			out.Values[i] = ec._DateChange_newRangeStart(ctx, field, obj)
+		case "newRangeEnd":
+			out.Values[i] = ec._DateChange_newRangeEnd(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var datesChangedActivityMetaImplementors = []string{"DatesChangedActivityMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _DatesChangedActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.DatesChangedActivityMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, datesChangedActivityMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DatesChangedActivityMeta")
+		case "version":
+			out.Values[i] = ec._DatesChangedActivityMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._DatesChangedActivityMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._DatesChangedActivityMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._DatesChangedActivityMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "dateChanges":
+			out.Values[i] = ec._DatesChangedActivityMeta_dateChanges(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
@@ -76926,6 +78030,44 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "datesChanged":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_datesChanged(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "datesChangedNotificationType":
+			out.Values[i] = ec._UserNotificationPreferences_datesChangedNotificationType(ctx, field, obj)
 		case "createdBy":
 			out.Values[i] = ec._UserNotificationPreferences_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -78790,6 +79932,70 @@ func (ec *executionContext) marshalNDataToSendParticipantsType2ᚕgithubᚗcom�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) marshalNDateChange2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateChange(ctx context.Context, sel ast.SelectionSet, v models.DateChange) graphql.Marshaler {
+	return ec._DateChange(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNDateChange2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateChangeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.DateChange) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNDateChange2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateChange(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalNDateChangeFieldType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateChangeFieldType(ctx context.Context, v interface{}) (models.DateChangeFieldType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DateChangeFieldType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDateChangeFieldType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDateChangeFieldType(ctx context.Context, sel ast.SelectionSet, v models.DateChangeFieldType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) marshalNDiscussionReply2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v models.DiscussionReply) graphql.Marshaler {
@@ -84278,6 +85484,23 @@ func (ec *executionContext) marshalODataToSendParticipantsType2ᚕgithubᚗcom�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalODatesChangedNotificationType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatesChangedNotificationType(ctx context.Context, v interface{}) (*models.DatesChangedNotificationType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DatesChangedNotificationType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalODatesChangedNotificationType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDatesChangedNotificationType(ctx context.Context, sel ast.SelectionSet, v *models.DatesChangedNotificationType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
 }
 
 func (ec *executionContext) marshalODiscussionRoleSelection2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx context.Context, sel ast.SelectionSet, v *models.DiscussionRoleSelection) graphql.Marshaler {

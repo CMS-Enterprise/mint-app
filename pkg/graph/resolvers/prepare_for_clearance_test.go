@@ -43,6 +43,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	_, err = UpdatePlanBasics(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		basics.ID,
 		map[string]interface{}{
@@ -65,6 +66,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	basics, err = PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	_, err = UpdatePlanBasics(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		basics.ID,
 		map[string]interface{}{
@@ -87,6 +89,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	basics, err = PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	_, err = UpdatePlanBasics(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		basics.ID,
 		map[string]interface{}{

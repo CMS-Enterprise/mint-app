@@ -349,6 +349,7 @@ func (suite *ResolverSuite) TestGetSolutionSelectedDetails() {
 	}
 
 	basics, err = UpdatePlanBasics(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		basics.ID,
 		changes,
