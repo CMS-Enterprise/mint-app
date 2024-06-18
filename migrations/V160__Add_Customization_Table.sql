@@ -17,6 +17,9 @@ CREATE TABLE user_view_customization (
   modified_dts TIMESTAMP WITH TIME ZONE
 );
 
+/* Enable Auditing for new table*/
+SELECT audit.AUDIT_TABLE('public', 'user_view_customization', 'id', 'user_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{}'::TEXT[]);
+
 COMMENT ON COLUMN user_view_customization.user_id IS
 'This column represents which user (uuid) the view customization is for.';
 
