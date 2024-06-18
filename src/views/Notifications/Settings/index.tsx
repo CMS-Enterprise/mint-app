@@ -98,7 +98,7 @@ const NotificationSettings = () => {
 
     // if datesChangedNotificationType is not changed by user, but datesChanged is changed, then do the following logic
     if (!changes.datesChangedNotificationType && changes.datesChanged?.length) {
-      // If Dates Changed notification is subscribed, then manually set datesChangedNotificationType to ALL_MODELS
+      // If datesChangedNotificationType is subscribed, then manually set datesChangedNotificationType to ALL_MODELS
       changes.datesChangedNotificationType =
         DatesChangedNotificationType.ALL_MODELS;
     }
