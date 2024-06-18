@@ -14,7 +14,10 @@ type TranslatedAuditMetaGeneric {
     version: Int!
     tableName: String!
     relation: String!
-    relationContent: String!
+    """
+    Relation content can be nil under certain situations, for example if a record was deleted before the audit was translated
+    """
+    relationContent: String
 }
 
 """
