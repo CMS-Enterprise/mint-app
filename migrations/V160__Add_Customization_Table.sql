@@ -17,4 +17,11 @@ CREATE TABLE user_view_customization (
   modified_dts TIMESTAMP WITH TIME ZONE
 );
 
-/* TODO: Add comments to columns */
+COMMENT ON COLUMN user_view_customization.user_id IS
+'This column represents which user (uuid) the view customization is for.';
+
+COMMENT ON COLUMN user_view_customization.view_customization IS
+'This column represents an list (ordered) of VIEW_CUSTOMIZATION_TYPE that the user has selected for their home page.';
+
+COMMENT ON COLUMN user_view_customization.possible_operational_solutions IS
+'This column represents a list of Operational Solution Keys that the user has selected to view. This selection is used when the user has also selected MODELS_BY_OPERATIONAL_SOLUTION as a view type.';
