@@ -206,6 +206,35 @@ func (suite *ResolverSuite) TestTranslateAuditCRAndTDLWorksWhenDataIsUnreadable(
 
 }
 
+func (suite *ResolverSuite) TestTranslateAuditCollaboratorWorksWhenDataIsUnreadable() {
+	plan := suite.createModelPlan("Plan For collaborator tests")
+	retTranslatedAuditsWithFields := suite.dangerousQueueAndTranslateAllAudits()
+	suite.GreaterOrEqual(len(retTranslatedAuditsWithFields), 2)
+
+	collaborator := suite.createPlanCollaborator(plan, "CLAB", []models.TeamRole{models.TeamRoleLeadership})
+	suite.Nil(collaborator.ModifiedBy)
+	suite.Nil(collaborator.ModifiedDts)
+
+	_, err := PlanCollaboratorUpdate(
+		suite.testConfigs.Logger,
+		collaborator.ID,
+		[]models.TeamRole{models.TeamRoleEvaluation},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+	suite.NoError(err)
+	_, err = PlanCollaboratorDelete(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	// Even though collaborator is deleted and no longer reference-able, this is still able to be translated, as the user id is a foreign key reference
+	// 3 changes. 1 for create, 1 for update, 1 for delete.
+	retTranslatedAuditsWithFields2 := suite.dangerousQueueAndTranslateAllAudits()
+
+	suite.NotNil(retTranslatedAuditsWithFields2)
+	suite.Len(retTranslatedAuditsWithFields2, 3)
+
+}
+
 func (suite *ResolverSuite) dangerousAuditTranslationQueueAllItems() {
 	arg := map[string]interface{}{}
 
