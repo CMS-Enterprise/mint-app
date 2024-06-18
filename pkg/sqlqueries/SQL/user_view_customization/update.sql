@@ -1,8 +1,9 @@
 UPDATE user_view_customization
 SET
-    user_id = :user_id,
     view_customization = :view_customization,
-    possible_operational_solutions = :possible_operational_solutions
+    possible_operational_solutions = :possible_operational_solutions,
+    modified_by = :modified_by,
+    modified_dts = NOW()
 WHERE user_id = :user_id
 RETURNING
 id,
