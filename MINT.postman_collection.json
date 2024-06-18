@@ -1,9 +1,7 @@
 {
 	"info": {
-		"_postman_id": "dab8a942-5d1c-47cd-a8f6-f052b439c980",
 		"name": "MINT",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20435042"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
