@@ -3039,6 +3039,13 @@ export type Query = {
   possibleOperationalSolutions: Array<PossibleOperationalSolution>;
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
+  /**
+   * TranslatedAuditCollection returns a collection of translated audits, with access dependant on who is viewing the audits.
+   * if a user has privileged access, they will see audit changes that are restricted, otherwise only unrestricted
+   * Optional Params
+   *     limit: this controls how many records will be returned at once. A null entry will return all records
+   *     offset: how many records to skip before returning results. If null, no records will be skipped.
+   */
   translatedAuditCollection?: Maybe<Array<TranslatedAudit>>;
   userAccount: UserAccount;
 };
@@ -3138,7 +3145,9 @@ export type QueryTaskListSectionLocksArgs = {
 
 /** Query definition for the schema */
 export type QueryTranslatedAuditCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
   modelPlanID: Scalars['UUID']['input'];
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
