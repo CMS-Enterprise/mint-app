@@ -153,6 +153,7 @@ func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Stor
 	// get the document
 	document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, uuidKey)
 	if err != nil {
+		//Changes: (fk) revisit this. Documents can be deleted, so should we handle this differently if the record can't be returned? Perhaps return nil, but no error?
 		if err.Error() != "sql: no rows in result set" {
 			// Expect There To Be Null results, only error for other store errors
 			return nil, fmt.Errorf("there was an issue getting the plan document  foreign key reference . err %w", err)
