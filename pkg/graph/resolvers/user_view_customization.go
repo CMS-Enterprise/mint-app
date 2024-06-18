@@ -123,12 +123,10 @@ func getDefaultViewCustomizationsByRole(
 		// MAC users should always have 1 customization by default:
 		// 1. ModelsWithCrTdl (Always present for MAC users)
 		customizations = append(customizations, models.ViewCustomizationTypeModelsWithCrTdl)
-	} else if principal.AllowNonCMSUser() {
-		// TODO: nothing?
-	} else if principal.AllowUSER() {
-		// If the user has none of the above roles, they're just a regular user
-		// Regular users should have 1 customization by default:
-		// 1. My Model Plans (Always present for regular users)
+	} else if principal.AllowNonCMSUser() || principal.AllowUSER() {
+		// If the user has none of the above roles, they're just a regular user or a non-CMS user, which we treat the same for this function
+		// These users should have 1 customization by default:
+		// 1. My Model Plans (Always present)
 		customizations = append(customizations, models.ViewCustomizationTypeMyModelPlans)
 	}
 
