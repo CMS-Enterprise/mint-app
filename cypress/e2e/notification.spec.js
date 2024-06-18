@@ -275,4 +275,95 @@ describe('Notification Center', () => {
       'You are already unsubscribed from email notifications when a new Model Plan is created.'
     );
   });
+
+  it.only('testing Dates Changed Notification', () => {
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/notifications/settings');
+
+    // Check the new model plan in-app checkbox
+    cy.get('[data-testid="notification-setting-in-app-datesChanged"]')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.get('[data-testid="notification-setting-email-datesChanged"]')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.contains('button', 'Save').click();
+
+    // Navigate back to home to click "Empty Plan" model plan
+    cy.get('[aria-label="Home"]').click();
+    cy.url().should('include', '/');
+
+    cy.clickPlanTableByName('Empty Plan');
+    cy.get('[data-testid="basics"]').click();
+    cy.url().should('include', '/basics');
+
+    cy.get(
+      '[data-testid="plan-basics-model-category-DISEASE_SPECIFIC_AND_EPISODIC"]'
+    )
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+    cy.get('#new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+    cy.contains('button', 'Next').click();
+
+    cy.url().should('include', '/overview');
+    cy.get('#ModelType-VOLUNTARY')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+    cy.contains('button', 'Next').click();
+
+    cy.url().should('include', '/milestones');
+    cy.get('#Milestone-completeICIP')
+      .type('2025-12-31')
+      .should('have.value', '2025-12-31');
+
+    cy.contains('button', 'Save and return to task list').click();
+
+    cy.get('[data-testid="navmenu__notification"]').click();
+
+    cy.url().should('include', '/notifications');
+
+    cy.get('[data-testid="individual-notification"]').contains(
+      'Dates have been updated for Empty Plan.'
+    );
+
+    cy.contains('button', 'View changes').click();
+
+    cy.get('[data-testid="notification--dates-changed"]').should('exist');
+
+    // Unsubscribe via email link
+    cy.visit('/notifications/settings?unsubscribe_email=DATES_CHANGED');
+
+    cy.get('[data-testid="notification-setting-email-datesChanged"]').should(
+      'be.not.checked'
+    );
+
+    cy.get('[data-testid="success-alert"]').contains(
+      'You have successfully unsubscribed from email notifications when model dates change.'
+    );
+
+    cy.visit('/notifications/settings?unsubscribe_email=DATES_CHANGED');
+
+    cy.get('[data-testid="error-alert"]').contains(
+      'You are already unsubscribed from email notifications when model dates change.'
+    );
+  });
 });
