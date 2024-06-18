@@ -233,19 +233,19 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 
 	const idNumField = "id_number"
-	var idNumber string
+	var idNumber *string
 	idNumberChange, fieldPresent := changesFields[idNumField]
 	if fieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
 			if idNumberChange.Old == nil {
 				return nil, nil, fmt.Errorf("%s was nil in the change field Old. A value was expected", idNumField)
 			}
-			idNumber = fmt.Sprint(idNumberChange.Old)
+			idNumber = models.StringPointer(fmt.Sprint(idNumberChange.Old))
 		} else {
 			if idNumberChange.New == nil {
 				return nil, nil, fmt.Errorf("%s was nil in the change field New. A value was expected", idNumField)
 			}
-			idNumber = fmt.Sprint(idNumberChange.New)
+			idNumber = models.StringPointer(fmt.Sprint(idNumberChange.New))
 		}
 	} else {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
@@ -258,28 +258,27 @@ func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey 
 			if err != nil {
 				return nil, nil, err
 			}
-			if planCR == nil {
-				return nil, nil, fmt.Errorf("planCR is not present in the database, but expected for this meta data")
+			if planCR != nil {
+				idNumber = &planCR.IDNumber
 			}
-			idNumber = planCR.IDNumber
+
 		case "plan_tdl":
 			logger := appcontext.ZLogger(ctx)
 			planTDL, err := store.PlanTDLGetByID(logger, primaryKey)
 			if err != nil {
 				return nil, nil, err
 			}
-			if planTDL == nil {
-				return nil, nil, fmt.Errorf("planTDL is not present in the database, but expected for this meta data")
+			if planTDL != nil {
+				idNumber = &planTDL.IDNumber
 			}
-			idNumber = planTDL.IDNumber
+
 		default:
 			return nil, nil, fmt.Errorf("unable to get plan_cr / plan_tdl meta data with this table type %s", tableName)
 		}
 
 	}
 
-	//Changes: (Meta) Should we break this into two functions?. Also should we define a specific meta data type?
-	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "id_number", &idNumber)
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "id_number", idNumber)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }

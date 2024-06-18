@@ -362,7 +362,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(crMetaData) {
 			suite.EqualValues("id_number", crMetaData.Relation)
-			suite.EqualValues(idNumberNew, crMetaData.RelationContent)
+			if suite.NotNil(crMetaData.RelationContent) {
+				suite.EqualValues(idNumberNew, *crMetaData.RelationContent)
+			}
 		}
 	})
 	// Get TDL MetaData
@@ -375,7 +377,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(tdlMetaData) {
 			suite.EqualValues("id_number", tdlMetaData.Relation)
-			suite.EqualValues(idNumberNew, tdlMetaData.RelationContent)
+			if suite.NotNil(tdlMetaData.RelationContent) {
+				suite.EqualValues(idNumberNew, *tdlMetaData.RelationContent)
+			}
 		}
 	})
 
@@ -390,7 +394,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(crMetaData) {
 			suite.EqualValues("id_number", crMetaData.Relation)
-			suite.EqualValues(idNumberDB, crMetaData.RelationContent)
+			if suite.NotNil(crMetaData.RelationContent) {
+				suite.EqualValues(idNumberDB, *crMetaData.RelationContent)
+			}
 		}
 	})
 	suite.Run("TDL without id_number field present will fetch that field from the db", func() {
@@ -403,7 +409,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(tdlMetaData) {
 			suite.EqualValues("id_number", tdlMetaData.Relation)
-			suite.EqualValues(idNumberDB, tdlMetaData.RelationContent)
+			if suite.NotNil(tdlMetaData.RelationContent) {
+				suite.EqualValues(idNumberDB, *tdlMetaData.RelationContent)
+			}
 		}
 	})
 	deleteOperation := models.DBOpDelete
@@ -441,7 +449,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(crMetaData) {
 			suite.EqualValues("id_number", crMetaData.Relation)
-			suite.EqualValues(idNumberOld, crMetaData.RelationContent)
+			if suite.NotNil(crMetaData.RelationContent) {
+				suite.EqualValues(idNumberOld, *crMetaData.RelationContent)
+			}
 		}
 	})
 	// Get TDL MetaData
@@ -454,7 +464,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(tdlMetaData) {
 			suite.EqualValues("id_number", tdlMetaData.Relation)
-			suite.EqualValues(idNumberOld, tdlMetaData.RelationContent)
+			if suite.NotNil(tdlMetaData.RelationContent) {
+				suite.EqualValues(idNumberOld, *tdlMetaData.RelationContent)
+			}
 		}
 	})
 
@@ -475,22 +487,28 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		suite.Nil(tdlMetaData)
 	})
-	suite.Run("CR without id_number  will fail if data should be fetch-able, but record is missing ", func() {
+	suite.Run("CR without id_number  will not fail not if data should be fetch-able, but record is missing ", func() {
 		// give empty changes to simulate no change data
 		crMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, cr.ID, crTable, emptyChanges, insertOperation)
-		suite.Error(err)
-		suite.Nil(metaDataType)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
 
-		suite.Nil(crMetaData)
+		suite.NotNil(crMetaData)
+		suite.Nil(crMetaData.RelationContent)
 	})
 
-	suite.Run("TDL without id_number Old value will fail if data should be fetch-able, but record is missing", func() {
+	suite.Run("TDL without id_number Old value will not fail if data should be fetch-able, but record is missing", func() {
 		// give empty changes to simulate no change data
 		tdlMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, tdl.ID, tdlTable, emptyChanges, insertOperation)
-		suite.Error(err)
-		suite.Nil(metaDataType)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
 
-		suite.Nil(tdlMetaData)
+		suite.NotNil(tdlMetaData)
+		suite.Nil(tdlMetaData.RelationContent)
 	})
 
 }
@@ -527,7 +545,9 @@ func (suite *TAuditSuite) TestPlanCollaboratorMetaDataGet() {
 
 		if suite.NotNil(collabMeta) {
 			suite.EqualValues("UserName", collabMeta.Relation)
-			suite.EqualValues(suite.testConfigs.Principal.UserAccount.CommonName, collabMeta.RelationContent)
+			if suite.NotNil(collabMeta.RelationContent) {
+				suite.EqualValues(suite.testConfigs.Principal.UserAccount.CommonName, *collabMeta.RelationContent)
+			}
 		}
 	})
 
@@ -540,7 +560,10 @@ func (suite *TAuditSuite) TestPlanCollaboratorMetaDataGet() {
 
 		if suite.NotNil(collabMeta) {
 			suite.EqualValues("UserName", collabMeta.Relation)
-			suite.EqualValues(collabAccount.UserAccount.CommonName, collabMeta.RelationContent)
+			if suite.NotNil(collabMeta.RelationContent) {
+				suite.EqualValues(collabAccount.UserAccount.CommonName, *collabMeta.RelationContent)
+			}
+
 		}
 	})
 
@@ -595,7 +618,9 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 
 		if suite.NotNil(collabMeta) {
 			suite.EqualValues("fileName", collabMeta.Relation)
-			suite.EqualValues(docNameNew, collabMeta.RelationContent)
+			if suite.NotNil(collabMeta.RelationContent) {
+				suite.EqualValues(docNameNew, *collabMeta.RelationContent)
+			}
 		}
 	})
 	suite.Run("Document meta data priorities data from changes set (old field on delete)", func() {
@@ -607,7 +632,9 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 
 		if suite.NotNil(collabMeta) {
 			suite.EqualValues("fileName", collabMeta.Relation)
-			suite.EqualValues(docNameOld, collabMeta.RelationContent)
+			if suite.NotNil(collabMeta.RelationContent) {
+				suite.EqualValues(docNameOld, *collabMeta.RelationContent)
+			}
 		}
 	})
 	suite.Run("Document meta data gets data from db if not in change set", func() {
@@ -619,7 +646,9 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 
 		if suite.NotNil(collabMeta) {
 			suite.EqualValues("fileName", collabMeta.Relation)
-			suite.EqualValues(docNameDB, collabMeta.RelationContent)
+			if suite.NotNil(collabMeta.RelationContent) {
+				suite.EqualValues(docNameDB, *collabMeta.RelationContent)
+			}
 		}
 	})
 
