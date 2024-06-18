@@ -3,6 +3,7 @@ package resolvers
 import (
 	"bytes"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -158,6 +159,44 @@ func (suite *ResolverSuite) TestTranslateAuditSolSubtaskWorksWhenDataIsUnreadabl
 		subtasks[1].ID,
 	)
 	suite.NoError(err)
+
+	// Update statement doesn't have name in the fields changes, and isn't able to query from the db since the record is deleted. These should all still translate as optional fields
+	retTranslatedAuditsWithFields2 := suite.dangerousQueueAndTranslateAllAudits()
+
+	suite.NotNil(retTranslatedAuditsWithFields2)
+	suite.Len(retTranslatedAuditsWithFields2, 6)
+
+}
+
+func (suite *ResolverSuite) TestTranslateAuditCRAndTDLWorksWhenDataIsUnreadable() {
+	plan := suite.createModelPlan("plan name")
+	retTranslatedAuditsWithFields := suite.dangerousQueueAndTranslateAllAudits()
+	suite.GreaterOrEqual(len(retTranslatedAuditsWithFields), 2)
+
+	crID := "hooray my cr ID"
+	tdlID := "hooray my tdl ID"
+	crTitle := "CR title"
+	tdlTitle := "TDL title"
+	dateInitiated := time.Now()
+	dateImplemented := dateInitiated
+	crNote := "cr note"
+	tdlNote := "tdl note"
+
+	cr := suite.createPlanCR(plan, crID, dateInitiated, dateImplemented, crTitle, crNote)
+	sharedChanges := map[string]interface{}{
+		"note": " hello",
+	}
+	_, err := PlanCRUpdate(suite.testConfigs.Logger, cr.ID, sharedChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	_, err = PlanCRDelete(suite.testConfigs.Logger, cr.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	tdl := suite.createPlanTDL(plan, tdlID, dateInitiated, tdlTitle, tdlNote)
+	_, err = PlanTDLUpdate(suite.testConfigs.Logger, tdl.ID, sharedChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	_, err = PlanTDLDelete(suite.testConfigs.Logger, tdl.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	// 6 records total, 2 for create, 2 for update, 2 for delete
 
 	// Update statement doesn't have name in the fields changes, and isn't able to query from the db since the record is deleted. These should all still translate as optional fields
 	retTranslatedAuditsWithFields2 := suite.dangerousQueueAndTranslateAllAudits()
