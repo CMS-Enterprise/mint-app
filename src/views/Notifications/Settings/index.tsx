@@ -143,34 +143,6 @@ const NotificationSettings = () => {
 
   // Unsubscribe from email
   useEffect(() => {
-    const showAlreadyUnsubbedBanner = () => {
-      showMessage(
-        <Alert
-          type="error"
-          slim
-          data-testid="error-alert"
-          className="margin-y-4"
-        >
-          <Trans
-            t={notificationsT}
-            i18nKey="settings.unsubscribedMessage.alreadyUnsubscribed"
-            values={{
-              notificationType: notificationsT(
-                `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
-              )
-            }}
-            components={{
-              bold: <strong />
-            }}
-          />
-        </Alert>
-      );
-    };
-    const cleanUpParams = () => {
-      params.delete('unsubscribe_email');
-      history.replace({ search: params.toString() });
-    };
-
     // if loading, then abort
     if (loading) return;
 
@@ -208,22 +180,46 @@ const NotificationSettings = () => {
       UserNotificationPreferenceFlag.IN_APP
     );
 
+    const showAlreadyUnsubbedBannerAndCleanParams = () => {
+      showMessage(
+        <Alert
+          type="error"
+          slim
+          data-testid="error-alert"
+          className="margin-y-4"
+        >
+          <Trans
+            t={notificationsT}
+            i18nKey="settings.unsubscribedMessage.alreadyUnsubscribed"
+            values={{
+              notificationType: notificationsT(
+                `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+              )
+            }}
+            components={{
+              bold: <strong />
+            }}
+          />
+        </Alert>
+      );
+      params.delete('unsubscribe_email');
+      history.replace({ search: params.toString() });
+    };
+
     // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
     // then show error alert banner
     if (
       unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
       !isSubscribedModelPlanEmail
     ) {
-      showAlreadyUnsubbedBanner();
-      cleanUpParams();
+      showAlreadyUnsubbedBannerAndCleanParams();
       return;
     }
     if (
       unsubscribeEmailParams === ActivityType.DATES_CHANGED &&
       !isSubscribedDatesChangedEmail
     ) {
-      showAlreadyUnsubbedBanner();
-      cleanUpParams();
+      showAlreadyUnsubbedBannerAndCleanParams();
       return;
     }
 
@@ -298,7 +294,8 @@ const NotificationSettings = () => {
         }
       }
 
-      cleanUpParams();
+      params.delete('unsubscribe_email');
+      history.replace({ search: params.toString() });
     }
   }, [
     datesChanged,
