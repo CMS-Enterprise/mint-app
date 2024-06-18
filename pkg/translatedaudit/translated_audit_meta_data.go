@@ -279,7 +279,7 @@ func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey 
 	}
 
 	//Changes: (Meta) Should we break this into two functions?. Also should we define a specific meta data type?
-	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "id_number", idNumber)
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "id_number", &idNumber)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }
@@ -328,7 +328,7 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 		return nil, nil, fmt.Errorf("could not retrieve user account for plan collaborator audit metadata. err %w", err)
 	}
 
-	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "UserName", userAccount.CommonName)
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "UserName", &userAccount.CommonName)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }
@@ -375,7 +375,7 @@ func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, document
 
 	}
 
-	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "fileName", fileName)
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "fileName", &fileName)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }
