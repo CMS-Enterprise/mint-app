@@ -63,12 +63,12 @@ func createAndInitializeUserViewCustomization(
 	logger *zap.Logger,
 ) (*models.UserViewCustomization, error) {
 	uvcToCreate := models.UserViewCustomization{
-		UserID:                       principal.Account().ID,
 		ViewCustomization:            pq.StringArray{},
 		PossibleOperationalSolutions: pq.StringArray{},
 	}
 
-	// should be created by the user who made the query
+	// should be created for (and by) the user who made the query
+	uvcToCreate.UserID = principal.Account().ID
 	uvcToCreate.CreatedBy = principal.Account().ID
 
 	customizations, err := getDefaultViewCustomizationsByRole(principal, store)

@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
@@ -18,7 +17,7 @@ const (
 // UserViewCustomization represents a user's choices to customize their homepage
 type UserViewCustomization struct {
 	baseStruct
-	UserID                       uuid.UUID      `json:"userId" db:"user_id"`
+	userIDRelation
 	ViewCustomization            pq.StringArray `json:"viewCustomization" db:"view_customization"`
 	PossibleOperationalSolutions pq.StringArray `json:"possibleOperationalSolutions" db:"possible_operational_solutions"`
 }

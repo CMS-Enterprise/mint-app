@@ -8,7 +8,7 @@ enum ViewCustomizationType {
 
 type UserViewCustomization {
   id: UUID!
-  userId: UUID!
+  userAccount: UserAccount!
   viewCustomization: [ViewCustomizationType!]!
   possibleOperationalSolutions: [OperationalSolutionKey!]!
   createdBy: UUID!

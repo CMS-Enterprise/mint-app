@@ -1218,7 +1218,7 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount        func(childComplexity int) int
 		ModifiedDts                  func(childComplexity int) int
 		PossibleOperationalSolutions func(childComplexity int) int
-		UserID                       func(childComplexity int) int
+		UserAccount                  func(childComplexity int) int
 		ViewCustomization            func(childComplexity int) int
 	}
 }
@@ -8566,12 +8566,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserViewCustomization.PossibleOperationalSolutions(childComplexity), true
 
-	case "UserViewCustomization.userId":
-		if e.complexity.UserViewCustomization.UserID == nil {
+	case "UserViewCustomization.userAccount":
+		if e.complexity.UserViewCustomization.UserAccount == nil {
 			break
 		}
 
-		return e.complexity.UserViewCustomization.UserID(childComplexity), true
+		return e.complexity.UserViewCustomization.UserAccount(childComplexity), true
 
 	case "UserViewCustomization.viewCustomization":
 		if e.complexity.UserViewCustomization.ViewCustomization == nil {
@@ -11791,7 +11791,7 @@ updateUserNotificationPreferences(changes: UserNotificationPreferencesChanges!):
 
 type UserViewCustomization {
   id: UUID!
-  userId: UUID!
+  userAccount: UserAccount!
   viewCustomization: [ViewCustomizationType!]!
   possibleOperationalSolutions: [OperationalSolutionKey!]!
   createdBy: UUID!
@@ -26627,8 +26627,8 @@ func (ec *executionContext) fieldContext_Mutation_updateUserViewCustomization(ct
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_UserViewCustomization_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_UserViewCustomization_userId(ctx, field)
+			case "userAccount":
+				return ec.fieldContext_UserViewCustomization_userAccount(ctx, field)
 			case "viewCustomization":
 				return ec.fieldContext_UserViewCustomization_viewCustomization(ctx, field)
 			case "possibleOperationalSolutions":
@@ -57706,8 +57706,8 @@ func (ec *executionContext) fieldContext_Query_userViewCustomization(ctx context
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_UserViewCustomization_id(ctx, field)
-			case "userId":
-				return ec.fieldContext_UserViewCustomization_userId(ctx, field)
+			case "userAccount":
+				return ec.fieldContext_UserViewCustomization_userAccount(ctx, field)
 			case "viewCustomization":
 				return ec.fieldContext_UserViewCustomization_viewCustomization(ctx, field)
 			case "possibleOperationalSolutions":
@@ -62278,8 +62278,8 @@ func (ec *executionContext) fieldContext_UserViewCustomization_id(ctx context.Co
 	return fc, nil
 }
 
-func (ec *executionContext) _UserViewCustomization_userId(ctx context.Context, field graphql.CollectedField, obj *models.UserViewCustomization) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserViewCustomization_userId(ctx, field)
+func (ec *executionContext) _UserViewCustomization_userAccount(ctx context.Context, field graphql.CollectedField, obj *models.UserViewCustomization) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserViewCustomization_userAccount(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -62292,7 +62292,7 @@ func (ec *executionContext) _UserViewCustomization_userId(ctx context.Context, f
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.UserID, nil
+		return obj.UserAccount(ctx), nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -62304,19 +62304,41 @@ func (ec *executionContext) _UserViewCustomization_userId(ctx context.Context, f
 		}
 		return graphql.Null
 	}
-	res := resTmp.(uuid.UUID)
+	res := resTmp.(*authentication.UserAccount)
 	fc.Result = res
-	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_UserViewCustomization_userId(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_UserViewCustomization_userAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserViewCustomization",
 		Field:      field,
-		IsMethod:   false,
+		IsMethod:   true,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -77018,11 +77040,42 @@ func (ec *executionContext) _UserViewCustomization(ctx context.Context, sel ast.
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "userId":
-			out.Values[i] = ec._UserViewCustomization_userId(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
+		case "userAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserViewCustomization_userAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "viewCustomization":
 			field := field
 

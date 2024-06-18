@@ -2985,7 +2985,7 @@ export type UserViewCustomization = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   possibleOperationalSolutions: Array<OperationalSolutionKey>;
-  userId: Scalars['UUID']['output'];
+  userAccount: UserAccount;
   viewCustomization: Array<ViewCustomizationType>;
 };
 
