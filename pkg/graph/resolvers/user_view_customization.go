@@ -21,10 +21,18 @@ func UserViewCustomizationGetByUserID(
 	store *storage.Store,
 	principal authentication.Principal,
 ) (*models.UserViewCustomization, error) {
+	// Ensure the principal has an account, throw an error otherwise.
+	// This function relies on the account ID for many of its functions
+	account, err := principal.MustAccount()
+	if err != nil {
+		logger.Error("user account was nil when fetching user view customizations", zap.Error(err))
+		return nil, err
+	}
+
 	retVal, err := sqlutils.WithTransaction[models.UserViewCustomization](
 		store,
 		func(tx *sqlx.Tx) (*models.UserViewCustomization, error) {
-			uvc, err := storage.UserViewCustomizationGetByUserID(tx, principal.Account().ID)
+			uvc, err := storage.UserViewCustomizationGetByUserID(tx, account.ID)
 			if err != nil {
 
 				// If the user view customization does not exist, create it
@@ -134,6 +142,13 @@ func UserViewCustomizationUpdate(
 	principal authentication.Principal,
 	changes map[string]interface{},
 ) (*models.UserViewCustomization, error) {
+	// Ensure the principal has an account, throw an error otherwise.
+	// This function relies on the account ID for many of its functions
+	if _, err := principal.MustAccount(); err != nil {
+		logger.Error("user account was nil when updating user view customizations", zap.Error(err))
+		return nil, err
+	}
+
 	existingUserViewCustomization, err := UserViewCustomizationGetByUserID(logger, store, principal)
 	if err != nil {
 		return nil, err

@@ -1,6 +1,7 @@
 package authentication
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -37,6 +38,8 @@ type Principal interface {
 	AllowNonCMSUser() bool
 
 	Account() *UserAccount
+
+	MustAccount() (*UserAccount, error)
 }
 
 type anonymous struct{}
@@ -79,6 +82,10 @@ func (*anonymous) AllowNonCMSUser() bool {
 
 func (*anonymous) Account() *UserAccount {
 	return nil
+}
+
+func (*anonymous) MustAccount() (*UserAccount, error) {
+	return nil, errors.New("anonymous principal has no user account")
 }
 
 // ApplicationPrincipal represents information
@@ -136,4 +143,13 @@ func (p *ApplicationPrincipal) AllowNonCMSUser() bool {
 // Account returns the user account of the context of the user who made the request
 func (p *ApplicationPrincipal) Account() *UserAccount {
 	return p.UserAccount
+}
+
+// MustAccount returns the user account of the context of the user who made the request
+// If the account is nil, this will instead return a nil account and an error
+func (p *ApplicationPrincipal) MustAccount() (*UserAccount, error) {
+	if p.UserAccount == nil {
+		return nil, errors.New("application principal has no user account")
+	}
+	return p.UserAccount, nil
 }
