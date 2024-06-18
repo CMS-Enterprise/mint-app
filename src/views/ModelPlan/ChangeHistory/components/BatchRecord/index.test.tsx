@@ -124,7 +124,7 @@ describe('ChangeRecord', () => {
 
   it('matches snapshot', async () => {
     const { asFragment } = render(
-      <BatchRecord changeRecords={mockChangeRecord} />
+      <BatchRecord changeRecords={mockChangeRecord} index={1} />
     );
     expect(asFragment()).toMatchSnapshot();
   });

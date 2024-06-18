@@ -63,6 +63,7 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
             {changeRecords[0].actorName}{' '}
             <Trans
               i18nKey="changeHistory:change"
+              shouldUnescape
               count={changeCount}
               values={{
                 count: changeCount,
@@ -122,6 +123,7 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
 
       <UswdsReactLink
         to={`/models/${modelID}/change-history`}
+        data-testid="view-change-history"
         className="display-flex flex-align-center"
       >
         <Icon.History className="margin-right-1" />
