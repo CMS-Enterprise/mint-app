@@ -1219,6 +1219,7 @@ type ComplexityRoot struct {
 		ModifiedDts                  func(childComplexity int) int
 		PossibleOperationalSolutions func(childComplexity int) int
 		UserAccount                  func(childComplexity int) int
+		UserID                       func(childComplexity int) int
 		ViewCustomization            func(childComplexity int) int
 	}
 }
@@ -8573,6 +8574,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserViewCustomization.UserAccount(childComplexity), true
 
+	case "UserViewCustomization.userId":
+		if e.complexity.UserViewCustomization.UserID == nil {
+			break
+		}
+
+		return e.complexity.UserViewCustomization.UserID(childComplexity), true
+
 	case "UserViewCustomization.viewCustomization":
 		if e.complexity.UserViewCustomization.ViewCustomization == nil {
 			break
@@ -11791,6 +11799,7 @@ updateUserNotificationPreferences(changes: UserNotificationPreferencesChanges!):
 
 type UserViewCustomization {
   id: UUID!
+  userId: UUID!
   userAccount: UserAccount!
   viewCustomization: [ViewCustomizationType!]!
   possibleOperationalSolutions: [OperationalSolutionKey!]!
@@ -26627,6 +26636,8 @@ func (ec *executionContext) fieldContext_Mutation_updateUserViewCustomization(ct
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_UserViewCustomization_id(ctx, field)
+			case "userId":
+				return ec.fieldContext_UserViewCustomization_userId(ctx, field)
 			case "userAccount":
 				return ec.fieldContext_UserViewCustomization_userAccount(ctx, field)
 			case "viewCustomization":
@@ -57706,6 +57717,8 @@ func (ec *executionContext) fieldContext_Query_userViewCustomization(ctx context
 			switch field.Name {
 			case "id":
 				return ec.fieldContext_UserViewCustomization_id(ctx, field)
+			case "userId":
+				return ec.fieldContext_UserViewCustomization_userId(ctx, field)
 			case "userAccount":
 				return ec.fieldContext_UserViewCustomization_userAccount(ctx, field)
 			case "viewCustomization":
@@ -62266,6 +62279,50 @@ func (ec *executionContext) _UserViewCustomization_id(ctx context.Context, field
 }
 
 func (ec *executionContext) fieldContext_UserViewCustomization_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserViewCustomization",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _UserViewCustomization_userId(ctx context.Context, field graphql.CollectedField, obj *models.UserViewCustomization) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserViewCustomization_userId(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserViewCustomization_userId(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "UserViewCustomization",
 		Field:      field,
@@ -77037,6 +77094,11 @@ func (ec *executionContext) _UserViewCustomization(ctx context.Context, sel ast.
 			out.Values[i] = graphql.MarshalString("UserViewCustomization")
 		case "id":
 			out.Values[i] = ec._UserViewCustomization_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "userId":
+			out.Values[i] = ec._UserViewCustomization_userId(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
