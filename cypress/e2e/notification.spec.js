@@ -99,7 +99,7 @@ describe('Notification Center', () => {
     cy.contains('h3', 'Empty Plan').siblings('a').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/models\/.{36}\/read-only\/model-basics/);
+      expect(loc.pathname).to.match(/models\/.{36}\/read-view\/model-basics/);
     });
   });
 
