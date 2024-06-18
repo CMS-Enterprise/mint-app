@@ -1,7 +1,11 @@
 package resolvers
 
 import (
+	"bytes"
 	"fmt"
+
+	"github.com/google/uuid"
+	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
@@ -14,7 +18,7 @@ func (suite *ResolverSuite) TestTranslateAudit() {
 
 	// beforeYesterday := yesterday.AddDate(0, 0, -1)
 
-	//Changes: (ChChCh Changes!) This should really happen in the translated audit package, testing in the resolver package for now just for simplicity for a POC
+	//Changes: (ChChCh Changes!) This should really happen in the translated audit package, testing in the resolver package for now just for simplicity
 	plan := suite.createModelPlan("test plan for changes")
 
 	planChanges := map[string]interface{}{
@@ -65,13 +69,49 @@ func (suite *ResolverSuite) TestTranslateAudit() {
 	suite.GreaterOrEqual(len(retTranslatedAuditsWithFields), 2) // Make sure there are at least 2 changes, and two fields
 
 }
+func (suite *ResolverSuite) TestTranslateAuditWorksWhenDataIsUnreadable() {
+
+	//make an document solution link, delete the document and confirm it still works
+
+	// suite.Run("Able to translate a document if")
+	solution, _, plan := suite.createOperationalSolution()
+	suite.TestPlanDocumentSolutionLinkCreateAndRemove()
+
+	reader := bytes.NewReader([]byte("Some test file contents"))
+	doc, err := suite.createTestPlanDocument(plan, reader)
+	suite.NoError(err)
+	retTranslatedAuditsWithFields := suite.dangerousQueueAndTranslateAllAudits()
+
+	suite.NotNil(retTranslatedAuditsWithFields)
+
+	_, err = PlanDocumentSolutionLinksCreate(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		solution.ID, []uuid.UUID{doc.ID},
+
+		suite.testConfigs.Principal,
+	)
+	suite.NoError(err)
+
+	_, err = PlanDocumentDelete(suite.testConfigs.Logger, suite.testConfigs.S3Client, doc.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	// translate fields now and assert it was ok
+	retTranslatedAuditsWithFields2 := suite.dangerousQueueAndTranslateAllAudits()
+	suite.NotNil(retTranslatedAuditsWithFields2)
+
+	// We expect two audits
+	suite.Equal(len(retTranslatedAuditsWithFields2), 3) // Make sure there are 2 audits for this
+
+}
 
 func (suite *ResolverSuite) dangerousAuditTranslationQueueAllItems() {
 	arg := map[string]interface{}{}
 
 	queued, err := sqlutils.SelectProcedure[models.TranslatedAuditQueue](suite.testConfigs.Store, sqlqueries.TranslatedAuditQueue.DANGEROUSQueueAllEntries, arg)
 	suite.NoError(err)
-	fmt.Printf("queued %d entries \r\n", len(queued))
+	suite.testConfigs.Logger.Debug(fmt.Sprintf("queued %d entries", len(queued)), zap.Int("queue_count", len(queued)))
+
 }
 
 func (suite *ResolverSuite) dangerousTranslateAllQueuedTranslatedAudits() []*models.TranslatedAuditWithTranslatedFields {
