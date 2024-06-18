@@ -206,7 +206,7 @@ export const RenderChangeValue = ({
   return (
     <>
       {!previous && parentQuestion}
-      <span>{value}</span>
+      <span data-testid="shown-value">{value}</span>
     </>
   );
 };
@@ -320,7 +320,9 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
                 time: formatTime(changeRecord.date)
               }}
               components={{
-                datetime: <span />
+                datetime: <span />,
+                // data-testid is used for cypress testing/sorting
+                planName: <span data-testid="new-plan" />
               }}
             />
           )}
