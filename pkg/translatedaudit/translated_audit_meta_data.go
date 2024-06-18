@@ -284,10 +284,9 @@ func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey 
 }
 
 func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
-	//Changes: (Meta) we need to have a way to persist this field even though it isn't the key. There are multiple foreign keys here. The user id is the foreign key we need to access.
-	// If the collaborator is deleted before the audit is translated, and the field isn't present, there will be an issue
 	const userIDField = "user_id"
 	var userUUID uuid.UUID
+	var userName *string
 	userIDChange, fieldPresent := changesFields[userIDField]
 	if fieldPresent {
 		var err error
@@ -315,21 +314,25 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 
 		collab, err := store.PlanCollaboratorGetByID(primaryKey)
 		if err != nil {
-			return nil, nil, err
+			if !errors.Is(err, sql.ErrNoRows) {
+				return nil, nil, err
+			}
 		}
-		if collab == nil {
-			return nil, nil, fmt.Errorf("collaborator is not present in the database, but expected for this meta data")
+		if collab != nil {
+			userUUID = collab.UserID
 		}
-		userUUID = collab.UserID
 
 	}
 
-	userAccount, err := storage.UserAccountGetByID(store, userUUID)
-	if err != nil {
-		return nil, nil, fmt.Errorf("could not retrieve user account for plan collaborator audit metadata. err %w", err)
+	if userUUID != uuid.Nil {
+		userAccount, err := storage.UserAccountGetByID(store, userUUID)
+		if err != nil {
+			return nil, nil, fmt.Errorf("could not retrieve user account for plan collaborator audit metadata. err %w", err)
+		}
+		userName = &userAccount.CommonName
 	}
 
-	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "UserName", &userAccount.CommonName)
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "UserName", userName)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }
