@@ -251,3 +251,7 @@ autosave
 translated_audit_queue
 translatedaudit
 audit.if_Modified
+src
+gql
+i18n
+modelPlan
