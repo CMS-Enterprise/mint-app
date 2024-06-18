@@ -22,6 +22,7 @@ import {
   getOperationalMetadata,
   getSolutionName,
   getSolutionOperationStatus,
+  hiddenFields,
   isLinkingTable,
   isOperationalSolutionWithMetaData,
   isSolutionDocumentLinkWithMetaData,
@@ -40,6 +41,7 @@ export type ChangeRecordType = NonNullable<
 
 type ChangeRecordProps = {
   changeRecords: ChangeRecordType[];
+  index: number;
 };
 
 type BatchChangeProps = {
@@ -53,6 +55,11 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 
   let fieldsToMap: ChangeRecordType['translatedFields'][0][] =
     change.translatedFields;
+
+  // Remove hidden fields from the fields to map
+  fieldsToMap = fieldsToMap.filter(
+    field => !hiddenFields.includes(field.fieldName)
+  );
 
   // If the change is connected to another table, only show the fields that are connected
   if (connected) {
@@ -103,6 +110,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
             return (
               <Trans
                 i18nKey="changeHistory:documentBatchUpdate"
+                shouldUnescape
                 values={{
                   isLink: documentType(change) ? ' link' : '',
                   action: t(`documentChangeType.${documentUpdateType(change)}`),
@@ -134,6 +142,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
               <div className="text-bold">
                 <Trans
                   i18nKey="changeHistory:documentSolutionLinkUpdate"
+                  shouldUnescape
                   values={{
                     action: t(`documentLinkType.${databaseAction}`),
                     toFrom: t(`toFrom.${databaseAction}`),
@@ -244,6 +253,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
             return (
               <Trans
                 i18nKey="changeHistory:subtaskUpdate"
+                shouldUnescape
                 values={{
                   action: t(`auditUpdateType.${change.action}`),
                   forFrom: t(`forFrom.${change.action}`),
@@ -329,7 +339,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 };
 
 // Render a single change record, showing the actor, the date, and the fields that were changed
-const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
+const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
   const { t } = useTranslation('changeHistory');
 
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -361,6 +371,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
 
           <Trans
             i18nKey="changeHistory:change"
+            shouldUnescape
             count={changeRecords.length}
             values={{
               count: isLinkingTable(tableName)
@@ -393,6 +404,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                   return (
                     <Trans
                       i18nKey="changeHistory:documentBatchUpdate"
+                      shouldUnescape
                       values={{
                         isLink: documentType(change) ? ' link' : '',
                         action: t(
@@ -415,6 +427,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
               {change.tableName === 'plan_document_solution_link' && (
                 <Trans
                   i18nKey="changeHistory:documentSolutionLinkUpdate"
+                  shouldUnescape
                   values={{
                     action: t(`documentLinkType.${change.action}`),
                     toFrom: t(`toFrom.${change.action}`),
@@ -446,6 +459,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
                   return (
                     <Trans
                       i18nKey="changeHistory:solutionUpdate"
+                      shouldUnescape
                       values={{
                         action: t(
                           `auditUpdateType.${getSolutionOperationStatus(
@@ -479,6 +493,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
 
                   return (
                     <Trans
+                      shouldUnescape
                       i18nKey="changeHistory:subtaskUpdate"
                       values={{
                         action: t(`auditUpdateType.${change.action}`),
@@ -500,7 +515,7 @@ const BatchRecord = ({ changeRecords }: ChangeRecordProps) => {
 
       <CollapsableLink
         className="margin-left-5"
-        id={changeRecords[0].id}
+        id={`batch-record-${index}`}
         label={t('showDetails')}
         closeLabel={t('hideDetails')}
         labelPosition="bottom"

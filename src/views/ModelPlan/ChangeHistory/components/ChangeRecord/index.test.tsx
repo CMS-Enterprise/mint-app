@@ -36,26 +36,26 @@ describe('ChangeRecord', () => {
   };
 
   it('renders without crashing', () => {
-    render(<ChangeRecord changeRecord={mockChangeRecord} />);
+    render(<ChangeRecord changeRecord={mockChangeRecord} index={1} />);
   });
 
   it('displays actor name', () => {
     const { getByText } = render(
-      <ChangeRecord changeRecord={mockChangeRecord} />
+      <ChangeRecord changeRecord={mockChangeRecord} index={1} />
     );
     expect(getByText('MINT Doe')).toBeInTheDocument();
   });
 
   it('displays translated fields', () => {
     const { getByText } = render(
-      <ChangeRecord changeRecord={mockChangeRecord} />
+      <ChangeRecord changeRecord={mockChangeRecord} index={1} />
     );
     expect(getByText('Model type')).toBeInTheDocument();
   });
 
   it('toggles details when "showDetails" and "hideDetails" are clicked', () => {
     const { getByText } = render(
-      <ChangeRecord changeRecord={mockChangeRecord} />
+      <ChangeRecord changeRecord={mockChangeRecord} index={1} />
     );
     const showDetailsButton = getByText('Show details');
     fireEvent.click(showDetailsButton);
@@ -69,7 +69,7 @@ describe('ChangeRecord', () => {
 
   it('matches snapshot', async () => {
     const { asFragment } = render(
-      <ChangeRecord changeRecord={mockChangeRecord} />
+      <ChangeRecord changeRecord={mockChangeRecord} index={1} />
     );
     expect(asFragment()).toMatchSnapshot();
   });

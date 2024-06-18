@@ -93,7 +93,7 @@ const CollapsableLink = ({
       aria-controls={id}
       className={classNames('mint-no-print', toggleClassName)}
       unstyled
-      data-testid="collapsable-link"
+      data-testid={id}
     >
       {iconPosition === 'left' ? selectedLabel : expandIcon}
       {iconPosition === 'left' ? expandIcon : selectedLabel}
