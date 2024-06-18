@@ -180,7 +180,14 @@ const NotificationSettings = () => {
       UserNotificationPreferenceFlag.IN_APP
     );
 
-    const showAlreadyUnsubbedBannerAndCleanParams = () => {
+    // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
+    // then show error alert banner
+    if (
+      (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
+        !isSubscribedModelPlanEmail) ||
+      (unsubscribeEmailParams === ActivityType.DATES_CHANGED &&
+        !isSubscribedDatesChangedEmail)
+    ) {
       showMessage(
         <Alert
           type="error"
@@ -204,30 +211,11 @@ const NotificationSettings = () => {
       );
       params.delete('unsubscribe_email');
       history.replace({ search: params.toString() });
-    };
-
-    // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
-    // then show error alert banner
-    if (
-      unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
-      !isSubscribedModelPlanEmail
-    ) {
-      showAlreadyUnsubbedBannerAndCleanParams();
-      return;
-    }
-    if (
-      unsubscribeEmailParams === ActivityType.DATES_CHANGED &&
-      !isSubscribedDatesChangedEmail
-    ) {
-      showAlreadyUnsubbedBannerAndCleanParams();
       return;
     }
 
     // Unsubscribe from New Model Plan email notifications
     if (
-      // not sure what this is checking for
-      // (newModelPlan?.length || datesChanged?.length) &&
-      // this may not be necessary...
       unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
       unsubscribeEmailParams === ActivityType.DATES_CHANGED
     ) {
