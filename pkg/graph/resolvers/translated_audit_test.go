@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -69,11 +70,10 @@ func (suite *ResolverSuite) TestTranslateAudit() {
 	suite.GreaterOrEqual(len(retTranslatedAuditsWithFields), 2) // Make sure there are at least 2 changes, and two fields
 
 }
-func (suite *ResolverSuite) TestTranslateAuditWorksWhenDataIsUnreadable() {
+func (suite *ResolverSuite) TestTranslateAuditDocSolLinkWorksWhenDataIsUnreadable() {
 
 	//make an document solution link, delete the document and confirm it still works
 
-	// suite.Run("Able to translate a document if")
 	solution, _, plan := suite.createOperationalSolution()
 	suite.TestPlanDocumentSolutionLinkCreateAndRemove()
 
@@ -102,6 +102,68 @@ func (suite *ResolverSuite) TestTranslateAuditWorksWhenDataIsUnreadable() {
 
 	// We expect two audits
 	suite.Equal(len(retTranslatedAuditsWithFields2), 3) // Make sure there are 2 audits for this
+
+}
+
+func (suite *ResolverSuite) TestTranslateAuditSolSubtaskWorksWhenDataIsUnreadable() {
+
+	solution, _, _ := suite.createOperationalSolution()
+	// queue and translate all audits before creating, updating, and deleting subtasks so we can isolate the changes specific to subtask modification
+	retTranslatedAuditsWithFields := suite.dangerousQueueAndTranslateAllAudits()
+
+	suite.NotNil(retTranslatedAuditsWithFields)
+
+	createOperationalSolutionInput := []*model.CreateOperationalSolutionSubtaskInput{
+		{
+			Name:   "Subtask A",
+			Status: models.OperationalSolutionSubtaskStatusTodo,
+		},
+		{
+			Name:   "Subtask B",
+			Status: models.OperationalSolutionSubtaskStatusInProgress,
+		},
+	}
+
+	// 2 create audit entries
+	subtasks := suite.createOperationalSolutionSubtasksWithSolution(
+		solution,
+		createOperationalSolutionInput,
+	)
+	updateInputs := suite.convertOperationalSubtasksToUpdateInputs(subtasks)
+
+	updateInputs[0].Changes["status"] = models.OperationalSolutionSubtaskStatusDone
+	updateInputs[1].Changes["status"] = models.OperationalSolutionSubtaskStatusTodo
+	// 2 update audit entries
+	_, err := OperationalSolutionSubtasksUpdateByID(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
+		updateInputs,
+	)
+	suite.NoError(err)
+
+	// 2 more entries for delete.
+	_, err = OperationalSolutionSubtaskDelete(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
+		subtasks[0].ID,
+	)
+	suite.NoError(err)
+
+	_, err = OperationalSolutionSubtaskDelete(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
+		subtasks[1].ID,
+	)
+	suite.NoError(err)
+
+	// Update statement doesn't have name in the fields changes, and isn't able to query from the db since the record is deleted. These should all still translate as optional fields
+	retTranslatedAuditsWithFields2 := suite.dangerousQueueAndTranslateAllAudits()
+
+	suite.NotNil(retTranslatedAuditsWithFields2)
+	suite.Len(retTranslatedAuditsWithFields2, 6)
 
 }
 
