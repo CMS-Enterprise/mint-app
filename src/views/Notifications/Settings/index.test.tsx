@@ -46,7 +46,9 @@ const notificationsSettingsMock = [
               UserNotificationPreferenceFlag.EMAIL,
               UserNotificationPreferenceFlag.IN_APP
             ],
-            newModelPlan: []
+            newModelPlan: [],
+            datesChanged: [],
+            datesChangedNotificationType: null
           }
         }
       }
@@ -81,6 +83,13 @@ describe('Notification Settings Page', () => {
         expect(
           screen.getByTestId('notification-setting-email-newModelPlan')
         ).not.toBeChecked();
+
+        expect(
+          screen.getByTestId('notification-setting-email-datesChanged')
+        ).not.toBeChecked();
+        expect(
+          screen.getByTestId('notification-setting-whichModel')
+        ).toBeDisabled();
       });
 
       await user.click(
@@ -88,6 +97,9 @@ describe('Notification Settings Page', () => {
       );
       await user.click(
         screen.getByTestId('notification-setting-email-newModelPlan')
+      );
+      await user.click(
+        screen.getByTestId('notification-setting-email-datesChanged')
       );
 
       await waitFor(() => {
@@ -98,6 +110,13 @@ describe('Notification Settings Page', () => {
         expect(
           screen.getByTestId('notification-setting-email-newModelPlan')
         ).toBeChecked();
+
+        expect(
+          screen.getByTestId('notification-setting-email-datesChanged')
+        ).toBeChecked();
+        expect(
+          screen.getByTestId('notification-setting-whichModel')
+        ).not.toBeDisabled();
       });
     });
   });

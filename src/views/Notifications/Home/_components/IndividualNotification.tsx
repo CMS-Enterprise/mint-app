@@ -13,6 +13,7 @@ import {
   activityText,
   isAddingCollaborator,
   isDailyDigest,
+  isDatesChanged,
   isNewDiscussionReply,
   isNewModelPlan,
   isSharedActivity,
@@ -20,6 +21,7 @@ import {
   isTaggedInDiscussionReply
 } from './_utils';
 import DailyDigest from './DailyDigest';
+import DatesChanged from './DatesChanged';
 
 type NotificationActivityType = Activity;
 
@@ -41,7 +43,8 @@ const IndividualNotification = ({
 }: IndividualNotificationProps) => {
   const { t: discussionT } = useTranslation('discussionsMisc');
 
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isDailyDigestExpanded, setIsDailyDigestExpanded] = useState(false);
+  const [isDatesChangedExpanded, setIsDatesChangedExpanded] = useState(false);
 
   const history = useHistory();
 
@@ -60,6 +63,38 @@ const IndividualNotification = ({
       });
     } else {
       action();
+    }
+  };
+
+  const handleClick = () => {
+    if (
+      isTaggedInDiscussion(metaData) ||
+      isTaggedInDiscussionReply(metaData) ||
+      isNewDiscussionReply(metaData)
+    ) {
+      handleMarkAsRead(() =>
+        history.push(
+          `/models/${metaData.modelPlanID}/read-only/discussions?discussionID=${metaData.discussionID}`
+        )
+      );
+    }
+    if (isDailyDigest(metaData)) {
+      handleMarkAsRead(() => setIsDailyDigestExpanded(!isDailyDigestExpanded));
+    }
+    if (isDatesChanged(metaData)) {
+      handleMarkAsRead(() =>
+        setIsDatesChangedExpanded(!isDatesChangedExpanded)
+      );
+    }
+    if (isAddingCollaborator(metaData)) {
+      handleMarkAsRead(() => {
+        history.push(`/models/${metaData.modelPlanID}/task-list`);
+      });
+    }
+    if (isSharedActivity(metaData) || isNewModelPlan(metaData)) {
+      handleMarkAsRead(() => {
+        history.push(`/models/${metaData.modelPlanID}/read-only`);
+      });
     }
   };
 
@@ -90,12 +125,13 @@ const IndividualNotification = ({
 
               <div className="margin-top-05 padding-left-1">
                 <p className="line-height-sans-4 margin-bottom-1 margin-top-0 ">
-                  <strong>{name}</strong>
+                  {!isDatesChanged(metaData) && <strong>{name}</strong>}
                   {activityText(metaData)}
                 </p>
                 {!isDailyDigest(metaData) &&
                   !isNewModelPlan(metaData) &&
                   !isSharedActivity(metaData) &&
+                  !isDatesChanged(metaData) &&
                   !isAddingCollaborator(metaData) && (
                     <MentionTextArea
                       className="notification__content text-base-darker margin-bottom-1"
@@ -114,41 +150,12 @@ const IndividualNotification = ({
                   type="button"
                   unstyled
                   className="display-flex flex-align-center"
-                  onClick={() => {
-                    if (
-                      isTaggedInDiscussion(metaData) ||
-                      isTaggedInDiscussionReply(metaData) ||
-                      isNewDiscussionReply(metaData)
-                    ) {
-                      handleMarkAsRead(() =>
-                        history.push(
-                          `/models/${metaData.modelPlanID}/read-only/discussions?discussionID=${metaData.discussionID}`
-                        )
-                      );
-                    }
-                    if (isDailyDigest(metaData)) {
-                      handleMarkAsRead(() => setIsExpanded(!isExpanded));
-                    }
-                    if (isAddingCollaborator(metaData)) {
-                      handleMarkAsRead(() => {
-                        history.push(
-                          `/models/${metaData.modelPlanID}/task-list`
-                        );
-                      });
-                    }
-                    if (
-                      isSharedActivity(metaData) ||
-                      isNewModelPlan(metaData)
-                    ) {
-                      handleMarkAsRead(() => {
-                        history.push(
-                          `/models/${metaData.modelPlanID}/read-only`
-                        );
-                      });
-                    }
-                  }}
+                  onClick={handleClick}
                 >
-                  <ActivityCTA data={metaData} isExpanded={isExpanded} />
+                  <ActivityCTA
+                    data={metaData}
+                    isExpanded={isDailyDigestExpanded}
+                  />
                 </Button>
               </div>
             </div>
@@ -162,7 +169,12 @@ const IndividualNotification = ({
           </Grid>
         </Grid>
       </Grid>
-      {isExpanded && isDailyDigest(metaData) && <DailyDigest {...metaData} />}
+      {isDailyDigestExpanded && isDailyDigest(metaData) && (
+        <DailyDigest {...metaData} />
+      )}
+      {isDatesChangedExpanded && isDatesChanged(metaData) && (
+        <DatesChanged {...metaData} />
+      )}
     </Grid>
   );
 };

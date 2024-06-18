@@ -43,7 +43,7 @@ func ModelPlanCreate(
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.ModelPlan, error) {
 
-	var newModelPlanEmailPrefs []*models.UserAccountNotificationPreferences
+	var newModelPlanEmailPrefs []*models.UserAccountAndNotificationPreferences
 
 	newPlan, err := sqlutils.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 		plan := models.NewModelPlan(principal.Account().ID, modelName)
@@ -184,7 +184,7 @@ func ModelPlanCreate(
 
 		receiverEmails := lo.Map(
 			newModelPlanEmailPrefs,
-			func(pref *models.UserAccountNotificationPreferences, _ int) string {
+			func(pref *models.UserAccountAndNotificationPreferences, _ int) string {
 				return pref.Email
 			},
 		)

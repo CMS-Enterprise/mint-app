@@ -10,11 +10,14 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  Icon
+  Icon,
+  Label,
+  Select
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   ActivityType,
+  DatesChangedNotificationType,
   GetNotificationSettingsQuery,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
@@ -47,6 +50,12 @@ const NotificationSettings = () => {
   > = notificationsT('settings.configurations', {
     returnObjects: true
   });
+  const whichModelType: Record<string, string> = notificationsT(
+    'settings.additionalConfigurations.whichModelTypes',
+    {
+      returnObjects: true
+    }
+  );
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);
 
@@ -69,7 +78,9 @@ const NotificationSettings = () => {
     taggedInDiscussion,
     newDiscussionReply,
     modelPlanShared,
-    newModelPlan
+    newModelPlan,
+    datesChanged,
+    datesChangedNotificationType
   } = (data?.currentUser.notificationPreferences ||
     {}) as GetNotifcationSettingsType;
 
@@ -84,6 +95,13 @@ const NotificationSettings = () => {
     const changes = {
       ...dirtyInputs
     };
+
+    // if datesChangedNotificationType is not changed by user, but datesChanged is changed, then do the following logic
+    if (!changes.datesChangedNotificationType && changes.datesChanged?.length) {
+      // If datesChangedNotificationType is subscribed, then manually set datesChangedNotificationType to ALL_MODELS
+      changes.datesChangedNotificationType =
+        DatesChangedNotificationType.ALL_MODELS;
+    }
 
     if (dirtyInputs.taggedInDiscussion) {
       changes.taggedInDiscussionReply = dirtyInputs.taggedInDiscussion;
@@ -125,9 +143,13 @@ const NotificationSettings = () => {
 
   // Unsubscribe from email
   useEffect(() => {
+    // if loading, then abort
+    if (loading) return;
+
     // if no unsubscribe email params, then abort
     if (!unsubscribeEmailParams) return;
-    // if params are not valid
+
+    // if params are not valid, throw error
     if (!Object.keys(ActivityType).includes(unsubscribeEmailParams)) {
       showMessage(
         <Alert
@@ -139,97 +161,134 @@ const NotificationSettings = () => {
           {notificationsT('settings.unsubscribedMessage.error')}
         </Alert>
       );
+      return;
+    }
+
+    // Setting variables
+    // New Model Plan variables
+    const isSubscribedModelPlanEmail = newModelPlan.includes(
+      UserNotificationPreferenceFlag.EMAIL
+    );
+    const isSubscribedModelPlanInApp = newModelPlan.includes(
+      UserNotificationPreferenceFlag.IN_APP
+    );
+    // Dates Changed variables
+    const isSubscribedDatesChangedEmail = datesChanged.includes(
+      UserNotificationPreferenceFlag.EMAIL
+    );
+    const isSubscribedDatesChangedInApp = datesChanged.includes(
+      UserNotificationPreferenceFlag.IN_APP
+    );
+
+    // if already unsubscribed to new model plan email notifications and/or dates changed email notifications,
+    // then show error alert banner
+    if (
+      (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN &&
+        !isSubscribedModelPlanEmail) ||
+      (unsubscribeEmailParams === ActivityType.DATES_CHANGED &&
+        !isSubscribedDatesChangedEmail)
+    ) {
+      showMessage(
+        <Alert
+          type="error"
+          slim
+          data-testid="error-alert"
+          className="margin-y-4"
+        >
+          <Trans
+            t={notificationsT}
+            i18nKey="settings.unsubscribedMessage.alreadyUnsubscribed"
+            values={{
+              notificationType: notificationsT(
+                `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+              )
+            }}
+            components={{
+              bold: <strong />
+            }}
+          />
+        </Alert>
+      );
+      params.delete('unsubscribe_email');
+      history.replace({ search: params.toString() });
+      return;
     }
 
     // Unsubscribe from New Model Plan email notifications
     if (
-      newModelPlan?.length &&
-      unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN
+      unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN ||
+      unsubscribeEmailParams === ActivityType.DATES_CHANGED
     ) {
-      const hasEmailNotifications = newModelPlan.includes(
-        UserNotificationPreferenceFlag.EMAIL
-      );
-
       // if user has email notifications, then proceeed to unsubscribe
-      if (hasEmailNotifications) {
-        const hasInAppNotifications = newModelPlan.includes(
-          UserNotificationPreferenceFlag.IN_APP
-        );
-        // Adjust payload if in-app notifications are enabled
-        const changes = {
-          newModelPlan: hasInAppNotifications
-            ? [UserNotificationPreferenceFlag.IN_APP]
-            : []
-        };
+      if (isSubscribedModelPlanEmail || isSubscribedDatesChangedEmail) {
+        let changes;
+        // Adjust payload if New Model Plan in-app notifications are enabled
+        if (unsubscribeEmailParams === ActivityType.NEW_MODEL_PLAN) {
+          changes = {
+            newModelPlan: isSubscribedModelPlanInApp
+              ? [UserNotificationPreferenceFlag.IN_APP]
+              : []
+          };
+        }
+        // Adjust payload if Dates Changed in-app notifications are enabled
+        if (unsubscribeEmailParams === ActivityType.DATES_CHANGED) {
+          changes = {
+            datesChanged: isSubscribedDatesChangedInApp
+              ? [UserNotificationPreferenceFlag.IN_APP]
+              : []
+          };
+        }
 
-        update({ variables: { changes } })
-          .then(response => {
-            if (!response?.errors) {
+        // Proceed to update user notification preferences if changes are present
+        if (changes) {
+          update({ variables: { changes } })
+            .then(response => {
+              if (!response?.errors) {
+                showMessage(
+                  <Alert
+                    type="success"
+                    slim
+                    data-testid="success-alert"
+                    className="margin-y-4"
+                  >
+                    <Trans
+                      t={notificationsT}
+                      i18nKey="settings.unsubscribedMessage.success"
+                      values={{
+                        notificationType: notificationsT(
+                          `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
+                        )
+                      }}
+                      components={{
+                        bold: <strong />
+                      }}
+                    />
+                  </Alert>
+                );
+              }
+            })
+            .catch(() => {
               showMessage(
                 <Alert
-                  type="success"
+                  type="error"
                   slim
-                  data-testid="success-alert"
+                  data-testid="error-alert"
                   className="margin-y-4"
                 >
-                  <Trans
-                    t={notificationsT}
-                    i18nKey="settings.unsubscribedMessage.success"
-                    values={{
-                      notificationType: notificationsT(
-                        `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
-                      )
-                    }}
-                    components={{
-                      bold: <strong />
-                    }}
-                  />
+                  {notificationsT('settings.unsubscribedMessage.error')}
                 </Alert>
               );
-            }
-          })
-          .catch(() => {
-            showMessage(
-              <Alert
-                type="error"
-                slim
-                data-testid="error-alert"
-                className="margin-y-4"
-              >
-                {notificationsT('settings.unsubscribedMessage.error')}
-              </Alert>
-            );
-          });
-      } else {
-        // Already unsubscribed to new model plan email notifications
-        showMessage(
-          <Alert
-            type="error"
-            slim
-            data-testid="error-alert"
-            className="margin-y-4"
-          >
-            <Trans
-              t={notificationsT}
-              i18nKey="settings.unsubscribedMessage.alreadyUnsubscribed"
-              values={{
-                notificationType: notificationsT(
-                  `settings.unsubscribedMessage.activityType.${unsubscribeEmailParams}`
-                )
-              }}
-              components={{
-                bold: <strong />
-              }}
-            />
-          </Alert>
-        );
+            });
+        }
       }
 
       params.delete('unsubscribe_email');
       history.replace({ search: params.toString() });
     }
   }, [
+    datesChanged,
     history,
+    loading,
     newModelPlan,
     notificationsT,
     params,
@@ -244,7 +303,9 @@ const NotificationSettings = () => {
     taggedInDiscussion: taggedInDiscussion ?? [],
     newDiscussionReply: newDiscussionReply ?? [],
     modelPlanShared: modelPlanShared ?? [],
-    newModelPlan: newModelPlan ?? []
+    newModelPlan: newModelPlan ?? [],
+    datesChanged: datesChanged ?? [],
+    datesChangedNotificationType: datesChangedNotificationType ?? undefined
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
@@ -290,7 +351,12 @@ const NotificationSettings = () => {
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<NotificationSettingsFormType>) => {
-              const { values, handleSubmit, dirty } = formikProps;
+              const {
+                dirty,
+                handleSubmit,
+                setFieldValue,
+                values
+              } = formikProps;
 
               return (
                 <>
@@ -336,6 +402,16 @@ const NotificationSettings = () => {
                       {getKeys(notificationSettings).map(setting => {
                         return (
                           <Grid row key={setting}>
+                            {setting === 'newModelPlan' && (
+                              <Grid mobile={{ col: 12 }}>
+                                <h4 className="margin-top-5 margin-bottom-0">
+                                  {notificationsT(
+                                    'settings.sections.additionalNotifications.heading'
+                                  )}
+                                </h4>
+                              </Grid>
+                            )}
+
                             <Grid mobile={{ col: 6 }}>
                               <p className="text-wrap margin-y-105">
                                 {notificationSettings[setting]}
@@ -350,7 +426,7 @@ const NotificationSettings = () => {
                                 className="padding-left-2"
                                 name={setting}
                                 value={UserNotificationPreferenceFlag.EMAIL}
-                                checked={values?.[setting].includes(
+                                checked={(values?.[setting] ?? []).includes(
                                   UserNotificationPreferenceFlag.EMAIL
                                 )}
                               />
@@ -364,8 +440,11 @@ const NotificationSettings = () => {
                                 className="padding-left-2"
                                 name={setting}
                                 value={UserNotificationPreferenceFlag.IN_APP}
-                                disabled
-                                checked={values?.[setting].includes(
+                                disabled={
+                                  setting !== 'datesChanged' &&
+                                  setting !== 'newModelPlan'
+                                }
+                                checked={(values?.[setting] ?? []).includes(
                                   UserNotificationPreferenceFlag.IN_APP
                                 )}
                               />
@@ -376,47 +455,43 @@ const NotificationSettings = () => {
 
                       {/* Additional Notification Section */}
                       <Grid row>
-                        <Grid mobile={{ col: 12 }}>
-                          <h4 className="margin-top-5 margin-bottom-0">
+                        <Grid
+                          className="tablet:padding-left-3"
+                          tablet={{ col: 6 }}
+                        >
+                          <Label
+                            htmlFor="notification-setting-whichModel"
+                            className="text-normal margin-top-0"
+                          >
                             {notificationsT(
-                              'settings.sections.additionalNotifications.heading'
+                              'settings.additionalConfigurations.whichModel'
                             )}
-                          </h4>
-                        </Grid>
+                          </Label>
 
-                        <Grid mobile={{ col: 6 }}>
-                          <p className="text-wrap margin-y-105">
-                            {notificationsT(
-                              'settings.additionalConfigurations.NEW_MODEL_PLAN'
-                            )}
-                          </p>
-                        </Grid>
-                        <Grid mobile={{ col: 3 }}>
                           <Field
-                            as={Checkbox}
-                            id="notification-setting-email-newModelPlan"
-                            data-testid="notification-setting-email-newModelPlan"
-                            className="padding-left-2"
-                            name="newModelPlan"
-                            value={UserNotificationPreferenceFlag.EMAIL}
-                            checked={values?.newModelPlan.includes(
-                              UserNotificationPreferenceFlag.EMAIL
-                            )}
-                          />
-                        </Grid>
-
-                        <Grid mobile={{ col: 3 }}>
-                          <Field
-                            as={Checkbox}
-                            id="notification-setting-in-app-newModelPlan"
-                            data-testid="notification-setting-in-app-newModelPlan"
-                            className="padding-left-2"
-                            name="newModelPlan"
-                            value={UserNotificationPreferenceFlag.IN_APP}
-                            checked={values?.newModelPlan.includes(
-                              UserNotificationPreferenceFlag.IN_APP
-                            )}
-                          />
+                            as={Select}
+                            id="notification-setting-whichModel"
+                            data-testid="notification-setting-whichModel"
+                            name="datesChangedNotificationType"
+                            value={values.datesChangedNotificationType}
+                            disabled={!values.datesChanged.length}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setFieldValue(
+                                'datesChangedNotificationType',
+                                e.target.value
+                              );
+                            }}
+                          >
+                            {getKeys(whichModelType).map(type => {
+                              return (
+                                <option key={type} value={type}>
+                                  {whichModelType[type]}
+                                </option>
+                              );
+                            })}
+                          </Field>
                         </Grid>
                       </Grid>
 

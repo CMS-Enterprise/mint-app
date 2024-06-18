@@ -14,11 +14,9 @@ func (suite *NotificationsSuite) TestActivityNewModelPlanCreate() {
 	suite.NoError(err)
 	suite.NotNil(receiverPrincipal.Account().Username)
 
-	mockPreferences := []*models.UserAccountNotificationPreferences{{
-		UserID:                   receiverPrincipal.Account().ID,
-		Username:                 *receiverPrincipal.Account().Username,
-		Email:                    receiverPrincipal.Account().Email,
-		NewModelPlanNotification: models.DefaultUserNotificationPreferencesFlags(),
+	mockPreferences := []*models.UserAccountAndNotificationPreferences{{
+		UserAccount:     *receiverPrincipal.Account(),
+		PreferenceFlags: models.DefaultUserNotificationPreferencesFlags(),
 	},
 	}
 
