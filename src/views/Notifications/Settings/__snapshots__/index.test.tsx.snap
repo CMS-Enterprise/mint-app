@@ -493,6 +493,11 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                   />
                 </div>
               </div>
+            </div>
+            <div
+              class="grid-row"
+              data-testid="grid"
+            >
               <div
                 class="mobile:grid-col-6"
                 data-testid="grid"
@@ -547,6 +552,11 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                   />
                 </div>
               </div>
+            </div>
+            <div
+              class="grid-row"
+              data-testid="grid"
+            >
               <div
                 class="tablet:grid-col-6 tablet:padding-left-3"
                 data-testid="grid"
