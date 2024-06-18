@@ -61,9 +61,6 @@ models:
   UUID:
     model:
       - github.com/cmsgov/mint-app/pkg/models.UUID
-  UUIDArray:
-    model:
-      - github.com/cmsgov/mint-app/pkg/models.UUIDArray
   UserAccount:
     model:
       - github.com/cmsgov/mint-app/pkg/authentication.UserAccount
