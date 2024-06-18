@@ -284,6 +284,8 @@ func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey 
 }
 
 func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+	//Changes: (Meta) we need to have a way to persist this field even though it isn't the key. There are multiple foreign keys here. The user id is the foreign key we need to access.
+	// If the collaborator is deleted before the audit is translated, and the field isn't present, there will be an issue
 	const userIDField = "user_id"
 	var userUUID uuid.UUID
 	userIDChange, fieldPresent := changesFields[userIDField]
