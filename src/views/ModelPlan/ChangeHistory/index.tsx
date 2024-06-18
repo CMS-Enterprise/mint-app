@@ -332,12 +332,13 @@ const ChangeHistory = () => {
                   <h3 className="margin-y-4">
                     {formatDateUtc(day, 'MMMM d, yyyy')}
                   </h3>
-                  {changesByDay[day].map(changeRecords => {
+                  {changesByDay[day].map((changeRecords, index) => {
                     // If the change is a batch, render as a batch
                     if (shouldRenderExistingLinkBatch(changeRecords)) {
                       return (
                         <BatchRecord
                           changeRecords={changeRecords}
+                          index={index}
                           key={changeRecords[0].id}
                         />
                       );
@@ -347,6 +348,7 @@ const ChangeHistory = () => {
                     return (
                       <ChangeRecord
                         changeRecord={changeRecords[0]}
+                        index={index}
                         key={changeRecords[0].id}
                       />
                     );

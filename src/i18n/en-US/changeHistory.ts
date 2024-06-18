@@ -8,7 +8,7 @@ const changeHistory = {
   change_other:
     'made {{count}} changes in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   planCreate:
-    'created {{plan_name}} <datetime>on {{date}} at {{time}}</datetime>',
+    'created <planName>{{plan_name}}</planName> <datetime>on {{date}} at {{time}}</datetime>',
   taskStatusUpdate:
     'marked {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
   teamANSWERED:

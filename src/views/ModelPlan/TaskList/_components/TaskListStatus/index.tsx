@@ -72,30 +72,32 @@ const TaskListStatus = ({
         </Grid>
         {readOnly && (
           <div className="mint-no-print">
-            {hasEditAccess && (
-              <div className="display-flex flex-align-center">
-                <div className="height-2 border-left-2px border-base-light margin-right-2 " />
+            <div className="display-flex flex-align-center">
+              <div className="height-2 border-left-2px border-base-light margin-right-2 " />
 
-                {flags.changeHistoryEnabled && (
-                  <>
-                    <UswdsReactLink
-                      to={{
-                        pathname: `/models/${modelID}/change-history`,
-                        state: {
-                          from: 'readview'
-                        }
-                      }}
-                      className="display-flex flex-align-center margin-right-2"
-                    >
-                      <Icon.History className="margin-right-1" />
+              {flags.changeHistoryEnabled && (
+                <>
+                  <UswdsReactLink
+                    to={{
+                      pathname: `/models/${modelID}/change-history`,
+                      state: {
+                        from: 'readview'
+                      }
+                    }}
+                    className="display-flex flex-align-center margin-right-2"
+                  >
+                    <Icon.History className="margin-right-1" />
 
-                      {changeHistoryT('viewChangeHistory')}
-                    </UswdsReactLink>
+                    {changeHistoryT('viewChangeHistory')}
+                  </UswdsReactLink>
 
+                  {hasEditAccess && (
                     <div className="height-2 border-left-2px border-base-light margin-right-2 " />
-                  </>
-                )}
+                  )}
+                </>
+              )}
 
+              {hasEditAccess && (
                 <UswdsReactLink
                   to={`/models/${modelID}/task-list`}
                   className="display-flex flex-align-center"
@@ -103,8 +105,8 @@ const TaskListStatus = ({
                   <Icon.Edit className="margin-right-1" />
                   {t('edit')}
                 </UswdsReactLink>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         )}
       </Grid>

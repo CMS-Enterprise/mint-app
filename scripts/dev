@@ -420,6 +420,16 @@ namespace :test do
       sh "yarn", "run", "test", "-t", *args
     end
   end
+  desc "Run Cypress test"
+  task :cypress => "db:clean" do
+    sh "yarn", "cypress", "run"
+  end
+  namespace :cypress do
+    desc "Runs Cypress tests in headed mode "
+    task :headed => "db:clean" do
+    sh "yarn", "cypress", "open"
+    end
+  end
 end
 
 desc "Build the Go application"
