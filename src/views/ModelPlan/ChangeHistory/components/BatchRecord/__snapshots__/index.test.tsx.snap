@@ -46,10 +46,10 @@ exports[`ChangeRecord > matches snapshot 1`] = `
         class="margin-left-5 mint-collapsable-link"
       >
         <button
-          aria-controls="1fb71b77-9bf9-418f-be42-f3adb3747c02"
+          aria-controls="batch-record-1"
           aria-expanded="false"
           class="usa-button usa-button--unstyled mint-no-print"
-          data-testid="collapsable-link"
+          data-testid="batch-record-1"
           type="button"
         >
           <svg
