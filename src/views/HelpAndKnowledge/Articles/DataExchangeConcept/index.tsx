@@ -130,7 +130,16 @@ const DataExchangeConceptHelpArticle = () => {
         </GridContainer>
       </MainContent>
       <div className="margin-top-6 margin-bottom-neg-7">
-        <RelatedArticles currentArticle={decT('title')} viewAllLink />
+        <RelatedArticles
+          currentArticle={decT('title')}
+          specificArticles={[
+            'How to have a successful 2-pager meeting',
+            'How to have a successful 6-pager meeting',
+            'High-level project plans'
+          ]}
+          type="getting-started"
+          viewAllLink
+        />
       </div>
     </>
   );
