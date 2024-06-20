@@ -168,7 +168,7 @@ const Header = () => {
       {isLoggedIn && pathname !== '/pre-decisional-notice' && (
         <NavigationBar
           className={classnames(
-            'position-sticky top-0 z-100 bg-white shadow-2',
+            'position-sticky top-0 z-top bg-white shadow-2',
             {
               'border-top-light': !isMobile
             }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Alert,
@@ -20,6 +20,13 @@ import RelatedArticles from '../_components/RelatedArticles';
 const DataExchangeConceptHelpArticle = () => {
   const { t: decT } = useTranslation('dataExchangeConcept');
 
+  const headingRow: string[] = decT('table.headingRow', {
+    returnObjects: true
+  });
+  const rows: string[] = decT('table.rows', {
+    returnObjects: true
+  });
+
   return (
     <>
       <MainContent>
@@ -37,9 +44,70 @@ const DataExchangeConceptHelpArticle = () => {
               {decT('description')}
             </p>
 
-            <Alert type="info" headingLevel="h4" noIcon>
+            <Alert
+              type="info"
+              headingLevel="h4"
+              noIcon
+              className="margin-bottom-6"
+            >
               {decT('alert')}
             </Alert>
+
+            <Grid row className="margin-bottom-6">
+              {headingRow.map((heading, index) => (
+                <Grid
+                  col={6}
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={index}
+                  className="border-bottom-2px position-sticky bg-white z-100"
+                  style={{ top: '54px' }}
+                >
+                  <p className="margin-y-1 margin-left-2 text-bold">
+                    {heading}
+                  </p>
+                </Grid>
+              ))}
+              {rows.map(row => {
+                return (
+                  <Fragment key={row}>
+                    <Grid
+                      col={row !== 'additionalItems' ? 6 : 12}
+                      className="border-bottom padding-y-2 padding-x-2"
+                    >
+                      <p className="margin-y-0 text-bold line-height-sans-4">
+                        {decT(`table.${row}.category`)}
+                      </p>
+                      {decT(`table.${row}.description`).includes('<bullet>') ? (
+                        <ul className="margin-y-0 padding-left-0 line-height-sans-4">
+                          <Trans
+                            t={decT}
+                            i18nKey={`table.${row}.description`}
+                            components={{
+                              bullet: <li className="margin-left-2" />,
+                              p: <p className="padding-left-0 margin-y-0" />
+                            }}
+                          />
+                        </ul>
+                      ) : (
+                        <p className="margin-y-0 line-height-sans-4">
+                          {decT(`table.${row}.description`)}
+                        </p>
+                      )}
+                    </Grid>
+                    {row !== 'additionalItems' && (
+                      <Grid
+                        col={6}
+                        className="border-bottom padding-y-2 padding-x-2"
+                      >
+                        <p className="margin-y-0 line-height-sans-4">
+                          {decT(`table.${row}.exampleAnswer`)}
+                        </p>
+                      </Grid>
+                    )}
+                  </Fragment>
+                );
+              })}
+            </Grid>
 
             <SummaryBox>
               <SummaryBoxHeading headingLevel="h3">
