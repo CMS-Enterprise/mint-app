@@ -218,7 +218,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               class="line-height-sans-4 margin-bottom-05"
             >
               <strong>
-                Alignment: 
+                Alignment:
               </strong>
               Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level:
               <ol
@@ -237,12 +237,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 <li
                   class="line-height-sans-4"
                 >
-                  Support Innovation 
+                  Support Innovation
                 </li>
                 <li
                   class="line-height-sans-4"
                 >
-                  Address affordability 
+                  Address affordability
                 </li>
                 <li
                   class="line-height-sans-4"
@@ -255,7 +255,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               class="line-height-sans-4 margin-bottom-05"
             >
               <strong>
-                Impact: 
+                Impact:
               </strong>
               Potential for the model to impact the following dimensions:
               <ul
@@ -277,7 +277,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               class="line-height-sans-4 margin-bottom-05"
             >
               <strong>
-                Feasibility: 
+                Feasibility:
               </strong>
               Consider the likelihood of successful execution of the model including initial operational or feasibility limitations, and potential for scaling
             </li>
@@ -285,7 +285,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               class="line-height-sans-4 margin-bottom-05"
             >
               <strong>
-                Innovation: 
+                Innovation:
               </strong>
               The model provides innovation in a particular dimension – payment approach, provider type, patient population, mechanisms of transformation
             </li>
@@ -293,7 +293,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               class="line-height-sans-4 margin-bottom-05"
             >
               <strong>
-                Stakeholders: 
+                Stakeholders:
               </strong>
               Include a brief description of any stakeholder engagement in the model concept
             </li>
@@ -370,7 +370,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               <span
                 class="margin-y-0"
               >
-                To view the links above, you will need access to the 
+                To view the links above, you will need access to the
                 <a
                   aria-label="Open in a new tab"
                   class="usa-link usa-link--external"
@@ -409,12 +409,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <li
               class="line-height-sans-4 margin-bottom-05"
             >
-              Do you need an in-house expert on data? 
+              Do you need an in-house expert on data?
             </li>
             <li
               class="line-height-sans-4 margin-bottom-05"
             >
-              Do you need help crunching numbers? 
+              Do you need help crunching numbers?
             </li>
             <li
               class="line-height-sans-4 margin-bottom-05"
@@ -424,12 +424,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <li
               class="line-height-sans-4 margin-bottom-05"
             >
-              Do you need help drafting the Innovation Center Investment Proposal (ICIP) or other documents? 
+              Do you need help drafting the Innovation Center Investment Proposal (ICIP) or other documents?
             </li>
             <li
               class="line-height-sans-4 margin-bottom-05"
             >
-              Do you need literature review support? 
+              Do you need literature review support?
             </li>
             <li
               class="line-height-sans-4 margin-bottom-05"
@@ -439,12 +439,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <li
               class="line-height-sans-4 margin-bottom-05"
             >
-              Do you need a clinical specialist? 
+              Do you need a clinical specialist?
             </li>
             <li
               class="line-height-sans-4 margin-bottom-05"
             >
-              Do you need help on a specific aspect of your model? 
+              Do you need help on a specific aspect of your model?
             </li>
           </ul>
           <p
@@ -470,7 +470,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           <p
             class="margin-top-0 margin-bottom-3 line-height-sans-4"
           >
-            After division and group leadership have reviewed and approved the 2-pager and the review meeting with CMMI FO is on the books, you may wonder, 
+            After division and group leadership have reviewed and approved the 2-pager and the review meeting with CMMI FO is on the books, you may wonder,
             <i>
               now what?
             </i>
@@ -530,7 +530,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-summary-box__text"
             >
-              Contact the MINT team at 
+              Contact the MINT team at
               <a
                 aria-label="Open in a new tab"
                 class="usa-link usa-link--external"

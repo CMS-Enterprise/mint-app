@@ -299,7 +299,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   <td
                     class="text-baseline"
                   >
-                    Model Team, MITRE 
+                    Model Team, MITRE
                     <i>
                       (if this support is requested/approved by CMMI FO)
                     </i>
@@ -394,7 +394,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
-                    Submit documents to clearance designees 
+                    Submit documents to clearance designees
                     <i>
                       (CMMI Clearance form)
                     </i>
@@ -576,7 +576,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             <p
               class="margin-top-0 margin-bottom-1"
             >
-              Documents listed may not apply to all models. However, all documents in this section will go through CMMI Internal Clearance, CMS Clearance, Health and Human Services (HHS) Clearance, and Office of Management and Budget (OMB) Clearance. 
+              Documents listed may not apply to all models. However, all documents in this section will go through CMMI Internal Clearance, CMS Clearance, Health and Human Services (HHS) Clearance, and Office of Management and Budget (OMB) Clearance.
             </p>
             <a
               aria-label="Open in a new tab"
@@ -684,7 +684,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
-                    Notice of Proposed Rulemaking (NPRM) 
+                    Notice of Proposed Rulemaking (NPRM)
                     <i>
                       (mandatory models only)
                     </i>
@@ -700,7 +700,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
-                    Final Rule 
+                    Final Rule
                     <i>
                       (mandatory models only)
                     </i>
@@ -824,7 +824,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
-                    Program/Payment Waivers 
+                    Program/Payment Waivers
                     <i>
                       (included in ICIP)
                     </i>
@@ -915,7 +915,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
-                    Obtain an application support contractor 
+                    Obtain an application support contractor
                     <i>
                       (as necessary if there are large volumes of applications)
                     </i>
@@ -947,21 +947,21 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       GrantSolutions
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=cms-qualtrics&section=about"
                     >
                       CMS Qualtrics
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=salesforce-letter-of-intent&section=about"
                     >
                       Salesforce LOI
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=salesforce-request-for-application&section=about"
@@ -986,7 +986,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       GrantSolutions
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=salesforce-application-review-and-scoring&section=about"
@@ -1011,7 +1011,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       CCW
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=integrated-data-repository&section=about"
@@ -1049,14 +1049,14 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       Outlook Mailbox
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=gov-delivery&section=about"
                     >
                       GovDelivery
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
@@ -1107,7 +1107,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
-                    Manage Part C/D enrollment 
+                    Manage Part C/D enrollment
                     <i>
                       (MAPD models only)
                     </i>
@@ -1128,7 +1128,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
-                    Review and collect plan bids 
+                    Review and collect plan bids
                     <i>
                       (MAPD models only)
                     </i>
@@ -1149,7 +1149,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
-                    Update the plan’s contract 
+                    Update the plan’s contract
                     <i>
                       (MAPD models only)
                     </i>
@@ -1313,7 +1313,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
-                    Utilize quality measures development contractor 
+                    Utilize quality measures development contractor
                     <i>
                       (if new measure development is necessary)
                     </i>
@@ -1339,7 +1339,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   <td
                     class="text-baseline"
                   >
-                    CCSQ contracts and systems, 
+                    CCSQ contracts and systems,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
@@ -1384,7 +1384,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       CCW
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=integrated-data-repository&section=about"
@@ -1403,7 +1403,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   <td
                     class="text-baseline"
                   >
-                    Existing CMS data and process, 
+                    Existing CMS data and process,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
@@ -1429,28 +1429,28 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       CCW
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=centralized-data-exchange&section=about"
                     >
                       CDX
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
                     >
                       HDR
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=integrated-data-repository&section=about"
                     >
                       IDR
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
@@ -1475,21 +1475,21 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       CCW
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=centralized-data-exchange&section=about"
                     >
                       CDX
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
                     >
                       HDR
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
@@ -1514,49 +1514,49 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       4i
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=beneficiary-claims-data-api&section=about"
                     >
                       BCDA
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=centralized-data-exchange&section=about"
                     >
                       CDX
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=cms-box&section=about"
                     >
                       CMS Box
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=expanded-data-feedback-reporting&section=about"
                     >
                       eDFR
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=electronic-file-transfer&section=about"
                     >
                       EFT
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
                     >
                       RMADA
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
@@ -1660,9 +1660,9 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=shared-systems&section=about"
                     >
-                      Shared Systems 
+                      Shared Systems
                     </a>
-                     / CR, 
+                     / CR,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=healthcare-integrated-general-kedger-accounting-system&section=about"
@@ -1685,7 +1685,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=shared-systems&section=about"
                     >
-                      Shared Systems 
+                      Shared Systems
                     </a>
                      / CR
                   </td>
@@ -1719,14 +1719,14 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       APPS
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=healthcare-integrated-general-kedger-accounting-system&section=about"
                     >
                       HIGLAS
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=innovation-payment-contract&section=about"
@@ -1769,19 +1769,19 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       APPS
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=innovation-payment-contract&section=about"
                     >
                       IPC
                     </a>
-                    , 
+                    ,
                     <a
                       class="usa-link usa-button usa-button--unstyled"
                       href="/help-and-knowledge/high-level-project-plan?solution=shared-systems&section=about"
                     >
-                      Shared Systems 
+                      Shared Systems
                     </a>
                   </td>
                 </tr>
@@ -2054,57 +2054,6 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   <h3
                     class="line-height-body-4 margin-bottom-1"
                   >
-                    How to have a successful 2-pager meeting
-                  </h3>
-                </header>
-                <a
-                  class="usa-link width-fit-content display-block "
-                  href="/help-and-knowledge/articles?category=getting-started"
-                >
-                  <span
-                    aria-label="Articles under the Getting started category"
-                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                    data-testid="tag"
-                  >
-                    Getting started
-                  </span>
-                </a>
-                <div
-                  class="usa-card__body padding-x-0 article__body"
-                  data-testid="CardBody"
-                >
-                  <p>
-                    Use this article to ensure you’re fully prepared for your 2-page concept review meeting with CMMI Front Office (FO).
-                  </p>
-                </div>
-                <div
-                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-                  data-testid="CardFooter"
-                >
-                  <button
-                    aria-label="Read How to have a successful 2-pager meeting article"
-                    class="usa-button usa-button--outline"
-                    type="button"
-                  >
-                    Read
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li
-              class="usa-card desktop:grid-col-4 article article-card--isLink"
-              data-testid="article-card"
-            >
-              <div
-                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
-              >
-                <header
-                  class="usa-card__header padding-0"
-                  data-testid="CardHeader"
-                >
-                  <h3
-                    class="line-height-body-4 margin-bottom-1"
-                  >
                     Overview for adding a model
                   </h3>
                 </header>
@@ -2185,6 +2134,57 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                 >
                   <button
                     aria-label="Read Sample Model Plan article"
+                    class="usa-button usa-button--outline"
+                    type="button"
+                  >
+                    Read
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-card desktop:grid-col-4 article article-card--isLink"
+              data-testid="article-card"
+            >
+              <div
+                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+              >
+                <header
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
+                >
+                  <h3
+                    class="line-height-body-4 margin-bottom-1"
+                  >
+                    How to have a successful 2-pager meeting
+                  </h3>
+                </header>
+                <a
+                  class="usa-link width-fit-content display-block "
+                  href="/help-and-knowledge/articles?category=getting-started"
+                >
+                  <span
+                    aria-label="Articles under the Getting started category"
+                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                    data-testid="tag"
+                  >
+                    Getting started
+                  </span>
+                </a>
+                <div
+                  class="usa-card__body padding-x-0 article__body"
+                  data-testid="CardBody"
+                >
+                  <p>
+                    Use this article to ensure you’re fully prepared for your 2-page concept review meeting with CMMI Front Office (FO).
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                  data-testid="CardFooter"
+                >
+                  <button
+                    aria-label="Read How to have a successful 2-pager meeting article"
                     class="usa-button usa-button--outline"
                     type="button"
                   >

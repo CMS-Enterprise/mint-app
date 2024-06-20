@@ -159,7 +159,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
             <p
               class="margin-top-105"
             >
-              Scope Baseline Defined 
+              Scope Baseline Defined
             </p>
           </li>
           <li
@@ -271,8 +271,8 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
                 class="text-normal margin-bottom-0 margin-top-105"
               >
                 (Onboarding Request, Change Request, etc.)
-          
-          
+
+
                 <strong>
                   Who:
                 </strong>
@@ -287,7 +287,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               class="usa-process-list__heading font-body-sm"
               data-testid="processListHeading"
             >
-              Complete Impact Assessment and Level of Effort (LOE) Estimate 
+              Complete Impact Assessment and Level of Effort (LOE) Estimate
               <p
                 class="text-normal margin-bottom-0 margin-top-105"
               >

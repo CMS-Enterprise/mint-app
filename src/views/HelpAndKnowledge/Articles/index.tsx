@@ -63,6 +63,12 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     type: ArticleCategories.GETTING_STARTED,
   },
   {
+    name: "Evaluating data exchange concepts",
+    route: "/data-exchange-concept",
+    translation: "dataExchangeConcept",
+    type: "getting-started",
+  },
+  {
     key: HelpArticle.UTILIZING_SOLUTIONS,
     route: "/utilizing-solutions",
     translation: "utilizingSolutions",

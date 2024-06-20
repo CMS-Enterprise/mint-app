@@ -210,8 +210,8 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
               class="margin-top-105"
             >
               Once a concept paper has been written, the Model Lead (or other model team member) will create a Model Plan within MINT to collaborate on the operational needs of the model.
-            
-            
+
+
               <a
                 class="usa-link margin-top-2 display-block display-flex flex-align-center text-bold"
                 href="/models/steps-overview"
@@ -246,7 +246,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
               class="margin-top-105"
             >
               Upload relevant documents
-            
+
             These will provide BSG and/or the IT Lead helpful background.
             </p>
           </li>
@@ -282,7 +282,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
           <li
             class="line-height-sans-5"
           >
-            Model Plan that identifies the high-level operational requirements for your model; 
+            Model Plan that identifies the high-level operational requirements for your model;
           </li>
           <li
             class="line-height-sans-5"
@@ -444,7 +444,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
             <p
               class="margin-top-105"
             >
-              The model team should keep their Model Plan as up to date as possible, especially date related changes. As they answer questions within the Model Plan, operational needs are identified within the operational solutions and implementation status tracker. 
+              The model team should keep their Model Plan as up to date as possible, especially date related changes. As they answer questions within the Model Plan, operational needs are identified within the operational solutions and implementation status tracker.
             </p>
           </li>
           <li
@@ -475,7 +475,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
               class="margin-top-105"
             >
               BSG will meet with model teams to understand the data the model will be collecting. For example: Models may choose to track participation in the model (the participants, providers, or beneficiaries). You will be asked to produce participation files in a specified format to be loaded into CMMI's central data repository the APM Management System (AMS).
-          
+
           This model data will be shared with AMS, QPP, and ResDAC. Data will be made available for researchers in ResDAC after the first quarter of operations if it is ready at that point in time.
             </p>
           </li>
