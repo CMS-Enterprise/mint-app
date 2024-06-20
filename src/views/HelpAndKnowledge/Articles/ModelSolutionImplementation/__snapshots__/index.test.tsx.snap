@@ -448,7 +448,11 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               <h3
                 class="line-height-body-4 margin-bottom-1"
               >
+<<<<<<< HEAD
                 Phases involved in creating IT and operational support for models
+=======
+                Utilizing available operational solutions
+>>>>>>> 7f528df2 (correct the snaps)
               </h3>
             </header>
             <a
@@ -468,7 +472,11 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
+<<<<<<< HEAD
                 There are two phases invovled in creating IT and operational support for CMMI models.
+=======
+                One model will require several operational solutions to complete the essential functions. This is an overview of timing and activities involved in working with existing systems and services.
+>>>>>>> 7f528df2 (correct the snaps)
               </p>
             </div>
             <div
@@ -476,7 +484,11 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               data-testid="CardFooter"
             >
               <button
+<<<<<<< HEAD
                 aria-label="Read Phases involved in creating IT and operational support for models article"
+=======
+                aria-label="Read Utilizing available operational solutions article"
+>>>>>>> 7f528df2 (correct the snaps)
                 class="usa-button usa-button--outline"
                 type="button"
               >
@@ -550,7 +562,11 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               <h3
                 class="line-height-body-4 margin-bottom-1"
               >
+<<<<<<< HEAD
                 Utilizing available operational solutions
+=======
+                Phases involved in creating IT and operational support for models
+>>>>>>> 7f528df2 (correct the snaps)
               </h3>
             </header>
             <a
@@ -570,7 +586,11 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
+<<<<<<< HEAD
                 One model will require several operational solutions to complete the essential functions. This is an overview of timing and activities involved in working with existing systems and services.
+=======
+                There are two phases invovled in creating IT and operational support for CMMI models.
+>>>>>>> 7f528df2 (correct the snaps)
               </p>
             </div>
             <div
@@ -578,7 +598,11 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
               data-testid="CardFooter"
             >
               <button
+<<<<<<< HEAD
                 aria-label="Read Utilizing available operational solutions article"
+=======
+                aria-label="Read Phases involved in creating IT and operational support for models article"
+>>>>>>> 7f528df2 (correct the snaps)
                 class="usa-button usa-button--outline"
                 type="button"
               >

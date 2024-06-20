@@ -450,7 +450,11 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               <h3
                 class="line-height-body-4 margin-bottom-1"
               >
+<<<<<<< HEAD
                 Phases involved in creating IT and operational support for models
+=======
+                Model implementation and solution implementation
+>>>>>>> 7f528df2 (correct the snaps)
               </h3>
             </header>
             <a
@@ -470,7 +474,11 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
+<<<<<<< HEAD
                 There are two phases invovled in creating IT and operational support for CMMI models.
+=======
+                This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
+>>>>>>> 7f528df2 (correct the snaps)
               </p>
             </div>
             <div
@@ -478,7 +486,11 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               data-testid="CardFooter"
             >
               <button
+<<<<<<< HEAD
                 aria-label="Read Phases involved in creating IT and operational support for models article"
+=======
+                aria-label="Read Model implementation and solution implementation article"
+>>>>>>> 7f528df2 (correct the snaps)
                 class="usa-button usa-button--outline"
                 type="button"
               >
@@ -552,7 +564,11 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               <h3
                 class="line-height-body-4 margin-bottom-1"
               >
+<<<<<<< HEAD
                 Model implementation and solution implementation
+=======
+                Phases involved in creating IT and operational support for models
+>>>>>>> 7f528df2 (correct the snaps)
               </h3>
             </header>
             <a
@@ -572,7 +588,11 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
+<<<<<<< HEAD
                 This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
+=======
+                There are two phases invovled in creating IT and operational support for CMMI models.
+>>>>>>> 7f528df2 (correct the snaps)
               </p>
             </div>
             <div
@@ -580,7 +600,11 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               data-testid="CardFooter"
             >
               <button
+<<<<<<< HEAD
                 aria-label="Read Model implementation and solution implementation article"
+=======
+                aria-label="Read Phases involved in creating IT and operational support for models article"
+>>>>>>> 7f528df2 (correct the snaps)
                 class="usa-button usa-button--outline"
                 type="button"
               >
