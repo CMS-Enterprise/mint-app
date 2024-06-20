@@ -69,27 +69,22 @@ const SharedSystemsTimeLine = ({
             <ul className="padding-left-4 margin-top-0">
               <li key="cr-item-0" className="list-item">
                 <Trans
-                  i18nKey={`solutions.${solution.key}.timeline.items[1].items[0]`}
-                >
-                  <span className="text-bold">Analysis CR</span> - This type of
-                  CR is recommended for model teams still figuring out what to
-                  do for the model. Essentially, this is a request to talk and
-                  collaborate with the Medicare Administrative Contractor (MAC)
-                  and Shared System Maintainers (SSM) on what will work for the
-                  model. It’s best to do an anaylsis CR a year before changes
-                  need made.
-                </Trans>
+                  i18nKey={`solutions.${solution.key}.timeline.items.1.items.0`}
+                  t={t}
+                  components={{
+                    bold: <span className="text-bold" />
+                  }}
+                />
               </li>
 
               <li key="cr-item-1" className="list-item">
                 <Trans
-                  i18nKey={`solutions.${solution.key}.timeline.items[1].items[0]`}
-                >
-                  <span className="text-bold">Implementation CR</span> - This
-                  type of CR is for implementing the necessary changes to
-                  support the model. It’s best to submit these at least six
-                  months prior to needing the changes made.
-                </Trans>
+                  i18nKey={`solutions.${solution.key}.timeline.items.1.items.1`}
+                  t={t}
+                  components={{
+                    bold: <span className="text-bold" />
+                  }}
+                />
               </li>
             </ul>
           )}

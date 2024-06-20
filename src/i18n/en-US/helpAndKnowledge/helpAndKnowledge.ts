@@ -129,7 +129,7 @@ const solutions: SolutionTType = {
         {
           header: 'Inquire about using 4i/ACO-OS',
           description:
-            'Send an email to <1>{{email}}</1> if interested in using 4i and ACO-OS for your model. Please also include Ashley Corbin on the email.'
+            'Send an email to <email>ACO-OIT@cms.hhs.gov</email> if interested in using 4i and ACO-OS for your model. Please also include Ashley Corbin on the email.'
         },
         {
           header: 'Meet with 4i/ACO-OS technical lead',
@@ -330,7 +330,7 @@ The business function of CDX is a centralized data exchange to enable interopera
         {
           header: 'Inquire about CDX',
           description:
-            'If you’re interested in using CDX for your model or would like to learn more about the system, please contact <1>{{email}}</1> to learn more.'
+            'If you’re interested in using CDX for your model or would like to learn more about the system, please contact <email>MINTTeam@cms.hhs.gov</email> to learn more.'
         },
         {
           header: 'Submit an onboarding request',
@@ -338,7 +338,7 @@ The business function of CDX is a centralized data exchange to enable interopera
             'To submit an onboarding request, you’ll need to do the following steps:',
           ordered: true,
           items: [
-            'Register as New User in the <1>{{link}}</1>',
+            'Register as New User in the <link1>CMS Enterprise Portal</link1>',
             'Submit Privileged User Role Request for IC',
             'Submit Role Request for CDX'
           ]
@@ -405,7 +405,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Complete CCW VRDC Access Request worksheet',
           description:
-            'Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<1>{{email}}</1>) and Velda.'
+            'Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (<email>CCWAccess@cms.hhs.gov</email>) and Velda.'
         },
         {
           header: 'Complete CCW CARS application',
@@ -423,7 +423,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
         {
           header: 'Complete Employee CCW Access Request form',
           description:
-            'Contact Velda McGhee, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<1>{{email}}</1>) and Velda.'
+            'Contact Velda McGhee, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA (<email>CCWAccess@cms.hhs.gov</email>) and Velda.'
         },
         {
           header: 'Complete CCW CARS application',
@@ -446,7 +446,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
     },
     timeline: {
       description:
-        'Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at <1>{{email}}</1>.',
+        'Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
       items: [
         {
           header: 'Access CMS Box',
@@ -478,7 +478,7 @@ Performing model implementation, design, monitoring, and evaluation activities t
     },
     timeline: {
       description:
-        'Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at <1>{{email}}</1>.',
+        'Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
       items: [
         {
           header: 'Access CMS Qualtrics',
@@ -719,7 +719,7 @@ Specific to CMMI, HIGLAS has two integrated points:`,
     },
     timeline: {
       description:
-        'Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at {{email}} if you have questions.',
+        'Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at <email>donna.schmidt@cms.hhs.gov</email> if you have questions.',
       items: []
     }
   },
@@ -1374,7 +1374,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
         {
           header: 'Submit request',
           description:
-            'From the CMS Connect app on your desktop, search for “Create or manage a resource mailbox” or “Mailbox request.” You’ll need to provide the following information:',
+            'From the CMS Connect app on your desktop, search for “<bold>Create or manage a resource mailbox</bold>” or “<bold>Mailbox request</bold>.” You’ll need to provide the following information:',
           items: [
             'Request type (Create a new resource mailbox)',
             {
@@ -1394,7 +1394,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
             'Add attachments associated with the request (optional)'
           ],
           description2:
-            'If you’d rather submit a request by email, please send the above information to {{email}}'
+            'If you’d rather submit a request by email, please send the above information to <email>cms_it_service_desk@cms.hhs.gov</email>'
         },
         {
           header: 'Mailbox created',
@@ -1486,7 +1486,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
     },
     timeline: {
       description:
-        'Model teams should follow the {{link}} standards to determine when to being working with RMADA.',
+        'Model teams should follow the <link1>Procurement Administrative Lead Time (PALT)</link1> standards to determine when to being working with RMADA.',
       items: [],
       links: ['Procurement Administrative Lead Time (PALT)']
     }
@@ -1716,10 +1716,28 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
     about: {
       description: `The Shared Systems are a group of systems used to process traditional Medicare Fee-for-Service (FFS) claims for Part A, Part B, and Durable Medical Equipment (DME).
 
-Beneficiaries visit a provider of Medicare services, and that provider files a claim with their Medicare Administrative Contractor (MAC). The MAC processes and pays the claim, and sends a remittance to advise the provider and a Medicare Summary Notice (MSN) to the beneficiary. There are many Centers and Offices that receive the Medicare legislation that determines policies; those become change requests implemented through quarterly releases by the Shared System Maintainers (SSM) and the MACs.
-
-The following systems are a part of Shared Systems:`,
+Beneficiaries visit a provider of Medicare services, and that provider files a claim with their Medicare Administrative Contractor (MAC). The MAC processes and pays the claim, and sends a remittance to advise the provider and a Medicare Summary Notice (MSN) to the beneficiary. There are many Centers and Offices that receive the Medicare legislation that determines policies; those become change requests implemented through quarterly releases by the Shared System Maintainers (SSM) and the MACs.`,
       components: [
+        {
+          header: 'Additional resources',
+          level: 'h4',
+          items: [
+            'Fee For Service Change Request Resource Center',
+            '<link1>Go to Fee For Service Change Request Resource Center</link1>'
+          ],
+          links: [
+            {
+              link: `https://share.cms.gov/center/cmmi-eos/CMMITraining/SitePages/FFSHome.aspx`,
+              external: true
+            }
+          ],
+          hideBullet: [1]
+        },
+        {
+          header: '',
+          description: 'The following systems are a part of Shared Systems: ',
+          items: []
+        },
         {
           header: 'Fiscal Intermediary Shared System (FISS)',
           description:
@@ -1781,8 +1799,8 @@ The following systems are a part of Shared Systems:`,
 
 There are two types of CRs:`,
           items: [
-            'Analysis CR - This type of CR is recommended for model teams still figuring out what to do for the model. Essentially, this is a request to talk and collaborate with the Medicare Administrative Contractor (MAC) and Shared System Maintainers (SSM) on what will work for the model. It’s best to do an anaylsis CR a year before changes need made.',
-            'Implementation CR - This type of CR is for implementing the necessary changes to support the model. It’s best to submit these at least six months prior to needing the changes made.'
+            '<bold>Analysis CR</bold> - This type of CR is recommended for model teams still figuring out what to do for the model. Essentially, this is a request to talk and collaborate with the Medicare Administrative Contractor (MAC) and Shared System Maintainers (SSM) on what will work for the model. It’s best to do an anaylsis CR a year before changes need made.',
+            '<bold>Implementation CR</bold> - This type of CR is for implementing the necessary changes to support the model. It’s best to submit these at least six months prior to needing the changes made.'
           ]
         },
         {

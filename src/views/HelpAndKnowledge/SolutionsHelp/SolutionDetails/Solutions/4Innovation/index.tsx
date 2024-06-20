@@ -60,15 +60,14 @@ const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
           </ProcessListHeading>
 
           <Trans
-            i18nKey={`solutions.${solution.key}.timeline.items[0].description`}
-          >
-            Send an email to{' '}
-            <ExternalLink href="mailto:ACO-OIT@cms.hhs.gov">
-              ACO-OIT@cms.hhs.gov
-            </ExternalLink>{' '}
-            if interested in using 4i and ACO-OS for your model. Please also
-            include Ashley Corbin on the email.
-          </Trans>
+            i18nKey={`solutions.${solution.key}.timeline.items.0.description`}
+            t={t}
+            components={{
+              email: (
+                <ExternalLink href="mailto:ACO-OIT@cms.hhs.gov"> </ExternalLink>
+              )
+            }}
+          />
         </ProcessListItem>
         {/* Typescript not satified with mapping through ProcessListItems */}
         {StandardTimelineItems as any}
