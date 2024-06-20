@@ -1,0 +1,554 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Get Access Article > matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class=""
+        data-testid="grid"
+      >
+        <button
+          class="usa-button usa-button--unstyled margin-top-6"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            class="usa-icon margin-right-05 text-tbottom"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+          Close tab
+        </button>
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-bottom-1"
+          tabindex="-1"
+        >
+          Evaluating data exchange concepts
+        </h1>
+        <a
+          class="usa-link width-fit-content display-block margin-bottom-1"
+          href="/help-and-knowledge/articles?category=getting-started"
+        >
+          <span
+            aria-label="Articles under the Getting started category"
+            class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+            data-testid="tag"
+          >
+            Getting started
+          </span>
+        </a>
+        <p
+          class="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4"
+        >
+          Exchanging data with our participants is an essential component of model operations. We collect data across a few use cases such as quality and clinical reporting. We also share data back with participants to provide tools and information to enable model success (e.g., analytics or claims data). The following is a framework for evaluating the data exchange components of new models in the context of new policy or technology opportunities.
+        </p>
+        <div
+          class="usa-alert usa-alert--info usa-alert--no-icon margin-bottom-6"
+          data-testid="alert"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              We recommend thinking about how data will be exchanged early in the model design process. These considerations should also be mentioned in your 2-page concept paper.
+            </p>
+          </div>
+        </div>
+        <div
+          class="grid-row margin-bottom-6"
+          data-testid="grid"
+        >
+          <div
+            class="grid-col-6 border-bottom-2px position-sticky bg-white z-100"
+            data-testid="grid"
+            style="top: 54px;"
+          >
+            <p
+              class="margin-y-1 margin-left-2 text-bold"
+            >
+              Category and description
+            </p>
+          </div>
+          <div
+            class="grid-col-6 border-bottom-2px position-sticky bg-white z-100"
+            data-testid="grid"
+            style="top: 54px;"
+          >
+            <p
+              class="margin-y-1 margin-left-2 text-bold"
+            >
+              Example answer
+            </p>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 text-bold line-height-sans-4"
+            >
+              Background
+            </p>
+            <p
+              class="margin-y-0 line-height-sans-4"
+            >
+              Provide a high-level overview of the data exchange concept in the model design.
+            </p>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 line-height-sans-4"
+            >
+              TEFCA is a ONC-led policy initiative to create an operating and technical framework for national health data exchange
+            </p>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 text-bold line-height-sans-4"
+            >
+              Realism
+            </p>
+            <p
+              class="margin-y-0 line-height-sans-4"
+            >
+              Is the model’s data exchange concept realistic and feasible given the current state of health IT standards, technology availability, and vendor capability?
+            </p>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 line-height-sans-4"
+            >
+              TEFCA is not yet operational, though the initial QHINs have been announced; since it is voluntary, it remains to be seen what uptake will look like once it becomes operational in 2024.
+            </p>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 text-bold line-height-sans-4"
+            >
+              Participant burden
+            </p>
+            <ul
+              class="margin-y-0 padding-left-0 line-height-sans-4"
+            >
+              <li
+                class="margin-left-2"
+              >
+                How well does the data exchange concept align with health IT standards vs. creating custom requirements?
+              </li>
+              <li
+                class="margin-left-2"
+              >
+                What is the impact on workload, time, and resources for the model participant and healthcare providers?
+              </li>
+              <li
+                class="margin-left-2"
+              >
+                What is the financial impact on participants?
+              </li>
+            </ul>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 line-height-sans-4"
+            >
+              Participating in TEFCA will be done through Qualified Health Information Networks (QHINs), which will likely take place through existing provider EHR vendors, though we anticipate that provider organizations will still need to invest some resources in participating in TEFCA, especially early on.
+            </p>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 text-bold line-height-sans-4"
+            >
+              CMMI impacts
+            </p>
+            <ul
+              class="margin-y-0 padding-left-0 line-height-sans-4"
+            >
+              <p
+                class="padding-left-0 margin-y-0"
+              >
+                How does the data exchange concept impact CMMI?
+              </p>
+              <li
+                class="margin-left-2"
+              >
+                Do we have the technology capability to support the data exchange?
+              </li>
+              <li
+                class="margin-left-2"
+              >
+                How does the data exchange concept impact model operations?
+              </li>
+              <li
+                class="margin-left-2"
+              >
+                What is the level of effort required to implement, manage, and sustain the data exchange concept?
+              </li>
+              <li
+                class="margin-left-2"
+              >
+                What are the initial and ongoing CMS costs?
+              </li>
+            </ul>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 line-height-sans-4"
+            >
+              Requiring participation in TEFCA will necessitate a moderate effort from CMMI. The voluntary nature of TEFCA means CMMI will need to measure and ensure compliance and evaluate performance.  Participating with a QHIN will likely incur cost, though it is unclear how much and this will relate to existing HIE costs in different regions
+            </p>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 text-bold line-height-sans-4"
+            >
+              Policy context
+            </p>
+            <p
+              class="margin-y-0 line-height-sans-4"
+            >
+              How does this concept fit into the current policy landscape and priorities?
+            </p>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 line-height-sans-4"
+            >
+              It is unclear how TEFCA will relate to existing services like HIEs or national networks; for example, will HIEs become QHINs or participate in TEFCA through a QHIN.ONC is pushing TEFCA forward and it is a HHS priority as evidenced by rule-making and public events.
+            </p>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 text-bold line-height-sans-4"
+            >
+              Relevant CMS/CMMI efforts
+            </p>
+            <ul
+              class="margin-y-0 padding-left-0 line-height-sans-4"
+            >
+              <li
+                class="margin-left-2"
+              >
+                Does the model’s data exchange concept align with HHS/CMS direction?
+              </li>
+              <li
+                class="margin-left-2"
+              >
+                Will other models use similar concepts?
+              </li>
+            </ul>
+          </div>
+          <div
+            class="grid-col-6 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 line-height-sans-4"
+            >
+              CMS OBRHI is leading most discussions around TEFCA and how it relates to CMS, both from a program perspective (e.g., it is now voluntary under MIPS), as well as directly participating (should CMS participate in a QHIN to facilitate data sharing)
+            </p>
+          </div>
+          <div
+            class="grid-col-12 border-bottom padding-y-2 padding-x-2"
+            data-testid="grid"
+          >
+            <p
+              class="margin-y-0 text-bold line-height-sans-4"
+            >
+              Additional items to consider
+            </p>
+            <ul
+              class="margin-y-0 padding-left-0 line-height-sans-4"
+            >
+              <li
+                class="margin-left-2"
+              >
+                Equity implications
+              </li>
+              <li
+                class="margin-left-2"
+              >
+                Industry/external usage and uptake
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="usa-summary-box"
+          data-testid="summary-box"
+        >
+          <div
+            class="usa-summary-box__body"
+          >
+            <h3
+              class="usa-summary-box__heading"
+            >
+              Need help with your data exchange concept?
+            </h3>
+            <div
+              class="usa-summary-box__text"
+            >
+              Contact William Gordon at 
+              <a
+                aria-label="Open in a new tab"
+                class="usa-link usa-link--external"
+                href="mailto:william.gordon@cms.hhs.gov"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                william.gordon@cms.hhs.gov
+              </a>
+               or the MINT team at 
+              <a
+                aria-label="Open in a new tab"
+                class="usa-link usa-link--external"
+                href="mailto:MINTTeam@cms.hhs.gov"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                MINTTeam@cms.hhs.gov
+              </a>
+              .
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div
+    class="margin-top-6 margin-bottom-neg-7"
+  >
+    <div
+      class="bg-primary-lighter"
+    >
+      <div
+        class="grid-container padding-top-4 padding-bottom-10"
+        data-testid="gridContainer"
+      >
+        <h2
+          class="margin-top-0 margin-bottom-1"
+        >
+          Related help articles
+        </h2>
+        <dt
+          class="margin-bottom-4"
+        >
+          Below are some additional help articles that you may find useful.
+        </dt>
+        <ul
+          class="usa-card-group"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  How to have a successful 2-pager meeting
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=getting-started"
+              >
+                <span
+                  aria-label="Articles under the Getting started category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Getting started
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body"
+                data-testid="CardBody"
+              >
+                <p>
+                  Use this article to ensure you’re fully prepared for your 2-page concept review meeting with CMMI Front Office (FO).
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read How to have a successful 2-pager meeting article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  How to have a successful 6-pager meeting
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=getting-started"
+              >
+                <span
+                  aria-label="Articles under the Getting started category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Getting started
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body"
+                data-testid="CardBody"
+              >
+                <p>
+                  Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-pager. Use this article to ensure you’re fully prepared for your 6-page concept review meeting with CMMI FO.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read How to have a successful 6-pager meeting article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  High-level project plans
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=getting-started"
+              >
+                <span
+                  aria-label="Articles under the Getting started category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Getting started
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body"
+                data-testid="CardBody"
+              >
+                <p>
+                  Use this high-level project plan to understand and track the key pieces of work involved in developing a model. The MINT Team can assist model teams in completing this for upcoming models once collaboration begins.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read High-level project plans article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <a
+          href="/help-and-knowledge/articles"
+        >
+          View all help articles
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
