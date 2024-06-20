@@ -2333,6 +2333,53 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "User View Customization",
+			"item": [
+				{
+					"name": "Get Customizations",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query userViewCustomization {\n    userViewCustomization {\n        id\n        userId\n        viewCustomization\n        possibleOperationalSolutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customizations",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateUserViewCustomization($changes: UserViewCustomizationChanges!) {\n    updateUserViewCustomization(changes: $changes) {\n        id\n        userId\n        viewCustomization\n        possibleOperationalSolutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
+								"variables": "{\n    \"changes\": {\n        \"viewCustomization\": [\"FOLLOWED_MODELS\",\"MY_MODEL_PLANS\"],\n        \"possibleOperationalSolutions\": [\"ACO_OS\"]\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {

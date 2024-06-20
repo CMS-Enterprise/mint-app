@@ -751,6 +751,7 @@ export type Mutation = {
   updatePlanTDL: PlanTdl;
   /** Sets the notification preferences of a user. */
   updateUserNotificationPreferences: UserNotificationPreferences;
+  updateUserViewCustomization: UserViewCustomization;
   uploadNewPlanDocument: PlanDocument;
 };
 
@@ -1032,6 +1033,12 @@ export type MutationUpdatePlanTdlArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdateUserNotificationPreferencesArgs = {
   changes: UserNotificationPreferencesChanges;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateUserViewCustomizationArgs = {
+  changes: UserViewCustomizationChanges;
 };
 
 
@@ -2523,6 +2530,7 @@ export type Query = {
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
   userAccount: UserAccount;
+  userViewCustomization: UserViewCustomization;
 };
 
 
@@ -3008,6 +3016,34 @@ export type UserNotifications = {
   /** This renders only the unread notifications */
   unreadNotifications: Array<UserNotification>;
 };
+
+export type UserViewCustomization = {
+  __typename: 'UserViewCustomization';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  possibleOperationalSolutions: Array<OperationalSolutionKey>;
+  userAccount: UserAccount;
+  userId: Scalars['UUID']['output'];
+  viewCustomization: Array<ViewCustomizationType>;
+};
+
+export type UserViewCustomizationChanges = {
+  possibleOperationalSolutions: Array<OperationalSolutionKey>;
+  viewCustomization: Array<ViewCustomizationType>;
+};
+
+export enum ViewCustomizationType {
+  ALL_MODEL_PLANS = 'ALL_MODEL_PLANS',
+  FOLLOWED_MODELS = 'FOLLOWED_MODELS',
+  MODELS_BY_OPERATIONAL_SOLUTION = 'MODELS_BY_OPERATIONAL_SOLUTION',
+  MODELS_WITH_CR_TDL = 'MODELS_WITH_CR_TDL',
+  MY_MODEL_PLANS = 'MY_MODEL_PLANS'
+}
 
 export enum WaiverType {
   FRAUD_ABUSE = 'FRAUD_ABUSE',
