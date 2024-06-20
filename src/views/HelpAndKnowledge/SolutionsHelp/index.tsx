@@ -4,7 +4,7 @@ Contains components for search, categories, and solutions cards
 */
 
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -71,12 +71,20 @@ export const searchSolutions = (
 
 const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const location = useLocation();
+  const history = useHistory();
 
   const params = new URLSearchParams(location.search);
 
   const category = params.get('category') as OperationalSolutionCategoryRoute;
   const page = params.get('page');
   const modal = params.get('solution');
+
+  if (!page) {
+    params.set('page', '1');
+    history.replace({
+      search: params.toString()
+    });
+  }
 
   const { helpSolutions, loading } = useHelpSolution();
 
