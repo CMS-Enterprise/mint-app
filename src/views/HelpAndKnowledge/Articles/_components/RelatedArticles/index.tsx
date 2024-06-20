@@ -28,6 +28,10 @@ const RelatedArticles = ({
 }: RelatedArticlesProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
+  if (specificArticles?.length !== 3) {
+    return null;
+  }
+
   // Filter to only the category tag type
   let filteredArticles = type
     ? helpAndKnowledgeArticles.filter(article => article.type === type)
