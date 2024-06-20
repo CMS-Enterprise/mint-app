@@ -711,7 +711,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cent
           <a
             aria-label="Open in a new tab"
             class="usa-link usa-link--external"
-            href="mailto:MINTTeam@cms.hhs.gov"
+            href="mailto:MINTTeam@cms.hhs.go"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -824,17 +824,17 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
           >
             Complete CCW VRDC Access Request worksheet
           </h3>
-          Contact Velda McGhee, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA 
+          Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (
           <a
             aria-label="Open in a new tab"
             class="usa-link usa-link--external"
-            href="mailto:CCWAccess@cms.hhs.gov"
+            href="mailto:CCWAccess@cms.hhs.go"
             rel="noopener noreferrer"
             target="_blank"
           >
             CCWAccess@cms.hhs.gov
           </a>
-           and Velda.
+          ) and Velda.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -880,7 +880,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
           >
             Complete Employee CCW Access Request form
           </h3>
-          Contact Velda McGhee, and she’ll send the Employee CCW Access Request form to complete. Once completed, email it with the supervisor’s approval to OEDA 
+          Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (
           <a
             aria-label="Open in a new tab"
             class="usa-link usa-link--external"
@@ -890,7 +890,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
           >
             CCWAccess@cms.hhs.gov
           </a>
-           and Velda.
+          ) and Velda.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -2204,9 +2204,9 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Outl
           <span
             class="text-bold"
           >
-            Mailbox request.
+            Mailbox request
           </span>
-          ” You’ll need to provide the following information:
+          .” You’ll need to provide the following information:
           <ul
             class="padding-left-4 margin-top-0 margin-bottom-4"
           >
@@ -2277,13 +2277,12 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Outl
           <a
             aria-label="Open in a new tab"
             class="usa-link usa-link--external"
-            href="mailto:cms_it_service_desk@cms.hhs.gov."
+            href="mailto:cms_it_service_desk@cms.hhs.gov"
             rel="noopener noreferrer"
             target="_blank"
           >
-            cms_it_service_desk@cms.hhs.gov.
+            cms_it_service_desk@cms.hhs.gov
           </a>
-          .
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -3096,10 +3095,20 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Shar
           >
             Draft a Change Request (CR)
           </h3>
-          <span
-            class="text-pre-wrap"
-          >
-            Donna will help you write a CR and submit it through Enterprise Electronic Change Information Management Portal (ECHIMP). CRs can occur up to 2-3 years before the changes get implemented.
+          <span>
+            Donna will help you write a CR and submit it through Enterprise Electronic Change Information Management Portal (ECHIMP). CRs can occur up to 2-3 years before the changes get implemented. You may use the Fee For Service Change Request Resource Center for additional resources about drafting your CR.
+
+
+            <a
+              aria-label="Open in a new tab"
+              class="usa-link usa-link--external display-block margin-top-105 margin-bottom-3"
+              href="https://share.cms.gov/center/cmmi-eos/CMMITraining/SitePages/FFSHome.aspx"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Go to Fee For Service Change Request Resource Center
+            </a>
+            
 
 There are two types of CRs:
           </span>
