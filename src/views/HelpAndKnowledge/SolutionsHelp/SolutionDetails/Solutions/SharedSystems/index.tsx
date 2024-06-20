@@ -6,6 +6,7 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 
+import ExternalLink from 'components/shared/ExternalLink';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { TimelineConfigType } from '../Generic/timeline';
@@ -61,8 +62,21 @@ const SharedSystemsTimeLine = ({
             {timelineConfig.items[1].header}
           </ProcessListHeading>
 
-          <span className="text-pre-wrap">
-            {timelineConfig.items[1].description}
+          <span>
+            <Trans
+              i18nKey={`solutions.${solution.key}.timeline.items.1.description`}
+              t={t}
+              components={{
+                link1: (
+                  <ExternalLink
+                    href="https://share.cms.gov/center/cmmi-eos/CMMITraining/SitePages/FFSHome.aspx"
+                    className="display-block margin-top-105 margin-bottom-3"
+                  >
+                    {' '}
+                  </ExternalLink>
+                )
+              }}
+            />
           </span>
 
           {timelineConfig.items[1].items && (

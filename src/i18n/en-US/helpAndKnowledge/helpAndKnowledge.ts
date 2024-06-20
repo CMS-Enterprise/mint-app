@@ -1739,6 +1739,20 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
           items: []
         },
         {
+          header: 'Common Working File (CWF)',
+          description: `Common Working File (CWF) is a Medicare Part A and B benefit coordination and claim validation system. CWF is a tool the Centers for Medicare & Medicaid Services (CMS) uses to maintain records about beneficiaries enrolled in the Medicare Fee-for-Service health plan. The CWF is comprised of nine localized databases called Hosts. Hosts maintain total Medicare claim history and entitlement information for the beneficiaries in their jurisdiction, which are updated daily by Medicare contractors and other applicable entities (i.e., Social Security Administration). CWF is used to determine the Medicare beneficiaries' eligibility for Medicare services and to monitor and inform other CMS payment systems on the appropriate usage of Medicare benefits, and to ensure payments for services received are appropriately determined and applied to payments based on Medicare payment and coverage rules. Also, the repository provides Medicare beneficiary eligibility information that is received nightly from the Social Security Administration (SSA). The eligibility information consists of newly enrolled beneficiaries in Medicare.`,
+          items: []
+        },
+        {
+          header: 'Functions',
+          level: 'h4',
+          items: [
+            'Verify beneficiary eligibility, entitlement, and utilization. Avoid improper payment through comparison of Part A and B data. Allow BDS and FPS checking before CWF processing.',
+            'CWF software performs data collection and validation, online inquiry, file maintenance, reports, and archival/retrieval.',
+            'The CWF provides the MAC with responses to claims. MACs also submit special transactions such as Medicare Secondary Payment (MSP) data (primary insurer data when Medicare is secondary), ESRD (End Stage Renal Disease) Method of Reimbursement Computation data (only Part A MACs submit these transactions), and Certificate of Medical Necessity ((CMS) only DME MACs submit these transactions). These transactions are submitted to the CWF along with the claims and are identified by transaction type. Claims are added to the CWF full claim history file.'
+          ]
+        },
+        {
           header: 'Fiscal Intermediary Shared System (FISS)',
           description:
             'The FISS is the shared system that processes Medicare Part A claims, including outpatient claims submitted under Part B. It interfaces directly with the Common Working File (CWF) system for verification, validation, and payment authorization. Claims are entered, corrected, adjusted, or canceled. Inquiries for claims statuses, additional development requests or eligibility, and various codes are processed.',
@@ -1795,7 +1809,9 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
         },
         {
           header: 'Draft a Change Request (CR)',
-          description: `Donna will help you write a CR and submit it through Enterprise Electronic Change Information Management Portal (ECHIMP). CRs can occur up to 2-3 years before the changes get implemented.
+          description: `Donna will help you write a CR and submit it through Enterprise Electronic Change Information Management Portal (ECHIMP). CRs can occur up to 2-3 years before the changes get implemented. You may use the Fee For Service Change Request Resource Center for additional resources about drafting your CR.
+
+<link1>Go to Fee For Service Change Request Resource Center</link1>
 
 There are two types of CRs:`,
           items: [
