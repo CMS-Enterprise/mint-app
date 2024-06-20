@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from 'views/NotFound';
 
 import AllArticles from './Articles/AllArticles';
+import DataExchangeConceptHelpArticle from './Articles/DataExchangeConcept';
 import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import ModelSolutionDesign from './Articles/ModelSolutionDesign';
@@ -33,6 +34,10 @@ export const HelpAndKnowledge = () => {
 
       <Route path="/help-and-knowledge/operational-solutions" exact>
         <SolutionsHelp />
+      </Route>
+
+      <Route path="/help-and-knowledge/data-exchange-concept" exact>
+        <DataExchangeConceptHelpArticle />
       </Route>
 
       {/* Getting Started Articles */}

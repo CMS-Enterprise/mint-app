@@ -1,5 +1,6 @@
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import prepareForClearance from './draftModelPlan/prepareForClearance';
+import dataExchangeConcept from './helpAndKnowledge/Articles/dataExchangeConcept';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
@@ -124,6 +125,7 @@ const enUS = {
   sampleModelPlan,
   sixPageMeeting,
   twoPageMeeting,
+  dataExchangeConcept,
   utilizingSolutions,
   // End Help and Knowledge Center Articles
   tableAndPagination,
