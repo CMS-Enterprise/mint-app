@@ -255,3 +255,8 @@ src
 gql
 i18n
 modelPlan
+graphql-schema-linter
+config.js
+Graphql
+exportTranslation
+util
