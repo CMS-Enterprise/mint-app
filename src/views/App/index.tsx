@@ -204,8 +204,6 @@ const AppRoutes = () => {
         component={SubmitRequest}
       />
 
-      <Redirect exact from="/models/:modelID" to="/models/:modelID/read-view" />
-
       <SecureRoute path="/notifications" component={Notifications} />
 
       <SecureRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
@@ -244,6 +242,8 @@ const AppRoutes = () => {
         path="/models/:modelID/locked-task-list-section"
         component={LockedTaskListSection}
       />
+
+      <Redirect exact from="/models/:modelID" to="/models/:modelID/read-view" />
 
       {/* 404 */}
       <Route path="*" component={NotFound} />
