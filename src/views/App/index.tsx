@@ -204,6 +204,8 @@ const AppRoutes = () => {
         component={SubmitRequest}
       />
 
+      <Redirect exact from="/models/:modelID" to="/models/:modelID/read-view" />
+
       <SecureRoute path="/notifications" component={Notifications} />
 
       <SecureRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
