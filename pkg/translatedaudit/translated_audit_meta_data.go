@@ -165,7 +165,6 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 
 	documentIDChange, fieldPresent := changesFields["document_id"]
 	if !fieldPresent {
-		//Changes: (Testing) verify this, we could also fetch the document solution link if it isn't a delete, but shouldn't need to
 		return nil, nil, fmt.Errorf("there is no document_ID present in the changes object, this is needed for the document solution link translated audit")
 	}
 	var err error
@@ -193,13 +192,11 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	// get the document
 	document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentUUID)
 	if err != nil {
-		if err.Error() != "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
-			//Changes: (Meta) Handle if the document doesn't exist. If that is the case (EG no rows in result set)
+		//EXPECT THERE TO BE NULL results, don't treat this as an error
+		if errors.Is(err, sql.ErrNoRows) {
 			return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", err)
 		}
 	}
-
-	// 	//Changes: (Meta) should we check for the error differently? see if it is a wrapped error?
 
 	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionID)
 	if err != nil {
@@ -223,7 +220,7 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	)
 	if document != nil {
 
-		// Changes: (Meta) This could be a little more efficient, because this gets the translation each call
+		// Future Enhancement: This could be more efficient by sharing the translation, but currently leaving like this for simplicity
 		const restrictedKey = "restricted"
 		translatedDocRestricted := getTranslationMapAndTranslateSingleValue("plan_document", restrictedKey, fmt.Sprint(document.Restricted))
 
@@ -232,8 +229,6 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 
 		meta.SetOptionalDocumentFields(document.FileName, translatedDocType, document.OtherTypeDescription, document.OptionalNotes, document.URL, translatedDocRestricted, document.Restricted)
 	}
-
-	//Changes: (Meta) We need to get other document information, and it needs to be translated.
 
 	metaType := models.TAMetaDocumentSolutionLink
 
