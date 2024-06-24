@@ -26,6 +26,7 @@ import FlagsWrapper from 'views/FlagsWrapper';
 import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import GetAccess from 'views/HelpAndKnowledge/Articles/GetAccess';
 import Home from 'views/Home';
+import HomePageSettings from 'views/HomeNew/Settings';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import ModelInfoWrapper from 'views/ModelInfoWrapper';
@@ -99,6 +100,14 @@ const AppRoutes = () => {
     <Switch>
       {/* General Routes */}
       <Route path="/" exact component={Home} />
+
+      {flags.customHomepageEnabled && (
+        <SecureRoute
+          exact
+          path="/homepage-settings"
+          component={HomePageSettings}
+        />
+      )}
 
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />

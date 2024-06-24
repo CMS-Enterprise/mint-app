@@ -11,6 +11,8 @@ import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
 import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
 import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
+import customHome from './home/customHome';
+import homepageSettings from './home/settings';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
 import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
@@ -65,6 +67,7 @@ const enUS = {
   accessibilityStatement,
   auth,
   cookies,
+  customHome,
   draftModelPlan,
   error,
   filterView,
@@ -75,6 +78,7 @@ const enUS = {
   header,
   helpAndKnowledge,
   home,
+  homepageSettings,
   landing,
   plan,
   modelPlanOverview,
