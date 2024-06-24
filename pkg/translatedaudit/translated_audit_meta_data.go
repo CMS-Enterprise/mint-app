@@ -222,8 +222,15 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 		documentUUID,
 	)
 	if document != nil {
-		// Changes: (Meta) all these document fields will also need to be translated
-		meta.SetOptionalDocumentFields(document.FileName, string(document.DocumentType), document.OtherTypeDescription, document.OptionalNotes, document.URL, fmt.Sprint(document.Restricted), document.Restricted)
+
+		// Changes: (Meta) This could be a little more efficient, because this gets the translation each call
+		const restrictedKey = "restricted"
+		translatedDocRestricted := getTranslationMapAndTranslateSingleValue("plan_document", restrictedKey, fmt.Sprint(document.Restricted))
+
+		const typeKey = "document_type"
+		translatedDocType := getTranslationMapAndTranslateSingleValue("plan_document", typeKey, fmt.Sprint(document.DocumentType))
+
+		meta.SetOptionalDocumentFields(document.FileName, translatedDocType, document.OtherTypeDescription, document.OptionalNotes, document.URL, translatedDocRestricted, document.Restricted)
 	}
 
 	//Changes: (Meta) We need to get other document information, and it needs to be translated.
