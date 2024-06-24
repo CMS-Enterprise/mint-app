@@ -22,7 +22,7 @@ type RelatedArticlesProps = {
 const RelatedArticles = ({
   className,
   currentArticle,
-  specificArticles,
+  specificArticleNames,
   type,
   viewAllLink,
 }: RelatedArticlesProps) => {
@@ -43,9 +43,9 @@ const RelatedArticles = ({
     .filter((article) => article.key !== currentArticle)
     .slice(0, 3);
 
-  // It first checks if `specificArticles` is defined, and if so, it maps over each article name to find the corresponding article object in `helpAndKnowledgeArticles`.
+  // It first checks if `specificArticleNames` is defined, and if so, it maps over each article name to find the corresponding article object in `helpAndKnowledgeArticles`.
   // It then filters out any undefined values and assigns the result to `articlesToShow`.
-  // If `specificArticles` is not defined, it assigns `filteredArticles` to `articlesToShow`.
+  // If `specificArticleNames` is not defined, it assigns `filteredArticles` to `articlesToShow`.
   const articlesToShow: ArticleProps[] =
     specificArticles
       ?.map((articleKey) =>

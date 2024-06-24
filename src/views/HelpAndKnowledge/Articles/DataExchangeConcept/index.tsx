@@ -132,7 +132,7 @@ const DataExchangeConceptHelpArticle = () => {
       <div className="margin-top-6 margin-bottom-neg-7">
         <RelatedArticles
           currentArticle={decT('title')}
-          specificArticles={[
+          specificArticleNames={[
             'How to have a successful 2-pager meeting',
             'How to have a successful 6-pager meeting',
             'High-level project plans'
