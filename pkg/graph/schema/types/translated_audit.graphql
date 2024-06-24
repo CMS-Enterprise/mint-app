@@ -14,7 +14,10 @@ type TranslatedAuditMetaGeneric {
     version: Int!
     tableName: String!
     relation: String!
-    relationContent: String!
+    """
+    Relation content can be nil under certain situations, for example if a record was deleted before the audit was translated
+    """
+    relationContent: String
 }
 
 """
@@ -65,7 +68,10 @@ type TranslatedAuditMetaOperationalSolutionSubtask {
     numberOfSubtasks: Int!
     needName: String!
     needIsOther: Boolean!
-    subtaskName: String!
+    """
+    The name of the subtask. If a subtask is updated, and then deleted before being translated, it is possible for this field to be nil.
+    """
+    subtaskName: String
 }
 
 """

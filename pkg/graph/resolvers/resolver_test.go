@@ -200,7 +200,7 @@ func (suite *ResolverSuite) createPlanTDL(mp *models.ModelPlan, idNumber string,
 	return tdl
 }
 
-func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolution {
+func (suite *ResolverSuite) createOperationalSolution() (*models.OperationalSolution, *models.OperationalNeed, *models.ModelPlan) {
 	planName := "Plan For Milestones"
 	plan := suite.createModelPlan(planName)
 	needType := models.OpNKManageCd
@@ -210,12 +210,13 @@ func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolut
 	changes := map[string]interface{}{
 		"nameOther": "AnotherSolution",
 	}
-	operationalSolution, _ := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
-	return operationalSolution
+	operationalSolution, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
+	suite.NoError(err)
+	return operationalSolution, need, plan
 }
 
 func (suite *ResolverSuite) createOperationalSolutionSubtask() *models.OperationalSolutionSubtask {
-	operationalSolution := suite.createOperationalSolution()
+	operationalSolution, _, _ := suite.createOperationalSolution()
 
 	return suite.createOperationalSolutionSubtaskWithSolution(operationalSolution)
 }
@@ -231,7 +232,7 @@ func (suite *ResolverSuite) createOperationalSolutionSubtaskWithSolution(
 }
 
 func (suite *ResolverSuite) createMultipleOperationSolutionSubtasks() []*models.OperationalSolutionSubtask {
-	operationalSolution := suite.createOperationalSolution()
+	operationalSolution, _, _ := suite.createOperationalSolution()
 
 	createOperationalSolutionInput := []*model.CreateOperationalSolutionSubtaskInput{
 		{

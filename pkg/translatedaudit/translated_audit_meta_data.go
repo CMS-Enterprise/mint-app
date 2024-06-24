@@ -2,6 +2,8 @@ package translatedaudit
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 	"fmt"
 	"time"
 
@@ -90,39 +92,38 @@ func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, o
 
 // OperationalSolutionSubtaskMetaDataGet uses the provided information to generate metadata needed for any operational solution subtask audits.
 // it checks if there is a name in the changes, and if so it sets that in the meta data, otherwise it will fetch it from the table record
-func OperationalSolutionSubtaskMetaDataGet(ctx context.Context, store *storage.Store, opSolutionSubtaskID interface{}, opSolutionID interface{}, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaOperationalSolutionSubtask, error) {
+func OperationalSolutionSubtaskMetaDataGet(ctx context.Context, store *storage.Store, opSolutionSubtaskID uuid.UUID, opSolutionID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaOperationalSolutionSubtask, error) {
 	logger := appcontext.ZLogger(ctx)
 
-	opSolutionUUID, err := parseInterfaceToUUID(opSolutionID)
-	if err != nil {
-		return nil, err
-	}
-	var subtaskName string
+	var subtaskName *string
 	nameChange, fieldPresent := changesFields["name"]
 	if fieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-			subtaskName = fmt.Sprint(nameChange.Old)
+			subtaskName = models.StringPointer(fmt.Sprint(nameChange.Old))
 		} else {
-			subtaskName = fmt.Sprint(nameChange.New)
+			subtaskName = models.StringPointer(fmt.Sprint(nameChange.New))
 		}
 
 	} else {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
 			return nil, fmt.Errorf("there wasn't a name present for this subtask, unable to generate subtask metadata. Subtask %v", opSolutionSubtaskID)
 		}
-		opSolutionSubtaskUUID, err2 := parseInterfaceToUUID(opSolutionSubtaskID)
-		if err2 != nil {
-			return nil, err2
+
+		// Insert or update statements mean the subtask should exist and can be fetched (unless it was deleted before the translation can occur)
+		opSolSubtask, err3 := store.OperationalSolutionSubtaskGetByID(logger, opSolutionSubtaskID)
+		if err3 != nil {
+			if !errors.Is(err3, sql.ErrNoRows) {
+				return nil, fmt.Errorf("unable to get operational solution subtask operational solution subtask audit metadata. err %w", err3)
+			} else {
+				subtaskName = nil
+			}
+		} else {
+			subtaskName = &opSolSubtask.Name
 		}
-		// Insert or update statements mean the subtask exists and can be fetched
-		opSolSubtask, err3 := store.OperationalSolutionSubtaskGetByID(logger, opSolutionSubtaskUUID)
-		if err != nil {
-			return nil, fmt.Errorf("unable to get operational solution subtask operational solution subtask audit metadata. err %w", err3)
-		}
-		subtaskName = opSolSubtask.Name
+
 	}
 
-	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionUUID)
+	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionID)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get operational solution with num of Subtasks for operational solution subtask audit metadata. err %w", err)
 	}
@@ -232,19 +233,19 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 
 	const idNumField = "id_number"
-	var idNumber string
+	var idNumber *string
 	idNumberChange, fieldPresent := changesFields[idNumField]
 	if fieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
 			if idNumberChange.Old == nil {
 				return nil, nil, fmt.Errorf("%s was nil in the change field Old. A value was expected", idNumField)
 			}
-			idNumber = fmt.Sprint(idNumberChange.Old)
+			idNumber = models.StringPointer(fmt.Sprint(idNumberChange.Old))
 		} else {
 			if idNumberChange.New == nil {
 				return nil, nil, fmt.Errorf("%s was nil in the change field New. A value was expected", idNumField)
 			}
-			idNumber = fmt.Sprint(idNumberChange.New)
+			idNumber = models.StringPointer(fmt.Sprint(idNumberChange.New))
 		}
 	} else {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
@@ -257,27 +258,26 @@ func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey 
 			if err != nil {
 				return nil, nil, err
 			}
-			if planCR == nil {
-				return nil, nil, fmt.Errorf("planCR is not present in the database, but expected for this meta data")
+			if planCR != nil {
+				idNumber = &planCR.IDNumber
 			}
-			idNumber = planCR.IDNumber
+
 		case "plan_tdl":
 			logger := appcontext.ZLogger(ctx)
 			planTDL, err := store.PlanTDLGetByID(logger, primaryKey)
 			if err != nil {
 				return nil, nil, err
 			}
-			if planTDL == nil {
-				return nil, nil, fmt.Errorf("planTDL is not present in the database, but expected for this meta data")
+			if planTDL != nil {
+				idNumber = &planTDL.IDNumber
 			}
-			idNumber = planTDL.IDNumber
+
 		default:
 			return nil, nil, fmt.Errorf("unable to get plan_cr / plan_tdl meta data with this table type %s", tableName)
 		}
 
 	}
 
-	//Changes: (Meta) Should we break this into two functions?. Also should we define a specific meta data type?
 	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "id_number", idNumber)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
@@ -286,6 +286,7 @@ func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey 
 func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 	const userIDField = "user_id"
 	var userUUID uuid.UUID
+	var userName *string
 	userIDChange, fieldPresent := changesFields[userIDField]
 	if fieldPresent {
 		var err error
@@ -313,21 +314,25 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 
 		collab, err := store.PlanCollaboratorGetByID(primaryKey)
 		if err != nil {
-			return nil, nil, err
+			if !errors.Is(err, sql.ErrNoRows) {
+				return nil, nil, err
+			}
 		}
-		if collab == nil {
-			return nil, nil, fmt.Errorf("collaborator is not present in the database, but expected for this meta data")
+		if collab != nil {
+			userUUID = collab.UserID
 		}
-		userUUID = collab.UserID
 
 	}
 
-	userAccount, err := storage.UserAccountGetByID(store, userUUID)
-	if err != nil {
-		return nil, nil, fmt.Errorf("could not retrieve user account for plan collaborator audit metadata. err %w", err)
+	if userUUID != uuid.Nil {
+		userAccount, err := storage.UserAccountGetByID(store, userUUID)
+		if err != nil {
+			return nil, nil, fmt.Errorf("could not retrieve user account for plan collaborator audit metadata. err %w", err)
+		}
+		userName = &userAccount.CommonName
 	}
 
-	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "UserName", userAccount.CommonName)
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "UserName", userName)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }
@@ -374,7 +379,7 @@ func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, document
 
 	}
 
-	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "fileName", fileName)
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "fileName", &fileName)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }
