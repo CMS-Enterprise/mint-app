@@ -9,7 +9,6 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/mappings"
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -72,25 +71,8 @@ func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, o
 		return nil, nil, fmt.Errorf("unable to get operational need for operational solution audit metadata. err %w", err)
 	}
 
-	//Changes: (Translations) abstract this logic in a helper function?
-	translatedStatus := fmt.Sprint(opSolutionWithSubtasks.Status)
-	// Translate the status if possible. If there are any errors, continue without translating.
-	translation, err := mappings.OperationalSolutionTranslation()
 	const statusKey = "status"
-	if err == nil {
-		translationMap, err := translation.ToMap()
-		if err == nil {
-
-			translationInterface, hasTranslation := translationMap[statusKey]
-			if hasTranslation {
-				options, hasOptions := translationInterface.GetOptions()
-				if hasOptions {
-					translation := translateValueSingle(translatedStatus, options)
-					translatedStatus = fmt.Sprint(translation)
-				}
-			}
-		}
-	}
+	translatedStatus := getTranslationMapAndTranslateSingleValue("operational_solution", statusKey, fmt.Sprint(opSolutionWithSubtasks.Status))
 
 	metaNeed := models.NewTranslatedAuditMetaOperationalSolution(
 		"operational_solution",
