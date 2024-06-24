@@ -106,6 +106,9 @@ type TranslatedAuditMetaDocumentSolutionLink {
     Document URL will only be visible if the user is a collaborator, or has assessment permission
     """
     documentURL: String
+    """
+    Document Visibility is the translated value of the restricted bool for a document
+    """
     documentVisibility: String
     documentRestricted: Boolean
 

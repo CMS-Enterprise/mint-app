@@ -3544,6 +3544,7 @@ export type TranslatedAuditMetaDocumentSolutionLink = {
   documentType?: Maybe<Scalars['String']['output']>;
   /** Document URL will only be visible if the user is a collaborator, or has assessment permission */
   documentURL?: Maybe<Scalars['String']['output']>;
+  /** Document Visibility is the translated value of the restricted bool for a document */
   documentVisibility?: Maybe<Scalars['String']['output']>;
   needIsOther: Scalars['Boolean']['output'];
   needName: Scalars['String']['output'];
