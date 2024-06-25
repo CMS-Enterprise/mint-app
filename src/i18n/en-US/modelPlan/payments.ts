@@ -256,7 +256,11 @@ export const payments: TranslationPayments = {
       ]
     },
     disconnectedChildren: true,
-    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.IPC]
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   payTypeNote: {
     gqlField: 'payTypeNote',
@@ -701,7 +705,7 @@ export const payments: TranslationPayments = {
       false: 'No'
     },
     parentRelation: () => payments.payType,
-    filterGroups: [ModelViewFilter.CCW]
+    filterGroups: [ModelViewFilter.CCW, ModelViewFilter.PBG]
   },
   sharedSystemsInvolvedAdditionalClaimPaymentNote: {
     gqlField: 'sharedSystemsInvolvedAdditionalClaimPaymentNote',
