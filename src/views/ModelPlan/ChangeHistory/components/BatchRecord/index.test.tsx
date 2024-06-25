@@ -70,7 +70,7 @@ describe('ChangeRecord', () => {
     {
       __typename: 'TranslatedAudit',
       id: '252b58f3-bc16-4ab1-9a40-4688d4c03668',
-      tableName: 'operational_solution',
+      tableName: TableName.OPERATIONAL_SOLUTION,
       date: '2024-06-06T21:54:49.713245Z',
       action: DatabaseOperation.INSERT,
       actorName: 'QWER Doe',

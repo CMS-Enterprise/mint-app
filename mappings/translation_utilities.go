@@ -10,8 +10,8 @@ import (
 // however, having them separate enable much more granular testing.
 
 // GetTranslation allows programmatic access to return a translation for a given table name
-func GetTranslation(tableName string) (Translation, error) {
-
+func GetTranslation(tableName models.TableName) (Translation, error) {
+	// Changes: (Translations) update this to switch on specific values
 	switch tableName {
 	case "model_plan":
 		return ModelPlanTranslation()

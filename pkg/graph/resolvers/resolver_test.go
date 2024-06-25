@@ -289,9 +289,9 @@ func (suite *ResolverSuite) createAnalyzedAuditChange(modelNameChange string,
 	modelStatusChanges []string,
 	documentCount int,
 	crTdlActivity bool,
-	updatedSections []string,
-	reviewSections []string,
-	clearanceSections []string,
+	updatedSections []models.TableName,
+	reviewSections []models.TableName,
+	clearanceSections []models.TableName,
 	addedLeads []models.AnalyzedModelLeadInfo, discussionActivity bool) *models.AnalyzedAuditChange {
 
 	auditChange := models.AnalyzedAuditChange{
@@ -338,9 +338,9 @@ func (suite *ResolverSuite) createDefaultTestAnalyzedAudit(mp *models.ModelPlan,
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
 	documentCount := 2
 	crTdlActivity := true
-	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
+	updatedSections := []models.TableName{"plan_payments", "plan_ops_eval_and_learning"}
+	reviewSections := []models.TableName{"plan_payments", "plan_ops_eval_and_learning"}
+	clearanceSections := []models.TableName{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
 	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
 	discussionActivity := true
 

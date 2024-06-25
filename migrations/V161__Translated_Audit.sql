@@ -50,7 +50,6 @@ ADD CONSTRAINT meta_data_type_requires_meta_data CHECK (
 
 COMMENT ON CONSTRAINT meta_data_type_requires_meta_data ON translated_audit IS 'This requires that either the meta data and the meta data type or null, or they are both not null';
 
--- Changes: (Serialization) Decide if we want to normalize the references that duplicate data, eg, actor_name, model_name etc. All of this is technically already in the audit.change table...
 
 -- Comment for the table
 COMMENT ON TABLE translated_audit IS 'Table storing human-readable audit trail of changes made to model plans. There should be at most one entry per audit.change entry ';
@@ -66,7 +65,6 @@ COMMENT ON COLUMN translated_audit.change_id IS 'Foreign key to the untranslated
 COMMENT ON COLUMN translated_audit.date IS 'Timestamp indicating the exact time of the change.';
 
 COMMENT ON COLUMN translated_audit.meta_data IS 'JSONB data storing the details of the changes made.';
-COMMENT ON COLUMN translated_audit.model_name IS 'String representing the model name associated with the change.';
 COMMENT ON COLUMN translated_audit.created_by IS 'Unique identifier of the user who created the audit trail change.';
 COMMENT ON COLUMN translated_audit.created_dts IS 'Timestamp with time zone indicating the creation time of the audit trail change.';
 COMMENT ON COLUMN translated_audit.modified_by IS 'Unique identifier of the user who last modified the audit trail change.';

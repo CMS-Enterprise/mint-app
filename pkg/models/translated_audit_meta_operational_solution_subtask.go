@@ -21,10 +21,10 @@ type TranslatedAuditMetaOperationalSolutionSubtask struct {
 }
 
 // NewTranslatedAuditMetaOperationalSolutionSubtask creates a New TranslatedAuditMetaOperationalSolutionSubtask
-func NewTranslatedAuditMetaOperationalSolutionSubtask(tableName string, version int, solutionName string, solutionOtherHeader *string, solIsOther bool, numSubtasks int, needName string, needIsOther bool, subtaskName *string) TranslatedAuditMetaOperationalSolutionSubtask {
+func NewTranslatedAuditMetaOperationalSolutionSubtask(version int, solutionName string, solutionOtherHeader *string, solIsOther bool, numSubtasks int, needName string, needIsOther bool, subtaskName *string) TranslatedAuditMetaOperationalSolutionSubtask {
 
 	return TranslatedAuditMetaOperationalSolutionSubtask{
-		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(tableName, version),
+		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(TNOperationalSolutionSubtask, version),
 		SolutionName:                  solutionName,
 		SolutionOtherHeader:           solutionOtherHeader,
 		SolutionIsOther:               solIsOther,

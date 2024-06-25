@@ -14,7 +14,7 @@ type TranslatedAuditMetaGeneric struct {
 }
 
 // NewTranslatedAuditMetaGeneric creates a New TranslatedAuditMetaGeneric
-func NewTranslatedAuditMetaGeneric(tableName string, version int, relation string, relationContent *string) TranslatedAuditMetaGeneric {
+func NewTranslatedAuditMetaGeneric(tableName TableName, version int, relation string, relationContent *string) TranslatedAuditMetaGeneric {
 
 	return TranslatedAuditMetaGeneric{
 		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(tableName, version),

@@ -65,31 +65,22 @@ type TranslatedAudit struct {
 func NewTranslatedAuditChange(
 	createdBy uuid.UUID,
 	actorID uuid.UUID,
-	actorName string,
 	modelPlanID uuid.UUID,
 	date time.Time,
-	tableName TableName,
 	tableID int,
 	changeID int,
 	primaryKey uuid.UUID,
 	action DatabaseOperation,
 ) TranslatedAudit {
-	// version := 0
-	// baseMeta := NewTranslatedAuditMetaBaseStruct(tableName, version)
 	return TranslatedAudit{
 		baseStruct:        NewBaseStruct(createdBy),
 		ActorID:           actorID,
-		ActorName:         actorName,
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		Date:              date,
-		TableName:         tableName,
 		TableID:           tableID,
 		ChangeID:          changeID,
 		PrimaryKey:        primaryKey,
 		Action:            action,
-
-		// MetaData:     &baseMeta,
-		// MetaDataType: TAMetaBase,
 	}
 
 }

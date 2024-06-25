@@ -44,7 +44,7 @@ BEGIN
     fkey_f,
     table_uses_user_id
     FROM audit.table_config
-    WHERE schema =TG_TABLE_SCHEMA::text AND name = TG_TABLE_NAME::text;
+    WHERE schema =TG_TABLE_SCHEMA::text AND name = TG_TABLE_NAME::TABLE_NAME;
 
     h_new= hstore(NEW.*);
     h_old= hstore(OLD.*);
