@@ -142,10 +142,10 @@ TranslatedAudit represent a point in time change made to part of application.
 """
 type TranslatedAudit {
     id: UUID!
-    modelName: String!
+    modelPlanID: UUID!
     
     tableID: Int!
-    tableName: String!
+    tableName: TableName!
     primaryKey: UUID!
     
     date: Time!
@@ -158,6 +158,9 @@ type TranslatedAudit {
 
 
     actorID: UUID!
+    """
+    The Common name of the actor who made the changes. This comes from the user account table.
+    """
     actorName: String!  #Changes: (Serialization) This could live in the actor account, but this is meant to facilitate search
     """
     The id of the audit.Change record that was translated.

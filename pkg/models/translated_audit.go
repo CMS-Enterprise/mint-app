@@ -42,18 +42,19 @@ type TranslatedAuditWithTranslatedFields struct {
 type TranslatedAudit struct {
 	baseStruct
 	modelPlanRelation
-	ModelName  string            `json:"modelName" db:"model_name"`
-	TableID    int               `json:"tableID" db:"table_id"`
-	TableName  string            `json:"tableName" db:"table_name"`
+	TableID int `json:"tableID" db:"table_id"`
+	// TableName is the data fetched from the audit.table_config table. It is not stored when the data is stored to the database.
+	TableName  TableName         `json:"tableName" db:"table_name"`
 	PrimaryKey uuid.UUID         `json:"primaryKey" db:"primary_key"`
 	Date       time.Time         `json:"date" db:"date"`
 	Action     DatabaseOperation `json:"action" db:"action"`
 	// Restricted denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user
 	Restricted bool `json:"restricted" db:"restricted"`
 
-	ActorID   uuid.UUID `json:"actorID" db:"actor_id"`
-	ActorName string    `json:"actorName" db:"actor_name"` //Changes (Structure) Maybe normalize this?
-	ChangeID  int       `json:"changeID" db:"change_id"`
+	ActorID uuid.UUID `json:"actorID" db:"actor_id"`
+	// ActorName is fetched from the user_account table. It is not stored when the data is stored to the database.
+	ActorName string `json:"actorName" db:"actor_name"`
+	ChangeID  int    `json:"changeID" db:"change_id"`
 
 	MetaDataRaw  interface{}                  `db:"meta_data"`
 	MetaDataType *TranslatedAuditMetaDataType `db:"meta_data_type"`
@@ -66,9 +67,8 @@ func NewTranslatedAuditChange(
 	actorID uuid.UUID,
 	actorName string,
 	modelPlanID uuid.UUID,
-	modelName string,
 	date time.Time,
-	tableName string,
+	tableName TableName,
 	tableID int,
 	changeID int,
 	primaryKey uuid.UUID,
@@ -81,7 +81,6 @@ func NewTranslatedAuditChange(
 		ActorID:           actorID,
 		ActorName:         actorName,
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-		ModelName:         modelName,
 		Date:              date,
 		TableName:         tableName,
 		TableID:           tableID,

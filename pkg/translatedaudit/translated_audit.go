@@ -90,14 +90,17 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	translatedAudit := models.TranslatedAuditWithTranslatedFields{
 		TranslatedFields: []*models.TranslatedAuditField{},
 	}
+
+	//Note, this isn't stored in the database. We set this here strictly for convenience for the rest of the function
+	tableNameEnum := models.TableName(audit.TableName) //Changes: (Translations) This should just come from a join, we don't need it yet
+
 	change := models.NewTranslatedAuditChange( //  Changes: (Translations)  extract this logic to another function
 		constants.GetSystemAccountUUID(),
 		audit.ModifiedBy,
 		actorAccount.CommonName,
 		plan.ID,
-		plan.ModelName,
 		audit.ModifiedDts,
-		audit.TableName,
+		tableNameEnum,
 		audit.TableID,
 		audit.ID,
 		audit.PrimaryKey,

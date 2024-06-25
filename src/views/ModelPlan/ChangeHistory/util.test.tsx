@@ -1,6 +1,7 @@
 import {
   AuditFieldChangeType,
   DatabaseOperation,
+  TableName,
   TranslationDataType
 } from 'gql/gen/graphql';
 
@@ -29,7 +30,7 @@ const sortData: ChangeRecordType[][] = [
   [
     {
       id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-      tableName: 'operational_need',
+      tableName: TableName.OPERATIONAL_NEED,
       date: '2024-04-22T13:55:13.725192Z',
       action: DatabaseOperation.INSERT,
       translatedFields: [
@@ -52,7 +53,7 @@ const sortData: ChangeRecordType[][] = [
   [
     {
       id: 'e9e1129d-2317-4acd-8d2b-7ca37b33452',
-      tableName: 'operational_need',
+      tableName: TableName.OPERATIONAL_NEED,
       date: '2024-05-22T13:55:13.725192Z',
       action: DatabaseOperation.INSERT,
       translatedFields: [
@@ -93,7 +94,7 @@ describe('util.tsx', () => {
       [
         {
           id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-          tableName: 'plan_basics',
+          tableName: TableName.PLAN_BASICS,
           date: '2024-04-22T13:55:13.725192Z',
           action: DatabaseOperation.INSERT,
           translatedFields: [
@@ -116,7 +117,7 @@ describe('util.tsx', () => {
       [
         {
           id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-          tableName: 'model_plan',
+          tableName: TableName.MODEL_PLAN,
           date: '2024-05-22T13:55:13.725192Z',
           action: DatabaseOperation.INSERT,
           translatedFields: [
@@ -149,7 +150,7 @@ describe('util.tsx', () => {
     const changes: ChangeRecordType[] = [
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-        tableName: 'plan_basics',
+        tableName: TableName.PLAN_BASICS,
         date: '2024-04-22T13:55:13.725192Z',
         action: DatabaseOperation.INSERT,
         translatedFields: [
@@ -210,7 +211,7 @@ describe('util.tsx', () => {
     const changes: ChangeRecordType[] = [
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-        tableName: 'plan_basics',
+        tableName: TableName.PLAN_BASICS,
         date: '2024-04-22T13:55:13.725192Z',
         action: DatabaseOperation.INSERT,
         translatedFields: [
@@ -291,7 +292,7 @@ describe('util.tsx', () => {
   it('identifyChangeType', () => {
     const change: ChangeRecordType = {
       id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-      tableName: 'plan_basics',
+      tableName: TableName.PLAN_BASICS,
       date: '2024-04-22T13:55:13.725192Z',
       action: DatabaseOperation.INSERT,
       translatedFields: [
@@ -317,7 +318,7 @@ describe('util.tsx', () => {
   it('isInitialCreatedSection', () => {
     const change: ChangeRecordType = {
       id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-      tableName: 'plan_basics',
+      tableName: TableName.PLAN_BASICS,
       date: '2024-04-22T13:55:13.725192Z',
       action: DatabaseOperation.INSERT,
       translatedFields: [
@@ -345,7 +346,7 @@ describe('util.tsx', () => {
     const changeRecords: ChangeRecordType[] = [
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-        tableName: 'operational_need',
+        tableName: TableName.OPERATIONAL_NEED,
         date: '2024-04-22T13:55:13.725192Z',
         action: DatabaseOperation.INSERT,
         translatedFields: [
@@ -478,7 +479,7 @@ describe('util.tsx', () => {
     const changes: ChangeRecordType[] = [
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-        tableName: 'operational_solution_subtask',
+        tableName: TableName.OPERATIONAL_SOLUTION_SUBTASK,
         date: '2024-04-22T13:55:23.725192Z',
         action: DatabaseOperation.INSERT,
         translatedFields: [
@@ -499,7 +500,7 @@ describe('util.tsx', () => {
       },
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b33452',
-        tableName: 'operational_solution_subtask',
+        tableName: TableName.OPERATIONAL_SOLUTION_SUBTASK,
         date: '2024-04-22T13:55:24.625192Z',
         action: DatabaseOperation.INSERT,
         translatedFields: [
@@ -520,7 +521,7 @@ describe('util.tsx', () => {
       },
       {
         id: 'e9e1129d-2317-4acd-8d2b-7ca37b33453',
-        tableName: 'operational_solution_subtask',
+        tableName: TableName.OPERATIONAL_SOLUTION_SUBTASK,
         date: '2024-04-22T13:59:13.725192Z',
         action: DatabaseOperation.INSERT,
         translatedFields: [
@@ -549,8 +550,8 @@ describe('util.tsx', () => {
     expect(groupBatchedChanges([...changes])).toEqual(expected);
 
     // Test double batched changes
-    changes[0].tableName = 'plan_document';
-    changes[1].tableName = 'plan_document_solution_link';
+    changes[0].tableName = TableName.PLAN_DOCUMENT;
+    changes[1].tableName = TableName.PLAN_DOCUMENT_SOLUTION_LINK;
 
     const expected2: ChangeRecordType[][] = [
       [changes[0], changes[1]],

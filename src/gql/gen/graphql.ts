@@ -3322,6 +3322,44 @@ export type SubscriptionOnTaskListSectionLocksChangedArgs = {
   modelPlanID: Scalars['UUID']['input'];
 };
 
+/** These represent all the possible tables in the database, in the public schema. */
+export enum TableName {
+  ACTIVITY = 'activity',
+  ANALYZED_AUDIT = 'analyzed_audit',
+  DISCUSSION_REPLY = 'discussion_reply',
+  EXISTING_MODEL = 'existing_model',
+  EXISTING_MODEL_LINK = 'existing_model_link',
+  MODEL_PLAN = 'model_plan',
+  NDA_AGREEMENT = 'nda_agreement',
+  OPERATIONAL_NEED = 'operational_need',
+  OPERATIONAL_SOLUTION = 'operational_solution',
+  OPERATIONAL_SOLUTION_SUBTASK = 'operational_solution_subtask',
+  PLAN_BASICS = 'plan_basics',
+  PLAN_BENEFICIARIES = 'plan_beneficiaries',
+  PLAN_COLLABORATOR = 'plan_collaborator',
+  PLAN_CR = 'plan_cr',
+  PLAN_DISCUSSION = 'plan_discussion',
+  PLAN_DOCUMENT = 'plan_document',
+  PLAN_DOCUMENT_SOLUTION_LINK = 'plan_document_solution_link',
+  PLAN_FAVORITE = 'plan_favorite',
+  PLAN_GENERAL_CHARACTERISTICS = 'plan_general_characteristics',
+  PLAN_OPS_EVAL_AND_LEARNING = 'plan_ops_eval_and_learning',
+  PLAN_PARTICIPANTS_AND_PROVIDERS = 'plan_participants_and_providers',
+  PLAN_PAYMENTS = 'plan_payments',
+  PLAN_TDL = 'plan_tdl',
+  POSSIBLE_NEED_SOLUTION_LINK = 'possible_need_solution_link',
+  POSSIBLE_OPERATIONAL_NEED = 'possible_operational_need',
+  POSSIBLE_OPERATIONAL_SOLUTION = 'possible_operational_solution',
+  POSSIBLE_OPERATIONAL_SOLUTION_CONTACT = 'possible_operational_solution_contact',
+  TAG = 'tag',
+  TRANSLATED_AUDIT = 'translated_audit',
+  TRANSLATED_AUDIT_FIELD = 'translated_audit_field',
+  TRANSLATED_AUDIT_QUEUE = 'translated_audit_queue',
+  USER_ACCOUNT = 'user_account',
+  USER_NOTIFICATION = 'user_notification',
+  USER_NOTIFICATION_PREFERENCES = 'user_notification_preferences'
+}
+
 /** Tag represents an entity tagged in the database */
 export type Tag = {
   __typename: 'Tag';
@@ -3438,6 +3476,7 @@ export type TranslatedAudit = {
   __typename: 'TranslatedAudit';
   action: DatabaseOperation;
   actorID: Scalars['UUID']['output'];
+  /** The Common name of the actor who made the changes. This comes from the user account table. */
   actorName: Scalars['String']['output'];
   /** The id of the audit.Change record that was translated. */
   changeID: Scalars['Int']['output'];
@@ -3450,7 +3489,7 @@ export type TranslatedAudit = {
   metaData?: Maybe<TranslatedAuditMetaData>;
   /** The type of meta data that is stored for this record */
   metaDataType?: Maybe<TranslatedAuditMetaDataType>;
-  modelName: Scalars['String']['output'];
+  modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -3458,7 +3497,7 @@ export type TranslatedAudit = {
   /** Restricted denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user */
   restricted: Scalars['Boolean']['output'];
   tableID: Scalars['Int']['output'];
-  tableName: Scalars['String']['output'];
+  tableName: TableName;
   /** The specific fields that were changed by the transaction */
   translatedFields: Array<TranslatedAuditField>;
 };
@@ -4090,7 +4129,7 @@ export type GetChangeHistoryQueryVariables = Exact<{
 }>;
 
 
-export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: string, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType?: TranslationDataType | null, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: string } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: string, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: string, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: string, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: string, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: string, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: string, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
+export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType?: TranslationDataType | null, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: string } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: string, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: string, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: string, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: string, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: string, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: string, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
 
 export type CreateModelPlanCollaboratorMutationVariables = Exact<{
   input: PlanCollaboratorCreateInput;

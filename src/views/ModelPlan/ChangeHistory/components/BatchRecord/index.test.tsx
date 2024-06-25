@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 import {
   AuditFieldChangeType,
   DatabaseOperation,
+  TableName,
   TranslationDataType
 } from 'gql/gen/graphql';
 
@@ -15,7 +16,7 @@ describe('ChangeRecord', () => {
     {
       __typename: 'TranslatedAudit',
       id: '1fb71b77-9bf9-418f-be42-f3adb3747c02',
-      tableName: 'operational_solution',
+      tableName: TableName.OPERATIONAL_SOLUTION,
       date: '2024-06-06T21:54:49.713741Z',
       action: DatabaseOperation.INSERT,
       actorName: 'QWER Doe',
