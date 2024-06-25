@@ -173,19 +173,31 @@ const HomePageSettings = () => {
                     })}
                   </CardGroup>
 
-                  <Alert type="info" slim className="margin-bottom-4">
-                    {homepageSettingsT('emptySettings')}
-                  </Alert>
+                  {values.viewCustomization.length === 0 && (
+                    <Alert type="info" slim>
+                      {homepageSettingsT('emptySettings')}
+                    </Alert>
+                  )}
+
+                  {values.viewCustomization.length ===
+                    Object.keys(ViewCustomizationType).length && (
+                    <Alert type="info" slim>
+                      {homepageSettingsT('allSettings')}
+                    </Alert>
+                  )}
 
                   <Button
                     type="submit"
                     onClick={() => setErrors({})}
-                    className="margin-bottom-4"
+                    className="margin-top-4"
                   >
                     {miscellaneousT('next')}
                   </Button>
 
-                  <div>
+                  <div
+                    style={{ width: 'fit-content' }}
+                    className="margin-top-4"
+                  >
                     <UswdsReactLink
                       to="/"
                       className="display-flex flex-align-center"

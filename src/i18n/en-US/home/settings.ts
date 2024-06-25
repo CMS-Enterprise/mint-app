@@ -38,7 +38,12 @@ const homepageSettings = {
   selectSolutions: 'Select solutions',
   emptySettings:
     'You don’t have any sections selected. Are you sure you want to proceed?',
-  back: 'Don’t customize and return to homepage'
+  emptySettingsTwo:
+    'You don’t have any sections selected. Go back to the previous step to select sections.',
+  allSettings:
+    'Are you sure you want every section? Your homepage will be really long.',
+  back: 'Don’t customize and return to homepage',
+  submit: 'Save customizations'
 };
 
 export default homepageSettings;
