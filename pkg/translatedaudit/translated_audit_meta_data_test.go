@@ -1,7 +1,6 @@
 package translatedaudit
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -61,6 +60,8 @@ func (suite *TAuditSuite) TestOperationalSolutionMetaDataGet() {
 	mustFinish := time.Now().UTC().Round(time.Microsecond)
 	mustStart := mustFinish.Add(-24 * time.Hour)
 	solStatus := models.OpSAtRisk
+	// just provide the translated value here instead of trying to translate it for this test
+	solStatusTranslated := "At risk"
 	solOtherHeader := models.StringPointer("hooray! It's the other header!")
 	sol := suite.createOperationalSolution(need.ID, solName, func(os *models.OperationalSolution) {
 		os.MustStartDts = &mustStart
@@ -93,7 +94,7 @@ func (suite *TAuditSuite) TestOperationalSolutionMetaDataGet() {
 	if suite.NotNil(metaData.SolutionMustStart) {
 		suite.EqualValues(mustStart, metaData.SolutionMustStart.UTC())
 	}
-	suite.EqualValues(solStatus, metaData.SolutionStatus)
+	suite.EqualValues(solStatusTranslated, metaData.SolutionStatus)
 	suite.EqualValues(solIsOther, metaData.SolutionIsOther)
 	suite.EqualValues(solOtherHeader, metaData.SolutionOtherHeader)
 
@@ -211,6 +212,9 @@ func (suite *TAuditSuite) TestDocumentSolutionLinkMetaDataGet() {
 	docName := "hooray! a document"
 
 	document := suite.createPlanDocument(plan.ID, docName)
+	// for simplicity, just write the translation here instead of trying to translate it
+	visibilityTranslated := "All"
+	documentTypeTranslated := "Other"
 
 	link := suite.createDocumentSolutionLink(document.ID, sol.ID)
 
@@ -255,10 +259,10 @@ func (suite *TAuditSuite) TestDocumentSolutionLinkMetaDataGet() {
 		suite.EqualValues(document.FileName, *metaData.DocumentName)
 	}
 	if suite.NotNil(metaData.DocumentType) {
-		suite.EqualValues(document.DocumentType, *metaData.DocumentType)
+		suite.EqualValues(documentTypeTranslated, *metaData.DocumentType)
 	}
 	if suite.NotNil(metaData.DocumentVisibility) {
-		suite.EqualValues(fmt.Sprint(document.Restricted), *metaData.DocumentVisibility)
+		suite.EqualValues(visibilityTranslated, *metaData.DocumentVisibility)
 	}
 
 	tableName := "document_solution_link"

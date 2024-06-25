@@ -190,11 +190,11 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	}
 
 	// get the document
-	document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentUUID)
-	if err != nil {
+	document, docErr := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentUUID)
+	if docErr != nil {
 		//EXPECT THERE TO BE NULL results, don't treat this as an error
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", err)
+		if !errors.Is(docErr, sql.ErrNoRows) {
+			return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", docErr)
 		}
 	}
 
@@ -317,10 +317,10 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 			return nil, nil, fmt.Errorf("the %s field, wasn't present on the audit change, and the data is deleted, and not queryable", userIDField)
 		}
 
-		collab, err := store.PlanCollaboratorGetByID(primaryKey)
-		if err != nil {
-			if !errors.Is(err, sql.ErrNoRows) {
-				return nil, nil, err
+		collab, collabErr := store.PlanCollaboratorGetByID(primaryKey)
+		if collabErr != nil {
+			if !errors.Is(collabErr, sql.ErrNoRows) {
+				return nil, nil, collabErr
 			}
 		}
 		if collab != nil {
@@ -369,11 +369,12 @@ func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, document
 			return nil, nil, fmt.Errorf("the %s field, wasn't present on the audit change, and the data is deleted, and not queryable", fileNameField)
 		}
 		logger := appcontext.ZLogger(ctx)
-		document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentID)
-		if err != nil {
-			if err.Error() != "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
+		document, docErr := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentID)
+		if docErr != nil {
+			if !errors.Is(docErr, sql.ErrNoRows) {
+				//EXPECT THERE TO BE NULL results, don't treat this as an error
 
-				return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", err)
+				return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", docErr)
 			}
 		}
 
