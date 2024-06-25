@@ -29,6 +29,10 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
 
+export type HomepageSettingsLocationType = {
+  homepageSettings: HomepageSettingsFormType;
+};
+
 type HomepageSettingsFormType = {
   viewCustomization: GetHomepageSettingsQuery['userViewCustomization']['viewCustomization'];
 };
@@ -40,9 +44,7 @@ const HomePageSettings = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const settingsState = location.state as {
-    homepageSettings: HomepageSettingsFormType;
-  };
+  const settingsState = location.state as HomepageSettingsLocationType;
 
   const formikRef = useRef<FormikProps<HomepageSettingsFormType>>(null);
 
@@ -66,7 +68,7 @@ const HomePageSettings = () => {
 
   const initialValues: HomepageSettingsFormType = {
     viewCustomization:
-      settingsState.homepageSettings.viewCustomization ||
+      settingsState?.homepageSettings?.viewCustomization ||
       data?.userViewCustomization.viewCustomization ||
       []
   };

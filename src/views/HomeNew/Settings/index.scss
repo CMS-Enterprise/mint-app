@@ -3,31 +3,43 @@
 .settings {
     &__card {
         .usa-card__container {
-            padding: .75rem !important;
-            border-radius: .25rem !important;
-            border: 2px solid color('base-light') !important;            
+            padding: .75rem;
+            border-radius: .25rem;
+            border: 2px solid color('base-light');            
         }
         
         .usa-checkbox__label {
-            margin-top: 0 !important;
+            margin-top: 0;
         }
 
         .usa-checkbox {
-            padding: 0 !important;
+            padding: 0;
         }
 
         .usa-checkbox__label {
-            font-weight: bold !important;
+            font-weight: bold;
         }
     }
 
     &__card-selected {
         .usa-card__container {
             background: rgba(0, 94, 162, 0.1);
-            border: 2px solid color('primary') !important;     
+            border: 2px solid color('primary');     
         }
         .usa-checkbox {
             background: transparent;
+        }
+    }
+
+    &__icon {
+        // padding: 2rem;
+        border-radius: .25rem;
+        border: 2px solid color('primary');
+        color: color('primary');
+
+        &__disabled {
+            color: color('base-light');
+            border: 2px solid color('base-light');
         }
     }
    

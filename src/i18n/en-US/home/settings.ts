@@ -1,9 +1,13 @@
 const homepageSettings = {
   heading: 'Homepage Settings',
   stepOne: '(Step 1 of 2)',
+  stepTwo: '(Step 2 of 2)',
   description:
     'Display the content that’s most meaningful to your role. You can update this at any time.',
+  descriptionTwo:
+    'Arrange the content however you wish. You can update this at any time.',
   selection: 'Select which information to display on your homepage.',
+  selectionTwo: 'Set the display order for your homepage.',
   settings: {
     MY_MODEL_PLANS: {
       heading: 'My Model Plans',
