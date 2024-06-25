@@ -50,6 +50,9 @@ const HomePageSettings = () => {
 
   const { data, loading, error } = useGetHomepageSettingsQuery();
 
+  const possibleOperationalSolutions =
+    data?.userViewCustomization.possibleOperationalSolutions || [];
+
   const handleSettingsSubmit = () => {
     history.push({
       pathname: '/homepage-settings/order',
@@ -157,22 +160,48 @@ const HomePageSettings = () => {
                             </p>
 
                             {settionOption ===
-                              ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION && (
-                              <UswdsReactLink
-                                to={{
-                                  pathname: '/homepage-settings/solutions',
-                                  state: {
-                                    homepageSettings: formikRef.current
-                                      ?.values as any
-                                  }
-                                }}
-                                className="padding-left-4 text-bold display-flex flex-align-center"
-                              >
-                                {homepageSettingsT('selectSolutions')}
+                              ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
+                              possibleOperationalSolutions.length === 0 && (
+                                <UswdsReactLink
+                                  to={{
+                                    pathname: '/homepage-settings/solutions',
+                                    state: {
+                                      homepageSettings: formikRef.current
+                                        ?.values as any
+                                    }
+                                  }}
+                                  className="padding-left-4 text-bold display-flex flex-align-center"
+                                >
+                                  {homepageSettingsT('selectSolutions')}
 
-                                <Icon.ArrowForward className="margin-left-1" />
-                              </UswdsReactLink>
-                            )}
+                                  <Icon.ArrowForward className="margin-left-1" />
+                                </UswdsReactLink>
+                              )}
+
+                            {settionOption ===
+                              ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
+                              possibleOperationalSolutions.length > 0 && (
+                                <div className="display-flex padding-left-4 padding-right-2">
+                                  <p className="text-bold margin-0 margin-right-105">
+                                    {possibleOperationalSolutions.join(', ')}
+                                  </p>
+                                  <span className="margin-right-105">|</span>
+                                  <UswdsReactLink
+                                    to={{
+                                      pathname: '/homepage-settings/solutions',
+                                      state: {
+                                        homepageSettings: formikRef.current
+                                          ?.values as any
+                                      }
+                                    }}
+                                    className="text-bold display-flex flex-align-center settings__update"
+                                  >
+                                    {homepageSettingsT('updateSolutions')}
+
+                                    <Icon.ArrowForward className="margin-left-1" />
+                                  </UswdsReactLink>
+                                </div>
+                              )}
                           </Card>
                         </Grid>
                       );

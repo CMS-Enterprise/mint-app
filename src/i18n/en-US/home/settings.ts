@@ -36,6 +36,7 @@ const homepageSettings = {
     }
   },
   selectSolutions: 'Select solutions',
+  updateSolutions: 'Update solutions',
   emptySettings:
     'You don’t have any sections selected. Are you sure you want to proceed?',
   emptySettingsTwo:

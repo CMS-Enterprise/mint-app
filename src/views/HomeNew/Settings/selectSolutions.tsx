@@ -23,6 +23,7 @@ import {
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import MultiSelect from 'components/shared/MultiSelect';
 import { treatAsOtherSolutions } from 'views/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
@@ -158,67 +159,81 @@ const SelectSolutionSettings = () => {
             {homepageSettingsT('solutionDescription')}
           </p>
 
-          <Grid desktop={{ col: 6 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
-            <Formik
-              initialValues={initialValues}
-              onSubmit={() => {
-                handleFormSubmit();
-              }}
-              enableReinitialize
-              innerRef={formikRef}
+          {loading || solutionLoading ? (
+            <div className="margin-top-8">
+              <PageLoading />
+            </div>
+          ) : (
+            <Grid
+              desktop={{ col: 6 }}
+              tablet={{ col: 12 }}
+              mobile={{ col: 12 }}
             >
-              {(formikProps: FormikProps<SettingsFormType>) => {
-                const { handleSubmit, setFieldValue } = formikProps;
+              <Formik
+                initialValues={initialValues}
+                onSubmit={() => {
+                  handleFormSubmit();
+                }}
+                enableReinitialize
+                innerRef={formikRef}
+              >
+                {(formikProps: FormikProps<SettingsFormType>) => {
+                  const { handleSubmit, setFieldValue } = formikProps;
 
-                return (
-                  <>
-                    <Form
-                      data-testid="it-solutions-add-solution"
-                      onSubmit={e => {
-                        handleSubmit(e);
-                      }}
-                    >
-                      <Fieldset
-                        disabled={!!error || loading || solutionLoading}
+                  return (
+                    <>
+                      <Form
+                        data-testid="it-solutions-add-solution"
+                        onSubmit={e => {
+                          handleSubmit(e);
+                        }}
                       >
-                        <Label htmlFor="possible-operational-solutions">
-                          {homepageSettingsT('operationalSolutions')}
-                        </Label>
+                        <Fieldset
+                          disabled={!!error || loading || solutionLoading}
+                        >
+                          <Label htmlFor="possible-operational-solutions">
+                            {homepageSettingsT('operationalSolutions')}
+                          </Label>
 
-                        <p className="text-base margin-y-1 line-height-body-4">
-                          {homepageSettingsT('startTyping')}
-                        </p>
+                          <p className="text-base margin-y-1 line-height-body-4">
+                            {homepageSettingsT('startTyping')}
+                          </p>
 
-                        <Field
-                          as={MultiSelect}
-                          id="possible-operational-solutions"
-                          ariaLabel={homepageSettingsT('operationalSolutions')}
-                          name="possibleOperationalSolutions"
-                          options={solutionOptions}
-                          selectedLabel={homepageSettingsT('multiselectLabel')}
-                          onChange={(value: string[] | []) => {
-                            setFieldValue(
-                              'possibleOperationalSolutions',
-                              value
-                            );
-                          }}
-                          initialValues={
-                            initialValues.possibleOperationalSolutions
-                          }
-                        />
+                          <Field
+                            as={MultiSelect}
+                            id="possible-operational-solutions"
+                            ariaLabel={homepageSettingsT(
+                              'operationalSolutions'
+                            )}
+                            name="possibleOperationalSolutions"
+                            options={solutionOptions}
+                            selectedLabel={homepageSettingsT(
+                              'multiselectLabel'
+                            )}
+                            onChange={(value: string[] | []) => {
+                              setFieldValue(
+                                'possibleOperationalSolutions',
+                                value
+                              );
+                            }}
+                            initialValues={
+                              initialValues.possibleOperationalSolutions
+                            }
+                          />
 
-                        <div className="margin-y-4">
-                          <Button type="submit">
-                            {homepageSettingsT('save')}
-                          </Button>
-                        </div>
-                      </Fieldset>
-                    </Form>
-                  </>
-                );
-              }}
-            </Formik>
-          </Grid>
+                          <div className="margin-y-4">
+                            <Button type="submit">
+                              {homepageSettingsT('save')}
+                            </Button>
+                          </div>
+                        </Fieldset>
+                      </Form>
+                    </>
+                  );
+                }}
+              </Formik>
+            </Grid>
+          )}
 
           <div style={{ width: 'fit-content' }}>
             <UswdsReactLink
