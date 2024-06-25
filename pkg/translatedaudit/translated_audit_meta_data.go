@@ -365,9 +365,11 @@ func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, document
 
 		}
 	} else {
-		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-			return nil, nil, fmt.Errorf("the %s field, wasn't present on the audit change, and the data is deleted, and not queryable", fileNameField)
-		}
+
+		// If the data isn't present, don't error, just have document name be nil
+		// if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+		// 	return nil, nil, fmt.Errorf("the %s field, wasn't present on the audit change, and the data is deleted, and not queryable", fileNameField)
+		// }
 		logger := appcontext.ZLogger(ctx)
 		document, docErr := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentID)
 		if docErr != nil {
@@ -378,10 +380,10 @@ func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, document
 			}
 		}
 
-		if document == nil {
-			return nil, nil, fmt.Errorf("document is not present in the database, but expected for this meta data")
+		if document != nil {
+			fileName = document.FileName
+			// return nil, nil, fmt.Errorf("document is not present in the database, but expected for this meta data")
 		}
-		fileName = document.FileName
 
 	}
 

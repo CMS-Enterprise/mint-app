@@ -642,26 +642,26 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 		}
 	})
 	suite.Run("Document meta data gets data from db if not in change set", func() {
-		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, emptyChanges, models.DBOpInsert)
+		docMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, emptyChanges, models.DBOpInsert)
 		suite.NoError(err)
 		if suite.NotNil(metaDataType) {
 			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
 		}
 
-		if suite.NotNil(collabMeta) {
-			suite.EqualValues("fileName", collabMeta.Relation)
-			if suite.NotNil(collabMeta.RelationContent) {
-				suite.EqualValues(docNameDB, *collabMeta.RelationContent)
+		if suite.NotNil(docMeta) {
+			suite.EqualValues("fileName", docMeta.Relation)
+			if suite.NotNil(docMeta.RelationContent) {
+				suite.EqualValues(docNameDB, *docMeta.RelationContent)
 			}
 		}
 	})
 
 	suite.Run("Document meta data fails when field isn't present in change set for DELETE", func() {
-		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, emptyChanges, models.DBOpDelete)
+		docMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, emptyChanges, models.DBOpDelete)
 		suite.Error(err)
 		suite.Nil(metaDataType)
 
-		suite.Nil(collabMeta)
+		suite.Nil(docMeta)
 	})
 	suite.Run("Document meta data fails when field isn't present on the correct / NEW / OLD value", func() {
 		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, oldChanges, models.DBOpInsert)
