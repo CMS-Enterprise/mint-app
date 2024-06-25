@@ -15,6 +15,7 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
+  OperationalSolutionKey,
   useGetHomepageSettingsQuery,
   useGetPossibleOperationalSolutionsQuery,
   useUpdateHomepageSettingsMutation
@@ -24,6 +25,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Alert from 'components/shared/Alert';
 import MultiSelect from 'components/shared/MultiSelect';
+import { treatAsOtherSolutions } from 'views/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 
 import { HomepageSettingsLocationType } from '.';
 
@@ -55,12 +57,18 @@ const SelectSolutionSettings = () => {
   const possibleOperationalSolutions =
     solutionData?.possibleOperationalSolutions || [];
 
-  const solutionOptions = [...possibleOperationalSolutions].map(solution => {
-    return {
-      label: solution.name,
-      value: solution.key
-    };
-  });
+  const solutionOptions = [...possibleOperationalSolutions]
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .filter(
+      solution =>
+        !treatAsOtherSolutions.includes(solution.key as OperationalSolutionKey)
+    )
+    .map(solution => {
+      return {
+        label: solution.name,
+        value: solution.key
+      };
+    });
 
   const [mutate] = useUpdateHomepageSettingsMutation();
 
@@ -76,13 +84,9 @@ const SelectSolutionSettings = () => {
 
   useEffect(() => {
     if (!loading && !selectedSettings) {
-      setSelectedSettings(
-        data?.userViewCustomization || {
-          viewCustomization: []
-        }
-      );
+      setSelectedSettings(location.state?.homepageSettings);
     }
-  }, [data?.userViewCustomization, loading, selectedSettings]);
+  }, [loading, selectedSettings, location.state?.homepageSettings]);
 
   // Passes the current state to the previous page if navigating back
   useEffect(() => {
@@ -217,7 +221,10 @@ const SelectSolutionSettings = () => {
           </Grid>
 
           <div style={{ width: 'fit-content' }}>
-            <UswdsReactLink to="/" className="display-flex flex-align-center">
+            <UswdsReactLink
+              to="/homepage-settings"
+              className="display-flex flex-align-center"
+            >
               <Icon.ArrowBack className="margin-right-2" />
               {homepageSettingsT('dontSelect')}
             </UswdsReactLink>

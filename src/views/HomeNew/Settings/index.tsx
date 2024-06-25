@@ -157,9 +157,15 @@ const HomePageSettings = () => {
                             </p>
 
                             {settionOption ===
-                              'MODELS_BY_OPERATIONAL_SOLUTION' && (
+                              ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION && (
                               <UswdsReactLink
-                                to="/homepage-settings/solutions"
+                                to={{
+                                  pathname: '/homepage-settings/solutions',
+                                  state: {
+                                    homepageSettings: formikRef.current
+                                      ?.values as any
+                                  }
+                                }}
                                 className="padding-left-4 text-bold display-flex flex-align-center"
                               >
                                 {homepageSettingsT('selectSolutions')}

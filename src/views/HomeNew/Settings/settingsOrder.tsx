@@ -86,11 +86,9 @@ const SettingsOrder = () => {
 
   useEffect(() => {
     if (!loading && !selectedSettings) {
-      setSelectedSettings(
-        data?.userViewCustomization || {
-          viewCustomization: []
-        }
-      );
+      setSelectedSettings({
+        viewCustomization: data?.userViewCustomization.viewCustomization || []
+      });
     }
   }, [data?.userViewCustomization, loading, selectedSettings]);
 

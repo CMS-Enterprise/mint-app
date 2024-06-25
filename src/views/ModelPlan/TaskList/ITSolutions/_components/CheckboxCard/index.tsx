@@ -40,6 +40,14 @@ type CheckboxCardProps = {
   index: number;
 };
 
+export const treatAsOtherSolutions = [
+  OperationalSolutionKey.CONTRACTOR,
+  OperationalSolutionKey.CROSS_MODEL_CONTRACT,
+  OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
+  OperationalSolutionKey.INTERNAL_STAFF,
+  OperationalSolutionKey.OTHER_NEW_PROCESS
+];
+
 const CheckboxCard = ({
   className,
   disabled,
@@ -87,14 +95,6 @@ const CheckboxCard = ({
         location.search ? '&' : '?'
       }solution=${solutionMap?.route || ''}&section=about`
     : `${initLocation}${location.search}`;
-
-  const treatAsOtherSolutions = [
-    OperationalSolutionKey.CONTRACTOR,
-    OperationalSolutionKey.CROSS_MODEL_CONTRACT,
-    OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
-    OperationalSolutionKey.INTERNAL_STAFF,
-    OperationalSolutionKey.OTHER_NEW_PROCESS
-  ];
 
   const isDefaultSolutionOptions =
     (solution.name !== null && solution.pocEmail === null) ||
