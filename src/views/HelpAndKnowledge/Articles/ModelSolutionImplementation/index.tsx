@@ -265,6 +265,11 @@ export const ModelSolutionImplementation = () => {
 
       <RelatedArticles
         currentArticle="Model implementation and solution implementation"
+        specificArticleNames={[
+          'Phases Involved',
+          'Model design and solution design',
+          'Utilizing available operational solutions'
+        ]}
         type="it-implementation"
         viewAllLink
       />

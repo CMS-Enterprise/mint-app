@@ -324,7 +324,12 @@ export const ModelSolutionDesign = () => {
       </MainContent>
 
       <RelatedArticles
-        currentArticle="Model implementation and solution design"
+        currentArticle="Model design and solution design"
+        specificArticleNames={[
+          'Phases Involved',
+          'Model implementation and solution implementation',
+          'Utilizing available operational solutions'
+        ]}
         type="it-implementation"
         viewAllLink
       />
