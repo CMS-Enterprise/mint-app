@@ -5,8 +5,7 @@
         .usa-card__container {
             padding: .75rem !important;
             border-radius: .25rem !important;
-            border: 2px solid color('base-light') !important;
-            
+            border: 2px solid color('base-light') !important;            
         }
         
         .usa-checkbox__label {
@@ -19,6 +18,16 @@
 
         .usa-checkbox__label {
             font-weight: bold !important;
+        }
+    }
+
+    &__card-selected {
+        .usa-card__container {
+            background: rgba(0, 94, 162, 0.1);
+            border: 2px solid color('primary') !important;     
+        }
+        .usa-checkbox {
+            background: transparent;
         }
     }
    

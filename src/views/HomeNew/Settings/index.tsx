@@ -12,6 +12,7 @@ import {
   GridContainer,
   Icon
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
@@ -36,14 +37,25 @@ const HomePageSettings = () => {
   const { t: homepageSettingsT } = useTranslation('homepageSettings');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
+  const history = useHistory();
+  const location = useLocation();
+
+  const settingsState = location.state as {
+    homepageSettings: HomepageSettingsFormType;
+  };
+
   const formikRef = useRef<FormikProps<HomepageSettingsFormType>>(null);
 
   const { data, loading, error } = useGetHomepageSettingsQuery();
 
-  console.log(data);
-
-  const history = useHistory();
-  const location = useLocation();
+  const handleSettingsSubmit = () => {
+    history.push({
+      pathname: '/homepage-settings/order',
+      state: {
+        homepageSettings: formikRef.current?.values
+      }
+    });
+  };
 
   const settingOptions: Record<
     ViewCustomizationType,
@@ -53,7 +65,10 @@ const HomePageSettings = () => {
   });
 
   const initialValues: HomepageSettingsFormType = {
-    viewCustomization: data?.userViewCustomization.viewCustomization || []
+    viewCustomization:
+      settingsState.homepageSettings.viewCustomization ||
+      data?.userViewCustomization.viewCustomization ||
+      []
   };
 
   if ((!loading && error) || (!loading && !data?.userViewCustomization)) {
@@ -89,22 +104,20 @@ const HomePageSettings = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={() => {
-              // handleFormSubmit('next');
+              handleSettingsSubmit();
             }}
             enableReinitialize
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<HomepageSettingsFormType>) => {
-              const {
-                errors,
-                handleSubmit,
-                setFieldValue,
-                setErrors,
-                values
-              } = formikProps;
+              const { handleSubmit, setErrors, values } = formikProps;
 
               return (
-                <div>
+                <Form
+                  onSubmit={e => {
+                    handleSubmit(e);
+                  }}
+                >
                   <CardGroup>
                     {getKeys(settingOptions).map(settionOption => {
                       return (
@@ -112,8 +125,18 @@ const HomePageSettings = () => {
                           desktop={{ col: 6 }}
                           tablet={{ col: 12 }}
                           mobile={{ col: 12 }}
+                          key={settionOption}
                         >
-                          <Card className="settings__card" key={settionOption}>
+                          <Card
+                            className={classNames(
+                              {
+                                'settings__card-selected': values.viewCustomization.includes(
+                                  settionOption
+                                )
+                              },
+                              'settings__card'
+                            )}
+                          >
                             <Field
                               as={CheckboxField}
                               disabled={loading}
@@ -169,7 +192,7 @@ const HomePageSettings = () => {
                       {homepageSettingsT('back')}
                     </UswdsReactLink>
                   </div>
-                </div>
+                </Form>
               );
             }}
           </Formik>

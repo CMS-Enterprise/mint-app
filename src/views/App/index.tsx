@@ -27,6 +27,7 @@ import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import GetAccess from 'views/HelpAndKnowledge/Articles/GetAccess';
 import Home from 'views/Home';
 import HomePageSettings from 'views/HomeNew/Settings';
+import SettingsOrder from 'views/HomeNew/Settings/settingsOrder';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import ModelInfoWrapper from 'views/ModelInfoWrapper';
@@ -102,11 +103,19 @@ const AppRoutes = () => {
       <Route path="/" exact component={Home} />
 
       {flags.customHomepageEnabled && (
-        <SecureRoute
-          exact
-          path="/homepage-settings"
-          component={HomePageSettings}
-        />
+        <>
+          <SecureRoute
+            exact
+            path="/homepage-settings"
+            component={HomePageSettings}
+          />
+
+          <SecureRoute
+            exact
+            path="/homepage-settings/order"
+            component={SettingsOrder}
+          />
+        </>
       )}
 
       <Redirect exact from="/login" to="/signin" />
