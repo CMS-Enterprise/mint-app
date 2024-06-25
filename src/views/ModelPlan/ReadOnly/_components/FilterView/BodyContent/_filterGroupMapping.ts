@@ -38,5 +38,10 @@ export const filteredGroupSolutions: Record<
   ],
   iddoc: [OperationalSolutionKey.INNOVATION, OperationalSolutionKey.ACO_OS],
   mdm: [OperationalSolutionKey.MDM],
-  pbg: [OperationalSolutionKey.IPC]
+  pbg: [
+    OperationalSolutionKey.IPC,
+    OperationalSolutionKey.SHARED_SYSTEMS,
+    OperationalSolutionKey.EFT,
+    OperationalSolutionKey.CONTRACTOR
+  ]
 };
