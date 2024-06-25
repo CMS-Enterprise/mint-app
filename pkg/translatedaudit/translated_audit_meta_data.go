@@ -71,6 +71,9 @@ func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, o
 		return nil, nil, fmt.Errorf("unable to get operational need for operational solution audit metadata. err %w", err)
 	}
 
+	const statusKey = "status"
+	translatedStatus := getTranslationMapAndTranslateSingleValue("operational_solution", statusKey, fmt.Sprint(opSolutionWithSubtasks.Status))
+
 	metaNeed := models.NewTranslatedAuditMetaOperationalSolution(
 		"operational_solution",
 		0,
@@ -80,7 +83,7 @@ func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, o
 		opSolutionWithSubtasks.NumberOfSubtasks,
 		opNeed.GetName(),
 		opNeed.GetIsOther(),
-		opSolutionWithSubtasks.Status,
+		translatedStatus,
 		opSolutionWithSubtasks.MustStartDts,
 		opSolutionWithSubtasks.MustFinishDts,
 	)
@@ -162,7 +165,6 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 
 	documentIDChange, fieldPresent := changesFields["document_id"]
 	if !fieldPresent {
-		//Changes: (Testing) verify this, we could also fetch the document solution link if it isn't a delete, but shouldn't need to
 		return nil, nil, fmt.Errorf("there is no document_ID present in the changes object, this is needed for the document solution link translated audit")
 	}
 	var err error
@@ -188,15 +190,13 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	}
 
 	// get the document
-	document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentUUID)
-	if err != nil {
-		if err.Error() != "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
-			//Changes: (Meta) Handle if the document doesn't exist. If that is the case (EG no rows in result set)
-			return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", err)
+	document, docErr := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentUUID)
+	if docErr != nil {
+		//EXPECT THERE TO BE NULL results, don't treat this as an error
+		if !errors.Is(docErr, sql.ErrNoRows) {
+			return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", docErr)
 		}
 	}
-
-	// 	//Changes: (Meta) should we check for the error differently? see if it is a wrapped error?
 
 	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionID)
 	if err != nil {
@@ -219,11 +219,16 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 		documentUUID,
 	)
 	if document != nil {
-		// Changes: (Meta) all these document fields will also need to be translated
-		meta.SetOptionalDocumentFields(document.FileName, string(document.DocumentType), document.OtherTypeDescription, document.OptionalNotes, document.URL, fmt.Sprint(document.Restricted), document.Restricted)
-	}
 
-	//Changes: (Meta) We need to get other document information, and it needs to be translated.
+		// Future Enhancement: This could be more efficient by sharing the translation, but currently leaving like this for simplicity
+		const restrictedKey = "restricted"
+		translatedDocRestricted := getTranslationMapAndTranslateSingleValue("plan_document", restrictedKey, fmt.Sprint(document.Restricted))
+
+		const typeKey = "document_type"
+		translatedDocType := getTranslationMapAndTranslateSingleValue("plan_document", typeKey, fmt.Sprint(document.DocumentType))
+
+		meta.SetOptionalDocumentFields(document.FileName, translatedDocType, document.OtherTypeDescription, document.OptionalNotes, document.URL, translatedDocRestricted, document.Restricted)
+	}
 
 	metaType := models.TAMetaDocumentSolutionLink
 
@@ -312,10 +317,10 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 			return nil, nil, fmt.Errorf("the %s field, wasn't present on the audit change, and the data is deleted, and not queryable", userIDField)
 		}
 
-		collab, err := store.PlanCollaboratorGetByID(primaryKey)
-		if err != nil {
-			if !errors.Is(err, sql.ErrNoRows) {
-				return nil, nil, err
+		collab, collabErr := store.PlanCollaboratorGetByID(primaryKey)
+		if collabErr != nil {
+			if !errors.Is(collabErr, sql.ErrNoRows) {
+				return nil, nil, collabErr
 			}
 		}
 		if collab != nil {
@@ -343,43 +348,41 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, documentID uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 	// Changes: (Meta) is file_name the only field we need here? What if it is a link? Should we fetch from the db instead? NOTE, we can't fetch that when the document is deleted however
 	const fileNameField = "file_name"
-	var fileName string
+	var fileName *string
 	fileNameChange, fieldPresent := changesFields[fileNameField]
 	if fieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
 			if fileNameChange.Old == nil {
 				return nil, nil, fmt.Errorf("%s was nil in the change field Old. A value was expected", fileNameField)
 			}
-			fileName = fmt.Sprint(fileNameChange.Old)
+			fileNameOld := fmt.Sprint(fileNameChange.Old)
+			fileName = &fileNameOld
 
 		} else {
 			if fileNameChange.New == nil {
 				return nil, nil, fmt.Errorf("%s was nil in the change field New. A value was expected", fileNameField)
 			}
-			fileName = fmt.Sprint(fileNameChange.New)
-
+			fileNameNew := fmt.Sprint(fileNameChange.New)
+			fileName = &fileNameNew
 		}
 	} else {
-		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-			return nil, nil, fmt.Errorf("the %s field, wasn't present on the audit change, and the data is deleted, and not queryable", fileNameField)
-		}
-		logger := appcontext.ZLogger(ctx)
-		document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentID)
-		if err != nil {
-			if err.Error() != "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
 
-				return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", err)
+		logger := appcontext.ZLogger(ctx)
+		document, docErr := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentID)
+		if docErr != nil {
+			if !errors.Is(docErr, sql.ErrNoRows) {
+				//EXPECT THERE TO BE NULL results, don't treat this as an error
+
+				return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", docErr)
 			}
 		}
 
-		if document == nil {
-			return nil, nil, fmt.Errorf("document is not present in the database, but expected for this meta data")
+		if document != nil {
+			fileName = &document.FileName
 		}
-		fileName = document.FileName
 
 	}
-
-	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "fileName", &fileName)
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "fileName", fileName)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }

@@ -3540,9 +3540,11 @@ export type TranslatedAuditMetaDocumentSolutionLink = {
   documentNote?: Maybe<Scalars['String']['output']>;
   documentOtherType?: Maybe<Scalars['String']['output']>;
   documentRestricted?: Maybe<Scalars['Boolean']['output']>;
+  /** Document type is the translated value of the document type enum */
   documentType?: Maybe<Scalars['String']['output']>;
   /** Document URL will only be visible if the user is a collaborator, or has assessment permission */
   documentURL?: Maybe<Scalars['String']['output']>;
+  /** Document Visibility is the translated value of the restricted bool for a document */
   documentVisibility?: Maybe<Scalars['String']['output']>;
   needIsOther: Scalars['Boolean']['output'];
   needName: Scalars['String']['output'];
@@ -3582,6 +3584,7 @@ export type TranslatedAuditMetaOperationalSolution = {
   solutionMustStart?: Maybe<Scalars['Time']['output']>;
   solutionName: Scalars['String']['output'];
   solutionOtherHeader?: Maybe<Scalars['String']['output']>;
+  /** SolutionStatus is the translated value for the type of solution */
   solutionStatus: Scalars['String']['output'];
   tableName: Scalars['String']['output'];
   version: Scalars['Int']['output'];

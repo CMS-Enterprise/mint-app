@@ -52,6 +52,9 @@ type TranslatedAuditMetaOperationalSolution {
     numberOfSubtasks: Int!
     needName: String!
     needIsOther: Boolean!
+    """
+    SolutionStatus is the translated value for the type of solution
+    """
     solutionStatus: String!
     solutionMustStart: Time
     solutionMustFinish: Time
@@ -93,6 +96,9 @@ type TranslatedAuditMetaDocumentSolutionLink {
     Document Name will be present if the document is still present and not deleted
     """
     documentName: String
+    """
+    Document type is the translated value of the document type enum
+    """
     documentType: String
     documentOtherType: String
     documentNote: String
@@ -100,6 +106,9 @@ type TranslatedAuditMetaDocumentSolutionLink {
     Document URL will only be visible if the user is a collaborator, or has assessment permission
     """
     documentURL: String
+    """
+    Document Visibility is the translated value of the restricted bool for a document
+    """
     documentVisibility: String
     documentRestricted: Boolean
 

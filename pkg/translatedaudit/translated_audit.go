@@ -292,7 +292,6 @@ func translateValue(value interface{}, options map[string]interface{}) interface
 	if value == nil {
 		return nil
 	}
-	// Changes: (Translations) Check if value is nil, don't need to translate that.
 	// Changes: (Translations) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
 	// strSlice, isSlice := value.([]string)
 	str, isString := value.(string)
@@ -311,6 +310,7 @@ func translateValue(value interface{}, options map[string]interface{}) interface
 		return translateValueSingle(str, options)
 	}
 	// Changes: (Translations)  Should we handle the case where we can't translate it more?
+	// Should we also try to use fmt to make the value a string, for example an enum is not able to be translated this way, as it isn't castable to string.
 	return value
 
 }
