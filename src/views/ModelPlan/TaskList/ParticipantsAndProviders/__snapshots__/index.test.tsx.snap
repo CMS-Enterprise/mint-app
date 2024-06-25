@@ -350,6 +350,11 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
                 >
                   Which type of Medicare providers/suppliers?
                 </label>
+                <p
+                  class="text-base margin-0 line-height-body-3"
+                >
+                  Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.
+                </p>
                 <textarea
                   aria-labelledby="label-participants-and-providers-medicare-type hint-participants-and-providers-medicare-type"
                   class="usa-textarea"
