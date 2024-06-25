@@ -5,6 +5,7 @@ import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
+  Button,
   Card,
   CardGroup,
   Grid,
@@ -103,55 +104,75 @@ const HomePageSettings = () => {
               } = formikProps;
 
               return (
-                <CardGroup>
-                  {getKeys(settingOptions).map(settionOption => {
-                    return (
-                      <Grid
-                        desktop={{ col: 6 }}
-                        tablet={{ col: 12 }}
-                        mobile={{ col: 12 }}
-                      >
-                        <Card className="settings__card" key={settionOption}>
-                          <Field
-                            as={CheckboxField}
-                            disabled={loading}
-                            id={settionOption}
-                            name="viewCustomization"
-                            label={settingOptions[settionOption].heading}
-                            value={settionOption}
-                            checked={values.viewCustomization.includes(
-                              settionOption
+                <div>
+                  <CardGroup>
+                    {getKeys(settingOptions).map(settionOption => {
+                      return (
+                        <Grid
+                          desktop={{ col: 6 }}
+                          tablet={{ col: 12 }}
+                          mobile={{ col: 12 }}
+                        >
+                          <Card className="settings__card" key={settionOption}>
+                            <Field
+                              as={CheckboxField}
+                              disabled={loading}
+                              id={settionOption}
+                              name="viewCustomization"
+                              label={settingOptions[settionOption].heading}
+                              value={settionOption}
+                              checked={values.viewCustomization.includes(
+                                settionOption
+                              )}
+                              className="text-bold"
+                            />
+
+                            <p className="padding-left-4 padding-right-2 margin-y-1 font-body-xs">
+                              {settingOptions[settionOption].description}
+                            </p>
+
+                            {settionOption ===
+                              'MODELS_BY_OPERATIONAL_SOLUTION' && (
+                              <UswdsReactLink
+                                to="/"
+                                className="padding-left-4 text-bold display-flex flex-align-center"
+                              >
+                                {homepageSettingsT('selectSolutions')}
+
+                                <Icon.ArrowForward className="margin-left-1" />
+                              </UswdsReactLink>
                             )}
-                            className="text-bold"
-                          />
+                          </Card>
+                        </Grid>
+                      );
+                    })}
+                  </CardGroup>
 
-                          <p className="padding-left-4 padding-right-2 margin-y-1 font-body-xs">
-                            {settingOptions[settionOption].description}
-                          </p>
+                  <Alert type="info" slim className="margin-bottom-4">
+                    {homepageSettingsT('emptySettings')}
+                  </Alert>
 
-                          {settionOption ===
-                            'MODELS_BY_OPERATIONAL_SOLUTION' && (
-                            <UswdsReactLink
-                              to="/"
-                              className="padding-left-4 text-bold display-flex flex-align-center"
-                            >
-                              {homepageSettingsT('selectSolutions')}
+                  <Button
+                    type="submit"
+                    onClick={() => setErrors({})}
+                    className="margin-bottom-4"
+                  >
+                    {miscellaneousT('next')}
+                  </Button>
 
-                              <Icon.ArrowForward className="margin-left-1" />
-                            </UswdsReactLink>
-                          )}
-                        </Card>
-                      </Grid>
-                    );
-                  })}
-                </CardGroup>
+                  <div>
+                    <UswdsReactLink
+                      to="/"
+                      className="display-flex flex-align-center"
+                    >
+                      <Icon.ArrowBack className="margin-right-2" />
+                      {homepageSettingsT('back')}
+                    </UswdsReactLink>
+                  </div>
+                </div>
               );
             }}
           </Formik>
-
-          <Alert type="info" slim>
-            {homepageSettingsT('emptySettings')}
-          </Alert>
         </Grid>
       </GridContainer>
     </MainContent>

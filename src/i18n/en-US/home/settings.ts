@@ -33,7 +33,8 @@ const homepageSettings = {
   },
   selectSolutions: 'Select solutions',
   emptySettings:
-    'You don’t have any sections selected. Are you sure you want to proceed?'
+    'You don’t have any sections selected. Are you sure you want to proceed?',
+  back: 'Don’t customize and return to homepage'
 };
 
 export default homepageSettings;
