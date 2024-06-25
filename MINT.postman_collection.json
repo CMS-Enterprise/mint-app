@@ -137,27 +137,6 @@
 					"response": []
 				},
 				{
-					"name": "Get Model Plans By Operational Solution Key",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query modelPlansByOperationalSolutionKey ($operationalSolutionKey: OperationalSolutionKey!) {\n    modelPlansByOperationalSolutionKey (operationalSolutionKey: $operationalSolutionKey) {\n        operationalSolution {\n            id\n            isCommonSolution\n            operationalNeedID\n            solutionType\n            needed\n            name\n            key\n            nameOther\n            pocName\n            pocEmail\n            mustStartDts\n            mustFinishDts\n            status\n            documents {\n                id\n                modelPlanID\n                fileType\n                bucket\n                fileKey\n                virusScanned\n                virusClean\n                restricted\n                fileName\n                fileSize\n                documentType\n                otherType\n                optionalNotes\n                downloadUrl\n                deletedAt\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            operationalSolutionSubtasks {\n                id\n                solutionID\n                name\n                status\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            createdByUserAccount \n            {\n                commonName\n            }   \n            modifiedByUserAccount\n            {\n                commonName\n            }\n        }\n        \n        modelPlan{\n            id\n            modelName\n            abbreviation\n            archived\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            status\n            isFavorite\n            isCollaborator\n            opSolutionLastModifiedDts\n        }\n    }\n}",
-								"variables": "{\n  \"operationalSolutionKey\": \"MARX\"\n}"
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get All Model Plans CRTDL",
 					"request": {
 						"method": "POST",
@@ -230,6 +209,27 @@
 							"graphql": {
 								"query": "mutation deletePlanFavorite ($modelPlanID: UUID!) {\n    deletePlanFavorite (modelPlanID: $modelPlanID) {\n        id\n        modelPlanID\n        userID\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
 								"variables": "{\n  \"modelPlanID\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Model Plans By Operational Solution Key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query modelPlansByOperationalSolutionKey ($operationalSolutionKey: OperationalSolutionKey!) {\n    modelPlansByOperationalSolutionKey (operationalSolutionKey: $operationalSolutionKey) {\n        operationalSolution {\n            id\n            isCommonSolution\n            operationalNeedID\n            solutionType\n            needed\n            name\n            key\n            nameOther\n            pocName\n            pocEmail\n            mustStartDts\n            mustFinishDts\n            status\n            documents {\n                id\n                modelPlanID\n                fileType\n                bucket\n                fileKey\n                virusScanned\n                virusClean\n                restricted\n                fileName\n                fileSize\n                documentType\n                otherType\n                optionalNotes\n                downloadUrl\n                deletedAt\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            operationalSolutionSubtasks {\n                id\n                solutionID\n                name\n                status\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            createdByUserAccount \n            {\n                commonName\n            }   \n            modifiedByUserAccount\n            {\n                commonName\n            }\n        }\n        \n        modelPlan{\n            id\n            modelName\n            abbreviation\n            archived\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            status\n            isFavorite\n            isCollaborator\n            opSolutionLastModifiedDts\n        }\n    }\n}",
+								"variables": "{\n  \"operationalSolutionKey\": \"MARX\"\n}"
 							}
 						},
 						"url": {
@@ -2359,100 +2359,42 @@
 			"name": "User View Customization",
 			"item": [
 				{
-					"name": "UserViewCustomization",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"let notifications = pm.response.json().data.currentUser.notifications.notifications",
-									"if (notifications.length > 0) {",
-									"    userNotificationID = notifications[0].id",
-									"    pm.collectionVariables.set(\"userNotificationID\", userNotificationID);",
-									"}",
-									"",
-									"",
-									"// for (let i =0; i< notifications.length; i++){",
-									"//     subtaskID = notifications[i].id",
-									"//     pm.collectionVariables.set(\"operationalSolutionSubtaskID\"+i, subtaskID);",
-									"// }"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
+					"name": "Get Customizations",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query userViewCustomization {\n  userId {\n    id\n    userId\n    viewCustomization\n    createdBy\n    createdByUserAccount {\n        commonName\n        email\n    }\n    createdDts\n    modifiedBy\n    modifiedByUserAccount {\n        commonName\n        email\n    }\n    modifiedDts\n  }\n}\n",
+								"query": "query userViewCustomization {\n    userViewCustomization {\n        id\n        userId\n        viewCustomization\n        possibleOperationalSolutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
 								"variables": ""
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "UpdateUserViewCustomization",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"let notifications = pm.response.json().data.currentUser.notifications.notifications",
-									"if (notifications.length > 0) {",
-									"    userNotificationID = notifications[0].id",
-									"    pm.collectionVariables.set(\"userNotificationID\", userNotificationID);",
-									"}",
-									"",
-									"",
-									"// for (let i =0; i< notifications.length; i++){",
-									"//     subtaskID = notifications[i].id",
-									"//     pm.collectionVariables.set(\"operationalSolutionSubtaskID\"+i, subtaskID);",
-									"// }"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
+					"name": "Update Customizations",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query userViewCustomization {\n  userViewCustomization {\n    id\n    userId\n    viewCustomization\n    possibleOperationalSolutions\n    createdBy\n    createdByUserAccount\n    createdDts\n    modifiedBy\n    modifiedByUserAccount\n    modifiedDts\n  }\n}\n",
-								"variables": ""
+								"query": "mutation updateUserViewCustomization($changes: UserViewCustomizationChanges!) {\n    updateUserViewCustomization(changes: $changes) {\n        id\n        userId\n        viewCustomization\n        possibleOperationalSolutions\n        createdBy\n        createdByUserAccount {\n            username\n        }\n        createdDts\n        modifiedBy\n        modifiedByUserAccount {\n            username\n        }\n        modifiedDts\n    }\n}",
+								"variables": "{\n    \"changes\": {\n        \"viewCustomization\": [\"FOLLOWED_MODELS\",\"MY_MODEL_PLANS\"],\n        \"possibleOperationalSolutions\": [\"ACO_OS\"]\n    }\n}"
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8085/api/graph/query",
-							"protocol": "http",
+							"raw": "{{url}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8085",
-							"path": [
-								"api",
-								"graph",
-								"query"
+								"{{url}}"
 							]
 						}
 					},
