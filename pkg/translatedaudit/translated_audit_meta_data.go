@@ -348,28 +348,25 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, documentID uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 	// Changes: (Meta) is file_name the only field we need here? What if it is a link? Should we fetch from the db instead? NOTE, we can't fetch that when the document is deleted however
 	const fileNameField = "file_name"
-	var fileName string
+	var fileName *string
 	fileNameChange, fieldPresent := changesFields[fileNameField]
 	if fieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
 			if fileNameChange.Old == nil {
 				return nil, nil, fmt.Errorf("%s was nil in the change field Old. A value was expected", fileNameField)
 			}
-			fileName = fmt.Sprint(fileNameChange.Old)
+			fileNameOld := fmt.Sprint(fileNameChange.Old)
+			fileName = &fileNameOld
 
 		} else {
 			if fileNameChange.New == nil {
 				return nil, nil, fmt.Errorf("%s was nil in the change field New. A value was expected", fileNameField)
 			}
-			fileName = fmt.Sprint(fileNameChange.New)
-
+			fileNameNew := fmt.Sprint(fileNameChange.New)
+			fileName = &fileNameNew
 		}
 	} else {
 
-		// If the data isn't present, don't error, just have document name be nil
-		// if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-		// 	return nil, nil, fmt.Errorf("the %s field, wasn't present on the audit change, and the data is deleted, and not queryable", fileNameField)
-		// }
 		logger := appcontext.ZLogger(ctx)
 		document, docErr := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentID)
 		if docErr != nil {
@@ -381,13 +378,11 @@ func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, document
 		}
 
 		if document != nil {
-			fileName = document.FileName
-			// return nil, nil, fmt.Errorf("document is not present in the database, but expected for this meta data")
+			fileName = &document.FileName
 		}
 
 	}
-
-	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "fileName", &fileName)
+	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "fileName", fileName)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }

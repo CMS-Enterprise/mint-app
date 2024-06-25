@@ -656,12 +656,14 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 		}
 	})
 
-	suite.Run("Document meta data fails when field isn't present in change set for DELETE", func() {
+	suite.Run("Document meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
 		docMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, emptyChanges, models.DBOpDelete)
-		suite.Error(err)
-		suite.Nil(metaDataType)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
 
-		suite.Nil(docMeta)
+		if suite.NotNil(docMeta) {
+			suite.EqualValues(docNameDB, *docMeta.RelationContent)
+		}
 	})
 	suite.Run("Document meta data fails when field isn't present on the correct / NEW / OLD value", func() {
 		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, oldChanges, models.DBOpInsert)
@@ -669,6 +671,19 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 		suite.Nil(metaDataType)
 
 		suite.Nil(collabMeta)
+	})
+
+	suite.Run("Document meta data doesn't fail when field isn't present in change set for DELETE, but filename is nil", func() {
+		// Delete the document and run tests on empty state
+		suite.deleteDocument(document.ID)
+
+		docMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, emptyChanges, models.DBOpDelete)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(docMeta) {
+			suite.Nil(docMeta.RelationContent)
+		}
 	})
 
 }
