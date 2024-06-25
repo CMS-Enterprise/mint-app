@@ -68,16 +68,16 @@ const ChronicConditionsTimeline = ({
           </ProcessListHeading>
 
           <Trans
-            i18nKey={`solutions.${solution.key}.timeline.items[1].items[0]`}
-          >
-            Contact Velda McGhee, and she’ll send the Employee CCW Access
-            Request form to complete. Once completed, email it with the
-            supervisor’s approval to OEDA{' '}
-            <ExternalLink href="mailto:CCWAccess@cms.hhs.gov">
-              CCWAccess@cms.hhs.gov
-            </ExternalLink>{' '}
-            and Velda.
-          </Trans>
+            t={t}
+            i18nKey={`solutions.${solution.key}.timeline.items.1.description`}
+            components={{
+              email: (
+                <ExternalLink href="mailto:CCWAccess@cms.hhs.go">
+                  {' '}
+                </ExternalLink>
+              )
+            }}
+          />
         </ProcessListItem>
 
         <ProcessListItem
@@ -121,16 +121,16 @@ const ChronicConditionsTimeline = ({
             </ProcessListHeading>
 
             <Trans
-              i18nKey={`solutions.${solution.key}.timeline.items[1].items[0]`}
-            >
-              Contact Velda McGhee, and she’ll send the Employee CCW Access
-              Request form to complete. Once completed, email it with the
-              supervisor’s approval to OEDA{' '}
-              <ExternalLink href="mailto:CCWAccess@cms.hhs.gov">
-                CCWAccess@cms.hhs.gov
-              </ExternalLink>{' '}
-              and Velda.
-            </Trans>
+              i18nKey={`solutions.${solution.key}.timeline.items.1.description`}
+              t={t}
+              components={{
+                email: (
+                  <ExternalLink href="mailto:CCWAccess@cms.hhs.gov">
+                    {' '}
+                  </ExternalLink>
+                )
+              }}
+            />
           </ProcessListItem>
 
           <ProcessListItem

@@ -49,15 +49,12 @@ const OutlookMailboxTimeLine = ({
           </ProcessListHeading>
 
           <Trans
-            i18nKey={`solutions.${solution.key}.timeline.items[0].description`}
-          >
-            From the CMS Connect app on your desktop, search for “
-            <span className="text-bold">
-              Create or manage a resource mailbox
-            </span>
-            ” or “<span className="text-bold">Mailbox request.</span>” You’ll
-            need to provide the following information:
-          </Trans>
+            i18nKey={`solutions.${solution.key}.timeline.items.0.description`}
+            t={t}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
 
           {timelineConfig.items[0].items && (
             <ul className="padding-left-4 margin-top-0 margin-bottom-4">
@@ -83,14 +80,17 @@ const OutlookMailboxTimeLine = ({
             </ul>
           )}
 
-          <Trans i18nKey={`solutions.${solution.key}.timeline.description`}>
-            If you’d rather submit a request by email, please send the above
-            information to{' '}
-            <ExternalLink href="mailto:cms_it_service_desk@cms.hhs.gov.">
-              cms_it_service_desk@cms.hhs.gov.
-            </ExternalLink>
-            .
-          </Trans>
+          <Trans
+            i18nKey={`solutions.${solution.key}.timeline.items.0.description2`}
+            t={t}
+            components={{
+              email: (
+                <ExternalLink href="mailto:cms_it_service_desk@cms.hhs.gov">
+                  {' '}
+                </ExternalLink>
+              )
+            }}
+          />
         </ProcessListItem>
 
         <ProcessListItem
