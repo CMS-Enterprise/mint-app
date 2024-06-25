@@ -27,6 +27,7 @@ import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import GetAccess from 'views/HelpAndKnowledge/Articles/GetAccess';
 import Home from 'views/Home';
 import HomePageSettings from 'views/HomeNew/Settings';
+import SelectSolutionSettings from 'views/HomeNew/Settings/selectSolutions';
 import SettingsOrder from 'views/HomeNew/Settings/settingsOrder';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
@@ -101,22 +102,6 @@ const AppRoutes = () => {
     <Switch>
       {/* General Routes */}
       <Route path="/" exact component={Home} />
-
-      {flags.customHomepageEnabled && (
-        <>
-          <SecureRoute
-            exact
-            path="/homepage-settings"
-            component={HomePageSettings}
-          />
-
-          <SecureRoute
-            exact
-            path="/homepage-settings/order"
-            component={SettingsOrder}
-          />
-        </>
-      )}
 
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />
@@ -233,6 +218,28 @@ const AppRoutes = () => {
       <SecureRoute path="/send-feedback" component={SendFeedback} />
 
       <SecureRoute path="/feedback-received" component={FeedbackReceived} />
+
+      {flags.customHomepageEnabled && (
+        <>
+          <SecureRoute
+            exact
+            path="/homepage-settings"
+            component={HomePageSettings}
+          />
+
+          <SecureRoute
+            exact
+            path="/homepage-settings/order"
+            component={SettingsOrder}
+          />
+
+          <SecureRoute
+            exact
+            path="/homepage-settings/solutions"
+            component={SelectSolutionSettings}
+          />
+        </>
+      )}
 
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />

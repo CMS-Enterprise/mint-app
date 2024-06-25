@@ -78,7 +78,7 @@ const HomePageSettings = () => {
   }
 
   return (
-    <MainContent data-testid="new-plan">
+    <MainContent>
       <GridContainer>
         <Grid desktop={{ col: 12 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
@@ -159,7 +159,7 @@ const HomePageSettings = () => {
                             {settionOption ===
                               'MODELS_BY_OPERATIONAL_SOLUTION' && (
                               <UswdsReactLink
-                                to="/"
+                                to="/homepage-settings/solutions"
                                 className="padding-left-4 text-bold display-flex flex-align-center"
                               >
                                 {homepageSettingsT('selectSolutions')}

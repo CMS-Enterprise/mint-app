@@ -21,8 +21,8 @@ type UserViewCustomization {
 }
 
 input UserViewCustomizationChanges @goModel(model: "map[string]interface{}") {
-  viewCustomization: [ViewCustomizationType!]!
-  possibleOperationalSolutions: [OperationalSolutionKey!]!
+  viewCustomization: [ViewCustomizationType!]
+  possibleOperationalSolutions: [OperationalSolutionKey!]
 }
 
 extend type Query {

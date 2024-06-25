@@ -81,6 +81,9 @@ const SettingsOrder = () => {
       ?.homepageSettings as HomepageSettingsLocationType['homepageSettings']
   );
 
+  // State management for mutation errors
+  const [mutationError, setMutationError] = useState<boolean>(false);
+
   useEffect(() => {
     if (!loading && !selectedSettings) {
       setSelectedSettings(
@@ -114,9 +117,7 @@ const SettingsOrder = () => {
     mutate({
       variables: {
         changes: {
-          viewCustomization: selectedSettings?.viewCustomization || [],
-          possibleOperationalSolutions:
-            data?.userViewCustomization.possibleOperationalSolutions || []
+          viewCustomization: selectedSettings?.viewCustomization || []
         }
       }
     })
@@ -124,11 +125,11 @@ const SettingsOrder = () => {
         window.history.replaceState({}, '');
         history.push('/');
       })
-      .catch(() => {});
+      .catch(() => setMutationError(true));
   };
 
   return (
-    <MainContent data-testid="new-plan">
+    <MainContent>
       <GridContainer>
         <Grid desktop={{ col: 12 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
@@ -139,6 +140,12 @@ const SettingsOrder = () => {
             </Breadcrumb>
             <Breadcrumb current>{homepageSettingsT('heading')}</Breadcrumb>
           </BreadcrumbBar>
+
+          {mutationError && (
+            <Alert type="error" slim>
+              {homepageSettingsT('settingsError')}
+            </Alert>
+          )}
 
           <h1 className="margin-bottom-2">
             {homepageSettingsT('heading')}

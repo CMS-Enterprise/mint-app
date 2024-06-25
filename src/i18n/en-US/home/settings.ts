@@ -43,7 +43,19 @@ const homepageSettings = {
   allSettings:
     'Are you sure you want every section? Your homepage will be really long.',
   back: 'Don’t customize and return to homepage',
-  submit: 'Save customizations'
+  submit: 'Save customizations',
+  solutionError:
+    'There was a problem saving your selected solutions. Please try again.',
+  settingsError:
+    'There was a problem saving your selected settings. Please try again.',
+  solutionsHeading: 'Select operational solutions',
+  solutionDescription:
+    'Models using the operational solutions chosen below will show in a tabbed section.',
+  operationalSolutions: 'Operational solutions',
+  startTyping: 'Start typing the name of the solution',
+  multiselectLabel: 'Solutions',
+  save: 'Save',
+  dontSelect: 'Don’t select solutions and return to previous page'
 };
 
 export default homepageSettings;

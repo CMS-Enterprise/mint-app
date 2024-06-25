@@ -3033,8 +3033,8 @@ export type UserViewCustomization = {
 };
 
 export type UserViewCustomizationChanges = {
-  possibleOperationalSolutions: Array<OperationalSolutionKey>;
-  viewCustomization: Array<ViewCustomizationType>;
+  possibleOperationalSolutions?: InputMaybe<Array<OperationalSolutionKey>>;
+  viewCustomization?: InputMaybe<Array<ViewCustomizationType>>;
 };
 
 export enum ViewCustomizationType {
