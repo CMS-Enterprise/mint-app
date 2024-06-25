@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import ExternalLink from 'components/shared/ExternalLink';
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
@@ -7,17 +7,21 @@ import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutions
 import '../index.scss';
 
 const HIGLASTimeline = ({ solution }: { solution: HelpSolutionType }) => {
+  const { t } = useTranslation('helpAndKnowledge');
+
   return (
     <div className="line-height-body-5 font-body-md">
-      <Trans i18nKey={`solutions.${solution.key}.timeline.description`}>
-        Any necessary setup for HIGLAS will be taken care of when working with
-        the Innovation Payment Contractor (IPC) or the Shared Systems. Contact
-        Donna Schmidt at{' '}
-        <ExternalLink href="mailto:donna.schmidt@cms.hhs.gov">
-          donna.schmidt@cms.hhs.gov
-        </ExternalLink>{' '}
-        if you have questions.
-      </Trans>
+      <Trans
+        i18nKey={`solutions.${solution.key}.timeline.description`}
+        t={t}
+        components={{
+          email: (
+            <ExternalLink href="mailto:donna.schmidt@cms.hhs.gov">
+              {' '}
+            </ExternalLink>
+          )
+        }}
+      />
     </div>
   );
 };
