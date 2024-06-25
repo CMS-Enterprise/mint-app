@@ -103,7 +103,15 @@ export const ModelPlanOverview = () => {
           </div>
         </div>
       </MainContent>
-      <RelatedArticles currentArticle="Model Plan Overview" viewAllLink />
+      <RelatedArticles
+        currentArticle={t('overviewHeading')}
+        specificArticleNames={[
+          'How to have a successful 2-pager meeting',
+          'High-level project plans',
+          'Sample Model Plan'
+        ]}
+        viewAllLink
+      />
     </>
   );
 };
