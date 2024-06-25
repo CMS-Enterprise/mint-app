@@ -31,7 +31,9 @@ const homepageSettings = {
         'This tabbed section displays the models using the operational solutions you care about.'
     }
   },
-  selectSolutions: 'Select solutions'
+  selectSolutions: 'Select solutions',
+  emptySettings:
+    'You don’t have any sections selected. Are you sure you want to proceed?'
 };
 
 export default homepageSettings;

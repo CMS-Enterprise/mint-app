@@ -1,0 +1,25 @@
+@use 'uswds-core' as *;
+
+.settings {
+    &__card {
+        .usa-card__container {
+            padding: .75rem !important;
+            border-radius: .25rem !important;
+            border: 2px solid color('base-light') !important;
+            
+        }
+        
+        .usa-checkbox__label {
+            margin-top: 0 !important;
+        }
+
+        .usa-checkbox {
+            padding: 0 !important;
+        }
+
+        .usa-checkbox__label {
+            font-weight: bold !important;
+        }
+    }
+   
+}
