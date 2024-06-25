@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
@@ -48,6 +50,9 @@ var modelPlanGetByIDLoaderSQL string
 
 //go:embed SQL/model_plan/get_op_solution_last_modified_dts_by_id_LOADER.sql
 var modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL string
+
+//go:embed SQL/model_plan/get_by_operational_solution_key.sql
+var modelPlanGetByOperationalSolutionKeySQL string
 
 // ModelPlanGetByModelPlanIDLOADER returns the model plan for a slice of ids
 func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
@@ -360,4 +365,89 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	}
 
 	return sqlResult, nil
+}
+
+func (s *Store) ModelPlanGetByOperationalSolutionKey(
+	logger *zap.Logger,
+	opSolKey models.OperationalSolutionKey,
+) ([]*model.ModelPlanAndOperationalSolution, error) {
+
+	stmt, err := s.db.PrepareNamed(modelPlanGetByOperationalSolutionKeySQL)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{
+		"operational_solution_key": opSolKey,
+	}
+
+	rows, err := stmt.Queryx(arg)
+	if err != nil {
+		logger.Error(
+			"Failed to fetch model plans",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlanAndOperationalSolutionRaw{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+	defer rows.Close()
+
+	var results []*model.ModelPlanAndOperationalSolution
+	for rows.Next() {
+		var rawResult models.ModelPlanAndOperationalSolutionRaw
+
+		// Scan into the raw structure to capture all fields
+		if err := rows.StructScan(&rawResult); err != nil {
+			return nil, err
+		}
+
+		if rawResult.OperationalSolutionID == uuid.Nil {
+			return nil, errors.New("OperationalSolutionID is nil")
+		}
+
+		// Manually map the fields from rawResult to operationalSolution and modelPlan
+		operationalSolution := models.NewOperationalSolutionFull(
+			rawResult.OperationalSolutionID,
+			rawResult.OperationalNeedID,
+			rawResult.SolutionType,
+			&rawResult.SolName,
+			&opSolKey,
+			rawResult.NameOther,
+			rawResult.PocName,
+			rawResult.PocEmail,
+			rawResult.MustStartDts,
+			rawResult.MustFinishDts,
+			rawResult.IsOther,
+			rawResult.IsCommonSolution,
+			rawResult.OtherHeader,
+			models.OpSolutionStatus(rawResult.OperationalSolutionStatus),
+			rawResult.OperationalSolutionCreatedBy,
+			rawResult.OperationalSolutionCreatedDts,
+			rawResult.OperationalSolutionModifiedBy,
+			rawResult.OperationalSolutionModifiedDts,
+		)
+
+		modelPlan := models.NewModelPlanFull(
+			rawResult.ModelPlanID,
+			rawResult.ModelName,
+			rawResult.Abbreviation,
+			rawResult.Archived,
+			models.ModelStatus(rawResult.ModelPlanStatus),
+			rawResult.ModelPlanCreatedBy,
+			rawResult.ModelPlanCreatedDts,
+			rawResult.ModelPlanModifiedBy,
+			rawResult.ModelPlanModifiedDts,
+		)
+
+		results = append(results, &model.ModelPlanAndOperationalSolution{
+			OperationalSolution: operationalSolution,
+			ModelPlan:           modelPlan,
+		})
+	}
+
+	return results, nil
 }

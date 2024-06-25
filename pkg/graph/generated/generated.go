@@ -286,34 +286,40 @@ type ComplexityRoot struct {
 	}
 
 	ModelPlan struct {
-		Abbreviation              func(childComplexity int) int
-		Archived                  func(childComplexity int) int
-		Basics                    func(childComplexity int) int
-		Beneficiaries             func(childComplexity int) int
-		Collaborators             func(childComplexity int) int
-		CreatedBy                 func(childComplexity int) int
-		CreatedByUserAccount      func(childComplexity int) int
-		CreatedDts                func(childComplexity int) int
-		Crs                       func(childComplexity int) int
-		Discussions               func(childComplexity int) int
-		Documents                 func(childComplexity int) int
-		GeneralCharacteristics    func(childComplexity int) int
-		ID                        func(childComplexity int) int
-		IsCollaborator            func(childComplexity int) int
-		IsFavorite                func(childComplexity int) int
-		ModelName                 func(childComplexity int) int
-		ModifiedBy                func(childComplexity int) int
-		ModifiedByUserAccount     func(childComplexity int) int
-		ModifiedDts               func(childComplexity int) int
-		NameHistory               func(childComplexity int, sort models.SortDirection) int
-		OpSolutionLastModifiedDts func(childComplexity int) int
-		OperationalNeeds          func(childComplexity int) int
-		OpsEvalAndLearning        func(childComplexity int) int
-		ParticipantsAndProviders  func(childComplexity int) int
-		Payments                  func(childComplexity int) int
-		PrepareForClearance       func(childComplexity int) int
-		Status                    func(childComplexity int) int
-		Tdls                      func(childComplexity int) int
+		Abbreviation               func(childComplexity int) int
+		Archived                   func(childComplexity int) int
+		Basics                     func(childComplexity int) int
+		Beneficiaries              func(childComplexity int) int
+		Collaborators              func(childComplexity int) int
+		CreatedBy                  func(childComplexity int) int
+		CreatedByUserAccount       func(childComplexity int) int
+		CreatedDts                 func(childComplexity int) int
+		Crs                        func(childComplexity int) int
+		Discussions                func(childComplexity int) int
+		Documents                  func(childComplexity int) int
+		GeneralCharacteristics     func(childComplexity int) int
+		ID                         func(childComplexity int) int
+		IsCollaborator             func(childComplexity int) int
+		IsFavorite                 func(childComplexity int) int
+		ModelName                  func(childComplexity int) int
+		ModifiedBy                 func(childComplexity int) int
+		ModifiedByUserAccount      func(childComplexity int) int
+		ModifiedDts                func(childComplexity int) int
+		NameHistory                func(childComplexity int, sort models.SortDirection) int
+		OpSolutionLastModifiedDts  func(childComplexity int) int
+		OperationalNeeds           func(childComplexity int) int
+		OpsEvalAndLearning         func(childComplexity int) int
+		ParticipantsAndProviders   func(childComplexity int) int
+		Payments                   func(childComplexity int) int
+		PrepareForClearance        func(childComplexity int) int
+		Status                     func(childComplexity int) int
+		StatusPlannedActiveOrEnded func(childComplexity int) int
+		Tdls                       func(childComplexity int) int
+	}
+
+	ModelPlanAndOperationalSolution struct {
+		ModelPlan           func(childComplexity int) int
+		OperationalSolution func(childComplexity int) int
 	}
 
 	ModelPlanSharedActivityMeta struct {
@@ -1082,29 +1088,30 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		AnalyzedAudits                    func(childComplexity int, dateAnalyzed time.Time) int
-		AuditChanges                      func(childComplexity int, tableName string, primaryKey uuid.UUID) int
-		CurrentUser                       func(childComplexity int) int
-		ExistingModelCollection           func(childComplexity int) int
-		ExistingModelLink                 func(childComplexity int, id uuid.UUID) int
-		ModelPlan                         func(childComplexity int, id uuid.UUID) int
-		ModelPlanCollection               func(childComplexity int, filter model.ModelPlanFilter) int
-		MostRecentDiscussionRoleSelection func(childComplexity int) int
-		NdaInfo                           func(childComplexity int) int
-		OperationalNeed                   func(childComplexity int, id uuid.UUID) int
-		OperationalSolution               func(childComplexity int, id uuid.UUID) int
-		OperationalSolutions              func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
-		PlanCollaboratorByID              func(childComplexity int, id uuid.UUID) int
-		PlanCr                            func(childComplexity int, id uuid.UUID) int
-		PlanDocument                      func(childComplexity int, id uuid.UUID) int
-		PlanPayments                      func(childComplexity int, id uuid.UUID) int
-		PlanTdl                           func(childComplexity int, id uuid.UUID) int
-		PossibleOperationalNeeds          func(childComplexity int) int
-		PossibleOperationalSolutions      func(childComplexity int) int
-		SearchOktaUsers                   func(childComplexity int, searchTerm string) int
-		TaskListSectionLocks              func(childComplexity int, modelPlanID uuid.UUID) int
-		UserAccount                       func(childComplexity int, username string) int
-		UserViewCustomization             func(childComplexity int) int
+		AnalyzedAudits                     func(childComplexity int, dateAnalyzed time.Time) int
+		AuditChanges                       func(childComplexity int, tableName string, primaryKey uuid.UUID) int
+		CurrentUser                        func(childComplexity int) int
+		ExistingModelCollection            func(childComplexity int) int
+		ExistingModelLink                  func(childComplexity int, id uuid.UUID) int
+		ModelPlan                          func(childComplexity int, id uuid.UUID) int
+		ModelPlanCollection                func(childComplexity int, filter model.ModelPlanFilter) int
+		ModelPlansByOperationalSolutionKey func(childComplexity int, operationalSolutionKey models.OperationalSolutionKey) int
+		MostRecentDiscussionRoleSelection  func(childComplexity int) int
+		NdaInfo                            func(childComplexity int) int
+		OperationalNeed                    func(childComplexity int, id uuid.UUID) int
+		OperationalSolution                func(childComplexity int, id uuid.UUID) int
+		OperationalSolutions               func(childComplexity int, operationalNeedID uuid.UUID, includeNotNeeded bool) int
+		PlanCollaboratorByID               func(childComplexity int, id uuid.UUID) int
+		PlanCr                             func(childComplexity int, id uuid.UUID) int
+		PlanDocument                       func(childComplexity int, id uuid.UUID) int
+		PlanPayments                       func(childComplexity int, id uuid.UUID) int
+		PlanTdl                            func(childComplexity int, id uuid.UUID) int
+		PossibleOperationalNeeds           func(childComplexity int) int
+		PossibleOperationalSolutions       func(childComplexity int) int
+		SearchOktaUsers                    func(childComplexity int, searchTerm string) int
+		TaskListSectionLocks               func(childComplexity int, modelPlanID uuid.UUID) int
+		UserAccount                        func(childComplexity int, username string) int
+		UserViewCustomization              func(childComplexity int) int
 	}
 
 	Subscription struct {
@@ -1301,6 +1308,7 @@ type ModelPlanResolver interface {
 	NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error)
 	OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error)
 	OpSolutionLastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error)
+	StatusPlannedActiveOrEnded(ctx context.Context, obj *models.ModelPlan) (model.StatusPlannedActiveOrEnded, error)
 }
 type ModelPlanSharedActivityMetaResolver interface {
 	ModelPlan(ctx context.Context, obj *models.ModelPlanSharedActivityMeta) (*models.ModelPlan, error)
@@ -1522,6 +1530,7 @@ type QueryResolver interface {
 	OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error)
 	OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error)
 	OperationalSolution(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error)
+	ModelPlansByOperationalSolutionKey(ctx context.Context, operationalSolutionKey models.OperationalSolutionKey) ([]*model.ModelPlanAndOperationalSolution, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 	PlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
 	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
@@ -2714,12 +2723,33 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.Status(childComplexity), true
 
+	case "ModelPlan.statusPlannedActiveOrEnded":
+		if e.complexity.ModelPlan.StatusPlannedActiveOrEnded == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.StatusPlannedActiveOrEnded(childComplexity), true
+
 	case "ModelPlan.tdls":
 		if e.complexity.ModelPlan.Tdls == nil {
 			break
 		}
 
 		return e.complexity.ModelPlan.Tdls(childComplexity), true
+
+	case "ModelPlanAndOperationalSolution.modelPlan":
+		if e.complexity.ModelPlanAndOperationalSolution.ModelPlan == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanAndOperationalSolution.ModelPlan(childComplexity), true
+
+	case "ModelPlanAndOperationalSolution.operationalSolution":
+		if e.complexity.ModelPlanAndOperationalSolution.OperationalSolution == nil {
+			break
+		}
+
+		return e.complexity.ModelPlanAndOperationalSolution.OperationalSolution(childComplexity), true
 
 	case "ModelPlanSharedActivityMeta.modelPlan":
 		if e.complexity.ModelPlanSharedActivityMeta.ModelPlan == nil {
@@ -7850,6 +7880,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.ModelPlanCollection(childComplexity, args["filter"].(model.ModelPlanFilter)), true
 
+	case "Query.modelPlansByOperationalSolutionKey":
+		if e.complexity.Query.ModelPlansByOperationalSolutionKey == nil {
+			break
+		}
+
+		args, err := ec.field_Query_modelPlansByOperationalSolutionKey_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.ModelPlansByOperationalSolutionKey(childComplexity, args["operationalSolutionKey"].(models.OperationalSolutionKey)), true
+
 	case "Query.mostRecentDiscussionRoleSelection":
 		if e.complexity.Query.MostRecentDiscussionRoleSelection == nil {
 			break
@@ -9462,6 +9504,25 @@ extend type Mutation {
   @hasRole(role: MINT_USER)
 
   updateOperationalSolution(id: UUID!, changes: OperationalSolutionChanges!): OperationalSolution!
+  @hasRole(role: MINT_USER)
+}`, BuiltIn: false},
+	{Name: "../schema/types/operational_solution_and_model_plan.graphql", Input: `enum StatusPlannedActiveOrEnded {
+  PLANNED
+  ACTIVE
+  ENDED
+}
+
+extend type ModelPlan {
+  statusPlannedActiveOrEnded: StatusPlannedActiveOrEnded!
+}
+
+type ModelPlanAndOperationalSolution {
+  operationalSolution: OperationalSolution!
+  modelPlan: ModelPlan!
+}
+
+extend type Query {
+  modelPlansByOperationalSolutionKey(operationalSolutionKey: OperationalSolutionKey!): [ModelPlanAndOperationalSolution]!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
 	{Name: "../schema/types/operational_solution_subtask.graphql", Input: `enum OperationalSolutionSubtaskStatus {
@@ -13082,6 +13143,21 @@ func (ec *executionContext) field_Query_modelPlan_args(ctx context.Context, rawA
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_modelPlansByOperationalSolutionKey_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 models.OperationalSolutionKey
+	if tmp, ok := rawArgs["operationalSolutionKey"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("operationalSolutionKey"))
+		arg0, err = ec.unmarshalNOperationalSolutionKey2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["operationalSolutionKey"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Query_operationalNeed_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -14136,6 +14212,8 @@ func (ec *executionContext) fieldContext_AddedAsCollaboratorMeta_modelPlan(ctx c
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -17154,6 +17232,8 @@ func (ec *executionContext) fieldContext_DatesChangedActivityMeta_modelPlan(ctx 
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -22007,6 +22087,246 @@ func (ec *executionContext) fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx
 	return fc, nil
 }
 
+func (ec *executionContext) _ModelPlan_statusPlannedActiveOrEnded(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().StatusPlannedActiveOrEnded(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.StatusPlannedActiveOrEnded)
+	fc.Result = res
+	return ec.marshalNStatusPlannedActiveOrEnded2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatusPlannedActiveOrEnded(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type StatusPlannedActiveOrEnded does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlanAndOperationalSolution_operationalSolution(ctx context.Context, field graphql.CollectedField, obj *model.ModelPlanAndOperationalSolution) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanAndOperationalSolution_operationalSolution(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OperationalSolution, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.OperationalSolution)
+	fc.Result = res
+	return ec.marshalNOperationalSolution2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolution(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlanAndOperationalSolution_operationalSolution(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlanAndOperationalSolution",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_OperationalSolution_id(ctx, field)
+			case "operationalNeedID":
+				return ec.fieldContext_OperationalSolution_operationalNeedID(ctx, field)
+			case "solutionType":
+				return ec.fieldContext_OperationalSolution_solutionType(ctx, field)
+			case "needed":
+				return ec.fieldContext_OperationalSolution_needed(ctx, field)
+			case "name":
+				return ec.fieldContext_OperationalSolution_name(ctx, field)
+			case "key":
+				return ec.fieldContext_OperationalSolution_key(ctx, field)
+			case "nameOther":
+				return ec.fieldContext_OperationalSolution_nameOther(ctx, field)
+			case "pocName":
+				return ec.fieldContext_OperationalSolution_pocName(ctx, field)
+			case "pocEmail":
+				return ec.fieldContext_OperationalSolution_pocEmail(ctx, field)
+			case "mustStartDts":
+				return ec.fieldContext_OperationalSolution_mustStartDts(ctx, field)
+			case "mustFinishDts":
+				return ec.fieldContext_OperationalSolution_mustFinishDts(ctx, field)
+			case "isOther":
+				return ec.fieldContext_OperationalSolution_isOther(ctx, field)
+			case "isCommonSolution":
+				return ec.fieldContext_OperationalSolution_isCommonSolution(ctx, field)
+			case "otherHeader":
+				return ec.fieldContext_OperationalSolution_otherHeader(ctx, field)
+			case "status":
+				return ec.fieldContext_OperationalSolution_status(ctx, field)
+			case "documents":
+				return ec.fieldContext_OperationalSolution_documents(ctx, field)
+			case "operationalSolutionSubtasks":
+				return ec.fieldContext_OperationalSolution_operationalSolutionSubtasks(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_OperationalSolution_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_OperationalSolution_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_OperationalSolution_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_OperationalSolution_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_OperationalSolution_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_OperationalSolution_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type OperationalSolution", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlanAndOperationalSolution_modelPlan(ctx context.Context, field graphql.CollectedField, obj *model.ModelPlanAndOperationalSolution) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlanAndOperationalSolution_modelPlan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlan, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.ModelPlan)
+	fc.Result = res
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlanAndOperationalSolution_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlanAndOperationalSolution",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ModelPlan_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ModelPlan_modelName(ctx, field)
+			case "abbreviation":
+				return ec.fieldContext_ModelPlan_abbreviation(ctx, field)
+			case "archived":
+				return ec.fieldContext_ModelPlan_archived(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ModelPlan_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_ModelPlan_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ModelPlan_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ModelPlan_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_ModelPlan_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ModelPlan_modifiedDts(ctx, field)
+			case "basics":
+				return ec.fieldContext_ModelPlan_basics(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+			case "participantsAndProviders":
+				return ec.fieldContext_ModelPlan_participantsAndProviders(ctx, field)
+			case "beneficiaries":
+				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+			case "collaborators":
+				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
+			case "documents":
+				return ec.fieldContext_ModelPlan_documents(ctx, field)
+			case "discussions":
+				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
+			case "status":
+				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "isFavorite":
+				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crs":
+				return ec.fieldContext_ModelPlan_crs(ctx, field)
+			case "tdls":
+				return ec.fieldContext_ModelPlan_tdls(ctx, field)
+			case "prepareForClearance":
+				return ec.fieldContext_ModelPlan_prepareForClearance(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+			case "operationalNeeds":
+				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
+			case "opSolutionLastModifiedDts":
+				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ModelPlanSharedActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanSharedActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ModelPlanSharedActivityMeta_version(ctx, field)
 	if err != nil {
@@ -22234,6 +22554,8 @@ func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_modelPlan(c
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -22595,6 +22917,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -22732,6 +23056,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -27849,6 +28175,8 @@ func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_modelP
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -28357,6 +28685,8 @@ func (ec *executionContext) fieldContext_NewModelPlanActivityMeta_modelPlan(ctx 
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -38385,6 +38715,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_currentModel
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -56753,6 +57085,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -56890,6 +57224,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -57339,6 +57675,91 @@ func (ec *executionContext) fieldContext_Query_operationalSolution(ctx context.C
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_operationalSolution_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_modelPlansByOperationalSolutionKey(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_modelPlansByOperationalSolutionKey(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().ModelPlansByOperationalSolutionKey(rctx, fc.Args["operationalSolutionKey"].(models.OperationalSolutionKey))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*model.ModelPlanAndOperationalSolution); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/graph/model.ModelPlanAndOperationalSolution`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.ModelPlanAndOperationalSolution)
+	fc.Result = res
+	return ec.marshalNModelPlanAndOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanAndOperationalSolution(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_modelPlansByOperationalSolutionKey(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "operationalSolution":
+				return ec.fieldContext_ModelPlanAndOperationalSolution_operationalSolution(ctx, field)
+			case "modelPlan":
+				return ec.fieldContext_ModelPlanAndOperationalSolution_modelPlan(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ModelPlanAndOperationalSolution", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_modelPlansByOperationalSolutionKey_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -59925,6 +60346,8 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_mod
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -60433,6 +60856,8 @@ func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_mode
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "statusPlannedActiveOrEnded":
+				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -69084,6 +69509,86 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "statusPlannedActiveOrEnded":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_statusPlannedActiveOrEnded(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var modelPlanAndOperationalSolutionImplementors = []string{"ModelPlanAndOperationalSolution"}
+
+func (ec *executionContext) _ModelPlanAndOperationalSolution(ctx context.Context, sel ast.SelectionSet, obj *model.ModelPlanAndOperationalSolution) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, modelPlanAndOperationalSolutionImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ModelPlanAndOperationalSolution")
+		case "operationalSolution":
+			out.Values[i] = ec._ModelPlanAndOperationalSolution_operationalSolution(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modelPlan":
+			out.Values[i] = ec._ModelPlanAndOperationalSolution_modelPlan(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -76482,6 +76987,28 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "modelPlansByOperationalSolutionKey":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_modelPlansByOperationalSolutionKey(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "planCollaboratorByID":
 			field := field
 
@@ -81097,6 +81624,44 @@ func (ec *executionContext) marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ec._ModelPlan(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNModelPlanAndOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanAndOperationalSolution(ctx context.Context, sel ast.SelectionSet, v []*model.ModelPlanAndOperationalSolution) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOModelPlanAndOperationalSolution2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanAndOperationalSolution(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNModelPlanChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
 	return v.(map[string]interface{}), nil
 }
@@ -83347,6 +83912,16 @@ func (ec *executionContext) marshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgo
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNStatusPlannedActiveOrEnded2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatusPlannedActiveOrEnded(ctx context.Context, v interface{}) (model.StatusPlannedActiveOrEnded, error) {
+	var res model.StatusPlannedActiveOrEnded
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNStatusPlannedActiveOrEnded2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatusPlannedActiveOrEnded(ctx context.Context, sel ast.SelectionSet, v model.StatusPlannedActiveOrEnded) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {
@@ -86380,6 +86955,13 @@ func (ec *executionContext) marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑ
 		return graphql.Null
 	}
 	return ec._ModelPlan(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOModelPlanAndOperationalSolution2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanAndOperationalSolution(ctx context.Context, sel ast.SelectionSet, v *model.ModelPlanAndOperationalSolution) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._ModelPlanAndOperationalSolution(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOModelStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx context.Context, v interface{}) (*models.ModelStatus, error) {

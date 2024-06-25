@@ -617,6 +617,7 @@ export type ModelPlan = {
   payments: PlanPayments;
   prepareForClearance: PrepareForClearance;
   status: ModelStatus;
+  statusPlannedActiveOrEnded: StatusPlannedActiveOrEnded;
   tdls: Array<PlanTdl>;
 };
 
@@ -624,6 +625,12 @@ export type ModelPlan = {
 /** ModelPlan represent the data point for plans about a model. It is the central data type in the application */
 export type ModelPlanNameHistoryArgs = {
   sort?: SortDirection;
+};
+
+export type ModelPlanAndOperationalSolution = {
+  __typename: 'ModelPlanAndOperationalSolution';
+  modelPlan: ModelPlan;
+  operationalSolution: OperationalSolution;
 };
 
 /**
@@ -2515,6 +2522,7 @@ export type Query = {
   existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
+  modelPlansByOperationalSolutionKey: Array<Maybe<ModelPlanAndOperationalSolution>>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
@@ -2562,6 +2570,12 @@ export type QueryModelPlanArgs = {
 /** Query definition for the schema */
 export type QueryModelPlanCollectionArgs = {
   filter?: ModelPlanFilter;
+};
+
+
+/** Query definition for the schema */
+export type QueryModelPlansByOperationalSolutionKeyArgs = {
+  operationalSolutionKey: OperationalSolutionKey;
 };
 
 
@@ -2779,6 +2793,12 @@ export enum StatesAndTerritories {
   WI = 'WI',
   WV = 'WV',
   WY = 'WY'
+}
+
+export enum StatusPlannedActiveOrEnded {
+  ACTIVE = 'ACTIVE',
+  ENDED = 'ENDED',
+  PLANNED = 'PLANNED'
 }
 
 export type Subscription = {

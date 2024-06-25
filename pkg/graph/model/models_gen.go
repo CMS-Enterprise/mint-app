@@ -33,6 +33,11 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
+type ModelPlanAndOperationalSolution struct {
+	OperationalSolution *models.OperationalSolution `json:"operationalSolution"`
+	ModelPlan           *models.ModelPlan           `json:"modelPlan"`
+}
+
 // NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
 type NDAInfo struct {
 	Agreed    bool       `json:"agreed"`
@@ -1974,6 +1979,49 @@ func (e *StakeholdersType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e StakeholdersType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type StatusPlannedActiveOrEnded string
+
+const (
+	StatusPlannedActiveOrEndedPlanned StatusPlannedActiveOrEnded = "PLANNED"
+	StatusPlannedActiveOrEndedActive  StatusPlannedActiveOrEnded = "ACTIVE"
+	StatusPlannedActiveOrEndedEnded   StatusPlannedActiveOrEnded = "ENDED"
+)
+
+var AllStatusPlannedActiveOrEnded = []StatusPlannedActiveOrEnded{
+	StatusPlannedActiveOrEndedPlanned,
+	StatusPlannedActiveOrEndedActive,
+	StatusPlannedActiveOrEndedEnded,
+}
+
+func (e StatusPlannedActiveOrEnded) IsValid() bool {
+	switch e {
+	case StatusPlannedActiveOrEndedPlanned, StatusPlannedActiveOrEndedActive, StatusPlannedActiveOrEndedEnded:
+		return true
+	}
+	return false
+}
+
+func (e StatusPlannedActiveOrEnded) String() string {
+	return string(e)
+}
+
+func (e *StatusPlannedActiveOrEnded) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = StatusPlannedActiveOrEnded(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid StatusPlannedActiveOrEnded", str)
+	}
+	return nil
+}
+
+func (e StatusPlannedActiveOrEnded) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

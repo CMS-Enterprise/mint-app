@@ -1,6 +1,10 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 // ModelPlan is the top-level object for an entire draft model plan
 type ModelPlan struct {
@@ -19,8 +23,36 @@ func NewModelPlan(createdBy uuid.UUID, modelName string) *ModelPlan {
 		Archived:   false,
 		Status:     ModelStatusPlanDraft,
 	}
-
 }
+
+// NewModelPlanFull returns a new model plan with all fields set
+func NewModelPlanFull(
+	id uuid.UUID,
+	modelName string,
+	abbreviation *string,
+	archived bool,
+	status ModelStatus,
+	createdBy uuid.UUID,
+	createdDts time.Time,
+	modifiedBy *uuid.UUID,
+	modifiedDts *time.Time,
+) *ModelPlan {
+	mp := ModelPlan{
+		ModelName:    modelName,
+		Abbreviation: abbreviation,
+		Archived:     archived,
+		Status:       status,
+		baseStruct:   NewBaseStruct(createdBy),
+	}
+
+	mp.ID = id
+	mp.CreatedDts = createdDts
+	mp.ModifiedBy = modifiedBy
+	mp.ModifiedDts = modifiedDts
+
+	return &mp
+}
+
 func (m ModelPlan) isLinkedExistingModel() {}
 
 // GetModelPlanID returns the modelPlanID of the task list section
