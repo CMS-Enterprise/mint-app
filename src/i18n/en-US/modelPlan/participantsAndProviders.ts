@@ -124,7 +124,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    filterGroups: [ModelViewFilter.PBG]
   },
   participantsCurrentlyInModelsNote: {
     gqlField: 'participantsCurrentlyInModelsNote',
@@ -225,7 +226,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     },
     optionsRelatedInfo: {
       OTHER: 'recruitmentOther'
-    }
+    },
+    filterGroups: [ModelViewFilter.PBG]
   },
   recruitmentOther: {
     gqlField: 'recruitmentOther',

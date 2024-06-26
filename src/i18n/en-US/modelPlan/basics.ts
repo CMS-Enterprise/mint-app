@@ -186,7 +186,8 @@ export const basics: TranslationBasics = {
     dbField: 'problem',
     label: 'Problem statement',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: [ModelViewFilter.PBG]
   },
   goal: {
     gqlField: 'goal',
@@ -210,7 +211,8 @@ export const basics: TranslationBasics = {
     dbField: 'test_interventions',
     label: 'Test Interventions',
     dataType: 'string',
-    formType: 'textarea'
+    formType: 'textarea',
+    filterGroups: [ModelViewFilter.PBG]
   },
   note: {
     gqlField: 'note',
@@ -342,7 +344,7 @@ export const basics: TranslationBasics = {
     label: 'Model wrap-up end date',
     dataType: 'date',
     formType: 'datePicker',
-    filterGroups: [ModelViewFilter.IPC]
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.PBG]
   },
   phasedIn: {
     gqlField: 'phasedIn',
