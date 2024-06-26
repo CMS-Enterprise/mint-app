@@ -45,24 +45,25 @@ COMMENT ON TABLE translated_audit IS 'Table storing human-readable audit trail o
 
 
 COMMENT ON COLUMN translated_audit.restricted IS 'This column specifies if the data should be restricted to users who have elevated permissions';
--- Changes: (Serialization) Update these comments for the new table
--- Comments for each column
 COMMENT ON COLUMN translated_audit.id IS 'Unique identifier for the audit trail change record.';
 COMMENT ON COLUMN translated_audit.model_plan_id IS 'Identifier referencing the model plan associated with this audit trail change.';
 COMMENT ON COLUMN translated_audit.actor_id IS 'Identifier of the user who performed the changes (actor).';
 COMMENT ON COLUMN translated_audit.change_id IS 'Foreign key to the untranslated change source of this translation';
 COMMENT ON COLUMN translated_audit.date IS 'Timestamp indicating the exact time of the change.';
 
+
+COMMENT ON COLUMN translated_audit.table_id IS 'Foreign key to the audit.table_config table'
+COMMENT ON COLUMN translated_audit.primary_key IS 'The primary key of the record of the original audit record.'
+COMMENT ON COLUMN translated_audit.action IS 'Specifies what type of action caused the audit '
+COMMENT ON COLUMN translated_audit.restricted IS 'This column specifies if the data should be restricted to users who have elevated permissions';
+COMMENT ON COLUMN translated_audit.meta_data_type IS 'Enum type which specifies what type of meta data to expect in the meta data column. This is used for deserialization'
 COMMENT ON COLUMN translated_audit.meta_data IS 'JSONB data storing the details of the changes made.';
 COMMENT ON COLUMN translated_audit.created_by IS 'Unique identifier of the user who created the audit trail change.';
 COMMENT ON COLUMN translated_audit.created_dts IS 'Timestamp with time zone indicating the creation time of the audit trail change.';
 COMMENT ON COLUMN translated_audit.modified_by IS 'Unique identifier of the user who last modified the audit trail change.';
 COMMENT ON COLUMN translated_audit.modified_dts IS 'Timestamp with time zone indicating the last modification time of the audit trail change.';
 
--- Changes: (Serialization) ADD MORE  comments for the new fields
 
--- Changes: (Serialization) Do we want to expose more fields to a parent level?
--- Should we make some paradigm choices eg changes have to be grouped by user? I think that is reasonable...
 
 -- Changes: (Serialization) Ensure that we only allow one entry in a time span per user. We wouldn't want to have multiple for that range
 
