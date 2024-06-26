@@ -338,6 +338,11 @@ const TwoPagerMeeting = () => {
       <div className="margin-top-6 margin-bottom-neg-7">
         <RelatedArticles
           currentArticle={twoPageMeetingT('title')}
+          specificArticleNames={[
+            'How to have a successful 6-pager meeting',
+            'High-level project plans',
+            'Sample Model Plan'
+          ]}
           viewAllLink
         />
       </div>

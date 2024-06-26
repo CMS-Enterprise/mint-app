@@ -1,13 +1,14 @@
 import React from 'react';
 import { Icon } from '@trussworks/react-uswds';
 
-type ArticleProps = {
+export type ArticleTypeProps = 'getting-started' | 'it-implementation';
+
+export type ArticleProps = {
   name: string;
   route: string;
   translation: string;
+  type: ArticleTypeProps;
 };
-
-export type ArticleTypeProps = 'getting-started' | 'it-implementation';
 
 export const articleCategories: ArticleTypeProps[] = [
   'getting-started',
@@ -15,9 +16,7 @@ export const articleCategories: ArticleTypeProps[] = [
 ];
 
 // Help and Knowledge Articles
-const helpAndKnowledgeArticles: (ArticleProps & {
-  type: ArticleTypeProps;
-})[] = [
+const helpAndKnowledgeArticles: ArticleProps[] = [
   {
     name: 'Model Plan Overview',
     route: '/model-plan-overview', // route for hitting rendered article component
@@ -61,7 +60,7 @@ const helpAndKnowledgeArticles: (ArticleProps & {
     type: 'it-implementation'
   },
   {
-    name: 'Model implementation and solution design',
+    name: 'Model design and solution design',
     route: '/model-and-solution-design',
     translation: 'modelSolutionDesign',
     type: 'it-implementation'
