@@ -118,6 +118,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'contractor_support_how',
     label: 'In what capacity will they support your model?',
     sublabel: '(implementation, data analysis, quality, etc.)',
+    questionTooltip: '(implementation, data analysis, quality, etc.)',
     dataType: 'string',
     formType: 'textarea',
     parentRelation: () => opsEvalAndLearning.contractorSupport,
@@ -1323,8 +1324,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     goField: 'AnticipatedChallenges',
     dbField: 'anticipated_challenges',
     label:
-      'What challenges do you anticipate during Model design and implementation?',
+      'What challenges do you anticipate during model design and implementation?',
     sublabel:
+      'Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.',
+    questionTooltip:
       'Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.',
     dataType: 'string',
     formType: 'textarea',
