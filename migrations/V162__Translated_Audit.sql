@@ -10,16 +10,6 @@ CREATE TYPE TRANSLATED_AUDIT_META_DATA_TYPE AS ENUM (
 );
 COMMENT ON TYPE TRANSLATED_AUDIT_META_DATA_TYPE IS 'The possible meta data types that can be stored on a translated audit entry';
 
-CREATE TYPE TABLE_NAME AS ENUM (
-    'activity',  'analyzed_audit',  'discussion_reply',  'existing_model',  'existing_model_link',  'model_plan',  'nda_agreement',  'operational_need',  'operational_solution',  'operational_solution_subtask',  'plan_basics',  'plan_beneficiaries',  'plan_collaborator',  'plan_cr',  'plan_discussion',  'plan_document',  'plan_document_solution_link',  'plan_favorite',  'plan_general_characteristics',  'plan_ops_eval_and_learning',  'plan_participants_and_providers',  'plan_payments',  'plan_tdl',  'possible_need_solution_link',  'possible_operational_need',  'possible_operational_solution',  'possible_operational_solution_contact',  'tag',  'translated_audit',  'translated_audit_field',  'translated_audit_queue',  'user_account',  'user_notification',  'user_notification_preferences'
-);
-
-COMMENT ON TYPE TABLE_NAME IS 'These are the possible values of the table names that are currently in the public schema';
-
--- Update the table_config table to use this enum type.
-ALTER TABLE audit.table_config
-ALTER COLUMN name TYPE TABLE_NAME USING name::TABLE_NAME;
-
 CREATE TABLE translated_audit (
     id UUID PRIMARY KEY,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
@@ -27,7 +17,6 @@ CREATE TABLE translated_audit (
     change_id BIGINT UNIQUE NOT NULL REFERENCES audit.change(id), --foreign key to user table
     date TIMESTAMP NOT NULL, 
     table_id INTEGER REFERENCES audit.table_config(id), --foreign key to the audit table
-    -- Changes: (Translations) potentially translate the table name as well? Like we are doing for fields
     primary_key UUID NOT NULL,
     action DATABASE_OPERATION NOT NULL, 
     restricted BOOLEAN NOT NULL,
