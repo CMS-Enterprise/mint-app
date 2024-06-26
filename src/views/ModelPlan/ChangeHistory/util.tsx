@@ -3,6 +3,7 @@ import {
   DatabaseOperation,
   ExisitingModelLinkFieldType,
   GetChangeHistoryQuery,
+  TableName,
   TranslatedAuditMetaBaseStruct,
   TranslatedAuditMetaData,
   TranslatedAuditMetaDiscussionReply,
@@ -163,6 +164,7 @@ export const hiddenFields: string[] = ['is_link'];
 
 // Tables where similar audits are batched together
 export const batchedTables: string[] = [
+  // TODO: Update this to table name
   'operational_solution',
   'operational_solution_subtask',
   'plan_document_solution_link',
@@ -170,9 +172,9 @@ export const batchedTables: string[] = [
 ];
 
 // Tables where audits are batch with a different table
-export const doubleBatchedTables: string[] = [
-  'plan_document',
-  'plan_document_solution_link'
+export const doubleBatchedTables: TableName[] = [
+  TableName.PLAN_DOCUMENT,
+  TableName.PLAN_DOCUMENT_SOLUTION_LINK
 ];
 
 // Fields that are connected to other tables
