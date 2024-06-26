@@ -12,7 +12,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/mappings"
-	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -76,12 +75,6 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		return nil, fmt.Errorf("unable to convert translation for %s to a map, err : %w", trans.TableName(), err)
 	}
 
-	// actorAccount, err := audit.ModifiedByUserAccount(ctx)
-	//Changes: (Job) Revisit this, as it might be nil!
-	actorAccount, err := storage.UserAccountGetByID(store, audit.ModifiedBy)
-	if err != nil {
-		return nil, fmt.Errorf("issue getting actor for audit  (%d) for plan %s, while attempting humanization. Err: %w ", audit.ID, plan.ModelName, err)
-	}
 	operation, isValidOperation := GetDatabaseOperation(audit.Action)
 	if !isValidOperation {
 
@@ -106,7 +99,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 
 	for fieldName, field := range audit.Fields {
 		//  Changes: (Translations) consider removing plan from the function
-		transField, wasTranslated, tErr := translateField(ctx, store, fieldName, field, audit, actorAccount, operation, plan, translationMap)
+		transField, wasTranslated, tErr := translateField(ctx, store, fieldName, field, audit, operation, plan, translationMap)
 
 		if tErr != nil {
 			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, plan.ModelName, err)
@@ -118,8 +111,6 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 		translatedAudit.TranslatedFields = append(translatedAudit.TranslatedFields, transField)
 
 	}
-
-	//Changes: (Meta) Could we pass the translated fields here to save some meta data searching?
 
 	_, err = SetTranslatedAuditTableSpecificMetaData(ctx, store, &translatedAudit, audit, operation)
 	if err != nil {
@@ -136,7 +127,6 @@ func translateField(
 	fieldName string,
 	field models.AuditField,
 	audit *models.AuditChange,
-	actorAccount *authentication.UserAccount,
 	operation models.DatabaseOperation,
 	modelPlan *models.ModelPlan,
 	translationMap map[string]models.ITranslationField) (*models.TranslatedAuditField, bool, error) {
