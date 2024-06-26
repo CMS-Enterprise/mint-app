@@ -55,7 +55,7 @@ const CheckboxField = ({
       </label>
       <p
         className={classnames(
-          'margin-y-1 margin-left-4 line-height-body-3 font-body-2xs',
+          'margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line',
           {
             'text-gray-30': disabled
           }
