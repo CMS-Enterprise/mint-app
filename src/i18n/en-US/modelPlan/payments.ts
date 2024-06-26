@@ -227,6 +227,8 @@ export const payments: TranslationPayments = {
     label: 'What will you pay?',
     sublabel:
       'If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.',
+    questionTooltip:
+      'If claims-based payments or non-claims-based payments are selected, there will be additional questions to answer.',
     dataType: 'enum',
     formType: 'checkbox',
     hideRelatedQuestionAlert: true,
@@ -278,6 +280,8 @@ export const payments: TranslationPayments = {
     label: 'Select which claims-based payments will you pay.',
     sublabel:
       'If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.',
+    questionTooltip:
+      'If reductions to beneficiary cost-sharing or other are selected, there will be additional questions to answer.',
     disconnectedLabel: `questionNotApplicableBeneficiary`,
     dataType: 'enum',
     formType: 'multiSelect',
@@ -366,6 +370,8 @@ export const payments: TranslationPayments = {
     label: 'Will the model change the Medicare Physician Fee Schedule?',
     sublabel:
       'If so, it might impact Critical Access Hospitals paid under Method II.',
+    questionTooltip:
+      'If so, it might impact Critical Access Hospitals paid under Method II.',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -441,6 +447,8 @@ export const payments: TranslationPayments = {
     label: 'Are you anticipating creating dependencies between services?',
     sublabel:
       'Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.',
+    questionTooltip:
+      'Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -490,6 +498,8 @@ export const payments: TranslationPayments = {
     dbField: 'providing_third_party_file',
     label:
       'Will your contractor be providing data (a Third Party File) that will be used in claims processing?',
+    questionTooltip:
+      'Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -541,6 +551,8 @@ export const payments: TranslationPayments = {
       'Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model?',
     readonlyLabel:
       'Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model? If so, please specify which services.',
+    questionTooltip:
+      'For example, we would assess cost-sharing for the service itself, but not for an add-on payment.',
     dataType: 'boolean',
     formType: 'radio',
     options: {
@@ -678,6 +690,8 @@ export const payments: TranslationPayments = {
     dbField: 'number_payments_per_pay_cycle',
     label: 'Number of payments per payment cycle',
     sublabel: 'This only applies if you are making non-claims-based payments',
+    questionTooltip:
+      'Note: If there will be 30+ payees we recommend a contractor.',
     dataType: 'string',
     formType: 'text',
     parentRelation: () => payments.payType,
@@ -1007,6 +1021,8 @@ export const payments: TranslationPayments = {
     goField: 'PaymentDemandRecoupmentFrequency',
     dbField: 'payment_demand_recoupment_frequency',
     label: 'How frequently do you anticipate making demands/recoupments?',
+    questionTooltip:
+      'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
     dataType: 'enum',
     formType: 'checkbox',
     options: frequencyOptions,
