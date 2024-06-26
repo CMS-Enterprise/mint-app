@@ -196,6 +196,8 @@ export const basics: TranslationBasics = {
     label: 'Goal',
     sublabel:
       'Please include the high level goal of the program and a description of the project.',
+    questionTooltip:
+      'The high level goal of the program and a description of the project.',
     dataType: 'string',
     formType: 'textarea',
     filterGroups: [
@@ -354,6 +356,8 @@ export const basics: TranslationBasics = {
       'If timelines are tight, might there be pieces of the model that can be phased in over time?',
     sublabel:
       'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
+    questionTooltip:
+      'That is, the basic model would start at the earliest possible date, but additional facets could be phased in at a later quarter.',
     dataType: 'boolean',
     formType: 'radio',
     isPageStart: true,
