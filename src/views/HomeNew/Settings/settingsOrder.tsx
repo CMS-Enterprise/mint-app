@@ -24,7 +24,7 @@ import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 
-import { HomepageSettingsLocationType } from '.';
+import { HomepageLocationStateType, HomepageSettingsLocationType } from '.';
 
 import './index.scss';
 
@@ -66,24 +66,21 @@ const SettingsOrder = () => {
 
   const history = useHistory();
 
-  const location = useLocation<{
-    homepageSettings: HomepageSettingsLocationType['homepageSettings'];
-  }>();
+  const { state } = useLocation<HomepageLocationStateType>();
 
   const { data, loading } = useGetHomepageSettingsQuery();
 
   const [mutate] = useUpdateHomepageSettingsMutation();
 
+  // State to manage order of selected settings, defaults to the current router state
   const [selectedSettings, setSelectedSettings] = useState<
     HomepageSettingsLocationType['homepageSettings'] | undefined
-  >(
-    location.state
-      ?.homepageSettings as HomepageSettingsLocationType['homepageSettings']
-  );
+  >(state?.homepageSettings);
 
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
+  // Waits for data to be loaded, then sets the selected settings to the current state if no router state
   useEffect(() => {
     if (!loading && !selectedSettings) {
       setSelectedSettings({
@@ -109,7 +106,7 @@ const SettingsOrder = () => {
     });
 
     return () => {};
-  }, [history, location, selectedSettings]);
+  }, [history, selectedSettings]);
 
   const handleSubmit = () => {
     mutate({
@@ -120,6 +117,7 @@ const SettingsOrder = () => {
       }
     })
       .then(() => {
+        // Removes router state upon successful mutation
         window.history.replaceState({}, '');
         history.push('/');
       })

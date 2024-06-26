@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
@@ -28,7 +28,7 @@ import Alert from 'components/shared/Alert';
 import MultiSelect from 'components/shared/MultiSelect';
 import { treatAsOtherSolutions } from 'views/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 
-import { HomepageSettingsLocationType } from '.';
+import { HomepageLocationStateType, HomepageSettingsLocationType } from '.';
 
 import './index.scss';
 
@@ -44,9 +44,7 @@ const SelectSolutionSettings = () => {
 
   const history = useHistory();
 
-  const location = useLocation<{
-    homepageSettings: HomepageSettingsLocationType['homepageSettings'];
-  }>();
+  const { state } = useLocation<HomepageLocationStateType>();
 
   const { data, loading, error } = useGetHomepageSettingsQuery();
 
@@ -55,39 +53,42 @@ const SelectSolutionSettings = () => {
     loading: solutionLoading
   } = useGetPossibleOperationalSolutionsQuery();
 
-  const possibleOperationalSolutions =
-    solutionData?.possibleOperationalSolutions || [];
+  // Sorts, filters, and formats the possible operational solutions for multiselect component
+  const solutionOptions = useMemo(
+    () =>
+      (solutionData?.possibleOperationalSolutions || [])
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .filter(
+          solution =>
+            !treatAsOtherSolutions.includes(
+              solution.key as OperationalSolutionKey
+            )
+        )
+        .map(solution => {
+          return {
+            label: solution.name,
+            value: solution.key
+          };
+        }),
+    [solutionData?.possibleOperationalSolutions]
+  );
 
-  const solutionOptions = [...possibleOperationalSolutions]
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .filter(
-      solution =>
-        !treatAsOtherSolutions.includes(solution.key as OperationalSolutionKey)
-    )
-    .map(solution => {
-      return {
-        label: solution.name,
-        value: solution.key
-      };
-    });
+  // State to manage order of selected settings, defaults to the current router state
+  const [selectedSettings, setSelectedSettings] = useState<
+    HomepageSettingsLocationType['homepageSettings'] | undefined
+  >(state?.homepageSettings);
+
+  // Waits for data to be loaded, then sets the selected settings to the current state if no router state
+  useEffect(() => {
+    if (!loading && !selectedSettings) {
+      setSelectedSettings(state?.homepageSettings);
+    }
+  }, [loading, selectedSettings, state?.homepageSettings]);
 
   const [mutate] = useUpdateHomepageSettingsMutation();
 
-  const [selectedSettings, setSelectedSettings] = useState<
-    HomepageSettingsLocationType['homepageSettings'] | undefined
-  >(
-    location.state
-      ?.homepageSettings as HomepageSettingsLocationType['homepageSettings']
-  );
-
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!loading && !selectedSettings) {
-      setSelectedSettings(location.state?.homepageSettings);
-    }
-  }, [loading, selectedSettings, location.state?.homepageSettings]);
 
   // Passes the current state to the previous page if navigating back
   useEffect(() => {
@@ -106,7 +107,7 @@ const SelectSolutionSettings = () => {
     });
 
     return () => {};
-  }, [history, location, selectedSettings]);
+  }, [history, selectedSettings]);
 
   const handleFormSubmit = () => {
     mutate({

@@ -33,6 +33,10 @@ export type HomepageSettingsLocationType = {
   homepageSettings: HomepageSettingsFormType;
 };
 
+export type HomepageLocationStateType = {
+  homepageSettings: HomepageSettingsLocationType['homepageSettings'];
+};
+
 type HomepageSettingsFormType = {
   viewCustomization: GetHomepageSettingsQuery['userViewCustomization']['viewCustomization'];
 };
@@ -42,9 +46,8 @@ const HomePageSettings = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const history = useHistory();
-  const location = useLocation();
 
-  const settingsState = location.state as HomepageSettingsLocationType;
+  const { state } = useLocation<HomepageLocationStateType>();
 
   const formikRef = useRef<FormikProps<HomepageSettingsFormType>>(null);
 
@@ -53,6 +56,7 @@ const HomePageSettings = () => {
   const possibleOperationalSolutions =
     data?.userViewCustomization.possibleOperationalSolutions || [];
 
+  // Sends formik values to next page through router state, no mutation needed
   const handleSettingsSubmit = () => {
     history.push({
       pathname: '/homepage-settings/order',
@@ -62,6 +66,7 @@ const HomePageSettings = () => {
     });
   };
 
+  // Get the settings options from the translation file
   const settingOptions: Record<
     ViewCustomizationType,
     Record<string, string>
@@ -71,7 +76,7 @@ const HomePageSettings = () => {
 
   const initialValues: HomepageSettingsFormType = {
     viewCustomization:
-      settingsState?.homepageSettings?.viewCustomization ||
+      state?.homepageSettings?.viewCustomization ||
       data?.userViewCustomization.viewCustomization ||
       []
   };
@@ -159,6 +164,7 @@ const HomePageSettings = () => {
                               {settingOptions[settionOption].description}
                             </p>
 
+                            {/* If MODELS_BY_OPERATIONAL_SOLUTION and no selected solutions render out a link to add solutions  */}
                             {settionOption ===
                               ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
                               possibleOperationalSolutions.length === 0 && (
@@ -178,6 +184,7 @@ const HomePageSettings = () => {
                                 </UswdsReactLink>
                               )}
 
+                            {/* If MODELS_BY_OPERATIONAL_SOLUTION selected solutions, render solution and link to update  */}
                             {settionOption ===
                               ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
                               possibleOperationalSolutions.length > 0 && (
