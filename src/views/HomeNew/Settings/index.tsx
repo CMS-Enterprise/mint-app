@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
@@ -25,6 +25,7 @@ import MainContent from 'components/MainContent';
 import Alert from 'components/shared/Alert';
 import CheckboxField from 'components/shared/CheckboxField';
 import { getKeys } from 'types/translation';
+import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
@@ -53,8 +54,15 @@ const HomePageSettings = () => {
 
   const { data, loading, error } = useGetHomepageSettingsQuery();
 
-  const possibleOperationalSolutions =
-    data?.userViewCustomization.possibleOperationalSolutions || [];
+  // Sorts, and replaces any underscores within solution acronyms
+  const selectedSolutions = useMemo(() => {
+    const possibleOperationalSolutions =
+      data?.userViewCustomization.possibleOperationalSolutions || [];
+
+    return [...helpSolutions]
+      .filter(solution => possibleOperationalSolutions.includes(solution.enum))
+      .map(solution => solution.acronym || solution.name);
+  }, [data?.userViewCustomization]);
 
   // Sends formik values to next page through router state, no mutation needed
   const handleSettingsSubmit = () => {
@@ -167,7 +175,7 @@ const HomePageSettings = () => {
                             {/* If MODELS_BY_OPERATIONAL_SOLUTION and no selected solutions render out a link to add solutions  */}
                             {settionOption ===
                               ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
-                              possibleOperationalSolutions.length === 0 && (
+                              selectedSolutions.length === 0 && (
                                 <UswdsReactLink
                                   to={{
                                     pathname: '/homepage-settings/solutions',
@@ -187,10 +195,10 @@ const HomePageSettings = () => {
                             {/* If MODELS_BY_OPERATIONAL_SOLUTION selected solutions, render solution and link to update  */}
                             {settionOption ===
                               ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
-                              possibleOperationalSolutions.length > 0 && (
+                              selectedSolutions.length > 0 && (
                                 <div className="display-flex padding-left-4 padding-right-2">
                                   <p className="text-bold margin-0 margin-right-105">
-                                    {possibleOperationalSolutions.join(', ')}
+                                    {selectedSolutions.join(', ')}
                                   </p>
                                   <span className="margin-right-105">|</span>
                                   <UswdsReactLink
