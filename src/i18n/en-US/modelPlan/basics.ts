@@ -404,7 +404,7 @@ export const basicsMisc: Record<string, string> = {
   highLevelTimeline: 'Anticipated high level timeline',
   clearance: 'Clearance',
   clearanceInfo:
-    'When you think you’ll begin internal (CMMI) clearance through when you’ll complete OMB/ASRF clearance',
+    'When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance',
   applicationPeriod: 'Application period',
   demonstrationPerformance: 'Performance period',
   demonstrationPerformanceInfo:

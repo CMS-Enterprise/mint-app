@@ -37,6 +37,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       MEDICARE_PROVIDERS:
         'Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.'
     },
+    tooltips: {
+      MEDICARE_PROVIDERS:
+        'Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.'
+    },
 
     optionsRelatedInfo: {
       MEDICARE_PROVIDERS: 'medicareProviderType',
@@ -231,6 +235,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NA: 'Not applicable'
     },
     optionsLabels: {
+      NOFO: 'CMMI writes, Office of General Council (OGC) reviews and approves'
+    },
+    tooltips: {
       NOFO: 'CMMI writes, Office of General Council (OGC) reviews and approves'
     },
     optionsRelatedInfo: {

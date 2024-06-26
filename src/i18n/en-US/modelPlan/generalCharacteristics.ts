@@ -1007,7 +1007,12 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       MEDICAID: '(1115, other)',
       PROGRAM_PAYMENT:
         '(e.g., SNF 3-day stay, Inpatient-Only rule)\n Note: CMMI writes, Office of General Council (OGC) advises, full clearance process is required'
-      // TODO: line break for above
+    },
+    tooltips: {
+      FRAUD_ABUSE: 'Note: Federal Waiver team writes',
+      MEDICAID: '(1115, other)',
+      PROGRAM_PAYMENT:
+        '(e.g., SNF 3-day stay, Inpatient-Only rule)\n Note: CMMI writes, Office of General Council (OGC) advises, full clearance process is required'
     },
     filterGroups: [ModelViewFilter.CMMI]
   },

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import {
   Grid,
+  Icon,
   Link as TrussLink,
   ProcessList,
   ProcessListHeading,
@@ -15,6 +16,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/shared/SectionWrapper';
+import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
@@ -267,6 +269,15 @@ const ReadOnlyModelBasics = ({
                     className="font-body-sm line-height-sans-4"
                   >
                     {basicsMiscT('clearance')}
+                    <span className="top-2px position-relative text-normal">
+                      <Tooltip
+                        label={basicsMiscT('clearanceInfo')}
+                        position="right"
+                        className="margin-left-05"
+                      >
+                        <Icon.Info className="text-base-light" />
+                      </Tooltip>
+                    </span>
                   </ProcessListHeading>
 
                   <div className="mobile-lg:display-flex">
@@ -324,6 +335,15 @@ const ReadOnlyModelBasics = ({
                     className="font-body-sm line-height-sans-4"
                   >
                     {basicsMiscT('demonstrationPerformance')}
+                    <span className="top-2px position-relative text-normal">
+                      <Tooltip
+                        label={basicsMiscT('demonstrationPerformanceInfo')}
+                        position="right"
+                        className="margin-left-05"
+                      >
+                        <Icon.Info className="text-base-light" />
+                      </Tooltip>
+                    </span>
                   </ProcessListHeading>
 
                   <div className="mobile-lg:display-flex">
