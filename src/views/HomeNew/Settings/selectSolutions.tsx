@@ -54,24 +54,25 @@ const SelectSolutionSettings = () => {
   } = useGetPossibleOperationalSolutionsQuery();
 
   // Sorts, filters, and formats the possible operational solutions for multiselect component
-  const solutionOptions = useMemo(
-    () =>
-      (solutionData?.possibleOperationalSolutions || [])
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .filter(
-          solution =>
-            !treatAsOtherSolutions.includes(
-              solution.key as OperationalSolutionKey
-            )
-        )
-        .map(solution => {
-          return {
-            label: solution.name,
-            value: solution.key
-          };
-        }),
-    [solutionData?.possibleOperationalSolutions]
-  );
+  const solutionOptions = useMemo(() => {
+    const possibleOperationalSolutions =
+      solutionData?.possibleOperationalSolutions || [];
+
+    return [...possibleOperationalSolutions]
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .filter(
+        solution =>
+          !treatAsOtherSolutions.includes(
+            solution.key as OperationalSolutionKey
+          )
+      )
+      .map(solution => {
+        return {
+          label: solution.name,
+          value: solution.key
+        };
+      });
+  }, [solutionData?.possibleOperationalSolutions]);
 
   // State to manage order of selected settings, defaults to the current router state
   const [selectedSettings, setSelectedSettings] = useState<
