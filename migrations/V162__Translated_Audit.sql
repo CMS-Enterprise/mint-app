@@ -51,21 +51,17 @@ COMMENT ON COLUMN translated_audit.actor_id IS 'Identifier of the user who perfo
 COMMENT ON COLUMN translated_audit.change_id IS 'Foreign key to the untranslated change source of this translation';
 COMMENT ON COLUMN translated_audit.date IS 'Timestamp indicating the exact time of the change.';
 
-
-COMMENT ON COLUMN translated_audit.table_id IS 'Foreign key to the audit.table_config table'
-COMMENT ON COLUMN translated_audit.primary_key IS 'The primary key of the record of the original audit record.'
-COMMENT ON COLUMN translated_audit.action IS 'Specifies what type of action caused the audit '
+COMMENT ON COLUMN translated_audit.table_id IS 'Foreign key to the audit.table_config table';
+COMMENT ON COLUMN translated_audit.primary_key IS 'The primary key of the record of the original audit record.';
+COMMENT ON COLUMN translated_audit.action IS 'Specifies what type of action caused the audit ';
 COMMENT ON COLUMN translated_audit.restricted IS 'This column specifies if the data should be restricted to users who have elevated permissions';
-COMMENT ON COLUMN translated_audit.meta_data_type IS 'Enum type which specifies what type of meta data to expect in the meta data column. This is used for deserialization'
+COMMENT ON COLUMN translated_audit.meta_data_type IS 'Enum type which specifies what type of meta data to expect in the meta data column. This is used for deserialization';
 COMMENT ON COLUMN translated_audit.meta_data IS 'JSONB data storing the details of the changes made.';
 COMMENT ON COLUMN translated_audit.created_by IS 'Unique identifier of the user who created the audit trail change.';
 COMMENT ON COLUMN translated_audit.created_dts IS 'Timestamp with time zone indicating the creation time of the audit trail change.';
 COMMENT ON COLUMN translated_audit.modified_by IS 'Unique identifier of the user who last modified the audit trail change.';
 COMMENT ON COLUMN translated_audit.modified_dts IS 'Timestamp with time zone indicating the last modification time of the audit trail change.';
 
-
-
--- Changes: (Serialization) Ensure that we only allow one entry in a time span per user. We wouldn't want to have multiple for that range
 
 CREATE TYPE AUDIT_FIELD_CHANGE_TYPE AS ENUM (
     'ANSWERED', 'UPDATED', 'REMOVED', 'UNCHANGED'
@@ -100,12 +96,14 @@ CREATE TYPE TRANSLATION_FORM_TYPE AS ENUM (
     'RANGEINPUT'
 );
 
+COMMENT ON TYPE TRANSLATION_FORM_TYPE IS 'What form type was used to select the answer for this question';
+
 CREATE TYPE TRANSLATION_QUESTION_TYPE AS ENUM (
     'OTHER',
     'NOTE'
 );
 
-COMMENT ON TYPE TRANSLATION_DATA_TYPE IS 'Represents the FORM type of the translation field';
+COMMENT ON TYPE TRANSLATION_QUESTION_TYPE IS 'Was the question a note or other? Null for a standard question';
 
 -- Changes: (Structure) Double check the data and form type columns. Can they ever be null? Eg what happens when we don't find a translation? Should we make a new type, or make it nullable?
 -- Currently allowing them to be null if a translation is not found
