@@ -273,9 +273,9 @@ export const CharacteristicsContent = () => {
           return false;
         }
 
-        const formValues = formikRef?.current?.values!;
+        const formValues = formikRef?.current?.values;
 
-        // Getting the inital values of model links
+        // Getting the initial values of model links
         const {
           resemblesExistingModelLinks: resemblesExistingModelLinksInitial,
           participationInModelPreconditionLinks: participationInModelPreconditionLinksInitial,
