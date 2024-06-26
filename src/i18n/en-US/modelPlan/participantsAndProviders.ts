@@ -51,6 +51,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'MedicareProviderType',
     dbField: 'medicare_provider_type',
     label: 'Which type of Medicare providers/suppliers?',
+    sublabel:
+      'Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.',
     dataType: 'string',
     formType: 'textarea',
     isOtherType: true,

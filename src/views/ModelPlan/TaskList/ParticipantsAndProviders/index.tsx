@@ -282,6 +282,11 @@ export const ParticipantsAndProvidersContent = () => {
                                   'medicareProviderType.label'
                                 )}
                               </Label>
+                              <p className="text-base margin-0 line-height-body-3">
+                                {participantsAndProvidersT(
+                                  'medicareProviderType.sublabel'
+                                )}
+                              </p>
                               <FieldErrorMsg>
                                 {flatErrors.medicareProviderType}
                               </FieldErrorMsg>
