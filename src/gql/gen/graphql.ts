@@ -2522,7 +2522,7 @@ export type Query = {
   existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
-  modelPlansByOperationalSolutionKey: Array<Maybe<ModelPlanAndOperationalSolution>>;
+  modelPlansByOperationalSolutionKey: Array<ModelPlanAndOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;

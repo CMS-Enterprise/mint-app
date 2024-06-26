@@ -33,11 +33,6 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-type ModelPlanAndOperationalSolution struct {
-	OperationalSolution *models.OperationalSolution `json:"operationalSolution"`
-	ModelPlan           *models.ModelPlan           `json:"modelPlan"`
-}
-
 // NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
 type NDAInfo struct {
 	Agreed    bool       `json:"agreed"`

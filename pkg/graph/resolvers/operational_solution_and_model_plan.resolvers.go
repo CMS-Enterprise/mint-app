@@ -6,8 +6,10 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -24,8 +26,20 @@ func (r *modelPlanResolver) StatusPlannedActiveOrEnded(ctx context.Context, obj 
 	}
 }
 
+// OperationalSolution is the resolver for the operationalSolution field.
+func (r *modelPlanAndOperationalSolutionResolver) OperationalSolution(ctx context.Context, obj *models.ModelPlanAndOperationalSolution) (*models.OperationalSolution, error) {
+	panic(fmt.Errorf("not implemented: OperationalSolution - operationalSolution"))
+	// return dataloaders.GetOperationalSolutionsByIDs(ctx).Load(obj.OperationalSolutionID)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
+func (r *modelPlanAndOperationalSolutionResolver) ModelPlan(ctx context.Context, obj *models.ModelPlanAndOperationalSolution) (*models.ModelPlan, error) {
+	panic(fmt.Errorf("not implemented: ModelPlan - modelPlan"))
+	// return dataloaders.ModelPlanGetByIDLOADERctx).Load(obj.ModelPlanID)
+}
+
 // ModelPlansByOperationalSolutionKey is the resolver for the modelPlansByOperationalSolutionKey field.
-func (r *queryResolver) ModelPlansByOperationalSolutionKey(ctx context.Context, operationalSolutionKey models.OperationalSolutionKey) ([]*model.ModelPlanAndOperationalSolution, error) {
+func (r *queryResolver) ModelPlansByOperationalSolutionKey(ctx context.Context, operationalSolutionKey models.OperationalSolutionKey) ([]*models.ModelPlanAndOperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)
 
 	return ModelPlansByOperationalSolutionKey(
@@ -34,3 +48,10 @@ func (r *queryResolver) ModelPlansByOperationalSolutionKey(ctx context.Context, 
 		operationalSolutionKey,
 	)
 }
+
+// ModelPlanAndOperationalSolution returns generated.ModelPlanAndOperationalSolutionResolver implementation.
+func (r *Resolver) ModelPlanAndOperationalSolution() generated.ModelPlanAndOperationalSolutionResolver {
+	return &modelPlanAndOperationalSolutionResolver{r}
+}
+
+type modelPlanAndOperationalSolutionResolver struct{ *Resolver }

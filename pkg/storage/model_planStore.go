@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
@@ -367,10 +365,11 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	return sqlResult, nil
 }
 
+// TODO: Tom to update SQL to not over-select
 func (s *Store) ModelPlanGetByOperationalSolutionKey(
 	logger *zap.Logger,
 	opSolKey models.OperationalSolutionKey,
-) ([]*model.ModelPlanAndOperationalSolution, error) {
+) ([]*models.ModelPlanAndOperationalSolution, error) {
 
 	stmt, err := s.db.PrepareNamed(modelPlanGetByOperationalSolutionKeySQL)
 	if err != nil {
@@ -382,7 +381,8 @@ func (s *Store) ModelPlanGetByOperationalSolutionKey(
 		"operational_solution_key": opSolKey,
 	}
 
-	rows, err := stmt.Queryx(arg)
+	ids := []*models.ModelPlanAndOperationalSolution{}
+	err = stmt.Select(ids, arg)
 	if err != nil {
 		logger.Error(
 			"Failed to fetch model plans",
@@ -390,64 +390,9 @@ func (s *Store) ModelPlanGetByOperationalSolutionKey(
 		)
 		return nil, &apperrors.QueryError{
 			Err:       err,
-			Model:     models.ModelPlanAndOperationalSolutionRaw{},
+			Model:     models.ModelPlanAndOperationalSolution{},
 			Operation: apperrors.QueryFetch,
 		}
 	}
-	defer rows.Close()
-
-	var results []*model.ModelPlanAndOperationalSolution
-	for rows.Next() {
-		var rawResult models.ModelPlanAndOperationalSolutionRaw
-
-		// Scan into the raw structure to capture all fields
-		if err := rows.StructScan(&rawResult); err != nil {
-			return nil, err
-		}
-
-		if rawResult.OperationalSolutionID == uuid.Nil {
-			return nil, errors.New("OperationalSolutionID is nil")
-		}
-
-		// Manually map the fields from rawResult to operationalSolution and modelPlan
-		operationalSolution := models.NewOperationalSolutionFull(
-			rawResult.OperationalSolutionID,
-			rawResult.OperationalNeedID,
-			rawResult.SolutionType,
-			&rawResult.SolName,
-			&opSolKey,
-			rawResult.NameOther,
-			rawResult.PocName,
-			rawResult.PocEmail,
-			rawResult.MustStartDts,
-			rawResult.MustFinishDts,
-			rawResult.IsOther,
-			rawResult.IsCommonSolution,
-			rawResult.OtherHeader,
-			models.OpSolutionStatus(rawResult.OperationalSolutionStatus),
-			rawResult.OperationalSolutionCreatedBy,
-			rawResult.OperationalSolutionCreatedDts,
-			rawResult.OperationalSolutionModifiedBy,
-			rawResult.OperationalSolutionModifiedDts,
-		)
-
-		modelPlan := models.NewModelPlanFull(
-			rawResult.ModelPlanID,
-			rawResult.ModelName,
-			rawResult.Abbreviation,
-			rawResult.Archived,
-			models.ModelStatus(rawResult.ModelPlanStatus),
-			rawResult.ModelPlanCreatedBy,
-			rawResult.ModelPlanCreatedDts,
-			rawResult.ModelPlanModifiedBy,
-			rawResult.ModelPlanModifiedDts,
-		)
-
-		results = append(results, &model.ModelPlanAndOperationalSolution{
-			OperationalSolution: operationalSolution,
-			ModelPlan:           modelPlan,
-		})
-	}
-
-	return results, nil
+	return ids, nil
 }

@@ -52,6 +52,7 @@ type ResolverRoot interface {
 	ExistingModelLink() ExistingModelLinkResolver
 	ExistingModelLinks() ExistingModelLinksResolver
 	ModelPlan() ModelPlanResolver
+	ModelPlanAndOperationalSolution() ModelPlanAndOperationalSolutionResolver
 	ModelPlanSharedActivityMeta() ModelPlanSharedActivityMetaResolver
 	Mutation() MutationResolver
 	NewDiscussionRepliedActivityMeta() NewDiscussionRepliedActivityMetaResolver
@@ -1310,6 +1311,10 @@ type ModelPlanResolver interface {
 	OpSolutionLastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error)
 	StatusPlannedActiveOrEnded(ctx context.Context, obj *models.ModelPlan) (model.StatusPlannedActiveOrEnded, error)
 }
+type ModelPlanAndOperationalSolutionResolver interface {
+	OperationalSolution(ctx context.Context, obj *models.ModelPlanAndOperationalSolution) (*models.OperationalSolution, error)
+	ModelPlan(ctx context.Context, obj *models.ModelPlanAndOperationalSolution) (*models.ModelPlan, error)
+}
 type ModelPlanSharedActivityMetaResolver interface {
 	ModelPlan(ctx context.Context, obj *models.ModelPlanSharedActivityMeta) (*models.ModelPlan, error)
 }
@@ -1530,7 +1535,7 @@ type QueryResolver interface {
 	OperationalNeed(ctx context.Context, id uuid.UUID) (*models.OperationalNeed, error)
 	OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error)
 	OperationalSolution(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error)
-	ModelPlansByOperationalSolutionKey(ctx context.Context, operationalSolutionKey models.OperationalSolutionKey) ([]*model.ModelPlanAndOperationalSolution, error)
+	ModelPlansByOperationalSolutionKey(ctx context.Context, operationalSolutionKey models.OperationalSolutionKey) ([]*models.ModelPlanAndOperationalSolution, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 	PlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
 	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
@@ -9517,12 +9522,14 @@ extend type ModelPlan {
 }
 
 type ModelPlanAndOperationalSolution {
+  # modelPlanID: UUID!
+  # operationalSolutionID: UUID!
   operationalSolution: OperationalSolution!
   modelPlan: ModelPlan!
 }
 
 extend type Query {
-  modelPlansByOperationalSolutionKey(operationalSolutionKey: OperationalSolutionKey!): [ModelPlanAndOperationalSolution]!
+  modelPlansByOperationalSolutionKey(operationalSolutionKey: OperationalSolutionKey!): [ModelPlanAndOperationalSolution!]!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
 	{Name: "../schema/types/operational_solution_subtask.graphql", Input: `enum OperationalSolutionSubtaskStatus {
@@ -22131,7 +22138,7 @@ func (ec *executionContext) fieldContext_ModelPlan_statusPlannedActiveOrEnded(ct
 	return fc, nil
 }
 
-func (ec *executionContext) _ModelPlanAndOperationalSolution_operationalSolution(ctx context.Context, field graphql.CollectedField, obj *model.ModelPlanAndOperationalSolution) (ret graphql.Marshaler) {
+func (ec *executionContext) _ModelPlanAndOperationalSolution_operationalSolution(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanAndOperationalSolution) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ModelPlanAndOperationalSolution_operationalSolution(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -22145,7 +22152,7 @@ func (ec *executionContext) _ModelPlanAndOperationalSolution_operationalSolution
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.OperationalSolution, nil
+		return ec.resolvers.ModelPlanAndOperationalSolution().OperationalSolution(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -22166,8 +22173,8 @@ func (ec *executionContext) fieldContext_ModelPlanAndOperationalSolution_operati
 	fc = &graphql.FieldContext{
 		Object:     "ModelPlanAndOperationalSolution",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
@@ -22223,7 +22230,7 @@ func (ec *executionContext) fieldContext_ModelPlanAndOperationalSolution_operati
 	return fc, nil
 }
 
-func (ec *executionContext) _ModelPlanAndOperationalSolution_modelPlan(ctx context.Context, field graphql.CollectedField, obj *model.ModelPlanAndOperationalSolution) (ret graphql.Marshaler) {
+func (ec *executionContext) _ModelPlanAndOperationalSolution_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanAndOperationalSolution) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ModelPlanAndOperationalSolution_modelPlan(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -22237,7 +22244,7 @@ func (ec *executionContext) _ModelPlanAndOperationalSolution_modelPlan(ctx conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ModelPlan, nil
+		return ec.resolvers.ModelPlanAndOperationalSolution().ModelPlan(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -22258,8 +22265,8 @@ func (ec *executionContext) fieldContext_ModelPlanAndOperationalSolution_modelPl
 	fc = &graphql.FieldContext{
 		Object:     "ModelPlanAndOperationalSolution",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
@@ -57716,10 +57723,10 @@ func (ec *executionContext) _Query_modelPlansByOperationalSolutionKey(ctx contex
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.([]*model.ModelPlanAndOperationalSolution); ok {
+		if data, ok := tmp.([]*models.ModelPlanAndOperationalSolution); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/graph/model.ModelPlanAndOperationalSolution`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/models.ModelPlanAndOperationalSolution`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -57731,9 +57738,9 @@ func (ec *executionContext) _Query_modelPlansByOperationalSolutionKey(ctx contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*model.ModelPlanAndOperationalSolution)
+	res := resTmp.([]*models.ModelPlanAndOperationalSolution)
 	fc.Result = res
-	return ec.marshalNModelPlanAndOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanAndOperationalSolution(ctx, field.Selections, res)
+	return ec.marshalNModelPlanAndOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanAndOperationalSolutionᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_modelPlansByOperationalSolutionKey(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -69570,7 +69577,7 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 
 var modelPlanAndOperationalSolutionImplementors = []string{"ModelPlanAndOperationalSolution"}
 
-func (ec *executionContext) _ModelPlanAndOperationalSolution(ctx context.Context, sel ast.SelectionSet, obj *model.ModelPlanAndOperationalSolution) graphql.Marshaler {
+func (ec *executionContext) _ModelPlanAndOperationalSolution(ctx context.Context, sel ast.SelectionSet, obj *models.ModelPlanAndOperationalSolution) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, modelPlanAndOperationalSolutionImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -69580,15 +69587,77 @@ func (ec *executionContext) _ModelPlanAndOperationalSolution(ctx context.Context
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("ModelPlanAndOperationalSolution")
 		case "operationalSolution":
-			out.Values[i] = ec._ModelPlanAndOperationalSolution_operationalSolution(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlanAndOperationalSolution_operationalSolution(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "modelPlan":
-			out.Values[i] = ec._ModelPlanAndOperationalSolution_modelPlan(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlanAndOperationalSolution_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -81624,7 +81693,7 @@ func (ec *executionContext) marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ec._ModelPlan(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNModelPlanAndOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanAndOperationalSolution(ctx context.Context, sel ast.SelectionSet, v []*model.ModelPlanAndOperationalSolution) graphql.Marshaler {
+func (ec *executionContext) marshalNModelPlanAndOperationalSolution2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanAndOperationalSolutionᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.ModelPlanAndOperationalSolution) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -81648,7 +81717,7 @@ func (ec *executionContext) marshalNModelPlanAndOperationalSolution2ᚕᚖgithub
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOModelPlanAndOperationalSolution2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanAndOperationalSolution(ctx, sel, v[i])
+			ret[i] = ec.marshalNModelPlanAndOperationalSolution2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanAndOperationalSolution(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -81659,7 +81728,23 @@ func (ec *executionContext) marshalNModelPlanAndOperationalSolution2ᚕᚖgithub
 	}
 	wg.Wait()
 
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
 	return ret
+}
+
+func (ec *executionContext) marshalNModelPlanAndOperationalSolution2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanAndOperationalSolution(ctx context.Context, sel ast.SelectionSet, v *models.ModelPlanAndOperationalSolution) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._ModelPlanAndOperationalSolution(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNModelPlanChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
@@ -86955,13 +87040,6 @@ func (ec *executionContext) marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑ
 		return graphql.Null
 	}
 	return ec._ModelPlan(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOModelPlanAndOperationalSolution2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanAndOperationalSolution(ctx context.Context, sel ast.SelectionSet, v *model.ModelPlanAndOperationalSolution) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._ModelPlanAndOperationalSolution(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOModelStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx context.Context, v interface{}) (*models.ModelStatus, error) {
