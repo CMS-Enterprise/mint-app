@@ -1,8 +1,13 @@
 package storage
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
@@ -70,6 +75,27 @@ func (s *Store) OperationalSolutionGetByID(_ *zap.Logger, id uuid.UUID) (*models
 	}
 
 	return &solution, err
+}
+
+// OperationalSolutionGetByIDLOADER returns an operational solution by ID using a DataLoader
+func (s *Store) OperationalSolutionGetByIDLOADER(
+	_ *zap.Logger,
+	paramTableJSON string,
+) ([]*models.OperationalSolution, error) {
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	opSols, err := sqlutils.SelectProcedure[models.OperationalSolution](
+		s.db,
+		sqlqueries.OperationalSolution.GetByIDLOADER,
+		arg,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("issue selecting operational solution by id with the data loader, %w", err)
+	}
+
+	return opSols, nil
 }
 
 // OperationalSolutionInsert inserts an operational solution if it already exists

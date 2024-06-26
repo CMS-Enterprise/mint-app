@@ -365,7 +365,6 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	return sqlResult, nil
 }
 
-// TODO: Tom to update SQL to not over-select
 func (s *Store) ModelPlanGetByOperationalSolutionKey(
 	logger *zap.Logger,
 	opSolKey models.OperationalSolutionKey,
@@ -381,8 +380,8 @@ func (s *Store) ModelPlanGetByOperationalSolutionKey(
 		"operational_solution_key": opSolKey,
 	}
 
-	ids := []*models.ModelPlanAndOperationalSolution{}
-	err = stmt.Select(ids, arg)
+	modelPlanAndOpSols := []*models.ModelPlanAndOperationalSolution{}
+	err = stmt.Select(&modelPlanAndOpSols, arg)
 	if err != nil {
 		logger.Error(
 			"Failed to fetch model plans",
@@ -394,5 +393,5 @@ func (s *Store) ModelPlanGetByOperationalSolutionKey(
 			Operation: apperrors.QueryFetch,
 		}
 	}
-	return ids, nil
+	return modelPlanAndOpSols, nil
 }

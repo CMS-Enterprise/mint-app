@@ -8,7 +8,7 @@ import (
 func (suite *ResolverSuite) createModelPlanWithNeedAndOpSol(
 	needType models.OperationalNeedKey,
 	solType models.OperationalSolutionKey,
-) *models.ModelPlan {
+) (*models.ModelPlan, *models.OperationalSolution) {
 	plan := suite.createModelPlan("plan for solutions")
 
 	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(
@@ -21,7 +21,7 @@ func (suite *ResolverSuite) createModelPlanWithNeedAndOpSol(
 	changes := map[string]interface{}{}
 	changes["needed"] = true
 
-	_, _ = OperationalSolutionCreate(
+	opSol, err := OperationalSolutionCreate(
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
@@ -33,8 +33,9 @@ func (suite *ResolverSuite) createModelPlanWithNeedAndOpSol(
 		changes,
 		suite.testConfigs.Principal,
 	)
+	suite.NoError(err)
 
-	return plan
+	return plan, opSol
 }
 
 // TestModelPlanGetByOperationalSolutionKey is the test function for ModelPlanGetByOperationalSolutionKey
@@ -42,7 +43,7 @@ func (suite *ResolverSuite) TestModelPlanGetByOperationalSolutionKey() {
 	needType := models.OpNKManageCd
 	solType := models.OpSKMarx
 
-	plan := suite.createModelPlanWithNeedAndOpSol(
+	plan, opSol := suite.createModelPlanWithNeedAndOpSol(
 		needType,
 		solType,
 	)
@@ -53,8 +54,8 @@ func (suite *ResolverSuite) TestModelPlanGetByOperationalSolutionKey() {
 	)
 	suite.NoError(err)
 	suite.Len(modelPlanAndOpSols, 1)
-	suite.EqualValues(plan.ID, modelPlanAndOpSols[0].ModelPlan.ID)
-	suite.EqualValues(26, *modelPlanAndOpSols[0].OperationalSolution.SolutionType) // 26 is the value of OpSKMarx
+	suite.EqualValues(plan.ID, modelPlanAndOpSols[0].ModelPlanID)
+	suite.EqualValues(opSol.ID, modelPlanAndOpSols[0].OperationalSolutionID)
 }
 
 // TestModelPlanWithoutOperationalSolution checks if a model plan without a valid operational solution is not fetched
@@ -84,11 +85,12 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithSameSolutionType() {
 	needType := models.OpNKManageCd
 	solType := models.OpSKMarx
 
-	_ = suite.createModelPlanWithNeedAndOpSol(
+	mpA, opSolA := suite.createModelPlanWithNeedAndOpSol(
 		needType,
 		solType,
 	)
-	_ = suite.createModelPlanWithNeedAndOpSol(
+
+	mpB, opSolB := suite.createModelPlanWithNeedAndOpSol(
 		needType,
 		solType,
 	)
@@ -99,39 +101,43 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithSameSolutionType() {
 	)
 	suite.NoError(err)
 	suite.Len(modelPlanAndOpSols, 2)
-	suite.EqualValues(26, *modelPlanAndOpSols[0].OperationalSolution.SolutionType) // 26 is the value of OpSKMarx
-	suite.EqualValues(26, *modelPlanAndOpSols[1].OperationalSolution.SolutionType) // 26 is the value of OpSKMarx
-
+	suite.EqualValues(mpA.ID, modelPlanAndOpSols[1].ModelPlanID)
+	suite.EqualValues(opSolA.ID, modelPlanAndOpSols[1].OperationalSolutionID)
+	suite.EqualValues(mpB.ID, modelPlanAndOpSols[0].ModelPlanID)
+	suite.EqualValues(opSolB.ID, modelPlanAndOpSols[0].OperationalSolutionID)
 }
 
 // TestMultipleModelPlansWithDifferentSolutionTypes checks if only the matching solution type is fetched
 func (suite *ResolverSuite) TestMultipleModelPlansWithDifferentSolutionTypes() {
 	needType := models.OpNKManageCd
-	solType1 := models.OpSKMarx
-	solType2 := models.OpSKCcw
+	solTypeA := models.OpSKMarx
+	solTypeB := models.OpSKCcw
 
-	suite.createModelPlanWithNeedAndOpSol(
+	mpA, opSolA := suite.createModelPlanWithNeedAndOpSol(
 		needType,
-		solType1,
+		solTypeA,
 	)
-	suite.createModelPlanWithNeedAndOpSol(
+
+	mpB, opSolB := suite.createModelPlanWithNeedAndOpSol(
 		needType,
-		solType2,
+		solTypeB,
 	)
 
 	modelPlanAndOpSols, err := suite.testConfigs.Store.ModelPlanGetByOperationalSolutionKey(
 		suite.testConfigs.Logger,
-		solType1,
+		solTypeA,
 	)
 	suite.NoError(err)
 	suite.Len(modelPlanAndOpSols, 1)
-	suite.EqualValues(26, *modelPlanAndOpSols[0].OperationalSolution.SolutionType) // 26 is the value of OpSKMarx
+	suite.EqualValues(mpA.ID, modelPlanAndOpSols[0].ModelPlanID)
+	suite.EqualValues(opSolA.ID, modelPlanAndOpSols[0].OperationalSolutionID)
 
 	modelPlanAndOpSols, err = suite.testConfigs.Store.ModelPlanGetByOperationalSolutionKey(
 		suite.testConfigs.Logger,
-		solType2,
+		solTypeB,
 	)
 	suite.NoError(err)
 	suite.Len(modelPlanAndOpSols, 1)
-	suite.EqualValues(5, *modelPlanAndOpSols[0].OperationalSolution.SolutionType) // 5 is the value of OpSKCcw
+	suite.EqualValues(mpB.ID, modelPlanAndOpSols[0].ModelPlanID)
+	suite.EqualValues(opSolB.ID, modelPlanAndOpSols[0].OperationalSolutionID)
 }
