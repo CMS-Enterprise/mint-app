@@ -37,7 +37,7 @@ import './index.scss';
  * @returns {Record<'viewCustomization', Array<ViewCustomizationType>>} A new array with the item moved, or the original array if the move is not possible.
  */
 
-const moveItem = (
+export const moveItem = (
   array: ViewCustomizationType[],
   index: number,
   direction: 'up' | 'down'

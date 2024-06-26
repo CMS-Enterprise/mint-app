@@ -168,7 +168,7 @@ const HomePageSettings = () => {
                               className="text-bold"
                             />
 
-                            <p className="padding-left-4 padding-right-2 margin-y-1 font-body-xs">
+                            <p className="padding-left-4 padding-right-2 margin-y-0 font-body-xs">
                               {settingOptions[settionOption].description}
                             </p>
 
@@ -184,7 +184,7 @@ const HomePageSettings = () => {
                                         ?.values as any
                                     }
                                   }}
-                                  className="padding-left-4 text-bold display-flex flex-align-center"
+                                  className="padding-left-4 text-bold display-flex flex-align-center margin-top-1"
                                 >
                                   {homepageSettingsT('selectSolutions')}
 
@@ -196,7 +196,7 @@ const HomePageSettings = () => {
                             {settionOption ===
                               ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
                               selectedSolutions.length > 0 && (
-                                <div className="display-flex padding-left-4 padding-right-2">
+                                <div className="display-flex padding-left-4 padding-right-2 margin-top-1">
                                   <p className="text-bold margin-0 margin-right-105">
                                     {selectedSolutions.join(', ')}
                                   </p>
