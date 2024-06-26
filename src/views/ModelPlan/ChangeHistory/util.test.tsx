@@ -78,8 +78,10 @@ const sortData: ChangeRecordType[][] = [
 describe('util.tsx', () => {
   // Test for isTranslationTaskListTable
   it('isTranslationTaskListTable', () => {
-    expect(isTranslationTaskListTable('plan_basics')).toBe(true);
-    expect(isTranslationTaskListTable('invalid_table')).toBe(false);
+    expect(isTranslationTaskListTable(TableName.PLAN_BASICS)).toBe(true);
+    expect(
+      isTranslationTaskListTable(TableName.OPERATIONAL_SOLUTION_SUBTASK)
+    ).toBe(false);
   });
 
   // Test for parseArray
