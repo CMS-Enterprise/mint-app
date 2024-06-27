@@ -29,18 +29,18 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	changes["nameOther"] = "AnotherSolution Again"
 	_, _ = OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 
-	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
+	opSols, err := OperationalSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
 	suite.Len(opSols, 2)
 
-	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, true)
+	opSols, err = OperationalSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, true)
 	suite.NoError(err)
 	suite.Len(opSols, 3) //We now have the possible need that is not needed
 
 	//INSERt the possible and return only needed types, verify it still returns 3
 	_, _ = OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, &solType, nil, suite.testConfigs.Principal)
 
-	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
+	opSols, err = OperationalSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
 	suite.Len(opSols, 3) //We still have 3 solutions, because they are now all needed
 
@@ -51,7 +51,7 @@ func (suite *ResolverSuite) TestOperationaSolutionsGetByOPNeedID() {
 	changes["nameOther"] = "Yet AnotherSolution Again"
 	_, _ = OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
 
-	opSols, err = OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
+	opSols, err = OperationalSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, need.ID, false)
 	suite.NoError(err)
 	suite.Len(opSols, 2)
 
@@ -78,7 +78,7 @@ func (suite *ResolverSuite) TestOperationalSolutionLoaderNotNeeded() {
 	numModels := 1
 	opNeedIds := makeMulipleModelsAndReturnNeedIDs(suite, numModels)
 
-	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, opNeedIds[0], false)
+	opSols, err := OperationalSolutionsAndPossibleGetByOPNeedIDLOADER(suite.testConfigs.Context, opNeedIds[0], false)
 	suite.Len(opSols, 0) // Should be an empty array, because there are no solutions at this point
 
 	suite.NoError(err)
@@ -86,7 +86,7 @@ func (suite *ResolverSuite) TestOperationalSolutionLoaderNotNeeded() {
 }
 
 func verifySolutionsLoader(ctx context.Context, operationalNeedID uuid.UUID) error { //TODO make this more robust, as we can't assert at this level
-	opSols, err := OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, operationalNeedID, true)
+	opSols, err := OperationalSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, operationalNeedID, true)
 	if err != nil {
 		return err
 	}

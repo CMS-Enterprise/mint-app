@@ -49,6 +49,9 @@ var modelPlanGetByIDLoaderSQL string
 //go:embed SQL/model_plan/get_op_solution_last_modified_dts_by_id_LOADER.sql
 var modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL string
 
+//go:embed SQL/model_plan/get_by_operational_solution_key.sql
+var modelPlanGetByOperationalSolutionKeySQL string
+
 // ModelPlanGetByModelPlanIDLOADER returns the model plan for a slice of ids
 func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
 
@@ -360,4 +363,35 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	}
 
 	return sqlResult, nil
+}
+
+func (s *Store) ModelPlanGetByOperationalSolutionKey(
+	logger *zap.Logger,
+	opSolKey models.OperationalSolutionKey,
+) ([]*models.ModelPlanAndOperationalSolution, error) {
+
+	stmt, err := s.db.PrepareNamed(modelPlanGetByOperationalSolutionKeySQL)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{
+		"operational_solution_key": opSolKey,
+	}
+
+	modelPlanAndOpSols := []*models.ModelPlanAndOperationalSolution{}
+	err = stmt.Select(&modelPlanAndOpSols, arg)
+	if err != nil {
+		logger.Error(
+			"Failed to fetch model plans",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlanAndOperationalSolution{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+	return modelPlanAndOpSols, nil
 }

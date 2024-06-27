@@ -1,0 +1,19 @@
+enum StatusPlannedActiveOrEnded {
+  PLANNED
+  ACTIVE
+  ENDED
+}
+
+extend type ModelPlan {
+  statusPlannedActiveOrEnded: StatusPlannedActiveOrEnded!
+}
+
+type ModelPlanAndOperationalSolution {
+  operationalSolution: OperationalSolution!
+  modelPlan: ModelPlan!
+}
+
+extend type Query {
+  modelPlansByOperationalSolutionKey(operationalSolutionKey: OperationalSolutionKey!): [ModelPlanAndOperationalSolution!]!
+  @hasRole(role: MINT_USER)
+}
