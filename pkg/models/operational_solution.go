@@ -37,54 +37,6 @@ func NewOperationalSolution(createdBy uuid.UUID, operationalNeedID uuid.UUID) *O
 	}
 }
 
-func NewOperationalSolutionFull(
-	id uuid.UUID,
-	operationalNeedID uuid.UUID,
-	solutionType *int,
-	name *string,
-	key *OperationalSolutionKey,
-	nameOther *string,
-	pocName *string,
-	pocEmail *string,
-	mustStartDts *time.Time,
-	mustFinishDts *time.Time,
-	isOther *bool,
-	isCommonSolution *bool,
-	otherHeader *string,
-	status OpSolutionStatus,
-	createdBy uuid.UUID,
-	createdDts time.Time,
-	modifiedBy *uuid.UUID,
-	modifiedDts *time.Time,
-) *OperationalSolution {
-	needed := true
-
-	opSol := OperationalSolution{
-		baseStruct:              NewBaseStruct(createdBy),
-		operationalNeedRelation: NewOperationalNeedRelation(operationalNeedID),
-		SolutionType:            solutionType,
-		Name:                    name,
-		Key:                     key,
-		NameOther:               nameOther,
-		PocName:                 pocName,
-		PocEmail:                pocEmail,
-		MustStartDts:            mustStartDts,
-		MustFinishDts:           mustFinishDts,
-		IsOther:                 isOther,
-		IsCommonSolution:        isCommonSolution,
-		OtherHeader:             otherHeader,
-		Status:                  status,
-		Needed:                  &needed,
-	}
-
-	opSol.ID = id
-	opSol.CreatedDts = createdDts
-	opSol.ModifiedBy = modifiedBy
-	opSol.ModifiedDts = modifiedDts
-
-	return &opSol
-}
-
 // OpSolutionStatus represents the types of OpSolutionStatus types.
 type OpSolutionStatus string
 

@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"fmt"
+	"github.com/pkg/errors"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -79,7 +79,7 @@ func (s *Store) OperationalSolutionGetByID(_ *zap.Logger, id uuid.UUID) (*models
 
 // OperationalSolutionGetByIDLOADER returns an operational solution by ID using a DataLoader
 func (s *Store) OperationalSolutionGetByIDLOADER(
-	_ *zap.Logger,
+	logger *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.OperationalSolution, error) {
 	arg := map[string]interface{}{
@@ -92,7 +92,9 @@ func (s *Store) OperationalSolutionGetByIDLOADER(
 		arg,
 	)
 	if err != nil {
-		return nil, fmt.Errorf("issue selecting operational solution by id with the data loader, %w", err)
+		errMessage := "error selecting operational solution"
+		logger.Error(errMessage, zap.Error(err))
+		return nil, errors.Wrap(err, errMessage)
 	}
 
 	return opSols, nil
