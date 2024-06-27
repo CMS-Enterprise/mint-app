@@ -18,8 +18,6 @@ var existingModelGetByModelPlanIDLoaderSQL string
 //go:embed SQL/existing_model/get_by_id.sql
 var existingModelGetByByIDSQL string
 
-// Changes: Move this to the sql queries package
-
 // ExistingModelGetByIDLOADER returns the existing model for a slice of model plan ids
 func (s *Store) ExistingModelGetByIDLOADER(
 	_ *zap.Logger,
