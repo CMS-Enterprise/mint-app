@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import Tooltip from 'components/shared/Tooltip';
 import { getKeys, TranslationPlanSection } from 'types/translation';
 
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
@@ -17,6 +20,8 @@ const ReadOnlyBody = ({
   config: Partial<TranslationPlanSection>;
   filteredView?: keyof typeof filterGroupKey;
 }) => {
+  const { t: basicsMiscT } = useTranslation('basicsMisc');
+
   return (
     <>
       {/* Map through all the translation config questions */}
@@ -40,6 +45,21 @@ const ReadOnlyBody = ({
                   {config[field]?.readonlyHeader}
                 </h3>
               )}
+
+            {field === 'performancePeriodStarts' && (
+              <p className="text-bold font-body-sm line-height-sans-4">
+                {basicsMiscT('demonstrationPerformance')}
+                <span className="top-2px position-relative text-normal">
+                  <Tooltip
+                    label={basicsMiscT('demonstrationPerformanceInfo')}
+                    position="right"
+                    className="margin-left-05"
+                  >
+                    <Icon.Info className="text-base-light" />
+                  </Tooltip>
+                </span>
+              </p>
+            )}
 
             {/* Checks if questions have config to be displayed side by side */}
             {config[field]?.adjacentPositioning ? (
