@@ -27,7 +27,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { HomepageSettingsType } from 'i18n/en-US/home/settings';
 import { getKeys } from 'types/translation';
 import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { NotFoundPartial } from 'views/NotFound';
+import NotFound from 'views/NotFound';
 
 import './index.scss';
 
@@ -98,7 +98,7 @@ const HomePageSettings = () => {
   };
 
   if ((!loading && error) || (!loading && !data?.userViewCustomization)) {
-    return <NotFoundPartial />;
+    return <NotFound />;
   }
 
   return (
