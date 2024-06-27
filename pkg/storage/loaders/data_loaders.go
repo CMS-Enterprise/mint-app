@@ -18,16 +18,17 @@ type DataLoaders struct {
 	DiscussionLoader      *WrappedDataLoader
 	DiscussionReplyLoader *WrappedDataLoader
 
-	OperationalNeedLoader                    *WrappedDataLoader
-	OperationSolutionLoader                  *WrappedDataLoader
-	OperationSolutionSubtaskLoader           *WrappedDataLoader
-	UserAccountLoader                        *WrappedDataLoader
-	DataReader                               *DataReader
-	ExistingModelLinkLoader                  *WrappedDataLoader
-	ExistingModelLinkNameLoader              *WrappedDataLoader
-	ExistingModelLoader                      *WrappedDataLoader
-	ModelPlanLoader                          *WrappedDataLoader
-	ModelPlanOpSolutionLastModifiedDtsLoader *WrappedDataLoader
+	OperationalNeedLoader                          *WrappedDataLoader
+	OperationalSolutionLoader                      *WrappedDataLoader
+	OperationalSolutionAndPossibleCollectionLoader *WrappedDataLoader
+	OperationSolutionSubtaskLoader                 *WrappedDataLoader
+	UserAccountLoader                              *WrappedDataLoader
+	DataReader                                     *DataReader
+	ExistingModelLinkLoader                        *WrappedDataLoader
+	ExistingModelLinkNameLoader                    *WrappedDataLoader
+	ExistingModelLoader                            *WrappedDataLoader
+	ModelPlanLoader                                *WrappedDataLoader
+	ModelPlanOpSolutionLastModifiedDtsLoader       *WrappedDataLoader
 
 	PossibleOperationSolutionContactLoader *WrappedDataLoader
 
@@ -58,7 +59,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.DiscussionReplyLoader = newWrappedDataLoader(loaders.GetDiscussionReplyByModelPlanID)
 
 	loaders.OperationalNeedLoader = newWrappedDataLoader(loaders.GetOperationalNeedsByModelPlanID)
-	loaders.OperationSolutionLoader = newWrappedDataLoader(loaders.GetOperationalSolutionAndPossibleCollectionByOperationalNeedID)
+	loaders.OperationalSolutionLoader = newWrappedDataLoader(loaders.OperationalSolutionGetByID)
+	loaders.OperationalSolutionAndPossibleCollectionLoader = newWrappedDataLoader(loaders.GetOperationalSolutionAndPossibleCollectionByOperationalNeedID)
 	loaders.OperationSolutionSubtaskLoader = newWrappedDataLoader(loaders.GetOperationalSolutionSubtaskByModelPlanID)
 	loaders.UserAccountLoader = newWrappedDataLoader(loaders.GetUserAccountsByIDLoader)
 

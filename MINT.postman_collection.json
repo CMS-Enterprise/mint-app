@@ -219,6 +219,27 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Model Plans By Operational Solution Key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query modelPlansByOperationalSolutionKey ($operationalSolutionKey: OperationalSolutionKey!) {\n    modelPlansByOperationalSolutionKey (operationalSolutionKey: $operationalSolutionKey) {\n        operationalSolution {\n            id\n            isCommonSolution\n            operationalNeedID\n            solutionType\n            needed\n            name\n            key\n            nameOther\n            pocName\n            pocEmail\n            mustStartDts\n            mustFinishDts\n            status\n            documents {\n                id\n                modelPlanID\n                fileType\n                bucket\n                fileKey\n                virusScanned\n                virusClean\n                restricted\n                fileName\n                fileSize\n                documentType\n                otherType\n                optionalNotes\n                downloadUrl\n                deletedAt\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            operationalSolutionSubtasks {\n                id\n                solutionID\n                name\n                status\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            createdByUserAccount \n            {\n                commonName\n            }   \n            modifiedByUserAccount\n            {\n                commonName\n            }\n        }\n        \n        modelPlan{\n            id\n            modelName\n            abbreviation\n            archived\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            status\n            isFavorite\n            isCollaborator\n            opSolutionLastModifiedDts\n        }\n    }\n}",
+								"variables": "{\n  \"operationalSolutionKey\": \"MARX\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
