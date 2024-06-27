@@ -21,7 +21,7 @@ REQUIRED
 REQUIRED
     Add instructions on how to test the changes in this PR
     This can be a list of steps to reproduce a bug, or a list of steps to verify a feature in the application
-    Include any example shell commands or postman requests that reviewers can run to test the changes
+    Include any example shell commands, SQL queries/commands, or Postman requests that reviewers can run to test the changes
 -->
 - 
 
