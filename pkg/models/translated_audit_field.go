@@ -49,8 +49,8 @@ type TranslatedAuditField struct {
 	QuestionType           *TranslationQuestionType `json:"questionType" db:"question_type"`
 	NotApplicableQuestions *pq.StringArray          `json:"notApplicableQuestions" db:"not_applicable_questions"`
 
-	DataType *TranslationDataType `json:"dataType" db:"data_type"`
-	FormType *TranslationFormType `json:"formType" db:"form_type"`
+	DataType TranslationDataType `json:"dataType" db:"data_type"`
+	FormType TranslationFormType `json:"formType" db:"form_type"`
 
 	// Changes: (Structure) Can we use a union generic type for these values instead of interface?
 	Old           interface{} `json:"old" db:"old"`
@@ -76,8 +76,8 @@ func NewTranslatedAuditField(
 	oldTranslated interface{},
 	new interface{},
 	newTranslated interface{},
-	dataType *TranslationDataType,
-	formType *TranslationFormType,
+	dataType TranslationDataType,
+	formType TranslationFormType,
 ) TranslatedAuditField {
 	version := 0
 	genericMeta := NewTranslatedAuditFieldMetaBaseStruct(version)

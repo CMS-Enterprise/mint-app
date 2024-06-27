@@ -229,8 +229,8 @@ func translateField(
 		translatedOld,
 		new,
 		translatedNew,
-		&dataType,
-		&formType,
+		dataType,
+		formType,
 	)
 	translatedField.ChangeType = changeType
 	translatedField.NotApplicableQuestions = conditionals
