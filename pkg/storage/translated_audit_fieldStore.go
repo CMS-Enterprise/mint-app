@@ -43,18 +43,6 @@ func TranslatedAuditFieldCreateCollection(np sqlutils.NamedPreparer, translatedA
 	return retFields, nil
 }
 
-// // TranslatedAuditFieldCollectionGetByTranslatedAuditID returns all TranslatedAuditFields for a translated audit id
-// func TranslatedAuditFieldCollectionGetByTranslatedAuditID(np sqlutils.NamedPreparer, translatedAuditID uuid.UUID) ([]*models.TranslatedAuditField, error) {
-
-// 	arg := map[string]interface{}{"translated_audit_id": translatedAuditID}
-
-// 	translatedAuditCollection, procErr := sqlutils.SelectProcedure[models.TranslatedAuditField](np, sqlqueries.TranslatedAuditField.CollectionGetByTranslatedAuditID, arg)
-// 	if procErr != nil {
-// 		return nil, fmt.Errorf("issue getting translated audit collection by translated_audit_id (%s)  : %w", translatedAuditID, procErr)
-// 	}
-// 	return translatedAuditCollection, nil
-// }
-
 // TranslatedAuditFieldCollectionGetByTranslatedAuditIDLoader returns all TranslatedAuditFields for a translated audit id
 func TranslatedAuditFieldCollectionGetByTranslatedAuditIDLoader(np sqlutils.NamedPreparer, paramTableJSON string) ([]*models.TranslatedAuditField, error) {
 
