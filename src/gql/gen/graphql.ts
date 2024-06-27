@@ -641,6 +641,7 @@ export type ModelPlanChanges = {
 
 export enum ModelPlanFilter {
   COLLAB_ONLY = 'COLLAB_ONLY',
+  FAVORITED = 'FAVORITED',
   INCLUDE_ALL = 'INCLUDE_ALL',
   WITH_CR_TDLS = 'WITH_CR_TDLS'
 }

@@ -40,6 +40,9 @@ var modelPlanCollectionByCollaboratorSQL string
 //go:embed SQL/model_plan/collection_with_crtdl.sql
 var modelPlanCollectionWithCRTDlSQL string
 
+//go:embed SQL/model_plan/collection_where_favorited_by_user_id.sql
+var modelPlanCollectionWhereFavoritedByUserID string
+
 //go:embed SQL/model_plan/delete_by_id.sql
 var modelPlanDeleteByID string
 
@@ -334,6 +337,43 @@ func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool)
 	if err != nil {
 		logger.Error(
 			"Failed to fetch model plans",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return modelPlans, nil
+}
+
+// ModelPlanCollectionFavorited returns a list of all model plans which are favorited by the user
+// Note: Externally, this is called "followed" but internally we call it "favorited"
+func (s *Store) ModelPlanCollectionFavorited(
+	logger *zap.Logger,
+	archived bool,
+	userID uuid.UUID,
+) ([]*models.ModelPlan, error) {
+
+	var modelPlans []*models.ModelPlan
+
+	stmt, err := s.db.PrepareNamed(modelPlanCollectionWhereFavoritedByUserID)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := map[string]interface{}{
+		"archived": archived,
+		"user_id":  userID,
+	}
+
+	err = stmt.Select(&modelPlans, arg)
+	if err != nil {
+		logger.Error(
+			"failed to fetch favorited model plans by user id",
 			zap.Error(err),
 		)
 		return nil, &apperrors.QueryError{

@@ -9249,6 +9249,7 @@ type LaunchDarklySettings {
   INCLUDE_ALL,
   COLLAB_ONLY,
   WITH_CR_TDLS,
+  FAVORITED,
 }
 
 enum ModelStatus {
