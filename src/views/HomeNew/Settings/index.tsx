@@ -54,7 +54,7 @@ const HomePageSettings = () => {
 
   const { data, loading, error } = useGetHomepageSettingsQuery();
 
-  // Sorts, and replaces any underscores within solution acronyms
+  // Sorts, and replaces any underscores within solution acronyms.  Returns an array of selected solutions acronyms or names
   const selectedSolutions = useMemo(() => {
     const possibleOperationalSolutions =
       data?.userViewCustomization.possibleOperationalSolutions || [];

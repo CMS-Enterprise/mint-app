@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
@@ -23,6 +23,8 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
+import useMessage from 'hooks/useMessage';
+import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { HomepageLocationStateType, HomepageSettingsLocationType } from '.';
 
@@ -66,19 +68,31 @@ const SettingsOrder = () => {
 
   const history = useHistory();
 
+  const { showMessageOnNextPage } = useMessage();
+
   const { state } = useLocation<HomepageLocationStateType>();
 
   const { data, loading } = useGetHomepageSettingsQuery();
 
   const [mutate] = useUpdateHomepageSettingsMutation();
 
+  // State management for mutation errors
+  const [mutationError, setMutationError] = useState<boolean>(false);
+
   // State to manage order of selected settings, defaults to the current router state
   const [selectedSettings, setSelectedSettings] = useState<
     HomepageSettingsLocationType['homepageSettings'] | undefined
   >(state?.homepageSettings);
 
-  // State management for mutation errors
-  const [mutationError, setMutationError] = useState<boolean>(false);
+  // Sorts, and replaces any underscores within solution acronyms.  Returns an array of selected solutions acronyms or names
+  const selectedSolutions = useMemo(() => {
+    const possibleOperationalSolutions =
+      data?.userViewCustomization.possibleOperationalSolutions || [];
+
+    return [...helpSolutions]
+      .filter(solution => possibleOperationalSolutions.includes(solution.enum))
+      .map(solution => solution.acronym || solution.name);
+  }, [data?.userViewCustomization]);
 
   // Waits for data to be loaded, then sets the selected settings to the current state if no router state
   useEffect(() => {
@@ -116,10 +130,19 @@ const SettingsOrder = () => {
         }
       }
     })
-      .then(() => {
-        // Removes router state upon successful mutation
-        window.history.replaceState({}, '');
-        history.push('/');
+      .then(response => {
+        if (!response?.errors) {
+          showMessageOnNextPage(
+            <>
+              <Alert type="success" slim className="margin-y-4">
+                {homepageSettingsT('success')}
+              </Alert>
+            </>
+          );
+          // Removes router state upon successful mutation
+          window.history.replaceState({}, '');
+          history.push('/');
+        }
       })
       .catch(() => setMutationError(true));
   };
@@ -187,9 +210,22 @@ const SettingsOrder = () => {
 
                         <Card className="settings__card settings__card-order margin-bottom-0 width-full">
                           <div className="padding-0 display-flex flex-align-center flex-justify">
-                            <p className="margin-0 padding-0 text-bold">
-                              {homepageSettingsT(`settings.${setting}.heading`)}
-                            </p>
+                            <div>
+                              <p className="margin-0 padding-0 text-bold">
+                                {homepageSettingsT(
+                                  `settings.${setting}.heading`
+                                )}
+                              </p>
+
+                              {/* If MODELS_BY_OPERATIONAL_SOLUTION selected solutions, render solutions */}
+                              {setting ===
+                                ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
+                                selectedSolutions.length > 0 && (
+                                  <p className="margin-0">
+                                    {selectedSolutions.join(', ')}
+                                  </p>
+                                )}
+                            </div>
 
                             <div className="display-flex flex-align-center">
                               <Icon.ArrowDropUp

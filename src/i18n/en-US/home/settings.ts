@@ -56,7 +56,8 @@ const homepageSettings = {
   startTyping: 'Start typing the name of the solution',
   multiselectLabel: 'Solutions',
   save: 'Save',
-  dontSelect: 'Don’t select solutions and return to previous page'
+  dontSelect: 'Don’t select solutions and return to previous page',
+  success: ' Success! Your homepage has been updated.'
 };
 
 export default homepageSettings;
