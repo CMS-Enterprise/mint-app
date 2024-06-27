@@ -187,12 +187,9 @@ func assertTFieldBase(t *testing.T, field reflect.StructField, base models.Trans
 	assertStringPointerNilOrNotEmpty(t, base.SubLabel, "SubLabel", field)
 	assertStringPointerNilOrNotEmpty(t, base.MultiSelectLabel, "MultiSelectLabel", field)
 
-	// assert.NotZero(t, base.IsArray) // not zero doesn't work for bool because false is zero
-
-	assert.NotZero(base.DataType)
+	assert.NotZero(base.DataType, "issue for field %s. Value: %s", field.Name)
 	assert.NotZero(base.FormType, "issue for field %s. Value: %s", field.Name)
 
-	//base.IsOtherType // Other types don't require a parent field or parent reference label. Sometimes the label is sufficient in and of itself
 	if base.IsNote {
 		someParentDefined := base.OtherParentField != nil || base.ParentReferencesLabel != nil
 
@@ -202,7 +199,6 @@ func assertTFieldBase(t *testing.T, field reflect.StructField, base models.Trans
 		} else if base.ParentReferencesLabel != nil {
 			assert.NotEqualValues("", *base.ParentReferencesLabel, "ParentReferencesLabel %s is an empty string, a value was expected", field.Name)
 		} else {
-			// Changes: (Testing)
 			assert.Failf("Other Parent field and Parent References Label are both undefined.", " Field %v,IsNote %v, IsOther %v", field.Name, base.IsNote, base.IsOtherType)
 		}
 	}
@@ -245,7 +241,6 @@ func assertTFieldWithParent(t *testing.T, field reflect.StructField, translation
 // assertTFieldWithChildren asserts that a translation with Children has child information populated
 func assertTFieldWithChildren(t *testing.T, field reflect.StructField, translation models.ITranslationField) {
 
-	// Changes: (Translations)  Implement this logic! We should expand the interface to get children as needed as well
 	children, hasChildren := translation.GetChildren()
 	assert.True(t, hasChildren)
 
