@@ -126,7 +126,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             Identify a comparison/match group
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -146,7 +146,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             Establish control and intervention groups
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -166,7 +166,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             Interrupted time series
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -186,7 +186,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             Leverage non-Medicare data (such as Medicaid data, external data sets)
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -206,7 +206,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -269,7 +269,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             Yes, for evaluation
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -289,7 +289,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             Yes, for implementation
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -309,7 +309,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             No
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -329,7 +329,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div

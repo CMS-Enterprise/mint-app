@@ -247,6 +247,43 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               What will you pay?
             </p>
+            <span
+              class="usa-tooltip"
+              data-testid="tooltipWrapper"
+            >
+              <div
+                aria-describedby="tooltip-638317"
+                class="usa-tooltip__trigger mint-no-print margin-left-1"
+                data-testid="triggerElement"
+                position="right"
+                tabindex="0"
+                title=""
+              >
+                <svg
+                  class="usa-icon text-base-light"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                  />
+                </svg>
+              </div>
+              <span
+                aria-hidden="true"
+                class="usa-tooltip__body"
+                data-testid="tooltipBody"
+                id="tooltip-638317"
+                role="tooltip"
+                title="If claims-based payments or non-claims-based payments are selected, there will be additional questions to answer."
+              >
+                If claims-based payments or non-claims-based payments are selected, there will be additional questions to answer.
+              </span>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -314,6 +351,43 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               >
                 Select which claims-based payments will you pay.
               </p>
+              <span
+                class="usa-tooltip"
+                data-testid="tooltipWrapper"
+              >
+                <div
+                  aria-describedby="tooltip-820038"
+                  class="usa-tooltip__trigger mint-no-print margin-left-1"
+                  data-testid="triggerElement"
+                  position="right"
+                  tabindex="0"
+                  title=""
+                >
+                  <svg
+                    class="usa-icon text-base-light"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                    />
+                  </svg>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="usa-tooltip__body"
+                  data-testid="tooltipBody"
+                  id="tooltip-820038"
+                  role="tooltip"
+                  title="If reductions to beneficiary cost-sharing or other are selected, there will be additional questions to answer."
+                >
+                  If reductions to beneficiary cost-sharing or other are selected, there will be additional questions to answer.
+                </span>
+              </span>
             </div>
             <ul
               class="margin-y-0 padding-left-3"
@@ -430,6 +504,43 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               >
                 Will the model change the Medicare Physician Fee Schedule?
               </p>
+              <span
+                class="usa-tooltip"
+                data-testid="tooltipWrapper"
+              >
+                <div
+                  aria-describedby="tooltip-870997"
+                  class="usa-tooltip__trigger mint-no-print margin-left-1"
+                  data-testid="triggerElement"
+                  position="right"
+                  tabindex="0"
+                  title=""
+                >
+                  <svg
+                    class="usa-icon text-base-light"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                    />
+                  </svg>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="usa-tooltip__body"
+                  data-testid="tooltipBody"
+                  id="tooltip-870997"
+                  role="tooltip"
+                  title="If so, it might impact Critical Access Hospitals paid under Method II."
+                >
+                  If so, it might impact Critical Access Hospitals paid under Method II.
+                </span>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -573,6 +684,43 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               >
                 Are you anticipating creating dependencies between services?
               </p>
+              <span
+                class="usa-tooltip"
+                data-testid="tooltipWrapper"
+              >
+                <div
+                  aria-describedby="tooltip-789739"
+                  class="usa-tooltip__trigger mint-no-print margin-left-1"
+                  data-testid="triggerElement"
+                  position="right"
+                  tabindex="0"
+                  title=""
+                >
+                  <svg
+                    class="usa-icon text-base-light"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                    />
+                  </svg>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="usa-tooltip__body"
+                  data-testid="tooltipBody"
+                  id="tooltip-789739"
+                  role="tooltip"
+                  title="Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid."
+                >
+                  Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.
+                </span>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -681,6 +829,43 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               >
                 Will your contractor be providing data (a Third Party File) that will be used in claims processing?
               </p>
+              <span
+                class="usa-tooltip"
+                data-testid="tooltipWrapper"
+              >
+                <div
+                  aria-describedby="tooltip-967024"
+                  class="usa-tooltip__trigger mint-no-print margin-left-1"
+                  data-testid="triggerElement"
+                  position="right"
+                  tabindex="0"
+                  title=""
+                >
+                  <svg
+                    class="usa-icon text-base-light"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                    />
+                  </svg>
+                </div>
+                <span
+                  aria-hidden="true"
+                  class="usa-tooltip__body"
+                  data-testid="tooltipBody"
+                  id="tooltip-967024"
+                  role="tooltip"
+                  title="Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC)."
+                >
+                  Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).
+                </span>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1408,6 +1593,43 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               How frequently do you anticipate making demands/recoupments?
             </p>
+            <span
+              class="usa-tooltip"
+              data-testid="tooltipWrapper"
+            >
+              <div
+                aria-describedby="tooltip-437589"
+                class="usa-tooltip__trigger mint-no-print margin-left-1"
+                data-testid="triggerElement"
+                position="right"
+                tabindex="0"
+                title=""
+              >
+                <svg
+                  class="usa-icon text-base-light"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                  />
+                </svg>
+              </div>
+              <span
+                aria-hidden="true"
+                class="usa-tooltip__body"
+                data-testid="tooltipBody"
+                id="tooltip-437589"
+                role="tooltip"
+                title="Note: If you are unsure of an approximate date, please select the first day of the approximate month."
+              >
+                Note: If you are unsure of an approximate date, please select the first day of the approximate month.
+              </span>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"

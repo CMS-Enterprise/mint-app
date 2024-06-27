@@ -218,6 +218,43 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             >
               In what capacity will they support your model?
             </p>
+            <span
+              class="usa-tooltip"
+              data-testid="tooltipWrapper"
+            >
+              <div
+                aria-describedby="tooltip-233919"
+                class="usa-tooltip__trigger mint-no-print margin-left-1"
+                data-testid="triggerElement"
+                position="right"
+                tabindex="0"
+                title=""
+              >
+                <svg
+                  class="usa-icon text-base-light"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                  />
+                </svg>
+              </div>
+              <span
+                aria-hidden="true"
+                class="usa-tooltip__body"
+                data-testid="tooltipBody"
+                id="tooltip-233919"
+                role="tooltip"
+                title="(implementation, data analysis, quality, etc.)"
+              >
+                (implementation, data analysis, quality, etc.)
+              </span>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -2420,8 +2457,45 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             <p
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
-              What challenges do you anticipate during Model design and implementation?
+              What challenges do you anticipate during model design and implementation?
             </p>
+            <span
+              class="usa-tooltip"
+              data-testid="tooltipWrapper"
+            >
+              <div
+                aria-describedby="tooltip-298261"
+                class="usa-tooltip__trigger mint-no-print margin-left-1"
+                data-testid="triggerElement"
+                position="right"
+                tabindex="0"
+                title=""
+              >
+                <svg
+                  class="usa-icon text-base-light"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                  />
+                </svg>
+              </div>
+              <span
+                aria-hidden="true"
+                class="usa-tooltip__body"
+                data-testid="tooltipBody"
+                id="tooltip-298261"
+                role="tooltip"
+                title="Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability."
+              >
+                Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.
+              </span>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"

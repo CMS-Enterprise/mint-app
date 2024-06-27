@@ -125,7 +125,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Annually
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -145,7 +145,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Semi-annually
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -165,7 +165,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Quarterly
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -185,7 +185,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Monthly
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -205,7 +205,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Continually
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -243,7 +243,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -299,7 +299,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Annually
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -319,7 +319,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Semi-annually
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -339,7 +339,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Quarterly
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -359,7 +359,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Monthly
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -379,7 +379,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Continually
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -399,7 +399,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -473,7 +473,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Manage ongoing communications with participants using an IT tool
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -493,7 +493,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Send mass emails to new participants
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -513,7 +513,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -533,7 +533,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
             We are not planning to communicate
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -594,7 +594,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               Two-sided
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -614,7 +614,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               One-sided
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -634,7 +634,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               Capitation
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -654,7 +654,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               Not risk-based
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -674,7 +674,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
               Other
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div

@@ -532,6 +532,43 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             >
               What type of Alternative Payment Model (APM) do you think the model could be?
             </p>
+            <span
+              class="usa-tooltip"
+              data-testid="tooltipWrapper"
+            >
+              <div
+                aria-describedby="tooltip-450871"
+                class="usa-tooltip__trigger mint-no-print margin-left-1"
+                data-testid="triggerElement"
+                position="right"
+                tabindex="0"
+                title=""
+              >
+                <svg
+                  class="usa-icon text-base-light"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                  />
+                </svg>
+              </div>
+              <span
+                aria-hidden="true"
+                class="usa-tooltip__body"
+                data-testid="tooltipBody"
+                id="tooltip-450871"
+                role="tooltip"
+                title="In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers."
+              >
+                In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.
+              </span>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -815,6 +852,43 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             >
               Is care coordination involved? How so?
             </p>
+            <span
+              class="usa-tooltip"
+              data-testid="tooltipWrapper"
+            >
+              <div
+                aria-describedby="tooltip-356033"
+                class="usa-tooltip__trigger mint-no-print margin-left-1"
+                data-testid="triggerElement"
+                position="right"
+                tabindex="0"
+                title=""
+              >
+                <svg
+                  class="usa-icon text-base-light"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                  />
+                </svg>
+              </div>
+              <span
+                aria-hidden="true"
+                class="usa-tooltip__body"
+                data-testid="tooltipBody"
+                id="tooltip-356033"
+                role="tooltip"
+                title="Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; if a certain service or diagnosis exists in history, then Service A cannot be paid."
+              >
+                Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; if a certain service or diagnosis exists in history, then Service A cannot be paid.
+              </span>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1490,12 +1564,94 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
                 class="font-sans-md line-height-sans-4"
               >
                 Fraud and Abuse
+                <span
+                  class="top-2px position-relative"
+                >
+                  <span
+                    class="usa-tooltip"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-331033"
+                      class="usa-tooltip__trigger mint-no-print margin-left-05"
+                      data-testid="triggerElement"
+                      position="right"
+                      tabindex="0"
+                      title=""
+                    >
+                      <svg
+                        class="usa-icon text-base-light"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-331033"
+                      role="tooltip"
+                      title="Note: Federal Waiver team writes"
+                    >
+                      Note: Federal Waiver team writes
+                    </span>
+                  </span>
+                </span>
               </li>
               <ul />
               <li
                 class="font-sans-md line-height-sans-4"
               >
                 Medicaid
+                <span
+                  class="top-2px position-relative"
+                >
+                  <span
+                    class="usa-tooltip"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-921967"
+                      class="usa-tooltip__trigger mint-no-print margin-left-05"
+                      data-testid="triggerElement"
+                      position="right"
+                      tabindex="0"
+                      title=""
+                    >
+                      <svg
+                        class="usa-icon text-base-light"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-921967"
+                      role="tooltip"
+                      title="(1115, other)"
+                    >
+                      (1115, other)
+                    </span>
+                  </span>
+                </span>
               </li>
               <ul />
             </ul>

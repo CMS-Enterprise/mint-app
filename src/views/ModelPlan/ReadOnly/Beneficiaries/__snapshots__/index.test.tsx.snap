@@ -592,6 +592,43 @@ exports[`Read Only Model Plan Summary -- Beneficiaries > matches snapshot 1`] = 
             >
               Are there precedence rules between this model and other model(s)?
             </p>
+            <span
+              class="usa-tooltip"
+              data-testid="tooltipWrapper"
+            >
+              <div
+                aria-describedby="tooltip-504169"
+                class="usa-tooltip__trigger mint-no-print margin-left-1"
+                data-testid="triggerElement"
+                position="right"
+                tabindex="0"
+                title=""
+              >
+                <svg
+                  class="usa-icon text-base-light"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                  />
+                </svg>
+              </div>
+              <span
+                aria-hidden="true"
+                class="usa-tooltip__body"
+                data-testid="tooltipBody"
+                id="tooltip-504169"
+                role="tooltip"
+                title="i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)"
+              >
+                i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)
+              </span>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"

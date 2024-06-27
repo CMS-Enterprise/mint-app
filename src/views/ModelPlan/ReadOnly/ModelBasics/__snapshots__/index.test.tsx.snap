@@ -444,6 +444,43 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             >
               Goal
             </p>
+            <span
+              class="usa-tooltip"
+              data-testid="tooltipWrapper"
+            >
+              <div
+                aria-describedby="tooltip-550000"
+                class="usa-tooltip__trigger mint-no-print margin-left-1"
+                data-testid="triggerElement"
+                position="right"
+                tabindex="0"
+                title=""
+              >
+                <svg
+                  class="usa-icon text-base-light"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                  />
+                </svg>
+              </div>
+              <span
+                aria-hidden="true"
+                class="usa-tooltip__body"
+                data-testid="tooltipBody"
+                id="tooltip-550000"
+                role="tooltip"
+                title="The high level goal of the program and a description of the project."
+              >
+                The high level goal of the program and a description of the project.
+              </span>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -542,7 +579,48 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             data-testid="processListHeading"
           >
             Clearance
+            <span
+              class="top-2px position-relative text-normal"
+            >
+              <span
+                class="usa-tooltip"
+                data-testid="tooltipWrapper"
+              />
+            </span>
           </p>
+          <div
+            aria-describedby="tooltip-550000"
+            class="usa-tooltip__trigger mint-no-print margin-left-05"
+            data-testid="triggerElement"
+            position="right"
+            tabindex="0"
+            title=""
+          >
+            <svg
+              class="usa-icon text-base-light"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+              />
+            </svg>
+          </div>
+          <span
+            aria-hidden="true"
+            class="usa-tooltip__body"
+            data-testid="tooltipBody"
+            id="tooltip-550000"
+            role="tooltip"
+            title="When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance"
+          >
+            When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance
+          </span>
+          <p />
           <div
             class="mobile-lg:display-flex"
           >
@@ -645,7 +723,48 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             data-testid="processListHeading"
           >
             Performance period
+            <span
+              class="top-2px position-relative text-normal"
+            >
+              <span
+                class="usa-tooltip"
+                data-testid="tooltipWrapper"
+              />
+            </span>
           </p>
+          <div
+            aria-describedby="tooltip-550000"
+            class="usa-tooltip__trigger mint-no-print margin-left-05"
+            data-testid="triggerElement"
+            position="right"
+            tabindex="0"
+            title=""
+          >
+            <svg
+              class="usa-icon text-base-light"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+              />
+            </svg>
+          </div>
+          <span
+            aria-hidden="true"
+            class="usa-tooltip__body"
+            data-testid="tooltipBody"
+            id="tooltip-550000"
+            role="tooltip"
+            title="When the model will be active beginning with the go-live date"
+          >
+            When the model will be active beginning with the go-live date
+          </span>
+          <p />
           <div
             class="mobile-lg:display-flex"
           >
@@ -713,6 +832,43 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
           >
             If timelines are tight, might there be pieces of the model that can be phased in over time?
           </p>
+          <span
+            class="usa-tooltip"
+            data-testid="tooltipWrapper"
+          >
+            <div
+              aria-describedby="tooltip-550000"
+              class="usa-tooltip__trigger mint-no-print margin-left-1"
+              data-testid="triggerElement"
+              position="right"
+              tabindex="0"
+              title=""
+            >
+              <svg
+                class="usa-icon text-base-light"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                />
+              </svg>
+            </div>
+            <span
+              aria-hidden="true"
+              class="usa-tooltip__body"
+              data-testid="tooltipBody"
+              id="tooltip-550000"
+              role="tooltip"
+              title="That is, the basic model would start at the earliest possible date, but additional facets could be phased in at a later quarter."
+            >
+              That is, the basic model would start at the earliest possible date, but additional facets could be phased in at a later quarter.
+            </span>
+          </span>
         </div>
         <div
           class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"

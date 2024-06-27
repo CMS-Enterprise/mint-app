@@ -149,7 +149,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
             We plan to have a learning contractor (cross-model or individual)
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -169,7 +169,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
             We plan to use an IT platform (Connect)
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -189,7 +189,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
             We plan to enable participant-to-participant collaboration
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -209,7 +209,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
             We plan to educate beneficiaries
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -229,7 +229,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -249,7 +249,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
             No, we will not have a learning strategy
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -287,7 +287,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
           data-testid="label"
           for="ops-eval-and-learning-learning-anticipated-challenges"
         >
-          What challenges do you anticipate during Model design and implementation?
+          What challenges do you anticipate during model design and implementation?
         </label>
         <p
           class="text-base margin-y-1 margin-top-2 line-height-body-4"
@@ -337,7 +337,7 @@ exports[`Model Plan Ops Eval and Learning - Learning > matches snapshot 1`] = `
                 This section of the Model Plan (Operations, evaluation, and learning) is ready for review.
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
               />
             </div>
           </div>

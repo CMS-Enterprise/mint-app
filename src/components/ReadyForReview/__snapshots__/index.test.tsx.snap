@@ -35,7 +35,7 @@ exports[`The ReadyForReview Component > matches snapshot 1`] = `
             This section of the Model Plan (Basics) is ready for review.
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
       </div>
