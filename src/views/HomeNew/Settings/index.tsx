@@ -24,7 +24,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Alert from 'components/shared/Alert';
 import CheckboxField from 'components/shared/CheckboxField';
-import { SettingsType } from 'i18n/en-US/home/settings';
+import { HomepageSettingsType } from 'i18n/en-US/home/settings';
 import { getKeys } from 'types/translation';
 import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { NotFoundPartial } from 'views/NotFound';
@@ -86,7 +86,7 @@ const HomePageSettings = () => {
   }, [history, formikRef.current?.values]);
 
   // Get the settings options from the translation file
-  const settingOptions: SettingsType = homepageSettingsT('settings', {
+  const settingOptions: HomepageSettingsType = homepageSettingsT('settings', {
     returnObjects: true
   });
 

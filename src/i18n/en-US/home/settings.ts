@@ -1,11 +1,11 @@
 import { ViewCustomizationType } from 'gql/gen/graphql';
 
-export type SettingsType = Record<
+export type HomepageSettingsType = Record<
   ViewCustomizationType,
   Record<'heading' | 'description', string>
 >;
 
-const settings: SettingsType = {
+const settings: HomepageSettingsType = {
   [ViewCustomizationType.MY_MODEL_PLANS]: {
     heading: 'My Model Plans',
     description:
