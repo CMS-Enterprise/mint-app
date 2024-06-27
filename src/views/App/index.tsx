@@ -219,28 +219,6 @@ const AppRoutes = () => {
 
       <SecureRoute path="/feedback-received" component={FeedbackReceived} />
 
-      {flags.customHomepageEnabled && (
-        <>
-          <SecureRoute
-            exact
-            path="/homepage-settings"
-            component={HomePageSettings}
-          />
-
-          <SecureRoute
-            exact
-            path="/homepage-settings/order"
-            component={SettingsOrder}
-          />
-
-          <SecureRoute
-            exact
-            path="/homepage-settings/solutions"
-            component={SelectSolutionSettings}
-          />
-        </>
-      )}
-
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />
       <Route path="/cookies" exact component={Cookies} />
@@ -267,6 +245,28 @@ const AppRoutes = () => {
         path="/models/:modelID/locked-task-list-section"
         component={LockedTaskListSection}
       />
+
+      {flags.customHomepageEnabled && (
+        <>
+          <SecureRoute
+            exact
+            path="/homepage-settings"
+            component={HomePageSettings}
+          />
+
+          <SecureRoute
+            exact
+            path="/homepage-settings/order"
+            component={SettingsOrder}
+          />
+
+          <SecureRoute
+            exact
+            path="/homepage-settings/solutions"
+            component={SelectSolutionSettings}
+          />
+        </>
+      )}
 
       {/* 404 */}
       <Route path="*" component={NotFound} />
