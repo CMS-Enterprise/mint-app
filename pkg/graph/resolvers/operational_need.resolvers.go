@@ -30,7 +30,7 @@ func (r *mutationResolver) UpdateCustomOperationalNeedByID(ctx context.Context, 
 
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
-	return OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
+	return OperationalSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, obj.ID, includeNotNeeded)
 }
 
 // OperationalNeed is the resolver for the operationalNeed field.

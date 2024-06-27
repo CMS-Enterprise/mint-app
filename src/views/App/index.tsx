@@ -268,6 +268,8 @@ const AppRoutes = () => {
         </>
       )}
 
+      <Redirect exact from="/models/:modelID" to="/models/:modelID/read-view" />
+
       {/* 404 */}
       <Route path="*" component={NotFound} />
     </Switch>

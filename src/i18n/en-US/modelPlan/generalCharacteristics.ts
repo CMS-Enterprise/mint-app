@@ -53,7 +53,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       ],
       NO: [() => generalCharacteristics.resemblesExistingModelWhyHow]
     },
-    filterGroups: [ModelViewFilter.IPC]
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.PBG]
   },
   resemblesExistingModelWhyHow: {
     gqlField: 'resemblesExistingModelWhyHow',
@@ -92,7 +92,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: 'string',
     formType: 'textarea',
     parentRelation: () => generalCharacteristics.resemblesExistingModel,
-    filterGroups: [ModelViewFilter.IPC]
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.PBG]
   },
   resemblesExistingModelOtherSpecify: {
     gqlField: 'resemblesExistingModelOtherSpecify',
@@ -246,7 +246,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     optionsRelatedInfo: {
       true: 'hasComponentsOrTracksDiffer'
     },
-    filterGroups: [ModelViewFilter.IPC]
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.PBG]
   },
   hasComponentsOrTracksDiffer: {
     gqlField: 'hasComponentsOrTracksDiffer',
@@ -324,7 +324,11 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       REGULAR: 'Regular APM',
       NOT_APM: 'It is not an APM'
     },
-    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.OACT]
+    filterGroups: [
+      ModelViewFilter.CMMI,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   alternativePaymentModelNote: {
     gqlField: 'alternativePaymentModelNote',
@@ -478,7 +482,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     optionsRelatedInfo: {
       true: 'careCoordinationInvolvedDescription'
-    }
+    },
+    filterGroups: [ModelViewFilter.PBG]
   },
   careCoordinationInvolvedDescription: {
     gqlField: 'careCoordinationInvolvedDescription',
@@ -512,7 +517,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     optionsRelatedInfo: {
       true: 'additionalServicesInvolvedDescription'
-    }
+    },
+    filterGroups: [ModelViewFilter.PBG]
   },
   additionalServicesInvolvedDescription: {
     gqlField: 'additionalServicesInvolvedDescription',
@@ -976,7 +982,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     optionsRelatedInfo: {
       true: 'waiversRequiredTypes'
     },
-    filterGroups: [ModelViewFilter.CMMI]
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.PBG]
   },
   waiversRequiredTypes: {
     gqlField: 'waiversRequiredTypes',

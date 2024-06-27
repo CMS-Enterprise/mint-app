@@ -130,7 +130,15 @@ const HighLevelProjectPlan = () => {
           </Grid>
         </GridContainer>
         <div className="margin-top-6 margin-bottom-neg-7">
-          <RelatedArticles currentArticle={highLevelT('title')} viewAllLink />
+          <RelatedArticles
+            currentArticle={highLevelT('title')}
+            specificArticleNames={[
+              'How to have a successful 2-pager meeting',
+              'Model Plan Overview',
+              'Sample Model Plan'
+            ]}
+            viewAllLink
+          />
         </div>
       </MainContent>
     </>

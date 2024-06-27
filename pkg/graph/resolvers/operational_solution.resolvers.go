@@ -58,7 +58,7 @@ func (r *operationalSolutionResolver) OperationalSolutionSubtasks(ctx context.Co
 
 // OperationalSolutions is the resolver for the operationalSolutions field.
 func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
-	return OperationaSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, operationalNeedID, includeNotNeeded)
+	return OperationalSolutionsAndPossibleGetByOPNeedIDLOADER(ctx, operationalNeedID, includeNotNeeded)
 }
 
 // OperationalSolution is the resolver for the operationalSolution field.

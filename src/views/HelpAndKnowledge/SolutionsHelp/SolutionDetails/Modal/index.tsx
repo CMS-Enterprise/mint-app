@@ -80,7 +80,9 @@ const SolutionDetailsModal = ({
 
   // Used to maintain previous route when opening and navigating through modal
   const [prevRoute] = useState<string | undefined>(
-    openedFrom === 'undefined' ? undefined : openedFrom
+    openedFrom === 'undefined' || openedFrom?.includes('solution=') // If openedFrom pasted in URL with already set params, set to undefined
+      ? undefined
+      : openedFrom
   );
 
   const isMobile = useCheckResponsiveScreen('tablet');
