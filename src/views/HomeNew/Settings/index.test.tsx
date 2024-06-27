@@ -9,6 +9,8 @@ import {
   ViewCustomizationType
 } from 'gql/gen/graphql';
 
+import { MessageProvider } from 'hooks/useMessage';
+
 import SelectSolutionSettings from './selectSolutions';
 import SettingsOrder, { moveItem } from './settingsOrder';
 import HomePageSettings from '.';
@@ -117,7 +119,9 @@ describe('settings snapshots', () => {
       <MemoryRouter initialEntries={[`/homepage-settings`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
           <Route path="/homepage-settings">
-            <HomePageSettings />
+            <MessageProvider>
+              <HomePageSettings />
+            </MessageProvider>
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -130,7 +134,10 @@ describe('settings snapshots', () => {
       <MemoryRouter initialEntries={[`/homepage-settings/order`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
           <Route path="/homepage-settings/order">
-            <SettingsOrder />
+            <MessageProvider>
+              {' '}
+              <SettingsOrder />
+            </MessageProvider>
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -143,7 +150,9 @@ describe('settings snapshots', () => {
       <MemoryRouter initialEntries={[`/homepage-settings/solutions`]}>
         <MockedProvider mocks={[...mocks, solutionsMock]} addTypename={false}>
           <Route path="/homepage-settings/solutions">
-            <SelectSolutionSettings />
+            <MessageProvider>
+              <SelectSolutionSettings />
+            </MessageProvider>
           </Route>
         </MockedProvider>
       </MemoryRouter>

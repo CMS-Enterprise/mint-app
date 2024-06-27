@@ -2,6 +2,7 @@
 
 exports[`settings snapshots > matches order snapshot 1`] = `
 <DocumentFragment>
+   
   <main
     class="mint-main-content"
     id="main-content"
