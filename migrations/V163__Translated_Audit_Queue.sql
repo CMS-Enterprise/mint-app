@@ -2,7 +2,7 @@ CREATE TYPE TRANSLATION_AUDIT_QUEUE_STATUS_TYPE AS ENUM (
     'NEW', 'QUEUED', 'PROCESSING', 'NOT_PROCESSED', 'PROCESSED', 'RETRY', 'FAILED'
 );
 
-COMMENT ON TYPE TRANSLATION_AUDIT_QUEUE_STATUS_TYPE IS 'Enum denoting the possible states an audit queue item can be in. On creation, it starts at status new.'
+COMMENT ON TYPE TRANSLATION_AUDIT_QUEUE_STATUS_TYPE IS 'Enum denoting the possible states an audit queue item can be in. On creation, it starts at status new.';
 
 CREATE TABLE translated_audit_queue (
     id UUID PRIMARY KEY,
