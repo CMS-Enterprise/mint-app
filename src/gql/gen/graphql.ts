@@ -167,9 +167,9 @@ export type AnalyzedPlanDiscussions = {
 
 export type AnalyzedPlanSections = {
   __typename: 'AnalyzedPlanSections';
-  readyForClearance: Array<Scalars['String']['output']>;
-  readyForReview: Array<Scalars['String']['output']>;
-  updated: Array<Scalars['String']['output']>;
+  readyForClearance: Array<TableName>;
+  readyForReview: Array<TableName>;
+  updated: Array<TableName>;
 };
 
 export type AuditChange = {
@@ -182,7 +182,7 @@ export type AuditChange = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   primaryKey: Scalars['UUID']['output'];
-  tableName: Scalars['String']['output'];
+  tableName: TableName;
 };
 
 export enum AuditFieldChangeType {
@@ -3060,7 +3060,7 @@ export type QueryAnalyzedAuditsArgs = {
 /** Query definition for the schema */
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
-  tableName: Scalars['String']['input'];
+  tableName: TableName;
 };
 
 
@@ -3542,7 +3542,7 @@ export type TranslatedAuditFieldMetaData = TranslatedAuditFieldMetaBaseStruct;
 
 export type TranslatedAuditMetaBaseStruct = {
   __typename: 'TranslatedAuditMetaBaseStruct';
-  tableName: Scalars['String']['output'];
+  tableName: TableName;
   version: Scalars['Int']['output'];
 };
 
@@ -3565,7 +3565,7 @@ export type TranslatedAuditMetaDiscussionReply = {
   discussionContent: Scalars['String']['output'];
   discussionID: Scalars['UUID']['output'];
   numberOfReplies: Scalars['Int']['output'];
-  tableName: Scalars['String']['output'];
+  tableName: TableName;
   version: Scalars['Int']['output'];
 };
 
@@ -3590,7 +3590,7 @@ export type TranslatedAuditMetaDocumentSolutionLink = {
   solutionIsOther: Scalars['Boolean']['output'];
   solutionName: Scalars['String']['output'];
   solutionOtherHeader?: Maybe<Scalars['String']['output']>;
-  tableName: Scalars['String']['output'];
+  tableName: TableName;
   version: Scalars['Int']['output'];
 };
 
@@ -3599,7 +3599,7 @@ export type TranslatedAuditMetaGeneric = {
   relation: Scalars['String']['output'];
   /** Relation content can be nil under certain situations, for example if a record was deleted before the audit was translated */
   relationContent?: Maybe<Scalars['String']['output']>;
-  tableName: Scalars['String']['output'];
+  tableName: TableName;
   version: Scalars['Int']['output'];
 };
 
@@ -3608,7 +3608,7 @@ export type TranslatedAuditMetaOperationalNeed = {
   __typename: 'TranslatedAuditMetaOperationalNeed';
   isOther: Scalars['Boolean']['output'];
   needName: Scalars['String']['output'];
-  tableName: Scalars['String']['output'];
+  tableName: TableName;
   version: Scalars['Int']['output'];
 };
 
@@ -3625,7 +3625,7 @@ export type TranslatedAuditMetaOperationalSolution = {
   solutionOtherHeader?: Maybe<Scalars['String']['output']>;
   /** SolutionStatus is the translated value for the type of solution */
   solutionStatus: Scalars['String']['output'];
-  tableName: Scalars['String']['output'];
+  tableName: TableName;
   version: Scalars['Int']['output'];
 };
 
@@ -3640,7 +3640,7 @@ export type TranslatedAuditMetaOperationalSolutionSubtask = {
   solutionOtherHeader?: Maybe<Scalars['String']['output']>;
   /** The name of the subtask. If a subtask is updated, and then deleted before being translated, it is possible for this field to be nil. */
   subtaskName?: Maybe<Scalars['String']['output']>;
-  tableName: Scalars['String']['output'];
+  tableName: TableName;
   version: Scalars['Int']['output'];
 };
 
@@ -4129,7 +4129,7 @@ export type GetChangeHistoryQueryVariables = Exact<{
 }>;
 
 
-export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType?: TranslationDataType | null, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: string } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: string, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: string, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: string, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: string, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: string, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: string, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
+export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType?: TranslationDataType | null, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: TableName } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: TableName, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: TableName, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: TableName, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: TableName, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
 
 export type CreateModelPlanCollaboratorMutationVariables = Exact<{
   input: PlanCollaboratorCreateInput;
@@ -4584,7 +4584,7 @@ export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: {
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'AddedAsCollaboratorMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<string>, readyForReview: Array<string>, readyForClearance: Array<string> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'ModelPlanSharedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, optionalMessage?: string | null, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewModelPlanActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
+export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'AddedAsCollaboratorMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<TableName>, readyForReview: Array<TableName>, readyForClearance: Array<TableName> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'ModelPlanSharedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, optionalMessage?: string | null, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewModelPlanActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
 
 export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 

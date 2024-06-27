@@ -55,7 +55,7 @@ describe('ChangeRecord', () => {
       metaData: {
         __typename: 'TranslatedAuditMetaOperationalSolution',
         version: 0,
-        tableName: 'operational_solution',
+        tableName: TableName.OPERATIONAL_SOLUTION,
         needName: 'Helpdesk support',
         needIsOther: false,
         solutionName: 'Consolidated Business Operations Support Center (CBOSC)',
@@ -109,7 +109,7 @@ describe('ChangeRecord', () => {
       metaData: {
         __typename: 'TranslatedAuditMetaOperationalSolution',
         version: 0,
-        tableName: 'operational_solution',
+        tableName: TableName.OPERATIONAL_SOLUTION,
         needName: 'Helpdesk support',
         needIsOther: false,
         solutionName: 'Contractor',
