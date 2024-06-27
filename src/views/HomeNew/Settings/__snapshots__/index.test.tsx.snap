@@ -40,14 +40,14 @@ exports[`settings snapshots > matches order snapshot 1`] = `
               aria-current="page"
               class="usa-breadcrumb__list-item usa-current"
             >
-              Homepage Settings
+              Homepage settings
             </li>
           </ol>
         </nav>
         <h1
           class="margin-bottom-2"
         >
-          Homepage Settings
+          Homepage settings
           <span
             class="font-body-lg text-base text-normal margin-left-2"
           >
@@ -176,14 +176,14 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
               aria-current="page"
               class="usa-breadcrumb__list-item usa-current"
             >
-              Homepage Settings
+              Homepage settings
             </li>
           </ol>
         </nav>
         <h1
           class="margin-bottom-2"
         >
-          Homepage Settings
+          Homepage settings
           <span
             class="font-body-lg text-base text-normal margin-left-2"
           >
@@ -522,7 +522,7 @@ exports[`settings snapshots > matches solutions snapshot 1`] = `
                 href="/homepage-settings"
               >
                 <span>
-                  Homepage Settings
+                  Homepage settings
                 </span>
               </a>
             </li>

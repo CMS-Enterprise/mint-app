@@ -34,7 +34,7 @@ const settings: HomepageSettingsType = {
 };
 
 const homepageSettings = {
-  heading: 'Homepage Settings',
+  heading: 'Homepage settings',
   stepOne: '(Step 1 of 2)',
   stepTwo: '(Step 2 of 2)',
   description:
