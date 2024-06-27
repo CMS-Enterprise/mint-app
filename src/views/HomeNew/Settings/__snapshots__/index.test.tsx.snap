@@ -104,7 +104,7 @@ exports[`settings snapshots > matches order snapshot 1`] = `
           </button>
           <button
             class="usa-button margin-bottom-4"
-            data-testid="button"
+            data-testid="save-settings-order"
             type="submit"
           >
             Save customizations
@@ -404,6 +404,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                   </p>
                   <a
                     class="usa-link padding-left-4 text-bold display-flex flex-align-center margin-top-1"
+                    data-testid="add-solutions-settings"
                     href="/homepage-settings/solutions"
                   >
                     Select solutions
@@ -443,7 +444,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
           </div>
           <button
             class="usa-button margin-top-4"
-            data-testid="button"
+            data-testid="next-settings"
             type="submit"
           >
             Next
