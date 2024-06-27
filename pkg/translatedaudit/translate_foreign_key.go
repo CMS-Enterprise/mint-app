@@ -211,6 +211,5 @@ func getExistingModelForeignKeyReference(ctx context.Context, store *storage.Sto
 		return "", fmt.Errorf("the existing model for %v was not returned for this foreign key translation", id)
 	}
 
-	//Changes: (fk) is this the correct value to translate to here?
 	return existingModel.ModelName, nil
 }

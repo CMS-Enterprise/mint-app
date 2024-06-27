@@ -43,7 +43,8 @@ const sortData: ChangeRecordType[][] = [
           oldTranslated: null,
           new: 'READY',
           newTranslated: 'Ready',
-          __typename: 'TranslatedAuditField'
+          __typename: 'TranslatedAuditField',
+          dataType: TranslationDataType.ENUM
         }
       ],
       actorName: 'Cosmo Kramer',
@@ -66,7 +67,8 @@ const sortData: ChangeRecordType[][] = [
           oldTranslated: null,
           new: 'READY',
           newTranslated: 'Ready',
-          __typename: 'TranslatedAuditField'
+          __typename: 'TranslatedAuditField',
+          dataType: TranslationDataType.ENUM
         }
       ],
       actorName: 'MINT Doe',
@@ -109,7 +111,8 @@ describe('util.tsx', () => {
               oldTranslated: null,
               new: 'READY',
               newTranslated: 'Ready',
-              __typename: 'TranslatedAuditField'
+              __typename: 'TranslatedAuditField',
+              dataType: TranslationDataType.ENUM
             }
           ],
           actorName: 'MINT Doe',
@@ -132,7 +135,8 @@ describe('util.tsx', () => {
               oldTranslated: null,
               new: 'READY',
               newTranslated: 'Ready',
-              __typename: 'TranslatedAuditField'
+              __typename: 'TranslatedAuditField',
+              dataType: TranslationDataType.ENUM
             }
           ],
           actorName: 'MINT Doe',
@@ -165,7 +169,8 @@ describe('util.tsx', () => {
             oldTranslated: null,
             new: 'READY',
             newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField'
+            __typename: 'TranslatedAuditField',
+            dataType: TranslationDataType.ENUM
           },
           {
             id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
@@ -176,7 +181,8 @@ describe('util.tsx', () => {
             oldTranslated: null,
             new: 'READY',
             newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField'
+            __typename: 'TranslatedAuditField',
+            dataType: TranslationDataType.ENUM
           }
         ],
         actorName: 'MINT Doe',
@@ -226,7 +232,8 @@ describe('util.tsx', () => {
             oldTranslated: null,
             new: 'READY',
             newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField'
+            __typename: 'TranslatedAuditField',
+            dataType: TranslationDataType.ENUM
           },
           {
             id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
@@ -237,7 +244,8 @@ describe('util.tsx', () => {
             oldTranslated: null,
             new: 'READY',
             newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField'
+            __typename: 'TranslatedAuditField',
+            dataType: TranslationDataType.ENUM
           }
         ],
         actorName: 'MINT Doe',
@@ -307,7 +315,8 @@ describe('util.tsx', () => {
           oldTranslated: null,
           new: 'READY',
           newTranslated: 'Ready',
-          __typename: 'TranslatedAuditField'
+          __typename: 'TranslatedAuditField',
+          dataType: TranslationDataType.ENUM
         }
       ],
       actorName: 'MINT Doe',
@@ -333,7 +342,8 @@ describe('util.tsx', () => {
           oldTranslated: null,
           new: 'READY',
           newTranslated: 'Ready',
-          __typename: 'TranslatedAuditField'
+          __typename: 'TranslatedAuditField',
+          dataType: TranslationDataType.ENUM
         }
       ],
       actorName: 'MINT Doe',
@@ -361,7 +371,8 @@ describe('util.tsx', () => {
             oldTranslated: null,
             new: 'READY',
             newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField'
+            __typename: 'TranslatedAuditField',
+            dataType: TranslationDataType.ENUM
           }
         ],
         actorName: 'MINT Doe',
@@ -494,7 +505,8 @@ describe('util.tsx', () => {
             oldTranslated: null,
             new: 'READY',
             newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField'
+            __typename: 'TranslatedAuditField',
+            dataType: TranslationDataType.ENUM
           }
         ],
         actorName: 'Cosmo Kramer',
@@ -515,7 +527,8 @@ describe('util.tsx', () => {
             oldTranslated: null,
             new: 'READY',
             newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField'
+            __typename: 'TranslatedAuditField',
+            dataType: TranslationDataType.ENUM
           }
         ],
         actorName: 'MINT Doe',
@@ -536,7 +549,8 @@ describe('util.tsx', () => {
             oldTranslated: null,
             new: 'READY',
             newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField'
+            __typename: 'TranslatedAuditField',
+            dataType: TranslationDataType.ENUM
           }
         ],
         actorName: 'MINT Doe',
