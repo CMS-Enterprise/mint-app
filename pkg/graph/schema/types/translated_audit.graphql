@@ -8,11 +8,11 @@ union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditM
 
 type TranslatedAuditMetaBaseStruct {
     version: Int!
-    tableName: String!
+    tableName: TableName!
 }
 type TranslatedAuditMetaGeneric {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     relation: String!
     """
     Relation content can be nil under certain situations, for example if a record was deleted before the audit was translated
@@ -25,7 +25,7 @@ TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a
 """
 type TranslatedAuditMetaDiscussionReply {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     discussionID: UUID!
     discussionContent: String!
     numberOfReplies: Int!
@@ -36,7 +36,7 @@ TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a
 """
 type TranslatedAuditMetaOperationalNeed {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     needName: String!
     isOther: Boolean!
 }
@@ -45,7 +45,7 @@ TranslatedAuditMetaOperationalSolution is the meta data type that is provided wh
 """
 type TranslatedAuditMetaOperationalSolution {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     solutionName: String!
     solutionOtherHeader: String
     solutionIsOther: Boolean!
@@ -64,7 +64,7 @@ TranslatedAuditMetaOperationalSolutionSubtask is the meta data type that is prov
 """
 type TranslatedAuditMetaOperationalSolutionSubtask {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     solutionName: String!
     solutionOtherHeader: String
     solutionIsOther: Boolean!
@@ -83,7 +83,7 @@ TranslatedAuditMetaDocumentSolutionLink is the meta data type for a document sol
 """
 type TranslatedAuditMetaDocumentSolutionLink {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     solutionName: String!
     solutionOtherHeader: String
     solutionIsOther: Boolean!

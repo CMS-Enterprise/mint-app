@@ -9,6 +9,6 @@ import (
 )
 
 // AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key
-func AuditChangeCollectionByIDAndTable(logger *zap.Logger, tableName string, primaryKey uuid.UUID, store *storage.Store) ([]*models.AuditChange, error) {
+func AuditChangeCollectionByIDAndTable(logger *zap.Logger, tableName models.TableName, primaryKey uuid.UUID, store *storage.Store) ([]*models.AuditChange, error) {
 	return store.AuditChangeCollectionByIDAndTable(logger, tableName, primaryKey)
 }

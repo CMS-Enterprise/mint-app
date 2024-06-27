@@ -301,7 +301,7 @@ export const getOperationalMetadata = (
 
   if (type === 'subtask') {
     return metaData && isSubtaskWithMetaData(metaData)
-      ? metaData[fieldName]
+      ? metaData[fieldName] || ''
       : '';
   }
   return '';
