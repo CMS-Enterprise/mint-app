@@ -1,7 +1,5 @@
 package models
 
-import "github.com/google/uuid"
-
 type TranslatedAuditQueueStatusType string
 
 // All the possible status of the
@@ -22,15 +20,4 @@ type TranslatedAuditQueue struct {
 	Status   TranslatedAuditQueueStatusType `json:"status" db:"status"`
 	Attempts int                            `json:"attempts" db:"attempts"`
 	Note     *string                        `json:"note" db:"note"`
-}
-
-func NewTranslatedAuditQueueEntry(createdBy uuid.UUID, changeID int) *TranslatedAuditQueue {
-	// Changes: (Job) Should we remove this? We don't create any, we just fetch from the DB
-	return &TranslatedAuditQueue{
-		baseStruct: NewBaseStruct(createdBy),
-		ChangeID:   changeID,
-		Status:     TPSQueued,
-		Attempts:   0,
-	}
-
 }
