@@ -302,6 +302,9 @@ export const basics: TranslationBasics = {
       position: 'left',
       adjacentField: 'performancePeriodEnds'
     },
+    groupLabel: 'Performance period',
+    groupLabelTooltip:
+      'When the model will be active beginning with the go-live date',
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CCW,

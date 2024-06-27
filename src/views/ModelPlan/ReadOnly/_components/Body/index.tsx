@@ -46,19 +46,21 @@ const ReadOnlyBody = ({
                 </h3>
               )}
 
-            {field === 'performancePeriodStarts' && (
-              <p className="text-bold font-body-sm line-height-sans-4">
-                {basicsMiscT('demonstrationPerformance')}
-                <span className="top-2px position-relative text-normal">
-                  <Tooltip
-                    label={basicsMiscT('demonstrationPerformanceInfo')}
-                    position="right"
-                    className="margin-left-05"
-                  >
-                    <Icon.Info className="text-base-light" />
-                  </Tooltip>
-                </span>
-              </p>
+            {config[field]?.groupLabel && (
+              <div className="text-bold font-body-sm line-height-sans-4 margin-bottom-2">
+                {config[field]?.groupLabel}
+                {config[field]?.groupLabelTooltip && (
+                  <span className="top-2px position-relative text-normal">
+                    <Tooltip
+                      label={basicsMiscT('demonstrationPerformanceInfo')}
+                      position="right"
+                      className="margin-left-05"
+                    >
+                      <Icon.Info className="text-base-light" />
+                    </Tooltip>
+                  </span>
+                )}
+              </div>
             )}
 
             {/* Checks if questions have config to be displayed side by side */}
