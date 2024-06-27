@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
@@ -64,15 +64,25 @@ const HomePageSettings = () => {
       .map(solution => solution.acronym || solution.name);
   }, [data?.userViewCustomization]);
 
-  // Sends formik values to next page through router state, no mutation needed
-  const handleSettingsSubmit = () => {
-    history.push({
-      pathname: '/homepage-settings/order',
-      state: {
-        homepageSettings: formikRef.current?.values
-      }
+  // Passes the current state to the previous page if navigating back
+  useEffect(() => {
+    // Blocks the route transition until unblock() is called
+    const unblock = history.block(destination => {
+      unblock();
+      history.push({
+        pathname: destination.pathname,
+        state:
+          // If the destination is the homepage settings page, pass the current state
+          destination.pathname === '/homepage-settings/solutions' ||
+          destination.pathname === '/homepage-settings/order'
+            ? { homepageSettings: formikRef.current?.values }
+            : undefined
+      });
+      return false;
     });
-  };
+
+    return () => {};
+  }, [history, formikRef.current?.values]);
 
   // Get the settings options from the translation file
   const settingOptions: Record<
@@ -122,7 +132,8 @@ const HomePageSettings = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={() => {
-              handleSettingsSubmit();
+              // handleSettingsSubmit();
+              history.push('/homepage-settings/order');
             }}
             enableReinitialize
             innerRef={formikRef}
@@ -184,6 +195,7 @@ const HomePageSettings = () => {
                                         ?.values as any
                                     }
                                   }}
+                                  data-testid="add-solutions-settings"
                                   className="padding-left-4 text-bold display-flex flex-align-center margin-top-1"
                                 >
                                   {homepageSettingsT('selectSolutions')}
@@ -197,7 +209,10 @@ const HomePageSettings = () => {
                               ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
                               selectedSolutions.length > 0 && (
                                 <div className="display-flex padding-left-4 padding-right-2 margin-top-1">
-                                  <p className="text-bold margin-0 margin-right-105">
+                                  <p
+                                    className="text-bold margin-0 margin-right-105"
+                                    data-testid="selected-solutions"
+                                  >
                                     {selectedSolutions.join(', ')}
                                   </p>
                                   <span className="margin-right-105">|</span>
@@ -240,6 +255,7 @@ const HomePageSettings = () => {
                     type="submit"
                     onClick={() => setErrors({})}
                     className="margin-top-4"
+                    data-testid="next-settings"
                   >
                     {miscellaneousT('next')}
                   </Button>

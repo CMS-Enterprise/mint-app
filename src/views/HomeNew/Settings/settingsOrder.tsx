@@ -198,6 +198,7 @@ const SettingsOrder = () => {
                       desktop={{ col: 12 }}
                       tablet={{ col: 12 }}
                       mobile={{ col: 12 }}
+                      data-testid={`${setting}-${index}`}
                       key={setting}
                     >
                       <div
@@ -244,6 +245,7 @@ const SettingsOrder = () => {
                                     )
                                   )
                                 }
+                                data-testid={`move-${index}-up`}
                                 size={5}
                               />
 
@@ -267,6 +269,7 @@ const SettingsOrder = () => {
                                     )
                                   )
                                 }
+                                data-testid={`move-${index}-down`}
                                 size={5}
                               />
                             </div>
@@ -294,6 +297,7 @@ const SettingsOrder = () => {
               type="submit"
               className="margin-bottom-4"
               onClick={() => handleSubmit()}
+              data-testid="save-settings-order"
             >
               {homepageSettingsT('submit')}
             </Button>

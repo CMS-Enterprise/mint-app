@@ -224,7 +224,10 @@ const SelectSolutionSettings = () => {
                           />
 
                           <div className="margin-y-4">
-                            <Button type="submit">
+                            <Button
+                              type="submit"
+                              data-testid="save-solution-settings"
+                            >
                               {homepageSettingsT('save')}
                             </Button>
                           </div>
