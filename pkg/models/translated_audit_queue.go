@@ -13,7 +13,6 @@ const (
 	TPSProcessing   TranslatedAuditQueueStatusType = "PROCESSING"
 	TPSRetry        TranslatedAuditQueueStatusType = "RETRY"
 	TPSFailed       TranslatedAuditQueueStatusType = "FAILED"
-	//Changes: (Job) Should we have a retry status?
 )
 
 // TranslatedAuditQueue is a structure that shows if an audit has, or will be processed
@@ -26,6 +25,7 @@ type TranslatedAuditQueue struct {
 }
 
 func NewTranslatedAuditQueueEntry(createdBy uuid.UUID, changeID int) *TranslatedAuditQueue {
+	// Changes: (Job) Should we remove this? We don't create any, we just fetch from the DB
 	return &TranslatedAuditQueue{
 		baseStruct: NewBaseStruct(createdBy),
 		ChangeID:   changeID,
