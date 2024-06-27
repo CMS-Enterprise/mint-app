@@ -14,10 +14,10 @@ type TranslatedAuditMetaOperationalNeed struct {
 }
 
 // NewTranslatedAuditMetaOperationalNeed creates a New TranslatedAuditMetaOperationalNeed
-func NewTranslatedAuditMetaOperationalNeed(tableName string, version int, needName string, isOther bool) TranslatedAuditMetaOperationalNeed {
+func NewTranslatedAuditMetaOperationalNeed(version int, needName string, isOther bool) TranslatedAuditMetaOperationalNeed {
 
 	return TranslatedAuditMetaOperationalNeed{
-		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(tableName, version),
+		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(TNOperationalNeed, version),
 		NeedName:                      needName,
 		IsOther:                       isOther,
 	}

@@ -27,7 +27,7 @@ func GetDatabaseOperation(action string) (models.DatabaseOperation, bool) {
 
 // getTranslationMapAndTranslateSingleValue is a utility function to translate a single field value to a translated value, assuming that the key for the translation, and the function to get the function is passed
 // it should be used in places where you need to get a single outlier translation (such as meta data) instead of normal operations where you can batch some of these data calls.
-func getTranslationMapAndTranslateSingleValue(tableName string, translationKey string, rawValue string) string {
+func getTranslationMapAndTranslateSingleValue(tableName models.TableName, translationKey string, rawValue string) string {
 
 	translation, err := mappings.GetTranslation(tableName)
 	if err == nil {

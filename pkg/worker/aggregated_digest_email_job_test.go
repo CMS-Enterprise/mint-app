@@ -55,9 +55,9 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
 	documentCount := 2
 	crTdlAvtivity := true
-	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
+	updatedSections := []models.TableName{"plan_payments", "plan_ops_eval_and_learning"}
+	reviewSections := []models.TableName{"plan_payments", "plan_ops_eval_and_learning"}
+	clearanceSections := []models.TableName{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
 	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
 	dicussionActivity := true
 

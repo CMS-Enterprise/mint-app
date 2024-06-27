@@ -1,7 +1,10 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { act, render, screen, waitFor } from '@testing-library/react';
-import { AnalyzedAudit as AnalyzedAuditsTypes } from 'gql/gen/graphql';
+import {
+  AnalyzedAudit as AnalyzedAuditsTypes,
+  TableName
+} from 'gql/gen/graphql';
 
 import setup from 'utils/testing/setup';
 
@@ -41,7 +44,7 @@ const dailyDigestProps: AnalyzedAuditsTypes[] = [
       crTdls: null,
       planSections: {
         __typename: 'AnalyzedPlanSections',
-        updated: ['plan_basics'],
+        updated: [TableName.PLAN_BASICS],
         readyForReview: [],
         readyForClearance: []
       },

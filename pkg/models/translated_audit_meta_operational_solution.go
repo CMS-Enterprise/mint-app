@@ -22,13 +22,13 @@ type TranslatedAuditMetaOperationalSolution struct {
 }
 
 // NewTranslatedAuditMetaOperationalSolution creates a New TranslatedAuditMetaOperationalSolution
-func NewTranslatedAuditMetaOperationalSolution(tableName string, version int, solutionName string, solutionOtherHeader *string, solIsOther bool, numSubtasks int, needName string, needIsOther bool, solStatusTranslated string,
+func NewTranslatedAuditMetaOperationalSolution(version int, solutionName string, solutionOtherHeader *string, solIsOther bool, numSubtasks int, needName string, needIsOther bool, solStatusTranslated string,
 	solMustStart *time.Time,
 	solMustFinish *time.Time,
 ) TranslatedAuditMetaOperationalSolution {
 
 	return TranslatedAuditMetaOperationalSolution{
-		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(tableName, version),
+		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(TNOperationalSolution, version),
 		SolutionName:                  solutionName,
 		SolutionOtherHeader:           solutionOtherHeader,
 		SolutionIsOther:               solIsOther,

@@ -3,6 +3,7 @@ import {
   DatabaseOperation,
   ExisitingModelLinkFieldType,
   GetChangeHistoryQuery,
+  TableName,
   TranslatedAuditMetaBaseStruct,
   TranslatedAuditMetaData,
   TranslatedAuditMetaDiscussionReply,
@@ -44,43 +45,43 @@ export type ChangeType =
   | 'Standard update';
 
 export type TranslationTables =
-  | 'model_plan'
-  | 'plan_basics'
-  | 'plan_general_characteristics'
-  | 'plan_participants_and_providers'
-  | 'plan_beneficiaries'
-  | 'plan_ops_eval_and_learning'
-  | 'plan_payments'
-  | 'plan_collaborator'
-  | 'plan_discussion'
-  | 'discussion_reply'
-  | 'plan_document'
-  | 'plan_cr'
-  | 'plan_tdl'
-  | 'operational_need'
-  | 'operational_solution'
-  | 'operational_solution_subtask'
-  | 'plan_document_solution_link'
-  | 'existing_model_link';
+  | TableName.MODEL_PLAN
+  | TableName.PLAN_BASICS
+  | TableName.PLAN_GENERAL_CHARACTERISTICS
+  | TableName.PLAN_PARTICIPANTS_AND_PROVIDERS
+  | TableName.PLAN_BENEFICIARIES
+  | TableName.PLAN_OPS_EVAL_AND_LEARNING
+  | TableName.PLAN_PAYMENTS
+  | TableName.PLAN_COLLABORATOR
+  | TableName.PLAN_DISCUSSION
+  | TableName.DISCUSSION_REPLY
+  | TableName.PLAN_DOCUMENT
+  | TableName.PLAN_CR
+  | TableName.PLAN_TDL
+  | TableName.OPERATIONAL_NEED
+  | TableName.OPERATIONAL_SOLUTION
+  | TableName.OPERATIONAL_SOLUTION_SUBTASK
+  | TableName.PLAN_DOCUMENT_SOLUTION_LINK
+  | TableName.EXISTING_MODEL_LINK;
 
 export type TranslationTaskListTable =
-  | 'plan_basics'
-  | 'plan_general_characteristics'
-  | 'plan_participants_and_providers'
-  | 'plan_beneficiaries'
-  | 'plan_ops_eval_and_learning'
-  | 'plan_payments';
+  | TableName.PLAN_BASICS
+  | TableName.PLAN_GENERAL_CHARACTERISTICS
+  | TableName.PLAN_PARTICIPANTS_AND_PROVIDERS
+  | TableName.PLAN_BENEFICIARIES
+  | TableName.PLAN_OPS_EVAL_AND_LEARNING
+  | TableName.PLAN_PAYMENTS;
 
 export const isTranslationTaskListTable = (
-  tableName: string
+  tableName: TableName
 ): tableName is TranslationTaskListTable => {
   return [
-    'plan_basics',
-    'plan_general_characteristics',
-    'plan_participants_and_providers',
-    'plan_beneficiaries',
-    'plan_ops_eval_and_learning',
-    'plan_payments'
+    TableName.PLAN_BASICS,
+    TableName.PLAN_GENERAL_CHARACTERISTICS,
+    TableName.PLAN_PARTICIPANTS_AND_PROVIDERS,
+    TableName.PLAN_BENEFICIARIES,
+    TableName.PLAN_OPS_EVAL_AND_LEARNING,
+    TableName.PLAN_PAYMENTS
   ].includes(tableName);
 };
 
@@ -129,15 +130,15 @@ export const datesWithNoDay: string[] = ['date_implemented'];
 // Fields that are not displayed in the change history
 const unneededFields: HiddenFieldTypes[] = [
   {
-    table: 'operational_need',
+    table: TableName.OPERATIONAL_NEED,
     fields: ['needed', 'need_type', 'model_plan_id']
   },
   {
-    table: 'operational_solution',
+    table: TableName.OPERATIONAL_SOLUTION,
     fields: ['operational_need_id', 'solution_type', 'is_other']
   },
   {
-    table: 'plan_document',
+    table: TableName.PLAN_DOCUMENT,
     fields: [
       'model_plan_id',
       'is_link',
@@ -150,11 +151,11 @@ const unneededFields: HiddenFieldTypes[] = [
     ]
   },
   {
-    table: 'plan_cr',
+    table: TableName.PLAN_CR,
     fields: ['model_plan_id']
   },
   {
-    table: 'plan_tdl',
+    table: TableName.PLAN_TDL,
     fields: ['model_plan_id']
   }
 ];
@@ -162,31 +163,31 @@ const unneededFields: HiddenFieldTypes[] = [
 export const hiddenFields: string[] = ['is_link'];
 
 // Tables where similar audits are batched together
-export const batchedTables: string[] = [
-  'operational_solution',
-  'operational_solution_subtask',
-  'plan_document_solution_link',
-  'existing_model_link'
+export const batchedTables: TableName[] = [
+  TableName.OPERATIONAL_SOLUTION,
+  TableName.OPERATIONAL_SOLUTION_SUBTASK,
+  TableName.PLAN_DOCUMENT_SOLUTION_LINK,
+  TableName.EXISTING_MODEL_LINK
 ];
 
 // Tables where audits are batch with a different table
-export const doubleBatchedTables: string[] = [
-  'plan_document',
-  'plan_document_solution_link'
+export const doubleBatchedTables: TableName[] = [
+  TableName.PLAN_DOCUMENT,
+  TableName.PLAN_DOCUMENT_SOLUTION_LINK
 ];
 
 // Fields that are connected to other tables
 export const connectedFields: HiddenFieldTypes[] = [
   {
-    table: 'plan_document_solution_link',
+    table: TableName.PLAN_TDL,
     fields: ['document_id']
   }
 ];
 
-export const linkingTables = ['existing_model_link'];
+export const linkingTables = [TableName.EXISTING_MODEL_LINK];
 
 // Determines if the table is a linking table
-export const isLinkingTable = (tableName: string): boolean =>
+export const isLinkingTable = (tableName: TableName): boolean =>
   linkingTables.includes(tableName);
 
 // Gets the linking table questions, in array, used to get audit count length
@@ -300,7 +301,7 @@ export const getOperationalMetadata = (
 
   if (type === 'subtask') {
     return metaData && isSubtaskWithMetaData(metaData)
-      ? metaData[fieldName]
+      ? metaData[fieldName] || ''
       : '';
   }
   return '';
@@ -551,7 +552,7 @@ export const separateStatusChanges = (
   changes.forEach(change => {
     if (
       !isTranslationTaskListTable(change.tableName) &&
-      change.tableName !== 'model_plan'
+      change.tableName !== TableName.MODEL_PLAN
     ) {
       filteredStatusChanges.push(change);
       return;
@@ -566,7 +567,7 @@ export const separateStatusChanges = (
     if (
       statusIndex === -1 ||
       // Check if the change is a new plan, if so group the name change with the status change, leave as is
-      (change.tableName === 'model_plan' &&
+      (change.tableName === TableName.MODEL_PLAN &&
         change.translatedFields.find(
           field => field.fieldName === 'status' && field.old === null
         ))
@@ -597,7 +598,7 @@ export const separateStatusChanges = (
 export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
   // If the change is a new plan, return 'New plan'
   if (
-    change.tableName === 'model_plan' &&
+    change.tableName === TableName.MODEL_PLAN &&
     change.translatedFields.find(
       field => field.fieldName === 'status' && field.old === null
     )
@@ -607,7 +608,7 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
 
   // If the change is a model plan status update and not a new plan, return 'Status update'
   if (
-    change.tableName === 'model_plan' &&
+    change.tableName === TableName.MODEL_PLAN &&
     change.translatedFields.find(
       field => field.fieldName === 'status' && field.old !== null
     )
@@ -623,39 +624,39 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'Task list status update';
   }
 
-  if (change.tableName === 'plan_collaborator') {
+  if (change.tableName === TableName.PLAN_COLLABORATOR) {
     return 'Team update';
   }
 
   if (
-    change.tableName === 'plan_discussion' ||
-    change.tableName === 'discussion_reply'
+    change.tableName === TableName.PLAN_DISCUSSION ||
+    change.tableName === TableName.DISCUSSION_REPLY
   ) {
     return 'Discussion update';
   }
 
-  if (change.tableName === 'plan_document') {
+  if (change.tableName === TableName.PLAN_DOCUMENT) {
     return 'Document update';
   }
 
-  if (change.tableName === 'plan_cr') {
+  if (change.tableName === TableName.PLAN_CR) {
     return 'CR update';
   }
 
-  if (change.tableName === 'plan_tdl') {
+  if (change.tableName === TableName.PLAN_TDL) {
     return 'TDL update';
   }
 
-  if (change.tableName === 'operational_solution_subtask') {
+  if (change.tableName === TableName.OPERATIONAL_SOLUTION_SUBTASK) {
     return 'Subtask update';
   }
 
-  if (change.tableName === 'plan_document_solution_link') {
+  if (change.tableName === TableName.PLAN_DOCUMENT_SOLUTION_LINK) {
     return 'Document solution link update';
   }
 
   // If the change is an operational solution create/no translatedFields, return 'Operational solution create'
-  if (change.tableName === 'operational_solution') {
+  if (change.tableName === TableName.OPERATIONAL_SOLUTION) {
     if (change.action === 'INSERT') {
       return 'Operational solution create';
     }
@@ -663,7 +664,7 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
   }
 
   // If the change is an operational need create/no translatedFields, return 'Operational need create'
-  if (change.tableName === 'operational_need') {
+  if (change.tableName === TableName.OPERATIONAL_NEED) {
     if (change.translatedFields.length === 0) {
       return 'Operational need create';
     }

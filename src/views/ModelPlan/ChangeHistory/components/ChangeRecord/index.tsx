@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import {
   DatabaseOperation,
   GetChangeHistoryQuery,
+  TableName,
   TranslationDataType,
   TranslationQuestionType
 } from 'gql/gen/graphql';
@@ -130,7 +131,7 @@ export const ActionText = ({
   const { t } = useTranslation('changeHistory');
 
   // If the change is an insert, render created text rather than answered/updated, etc.
-  if (tableName === 'operational_need' && changeType === 'INSERT') {
+  if (tableName === TableName.OPERATIONAL_NEED && changeType === 'INSERT') {
     return <span className="text-normal">{t(`changeType.CREATED`)}</span>;
   }
   // Render the change type - answered, removed, updated
@@ -249,7 +250,7 @@ export const ChangedQuestion = ({
     <>
       {change.fieldNameTranslated}{' '}
       {/* Post text action - updated, created, removed, etc */}
-      {tableName === 'operational_need' && (
+      {tableName === TableName.OPERATIONAL_NEED && (
         <ActionText
           change={change}
           changeType={changeType}
@@ -492,7 +493,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
                         id={`mention-${changeRecord.id}`}
                         editable={false}
                         initialContent={
-                          changeRecord.tableName === 'discussion_reply'
+                          changeRecord.tableName === TableName.DISCUSSION_REPLY
                             ? metaDiscussion
                             : content
                         }
@@ -500,7 +501,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
                     </li>
                   </ul>
 
-                  {changeRecord.tableName === 'discussion_reply' && (
+                  {changeRecord.tableName === TableName.DISCUSSION_REPLY && (
                     <CollapsableLink
                       id={changeRecord.id}
                       label={t('showDetails')}

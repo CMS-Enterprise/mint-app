@@ -27,7 +27,7 @@ func DiscussionReplyMetaDataGet(ctx context.Context, store *storage.Store, reply
 		return nil, fmt.Errorf("unable to get discussion by provided discussion ID for discussion reply translation metadata. err %w", err)
 	}
 	numOfReplies := discussionWithReplies.NumberOfReplies
-	metaReply := models.NewTranslatedAuditMetaDiscussionReply("discussion_reply", 0, discussionWithReplies.ID, discussionWithReplies.Content.RawContent.String(), numOfReplies)
+	metaReply := models.NewTranslatedAuditMetaDiscussionReply(0, discussionWithReplies.ID, discussionWithReplies.Content.RawContent.String(), numOfReplies)
 	return &metaReply, nil
 
 }
@@ -44,7 +44,7 @@ func OperationalNeedMetaDataGet(ctx context.Context, store *storage.Store, opNee
 		return nil, fmt.Errorf("unable to get operational need for operational need audit metadata. err %w", err)
 	}
 
-	metaNeed := models.NewTranslatedAuditMetaOperationalNeed("operational_need", 0, opNeed.GetName(), opNeed.GetIsOther())
+	metaNeed := models.NewTranslatedAuditMetaOperationalNeed(0, opNeed.GetName(), opNeed.GetIsOther())
 
 	return &metaNeed, nil
 
@@ -75,7 +75,6 @@ func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, o
 	translatedStatus := getTranslationMapAndTranslateSingleValue("operational_solution", statusKey, fmt.Sprint(opSolutionWithSubtasks.Status))
 
 	metaNeed := models.NewTranslatedAuditMetaOperationalSolution(
-		"operational_solution",
 		0,
 		opSolutionWithSubtasks.GetName(),
 		opSolutionWithSubtasks.OtherHeader,
@@ -141,7 +140,6 @@ func OperationalSolutionSubtaskMetaDataGet(ctx context.Context, store *storage.S
 	}
 
 	metaNeed := models.NewTranslatedAuditMetaOperationalSolutionSubtask(
-		"operational_solution_subtask",
 		0,
 		opSolutionWithSubtasks.GetName(),
 		opSolutionWithSubtasks.OtherHeader,
@@ -209,7 +207,7 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	}
 
 	meta := models.NewTranslatedAuditMetaDocumentSolutionLink(
-		"document_solution_link",
+
 		0,
 		opSolutionWithSubtasks.GetName(),
 		opSolutionWithSubtasks.OtherHeader,
@@ -235,7 +233,7 @@ func DocumentSolutionLinkMetaDataGet(ctx context.Context, store *storage.Store, 
 	return &meta, &metaType, nil
 }
 
-func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, tableName models.TableName, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 
 	const idNumField = "id_number"
 	var idNumber *string
@@ -288,7 +286,7 @@ func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey 
 	return &meta, &metaType, nil
 }
 
-func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, primaryKey uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 	const userIDField = "user_id"
 	var userUUID uuid.UUID
 	var userName *string
@@ -337,7 +335,7 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 		userName = &userAccount.CommonName
 	}
 
-	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "UserName", userName)
+	meta := models.NewTranslatedAuditMetaGeneric(models.TNPlanCollaborator, 0, "UserName", userName)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }
@@ -345,7 +343,7 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 // PlanDocumentMetaDataGet gets meta data for a plan document translated audit entry.
 // it first checks if the field is present in the change set, and if not, will fetch the record from the database
 // by checking the change set first, we are able to set meta data for records that have already been deleted
-func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, documentID uuid.UUID, tableName string, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, documentID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 	// Changes: (Meta) is file_name the only field we need here? What if it is a link? Should we fetch from the db instead? NOTE, we can't fetch that when the document is deleted however
 	const fileNameField = "file_name"
 	var fileName *string
@@ -382,7 +380,7 @@ func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, document
 		}
 
 	}
-	meta := models.NewTranslatedAuditMetaGeneric(tableName, 0, "fileName", fileName)
+	meta := models.NewTranslatedAuditMetaGeneric(models.TNPlanDocument, 0, "fileName", fileName)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }
@@ -453,14 +451,14 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 			return true, err
 		}
 	case "plan_collaborator":
-		metaData, metaDataType, err := PlanCollaboratorMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
+		metaData, metaDataType, err := PlanCollaboratorMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
 		metaDataInterface = metaData
 		metaDataTypeGlobal = metaDataType
 		if err != nil {
 			return true, err
 		}
 	case "plan_document":
-		metaData, metaDataType, err := PlanDocumentMetaDataGet(ctx, store, audit.PrimaryKey, audit.TableName, audit.Fields, operation)
+		metaData, metaDataType, err := PlanDocumentMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
 		metaDataInterface = metaData
 		metaDataTypeGlobal = metaDataType
 		if err != nil {

@@ -42,7 +42,7 @@ func (tam *TranslatedAuditMetaDocumentSolutionLink) SetOptionalDocumentFields(do
 }
 
 // NewTranslatedAuditMetaDocumentSolutionLink creates a New TranslatedAuditMetaDocumentSolutionLink
-func NewTranslatedAuditMetaDocumentSolutionLink(tableName string,
+func NewTranslatedAuditMetaDocumentSolutionLink(
 	version int,
 	solutionName string,
 	solutionOtherHeader *string,
@@ -55,7 +55,7 @@ func NewTranslatedAuditMetaDocumentSolutionLink(tableName string,
 ) TranslatedAuditMetaDocumentSolutionLink {
 
 	return TranslatedAuditMetaDocumentSolutionLink{
-		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(tableName, version),
+		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(TNPlanDocumentSolutionLink, version),
 		SolutionName:                  solutionName,
 		SolutionOtherHeader:           solutionOtherHeader,
 		SolutionIsOther:               solIsOther,

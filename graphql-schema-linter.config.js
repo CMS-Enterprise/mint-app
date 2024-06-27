@@ -48,6 +48,7 @@ module.exports = {
       'TranslationFieldWithOptionsAndChildren',
       'TranslationFieldWithOptionsAndParent',
       'TranslationFieldWithParentAndChildren'
-    ]
+    ],
+    'enum-values-all-caps': ['TableName']
   }
 };

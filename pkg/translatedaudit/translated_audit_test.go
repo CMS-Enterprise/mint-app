@@ -7,7 +7,6 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -81,10 +80,7 @@ func TestTranslateField(t *testing.T) {
 		translationFieldKey: testTranslation,
 		otherParentField:    parentTranslationTest,
 	}
-	testUserAccountUsername := "username"
-	testAccount := authentication.UserAccount{
-		Username: &testUserAccountUsername,
-	}
+
 	plan := models.ModelPlan{}
 
 	// Changes: (Testing) Consider converting this to a testify suite, so we can pass a full store and context
@@ -92,7 +88,7 @@ func TestTranslateField(t *testing.T) {
 
 	t.Run("Form Type is present when there is a translation", func(t *testing.T) {
 		var store *storage.Store //nil store
-		translatedField, wasTranslated, err := translateField(ctx, store, translationFieldKey, testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		translatedField, wasTranslated, err := translateField(ctx, store, translationFieldKey, testAuditField, &testAuditChange, models.DBOpUpdate, &plan, testTranslationMap)
 		assert.True(t, wasTranslated)
 		assert.NoError(t, err)
 		assert.NotNil(t, translatedField.FormType)
@@ -107,17 +103,9 @@ func TestTranslateField(t *testing.T) {
 
 	})
 
-	// Changes: (Testing) If we continue to translate fields without translations, re-enable this test. For now, this is returning nil for a field
-	// t.Run("Form Type is not present when there is not a translation", func(t *testing.T) {
-	// 	var store *storage.Store //nil store
-	// 	translatedField, wasTranslated, err := translateField(store, "there is no translation for this", testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
-	// 	assert.False(t, wasTranslated)
-	// 	assert.NoError(t, err)
-	// 	assert.Nil(t, translatedField.FormType)
-	// })
 	t.Run("When there is not a translation, there is no translation field ", func(t *testing.T) {
 		var store *storage.Store //nil store
-		translatedField, wasTranslated, err := translateField(ctx, store, "there is no translation for this", testAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		translatedField, wasTranslated, err := translateField(ctx, store, "there is no translation for this", testAuditField, &testAuditChange, models.DBOpUpdate, &plan, testTranslationMap)
 		assert.False(t, wasTranslated)
 		assert.Nil(t, (translatedField))
 		assert.NoError(t, err)
@@ -130,7 +118,7 @@ func TestTranslateField(t *testing.T) {
 			New: "{}",
 		}
 		var store *storage.Store //nil store
-		translatedField, wasTranslated, err := translateField(ctx, store, "there is no translation for this", unchangedAuditField, &testAuditChange, &testAccount, models.DBOpUpdate, &plan, testTranslationMap)
+		translatedField, wasTranslated, err := translateField(ctx, store, "there is no translation for this", unchangedAuditField, &testAuditChange, models.DBOpUpdate, &plan, testTranslationMap)
 		assert.False(t, wasTranslated)
 		assert.Nil(t, (translatedField))
 		assert.NoError(t, err)

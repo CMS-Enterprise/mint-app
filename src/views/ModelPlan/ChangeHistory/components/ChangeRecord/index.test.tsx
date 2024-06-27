@@ -3,6 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import {
   AuditFieldChangeType,
   DatabaseOperation,
+  TableName,
   TranslationDataType
 } from 'gql/gen/graphql';
 
@@ -11,7 +12,7 @@ import ChangeRecord, { ChangeRecordType } from './index';
 describe('ChangeRecord', () => {
   const mockChangeRecord: ChangeRecordType = {
     id: 'e9e1129d-2317-4acd-8d2b-7ca37b37f802',
-    tableName: 'plan_basics',
+    tableName: TableName.PLAN_BASICS,
     date: '2024-04-22T13:55:13.725192Z',
     action: DatabaseOperation.INSERT,
     translatedFields: [
