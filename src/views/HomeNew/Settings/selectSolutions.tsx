@@ -18,7 +18,8 @@ import {
   OperationalSolutionKey,
   useGetHomepageSettingsQuery,
   useGetPossibleOperationalSolutionsQuery,
-  useUpdateHomepageSettingsMutation
+  useUpdateHomepageSettingsMutation,
+  ViewCustomizationType
 } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -117,7 +118,26 @@ const SelectSolutionSettings = () => {
       }
     })
       .then(() => {
-        history.push('/homepage-settings');
+        // Checks if MODELS_BY_OPERATIONAL_SOLUTION is in the selected settings and adds it if not and there are operational solutions selected
+        if (
+          formikRef.current?.values?.possibleOperationalSolutions &&
+          formikRef.current?.values?.possibleOperationalSolutions.length > 0 &&
+          !selectedSettings?.viewCustomization.includes(
+            ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION
+          )
+        ) {
+          setSelectedSettings({
+            viewCustomization: [
+              ...(selectedSettings?.viewCustomization || []),
+              ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION
+            ]
+          });
+        }
+
+        // Allow state to hydrate before redirecting
+        setTimeout(() => {
+          history.push('/homepage-settings');
+        }, 0);
       })
       .catch(() => setMutationError(true));
   };

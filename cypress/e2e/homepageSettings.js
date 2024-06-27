@@ -43,8 +43,6 @@ describe('Homepage Settings', () => {
 
     cy.get('#MODELS_BY_OPERATIONAL_SOLUTION')
       .should('be.visible')
-      .should('not.be.checked')
-      .check({ force: true })
       .should('be.checked');
 
     cy.get('#ALL_MODEL_PLANS')
