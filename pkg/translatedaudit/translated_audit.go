@@ -28,8 +28,9 @@ func TranslateAudit(
 	if err != nil {
 		return nil, err
 	}
-	if auditWithModelPlan.TableName == "user_notification_preferences" {
+	if auditWithModelPlan.TableName == models.TNUserNotificationPreferences {
 		// Changes: (Translations) Expand this logic, we don't want to make the job retry if it is a table we don't care about translating ( like this one which doesn't have a model plan)
+		// Changes: (Translations) Pull in main and update to also not translate any new tables that isn't associated to a model plan. Make sure to add this in documentation
 		return nil, nil
 	}
 

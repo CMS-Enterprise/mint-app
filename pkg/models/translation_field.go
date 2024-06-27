@@ -67,12 +67,10 @@ type TranslationFieldBase struct {
 
 // GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Export only Label, then the parent label, then label
 func (tfb TranslationFieldBase) GetLabel() string {
-	//Changes: (Translations) Should GetLabel return an error ever?
 	/*1. Favor Export Label  */
 	if tfb.ExportLabel != nil {
 		return *tfb.ExportLabel
 	}
-	// Changes: (Translations) Verify the priority for labels? Read only sometimes has language that isn't correct for this.
 	return tfb.Label
 
 }
