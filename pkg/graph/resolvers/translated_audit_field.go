@@ -12,12 +12,12 @@ import (
 
 // TranslatedAuditFieldCollectionGetByTranslatedAuditID returns all TranslatedAuditChange for a given translated audit id
 func TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx context.Context, translatedAuditID uuid.UUID) ([]*models.TranslatedAuditField, error) {
-	translatedChangeCollection, err := loaders.TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, translatedAuditID)
+	translatedAuditFieldCollection, err := loaders.TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, translatedAuditID)
 	if err != nil {
 		return nil, err
 	}
 
-	for _, change := range translatedChangeCollection {
+	for _, change := range translatedAuditFieldCollection {
 		err2 := change.ParseMetaData()
 		// Changes: (Serialization) consider calling this in the loader since we already loop in that call?
 
@@ -27,6 +27,6 @@ func TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx context.Context, t
 
 	}
 
-	return translatedChangeCollection, err
+	return translatedAuditFieldCollection, err
 
 }
