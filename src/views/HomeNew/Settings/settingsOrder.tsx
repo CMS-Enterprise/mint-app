@@ -235,7 +235,7 @@ const SettingsOrder = () => {
                                   {
                                     settings__icon__disabled: index === 0
                                   },
-                                  'settings__icon margin-right-1'
+                                  'settings__icon margin-right-1 pointer'
                                 )}
                                 onClick={() =>
                                   setSelectedSettings(
@@ -259,7 +259,7 @@ const SettingsOrder = () => {
                                         .length -
                                         1
                                   },
-                                  'settings__icon'
+                                  'settings__icon pointer'
                                 )}
                                 onClick={() =>
                                   setSelectedSettings(
