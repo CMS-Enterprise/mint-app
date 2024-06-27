@@ -18,7 +18,7 @@ SELECT
     tAudit.modified_dts
 FROM translated_audit AS tAudit
 LEFT JOIN user_account AS actor ON tAudit.actor_id = actor.id
-LEFT JOIN audit.table_config ON tAudit.table_id = table_config.id;
+LEFT JOIN audit.table_config ON tAudit.table_id = table_config.id
 WHERE
     tAudit.model_plan_id = :model_plan_id
     AND (
