@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -20,8 +19,6 @@ const ReadOnlyBody = ({
   config: Partial<TranslationPlanSection>;
   filteredView?: keyof typeof filterGroupKey;
 }) => {
-  const { t: basicsMiscT } = useTranslation('basicsMisc');
-
   return (
     <>
       {/* Map through all the translation config questions */}
@@ -52,7 +49,7 @@ const ReadOnlyBody = ({
                 {config[field]?.groupLabelTooltip && (
                   <span className="top-2px position-relative text-normal">
                     <Tooltip
-                      label={basicsMiscT('demonstrationPerformanceInfo')}
+                      label={config[field]?.groupLabelTooltip!}
                       position="right"
                       className="margin-left-05"
                     >
