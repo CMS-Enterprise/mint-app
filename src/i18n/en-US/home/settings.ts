@@ -57,7 +57,8 @@ const homepageSettings = {
   multiselectLabel: 'Solutions',
   save: 'Save',
   dontSelect: 'Don’t select solutions and return to previous page',
-  success: ' Success! Your homepage has been updated.'
+  success: ' Success! Your homepage has been updated.',
+  noneSelected: 'None selected'
 };
 
 export default homepageSettings;

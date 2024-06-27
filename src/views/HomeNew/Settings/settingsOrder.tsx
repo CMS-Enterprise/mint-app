@@ -220,12 +220,13 @@ const SettingsOrder = () => {
 
                               {/* If MODELS_BY_OPERATIONAL_SOLUTION selected solutions, render solutions */}
                               {setting ===
-                                ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION &&
-                                selectedSolutions.length > 0 && (
-                                  <p className="margin-0">
-                                    {selectedSolutions.join(', ')}
-                                  </p>
-                                )}
+                                ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION && (
+                                <p className="margin-0">
+                                  {selectedSolutions.length > 0
+                                    ? selectedSolutions.join(', ')
+                                    : homepageSettingsT('noneSelected')}
+                                </p>
+                              )}
                             </div>
 
                             <div className="display-flex flex-align-center">
