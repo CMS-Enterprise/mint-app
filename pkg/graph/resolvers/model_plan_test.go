@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/davecgh/go-spew/spew"
+
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
@@ -270,6 +272,120 @@ func (suite *ResolverSuite) TestModelPlanOpSolutionLastModifiedDtsDataLoader() {
 
 	err = suite.verifyModelPlanTrackingDate(plan, documentSolLinks[0].CreatedDts)
 	suite.NoError(err)
+}
+
+func (suite *ResolverSuite) TestModelPlansGetByFavorited() {
+	plan := suite.createModelPlan("My Favorite Plan")
+	planB := suite.createModelPlan("Not my favorite Plan")
+
+	println("--------- plan ---------")
+	spew.Dump(plan)
+	println("--------- planB ---------")
+	spew.Dump(planB)
+
+	_, err := PlanFavoriteCreate(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Principal.Account().ID,
+		suite.testConfigs.Store,
+		plan.ID,
+	)
+	suite.NoError(err)
+
+	retPlans, err := suite.testConfigs.Store.ModelPlanCollectionFavorited(
+		suite.testConfigs.Logger,
+		false,
+		suite.testConfigs.Principal.Account().ID,
+	)
+
+	println("--------- retPlans ---------")
+	spew.Dump(retPlans)
+
+	suite.NoError(err)
+	suite.Len(retPlans, 1)
+	suite.EqualValues(plan.ID, retPlans[0].ID)
+}
+
+func (suite *ResolverSuite) TestModelPlansGetByFavoritedWithMultipleFavorited() {
+	plan1 := suite.createModelPlan("My Favorite Plan 1")
+	plan2 := suite.createModelPlan("My Favorite Plan 2")
+
+	_, err := PlanFavoriteCreate(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Principal.Account().ID,
+		suite.testConfigs.Store,
+		plan1.ID,
+	)
+	suite.NoError(err)
+
+	_, err = PlanFavoriteCreate(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Principal.Account().ID,
+		suite.testConfigs.Store,
+		plan2.ID,
+	)
+	suite.NoError(err)
+
+	retPlans, err := suite.testConfigs.Store.ModelPlanCollectionFavorited(
+		suite.testConfigs.Logger,
+		false,
+		suite.testConfigs.Principal.Account().ID,
+	)
+
+	suite.NoError(err)
+	suite.Len(retPlans, 2)
+}
+
+func (suite *ResolverSuite) TestModelPlansGetByFavoritedWithArchival() {
+	plan := suite.createModelPlan("My Favorite Plan")
+	archivedPlan := suite.createModelPlan("My Archived Favorite Plan")
+
+	_, err := PlanFavoriteCreate(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Principal.Account().ID,
+		suite.testConfigs.Store,
+		plan.ID,
+	)
+	suite.NoError(err)
+
+	_, err = PlanFavoriteCreate(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Principal.Account().ID,
+		suite.testConfigs.Store,
+		archivedPlan.ID,
+	)
+	suite.NoError(err)
+
+	changes := map[string]interface{}{
+		"archived": true,
+	}
+	_, err = ModelPlanUpdate(
+		suite.testConfigs.Logger,
+		archivedPlan.ID,
+		changes,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+	suite.NoError(err)
+
+	retPlans, err := suite.testConfigs.Store.ModelPlanCollectionFavorited(
+		suite.testConfigs.Logger,
+		false,
+		suite.testConfigs.Principal.Account().ID,
+	)
+
+	suite.NoError(err)
+	suite.Len(retPlans, 1)
+	suite.EqualValues(plan.ID, retPlans[0].ID)
 }
 
 func (suite *ResolverSuite) verifyModelPlanTrackingDate(

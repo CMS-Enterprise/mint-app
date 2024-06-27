@@ -9,7 +9,7 @@ SELECT DISTINCT
     model_plan.modified_by,
     model_plan.modified_dts
 FROM model_plan
-INNER JOIN plan_favorite ON
-    model_plan.id = plan_favorite.model_plan_id
-    AND plan_favorite.user_id = :user_id
-    AND model_plan.archived = :archived
+INNER JOIN plan_favorite ON model_plan.id = plan_favorite.model_plan_id
+WHERE
+    plan_favorite.user_id = :user_id
+    AND model_plan.archived = :archived;

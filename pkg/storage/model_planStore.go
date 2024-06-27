@@ -357,20 +357,12 @@ func (s *Store) ModelPlanCollectionFavorited(
 	userID uuid.UUID,
 ) ([]*models.ModelPlan, error) {
 
-	var modelPlans []*models.ModelPlan
-
-	stmt, err := s.db.PrepareNamed(modelPlanCollectionWhereFavoritedByUserID)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
 	arg := map[string]interface{}{
 		"archived": archived,
 		"user_id":  userID,
 	}
 
-	err = stmt.Select(&modelPlans, arg)
+	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, modelPlanCollectionWhereFavoritedByUserID, arg)
 	if err != nil {
 		logger.Error(
 			"failed to fetch favorited model plans by user id",
