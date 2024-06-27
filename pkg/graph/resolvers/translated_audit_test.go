@@ -16,6 +16,33 @@ import (
 	"github.com/cmsgov/mint-app/pkg/translatedaudit"
 )
 
+func (suite *ResolverSuite) TestTranslatedAuditCollectionGetByModelPlanID() {
+	plan := suite.createModelPlan("test plan for changes")
+
+	suite.dangerousQueueAndTranslateAllAudits()
+
+	planChanges := map[string]interface{}{
+		"modelName":    "NEW_AND_IMPROVED",
+		"abbreviation": "some model abbreviation",
+		"status":       models.ModelStatusIcipComplete,
+		"archived":     true,
+	}
+	_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	translatedAudits, err := TranslatedAuditCollectionGetByModelPlanID(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		plan.ID,
+		nil,
+		nil,
+	)
+	suite.NoError(err)
+	suite.GreaterOrEqual(len(translatedAudits), 5)
+
+}
 func (suite *ResolverSuite) TestTranslateAudit() {
 
 	// beforeYesterday := yesterday.AddDate(0, 0, -1)
@@ -258,7 +285,6 @@ func (suite *ResolverSuite) dangerousTranslateAllQueuedTranslatedAudits() []*mod
 			translatedAudits = append(translatedAudits, audit)
 
 		}
-		// fmt.Println(fmt.Errorf("error getting queued objects to translate, %w", translationErr))
 	}
 	return translatedAudits
 }
