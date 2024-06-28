@@ -112,7 +112,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  How to have a successful 2-pager meeting
+                  Overview for adding a model
                 </h3>
               </header>
               <a
@@ -132,7 +132,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  Use this article to ensure you’re fully prepared for your 2-page concept review meeting with CMMI Front Office (FO).
+                  Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the operational solutions the model will use and track its status through implementation
                 </p>
               </div>
               <div
@@ -140,58 +140,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read How to have a successful 2-pager meeting article"
-                  class="usa-button usa-button--outline"
-                  type="button"
-                >
-                  Read
-                </button>
-              </div>
-            </div>
-          </li>
-          <li
-            class="usa-card desktop:grid-col-4 article article-card--isLink"
-            data-testid="article-card"
-          >
-            <div
-              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
-            >
-              <header
-                class="usa-card__header padding-0"
-                data-testid="CardHeader"
-              >
-                <h3
-                  class="line-height-body-4 margin-bottom-1"
-                >
-                  How to have a successful 6-pager meeting
-                </h3>
-              </header>
-              <a
-                class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/articles?category=getting-started"
-              >
-                <span
-                  aria-label="Articles under the Getting started category"
-                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                  data-testid="tag"
-                >
-                  Getting started
-                </span>
-              </a>
-              <div
-                class="usa-card__body padding-x-0 article__body"
-                data-testid="CardBody"
-              >
-                <p>
-                  Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-pager. Use this article to ensure you’re fully prepared for your 6-page concept review meeting with CMMI FO.
-                </p>
-              </div>
-              <div
-                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-                data-testid="CardFooter"
-              >
-                <button
-                  aria-label="Read How to have a successful 6-pager meeting article"
+                  aria-label="Read Overview for adding a model article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
@@ -316,57 +265,6 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  Overview for adding a model
-                </h3>
-              </header>
-              <a
-                class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/articles?category=getting-started"
-              >
-                <span
-                  aria-label="Articles under the Getting started category"
-                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                  data-testid="tag"
-                >
-                  Getting started
-                </span>
-              </a>
-              <div
-                class="usa-card__body padding-x-0 article__body"
-                data-testid="CardBody"
-              >
-                <p>
-                  Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the operational solutions the model will use and track its status through implementation
-                </p>
-              </div>
-              <div
-                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-                data-testid="CardFooter"
-              >
-                <button
-                  aria-label="Read Overview for adding a model article"
-                  class="usa-button usa-button--outline"
-                  type="button"
-                >
-                  Read
-                </button>
-              </div>
-            </div>
-          </li>
-          <li
-            class="usa-card desktop:grid-col-4 article article-card--isLink"
-            data-testid="article-card"
-          >
-            <div
-              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
-            >
-              <header
-                class="usa-card__header padding-0"
-                data-testid="CardHeader"
-              >
-                <h3
-                  class="line-height-body-4 margin-bottom-1"
-                >
                   Phases involved in creating IT and operational support for models
                 </h3>
               </header>
@@ -447,6 +345,108 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               >
                 <button
                   aria-label="Read Sample Model Plan article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  How to have a successful 6-pager meeting
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=getting-started"
+              >
+                <span
+                  aria-label="Articles under the Getting started category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Getting started
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body"
+                data-testid="CardBody"
+              >
+                <p>
+                  Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-pager. Use this article to ensure you’re fully prepared for your 6-page concept review meeting with CMMI FO.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read How to have a successful 6-pager meeting article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  How to have a successful 2-pager meeting
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=getting-started"
+              >
+                <span
+                  aria-label="Articles under the Getting started category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Getting started
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body"
+                data-testid="CardBody"
+              >
+                <p>
+                  Use this article to ensure you’re fully prepared for your 2-page concept review meeting with CMMI Front Office (FO).
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read How to have a successful 2-pager meeting article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
