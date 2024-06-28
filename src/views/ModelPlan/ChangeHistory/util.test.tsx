@@ -199,6 +199,7 @@ describe('util.tsx', () => {
           {
             id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
             changeType: AuditFieldChangeType.ANSWERED,
+            dataType: TranslationDataType.ENUM,
             fieldName: 'status',
             fieldNameTranslated: 'Model Plan status',
             old: null,
@@ -226,26 +227,26 @@ describe('util.tsx', () => {
           {
             id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
             changeType: AuditFieldChangeType.ANSWERED,
+            dataType: TranslationDataType.ENUM,
             fieldName: 'status',
             fieldNameTranslated: 'Model Plan status',
             old: null,
             oldTranslated: null,
             new: 'READY',
             newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField',
-            dataType: TranslationDataType.ENUM
+            __typename: 'TranslatedAuditField'
           },
           {
             id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
             changeType: AuditFieldChangeType.ANSWERED,
+            dataType: TranslationDataType.ENUM,
             fieldName: 'model_type',
             fieldNameTranslated: 'Model Plan status',
             old: null,
             oldTranslated: null,
             new: 'READY',
             newTranslated: 'Ready',
-            __typename: 'TranslatedAuditField',
-            dataType: TranslationDataType.ENUM
+            __typename: 'TranslatedAuditField'
           }
         ],
         actorName: 'MINT Doe',
@@ -262,6 +263,7 @@ describe('util.tsx', () => {
           {
             id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
             changeType: AuditFieldChangeType.ANSWERED,
+            dataType: TranslationDataType.ENUM,
             fieldName: 'model_type',
             fieldNameTranslated: 'Model Plan status',
             old: null,
@@ -283,6 +285,7 @@ describe('util.tsx', () => {
           {
             id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
             changeType: AuditFieldChangeType.ANSWERED,
+            dataType: TranslationDataType.ENUM,
             fieldName: 'status',
             fieldNameTranslated: 'Model Plan status',
             old: null,
@@ -408,6 +411,7 @@ describe('util.tsx', () => {
               {
                 id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
                 changeType: AuditFieldChangeType.ANSWERED,
+                dataType: TranslationDataType.ENUM,
                 fieldName: 'needed',
                 fieldNameTranslated: 'Model Plan status',
                 old: null,
@@ -433,6 +437,7 @@ describe('util.tsx', () => {
               {
                 id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
                 changeType: AuditFieldChangeType.ANSWERED,
+                dataType: TranslationDataType.ENUM,
                 fieldName: 'needed',
                 fieldNameTranslated: 'Model Plan status',
                 old: null,
