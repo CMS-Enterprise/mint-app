@@ -49,7 +49,7 @@ func assertTranslationFields(t *testing.T, translation Translation) {
 		tField := assertTranslationFieldData(t, field, value)
 		if assert.NotNil(t, tField) {
 			previousEntry, wasSeen := orderSeen[tField.Order]
-			if assert.False(t, wasSeen, "there was a duplicate order entry found for this translation. Previously seen for %s. Current entry %s", previousEntry, tField.GoField) {
+			if assert.Falsef(t, wasSeen, "there was a duplicate order entry found for this translation. Previously seen for %s. Current entry %s", previousEntry, tField.GoField) {
 				orderSeen[tField.Order] = tField.GoField
 			}
 
@@ -106,7 +106,7 @@ func assertTranslationStructField(t *testing.T, field reflect.StructField, trans
 
 func assertTranslationField(t *testing.T, field reflect.StructField, value reflect.Value) models.TranslationFieldBase {
 	tField, ok := value.Interface().(models.TranslationField)
-	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
+	assert.Truef(t, ok, "the value is not of type %T, it is type %T", tField, value)
 
 	assertTFieldBase(t, field, tField.TranslationFieldBase)
 	return tField.TranslationFieldBase
@@ -115,7 +115,7 @@ func assertTranslationField(t *testing.T, field reflect.StructField, value refle
 
 func assertTranslationFieldWithOptions(t *testing.T, field reflect.StructField, value reflect.Value) models.TranslationFieldBase {
 	tField, ok := value.Interface().(models.TranslationFieldWithOptions)
-	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
+	assert.Truef(t, ok, "the value is not of type %T, it is type %T", tField, value)
 
 	assertTFieldBase(t, field, tField.TranslationFieldBase)
 
@@ -125,7 +125,7 @@ func assertTranslationFieldWithOptions(t *testing.T, field reflect.StructField, 
 }
 func assertTranslationFieldWithParent(t *testing.T, field reflect.StructField, value reflect.Value) models.TranslationFieldBase {
 	tField, ok := value.Interface().(models.TranslationFieldWithParent)
-	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
+	assert.Truef(t, ok, "the value is not of type %T, it is type %T", tField, value)
 
 	assertTFieldBase(t, field, tField.TranslationFieldBase)
 
@@ -136,7 +136,7 @@ func assertTranslationFieldWithParent(t *testing.T, field reflect.StructField, v
 
 func assertTranslationFieldWithOptionsAndChildren(t *testing.T, field reflect.StructField, value reflect.Value) models.TranslationFieldBase {
 	tField, ok := value.Interface().(models.TranslationFieldWithOptionsAndChildren)
-	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
+	assert.Truef(t, ok, "the value is not of type %T, it is type %T", tField, value)
 
 	assertTFieldBase(t, field, tField.TranslationFieldBase)
 
@@ -149,7 +149,7 @@ func assertTranslationFieldWithOptionsAndChildren(t *testing.T, field reflect.St
 
 func assertTranslationFieldWithOptionsAndParent(t *testing.T, field reflect.StructField, value reflect.Value) models.TranslationFieldBase {
 	tField, ok := value.Interface().(models.TranslationFieldWithOptionsAndParent)
-	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
+	assert.Truef(t, ok, "the value is not of type %T, it is type %T", tField, value)
 
 	assertTFieldBase(t, field, tField.TranslationFieldBase)
 
@@ -162,7 +162,7 @@ func assertTranslationFieldWithOptionsAndParent(t *testing.T, field reflect.Stru
 
 func assertTranslationFieldWithParentAndChildren(t *testing.T, field reflect.StructField, value reflect.Value) models.TranslationFieldBase {
 	tField, ok := value.Interface().(models.TranslationFieldWithParentAndChildren)
-	assert.True(t, ok, "the value is not of type %T, it is type %T", tField, value)
+	assert.Truef(t, ok, "the value is not of type %T, it is type %T", tField, value)
 
 	assertTFieldBase(t, field, tField.TranslationFieldBase)
 
@@ -176,28 +176,28 @@ func assertTranslationFieldWithParentAndChildren(t *testing.T, field reflect.Str
 // assertTFieldBase asserts that all fields of a translation are filled out appropriately when they are expected
 func assertTFieldBase(t *testing.T, field reflect.StructField, base models.TranslationFieldBase) {
 	assert := assert.New(t)
-	assert.NotZero(base, "issue for field %s", field.Name)
+	assert.NotZerof(base, "issue for field %s", field.Name)
 
-	assert.NotZero(base.GqlField, "issue for field %s", field.Name)
-	assert.NotZero(base.GoField, "issue for field %s", field.Name)
-	assert.NotZero(base.DbField, "issue for field %s", field.Name)
-	assert.NotZero(base.Label, "issue for field %s", field.Name)
+	assert.NotZerof(base.GqlField, "issue for field %s", field.Name)
+	assert.NotZerof(base.GoField, "issue for field %s", field.Name)
+	assert.NotZerof(base.DbField, "issue for field %s", field.Name)
+	assert.NotZerof(base.Label, "issue for field %s", field.Name)
 
 	assertStringPointerNilOrNotEmpty(t, base.ReadOnlyLabel, "ReadOnlyLabel", field)
 	assertStringPointerNilOrNotEmpty(t, base.SubLabel, "SubLabel", field)
 	assertStringPointerNilOrNotEmpty(t, base.MultiSelectLabel, "MultiSelectLabel", field)
 
-	assert.NotZero(base.DataType, "issue for field %s. Value: %s", field.Name)
-	assert.NotZero(base.FormType, "issue for field %s. Value: %s", field.Name)
+	assert.NotZerof(base.DataType, "issue for field %s. Value: %s", field.Name)
+	assert.NotZerof(base.FormType, "issue for field %s. Value: %s", field.Name)
 
 	if base.IsNote {
 		someParentDefined := base.OtherParentField != nil || base.ParentReferencesLabel != nil
 
 		assert.True(someParentDefined)
 		if base.OtherParentField != nil {
-			assert.NotEqualValues("", *base.OtherParentField, "OtherParentField %s is an empty string, a value was expected", field.Name)
+			assert.NotEqualValuesf("", *base.OtherParentField, "OtherParentField %s is an empty string, a value was expected", field.Name)
 		} else if base.ParentReferencesLabel != nil {
-			assert.NotEqualValues("", *base.ParentReferencesLabel, "ParentReferencesLabel %s is an empty string, a value was expected", field.Name)
+			assert.NotEqualValuesf("", *base.ParentReferencesLabel, "ParentReferencesLabel %s is an empty string, a value was expected", field.Name)
 		} else {
 			assert.Failf("Other Parent field and Parent References Label are both undefined.", " Field %v,IsNote %v, IsOther %v", field.Name, base.IsNote, base.IsOtherType)
 		}
@@ -205,8 +205,9 @@ func assertTFieldBase(t *testing.T, field reflect.StructField, base models.Trans
 
 	assertStringPointerNilOrNotEmpty(t, base.OtherParentField, "OtherParentField", field)
 	assertStringPointerNilOrNotEmpty(t, base.ParentReferencesLabel, "ParentReferencesLabel", field)
+
 	// this is filled out and is not 0
-	assert.NotZero(base.Order)
+	assert.NotZerof(base.Order, "field %s. Doesn't have a non zero order entry", field.Name)
 
 }
 
@@ -217,13 +218,13 @@ func assertTFieldOptions(t *testing.T, field reflect.StructField, translation mo
 	options, hasOptions := translation.GetOptions()
 	assert.True(t, hasOptions)
 
-	assert.NotZero(t, options, "field %s. Doesn't have options", field.Name)
+	assert.NotZerof(t, options, "field %s. Doesn't have options", field.Name)
 
 	count := len(options)
-	assert.GreaterOrEqual(t, count, 1, "field %s. Doesn't have options. There are %i options.", field.Name, count)
+	assert.GreaterOrEqualf(t, count, 1, "field %s. Doesn't have options. There are %i options.", field.Name, count)
 	for key, option := range options {
 		// translated field is a zero string. If you only translate one option and it is "", it will fail to insert in the database
-		assert.NotEqual(t, option, "", "field %s, option for %s is an empty string, which is not allowed", field.Name, key)
+		assert.NotEqualf(t, option, "", "field %s, option for %s is an empty string, which is not allowed", field.Name, key)
 
 	}
 
@@ -234,7 +235,7 @@ func assertTFieldWithParent(t *testing.T, field reflect.StructField, translation
 	parent, hasParent := translation.GetParent()
 	assert.True(t, hasParent)
 
-	assert.NotZero(t, parent, "field %s. Doesn't have parent", field.Name)
+	assert.NotZerof(t, parent, "field %s. Doesn't have parent", field.Name)
 
 }
 
@@ -244,10 +245,10 @@ func assertTFieldWithChildren(t *testing.T, field reflect.StructField, translati
 	children, hasChildren := translation.GetChildren()
 	assert.True(t, hasChildren)
 
-	assert.NotZero(t, children, "field %s. Doesn't have children", field.Name)
+	assert.NotZerof(t, children, "field %s. Doesn't have children", field.Name)
 
 	count := len(children)
-	assert.GreaterOrEqual(t, count, 1, "field %s. Doesn't have any children defined", field.Name)
+	assert.GreaterOrEqualf(t, count, 1, "field %s. Doesn't have any children defined", field.Name)
 	// // Changes: (Translations) ensure that the children are defined correctly too? should we run through the test like above? Recursive?
 
 }
@@ -258,7 +259,7 @@ func assertStringPointerNilOrNotEmpty(t *testing.T, value *string, sectionName s
 		return
 	}
 
-	assert.NotEqualValues(t, "", *value, "field %s, section %s, is an empty string, a value was expected", field.Name, sectionName)
+	assert.NotEqualValuesf(t, "", *value, "field %s, section %s, is an empty string, a value was expected", field.Name, sectionName)
 
 }
 
