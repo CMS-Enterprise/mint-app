@@ -128,8 +128,7 @@ CREATE TABLE translated_audit_field (
     old_translated ZERO_STRING, 
     new ZERO_STRING,
     new_translated ZERO_STRING, 
-    --  Changes (Structure) meta_data is not used at all, we should consider removing it
-    meta_data JSONB NOT NULL, -- This could be whatever
+
 
     created_by UUID NOT NULL REFERENCES user_account(id),
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -152,7 +151,6 @@ COMMENT ON COLUMN translated_audit_field.old IS 'The untranslated value of the o
 COMMENT ON COLUMN translated_audit_field.old_translated IS 'The translated value of the old answer';
 COMMENT ON COLUMN translated_audit_field.new IS 'The untranslated value of the new answer';
 COMMENT ON COLUMN translated_audit_field.new_translated IS 'The translated value of the new answer';
-COMMENT ON COLUMN translated_audit_field.meta_data IS 'JSONb column that stored contextual data for the field change';
 COMMENT ON COLUMN translated_audit_field.created_by IS 'Unique identifier of the user who created the translated audit field.';
 COMMENT ON COLUMN translated_audit_field.created_dts IS 'Timestamp with time zone indicating the creation time of the translated audit field.';
 COMMENT ON COLUMN translated_audit_field.modified_by IS 'Unique identifier of the user who last modified the translated audit field.';

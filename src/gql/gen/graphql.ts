@@ -3516,7 +3516,6 @@ export type TranslatedAuditField = {
   fieldOrder: Scalars['Float']['output'];
   formType: TranslationFormType;
   id: Scalars['UUID']['output'];
-  metaData: TranslatedAuditFieldMetaData;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -3532,13 +3531,6 @@ export type TranslatedAuditField = {
   referenceLabel?: Maybe<Scalars['String']['output']>;
   translatedAuditID: Scalars['UUID']['output'];
 };
-
-export type TranslatedAuditFieldMetaBaseStruct = {
-  __typename: 'TranslatedAuditFieldMetaBaseStruct';
-  version: Scalars['Int']['output'];
-};
-
-export type TranslatedAuditFieldMetaData = TranslatedAuditFieldMetaBaseStruct;
 
 export type TranslatedAuditMetaBaseStruct = {
   __typename: 'TranslatedAuditMetaBaseStruct';

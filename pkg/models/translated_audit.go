@@ -67,8 +67,6 @@ Fields include
   * date
   * action
   * primary key
-
-
 */
 
 // NewTranslatedAuditChange

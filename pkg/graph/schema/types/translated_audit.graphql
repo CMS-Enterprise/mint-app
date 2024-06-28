@@ -242,8 +242,6 @@ type TranslatedAuditField {
     new: Any
     newTranslated: Any
 
-    # Changes: (Structure) Decide if this field is needed here, or just on the parent level... Also, consider if it makes sense to leave this nullable?
-    metaData: TranslatedAuditFieldMetaData!
 
     createdBy: UUID!
     createdByUserAccount: UserAccount!
@@ -251,13 +249,6 @@ type TranslatedAuditField {
     modifiedBy: UUID
     modifiedByUserAccount: UserAccount
     modifiedDts: Time
-}
-
-union TranslatedAuditFieldMetaData = TranslatedAuditFieldMetaBaseStruct 
-
-
-type TranslatedAuditFieldMetaBaseStruct {
-    version: Int!
 }
 
 extend type Query {

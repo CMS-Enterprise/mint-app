@@ -16,9 +16,6 @@ func TranslatedAuditFieldCreate(np sqlutils.NamedPreparer, translatedAuditField 
 		translatedAuditField.ID = uuid.New()
 	}
 
-	// Set the raw data as the MetaData
-	translatedAuditField.MetaDataRaw = translatedAuditField.MetaData
-
 	retHumanizedField, procError := sqlutils.GetProcedure[models.TranslatedAuditField](np, sqlqueries.TranslatedAuditField.Create, translatedAuditField)
 	if procError != nil {
 		return nil, fmt.Errorf("issue creating new TranslatedAuditField object: %w", procError)
