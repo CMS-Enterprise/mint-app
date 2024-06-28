@@ -12,11 +12,11 @@ func (suite *TAuditSuite) TestDiscussionReplyMetaDataGet() {
 	discussion := suite.createPlanDiscussion(plan.ID, discussionContent)
 	replyContent := "that's very interesting"
 
-	reply := suite.createDiscussionReply(discussion.ID, replyContent)
+	_ = suite.createDiscussionReply(discussion.ID, replyContent)
 	now := time.Now()
 	numReplies := 1
 
-	metaData, err := DiscussionReplyMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, reply.ID, discussion.ID, now)
+	metaData, err := DiscussionReplyMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, discussion.ID, now)
 	suite.NoError(err)
 	suite.NotNil(metaData)
 

@@ -15,7 +15,7 @@ import (
 )
 
 // DiscussionReplyMetaDataGet uses the provided information to generate metadata needed for any discussion reply audits
-func DiscussionReplyMetaDataGet(ctx context.Context, store *storage.Store, replyID uuid.UUID, discussionID uuid.UUID, auditTime time.Time) (*models.TranslatedAuditMetaDiscussionReply, error) {
+func DiscussionReplyMetaDataGet(ctx context.Context, store *storage.Store, discussionID uuid.UUID, auditTime time.Time) (*models.TranslatedAuditMetaDiscussionReply, error) {
 	logger := appcontext.ZLogger(ctx)
 
 	discussionWithReplies, err := storage.PlanDiscussionByIDWithNumberOfReplies(store, logger, discussionID, auditTime)
@@ -386,11 +386,9 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 	// the default state is not-restricted
 	var restricted bool
 	switch audit.TableName {
-	//Changes: (Meta) refactor all of these to explicitly take UUIDs, since primary and foreignKey are always UUIDs and not interfaces. We don't need to parse them
-	// Changes: (Meta) Audit these method signatures, refactor to have a cohesive unified signature throughout, and remove any unnecessary params
 
 	case "discussion_reply":
-		metaData, err := DiscussionReplyMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.ModifiedDts)
+		metaData, err := DiscussionReplyMetaDataGet(ctx, store, audit.ForeignKey, audit.ModifiedDts)
 		metaDataType := models.TAMetaDiscussionReply
 		metaDataInterface = metaData
 		metaDataTypeGlobal = &metaDataType
