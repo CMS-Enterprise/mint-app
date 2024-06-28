@@ -22,7 +22,6 @@ SELECT
     TAF.old_translated,
     TAF.new,
     TAF.new_translated,
-    TAF.meta_data,
     TAF.created_by,
     TAF.created_dts,
     TAF.modified_by,
