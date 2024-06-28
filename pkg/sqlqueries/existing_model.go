@@ -13,7 +13,7 @@ type existingModelScripts struct {
 	GetByModelPlanIDLoader string
 }
 
-// ExistingModel houses all the sql for getting data for discussion reply from the database
+// ExistingModel houses all the sql for getting data for existing model from the database
 var ExistingModel = existingModelScripts{
 	CollectionGet:          existingModelCollectionGetSQL,
 	GetByModelPlanIDLoader: existingModelGetByModelPlanIDLoaderSQL,
