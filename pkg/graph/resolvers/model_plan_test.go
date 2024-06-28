@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
-
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
@@ -275,19 +273,15 @@ func (suite *ResolverSuite) TestModelPlanOpSolutionLastModifiedDtsDataLoader() {
 }
 
 func (suite *ResolverSuite) TestModelPlansGetByFavorited() {
+	testPrincipal := getTestPrincipal(suite.testConfigs.Store, "User B")
 	plan := suite.createModelPlan("My Favorite Plan")
-	planB := suite.createModelPlan("Not my favorite Plan")
-
-	println("--------- plan ---------")
-	spew.Dump(plan)
-	println("--------- planB ---------")
-	spew.Dump(planB)
+	_ = suite.createModelPlan("My Unfavorited Plan")
 
 	_, err := PlanFavoriteCreate(
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
-		suite.testConfigs.Principal.Account().ID,
+		testPrincipal.UserAccount.ID,
 		suite.testConfigs.Store,
 		plan.ID,
 	)
@@ -296,11 +290,8 @@ func (suite *ResolverSuite) TestModelPlansGetByFavorited() {
 	retPlans, err := suite.testConfigs.Store.ModelPlanCollectionFavorited(
 		suite.testConfigs.Logger,
 		false,
-		suite.testConfigs.Principal.Account().ID,
+		testPrincipal.UserAccount.ID,
 	)
-
-	println("--------- retPlans ---------")
-	spew.Dump(retPlans)
 
 	suite.NoError(err)
 	suite.Len(retPlans, 1)
