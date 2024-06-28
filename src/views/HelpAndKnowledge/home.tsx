@@ -8,6 +8,7 @@ import PageHeading from 'components/PageHeading';
 import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
 import SolutionCategories from './SolutionsHelp/_components/SolutionCategories';
+import { ArticleCategories } from './Articles';
 
 export const HelpAndKnowledgeHome = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -30,7 +31,7 @@ export const HelpAndKnowledgeHome = () => {
       </SummaryBox>
       <GridContainer className="padding-bottom-4">
         <h2 className="margin-bottom-0">
-          {t('helpCategories.GETTING_STARTED')}
+          {t(`helpCategories.${ArticleCategories.GETTING_STARTED}`)}
         </h2>
 
         <p className="margin-bottom-3 font-body-md">{t('instructions')}</p>
