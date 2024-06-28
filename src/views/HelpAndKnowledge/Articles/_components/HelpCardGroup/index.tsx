@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactPaginate from 'react-paginate';
 import { CardGroup } from '@trussworks/react-uswds';
 
 import ArticleCard from 'views/HelpAndKnowledge/Articles/_components/ArticleCard';
 
-import helpAndKnowledgeArticles from '../..';
+import helpAndKnowledgeArticles, { HelpArticle } from '../..';
 
 type HelpCardGroupType = {
   className?: string;
@@ -21,13 +22,23 @@ const HelpCardGroup = ({
   tag,
   pagination = false
 }: HelpCardGroupType) => {
-  const [pageOffset, setPageOffset] = useState(0);
+  const { t } = useTranslation('helpAndKnowledge');
 
-  helpAndKnowledgeArticles.sort((a, b) => a.order - b.order);
+  const articleNames: Record<HelpArticle, string> = t('helpArticleNames', {
+    returnObjects: true
+  });
+
+  helpAndKnowledgeArticles.sort((a, b) =>
+    articleNames[a.key]
+      .toLowerCase()
+      .localeCompare(articleNames[b.key].toLowerCase())
+  );
 
   const articles = filter
     ? helpAndKnowledgeArticles.filter(article => article.type === filter)
     : helpAndKnowledgeArticles;
+
+  const [pageOffset, setPageOffset] = useState(0);
 
   // Pagination configurations
   const itemsPerPage = 9;

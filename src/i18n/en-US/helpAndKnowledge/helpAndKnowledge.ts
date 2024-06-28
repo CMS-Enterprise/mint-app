@@ -2,7 +2,10 @@ import {
   OperationalSolutionCategoryRoute,
   OperationalSolutionSubCategories
 } from 'data/operationalSolutionCategories';
-import { ArticleCategories } from 'views/HelpAndKnowledge/Articles';
+import {
+  ArticleCategories,
+  HelpArticle
+} from 'views/HelpAndKnowledge/Articles';
 import { AboutConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
 import { TimelineConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
 
@@ -1839,6 +1842,21 @@ const helpCategories: Record<ArticleCategories, string> = {
   [ArticleCategories.IT_IMPLEMENTATION]: 'IT implementation'
 };
 
+const helpArticleNames: Record<HelpArticle, string> = {
+  [HelpArticle.MODEL_PLAN_OVERVIEW]: 'Overview for adding a model',
+  [HelpArticle.HIGH_LEVEL_PROJECT_PLAN]: 'High-Level Project Plans',
+  [HelpArticle.SAMPLE_MODEL_PLAN]: 'Sample Model Plan',
+  [HelpArticle.TWO_PAGER_MEETING]: 'How to have a successful 2-pager meeting',
+  [HelpArticle.SIX_PAGER_MEETING]: 'How to have a successful 6-pager meeting',
+  [HelpArticle.UTILIZING_SOLUTIONS]:
+    'Utilizing available operational solutions',
+  [HelpArticle.MODEL_SOLUTION_IMPLEMENTATION]:
+    'Model implementation and solution implementation',
+  [HelpArticle.MODEL_SOLUTION_DESIGN]: 'Model design and solution design',
+  [HelpArticle.PHASES_INVOLVED]:
+    'Phases involved in creating IT and operational support for models'
+};
+
 const helpAndKnowledge = {
   heading: 'Help and Knowledge Center',
   home: 'Home',
@@ -1847,6 +1865,7 @@ const helpAndKnowledge = {
   read: 'Read',
   all: 'All help articles',
   helpCategories,
+  helpArticleNames,
   instructions:
     'Use the articles below to help get started with your Model Plan and IT implementation.',
   gettingStartedInstructions:
