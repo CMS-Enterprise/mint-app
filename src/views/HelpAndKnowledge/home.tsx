@@ -29,7 +29,9 @@ export const HelpAndKnowledgeHome = () => {
         </GridContainer>
       </SummaryBox>
       <GridContainer className="padding-bottom-4">
-        <h2 className="margin-bottom-0">{t('getting-started')}</h2>
+        <h2 className="margin-bottom-0">
+          {t('helpCategories.GETTING_STARTED')}
+        </h2>
 
         <p className="margin-bottom-3 font-body-md">{t('instructions')}</p>
 

@@ -14,6 +14,8 @@ import PageHeading from 'components/PageHeading';
 import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
+import { HelpArticle } from '..';
+
 type ModelPlanOverviewContentProps = {
   help?: boolean;
 };
@@ -104,11 +106,11 @@ export const ModelPlanOverview = () => {
         </div>
       </MainContent>
       <RelatedArticles
-        currentArticle="Model Plan Overview"
-        specificArticleNames={[
-          'How to have a successful 2-pager meeting',
-          'High-level project plans',
-          'Sample Model Plan'
+        currentArticle={HelpArticle.MODEL_PLAN_OVERVIEW}
+        specificArticles={[
+          HelpArticle.TWO_PAGER_MEETING,
+          HelpArticle.HIGH_LEVEL_PROJECT_PLAN,
+          HelpArticle.SAMPLE_MODEL_PLAN
         ]}
         viewAllLink
       />

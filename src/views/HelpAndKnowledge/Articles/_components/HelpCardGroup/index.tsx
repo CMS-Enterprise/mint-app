@@ -24,7 +24,7 @@ const HelpCardGroup = ({
   const [pageOffset, setPageOffset] = useState(0);
 
   helpAndKnowledgeArticles.sort((a, b) =>
-    a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+    a.key.toLowerCase().localeCompare(b.key.toLowerCase())
   );
 
   const articles = filter
@@ -51,13 +51,7 @@ const HelpCardGroup = ({
     <>
       <CardGroup className={className}>
         {firstThreeArticles.map(article => (
-          <ArticleCard
-            key={article.route}
-            {...article}
-            isLink
-            tag={tag}
-            type={article.type}
-          />
+          <ArticleCard {...article} isLink tag={tag} type={article.type} />
         ))}
       </CardGroup>
 

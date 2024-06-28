@@ -2,6 +2,7 @@ import {
   OperationalSolutionCategoryRoute,
   OperationalSolutionSubCategories
 } from 'data/operationalSolutionCategories';
+import { ArticleCategories } from 'views/HelpAndKnowledge/Articles';
 import { AboutConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
 import { TimelineConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
 
@@ -1833,6 +1834,11 @@ There are two types of CRs:`,
   }
 };
 
+const helpCategories: Record<ArticleCategories, string> = {
+  [ArticleCategories.GETTING_STARTED]: 'Getting started',
+  [ArticleCategories.IT_IMPLEMENTATION]: 'IT implementation'
+};
+
 const helpAndKnowledge = {
   heading: 'Help and Knowledge Center',
   home: 'Home',
@@ -1840,8 +1846,7 @@ const helpAndKnowledge = {
     'Get help with the creation of your Model Plan and the implementation of operational solutions.',
   read: 'Read',
   all: 'All help articles',
-  'getting-started': 'Getting started',
-  'it-implementation': 'IT implementation',
+  helpCategories,
   instructions:
     'Use the articles below to help get started with your Model Plan and IT implementation.',
   gettingStartedInstructions:
