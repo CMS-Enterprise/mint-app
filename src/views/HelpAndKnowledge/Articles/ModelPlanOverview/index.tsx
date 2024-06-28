@@ -14,7 +14,8 @@ import PageHeading from 'components/PageHeading';
 import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
-import { HelpArticle } from '..';
+import HelpCategoryTag from '../_components/HelpCategoryTag';
+import { ArticleCategories, HelpArticle } from '..';
 
 type ModelPlanOverviewContentProps = {
   help?: boolean;
@@ -31,11 +32,13 @@ export const ModelPlanOverviewContent = ({
         <p className="margin-top-0 margin-bottom-1">
           {help ? t('summaryBox.copyHelp') : t('summaryBox.copy')}
         </p>
+
         <ul className="padding-left-3 margin-y-0">
           <li>{t('summaryBox.listItem.start')}</li>
           <li>{t('summaryBox.listItem.upload')}</li>
           <li>{t('summaryBox.listItem.track')}</li>
         </ul>
+
         <p className="margin-y-1">
           <Trans i18nKey="modelPlanOverview:summaryBox.email">
             indexZero
@@ -47,6 +50,7 @@ export const ModelPlanOverviewContent = ({
       <PageHeading className="margin-top-7 margin-bottom-1" headingLevel="h2">
         {t('steps.heading')}
       </PageHeading>
+
       <p className="font-body-lg margin-y-0">{t('steps.description')}</p>
 
       <Grid desktop={{ col: 6 }} className="margin-top-105">
@@ -100,11 +104,21 @@ export const ModelPlanOverview = () => {
         <div className="grid-container">
           <div className="tablet:grid-col-12">
             <HelpBreadcrumb text={t('overviewHeading')} />
-            <PageHeading>{t('overviewHeading')}</PageHeading>
+
+            <PageHeading className="margin-bottom-1">
+              {t('overviewHeading')}
+            </PageHeading>
+
+            <HelpCategoryTag
+              type={ArticleCategories.GETTING_STARTED}
+              className="margin-bottom-4"
+            />
+
             <ModelPlanOverviewContent help />
           </div>
         </div>
       </MainContent>
+
       <RelatedArticles
         currentArticle={HelpArticle.MODEL_PLAN_OVERVIEW}
         specificArticles={[
