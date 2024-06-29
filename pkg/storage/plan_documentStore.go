@@ -19,9 +19,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_document_solution_link/delete_by_document_id.sql
-var planDocumentSolutionLinksDeleteByDocumentIDSQL string
-
 // PlanDocumentCreate creates a plan document
 func (s *Store) PlanDocumentCreate(
 	logger *zap.Logger,
@@ -265,7 +262,7 @@ func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid
 		return nil, err
 	}
 
-	stmt, err := tx.PrepareNamed(planDocumentSolutionLinksDeleteByDocumentIDSQL)
+	stmt, err := tx.PrepareNamed(sqlqueries.PlanDocument.DeleteByID)
 	if err != nil {
 		return nil, err
 	}
