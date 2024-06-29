@@ -2,6 +2,7 @@ package storage
 
 import (
 	_ "embed"
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -9,9 +10,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 )
-
-//go:embed SQL/prepare_for_clearance/get_by_model_plan_id.sql
-var prepareForClearanceGetByModelPlanID string
 
 // ReadyForClearanceGetByModelPlanID reads information about a model plan's clearance
 func (s *Store) ReadyForClearanceGetByModelPlanID(
@@ -21,7 +19,7 @@ func (s *Store) ReadyForClearanceGetByModelPlanID(
 
 	dbResult := &models.PrepareForClearanceResponse{}
 
-	stmt, err := s.db.PrepareNamed(prepareForClearanceGetByModelPlanID)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PrepareForClearance.GetByModelPlanID)
 	if err != nil {
 		return nil, err
 	}
