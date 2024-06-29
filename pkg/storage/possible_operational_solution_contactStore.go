@@ -5,6 +5,7 @@ import (
 	_ "embed"
 	"errors"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 
@@ -12,12 +13,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/models"
 )
-
-//go:embed SQL/possible_operational_solution_contact/collection_get_by_possible_solution_id.sql
-var possibleOperationalSolutionContactsGetByPossibleSolutionIDLOADERSQL string
-
-//go:embed SQL/possible_operational_solution_contact/get_primary_contact_by_possible_solution_id.sql
-var getPrimaryContactByPossibleSolutionID string
 
 // PossibleOperationalSolutionContactsGetByPossibleSolutionIDLOADER returns
 // Solution contacts that match the paramTable JSON
@@ -29,7 +24,7 @@ func (s *Store) PossibleOperationalSolutionContactsGetByPossibleSolutionIDLOADER
 	// paramtableJSON should have possibleSolutionID as a key
 	var contacts []*models.PossibleOperationalSolutionContact
 
-	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionContactsGetByPossibleSolutionIDLOADERSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PossibleOperationalSolutionContact.CollectionGetByPossibleSolutionID)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +51,7 @@ func (s *Store) PossibleOperationalSolutionPrimaryContactGetByPossibleSolutionID
 ) (*models.PossibleOperationalSolutionContact, error) {
 
 	contact := models.PossibleOperationalSolutionContact{}
-	stmt, err := np.PrepareNamed(getPrimaryContactByPossibleSolutionID)
+	stmt, err := np.PrepareNamed(sqlqueries.PossibleOperationalSolutionContact.GetPrimaryContactByPossibleSolutionID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
 	}
