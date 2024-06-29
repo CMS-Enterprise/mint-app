@@ -3,8 +3,6 @@ package storage
 import (
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
-
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -14,13 +12,28 @@ import (
 	_ "embed"
 )
 
+//go:embed SQL/plan_tdl/create.sql
+var planTDLCreateSQL string
+
+//go:embed SQL/plan_tdl/update.sql
+var planTDLUpdateSQL string
+
+//go:embed SQL/plan_tdl/delete.sql
+var planTDLDeleteSQL string
+
+//go:embed SQL/plan_tdl/get.sql
+var planTDLGetSQL string
+
+//go:embed SQL/plan_tdl/collection_by_model_plan_id.sql
+var planTDLCollectionByModelPlanIDSQL string
+
 // PlanTDLCreate creates  returns a plan_cr_tdl object
 func (s *Store) PlanTDLCreate(logger *zap.Logger, planTDL *models.PlanTDL) (*models.PlanTDL, error) {
 	if planTDL.ID == uuid.Nil {
 		planTDL.ID = uuid.New()
 	}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTDL.Create)
+	stmt, err := s.db.PrepareNamed(planTDLCreateSQL)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create TDL with error %s", err),
@@ -45,7 +58,7 @@ func (s *Store) PlanTDLCreate(logger *zap.Logger, planTDL *models.PlanTDL) (*mod
 
 // PlanTDLUpdate updates and returns a plan_cr_tdl object
 func (s *Store) PlanTDLUpdate(logger *zap.Logger, planTDL *models.PlanTDL) (*models.PlanTDL, error) {
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTDL.Update)
+	stmt, err := s.db.PrepareNamed(planTDLUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, planTDL)
 	}
@@ -70,7 +83,7 @@ func (s *Store) PlanTDLDelete(_ *zap.Logger, id uuid.UUID, userID uuid.UUID) (*m
 		return nil, err
 	}
 
-	stmt, err := tx.PrepareNamed(sqlqueries.PlanTDL.Delete)
+	stmt, err := tx.PrepareNamed(planTDLDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +109,7 @@ func (s *Store) PlanTDLDelete(_ *zap.Logger, id uuid.UUID, userID uuid.UUID) (*m
 // PlanTDLGetByID returns a plan_cr_tdl
 func (s *Store) PlanTDLGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanTDL, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTDL.Get)
+	stmt, err := s.db.PrepareNamed(planTDLGetSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +136,7 @@ func (s *Store) PlanTDLsGetByModelPlanID(_ *zap.Logger, modelPlanID uuid.UUID) (
 
 	var planTDLs []*models.PlanTDL
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTDL.CollectionByModelPlanID)
+	stmt, err := s.db.PrepareNamed(planTDLCollectionByModelPlanIDSQL)
 	if err != nil {
 		return nil, err
 	}

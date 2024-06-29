@@ -5,8 +5,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
-
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -17,6 +15,21 @@ import (
 	_ "embed"
 )
 
+//go:embed SQL/possible_operational_solution/collection_get_by_need_type.sql
+var possibleOperationalSolutionCollectionByNeedTypeSQL string
+
+//go:embed SQL/possible_operational_solution/collection_get_all.sql
+var possibleOperationalSolutionCollectionGelAllSQL string
+
+//go:embed SQL/possible_operational_solution/collection_get_by_operational_need_id.sql
+var possibleOperationalSolutionCollectionByOperationalNeedIDSQL string
+
+//go:embed SQL/possible_operational_solution/get_by_id.sql
+var possibleOperationalSolutionGetByIDSQL string
+
+//go:embed SQL/possible_operational_solution/get_by_key.sql
+var possibleOperationalSolutionGetByKeySQL string
+
 // PossibleOperationalSolutionCollectionGetByNeedType returns possible
 // operational solutions for a given operational need
 func (s *Store) PossibleOperationalSolutionCollectionGetByNeedType(
@@ -26,7 +39,7 @@ func (s *Store) PossibleOperationalSolutionCollectionGetByNeedType(
 
 	var posSols []*models.PossibleOperationalSolution
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PossibleOperationalSolution.CollectionByNeedType)
+	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionCollectionByNeedTypeSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -52,11 +65,10 @@ func (s *Store) PossibleOperationalSolutionCollectionGetAll(_ *zap.Logger) (
 ) {
 
 	var posSols []*models.PossibleOperationalSolution
-	stmt, err := s.db.PrepareNamed(sqlqueries.PossibleOperationalSolution.CollectionGetAll)
+	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionCollectionGelAllSQL)
 	if err != nil {
 		return nil, err
 	}
-	defer stmt.Close()
 
 	arg := map[string]interface{}{}
 
@@ -77,7 +89,7 @@ func (s *Store) PossibleOperationalSolutionCollectionGetByOperationalNeedID(
 
 	var posSols []*models.PossibleOperationalSolution
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PossibleOperationalSolution.CollectionByOperationalNeedID)
+	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionCollectionByOperationalNeedIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +112,7 @@ func (s *Store) PossibleOperationalSolutionCollectionGetByOperationalNeedID(
 func (s *Store) PossibleOperationalSolutionGetByID(logger *zap.Logger, id int) (*models.PossibleOperationalSolution, error) {
 
 	opSol := models.PossibleOperationalSolution{}
-	stmt, err := s.db.PrepareNamed(sqlqueries.PossibleOperationalSolution.GetByID)
+	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionGetByIDSQL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
 	}
@@ -138,7 +150,7 @@ func (s *Store) PossibleOperationalSolutionGetByKey(logger *zap.Logger, solKey m
 	//TODO: restructure as data-loaders
 
 	opSol := models.PossibleOperationalSolution{}
-	stmt, err := s.db.PrepareNamed(sqlqueries.PossibleOperationalSolution.GetByKey)
+	stmt, err := s.db.PrepareNamed(possibleOperationalSolutionGetByKeySQL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
 	}
