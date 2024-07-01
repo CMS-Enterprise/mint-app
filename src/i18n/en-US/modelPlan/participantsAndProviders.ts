@@ -2,6 +2,7 @@ import { TranslationParticipantsAndProviders } from 'types/translation';
 
 import {
   ModelViewFilter,
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/gen/graphql';
@@ -1043,7 +1044,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 5.18,
-    tableReference: 'user_account',
+    tableReference: TableName.USER_ACCOUNT,
     hideFromReadonly: true
   },
   readyForReviewDts: {
@@ -1065,7 +1066,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 5.2,
-    tableReference: 'user_account',
+    tableReference: TableName.USER_ACCOUNT,
     hideFromReadonly: true
   },
   readyForClearanceDts: {

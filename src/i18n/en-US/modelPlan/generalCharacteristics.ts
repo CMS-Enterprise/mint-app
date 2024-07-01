@@ -2,6 +2,7 @@ import { TranslationGeneralCharacteristics } from 'types/translation';
 
 import {
   ModelViewFilter,
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/gen/graphql';
@@ -32,7 +33,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: TranslationDataType.NUMBER,
     formType: TranslationFormType.TEXT,
     order: 1.02,
-    tableReference: 'existing_model',
+    tableReference: TableName.EXISTING_MODEL,
     hideFromReadonly: true
   },
   currentModelPlanID: {
@@ -43,7 +44,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 1.03,
-    tableReference: 'model_plan',
+    tableReference: TableName.MODEL_PLAN,
     hideFromReadonly: true
   },
   existingModel: {
@@ -1129,7 +1130,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 5.1,
-    tableReference: 'user_account',
+    tableReference: TableName.USER_ACCOUNT,
     hideFromReadonly: true
   },
   readyForReviewDts: {
@@ -1151,7 +1152,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 5.12,
-    tableReference: 'user_account',
+    tableReference: TableName.USER_ACCOUNT,
     hideFromReadonly: true
   },
   readyForClearanceDts: {

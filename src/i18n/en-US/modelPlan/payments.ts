@@ -2,6 +2,7 @@ import { TranslationPayments } from 'types/translation';
 
 import {
   ModelViewFilter,
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/gen/graphql';
@@ -1212,7 +1213,7 @@ export const payments: TranslationPayments = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 7.15,
-    tableReference: 'user_account',
+    tableReference: TableName.USER_ACCOUNT,
     hideFromReadonly: true
   },
   readyForReviewDts: {
@@ -1233,7 +1234,7 @@ export const payments: TranslationPayments = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 7.17,
-    tableReference: 'user_account',
+    tableReference: TableName.USER_ACCOUNT,
     hideFromReadonly: true
   },
   readyForClearanceDts: {

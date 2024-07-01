@@ -61,8 +61,8 @@ type TranslationFieldBase struct {
 	// Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
 	ParentReferencesLabel *string `json:"parentReferencesLabel"`
 	// Labels specifically for export/change history.  Takes priority over all other labels
-	ExportLabel    *string `json:"exportLabel"`
-	TableReference *string `json:"tableReference"`
+	ExportLabel    *string    `json:"exportLabel"`
+	TableReference *TableName `json:"tableReference"`
 }
 
 // GetLabel has logic to prioritize the translated label to be returned for a specific field. It prioritizes the Export only Label, then the parent label, then label
@@ -74,23 +74,27 @@ func (tfb TranslationFieldBase) GetLabel() string {
 	return tfb.Label
 
 }
+
+// GetReferencesLabel returns either the discrete ParentReferencesLabel if present, OR the label of the parent field. If neither are found, return nil
 func (tfb TranslationFieldBase) GetReferencesLabel(translationDictionary map[string]ITranslationField) *string {
 	if tfb.ParentReferencesLabel != nil {
 		return tfb.ParentReferencesLabel
 	}
 	if tfb.OtherParentField != nil {
-		// Attempt to get the parent field, and it's label (with recursion?) If not, fall through to the other labels.
+		// Attempt to get the parent field, and it's label
 		parent, ok := translationDictionary[*tfb.OtherParentField]
 		if ok {
 			parentLabel := parent.GetLabel()
+			// Note, this will only get the parent label or export label. It does not check for further parent labels.
 			return &parentLabel
-			// Changes: (Translations) verify that this is ok, we are opening ourselves up to recursion using this method call...
 		}
+		// If parent isn't found, return nil
 	}
 	return nil
 
 }
 
+// GetFieldOrder returns the order field of a translation
 func (tfb TranslationFieldBase) GetFieldOrder() float64 {
 	return tfb.Order
 }
@@ -120,7 +124,7 @@ func (tfb TranslationFieldBase) GetQuestionType() *TranslationQuestionType {
 	return nil
 
 }
-func (tfb TranslationFieldBase) GetTableReference() (string, bool) {
+func (tfb TranslationFieldBase) GetTableReference() (TableName, bool) {
 	if tfb.TableReference == nil {
 		return "", false
 	}
@@ -163,7 +167,7 @@ type ITranslationField interface {
 	GetQuestionType() *TranslationQuestionType
 
 	// GetTableReference returns the table that a translation references.
-	GetTableReference() (string, bool)
+	GetTableReference() (TableName, bool)
 }
 
 //Changes: (Translations) Define the Translation Parent better

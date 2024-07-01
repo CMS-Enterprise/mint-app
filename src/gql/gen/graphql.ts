@@ -3672,7 +3672,7 @@ export type TranslationField = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents a translation question with options */
@@ -3702,7 +3702,7 @@ export type TranslationFieldWithOptions = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents a translation question with options and child/children */
@@ -3733,7 +3733,7 @@ export type TranslationFieldWithOptionsAndChildren = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents a translation question with options and parent */
@@ -3764,7 +3764,7 @@ export type TranslationFieldWithOptionsAndParent = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents a translation question with no options and a parent */
@@ -3793,7 +3793,7 @@ export type TranslationFieldWithParent = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents a translation question with options and parent and children */
@@ -3825,7 +3825,7 @@ export type TranslationFieldWithParentAndChildren = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents the FORM type of the translation field */

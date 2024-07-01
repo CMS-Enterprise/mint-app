@@ -8,13 +8,14 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 //Changes: (fk) Should this be moved into it's own package?
 //Changes: (fk) if we have time to allow workers to take a dataloader, these function calls will be more efficient
 
-func translateForeignKey(ctx context.Context, store *storage.Store, value interface{}, tableReference string) (interface{}, error) {
+func translateForeignKey(ctx context.Context, store *storage.Store, value interface{}, tableReference models.TableName) (interface{}, error) {
 	if value == nil {
 		return nil, nil
 	}
@@ -22,25 +23,24 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value interf
 		return nil, fmt.Errorf("the store was nil, but is required to translate foreign key fields ")
 	}
 
-	//Changes: (fk) Refactor this, and handle errors etc
 	switch tableReference {
-	case "user_account":
+	case models.TNUserAccount:
 		{
 			return getUserAccountForeignKeyTranslation(store, value)
 		}
-	case "operational_solution":
+	case models.TNOperationalSolution:
 		{
 			return getOperationalSolutionForeignKeyReference(ctx, store, value)
 		}
-	case "plan_document":
+	case models.TNPlanDocument:
 		{
 			return getPlanDocumentForeignKeyReference(ctx, store, value)
 		}
-	case "model_plan":
+	case models.TNModelPlan:
 		{
 			return getModelPlanForeignKeyReference(ctx, store, value)
 		}
-	case "existing_model":
+	case models.TNExistingModel:
 		{
 			return getExistingModelForeignKeyReference(ctx, store, value)
 		}
