@@ -161,7 +161,7 @@ type TranslatedAudit {
     """
     The Common name of the actor who made the changes. This comes from the user account table.
     """
-    actorName: String!  #Changes: (Serialization) This could live in the actor account, but this is meant to facilitate search
+    actorName: String!
     """
     The id of the audit.Change record that was translated.
     """

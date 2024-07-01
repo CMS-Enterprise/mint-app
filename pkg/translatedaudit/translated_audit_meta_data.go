@@ -334,7 +334,6 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 // it first checks if the field is present in the change set, and if not, will fetch the record from the database
 // by checking the change set first, we are able to set meta data for records that have already been deleted
 func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, documentID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
-	// Changes: (Meta) is file_name the only field we need here? What if it is a link? Should we fetch from the db instead? NOTE, we can't fetch that when the document is deleted however
 	const fileNameField = "file_name"
 	var fileName *string
 	fileNameChange, fieldPresent := changesFields[fileNameField]
