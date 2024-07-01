@@ -264,6 +264,7 @@ shared_enums
 translation_interface.go
 translation_extensions.go
 translation_utilities.go
+translated_audit.go
 deserializing
 deserialized
 json

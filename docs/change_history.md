@@ -91,3 +91,11 @@ Change history is a MINT feature that aims to give full transparency into model 
      - Add a test to `VerifyFieldsArePopulated`. This should call `assertTranslationFields`
      - Add a test to verify `TranslationCoverage` this should call `assertTranslationStructCoverage`
          - this can explicitly provide fields that we expect not to be translated.
+
+### Modifying Existing Jobs that rely on Audit Data
+  - Is this data not going to be translated? Update `TranslateAudit` [pkg/translatedaudit/translated_audit.go] (../pkg/translatedaudit/translated_audit.go) to skip the translation
+  - Is there meta data that will be needed for this specific `Translated Audit`? Make sure to generate the meta data.
+      - If the entry can ever be deleted, ensure that the meta data is nullable (as you can't guarantee you will have access to the record at the time of translation)
+  - Does the record affect Analyzed Audit?
+    - Update the analyzed audit job to get data from the new table as well.
+    - Verify that new changes to the analyzed audit struct are backwards compatible (as the historic data is returned for notifications)
