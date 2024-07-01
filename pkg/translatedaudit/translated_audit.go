@@ -195,8 +195,6 @@ func translateField(
 
 	options, hasOptions := translationInterface.GetOptions()
 	tableReference, hasTableReference := translationInterface.GetTableReference()
-	//Changes: (fk) look to update the unit tests, we don't want a foreign key relation to be overridden with options.
-	// ALSO! consider if there are any places with an array of foreign keys, I think we don't have that anymore
 	if hasOptions {
 		translatedOld = translateValue(old, options)
 		translatedNew = translateValue(new, options)

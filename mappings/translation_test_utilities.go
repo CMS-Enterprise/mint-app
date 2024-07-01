@@ -218,6 +218,9 @@ func assertTFieldOptions(t *testing.T, field reflect.StructField, translation mo
 	options, hasOptions := translation.GetOptions()
 	assert.True(t, hasOptions)
 
+	tableReference, hasTableReference := translation.GetTableReference()
+	assert.Falsef(t, hasTableReference, "field %s has options, but also references a table (%s) for a foreign key. The table reference will be missed", field.Name, tableReference)
+
 	assert.NotZerof(t, options, "field %s. Doesn't have options", field.Name)
 
 	count := len(options)
