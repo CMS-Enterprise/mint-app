@@ -3,6 +3,8 @@ package storage
 import (
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -12,21 +14,6 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/plan_favorite/create.sql
-var planFavoriteCreateSQL string
-
-//go:embed SQL/plan_favorite/delete.sql
-var planFavoriteDeleteSQL string
-
-//go:embed SQL/plan_favorite/get.sql
-var planFavoriteGetSQL string
-
-//go:embed SQL/plan_favorite/get_collection_by_user_id.sql
-var planFavoriteGetCollectionByUserIDSQL string
-
-//go:embed SQL/plan_favorite/get_unique_user_id.sql
-var planFavoriteGetUniqueUserIDsSQL string
-
 // PlanFavoriteCreate creates and returns a plan favorite object
 func (s *Store) PlanFavoriteCreate(np sqlutils.NamedPreparer, logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
 
@@ -34,7 +21,7 @@ func (s *Store) PlanFavoriteCreate(np sqlutils.NamedPreparer, logger *zap.Logger
 		favorite.ID = uuid.New()
 	}
 
-	stmt, err := np.PrepareNamed(planFavoriteCreateSQL) // TODO: Look to refactor this SQL to make it clearer
+	stmt, err := np.PrepareNamed(sqlqueries.PlanFavorite.Create) // TODO: Look to refactor this SQL to make it clearer
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create plan favorite with error %s", err),
@@ -73,7 +60,7 @@ func (s *Store) PlanFavoriteDelete(
 		return nil, err
 	}
 
-	stmt, err := tx.PrepareNamed(planFavoriteDeleteSQL)
+	stmt, err := tx.PrepareNamed(sqlqueries.PlanFavorite.Delete)
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +91,7 @@ func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(
 	modelPlanID uuid.UUID,
 ) (*models.PlanFavorite, error) {
 
-	stmt, err := s.db.PrepareNamed(planFavoriteGetSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanFavorite.Get)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +120,7 @@ func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
 
 	var userIDs []uuid.UUID
 
-	stmt, err := s.db.PrepareNamed(planFavoriteGetUniqueUserIDsSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanFavorite.GetUniqueUserIDs)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +145,7 @@ func PlanFavoriteGetCollectionByUserID(
 
 	var planFavorites []*models.PlanFavorite
 
-	stmt, err := np.PrepareNamed(planFavoriteGetCollectionByUserIDSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanFavorite.GetCollectionByUserID)
 	if err != nil {
 		return nil, err
 	}

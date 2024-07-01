@@ -3,6 +3,8 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -13,18 +15,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_participants_and_providers/create.sql
-var planParticipantsAndProvidersCreateSQL string
-
-//go:embed SQL/plan_participants_and_providers/update.sql
-var planParticipantsAndProvidersUpdateSQL string
-
-//go:embed SQL/plan_participants_and_providers/get_by_id.sql
-var planParticipantsAndProvidersGetByIDSQL string
-
-//go:embed SQL/plan_participants_and_providers/get_by_model_plan_id_LOADER.sql
-var planParticipantsAndProvidersGetByModelPlanIDLoaderSQL string
-
 // PlanParticipantsAndProvidersGetByModelPlanIDLOADER returns the plan
 // GeneralCharacteristics for a slice of model plan ids
 func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(
@@ -34,7 +24,7 @@ func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(
 
 	var pAndPSlice []*models.PlanParticipantsAndProviders
 
-	stmt, err := s.db.PrepareNamed(planParticipantsAndProvidersGetByModelPlanIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanParticipantsAndProviders.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +51,7 @@ func (s *Store) PlanParticipantsAndProvidersCreate(
 
 	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
 
-	stmt, err := np.PrepareNamed(planParticipantsAndProvidersCreateSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanParticipantsAndProviders.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
 	}
@@ -84,7 +74,7 @@ func (s *Store) PlanParticipantsAndProvidersUpdate(
 	gc *models.PlanParticipantsAndProviders,
 ) (*models.PlanParticipantsAndProviders, error) {
 
-	stmt, err := s.db.PrepareNamed(planParticipantsAndProvidersUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanParticipantsAndProviders.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, gc)
 	}
@@ -108,7 +98,7 @@ func (s *Store) PlanParticipantsAndProvidersGetByID(
 
 	gc := models.PlanParticipantsAndProviders{}
 
-	stmt, err := s.db.PrepareNamed(planParticipantsAndProvidersGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanParticipantsAndProviders.GetByID)
 	if err != nil {
 		return nil, err
 	}

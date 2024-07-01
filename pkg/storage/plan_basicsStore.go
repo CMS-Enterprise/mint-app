@@ -3,6 +3,8 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -13,24 +15,12 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_basics/create.sql
-var planBasicsCreateSQL string
-
-//go:embed SQL/plan_basics/update.sql
-var planBasicsUpdateSQL string
-
-//go:embed SQL/plan_basics/get_by_id.sql
-var planBasicsGetByIDSQL string
-
-//go:embed SQL/plan_basics/get_by_model_plan_id_LOADER.sql
-var planBasicsGetByModelPlanIDLoaderSQL string
-
 // PlanBasicsCreate creates a new plan basics
 func (s *Store) PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
 
 	basics.ID = utilityUUID.ValueOrNewUUID(basics.ID)
 
-	stmt, err := np.PrepareNamed(planBasicsCreateSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanBasics.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, basics)
 	}
@@ -50,7 +40,7 @@ func (s *Store) PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, 
 // PlanBasicsUpdate updates the plan basics for a given id
 func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
 
-	stmt, err := s.db.PrepareNamed(planBasicsUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBasics.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, plan)
 	}
@@ -69,7 +59,7 @@ func (s *Store) PlanBasicsGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanBasi
 
 	plan := models.PlanBasics{}
 
-	stmt, err := s.db.PrepareNamed(planBasicsGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBasics.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +81,7 @@ func (s *Store) PlanBasicsGetByModelPlanIDLOADER(
 
 	var basicSlice []*models.PlanBasics // TODO: use new data loader query instead.
 
-	stmt, err := s.db.PrepareNamed(planBasicsGetByModelPlanIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBasics.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}

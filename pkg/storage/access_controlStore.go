@@ -3,28 +3,18 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
-
-//go:embed SQL/access_control/check_if_collaborator.sql
-var checkIfCollaboratorSQL string
-
-//go:embed SQL/access_control/check_if_collaborator_discussion_id.sql
-var checkIfCollaboratorDiscussionIDSQL string
-
-//go:embed SQL/access_control/check_if_collaborator_by_solution_id.sql
-var checkIfCollaboratorBySolutionIDSQL string
-
-//go:embed SQL/access_control/check_if_collaborator_by_operational_need_id.sql
-var checkIfCollaboratorByOperationalNeedIDSQL string
 
 // CheckIfCollaborator returns true if the principal is a collaborator on a model plan.
 func (s *Store) CheckIfCollaborator(_ *zap.Logger, principalID uuid.UUID, modelPlanID uuid.UUID) (bool, error) {
 
 	isCollaborator := false
 
-	stmt, err := s.db.PrepareNamed(checkIfCollaboratorSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaborator)
 	if err != nil {
 		return isCollaborator, err
 	}
@@ -52,7 +42,7 @@ func (s *Store) CheckIfCollaboratorByDiscussionID(
 
 	isCollaborator := false
 
-	stmt, err := s.db.PrepareNamed(checkIfCollaboratorDiscussionIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaboratorByDiscussionID)
 	if err != nil {
 		return isCollaborator, err
 	}
@@ -80,7 +70,7 @@ func (s *Store) CheckIfCollaboratorBySolutionID(
 
 	isCollaborator := false
 
-	stmt, err := s.db.PrepareNamed(checkIfCollaboratorBySolutionIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaboratorBySolutionID)
 	if err != nil {
 		return isCollaborator, err
 	}
@@ -108,7 +98,7 @@ func (s *Store) CheckIfCollaboratorByOperationalNeedID(
 
 	isCollaborator := false
 
-	stmt, err := s.db.PrepareNamed(checkIfCollaboratorByOperationalNeedIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaboratorByOperationalNeedID)
 	if err != nil {
 		return isCollaborator, err
 	}

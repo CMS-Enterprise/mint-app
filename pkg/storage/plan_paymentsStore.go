@@ -3,6 +3,8 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -14,18 +16,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-//go:embed SQL/plan_payments/create.sql
-var planPaymentsCreateSQL string
-
-//go:embed SQL/plan_payments/update.sql
-var planPaymentsUpdateSQL string
-
-//go:embed SQL/plan_payments/get_by_id.sql
-var planPaymentsGetByIDSQL string
-
-//go:embed SQL/plan_payments/get_by_model_plan_id_LOADER.sql
-var planPaymentsGetByModelPlanIDLoaderSQL string
-
 // PlanPaymentsGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(
 	_ *zap.Logger,
@@ -34,7 +24,7 @@ func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(
 
 	var paySlice []*models.PlanPayments
 
-	stmt, err := s.db.PrepareNamed(planPaymentsGetByModelPlanIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanPayments.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +50,7 @@ func (s *Store) PlanPaymentsCreate(
 
 	payments.ID = utilityUUID.ValueOrNewUUID(payments.ID)
 
-	stmt, err := np.PrepareNamed(planPaymentsCreateSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanPayments.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, payments)
 	}
@@ -83,7 +73,7 @@ func (s *Store) PlanPaymentsRead(
 	id uuid.UUID) (*models.PlanPayments, error) {
 	modelInstance := models.PlanPayments{}
 
-	stmt, err := s.db.PrepareNamed(planPaymentsGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanPayments.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +93,7 @@ func (s *Store) PlanPaymentsUpdate(
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
 
-	stmt, err := s.db.PrepareNamed(planPaymentsUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanPayments.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, payments)
 	}

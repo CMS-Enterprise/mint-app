@@ -3,6 +3,8 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -11,21 +13,12 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 )
 
-//go:embed SQL/nda_agreement/get_by_user_id.sql
-var ndaAgreementGetByUserIDSQL string
-
-//go:embed SQL/nda_agreement/update.sql
-var ndaAgreementUpdateSQL string
-
-//go:embed SQL/nda_agreement/insert.sql
-var ndaAgreementInsertSQL string
-
 // NDAAgreementGetByUserID returns an NDA based on a UserID
 func (s *Store) NDAAgreementGetByUserID(_ *zap.Logger, userID uuid.UUID) (*models.NDAAgreement, error) {
 
 	nda := models.NDAAgreement{}
 
-	stmt, err := s.db.PrepareNamed(ndaAgreementGetByUserIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.NDAAgreement.GetByUserID)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +42,7 @@ func (s *Store) NDAAgreementGetByUserID(_ *zap.Logger, userID uuid.UUID) (*model
 // NDAAgreementUpdate updates an nda agreement based on userID
 func (s *Store) NDAAgreementUpdate(_ *zap.Logger, nda *models.NDAAgreement) (*models.NDAAgreement, error) {
 
-	stmt, err := s.db.PrepareNamed(ndaAgreementUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.NDAAgreement.Update)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +61,7 @@ func (s *Store) NDAAgreementCreate(_ *zap.Logger, nda *models.NDAAgreement) (*mo
 
 	nda.ID = utilityUUID.ValueOrNewUUID(nda.ID)
 
-	stmt, err := s.db.PrepareNamed(ndaAgreementInsertSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.NDAAgreement.Insert)
 	if err != nil {
 		return nil, err
 	}
