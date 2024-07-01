@@ -99,3 +99,4 @@ Change history is a MINT feature that aims to give full transparency into model 
   - Does the record affect Analyzed Audit?
     - Update the analyzed audit job to get data from the new table as well.
     - Verify that new changes to the analyzed audit struct are backwards compatible (as the historic data is returned for notifications)
+ - Is the Translation `restricted`? Make sure to update the logic for that translated audit to set the restriction level on the audit as well (look at [`checkIfDocumentIsRestricted`](../pkg/translatedaudit/restriction_level.go) for an example)
