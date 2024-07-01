@@ -35,6 +35,9 @@ var modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL string
 //go:embed SQL/model_plan/get_by_operational_solution_key.sql
 var modelPlanGetByOperationalSolutionKeySQL string
 
+//go:embed SQL/model_plan/collection_where_favorited_by_user_id.sql
+var modelPlanCollectionWhereFavoritedByUserID string
+
 type modelPlanScripts struct {
 	Create                                 string
 	Update                                 string
@@ -47,6 +50,7 @@ type modelPlanScripts struct {
 	GetByIDLoader                          string
 	GetOpSolutionLastModifiedDtsByIDLoader string
 	GetByOperationalSolutionKey            string
+	CollectionWhereFavoritedByUserID       string
 }
 
 // ModelPlan houses all the sql for getting data for model plan from the database
@@ -62,4 +66,5 @@ var ModelPlan = modelPlanScripts{
 	GetByIDLoader:                          modelPlanGetByIDLoaderSQL,
 	GetOpSolutionLastModifiedDtsByIDLoader: modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL,
 	GetByOperationalSolutionKey:            modelPlanGetByOperationalSolutionKeySQL,
+	CollectionWhereFavoritedByUserID:       modelPlanCollectionWhereFavoritedByUserID,
 }

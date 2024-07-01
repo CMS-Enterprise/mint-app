@@ -318,6 +318,35 @@ func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool)
 	return modelPlans, nil
 }
 
+// ModelPlanCollectionFavorited returns a list of all model plans which are favorited by the user
+// Note: Externally, this is called "followed" but internally we call it "favorited"
+func (s *Store) ModelPlanCollectionFavorited(
+	logger *zap.Logger,
+	archived bool,
+	userID uuid.UUID,
+) ([]*models.ModelPlan, error) {
+
+	arg := map[string]interface{}{
+		"archived": archived,
+		"user_id":  userID,
+	}
+
+	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereFavoritedByUserID, arg)
+	if err != nil {
+		logger.Error(
+			"failed to fetch favorited model plans by user id",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return modelPlans, nil
+}
+
 // ModelPlanDeleteByID deletes a model plan for a given ID
 func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
 	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.DeleteByID)

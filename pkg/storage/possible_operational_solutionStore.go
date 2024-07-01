@@ -56,6 +56,7 @@ func (s *Store) PossibleOperationalSolutionCollectionGetAll(_ *zap.Logger) (
 	if err != nil {
 		return nil, err
 	}
+	defer stmt.Close()
 
 	arg := map[string]interface{}{}
 

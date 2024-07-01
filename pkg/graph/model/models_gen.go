@@ -1146,17 +1146,19 @@ const (
 	ModelPlanFilterIncludeAll ModelPlanFilter = "INCLUDE_ALL"
 	ModelPlanFilterCollabOnly ModelPlanFilter = "COLLAB_ONLY"
 	ModelPlanFilterWithCrTdls ModelPlanFilter = "WITH_CR_TDLS"
+	ModelPlanFilterFavorited  ModelPlanFilter = "FAVORITED"
 )
 
 var AllModelPlanFilter = []ModelPlanFilter{
 	ModelPlanFilterIncludeAll,
 	ModelPlanFilterCollabOnly,
 	ModelPlanFilterWithCrTdls,
+	ModelPlanFilterFavorited,
 }
 
 func (e ModelPlanFilter) IsValid() bool {
 	switch e {
-	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls:
+	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls, ModelPlanFilterFavorited:
 		return true
 	}
 	return false
