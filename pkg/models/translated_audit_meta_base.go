@@ -16,7 +16,6 @@ type TranslatedAuditMetaData interface {
 
 // TranslatedAuditMetaBaseStruct represents the shared data in common between all HumanizedAuditChanges
 type TranslatedAuditMetaBaseStruct struct {
-	// Changes: (Meta) do we actually need table name here? What about version? Are these doing anything?
 	TableName TableName `json:"tableName"`
 	Version   int       `json:"version"`
 }
