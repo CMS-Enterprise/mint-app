@@ -13,8 +13,6 @@ func (pbt *PlanBasicsTranslation) ToMap() (map[string]models.ITranslationField, 
 	return models.StructToTranslationMap(*pbt)
 }
 
-// Changes: (Structure) Consider moving these all to their own file
-
 // TableName returns the table name for this translation, satisfying the Translation interface
 func (pbt *PlanBeneficiariesTranslation) TableName() string {
 	return "plan_beneficiaries"

@@ -23,10 +23,8 @@ func TranslatedAuditQueueGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*mode
 	return translatedAuditQueue, nil
 }
 
-// TranslatedAuditQueueGetEntriesToQueue returns a translatedAuditQueue entries that are ready to be queued
+// TranslatedAuditQueueGetEntriesToQueue returns a translatedAuditQueue entries that are ready to be queued (the record was created by the audit trigger)
 func TranslatedAuditQueueGetEntriesToQueue(np sqlutils.NamedPreparer) ([]*models.TranslatedAuditQueue, error) {
-
-	//Changes: (Job) Is this method needed anymore? The audit trigger queues records.
 	arg := map[string]interface{}{}
 	translatedAuditQueue, procErr := sqlutils.SelectProcedure[models.TranslatedAuditQueue](np, sqlqueries.TranslatedAuditQueue.GetEntriesToQueue, arg)
 	if procErr != nil {
