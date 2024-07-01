@@ -4,8 +4,8 @@ package model
 import "github.com/cmsgov/mint-app/pkg/models"
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pbt *PlanBasicsTranslation) TableName() string {
-	return "plan_basics"
+func (pbt *PlanBasicsTranslation) TableName() models.TableName {
+	return models.TNPlanBasics
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -14,8 +14,8 @@ func (pbt *PlanBasicsTranslation) ToMap() (map[string]models.ITranslationField, 
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pbt *PlanBeneficiariesTranslation) TableName() string {
-	return "plan_beneficiaries"
+func (pbt *PlanBeneficiariesTranslation) TableName() models.TableName {
+	return models.TNPlanBeneficiaries
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -24,8 +24,8 @@ func (pbt *PlanBeneficiariesTranslation) ToMap() (map[string]models.ITranslation
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pct *PlanCollaboratorTranslation) TableName() string {
-	return "plan_collaborator"
+func (pct *PlanCollaboratorTranslation) TableName() models.TableName {
+	return models.TNPlanCollaborator
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -34,8 +34,8 @@ func (pct *PlanCollaboratorTranslation) ToMap() (map[string]models.ITranslationF
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pGct *PlanGeneralCharacteristicsTranslation) TableName() string {
-	return "plan_general_characteristics"
+func (pGct *PlanGeneralCharacteristicsTranslation) TableName() models.TableName {
+	return models.TNPlanGeneralCharacteristics
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -44,8 +44,8 @@ func (pGct *PlanGeneralCharacteristicsTranslation) ToMap() (map[string]models.IT
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pOet *PlanOpsEvalAndLearningTranslation) TableName() string {
-	return "plan_ops_eval_and_learning"
+func (pOet *PlanOpsEvalAndLearningTranslation) TableName() models.TableName {
+	return models.TNPlanOpsEvalAndLearning
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -54,8 +54,8 @@ func (pOet *PlanOpsEvalAndLearningTranslation) ToMap() (map[string]models.ITrans
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (ppt *PlanPaymentsTranslation) TableName() string {
-	return "plan_payments"
+func (ppt *PlanPaymentsTranslation) TableName() models.TableName {
+	return models.TNPlanPayments
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -64,8 +64,8 @@ func (ppt *PlanPaymentsTranslation) ToMap() (map[string]models.ITranslationField
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (tpp *PlanParticipantsAndProvidersTranslation) TableName() string {
-	return "plan_participants_and_providers"
+func (tpp *PlanParticipantsAndProvidersTranslation) TableName() models.TableName {
+	return models.TNPlanParticipantsAndProviders
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -74,8 +74,8 @@ func (tpp *PlanParticipantsAndProvidersTranslation) ToMap() (map[string]models.I
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (tpp *ModelPlanTranslation) TableName() string {
-	return "model_plan"
+func (tpp *ModelPlanTranslation) TableName() models.TableName {
+	return models.TNModelPlan
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -84,8 +84,8 @@ func (tpp *ModelPlanTranslation) ToMap() (map[string]models.ITranslationField, e
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pdt *PlanDiscussionTranslation) TableName() string {
-	return "plan_discussion"
+func (pdt *PlanDiscussionTranslation) TableName() models.TableName {
+	return models.TNPlanDiscussion
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -94,8 +94,8 @@ func (pdt *PlanDiscussionTranslation) ToMap() (map[string]models.ITranslationFie
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (drt *DiscussionReplyTranslation) TableName() string {
-	return "discussion_reply"
+func (drt *DiscussionReplyTranslation) TableName() models.TableName {
+	return models.TNDiscussionReply
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -104,8 +104,8 @@ func (drt *DiscussionReplyTranslation) ToMap() (map[string]models.ITranslationFi
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pct *PlanCRTranslation) TableName() string {
-	return "plan_cr"
+func (pct *PlanCRTranslation) TableName() models.TableName {
+	return models.TNPlanCr
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -114,8 +114,8 @@ func (pct *PlanCRTranslation) ToMap() (map[string]models.ITranslationField, erro
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (ptt *PlanTDLTranslation) TableName() string {
-	return "plan_tdl"
+func (ptt *PlanTDLTranslation) TableName() models.TableName {
+	return models.TNPlanTdl
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -124,8 +124,8 @@ func (ptt *PlanTDLTranslation) ToMap() (map[string]models.ITranslationField, err
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pdt *PlanDocumentTranslation) TableName() string {
-	return "plan_document"
+func (pdt *PlanDocumentTranslation) TableName() models.TableName {
+	return models.TNPlanDocument
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -134,8 +134,8 @@ func (pdt *PlanDocumentTranslation) ToMap() (map[string]models.ITranslationField
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (ont *OperationalNeedTranslation) TableName() string {
-	return "operational_need"
+func (ont *OperationalNeedTranslation) TableName() models.TableName {
+	return models.TNOperationalNeed
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -144,8 +144,8 @@ func (ont *OperationalNeedTranslation) ToMap() (map[string]models.ITranslationFi
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (ost *OperationalSolutionTranslation) TableName() string {
-	return "operational_solution"
+func (ost *OperationalSolutionTranslation) TableName() models.TableName {
+	return models.TNOperationalSolution
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -154,8 +154,8 @@ func (ost *OperationalSolutionTranslation) ToMap() (map[string]models.ITranslati
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (ost *OperationalSolutionSubtaskTranslation) TableName() string {
-	return "operational_solution_subtask"
+func (ost *OperationalSolutionSubtaskTranslation) TableName() models.TableName {
+	return models.TNOperationalSolutionSubtask
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -164,8 +164,8 @@ func (ost *OperationalSolutionSubtaskTranslation) ToMap() (map[string]models.ITr
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (emt *ExistingModelLinkTranslation) TableName() string {
-	return "existing_model_link"
+func (emt *ExistingModelLinkTranslation) TableName() models.TableName {
+	return models.TNExistingModelLink
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
@@ -174,8 +174,8 @@ func (emt *ExistingModelLinkTranslation) ToMap() (map[string]models.ITranslation
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
-func (pdt *PlanDocumentSolutionLinkTranslation) TableName() string {
-	return "plan_document_solution_link"
+func (pdt *PlanDocumentSolutionLinkTranslation) TableName() models.TableName {
+	return models.TNPlanDocumentSolutionLink
 }
 
 // ToMap translates this translation to a map, satisfying the Translation interface
