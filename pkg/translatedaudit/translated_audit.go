@@ -160,7 +160,6 @@ func translateField(
 
 	translatedLabel := translationInterface.GetLabel()
 	referencesLabel := translationInterface.GetReferencesLabel(translationMap)
-	//Changes: (Translations) update this to handle if notes, or preferences.
 
 	formType := translationInterface.GetFormType()
 	dataType := translationInterface.GetDataType()
