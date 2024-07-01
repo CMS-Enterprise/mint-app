@@ -161,7 +161,7 @@ type ITranslationField interface {
 
 	HasChildren() bool
 	GetChildren() (map[string][]TranslationField, bool)
-	//Changes: (Translations) Note, the children could be other types (Eg with options, or with parent), but this allows us to have a typed deserialization
+	//Note, the children could be other types (Eg with options, or with parent), but this allows us to have a typed deserialization
 
 	GetQuestionType() *TranslationQuestionType
 

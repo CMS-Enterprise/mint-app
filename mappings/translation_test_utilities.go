@@ -254,9 +254,10 @@ func assertTFieldWithChildren(t *testing.T, field reflect.StructField, translati
 	for childKey, childRelationList := range children {
 		assert.NotZero(t, childKey)
 		for _, child := range childRelationList {
-			// Assert that each exported option at least has a label correctly defined.
-			label := child.GetLabel()
-			assert.NotZero(t, label)
+			// Assert that each exported option at least has a label correctly defined. Update the reflect field so any error messages are still meaningful
+			childField := field
+			childField.Name = childField.Name + "_child_" + childKey
+			assertTFieldBase(t, field, child.TranslationFieldBase)
 		}
 
 	}
