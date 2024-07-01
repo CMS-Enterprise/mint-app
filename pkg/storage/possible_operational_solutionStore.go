@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
 	"go.uber.org/zap"
