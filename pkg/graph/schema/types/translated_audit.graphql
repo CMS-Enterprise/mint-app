@@ -8,13 +8,16 @@ union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditM
 
 type TranslatedAuditMetaBaseStruct {
     version: Int!
-    tableName: String!
+    tableName: TableName!
 }
 type TranslatedAuditMetaGeneric {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     relation: String!
-    relationContent: String!
+    """
+    Relation content can be nil under certain situations, for example if a record was deleted before the audit was translated
+    """
+    relationContent: String
 }
 
 """
@@ -22,7 +25,7 @@ TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a
 """
 type TranslatedAuditMetaDiscussionReply {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     discussionID: UUID!
     discussionContent: String!
     numberOfReplies: Int!
@@ -33,7 +36,7 @@ TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a
 """
 type TranslatedAuditMetaOperationalNeed {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     needName: String!
     isOther: Boolean!
 }
@@ -42,13 +45,16 @@ TranslatedAuditMetaOperationalSolution is the meta data type that is provided wh
 """
 type TranslatedAuditMetaOperationalSolution {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     solutionName: String!
     solutionOtherHeader: String
     solutionIsOther: Boolean!
     numberOfSubtasks: Int!
     needName: String!
     needIsOther: Boolean!
+    """
+    SolutionStatus is the translated value for the type of solution
+    """
     solutionStatus: String!
     solutionMustStart: Time
     solutionMustFinish: Time
@@ -58,14 +64,17 @@ TranslatedAuditMetaOperationalSolutionSubtask is the meta data type that is prov
 """
 type TranslatedAuditMetaOperationalSolutionSubtask {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     solutionName: String!
     solutionOtherHeader: String
     solutionIsOther: Boolean!
     numberOfSubtasks: Int!
     needName: String!
     needIsOther: Boolean!
-    subtaskName: String!
+    """
+    The name of the subtask. If a subtask is updated, and then deleted before being translated, it is possible for this field to be nil.
+    """
+    subtaskName: String
 }
 
 """
@@ -74,7 +83,7 @@ TranslatedAuditMetaDocumentSolutionLink is the meta data type for a document sol
 """
 type TranslatedAuditMetaDocumentSolutionLink {
     version: Int!
-    tableName: String!
+    tableName: TableName!
     solutionName: String!
     solutionOtherHeader: String
     solutionIsOther: Boolean!
@@ -87,6 +96,9 @@ type TranslatedAuditMetaDocumentSolutionLink {
     Document Name will be present if the document is still present and not deleted
     """
     documentName: String
+    """
+    Document type is the translated value of the document type enum
+    """
     documentType: String
     documentOtherType: String
     documentNote: String
@@ -94,6 +106,9 @@ type TranslatedAuditMetaDocumentSolutionLink {
     Document URL will only be visible if the user is a collaborator, or has assessment permission
     """
     documentURL: String
+    """
+    Document Visibility is the translated value of the restricted bool for a document
+    """
     documentVisibility: String
     documentRestricted: Boolean
 
@@ -127,10 +142,10 @@ TranslatedAudit represent a point in time change made to part of application.
 """
 type TranslatedAudit {
     id: UUID!
-    modelName: String!
+    modelPlanID: UUID!
     
     tableID: Int!
-    tableName: String!
+    tableName: TableName!
     primaryKey: UUID!
     
     date: Time!
@@ -143,6 +158,9 @@ type TranslatedAudit {
 
 
     actorID: UUID!
+    """
+    The Common name of the actor who made the changes. This comes from the user account table.
+    """
     actorName: String!  #Changes: (Serialization) This could live in the actor account, but this is meant to facilitate search
     """
     The id of the audit.Change record that was translated.

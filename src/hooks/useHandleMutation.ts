@@ -75,6 +75,16 @@ function useHandleMutation<TData = any, TVariables = OperationVariables>(
           formikRef?.current?.values
         );
 
+        // If no changes, don't call mutation
+        if (Object.keys(changes).length === 0) {
+          unblock();
+          history.push({
+            pathname: destination.pathname,
+            state: destination.state
+          });
+          return false;
+        }
+
         if (changes.status) {
           changes.status = sanitizeStatus(changes.status);
         }

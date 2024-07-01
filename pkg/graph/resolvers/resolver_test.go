@@ -200,7 +200,7 @@ func (suite *ResolverSuite) createPlanTDL(mp *models.ModelPlan, idNumber string,
 	return tdl
 }
 
-func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolution {
+func (suite *ResolverSuite) createOperationalSolution() (*models.OperationalSolution, *models.OperationalNeed, *models.ModelPlan) {
 	planName := "Plan For Milestones"
 	plan := suite.createModelPlan(planName)
 	needType := models.OpNKManageCd
@@ -210,12 +210,13 @@ func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolut
 	changes := map[string]interface{}{
 		"nameOther": "AnotherSolution",
 	}
-	operationalSolution, _ := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
-	return operationalSolution
+	operationalSolution, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
+	suite.NoError(err)
+	return operationalSolution, need, plan
 }
 
 func (suite *ResolverSuite) createOperationalSolutionSubtask() *models.OperationalSolutionSubtask {
-	operationalSolution := suite.createOperationalSolution()
+	operationalSolution, _, _ := suite.createOperationalSolution()
 
 	return suite.createOperationalSolutionSubtaskWithSolution(operationalSolution)
 }
@@ -231,7 +232,7 @@ func (suite *ResolverSuite) createOperationalSolutionSubtaskWithSolution(
 }
 
 func (suite *ResolverSuite) createMultipleOperationSolutionSubtasks() []*models.OperationalSolutionSubtask {
-	operationalSolution := suite.createOperationalSolution()
+	operationalSolution, _, _ := suite.createOperationalSolution()
 
 	createOperationalSolutionInput := []*model.CreateOperationalSolutionSubtaskInput{
 		{
@@ -288,9 +289,9 @@ func (suite *ResolverSuite) createAnalyzedAuditChange(modelNameChange string,
 	modelStatusChanges []string,
 	documentCount int,
 	crTdlActivity bool,
-	updatedSections []string,
-	reviewSections []string,
-	clearanceSections []string,
+	updatedSections []models.TableName,
+	reviewSections []models.TableName,
+	clearanceSections []models.TableName,
 	addedLeads []models.AnalyzedModelLeadInfo, discussionActivity bool) *models.AnalyzedAuditChange {
 
 	auditChange := models.AnalyzedAuditChange{
@@ -337,9 +338,9 @@ func (suite *ResolverSuite) createDefaultTestAnalyzedAudit(mp *models.ModelPlan,
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
 	documentCount := 2
 	crTdlActivity := true
-	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
+	updatedSections := []models.TableName{"plan_payments", "plan_ops_eval_and_learning"}
+	reviewSections := []models.TableName{"plan_payments", "plan_ops_eval_and_learning"}
+	clearanceSections := []models.TableName{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
 	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
 	discussionActivity := true
 

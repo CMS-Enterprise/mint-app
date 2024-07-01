@@ -1,4 +1,4 @@
-import { AnalyzedAuditChange as ChangeTypes } from 'gql/gen/graphql';
+import { AnalyzedAuditChange as ChangeTypes, TableName } from 'gql/gen/graphql';
 
 import { pushValuesToChangesArray } from './_utils';
 
@@ -61,7 +61,7 @@ describe('PushValuesToChangesArray Util', () => {
       planSections: {
         __typename: 'AnalyzedPlanSections',
         updated: [],
-        readyForReview: ['plan_basics'],
+        readyForReview: [TableName.PLAN_BASICS],
         readyForClearance: []
       }
     };

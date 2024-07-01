@@ -17,15 +17,14 @@ type TranslatedAuditMetaOperationalSolutionSubtask struct {
 	SolutionOtherHeader *string `json:"solutionOtherHeader"`
 	NumberOfSubtasks    int     `json:"numberOfSubtasks"`
 	SolutionIsOther     bool    `json:"solutionIsOther"`
-	SubtaskName         string  `json:"subtaskName"`
-	// Changes: (Meta) do we need the otherHeader in the meta data as well?
+	SubtaskName         *string `json:"subtaskName"`
 }
 
 // NewTranslatedAuditMetaOperationalSolutionSubtask creates a New TranslatedAuditMetaOperationalSolutionSubtask
-func NewTranslatedAuditMetaOperationalSolutionSubtask(tableName string, version int, solutionName string, solutionOtherHeader *string, solIsOther bool, numSubtasks int, needName string, needIsOther bool, subtaskName string) TranslatedAuditMetaOperationalSolutionSubtask {
+func NewTranslatedAuditMetaOperationalSolutionSubtask(version int, solutionName string, solutionOtherHeader *string, solIsOther bool, numSubtasks int, needName string, needIsOther bool, subtaskName *string) TranslatedAuditMetaOperationalSolutionSubtask {
 
 	return TranslatedAuditMetaOperationalSolutionSubtask{
-		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(tableName, version),
+		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(TNOperationalSolutionSubtask, version),
 		SolutionName:                  solutionName,
 		SolutionOtherHeader:           solutionOtherHeader,
 		SolutionIsOther:               solIsOther,

@@ -260,23 +260,23 @@ func analyzeDocumentsAudits(audits []*models.AuditChange) (*models.AnalyzedDocum
 
 // analyzeSectionsAudits analyzes which sections had updates and status changes to READY_FOR_REVIEW or READY_FOR_CLEARANCE
 func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSections, error) {
-	sections := []string{
-		"plan_basics",
-		"plan_general_characteristics",
-		"plan_participants_and_providers",
-		"plan_beneficiaries",
-		"plan_ops_eval_and_learning",
-		"plan_payments",
+	sections := []models.TableName{
+		models.TNPlanBasics,
+		models.TNPlanGeneralCharacteristics,
+		models.TNPlanParticipantsAndProviders,
+		models.TNPlanBeneficiaries,
+		models.TNPlanOpsEvalAndLearning,
+		models.TNPlanPayments,
 	}
 	filteredAudits := lo.Filter(audits, func(m *models.AuditChange, index int) bool {
 		return lo.Contains(sections, m.TableName)
 	})
 
-	updatedSections := lo.Uniq(lo.Map(filteredAudits, func(m *models.AuditChange, index int) string {
+	updatedSections := lo.Uniq(lo.Map(filteredAudits, func(m *models.AuditChange, index int) models.TableName {
 		return m.TableName
 	}))
 
-	readyForReview := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
+	readyForReview := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
 		keys := lo.Keys(m.Fields)
 		if lo.Contains(keys, "status") {
 			if m.Fields["status"].New.(string) == "READY_FOR_REVIEW" {
@@ -286,7 +286,7 @@ func analyzeSectionsAudits(audits []*models.AuditChange) (*models.AnalyzedPlanSe
 		return "", false
 	}))
 
-	readyForClearance := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (string, bool) {
+	readyForClearance := lo.Uniq(lo.FilterMap(filteredAudits, func(m *models.AuditChange, index int) (models.TableName, bool) {
 		keys := lo.Keys(m.Fields)
 		if lo.Contains(keys, "status") {
 			if m.Fields["status"].New.(string) == "READY_FOR_CLEARANCE" {

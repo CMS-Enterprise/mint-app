@@ -14,20 +14,15 @@ type TranslatedAuditMetaData interface {
 	Scan(src interface{}) error
 }
 
-//Ticket: (ChChCh Changes!) Try to see about what data should be in here? should we have each entry have it's separate data?
-// We could have data for Multiple Tables, and for Multiple fields. We need to be able to handle them all....
-
-//Ticket: (ChChCh Changes!) Should we store these as single entries in the database? Or should we store them grouped in the database?
-
 // TranslatedAuditMetaBaseStruct represents the shared data in common between all HumanizedAuditChanges
 type TranslatedAuditMetaBaseStruct struct {
 	// Changes: (Meta) do we actually need table name here? What about version? Are these doing anything?
-	TableName string `json:"tableName"`
-	Version   int    `json:"version"`
+	TableName TableName `json:"tableName"`
+	Version   int       `json:"version"`
 }
 
 // NewTranslatedAuditMetaBaseStruct creates a New TranslatedAuditMetaBaseStruct
-func NewTranslatedAuditMetaBaseStruct(tableName string, version int) TranslatedAuditMetaBaseStruct {
+func NewTranslatedAuditMetaBaseStruct(tableName TableName, version int) TranslatedAuditMetaBaseStruct {
 
 	return TranslatedAuditMetaBaseStruct{
 		TableName: tableName,

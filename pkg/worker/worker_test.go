@@ -160,9 +160,9 @@ func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange string,
 	modelStatusChanges []string,
 	documentCount int,
 	crTdlActivity bool,
-	updatedSections []string,
-	reviewSections []string,
-	clearanceSections []string,
+	updatedSections []models.TableName,
+	reviewSections []models.TableName,
+	clearanceSections []models.TableName,
 	addedLeads []models.AnalyzedModelLeadInfo, discussionActivity bool) *models.AnalyzedAuditChange {
 
 	auditChange := models.AnalyzedAuditChange{

@@ -25,7 +25,7 @@ var auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate string
 // AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key from the database
 func (s *Store) AuditChangeCollectionByIDAndTable(
 	_ *zap.Logger,
-	tableName string,
+	tableName models.TableName,
 	primaryKey uuid.UUID,
 ) ([]*models.AuditChange, error) {
 

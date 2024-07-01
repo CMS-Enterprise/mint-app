@@ -1,7 +1,6 @@
 package translatedaudit
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -61,6 +60,8 @@ func (suite *TAuditSuite) TestOperationalSolutionMetaDataGet() {
 	mustFinish := time.Now().UTC().Round(time.Microsecond)
 	mustStart := mustFinish.Add(-24 * time.Hour)
 	solStatus := models.OpSAtRisk
+	// just provide the translated value here instead of trying to translate it for this test
+	solStatusTranslated := "At risk"
 	solOtherHeader := models.StringPointer("hooray! It's the other header!")
 	sol := suite.createOperationalSolution(need.ID, solName, func(os *models.OperationalSolution) {
 		os.MustStartDts = &mustStart
@@ -93,7 +94,7 @@ func (suite *TAuditSuite) TestOperationalSolutionMetaDataGet() {
 	if suite.NotNil(metaData.SolutionMustStart) {
 		suite.EqualValues(mustStart, metaData.SolutionMustStart.UTC())
 	}
-	suite.EqualValues(solStatus, metaData.SolutionStatus)
+	suite.EqualValues(solStatusTranslated, metaData.SolutionStatus)
 	suite.EqualValues(solIsOther, metaData.SolutionIsOther)
 	suite.EqualValues(solOtherHeader, metaData.SolutionOtherHeader)
 
@@ -138,7 +139,7 @@ func (suite *TAuditSuite) TestOperationalSolutionSubtaskMetaDataGet() {
 	needIsOther := true
 	solIsOther := true
 
-	metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID.String(), sol.ID.String(), changes, operation)
+	metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID, sol.ID, changes, operation)
 
 	suite.NoError(err)
 	suite.NotNil(metaData)
@@ -157,21 +158,36 @@ func (suite *TAuditSuite) TestOperationalSolutionSubtaskMetaDataGet() {
 	suite.EqualValues(0, metaData.Version)
 
 	//Assert it gets the name from the changes object
-	suite.EqualValues(subtaskNameNewForChanges, metaData.SubtaskName)
+	if suite.NotNil(metaData.SubtaskName) {
+		suite.EqualValues(subtaskNameNewForChanges, *metaData.SubtaskName)
+	}
 
 	suite.Run("A delete or truncate without a name in the changes object will error", func() {
-		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID.String(), sol.ID.String(), emptyChanges, models.DBOpDelete)
+		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID, sol.ID, emptyChanges, models.DBOpDelete)
 
 		suite.Error(err)
 		suite.Nil(metaData)
 	})
 	suite.Run("An update without a name in the changes object will fetch from DB", func() {
 
-		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID.String(), sol.ID.String(), emptyChanges, models.DBOpUpdate)
+		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID, sol.ID, emptyChanges, models.DBOpUpdate)
 
 		suite.NoError(err)
 		suite.NotNil(metaData)
-		suite.EqualValues(subtaskNameNew, metaData.SubtaskName)
+		if suite.NotNil(metaData.SubtaskName) {
+			suite.EqualValues(subtaskNameNew, *metaData.SubtaskName)
+		}
+	})
+	suite.Run("An update without a name in the changes object will fetch from DB, but will not error if the value is nil", func() {
+
+		_, err := suite.testConfigs.Store.OperationalSolutionSubtaskDelete(suite.testConfigs.Logger, subTask.ID, suite.testConfigs.Principal.UserAccount.ID)
+		suite.NoError(err)
+
+		metaData, err := OperationalSolutionSubtaskMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, subTask.ID, sol.ID, emptyChanges, models.DBOpUpdate)
+
+		suite.NoError(err)
+		suite.NotNil(metaData)
+		suite.Nil(metaData.SubtaskName)
 	})
 
 }
@@ -196,6 +212,9 @@ func (suite *TAuditSuite) TestDocumentSolutionLinkMetaDataGet() {
 	docName := "hooray! a document"
 
 	document := suite.createPlanDocument(plan.ID, docName)
+	// for simplicity, just write the translation here instead of trying to translate it
+	visibilityTranslated := "All"
+	documentTypeTranslated := "Other"
 
 	link := suite.createDocumentSolutionLink(document.ID, sol.ID)
 
@@ -240,14 +259,13 @@ func (suite *TAuditSuite) TestDocumentSolutionLinkMetaDataGet() {
 		suite.EqualValues(document.FileName, *metaData.DocumentName)
 	}
 	if suite.NotNil(metaData.DocumentType) {
-		suite.EqualValues(document.DocumentType, *metaData.DocumentType)
+		suite.EqualValues(documentTypeTranslated, *metaData.DocumentType)
 	}
 	if suite.NotNil(metaData.DocumentVisibility) {
-		suite.EqualValues(fmt.Sprint(document.Restricted), *metaData.DocumentVisibility)
+		suite.EqualValues(visibilityTranslated, *metaData.DocumentVisibility)
 	}
 
-	tableName := "document_solution_link"
-	suite.EqualValues(tableName, metaData.TableName)
+	suite.EqualValues(models.TNPlanDocumentSolutionLink, metaData.TableName)
 	suite.EqualValues(0, metaData.Version)
 
 	// Delete the document and run tests on empty state
@@ -318,8 +336,8 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 	idNumberOld := "test ID number in Old field"
 	cr := suite.createPlanCR(plan.ID, idNumberDB)
 	tdl := suite.createPlanTDL(plan.ID, idNumberDB)
-	crTable := "plan_cr"
-	tdlTable := "plan_tdl"
+	crTable := models.TNPlanCr
+	tdlTable := models.TNPlanTdl
 	insertOperation := models.DBOpInsert
 
 	// mock the changes we'd get from an insert
@@ -347,7 +365,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(crMetaData) {
 			suite.EqualValues("id_number", crMetaData.Relation)
-			suite.EqualValues(idNumberNew, crMetaData.RelationContent)
+			if suite.NotNil(crMetaData.RelationContent) {
+				suite.EqualValues(idNumberNew, *crMetaData.RelationContent)
+			}
 		}
 	})
 	// Get TDL MetaData
@@ -360,7 +380,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(tdlMetaData) {
 			suite.EqualValues("id_number", tdlMetaData.Relation)
-			suite.EqualValues(idNumberNew, tdlMetaData.RelationContent)
+			if suite.NotNil(tdlMetaData.RelationContent) {
+				suite.EqualValues(idNumberNew, *tdlMetaData.RelationContent)
+			}
 		}
 	})
 
@@ -375,7 +397,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(crMetaData) {
 			suite.EqualValues("id_number", crMetaData.Relation)
-			suite.EqualValues(idNumberDB, crMetaData.RelationContent)
+			if suite.NotNil(crMetaData.RelationContent) {
+				suite.EqualValues(idNumberDB, *crMetaData.RelationContent)
+			}
 		}
 	})
 	suite.Run("TDL without id_number field present will fetch that field from the db", func() {
@@ -388,7 +412,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(tdlMetaData) {
 			suite.EqualValues("id_number", tdlMetaData.Relation)
-			suite.EqualValues(idNumberDB, tdlMetaData.RelationContent)
+			if suite.NotNil(tdlMetaData.RelationContent) {
+				suite.EqualValues(idNumberDB, *tdlMetaData.RelationContent)
+			}
 		}
 	})
 	deleteOperation := models.DBOpDelete
@@ -426,7 +452,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(crMetaData) {
 			suite.EqualValues("id_number", crMetaData.Relation)
-			suite.EqualValues(idNumberOld, crMetaData.RelationContent)
+			if suite.NotNil(crMetaData.RelationContent) {
+				suite.EqualValues(idNumberOld, *crMetaData.RelationContent)
+			}
 		}
 	})
 	// Get TDL MetaData
@@ -439,7 +467,9 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		if suite.NotNil(tdlMetaData) {
 			suite.EqualValues("id_number", tdlMetaData.Relation)
-			suite.EqualValues(idNumberOld, tdlMetaData.RelationContent)
+			if suite.NotNil(tdlMetaData.RelationContent) {
+				suite.EqualValues(idNumberOld, *tdlMetaData.RelationContent)
+			}
 		}
 	})
 
@@ -460,22 +490,28 @@ func (suite *TAuditSuite) TestPlanCrTdlMetaDataGet() {
 
 		suite.Nil(tdlMetaData)
 	})
-	suite.Run("CR without id_number  will fail if data should be fetch-able, but record is missing ", func() {
+	suite.Run("CR without id_number  will not fail not if data should be fetch-able, but record is missing ", func() {
 		// give empty changes to simulate no change data
 		crMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, cr.ID, crTable, emptyChanges, insertOperation)
-		suite.Error(err)
-		suite.Nil(metaDataType)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
 
-		suite.Nil(crMetaData)
+		suite.NotNil(crMetaData)
+		suite.Nil(crMetaData.RelationContent)
 	})
 
-	suite.Run("TDL without id_number Old value will fail if data should be fetch-able, but record is missing", func() {
+	suite.Run("TDL without id_number Old value will not fail if data should be fetch-able, but record is missing", func() {
 		// give empty changes to simulate no change data
 		tdlMetaData, metaDataType, err := PlanCrTdlMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, tdl.ID, tdlTable, emptyChanges, insertOperation)
-		suite.Error(err)
-		suite.Nil(metaDataType)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
 
-		suite.Nil(tdlMetaData)
+		suite.NotNil(tdlMetaData)
+		suite.Nil(tdlMetaData.RelationContent)
 	})
 
 }
@@ -486,7 +522,6 @@ func (suite *TAuditSuite) TestPlanCollaboratorMetaDataGet() {
 	collabAccount, err := suite.testConfigs.GetTestPrincipal(suite.testConfigs.Store, collabUserName)
 	suite.NoError(err)
 	collab := suite.createPlanCollaborator(plan.ID, collabUserName)
-	tableName := "plan_collaborator"
 
 	newChanges := models.AuditFields{
 		"user_id": models.AuditField{
@@ -504,7 +539,7 @@ func (suite *TAuditSuite) TestPlanCollaboratorMetaDataGet() {
 	emptyChanges := models.AuditFields{}
 
 	suite.Run("Collab meta data priorities data from changes set", func() {
-		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, tableName, newChanges, models.DBOpInsert)
+		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, newChanges, models.DBOpInsert)
 		suite.NoError(err)
 		if suite.NotNil(metaDataType) {
 			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
@@ -512,12 +547,14 @@ func (suite *TAuditSuite) TestPlanCollaboratorMetaDataGet() {
 
 		if suite.NotNil(collabMeta) {
 			suite.EqualValues("UserName", collabMeta.Relation)
-			suite.EqualValues(suite.testConfigs.Principal.UserAccount.CommonName, collabMeta.RelationContent)
+			if suite.NotNil(collabMeta.RelationContent) {
+				suite.EqualValues(suite.testConfigs.Principal.UserAccount.CommonName, *collabMeta.RelationContent)
+			}
 		}
 	})
 
 	suite.Run("Collab meta data fetches from DB when field isn't present in change set", func() {
-		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, tableName, emptyChanges, models.DBOpInsert)
+		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, emptyChanges, models.DBOpInsert)
 		suite.NoError(err)
 		if suite.NotNil(metaDataType) {
 			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
@@ -525,19 +562,22 @@ func (suite *TAuditSuite) TestPlanCollaboratorMetaDataGet() {
 
 		if suite.NotNil(collabMeta) {
 			suite.EqualValues("UserName", collabMeta.Relation)
-			suite.EqualValues(collabAccount.UserAccount.CommonName, collabMeta.RelationContent)
+			if suite.NotNil(collabMeta.RelationContent) {
+				suite.EqualValues(collabAccount.UserAccount.CommonName, *collabMeta.RelationContent)
+			}
+
 		}
 	})
 
 	suite.Run("Collab meta data fails when field isn't present in change set for DELETE", func() {
-		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, tableName, emptyChanges, models.DBOpDelete)
+		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, emptyChanges, models.DBOpDelete)
 		suite.Error(err)
 		suite.Nil(metaDataType)
 
 		suite.Nil(collabMeta)
 	})
 	suite.Run("Collab meta data fails when field isn't present on the correct / NEW / OLD value", func() {
-		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, tableName, oldChanges, models.DBOpInsert)
+		collabMeta, metaDataType, err := PlanCollaboratorMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, collab.ID, oldChanges, models.DBOpInsert)
 		suite.Error(err)
 		suite.Nil(metaDataType)
 
@@ -552,7 +592,6 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 
 	document := suite.createPlanDocument(plan.ID, docNameDB)
 
-	tableName := "plan_collaborator"
 	docNameNew := "newDocName"
 	docNameOld := "oldDocName"
 
@@ -572,7 +611,7 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 	emptyChanges := models.AuditFields{}
 
 	suite.Run("Document meta data priorities data from changes set (new field on insert)", func() {
-		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, newChanges, models.DBOpInsert)
+		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, newChanges, models.DBOpInsert)
 		suite.NoError(err)
 		if suite.NotNil(metaDataType) {
 			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
@@ -580,11 +619,13 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 
 		if suite.NotNil(collabMeta) {
 			suite.EqualValues("fileName", collabMeta.Relation)
-			suite.EqualValues(docNameNew, collabMeta.RelationContent)
+			if suite.NotNil(collabMeta.RelationContent) {
+				suite.EqualValues(docNameNew, *collabMeta.RelationContent)
+			}
 		}
 	})
 	suite.Run("Document meta data priorities data from changes set (old field on delete)", func() {
-		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, oldChanges, models.DBOpDelete)
+		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, oldChanges, models.DBOpDelete)
 		suite.NoError(err)
 		if suite.NotNil(metaDataType) {
 			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
@@ -592,35 +633,54 @@ func (suite *TAuditSuite) TestPlanDocumentMetaDataGet() {
 
 		if suite.NotNil(collabMeta) {
 			suite.EqualValues("fileName", collabMeta.Relation)
-			suite.EqualValues(docNameOld, collabMeta.RelationContent)
+			if suite.NotNil(collabMeta.RelationContent) {
+				suite.EqualValues(docNameOld, *collabMeta.RelationContent)
+			}
 		}
 	})
 	suite.Run("Document meta data gets data from db if not in change set", func() {
-		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, emptyChanges, models.DBOpInsert)
+		docMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, emptyChanges, models.DBOpInsert)
 		suite.NoError(err)
 		if suite.NotNil(metaDataType) {
 			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
 		}
 
-		if suite.NotNil(collabMeta) {
-			suite.EqualValues("fileName", collabMeta.Relation)
-			suite.EqualValues(docNameDB, collabMeta.RelationContent)
+		if suite.NotNil(docMeta) {
+			suite.EqualValues("fileName", docMeta.Relation)
+			if suite.NotNil(docMeta.RelationContent) {
+				suite.EqualValues(docNameDB, *docMeta.RelationContent)
+			}
 		}
 	})
 
-	suite.Run("Document meta data fails when field isn't present in change set for DELETE", func() {
-		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, emptyChanges, models.DBOpDelete)
+	suite.Run("Document meta data doesn't fail when field isn't present in change set for DELETE, fetch filename from db", func() {
+		docMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, emptyChanges, models.DBOpDelete)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(docMeta) {
+			suite.EqualValues(docNameDB, *docMeta.RelationContent)
+		}
+	})
+	suite.Run("Document meta data fails when field isn't present on the correct / NEW / OLD value", func() {
+		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, oldChanges, models.DBOpInsert)
 		suite.Error(err)
 		suite.Nil(metaDataType)
 
 		suite.Nil(collabMeta)
 	})
-	suite.Run("Document meta data fails when field isn't present on the correct / NEW / OLD value", func() {
-		collabMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, tableName, oldChanges, models.DBOpInsert)
-		suite.Error(err)
-		suite.Nil(metaDataType)
 
-		suite.Nil(collabMeta)
+	suite.Run("Document meta data doesn't fail when field isn't present in change set for DELETE, but filename is nil", func() {
+		// Delete the document and run tests on empty state
+		suite.deleteDocument(document.ID)
+
+		docMeta, metaDataType, err := PlanDocumentMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, document.ID, emptyChanges, models.DBOpDelete)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(docMeta) {
+			suite.Nil(docMeta.RelationContent)
+		}
 	})
 
 }

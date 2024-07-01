@@ -6,6 +6,7 @@ import {
   AuditFieldChangeType,
   DatabaseOperation,
   GetChangeHistoryQuery,
+  TableName,
   TranslationDataType
 } from 'gql/gen/graphql';
 
@@ -76,7 +77,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
 
   // Get the action change, if it's a solution operation - check 'needed' value to get the correct action
   const databaseAction =
-    change.tableName === 'operational_solution'
+    change.tableName === TableName.OPERATIONAL_SOLUTION
       ? getSolutionOperationStatus(change)
       : change.action;
 
@@ -87,7 +88,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
     >
       <div className="margin-right-05">
         {/* Existing model link header */}
-        {change.tableName === 'existing_model_link' &&
+        {change.tableName === TableName.EXISTING_MODEL_LINK &&
           (() => {
             return (
               <span className="text-bold">
@@ -100,9 +101,9 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
           })()}
 
         {/* Documents header */}
-        {change.tableName === 'plan_document' &&
+        {change.tableName === TableName.PLAN_DOCUMENT &&
           (() => {
-            // Remove the 'file_name' field from the fields to map - already in header, doesnt need to be in changes
+            // Remove the 'file_name' field from the fields to map - already in header, doesn't need to be in changes
             fieldsToMap = fieldsToMap.filter(
               field => field.fieldName !== 'file_name'
             );
@@ -128,7 +129,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
           })()}
 
         {/* Document solution link header */}
-        {change.tableName === 'plan_document_solution_link' &&
+        {change.tableName === TableName.PLAN_DOCUMENT_SOLUTION_LINK &&
           (() => {
             if (!connected) {
               fieldsToMap =
@@ -159,7 +160,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
           })()}
 
         {/* Operational solution header */}
-        {change.tableName === 'operational_solution' &&
+        {change.tableName === TableName.OPERATIONAL_SOLUTION &&
           (() => {
             const solutionName = getOperationalMetadata(
               'solution',
@@ -211,7 +212,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
           })()}
 
         {/* Subtask header */}
-        {change.tableName === 'operational_solution_subtask' &&
+        {change.tableName === TableName.OPERATIONAL_SOLUTION_SUBTASK &&
           (() => {
             const solutionName = getOperationalMetadata(
               'subtask',
@@ -346,12 +347,12 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
 
   // Use solution document link as the table name if it's a batch of solution document links
   const isSolutionDocumentLinkBatch: boolean = !!changeRecords.find(change => {
-    return change.tableName === 'plan_document_solution_link';
+    return change.tableName === TableName.PLAN_DOCUMENT_SOLUTION_LINK;
   });
 
   // Use the first table name in the batch as the table name, unless it's a batch of solution document links
-  const tableName: string = isSolutionDocumentLinkBatch
-    ? 'plan_document_solution_link'
+  const tableName: TableName = isSolutionDocumentLinkBatch
+    ? TableName.PLAN_DOCUMENT_SOLUTION_LINK
     : changeRecords[0].tableName;
 
   // If the table is a linking table, condense the changes to show only the relevant fields
@@ -442,7 +443,7 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
               )}
 
               {/* Operational solution audits */}
-              {change.tableName === 'operational_solution' &&
+              {change.tableName === TableName.OPERATIONAL_SOLUTION &&
                 (() => {
                   const solutionName = getOperationalMetadata(
                     'solution',
@@ -477,7 +478,7 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
                 })()}
 
               {/* Operational solution subtask audits */}
-              {change.tableName === 'operational_solution_subtask' &&
+              {change.tableName === TableName.OPERATIONAL_SOLUTION_SUBTASK &&
                 (() => {
                   const solutionName = getOperationalMetadata(
                     'subtask',

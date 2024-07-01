@@ -9,12 +9,12 @@ import (
 // TranslatedAuditMetaGeneric represents the shared data in common between all HumanizedAuditChanges
 type TranslatedAuditMetaGeneric struct {
 	TranslatedAuditMetaBaseStruct
-	Relation        string `json:"relation"`
-	RelationContent string `json:"relationContent"`
+	Relation        string  `json:"relation"`
+	RelationContent *string `json:"relationContent"`
 }
 
 // NewTranslatedAuditMetaGeneric creates a New TranslatedAuditMetaGeneric
-func NewTranslatedAuditMetaGeneric(tableName string, version int, relation string, relationContent string) TranslatedAuditMetaGeneric {
+func NewTranslatedAuditMetaGeneric(tableName TableName, version int, relation string, relationContent *string) TranslatedAuditMetaGeneric {
 
 	return TranslatedAuditMetaGeneric{
 		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(tableName, version),

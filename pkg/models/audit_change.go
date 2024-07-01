@@ -27,7 +27,7 @@ const (
 type AuditChange struct {
 	ID          int         `json:"id" db:"id"`
 	TableID     int         `json:"tableID" db:"table_id"`
-	TableName   string      `json:"tableName" db:"table_name"`
+	TableName   TableName   `json:"tableName" db:"table_name"`
 	PrimaryKey  uuid.UUID   `json:"primaryKey" db:"primary_key"`
 	ForeignKey  uuid.UUID   `json:"foreignKey" db:"foreign_key"`
 	Action      string      `json:"action" db:"action"`

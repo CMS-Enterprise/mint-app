@@ -17,10 +17,10 @@ type TranslatedAuditMetaDiscussionReply struct {
 }
 
 // NewTranslatedAuditMetaDiscussionReply creates a New TranslatedAuditMetaDiscussionReply
-func NewTranslatedAuditMetaDiscussionReply(tableName string, version int, discussionID uuid.UUID, discussionContent string, numberOfReplies int) TranslatedAuditMetaDiscussionReply {
+func NewTranslatedAuditMetaDiscussionReply(version int, discussionID uuid.UUID, discussionContent string, numberOfReplies int) TranslatedAuditMetaDiscussionReply {
 
 	return TranslatedAuditMetaDiscussionReply{
-		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(tableName, version),
+		TranslatedAuditMetaBaseStruct: NewTranslatedAuditMetaBaseStruct(TNDiscussionReply, version),
 		discussionRelation:            NewDiscussionRelation(discussionID),
 		DiscussionContent:             discussionContent,
 		NumberOfReplies:               numberOfReplies,
