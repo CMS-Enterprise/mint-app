@@ -3,6 +3,8 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -13,18 +15,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_general_characteristics/create.sql
-var planGeneralCharacteristicsCreateSQL string
-
-//go:embed SQL/plan_general_characteristics/update.sql
-var planGeneralCharacteristicsUpdateSQL string
-
-//go:embed SQL/plan_general_characteristics/get_by_id.sql
-var planGeneralCharacteristicsGetByIDSQL string
-
-//go:embed SQL/plan_general_characteristics/get_by_model_plan_id_LOADER.sql
-var planGeneralCharacteristicsGetByModelPlanIDLoaderSQL string
-
 // PlanGeneralCharacteristicsCreate creates a new plan basics
 func (s *Store) PlanGeneralCharacteristicsCreate(
 	np sqlutils.NamedPreparer,
@@ -34,7 +24,7 @@ func (s *Store) PlanGeneralCharacteristicsCreate(
 
 	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
 
-	stmt, err := np.PrepareNamed(planGeneralCharacteristicsCreateSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanGeneralCharacteristics.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
 	}
@@ -57,7 +47,7 @@ func (s *Store) PlanGeneralCharacteristicsUpdate(
 	gc *models.PlanGeneralCharacteristics,
 ) (*models.PlanGeneralCharacteristics, error) {
 
-	stmt, err := s.db.PrepareNamed(planGeneralCharacteristicsUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanGeneralCharacteristics.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, gc)
 	}
@@ -79,7 +69,7 @@ func (s *Store) PlanGeneralCharacteristicsGetByID(
 
 	gc := models.PlanGeneralCharacteristics{}
 
-	stmt, err := s.db.PrepareNamed(planGeneralCharacteristicsGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanGeneralCharacteristics.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +92,7 @@ func (s *Store) PlanGeneralCharacteristicsGetByModelPlanIDLOADER(
 
 	var genCharSlice []*models.PlanGeneralCharacteristics
 
-	stmt, err := s.db.PrepareNamed(planGeneralCharacteristicsGetByModelPlanIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanGeneralCharacteristics.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}

@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
@@ -19,48 +21,12 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/model_plan/create.sql
-var modelPlanCreateSQL string
-
-//go:embed SQL/model_plan/update.sql
-var modelPlanUpdateSQL string
-
-//go:embed SQL/model_plan/get_by_id.sql
-var modelPlanGetByIDSQL string
-
-//go:embed SQL/model_plan/get_by_name.sql
-var modelPlanGetByNameSQL string
-
-//go:embed SQL/model_plan/collection_where_archived.sql
-var modelPlanCollectionWhereArchivedSQL string
-
-//go:embed SQL/model_plan/collection_by_collaborator.sql
-var modelPlanCollectionByCollaboratorSQL string
-
-//go:embed SQL/model_plan/collection_with_crtdl.sql
-var modelPlanCollectionWithCRTDlSQL string
-
-//go:embed SQL/model_plan/collection_where_favorited_by_user_id.sql
-var modelPlanCollectionWhereFavoritedByUserID string
-
-//go:embed SQL/model_plan/delete_by_id.sql
-var modelPlanDeleteByID string
-
-//go:embed SQL/model_plan/get_by_id_LOADER.sql
-var modelPlanGetByIDLoaderSQL string
-
-//go:embed SQL/model_plan/get_op_solution_last_modified_dts_by_id_LOADER.sql
-var modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL string
-
-//go:embed SQL/model_plan/get_by_operational_solution_key.sql
-var modelPlanGetByOperationalSolutionKeySQL string
-
 // ModelPlanGetByModelPlanIDLOADER returns the model plan for a slice of ids
 func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
 
 	var planSlice []*models.ModelPlan
 
-	stmt, err := s.db.PrepareNamed(modelPlanGetByIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.GetByIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +53,7 @@ func (s *Store) ModelPlanOpSolutionLastModifiedDtsGetByModelPlanIDLOADER(logger 
 ) {
 	var trackingDates = make(map[string]time.Time)
 
-	stmt, err := s.db.PrepareNamed(modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.GetOpSolutionLastModifiedDtsByIDLoader)
 	if err != nil {
 		logger.Error("Failed to prepare SQL statement", zap.Error(err))
 		return nil, err
@@ -128,7 +94,7 @@ func (s *Store) ModelPlanCreate(np sqlutils.NamedPreparer, logger *zap.Logger, p
 		plan.ID = uuid.New()
 	}
 
-	stmt, err := np.PrepareNamed(modelPlanCreateSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.ModelPlan.Create)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
@@ -159,7 +125,7 @@ func (s *Store) ModelPlanCreate(np sqlutils.NamedPreparer, logger *zap.Logger, p
 // ModelPlanUpdate updates a model plan
 func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 
-	stmt, err := s.db.PrepareNamed(modelPlanUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.Update)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
@@ -191,7 +157,7 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 func (s *Store) ModelPlanGetByID(np sqlutils.NamedPreparer, logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
 
 	plan := models.ModelPlan{}
-	stmt, err := np.PrepareNamed(modelPlanGetByIDSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.ModelPlan.GetByID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
 	}
@@ -228,7 +194,7 @@ func (s *Store) ModelPlanGetByID(np sqlutils.NamedPreparer, logger *zap.Logger, 
 func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*models.ModelPlan, error) {
 
 	plan := models.ModelPlan{}
-	stmt, err := s.db.PrepareNamed(modelPlanGetByNameSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.GetByName)
 	if err != nil {
 		return nil, err
 	}
@@ -258,7 +224,7 @@ func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*model
 
 	var modelPlans []*models.ModelPlan
 
-	stmt, err := s.db.PrepareNamed(modelPlanCollectionWhereArchivedSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.CollectionWhereArchived)
 	if err != nil {
 		return nil, err
 	}
@@ -294,7 +260,7 @@ func (s *Store) ModelPlanCollectionCollaboratorOnly(
 
 	var modelPlans []*models.ModelPlan
 
-	stmt, err := s.db.PrepareNamed(modelPlanCollectionByCollaboratorSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.CollectionByCollaborator)
 	if err != nil {
 		return nil, err
 	}
@@ -326,7 +292,7 @@ func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool)
 
 	var modelPlans []*models.ModelPlan
 
-	stmt, err := s.db.PrepareNamed(modelPlanCollectionWithCRTDlSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.CollectionWithCRTDL)
 	if err != nil {
 		return nil, err
 	}
@@ -365,7 +331,7 @@ func (s *Store) ModelPlanCollectionFavorited(
 		"user_id":  userID,
 	}
 
-	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, modelPlanCollectionWhereFavoritedByUserID, arg)
+	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereFavoritedByUserID, arg)
 	if err != nil {
 		logger.Error(
 			"failed to fetch favorited model plans by user id",
@@ -383,7 +349,7 @@ func (s *Store) ModelPlanCollectionFavorited(
 
 // ModelPlanDeleteByID deletes a model plan for a given ID
 func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
-	stmt, err := s.db.PrepareNamed(modelPlanDeleteByID)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.DeleteByID)
 	if err != nil {
 		return nil, err
 	}
@@ -402,7 +368,7 @@ func (s *Store) ModelPlanGetByOperationalSolutionKey(
 	opSolKey models.OperationalSolutionKey,
 ) ([]*models.ModelPlanAndOperationalSolution, error) {
 
-	stmt, err := s.db.PrepareNamed(modelPlanGetByOperationalSolutionKeySQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.GetByOperationalSolutionKey)
 	if err != nil {
 		return nil, err
 	}
@@ -412,7 +378,7 @@ func (s *Store) ModelPlanGetByOperationalSolutionKey(
 		"operational_solution_key": opSolKey,
 	}
 
-	modelPlanAndOpSols := []*models.ModelPlanAndOperationalSolution{}
+	var modelPlanAndOpSols []*models.ModelPlanAndOperationalSolution
 	err = stmt.Select(&modelPlanAndOpSols, arg)
 	if err != nil {
 		logger.Error(

@@ -4,6 +4,8 @@ import (
 	_ "embed"
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -14,15 +16,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/tag/create.sql
-var tagCreateSQL string
-
-//go:embed SQL/tag/create_collection.sql
-var tagCreateCollectionSQL string
-
-//go:embed SQL/tag/get_by_table_field_and_content_id.sql
-var tagGetByTableFieldAndContentIDSQL string
-
 // TagCreate writes a new tage to the database
 func (s *Store) TagCreate(
 	logger *zap.Logger,
@@ -30,7 +23,7 @@ func (s *Store) TagCreate(
 ) (*models.Tag, error) {
 	tag.ID = utilityUUID.ValueOrNewUUID(tag.ID)
 
-	stmt, err := s.db.PrepareNamed(tagCreateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.Tag.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, tag)
 	}
@@ -50,7 +43,7 @@ func (s *Store) TagCreate(
 func TagCollectionCreate(np sqlutils.NamedPreparer, _ *zap.Logger, tags []*models.Tag, createdBy uuid.UUID) ([]*models.Tag, error) {
 
 	retTags := []*models.Tag{}
-	stmt, sErr := np.PrepareNamed(tagCreateCollectionSQL)
+	stmt, sErr := np.PrepareNamed(sqlqueries.Tag.CreateCollection)
 	if sErr != nil {
 		return nil, sErr
 	}
@@ -88,7 +81,7 @@ func (s *Store) TagCollectionGetByContentIDAndField(_ *zap.Logger, taggedTable s
 
 	var tags []*models.Tag
 
-	stmt, err := s.db.PrepareNamed(tagGetByTableFieldAndContentIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.Tag.GetByTableFieldAndContent)
 	if err != nil {
 		return nil, err
 	}

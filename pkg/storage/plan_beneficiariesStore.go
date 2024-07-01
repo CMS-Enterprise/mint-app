@@ -3,6 +3,8 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -13,18 +15,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_beneficiaries/create.sql
-var planBeneficiariesCreateSQL string
-
-//go:embed SQL/plan_beneficiaries/update.sql
-var planBeneficiariesUpdateSQL string
-
-//go:embed SQL/plan_beneficiaries/get_by_id.sql
-var planBeneficiariesGetByIDSQL string
-
-//go:embed SQL/plan_beneficiaries/get_by_model_plan_id_LOADER.sql
-var planBeneficiariesGetByModelPlanIDLoaderSQL string
-
 // PlanBeneficiariesGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(
 	_ *zap.Logger,
@@ -33,7 +23,7 @@ func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(
 
 	var benesSlice []*models.PlanBeneficiaries
 
-	stmt, err := s.db.PrepareNamed(planBeneficiariesGetByModelPlanIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBeneficiaries.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +50,7 @@ func (s *Store) PlanBeneficiariesCreate(
 
 	b.ID = utilityUUID.ValueOrNewUUID(b.ID)
 
-	stmt, err := np.PrepareNamed(planBeneficiariesCreateSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanBeneficiaries.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, b)
 	}
@@ -82,7 +72,7 @@ func (s *Store) PlanBeneficiariesUpdate(
 	b *models.PlanBeneficiaries,
 ) (*models.PlanBeneficiaries, error) {
 
-	stmt, err := s.db.PrepareNamed(planBeneficiariesUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBeneficiaries.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, b)
 	}
@@ -104,7 +94,7 @@ func (s *Store) PlanBeneficiariesGetByID(
 
 	b := models.PlanBeneficiaries{}
 
-	stmt, err := s.db.PrepareNamed(planBeneficiariesGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBeneficiaries.GetByID)
 	if err != nil {
 		return nil, err
 	}
