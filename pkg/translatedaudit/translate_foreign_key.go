@@ -12,8 +12,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-//Changes: (fk) Should this be moved into it's own package?
-//Changes: (fk) if we have time to allow workers to take a dataloader, these function calls will be more efficient
+//Future Enhancement: allow faktory workers to take a dataloader
 
 func translateForeignKey(ctx context.Context, store *storage.Store, value interface{}, tableReference models.TableName) (interface{}, error) {
 	if value == nil {
@@ -77,7 +76,6 @@ func parseInterfaceToUUID(val interface{}) (uuid.UUID, error) {
 
 	stringKey, isString := val.(string)
 	if isString {
-		// Changes: (fk) Should we validate the id of the key? parse only tries to parse, it doesn't actually validate the string
 		parsedUUID, err := uuid.Parse(stringKey)
 		if err != nil {
 			return uuid.Nil, fmt.Errorf("unable to parse string to UUID. err %w", err)
@@ -153,7 +151,6 @@ func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Stor
 	// get the document
 	document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, uuidKey)
 	if err != nil {
-		//Changes: (fk) revisit this. Documents can be deleted, so should we handle this differently if the record can't be returned? Perhaps return nil, but no error?
 		if err.Error() != "sql: no rows in result set" {
 			// Expect There To Be Null results, only error for other store errors
 			return nil, fmt.Errorf("there was an issue getting the plan document  foreign key reference . err %w", err)
@@ -164,8 +161,6 @@ func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Stor
 		// a document can be deleted and then translated, in that case, don't translate the value, but don't fail
 		return nil, nil
 	}
-
-	//Changes: (fk) Revisit this, do we need to return something besides FileName? Perhaps a link? Name is probably good, but verify
 
 	return &document.FileName, nil
 }
