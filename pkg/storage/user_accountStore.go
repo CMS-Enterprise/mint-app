@@ -3,6 +3,8 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -13,32 +15,11 @@ import (
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
-//go:embed SQL/user_account/get_by_username.sql
-var userAccountGetByUsername string
-
-//go:embed SQL/user_account/get_by_id.sql
-var userAccountGetByID string
-
-//go:embed SQL/user_account/get_by_id_LOADER.sql
-var userAccountGetByIDLOADER string
-
-//go:embed SQL/user_account/insert_by_username.sql
-var userAccountInsertByUsername string
-
-//go:embed SQL/user_account/update_by_username.sql
-var userAccountUpdateByUsername string
-
-//go:embed SQL/user_account/get_notification_preferences_new_model_plan.sql
-var userNotificationPreferencesNewModelPlan string
-
-//go:embed SQL/user_account/get_notification_recipients_dates_changed.sql
-var userAccountGetNotificationRecipientsDatesChanged string
-
 // UserAccountGetByUsername gets a user account by a give username
 func UserAccountGetByUsername(np sqlutils.NamedPreparer, username string) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	stmt, err := np.PrepareNamed(userAccountGetByUsername)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.GetByUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +44,7 @@ func UserAccountGetByUsername(np sqlutils.NamedPreparer, username string) (*auth
 func UserAccountGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	stmt, err := np.PrepareNamed(userAccountGetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +70,7 @@ func (s *Store) UserAccountGetByIDLOADER(
 
 	var userSlice []*authentication.UserAccount
 
-	stmt, err := s.db.PrepareNamed(userAccountGetByIDLOADER)
+	stmt, err := s.db.PrepareNamed(sqlqueries.UserAccount.GetByIDLOADER)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +98,7 @@ func (s *Store) UserAccountNotificationPreferencesNewModelPlan(np sqlutils.Named
 
 	var results []*models.UserAccountAndNotificationPreferences
 
-	stmt, err := np.PrepareNamed(userNotificationPreferencesNewModelPlan)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.GetNotificationPreferencesNewModelPlan)
 	if err != nil {
 		return nil, err
 	}
@@ -139,7 +120,7 @@ func UserAccountInsertByUsername(np sqlutils.NamedPreparer, userAccount *authent
 		userAccount.ID = uuid.New()
 	}
 
-	stmt, err := np.PrepareNamed(userAccountInsertByUsername)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.InsertByUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +145,7 @@ func UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authent
 		userAccount.ID = uuid.New()
 	}
 
-	stmt, err := np.PrepareNamed(userAccountUpdateByUsername)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.UpdateByUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +169,7 @@ func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(
 ) {
 	var recipients []*models.UserAccountAndNotificationPreferences
 
-	stmt, err := s.db.PrepareNamed(userAccountGetNotificationRecipientsDatesChanged)
+	stmt, err := s.db.PrepareNamed(sqlqueries.UserAccount.GetNotificationRecipientsDatesChanged)
 	if err != nil {
 		return nil, err
 	}
