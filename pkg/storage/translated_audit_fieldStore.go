@@ -26,8 +26,7 @@ func TranslatedAuditFieldCreate(np sqlutils.NamedPreparer, translatedAuditField 
 // TranslatedAuditFieldCreateCollection creates a TranslatedAuditField in the database, using the values passed in the translatedAuditFields parameter
 func TranslatedAuditFieldCreateCollection(np sqlutils.NamedPreparer, translatedAuditFields []*models.TranslatedAuditField) ([]*models.TranslatedAuditField, error) {
 	retFields := []*models.TranslatedAuditField{}
-	// Changes: (Serialization) Make this a separate SQL call to try to insert all records at once instead of iterating through a collection.
-	// Note, even in this structure, a transaction is possible
+	// Future Enhancement Make this a separate SQL call to try to insert all records at once instead of iterating through a collection.
 
 	for _, translatedAuditField := range translatedAuditFields {
 		retField, err := TranslatedAuditFieldCreate(np, translatedAuditField)

@@ -238,8 +238,6 @@ func translateField(
 	translatedField.QuestionType = questionType
 	translatedField.ReferenceLabel = referencesLabel
 
-	// change.MetaDataRaw = nil //Changes: (Meta) This should be specific to the type of change...
-
 	return &translatedField, true, nil
 
 }
@@ -248,7 +246,7 @@ func translateField(
 func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType {
 	if new == nil || new == "{}" {
 		if old == nil || old == "{}" {
-			//Changes: (Meta) Revisit this, is this possible?
+			//This is left because is is possible from the interface types, though in practice this shouldn't occur unless data is being submitted incorrectly
 			return models.AFCUnchanged
 		}
 		return models.AFCRemoved
@@ -282,18 +280,16 @@ func translateValue(value interface{}, options map[string]interface{}) interface
 	if value == nil {
 		return nil
 	}
-	// Changes: (Translations) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
-	// strSlice, isSlice := value.([]string)
+
 	str, isString := value.(string)
 
-	// strSlice, isSlice := isArray(str)
 	strSlice, isSlice := value.(pq.StringArray)
 
 	if isSlice {
 		transArray := translateStrSlice(strSlice, options)
 		return transArray
 	}
-	// str, isString := value.(string)
+
 	if isString {
 		// Changes: (Translations) Revisit this issue here, we need the value to be stringified properly. Or provide a column type that is string or string array
 
@@ -311,7 +307,6 @@ func translateValueSingle(value string, options map[string]interface{}) string {
 	if ok {
 		return fmt.Sprint(translated) // Translations are always string representations
 	}
-	// Changes: (Translations)  If the map doesn't have a value, return the raw value instead.
 	return value
 
 }
@@ -370,7 +365,7 @@ func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAud
 		}
 
 		for _, translatedAuditField := range translatedAudit.TranslatedFields {
-			// Changes: (Serialization) Combine this with the storage message loop
+			// Note, this could be moved to the store methods inner loop. This is left here to keep the logic atomic.
 			translatedAuditField.TranslatedAuditID = retTranslated.ID
 		}
 
