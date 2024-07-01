@@ -4,13 +4,12 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/cmsgov/mint-app/pkg/models"
 
 	_ "embed"
 )
-
-//go:embed SQL/possible_operational_need/collection_get_by_model_plan_id.sql
-var possibleOperationalNeedCollectionByModelPlanIDSQL string
 
 // PossibleOperationalNeedCollectionGetByModelPlanID returns possible operational
 // needs that don't have an existing record for a model plan
@@ -21,7 +20,7 @@ func (s *Store) PossibleOperationalNeedCollectionGetByModelPlanID(
 
 	var posNeeds []*models.PossibleOperationalNeed
 
-	stmt, err := s.db.PrepareNamed(possibleOperationalNeedCollectionByModelPlanIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PossibleOperationalNeed.CollectionByModelPlanID)
 	if err != nil {
 		return nil, err
 	}
