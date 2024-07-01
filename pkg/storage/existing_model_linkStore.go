@@ -3,6 +3,8 @@ package storage
 import (
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -12,18 +14,6 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/existing_model_link/merge.sql
-var existingModelLinkMergeSQL string
-
-//go:embed SQL/existing_model_link/get_by_id.sql
-var existingModelLinkGetByIDSQL string
-
-//go:embed SQL/existing_model_link/get_by_model_plan_id_and_field_name_LOADER.sql
-var existingModelLinkGetByModelPlanIDAndFieldNameLoaderSQL string
-
-//go:embed SQL/existing_model_link/get_names_by_model_plan_id_and_field_name_LOADER.sql
-var existingModelLinkGetNamesByModelPlanIDAndFieldNameSQL string
-
 // GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER returns the plan GeneralCharacteristics for a slice of model plan ids and field Names
 func (s *Store) GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER(
 	logger *zap.Logger,
@@ -32,7 +22,7 @@ func (s *Store) GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER(
 
 	var linkSlice []*models.ExistingModelLinks
 
-	stmt, err := s.db.PrepareNamed(existingModelLinkGetNamesByModelPlanIDAndFieldNameSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ExistingModelLink.GetNamesByModelPlanIDAndFieldName)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +49,7 @@ func (s *Store) ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(
 
 	var linkSlice []*models.ExistingModelLink
 
-	stmt, err := s.db.PrepareNamed(existingModelLinkGetByModelPlanIDAndFieldNameLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ExistingModelLink.GetByModelPlanIDAndFieldNameLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -107,7 +97,7 @@ func (s *Store) ExistingModelLinksUpdate(
 	}
 	var linkSlice []*models.ExistingModelLink
 
-	stmt, err := tx.PrepareNamed(existingModelLinkMergeSQL)
+	stmt, err := tx.PrepareNamed(sqlqueries.ExistingModelLink.Merge)
 	if err != nil {
 		logger.Error("failed to prepare Existing Model Links update query", zap.Error(err))
 		return nil, err
@@ -133,7 +123,7 @@ func (s *Store) ExistingModelLinkGetByID(logger *zap.Logger, id uuid.UUID) (*mod
 
 	link := models.ExistingModelLink{}
 
-	stmt, err := s.db.PrepareNamed(existingModelLinkGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.ExistingModelLink.GetByID)
 	if err != nil {
 		return nil, err
 	}
