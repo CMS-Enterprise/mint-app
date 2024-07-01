@@ -129,7 +129,6 @@ func (tfb TranslationFieldBase) GetTableReference() (TableName, bool) {
 		return "", false
 	}
 
-	// Changes: (fk) Make this return a type enum instead of a string, for possible table references
 	return *tfb.TableReference, true
 
 }

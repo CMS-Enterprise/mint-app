@@ -60,8 +60,6 @@ func assertTranslationFields(t *testing.T, translation Translation) {
 }
 
 func assertTranslationFieldData(t *testing.T, field reflect.StructField, value reflect.Value) *models.TranslationFieldBase {
-	//Changes (Translations) Revisit this, assert non nil values of all fields based on the data type (we are asserting that something that is meant to have options, does have options defined)
-
 	kind := value.Kind()
 	if assert.EqualValues(t, reflect.Struct, kind, "the translation field expected a struct. found %v", kind) {
 		return assertTranslationStructField(t, field, value)
@@ -252,7 +250,16 @@ func assertTFieldWithChildren(t *testing.T, field reflect.StructField, translati
 
 	count := len(children)
 	assert.GreaterOrEqualf(t, count, 1, "field %s. Doesn't have any children defined", field.Name)
-	// // Changes: (Translations) ensure that the children are defined correctly too? should we run through the test like above? Recursive?
+
+	for childKey, childRelationList := range children {
+		assert.NotZero(t, childKey)
+		for _, child := range childRelationList {
+			// Assert that each exported option at least has a label correctly defined.
+			label := child.GetLabel()
+			assert.NotZero(t, label)
+		}
+
+	}
 
 }
 
