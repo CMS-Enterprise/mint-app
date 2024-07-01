@@ -260,3 +260,10 @@ config.js
 Graphql
 exportTranslation
 util
+shared_enums
+translation_interface.go
+translation_extensions.go
+translation_utilities.go
+deserializing
+deserialized
+json

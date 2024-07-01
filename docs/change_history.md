@@ -11,6 +11,20 @@ Change history is a MINT feature that aims to give full transparency into model 
 - Any user/job code can access Change History, however some data that would normally be restricted in the read view, will be hidden from Change History
 
 ## Configuration
+### Adding new audit tables in the database
+- Use the `SELECT audit.AUDIT_TABLE` method in the database to add a table configuration, and to enable the audit trigger on that table. Reference the database for the most up to date documentation on the trigger.
+
+`Example`
+```SQL
+  SELECT audit.AUDIT_TABLE(''public'', ''testing_table'', ''id'', NULL, ''{created_by,created_dts,modified_by,modified_dts}''::TEXT[], ''{*,id}''::TEXT[])
+```
+ 
+  NOTE: if the `testing_table` enum value did not exist on the `TABLE_NAME` type, it would need to be added for this to work
+```SQL
+    ALTER TYPE TABLE_NAME ADD VALUE ''testing_table'';
+```
+
+- If a new table is added, be sure to add the new enum value to `TableName` in the [shared_enums go file](../pkg/models/shared_enums.go), and in [GQL](../pkg/graph/schema/types/shared_enums.graphql)
 
 #### Steps to add new translations for Change History (FE?)
 
@@ -52,6 +66,28 @@ Change history is a MINT feature that aims to give full transparency into model 
    - Add the table translation file in [/src/i18n/modelPlan/](../src/i18n/modelPlan)
    - Populate the translation file with JSON config for text, options, etc
 
+
 - ##### Extending properties of translation configuration
+ - TODO?
  
-  - TODO: 
+
+
+ ### Backend Generated Type Wiring
+  #### Implement Interface for Generated Type
+  - Implement the Translation Interface defined in [mappings/translation_interface.go](../mappings/translation_interface.go)
+    - Go into [pkg/graph/model/translation_extensions.go](../pkg/graph/model/translation_extensions.go)
+      - Implement `TableName()`
+      - Implement `ToMap()`
+
+#### Backend Wiring of Generated Translations
+  
+  - Create a new file, and test in [mappings](../mappings/)
+      - File should be appended with `_translation.go`
+  - Embed the exported JSON translation from [mappings/translation](../mappings/translation/)
+    - Create a Function that returns the generated type, and error by deserializing the embedded json to the deserialized type
+  - Update `GetTranslation` in [mappings/translation_utilities.go](../mappings/translation_utilities.go) to add an entry to return the new translation. ( This is how the translation audit job gets the translation)
+  - Create a unit test file in the mapping directory. 
+     - Add a test that asserts the data can be deserialized and the `ToMap()` function works
+     - Add a test to `VerifyFieldsArePopulated`. This should call `assertTranslationFields`
+     - Add a test to verify `TranslationCoverage` this should call `assertTranslationStructCoverage`
+         - this can explicitly provide fields that we expect not to be translated.
