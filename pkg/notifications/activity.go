@@ -144,6 +144,14 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 		}
 		return &meta, nil
 
+	case models.ActivityDataExchangeApproachCompleted:
+		// Deserialize the raw JSON into DataExchangeApproachCompletedActivityMeta
+		meta := models.DataExchangeApproachCompletedActivityMeta{}
+		if err := json.Unmarshal(rawData, &meta); err != nil {
+			return nil, err
+		}
+		return &meta, nil
+
 	default:
 		// Return a default implementation or handle unsupported types
 		return nil, fmt.Errorf("unsupported activity type: %s", activityType)
