@@ -128,8 +128,6 @@ func getOperationalSolutionForeignKeyReference(ctx context.Context, store *stora
 		return "", fmt.Errorf("the solution for %s was not returned for this foreign key translation", uuidKey)
 	}
 
-	// Changes: (Translations) What should we return? Probably solution name, figure out what to return here
-	// can update the translation as needed.
 	if solution.Name != nil {
 		return *solution.Name, nil
 	}

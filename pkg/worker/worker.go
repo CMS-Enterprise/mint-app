@@ -49,12 +49,6 @@ const (
 	translateAuditJobName string = "TranslateAuditJob"
 )
 
-//Changes: (Job) If possible define all jobs like this so they can be referenced. To do that, they can't be receivers though...
-// var TranslateAuditJob = JobWrapper{
-// 	Name: "TranslateAuditJob",
-// 	Job:  ,
-// }
-
 // Work creates, configures, and starts worker
 func (w *Worker) Work() {
 	if !w.ProcessJobs {
@@ -99,6 +93,12 @@ func (w *Worker) Work() {
 	* // Future Enhancement
 	Re-work this to consider wrapping a representation of the job with the name of the job itself. Consider a struct that is built with both a name and function.
 	This requires rework because all jobs are currently methods on a worker, instead of functions that take a worker
+
+	Something like:
+		// var TranslateAuditJob = JobWrapper{
+		// 	Name: "TranslateAuditJob",
+		// 	Job:  ,
+		// }
 
 	******************************/
 

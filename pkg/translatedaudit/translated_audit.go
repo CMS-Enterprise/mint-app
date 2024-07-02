@@ -66,18 +66,7 @@ func TranslateAudit(
 		return nil, fmt.Errorf("issue saving translated audit. %w", err)
 	}
 
-	// retTranslatedChanges, err := storage.TranslatedAuditChangeCreateCollection(store, translatedChanges)
-
 	return retTranslatedChanges, err
-	//Changes: (Job) Implement this to translate a single audit, we also need to figure out what model plan this is based on the audit id
-
-	/*
-		1. Get Audit (with ModelPlanID?)
-		2. Run the Translation Job
-		3. Save
-		4. Should we delete the processing job here? Or elsewhere? Should the id actually be the id of the processing entry? That way we can save it and update here?
-
-	*/
 }
 
 func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audit *models.AuditChange) (*models.TranslatedAuditWithTranslatedFields, error) {

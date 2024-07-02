@@ -72,8 +72,6 @@ func TestTranslationFieldLabel(t *testing.T) {
 		otherParentField: parentTranslationTest,
 	}
 
-	//Changes: (Translations) Should GetLabel return an error ever?
-
 	t.Run("label field is the fall through field", func(t *testing.T) {
 		// When there is no note or is other, and no export label, use the base label
 		label := testTranslation.GetLabel()
