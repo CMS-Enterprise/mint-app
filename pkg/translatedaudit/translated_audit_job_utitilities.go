@@ -25,13 +25,10 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 	if err != nil {
 		return nil, fmt.Errorf("unable to return translatedAuditQueue entry, err: %w", err)
 	}
-	// NOTE,  this will apply to audits not associated with a model plan, we need to handle those here as well.
 
-	// Changes (Job) Note, we should perhaps wrap updating the audit, and the final updating of the queue item in a transaction
-	// ALSO! Only grab queue items that are either queued, or set to retry? Should we set up a max retry?
 	translatedAuditAndFields, translateErr := TranslateAudit(ctx, store, logger, auditID)
 	if translateErr != nil {
-		// fail the translation, update the attempts
+		// fail the translation
 		queueEntry.Status = models.TPSFailed
 		_, err = storage.TranslatedAuditQueueUpdate(store, logger, queueEntry)
 		if err != nil {
