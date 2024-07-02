@@ -76,9 +76,6 @@ func init() {
 	rootCmd.AddCommand(translationExportCmd)
 
 	// job based audit translation commands
-	rootCmd.AddCommand(queueAllTranslatedAuditChangesCommand)
-	rootCmd.AddCommand(translateAllQueuedTranslatedAuditChangesCommand)
-	rootCmd.AddCommand(translateNextQueuedTranslatedAuditChangesCommand)
 	rootCmd.AddCommand(queueAndProcessAllTranslatedAuditChangesCommand)
 
 }

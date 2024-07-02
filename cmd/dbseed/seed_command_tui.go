@@ -84,23 +84,7 @@ func newSeedCommandTuiModel() seedCommandTuiModel {
 			},
 
 			genericCommandOption{
-				CommandName: "Queue Audits",
-				CommandRun:  func() { queueAllTranslatedAuditChangesCommand.Run(queueAllTranslatedAuditChangesCommand, []string{}) },
-			},
-			genericCommandOption{
-				CommandName: "Translate  Next Audit",
-				CommandRun: func() {
-					translateNextQueuedTranslatedAuditChangesCommand.Run(translateNextQueuedTranslatedAuditChangesCommand, []string{})
-				},
-			},
-			genericCommandOption{
-				CommandName: "Translate Audit Queue",
-				CommandRun: func() {
-					translateAllQueuedTranslatedAuditChangesCommand.Run(translateAllQueuedTranslatedAuditChangesCommand, []string{})
-				},
-			},
-			genericCommandOption{
-				CommandName: "Translate and Queue available Audits",
+				CommandName: "Translate Audits",
 				CommandRun: func() {
 					queueAndProcessAllTranslatedAuditChangesCommand.Run(queueAndProcessAllTranslatedAuditChangesCommand, []string{})
 				},

@@ -38,41 +38,6 @@ func analyzeModelPlanForAnalyzedAudit() {
 
 }
 
-//Changes: (Utility) Make this only have one translate command for simplicity. It can take params to change the behavior
-
-var queueAllTranslatedAuditChangesCommand = &cobra.Command{
-	Use:   "queueTranslation",
-	Short: "Enqueues all audit translations",
-
-	Run: func(cmd *cobra.Command, args []string) {
-
-		fmt.Printf("Ran the queue Translation command : %s", cmd.Use)
-		seeder := newDefaultSeeder(viperConfig)
-		seeder.queueAllTranslatedAuditChanges()
-	},
-}
-var translateAllQueuedTranslatedAuditChangesCommand = &cobra.Command{
-	Use:   "translateQueue",
-	Short: "Translates all enqueued audit translation queue entries",
-
-	Run: func(cmd *cobra.Command, args []string) {
-
-		fmt.Printf("Ran the translate  Queue command : %s", cmd.Use)
-		seeder := newDefaultSeeder(viperConfig)
-		seeder.translateAllQueuedTranslatedAudits()
-	},
-}
-var translateNextQueuedTranslatedAuditChangesCommand = &cobra.Command{
-	Use:   "translateNextQueue",
-	Short: "Translates next enqueued audit translation queue entries",
-
-	Run: func(cmd *cobra.Command, args []string) {
-
-		fmt.Printf("Ran the translate next Queued Translation command : %s", cmd.Use)
-		seeder := newDefaultSeeder(viperConfig)
-		seeder.translateNextQueuedTranslatedAudit()
-	},
-}
 var queueAndProcessAllTranslatedAuditChangesCommand = &cobra.Command{
 	Use:   "translate",
 	Short: "Enqueues and processes all audit translations",
@@ -155,21 +120,6 @@ func (s *Seeder) translateAllQueuedTranslatedAudits() {
 			fmt.Println(fmt.Errorf("error getting queued objects to translate, %w", translationErr))
 		}
 	}
-}
-
-func (s *Seeder) translateNextQueuedTranslatedAudit() {
-	queuedObjects, err := storage.TranslatedAuditQueueGetQueued(s.Config.Store)
-	if err != nil {
-		fmt.Printf("issue getting queued Objects to translate \r\n")
-	}
-	if len(queuedObjects) > 1 {
-		queued := queuedObjects[0]
-		_, translationErr := translatedaudit.TranslateAuditJobByID(s.Config.Context, s.Config.Store, s.Config.Logger, queued.ChangeID, queued.ID)
-		if translationErr != nil {
-			fmt.Println(fmt.Errorf("error getting queued objects to translate, %w ", translationErr))
-		}
-	}
-
 }
 
 func (s *Seeder) queueAndProcessAllTranslatedAuditQueueEntries() {
