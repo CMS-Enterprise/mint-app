@@ -130,7 +130,6 @@ const HomePageSettings = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={() => {
-              // handleSettingsSubmit();
               history.push('/homepage-settings/order');
             }}
             enableReinitialize
