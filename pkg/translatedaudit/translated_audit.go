@@ -50,13 +50,7 @@ func TranslateAudit(
 		return nil, nil
 	}
 
-	// Changes: (Job) Should we just fetch the model name when we get the ID as well? it's just this use case...
-	plan, err := store.ModelPlanGetByID(store, logger, auditWithModelPlan.ModelPlanID)
-	if err != nil {
-		return nil, err
-	}
-
-	translatedAuditWithFields, err := genericAuditTranslation(ctx, store, plan, &auditWithModelPlan.AuditChange)
+	translatedAuditWithFields, err := genericAuditTranslation(ctx, store, auditWithModelPlan)
 	if err != nil {
 		return nil, fmt.Errorf("issue translating audit. %w", err)
 	}
@@ -69,7 +63,7 @@ func TranslateAudit(
 	return retTranslatedChanges, err
 }
 
-func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audit *models.AuditChange) (*models.TranslatedAuditWithTranslatedFields, error) {
+func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *models.AuditChangeWithModelPlanID) (*models.TranslatedAuditWithTranslatedFields, error) {
 	//Changes: (Translations) Note, it might be more appropriate to fetch the model plan each time. Note, this is not as efficient as grouping first,
 	// but it works with having the job translate one audit at a time
 	trans, err := mappings.GetTranslation(audit.TableName)
@@ -84,7 +78,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	operation, isValidOperation := GetDatabaseOperation(audit.Action)
 	if !isValidOperation {
 
-		return nil, fmt.Errorf("issue converting operation to valid DB operation for audit  (%d) for plan %s, while attempting humanization. Provided value was %s ", audit.ID, plan.ModelName, audit.Action)
+		return nil, fmt.Errorf("issue converting operation to valid DB operation for audit  (%d) for plan %s, while attempting humanization. Provided value was %s ", audit.ID, audit.ModelPlanID, audit.Action)
 	}
 	translatedAudit := models.TranslatedAuditWithTranslatedFields{
 		TranslatedFields: []*models.TranslatedAuditField{},
@@ -93,7 +87,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	change := models.NewTranslatedAuditChange( //  Changes: (Translations)  extract this logic to another function
 		constants.GetSystemAccountUUID(),
 		audit.ModifiedBy,
-		plan.ID,
+		audit.ModelPlanID,
 		audit.ModifiedDts,
 		audit.TableID,
 		audit.ID,
@@ -104,11 +98,10 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	translatedAudit.TranslatedAudit = change
 
 	for fieldName, field := range audit.Fields {
-		//  Changes: (Translations) consider removing plan from the function
-		transField, wasTranslated, tErr := translateField(ctx, store, fieldName, field, audit, operation, plan, translationMap)
+		transField, wasTranslated, tErr := translateField(ctx, store, fieldName, field, &audit.AuditChange, operation, translationMap)
 
 		if tErr != nil {
-			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, plan.ModelName, err)
+			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, audit.ModelPlanID, err)
 		}
 		if !wasTranslated {
 			//If this doesn't have a translation, don't append this to the translated field list (and don't save it)
@@ -118,7 +111,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 
 	}
 
-	_, err = SetTranslatedAuditTableSpecificMetaData(ctx, store, &translatedAudit, audit, operation)
+	_, err = SetTranslatedAuditTableSpecificMetaData(ctx, store, &translatedAudit, &audit.AuditChange, operation)
 	if err != nil {
 		return nil, fmt.Errorf("unable to translate table specific audit data. err %w", err)
 	}
@@ -134,7 +127,6 @@ func translateField(
 	field models.AuditField,
 	audit *models.AuditChange,
 	operation models.DatabaseOperation,
-	modelPlan *models.ModelPlan,
 	translationMap map[string]models.ITranslationField) (*models.TranslatedAuditField, bool, error) {
 
 	old := field.Old

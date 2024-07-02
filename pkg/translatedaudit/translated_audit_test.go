@@ -80,13 +80,11 @@ func TestTranslateField(t *testing.T) {
 		otherParentField:    parentTranslationTest,
 	}
 
-	plan := models.ModelPlan{}
-
 	ctx := context.Background()
 
 	t.Run("Form Type is present when there is a translation", func(t *testing.T) {
 		var store *storage.Store //nil store
-		translatedField, wasTranslated, err := translateField(ctx, store, translationFieldKey, testAuditField, &testAuditChange, models.DBOpUpdate, &plan, testTranslationMap)
+		translatedField, wasTranslated, err := translateField(ctx, store, translationFieldKey, testAuditField, &testAuditChange, models.DBOpUpdate, testTranslationMap)
 		assert.True(t, wasTranslated)
 		assert.NoError(t, err)
 		assert.NotNil(t, translatedField.FormType)
@@ -100,7 +98,7 @@ func TestTranslateField(t *testing.T) {
 
 	t.Run("When there is not a translation, there is no translation field ", func(t *testing.T) {
 		var store *storage.Store //nil store
-		translatedField, wasTranslated, err := translateField(ctx, store, "there is no translation for this", testAuditField, &testAuditChange, models.DBOpUpdate, &plan, testTranslationMap)
+		translatedField, wasTranslated, err := translateField(ctx, store, "there is no translation for this", testAuditField, &testAuditChange, models.DBOpUpdate, testTranslationMap)
 		assert.False(t, wasTranslated)
 		assert.Nil(t, (translatedField))
 		assert.NoError(t, err)
@@ -113,7 +111,7 @@ func TestTranslateField(t *testing.T) {
 			New: "{}",
 		}
 		var store *storage.Store //nil store
-		translatedField, wasTranslated, err := translateField(ctx, store, "there is no translation for this", unchangedAuditField, &testAuditChange, models.DBOpUpdate, &plan, testTranslationMap)
+		translatedField, wasTranslated, err := translateField(ctx, store, "there is no translation for this", unchangedAuditField, &testAuditChange, models.DBOpUpdate, testTranslationMap)
 		assert.False(t, wasTranslated)
 		assert.Nil(t, (translatedField))
 		assert.NoError(t, err)
