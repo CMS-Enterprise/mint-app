@@ -12,6 +12,8 @@ export default gql(/* GraphQL */ `
         newDiscussionReply
         modelPlanShared
         newModelPlan
+        datesChanged
+        datesChangedNotificationType
       }
     }
   }

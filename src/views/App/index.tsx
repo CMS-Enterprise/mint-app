@@ -110,8 +110,34 @@ const AppRoutes = () => {
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
 
-      <SecureRoute
+      <Redirect
+        exact
+        from="/models/:modelID/read-only"
+        to="/models/:modelID/read-view"
+      />
+
+      <Redirect
+        exact
+        from="/models/:modelID/read-view"
+        to="/models/:modelID/read-view/model-basics"
+      />
+
+      {/* Wrap redirect as child of route to pass on query parameters */}
+      <Route
         path="/models/:modelID/read-only/:subinfo?"
+        render={match => (
+          <Redirect
+            to={{
+              // /models/:modelID/read-view/:subinfo? syntax does not work with pathname prop, so we replace 'only' with 'view'
+              pathname: match.location.pathname.replace('only', 'view'),
+              search: match.location.search
+            }}
+          />
+        )}
+      />
+
+      <SecureRoute
+        path="/models/:modelID/read-view/:subinfo?"
         exact
         component={ReadOnly}
       />
@@ -224,6 +250,8 @@ const AppRoutes = () => {
         path="/models/:modelID/locked-task-list-section"
         component={LockedTaskListSection}
       />
+
+      <Redirect exact from="/models/:modelID" to="/models/:modelID/read-view" />
 
       {/* 404 */}
       <Route path="*" component={NotFound} />

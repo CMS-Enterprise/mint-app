@@ -16,6 +16,7 @@ import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBrea
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
+import { ArticleCategories, HelpArticle } from '..';
 
 type StepsType = {
   heading: string;
@@ -45,7 +46,7 @@ export const PhasesInvolved = () => {
             </PageHeading>
 
             <HelpCategoryTag
-              type="it-implementation"
+              type={ArticleCategories.IT_IMPLEMENTATION}
               className="margin-bottom-1"
             />
 
@@ -89,8 +90,13 @@ export const PhasesInvolved = () => {
       </MainContent>
 
       <RelatedArticles
-        currentArticle="Model implementation and solution design"
-        type="it-implementation"
+        currentArticle={HelpArticle.PHASES_INVOLVED}
+        specificArticles={[
+          HelpArticle.MODEL_SOLUTION_DESIGN,
+          HelpArticle.MODEL_SOLUTION_IMPLEMENTATION,
+          HelpArticle.UTILIZING_SOLUTIONS
+        ]}
+        type={ArticleCategories.IT_IMPLEMENTATION}
         viewAllLink
       />
     </>

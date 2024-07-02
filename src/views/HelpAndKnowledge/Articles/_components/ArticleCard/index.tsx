@@ -9,7 +9,7 @@ import {
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
-import { ArticleTypeProps } from 'views/HelpAndKnowledge/Articles';
+import { ArticleCategories } from 'views/HelpAndKnowledge/Articles';
 import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 
 import './index.scss';
@@ -20,7 +20,7 @@ type ArticleCardProps = {
   translation: string;
   isLink?: boolean;
   tag?: boolean;
-  type: ArticleTypeProps;
+  type: ArticleCategories;
 };
 
 const ArticleCard = ({

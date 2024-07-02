@@ -3,6 +3,8 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -13,18 +15,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_ops_eval_and_learning/create.sql
-var planOpsEvalAndLearningCreateSQL string
-
-//go:embed SQL/plan_ops_eval_and_learning/update.sql
-var planOpsEvalAndLearningUpdateSQL string
-
-//go:embed SQL/plan_ops_eval_and_learning/get_by_id.sql
-var planOpsEvalAndLearningGetByIDSQL string
-
-//go:embed SQL/plan_ops_eval_and_learning/get_by_model_plan_id_LOADER.sql
-var planOpsEvalAndLearningGetByModelPlanIDLoaderSQL string
-
 // PlanOpsEvalAndLearningGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(
 	_ *zap.Logger,
@@ -33,7 +23,7 @@ func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(
 
 	var oelSlice []*models.PlanOpsEvalAndLearning
 
-	stmt, err := s.db.PrepareNamed(planOpsEvalAndLearningGetByModelPlanIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanOpsEvalAndLearning.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +50,7 @@ func (s *Store) PlanOpsEvalAndLearningCreate(
 
 	oel.ID = utilityUUID.ValueOrNewUUID(oel.ID)
 
-	stmt, err := np.PrepareNamed(planOpsEvalAndLearningCreateSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanOpsEvalAndLearning.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, oel)
 	}
@@ -83,7 +73,7 @@ func (s *Store) PlanOpsEvalAndLearningUpdate(
 	oel *models.PlanOpsEvalAndLearning,
 ) (*models.PlanOpsEvalAndLearning, error) {
 
-	stmt, err := s.db.PrepareNamed(planOpsEvalAndLearningUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanOpsEvalAndLearning.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, oel)
 	}
@@ -105,7 +95,7 @@ func (s *Store) PlanOpsEvalAndLearningGetByID(
 
 	oel := models.PlanOpsEvalAndLearning{}
 
-	stmt, err := s.db.PrepareNamed(planOpsEvalAndLearningGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanOpsEvalAndLearning.GetByID)
 	if err != nil {
 		return nil, err
 	}

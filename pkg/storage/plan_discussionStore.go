@@ -33,23 +33,8 @@ var planDiscussionGetByID string
 //go:embed SQL/plan_discussion/get_most_recent_user_role.sql
 var getUserRoleSQL string
 
-//go:embed SQL/discussion_reply/create.sql
-var discussionReplyCreateSQL string
-
-//go:embed SQL/discussion_reply/update.sql
-var discussionReplyUpdateSQL string
-
-//go:embed SQL/discussion_reply/delete.sql
-var discussionReplyDeleteSQL string
-
-//go:embed SQL/discussion_reply/get_by_id.sql
-var discussionReplyGetByID string
-
 //go:embed SQL/plan_discussion/get_by_model_plan_id_LOADER.sql
 var planDiscussionGetByModelPlanIDLoaderSQL string
-
-//go:embed SQL/discussion_reply/get_by_discussion_id_LOADER.sql
-var discussionReplyGetByDiscussionIDLoaderSQL string
 
 //TODO: Migrate all these queries to the sql_queries package
 
@@ -61,7 +46,7 @@ func (s *Store) DiscussionReplyGetByDiscussionIDLOADER(
 
 	var discRSlice []*models.DiscussionReply
 
-	stmt, err := s.db.PrepareNamed(discussionReplyGetByDiscussionIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.DiscussionReply.GetByDiscussionIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +130,7 @@ func DiscussionReplyCreate(
 
 	reply.ID = utilityUUID.ValueOrNewUUID(reply.ID)
 
-	stmt, err := np.PrepareNamed(discussionReplyCreateSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.DiscussionReply.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, reply)
 	}
@@ -186,7 +171,7 @@ func (s *Store) DiscussionReplyUpdate(
 	reply *models.DiscussionReply,
 ) (*models.DiscussionReply, error) {
 
-	stmt, err := s.db.PrepareNamed(discussionReplyUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.DiscussionReply.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, reply)
 	}
@@ -280,10 +265,11 @@ func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID u
 	if err != nil {
 		return nil, err
 	}
-	statement, err := tx.PrepareNamed(discussionReplyDeleteSQL)
+	statement, err := tx.PrepareNamed(sqlqueries.DiscussionReply.Delete)
 	if err != nil {
 		return nil, err
 	}
+	defer statement.Close()
 
 	discussionReply := &models.DiscussionReply{}
 	err = statement.Get(discussionReply, args)
@@ -302,7 +288,7 @@ func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID u
 // DiscussionReplyByID retrieves the discussion reply for a given id
 func (s *Store) DiscussionReplyByID(_ *zap.Logger, id uuid.UUID) (*models.DiscussionReply, error) {
 
-	stmt, err := s.db.PrepareNamed(discussionReplyGetByID)
+	stmt, err := s.db.PrepareNamed(sqlqueries.DiscussionReply.GetByID)
 	if err != nil {
 		return nil, err
 	}

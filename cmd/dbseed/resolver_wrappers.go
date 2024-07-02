@@ -60,6 +60,7 @@ func (s *Seeder) updateModelPlan(mp *models.ModelPlan, changes map[string]interf
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the Plan Basics object with the principal value of the Model Plan's "createdBy"
 func (s *Seeder) updatePlanBasics(
+	ctx context.Context,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -74,6 +75,7 @@ func (s *Seeder) updatePlanBasics(
 	}
 
 	updated, err := resolvers.UpdatePlanBasics(
+		ctx,
 		s.Config.Logger,
 		basics.ID,
 		changes,
@@ -117,7 +119,7 @@ func (s *Seeder) addPlanCollaborator(
 		s.Config.Logger,
 		emailService,
 		emailTemplateService,
-		email.AddressBook{},
+		s.Config.AddressBook,
 		input,
 		princ,
 		true,

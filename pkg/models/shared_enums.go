@@ -109,4 +109,5 @@ const (
 	TNUserAccount                        TableName = "user_account"
 	TNUserNotification                   TableName = "user_notification"
 	TNUserNotificationPreferences        TableName = "user_notification_preferences"
+	TNUserViewCustomization              TableName = "user_view_customization"
 )

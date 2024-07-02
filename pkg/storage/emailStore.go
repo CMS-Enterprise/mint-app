@@ -3,20 +3,16 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 )
 
-//go:embed SQL/email/solution_selected_details_get.sql
-var solutionSelectedDetailsGet string
-
-//go:embed SQL/email/discussion_reply_to_originator_details_get.sql
-var discussionReplyToOriginatorDetailsGet string
-
 // GetSolutionSelectedDetails queries the database to return information that is useful
 func (s *Store) GetSolutionSelectedDetails(solutionID uuid.UUID) (*email.SolutionSelectedDB, error) {
-	stmt, err := s.db.PrepareNamed(solutionSelectedDetailsGet)
+	stmt, err := s.db.PrepareNamed(sqlqueries.Email.SolutionSelectedDetailsGet)
 	if err != nil {
 
 		return nil, err
@@ -43,7 +39,7 @@ func (s *Store) GetDiscussionReplyDetailsForEmail(discussionID uuid.UUID) ([]*em
 
 	var discRSlice []*email.DiscussionReplyEmailContentDB
 
-	stmt, err := s.db.PrepareNamed(discussionReplyToOriginatorDetailsGet)
+	stmt, err := s.db.PrepareNamed(sqlqueries.Email.DiscussionReplyToOriginatorDetailsGet)
 	if err != nil {
 		return nil, err
 	}

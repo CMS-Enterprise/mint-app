@@ -58,6 +58,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'MedicareProviderType',
     dbField: 'medicare_provider_type',
     label: 'Which type of Medicare providers/suppliers?',
+    sublabel:
+      'Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 1.02,
@@ -138,7 +140,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       true: 'Yes',
       false: 'No'
-    }
+    },
+    filterGroups: [ModelViewFilter.PBG]
   },
   participantsCurrentlyInModelsNote: {
     gqlField: 'participantsCurrentlyInModelsNote',
@@ -249,7 +252,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     },
     optionsRelatedInfo: {
       OTHER: 'recruitmentOther'
-    }
+    },
+    filterGroups: [ModelViewFilter.PBG]
   },
   recruitmentOther: {
     gqlField: 'recruitmentOther',

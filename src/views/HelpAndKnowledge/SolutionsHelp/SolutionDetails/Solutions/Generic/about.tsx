@@ -27,6 +27,7 @@ interface AboutComponentType {
   noList?: boolean;
   ordered?: boolean;
   links?: LinkType[]; // Must be the same number of items as items[]
+  hideBullet?: number[]; // index of bullet to hide
 }
 
 export interface AboutConfigType {
@@ -174,7 +175,10 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                           'list-item':
                             component.items.length > 1 &&
                             component.level !== 'h4' &&
-                            component.header
+                            component.header,
+                          'list-style-none': !!component?.hideBullet?.includes(
+                            index
+                          )
                         })}
                       >
                         {/* Renders list item or another nested list */}

@@ -16,8 +16,15 @@ const notifications = {
       DAILY_DIGEST_COMPLETE: {
         text: ' sent your daily digest.',
         cta: {
-          show: 'View digest',
+          view: 'View digest',
           hide: 'Hide digest'
+        }
+      },
+      DATES_CHANGED: {
+        text: 'Dates have been updated for {{-modelName}}.',
+        cta: {
+          view: 'View changes',
+          hide: 'Hide changes'
         }
       },
       MODEL_PLAN_SHARED: {
@@ -74,6 +81,20 @@ const notifications = {
         ANNOUNCED: 'This model has been announced'
       },
       moreChanges: '+{{-num}} more changes'
+    },
+    datesChanged: {
+      heading: 'Dates have been updated for {{-modelName}}',
+      subheading: 'One or more dates have been updated for this model.',
+      cta: 'View this Model Plan',
+      noDateEntered: 'no date entered',
+      field: {
+        ANNOUNCED: 'Announce model',
+        APPLICATIONS: 'Application period',
+        CLEARANCE: 'Clearance',
+        COMPLETE_ICIP: 'Complete ICIP',
+        PERFORMANCE_PERIOD: 'Performance period',
+        WRAP_UP_ENDS: 'Model wrap-up end date'
+      }
     }
   },
   settings: {
@@ -99,16 +120,16 @@ const notifications = {
       addedAsCollaborator: 'When I’m added as a collaborator to a Model Plan',
       taggedInDiscussion: 'When I’m tagged in a discussion',
       newDiscussionReply: 'When someone replies to a discussion I started',
-      modelPlanShared: 'When someone shares a Model Plan with me'
+      modelPlanShared: 'When someone shares a Model Plan with me',
+      newModelPlan: 'When a new Model Plan is created',
+      datesChanged: 'When model dates change'
     },
     additionalConfigurations: {
-      NEW_MODEL_PLAN: 'When a new Model Plan is created',
-      dateChanges: 'When model dates change',
       whichModel: 'Which models?',
       whichModelTypes: {
-        all: 'All models',
-        following: 'Models I’m following',
-        mine: 'My Model Plans'
+        ALL_MODELS: 'All models',
+        FOLLOWED_MODELS: 'Models I’m following',
+        MY_MODELS: 'My Model Plans'
       }
     },
     save: 'Save',
@@ -124,7 +145,8 @@ const notifications = {
       alreadyUnsubscribed:
         'You are already unsubscribed from email notifications <bold>{{-notificationType}}.</bold>',
       activityType: {
-        NEW_MODEL_PLAN: 'when a new Model Plan is created'
+        NEW_MODEL_PLAN: 'when a new Model Plan is created',
+        DATES_CHANGED: 'when model dates change'
       }
     }
   }

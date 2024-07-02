@@ -450,7 +450,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               <h3
                 class="line-height-body-4 margin-bottom-1"
               >
-                Model implementation and solution implementation
+                Phases involved in creating IT and operational support for models
               </h3>
             </header>
             <a
@@ -470,7 +470,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
-                This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
+                There are two phases invovled in creating IT and operational support for CMMI models.
               </p>
             </div>
             <div
@@ -478,7 +478,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               data-testid="CardFooter"
             >
               <button
-                aria-label="Read Model implementation and solution implementation article"
+                aria-label="Read Phases involved in creating IT and operational support for models article"
                 class="usa-button usa-button--outline"
                 type="button"
               >
@@ -552,7 +552,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               <h3
                 class="line-height-body-4 margin-bottom-1"
               >
-                Phases involved in creating IT and operational support for models
+                Model implementation and solution implementation
               </h3>
             </header>
             <a
@@ -572,7 +572,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
-                There are two phases invovled in creating IT and operational support for CMMI models.
+                This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
               </p>
             </div>
             <div
@@ -580,7 +580,7 @@ exports[`UtilizingSolutions > matches the snapshot 1`] = `
               data-testid="CardFooter"
             >
               <button
-                aria-label="Read Phases involved in creating IT and operational support for models article"
+                aria-label="Read Model implementation and solution implementation article"
                 class="usa-button usa-button--outline"
                 type="button"
               >

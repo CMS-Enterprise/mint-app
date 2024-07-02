@@ -10,6 +10,8 @@ import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCat
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import ReadOnly from 'views/ModelPlan/ReadOnly';
 
+import { ArticleCategories, HelpArticle } from '..';
+
 export const SampleModelPlan = () => {
   const { t } = useTranslation('sampleModelPlan');
 
@@ -21,7 +23,7 @@ export const SampleModelPlan = () => {
             <HelpBreadcrumb text={t('title')} />
             <PageHeading className="margin-bottom-1">{t('title')}</PageHeading>
             <HelpCategoryTag
-              type="getting-started"
+              type={ArticleCategories.GETTING_STARTED}
               className="margin-bottom-1"
             />
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-6">
@@ -32,7 +34,15 @@ export const SampleModelPlan = () => {
       </MainContent>
       <ReadOnly isHelpArticle />
       <SectionWrapper className="margin-top-6">
-        <RelatedArticles currentArticle={t('title')} viewAllLink />
+        <RelatedArticles
+          currentArticle={HelpArticle.SAMPLE_MODEL_PLAN}
+          specificArticles={[
+            HelpArticle.TWO_PAGER_MEETING,
+            HelpArticle.HIGH_LEVEL_PROJECT_PLAN,
+            HelpArticle.MODEL_PLAN_OVERVIEW
+          ]}
+          viewAllLink
+        />
       </SectionWrapper>
     </>
   );

@@ -3,6 +3,8 @@ package storage
 import (
 	"fmt"
 
+	"github.com/pkg/errors"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -87,6 +89,29 @@ func OperationalSolutionGetByIDWithNumberOfSubtasks(np sqlutils.NamedPreparer, _
 		return nil, fmt.Errorf("issue returning Operational Solution With Number of Subtasks object: %w", procError)
 	}
 	return solutionWithNumberOfSubtasks, nil
+}
+
+// OperationalSolutionGetByIDLOADER returns an operational solution by ID using a DataLoader
+func (s *Store) OperationalSolutionGetByIDLOADER(
+	logger *zap.Logger,
+	paramTableJSON string,
+) ([]*models.OperationalSolution, error) {
+	arg := map[string]interface{}{
+		"paramTableJSON": paramTableJSON,
+	}
+
+	opSols, err := sqlutils.SelectProcedure[models.OperationalSolution](
+		s.db,
+		sqlqueries.OperationalSolution.GetByIDLOADER,
+		arg,
+	)
+	if err != nil {
+		errMessage := "error selecting operational solution"
+		logger.Error(errMessage, zap.Error(err))
+		return nil, errors.Wrap(err, errMessage)
+	}
+
+	return opSols, nil
 }
 
 // OperationalSolutionInsert inserts an operational solution if it already exists

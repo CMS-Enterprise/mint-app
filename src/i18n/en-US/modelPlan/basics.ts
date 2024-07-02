@@ -201,7 +201,8 @@ export const basics: TranslationBasics = {
     label: 'Problem statement',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 2.03
+    order: 2.03,
+    filterGroups: [ModelViewFilter.PBG]
   },
   goal: {
     gqlField: 'goal',
@@ -227,7 +228,8 @@ export const basics: TranslationBasics = {
     label: 'Test Interventions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 2.05
+    order: 2.05,
+    filterGroups: [ModelViewFilter.PBG]
   },
   note: {
     gqlField: 'note',
@@ -374,7 +376,7 @@ export const basics: TranslationBasics = {
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
     order: 3.1,
-    filterGroups: [ModelViewFilter.IPC]
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.PBG]
   },
   phasedIn: {
     gqlField: 'phasedIn',

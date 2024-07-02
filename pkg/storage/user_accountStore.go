@@ -3,38 +3,23 @@ package storage
 import (
 	_ "embed"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
-//go:embed SQL/user_account/get_by_username.sql
-var userAccountGetByUsername string
-
-//go:embed SQL/user_account/get_by_id.sql
-var userAccountGetByID string
-
-//go:embed SQL/user_account/get_by_id_LOADER.sql
-var userAccountGetByIDLOADER string
-
-//go:embed SQL/user_account/insert_by_username.sql
-var userAccountInsertByUsername string
-
-//go:embed SQL/user_account/update_by_username.sql
-var userAccountUpdateByUsername string
-
-//go:embed SQL/user_account/get_notification_preferences_new_model_plan.sql
-var userNotificationPreferencesNewModelPlan string
-
 // UserAccountGetByUsername gets a user account by a give username
 func UserAccountGetByUsername(np sqlutils.NamedPreparer, username string) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	stmt, err := np.PrepareNamed(userAccountGetByUsername)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.GetByUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +44,7 @@ func UserAccountGetByUsername(np sqlutils.NamedPreparer, username string) (*auth
 func UserAccountGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
 
-	stmt, err := np.PrepareNamed(userAccountGetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +70,7 @@ func (s *Store) UserAccountGetByIDLOADER(
 
 	var userSlice []*authentication.UserAccount
 
-	stmt, err := s.db.PrepareNamed(userAccountGetByIDLOADER)
+	stmt, err := s.db.PrepareNamed(sqlqueries.UserAccount.GetByIDLOADER)
 	if err != nil {
 		return nil, err
 	}
@@ -107,24 +92,24 @@ func (s *Store) UserAccountGetByIDLOADER(
 // preferences for a new model plan for a slice of users who have at least one
 // enabled preference
 func (s *Store) UserAccountNotificationPreferencesNewModelPlan(np sqlutils.NamedPreparer) (
-	[]*models.UserAccountNotificationPreferences,
+	[]*models.UserAccountAndNotificationPreferences,
 	error,
 ) {
 
-	var userNotificationPreferences []*models.UserAccountNotificationPreferences
+	var results []*models.UserAccountAndNotificationPreferences
 
-	stmt, err := np.PrepareNamed(userNotificationPreferencesNewModelPlan)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.GetNotificationPreferencesNewModelPlan)
 	if err != nil {
 		return nil, err
 	}
 	defer stmt.Close()
 
-	err = stmt.Select(&userNotificationPreferences, map[string]interface{}{})
+	err = stmt.Select(&results, map[string]interface{}{})
 	if err != nil {
 		return nil, err
 	}
 
-	return userNotificationPreferences, nil
+	return results, nil
 }
 
 // UserAccountInsertByUsername creates a new user account for a given username
@@ -135,7 +120,7 @@ func UserAccountInsertByUsername(np sqlutils.NamedPreparer, userAccount *authent
 		userAccount.ID = uuid.New()
 	}
 
-	stmt, err := np.PrepareNamed(userAccountInsertByUsername)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.InsertByUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +145,7 @@ func UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authent
 		userAccount.ID = uuid.New()
 	}
 
-	stmt, err := np.PrepareNamed(userAccountUpdateByUsername)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.UpdateByUsername)
 	if err != nil {
 		return nil, err
 	}
@@ -172,4 +157,30 @@ func UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authent
 	}
 
 	return user, nil
+}
+
+// UserAccountsGetNotificationRecipientsForDatesChanged returns a collection of
+// user accounts that should be notified of a change in model plan dates
+func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(
+	modelPlanID uuid.UUID,
+) (
+	[]*models.UserAccountAndNotificationPreferences,
+	error,
+) {
+	var recipients []*models.UserAccountAndNotificationPreferences
+
+	stmt, err := s.db.PrepareNamed(sqlqueries.UserAccount.GetNotificationRecipientsDatesChanged)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	arg := utilitySQL.CreateModelPlanIDQueryMap(modelPlanID)
+
+	err = stmt.Select(&recipients, arg)
+	if err != nil {
+		return nil, err
+	}
+
+	return recipients, nil
 }
