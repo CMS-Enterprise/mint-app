@@ -90,7 +90,7 @@ func getAllChildren(answers []string, childrenMap map[string][]models.Translatio
 	}
 	// If multiple answers make a conditional an option, we want to only return unique ones
 	uniqFields := lo.UniqBy(allFields, func(field models.TranslationField) string {
-		return field.GoField
+		return field.DbField
 	})
 	return uniqFields
 
