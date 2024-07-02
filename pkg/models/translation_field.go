@@ -169,8 +169,6 @@ type ITranslationField interface {
 	GetTableReference() (TableName, bool)
 }
 
-//Changes: (Translations) Define the Translation Parent better
-
 // ITranslationParent is the shared interface for translations that have some sort of parent
 type ITranslationParent interface {
 	isTranslationParent()
@@ -245,7 +243,6 @@ func (tor translationNoOptionRelation) GetOptions() (map[string]interface{}, boo
 type TranslationFieldWithOptionsAndChildren struct {
 	TranslationFieldBase
 	translationOptionRelation
-	// Changes: (Translations) Determine how to use child relation
 	translationChildRelation
 	translationNoParentRelation
 }
@@ -256,8 +253,6 @@ func (tf TranslationFieldWithOptionsAndChildren) isTranslationParent() {}
 // translationChildRelation is struct that is mean to be embedded in other Translation types to expose functionality for translations that have a Child relationships
 type translationChildRelation struct {
 	ChildRelation map[string][]TranslationField `json:"childRelation"`
-	// Changes: (Translations) The child relation is a map of child questions connected to options
-	// Example key is yes, so the children are other translation fields
 }
 
 func (tcr translationChildRelation) HasChildren() bool {
@@ -284,7 +279,6 @@ func (tpr translationParentRelation) GetParent() (ITranslationParent, bool) {
 
 // translationParentRelation is struct that is mean to be embedded in other Translation types to expose functionality for translations that have a Parent
 type translationParentRelationWithOptionsAndChildren struct {
-	// Changes: (Structure) Figure out if we can make the parent relation structure match better? For now, making a separate implementation
 	ParentRelation TranslationFieldWithOptionsAndChildren `json:"parentRelation"`
 }
 
