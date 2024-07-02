@@ -18,6 +18,23 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
+// unTranslatedTables is a list of tables that should be skipped for translated audit, even if the raw data is being audited
+var unTranslatedTables = []models.TableName{
+	models.TNUserAccount,      // Not currently audited
+	models.TNUserNotification, // Not currently audited
+	models.TNUserNotificationPreferences,
+	models.TNUserViewCustomization}
+
+// Returns true in the table name is in the list of provided Table Names
+func tableListContains(tableName models.TableName, tableNameList []models.TableName) bool {
+	for _, tableNameListItem := range tableNameList {
+		if tableName == tableNameListItem {
+			return true
+		}
+	}
+	return false
+}
+
 // TranslateAudit translates a single audit to a translated audit and stores it in the translated audit table in the database.
 func TranslateAudit(
 	ctx context.Context,
@@ -28,9 +45,8 @@ func TranslateAudit(
 	if err != nil {
 		return nil, err
 	}
-	if auditWithModelPlan.TableName == models.TNUserNotificationPreferences {
-		// Changes: (Translations) Expand this logic, we don't want to make the job retry if it is a table we don't care about translating ( like this one which doesn't have a model plan)
-		// Changes: (Translations) Pull in main and update to also not translate any new tables that isn't associated to a model plan. Make sure to add this in documentation
+	// Check if this is a table to skip, if so, return nil, nil to mark the job as done.
+	if tableListContains(auditWithModelPlan.TableName, unTranslatedTables) {
 		return nil, nil
 	}
 
