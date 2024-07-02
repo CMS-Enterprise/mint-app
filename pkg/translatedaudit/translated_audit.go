@@ -148,25 +148,18 @@ func translateField(
 	modelPlan *models.ModelPlan,
 	translationMap map[string]models.ITranslationField) (*models.TranslatedAuditField, bool, error) {
 
-	// Set default values in case of missing translation
-	// Changes: (Translations) We should handle a nil / empty case what should we do in that case?
-
 	old := field.Old
 	new := field.New
 	translatedOld := old
 	translatedNew := new
 	changeType := getChangeType(old, new)
 	if changeType == models.AFCUnchanged {
-		// Changes: (Translations) revisit this paradigm.
 		// If a field is actually unchanged (null to empty array or v versa), don't write an entry.
+		// This should not happen, except in rare cases when an empty array is passed to update from a null value.
 		return nil, false, nil
 	}
 
-	var conditionals *pq.StringArray //TODO: can we make the function that checks return this instead of instantiating here?
-
-	// Changes: (Translations) We need to distinguish if the answer is for an other / note field. The label in that case is really the parent's label or the specific text for that type.
-
-	// Changes: (Translations) Handle if the change made a question not necessary // Changes: (Structure) How should we structure this? Field MetaData? Or base level implementation information?
+	var conditionals *pq.StringArray
 
 	translationInterface := translationMap[fieldName]
 	if translationInterface == nil {
