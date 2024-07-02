@@ -82,7 +82,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *m
 		TranslatedFields: []*models.TranslatedAuditField{},
 	}
 
-	change := models.NewTranslatedAuditChange( //  Changes: (Translations)  extract this logic to another function
+	change := models.NewTranslatedAuditChange(
 		constants.GetSystemAccountUUID(),
 		audit.ModifiedBy,
 		audit.ModelPlanID,
@@ -160,7 +160,6 @@ func translateField(
 
 	}
 
-	//Changes: (Translations) refactor this
 	oldStr, oldIsString := old.(string)
 	if oldIsString {
 		oldSlice, oldIsSlice := isArray(oldStr)
