@@ -38,12 +38,12 @@ const customHome = {
     id: 'model-plans',
     title: 'Model plans',
     basic: {
-      heading: 'My model plans',
+      heading: 'My Model Plans',
       subheading:
         'You have been added as a team member to the model plans below.'
     },
     admin: {
-      heading: 'All model plans'
+      heading: 'All Model Plans'
     },
     mac: {
       heading: 'Upcoming models',
