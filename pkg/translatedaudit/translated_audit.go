@@ -64,13 +64,11 @@ func TranslateAudit(
 }
 
 func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *models.AuditChangeWithModelPlanID) (*models.TranslatedAuditWithTranslatedFields, error) {
-	//Changes: (Translations) Note, it might be more appropriate to fetch the model plan each time. Note, this is not as efficient as grouping first,
-	// but it works with having the job translate one audit at a time
 	trans, err := mappings.GetTranslation(audit.TableName)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get translation for %s , err : %w", audit.TableName, err)
 	}
-	translationMap, err := trans.ToMap() // Changes: (Translations)  Maybe make this return the map from the library?
+	translationMap, err := trans.ToMap()
 	if err != nil {
 		return nil, fmt.Errorf("unable to convert translation for %s to a map, err : %w", trans.TableName(), err)
 	}
