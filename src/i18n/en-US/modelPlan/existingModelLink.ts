@@ -1,6 +1,7 @@
 import { TranslationExistingModelLink } from 'types/translation';
 
 import {
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/gen/graphql';
@@ -14,7 +15,7 @@ export const existingModelLink: TranslationExistingModelLink = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.01,
-    tableReference: 'existing_model'
+    tableReference: TableName.EXISTING_MODEL
   },
   currentModelPlanID: {
     gqlField: 'currentModelPlanID',
@@ -24,7 +25,7 @@ export const existingModelLink: TranslationExistingModelLink = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.02,
-    tableReference: 'model_plan'
+    tableReference: TableName.MODEL_PLAN
   },
   fieldName: {
     gqlField: 'fieldName',

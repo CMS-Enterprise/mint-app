@@ -12,7 +12,7 @@ import (
 )
 
 func TestTranslateAuditsForModelPlan(t *testing.T) {
-	//Changes: (ChChCh Changes!) This should really happen in this package, testing in the resolver package for now just for simplicity for a POC
+	//This happens in the resolver package for simplicity, as it really needs to be an integration test
 
 }
 
@@ -21,7 +21,6 @@ func TestTranslateField(t *testing.T) {
 	// Test if a translation does exist, what is returned?
 
 	// SEE TestTranslationFieldLabel
-	// Changes: (Testing) Verify testing is in the right packages, and that we translate everything sufficiently
 
 	testBaseLabel := "Hooray Base Label"
 	testReadOnlyLabel := "Hooray ReadOnly Label"
@@ -83,7 +82,6 @@ func TestTranslateField(t *testing.T) {
 
 	plan := models.ModelPlan{}
 
-	// Changes: (Testing) Consider converting this to a testify suite, so we can pass a full store and context
 	ctx := context.Background()
 
 	t.Run("Form Type is present when there is a translation", func(t *testing.T) {
@@ -94,12 +92,9 @@ func TestTranslateField(t *testing.T) {
 		assert.NotNil(t, translatedField.FormType)
 		assert.NotNil(t, translatedField.DataType)
 
-		if translatedField.FormType != nil {
-			assert.EqualValues(t, testTranslation.FormType, *translatedField.FormType)
-		}
-		if translatedField.DataType != nil {
-			assert.EqualValues(t, testTranslation.DataType, *translatedField.DataType)
-		}
+		assert.EqualValues(t, testTranslation.FormType, translatedField.FormType)
+
+		assert.EqualValues(t, testTranslation.DataType, translatedField.DataType)
 
 	})
 

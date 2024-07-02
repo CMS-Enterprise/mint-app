@@ -15,14 +15,10 @@ import (
 )
 
 // DiscussionReplyMetaDataGet uses the provided information to generate metadata needed for any discussion reply audits
-func DiscussionReplyMetaDataGet(ctx context.Context, store *storage.Store, replyID interface{}, discussionID interface{}, auditTime time.Time) (*models.TranslatedAuditMetaDiscussionReply, error) {
+func DiscussionReplyMetaDataGet(ctx context.Context, store *storage.Store, discussionID uuid.UUID, auditTime time.Time) (*models.TranslatedAuditMetaDiscussionReply, error) {
 	logger := appcontext.ZLogger(ctx)
-	discussionUUID, err := parseInterfaceToUUID(discussionID)
-	if err != nil {
-		return nil, err
-	}
 
-	discussionWithReplies, err := storage.PlanDiscussionByIDWithNumberOfReplies(store, logger, discussionUUID, auditTime)
+	discussionWithReplies, err := storage.PlanDiscussionByIDWithNumberOfReplies(store, logger, discussionID, auditTime)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get discussion by provided discussion ID for discussion reply translation metadata. err %w", err)
 	}
@@ -33,13 +29,10 @@ func DiscussionReplyMetaDataGet(ctx context.Context, store *storage.Store, reply
 }
 
 // OperationalNeedMetaDataGet uses the provided information to generate metadata needed for any operational need audits
-func OperationalNeedMetaDataGet(ctx context.Context, store *storage.Store, opNeedID interface{}) (*models.TranslatedAuditMetaOperationalNeed, error) {
+func OperationalNeedMetaDataGet(ctx context.Context, store *storage.Store, opNeedID uuid.UUID) (*models.TranslatedAuditMetaOperationalNeed, error) {
 	logger := appcontext.ZLogger(ctx)
-	opNeedUUID, err := parseInterfaceToUUID(opNeedID)
-	if err != nil {
-		return nil, err
-	}
-	opNeed, err := store.OperationalNeedGetByID(logger, opNeedUUID)
+
+	opNeed, err := store.OperationalNeedGetByID(logger, opNeedID)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get operational need for operational need audit metadata. err %w", err)
 	}
@@ -51,13 +44,10 @@ func OperationalNeedMetaDataGet(ctx context.Context, store *storage.Store, opNee
 }
 
 // OperationalSolutionMetaDataGet uses the provided information to generate metadata needed for any operational solution audits
-func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, opSolutionID interface{}) (*models.TranslatedAuditMetaOperationalSolution, *models.TranslatedAuditMetaDataType, error) {
+func OperationalSolutionMetaDataGet(ctx context.Context, store *storage.Store, opSolutionID uuid.UUID) (*models.TranslatedAuditMetaOperationalSolution, *models.TranslatedAuditMetaDataType, error) {
 	logger := appcontext.ZLogger(ctx)
-	opSolutionUUID, err := parseInterfaceToUUID(opSolutionID)
-	if err != nil {
-		return nil, nil, err
-	}
-	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionUUID)
+
+	opSolutionWithSubtasks, err := storage.OperationalSolutionGetByIDWithNumberOfSubtasks(store, logger, opSolutionID)
 	if err != nil {
 		return nil, nil, fmt.Errorf("unable to get operational solution with num of Subtasks for operational solution audit metadata. err %w", err)
 	}
@@ -344,7 +334,6 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 // it first checks if the field is present in the change set, and if not, will fetch the record from the database
 // by checking the change set first, we are able to set meta data for records that have already been deleted
 func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, documentID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
-	// Changes: (Meta) is file_name the only field we need here? What if it is a link? Should we fetch from the db instead? NOTE, we can't fetch that when the document is deleted however
 	const fileNameField = "file_name"
 	var fileName *string
 	fileNameChange, fieldPresent := changesFields[fileNameField]
@@ -396,10 +385,9 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 	// the default state is not-restricted
 	var restricted bool
 	switch audit.TableName {
-	//Changes: (Meta) refactor all of these to explicitly take UUIDs, since primary and foreignKey are always UUIDs and not interfaces. We don't need to parse them
-	// Changes: (Meta) Audit these method signatures, refactor to have a cohesive unified signature throughout, and remove any unnecessary params
+
 	case "discussion_reply":
-		metaData, err := DiscussionReplyMetaDataGet(ctx, store, audit.PrimaryKey, audit.ForeignKey, audit.ModifiedDts)
+		metaData, err := DiscussionReplyMetaDataGet(ctx, store, audit.ForeignKey, audit.ModifiedDts)
 		metaDataType := models.TAMetaDiscussionReply
 		metaDataInterface = metaData
 		metaDataTypeGlobal = &metaDataType

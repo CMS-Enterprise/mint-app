@@ -6,56 +6,49 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// Changes: (Translations) Could all translation live in a exported map? At least the name and the json string? We could reduce the number of functions
-// however, having them separate enable much more granular testing.
+// Note, these could all translation live in a exported map, however, having them separate enable much more granular testing.
 
 // GetTranslation allows programmatic access to return a translation for a given table name
 func GetTranslation(tableName models.TableName) (Translation, error) {
-	// Changes: (Translations) update this to switch on specific values
 	switch tableName {
-	case "model_plan":
+	case models.TNModelPlan:
 		return ModelPlanTranslation()
-	case "plan_participants_and_providers":
+	case models.TNPlanParticipantsAndProviders:
 		return PlanParticipantsAndProvidersTranslation()
-	case "plan_basics":
+	case models.TNPlanBasics:
 		return PlanBasicsTranslation()
-	case "plan_payments":
+	case models.TNPlanPayments:
 		return PlanPaymentsTranslation()
-	case "plan_ops_eval_and_learning":
+	case models.TNPlanOpsEvalAndLearning:
 		return PlanOpsEvalAndLearningTranslation()
-	case "plan_general_characteristics":
+	case models.TNPlanGeneralCharacteristics:
 		return PlanGeneralCharacteristicsTranslation()
-	case "plan_collaborator":
+	case models.TNPlanCollaborator:
 		return PlanCollaboratorTranslation()
-	case "plan_beneficiaries":
+	case models.TNPlanBeneficiaries:
 		return PlanBeneficiariesTranslation()
-	case "plan_document":
+	case models.TNPlanDocument:
 		return PlanDocumentTranslation()
-	case "operational_need":
+	case models.TNOperationalNeed:
 		return OperationalNeedTranslation()
-	case "operational_solution":
+	case models.TNOperationalSolution:
 		return OperationalSolutionTranslation()
-	case "operational_solution_subtask":
+	case models.TNOperationalSolutionSubtask:
 		return OperationalSolutionSubtaskTranslation()
-	case "plan_discussion":
+	case models.TNPlanDiscussion:
 		return PlanDiscussionTranslation()
-	case "discussion_reply":
+	case models.TNDiscussionReply:
 		return DiscussionReplyTranslation()
-	case "plan_cr":
+	case models.TNPlanCr:
 		return PlanCRTranslation()
-	case "plan_tdl":
+	case models.TNPlanTdl:
 		return PlanTDLTranslation()
-	case "existing_model_link":
+	case models.TNExistingModelLink:
 		return ExistingModelLinkTranslation()
-	case "plan_document_solution_link":
+	case models.TNPlanDocumentSolutionLink:
 		return PlanDocumentSolutionLinkTranslation()
 	default:
-		// ut := UnknownTranslation{
-		// 	tableName: tableName,
-		// }
-		// return &ut, nil
 
-		// Changes: (Translations) Decide how we want to handle when no translation is found, idempotent? Or just don't translate?
 		return nil, fmt.Errorf("no translation for table: %s ", tableName)
 
 	}

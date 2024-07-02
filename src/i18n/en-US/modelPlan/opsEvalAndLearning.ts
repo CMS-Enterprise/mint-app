@@ -2,6 +2,7 @@ import { TranslationOpsEvalAndLearning } from 'types/translation';
 
 import {
   ModelViewFilter,
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/gen/graphql';
@@ -1513,7 +1514,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 9.05,
-    tableReference: 'user_account',
+    tableReference: TableName.USER_ACCOUNT,
     hideFromReadonly: true
   },
   readyForReviewDts: {
@@ -1535,7 +1536,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 9.07,
-    tableReference: 'user_account',
+    tableReference: TableName.USER_ACCOUNT,
     hideFromReadonly: true
   },
   readyForClearanceDts: {

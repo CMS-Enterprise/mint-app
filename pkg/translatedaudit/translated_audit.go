@@ -28,8 +28,9 @@ func TranslateAudit(
 	if err != nil {
 		return nil, err
 	}
-	if auditWithModelPlan.TableName == "user_notification_preferences" {
+	if auditWithModelPlan.TableName == models.TNUserNotificationPreferences {
 		// Changes: (Translations) Expand this logic, we don't want to make the job retry if it is a table we don't care about translating ( like this one which doesn't have a model plan)
+		// Changes: (Translations) Pull in main and update to also not translate any new tables that isn't associated to a model plan. Make sure to add this in documentation
 		return nil, nil
 	}
 
@@ -159,7 +160,6 @@ func translateField(
 
 	translatedLabel := translationInterface.GetLabel()
 	referencesLabel := translationInterface.GetReferencesLabel(translationMap)
-	//Changes: (Translations) update this to handle if notes, or preferences.
 
 	formType := translationInterface.GetFormType()
 	dataType := translationInterface.GetDataType()
@@ -194,8 +194,6 @@ func translateField(
 
 	options, hasOptions := translationInterface.GetOptions()
 	tableReference, hasTableReference := translationInterface.GetTableReference()
-	//Changes: (fk) look to update the unit tests, we don't want a foreign key relation to be overridden with options.
-	// ALSO! consider if there are any places with an array of foreign keys, I think we don't have that anymore
 	if hasOptions {
 		translatedOld = translateValue(old, options)
 		translatedNew = translateValue(new, options)
@@ -229,15 +227,13 @@ func translateField(
 		translatedOld,
 		new,
 		translatedNew,
-		&dataType,
-		&formType,
+		dataType,
+		formType,
 	)
 	translatedField.ChangeType = changeType
 	translatedField.NotApplicableQuestions = conditionals
 	translatedField.QuestionType = questionType
 	translatedField.ReferenceLabel = referencesLabel
-
-	// change.MetaDataRaw = nil //Changes: (Meta) This should be specific to the type of change...
 
 	return &translatedField, true, nil
 
@@ -247,7 +243,7 @@ func translateField(
 func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType {
 	if new == nil || new == "{}" {
 		if old == nil || old == "{}" {
-			//Changes: (Meta) Revisit this, is this possible?
+			//This is left because is is possible from the interface types, though in practice this shouldn't occur unless data is being submitted incorrectly
 			return models.AFCUnchanged
 		}
 		return models.AFCRemoved
@@ -281,18 +277,16 @@ func translateValue(value interface{}, options map[string]interface{}) interface
 	if value == nil {
 		return nil
 	}
-	// Changes: (Translations) work on bool representation, they should come through here as a string, but show up as t, f. We will want to set they values
-	// strSlice, isSlice := value.([]string)
+
 	str, isString := value.(string)
 
-	// strSlice, isSlice := isArray(str)
 	strSlice, isSlice := value.(pq.StringArray)
 
 	if isSlice {
 		transArray := translateStrSlice(strSlice, options)
 		return transArray
 	}
-	// str, isString := value.(string)
+
 	if isString {
 		// Changes: (Translations) Revisit this issue here, we need the value to be stringified properly. Or provide a column type that is string or string array
 
@@ -310,7 +304,6 @@ func translateValueSingle(value string, options map[string]interface{}) string {
 	if ok {
 		return fmt.Sprint(translated) // Translations are always string representations
 	}
-	// Changes: (Translations)  If the map doesn't have a value, return the raw value instead.
 	return value
 
 }
@@ -369,7 +362,7 @@ func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAud
 		}
 
 		for _, translatedAuditField := range translatedAudit.TranslatedFields {
-			// Changes: (Serialization) Combine this with the storage message loop
+			// Note, this could be moved to the store methods inner loop. This is left here to keep the logic atomic.
 			translatedAuditField.TranslatedAuditID = retTranslated.ID
 		}
 

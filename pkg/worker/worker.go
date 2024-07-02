@@ -95,6 +95,13 @@ func (w *Worker) Work() {
 	*err := mgr.RunWithContext(ctx)
 	******************************/
 
+	/**********************
+	* // Future Enhancement
+	Re-work this to consider wrapping a representation of the job with the name of the job itself. Consider a struct that is built with both a name and function.
+	This requires rework because all jobs are currently methods on a worker, instead of functions that take a worker
+
+	******************************/
+
 	err := mgr.Run()
 	if err != nil {
 		panic(err)

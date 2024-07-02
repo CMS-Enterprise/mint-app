@@ -3509,14 +3509,13 @@ export type TranslatedAuditField = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  dataType?: Maybe<TranslationDataType>;
+  dataType: TranslationDataType;
   fieldName: Scalars['String']['output'];
   fieldNameTranslated: Scalars['String']['output'];
   /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
   fieldOrder: Scalars['Float']['output'];
-  formType?: Maybe<TranslationFormType>;
+  formType: TranslationFormType;
   id: Scalars['UUID']['output'];
-  metaData: TranslatedAuditFieldMetaData;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -3532,13 +3531,6 @@ export type TranslatedAuditField = {
   referenceLabel?: Maybe<Scalars['String']['output']>;
   translatedAuditID: Scalars['UUID']['output'];
 };
-
-export type TranslatedAuditFieldMetaBaseStruct = {
-  __typename: 'TranslatedAuditFieldMetaBaseStruct';
-  version: Scalars['Int']['output'];
-};
-
-export type TranslatedAuditFieldMetaData = TranslatedAuditFieldMetaBaseStruct;
 
 export type TranslatedAuditMetaBaseStruct = {
   __typename: 'TranslatedAuditMetaBaseStruct';
@@ -3680,7 +3672,7 @@ export type TranslationField = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents a translation question with options */
@@ -3710,7 +3702,7 @@ export type TranslationFieldWithOptions = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents a translation question with options and child/children */
@@ -3741,7 +3733,7 @@ export type TranslationFieldWithOptionsAndChildren = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents a translation question with options and parent */
@@ -3772,7 +3764,7 @@ export type TranslationFieldWithOptionsAndParent = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents a translation question with no options and a parent */
@@ -3801,7 +3793,7 @@ export type TranslationFieldWithParent = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents a translation question with options and parent and children */
@@ -3833,7 +3825,7 @@ export type TranslationFieldWithParentAndChildren = {
   readonlyLabel?: Maybe<Scalars['String']['output']>;
   sublabel?: Maybe<Scalars['String']['output']>;
   /** Table reference for fields that are of dataType UUID and reference a table in the database */
-  tableReference?: Maybe<Scalars['String']['output']>;
+  tableReference?: Maybe<TableName>;
 };
 
 /** Represents the FORM type of the translation field */
@@ -4129,7 +4121,7 @@ export type GetChangeHistoryQueryVariables = Exact<{
 }>;
 
 
-export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType?: TranslationDataType | null, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: TableName } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: TableName, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: TableName, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: TableName, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: TableName, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
+export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType: TranslationDataType, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: TableName } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: TableName, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: TableName, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: TableName, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: TableName, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
 
 export type CreateModelPlanCollaboratorMutationVariables = Exact<{
   input: PlanCollaboratorCreateInput;

@@ -6,13 +6,13 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/constants"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 func (suite *TAuditSuite) TestTranslateForeignKey() {
 	suite.Run("user_account returns a user account", func() {
 
-		tableName := "user_account"
-		translatedPrincipal, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal.UserAccount.ID.String(), tableName)
+		translatedPrincipal, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal.UserAccount.ID.String(), models.TNUserAccount)
 		suite.NoError(err)
 		suite.EqualValues(suite.testConfigs.Principal.UserAccount.CommonName, translatedPrincipal)
 
@@ -24,9 +24,7 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 		solName := "make a unit test"
 		sol := suite.createOperationalSolution(need.ID, solName)
 
-		tableName := "operational_solution"
-
-		translatedSolution, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, sol.ID.String(), tableName)
+		translatedSolution, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, sol.ID.String(), models.TNOperationalSolution)
 		suite.NoError(err)
 		suite.EqualValues(solName, translatedSolution)
 
@@ -35,9 +33,8 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 	suite.Run("existing model returns an existing model", func() {
 		existingID := 100001
 		existingName := "Advance Payment ACO Model"
-		tableName := "existing_model"
 
-		translatedExisting, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, fmt.Sprint(existingID), tableName)
+		translatedExisting, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, fmt.Sprint(existingID), models.TNExistingModel)
 		suite.NoError(err)
 		suite.EqualValues(existingName, translatedExisting)
 
@@ -46,9 +43,8 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 	suite.Run("model_plan returns an ModelPlan", func() {
 		planName := "test plan"
 		plan := suite.createModelPlan(planName)
-		tableName := "model_plan"
 
-		translatedPlan, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, plan.ID.String(), tableName)
+		translatedPlan, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, plan.ID.String(), models.TNModelPlan)
 		suite.NoError(err)
 		suite.EqualValues(planName, translatedPlan)
 
@@ -58,9 +54,8 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 		plan := suite.createModelPlan(planName)
 		docName := "testing Doc link"
 		doc := suite.createPlanDocument(plan.ID, docName)
-		tableName := "plan_document"
 
-		translatedDoc, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, doc.ID.String(), tableName)
+		translatedDoc, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, doc.ID.String(), models.TNPlanDocument)
 		suite.NoError(err)
 		stringTranslation, ok := translatedDoc.(*string)
 		suite.True(ok)
@@ -71,7 +66,7 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 	})
 	suite.Run("unknown table returns an error", func() {
 
-		tableName := "unknown_fake_table"
+		tableName := models.TableName("unknown_fake_table")
 		translation, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Principal.UserAccount.ID.String(), tableName)
 		suite.Error(err)
 		suite.Nil(translation)
@@ -80,8 +75,7 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 
 	suite.Run("nil store returns an error", func() {
 
-		tableName := "user_account"
-		translation, err := translateForeignKey(suite.testConfigs.Context, nil, suite.testConfigs.Principal.UserAccount.ID.String(), tableName)
+		translation, err := translateForeignKey(suite.testConfigs.Context, nil, suite.testConfigs.Principal.UserAccount.ID.String(), models.TNUserAccount)
 		suite.Error(err)
 		suite.Nil(translation)
 

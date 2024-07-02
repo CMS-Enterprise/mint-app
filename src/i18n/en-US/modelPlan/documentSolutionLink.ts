@@ -1,6 +1,7 @@
 import { TranslationDocumentSolutionLink } from 'types/translation';
 
 import {
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/gen/graphql';
@@ -14,7 +15,7 @@ export const documentSolutionLink: TranslationDocumentSolutionLink = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.01,
-    tableReference: 'operational_solution'
+    tableReference: TableName.OPERATIONAL_SOLUTION
   },
   documentID: {
     gqlField: 'documentID',
@@ -24,7 +25,7 @@ export const documentSolutionLink: TranslationDocumentSolutionLink = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.02,
-    tableReference: 'plan_document'
+    tableReference: TableName.PLAN_DOCUMENT
   }
 };
 

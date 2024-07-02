@@ -16,7 +16,6 @@ type TranslatedAuditMetaData interface {
 
 // TranslatedAuditMetaBaseStruct represents the shared data in common between all HumanizedAuditChanges
 type TranslatedAuditMetaBaseStruct struct {
-	// Changes: (Meta) do we actually need table name here? What about version? Are these doing anything?
 	TableName TableName `json:"tableName"`
 	Version   int       `json:"version"`
 }
@@ -58,8 +57,7 @@ func (hmb *TranslatedAuditMetaBaseStruct) Scan(src interface{}) error {
 
 // parseRawTranslatedAuditMetaData conditionally parses meta data from JSON to a specific meta data type
 func parseRawTranslatedAuditMetaData(metaDataType *TranslatedAuditMetaDataType, rawMetaDataJSON interface{}) (TranslatedAuditMetaData, error) {
-	//Changes: (Meta) Figure out how we distinguish meta data type. This should be specific to a field / table, but that isn't here..... \
-	// We might need to partially deserialize this to a map, then cast to a type? OR! We could store more data about it in another column.
+
 	if metaDataType == nil {
 		return nil, nil
 	}

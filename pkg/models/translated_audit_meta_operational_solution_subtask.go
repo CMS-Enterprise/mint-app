@@ -6,8 +6,6 @@ import (
 	"errors"
 )
 
-// Changes: (Meta) Should we consider embedding common fields and methods for meta data? There is a benefit to make it uniquely
-
 // TranslatedAuditMetaOperationalSolutionSubtask represents the data about an operational need to render an operational need human readable.
 type TranslatedAuditMetaOperationalSolutionSubtask struct {
 	TranslatedAuditMetaBaseStruct

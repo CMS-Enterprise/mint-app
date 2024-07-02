@@ -2,6 +2,7 @@ import { TranslationBeneficiaries } from 'types/translation';
 
 import {
   ModelViewFilter,
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/gen/graphql';
@@ -472,7 +473,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 3.15,
-    tableReference: 'user_account',
+    tableReference: TableName.USER_ACCOUNT,
     hideFromReadonly: true
   },
   readyForReviewDts: {
@@ -494,7 +495,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 3.17,
-    tableReference: 'user_account',
+    tableReference: TableName.USER_ACCOUNT,
     hideFromReadonly: true
   },
   readyForClearanceDts: {

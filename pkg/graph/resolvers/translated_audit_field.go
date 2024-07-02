@@ -2,7 +2,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -12,21 +11,11 @@ import (
 
 // TranslatedAuditFieldCollectionGetByTranslatedAuditID returns all TranslatedAuditChange for a given translated audit id
 func TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx context.Context, translatedAuditID uuid.UUID) ([]*models.TranslatedAuditField, error) {
-	translatedChangeCollection, err := loaders.TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, translatedAuditID)
+	translatedAuditFieldCollection, err := loaders.TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, translatedAuditID)
 	if err != nil {
 		return nil, err
 	}
 
-	for _, change := range translatedChangeCollection {
-		err2 := change.ParseMetaData()
-		// Changes: (Serialization) consider calling this in the loader since we already loop in that call?
-
-		if err2 != nil {
-			return nil, fmt.Errorf("issue parsing raw meta data for translated change %s. Error : %w", change.ID, err2)
-		}
-
-	}
-
-	return translatedChangeCollection, err
+	return translatedAuditFieldCollection, err
 
 }

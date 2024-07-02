@@ -12,11 +12,11 @@ func (suite *TAuditSuite) TestDiscussionReplyMetaDataGet() {
 	discussion := suite.createPlanDiscussion(plan.ID, discussionContent)
 	replyContent := "that's very interesting"
 
-	reply := suite.createDiscussionReply(discussion.ID, replyContent)
+	_ = suite.createDiscussionReply(discussion.ID, replyContent)
 	now := time.Now()
 	numReplies := 1
 
-	metaData, err := DiscussionReplyMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, reply.ID.String(), discussion.ID.String(), now)
+	metaData, err := DiscussionReplyMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, discussion.ID, now)
 	suite.NoError(err)
 	suite.NotNil(metaData)
 
@@ -37,7 +37,7 @@ func (suite *TAuditSuite) TestOperationalNeedMetaDataGet() {
 
 	// the test function makes a custom solution
 	needIsOther := true
-	metaData, err := OperationalNeedMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, need.ID.String())
+	metaData, err := OperationalNeedMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, need.ID)
 
 	suite.NoError(err)
 	suite.NotNil(metaData)
@@ -73,7 +73,7 @@ func (suite *TAuditSuite) TestOperationalSolutionMetaDataGet() {
 	needIsOther := true
 	solIsOther := true
 
-	metaData, metaDataType, err := OperationalSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, sol.ID.String())
+	metaData, metaDataType, err := OperationalSolutionMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, sol.ID)
 
 	suite.NoError(err)
 	suite.NotNil(metaData)

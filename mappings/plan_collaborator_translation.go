@@ -8,8 +8,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 )
 
-//Changes (ChChCh Changes!) Update export file name to not be plural so it matches db tables
-
 //go:embed translation/plan_collaborator.json
 var collaboratorJSON []byte
 

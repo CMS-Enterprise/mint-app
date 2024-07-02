@@ -1,6 +1,7 @@
 import { TranslationCollaborators } from 'types/translation';
 
 import {
+  TableName,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/gen/graphql';
@@ -14,7 +15,7 @@ export const collaborators: TranslationCollaborators = {
     dataType: TranslationDataType.UUID,
     formType: TranslationFormType.TEXT,
     order: 1.01,
-    tableReference: 'user_account'
+    tableReference: TableName.USER_ACCOUNT
   },
   username: {
     gqlField: 'username',

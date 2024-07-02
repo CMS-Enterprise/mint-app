@@ -61,6 +61,14 @@ type TranslatedAudit struct {
 	MetaData     TranslatedAuditMetaData      `json:"metaData"`
 }
 
+/* Future Enhancement: Note some of theses fields duplicate data that is from the audit.changes table. If desired some of these fields could be removed from this table, and be returned from the changes table
+Fields include
+  * actorID
+  * date
+  * action
+  * primary key
+*/
+
 // NewTranslatedAuditChange
 func NewTranslatedAuditChange(
 	createdBy uuid.UUID,

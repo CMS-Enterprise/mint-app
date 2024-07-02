@@ -9,8 +9,8 @@ import (
 func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAuditID() {
 	// beforeYesterday := yesterday.AddDate(0, 0, -1)
 
-	// Changes: (ChChCh Changes!) This should really happen in the translated audit package, testing in the resolver package for now just for simplicity for a POC
-	//Changes: (ChChCh Changes!) This could potentially be combined with the audit change test, but duplicating some logic here instead for clarity
+	// Note This could happen in the translated audit package, but we are testing in the resolver package for simplicity as an integration test
+	//Note This could potentially be combined with the audit change test, but duplicating some logic here instead for clarity
 	plan := suite.createModelPlan("test plan for changes")
 
 	planChanges := map[string]interface{}{

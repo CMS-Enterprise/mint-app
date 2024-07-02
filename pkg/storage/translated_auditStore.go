@@ -28,23 +28,6 @@ func TranslatedAuditCreate(np sqlutils.NamedPreparer, translatedAudit *models.Tr
 	return retHumanizedChange, nil
 }
 
-// TranslatedAuditCreateCollection creates a TranslatedAudit in the database, using the values passed in the translatedAudits parameter
-func TranslatedAuditCreateCollection(np sqlutils.NamedPreparer, translatedAudits []*models.TranslatedAudit) ([]*models.TranslatedAudit, error) {
-	retChanges := []*models.TranslatedAudit{}
-	// Changes (ChChCh Changes!) Make this a separate SQL call to try to insert all records at once instead of iterating through a collection.
-	// Note, even in this structure, a transaction is possible
-
-	for _, translatedAuditChange := range translatedAudits {
-		retChange, err := TranslatedAuditCreate(np, translatedAuditChange)
-		if err != nil {
-			return nil, fmt.Errorf("issue creating new TranslatedAuditChange collection. error: %w", err)
-		}
-		retChanges = append(retChanges, retChange)
-	}
-
-	return retChanges, nil
-}
-
 // TranslatedAuditCollectionGetByModelPlanID returns all translatedAudits for a given model plan id
 // hasRestrictedAccess: whether or not to show restricted records
 // limit: this controls how many records will be returned at once. A null entry will return all records

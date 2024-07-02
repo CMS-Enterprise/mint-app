@@ -45,9 +45,7 @@ func (suite *ResolverSuite) TestTranslatedAuditCollectionGetByModelPlanID() {
 }
 func (suite *ResolverSuite) TestTranslateAudit() {
 
-	// beforeYesterday := yesterday.AddDate(0, 0, -1)
-
-	//Changes: (ChChCh Changes!) This should really happen in the translated audit package, testing in the resolver package for now just for simplicity
+	//This method comes from the translatedaudit package. However, we are testing it for an integration test.
 	plan := suite.createModelPlan("test plan for changes")
 
 	planChanges := map[string]interface{}{
