@@ -268,3 +268,5 @@ translated_audit.go
 deserializing
 deserialized
 json
+translation.graphql
+graphql

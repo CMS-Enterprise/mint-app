@@ -11,15 +11,19 @@ Change history is a MINT feature that aims to give full transparency into model 
 - Any user/job code can access Change History, however some data that would normally be restricted in the read view, will be hidden from Change History
 
 ## Configuration
+
 ### Adding new audit tables in the database
+
 - Use the `SELECT audit.AUDIT_TABLE` method in the database to add a table configuration, and to enable the audit trigger on that table. Reference the database for the most up to date documentation on the trigger.
 
 `Example`
+
 ```SQL
   SELECT audit.AUDIT_TABLE(''public'', ''testing_table'', ''id'', NULL, ''{created_by,created_dts,modified_by,modified_dts}''::TEXT[], ''{*,id}''::TEXT[])
 ```
- 
+
   NOTE: if the `testing_table` enum value did not exist on the `TABLE_NAME` type, it would need to be added for this to work
+
 ```SQL
     ALTER TYPE TABLE_NAME ADD VALUE ''testing_table'';
 ```
@@ -49,7 +53,6 @@ Change history is a MINT feature that aims to give full transparency into model 
     - Refer to the in-code documentation for all the configuration options
   - Export the edits typescript translation file with the command `yarn ts-node ./mappings/export/exportTranslation.ts`
   - Verify the new property and its configuration is exported as JSON to [/pkg/mappings/export/translation/](../pkg/mappings/export/translation/)
-
 - ##### New Table
 
   - Create schema file for new table in [/pkg/graph/schema/types/](../pkg/graph/schema/types/)
@@ -59,44 +62,46 @@ Change history is a MINT feature that aims to give full transparency into model 
     - The value on the `gotag` will be the database field name
   - Add table name to the ignore `defined-types-are-used` list here [/graphql-schema-linter.config.js](../graphql-schema-linter.config.js)
     - Graphql codegen expects all defined schema types to be used in a resolver.  This tells codegen that we do not intend to use these defined types in the conventional method.
-   - Run `scripts/dev gql` command to execute `graphql-codegen`
-   - Add the table to `translationSections` within [/pkg/mappings/export/exportTranslation/](../pkg/mappings/export/exportTranslation/) and [/pkg/mappings/export/util/](../pkg/mappings/export/util/)
-     - Import any necessary types from the new code generated with codegen
-   - Add the table and it's property mappings to [/src/types/translation/](../src/types/translation.ts)
-   - Add the table translation file in [/src/i18n/modelPlan/](../src/i18n/modelPlan)
-   - Populate the translation file with JSON config for text, options, etc
-
-
+  - Run `scripts/dev gql` command to execute `graphql-codegen`
+  - Add the table to `translationSections` within [/pkg/mappings/export/exportTranslation/](../pkg/mappings/export/exportTranslation/) and [/pkg/mappings/export/util/](../pkg/mappings/export/util/)
+    - Import any necessary types from the new code generated with codegen
+  - Add the table and it's property mappings to [/src/types/translation/](../src/types/translation.ts)
+  - Add the table translation file in [/src/i18n/modelPlan/](../src/i18n/modelPlan)
+  - Populate the translation file with JSON config for text, options, etc
 - ##### Extending properties of translation configuration
- - TODO?
- 
+  - Update schema for translations in [/pkg/graph/schema/types/translation.graphql](../pkg/graph/schema/types/translation.graphql) with new properties
+  - Add any comments necessary to describe the new property
+  - Run graphql codegen to generate new schema
+  - New properties will now be available for FE
 
+### Backend Generated Type Wiring
 
- ### Backend Generated Type Wiring
-  #### Implement Interface for Generated Type
-  - Implement the Translation Interface defined in [mappings/translation_interface.go](../mappings/translation_interface.go)
-    - Go into [pkg/graph/model/translation_extensions.go](../pkg/graph/model/translation_extensions.go)
-      - Implement `TableName()`
-      - Implement `ToMap()`
+#### Implement Interface for Generated Type
+
+- Implement the Translation Interface defined in [mappings/translation_interface.go](../mappings/translation_interface.go)
+  - Go into [pkg/graph/model/translation_extensions.go](../pkg/graph/model/translation_extensions.go)
+    - Implement `TableName()`
+    - Implement `ToMap()`
 
 #### Backend Wiring of Generated Translations
-  
-  - Create a new file, and test in [mappings](../mappings/)
-      - File should be appended with `_translation.go`
-  - Embed the exported JSON translation from [mappings/translation](../mappings/translation/)
-    - Create a Function that returns the generated type, and error by deserializing the embedded json to the deserialized type
-  - Update `GetTranslation` in [mappings/translation_utilities.go](../mappings/translation_utilities.go) to add an entry to return the new translation. ( This is how the translation audit job gets the translation)
-  - Create a unit test file in the mapping directory. 
-     - Add a test that asserts the data can be deserialized and the `ToMap()` function works
-     - Add a test to `VerifyFieldsArePopulated`. This should call `assertTranslationFields`
-     - Add a test to verify `TranslationCoverage` this should call `assertTranslationStructCoverage`
-         - this can explicitly provide fields that we expect not to be translated.
+
+- Create a new file, and test in [mappings](../mappings/)
+  - File should be appended with `_translation.go`
+- Embed the exported JSON translation from [mappings/translation](../mappings/translation/)
+  - Create a Function that returns the generated type, and error by deserializing the embedded json to the deserialized type
+- Update `GetTranslation` in [mappings/translation_utilities.go](../mappings/translation_utilities.go) to add an entry to return the new translation. ( This is how the translation audit job gets the translation)
+- Create a unit test file in the mapping directory.
+  - Add a test that asserts the data can be deserialized and the `ToMap()` function works
+  - Add a test to `VerifyFieldsArePopulated`. This should call `assertTranslationFields`
+  - Add a test to verify `TranslationCoverage` this should call `assertTranslationStructCoverage`
+    - this can explicitly provide fields that we expect not to be translated.
 
 ### Modifying Existing Jobs that rely on Audit Data
-  - Is this data not going to be translated? Update `TranslateAudit` [pkg/translatedaudit/translated_audit.go] (../pkg/translatedaudit/translated_audit.go) to skip the translation
-  - Is there meta data that will be needed for this specific `Translated Audit`? Make sure to generate the meta data.
-      - If the entry can ever be deleted, ensure that the meta data is nullable (as you can't guarantee you will have access to the record at the time of translation)
-  - Does the record affect Analyzed Audit?
-    - Update the analyzed audit job to get data from the new table as well.
-    - Verify that new changes to the analyzed audit struct are backwards compatible (as the historic data is returned for notifications)
- - Is the Translation `restricted`? Make sure to update the logic for that translated audit to set the restriction level on the audit as well (look at [`checkIfDocumentIsRestricted`](../pkg/translatedaudit/restriction_level.go) for an example)
+
+- Is this data not going to be translated? Update `TranslateAudit` [pkg/translatedaudit/translated_audit.go] (../pkg/translatedaudit/translated_audit.go) to skip the translation
+- Is there meta data that will be needed for this specific `Translated Audit`? Make sure to generate the meta data.
+  - If the entry can ever be deleted, ensure that the meta data is nullable (as you can't guarantee you will have access to the record at the time of translation)
+- Does the record affect Analyzed Audit?
+  - Update the analyzed audit job to get data from the new table as well.
+  - Verify that new changes to the analyzed audit struct are backwards compatible (as the historic data is returned for notifications)
+- Is the Translation `restricted`? Make sure to update the logic for that translated audit to set the restriction level on the audit as well (look at [`checkIfDocumentIsRestricted`](../pkg/translatedaudit/restriction_level.go) for an example)
