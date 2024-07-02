@@ -62,9 +62,6 @@ type TranslatedAuditField struct {
 // NewTranslatedAuditField
 func NewTranslatedAuditField(
 	createdBy uuid.UUID,
-
-	// translatedAuditID uuid.UUID, //Audit ID is handled during serialization
-
 	fieldName string,
 	fieldNameTranslated string,
 	fieldOrder float64,
@@ -77,10 +74,7 @@ func NewTranslatedAuditField(
 ) TranslatedAuditField {
 
 	return TranslatedAuditField{
-		baseStruct: NewBaseStruct(createdBy),
-
-		// TranslatedAuditID: translatedAuditID,
-
+		baseStruct:          NewBaseStruct(createdBy),
 		FieldName:           fieldName,
 		FieldNameTranslated: fieldNameTranslated,
 		FieldOrder:          fieldOrder,

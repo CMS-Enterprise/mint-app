@@ -297,6 +297,7 @@ func translateValueSingle(value string, options map[string]interface{}) string {
 }
 
 // isArray checks if a String begins with { and ends with }. If so, it is an array
+// Arrays get parsed and returned as a pq.StringArray
 func isArray(str string) (pq.StringArray, bool) {
 	// Define a regular expression to match the array format
 	arrayRegex := regexp.MustCompile(`^\{.*\}$`)
@@ -311,8 +312,7 @@ func isArray(str string) (pq.StringArray, bool) {
 
 }
 
-// extractArrayValues extracts array values from a string representation
-// Changes: (Translations)  Verify the extraction, perhaps we can combine with earlier function?
+// extractArrayValues extracts array values from a string representation, and returns a pq.StringArray
 func extractArrayValues(str string) pq.StringArray {
 	// Define a regular expression to match the array format
 	arrayRegex := regexp.MustCompile(`\{(.+?)\}`)
