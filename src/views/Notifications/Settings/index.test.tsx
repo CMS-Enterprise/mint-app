@@ -46,6 +46,10 @@ const notificationsSettingsMock = [
               UserNotificationPreferenceFlag.EMAIL,
               UserNotificationPreferenceFlag.IN_APP
             ],
+            dataExchangeApproachCompleted: [
+              UserNotificationPreferenceFlag.EMAIL,
+              UserNotificationPreferenceFlag.IN_APP
+            ],
             newModelPlan: [],
             datesChanged: [],
             datesChangedNotificationType: null
