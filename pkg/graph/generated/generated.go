@@ -17542,9 +17542,9 @@ func (ec *executionContext) _DataExchangeApproachCompletedActivityMeta_dataExcha
 		}
 		return graphql.Null
 	}
-	res := resTmp.(models.DataExchangeApproach)
+	res := resTmp.(*models.DataExchangeApproach)
 	fc.Result = res
-	return ec.marshalNDataExchangeApproach2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataExchangeApproach(ctx, field.Selections, res)
+	return ec.marshalNDataExchangeApproach2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataExchangeApproach(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DataExchangeApproachCompletedActivityMeta_dataExchangeApproach(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -81720,8 +81720,14 @@ func (ec *executionContext) marshalNCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmint�
 	return ec._CurrentUser(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNDataExchangeApproach2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataExchangeApproach(ctx context.Context, sel ast.SelectionSet, v models.DataExchangeApproach) graphql.Marshaler {
-	return ec._DataExchangeApproach(ctx, sel, &v)
+func (ec *executionContext) marshalNDataExchangeApproach2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataExchangeApproach(ctx context.Context, sel ast.SelectionSet, v *models.DataExchangeApproach) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._DataExchangeApproach(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNDataForMonitoringType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataForMonitoringType(ctx context.Context, v interface{}) (model.DataForMonitoringType, error) {

@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/notifications"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 
@@ -257,6 +260,27 @@ func (s *Seeder) SeedData() {
 				Status: models.OperationalSolutionSubtaskStatusTodo,
 			},
 		},
+	)
+
+	// Send a notification for Data Exchange Approach Completed
+	dataExchangeApproach := models.NewDataExchangeApproach(
+		"Data Exchange Approach",
+		planWithDocuments.CreatedBy,
+		planWithDocuments.ID,
+	)
+
+	// create an actor principal for testing notifications
+
+	actorPrincipal := s.getTestPrincipalByUsername("MINT")
+
+	_, err = notifications.ActivityDataExchangeApproachCompletedCreate(
+		s.Config.Context,
+		actorPrincipal.UserAccount.ID,
+		s.Config.Store,
+		[]uuid.UUID{planWithDocuments.CreatedBy},
+		dataExchangeApproach,
+		planWithDocuments.CreatedBy,
+		loaders.UserNotificationPreferencesGetByUserID,
 	)
 }
 
