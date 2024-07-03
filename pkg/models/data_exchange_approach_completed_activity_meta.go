@@ -10,23 +10,20 @@ import (
 // is relevant to completing a Data Exchange Approach
 type DataExchangeApproachCompletedActivityMeta struct {
 	ActivityMetaBaseStruct
-	Version              int                  `json:"version"`
-	Type                 ActivityType         `json:"type"`
-	DataExchangeApproach DataExchangeApproach `json:"dataExchangeApproach"`
-	MarkedCompleteBy     uuid.UUID            `json:"markedCompleteBy"`
+	Version              int                   `json:"version"`
+	Type                 ActivityType          `json:"type"`
+	DataExchangeApproach *DataExchangeApproach `json:"dataExchangeApproach"`
+	MarkedCompleteBy     uuid.UUID             `json:"markedCompleteBy"`
 }
 
-// NewDataExchangeApproachCompletedActivityMeta creates a new DataExchangeApproachCompletedActivityMeta
-func NewDataExchangeApproachCompletedActivityMeta(
-	version int,
-	activityType ActivityType,
-	dataExchangeApproach DataExchangeApproach,
+// newDataExchangeApproachCompletedActivityMeta creates a new DataExchangeApproachCompletedActivityMeta
+func newDataExchangeApproachCompletedActivityMeta(
+	dataExchangeApproach *DataExchangeApproach,
 	markedCompleteBy uuid.UUID,
 ) *DataExchangeApproachCompletedActivityMeta {
+	version := 0 // iterate this if this type ever updates
 	return &DataExchangeApproachCompletedActivityMeta{
-		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(activityType, version),
-		Version:                version,
-		Type:                   activityType,
+		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityDataExchangeApproachCompleted, version),
 		DataExchangeApproach:   dataExchangeApproach,
 		MarkedCompleteBy:       markedCompleteBy,
 	}
@@ -35,19 +32,15 @@ func NewDataExchangeApproachCompletedActivityMeta(
 // NewDataExchangeApproachCompletedActivity creates a new Data Exchange Approach Complete type of Activity
 func NewDataExchangeApproachCompletedActivity(
 	actorID uuid.UUID,
-	version int,
-	activityType ActivityType,
-	dataExchangeApproach DataExchangeApproach,
+	dataExchangeApproach *DataExchangeApproach,
 	markedCompleteBy uuid.UUID,
 ) *Activity {
 	return &Activity{
 		baseStruct:   NewBaseStruct(actorID),
 		ActorID:      actorID,
 		EntityID:     markedCompleteBy,
-		ActivityType: activityType,
-		MetaData: NewDataExchangeApproachCompletedActivityMeta(
-			version,
-			activityType,
+		ActivityType: ActivityDataExchangeApproachCompleted,
+		MetaData: newDataExchangeApproachCompletedActivityMeta(
 			dataExchangeApproach,
 			markedCompleteBy,
 		),

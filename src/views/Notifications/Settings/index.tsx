@@ -80,7 +80,8 @@ const NotificationSettings = () => {
     modelPlanShared,
     newModelPlan,
     datesChanged,
-    datesChangedNotificationType
+    datesChangedNotificationType,
+    dataExchangeApproachCompleted
   } = (data?.currentUser.notificationPreferences ||
     {}) as GetNotifcationSettingsType;
 
@@ -305,7 +306,8 @@ const NotificationSettings = () => {
     modelPlanShared: modelPlanShared ?? [],
     newModelPlan: newModelPlan ?? [],
     datesChanged: datesChanged ?? [],
-    datesChangedNotificationType: datesChangedNotificationType ?? undefined
+    datesChangedNotificationType: datesChangedNotificationType ?? undefined,
+    dataExchangeApproachCompleted: dataExchangeApproachCompleted ?? []
   };
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
@@ -411,7 +413,15 @@ const NotificationSettings = () => {
                                 </h4>
                               </Grid>
                             )}
-
+                            {setting === 'datesChanged' && (
+                              <Grid mobile={{ col: 12 }}>
+                                <h4 className="margin-top-5 margin-bottom-0">
+                                  {notificationsT(
+                                    'settings.sections.additionalNotifications.heading'
+                                  )}
+                                </h4>
+                              </Grid>
+                            )}
                             <Grid mobile={{ col: 6 }}>
                               <p className="text-wrap margin-y-105">
                                 {notificationSettings[setting]}

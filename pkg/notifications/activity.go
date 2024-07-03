@@ -111,6 +111,7 @@ func parseRawActivityMetaData(activityType models.ActivityType, rawMetaDataJSON 
 			return nil, err
 		}
 		return &meta, nil
+
 	case models.ActivityAddedAsCollaborator:
 		// Deserialize the raw JSON into AddedAsCollaboratorMeta
 		meta := models.AddedAsCollaboratorMeta{}
