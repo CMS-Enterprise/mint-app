@@ -21,7 +21,12 @@ import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCat
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
-import { covertToLowercaseAndDashes, ScrollLink } from '..';
+import {
+  ArticleCategories,
+  covertToLowercaseAndDashes,
+  HelpArticle,
+  ScrollLink
+} from '..';
 
 const SixPagerMeeting = () => {
   const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
@@ -114,7 +119,7 @@ const SixPagerMeeting = () => {
               {sixPageMeetingT('title')}
             </PageHeading>
             <HelpCategoryTag
-              type="getting-started"
+              type={ArticleCategories.GETTING_STARTED}
               className="margin-bottom-1"
             />
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
@@ -534,7 +539,12 @@ const SixPagerMeeting = () => {
       </MainContent>
       <div className="margin-top-6 margin-bottom-neg-7">
         <RelatedArticles
-          currentArticle={sixPageMeetingT('title')}
+          currentArticle={HelpArticle.SIX_PAGER_MEETING}
+          specificArticles={[
+            HelpArticle.TWO_PAGER_MEETING,
+            HelpArticle.HIGH_LEVEL_PROJECT_PLAN,
+            HelpArticle.SAMPLE_MODEL_PLAN
+          ]}
           viewAllLink
         />
       </div>

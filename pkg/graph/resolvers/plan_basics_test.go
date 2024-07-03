@@ -99,6 +99,7 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	}
 
 	updatedBasics, err := UpdatePlanBasics(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		basics.ID,
 		changes,

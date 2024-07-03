@@ -40,7 +40,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       DISEASE_SPECIFIC: 'diseaseSpecificGroup',
       OTHER: 'beneficiariesOther'
     },
-    filterGroups: [ModelViewFilter.MDM]
+    filterGroups: [ModelViewFilter.MDM, ModelViewFilter.PBG]
   },
   diseaseSpecificGroup: {
     gqlField: 'diseaseSpecificGroup',
@@ -239,7 +239,7 @@ export const beneficiaries: TranslationBeneficiaries = {
     optionsRelatedInfo: {
       OTHER: 'beneficiarySelectionOther'
     },
-    filterGroups: [ModelViewFilter.CMMI]
+    filterGroups: [ModelViewFilter.CMMI, ModelViewFilter.PBG]
   },
   beneficiarySelectionOther: {
     gqlField: 'beneficiarySelectionOther',

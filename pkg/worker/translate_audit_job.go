@@ -15,9 +15,11 @@ import (
 // args[0] the id of the audit change (int, but float in faktory)
 // args[0] the id of the queue (UUID)
 func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (returnedError error) {
-	// Changes: (Job) the job is wrapped in panic protection when it is registered, BUT it won't update the queue on a panic. See if we can also defer the panic here, and if so, does that override the parent recover?
-	// defer apperrors.RecoverPanicAsErrorFunction(&returnedError)
-	// fmt.Printf("translating audit job reached. Args %v", args)
+	/*
+		// Future Enhancement: the job is wrapped in panic protection when it is registered, BUT it won't update the queue on a panic. If desired we can also defer the panic here, and try to enable the recover on the parent function to update the queue item
+		// defer apperrors.RecoverPanicAsErrorFunction(&returnedError)
+		// fmt.Printf("translating audit job reached. Args %v", args)
+	*/
 	w.Logger.Info("translating job reached.", zap.Any("args", args))
 	if len(args) < 2 {
 		return fmt.Errorf("no arguments were provided for this translateAuditJob")

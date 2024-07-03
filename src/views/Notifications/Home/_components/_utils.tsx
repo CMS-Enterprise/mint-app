@@ -6,6 +6,7 @@ import {
   AnalyzedAuditChange,
   AnalyzedCrTdls,
   DailyDigestCompleteActivityMeta,
+  DatesChangedActivityMeta,
   ModelPlanSharedActivityMeta,
   NewDiscussionRepliedActivityMeta,
   NewModelPlanActivityMeta,
@@ -20,7 +21,8 @@ type MetaDataType =
   | NewDiscussionRepliedActivityMeta
   | ModelPlanSharedActivityMeta
   | AddedAsCollaboratorMeta
-  | NewModelPlanActivityMeta;
+  | NewModelPlanActivityMeta
+  | DatesChangedActivityMeta;
 
 // Type guard to check union type
 export const isTaggedInDiscussion = (
@@ -65,6 +67,13 @@ export const isAddingCollaborator = (
   return data.__typename === 'AddedAsCollaboratorMeta';
 };
 
+export const isDatesChanged = (
+  data: MetaDataType
+): data is DatesChangedActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'DatesChangedActivityMeta';
+};
+
 export const isNewModelPlan = (
   data: MetaDataType
 ): data is NewModelPlanActivityMeta => {
@@ -73,18 +82,10 @@ export const isNewModelPlan = (
 };
 
 export const activityText = (data: MetaDataType) => {
-  if (isTaggedInDiscussion(data)) {
+  if (isAddingCollaborator(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.text"
-        values={{ modelName: data.modelPlan.modelName }}
-      />
-    );
-  }
-  if (isTaggedInDiscussionReply(data)) {
-    return (
-      <Trans
-        i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.text"
+        i18nKey="notifications:index.activityType.ADDED_AS_COLLABORATOR.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
@@ -94,18 +95,18 @@ export const activityText = (data: MetaDataType) => {
       <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.text" />
     );
   }
-  if (isSharedActivity(data)) {
+  if (isDatesChanged(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.text"
+        i18nKey="notifications:index.activityType.DATES_CHANGED.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
   }
-  if (isAddingCollaborator(data)) {
+  if (isSharedActivity(data)) {
     return (
       <Trans
-        i18nKey="notifications:index.activityType.ADDED_AS_COLLABORATOR.text"
+        i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.text"
         values={{ modelName: data.modelPlan.modelName }}
       />
     );
@@ -126,6 +127,23 @@ export const activityText = (data: MetaDataType) => {
       />
     );
   }
+  if (isTaggedInDiscussion(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
+    );
+  }
+  if (isTaggedInDiscussionReply(data)) {
+    return (
+      <Trans
+        i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.text"
+        values={{ modelName: data.modelPlan.modelName }}
+      />
+    );
+  }
+
   return '';
 };
 
@@ -136,38 +154,6 @@ export const ActivityCTA = ({
   data: MetaDataType;
   isExpanded: boolean;
 }) => {
-  if (isTaggedInDiscussion(data)) {
-    return (
-      <>
-        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
-      </>
-    );
-  }
-  if (isTaggedInDiscussionReply(data)) {
-    return (
-      <>
-        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
-      </>
-    );
-  }
-  if (isNewDiscussionReply(data)) {
-    return (
-      <>
-        <Trans i18nKey="notifications:index.activityType.NEW_DISCUSSION_REPLY.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
-      </>
-    );
-  }
-  if (isSharedActivity(data)) {
-    return (
-      <>
-        <Trans i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.cta" />
-        <Icon.ArrowForward className="margin-left-1" aria-hidden />
-      </>
-    );
-  }
   if (isAddingCollaborator(data)) {
     return (
       <>
@@ -184,11 +170,35 @@ export const ActivityCTA = ({
       </>
     ) : (
       <>
-        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.show" />
+        <Trans i18nKey="notifications:index.activityType.DAILY_DIGEST_COMPLETE.cta.view" />
         <Icon.ExpandMore className="margin-left-1" aria-hidden />
       </>
     );
   }
+
+  if (isDatesChanged(data)) {
+    return isExpanded ? (
+      <>
+        <Trans i18nKey="notifications:index.activityType.DATES_CHANGED.cta.hide" />
+        <Icon.ExpandLess className="margin-left-1" aria-hidden />
+      </>
+    ) : (
+      <>
+        <Trans i18nKey="notifications:index.activityType.DATES_CHANGED.cta.view" />
+        <Icon.ExpandMore className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+
+  if (isSharedActivity(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.MODEL_PLAN_SHARED.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+
   if (isNewModelPlan(data)) {
     return (
       <>
@@ -197,6 +207,32 @@ export const ActivityCTA = ({
       </>
     );
   }
+  if (isNewDiscussionReply(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.NEW_DISCUSSION_REPLY.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+
+  if (isTaggedInDiscussion(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+  if (isTaggedInDiscussionReply(data)) {
+    return (
+      <>
+        <Trans i18nKey="notifications:index.activityType.TAGGED_IN_DISCUSSION_REPLY.cta" />
+        <Icon.ArrowForward className="margin-left-1" aria-hidden />
+      </>
+    );
+  }
+
   return <></>;
 };
 

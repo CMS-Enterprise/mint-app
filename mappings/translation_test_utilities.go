@@ -18,8 +18,6 @@ var baseStructExcludeFields []string = []string{"ID", "CreatedBy", "CreatedDts",
 // taskListStructExcludeFields are the fields that aren't needed to be translated for most task list sections
 var taskListStructExcludeFields []string = append(baseStructExcludeFields, "ModelPlanID")
 
-//Changes (Testing) Assert that every go tag is correct? Is this possible? Example, on plan basics demo_code had extra quotes, and the notes field mapped to demo_code, so the translation was weird
-
 // assertTranslationFields will iterate through all fields in a translation and make sure that they are populated correctly and valid
 func assertTranslationFields(t *testing.T, translation Translation) {
 	// Get the type & value of the object
@@ -40,6 +38,7 @@ func assertTranslationFields(t *testing.T, translation Translation) {
 		t.FailNow()
 	}
 	orderSeen := map[float64]string{}
+	dbTagSeen := map[string]string{}
 
 	// Iterate over all available fields
 	for i := 0; i < typ.NumField(); i++ {
@@ -51,6 +50,11 @@ func assertTranslationFields(t *testing.T, translation Translation) {
 			previousEntry, wasSeen := orderSeen[tField.Order]
 			if assert.Falsef(t, wasSeen, "there was a duplicate order entry found for this translation. Previously seen for %s. Current entry %s", previousEntry, tField.GoField) {
 				orderSeen[tField.Order] = tField.GoField
+			}
+			// test that there is only one translation per field so non get overridden. Struct coverage is handled by assertTranslationStructCoverage
+			previousDBTag, dbWasSeen := dbTagSeen[tField.DbField]
+			if assert.Falsef(t, dbWasSeen, "there was a duplicate db tag for this translation. Previously seen for GQLField %s. Current entry %s", previousDBTag, tField.GqlField) {
+				dbTagSeen[tField.DbField] = tField.GqlField
 			}
 
 		}

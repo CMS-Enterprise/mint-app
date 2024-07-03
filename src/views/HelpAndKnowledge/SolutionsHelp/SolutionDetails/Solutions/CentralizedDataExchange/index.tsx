@@ -44,15 +44,14 @@ const CentralizedDataExhangeTimeline = ({
           </ProcessListHeading>
 
           <Trans
-            i18nKey={`solutions.${solution.key}.timeline.items[0].description`}
-          >
-            If you’re interested in using CDX for your model or would like to
-            learn more about the system, please contact{' '}
-            <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
-              MINTTeam@cms.hhs.gov
-            </ExternalLink>{' '}
-            to learn more.
-          </Trans>
+            t={t}
+            i18nKey={`solutions.${solution.key}.timeline.items.0.description`}
+            components={{
+              email: (
+                <ExternalLink href="mailto:MINTTeam@cms.hhs.go"> </ExternalLink>
+              )
+            }}
+          />
         </ProcessListItem>
 
         <ProcessListItem
@@ -69,13 +68,16 @@ const CentralizedDataExhangeTimeline = ({
             <ol>
               <li>
                 <Trans
-                  i18nKey={`solutions.${solution.key}.timeline.items[1].items[0]`}
-                >
-                  Register as New User in the{' '}
-                  <ExternalLink href="https://portalval.cms.gov/portal/">
-                    {timelineConfig.links && timelineConfig.links[0]}
-                  </ExternalLink>
-                </Trans>
+                  t={t}
+                  i18nKey={`solutions.${solution.key}.timeline.items.1.items.0`}
+                  components={{
+                    link1: (
+                      <ExternalLink href="https://portalval.cms.gov/portal/">
+                        {' '}
+                      </ExternalLink>
+                    )
+                  }}
+                />
               </li>
               <li>{timelineConfig.items[1].items[1]}</li>
               <li>{timelineConfig.items[1].items[2]}</li>

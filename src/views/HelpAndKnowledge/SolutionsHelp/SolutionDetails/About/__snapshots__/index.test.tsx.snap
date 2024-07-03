@@ -3232,9 +3232,98 @@ exports[`Operational Solutions About Components > matches the snapshot > Shared 
         The Shared Systems are a group of systems used to process traditional Medicare Fee-for-Service (FFS) claims for Part A, Part B, and Durable Medical Equipment (DME).
 
 Beneficiaries visit a provider of Medicare services, and that provider files a claim with their Medicare Administrative Contractor (MAC). The MAC processes and pays the claim, and sends a remittance to advise the provider and a Medicare Summary Notice (MSN) to the beneficiary. There are many Centers and Offices that receive the Medicare legislation that determines policies; those become change requests implemented through quarterly releases by the Shared System Maintainers (SSM) and the MACs.
-
-The following systems are a part of Shared Systems:
       </p>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Additional resources
+        </h4>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class=""
+          >
+            Fee For Service Change Request Resource Center
+          </li>
+          <li
+            class="list-style-none"
+          >
+            <a
+              aria-label="Open in a new tab"
+              class="usa-link usa-link--external"
+              href="https://share.cms.gov/center/cmmi-eos/CMMITraining/SitePages/FFSHome.aspx"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Go to Fee For Service Change Request Resource Center
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h3
+          class="margin-bottom-2"
+        />
+        <span
+          class="text-pre-wrap "
+        >
+          The following systems are a part of Shared Systems: 
+        </span>
+        <ul
+          class="padding-left-4"
+        />
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h3
+          class="margin-bottom-2"
+        >
+          Common Working File (CWF)
+        </h3>
+        <span
+          class="text-pre-wrap "
+        >
+          Common Working File (CWF) is a Medicare Part A and B benefit coordination and claim validation system. CWF is a tool the Centers for Medicare & Medicaid Services (CMS) uses to maintain records about beneficiaries enrolled in the Medicare Fee-for-Service health plan. The CWF is comprised of nine localized databases called Hosts. Hosts maintain total Medicare claim history and entitlement information for the beneficiaries in their jurisdiction, which are updated daily by Medicare contractors and other applicable entities (i.e., Social Security Administration). CWF is used to determine the Medicare beneficiaries' eligibility for Medicare services and to monitor and inform other CMS payment systems on the appropriate usage of Medicare benefits, and to ensure payments for services received are appropriately determined and applied to payments based on Medicare payment and coverage rules. Also, the repository provides Medicare beneficiary eligibility information that is received nightly from the Social Security Administration (SSA). The eligibility information consists of newly enrolled beneficiaries in Medicare.
+        </span>
+        <ul
+          class="padding-left-4"
+        />
+      </div>
+      <div
+        class="margin-top-4"
+      >
+        <h4
+          class="margin-bottom-2 margin-bottom-0 font-body-md"
+        >
+          Functions
+        </h4>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class=""
+          >
+            Verify beneficiary eligibility, entitlement, and utilization. Avoid improper payment through comparison of Part A and B data. Allow BDS and FPS checking before CWF processing.
+          </li>
+          <li
+            class=""
+          >
+            CWF software performs data collection and validation, online inquiry, file maintenance, reports, and archival/retrieval.
+          </li>
+          <li
+            class=""
+          >
+            The CWF provides the MAC with responses to claims. MACs also submit special transactions such as Medicare Secondary Payment (MSP) data (primary insurer data when Medicare is secondary), ESRD (End Stage Renal Disease) Method of Reimbursement Computation data (only Part A MACs submit these transactions), and Certificate of Medical Necessity ((CMS) only DME MACs submit these transactions). These transactions are submitted to the CWF along with the claims and are identified by transaction type. Claims are added to the CWF full claim history file.
+          </li>
+        </ul>
+      </div>
       <div
         class="margin-top-4"
       >

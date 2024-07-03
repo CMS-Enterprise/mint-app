@@ -43,7 +43,7 @@ func ModelPlanCreate(
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.ModelPlan, error) {
 
-	var newModelPlanEmailPrefs []*models.UserAccountNotificationPreferences
+	var newModelPlanEmailPrefs []*models.UserAccountAndNotificationPreferences
 
 	newPlan, err := sqlutils.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 		plan := models.NewModelPlan(principal.Account().ID, modelName)
@@ -184,7 +184,7 @@ func ModelPlanCreate(
 
 		receiverEmails := lo.Map(
 			newModelPlanEmailPrefs,
-			func(pref *models.UserAccountNotificationPreferences, _ int) string {
+			func(pref *models.UserAccountAndNotificationPreferences, _ int) string {
 				return pref.Email
 			},
 		)
@@ -354,6 +354,8 @@ func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal,
 		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterWithCrTdls:
 		modelPlans, err = store.ModelPlanCollectionWithCRTDLS(logger, false)
+	case model.ModelPlanFilterFavorited:
+		modelPlans, err = store.ModelPlanCollectionFavorited(logger, false, principal.Account().ID)
 	default:
 		modelPlans = nil
 		err = fmt.Errorf("model plan filter not defined for filter: %s", filter)

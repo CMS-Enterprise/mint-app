@@ -33,6 +33,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     model_plan,
 	user_notification,
 	activity,
+	user_view_customization,
 	translated_audit_field,
 	translated_audit_queue,
 	translated_audit,

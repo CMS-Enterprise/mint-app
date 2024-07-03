@@ -1,0 +1,36 @@
+enum ViewCustomizationType {
+  MY_MODEL_PLANS
+  ALL_MODEL_PLANS
+  FOLLOWED_MODELS
+  MODELS_WITH_CR_TDL
+  MODELS_BY_OPERATIONAL_SOLUTION
+}
+
+type UserViewCustomization {
+  id: UUID!
+  userId: UUID!
+  userAccount: UserAccount!
+  viewCustomization: [ViewCustomizationType!]!
+  possibleOperationalSolutions: [OperationalSolutionKey!]!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input UserViewCustomizationChanges @goModel(model: "map[string]interface{}") {
+  viewCustomization: [ViewCustomizationType!]!
+  possibleOperationalSolutions: [OperationalSolutionKey!]!
+}
+
+extend type Query {
+  userViewCustomization: UserViewCustomization!
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  updateUserViewCustomization(changes: UserViewCustomizationChanges!): UserViewCustomization!
+  @hasRole(role: MINT_USER)
+}

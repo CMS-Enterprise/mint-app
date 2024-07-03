@@ -197,4 +197,5 @@ enum TableName {
   user_account
   user_notification
   user_notification_preferences
+  user_view_customization
 }

@@ -5,6 +5,8 @@ import (
 	_ "embed"
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -15,21 +17,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 )
 
-//go:embed SQL/operational_solution_subtask/create.sql
-var operationalSolutionSubtaskCreateSQL string
-
-//go:embed SQL/operational_solution_subtask/get_by_id.sql
-var operationalSolutionSubtaskGetByIDSQL string
-
-//go:embed SQL/operational_solution_subtask/update.sql
-var operationalSolutionSubtaskUpdateByIDSQL string
-
-//go:embed SQL/operational_solution_subtask/delete_by_id.sql
-var operationalSolutionSubtaskDeleteByIDSQL string
-
-//go:embed SQL/operational_solution_subtask/get_by_solution_id_LOADER.sql
-var operationalSolutionSubtaskGetBySolutionIDLoaderSQL string
-
 // OperationalSolutionSubtaskGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) OperationalSolutionSubtaskGetByModelPlanIDLOADER(
 	_ *zap.Logger,
@@ -38,7 +25,7 @@ func (s *Store) OperationalSolutionSubtaskGetByModelPlanIDLOADER(
 
 	var OpSolSSlice []*models.OperationalSolutionSubtask
 
-	stmt, err := s.db.PrepareNamed(operationalSolutionSubtaskGetBySolutionIDLoaderSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalSolutionSubtask.GetBySolutionIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +52,7 @@ func (s *Store) OperationalSolutionSubtasksCreate(
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
 
-	stmt, err := tx.PrepareNamed(operationalSolutionSubtaskCreateSQL)
+	stmt, err := tx.PrepareNamed(sqlqueries.OperationalSolutionSubtask.Create)
 	if err != nil {
 		return nil, fmt.Errorf("could not prepare subtask creation statement: %w", err)
 	}
@@ -100,7 +87,7 @@ func (s *Store) OperationalSolutionSubtaskGetByID(
 	subtaskID uuid.UUID,
 ) (*models.OperationalSolutionSubtask, error) {
 
-	stmt, err := s.db.PrepareNamed(operationalSolutionSubtaskGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalSolutionSubtask.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +120,7 @@ func (s *Store) OperationalSolutionSubtaskDelete(
 		return nil, err
 	}
 
-	stmt, err := tx.PrepareNamed(operationalSolutionSubtaskDeleteByIDSQL)
+	stmt, err := tx.PrepareNamed(sqlqueries.OperationalSolutionSubtask.DeleteByID)
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +148,7 @@ func (s *Store) OperationalSolutionSubtasksUpdate(
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
 
-	stmt, err := tx.PrepareNamed(operationalSolutionSubtaskUpdateByIDSQL)
+	stmt, err := tx.PrepareNamed(sqlqueries.OperationalSolutionSubtask.Update)
 	if err != nil {
 		return nil, err
 	}

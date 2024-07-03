@@ -4,6 +4,8 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -11,33 +13,6 @@ import (
 
 	_ "embed"
 )
-
-//go:embed SQL/operational_need/collection_get_by_model_plan_id.sql
-var operationalNeedCollectionByModelPlanIDSQL string
-
-//go:embed SQL/operational_need/collection_get_by_model_plan_id_LOADER.sql
-var operationalNeedCollectionByModelPlanIDLOADERSQL string
-
-//go:embed SQL/operational_need/get_by_model_plan_id_and_type.sql
-var operationalNeedGetByModelPlanIDAndTypeSQL string
-
-//go:embed SQL/operational_need/get_by_model_plan_id_and_other_type.sql
-var operationalNeedGetByModelPlanIDAndOtherTypeSQL string
-
-//go:embed SQL/operational_need/get_by_id.sql
-var operationalNeedGetByIDSQL string
-
-//go:embed SQL/operational_need/update_by_id.sql
-var operationalNeedUpdateByIDSQL string
-
-//go:embed SQL/operational_need/insert_or_update.sql
-var operationalNeedInsertOrUpdateSQL string
-
-//go:embed SQL/operational_need/insert_all_possible.sql
-var operationalNeedInsertAllPossibleSQL string
-
-//go:embed SQL/operational_need/insert_or_update_other.sql
-var operationalNeedInsertOrUpdateOtherSQL string
 
 // OperationalNeedCollectionGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan
 func (s *Store) OperationalNeedCollectionGetByModelPlanID(
@@ -47,7 +22,7 @@ func (s *Store) OperationalNeedCollectionGetByModelPlanID(
 
 	var needs []*models.OperationalNeed
 
-	stmt, err := s.db.PrepareNamed(operationalNeedCollectionByModelPlanIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalNeed.CollectionByModelPlanID)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +48,7 @@ func (s *Store) OperationalNeedCollectionGetByModelPlanIDLOADER(
 
 	var needs []*models.OperationalNeed
 
-	stmt, err := s.db.PrepareNamed(operationalNeedCollectionByModelPlanIDLOADERSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalNeed.CollectionByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +74,7 @@ func (s *Store) OperationalNeedGetByModelPlanIDAndType(
 
 	need := models.OperationalNeed{}
 
-	stmt, err := s.db.PrepareNamed(operationalNeedGetByModelPlanIDAndTypeSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalNeed.GetByModelPlanIDAndType)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +107,7 @@ func (s *Store) OperationalNeedGetByModelPlanIDAndOtherType(
 
 	need := models.OperationalNeed{}
 
-	stmt, err := s.db.PrepareNamed(operationalNeedGetByModelPlanIDAndOtherTypeSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalNeed.GetByModelPlanIDAndOtherType)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +135,7 @@ func (s *Store) OperationalNeedGetByID(_ *zap.Logger, id uuid.UUID) (*models.Ope
 
 	need := models.OperationalNeed{}
 
-	stmt, err := s.db.PrepareNamed(operationalNeedGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalNeed.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -185,7 +160,7 @@ func (s *Store) OperationalNeedInsertOrUpdate(
 	needTypeKey models.OperationalNeedKey,
 ) (*models.OperationalNeed, error) {
 
-	stmt, err := s.db.PrepareNamed(operationalNeedInsertOrUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalNeed.InsertOrUpdate)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
 	}
@@ -208,7 +183,7 @@ func (s *Store) OperationalNeedInsertOrUpdateOther(
 	customNeedType string,
 ) (*models.OperationalNeed, error) {
 
-	stmt, err := s.db.PrepareNamed(operationalNeedInsertOrUpdateOtherSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalNeed.InsertOrUpdateOther)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
 	}
@@ -231,7 +206,7 @@ func (s *Store) OperationalNeedUpdateByID(
 	need *models.OperationalNeed,
 ) (*models.OperationalNeed, error) {
 
-	stmt, err := s.db.PrepareNamed(operationalNeedUpdateByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.OperationalNeed.UpdateByID)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
 	}
@@ -253,7 +228,7 @@ func (s *Store) OperationalNeedInsertAllPossible(
 ) ([]*models.OperationalNeed, error) {
 
 	var needs []*models.OperationalNeed
-	stmt, err := np.PrepareNamed(operationalNeedInsertAllPossibleSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.OperationalNeed.InsertAllPossible)
 	if err != nil {
 		return nil, err
 	}

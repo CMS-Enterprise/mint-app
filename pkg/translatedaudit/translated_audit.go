@@ -18,6 +18,23 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
+// unTranslatedTables is a list of tables that should be skipped for translated audit, even if the raw data is being audited
+var unTranslatedTables = []models.TableName{
+	models.TNUserAccount,      // Not currently audited
+	models.TNUserNotification, // Not currently audited
+	models.TNUserNotificationPreferences,
+	models.TNUserViewCustomization}
+
+// Returns true in the table name is in the list of provided Table Names
+func tableListContains(tableName models.TableName, tableNameList []models.TableName) bool {
+	for _, tableNameListItem := range tableNameList {
+		if tableName == tableNameListItem {
+			return true
+		}
+	}
+	return false
+}
+
 // TranslateAudit translates a single audit to a translated audit and stores it in the translated audit table in the database.
 func TranslateAudit(
 	ctx context.Context,
@@ -28,19 +45,12 @@ func TranslateAudit(
 	if err != nil {
 		return nil, err
 	}
-	if auditWithModelPlan.TableName == models.TNUserNotificationPreferences {
-		// Changes: (Translations) Expand this logic, we don't want to make the job retry if it is a table we don't care about translating ( like this one which doesn't have a model plan)
-		// Changes: (Translations) Pull in main and update to also not translate any new tables that isn't associated to a model plan. Make sure to add this in documentation
+	// Check if this is a table to skip, if so, return nil, nil to mark the job as done.
+	if tableListContains(auditWithModelPlan.TableName, unTranslatedTables) {
 		return nil, nil
 	}
 
-	// Changes: (Job) Should we just fetch the model name when we get the ID as well? it's just this use case...
-	plan, err := store.ModelPlanGetByID(store, logger, auditWithModelPlan.ModelPlanID)
-	if err != nil {
-		return nil, err
-	}
-
-	translatedAuditWithFields, err := genericAuditTranslation(ctx, store, plan, &auditWithModelPlan.AuditChange)
+	translatedAuditWithFields, err := genericAuditTranslation(ctx, store, auditWithModelPlan)
 	if err != nil {
 		return nil, fmt.Errorf("issue translating audit. %w", err)
 	}
@@ -50,28 +60,15 @@ func TranslateAudit(
 		return nil, fmt.Errorf("issue saving translated audit. %w", err)
 	}
 
-	// retTranslatedChanges, err := storage.TranslatedAuditChangeCreateCollection(store, translatedChanges)
-
 	return retTranslatedChanges, err
-	//Changes: (Job) Implement this to translate a single audit, we also need to figure out what model plan this is based on the audit id
-
-	/*
-		1. Get Audit (with ModelPlanID?)
-		2. Run the Translation Job
-		3. Save
-		4. Should we delete the processing job here? Or elsewhere? Should the id actually be the id of the processing entry? That way we can save it and update here?
-
-	*/
 }
 
-func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *models.ModelPlan, audit *models.AuditChange) (*models.TranslatedAuditWithTranslatedFields, error) {
-	//Changes: (Translations) Note, it might be more appropriate to fetch the model plan each time. Note, this is not as efficient as grouping first,
-	// but it works with having the job translate one audit at a time
+func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *models.AuditChangeWithModelPlanID) (*models.TranslatedAuditWithTranslatedFields, error) {
 	trans, err := mappings.GetTranslation(audit.TableName)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get translation for %s , err : %w", audit.TableName, err)
 	}
-	translationMap, err := trans.ToMap() // Changes: (Translations)  Maybe make this return the map from the library?
+	translationMap, err := trans.ToMap()
 	if err != nil {
 		return nil, fmt.Errorf("unable to convert translation for %s to a map, err : %w", trans.TableName(), err)
 	}
@@ -79,16 +76,16 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	operation, isValidOperation := GetDatabaseOperation(audit.Action)
 	if !isValidOperation {
 
-		return nil, fmt.Errorf("issue converting operation to valid DB operation for audit  (%d) for plan %s, while attempting humanization. Provided value was %s ", audit.ID, plan.ModelName, audit.Action)
+		return nil, fmt.Errorf("issue converting operation to valid DB operation for audit  (%d) for plan %s, while attempting humanization. Provided value was %s ", audit.ID, audit.ModelPlanID, audit.Action)
 	}
 	translatedAudit := models.TranslatedAuditWithTranslatedFields{
 		TranslatedFields: []*models.TranslatedAuditField{},
 	}
 
-	change := models.NewTranslatedAuditChange( //  Changes: (Translations)  extract this logic to another function
+	change := models.NewTranslatedAuditChange(
 		constants.GetSystemAccountUUID(),
 		audit.ModifiedBy,
-		plan.ID,
+		audit.ModelPlanID,
 		audit.ModifiedDts,
 		audit.TableID,
 		audit.ID,
@@ -99,11 +96,10 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 	translatedAudit.TranslatedAudit = change
 
 	for fieldName, field := range audit.Fields {
-		//  Changes: (Translations) consider removing plan from the function
-		transField, wasTranslated, tErr := translateField(ctx, store, fieldName, field, audit, operation, plan, translationMap)
+		transField, wasTranslated, tErr := translateField(ctx, store, fieldName, field, &audit.AuditChange, operation, translationMap)
 
 		if tErr != nil {
-			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, plan.ModelName, err)
+			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, audit.ModelPlanID, err)
 		}
 		if !wasTranslated {
 			//If this doesn't have a translation, don't append this to the translated field list (and don't save it)
@@ -113,7 +109,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, plan *mo
 
 	}
 
-	_, err = SetTranslatedAuditTableSpecificMetaData(ctx, store, &translatedAudit, audit, operation)
+	_, err = SetTranslatedAuditTableSpecificMetaData(ctx, store, &translatedAudit, &audit.AuditChange, operation)
 	if err != nil {
 		return nil, fmt.Errorf("unable to translate table specific audit data. err %w", err)
 	}
@@ -129,11 +125,7 @@ func translateField(
 	field models.AuditField,
 	audit *models.AuditChange,
 	operation models.DatabaseOperation,
-	modelPlan *models.ModelPlan,
 	translationMap map[string]models.ITranslationField) (*models.TranslatedAuditField, bool, error) {
-
-	// Set default values in case of missing translation
-	// Changes: (Translations) We should handle a nil / empty case what should we do in that case?
 
 	old := field.Old
 	new := field.New
@@ -141,16 +133,12 @@ func translateField(
 	translatedNew := new
 	changeType := getChangeType(old, new)
 	if changeType == models.AFCUnchanged {
-		// Changes: (Translations) revisit this paradigm.
 		// If a field is actually unchanged (null to empty array or v versa), don't write an entry.
+		// This should not happen, except in rare cases when an empty array is passed to update from a null value.
 		return nil, false, nil
 	}
 
-	var conditionals *pq.StringArray //TODO: can we make the function that checks return this instead of instantiating here?
-
-	// Changes: (Translations) We need to distinguish if the answer is for an other / note field. The label in that case is really the parent's label or the specific text for that type.
-
-	// Changes: (Translations) Handle if the change made a question not necessary // Changes: (Structure) How should we structure this? Field MetaData? Or base level implementation information?
+	var conditionals *pq.StringArray
 
 	translationInterface := translationMap[fieldName]
 	if translationInterface == nil {
@@ -172,7 +160,6 @@ func translateField(
 
 	}
 
-	//Changes: (Translations) refactor this
 	oldStr, oldIsString := old.(string)
 	if oldIsString {
 		oldSlice, oldIsSlice := isArray(oldStr)
@@ -255,9 +242,6 @@ func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType
 }
 
 func translateStrSlice(strSlice []string, options map[string]interface{}) pq.StringArray {
-	// Changes: (Translations) Determine if we can serialize a generic interface? it makes a weird artifact in the GQL
-	// Changes: (Translations) Determine why team_roles for plan collaborator serializes with extra escaped characters
-	//   "{\"Mandatory national\",\"Other\"}",
 	transArray := pq.StringArray{}
 	for _, str := range strSlice {
 		translated := translateValueSingle(str, options)
@@ -265,8 +249,6 @@ func translateStrSlice(strSlice []string, options map[string]interface{}) pq.Str
 	}
 
 	return transArray
-	// Changes: (Translations) revisit this, even using generic array results in escape characters in GQL...
-	// genArray := pq.GenericArray{transArray}
 
 }
 
@@ -288,12 +270,9 @@ func translateValue(value interface{}, options map[string]interface{}) interface
 	}
 
 	if isString {
-		// Changes: (Translations) Revisit this issue here, we need the value to be stringified properly. Or provide a column type that is string or string array
-
 		return translateValueSingle(str, options)
 	}
-	// Changes: (Translations)  Should we handle the case where we can't translate it more?
-	// Should we also try to use fmt to make the value a string, for example an enum is not able to be translated this way, as it isn't castable to string.
+
 	return value
 
 }
@@ -309,6 +288,7 @@ func translateValueSingle(value string, options map[string]interface{}) string {
 }
 
 // isArray checks if a String begins with { and ends with }. If so, it is an array
+// Arrays get parsed and returned as a pq.StringArray
 func isArray(str string) (pq.StringArray, bool) {
 	// Define a regular expression to match the array format
 	arrayRegex := regexp.MustCompile(`^\{.*\}$`)
@@ -323,8 +303,7 @@ func isArray(str string) (pq.StringArray, bool) {
 
 }
 
-// extractArrayValues extracts array values from a string representation
-// Changes: (Translations)  Verify the extraction, perhaps we can combine with earlier function?
+// extractArrayValues extracts array values from a string representation, and returns a pq.StringArray
 func extractArrayValues(str string) pq.StringArray {
 	// Define a regular expression to match the array format
 	arrayRegex := regexp.MustCompile(`\{(.+?)\}`)

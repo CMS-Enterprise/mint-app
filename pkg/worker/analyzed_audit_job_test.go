@@ -83,6 +83,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		"status": "READY_FOR_CLEARANCE",
 	}
 	_, basicsErr := resolvers.UpdatePlanBasics(
+		suite.testConfigs.Context,
 		worker.Logger,
 		basics.ID,
 		clearanceChanges,

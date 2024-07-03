@@ -4,6 +4,8 @@ import (
 	_ "embed"
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"github.com/lib/pq"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -17,21 +19,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
-
-//go:embed SQL/plan_document_solution_link/create.sql
-var planDocumentSolutionLinksCreateSQL string
-
-//go:embed SQL/plan_document_solution_link/delete_by_ids.sql
-var planDocumentSolutionLinkDeleteByIDsSQL string
-
-//go:embed SQL/plan_document_solution_link/get_by_solution_id.sql
-var planDocumentSolutionLinksGetBySolutionIDSQL string
-
-//go:embed SQL/plan_document_solution_link/get_by_ids.sql
-var planDocumentSolutionLinkGetByIDsSQL string
-
-//go:embed SQL/plan_document_solution_link/num_links_by_document_id.sql
-var planDocumentNumLinkedSolutionsSQL string
 
 // PlanDocumentSolutionLinksCreate creates a collection of plan document solution links
 func (s *Store) PlanDocumentSolutionLinksCreate(
@@ -49,7 +36,7 @@ func (s *Store) PlanDocumentSolutionLinksCreate(
 	}
 
 	var ret []*models.PlanDocumentSolutionLink
-	stmt, err := s.db.PrepareNamed(planDocumentSolutionLinksCreateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocumentSolutionLink.Create)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +66,7 @@ func (s *Store) PlanDocumentSolutionLinksRemove(
 		return false, err
 	}
 
-	stmt, err := tx.PrepareNamed(planDocumentSolutionLinkDeleteByIDsSQL)
+	stmt, err := tx.PrepareNamed(sqlqueries.PlanDocumentSolutionLink.DeleteByIDs)
 	if err != nil {
 		return false, err
 	}
@@ -110,7 +97,7 @@ func (s *Store) PlanDocumentSolutionLinksGetBySolutionID(
 	solutionID uuid.UUID,
 ) ([]*models.PlanDocumentSolutionLink, error) {
 
-	stmt, err := s.db.PrepareNamed(planDocumentSolutionLinksGetBySolutionIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocumentSolutionLink.GetBySolutionID)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +115,7 @@ func (s *Store) PlanDocumentSolutionLinksGetBySolutionID(
 // PlanDocumentNumLinkedSolutions implements store logic to retrieve the number of linked solutions for a document by ID
 func (s *Store) PlanDocumentNumLinkedSolutions(logger *zap.Logger, documentID uuid.UUID) (int, error) {
 
-	stmt, err := s.db.PrepareNamed(planDocumentNumLinkedSolutionsSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocumentSolutionLink.NumLinksByDocumentID)
 	if err != nil {
 		return 0, genericmodel.HandleModelFetchGenericError(logger, err, documentID)
 	}
@@ -154,7 +141,7 @@ func (s *Store) PlanDocumentSolutionLinkGetByIDs(
 
 	link := &models.PlanDocumentSolutionLink{}
 
-	stmt, err := s.db.PrepareNamed(planDocumentSolutionLinkGetByIDsSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocumentSolutionLink.GetByIDs)
 	if err != nil {
 		return nil, err
 	}

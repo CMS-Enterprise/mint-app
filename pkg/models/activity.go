@@ -16,6 +16,7 @@ const (
 	ActivityNewDiscussionReply      ActivityType = "NEW_DISCUSSION_REPLY"
 	ActivityModelPlanShared         ActivityType = "MODEL_PLAN_SHARED"
 	ActivityNewModelPlan            ActivityType = "NEW_MODEL_PLAN"
+	ActivityDatesChanged            ActivityType = "DATES_CHANGED"
 )
 
 // Activity represents a discrete event that has happened in the application that might be notifiable.

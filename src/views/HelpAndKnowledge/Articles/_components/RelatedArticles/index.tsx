@@ -5,39 +5,54 @@ import { CardGroup, GridContainer } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
 import helpAndKnowledgeArticles, {
-  ArticleTypeProps
+  ArticleCategories,
+  ArticleProps,
+  HelpArticle
 } from 'views/HelpAndKnowledge/Articles';
 import ArticleCard from 'views/HelpAndKnowledge/Articles/_components/ArticleCard';
 
 type RelatedArticlesProps = {
   className?: string;
-  currentArticle: string;
+  currentArticle: HelpArticle;
+  specificArticles?: [HelpArticle, HelpArticle, HelpArticle];
+  type?: ArticleCategories;
   viewAllLink?: boolean;
-  type?: ArticleTypeProps;
 };
 
 const RelatedArticles = ({
   className,
   currentArticle,
-  viewAllLink,
-  type
+  specificArticles,
+  type,
+  viewAllLink
 }: RelatedArticlesProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
   // Filter to only the category tag type
-  let selectedArticles = type
+  let filteredArticles = type
     ? helpAndKnowledgeArticles.filter(article => article.type === type)
     : helpAndKnowledgeArticles;
 
   // If the only article is the current article, default to all articles
-  if (selectedArticles.length <= 1) {
-    selectedArticles = helpAndKnowledgeArticles;
+  if (filteredArticles.length <= 1) {
+    filteredArticles = helpAndKnowledgeArticles;
   }
 
   // Slice to first 3 of the relevant articles
-  selectedArticles = selectedArticles
-    .filter(article => article.name !== currentArticle)
+  filteredArticles = filteredArticles
+    .filter(article => article.key !== currentArticle)
     .slice(0, 3);
+
+  // It first checks if `specificArticles` is defined, and if so, it maps over each article name to find the corresponding article object in `helpAndKnowledgeArticles`.
+  // It then filters out any undefined values and assigns the result to `articlesToShow`.
+  // If `specificArticles` is not defined, it assigns `filteredArticles` to `articlesToShow`.
+  const articlesToShow: ArticleProps[] =
+    specificArticles
+      ?.map(articleKey =>
+        helpAndKnowledgeArticles.find(article => article.key === articleKey)
+      )
+      .filter((article): article is ArticleProps => !!article) ?? // Filter out undefined values // Filter out undefined values
+    filteredArticles;
 
   return (
     <div className="bg-primary-lighter">
@@ -45,8 +60,8 @@ const RelatedArticles = ({
         <h2 className="margin-top-0 margin-bottom-1">{t('relatedHelp')}</h2>
         <dt className="margin-bottom-4">{t('relatedDescription')}</dt>
         <CardGroup className={classnames(className)}>
-          {selectedArticles.map(article => (
-            <ArticleCard key={article.route} {...article} isLink />
+          {articlesToShow.map(article => (
+            <ArticleCard {...article} isLink />
           ))}
         </CardGroup>
         {viewAllLink && (

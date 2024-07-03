@@ -19,7 +19,12 @@ import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBrea
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
-import { covertToLowercaseAndDashes, ScrollLink } from '..';
+import {
+  ArticleCategories,
+  covertToLowercaseAndDashes,
+  HelpArticle,
+  ScrollLink
+} from '..';
 
 export const ModelSolutionDesign = () => {
   const { t } = useTranslation('modelSolutionDesign');
@@ -83,7 +88,7 @@ export const ModelSolutionDesign = () => {
             </PageHeading>
 
             <HelpCategoryTag
-              type="it-implementation"
+              type={ArticleCategories.IT_IMPLEMENTATION}
               className="margin-bottom-1"
             />
 
@@ -324,8 +329,13 @@ export const ModelSolutionDesign = () => {
       </MainContent>
 
       <RelatedArticles
-        currentArticle="Model implementation and solution design"
-        type="it-implementation"
+        currentArticle={HelpArticle.MODEL_SOLUTION_DESIGN}
+        specificArticles={[
+          HelpArticle.PHASES_INVOLVED,
+          HelpArticle.MODEL_SOLUTION_IMPLEMENTATION,
+          HelpArticle.UTILIZING_SOLUTIONS
+        ]}
+        type={ArticleCategories.IT_IMPLEMENTATION}
         viewAllLink
       />
     </>

@@ -8,6 +8,7 @@ import (
 )
 
 // checkChildConditionals will check if changes to a question make any questions non applicable
+// if so, return an array of the question label.
 func checkChildConditionals(old interface{}, new interface{}, childrenMap map[string][]models.TranslationField) *pq.StringArray {
 
 	if old == nil {
@@ -68,8 +69,7 @@ func checkChildConditionals(old interface{}, new interface{}, childrenMap map[st
 
 	for _, child := range oldMinusNew {
 
-		//Changes: (Translations) Should we call get label here? Figure that out
-		conditionals = append(conditionals, child.Label)
+		conditionals = append(conditionals, child.GetLabel())
 
 	}
 
@@ -77,6 +77,7 @@ func checkChildConditionals(old interface{}, new interface{}, childrenMap map[st
 
 }
 
+// getAllChildren returns a list of unique children for an array of answers
 func getAllChildren(answers []string, childrenMap map[string][]models.TranslationField) []models.TranslationField {
 	allFields := []models.TranslationField{}
 
@@ -89,7 +90,7 @@ func getAllChildren(answers []string, childrenMap map[string][]models.Translatio
 	}
 	// If multiple answers make a conditional an option, we want to only return unique ones
 	uniqFields := lo.UniqBy(allFields, func(field models.TranslationField) string {
-		return field.Label
+		return field.DbField
 	})
 	return uniqFields
 

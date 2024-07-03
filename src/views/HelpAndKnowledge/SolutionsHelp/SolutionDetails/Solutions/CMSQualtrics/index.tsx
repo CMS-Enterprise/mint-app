@@ -25,15 +25,15 @@ const CMSQualtricsTimeline = ({ solution }: { solution: HelpSolutionType }) => {
 
   return (
     <div className="operational-solution-details line-height-body-5 font-body-md">
-      <Trans i18nKey={`solutions.${solution.key}.timeline.description`}>
-        Since this is a self service tool, you can work at your own pace. If you
-        have questions or need help using CMS Qualtrics, contact the MINT Team
-        at{' '}
-        <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
-          MINTTeam@cms.hhs.gov
-        </ExternalLink>
-        .
-      </Trans>
+      <Trans
+        i18nKey={`solutions.${solution.key}.timeline.description`}
+        t={t}
+        components={{
+          email: (
+            <ExternalLink href="mailto:MINTTeam@cms.hhs.gov"> </ExternalLink>
+          )
+        }}
+      />
 
       <ProcessList>
         <ProcessListItem

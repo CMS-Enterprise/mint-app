@@ -76,9 +76,6 @@ func init() {
 	rootCmd.AddCommand(translationExportCmd)
 
 	// job based audit translation commands
-	rootCmd.AddCommand(queueAllTranslatedAuditChangesCommand)
-	rootCmd.AddCommand(translateAllQueuedTranslatedAuditChangesCommand)
-	rootCmd.AddCommand(translateNextQueuedTranslatedAuditChangesCommand)
 	rootCmd.AddCommand(queueAndProcessAllTranslatedAuditChangesCommand)
 
 }
@@ -159,6 +156,7 @@ func (s *Seeder) SeedData() {
 	// Seed a plan with some information already in it
 	planWithBasics := s.createModelPlan("Plan with Basics", "MINT")
 	s.updatePlanBasics(
+		s.Config.Context,
 		nil,
 		nil,
 		email.AddressBook{},
@@ -234,8 +232,8 @@ func (s *Seeder) SeedData() {
 	})
 	_ = s.planDocumentCreate(sampleModelPlan, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, false, nil, zero.StringFrom("Oncology Model Information").Ptr(), true, false)
 	s.addPlanCollaborator(
-		nil,
-		nil,
+		s.Config.EmailService,
+		s.Config.EmailTemplateService,
 		sampleModelPlan,
 		&model.PlanCollaboratorCreateInput{
 			ModelPlanID: sampleModelPlan.ID,
@@ -243,9 +241,10 @@ func (s *Seeder) SeedData() {
 			TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
 		})
 	s.updatePlanBasics(
-		nil,
-		nil,
-		email.AddressBook{},
+		s.Config.Context,
+		s.Config.EmailService,
+		s.Config.EmailTemplateService,
+		s.Config.AddressBook,
 		sampleModelPlan,
 		map[string]interface{}{
 			"amsModelID":      "123",

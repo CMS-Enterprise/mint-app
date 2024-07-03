@@ -61,12 +61,13 @@ export type Activity = {
 };
 
 /** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
-export type ActivityMetaData = AddedAsCollaboratorMeta | DailyDigestCompleteActivityMeta | ModelPlanSharedActivityMeta | NewDiscussionRepliedActivityMeta | NewModelPlanActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
+export type ActivityMetaData = AddedAsCollaboratorMeta | DailyDigestCompleteActivityMeta | DatesChangedActivityMeta | ModelPlanSharedActivityMeta | NewDiscussionRepliedActivityMeta | NewModelPlanActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
   ADDED_AS_COLLABORATOR = 'ADDED_AS_COLLABORATOR',
   DAILY_DIGEST_COMPLETE = 'DAILY_DIGEST_COMPLETE',
+  DATES_CHANGED = 'DATES_CHANGED',
   MODEL_PLAN_SHARED = 'MODEL_PLAN_SHARED',
   NEW_DISCUSSION_REPLY = 'NEW_DISCUSSION_REPLY',
   NEW_MODEL_PLAN = 'NEW_MODEL_PLAN',
@@ -351,6 +352,43 @@ export enum DatabaseOperation {
   UPDATE = 'UPDATE'
 }
 
+export type DateChange = {
+  __typename: 'DateChange';
+  field: DateChangeFieldType;
+  isChanged: Scalars['Boolean']['output'];
+  isRange: Scalars['Boolean']['output'];
+  newDate?: Maybe<Scalars['Time']['output']>;
+  newRangeEnd?: Maybe<Scalars['Time']['output']>;
+  newRangeStart?: Maybe<Scalars['Time']['output']>;
+  oldDate?: Maybe<Scalars['Time']['output']>;
+  oldRangeEnd?: Maybe<Scalars['Time']['output']>;
+  oldRangeStart?: Maybe<Scalars['Time']['output']>;
+};
+
+export enum DateChangeFieldType {
+  ANNOUNCED = 'ANNOUNCED',
+  APPLICATIONS = 'APPLICATIONS',
+  CLEARANCE = 'CLEARANCE',
+  COMPLETE_ICIP = 'COMPLETE_ICIP',
+  PERFORMANCE_PERIOD = 'PERFORMANCE_PERIOD',
+  WRAP_UP_ENDS = 'WRAP_UP_ENDS'
+}
+
+export type DatesChangedActivityMeta = {
+  __typename: 'DatesChangedActivityMeta';
+  dateChanges: Array<DateChange>;
+  modelPlan: ModelPlan;
+  modelPlanID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
+
+export enum DatesChangedNotificationType {
+  ALL_MODELS = 'ALL_MODELS',
+  FOLLOWED_MODELS = 'FOLLOWED_MODELS',
+  MY_MODELS = 'MY_MODELS'
+}
+
 /** DiscussionReply represents a discussion reply */
 export type DiscussionReply = {
   __typename: 'DiscussionReply';
@@ -616,6 +654,7 @@ export type ModelPlan = {
   payments: PlanPayments;
   prepareForClearance: PrepareForClearance;
   status: ModelStatus;
+  statusPlannedActiveOrEnded: StatusPlannedActiveOrEnded;
   tdls: Array<PlanTdl>;
 };
 
@@ -623,6 +662,12 @@ export type ModelPlan = {
 /** ModelPlan represent the data point for plans about a model. It is the central data type in the application */
 export type ModelPlanNameHistoryArgs = {
   sort?: SortDirection;
+};
+
+export type ModelPlanAndOperationalSolution = {
+  __typename: 'ModelPlanAndOperationalSolution';
+  modelPlan: ModelPlan;
+  operationalSolution: OperationalSolution;
 };
 
 /**
@@ -640,6 +685,7 @@ export type ModelPlanChanges = {
 
 export enum ModelPlanFilter {
   COLLAB_ONLY = 'COLLAB_ONLY',
+  FAVORITED = 'FAVORITED',
   INCLUDE_ALL = 'INCLUDE_ALL',
   WITH_CR_TDLS = 'WITH_CR_TDLS'
 }
@@ -761,6 +807,7 @@ export type Mutation = {
   updatePlanTDL: PlanTdl;
   /** Sets the notification preferences of a user. */
   updateUserNotificationPreferences: UserNotificationPreferences;
+  updateUserViewCustomization: UserViewCustomization;
   uploadNewPlanDocument: PlanDocument;
 };
 
@@ -1042,6 +1089,12 @@ export type MutationUpdatePlanTdlArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdateUserNotificationPreferencesArgs = {
   changes: UserNotificationPreferencesChanges;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateUserViewCustomizationArgs = {
+  changes: UserViewCustomizationChanges;
 };
 
 
@@ -3025,6 +3078,7 @@ export type Query = {
   existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
+  modelPlansByOperationalSolutionKey: Array<ModelPlanAndOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
@@ -3048,6 +3102,7 @@ export type Query = {
    */
   translatedAuditCollection?: Maybe<Array<TranslatedAudit>>;
   userAccount: UserAccount;
+  userViewCustomization: UserViewCustomization;
 };
 
 
@@ -3079,6 +3134,12 @@ export type QueryModelPlanArgs = {
 /** Query definition for the schema */
 export type QueryModelPlanCollectionArgs = {
   filter?: ModelPlanFilter;
+};
+
+
+/** Query definition for the schema */
+export type QueryModelPlansByOperationalSolutionKeyArgs = {
+  operationalSolutionKey: OperationalSolutionKey;
 };
 
 
@@ -3306,6 +3367,12 @@ export enum StatesAndTerritories {
   WY = 'WY'
 }
 
+export enum StatusPlannedActiveOrEnded {
+  ACTIVE = 'ACTIVE',
+  ENDED = 'ENDED',
+  PLANNED = 'PLANNED'
+}
+
 export type Subscription = {
   __typename: 'Subscription';
   onLockTaskListSectionContext: TaskListSectionLockStatusChanged;
@@ -3357,7 +3424,8 @@ export enum TableName {
   TRANSLATED_AUDIT_QUEUE = 'translated_audit_queue',
   USER_ACCOUNT = 'user_account',
   USER_NOTIFICATION = 'user_notification',
-  USER_NOTIFICATION_PREFERENCES = 'user_notification_preferences'
+  USER_NOTIFICATION_PREFERENCES = 'user_notification_preferences',
+  USER_VIEW_CUSTOMIZATION = 'user_view_customization'
 }
 
 /** Tag represents an entity tagged in the database */
@@ -3918,6 +3986,8 @@ export type UserNotificationPreferences = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   dailyDigestComplete: Array<UserNotificationPreferenceFlag>;
+  datesChanged: Array<UserNotificationPreferenceFlag>;
+  datesChangedNotificationType?: Maybe<DatesChangedNotificationType>;
   id: Scalars['UUID']['output'];
   modelPlanShared: Array<UserNotificationPreferenceFlag>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
@@ -3934,6 +4004,8 @@ export type UserNotificationPreferences = {
 export type UserNotificationPreferencesChanges = {
   addedAsCollaborator?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   dailyDigestComplete?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  datesChanged?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  datesChangedNotificationType?: InputMaybe<DatesChangedNotificationType>;
   modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   newDiscussionReply?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   newModelPlan?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
@@ -3951,6 +4023,34 @@ export type UserNotifications = {
   /** This renders only the unread notifications */
   unreadNotifications: Array<UserNotification>;
 };
+
+export type UserViewCustomization = {
+  __typename: 'UserViewCustomization';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  possibleOperationalSolutions: Array<OperationalSolutionKey>;
+  userAccount: UserAccount;
+  userId: Scalars['UUID']['output'];
+  viewCustomization: Array<ViewCustomizationType>;
+};
+
+export type UserViewCustomizationChanges = {
+  possibleOperationalSolutions: Array<OperationalSolutionKey>;
+  viewCustomization: Array<ViewCustomizationType>;
+};
+
+export enum ViewCustomizationType {
+  ALL_MODEL_PLANS = 'ALL_MODEL_PLANS',
+  FOLLOWED_MODELS = 'FOLLOWED_MODELS',
+  MODELS_BY_OPERATIONAL_SOLUTION = 'MODELS_BY_OPERATIONAL_SOLUTION',
+  MODELS_WITH_CR_TDL = 'MODELS_WITH_CR_TDL',
+  MY_MODEL_PLANS = 'MY_MODEL_PLANS'
+}
 
 export enum WaiverType {
   FRAUD_ABUSE = 'FRAUD_ABUSE',
@@ -4571,12 +4671,12 @@ export type UpdateNdaMutation = { __typename: 'Mutation', agreeToNDA: { __typena
 export type GetNotificationSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag>, newModelPlan: Array<UserNotificationPreferenceFlag> } } };
+export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag>, newModelPlan: Array<UserNotificationPreferenceFlag>, datesChanged: Array<UserNotificationPreferenceFlag>, datesChangedNotificationType?: DatesChangedNotificationType | null } } };
 
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'AddedAsCollaboratorMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<TableName>, readyForReview: Array<TableName>, readyForClearance: Array<TableName> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'ModelPlanSharedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, optionalMessage?: string | null, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewModelPlanActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
+export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'AddedAsCollaboratorMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<TableName>, readyForReview: Array<TableName>, readyForClearance: Array<TableName> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'DatesChangedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string }, dateChanges: Array<{ __typename: 'DateChange', isChanged: boolean, field: DateChangeFieldType, isRange: boolean, oldDate?: Time | null, newDate?: Time | null, oldRangeStart?: Time | null, oldRangeEnd?: Time | null, newRangeStart?: Time | null, newRangeEnd?: Time | null }> } | { __typename: 'ModelPlanSharedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, optionalMessage?: string | null, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewModelPlanActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
 
 export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4593,7 +4693,7 @@ export type UpdateNotificationSettingsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateNotificationSettingsMutation = { __typename: 'Mutation', updateUserNotificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag>, newModelPlan: Array<UserNotificationPreferenceFlag> } };
+export type UpdateNotificationSettingsMutation = { __typename: 'Mutation', updateUserNotificationPreferences: { __typename: 'UserNotificationPreferences', id: UUID, dailyDigestComplete: Array<UserNotificationPreferenceFlag>, addedAsCollaborator: Array<UserNotificationPreferenceFlag>, taggedInDiscussion: Array<UserNotificationPreferenceFlag>, taggedInDiscussionReply: Array<UserNotificationPreferenceFlag>, newDiscussionReply: Array<UserNotificationPreferenceFlag>, modelPlanShared: Array<UserNotificationPreferenceFlag>, newModelPlan: Array<UserNotificationPreferenceFlag>, datesChanged: Array<UserNotificationPreferenceFlag>, datesChangedNotificationType?: DatesChangedNotificationType | null } };
 
 export type MarkNotificationAsReadMutationVariables = Exact<{
   notificationID: Scalars['UUID']['input'];
@@ -9812,6 +9912,8 @@ export const GetNotificationSettingsDocument = gql`
       newDiscussionReply
       modelPlanShared
       newModelPlan
+      datesChanged
+      datesChangedNotificationType
     }
   }
 }
@@ -9879,6 +9981,25 @@ export const GetNotificationsDocument = gql`
                 modelName
               }
               content
+            }
+            ... on DatesChangedActivityMeta {
+              version
+              type
+              modelPlan {
+                modelName
+              }
+              modelPlanID
+              dateChanges {
+                isChanged
+                field
+                isRange
+                oldDate
+                newDate
+                oldRangeStart
+                oldRangeEnd
+                newRangeStart
+                newRangeEnd
+              }
             }
             ... on TaggedInPlanDiscussionActivityMeta {
               version
@@ -10087,6 +10208,8 @@ export const UpdateNotificationSettingsDocument = gql`
     newDiscussionReply
     modelPlanShared
     newModelPlan
+    datesChanged
+    datesChangedNotificationType
   }
 }
     `;
@@ -12701,11 +12824,11 @@ export const TypedGetUserInfoDocument = {"kind":"Document","definitions":[{"kind
 export const TypedSearchOktaUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchOktaUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchOktaUsers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchTerm"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>;
 export const TypedUpdateModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateModelPlanMutation, UpdateModelPlanMutationVariables>;
 export const TypedUpdateNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreeToNDA"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"agree"},"value":{"kind":"BooleanValue","value":true}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<UpdateNdaMutation, UpdateNdaMutationVariables>;
-export const TypedGetNotificationSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotificationSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notificationPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dailyDigestComplete"}},{"kind":"Field","name":{"kind":"Name","value":"addedAsCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussion"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"newDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanShared"}},{"kind":"Field","name":{"kind":"Name","value":"newModelPlan"}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>;
-export const TypedGetNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUnreadNotifications"}},{"kind":"Field","name":{"kind":"Name","value":"notifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isRead"}},{"kind":"Field","name":{"kind":"Name","value":"inAppSent"}},{"kind":"Field","name":{"kind":"Name","value":"emailSent"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"activity"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activityType"}},{"kind":"Field","name":{"kind":"Name","value":"entityID"}},{"kind":"Field","name":{"kind":"Name","value":"actorID"}},{"kind":"Field","name":{"kind":"Name","value":"actorUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewDiscussionRepliedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"replyID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TaggedInPlanDiscussionActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AddedAsCollaboratorMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TaggedInDiscussionReplyActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"replyID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanSharedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"optionalMessage"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewModelPlanActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DailyDigestCompleteActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanIDs"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"analyzedAudits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"changes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"oldName"}},{"kind":"Field","name":{"kind":"Name","value":"statusChanges"}}]}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"Field","name":{"kind":"Name","value":"crTdls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activity"}}]}},{"kind":"Field","name":{"kind":"Name","value":"planSections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReview"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearance"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelLeads"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"added"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"planDiscussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activity"}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationsQuery, GetNotificationsQueryVariables>;
+export const TypedGetNotificationSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotificationSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notificationPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dailyDigestComplete"}},{"kind":"Field","name":{"kind":"Name","value":"addedAsCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussion"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"newDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanShared"}},{"kind":"Field","name":{"kind":"Name","value":"newModelPlan"}},{"kind":"Field","name":{"kind":"Name","value":"datesChanged"}},{"kind":"Field","name":{"kind":"Name","value":"datesChangedNotificationType"}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationSettingsQuery, GetNotificationSettingsQueryVariables>;
+export const TypedGetNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUnreadNotifications"}},{"kind":"Field","name":{"kind":"Name","value":"notifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isRead"}},{"kind":"Field","name":{"kind":"Name","value":"inAppSent"}},{"kind":"Field","name":{"kind":"Name","value":"emailSent"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"activity"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activityType"}},{"kind":"Field","name":{"kind":"Name","value":"entityID"}},{"kind":"Field","name":{"kind":"Name","value":"actorID"}},{"kind":"Field","name":{"kind":"Name","value":"actorUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewDiscussionRepliedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"replyID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DatesChangedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"dateChanges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isChanged"}},{"kind":"Field","name":{"kind":"Name","value":"field"}},{"kind":"Field","name":{"kind":"Name","value":"isRange"}},{"kind":"Field","name":{"kind":"Name","value":"oldDate"}},{"kind":"Field","name":{"kind":"Name","value":"newDate"}},{"kind":"Field","name":{"kind":"Name","value":"oldRangeStart"}},{"kind":"Field","name":{"kind":"Name","value":"oldRangeEnd"}},{"kind":"Field","name":{"kind":"Name","value":"newRangeStart"}},{"kind":"Field","name":{"kind":"Name","value":"newRangeEnd"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TaggedInPlanDiscussionActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AddedAsCollaboratorMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TaggedInDiscussionReplyActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"replyID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanSharedActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"optionalMessage"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"NewModelPlanActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"DailyDigestCompleteActivityMeta"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanIDs"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"analyzedAudits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"changes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"oldName"}},{"kind":"Field","name":{"kind":"Name","value":"statusChanges"}}]}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}},{"kind":"Field","name":{"kind":"Name","value":"crTdls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activity"}}]}},{"kind":"Field","name":{"kind":"Name","value":"planSections"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updated"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReview"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearance"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelLeads"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"added"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"planDiscussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activity"}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetNotificationsQuery, GetNotificationsQueryVariables>;
 export const TypedGetPollNotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPollNotifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"numUnreadNotifications"}}]}}]}}]}}]} as unknown as DocumentNode<GetPollNotificationsQuery, GetPollNotificationsQueryVariables>;
 export const TypedUpdateAllNotificationsAsReadDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateAllNotificationsAsRead"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"markAllNotificationsAsRead"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateAllNotificationsAsReadMutation, UpdateAllNotificationsAsReadMutationVariables>;
-export const TypedUpdateNotificationSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateNotificationSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserNotificationPreferencesChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUserNotificationPreferences"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dailyDigestComplete"}},{"kind":"Field","name":{"kind":"Name","value":"addedAsCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussion"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"newDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanShared"}},{"kind":"Field","name":{"kind":"Name","value":"newModelPlan"}}]}}]}}]} as unknown as DocumentNode<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>;
+export const TypedUpdateNotificationSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateNotificationSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserNotificationPreferencesChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUserNotificationPreferences"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"dailyDigestComplete"}},{"kind":"Field","name":{"kind":"Name","value":"addedAsCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussion"}},{"kind":"Field","name":{"kind":"Name","value":"taggedInDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"newDiscussionReply"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanShared"}},{"kind":"Field","name":{"kind":"Name","value":"newModelPlan"}},{"kind":"Field","name":{"kind":"Name","value":"datesChanged"}},{"kind":"Field","name":{"kind":"Name","value":"datesChangedNotificationType"}}]}}]}}]} as unknown as DocumentNode<UpdateNotificationSettingsMutation, UpdateNotificationSettingsMutationVariables>;
 export const TypedMarkNotificationAsReadDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MarkNotificationAsRead"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"notificationID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"markNotificationAsRead"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"notificationID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"notificationID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isRead"}}]}}]}}]} as unknown as DocumentNode<MarkNotificationAsReadMutation, MarkNotificationAsReadMutationVariables>;
 export const TypedGetAllOpsEvalAndLearningDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllOpsEvalAndLearning"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholders"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersOther"}},{"kind":"Field","name":{"kind":"Name","value":"stakeholdersNote"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUse"}},{"kind":"Field","name":{"kind":"Name","value":"helpdeskUseNote"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupport"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportHow"}},{"kind":"Field","name":{"kind":"Name","value":"contractorSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupportNote"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentified"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedDetail"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedNote"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfo"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfoNote"}},{"kind":"Field","name":{"kind":"Name","value":"icdOwner"}},{"kind":"Field","name":{"kind":"Name","value":"draftIcdDueDate"}},{"kind":"Field","name":{"kind":"Name","value":"icdNote"}},{"kind":"Field","name":{"kind":"Name","value":"uatNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"stcNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"testingTimelines"}},{"kind":"Field","name":{"kind":"Name","value":"testingNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileTypes"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseType"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseFileFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataFullTimeOrIncremental"}},{"kind":"Field","name":{"kind":"Name","value":"eftSetUp"}},{"kind":"Field","name":{"kind":"Name","value":"unsolicitedAdjustmentsIncluded"}},{"kind":"Field","name":{"kind":"Name","value":"dataFlowDiagramsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"produceBenefitEnhancementFiles"}},{"kind":"Field","name":{"kind":"Name","value":"fileNamingConventions"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"benchmarkForPerformanceNote"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScores"}},{"kind":"Field","name":{"kind":"Name","value":"computePerformanceScoresNote"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustPayments"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustOther"}},{"kind":"Field","name":{"kind":"Name","value":"riskAdjustNote"}},{"kind":"Field","name":{"kind":"Name","value":"appealPerformance"}},{"kind":"Field","name":{"kind":"Name","value":"appealFeedback"}},{"kind":"Field","name":{"kind":"Name","value":"appealPayments"}},{"kind":"Field","name":{"kind":"Name","value":"appealOther"}},{"kind":"Field","name":{"kind":"Name","value":"appealNote"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproaches"}},{"kind":"Field","name":{"kind":"Name","value":"evaluationApproachOther"}},{"kind":"Field","name":{"kind":"Name","value":"evalutaionApproachNote"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentOther"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvmentNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoringNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipants"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataToSendParticicipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfData"}},{"kind":"Field","name":{"kind":"Name","value":"shareCclfDataNote"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcw"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcwNote"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToKnown"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToWhich"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToNote"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasuresNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPayment"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataSharingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStarts"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataCollectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStarts"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingStartsNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"qualityReportingFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystems"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsOther"}},{"kind":"Field","name":{"kind":"Name","value":"modelLearningSystemsNote"}},{"kind":"Field","name":{"kind":"Name","value":"anticipatedChallenges"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllOpsEvalAndLearningQuery, GetAllOpsEvalAndLearningQueryVariables>;
 export const TypedGetCcwAndQualityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCCWAndQuality"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ccmInvolvment"}},{"kind":"Field","name":{"kind":"Name","value":"dataNeededForMonitoring"}},{"kind":"Field","name":{"kind":"Name","value":"iddocSupport"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcw"}},{"kind":"Field","name":{"kind":"Name","value":"sendFilesBetweenCcwNote"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToKnown"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToWhich"}},{"kind":"Field","name":{"kind":"Name","value":"appToSendFilesToNote"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"useCcwForFileDistribiutionToParticipantsNote"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasures"}},{"kind":"Field","name":{"kind":"Name","value":"developNewQualityMeasuresNote"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPayment"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentOther"}},{"kind":"Field","name":{"kind":"Name","value":"qualityPerformanceImpactsPaymentNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetCcwAndQualityQuery, GetCcwAndQualityQueryVariables>;

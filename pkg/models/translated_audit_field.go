@@ -2,7 +2,6 @@ package models
 
 import (
 	"database/sql/driver"
-	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/lib/pq"
@@ -52,7 +51,10 @@ type TranslatedAuditField struct {
 	DataType TranslationDataType `json:"dataType" db:"data_type"`
 	FormType TranslationFormType `json:"formType" db:"form_type"`
 
-	// Changes: (Structure) Can we use a union generic type for these values instead of interface?
+	// Note, these interface types generally get interpreted by pq to be a string. This results in returned characters that are meant to escape a string.
+	// Currently, the conversion is handled on the frontend. See TranslatedAuditField Loader note https://github.com/CMSgov/mint-app/blob/cfdbc9bc694badf2ff42b0e3772106ecddc91016/pkg/storage/loaders/translated_audit_field_loader.go#L38
+	// This is stored correctly in the database, it is just how it is returned from the database, and to graphql in turn.
+
 	Old           interface{} `json:"old" db:"old"`
 	OldTranslated interface{} `json:"oldTranslated" db:"old_translated"`
 	New           interface{} `json:"new" db:"new"`
@@ -62,9 +64,6 @@ type TranslatedAuditField struct {
 // NewTranslatedAuditField
 func NewTranslatedAuditField(
 	createdBy uuid.UUID,
-
-	// translatedAuditID uuid.UUID, //Audit ID is handled during serialization
-
 	fieldName string,
 	fieldNameTranslated string,
 	fieldOrder float64,
@@ -77,10 +76,7 @@ func NewTranslatedAuditField(
 ) TranslatedAuditField {
 
 	return TranslatedAuditField{
-		baseStruct: NewBaseStruct(createdBy),
-
-		// TranslatedAuditID: translatedAuditID,
-
+		baseStruct:          NewBaseStruct(createdBy),
 		FieldName:           fieldName,
 		FieldNameTranslated: fieldNameTranslated,
 		FieldOrder:          fieldOrder,
@@ -92,65 +88,5 @@ func NewTranslatedAuditField(
 		DataType: dataType,
 		FormType: formType,
 	}
-
-}
-
-// ParseStringArray converts values that should be viewed as an array to an array
-func (taf *TranslatedAuditField) ParseStringArray() error {
-	// Changes (Serialization) HANDLE IF ANY OF THESE ARE NULL! DON'T BLOCK PROCESSING THE OTHER ONES AND RETURN EARLY
-	if taf.Old != nil {
-		oldArray, err := parseInterfaceToArray(taf.Old)
-		if err == nil {
-			taf.Old = oldArray
-		}
-
-	}
-
-	if taf.OldTranslated != nil {
-		oldTranslatedArray, err := parseInterfaceToArray(taf.OldTranslated)
-		if err == nil {
-			taf.OldTranslated = oldTranslatedArray
-		}
-
-	}
-
-	if taf.New != nil {
-		newArray, err := parseInterfaceToArray(taf.New)
-		if err == nil {
-			taf.New = newArray
-		}
-
-	}
-
-	if taf.NewTranslated != nil {
-		newTranslatedArray, err := parseInterfaceToArray(taf.NewTranslated)
-		if err == nil {
-			taf.NewTranslated = newTranslatedArray
-		}
-	}
-
-	return nil
-
-}
-
-// parseInterfaceToArray attempts to parse an interface object to a string array. It will return nil if it isn't an array
-func parseInterfaceToArray(value interface{}) ([]string, error) {
-	stringSlice, ok := value.([]interface{})
-	if !ok {
-
-		return nil, fmt.Errorf("error: Could not assert interface to []interface{}")
-	}
-
-	// Convert []interface{} to []string
-	var stringArray []string
-	for _, v := range stringSlice {
-		if str, ok := v.(string); ok {
-			stringArray = append(stringArray, str)
-		} else {
-
-			return nil, fmt.Errorf("error: Element in slice is not a string")
-		}
-	}
-	return stringArray, nil
 
 }

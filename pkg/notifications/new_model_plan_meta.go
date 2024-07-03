@@ -16,7 +16,7 @@ func ActivityNewModelPlanCreate(
 	np sqlutils.NamedPreparer,
 	actorID uuid.UUID,
 	modelPlanID uuid.UUID,
-	userAccountPrefs []*models.UserAccountNotificationPreferences,
+	userAccountPrefs []*models.UserAccountAndNotificationPreferences,
 ) (*models.Activity, error) {
 
 	activity := models.NewNewModelPlanMetaActivity(actorID, modelPlanID)
@@ -27,7 +27,7 @@ func ActivityNewModelPlanCreate(
 	}
 
 	for _, pref := range userAccountPrefs {
-		_, err := userNotificationCreate(ctx, np, retActivity, pref.UserID, pref.NewModelPlanNotification)
+		_, err := userNotificationCreate(ctx, np, retActivity, pref.ID, pref.PreferenceFlags)
 		if err != nil {
 			return nil, err
 		}
