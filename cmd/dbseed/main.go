@@ -269,6 +269,8 @@ func (s *Seeder) SeedData() {
 		planWithDocuments.ID,
 	)
 
+	dataExchangeApproach.ID = uuid.MustParse("01020304-0506-0708-090a-0b0c0d0e0f10")
+
 	// create an actor principal for testing notifications
 
 	actorPrincipal := s.getTestPrincipalByUsername("MINT")
