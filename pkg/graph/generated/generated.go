@@ -1240,23 +1240,24 @@ type ComplexityRoot struct {
 	}
 
 	UserNotificationPreferences struct {
-		AddedAsCollaborator          func(childComplexity int) int
-		CreatedBy                    func(childComplexity int) int
-		CreatedByUserAccount         func(childComplexity int) int
-		CreatedDts                   func(childComplexity int) int
-		DailyDigestComplete          func(childComplexity int) int
-		DatesChanged                 func(childComplexity int) int
-		DatesChangedNotificationType func(childComplexity int) int
-		ID                           func(childComplexity int) int
-		ModelPlanShared              func(childComplexity int) int
-		ModifiedBy                   func(childComplexity int) int
-		ModifiedByUserAccount        func(childComplexity int) int
-		ModifiedDts                  func(childComplexity int) int
-		NewDiscussionReply           func(childComplexity int) int
-		NewModelPlan                 func(childComplexity int) int
-		TaggedInDiscussion           func(childComplexity int) int
-		TaggedInDiscussionReply      func(childComplexity int) int
-		UserID                       func(childComplexity int) int
+		AddedAsCollaborator           func(childComplexity int) int
+		CreatedBy                     func(childComplexity int) int
+		CreatedByUserAccount          func(childComplexity int) int
+		CreatedDts                    func(childComplexity int) int
+		DailyDigestComplete           func(childComplexity int) int
+		DataExchangeApproachCompleted func(childComplexity int) int
+		DatesChanged                  func(childComplexity int) int
+		DatesChangedNotificationType  func(childComplexity int) int
+		ID                            func(childComplexity int) int
+		ModelPlanShared               func(childComplexity int) int
+		ModifiedBy                    func(childComplexity int) int
+		ModifiedByUserAccount         func(childComplexity int) int
+		ModifiedDts                   func(childComplexity int) int
+		NewDiscussionReply            func(childComplexity int) int
+		NewModelPlan                  func(childComplexity int) int
+		TaggedInDiscussion            func(childComplexity int) int
+		TaggedInDiscussionReply       func(childComplexity int) int
+		UserID                        func(childComplexity int) int
 	}
 
 	UserNotifications struct {
@@ -1613,6 +1614,8 @@ type UserNotificationPreferencesResolver interface {
 	ModelPlanShared(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	NewModelPlan(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	DatesChanged(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+
+	DataExchangeApproachCompleted(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 }
 type UserViewCustomizationResolver interface {
 	ViewCustomization(ctx context.Context, obj *models.UserViewCustomization) ([]models.ViewCustomizationType, error)
@@ -8742,6 +8745,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserNotificationPreferences.DailyDigestComplete(childComplexity), true
 
+	case "UserNotificationPreferences.dataExchangeApproachCompleted":
+		if e.complexity.UserNotificationPreferences.DataExchangeApproachCompleted == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.DataExchangeApproachCompleted(childComplexity), true
+
 	case "UserNotificationPreferences.datesChanged":
 		if e.complexity.UserNotificationPreferences.DatesChanged == nil {
 			break
@@ -12171,6 +12181,8 @@ type UserNotificationPreferences {
   datesChanged: [UserNotificationPreferenceFlag!]!
   datesChangedNotificationType: DatesChangedNotificationType
 
+  dataExchangeApproachCompleted: [UserNotificationPreferenceFlag!]!
+
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -12201,6 +12213,8 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
 
   datesChanged: [UserNotificationPreferenceFlag!]
   datesChangedNotificationType: DatesChangedNotificationType
+
+  dataExchangeApproachCompleted: [UserNotificationPreferenceFlag!]
 }
 
 extend type Mutation {
@@ -16501,6 +16515,8 @@ func (ec *executionContext) fieldContext_CurrentUser_notificationPreferences(ctx
 				return ec.fieldContext_UserNotificationPreferences_datesChanged(ctx, field)
 			case "datesChangedNotificationType":
 				return ec.fieldContext_UserNotificationPreferences_datesChangedNotificationType(ctx, field)
+			case "dataExchangeApproachCompleted":
+				return ec.fieldContext_UserNotificationPreferences_dataExchangeApproachCompleted(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -28799,6 +28815,8 @@ func (ec *executionContext) fieldContext_Mutation_updateUserNotificationPreferen
 				return ec.fieldContext_UserNotificationPreferences_datesChanged(ctx, field)
 			case "datesChangedNotificationType":
 				return ec.fieldContext_UserNotificationPreferences_datesChangedNotificationType(ctx, field)
+			case "dataExchangeApproachCompleted":
+				return ec.fieldContext_UserNotificationPreferences_dataExchangeApproachCompleted(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -64202,6 +64220,50 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_datesChange
 	return fc, nil
 }
 
+func (ec *executionContext) _UserNotificationPreferences_dataExchangeApproachCompleted(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_dataExchangeApproachCompleted(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.UserNotificationPreferences().DataExchangeApproachCompleted(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.UserNotificationPreferenceFlag)
+	fc.Result = res
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_dataExchangeApproachCompleted(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UserNotificationPreferenceFlag does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _UserNotificationPreferences_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 	if err != nil {
@@ -79996,6 +80058,42 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "datesChangedNotificationType":
 			out.Values[i] = ec._UserNotificationPreferences_datesChangedNotificationType(ctx, field, obj)
+		case "dataExchangeApproachCompleted":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_dataExchangeApproachCompleted(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "createdBy":
 			out.Values[i] = ec._UserNotificationPreferences_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
