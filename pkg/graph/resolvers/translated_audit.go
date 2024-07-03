@@ -19,7 +19,7 @@ import (
 // offset: how many records to skip before returning results. If null, no records will be skipped.
 func TranslatedAuditCollectionGetByModelPlanID(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
 
-	hasPrivilegedAccess, err := accesscontrol.IsCollaboratorModelPlanID(logger, principal, store, modelPlanID)
+	hasPrivilegedAccess, err := accesscontrol.HasPrivilegedDocumentAccessByModelPlanID(logger, principal, store, modelPlanID)
 	if err != nil {
 		return nil, fmt.Errorf("unable to determine appropriate access level to view audit collection. err %w", err)
 		//If desired, we could just return the non-privileged version on error there
