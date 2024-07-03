@@ -10,8 +10,6 @@ import (
 // is relevant to completing a Data Exchange Approach
 type DataExchangeApproachCompletedActivityMeta struct {
 	ActivityMetaBaseStruct
-	Version              int                   `json:"version"`
-	Type                 ActivityType          `json:"type"`
 	DataExchangeApproach *DataExchangeApproach `json:"dataExchangeApproach"`
 	MarkedCompleteBy     uuid.UUID             `json:"markedCompleteBy"`
 }
