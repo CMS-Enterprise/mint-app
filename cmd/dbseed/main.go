@@ -5,9 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/notifications"
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
-
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 
@@ -275,15 +272,24 @@ func (s *Seeder) SeedData() {
 
 	actorPrincipal := s.getTestPrincipalByUsername("MINT")
 
-	_, err = notifications.ActivityDataExchangeApproachCompletedCreate(
+	// Use a test user to mark the data exchange approach as complete
+	testUser := s.getTestPrincipalByUsername("BTAL")
+
+	err = resolvers.SendDataExchangeApproachCompletedNotification(
 		s.Config.Context,
+		s.Config.EmailService,
+		s.Config.EmailTemplateService,
+		s.Config.AddressBook,
 		actorPrincipal.UserAccount.ID,
 		s.Config.Store,
 		[]uuid.UUID{planWithDocuments.CreatedBy},
+		planWithDocuments,
 		dataExchangeApproach,
-		planWithDocuments.CreatedBy,
-		loaders.UserNotificationPreferencesGetByUserID,
+		testUser.UserAccount.ID,
 	)
+	if err != nil {
+		panic(fmt.Errorf("failed to send data exchange approach completed notification: %w", err))
+	}
 }
 
 // CreateAnalyzedAuditData uses the seeder to generate analyzed audits. It will make one record for all changes just seeded

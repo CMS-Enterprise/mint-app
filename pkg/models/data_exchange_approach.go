@@ -6,8 +6,6 @@ import (
 	"github.com/google/uuid"
 )
 
-// TODO: Should this be DataExchange? DataExchangeConcept? How do we want to identify this model?
-
 // DataExchangeApproach represents the data exchange approach of a model plan
 type DataExchangeApproach struct {
 	baseStruct
