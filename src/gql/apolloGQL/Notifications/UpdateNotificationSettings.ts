@@ -15,7 +15,6 @@ export default gql(/* GraphQL */ `
       newModelPlan
       datesChanged
       datesChangedNotificationType
-      dataExchangeApproachCompleted
     }
   }
 `);

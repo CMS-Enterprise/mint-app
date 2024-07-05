@@ -20,10 +20,6 @@ const notifications = {
           hide: 'Hide digest'
         }
       },
-      DATA_EXCHANGE_APPROACH_COMPLETED: {
-        text: 'Data Exchange Approach completed for {{-modelName}}.',
-        cta: 'View Model Plan'
-      },
       DATES_CHANGED: {
         text: 'Dates have been updated for {{-modelName}}.',
         cta: {
@@ -99,12 +95,6 @@ const notifications = {
         PERFORMANCE_PERIOD: 'Performance period',
         WRAP_UP_ENDS: 'Model wrap-up end date'
       }
-    },
-    dataExchangeApproachCompleted: {
-      heading: 'Data Exchange Approach completed for {{-modelName}}',
-      subheading:
-        'The Data Exchange Approach has been completed for this model.',
-      cta: 'View this Model Plan'
     }
   },
   settings: {
@@ -132,9 +122,7 @@ const notifications = {
       newDiscussionReply: 'When someone replies to a discussion I started',
       modelPlanShared: 'When someone shares a Model Plan with me',
       newModelPlan: 'When a new Model Plan is created',
-      datesChanged: 'When model dates change',
-      dataExchangeApproachCompleted:
-        'When the Data Exchange Approach is completed'
+      datesChanged: 'When model dates change'
     },
     additionalConfigurations: {
       whichModel: 'Which models?',
@@ -158,9 +146,7 @@ const notifications = {
         'You are already unsubscribed from email notifications <bold>{{-notificationType}}.</bold>',
       activityType: {
         NEW_MODEL_PLAN: 'when a new Model Plan is created',
-        DATES_CHANGED: 'when model dates change',
-        DATA_EXCHANGE_APPROACH_COMPLETED:
-          'when the Data Exchange Approach is completed'
+        DATES_CHANGED: 'when model dates change'
       }
     }
   }
