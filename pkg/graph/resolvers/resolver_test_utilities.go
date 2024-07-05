@@ -129,7 +129,7 @@ func getTestPrincipal(store *storage.Store, userName string) *authentication.App
 
 }
 
-func createAddedAsCollaboratorTemplateCacheHelper(
+func createDummyTemplateCacheHelper(
 	planName string,
 	plan *models.ModelPlan) (*emailTemplates.EmailTemplate, string, string) {
 	templateCache := emailTemplates.NewTemplateCache()

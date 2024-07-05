@@ -4,13 +4,10 @@ import (
 	"github.com/golang/mock/gomock"
 
 	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
-	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
-func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
+func (s *ResolverSuite) TestDataExchangeApproachCompletedEmail() {
 	mockController := gomock.NewController(s.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
 	mockEmailTemplateService := email.NewMockTemplateService(mockController)
@@ -18,19 +15,18 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 	planName := "Plan For Milestones"
 	plan := s.createModelPlan(planName)
 
-	collaboratorInput := &model.PlanCollaboratorCreateInput{
-		ModelPlanID: plan.ID,
-		UserName:    "CLAB",
-		TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+		MINTTeamEmail: "mint.team@local.fake",
 	}
-	expectedEmail := "CLAB.doe@local.fake" // This comes from the stub fetch user info function
 
 	testTemplate, expectedSubject, expectedBody := createDummyTemplateCacheHelper(planName, plan)
 	mockEmailTemplateService.
 		EXPECT().
-		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).
+		GetEmailTemplate(gomock.Eq(email.DataExchangeApproachCompletedTemplateName)).
 		Return(testTemplate, nil).
 		AnyTimes()
+	expectedEmail := addressBook.MINTTeamEmail
 
 	mockEmailService.
 		EXPECT().
@@ -42,11 +38,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 			gomock.Any(),
 			gomock.Eq(expectedBody),
 		).
-		AnyTimes()
-
-	addressBook := email.AddressBook{
-		DefaultSender: "unit-test-execution@mint.cms.gov",
-	}
+		Times(1)
 
 	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
 		ClientAddress: "http://localhost:3005",
@@ -58,20 +50,16 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		Return(emailServiceConfig).
 		AnyTimes()
 
-	_, _, err := PlanCollaboratorCreate(
-		s.testConfigs.Context,
-		s.testConfigs.Store,
-		s.testConfigs.Store,
-		s.testConfigs.Logger,
+	err := SendDataExchangeApproachCompletedEmailNotification(
 		mockEmailService,
 		mockEmailTemplateService,
 		addressBook,
-		collaboratorInput,
-		s.testConfigs.Principal,
+		plan,
+		expectedEmail,
+		"Test User",
 		false,
-		userhelpers.GetUserInfoAccountInfoWrapperFunc(s.stubFetchUserInfo),
-		true,
 	)
 	s.NoError(err)
+
 	mockController.Finish()
 }
