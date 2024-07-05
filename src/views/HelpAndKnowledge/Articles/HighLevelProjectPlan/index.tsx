@@ -22,6 +22,8 @@ import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/Related
 import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
+import { ArticleCategories, HelpArticle } from '..';
+
 import Table from './table';
 
 const HighLevelProjectPlan = () => {
@@ -100,7 +102,7 @@ const HighLevelProjectPlan = () => {
               {highLevelT('title')}
             </PageHeading>
             <HelpCategoryTag
-              type="getting-started"
+              type={ArticleCategories.GETTING_STARTED}
               className="margin-bottom-1"
             />
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
@@ -132,10 +134,10 @@ const HighLevelProjectPlan = () => {
         <div className="margin-top-6 margin-bottom-neg-7">
           <RelatedArticles
             currentArticle={highLevelT('title')}
-            specificArticleNames={[
-              'How to have a successful 2-pager meeting',
-              'Model Plan Overview',
-              'Sample Model Plan'
+            specificArticles={[
+              HelpArticle.TWO_PAGER_MEETING,
+              HelpArticle.MODEL_PLAN_OVERVIEW,
+              HelpArticle.SAMPLE_MODEL_PLAN
             ]}
             viewAllLink
           />
