@@ -59,7 +59,7 @@ const HomeNew = () => {
           {t('requestsTable.basic.heading')}
         </h2>
 
-        <p className="margin-y-0">{t('requestsTable.basic.subheading')}</p>
+        <p>{t('requestsTable.basic.subheading')}</p>
 
         <ModelPlansTable
           type="home"
@@ -77,7 +77,7 @@ const HomeNew = () => {
 
         <ModelPlansTable
           type="home"
-          userModels
+          userModels={false}
           isAssessment={isAssessment(userGroups, flags)}
           isMAC={false}
         />
