@@ -16,6 +16,8 @@ import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBrea
 import HelpCategoryTag from 'views/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
+import { ArticleCategories, HelpArticle } from '..';
+
 const covertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
 
@@ -75,7 +77,7 @@ const TwoPagerMeeting = () => {
               {twoPageMeetingT('title')}
             </PageHeading>
             <HelpCategoryTag
-              type="getting-started"
+              type={ArticleCategories.GETTING_STARTED}
               className="margin-bottom-1"
             />
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
@@ -337,11 +339,11 @@ const TwoPagerMeeting = () => {
       </MainContent>
       <div className="margin-top-6 margin-bottom-neg-7">
         <RelatedArticles
-          currentArticle={twoPageMeetingT('title')}
-          specificArticleNames={[
-            'How to have a successful 6-pager meeting',
-            'High-level project plans',
-            'Sample Model Plan'
+          currentArticle={HelpArticle.TWO_PAGER_MEETING}
+          specificArticles={[
+            HelpArticle.SIX_PAGER_MEETING,
+            HelpArticle.HIGH_LEVEL_PROJECT_PLAN,
+            HelpArticle.SAMPLE_MODEL_PLAN
           ]}
           viewAllLink
         />

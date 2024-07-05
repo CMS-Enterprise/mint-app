@@ -2,13 +2,15 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 
+import { ArticleCategories } from '../..';
+
 import HelpCategoryTag from './index';
 
 describe('HelpCategoryTag', () => {
   it('renders without errors', async () => {
     const { getByText, getByTestId } = render(
       <MemoryRouter>
-        <HelpCategoryTag type="getting-started" />
+        <HelpCategoryTag type={ArticleCategories.GETTING_STARTED} />
       </MemoryRouter>
     );
 

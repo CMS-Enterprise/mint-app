@@ -9,7 +9,7 @@ import HelpBreadcrumb from 'views/HelpAndKnowledge/Articles/_components/HelpBrea
 import NotFound from 'views/NotFound';
 
 import HelpCardGroup from '../_components/HelpCardGroup';
-import { articleCategories, ArticleTypeProps } from '..';
+import { ArticleCategories, articleCategories } from '..';
 
 const AllArticles = () => {
   const { t } = useTranslation('helpAndKnowledge');
@@ -18,7 +18,7 @@ const AllArticles = () => {
   const params = new URLSearchParams(location.search);
   const category = params.get('category');
 
-  if (category && !articleCategories.includes(category as ArticleTypeProps)) {
+  if (category && !articleCategories.includes(category as ArticleCategories)) {
     return <NotFound />;
   }
 
@@ -26,8 +26,12 @@ const AllArticles = () => {
     <MainContent>
       <GridContainer>
         <Grid>
-          <HelpBreadcrumb text={t(`${category || 'all'}`)} />
-          <PageHeading>{t(`${category || 'all'}`)}</PageHeading>
+          <HelpBreadcrumb
+            text={category ? t(`helpCategories.${category}`) : t(`${'all'}`)}
+          />
+          <PageHeading>
+            {category ? t(`helpCategories.${category}`) : t(`${'all'}`)}
+          </PageHeading>
 
           <HelpCardGroup
             className="margin-y-2"
