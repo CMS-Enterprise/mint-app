@@ -164,7 +164,11 @@ const HomeNew = () => {
                 <PageLoading />
               ) : (
                 data?.userViewCustomization.viewCustomization.map(
-                  customization => homepageComponents[customization]
+                  customization => (
+                    <div key={customization}>
+                      {homepageComponents[customization]}
+                    </div>
+                  )
                 )
               )}
 
