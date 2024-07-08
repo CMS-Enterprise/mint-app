@@ -118,10 +118,10 @@ const HomeNew = () => {
             {message}
 
             <Grid data-testid="homepage">
-              <Grid row>
-                <Grid tablet={{ col: 8 }}>
+              <Grid row className="padding-top-4">
+                <Grid desktop={{ col: 9 }}>
                   <div>
-                    <PageHeading className="margin-bottom-1">
+                    <PageHeading className="margin-bottom-1 margin-top-0">
                       {t('title')}
                     </PageHeading>
 
@@ -133,8 +133,8 @@ const HomeNew = () => {
                   </div>
                 </Grid>
 
-                <Grid tablet={{ col: 4 }}>
-                  <Card className="margin-top-4 margin-bottom-0 home__card display-flex">
+                <Grid desktop={{ col: 3 }}>
+                  <Card className="margin-y-0 home__card display-flex">
                     <p className="text-bold margin-top-0">
                       {t('customizeHomepage')}
                     </p>

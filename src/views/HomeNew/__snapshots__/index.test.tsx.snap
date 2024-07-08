@@ -99,17 +99,17 @@ exports[`The home page > matches setting snapshot 1`] = `
         data-testid="homepage"
       >
         <div
-          class="grid-row"
+          class="grid-row padding-top-4"
           data-testid="grid"
         >
           <div
-            class="tablet:grid-col-8"
+            class="desktop:grid-col-9"
             data-testid="grid"
           >
             <div>
               <h1
                 aria-live="polite"
-                class="mint-h1 margin-bottom-1"
+                class="mint-h1 margin-bottom-1 margin-top-0"
                 tabindex="-1"
               >
                 Welcome to MINT
@@ -122,11 +122,11 @@ exports[`The home page > matches setting snapshot 1`] = `
             </div>
           </div>
           <div
-            class="tablet:grid-col-4"
+            class="desktop:grid-col-3"
             data-testid="grid"
           >
             <li
-              class="usa-card margin-top-4 margin-bottom-0 home__card display-flex"
+              class="usa-card margin-y-0 home__card display-flex"
               data-testid="Card"
             >
               <div
