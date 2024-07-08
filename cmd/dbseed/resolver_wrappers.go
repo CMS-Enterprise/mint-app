@@ -277,7 +277,7 @@ func (s *Seeder) addPlanDocumentSolutionLinks(
 
 func (s *Seeder) getTestPrincipalByUsername(userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(s.Config.Context, s.Config.Store, s.Config.Store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(s.Config.Context, s.Config.Store, s.Config.Store, userName, true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(s.Config.FetchUserInfo))
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,

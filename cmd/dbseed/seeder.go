@@ -9,6 +9,8 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/local"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
@@ -46,6 +48,11 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 	}
 	addressBook := emailtestconfigs.InitializeAddressBook()
 
+	oktaClient, oktaClientErr := local.NewOktaAPIClient()
+	if oktaClientErr != nil {
+		logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+	}
+
 	seederConfig := SeederConfig{
 		Store:                store,
 		Logger:               logger,
@@ -54,6 +61,7 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 		EmailService:         emailService,
 		EmailTemplateService: emailTemplateService,
 		AddressBook:          addressBook,
+		FetchUserInfo:        oktaClient.FetchUserInfo,
 	}
 	return newSeeder(seederConfig)
 
@@ -68,4 +76,6 @@ type SeederConfig struct {
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateService
 	AddressBook          email.AddressBook
+	FetchUserInfo        func(context.Context, string) (*models.UserInfo, error)
+	// FetchUserInfo        userhelpers.GetAccountInfoFunc
 }
