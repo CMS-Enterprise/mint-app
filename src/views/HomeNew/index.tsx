@@ -98,34 +98,40 @@ const HomeNew = () => {
             {message}
 
             <Grid data-testid="homepage">
-              <div className="display-flex flex-justify">
-                <div>
-                  <PageHeading className="margin-bottom-1">
-                    {t('title')}
-                  </PageHeading>
-
-                  <p className="line-height-body-5 font-body-lg text-light margin-top-0 margin-bottom-3">
-                    {!isMAC(userGroups) ? t('subheading') : t('macSubheading')}
-                  </p>
-                </div>
-
-                <Card className="margin-top-4 margin-bottom-0 home__card">
-                  <p className="text-bold margin-top-0">
-                    {t('customizeHomepage')}
-                  </p>
-
+              <Grid row>
+                <Grid tablet={{ col: 8 }}>
                   <div>
-                    <UswdsReactLink
-                      variant="unstyled"
-                      to="/homepage-settings"
-                      className="display-flex flex-align-center"
-                    >
-                      <Icon.Edit className="margin-right-1 text-primary" />
-                      {t('editHomepage')}
-                    </UswdsReactLink>
+                    <PageHeading className="margin-bottom-1">
+                      {t('title')}
+                    </PageHeading>
+
+                    <p className="line-height-body-5 font-body-lg text-light margin-top-0 margin-bottom-3">
+                      {!isMAC(userGroups)
+                        ? t('subheading')
+                        : t('macSubheading')}
+                    </p>
                   </div>
-                </Card>
-              </div>
+                </Grid>
+
+                <Grid tablet={{ col: 4 }}>
+                  <Card className="margin-top-4 margin-bottom-0 home__card display-flex">
+                    <p className="text-bold margin-top-0">
+                      {t('customizeHomepage')}
+                    </p>
+
+                    <div>
+                      <UswdsReactLink
+                        variant="unstyled"
+                        to="/homepage-settings"
+                        className="display-flex flex-align-center"
+                      >
+                        <Icon.Edit className="margin-right-1 text-primary" />
+                        {t('editHomepage')}
+                      </UswdsReactLink>
+                    </div>
+                  </Card>
+                </Grid>
+              </Grid>
 
               {!isMAC(userGroups) && (
                 <SummaryBox className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3">

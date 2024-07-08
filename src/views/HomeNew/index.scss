@@ -2,6 +2,8 @@
 
 .home {
     &__card {
+        flex-direction: row-reverse;
+
         .usa-card__container {
             padding: 1rem;
             border-radius: .25rem;

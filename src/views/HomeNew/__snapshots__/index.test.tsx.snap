@@ -99,57 +99,68 @@ exports[`The home page > matches setting snapshot 1`] = `
         data-testid="homepage"
       >
         <div
-          class="display-flex flex-justify"
+          class="grid-row"
+          data-testid="grid"
         >
-          <div>
-            <h1
-              aria-live="polite"
-              class="mint-h1 margin-bottom-1"
-              tabindex="-1"
-            >
-              Welcome to MINT
-            </h1>
-            <p
-              class="line-height-body-5 font-body-lg text-light margin-top-0 margin-bottom-3"
-            >
-              The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model plans.
-            </p>
-          </div>
-          <li
-            class="usa-card margin-top-4 margin-bottom-0 home__card"
-            data-testid="Card"
+          <div
+            class="tablet:grid-col-8"
+            data-testid="grid"
           >
-            <div
-              class="usa-card__container"
-            >
-              <p
-                class="text-bold margin-top-0"
+            <div>
+              <h1
+                aria-live="polite"
+                class="mint-h1 margin-bottom-1"
+                tabindex="-1"
               >
-                Did you know you can customize this page?
+                Welcome to MINT
+              </h1>
+              <p
+                class="line-height-body-5 font-body-lg text-light margin-top-0 margin-bottom-3"
+              >
+                The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model plans.
               </p>
-              <div>
-                <a
-                  class="display-flex flex-align-center"
-                  href="/homepage-settings"
-                >
-                  <svg
-                    class="usa-icon margin-right-1 text-primary"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                    />
-                  </svg>
-                  Edit homepage settings
-                </a>
-              </div>
             </div>
-          </li>
+          </div>
+          <div
+            class="tablet:grid-col-4"
+            data-testid="grid"
+          >
+            <li
+              class="usa-card margin-top-4 margin-bottom-0 home__card display-flex"
+              data-testid="Card"
+            >
+              <div
+                class="usa-card__container"
+              >
+                <p
+                  class="text-bold margin-top-0"
+                >
+                  Did you know you can customize this page?
+                </p>
+                <div>
+                  <a
+                    class="display-flex flex-align-center"
+                    href="/homepage-settings"
+                  >
+                    <svg
+                      class="usa-icon margin-right-1 text-primary"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                      />
+                    </svg>
+                    Edit homepage settings
+                  </a>
+                </div>
+              </div>
+            </li>
+          </div>
         </div>
         <div
           class="usa-summary-box bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3"
