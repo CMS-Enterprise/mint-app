@@ -45,9 +45,7 @@ describe('Logging in', () => {
     cy.visit('/');
 
     cy.get('[data-testid="page-loading"]').should('not.exist');
-    cy.get('[data-testid="scrollable-table-container"]', {
-      timeout: 20000
-    }).should('exist');
-    cy.get('h2', { timeout: 20000 }).should('have.text', 'Upcoming models');
+
+    cy.get('h1', { timeout: 20000 }).should('have.text', 'Welcome to MINT');
   });
 });
