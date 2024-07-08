@@ -2,33 +2,47 @@ import { ViewCustomizationType } from 'gql/gen/graphql';
 
 export type HomepageSettingsType = Record<
   ViewCustomizationType,
-  Record<'heading' | 'description', string>
+  Record<string, string>
 >;
 
 const settings: HomepageSettingsType = {
   [ViewCustomizationType.MY_MODEL_PLANS]: {
     heading: 'My Model Plans',
     description:
-      'You have been added as a team member to the model plans below.'
+      'You have been added as a team member to the model plans below.',
+    noResultsHeading: 'You haven’t been added to any Model Plans yet.',
+    noResultsDescription:
+      'Once you create one or are added as a team member to an existing plan, it will appear here.'
   },
   [ViewCustomizationType.ALL_MODEL_PLANS]: {
     heading: 'All Model Plans',
-    description: ''
+    noResultsHeading: 'There are no model plans in MINT yet.',
+    noResultsDescription: 'Once a plan is created, it will appear here.'
   },
   [ViewCustomizationType.FOLLOWED_MODELS]: {
     heading: 'Models I’m following',
     description:
-      'This section shows only the models you’re following (like the one on the Models tab).'
+      'This section shows only the models you’re following (like the one on the Models tab).',
+    noResultsHeading: 'You haven’t been added to any Model Plans yet.',
+    noResultsDescription:
+      'Once you create one or are added as a team member to an existing plan, it will appear here.'
   },
   [ViewCustomizationType.MODELS_WITH_CR_TDL]: {
     heading: 'Models with FFS CRs or TDLs',
     description:
-      'View all of the models that contain Fee-for-Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs).'
+      'View all of the models that contain Fee-for-Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs).',
+    noResultsHeading:
+      'There are no model plans in FFS CRs or TDLs in MINT yet.',
+    noResultsDescription:
+      'Once a FFS CR or TDL plan is created, it will appear here.'
   },
   [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: {
     heading: 'Models using specific operational solutions',
     description:
-      'This tabbed section displays the models using the operational solutions you care about.'
+      'This tabbed section displays the models using the operational solutions you care about.',
+    noResultsHeading: 'You haven’t been added to any Model Plans yet.',
+    noResultsDescription:
+      'Once you create one or are added as a team member to an existing plan, it will appear here.'
   }
 };
 
@@ -44,10 +58,6 @@ const customHome = {
   viewMore: 'View {{-number}} more',
   viewLess: 'View less',
   more: 'more',
-  mintTasks: [
-    'collaborate on requirements for new CMMI models and demonstrations',
-    'access resources to help you complete your model plans'
-  ],
   settings,
   newModelSummaryBox: {
     copy: 'Have a new model or demonstration?',

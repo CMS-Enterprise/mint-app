@@ -444,8 +444,8 @@ const ModelPlansTable = ({
 
   if (data.length === 0) {
     return (
-      <Alert type="info" heading={homeT('requestsTable.empty.heading')}>
-        {homeT('requestsTable.empty.body')}
+      <Alert type="info" heading={homeT(`settings.${type}.noResultsHeading`)}>
+        {homeT(`settings.${type}.noResultsDescription`)}
       </Alert>
     );
   }
