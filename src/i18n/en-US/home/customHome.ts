@@ -1,12 +1,11 @@
 const customHome = {
-  title: 'Welcome to Model Innovation Tool (MINT)',
+  title: 'Welcome to MINT',
   subheading:
     'The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model plans.',
   macSubheading:
     'The place to learn about upcoming CMMI models and demonstrations.',
   signIn: 'Sign in to start',
   mintPurpose: 'You can use MINT to:',
-  startNow: 'Start a new Model Plan',
   previously: 'previously ',
   viewMore: 'View {{-number}} more',
   viewLess: 'View less',
@@ -39,10 +38,12 @@ const customHome = {
     id: 'model-plans',
     title: 'Model plans',
     basic: {
-      heading: 'My model plans'
+      heading: 'My Model Plans',
+      subheading:
+        'You have been added as a team member to the model plans below.'
     },
     admin: {
-      heading: 'All model plans'
+      heading: 'All Model Plans'
     },
     mac: {
       heading: 'Upcoming models',
@@ -79,7 +80,10 @@ const customHome = {
     updated: 'Updated',
     unansweredQuestion: 'unanswered question',
     answeredQuestion: 'answered question'
-  }
+  },
+  emptyHome: 'Your homepage looks a little empty.',
+  editHomepage: 'Edit homepage settings',
+  customizeHomepage: 'Did you know you can customize this page?'
 };
 
 export default customHome;

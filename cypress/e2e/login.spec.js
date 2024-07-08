@@ -30,20 +30,14 @@ describe('Logging in', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/');
 
-    cy.get('h1', { timeout: 20000 }).should(
-      'have.text',
-      'Welcome to Model Innovation Tool (MINT)'
-    );
+    cy.get('h1', { timeout: 20000 }).should('have.text', 'Welcome to MINT');
 
     cy.logout();
 
     cy.localLogin({ name: 'MINT', role: 'MINT_USER_NONPROD', nda: true });
     cy.visit('/');
 
-    cy.get('h1', { timeout: 20000 }).should(
-      'have.text',
-      'Welcome to Model Innovation Tool (MINT)'
-    );
+    cy.get('h1', { timeout: 20000 }).should('have.text', 'Welcome to MINT');
   });
 
   it('logs in with local MAC', () => {
@@ -51,9 +45,7 @@ describe('Logging in', () => {
     cy.visit('/');
 
     cy.get('[data-testid="page-loading"]').should('not.exist');
-    cy.get('[data-testid="scrollable-table-container"]', {
-      timeout: 20000
-    }).should('exist');
-    cy.get('h2', { timeout: 20000 }).should('have.text', 'Upcoming models');
+
+    cy.get('h1', { timeout: 20000 }).should('have.text', 'Welcome to MINT');
   });
 });

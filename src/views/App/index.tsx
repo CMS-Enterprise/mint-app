@@ -26,6 +26,7 @@ import FlagsWrapper from 'views/FlagsWrapper';
 import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import GetAccess from 'views/HelpAndKnowledge/Articles/GetAccess';
 import Home from 'views/Home';
+import HomeNew from 'views/HomeNew';
 import HomePageSettings from 'views/HomeNew/Settings';
 import SelectSolutionSettings from 'views/HomeNew/Settings/selectSolutions';
 import SettingsOrder from 'views/HomeNew/Settings/settingsOrder';
@@ -101,7 +102,12 @@ const AppRoutes = () => {
   return (
     <Switch>
       {/* General Routes */}
-      <Route path="/" exact component={Home} />
+
+      {flags.customHomepageEnabled ? (
+        <Route path="/" exact component={HomeNew} />
+      ) : (
+        <Route path="/" exact component={Home} />
+      )}
 
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />

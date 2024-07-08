@@ -492,33 +492,30 @@ const ModelPlansTable = ({
 
   return (
     <div className="model-plan-table">
-      <div className="mint-header__basic">
-        {!userModels && (
-          <GlobalClientFilter
-            setGlobalFilter={setGlobalFilter}
-            tableID={homeT('requestsTable.id')}
-            tableName={homeT('requestsTable.title')}
-            className="margin-bottom-4"
-          />
-        )}
+      <div className="mint-header__basic display-flex flex-justify flex-align-self-start">
+        <div>
+          {!userModels && (
+            <GlobalClientFilter
+              setGlobalFilter={setGlobalFilter}
+              tableID={homeT('requestsTable.id')}
+              tableName={homeT('requestsTable.title')}
+              className="margin-bottom-4 maxw-none width-mobile-lg"
+            />
+          )}
 
-        {isAssessment && !userModels && (
-          <div className="flex-align-self-center">
-            <CsvExportLink />
-          </div>
-        )}
+          {!userModels && (
+            <TableResults
+              globalFilter={state.globalFilter}
+              pageIndex={state.pageIndex}
+              pageSize={state.pageSize}
+              filteredRowLength={page.length}
+              rowLength={data.length}
+            />
+          )}
+        </div>
+
+        <>{isAssessment && !userModels && <CsvExportLink />}</>
       </div>
-
-      {!userModels && (
-        <TableResults
-          globalFilter={state.globalFilter}
-          pageIndex={state.pageIndex}
-          pageSize={state.pageSize}
-          filteredRowLength={page.length}
-          rowLength={data.length}
-          className="margin-bottom-4"
-        />
-      )}
 
       <UswdsTable {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">
