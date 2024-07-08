@@ -456,6 +456,20 @@ func getMockUserData() []*models.UserInfo {
 			FirstName:   "Isidro",
 			LastName:    "Swaniawski",
 		},
+		{
+			DisplayName: "Betty Alpha",
+			Email:       "betty.alpha@local.fake",
+			Username:    "BTAL",
+			FirstName:   "Betty",
+			LastName:    "Alpha",
+		},
+		{
+			DisplayName: "Bruce Wayne",
+			Email:       "bruce.wayne@gotham.city",
+			Username:    "BTMN",
+			FirstName:   "Bruce",
+			LastName:    "Wayne",
+		},
 	}
 }
 
