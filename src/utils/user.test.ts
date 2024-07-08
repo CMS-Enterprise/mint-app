@@ -45,7 +45,8 @@ describe('user', () => {
             helpScoutEnabled: false,
             feedbackEnabled: false,
             notificationsEnabled: false,
-            changeHistoryEnabled: false
+            changeHistoryEnabled: false,
+            customHomepageEnabled: false
           })
         ).toBe(false);
       });

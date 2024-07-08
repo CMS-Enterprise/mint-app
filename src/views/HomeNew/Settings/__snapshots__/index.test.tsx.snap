@@ -1,0 +1,597 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`settings snapshots > matches order snapshot 1`] = `
+<DocumentFragment>
+   
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="mobile:grid-col-12 tablet:grid-col-12 desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <nav
+          aria-label="Breadcrumbs"
+          class="usa-breadcrumb usa-breadcrumb--wrap"
+        >
+          <ol
+            class="usa-breadcrumb__list"
+          >
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-breadcrumb__link"
+                href="/"
+              >
+                <span>
+                  Home
+                </span>
+              </a>
+            </li>
+            <li
+              aria-current="page"
+              class="usa-breadcrumb__list-item usa-current"
+            >
+              Homepage settings
+            </li>
+          </ol>
+        </nav>
+        <h1
+          class="margin-bottom-2"
+        >
+          Homepage settings
+          <span
+            class="font-body-lg text-base text-normal margin-left-2"
+          >
+            (Step 2 of 2)
+          </span>
+        </h1>
+        <p
+          class="font-body-lg margin-top-0 margin-bottom-6"
+        >
+          Arrange the content however you wish. You can update this at any time.
+        </p>
+        <h3>
+          Set the display order for your homepage.
+        </h3>
+        <div
+          class="mobile:grid-col-12 tablet:grid-col-12 desktop:grid-col-6"
+          data-testid="grid"
+        >
+          <div
+            class="margin-top-8"
+          >
+            <div
+              class="margin-y-10"
+              data-testid="page-loading"
+            >
+              <div
+                class="text-center"
+              >
+                <span
+                  aria-busy="true"
+                  aria-valuetext="Loading the page"
+                  class="mint-spinner mint-spinner--xl"
+                  data-testid="spinner"
+                  role="progressbar"
+                />
+              </div>
+              <h1
+                class="margin-top-6 text-center"
+              >
+                Loading the page
+              </h1>
+            </div>
+          </div>
+        </div>
+        <div
+          class="display-flex"
+        >
+          <button
+            class="usa-button usa-button--outline margin-bottom-4"
+            data-testid="button"
+            type="button"
+          >
+            Back
+          </button>
+          <button
+            class="usa-button margin-bottom-4"
+            data-testid="save-settings-order"
+            type="submit"
+          >
+            Save customizations
+          </button>
+        </div>
+        <div>
+          <a
+            class="usa-link display-flex flex-align-center"
+            href="/"
+          >
+            <svg
+              class="usa-icon margin-right-2"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Don’t customize and return to homepage
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`settings snapshots > matches setting snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="mobile:grid-col-12 tablet:grid-col-12 desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <nav
+          aria-label="Breadcrumbs"
+          class="usa-breadcrumb usa-breadcrumb--wrap"
+        >
+          <ol
+            class="usa-breadcrumb__list"
+          >
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-breadcrumb__link"
+                href="/"
+              >
+                <span>
+                  Home
+                </span>
+              </a>
+            </li>
+            <li
+              aria-current="page"
+              class="usa-breadcrumb__list-item usa-current"
+            >
+              Homepage settings
+            </li>
+          </ol>
+        </nav>
+        <h1
+          class="margin-bottom-2"
+        >
+          Homepage settings
+          <span
+            class="font-body-lg text-base text-normal margin-left-2"
+          >
+            (Step 1 of 2)
+          </span>
+        </h1>
+        <p
+          class="font-body-lg margin-top-0 margin-bottom-6"
+        >
+          Display the content that’s most meaningful to your role. You can update this at any time.
+        </p>
+        <h3>
+          Select which information to display on your homepage.
+        </h3>
+        <form
+          action="#"
+        >
+          <ul
+            class="usa-card-group"
+            data-testid="CardGroup"
+          >
+            <div
+              class="mobile:grid-col-12 tablet:grid-col-12 desktop:grid-col-6"
+              data-testid="grid"
+            >
+              <li
+                class="usa-card settings__card"
+                data-testid="Card"
+              >
+                <div
+                  class="usa-card__container"
+                >
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="MY_MODEL_PLANS"
+                      name="viewCustomization"
+                      type="checkbox"
+                      value="MY_MODEL_PLANS"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="MY_MODEL_PLANS"
+                    >
+                      My Model Plans
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                  <p
+                    class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
+                  >
+                    This section displays all of the Model Plans that you’re a team member of. Model links go to the Task List.
+                  </p>
+                </div>
+              </li>
+            </div>
+            <div
+              class="mobile:grid-col-12 tablet:grid-col-12 desktop:grid-col-6"
+              data-testid="grid"
+            >
+              <li
+                class="usa-card settings__card"
+                data-testid="Card"
+              >
+                <div
+                  class="usa-card__container"
+                >
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="ALL_MODEL_PLANS"
+                      name="viewCustomization"
+                      type="checkbox"
+                      value="ALL_MODEL_PLANS"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="ALL_MODEL_PLANS"
+                    >
+                      All Model Plans
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                  <p
+                    class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
+                  >
+                    This searchable table displays all Model Plans (like the one on the Models tab).
+                  </p>
+                </div>
+              </li>
+            </div>
+            <div
+              class="mobile:grid-col-12 tablet:grid-col-12 desktop:grid-col-6"
+              data-testid="grid"
+            >
+              <li
+                class="usa-card settings__card"
+                data-testid="Card"
+              >
+                <div
+                  class="usa-card__container"
+                >
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="FOLLOWED_MODELS"
+                      name="viewCustomization"
+                      type="checkbox"
+                      value="FOLLOWED_MODELS"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="FOLLOWED_MODELS"
+                    >
+                      Models I’m following
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                  <p
+                    class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
+                  >
+                    This section shows only the models you’re following (like the one on the Models tab).
+                  </p>
+                </div>
+              </li>
+            </div>
+            <div
+              class="mobile:grid-col-12 tablet:grid-col-12 desktop:grid-col-6"
+              data-testid="grid"
+            >
+              <li
+                class="usa-card settings__card"
+                data-testid="Card"
+              >
+                <div
+                  class="usa-card__container"
+                >
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="MODELS_WITH_CR_TDL"
+                      name="viewCustomization"
+                      type="checkbox"
+                      value="MODELS_WITH_CR_TDL"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="MODELS_WITH_CR_TDL"
+                    >
+                      Models with FFS CRs or TDLs
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                  <p
+                    class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
+                  >
+                    This searchable table displays models with Fee-for-Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs).
+                  </p>
+                </div>
+              </li>
+            </div>
+            <div
+              class="mobile:grid-col-12 tablet:grid-col-12 desktop:grid-col-6"
+              data-testid="grid"
+            >
+              <li
+                class="usa-card settings__card"
+                data-testid="Card"
+              >
+                <div
+                  class="usa-card__container"
+                >
+                  <div
+                    class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      disabled=""
+                      id="MODELS_BY_OPERATIONAL_SOLUTION"
+                      name="viewCustomization"
+                      type="checkbox"
+                      value="MODELS_BY_OPERATIONAL_SOLUTION"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="MODELS_BY_OPERATIONAL_SOLUTION"
+                    >
+                      Models using specific operational solutions
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                    />
+                  </div>
+                  <p
+                    class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
+                  >
+                    This tabbed section displays the models using the operational solutions you care about.
+                  </p>
+                  <a
+                    class="usa-link padding-left-4 text-bold display-flex flex-align-center margin-top-1"
+                    data-testid="add-solutions-settings"
+                    href="/homepage-settings/solutions"
+                  >
+                    Select solutions
+                    <svg
+                      class="usa-icon margin-left-1"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </li>
+            </div>
+          </ul>
+          <div
+            class="usa-alert usa-alert--info usa-alert--slim flex"
+            data-testid="alert"
+          >
+            <div
+              class="usa-alert__body"
+            >
+              <p
+                class="usa-alert__text"
+              >
+                <span>
+                  You don’t have any sections selected. Are you sure you want to proceed?
+                </span>
+              </p>
+            </div>
+          </div>
+          <button
+            class="usa-button margin-top-4"
+            data-testid="next-settings"
+            type="submit"
+          >
+            Next
+          </button>
+          <div
+            class="margin-top-4"
+          >
+            <a
+              class="usa-link display-flex flex-align-center"
+              href="/"
+            >
+              <svg
+                class="usa-icon margin-right-2"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                />
+              </svg>
+              Don’t customize and return to homepage
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
+exports[`settings snapshots > matches solutions snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="mobile:grid-col-12 tablet:grid-col-12 desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <nav
+          aria-label="Breadcrumbs"
+          class="usa-breadcrumb usa-breadcrumb--wrap"
+        >
+          <ol
+            class="usa-breadcrumb__list"
+          >
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-breadcrumb__link"
+                href="/"
+              >
+                <span>
+                  Home
+                </span>
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-breadcrumb__link"
+                href="/homepage-settings"
+              >
+                <span>
+                  Homepage settings
+                </span>
+              </a>
+            </li>
+            <li
+              aria-current="page"
+              class="usa-breadcrumb__list-item usa-current"
+            >
+              Select operational solutions
+            </li>
+          </ol>
+        </nav>
+        <h1
+          class="margin-bottom-2"
+        >
+          Select operational solutions
+        </h1>
+        <p
+          class="font-body-lg margin-top-0 margin-bottom-4"
+        >
+          Models using the operational solutions chosen below will show in a tabbed section.
+        </p>
+        <div
+          class="margin-top-8"
+        >
+          <div
+            class="margin-y-10"
+            data-testid="page-loading"
+          >
+            <div
+              class="text-center"
+            >
+              <span
+                aria-busy="true"
+                aria-valuetext="Loading the page"
+                class="mint-spinner mint-spinner--xl"
+                data-testid="spinner"
+                role="progressbar"
+              />
+            </div>
+            <h1
+              class="margin-top-6 text-center"
+            >
+              Loading the page
+            </h1>
+          </div>
+        </div>
+        <div>
+          <a
+            class="usa-link display-flex flex-align-center"
+            href="/homepage-settings"
+          >
+            <svg
+              class="usa-icon margin-right-2"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Don’t select solutions and return to previous page
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

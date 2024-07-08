@@ -43,7 +43,8 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             feedbackEnabled: false,
             downgradeNonCMS: false,
             notificationsEnabled: false,
-            changeHistoryEnabled: false
+            changeHistoryEnabled: false,
+            customHomepageEnabled: false
           }
         });
 

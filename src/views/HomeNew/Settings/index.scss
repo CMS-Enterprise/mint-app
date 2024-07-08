@@ -1,0 +1,56 @@
+@use 'uswds-core' as *;
+
+.settings {
+    &__card {
+        .usa-card__container {
+            padding: .75rem;
+            border-radius: .25rem;
+            border: 2px solid color('base-light');            
+        }
+        
+        .usa-checkbox__label {
+            margin-top: 0;
+        }
+
+        .usa-checkbox {
+            padding: 0;
+        }
+
+        .usa-checkbox__label {
+            font-weight: bold;
+        }
+    }
+
+    &__card-order {
+        .usa-card__container {
+            border: 2px solid color('base-lighter');            
+        }
+    }
+
+    &__card-selected {
+        .usa-card__container {
+            background: rgba(0, 94, 162, 0.1);
+            border: 2px solid color('primary');     
+        }
+        .usa-checkbox {
+            background: transparent;
+        }
+    }
+
+    &__icon {
+        // padding: 2rem;
+        border-radius: .25rem;
+        border: 2px solid color('primary');
+        color: color('primary');
+
+        &__disabled {
+            color: color('base-light');
+            border: 2px solid color('base-light');
+        }
+    }
+   
+    &__update {
+        white-space: nowrap;
+        align-self: baseline;
+    }
+}

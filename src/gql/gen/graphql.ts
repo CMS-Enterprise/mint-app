@@ -4040,8 +4040,8 @@ export type UserViewCustomization = {
 };
 
 export type UserViewCustomizationChanges = {
-  possibleOperationalSolutions: Array<OperationalSolutionKey>;
-  viewCustomization: Array<ViewCustomizationType>;
+  possibleOperationalSolutions?: InputMaybe<Array<OperationalSolutionKey>>;
+  viewCustomization?: InputMaybe<Array<ViewCustomizationType>>;
 };
 
 export enum ViewCustomizationType {
@@ -4409,6 +4409,18 @@ export type UpdatePlanGeneralCharacteristicsMutationVariables = Exact<{
 
 
 export type UpdatePlanGeneralCharacteristicsMutation = { __typename: 'Mutation', updatePlanGeneralCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID } };
+
+export type GetHomepageSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetHomepageSettingsQuery = { __typename: 'Query', userViewCustomization: { __typename: 'UserViewCustomization', id: UUID, viewCustomization: Array<ViewCustomizationType>, possibleOperationalSolutions: Array<OperationalSolutionKey> } };
+
+export type UpdateHomepageSettingsMutationVariables = Exact<{
+  changes: UserViewCustomizationChanges;
+}>;
+
+
+export type UpdateHomepageSettingsMutation = { __typename: 'Mutation', updateUserViewCustomization: { __typename: 'UserViewCustomization', id: UUID } };
 
 export type CreateDocumentSolutionLinksMutationVariables = Exact<{
   solutionID: Scalars['UUID']['input'];
@@ -7382,6 +7394,80 @@ export function useUpdatePlanGeneralCharacteristicsMutation(baseOptions?: Apollo
 export type UpdatePlanGeneralCharacteristicsMutationHookResult = ReturnType<typeof useUpdatePlanGeneralCharacteristicsMutation>;
 export type UpdatePlanGeneralCharacteristicsMutationResult = Apollo.MutationResult<UpdatePlanGeneralCharacteristicsMutation>;
 export type UpdatePlanGeneralCharacteristicsMutationOptions = Apollo.BaseMutationOptions<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
+export const GetHomepageSettingsDocument = gql`
+    query GetHomepageSettings {
+  userViewCustomization {
+    id
+    viewCustomization
+    possibleOperationalSolutions
+  }
+}
+    `;
+
+/**
+ * __useGetHomepageSettingsQuery__
+ *
+ * To run a query within a React component, call `useGetHomepageSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetHomepageSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetHomepageSettingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetHomepageSettingsQuery(baseOptions?: Apollo.QueryHookOptions<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>(GetHomepageSettingsDocument, options);
+      }
+export function useGetHomepageSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>(GetHomepageSettingsDocument, options);
+        }
+export function useGetHomepageSettingsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>(GetHomepageSettingsDocument, options);
+        }
+export type GetHomepageSettingsQueryHookResult = ReturnType<typeof useGetHomepageSettingsQuery>;
+export type GetHomepageSettingsLazyQueryHookResult = ReturnType<typeof useGetHomepageSettingsLazyQuery>;
+export type GetHomepageSettingsSuspenseQueryHookResult = ReturnType<typeof useGetHomepageSettingsSuspenseQuery>;
+export type GetHomepageSettingsQueryResult = Apollo.QueryResult<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>;
+export const UpdateHomepageSettingsDocument = gql`
+    mutation UpdateHomepageSettings($changes: UserViewCustomizationChanges!) {
+  updateUserViewCustomization(changes: $changes) {
+    id
+  }
+}
+    `;
+export type UpdateHomepageSettingsMutationFn = Apollo.MutationFunction<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>;
+
+/**
+ * __useUpdateHomepageSettingsMutation__
+ *
+ * To run a mutation, you first call `useUpdateHomepageSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateHomepageSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateHomepageSettingsMutation, { data, loading, error }] = useUpdateHomepageSettingsMutation({
+ *   variables: {
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateHomepageSettingsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>(UpdateHomepageSettingsDocument, options);
+      }
+export type UpdateHomepageSettingsMutationHookResult = ReturnType<typeof useUpdateHomepageSettingsMutation>;
+export type UpdateHomepageSettingsMutationResult = Apollo.MutationResult<UpdateHomepageSettingsMutation>;
+export type UpdateHomepageSettingsMutationOptions = Apollo.BaseMutationOptions<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>;
 export const CreateDocumentSolutionLinksDocument = gql`
     mutation CreateDocumentSolutionLinks($solutionID: UUID!, $documentIDs: [UUID!]!) {
   createPlanDocumentSolutionLinks(
@@ -12792,6 +12878,8 @@ export const TypedGetKeyCharacteristicsDocument = {"kind":"Document","definition
 export const TypedGetTargetsAndOptionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTargetsAndOptions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargeted"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesStatesAndTerritories"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesRegionTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedTo"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedToOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedNote"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptions"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptionsNote"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypes"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeededNote"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>;
 export const TypedUpdateExistingModelLinksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateExistingModelLinks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fieldName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ExisitingModelLinkFieldType"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"existingModelIDs"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"currentModelPlanIDs"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateExistingModelLinks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"fieldName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fieldName"}}},{"kind":"Argument","name":{"kind":"Name","value":"existingModelIDs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"existingModelIDs"}}},{"kind":"Argument","name":{"kind":"Name","value":"currentModelPlanIDs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"currentModelPlanIDs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"links"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"existingModelID"}},{"kind":"Field","name":{"kind":"Name","value":"model"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ExistingModel"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"stage"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"keywords"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlan"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdateExistingModelLinksMutation, UpdateExistingModelLinksMutationVariables>;
 export const TypedUpdatePlanGeneralCharacteristicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePlanGeneralCharacteristics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanGeneralCharacteristicsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanGeneralCharacteristics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
+export const TypedGetHomepageSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHomepageSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userViewCustomization"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"viewCustomization"}},{"kind":"Field","name":{"kind":"Name","value":"possibleOperationalSolutions"}}]}}]}}]} as unknown as DocumentNode<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>;
+export const TypedUpdateHomepageSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateHomepageSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserViewCustomizationChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUserViewCustomization"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>;
 export const TypedCreateDocumentSolutionLinksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateDocumentSolutionLinks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"documentIDs"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPlanDocumentSolutionLinks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"solutionID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionID"}}},{"kind":"Argument","name":{"kind":"Name","value":"documentIDs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"documentIDs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateDocumentSolutionLinksMutation, CreateDocumentSolutionLinksMutationVariables>;
 export const TypedCreateOperationalSolutionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOperationalSolution"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"operationalNeedID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionType"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OperationalSolutionKey"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OperationalSolutionChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createOperationalSolution"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"operationalNeedID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"operationalNeedID"}}},{"kind":"Argument","name":{"kind":"Name","value":"solutionType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionType"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameOther"}},{"kind":"Field","name":{"kind":"Name","value":"needed"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]} as unknown as DocumentNode<CreateOperationalSolutionMutation, CreateOperationalSolutionMutationVariables>;
 export const TypedCreateOperationalSolutionSubtasksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOperationalSolutionSubtasks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"solutionID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"inputs"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateOperationalSolutionSubtaskInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createOperationalSolutionSubtasks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"solutionID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"solutionID"}}},{"kind":"Argument","name":{"kind":"Name","value":"inputs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"inputs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<CreateOperationalSolutionSubtasksMutation, CreateOperationalSolutionSubtasksMutationVariables>;
