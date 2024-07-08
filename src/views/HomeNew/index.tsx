@@ -28,7 +28,7 @@ import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
 import Landing from 'views/Landing';
-import ModelPlansTable from 'views/ModelPlan/Table';
+import ModelPlansTable from 'views/ModelPlan/HomeTable';
 
 import './index.scss';
 
@@ -65,10 +65,9 @@ const HomeNew = () => {
         </p>
 
         <ModelPlansTable
-          type="home"
-          userModels
+          type={ViewCustomizationType.MY_MODEL_PLANS}
+          canSearch={false}
           isAssessment={isAssessment(userGroups, flags)}
-          isMAC={false}
         />
       </>
     ),
@@ -81,11 +80,8 @@ const HomeNew = () => {
         </h2>
 
         <ModelPlansTable
-          type="home"
-          userModels={false}
+          type={ViewCustomizationType.ALL_MODEL_PLANS}
           isAssessment={isAssessment(userGroups, flags)}
-          isMAC={false}
-          csvDownload={isAssessment(userGroups, flags)}
         />
       </>
     ),
@@ -105,10 +101,8 @@ const HomeNew = () => {
         </p>
 
         <ModelPlansTable
-          type="mac"
-          userModels={false}
+          type={ViewCustomizationType.MODELS_WITH_CR_TDL}
           isAssessment={isAssessment(userGroups, flags)}
-          isMAC={false}
         />
       </>
     ),
