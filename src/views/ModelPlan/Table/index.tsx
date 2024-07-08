@@ -514,13 +514,7 @@ const ModelPlansTable = ({
           )}
         </div>
 
-        <>
-          {isAssessment && !userModels && (
-            <div className="flex-align-self-center">
-              <CsvExportLink />
-            </div>
-          )}
-        </>
+        <>{isAssessment && !userModels && <CsvExportLink />}</>
       </div>
 
       <UswdsTable {...getTableProps()} fullWidth scrollable>
