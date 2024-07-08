@@ -98,10 +98,10 @@ const ModelPlansTable = ({
     const queryData = (modelPlans?.modelPlanCollection ??
       []) as AllModelPlansType[];
     // Combine crs and tdls into single data point for table column
-    queryData.forEach(plan => {
-      return { ...plan, crtdls: [...(plan.crs || []), ...(plan.tdls || [])] };
+    const mergedCRTDLS = queryData.map(plan => {
+      return { ...plan, crTdls: [...(plan.crs || []), ...(plan.tdls || [])] };
     });
-    return queryData;
+    return mergedCRTDLS;
   }, [modelPlans?.modelPlanCollection]);
 
   const columns = useMemo(() => {
