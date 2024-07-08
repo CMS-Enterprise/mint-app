@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/local"
 	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -25,15 +26,16 @@ import (
 
 // TestConfigs is a struct that contains all the dependencies needed to run a test
 type TestConfigs struct {
-	DBConfig  storage.DBConfig
-	LDClient  *ld.LDClient
-	Logger    *zap.Logger
-	UserInfo  *models.UserInfo
-	Store     *storage.Store
-	S3Client  *upload.S3Client
-	PubSub    *pubsub.ServicePubSub
-	Principal *authentication.ApplicationPrincipal
-	Context   context.Context
+	DBConfig      storage.DBConfig
+	LDClient      *ld.LDClient
+	Logger        *zap.Logger
+	UserInfo      *models.UserInfo
+	Store         *storage.Store
+	S3Client      *upload.S3Client
+	PubSub        *pubsub.ServicePubSub
+	Principal     *authentication.ApplicationPrincipal
+	Context       context.Context
+	FetchUserInfo func(context.Context, string) (*models.UserInfo, error)
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -75,6 +77,12 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.S3Client = &s3Client
 	tc.PubSub = ps
 
+	oktaClient, oktaClientErr := local.NewOktaAPIClient()
+	if oktaClientErr != nil {
+		logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+	}
+	tc.FetchUserInfo = oktaClient.FetchUserInfo
+
 	dataLoaders := loaders.NewDataLoaders(tc.Store)
 	tc.Context = loaders.CTXWithLoaders(context.Background(), dataLoaders)
 	tc.Context = appcontext.WithLogger(tc.Context, tc.Logger)
@@ -111,22 +119,6 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	ps := pubsub.NewServicePubSub()
 
 	return config, ldClient, logger, userInfo, ps
-}
-
-func getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
-
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
-
-	princ := &authentication.ApplicationPrincipal{
-		Username:          userName,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: true,
-		JobCodeMAC:        false,
-		JobCodeNonCMS:     false,
-		UserAccount:       userAccount,
-	}
-	return princ
-
 }
 
 func createAddedAsCollaboratorTemplateCacheHelper(

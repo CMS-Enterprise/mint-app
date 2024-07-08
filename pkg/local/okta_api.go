@@ -2,7 +2,6 @@ package local
 
 import (
 	"context"
-	"errors"
 	"strings"
 
 	"go.uber.org/zap"
@@ -469,7 +468,20 @@ func (c *client) FetchUserInfo(ctx context.Context, username string) (*models.Us
 			return mockUser, nil
 		}
 	}
-	return nil, errors.New("failed to fetch user from Okta API")
+	return genericMockUserInfo(username), nil
+}
+
+func genericMockUserInfo(username string) *models.UserInfo {
+	accountInfo := &models.UserInfo{
+		DisplayName: username + " Doe",
+
+		Email:     username + "@local.cms.gov",
+		FirstName: username,
+		LastName:  username,
+		Username:  username,
+	}
+	return accountInfo
+
 }
 
 // SearchByName fetches a user's personal details by their common name

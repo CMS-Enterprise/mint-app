@@ -21,6 +21,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/handlers"
+	"github.com/cmsgov/mint-app/pkg/local"
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -28,9 +30,10 @@ import (
 
 type AuthenticationMiddlewareTestSuite struct {
 	suite.Suite
-	logger *zap.Logger
-	config *viper.Viper
-	store  *storage.Store
+	logger        *zap.Logger
+	config        *viper.Viper
+	store         *storage.Store
+	FetchUserInfo func(context.Context, string) (*models.UserInfo, error)
 }
 
 func TestAuthenticationMiddlewareTestSuite(t *testing.T) {
@@ -40,11 +43,17 @@ func TestAuthenticationMiddlewareTestSuite(t *testing.T) {
 
 	store, _ := storage.NewStore(NewDBConfig(), ldClient)
 
+	oktaClient, oktaClientErr := local.NewOktaAPIClient()
+	if oktaClientErr != nil {
+		logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+	}
+
 	testSuite := &AuthenticationMiddlewareTestSuite{
-		Suite:  suite.Suite{},
-		logger: logger,
-		config: config,
-		store:  store,
+		Suite:         suite.Suite{},
+		logger:        logger,
+		config:        config,
+		store:         store,
+		FetchUserInfo: oktaClient.FetchUserInfo,
 	}
 
 	suite.Run(t, testSuite)
@@ -99,8 +108,8 @@ func (s *AuthenticationMiddlewareTestSuite) buildMiddleware(verify func(jwt stri
 }
 
 func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
-
-	_, err := userhelpers.GetOrCreateUserAccount(context.Background(), s.store, s.store, "EASI", true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+	userhelpers.GetUserInfoAccountInfoWrapperFunc(s.FetchUserInfo)
+	_, err := userhelpers.GetOrCreateUserAccount(context.Background(), s.store, s.store, "EASI", true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(s.FetchUserInfo))
 
 	s.NoError(err)
 

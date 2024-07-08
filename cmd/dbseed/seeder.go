@@ -77,5 +77,4 @@ type SeederConfig struct {
 	EmailTemplateService email.TemplateService
 	AddressBook          email.AddressBook
 	FetchUserInfo        func(context.Context, string) (*models.UserInfo, error)
-	// FetchUserInfo        userhelpers.GetAccountInfoFunc
 }

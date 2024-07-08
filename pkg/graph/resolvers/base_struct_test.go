@@ -11,7 +11,7 @@ func (suite *ResolverSuite) TestCreatedByUserAccount() {
 }
 
 func (suite *ResolverSuite) TestModifiedByUserAccount() {
-	updaterPrincipal := getTestPrincipal(suite.testConfigs.Store, "BTMN")
+	updaterPrincipal := suite.GetTestPrincipal(suite.testConfigs.Store, "BTMN")
 
 	plan := suite.createModelPlan("My Test plan")
 	colab := suite.createPlanCollaborator(plan, "FRND", []models.TeamRole{models.TeamRoleEvaluation})

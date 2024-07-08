@@ -175,7 +175,7 @@ func (suite *ResolverSuite) TestCollaboratorNonCMSCannotSeeRestrictedDocs() {
 	// So we don't need to make one!
 
 	// create a principal for "TEST" that DOESN'T have the non-CMS job code -- they SHOULD be able to see both docs
-	principal := getTestPrincipal(suite.testConfigs.Store, "TEST")
+	principal := suite.GetTestPrincipal(suite.testConfigs.Store, "TEST")
 	docs, err := PlanDocumentsReadByModelPlanID(suite.testConfigs.Logger, plan.ID, principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
 	suite.NoError(err)
 	suite.Len(docs, 2)

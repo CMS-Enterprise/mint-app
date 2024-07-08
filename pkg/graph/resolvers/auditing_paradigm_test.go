@@ -29,10 +29,10 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 	}
 
 	/* Create 4 discussion replies, with different principals*/
-	testPR1 := getTestPrincipal(suite.testConfigs.Store, "TestDR1")
-	testPR2 := getTestPrincipal(suite.testConfigs.Store, "TestDR2")
-	testPR3 := getTestPrincipal(suite.testConfigs.Store, "TestDR3")
-	testPR4 := getTestPrincipal(suite.testConfigs.Store, "TestDR4")
+	testPR1 := suite.GetTestPrincipal(suite.testConfigs.Store, "TestDR1")
+	testPR2 := suite.GetTestPrincipal(suite.testConfigs.Store, "TestDR2")
+	testPR3 := suite.GetTestPrincipal(suite.testConfigs.Store, "TestDR3")
+	testPR4 := suite.GetTestPrincipal(suite.testConfigs.Store, "TestDR4")
 
 	dr1, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, input, testPR1, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)

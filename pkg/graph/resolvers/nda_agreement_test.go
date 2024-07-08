@@ -6,7 +6,7 @@ import (
 
 // NDAAgreementGetByUserID returns an NDA agreement by userID
 func (suite *ResolverSuite) TestNDAAgreementGetByUserID() {
-	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username) //write to the user table
+	princ := suite.GetTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username) //write to the user table
 	suite.NotNil(princ)
 	suite.NotNil(princ.Account())
 
@@ -21,7 +21,7 @@ func (suite *ResolverSuite) TestNDAAgreementGetByUserID() {
 // NDAAgreementUpdateOrCreate either writes an entry to the nda table, or updates an existing one
 func (suite *ResolverSuite) TestNDAAgreementUpdateOrCreate() {
 
-	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username) //write to the user table
+	princ := suite.GetTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username) //write to the user table
 
 	//1. Create New NDA, don't agree
 	nda, err := NDAAgreementUpdateOrCreate(suite.testConfigs.Logger, false, princ, suite.testConfigs.Store)
