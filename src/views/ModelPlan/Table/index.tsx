@@ -58,6 +58,7 @@ type ModelPlansTableProps =
       userModels: boolean;
       isAssessment: boolean;
       isMAC: boolean;
+      csvDownload?: boolean;
     }
   | {
       type: 'models';
@@ -68,6 +69,7 @@ type ModelPlansTableProps =
       userModels?: never;
       isAssessment?: never;
       isMAC?: never;
+      csvDownload?: boolean;
     };
 
 const ModelPlansTable = ({
@@ -78,7 +80,8 @@ const ModelPlansTable = ({
   tableHidden,
   userModels,
   isAssessment,
-  isMAC
+  isMAC,
+  csvDownload
 }: ModelPlansTableProps) => {
   const { t: homeT } = useTranslation('home');
 
@@ -514,7 +517,7 @@ const ModelPlansTable = ({
           )}
         </div>
 
-        <>{isAssessment && !userModels && <CsvExportLink />}</>
+        <>{csvDownload && <CsvExportLink />}</>
       </div>
 
       <UswdsTable {...getTableProps()} fullWidth scrollable>

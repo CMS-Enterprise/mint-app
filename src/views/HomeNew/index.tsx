@@ -57,10 +57,12 @@ const HomeNew = () => {
         <Divider className="margin-y-6" />
 
         <h2 className="margin-top-0 margin-bottom-2">
-          {t('requestsTable.basic.heading')}
+          {t(`settings.${ViewCustomizationType.MY_MODEL_PLANS}.heading`)}
         </h2>
 
-        <p>{t('requestsTable.basic.subheading')}</p>
+        <p>
+          {t(`settings.${ViewCustomizationType.MY_MODEL_PLANS}.description`)}
+        </p>
 
         <ModelPlansTable
           type="home"
@@ -74,18 +76,42 @@ const HomeNew = () => {
       <>
         <Divider className="margin-y-6" />
 
-        <h2 className="margin-top-0">{t('requestsTable.admin.heading')}</h2>
+        <h2 className="margin-top-0">
+          {t(`settings.${ViewCustomizationType.ALL_MODEL_PLANS}.heading`)}
+        </h2>
 
         <ModelPlansTable
           type="home"
           userModels={false}
           isAssessment={isAssessment(userGroups, flags)}
           isMAC={false}
+          csvDownload={isAssessment(userGroups, flags)}
         />
       </>
     ),
     [ViewCustomizationType.FOLLOWED_MODELS]: <></>,
-    [ViewCustomizationType.MODELS_WITH_CR_TDL]: <></>,
+    [ViewCustomizationType.MODELS_WITH_CR_TDL]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(`settings.${ViewCustomizationType.MODELS_WITH_CR_TDL}.heading`)}
+        </h2>
+
+        <p>
+          {t(
+            `settings.${ViewCustomizationType.MODELS_WITH_CR_TDL}.description`
+          )}
+        </p>
+
+        <ModelPlansTable
+          type="mac"
+          userModels={false}
+          isAssessment={isAssessment(userGroups, flags)}
+          isMAC={false}
+        />
+      </>
+    ),
     [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: <></>
   };
 

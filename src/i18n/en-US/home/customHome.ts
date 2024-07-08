@@ -1,3 +1,37 @@
+import { ViewCustomizationType } from 'gql/gen/graphql';
+
+export type HomepageSettingsType = Record<
+  ViewCustomizationType,
+  Record<'heading' | 'description', string>
+>;
+
+const settings: HomepageSettingsType = {
+  [ViewCustomizationType.MY_MODEL_PLANS]: {
+    heading: 'My Model Plans',
+    description:
+      'You have been added as a team member to the model plans below.'
+  },
+  [ViewCustomizationType.ALL_MODEL_PLANS]: {
+    heading: 'All Model Plans',
+    description: ''
+  },
+  [ViewCustomizationType.FOLLOWED_MODELS]: {
+    heading: 'Models I’m following',
+    description:
+      'This section shows only the models you’re following (like the one on the Models tab).'
+  },
+  [ViewCustomizationType.MODELS_WITH_CR_TDL]: {
+    heading: 'Models with FFS CRs or TDLs',
+    description:
+      'View all of the models that contain Fee-for-Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs).'
+  },
+  [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: {
+    heading: 'Models using specific operational solutions',
+    description:
+      'This tabbed section displays the models using the operational solutions you care about.'
+  }
+};
+
 const customHome = {
   title: 'Welcome to MINT',
   subheading:
@@ -14,6 +48,7 @@ const customHome = {
     'collaborate on requirements for new CMMI models and demonstrations',
     'access resources to help you complete your model plans'
   ],
+  settings,
   newModelSummaryBox: {
     copy: 'Have a new model or demonstration?',
     cta: 'Start a new Model Plan'
@@ -37,22 +72,6 @@ const customHome = {
   requestsTable: {
     id: 'model-plans',
     title: 'Model plans',
-    basic: {
-      heading: 'My Model Plans',
-      subheading:
-        'You have been added as a team member to the model plans below.'
-    },
-    admin: {
-      heading: 'All Model Plans'
-    },
-    mac: {
-      heading: 'Upcoming models',
-      empty: {
-        heading: 'There aren’t any model plans with CRs or TDLs.',
-        body:
-          'Check back later. When CR or TDL is added to a model plan, it will appear here.'
-      }
-    },
     empty: {
       heading: 'You haven’t been added to any Model Plans yet.',
       body:
