@@ -32,6 +32,7 @@ import ModelPlansTable from 'views/ModelPlan/Table';
 
 import './index.scss';
 
+// TODO: Rename once old home is removed
 const HomeNew = () => {
   const { t } = useTranslation('customHome');
 
@@ -96,7 +97,7 @@ const HomeNew = () => {
           <GridContainer>
             {message}
 
-            <Grid>
+            <Grid data-testid="homepage">
               <div className="display-flex flex-justify">
                 <div>
                   <PageHeading className="margin-bottom-1">
