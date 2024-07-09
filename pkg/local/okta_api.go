@@ -572,6 +572,13 @@ var mockUserDictionary = map[string]*models.UserInfo{
 		FirstName:   "Peter",
 		LastName:    "Parker",
 	},
+	"PSTM": {
+		DisplayName: "Post Man",
+		Email:       "Post.Man@local.fake",
+		Username:    "PSTM",
+		FirstName:   "Post",
+		LastName:    "Man",
+	},
 }
 
 // FetchUserInfo fetches a user's personal details
