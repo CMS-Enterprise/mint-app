@@ -1,0 +1,53 @@
+INSERT INTO data_exchange_approach(
+    id,
+    model_plan_id,
+    high_level_overview,
+    new_methods,
+    feasibility,
+    participant_burden,
+    cmmi_impact,
+    additional_considerations,
+    created_by,
+    modified_by,
+    ready_for_review_by,
+    ready_for_review_dts,
+    ready_for_clearance_by,
+    ready_for_clearance_dts,
+    status
+)
+VALUES
+(
+    :id,
+    :model_plan_id,
+    :high_level_overview,
+    :new_methods,
+    :feasibility,
+    :participant_burden,
+    :cmmi_impact,
+    :additional_considerations,
+    :created_by,
+    :modified_by,
+    :ready_for_review_by,
+    :ready_for_review_dts,
+    :ready_for_clearance_by,
+    :ready_for_clearance_dts,
+    :status
+)
+RETURNING
+id,
+model_plan_id,
+high_level_overview,
+new_methods,
+feasibility,
+participant_burden,
+cmmi_impact,
+additional_considerations,
+created_by,
+created_dts,
+modified_by,
+modified_dts,
+ready_for_review_by,
+ready_for_review_dts,
+ready_for_clearance_by,
+ready_for_clearance_dts,
+status;

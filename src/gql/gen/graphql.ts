@@ -291,6 +291,41 @@ export type DailyDigestCompleteActivityMeta = {
   version: Scalars['Int']['output'];
 };
 
+export type DataExchangeApproach = {
+  __typename: 'DataExchangeApproach';
+  additionalConsiderations?: Maybe<Scalars['String']['output']>;
+  cmmiImpact?: Maybe<Scalars['String']['output']>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  feasibility?: Maybe<Scalars['String']['output']>;
+  highLevelOverview?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  newMethods?: Maybe<Scalars['String']['output']>;
+  participantBurden?: Maybe<Scalars['String']['output']>;
+  readyForClearanceBy?: Maybe<Scalars['UUID']['output']>;
+  readyForClearanceByUserAccount?: Maybe<UserAccount>;
+  readyForClearanceDts?: Maybe<Scalars['Time']['output']>;
+  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
+  readyForReviewByUserAccount?: Maybe<UserAccount>;
+  readyForReviewDts?: Maybe<Scalars['Time']['output']>;
+  status: TaskStatus;
+};
+
+export type DataExchangeApproachChanges = {
+  additionalConsiderations?: InputMaybe<Scalars['String']['input']>;
+  cmmiImpact?: InputMaybe<Scalars['String']['input']>;
+  feasibility?: InputMaybe<Scalars['String']['input']>;
+  highLevelOverview?: InputMaybe<Scalars['String']['input']>;
+  newMethods?: InputMaybe<Scalars['String']['input']>;
+  participantBurden?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<TaskStatusInput>;
+};
+
 export enum DataForMonitoringType {
   CLINICAL_DATA = 'CLINICAL_DATA',
   ENCOUNTER_DATA = 'ENCOUNTER_DATA',
@@ -599,6 +634,7 @@ export type ModelPlan = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   crs: Array<PlanCr>;
+  dataExchangeApproach: DataExchangeApproach;
   discussions: Array<PlanDiscussion>;
   documents: Array<PlanDocument>;
   generalCharacteristics: PlanGeneralCharacteristics;
@@ -740,6 +776,7 @@ export type Mutation = {
   unlockAllTaskListSections: Array<TaskListSectionLockStatus>;
   unlockTaskListSection: Scalars['Boolean']['output'];
   updateCustomOperationalNeedByID: OperationalNeed;
+  updateDataExchangeApproach: DataExchangeApproach;
   /**
    * This will update linked existing models, and relatede model plans for given model plan and fieldName.
    * The fieldName allows it so you can create links for multiple sections of the model plan
@@ -943,6 +980,13 @@ export type MutationUpdateCustomOperationalNeedByIdArgs = {
   customNeedType?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['UUID']['input'];
   needed: Scalars['Boolean']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateDataExchangeApproachArgs = {
+  changes: DataExchangeApproachChanges;
+  id: Scalars['UUID']['input'];
 };
 
 

@@ -110,6 +110,14 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
+		//Create default Plan Data Exchange Approach object
+		dataExchangeApproach := models.NewDataExchangeApproach(baseTaskListUser)
+
+		_, err = store.DataExchangeApproachCreate(tx, logger, dataExchangeApproach)
+		if err != nil {
+			return nil, err
+		}
+
 		//Create default Operational Needs
 		_, err = store.OperationalNeedInsertAllPossible(tx, logger, createdPlan.ID, principal.Account().ID)
 		if err != nil {
