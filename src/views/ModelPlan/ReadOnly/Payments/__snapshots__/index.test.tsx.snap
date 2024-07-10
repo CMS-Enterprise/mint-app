@@ -36,13 +36,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--what-will-be-the-funding-source-for-payments margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               What will be the funding source for payments?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -68,13 +68,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -95,13 +95,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--what-is-the-funding-source-for-reconciliation-or-other-expenditures margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               What is the funding source for reconciliation or other expenditures?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -127,13 +127,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -154,13 +154,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--who-will-you-pay margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Who will you pay?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -186,13 +186,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--please-specify-who-you-will-pay margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Please specify who you will pay.
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -213,13 +213,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -240,48 +240,52 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--what-will-you-pay margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               What will you pay?
-            </p>
-            <span
-              class="usa-tooltip"
-              data-testid="tooltipWrapper"
-            >
-              <div
-                aria-describedby="tooltip-550000"
-                class="usa-tooltip__trigger mint-no-print margin-left-1"
-                data-testid="triggerElement"
-                position="right"
-                tabindex="0"
-                title=""
-              >
-                <svg
-                  class="usa-icon text-base-light"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                  />
-                </svg>
-              </div>
               <span
-                aria-hidden="true"
-                class="usa-tooltip__body"
-                data-testid="tooltipBody"
-                id="tooltip-550000"
-                role="tooltip"
-                title="If claims-based payments or non-claims-based payments are selected, there will be additional questions to answer."
+                class="text-normal line-height-sans-2"
               >
-                If claims-based payments or non-claims-based payments are selected, there will be additional questions to answer.
+                <span
+                  class="usa-tooltip"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-550000"
+                    class="usa-tooltip__trigger mint-no-print margin-left-1"
+                    data-testid="triggerElement"
+                    position="right"
+                    tabindex="0"
+                    title=""
+                  >
+                    <svg
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-550000"
+                    role="tooltip"
+                    title="If claims-based payments or non-claims-based payments are selected, there will be additional questions to answer."
+                  >
+                    If claims-based payments or non-claims-based payments are selected, there will be additional questions to answer.
+                  </span>
+                </span>
               </span>
             </span>
           </div>
@@ -309,13 +313,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -344,48 +348,52 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--select-which-claims-based-payments-will-you-pay margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Select which claims-based payments will you pay.
-              </p>
-              <span
-                class="usa-tooltip"
-                data-testid="tooltipWrapper"
-              >
-                <div
-                  aria-describedby="tooltip-550000"
-                  class="usa-tooltip__trigger mint-no-print margin-left-1"
-                  data-testid="triggerElement"
-                  position="right"
-                  tabindex="0"
-                  title=""
-                >
-                  <svg
-                    class="usa-icon text-base-light"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                    />
-                  </svg>
-                </div>
                 <span
-                  aria-hidden="true"
-                  class="usa-tooltip__body"
-                  data-testid="tooltipBody"
-                  id="tooltip-550000"
-                  role="tooltip"
-                  title="If reductions to beneficiary cost-sharing or other are selected, there will be additional questions to answer."
+                  class="text-normal line-height-sans-2"
                 >
-                  If reductions to beneficiary cost-sharing or other are selected, there will be additional questions to answer.
+                  <span
+                    class="usa-tooltip"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-550000"
+                      class="usa-tooltip__trigger mint-no-print margin-left-1"
+                      data-testid="triggerElement"
+                      position="right"
+                      tabindex="0"
+                      title=""
+                    >
+                      <svg
+                        class="usa-icon text-base-light"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-550000"
+                      role="tooltip"
+                      title="If reductions to beneficiary cost-sharing or other are selected, there will be additional questions to answer."
+                    >
+                      If reductions to beneficiary cost-sharing or other are selected, there will be additional questions to answer.
+                    </span>
+                  </span>
                 </span>
               </span>
             </div>
@@ -416,13 +424,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -443,13 +451,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--should-any-model-providers-be-excluded-from-existing-fee-for-service-payment-systems margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Should any model providers be excluded from existing Fee-for-Service payment systems?
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -470,13 +478,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -497,48 +505,52 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--will-the-model-change-the-medicare-physician-fee-schedule margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Will the model change the Medicare Physician Fee Schedule?
-              </p>
-              <span
-                class="usa-tooltip"
-                data-testid="tooltipWrapper"
-              >
-                <div
-                  aria-describedby="tooltip-550000"
-                  class="usa-tooltip__trigger mint-no-print margin-left-1"
-                  data-testid="triggerElement"
-                  position="right"
-                  tabindex="0"
-                  title=""
-                >
-                  <svg
-                    class="usa-icon text-base-light"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                    />
-                  </svg>
-                </div>
                 <span
-                  aria-hidden="true"
-                  class="usa-tooltip__body"
-                  data-testid="tooltipBody"
-                  id="tooltip-550000"
-                  role="tooltip"
-                  title="If so, it might impact Critical Access Hospitals paid under Method II."
+                  class="text-normal line-height-sans-2"
                 >
-                  If so, it might impact Critical Access Hospitals paid under Method II.
+                  <span
+                    class="usa-tooltip"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-550000"
+                      class="usa-tooltip__trigger mint-no-print margin-left-1"
+                      data-testid="triggerElement"
+                      position="right"
+                      tabindex="0"
+                      title=""
+                    >
+                      <svg
+                        class="usa-icon text-base-light"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-550000"
+                      role="tooltip"
+                      title="If so, it might impact Critical Access Hospitals paid under Method II."
+                    >
+                      If so, it might impact Critical Access Hospitals paid under Method II.
+                    </span>
+                  </span>
                 </span>
               </span>
             </div>
@@ -561,13 +573,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -588,13 +600,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--does-the-model-affect-medicare-secondary-payer-claims--how-so margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Does the model affect Medicare Secondary Payer claims? How so?
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -623,13 +635,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -650,13 +662,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--how-does-the-model-differ-from-current-policy--especially-in-terms-of-payment-rates-and-periodicity-of-payment margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -677,48 +689,52 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--are-you-anticipating-creating-dependencies-between-services margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Are you anticipating creating dependencies between services?
-              </p>
-              <span
-                class="usa-tooltip"
-                data-testid="tooltipWrapper"
-              >
-                <div
-                  aria-describedby="tooltip-550000"
-                  class="usa-tooltip__trigger mint-no-print margin-left-1"
-                  data-testid="triggerElement"
-                  position="right"
-                  tabindex="0"
-                  title=""
-                >
-                  <svg
-                    class="usa-icon text-base-light"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                    />
-                  </svg>
-                </div>
                 <span
-                  aria-hidden="true"
-                  class="usa-tooltip__body"
-                  data-testid="tooltipBody"
-                  id="tooltip-550000"
-                  role="tooltip"
-                  title="Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid."
+                  class="text-normal line-height-sans-2"
                 >
-                  Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.
+                  <span
+                    class="usa-tooltip"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-550000"
+                      class="usa-tooltip__trigger mint-no-print margin-left-1"
+                      data-testid="triggerElement"
+                      position="right"
+                      tabindex="0"
+                      title=""
+                    >
+                      <svg
+                        class="usa-icon text-base-light"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-550000"
+                      role="tooltip"
+                      title="Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid."
+                    >
+                      Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.
+                    </span>
+                  </span>
                 </span>
               </span>
             </div>
@@ -741,13 +757,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -768,13 +784,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--will-any-additional-data-need-to-be-collected-for-claims margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Will any additional data need to be collected for claims?
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -795,13 +811,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -822,48 +838,52 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--will-your-contractor-be-providing-data--a-third-party-file--that-will-be-used-in-claims-processing margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Will your contractor be providing data (a Third Party File) that will be used in claims processing?
-              </p>
-              <span
-                class="usa-tooltip"
-                data-testid="tooltipWrapper"
-              >
-                <div
-                  aria-describedby="tooltip-550000"
-                  class="usa-tooltip__trigger mint-no-print margin-left-1"
-                  data-testid="triggerElement"
-                  position="right"
-                  tabindex="0"
-                  title=""
-                >
-                  <svg
-                    class="usa-icon text-base-light"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                    />
-                  </svg>
-                </div>
                 <span
-                  aria-hidden="true"
-                  class="usa-tooltip__body"
-                  data-testid="tooltipBody"
-                  id="tooltip-550000"
-                  role="tooltip"
-                  title="Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC)."
+                  class="text-normal line-height-sans-2"
                 >
-                  Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).
+                  <span
+                    class="usa-tooltip"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-550000"
+                      class="usa-tooltip__trigger mint-no-print margin-left-1"
+                      data-testid="triggerElement"
+                      position="right"
+                      tabindex="0"
+                      title=""
+                    >
+                      <svg
+                        class="usa-icon text-base-light"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-550000"
+                      role="tooltip"
+                      title="Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC)."
+                    >
+                      Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).
+                    </span>
+                  </span>
                 </span>
               </span>
             </div>
@@ -886,13 +906,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--is-your-contractor-aware-that-test-data-will-be-needed--and-when-that-test-data-must-be-available margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Is your contractor aware that test data will be needed, and when that test data must be available?
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -976,13 +996,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1057,13 +1077,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1093,13 +1113,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1123,13 +1143,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1153,13 +1173,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1181,13 +1201,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--what-level-of-complexity-do-you-expect-calculations-to-be margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               What level of complexity do you expect calculations to be?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1208,13 +1228,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1235,13 +1255,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--are-there-any-business-requirement-s--that-address-claims-processing-precedence-order-with-the-other-model-s---if-so--please-specify margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Are there any business requirement(s) that address claims processing precedence order with the other model(s)? If so, please specify.
-            </p>
+            </span>
           </div>
           <em
             class="text-base"
@@ -1265,13 +1285,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1292,13 +1312,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--will-participants-be-allowed-to-select-between-multiple-payment-mechanisms--if-so--please-describe margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Will participants be allowed to select between multiple payment mechanisms? If so, please describe.
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1327,13 +1347,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1354,13 +1374,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--how-often-do-you-anticipate-making-payments margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               How often do you anticipate making payments?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -1386,13 +1406,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1413,13 +1433,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--will-you-recover-the-payments margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Will you recover the payments?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1440,13 +1460,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1467,13 +1487,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--do-you-anticipate-reconciling-payments-retrospectively margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Do you anticipate reconciling payments retrospectively?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1494,13 +1514,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1521,13 +1541,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--how-often-are-payments-reconciled margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               How often are payments reconciled?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -1559,13 +1579,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1586,48 +1606,52 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--how-frequently-do-you-anticipate-making-demands-recoupments margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               How frequently do you anticipate making demands/recoupments?
-            </p>
-            <span
-              class="usa-tooltip"
-              data-testid="tooltipWrapper"
-            >
-              <div
-                aria-describedby="tooltip-550000"
-                class="usa-tooltip__trigger mint-no-print margin-left-1"
-                data-testid="triggerElement"
-                position="right"
-                tabindex="0"
-                title=""
-              >
-                <svg
-                  class="usa-icon text-base-light"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                  />
-                </svg>
-              </div>
               <span
-                aria-hidden="true"
-                class="usa-tooltip__body"
-                data-testid="tooltipBody"
-                id="tooltip-550000"
-                role="tooltip"
-                title="Note: If you are unsure of an approximate date, please select the first day of the approximate month."
+                class="text-normal line-height-sans-2"
               >
-                Note: If you are unsure of an approximate date, please select the first day of the approximate month.
+                <span
+                  class="usa-tooltip"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-550000"
+                    class="usa-tooltip__trigger mint-no-print margin-left-1"
+                    data-testid="triggerElement"
+                    position="right"
+                    tabindex="0"
+                    title=""
+                  >
+                    <svg
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-550000"
+                    role="tooltip"
+                    title="Note: If you are unsure of an approximate date, please select the first day of the approximate month."
+                  >
+                    Note: If you are unsure of an approximate date, please select the first day of the approximate month.
+                  </span>
+                </span>
               </span>
             </span>
           </div>
@@ -1661,13 +1685,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1688,13 +1712,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--when-will-payments-start margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               When will payments start?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1715,13 +1739,13 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"

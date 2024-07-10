@@ -36,13 +36,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--is-this-a-new-track-of-an-existing-model-or-a-new-model margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Is this a new track of an existing model or a new model?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -63,13 +63,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--which-existing-model margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Which existing model?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -90,13 +90,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--does-your-proposed-track-model-resemble-any-existing-models margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Does your proposed track/model resemble any existing models?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -117,13 +117,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--explain-why-and-how-the-model-made-this-decision margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Explain why and how the model made this decision.
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -144,13 +144,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--which-existing-models-does-your-proposed-track-model-most-closely-resemble margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Which existing models does your proposed track/model most closely resemble?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -188,13 +188,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--in-what-way-does-the-new-model-resemble-the-selected-model-s margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               In what way does the new model resemble the selected model(s)?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -228,13 +228,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -255,13 +255,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--is-participation-in-another-model-a-precondition-for-participation-in-this-model margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Is participation in another model a precondition for participation in this model?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -285,13 +285,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--which-models margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Which models?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -335,13 +335,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--explain-any-details-including-if-it-is-just-part-of-the-model margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Explain any details including if it is just part of the model.
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -362,13 +362,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -389,13 +389,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--are-there-different-components-tracks--if-so--how-do-the-tracks-differ margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Are there different components/tracks? If so, how do the tracks differ?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -424,13 +424,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -451,13 +451,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--will-another-agency-or-state-help-design-operate-the-model margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Will another Agency or State help design/operate the model?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -498,13 +498,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -525,48 +525,52 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--what-type-of-alternative-payment-model--apm--do-you-think-the-model-could-be margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               What type of Alternative Payment Model (APM) do you think the model could be?
-            </p>
-            <span
-              class="usa-tooltip"
-              data-testid="tooltipWrapper"
-            >
-              <div
-                aria-describedby="tooltip-550000"
-                class="usa-tooltip__trigger mint-no-print margin-left-1"
-                data-testid="triggerElement"
-                position="right"
-                tabindex="0"
-                title=""
-              >
-                <svg
-                  class="usa-icon text-base-light"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                  />
-                </svg>
-              </div>
               <span
-                aria-hidden="true"
-                class="usa-tooltip__body"
-                data-testid="tooltipBody"
-                id="tooltip-550000"
-                role="tooltip"
-                title="In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers."
+                class="text-normal line-height-sans-2"
               >
-                In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.
+                <span
+                  class="usa-tooltip"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-550000"
+                    class="usa-tooltip__trigger mint-no-print margin-left-1"
+                    data-testid="triggerElement"
+                    position="right"
+                    tabindex="0"
+                    title=""
+                  >
+                    <svg
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-550000"
+                    role="tooltip"
+                    title="In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers."
+                  >
+                    In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.
+                  </span>
+                </span>
               </span>
             </span>
           </div>
@@ -600,13 +604,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -627,13 +631,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--what-are-the-model-key-characteristics margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               What are the model key characteristics?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -728,13 +732,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -758,13 +762,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -788,13 +792,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -818,13 +822,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -845,48 +849,52 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--is-care-coordination-involved--how-so margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Is care coordination involved? How so?
-            </p>
-            <span
-              class="usa-tooltip"
-              data-testid="tooltipWrapper"
-            >
-              <div
-                aria-describedby="tooltip-550000"
-                class="usa-tooltip__trigger mint-no-print margin-left-1"
-                data-testid="triggerElement"
-                position="right"
-                tabindex="0"
-                title=""
-              >
-                <svg
-                  class="usa-icon text-base-light"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                  />
-                </svg>
-              </div>
               <span
-                aria-hidden="true"
-                class="usa-tooltip__body"
-                data-testid="tooltipBody"
-                id="tooltip-550000"
-                role="tooltip"
-                title="Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; if a certain service or diagnosis exists in history, then Service A cannot be paid."
+                class="text-normal line-height-sans-2"
               >
-                Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; if a certain service or diagnosis exists in history, then Service A cannot be paid.
+                <span
+                  class="usa-tooltip"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-550000"
+                    class="usa-tooltip__trigger mint-no-print margin-left-1"
+                    data-testid="triggerElement"
+                    position="right"
+                    tabindex="0"
+                    title=""
+                  >
+                    <svg
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-550000"
+                    role="tooltip"
+                    title="Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; if a certain service or diagnosis exists in history, then Service A cannot be paid."
+                  >
+                    Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; if a certain service or diagnosis exists in history, then Service A cannot be paid.
+                  </span>
+                </span>
               </span>
             </span>
           </div>
@@ -917,13 +925,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -944,13 +952,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--are-additional-services-involved--how-so margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Are additional services involved? How so?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -979,13 +987,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1006,13 +1014,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--are-community-partners-involved--how-so margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Are community partners involved? How so?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1043,13 +1051,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1070,13 +1078,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--is-the-model-targeted-at-specific-geographies margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Is the model targeted at specific geographies?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1097,13 +1105,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--geography-type-is margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Geography type is
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -1168,13 +1176,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Geographies are applied to
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -1215,13 +1223,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1242,13 +1250,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--does-the-model-offer-different-options-for-participation margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Does the model offer different options for participation?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1269,13 +1277,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1296,13 +1304,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--what-is-the-agreement-type margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               What is the agreement type?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -1382,13 +1390,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1409,13 +1417,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--is-rulemaking-required--if-so--which-rule-do-you-anticipate-using-and-what-is-the-target-date-of-display-for-that-regulation margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1444,13 +1452,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1471,13 +1479,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--what-authority-allows-cmmi-to-test-the-model margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               What authority allows CMMI to test the model?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -1518,13 +1526,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1545,13 +1553,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--are-waivers-required--if-so--which-types-of-waivers margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Are waivers required? If so, which types of waivers?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1673,13 +1681,13 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
