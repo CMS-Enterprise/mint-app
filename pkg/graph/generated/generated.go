@@ -9296,6 +9296,7 @@ type LaunchDarklySettings {
   INCLUDE_ALL,
   COLLAB_ONLY,
   WITH_CR_TDLS,
+  FAVORITED,
 }
 
 enum ModelStatus {
@@ -12060,8 +12061,8 @@ type UserViewCustomization {
 }
 
 input UserViewCustomizationChanges @goModel(model: "map[string]interface{}") {
-  viewCustomization: [ViewCustomizationType!]!
-  possibleOperationalSolutions: [OperationalSolutionKey!]!
+  viewCustomization: [ViewCustomizationType!]
+  possibleOperationalSolutions: [OperationalSolutionKey!]
 }
 
 extend type Query {
@@ -12071,7 +12072,7 @@ extend type Query {
 
 extend type Mutation {
   updateUserViewCustomization(changes: UserViewCustomizationChanges!): UserViewCustomization!
-  @hasRole(role: MINT_USER)
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -27786,14 +27787,14 @@ func (ec *executionContext) _Mutation_updateUserViewCustomization(ctx context.Co
 			return ec.resolvers.Mutation().UpdateUserViewCustomization(rctx, fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []interface{}{"MINT_USER", "MINT_MAC"})
 			if err != nil {
 				return nil, err
 			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
+			if ec.directives.HasAnyRole == nil {
+				return nil, errors.New("directive hasAnyRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasAnyRole(ctx, nil, directive0, roles)
 		}
 
 		tmp, err := directive1(rctx)
@@ -87312,6 +87313,73 @@ func (ec *executionContext) marshalOOperationalNeedKey2ᚖgithubᚗcomᚋcmsgov�
 	return res
 }
 
+func (ec *executionContext) unmarshalOOperationalSolutionKey2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKeyᚄ(ctx context.Context, v interface{}) ([]models.OperationalSolutionKey, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.OperationalSolutionKey, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNOperationalSolutionKey2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOOperationalSolutionKey2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKeyᚄ(ctx context.Context, sel ast.SelectionSet, v []models.OperationalSolutionKey) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNOperationalSolutionKey2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalOOperationalSolutionKey2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalSolutionKey(ctx context.Context, v interface{}) (*models.OperationalSolutionKey, error) {
 	if v == nil {
 		return nil, nil
@@ -88689,6 +88757,73 @@ func (ec *executionContext) marshalOUserNotificationPreferenceFlag2ᚕgithubᚗc
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNUserNotificationPreferenceFlag2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlag(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOViewCustomizationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐViewCustomizationTypeᚄ(ctx context.Context, v interface{}) ([]models.ViewCustomizationType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.ViewCustomizationType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNViewCustomizationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐViewCustomizationType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOViewCustomizationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐViewCustomizationTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ViewCustomizationType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNViewCustomizationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐViewCustomizationType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

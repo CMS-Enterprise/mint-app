@@ -26,6 +26,10 @@ import FlagsWrapper from 'views/FlagsWrapper';
 import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import GetAccess from 'views/HelpAndKnowledge/Articles/GetAccess';
 import Home from 'views/Home';
+import HomeNew from 'views/HomeNew';
+import HomePageSettings from 'views/HomeNew/Settings';
+import SelectSolutionSettings from 'views/HomeNew/Settings/selectSolutions';
+import SettingsOrder from 'views/HomeNew/Settings/settingsOrder';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import ModelInfoWrapper from 'views/ModelInfoWrapper';
@@ -98,7 +102,12 @@ const AppRoutes = () => {
   return (
     <Switch>
       {/* General Routes */}
-      <Route path="/" exact component={Home} />
+
+      {flags.customHomepageEnabled ? (
+        <Route path="/" exact component={HomeNew} />
+      ) : (
+        <Route path="/" exact component={Home} />
+      )}
 
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />
@@ -242,6 +251,28 @@ const AppRoutes = () => {
         path="/models/:modelID/locked-task-list-section"
         component={LockedTaskListSection}
       />
+
+      {flags.customHomepageEnabled && (
+        <>
+          <SecureRoute
+            exact
+            path="/homepage-settings"
+            component={HomePageSettings}
+          />
+
+          <SecureRoute
+            exact
+            path="/homepage-settings/order"
+            component={SettingsOrder}
+          />
+
+          <SecureRoute
+            exact
+            path="/homepage-settings/solutions"
+            component={SelectSolutionSettings}
+          />
+        </>
+      )}
 
       <Redirect exact from="/models/:modelID" to="/models/:modelID/read-view" />
 

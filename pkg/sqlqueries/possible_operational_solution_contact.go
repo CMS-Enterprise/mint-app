@@ -1,0 +1,20 @@
+package sqlqueries
+
+import _ "embed"
+
+//go:embed SQL/possible_operational_solution_contact/collection_get_by_possible_solution_id.sql
+var possibleOperationalSolutionContactsGetByPossibleSolutionIDLOADERSQL string
+
+//go:embed SQL/possible_operational_solution_contact/get_primary_contact_by_possible_solution_id.sql
+var getPrimaryContactByPossibleSolutionID string
+
+type possibleOperationalSolutionContactScripts struct {
+	CollectionGetByPossibleSolutionID     string
+	GetPrimaryContactByPossibleSolutionID string
+}
+
+// PossibleOperationalSolutionContact houses all the sql for getting data for possible operational solution contact from the database
+var PossibleOperationalSolutionContact = possibleOperationalSolutionContactScripts{
+	CollectionGetByPossibleSolutionID:     possibleOperationalSolutionContactsGetByPossibleSolutionIDLOADERSQL,
+	GetPrimaryContactByPossibleSolutionID: getPrimaryContactByPossibleSolutionID,
+}

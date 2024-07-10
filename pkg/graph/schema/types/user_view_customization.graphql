@@ -21,8 +21,8 @@ type UserViewCustomization {
 }
 
 input UserViewCustomizationChanges @goModel(model: "map[string]interface{}") {
-  viewCustomization: [ViewCustomizationType!]!
-  possibleOperationalSolutions: [OperationalSolutionKey!]!
+  viewCustomization: [ViewCustomizationType!]
+  possibleOperationalSolutions: [OperationalSolutionKey!]
 }
 
 extend type Query {
@@ -32,5 +32,5 @@ extend type Query {
 
 extend type Mutation {
   updateUserViewCustomization(changes: UserViewCustomizationChanges!): UserViewCustomization!
-  @hasRole(role: MINT_USER)
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

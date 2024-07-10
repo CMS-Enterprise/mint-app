@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	_ "embed"
 
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
@@ -17,33 +19,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_document/create.sql
-var planDocumentCreateSQL string
-
-//go:embed SQL/plan_document/update.sql
-var planDocumentUpdateSQL string
-
-//go:embed SQL/plan_document/read_by_id.sql
-var planDocumentGetByIDSQL string
-
-//go:embed SQL/plan_document/read_by_model_plan_id.sql
-var planDocumentGetByModelPlanIDSQL string
-
-//go:embed SQL/plan_document/read_by_solution_id.sql
-var planDocumentsGetBySolutionIDSQL string
-
-//go:embed SQL/plan_document/read_by_model_plan_id_not_restricted.sql
-var planDocumentGetByModelPlanIDNotRestrictedSQL string
-
-//go:embed SQL/plan_document/read_by_solution_id_not_restricted.sql
-var planDocumentGetBySolutionIDNotRestrictedSQL string
-
-//go:embed SQL/plan_document/delete_by_id.sql
-var planDocumentDeleteByIDSQL string
-
-//go:embed SQL/plan_document_solution_link/delete_by_document_id.sql
-var planDocumentSolutionLinksDeleteByDocumentIDSQL string
-
 // PlanDocumentCreate creates a plan document
 func (s *Store) PlanDocumentCreate(
 	logger *zap.Logger,
@@ -55,7 +30,7 @@ func (s *Store) PlanDocumentCreate(
 	inputDocument.ModifiedDts = nil
 
 	retDoc := &models.PlanDocument{}
-	stmt, err := s.db.PrepareNamed(planDocumentCreateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, inputDocument)
 	}
@@ -76,7 +51,7 @@ func (s *Store) PlanDocumentRead(
 	id uuid.UUID,
 ) (*models.PlanDocument, error) {
 
-	stmt, err := s.db.PrepareNamed(planDocumentGetByIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +77,7 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 	modelPlanID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	stmt, err := s.db.PrepareNamed(planDocumentGetByModelPlanIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByModelPlanID)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +104,7 @@ func (s *Store) PlanDocumentsReadBySolutionID(
 	solutionID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	stmt, err := s.db.PrepareNamed(planDocumentsGetBySolutionIDSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetBySolutionID)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +131,7 @@ func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
 	modelPlanID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	stmt, err := s.db.PrepareNamed(planDocumentGetByModelPlanIDNotRestrictedSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByModelPlanIDNotRestricted)
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +158,7 @@ func (s *Store) PlanDocumentsReadBySolutionIDNotRestricted(
 	solutionID uuid.UUID,
 	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
 
-	stmt, err := s.db.PrepareNamed(planDocumentGetBySolutionIDNotRestrictedSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetBySolutionIDNotRestricted)
 	if err != nil {
 		return nil, err
 	}
@@ -262,7 +237,7 @@ func logIfNoRowsFetched(logger *zap.Logger, modelPlanID uuid.UUID, documents []*
 // PlanDocumentUpdate updates a plan document object by id with provided values
 func (s *Store) PlanDocumentUpdate(logger *zap.Logger, plan *models.PlanDocument) (*models.PlanDocument, error) {
 
-	stmt, err := s.db.PrepareNamed(planDocumentUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, plan)
 	}
@@ -287,7 +262,7 @@ func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid
 		return nil, err
 	}
 
-	stmt, err := tx.PrepareNamed(planDocumentSolutionLinksDeleteByDocumentIDSQL)
+	stmt, err := tx.PrepareNamed(sqlqueries.PlanDocumentSolutionLink.DeleteByDocumentID)
 	if err != nil {
 		return nil, err
 	}
@@ -298,7 +273,7 @@ func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid
 		return nil, err
 	}
 
-	stmt, err = tx.PrepareNamed(planDocumentDeleteByIDSQL)
+	stmt, err = tx.PrepareNamed(sqlqueries.PlanDocument.DeleteByID)
 	if err != nil {
 		return nil, err
 	}
