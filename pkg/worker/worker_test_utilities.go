@@ -7,6 +7,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/local"
+	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
@@ -34,7 +35,7 @@ type TestConfigs struct {
 	Principal            *authentication.ApplicationPrincipal
 	EmailTemplateService email.TemplateServiceImpl
 	Context              context.Context
-	FetchUserInfo        func(context.Context, string) (*models.UserInfo, error)
+	OktaClient           oktaapi.Client
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -80,7 +81,7 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.S3Client = &s3Client
 	tc.PubSub = ps
 	tc.EmailTemplateService = *emailTemplateService
-	tc.FetchUserInfo = oktaClient.FetchUserInfo
+	tc.OktaClient = oktaClient
 
 	dataLoaders := loaders.NewDataLoaders(tc.Store)
 	tc.Context = loaders.CTXWithLoaders(context.Background(), dataLoaders)
