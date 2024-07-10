@@ -44,7 +44,7 @@ func (suite *WorkerSuite) SetupTest() {
 	assert.NoError(suite.T(), err)
 
 	//GET USER ACCOUNT EACH TIME!
-	princ := suite.GetTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
+	princ := suite.getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
 	suite.testConfigs.Principal = princ
 
 	// Flush faktory after each test
@@ -195,7 +195,7 @@ func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange string,
 }
 
 func (suite *WorkerSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Time, changes models.AnalyzedAuditChange) *models.AnalyzedAudit {
-	principal := suite.GetTestPrincipal(suite.testConfigs.Store, "TEST")
+	principal := suite.getTestPrincipal(suite.testConfigs.Store, "TEST")
 	newAnalyzedAudit, err := models.NewAnalyzedAudit(principal.UserAccount.ID, mp.ID, mp.ModelName, date, changes)
 	suite.NoError(err)
 
@@ -218,7 +218,8 @@ func TestWorkerSuite(t *testing.T) {
 	suite.Run(t, rs)
 }
 
-func (suite *WorkerSuite) GetTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
+// getTestPrincipal gets a user principal from database
+func (suite *WorkerSuite) getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
 
 	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, store, userName, true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.testConfigs.FetchUserInfo))
 
