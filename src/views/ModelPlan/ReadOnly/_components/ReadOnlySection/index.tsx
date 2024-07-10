@@ -91,7 +91,7 @@ const ReadOnlySection = <
       <div
         className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
       >
-        <div className="display-flex flex-align-center">
+        <div className="read-only-section--question">
           <span className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block">
             {heading}
             {config.questionTooltip && (
