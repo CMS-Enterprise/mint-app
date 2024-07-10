@@ -44,7 +44,7 @@ func (suite *ResolverSuite) getTestPrincipal(store *storage.Store, userName stri
 		userName,
 		true,
 		false,
-		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.testConfigs.FetchUserInfo))
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.testConfigs.OktaClient.FetchUserInfo))
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,

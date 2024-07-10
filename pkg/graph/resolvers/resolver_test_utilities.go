@@ -7,6 +7,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/local"
+	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -26,16 +27,16 @@ import (
 
 // TestConfigs is a struct that contains all the dependencies needed to run a test
 type TestConfigs struct {
-	DBConfig      storage.DBConfig
-	LDClient      *ld.LDClient
-	Logger        *zap.Logger
-	UserInfo      *models.UserInfo
-	Store         *storage.Store
-	S3Client      *upload.S3Client
-	PubSub        *pubsub.ServicePubSub
-	Principal     *authentication.ApplicationPrincipal
-	Context       context.Context
-	FetchUserInfo func(context.Context, string) (*models.UserInfo, error)
+	DBConfig   storage.DBConfig
+	LDClient   *ld.LDClient
+	Logger     *zap.Logger
+	UserInfo   *models.UserInfo
+	Store      *storage.Store
+	S3Client   *upload.S3Client
+	PubSub     *pubsub.ServicePubSub
+	Principal  *authentication.ApplicationPrincipal
+	Context    context.Context
+	OktaClient oktaapi.Client
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -81,7 +82,7 @@ func (tc *TestConfigs) GetDefaults() {
 	if oktaClientErr != nil {
 		logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
 	}
-	tc.FetchUserInfo = oktaClient.FetchUserInfo
+	tc.OktaClient = oktaClient
 
 	dataLoaders := loaders.NewDataLoaders(tc.Store)
 	tc.Context = loaders.CTXWithLoaders(context.Background(), dataLoaders)
