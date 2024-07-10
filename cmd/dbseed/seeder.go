@@ -10,7 +10,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/local"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
@@ -61,7 +61,7 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 		EmailService:         emailService,
 		EmailTemplateService: emailTemplateService,
 		AddressBook:          addressBook,
-		FetchUserInfo:        oktaClient.FetchUserInfo,
+		OktaClient:           oktaClient,
 	}
 	return newSeeder(seederConfig)
 
@@ -76,5 +76,5 @@ type SeederConfig struct {
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateService
 	AddressBook          email.AddressBook
-	FetchUserInfo        func(context.Context, string) (*models.UserInfo, error)
+	OktaClient           oktaapi.Client
 }
