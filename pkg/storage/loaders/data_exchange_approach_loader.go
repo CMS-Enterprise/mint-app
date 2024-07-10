@@ -122,7 +122,7 @@ func GetDataExchangeApproachByID(ctx context.Context, id uuid.UUID) (
 	allLoaders := Loaders(ctx)
 	dataExchangeApproachLoader := allLoaders.DataExchangeApproachLoader
 	key := NewKeyArgs()
-	key.Args[DLDataExchangeApproachIDKey] = []uuid.UUID{id}
+	key.Args[DLDataExchangeApproachIDKey] = id
 
 	thunk := dataExchangeApproachLoader.Loader.Load(ctx, key)
 	result, err := thunk()
@@ -131,14 +131,10 @@ func GetDataExchangeApproachByID(ctx context.Context, id uuid.UUID) (
 		return nil, err
 	}
 
-	dataExchangeApproachLoaderSlice, ok := result.([]*models.DataExchangeApproach)
+	dataExchangeApproach, ok := result.(*models.DataExchangeApproach)
 	if !ok {
-		return nil, fmt.Errorf("could not cast data exchange approach to slice")
+		return nil, fmt.Errorf("could not cast data exchange approach")
 	}
 
-	if len(dataExchangeApproachLoaderSlice) == 0 {
-		return nil, nil
-	}
-
-	return dataExchangeApproachLoaderSlice[0], nil
+	return dataExchangeApproach, nil
 }

@@ -16,9 +16,11 @@ SELECT
     dea.cmmi_impact,
     dea.additional_considerations,
     dea.created_by,
-    dea.created_dts,
     dea.modified_by,
-    dea.modified_dts,
+    dea.ready_for_review_by,
+    dea.ready_for_review_dts,
+    dea.ready_for_clearance_by,
+    dea.ready_for_clearance_dts,
     dea.status
 
 FROM QUERIED_IDS AS qIDs

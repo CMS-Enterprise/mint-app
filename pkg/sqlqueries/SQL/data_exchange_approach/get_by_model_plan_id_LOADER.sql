@@ -16,11 +16,12 @@ SELECT
     dea.cmmi_impact,
     dea.additional_considerations,
     dea.created_by,
-    dea.created_dts,
     dea.modified_by,
-    dea.modified_dts,
+    dea.ready_for_review_by,
+    dea.ready_for_review_dts,
+    dea.ready_for_clearance_by,
+    dea.ready_for_clearance_dts,
     dea.status
--- TODO replace with expanded fields
 
 FROM QUERIED_IDS AS qIDs
 INNER JOIN data_exchange_approach AS dea ON dea.model_plan_id = qIDs.model_plan_id;
