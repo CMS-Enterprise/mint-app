@@ -30,12 +30,13 @@ func (suite *ResolverSuite) SetupTest() {
 	err := suite.testConfigs.Store.TruncateAllTablesDANGEROUS(suite.testConfigs.Logger)
 
 	//GET USER ACCOUNT EACH TIME!
-	princ := suite.GetTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
+	princ := suite.getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
 	suite.testConfigs.Principal = princ
 	assert.NoError(suite.T(), err)
 }
 
-func (suite *ResolverSuite) GetTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
+// getTestPrincipal gets a user principal from database
+func (suite *ResolverSuite) getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
 
 	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(),
 		store,
@@ -345,7 +346,7 @@ func (suite *ResolverSuite) createAnalyzedAuditChange(modelNameChange string,
 
 // createAnalyzedAudit is a helper function to just store an analyzed audit to the DB, without using a resolver
 func (suite *ResolverSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Time, changes models.AnalyzedAuditChange) *models.AnalyzedAudit {
-	principal := suite.GetTestPrincipal(suite.testConfigs.Store, "TEST")
+	principal := suite.getTestPrincipal(suite.testConfigs.Store, "TEST")
 	newAnalyzedAudit, err := models.NewAnalyzedAudit(principal.UserAccount.ID, mp.ID, mp.ModelName, date, changes)
 	suite.NoError(err)
 

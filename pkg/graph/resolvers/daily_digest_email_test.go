@@ -111,7 +111,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 
 	mp := suite.createModelPlan("Test Plan")
 
-	userAccount := suite.GetTestPrincipal(suite.testConfigs.Store, userName)
+	userAccount := suite.getTestPrincipal(suite.testConfigs.Store, userName)
 
 	// Create a favorite, as favorites determine what models users get a digest in regards to.
 	_, err = PlanFavoriteCreate(suite.testConfigs.Store, suite.testConfigs.Logger, userAccount, userAccount.Account().ID, suite.testConfigs.Store, mp.ID)
