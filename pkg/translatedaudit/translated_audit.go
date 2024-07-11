@@ -117,6 +117,14 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *m
 	return &translatedAudit, nil
 }
 
+// setEmptyStringsToNil checks if a value is an empty string, and if so, t
+func setEmptyStringsToNil(value interface{}) interface{} {
+	if value == "" {
+		return nil
+	}
+	return value
+}
+
 // translateField translates a given audit field. It returns the translated audit field, as well as a bool to signify if it was translated or not
 func translateField(
 	ctx context.Context,
@@ -127,14 +135,15 @@ func translateField(
 	operation models.DatabaseOperation,
 	translationMap map[string]models.ITranslationField) (*models.TranslatedAuditField, bool, error) {
 
-	old := field.Old
-	new := field.New
+	//Check if any value is "", if so, update to nil instead.
+	old := setEmptyStringsToNil(field.Old)
+	new := setEmptyStringsToNil(field.New)
 	translatedOld := old
 	translatedNew := new
 	changeType := getChangeType(old, new)
 	if changeType == models.AFCUnchanged {
 		// If a field is actually unchanged (null to empty array or v versa), don't write an entry.
-		// This should not happen, except in rare cases when an empty array is passed to update from a null value.
+		// This should not happen, except in rare cases when an empty array is passed to update from a null value. Or a value was changed from null to empty string or vice versa
 		return nil, false, nil
 	}
 
