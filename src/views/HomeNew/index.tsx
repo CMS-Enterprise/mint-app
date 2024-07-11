@@ -137,6 +137,7 @@ const HomeNew = () => {
             <FavoritesTable
               favorites={favorites || []}
               removeFavorite={handleUpdateFavorite}
+              toTaskList
             />
           )}
           {!favoritesLoading && !favorites?.length && (

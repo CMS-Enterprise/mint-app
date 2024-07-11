@@ -20,13 +20,15 @@ type FavoriteCardProps = {
   type?: 'plan'; // Built in for future iterations/varations of favorited datasets that ingest i18n translations for headers.
   modelPlan: FavoritesModelType;
   removeFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
+  toTaskList?: boolean;
 };
 
 const FavoriteCard = ({
   className,
   type = 'plan',
   modelPlan,
-  removeFavorite
+  removeFavorite,
+  toTaskList = false
 }: FavoriteCardProps) => {
   const { t } = useTranslation('plan');
   const { t: h } = useTranslation('customHome');
@@ -69,7 +71,9 @@ const FavoriteCard = ({
                 <Icon.Star size={5} />
               </Button>
               <h3 className="bookmark__title margin-0">
-                <UswdsReactLink to={`/models/${id}/read-only`}>
+                <UswdsReactLink
+                  to={`/models/${id}/${toTaskList ? 'task-list' : 'read-view'}`}
+                >
                   {modelName}
                 </UswdsReactLink>
               </h3>
