@@ -146,7 +146,7 @@ const HomeNew = () => {
               heading={t(
                 `settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsHeading`
               )}
-              className="margin-bottom-2 margin-top-4"
+              className="margin-y-2"
             >
               <Trans
                 i18nKey={`customHome:settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsDescription`}
