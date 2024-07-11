@@ -22,10 +22,10 @@ const settings: HomepageSettingsType = {
   [ViewCustomizationType.FOLLOWED_MODELS]: {
     heading: 'Models I’m following',
     description:
-      'This section shows only the models you’re following (like the one on the Models tab).',
-    noResultsHeading: 'You haven’t been added to any Model Plans yet.',
+      'You will receive email notifications when models you’re following are updated.',
+    noResultsHeading: 'You are not following any models yet.',
     noResultsDescription:
-      'Once you create one or are added as a team member to an existing plan, it will appear here.'
+      'Click the star icon (<star></star>) for any model to add it to this section.'
   },
   [ViewCustomizationType.MODELS_WITH_CR_TDL]: {
     heading: 'Models with FFS CRs or TDLs',
@@ -100,7 +100,7 @@ const customHome = {
       paymentDate: 'Payment start date',
       keyCharacteristics: 'Key characteristics',
       demoCode: 'Demo code',
-      crTDLs: 'CRs and TDLs',
+      crTDLs: 'FFS CRs and TDLs',
       status: 'Status',
       recentActivity: 'Recent activity'
     },

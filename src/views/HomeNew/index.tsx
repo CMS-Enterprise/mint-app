@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
@@ -12,11 +12,14 @@ import {
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import {
+  ModelPlanFilter,
+  useGetFavoritesQuery,
   useGetHomepageSettingsQuery,
   ViewCustomizationType
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import FavoritesTable from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
@@ -24,6 +27,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
+import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
@@ -31,6 +35,8 @@ import Landing from 'views/Landing';
 import ModelPlansTable from 'views/ModelPlan/HomeTable';
 
 import './index.scss';
+
+export type UpdateFavoriteProps = 'addFavorite' | 'removeFavorite';
 
 // TODO: Rename once old home is removed
 const HomeNew = () => {
@@ -50,6 +56,34 @@ const HomeNew = () => {
   const isLanding: boolean = pathname === '/' && !authState?.isAuthenticated;
 
   const { data, loading } = useGetHomepageSettingsQuery();
+
+  const {
+    data: favoritesData,
+    loading: favoritesLoading,
+    refetch
+  } = useGetFavoritesQuery({
+    variables: {
+      filter: ModelPlanFilter.INCLUDE_ALL,
+      isMAC: true
+    }
+  });
+
+  const favorites = favoritesData?.modelPlanCollection.filter(
+    modelPlan => modelPlan.isFavorite
+  );
+
+  const favoriteMutations = useFavoritePlan();
+
+  const handleUpdateFavorite = (
+    modelPlanID: string,
+    type: UpdateFavoriteProps
+  ) => {
+    favoriteMutations[type]({
+      variables: {
+        modelPlanID
+      }
+    }).then(() => refetch());
+  };
 
   const homepageComponents: Record<ViewCustomizationType, JSX.Element> = {
     [ViewCustomizationType.MY_MODEL_PLANS]: (
@@ -85,7 +119,45 @@ const HomeNew = () => {
         />
       </>
     ),
-    [ViewCustomizationType.FOLLOWED_MODELS]: <></>,
+    [ViewCustomizationType.FOLLOWED_MODELS]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(`settings.${ViewCustomizationType.FOLLOWED_MODELS}.heading`)}
+        </h2>
+
+        <p>
+          {t(`settings.${ViewCustomizationType.FOLLOWED_MODELS}.description`)}
+        </p>
+
+        <>
+          {favoritesLoading && <PageLoading />}
+          {!favoritesLoading && favorites?.length && (
+            <FavoritesTable
+              favorites={favorites || []}
+              removeFavorite={handleUpdateFavorite}
+            />
+          )}
+          {!favoritesLoading && !favorites?.length && (
+            <Alert
+              type="info"
+              heading={t(
+                `settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsHeading`
+              )}
+              className="margin-bottom-2 margin-top-4"
+            >
+              <Trans
+                i18nKey={`customHome:settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsDescription`}
+                components={{
+                  star: <Icon.StarOutline size={3} style={{ top: '6px' }} />
+                }}
+              />
+            </Alert>
+          )}
+        </>
+      </>
+    ),
     [ViewCustomizationType.MODELS_WITH_CR_TDL]: (
       <>
         <Divider className="margin-y-6" />

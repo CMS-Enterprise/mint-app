@@ -466,9 +466,15 @@ const ModelPlansTable = ({
   const modelsStyle = (index: number) => {
     return {
       minWidth:
-        (!isHome && index === 0 && '50px') ||
-        (!isHome && index === 2 && '100px') ||
-        (!isHome && index === 3 && '100px') ||
+        (type === ViewCustomizationType.FOLLOWED_MODELS &&
+          index === 0 &&
+          '50px') ||
+        (type === ViewCustomizationType.FOLLOWED_MODELS &&
+          index === 2 &&
+          '100px') ||
+        (type === ViewCustomizationType.FOLLOWED_MODELS &&
+          index === 3 &&
+          '100px') ||
         '138px',
       padding: index === 0 ? '0' : 'auto',
       paddingTop: index === 0 ? '0rem' : 'auto',
@@ -525,7 +531,11 @@ const ModelPlansTable = ({
                     aria-sort={getColumnSortStatus(column)}
                     className="table-header"
                     scope="col"
-                    style={!isHome ? modelsStyle(index) : homeStyle(index)}
+                    style={
+                      type === ViewCustomizationType.FOLLOWED_MODELS
+                        ? modelsStyle(index)
+                        : homeStyle(index)
+                    }
                   >
                     <button
                       className={classNames(
