@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
@@ -63,7 +62,7 @@ func (r *userNotificationPreferencesResolver) DatesChanged(ctx context.Context, 
 
 // DataExchangeApproachCompleted is the resolver for the dataExchangeApproachCompleted field.
 func (r *userNotificationPreferencesResolver) DataExchangeApproachCompleted(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
-	panic(fmt.Errorf("not implemented: DataExchangeApproachCompleted - dataExchangeApproachCompleted"))
+	return obj.DataExchangeApproachCompleted, nil
 }
 
 // UserNotificationPreferences returns generated.UserNotificationPreferencesResolver implementation.
