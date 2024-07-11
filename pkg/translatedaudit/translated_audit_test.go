@@ -117,6 +117,18 @@ func TestTranslateField(t *testing.T) {
 		assert.NoError(t, err)
 
 	})
+	t.Run("When a field is changed to empty string, there is no translation field ", func(t *testing.T) {
+		unchangedAuditField := models.AuditField{
+			Old: nil,
+			New: "",
+		}
+		var store *storage.Store //nil store
+		translatedField, wasTranslated, err := translateField(ctx, store, "there is no translation for this", unchangedAuditField, &testAuditChange, models.DBOpUpdate, testTranslationMap)
+		assert.False(t, wasTranslated)
+		assert.Nil(t, (translatedField))
+		assert.NoError(t, err)
+
+	})
 
 }
 
