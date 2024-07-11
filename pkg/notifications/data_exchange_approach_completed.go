@@ -14,11 +14,11 @@ func ActivityDataExchangeApproachCompletedCreate(
 	ctx context.Context,
 	actorID uuid.UUID,
 	np sqlutils.NamedPreparer,
-	receiverIDs []uuid.UUID,
+	receivers []*models.UserAccountAndNotificationPreferences,
 	approach *models.DataExchangeApproach,
 	markedCompletedBy uuid.UUID,
-	getPreferencesFunc GetUserNotificationPreferencesFunc,
 ) (*models.Activity, error) {
+
 	activity := models.NewDataExchangeApproachCompletedActivity(
 		actorID,
 		approach,
@@ -30,13 +30,8 @@ func ActivityDataExchangeApproachCompletedCreate(
 		return nil, actErr
 	}
 
-	for _, receiverID := range receiverIDs {
-		preferences, err := getPreferencesFunc(ctx, receiverID)
-		if err != nil {
-			return nil, err
-		}
-
-		_, err = userNotificationCreate(ctx, np, retActivity, receiverID, preferences.ModelPlanShared)
+	for _, receiver := range receivers {
+		_, err := userNotificationCreate(ctx, np, retActivity, receiver.ID, receiver.PreferenceFlags)
 		if err != nil {
 			return nil, err
 		}

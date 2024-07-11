@@ -33,14 +33,15 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		baseStruct: NewBaseStruct(userID),
 		UserID:     userID,
 
-		DailyDigestComplete:     DefaultUserNotificationPreferencesFlags(),
-		AddedAsCollaborator:     DefaultUserNotificationPreferencesFlags(),
-		TaggedInDiscussion:      DefaultUserNotificationPreferencesFlags(),
-		TaggedInDiscussionReply: DefaultUserNotificationPreferencesFlags(),
-		NewDiscussionReply:      DefaultUserNotificationPreferencesFlags(),
-		ModelPlanShared:         DefaultUserNotificationPreferencesFlags(),
-		NewModelPlan:            EmptyUserNotificationPreferencesFlags(),
-		DatesChanged:            EmptyUserNotificationPreferencesFlags(),
+		DailyDigestComplete:           DefaultUserNotificationPreferencesFlags(),
+		AddedAsCollaborator:           DefaultUserNotificationPreferencesFlags(),
+		TaggedInDiscussion:            DefaultUserNotificationPreferencesFlags(),
+		TaggedInDiscussionReply:       DefaultUserNotificationPreferencesFlags(),
+		NewDiscussionReply:            DefaultUserNotificationPreferencesFlags(),
+		ModelPlanShared:               DefaultUserNotificationPreferencesFlags(),
+		NewModelPlan:                  EmptyUserNotificationPreferencesFlags(),
+		DatesChanged:                  EmptyUserNotificationPreferencesFlags(),
+		DataExchangeApproachCompleted: EmptyUserNotificationPreferencesFlags(),
 	}
 }
 

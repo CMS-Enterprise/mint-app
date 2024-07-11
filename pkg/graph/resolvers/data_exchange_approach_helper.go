@@ -12,7 +12,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/notifications"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
@@ -67,18 +66,13 @@ func SendDataExchangeApproachCompletedEmailNotifications(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
 	addressBook email.AddressBook,
-	receiverIDs []uuid.UUID,
+	receivers []*models.UserAccountAndNotificationPreferences,
 	modelPlan *models.ModelPlan,
 	markedCompletedByUserCommonName string,
 	showFooter bool,
 ) error {
-	for _, userID := range receiverIDs {
-		user, err := userhelpers.UserAccountGetByIDLOADER(ctx, userID)
-		if err != nil {
-			return err
-		}
-
-		err = SendDataExchangeApproachCompletedEmailNotification(
+	for _, user := range receivers {
+		err := SendDataExchangeApproachCompletedEmailNotification(
 			emailService,
 			templateService,
 			addressBook,
@@ -101,22 +95,23 @@ func SendDataExchangeApproachCompletedNotification(
 	addressBook email.AddressBook,
 	actorID uuid.UUID,
 	np sqlutils.NamedPreparer,
-	receiverIDs []uuid.UUID,
+	receivers []*models.UserAccountAndNotificationPreferences,
 	modelPlan *models.ModelPlan,
 	approach *models.DataExchangeApproach, // TODO: We should probably remove this and reference it from modelPlan
 	markedCompletedBy uuid.UUID,
 ) error {
 	logger := appcontext.ZLogger(ctx)
 
+	emailPreferences, inAppPreferences := models.FilterNotificationPreferences(receivers)
+
 	// Create and send in-app notifications
 	_, err := notifications.ActivityDataExchangeApproachCompletedCreate(
 		ctx,
 		actorID,
 		np,
-		receiverIDs,
+		inAppPreferences,
 		approach,
 		markedCompletedBy,
-		loaders.UserNotificationPreferencesGetByUserID,
 	)
 	if err != nil {
 		logger.Error("failed to create and send in-app notifications", zap.Error(err))
@@ -150,7 +145,7 @@ func SendDataExchangeApproachCompletedNotification(
 		emailService,
 		templateService,
 		addressBook,
-		receiverIDs,
+		emailPreferences,
 		modelPlan,
 		markedCompletedByUser.CommonName,
 		true,

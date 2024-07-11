@@ -1,8 +1,6 @@
 package notifications
 
 import (
-	"context"
-
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -20,11 +18,11 @@ func (suite *NotificationsSuite) TestActivityDataExchangeApproachCompletedCreate
 	approachMarkedCompleteBy, err := suite.testConfigs.GetTestPrincipal(suite.testConfigs.Store, "MINT")
 	suite.NoError(err)
 
-	receiverIDs := []uuid.UUID{approachCreator.Account().ID}
-
-	mockFunc := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
-		// Return mock data, all notifications enabled
-		return models.NewUserNotificationPreferences(user_id), nil
+	receivers := []*models.UserAccountAndNotificationPreferences{
+		{
+			UserAccount:     *approachCreator.UserAccount,
+			PreferenceFlags: models.DefaultUserNotificationPreferencesFlags(),
+		},
 	}
 
 	approach := models.NewDataExchangeApproach(
@@ -37,10 +35,9 @@ func (suite *NotificationsSuite) TestActivityDataExchangeApproachCompletedCreate
 		suite.testConfigs.Context,
 		actorID,
 		suite.testConfigs.Store,
-		receiverIDs,
+		receivers,
 		approach,
 		approachMarkedCompleteBy.Account().ID,
-		mockFunc,
 	)
 
 	suite.NoError(err)
