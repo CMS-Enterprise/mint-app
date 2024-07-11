@@ -133,7 +133,7 @@ const HomeNew = () => {
 
         <>
           {favoritesLoading && <PageLoading />}
-          {!favoritesLoading && favorites?.length && (
+          {!favoritesLoading && favorites && favorites?.length > 0 && (
             <FavoritesTable
               favorites={favorites || []}
               removeFavorite={handleUpdateFavorite}
