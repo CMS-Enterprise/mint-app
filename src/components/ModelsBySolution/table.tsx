@@ -70,7 +70,7 @@ const ModelsBySolutionTable = ({
         Cell: ({ row }: { row: Row<ModelsBySolutionType[0]> }) => {
           return (
             <CardGroup className="margin-top-2 margin-x-0">
-              <Grid desktop={{ col: 4 }} tablet={{ col: 4 }}>
+              <Grid desktop={{ col: 4 }} tablet={{ col: 6 }}>
                 <ModelSolutionCard
                   key={row.original.modelPlan.id}
                   modelPlan={row.original.modelPlan}
