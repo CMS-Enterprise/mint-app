@@ -3,6 +3,9 @@ package worker
 import (
 	"time"
 
+	faktory "github.com/contribsys/faktory/client"
+	faktory_worker "github.com/contribsys/faktory_worker_go"
+
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -36,7 +39,12 @@ func (suite *WorkerSuite) TestTranslateAuditJob() {
 	}
 	entryToTest := testableEntries[0]
 
-	jobErr := worker.TranslateAuditJob(suite.testConfigs.Context, entryToTest.ChangeID, entryToTest.ID)
+	pool, err := faktory.NewPool(5)
+	suite.NoError(err)
+	job := faktory.NewJob(translateAuditJobName, entryToTest.ChangeID, entryToTest.ID)
+	perf := faktory_worker.NewTestExecutor(pool)
+	jobErr := perf.Execute(job, worker.TranslateAuditJob)
+	suite.NoError(jobErr)
 
 	suite.NoError(jobErr)
 }
