@@ -94,8 +94,13 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 		JobCodeMAC:        jcMAC,
 		JobCodeNonCMS:     jcNonCMS,
 	}
+	oktaClient, oktaClientErr := NewOktaAPIClient()
+	if oktaClientErr != nil {
+		return nil, oktaClientErr
+	}
 
-	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, store, princ.ID(), true, princ.JobCodeMAC, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+	userhelpers.GetUserInfoAccountInfoWrapperFunc(oktaClient.FetchUserInfo)
+	userAccount, err := userhelpers.GetOrCreateUserAccount(ctx, store, store, princ.ID(), true, princ.JobCodeMAC, userhelpers.GetUserInfoAccountInfoWrapperFunc(oktaClient.FetchUserInfo))
 	if err != nil {
 		return nil, err
 	}

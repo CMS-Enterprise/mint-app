@@ -19,17 +19,17 @@ func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	basicUserPrincipal.JobCodeASSESSMENT = false
 	basicUserPrincipal.JobCodeMAC = false
 
-	notCollab := getTestPrincipal(suite.testConfigs.Store, "FAIL")
+	notCollab := suite.getTestPrincipal(suite.testConfigs.Store, "FAIL")
 	notCollab.JobCodeUSER = true
 	notCollab.JobCodeASSESSMENT = false
 	notCollab.JobCodeMAC = false
 
-	assessment := getTestPrincipal(suite.testConfigs.Store, "FAIL")
+	assessment := suite.getTestPrincipal(suite.testConfigs.Store, "FAIL")
 	assessment.JobCodeUSER = true
 	assessment.JobCodeASSESSMENT = true //Bypass Collaborator check
 	assessment.JobCodeMAC = false
 
-	macUser := getTestPrincipal(suite.testConfigs.Store, "MyFunIDMUsername")
+	macUser := suite.getTestPrincipal(suite.testConfigs.Store, "MyFunIDMUsername")
 	macUser.JobCodeUSER = false
 	macUser.JobCodeASSESSMENT = false
 	macUser.JobCodeMAC = true

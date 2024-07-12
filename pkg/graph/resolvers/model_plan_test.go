@@ -86,7 +86,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	suite.createPlanTDL(planWithCRTDLs, "Happy Happy Test", time.Now(), "Good TDL", "This is a test")
 
 	// Get plan collection as CLAB
-	clabPrincipal := getTestPrincipal(suite.testConfigs.Store, "CLAB")
+	clabPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "CLAB")
 	clabPrincipal.JobCodeASSESSMENT = false
 
 	// Assert that CLAB only sees 1 model plan with collab only filter
@@ -273,7 +273,7 @@ func (suite *ResolverSuite) TestModelPlanOpSolutionLastModifiedDtsDataLoader() {
 }
 
 func (suite *ResolverSuite) TestModelPlansGetByFavorited() {
-	testPrincipal := getTestPrincipal(suite.testConfigs.Store, "User B")
+	testPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "User B")
 	plan := suite.createModelPlan("My Favorite Plan")
 	_ = suite.createModelPlan("My Unfavorited Plan")
 
