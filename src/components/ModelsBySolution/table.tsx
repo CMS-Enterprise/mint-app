@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Row,
@@ -70,7 +70,9 @@ const ModelsBySolutionTable = ({
     return data?.modelPlansByOperationalSolutionKey || [];
   }, [data?.modelPlansByOperationalSolutionKey]);
 
-  const filteredModels = useRef<ModelsBySolutionType>([...modelsBySolution]);
+  const [filteredModels, setFilteredModels] = useState<ModelsBySolutionType>([
+    ...modelsBySolution
+  ]);
 
   const columns: any = useMemo(() => {
     return [
@@ -110,7 +112,7 @@ const ModelsBySolutionTable = ({
   } = useTable(
     {
       columns,
-      data: filteredModels.current,
+      data: filteredModels,
       globalFilter: useMemo(
         () => (
           rows: Row<any>[],
@@ -156,13 +158,15 @@ const ModelsBySolutionTable = ({
 
   useEffect(() => {
     if (selectedStatus === 'total') {
-      filteredModels.current = [...modelsBySolution];
+      setFilteredModels([...modelsBySolution]);
       return;
     }
 
-    filteredModels.current = [...modelsBySolution].filter(model => {
-      return model.modelPlan.status === selectedStatus;
-    });
+    setFilteredModels(
+      [...modelsBySolution].filter(model => {
+        return model.modelPlan.status === selectedStatus;
+      })
+    );
   }, [selectedStatus, modelsBySolution]);
 
   if (loading) {
@@ -182,7 +186,7 @@ const ModelsBySolutionTable = ({
         setSelectedStatus={setSelectedStatus}
       />
 
-      {modelsBySolution.length > 4 && (
+      {filteredModels.length > 4 && (
         <div>
           <GlobalClientFilter
             setGlobalFilter={setGlobalFilter}
@@ -198,12 +202,12 @@ const ModelsBySolutionTable = ({
             pageIndex={state.pageIndex}
             pageSize={state.pageSize}
             filteredRowLength={page.length}
-            rowLength={modelsBySolution.length}
+            rowLength={filteredModels.length}
           />
         </div>
       )}
 
-      {modelsBySolution.length === 0 && (
+      {filteredModels.length === 0 && (
         <Alert type="info" heading={customHomeT('noModelSolutionHeading')}>
           <Trans
             i18nKey="customHome:noModelSolutionDescription"
