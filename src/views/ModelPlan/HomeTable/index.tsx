@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Column,
@@ -20,7 +20,8 @@ import {
   ModelCategory,
   ModelPlanFilter,
   TeamRole,
-  useGetModelPlansQuery
+  useGetModelPlansQuery,
+  ViewCustomizationType
 } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
@@ -41,6 +42,8 @@ import {
 } from 'utils/tableSort';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
 
+import './index.scss';
+
 type AllModelPlansType = GetModelPlansQuery['modelPlanCollection'][0];
 type CollaboratorsType = GetModelPlansQuery['modelPlanCollection'][0]['collaborators'][0];
 
@@ -50,53 +53,44 @@ type CRTDLType =
 
 type ModelPlansTableProps =
   | {
-      type: 'home' | 'mac';
+      type: ViewCustomizationType;
       updateFavorite?: never;
       hiddenColumns?: number[]; // indexes of columns to be hidden
-      hideTable?: (tableHidden: boolean) => void;
-      tableHidden?: boolean;
-      userModels: boolean;
-      isAssessment: boolean;
-      isMAC: boolean;
-      csvDownload?: boolean;
+      canSearch?: boolean;
+      isHome?: boolean;
+      isAssessment?: boolean;
     }
   | {
-      type: 'models';
+      type: ViewCustomizationType.FOLLOWED_MODELS;
       updateFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
       hiddenColumns?: number[]; // indexes of columns to be hidden
-      hideTable?: never;
-      tableHidden?: never;
-      userModels?: never;
-      isAssessment?: never;
-      isMAC?: never;
-      csvDownload?: boolean;
+      canSearch?: boolean;
+      isHome?: boolean;
+      isAssessment?: boolean;
     };
 
 const ModelPlansTable = ({
   type,
   updateFavorite,
   hiddenColumns,
-  hideTable,
-  tableHidden,
-  userModels,
-  isAssessment,
-  isMAC,
-  csvDownload
+  canSearch = true,
+  isHome = true,
+  isAssessment
 }: ModelPlansTableProps) => {
-  const { t: homeT } = useTranslation('home');
+  const { t: homeT } = useTranslation('customHome');
 
   let queryType = ModelPlanFilter.COLLAB_ONLY;
 
-  if (!userModels && !isMAC) {
+  if (type === ViewCustomizationType.ALL_MODEL_PLANS) {
     queryType = ModelPlanFilter.INCLUDE_ALL;
-  } else if (isMAC) {
+  } else if (type === ViewCustomizationType.MODELS_WITH_CR_TDL) {
     queryType = ModelPlanFilter.WITH_CR_TDLS;
   }
 
   const { data: modelPlans, loading, error } = useGetModelPlansQuery({
     variables: {
       filter: queryType,
-      isMAC: type !== 'home'
+      isMAC: type === ViewCustomizationType.MODELS_WITH_CR_TDL
     }
   });
 
@@ -123,10 +117,11 @@ const ModelPlansTable = ({
       'recentActivity'
     ];
 
-    const tableColumns: Record<string, string[]> = {
-      home: [...homeColumns],
-      models: ['isFavorite', ...homeColumns],
-      mac: [
+    const tableColumns: Record<ViewCustomizationType, string[]> = {
+      [ViewCustomizationType.MY_MODEL_PLANS]: [...homeColumns],
+      [ViewCustomizationType.ALL_MODEL_PLANS]: [...homeColumns],
+      [ViewCustomizationType.FOLLOWED_MODELS]: ['isFavorite', ...homeColumns],
+      [ViewCustomizationType.MODELS_WITH_CR_TDL]: [
         'modelName',
         'status',
         'startDate',
@@ -135,7 +130,8 @@ const ModelPlansTable = ({
         'demoCode',
         'crTdls',
         'modelPoc'
-      ]
+      ],
+      [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: [...homeColumns]
     };
 
     const columnOptions: Record<string, Column> = {
@@ -190,7 +186,7 @@ const ModelPlansTable = ({
             <>
               <UswdsReactLink
                 to={`/models/${row.original.id}/${
-                  type === 'models' ? 'read-only/model-basics' : 'task-list'
+                  !isHome ? 'read-only/model-basics' : 'task-list'
                 }`}
               >
                 {value}
@@ -392,7 +388,7 @@ const ModelPlansTable = ({
     );
 
     return columnList;
-  }, [homeT, updateFavorite, type]);
+  }, [homeT, updateFavorite, type, isHome]);
 
   const {
     getTableProps,
@@ -438,18 +434,6 @@ const ModelPlansTable = ({
     usePagination
   );
 
-  // Checking if the table is for Assessment and if they have no associated models
-  // If so, do not render the table at all
-  useEffect(() => {
-    if (!loading && isAssessment && userModels && data.length === 0) {
-      if (hideTable) hideTable(true);
-    }
-  }, [loading, isAssessment, userModels, data, hideTable]);
-
-  if (tableHidden) {
-    return null;
-  }
-
   if (!data.length && loading) {
     return <PageLoading />;
   }
@@ -460,8 +444,8 @@ const ModelPlansTable = ({
 
   if (data.length === 0) {
     return (
-      <Alert type="info" heading={homeT('requestsTable.empty.heading')}>
-        {homeT('requestsTable.empty.body')}
+      <Alert type="info" heading={homeT(`settings.${type}.noResultsHeading`)}>
+        {homeT(`settings.${type}.noResultsDescription`)}
       </Alert>
     );
   }
@@ -482,9 +466,9 @@ const ModelPlansTable = ({
   const modelsStyle = (index: number) => {
     return {
       minWidth:
-        (type === 'models' && index === 0 && '50px') ||
-        (type === 'models' && index === 2 && '100px') ||
-        (type === 'models' && index === 3 && '100px') ||
+        (!isHome && index === 0 && '50px') ||
+        (!isHome && index === 2 && '100px') ||
+        (!isHome && index === 3 && '100px') ||
         '138px',
       padding: index === 0 ? '0' : 'auto',
       paddingTop: index === 0 ? '0rem' : 'auto',
@@ -497,7 +481,7 @@ const ModelPlansTable = ({
     <div className="model-plan-table">
       <div className="mint-header__basic display-flex flex-justify flex-align-self-start">
         <div>
-          {!userModels && (
+          {canSearch && (
             <GlobalClientFilter
               setGlobalFilter={setGlobalFilter}
               tableID={homeT('requestsTable.id')}
@@ -506,7 +490,7 @@ const ModelPlansTable = ({
             />
           )}
 
-          {!userModels && (
+          {canSearch && !!state.globalFilter && (
             <TableResults
               globalFilter={state.globalFilter}
               pageIndex={state.pageIndex}
@@ -517,7 +501,11 @@ const ModelPlansTable = ({
           )}
         </div>
 
-        <>{csvDownload && <CsvExportLink />}</>
+        <>
+          {type === ViewCustomizationType.ALL_MODEL_PLANS && isAssessment && (
+            <CsvExportLink />
+          )}
+        </>
       </div>
 
       <UswdsTable {...getTableProps()} fullWidth scrollable>
@@ -537,9 +525,7 @@ const ModelPlansTable = ({
                     aria-sort={getColumnSortStatus(column)}
                     className="table-header"
                     scope="col"
-                    style={
-                      type === 'models' ? modelsStyle(index) : homeStyle(index)
-                    }
+                    style={!isHome ? modelsStyle(index) : homeStyle(index)}
                   >
                     <button
                       className={classNames(
@@ -615,7 +601,7 @@ const ModelPlansTable = ({
         </Alert>
       )}
 
-      {!userModels && (
+      {canSearch && data.length > 10 && (
         <TablePagination
           gotoPage={gotoPage}
           previousPage={previousPage}

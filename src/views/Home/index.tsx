@@ -118,6 +118,7 @@ const Home = () => {
                     userModels={false}
                     isAssessment={isAssessment(userGroups, flags)}
                     isMAC={isMAC(userGroups)}
+                    csvDownload={isAssessment(userGroups, flags)}
                   />
                 </>
               )}

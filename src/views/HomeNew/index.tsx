@@ -28,7 +28,7 @@ import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
 import Landing from 'views/Landing';
-import ModelPlansTable from 'views/ModelPlan/Table';
+import ModelPlansTable from 'views/ModelPlan/HomeTable';
 
 import './index.scss';
 
@@ -57,16 +57,17 @@ const HomeNew = () => {
         <Divider className="margin-y-6" />
 
         <h2 className="margin-top-0 margin-bottom-2">
-          {t('requestsTable.basic.heading')}
+          {t(`settings.${ViewCustomizationType.MY_MODEL_PLANS}.heading`)}
         </h2>
 
-        <p>{t('requestsTable.basic.subheading')}</p>
+        <p>
+          {t(`settings.${ViewCustomizationType.MY_MODEL_PLANS}.description`)}
+        </p>
 
         <ModelPlansTable
-          type="home"
-          userModels
+          type={ViewCustomizationType.MY_MODEL_PLANS}
+          canSearch={false}
           isAssessment={isAssessment(userGroups, flags)}
-          isMAC={false}
         />
       </>
     ),
@@ -74,18 +75,37 @@ const HomeNew = () => {
       <>
         <Divider className="margin-y-6" />
 
-        <h2 className="margin-top-0">{t('requestsTable.admin.heading')}</h2>
+        <h2 className="margin-top-0">
+          {t(`settings.${ViewCustomizationType.ALL_MODEL_PLANS}.heading`)}
+        </h2>
 
         <ModelPlansTable
-          type="home"
-          userModels={false}
+          type={ViewCustomizationType.ALL_MODEL_PLANS}
           isAssessment={isAssessment(userGroups, flags)}
-          isMAC={false}
         />
       </>
     ),
     [ViewCustomizationType.FOLLOWED_MODELS]: <></>,
-    [ViewCustomizationType.MODELS_WITH_CR_TDL]: <></>,
+    [ViewCustomizationType.MODELS_WITH_CR_TDL]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(`settings.${ViewCustomizationType.MODELS_WITH_CR_TDL}.heading`)}
+        </h2>
+
+        <p>
+          {t(
+            `settings.${ViewCustomizationType.MODELS_WITH_CR_TDL}.description`
+          )}
+        </p>
+
+        <ModelPlansTable
+          type={ViewCustomizationType.MODELS_WITH_CR_TDL}
+          isAssessment={isAssessment(userGroups, flags)}
+        />
+      </>
+    ),
     [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: <></>
   };
 
@@ -98,10 +118,10 @@ const HomeNew = () => {
             {message}
 
             <Grid data-testid="homepage">
-              <Grid row>
-                <Grid tablet={{ col: 8 }}>
+              <Grid row className="padding-top-4">
+                <Grid desktop={{ col: 9 }}>
                   <div>
-                    <PageHeading className="margin-bottom-1">
+                    <PageHeading className="margin-bottom-1 margin-top-0">
                       {t('title')}
                     </PageHeading>
 
@@ -113,8 +133,8 @@ const HomeNew = () => {
                   </div>
                 </Grid>
 
-                <Grid tablet={{ col: 4 }}>
-                  <Card className="margin-top-4 margin-bottom-0 home__card display-flex">
+                <Grid desktop={{ col: 3 }}>
+                  <Card className="margin-y-0 home__card display-flex">
                     <p className="text-bold margin-top-0">
                       {t('customizeHomepage')}
                     </p>
