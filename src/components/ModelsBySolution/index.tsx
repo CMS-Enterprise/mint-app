@@ -4,6 +4,7 @@ import { Card, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
 import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus';
 
@@ -22,6 +23,8 @@ const ModelSolutionCard = ({
 }: ModelSolutionCardProps) => {
   const { t: customHomeT } = useTranslation('customHome');
 
+  const basicsConfig = usePlanTranslation('basics');
+
   const { id, basics, modelName, status } = modelPlan;
 
   return (
@@ -33,7 +36,7 @@ const ModelSolutionCard = ({
         <Grid row>
           <Grid desktop={{ col: 12 }}>
             <h3 className="model-solution-card__title margin-top-0">
-              <UswdsReactLink to={`/models/${id}/task-list`}>
+              <UswdsReactLink to={`/models/${id}/read-view`}>
                 {modelName}
               </UswdsReactLink>
             </h3>
@@ -53,37 +56,43 @@ const ModelSolutionCard = ({
               {customHomeT('solutionCard.category')}
             </p>
             {basics.modelCategory ? (
-              basics.modelCategory
+              basicsConfig.modelCategory.options[basics.modelCategory]
             ) : (
               <i className="text-base">{customHomeT('solutionCard.tbd')}</i>
             )}
           </Grid>
 
-          <Grid row gap>
-            <Grid desktop={{ col: 6 }}>
-              <p className="text-bold margin-bottom-0 margin-right-1">
-                {customHomeT('solutionCard.startDate')}
-              </p>
-              <p className="text-bold margin-top-0 margin-bottom-0">
-                {basics.applicationsStart ? (
-                  formatDateUtc(basics.applicationsStart, 'MMMM d, yyyy')
-                ) : (
-                  <i className="text-base">{customHomeT('solutionCard.tbd')}</i>
-                )}
-              </p>
-            </Grid>
+          <Grid desktop={{ col: 12 }}>
+            <Grid row gap>
+              <Grid desktop={{ col: 6 }}>
+                <p className="text-bold margin-bottom-0 margin-right-1">
+                  {customHomeT('solutionCard.startDate')}
+                </p>
+                <p className="margin-top-0 margin-bottom-0">
+                  {basics.applicationsStart ? (
+                    formatDateUtc(basics.applicationsStart, 'MM/dd/yyyy')
+                  ) : (
+                    <i className="text-base">
+                      {customHomeT('solutionCard.tbd')}
+                    </i>
+                  )}
+                </p>
+              </Grid>
 
-            <Grid desktop={{ col: 6 }}>
-              <p className="text-bold margin-bottom-0 margin-right-1">
-                {customHomeT('solutionCard.endDate')}
-              </p>
-              <p className="text-bold margin-top-0 margin-bottom-0">
-                {basics.applicationsEnd ? (
-                  formatDateUtc(basics.applicationsEnd, 'MMMM d, yyyy')
-                ) : (
-                  <i className="text-base">{customHomeT('solutionCard.tbd')}</i>
-                )}
-              </p>
+              <Grid desktop={{ col: 6 }}>
+                <p className="text-bold margin-bottom-0 margin-right-1">
+                  {customHomeT('solutionCard.endDate')}
+                </p>
+                <p className="margin-top-0 margin-bottom-0">
+                  {basics.applicationsEnd ? (
+                    formatDateUtc(basics.applicationsEnd, 'MM/dd/yyyy')
+                  ) : (
+                    <i className="text-base">
+                      {customHomeT('solutionCard.tbd')}
+                    </i>
+                  )}
+                </p>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

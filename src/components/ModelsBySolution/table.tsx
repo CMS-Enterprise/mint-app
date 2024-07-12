@@ -18,6 +18,7 @@ import {
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
+import { formatDateUtc } from 'utils/date';
 
 import ModelSolutionCard from '.';
 
@@ -96,9 +97,35 @@ const ModelsBySolutionTable = ({
           const filterValueLower = filterValue.toLowerCase();
           return rows.filter((row: Row<ModelsBySolutionType[0]>) => {
             // eslint-disable-next-line react/prop-types
-            return row?.original?.modelPlan?.modelName // eslint-disable-next-line react/prop-types
-              ?.toLowerCase()
-              .includes(filterValueLower);
+            return (
+              // eslint-disable-next-line react/prop-types
+              row?.original?.modelPlan?.modelName
+                // eslint-disable-next-line react/prop-types
+                ?.toLowerCase()
+                .includes(filterValueLower) ||
+              // eslint-disable-next-line react/prop-types
+              row?.original?.modelPlan?.status
+                // eslint-disable-next-line react/prop-types
+                ?.toLowerCase()
+                .includes(filterValueLower) ||
+              // eslint-disable-next-line react/prop-types
+              row?.original?.modelPlan?.basics?.modelCategory
+                // eslint-disable-next-line react/prop-types
+                ?.toLowerCase()
+                .includes(filterValueLower) ||
+              // eslint-disable-next-line react/prop-types
+              formatDateUtc(
+                // eslint-disable-next-line react/prop-types
+                row?.original?.modelPlan?.basics?.applicationsStart,
+                'MM/dd/yyyy'
+              ).includes(filterValueLower) ||
+              // eslint-disable-next-line react/prop-types
+              formatDateUtc(
+                // eslint-disable-next-line react/prop-types
+                row?.original?.modelPlan?.basics?.applicationsEnd,
+                'MM/dd/yyyy'
+              ).includes(filterValueLower)
+            );
           });
         },
         []
@@ -116,6 +143,7 @@ const ModelsBySolutionTable = ({
   return (
     <div id="models-by-solution-table">
       <div className="mint-header__basic display-flex flex-justify flex-align-self-start">
+        {/* {modelsBySolution.length > 4 && ( */}
         <div>
           <GlobalClientFilter
             setGlobalFilter={setGlobalFilter}
@@ -134,6 +162,7 @@ const ModelsBySolutionTable = ({
             rowLength={modelsBySolution.length}
           />
         </div>
+        {/* )} */}
       </div>
 
       <UswdsTable {...getTableProps()} fullWidth>

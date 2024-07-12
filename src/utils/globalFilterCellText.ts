@@ -37,7 +37,6 @@ export default function globalFilterCellText(
   columnIds: string[],
   filterValue: string
 ): Row<any>[] {
-  console.log(rows);
   const filterValueLower = filterValue.toLowerCase();
   return rows.filter(row =>
     row.cells.some(cell => {
