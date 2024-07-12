@@ -112,6 +112,8 @@ export type TranslationFieldProperties = {
   otherParentField?: string; // gql field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
   questionTooltip?: string; // Render tooltip next to the question
   exportLabel?: string;
+  groupLabel?: string;
+  groupLabelTooltip?: string;
 };
 
 /*

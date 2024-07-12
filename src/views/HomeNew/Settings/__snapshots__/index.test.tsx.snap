@@ -234,7 +234,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                       My Model Plans
                     </label>
                     <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                     />
                   </div>
                   <p
@@ -274,7 +274,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                       All Model Plans
                     </label>
                     <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                     />
                   </div>
                   <p
@@ -314,7 +314,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                       Models I’m following
                     </label>
                     <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                     />
                   </div>
                   <p
@@ -354,7 +354,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                       Models with FFS CRs or TDLs
                     </label>
                     <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                     />
                   </div>
                   <p
@@ -394,7 +394,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                       Models using specific operational solutions
                     </label>
                     <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                     />
                   </div>
                   <p

@@ -437,7 +437,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                   Annually
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -457,7 +457,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                   Semi-annually
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -477,7 +477,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                   Quarterly
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -497,7 +497,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                   Monthly
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -517,7 +517,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                   Continually
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -537,7 +537,7 @@ exports[`Model Plan -- Complexity > matches snapshot 1`] = `
                   Other
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div

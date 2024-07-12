@@ -750,7 +750,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                     <div
@@ -813,7 +813,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -876,7 +876,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -939,7 +939,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -1002,7 +1002,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -1065,7 +1065,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                   </div>
@@ -1103,7 +1103,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         Center for Medicare and Medicaid Innovation (CMMI)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -1123,7 +1123,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         Center for Clinical Standards and Quality (CCSQ)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -1143,7 +1143,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         Center for Medicaid and CHIP Services (CMCS)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -1163,7 +1163,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         Center for Medicare (CM)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -1183,7 +1183,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         Federal Coordinated Health Care Office (FCHCO)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -1203,7 +1203,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         Center for Program Integrity (CPI)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                   </div>
@@ -1241,7 +1241,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         Patient Care Models Group (PCMG)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                     <div
@@ -1262,7 +1262,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         Policy and Programs Group (PPG)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                     <div
@@ -1283,7 +1283,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         Seamless Care Models Group (SCMG)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                     <div
@@ -1304,7 +1304,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         State and Population Health Group (SPHG)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                     <div
@@ -1325,7 +1325,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                         To be determined
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                   </div>
@@ -2162,7 +2162,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -2225,7 +2225,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -2288,7 +2288,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -2351,7 +2351,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -2415,7 +2415,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                     <div
@@ -2478,7 +2478,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                   </div>
@@ -2516,7 +2516,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         Center for Medicare and Medicaid Innovation (CMMI)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -2536,7 +2536,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         Center for Clinical Standards and Quality (CCSQ)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -2556,7 +2556,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         Center for Medicaid and CHIP Services (CMCS)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -2576,7 +2576,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         Center for Medicare (CM)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -2596,7 +2596,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         Federal Coordinated Health Care Office (FCHCO)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
@@ -2616,7 +2616,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         Center for Program Integrity (CPI)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                   </div>
@@ -2654,7 +2654,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         Patient Care Models Group (PCMG)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                     <div
@@ -2675,7 +2675,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         Policy and Programs Group (PPG)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                     <div
@@ -2696,7 +2696,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         Seamless Care Models Group (SCMG)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                     <div
@@ -2717,7 +2717,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         State and Population Health Group (SPHG)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                     <div
@@ -2738,7 +2738,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         To be determined
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
                       />
                     </div>
                   </div>

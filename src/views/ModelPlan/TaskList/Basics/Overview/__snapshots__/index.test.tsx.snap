@@ -131,7 +131,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 Voluntary
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
               />
             </div>
             <div
@@ -151,7 +151,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 Mandatory national
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
               />
             </div>
             <div
@@ -171,7 +171,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 Mandatory regional or state
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
               />
             </div>
             <div
@@ -191,7 +191,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 Other
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
               />
             </div>
           </fieldset>

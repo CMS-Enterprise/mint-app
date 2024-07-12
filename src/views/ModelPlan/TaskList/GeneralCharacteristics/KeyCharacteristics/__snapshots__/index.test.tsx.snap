@@ -124,7 +124,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Yes, we will partner with states
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -144,7 +144,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Yes, we will get ideas from another agency
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -164,7 +164,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Yes, we will get support from another agency through Inter Agency Agreement (IAA)
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -184,7 +184,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             No
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -204,7 +204,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -283,7 +283,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               Advanced APM
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -303,7 +303,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               MIPS APM
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -323,7 +323,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               Regular APM
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -343,7 +343,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               It is not an APM
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
         </fieldset>
