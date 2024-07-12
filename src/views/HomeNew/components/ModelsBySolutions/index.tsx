@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Header, PrimaryNav } from '@trussworks/react-uswds';
+import { Header, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { OperationalSolutionKey } from 'gql/gen/graphql';
 
@@ -20,9 +20,7 @@ const ModelsBySolutions = ({
     operationalSolutionKeys[0]
   );
 
-  const onClick = (): void => setExpanded(prvExpanded => !prvExpanded);
-
-  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   const solutionNavs = operationalSolutionKeys.map(solutionKey => (
     <button
@@ -43,18 +41,39 @@ const ModelsBySolutions = ({
     <div className="models-by-solutions">
       <Header
         basic
-        extended={expanded}
+        extended={false}
         className="margin-bottom-4 models-by-solutions__nav-container"
       >
         <div className="usa-nav-container padding-0">
           <PrimaryNav
             items={solutionNavs}
-            mobileExpanded={expanded}
-            onToggleMobileNav={onClick}
+            mobileExpanded={false}
             className="flex-justify-start margin-0 padding-0"
           />
         </div>
       </Header>
+
+      {isTablet && (
+        <Select
+          id="solutionKey"
+          name="solutionKey"
+          value={isCurrent}
+          onChange={e =>
+            setIsCurrent(e.currentTarget.value as OperationalSolutionKey)
+          }
+          className="margin-bottom-4 text-primary text-bold"
+        >
+          {operationalSolutionKeys.map(solution => {
+            return (
+              <option key={solution} value={solution}>
+                {helpSolutions
+                  .find(sol => sol.enum === solution)
+                  ?.acronym?.toUpperCase()}
+              </option>
+            );
+          })}
+        </Select>
+      )}
 
       <ModelsBySolutionTable operationalSolutionKey={isCurrent} />
     </div>
