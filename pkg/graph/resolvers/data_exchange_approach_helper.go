@@ -97,7 +97,7 @@ func SendDataExchangeApproachCompletedNotification(
 	np sqlutils.NamedPreparer,
 	receivers []*models.UserAccountAndNotificationPreferences,
 	modelPlan *models.ModelPlan,
-	approach *models.DataExchangeApproach, // TODO: We should probably remove this and reference it from modelPlan
+	approach *models.DataExchangeApproach,
 	markedCompletedBy uuid.UUID,
 ) error {
 	logger := appcontext.ZLogger(ctx)
