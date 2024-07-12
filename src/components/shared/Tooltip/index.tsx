@@ -10,11 +10,13 @@ type TooltipProps = {
   className?: string;
   label: string;
   position?: 'top' | 'bottom' | 'left' | 'right';
+  wrapperclasses?: string;
 };
 
 const Tooltip = ({
   children,
   className,
+  wrapperclasses,
   label,
   position = 'top'
 }: TooltipProps): React.ReactElement => {
@@ -29,6 +31,7 @@ const Tooltip = ({
       label={label}
       asCustom={CustomDiv}
       position={position}
+      wrapperclasses={wrapperclasses}
       className={classNames('mint-no-print', className)}
     >
       {children}
