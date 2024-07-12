@@ -112,7 +112,14 @@ const customHome = {
   },
   emptyHome: 'Your homepage looks a little empty.',
   editHomepage: 'Edit homepage settings',
-  customizeHomepage: 'Did you know you can customize this page?'
+  customizeHomepage: 'Did you know you can customize this page?',
+  solutionCard: {
+    status: 'Status',
+    category: 'Category',
+    startDate: 'Start date',
+    endDate: 'End date',
+    tbd: 'To be determined'
+  }
 };
 
 export default customHome;

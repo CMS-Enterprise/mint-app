@@ -8,7 +8,7 @@ import {
   usePagination,
   useTable
 } from 'react-table';
-import { CardGroup, Table as UswdsTable } from '@trussworks/react-uswds';
+import { CardGroup, Grid, Table as UswdsTable } from '@trussworks/react-uswds';
 import {
   GetModelsBySolutionQuery,
   OperationalSolutionKey,
@@ -54,11 +54,13 @@ const ModelsBySolutionTable = ({
         accessor: 'id',
         Cell: ({ row }: { row: Row<ModelsBySolutionType[0]> }) => {
           return (
-            <CardGroup>
-              <ModelSolutionCard
-                key={row.original.modelPlan.id}
-                modelPlan={row.original.modelPlan}
-              />
+            <CardGroup className="margin-top-2 margin-x-0">
+              <Grid desktop={{ col: 4 }} tablet={{ col: 4 }}>
+                <ModelSolutionCard
+                  key={row.original.modelPlan.id}
+                  modelPlan={row.original.modelPlan}
+                />
+              </Grid>
             </CardGroup>
           );
         }
@@ -121,7 +123,7 @@ const ModelsBySolutionTable = ({
             tableName={customHomeT(
               'settings.MODELS_BY_OPERATIONAL_SOLUTION.heading'
             )}
-            className="margin-bottom-4 maxw-none width-mobile-lg"
+            className="margin-bottom-3 maxw-none width-mobile-lg"
           />
 
           <TableResults
