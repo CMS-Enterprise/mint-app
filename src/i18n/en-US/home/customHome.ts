@@ -123,7 +123,13 @@ const customHome = {
   noModelSolutionHeading:
     'There is no record of any models using this solution.',
   noModelSolutionDescription:
-    'If you believe this is an error, please <report>report a problem</report> or email the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.'
+    'If you believe this is an error, please <report>report a problem</report> or email the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
+  solutionStatus: {
+    total: 'Total',
+    planned: 'Planned',
+    active: 'Active',
+    ended: 'Ended'
+  }
 };
 
 export default customHome;

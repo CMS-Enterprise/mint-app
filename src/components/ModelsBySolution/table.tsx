@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Row,
@@ -31,6 +31,9 @@ import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
+import ModelsBySolutionsBanner, {
+  StatusCategories
+} from 'views/HomeNew/components/ModelsBySolutions/banner';
 
 import ModelSolutionCard from '.';
 
@@ -51,6 +54,10 @@ const ModelsBySolutionTable = ({
 }: ModelPlansTableProps) => {
   const { t: customHomeT } = useTranslation('customHome');
 
+  const [selectedStatus, setSelectedStatus] = useState<StatusCategories>(
+    'total'
+  );
+
   const basicsConfig = usePlanTranslation('basics');
 
   const { data, loading } = useGetModelsBySolutionQuery({
@@ -62,6 +69,8 @@ const ModelsBySolutionTable = ({
   const modelsBySolution = useMemo(() => {
     return data?.modelPlansByOperationalSolutionKey || [];
   }, [data?.modelPlansByOperationalSolutionKey]);
+
+  const filteredModels = useRef<ModelsBySolutionType>([...modelsBySolution]);
 
   const columns: any = useMemo(() => {
     return [
@@ -101,7 +110,7 @@ const ModelsBySolutionTable = ({
   } = useTable(
     {
       columns,
-      data: modelsBySolution,
+      data: filteredModels.current,
       globalFilter: useMemo(
         () => (
           rows: Row<any>[],
@@ -145,6 +154,17 @@ const ModelsBySolutionTable = ({
     usePagination
   );
 
+  useEffect(() => {
+    if (selectedStatus === 'total') {
+      filteredModels.current = [...modelsBySolution];
+      return;
+    }
+
+    filteredModels.current = [...modelsBySolution].filter(model => {
+      return model.modelPlan.status === selectedStatus;
+    });
+  }, [selectedStatus, modelsBySolution]);
+
   if (loading) {
     return (
       <div className="padding-left-4 padding-top-3">
@@ -155,6 +175,13 @@ const ModelsBySolutionTable = ({
 
   return (
     <div id="models-by-solution-table">
+      <ModelsBySolutionsBanner
+        solutionKey={operationalSolutionKey}
+        solutionModels={modelsBySolution}
+        selectedStatus={selectedStatus}
+        setSelectedStatus={setSelectedStatus}
+      />
+
       {modelsBySolution.length > 4 && (
         <div>
           <GlobalClientFilter

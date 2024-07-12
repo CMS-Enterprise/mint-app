@@ -8,4 +8,9 @@
     .usa-header--basic .usa-nav__primary-item > .usa-current::after, .usa-header--basic .usa-nav__link:hover::after {
         bottom: 0 !important;
     }
+
+    &__banner-buttons {
+        display: flex;
+        flex-direction: row-reverse;
+    }
 }
