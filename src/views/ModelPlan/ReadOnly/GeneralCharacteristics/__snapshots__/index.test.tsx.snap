@@ -39,7 +39,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Is this a new track of an existing model or a new model?
             </span>
@@ -66,7 +66,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Which existing model?
             </span>
@@ -93,7 +93,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Does your proposed track/model resemble any existing models?
             </span>
@@ -120,7 +120,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Explain why and how the model made this decision.
             </span>
@@ -147,7 +147,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Which existing models does your proposed track/model most closely resemble?
             </span>
@@ -191,7 +191,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               In what way does the new model resemble the selected model(s)?
             </span>
@@ -231,7 +231,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -258,7 +258,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Is participation in another model a precondition for participation in this model?
             </span>
@@ -288,7 +288,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Which models?
             </span>
@@ -338,7 +338,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Explain any details including if it is just part of the model.
             </span>
@@ -365,7 +365,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -392,7 +392,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Are there different components/tracks? If so, how do the tracks differ?
             </span>
@@ -427,7 +427,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -454,7 +454,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Will another Agency or State help design/operate the model?
             </span>
@@ -501,7 +501,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -528,7 +528,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               What type of Alternative Payment Model (APM) do you think the model could be?
               <span
@@ -607,7 +607,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -634,7 +634,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               What are the model key characteristics?
             </span>
@@ -735,7 +735,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -765,7 +765,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -795,7 +795,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -825,7 +825,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -852,7 +852,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Is care coordination involved? How so?
               <span
@@ -928,7 +928,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -955,7 +955,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Are additional services involved? How so?
             </span>
@@ -990,7 +990,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -1017,7 +1017,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Are community partners involved? How so?
             </span>
@@ -1054,7 +1054,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -1081,7 +1081,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Is the model targeted at specific geographies?
             </span>
@@ -1108,7 +1108,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Geography type is
             </span>
@@ -1179,7 +1179,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Geographies are applied to
             </span>
@@ -1226,7 +1226,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -1253,7 +1253,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Does the model offer different options for participation?
             </span>
@@ -1280,7 +1280,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -1307,7 +1307,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               What is the agreement type?
             </span>
@@ -1393,7 +1393,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -1420,7 +1420,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?
             </span>
@@ -1455,7 +1455,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -1482,7 +1482,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               What authority allows CMMI to test the model?
             </span>
@@ -1529,7 +1529,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -1556,7 +1556,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Are waivers required? If so, which types of waivers?
             </span>
@@ -1684,7 +1684,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>

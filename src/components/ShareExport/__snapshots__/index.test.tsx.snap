@@ -273,7 +273,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Previous names
                   </span>
@@ -378,7 +378,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Primary model category
                         </span>
@@ -447,7 +447,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Additional model categories
                         </span>
@@ -533,7 +533,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           CMS component
                         </span>
@@ -572,7 +572,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           CMMI Group
                         </span>
@@ -615,7 +615,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Model Type
                     </span>
@@ -650,7 +650,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Problem statement
                     </span>
@@ -677,7 +677,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Goal
                       <span
@@ -745,7 +745,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Test Interventions
                     </span>
@@ -772,7 +772,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -1069,7 +1069,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     If timelines are tight, might there be pieces of the model that can be phased in over time?
                     <span
@@ -1133,7 +1133,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Notes
                   </span>
@@ -1187,7 +1187,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Is this a new track of an existing model or a new model?
                     </span>
@@ -1214,7 +1214,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Which existing model?
                     </span>
@@ -1241,7 +1241,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Does your proposed track/model resemble any existing models?
                     </span>
@@ -1268,7 +1268,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Explain why and how the model made this decision.
                     </span>
@@ -1295,7 +1295,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Which existing models does your proposed track/model most closely resemble?
                     </span>
@@ -1339,7 +1339,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       In what way does the new model resemble the selected model(s)?
                     </span>
@@ -1379,7 +1379,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -1406,7 +1406,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Is participation in another model a precondition for participation in this model?
                     </span>
@@ -1436,7 +1436,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Which models?
                     </span>
@@ -1486,7 +1486,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Explain any details including if it is just part of the model.
                     </span>
@@ -1513,7 +1513,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -1540,7 +1540,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are there different components/tracks? If so, how do the tracks differ?
                     </span>
@@ -1575,7 +1575,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -1602,7 +1602,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will another Agency or State help design/operate the model?
                     </span>
@@ -1649,7 +1649,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -1676,7 +1676,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What type of Alternative Payment Model (APM) do you think the model could be?
                       <span
@@ -1755,7 +1755,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -1782,7 +1782,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What are the model key characteristics?
                     </span>
@@ -1883,7 +1883,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -1913,7 +1913,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -1943,7 +1943,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -1973,7 +1973,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -2000,7 +2000,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Is care coordination involved? How so?
                       <span
@@ -2076,7 +2076,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -2103,7 +2103,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are additional services involved? How so?
                     </span>
@@ -2138,7 +2138,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -2165,7 +2165,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are community partners involved? How so?
                     </span>
@@ -2202,7 +2202,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -2229,7 +2229,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Is the model targeted at specific geographies?
                     </span>
@@ -2256,7 +2256,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Geography type is
                     </span>
@@ -2327,7 +2327,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Geographies are applied to
                     </span>
@@ -2374,7 +2374,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -2401,7 +2401,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Does the model offer different options for participation?
                     </span>
@@ -2428,7 +2428,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -2455,7 +2455,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What is the agreement type?
                     </span>
@@ -2541,7 +2541,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -2568,7 +2568,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?
                     </span>
@@ -2603,7 +2603,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -2630,7 +2630,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What authority allows CMMI to test the model?
                     </span>
@@ -2677,7 +2677,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -2704,7 +2704,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are waivers required? If so, which types of waivers?
                     </span>
@@ -2832,7 +2832,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -2887,7 +2887,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Who are the participants?
                     </span>
@@ -2958,7 +2958,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -2985,7 +2985,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are the participants in CMMI models now?
                       <span
@@ -3053,7 +3053,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -3080,7 +3080,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       At what level will the model apply?
                       <span
@@ -3156,7 +3156,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           How many participants do you expect?
                         </span>
@@ -3184,7 +3184,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           What is your level of confidence on this estimate?
                         </span>
@@ -3216,7 +3216,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -3243,7 +3243,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How will you recruit the participants?
                     </span>
@@ -3273,7 +3273,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -3300,7 +3300,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How will you select participants?
                     </span>
@@ -3341,7 +3341,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -3368,7 +3368,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How frequently are participants added?
                     </span>
@@ -3412,7 +3412,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -3439,7 +3439,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How frequently are participants removed?
                     </span>
@@ -3483,7 +3483,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -3510,7 +3510,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How will you communicate with participants?
                     </span>
@@ -3551,7 +3551,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -3578,7 +3578,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What type of risk will the participant assume?
                     </span>
@@ -3613,7 +3613,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -3640,7 +3640,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will the risk arrangement change as the model progresses?
                     </span>
@@ -3667,7 +3667,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -3694,7 +3694,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are participants required to retain a financial guarantee? If so, are there any limitations on the type?
                       <span
@@ -3790,7 +3790,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -3817,7 +3817,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will the participants coordinate the work of others?
                     </span>
@@ -3844,7 +3844,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -3879,7 +3879,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Will there be gainsharing payments?
                         </span>
@@ -3907,7 +3907,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Will you track gainsharing payments?
                         </span>
@@ -3939,7 +3939,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are providers eligible to participate in gainsharing arrangements?
                     </span>
@@ -3980,7 +3980,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4007,7 +4007,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will you collect participant IDs?
                     </span>
@@ -4042,7 +4042,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4069,7 +4069,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How frequently are providers added?
                     </span>
@@ -4113,7 +4113,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4140,7 +4140,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How will you decide to add providers?
                     </span>
@@ -4175,7 +4175,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4202,7 +4202,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Can providers leave the model?
                     </span>
@@ -4237,7 +4237,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4264,7 +4264,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How frequently are providers removed?
                     </span>
@@ -4308,7 +4308,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4335,7 +4335,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will the providers overlap with other models?
                     </span>
@@ -4407,7 +4407,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4462,7 +4462,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Who are the beneficiaries of this model?
                     </span>
@@ -4512,7 +4512,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4539,7 +4539,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?
                     </span>
@@ -4574,7 +4574,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4601,7 +4601,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Should beneficiaries with certain characteristics or enrollments be excluded? How so, what are the exclusionary criteria?
                     </span>
@@ -4631,7 +4631,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4666,7 +4666,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           How many people do you think will be impacted by this model?
                         </span>
@@ -4694,7 +4694,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           What is your level of confidence on this estimate?
                         </span>
@@ -4726,7 +4726,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4753,7 +4753,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How will you choose beneficiaries?
                     </span>
@@ -4788,7 +4788,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4815,7 +4815,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How frequently are beneficiaries added?
                     </span>
@@ -4859,7 +4859,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4886,7 +4886,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How frequently are beneficiaries removed?
                     </span>
@@ -4930,7 +4930,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -4957,7 +4957,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will the beneficiaries overlap with other models?
                     </span>
@@ -4984,7 +4984,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -5011,7 +5011,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are there precedence rules between this model and other model(s)?
                       <span
@@ -5096,7 +5096,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -5151,7 +5151,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What stakeholders do you plan to communicate with?
                     </span>
@@ -5198,7 +5198,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -5225,7 +5225,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Do you plan to use a helpdesk?
                     </span>
@@ -5252,7 +5252,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -5279,7 +5279,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What contractors will support your model?
                     </span>
@@ -5326,7 +5326,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       In what capacity will they support your model?
                       <span
@@ -5394,7 +5394,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -5426,7 +5426,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are you planning to use IDDOC support?
                     </span>
@@ -5453,7 +5453,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -5480,7 +5480,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are technical contacts identified?
                     </span>
@@ -5515,7 +5515,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -5542,7 +5542,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will you collect participant information?
                     </span>
@@ -5569,7 +5569,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -5601,7 +5601,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       ICD owner
                     </span>
@@ -5628,7 +5628,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Draft ICD required by
                     </span>
@@ -5661,7 +5661,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       User Acceptance Testing (UAT) – test data needs
                     </span>
@@ -5688,7 +5688,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       STC – test data needs
                     </span>
@@ -5715,7 +5715,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Define the testing timelines
                     </span>
@@ -5742,7 +5742,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -5774,7 +5774,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What types of files?
                     </span>
@@ -5815,7 +5815,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What types of responses?
                     </span>
@@ -5842,7 +5842,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Frequency of files?
                     </span>
@@ -5869,7 +5869,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Full time or incremental?
                     </span>
@@ -5896,7 +5896,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are Electronic File Transfer (EFT) and connectivity set up?
                     </span>
@@ -5923,7 +5923,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will unsolicited adjustments be included?
                     </span>
@@ -5950,7 +5950,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are data flow diagrams needed?
                     </span>
@@ -5977,7 +5977,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will you produce Benefit Enhancement Files?
                     </span>
@@ -6004,7 +6004,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       File naming conventions
                     </span>
@@ -6031,7 +6031,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -6058,7 +6058,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will you establish a benchmark to capture performance?
                     </span>
@@ -6085,7 +6085,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -6112,7 +6112,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will you compute performance scores?
                     </span>
@@ -6139,7 +6139,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -6174,7 +6174,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Will you make risk adjustments to performance scores?
                         </span>
@@ -6202,7 +6202,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Will you make risk adjustments to feedback results?
                         </span>
@@ -6242,7 +6242,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Will you make risk adjustments to payments?
                         </span>
@@ -6270,7 +6270,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Will you make risk adjustments to others?
                         </span>
@@ -6302,7 +6302,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -6337,7 +6337,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Will participants be able to appeal performance scores?
                         </span>
@@ -6365,7 +6365,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Will participants be able to appeal feedback results?
                         </span>
@@ -6405,7 +6405,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Will participants be able to appeal payments?
                         </span>
@@ -6433,7 +6433,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="read-only-section--question"
                       >
                         <span
-                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                          class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                         >
                           Will participants be able to appeal others?
                         </span>
@@ -6465,7 +6465,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -6492,7 +6492,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What type of evaluation approach are you considering?
                     </span>
@@ -6539,7 +6539,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -6566,7 +6566,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Is Chronic Conditions Warehouse (CCW) involved in the model?
                     </span>
@@ -6613,7 +6613,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -6640,7 +6640,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What data do you need to monitor the model?
                     </span>
@@ -6693,7 +6693,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -6720,7 +6720,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What data will you send to participants?
                     </span>
@@ -6773,7 +6773,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -6800,7 +6800,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?
                     </span>
@@ -6827,7 +6827,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -6880,7 +6880,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Will you need to send files between the CCW and other applications?
                       </span>
@@ -6907,7 +6907,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -6934,7 +6934,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Do you know which applications will be on the other sides of the file transfers? If so, please specify.
                       </span>
@@ -6969,7 +6969,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -6996,7 +6996,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Will you use the CCW to distribute files to and from model participants?
                       </span>
@@ -7023,7 +7023,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -7104,7 +7104,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -7137,7 +7137,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -7168,7 +7168,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -7200,7 +7200,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Data sharing starts
                     </span>
@@ -7230,7 +7230,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How often do you anticipate sharing data?
                     </span>
@@ -7268,7 +7268,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -7295,7 +7295,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Data collection starts
                     </span>
@@ -7325,7 +7325,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How often do you anticipate collecting data?
                     </span>
@@ -7363,7 +7363,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -7390,7 +7390,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Quality reporting starts
                     </span>
@@ -7420,7 +7420,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -7447,7 +7447,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How frequently does quality reporting happen?
                     </span>
@@ -7491,7 +7491,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will the model have a learning strategy?
                     </span>
@@ -7544,7 +7544,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -7571,7 +7571,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What challenges do you anticipate during model design and implementation?
                       <span
@@ -7667,7 +7667,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What will be the funding source for payments?
                     </span>
@@ -7699,7 +7699,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -7726,7 +7726,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What is the funding source for reconciliation or other expenditures?
                     </span>
@@ -7758,7 +7758,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -7785,7 +7785,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Who will you pay?
                     </span>
@@ -7817,7 +7817,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Please specify who you will pay.
                     </span>
@@ -7844,7 +7844,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -7871,7 +7871,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What will you pay?
                       <span
@@ -7944,7 +7944,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -7979,7 +7979,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Select which claims-based payments will you pay.
                         <span
@@ -8055,7 +8055,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -8082,7 +8082,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Should any model providers be excluded from existing Fee-for-Service payment systems?
                       </span>
@@ -8109,7 +8109,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -8136,7 +8136,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Will the model change the Medicare Physician Fee Schedule?
                         <span
@@ -8204,7 +8204,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -8231,7 +8231,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Does the model affect Medicare Secondary Payer claims? How so?
                       </span>
@@ -8266,7 +8266,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -8293,7 +8293,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
                       </span>
@@ -8320,7 +8320,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Are you anticipating creating dependencies between services?
                         <span
@@ -8388,7 +8388,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -8415,7 +8415,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Will any additional data need to be collected for claims?
                       </span>
@@ -8442,7 +8442,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -8469,7 +8469,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Will your contractor be providing data (a Third Party File) that will be used in claims processing?
                         <span
@@ -8537,7 +8537,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Is your contractor aware that test data will be needed, and when that test data must be available?
                       </span>
@@ -8627,7 +8627,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -8708,7 +8708,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -8744,7 +8744,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -8774,7 +8774,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -8804,7 +8804,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         Notes
                       </span>
@@ -8832,7 +8832,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       What level of complexity do you expect calculations to be?
                     </span>
@@ -8859,7 +8859,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -8886,7 +8886,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Are there any business requirement(s) that address claims processing precedence order with the other model(s)? If so, please specify.
                     </span>
@@ -8916,7 +8916,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -8943,7 +8943,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will participants be allowed to select between multiple payment mechanisms? If so, please describe.
                     </span>
@@ -8978,7 +8978,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -9005,7 +9005,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How often do you anticipate making payments?
                     </span>
@@ -9037,7 +9037,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -9064,7 +9064,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Will you recover the payments?
                     </span>
@@ -9091,7 +9091,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -9118,7 +9118,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Do you anticipate reconciling payments retrospectively?
                     </span>
@@ -9145,7 +9145,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -9172,7 +9172,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How often are payments reconciled?
                     </span>
@@ -9210,7 +9210,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -9237,7 +9237,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       How frequently do you anticipate making demands/recoupments?
                       <span
@@ -9316,7 +9316,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>
@@ -9343,7 +9343,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       When will payments start?
                     </span>
@@ -9370,7 +9370,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="read-only-section--question"
                   >
                     <span
-                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                      class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                     >
                       Notes
                     </span>

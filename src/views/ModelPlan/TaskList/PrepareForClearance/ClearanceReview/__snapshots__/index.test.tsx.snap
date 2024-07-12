@@ -110,7 +110,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Who are the beneficiaries of this model?
                   </span>
@@ -160,7 +160,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Notes
                   </span>
@@ -187,7 +187,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?
                   </span>
@@ -222,7 +222,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Notes
                   </span>
@@ -249,7 +249,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Should beneficiaries with certain characteristics or enrollments be excluded? How so, what are the exclusionary criteria?
                   </span>
@@ -279,7 +279,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Notes
                   </span>
@@ -314,7 +314,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         How many people do you think will be impacted by this model?
                       </span>
@@ -342,7 +342,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                       class="read-only-section--question"
                     >
                       <span
-                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                       >
                         What is your level of confidence on this estimate?
                       </span>
@@ -374,7 +374,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Notes
                   </span>
@@ -401,7 +401,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     How will you choose beneficiaries?
                   </span>
@@ -436,7 +436,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Notes
                   </span>
@@ -463,7 +463,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     How frequently are beneficiaries added?
                   </span>
@@ -507,7 +507,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Notes
                   </span>
@@ -534,7 +534,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     How frequently are beneficiaries removed?
                   </span>
@@ -578,7 +578,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Notes
                   </span>
@@ -605,7 +605,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Will the beneficiaries overlap with other models?
                   </span>
@@ -632,7 +632,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Notes
                   </span>
@@ -659,7 +659,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Are there precedence rules between this model and other model(s)?
                     <span
@@ -744,7 +744,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
                   class="read-only-section--question"
                 >
                   <span
-                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                    class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                   >
                     Notes
                   </span>

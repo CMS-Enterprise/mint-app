@@ -36,7 +36,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
           class="read-only-section--question"
         >
           <span
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
           >
             Previous names
           </span>
@@ -141,7 +141,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                 >
                   Primary model category
                 </span>
@@ -210,7 +210,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                 >
                   Additional model categories
                 </span>
@@ -296,7 +296,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                 >
                   CMS component
                 </span>
@@ -335,7 +335,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
                 >
                   CMMI Group
                 </span>
@@ -378,7 +378,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Model Type
             </span>
@@ -413,7 +413,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Problem statement
             </span>
@@ -440,7 +440,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Goal
               <span
@@ -508,7 +508,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Test Interventions
             </span>
@@ -535,7 +535,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
             >
               Notes
             </span>
@@ -832,7 +832,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
           class="read-only-section--question"
         >
           <span
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
           >
             If timelines are tight, might there be pieces of the model that can be phased in over time?
             <span
@@ -896,7 +896,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
           class="read-only-section--question"
         >
           <span
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-block"
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
           >
             Notes
           </span>
