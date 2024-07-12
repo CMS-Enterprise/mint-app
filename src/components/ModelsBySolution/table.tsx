@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
+
 import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Row,
   useFilters,
@@ -8,16 +10,26 @@ import {
   usePagination,
   useTable
 } from 'react-table';
-import { CardGroup, Grid, Table as UswdsTable } from '@trussworks/react-uswds';
+import {
+  CardGroup,
+  Grid,
+  Link,
+  Table as UswdsTable
+} from '@trussworks/react-uswds';
 import {
   GetModelsBySolutionQuery,
+  ModelCategory,
   OperationalSolutionKey,
   useGetModelsBySolutionQuery
 } from 'gql/gen/graphql';
 
+import UswdsReactLink from 'components/LinkWrapper';
+import Alert from 'components/shared/Alert';
+import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
 
 import ModelSolutionCard from '.';
@@ -38,6 +50,8 @@ const ModelsBySolutionTable = ({
   operationalSolutionKey
 }: ModelPlansTableProps) => {
   const { t: customHomeT } = useTranslation('customHome');
+
+  const basicsConfig = usePlanTranslation('basics');
 
   const { data, loading } = useGetModelsBySolutionQuery({
     variables: {
@@ -96,39 +110,30 @@ const ModelsBySolutionTable = ({
         ): Row<any>[] => {
           const filterValueLower = filterValue.toLowerCase();
           return rows.filter((row: Row<ModelsBySolutionType[0]>) => {
-            // eslint-disable-next-line react/prop-types
             return (
-              // eslint-disable-next-line react/prop-types
               row?.original?.modelPlan?.modelName
-                // eslint-disable-next-line react/prop-types
                 ?.toLowerCase()
                 .includes(filterValueLower) ||
-              // eslint-disable-next-line react/prop-types
               row?.original?.modelPlan?.status
-                // eslint-disable-next-line react/prop-types
                 ?.toLowerCase()
                 .includes(filterValueLower) ||
-              // eslint-disable-next-line react/prop-types
-              row?.original?.modelPlan?.basics?.modelCategory
-                // eslint-disable-next-line react/prop-types
+              basicsConfig.modelCategory.options[
+                row?.original?.modelPlan?.basics?.modelCategory as ModelCategory
+              ]
                 ?.toLowerCase()
                 .includes(filterValueLower) ||
-              // eslint-disable-next-line react/prop-types
               formatDateUtc(
-                // eslint-disable-next-line react/prop-types
                 row?.original?.modelPlan?.basics?.applicationsStart,
                 'MM/dd/yyyy'
               ).includes(filterValueLower) ||
-              // eslint-disable-next-line react/prop-types
               formatDateUtc(
-                // eslint-disable-next-line react/prop-types
                 row?.original?.modelPlan?.basics?.applicationsEnd,
                 'MM/dd/yyyy'
               ).includes(filterValueLower)
             );
           });
         },
-        []
+        [basicsConfig.modelCategory.options]
       ),
       initialState: {
         pageSize: 3
@@ -140,10 +145,17 @@ const ModelsBySolutionTable = ({
     usePagination
   );
 
+  if (loading) {
+    return (
+      <div className="padding-left-4 padding-top-3">
+        <Spinner />
+      </div>
+    );
+  }
+
   return (
     <div id="models-by-solution-table">
-      <div className="mint-header__basic display-flex flex-justify flex-align-self-start">
-        {/* {modelsBySolution.length > 4 && ( */}
+      {modelsBySolution.length > 4 && (
         <div>
           <GlobalClientFilter
             setGlobalFilter={setGlobalFilter}
@@ -162,17 +174,30 @@ const ModelsBySolutionTable = ({
             rowLength={modelsBySolution.length}
           />
         </div>
-        {/* )} */}
-      </div>
+      )}
+
+      {modelsBySolution.length === 0 && (
+        <Alert type="info" heading={customHomeT('noModelSolutionHeading')}>
+          <Trans
+            i18nKey="customHome:noModelSolutionDescription"
+            components={{
+              report: (
+                <UswdsReactLink to="/report-a-problem" target="_blank">
+                  {' '}
+                </UswdsReactLink>
+              ),
+              email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+            }}
+          />
+        </Alert>
+      )}
 
       <UswdsTable {...getTableProps()} fullWidth>
         <tbody {...getTableBodyProps()}>
           {page.map(row => {
             prepareRow(row);
             return (
-              // eslint-disable-next-line react/prop-types
               <tr {...row.getRowProps()}>
-                {/* eslint-disable-next-line react/prop-types */}
                 {row.cells.map((cell, i) => {
                   return (
                     <td className="border-0 padding-0" {...cell.getCellProps()}>

@@ -119,7 +119,11 @@ const customHome = {
     startDate: 'Start date',
     endDate: 'End date',
     tbd: 'To be determined'
-  }
+  },
+  noModelSolutionHeading:
+    'There is no record of any models using this solution.',
+  noModelSolutionDescription:
+    'If you believe this is an error, please <report>report a problem</report> or email the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.'
 };
 
 export default customHome;

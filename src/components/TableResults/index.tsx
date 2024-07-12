@@ -3,6 +3,8 @@ import { Trans, useTranslation } from 'react-i18next';
 import { FilterValue } from 'react-table';
 import classnames from 'classnames';
 
+import Alert from 'components/shared/Alert';
+
 type TableResultsProps = {
   className?: string;
   globalFilter: FilterValue;
@@ -47,11 +49,23 @@ const TableResults = ({
       <span>
         {rows === 0 ? (
           showNoResults && (
-            <div role="status" aria-live="polite">
-              {t('tableAndPagination:results.noResults')}{' '}
-              {/* Displays the search input even if there are no results */}
-              {displayResult(globalFilter)}
-            </div>
+            <>
+              <div role="status" aria-live="polite">
+                {t('tableAndPagination:results.noResults')}{' '}
+                {/* Displays the search input even if there are no results */}
+                {displayResult(globalFilter)}
+              </div>
+              {globalFilter && (
+                <Alert
+                  type="warning"
+                  heading={t('results.alertHeading', {
+                    query: globalFilter
+                  })}
+                >
+                  {t('results.alertDescription')}
+                </Alert>
+              )}
+            </>
           )
         ) : (
           <div role="status" aria-live="polite">
