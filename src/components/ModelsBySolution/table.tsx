@@ -1,5 +1,13 @@
 import React, { useMemo } from 'react';
-import { Row, useFlexLayout, usePagination, useTable } from 'react-table';
+import { useTranslation } from 'react-i18next';
+import {
+  Row,
+  useFilters,
+  useFlexLayout,
+  useGlobalFilter,
+  usePagination,
+  useTable
+} from 'react-table';
 import { CardGroup, Table as UswdsTable } from '@trussworks/react-uswds';
 import {
   GetModelsBySolutionQuery,
@@ -7,7 +15,9 @@ import {
   useGetModelsBySolutionQuery
 } from 'gql/gen/graphql';
 
+import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
+import TableResults from 'components/TableResults';
 
 import ModelSolutionCard from '.';
 
@@ -26,6 +36,8 @@ type ModelPlansTableProps = {
 const ModelsBySolutionTable = ({
   operationalSolutionKey
 }: ModelPlansTableProps) => {
+  const { t: customHomeT } = useTranslation('customHome');
+
   const { data, loading, refetch } = useGetModelsBySolutionQuery({
     variables: {
       operationalSolutionKey
@@ -40,7 +52,6 @@ const ModelsBySolutionTable = ({
     return [
       {
         accessor: 'id',
-        disableGlobalFilter: true,
         Cell: ({ row }: { row: Row<ModelsBySolutionType[0]> }) => {
           return (
             <CardGroup>
@@ -65,6 +76,7 @@ const ModelsBySolutionTable = ({
     gotoPage,
     nextPage,
     previousPage,
+    setGlobalFilter,
     setPageSize,
     page,
     state,
@@ -73,22 +85,63 @@ const ModelsBySolutionTable = ({
     {
       columns,
       data: modelsBySolution,
+      globalFilter: useMemo(
+        () => (
+          rows: Row<any>[],
+          columnIds: string[],
+          filterValue: string
+        ): Row<any>[] => {
+          const filterValueLower = filterValue.toLowerCase();
+          return rows.filter((row: Row<ModelsBySolutionType[0]>) => {
+            // eslint-disable-next-line react/prop-types
+            return row?.original?.modelPlan?.modelName // eslint-disable-next-line react/prop-types
+              ?.toLowerCase()
+              .includes(filterValueLower);
+          });
+        },
+        []
+      ),
       initialState: {
         pageSize: 3
       }
     },
-    usePagination,
-    useFlexLayout
+    useFlexLayout,
+    useFilters,
+    useGlobalFilter,
+    usePagination
   );
 
   return (
     <div id="models-by-solution-table">
+      <div className="mint-header__basic display-flex flex-justify flex-align-self-start">
+        <div>
+          <GlobalClientFilter
+            setGlobalFilter={setGlobalFilter}
+            tableID="models-by-solution-table"
+            tableName={customHomeT(
+              'settings.MODELS_BY_OPERATIONAL_SOLUTION.heading'
+            )}
+            className="margin-bottom-4 maxw-none width-mobile-lg"
+          />
+
+          <TableResults
+            globalFilter={state.globalFilter}
+            pageIndex={state.pageIndex}
+            pageSize={state.pageSize}
+            filteredRowLength={page.length}
+            rowLength={modelsBySolution.length}
+          />
+        </div>
+      </div>
+
       <UswdsTable {...getTableProps()} fullWidth>
         <tbody {...getTableBodyProps()}>
           {page.map(row => {
             prepareRow(row);
             return (
+              // eslint-disable-next-line react/prop-types
               <tr {...row.getRowProps()}>
+                {/* eslint-disable-next-line react/prop-types */}
                 {row.cells.map((cell, i) => {
                   return (
                     <td className="border-0 padding-0" {...cell.getCellProps()}>
