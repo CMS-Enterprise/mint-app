@@ -5,14 +5,15 @@ import (
 	"context"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
 // GetTestPrincipal is a utility function to return a principal for tests
-func GetTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
+func GetTestPrincipal(store *storage.Store, userName string, oktaClient oktaapi.Client) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, store, userName, true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(oktaClient.FetchUserInfo))
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,
