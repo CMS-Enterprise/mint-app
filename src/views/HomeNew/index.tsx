@@ -35,6 +35,8 @@ import { isAssessment, isMAC } from 'utils/user';
 import Landing from 'views/Landing';
 import ModelPlansTable from 'views/ModelPlan/HomeTable';
 
+import ModelsBySolutions from './components/ModelsBySolutions';
+
 import './index.scss';
 
 export type UpdateFavoriteProps = 'addFavorite' | 'removeFavorite';
@@ -196,9 +198,9 @@ const HomeNew = () => {
           )}
         </p>
 
-        <ModelsBySolutionTable
-          operationalSolutionKey={
-            data?.userViewCustomization.possibleOperationalSolutions[0]!
+        <ModelsBySolutions
+          operationalSolutionKeys={
+            data?.userViewCustomization.possibleOperationalSolutions || []
           }
         />
       </>

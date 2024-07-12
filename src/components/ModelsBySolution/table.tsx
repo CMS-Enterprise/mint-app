@@ -38,7 +38,7 @@ const ModelsBySolutionTable = ({
 }: ModelPlansTableProps) => {
   const { t: customHomeT } = useTranslation('customHome');
 
-  const { data, loading, refetch } = useGetModelsBySolutionQuery({
+  const { data, loading } = useGetModelsBySolutionQuery({
     variables: {
       operationalSolutionKey
     }

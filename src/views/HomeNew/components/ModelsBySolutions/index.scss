@@ -1,0 +1,11 @@
+@use 'uswds-core' as *;
+
+.models-by-solutions {
+    &__nav-container {
+        border-bottom: 1px solid color('base-light');
+    }
+
+    .usa-header--basic .usa-nav__primary-item > .usa-current::after, .usa-header--basic .usa-nav__link:hover::after {
+        bottom: 0 !important;
+    }
+}
