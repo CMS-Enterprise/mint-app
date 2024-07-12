@@ -36,7 +36,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
           class="read-only-section--question"
         >
           <span
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
             Previous names
           </span>
@@ -141,7 +141,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   Primary model category
                 </span>
@@ -210,7 +210,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   Additional model categories
                 </span>
@@ -296,7 +296,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   CMS component
                 </span>
@@ -335,7 +335,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
                 class="read-only-section--question"
               >
                 <span
-                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                  class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   CMMI Group
                 </span>
@@ -378,7 +378,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Model Type
             </span>
@@ -413,7 +413,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Problem statement
             </span>
@@ -440,23 +440,24 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Goal
               <span
-                class="text-normal line-height-sans-2"
+                class="text-normal line-height-sans-2 margin-left-1 position-relative"
               >
                 <span
-                  class="usa-tooltip"
+                  class="usa-tooltip top-2px"
                   data-testid="tooltipWrapper"
                 >
                   <div
                     aria-describedby="tooltip-550000"
-                    class="usa-tooltip__trigger mint-no-print margin-left-1"
+                    class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     position="right"
                     tabindex="0"
                     title=""
+                    wrapperclasses="top-2px"
                   >
                     <svg
                       class="usa-icon text-base-light"
@@ -508,7 +509,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Test Interventions
             </span>
@@ -535,7 +536,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -832,23 +833,24 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
           class="read-only-section--question"
         >
           <span
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
             If timelines are tight, might there be pieces of the model that can be phased in over time?
             <span
-              class="text-normal line-height-sans-2"
+              class="text-normal line-height-sans-2 margin-left-1 position-relative"
             >
               <span
-                class="usa-tooltip"
+                class="usa-tooltip top-2px"
                 data-testid="tooltipWrapper"
               >
                 <div
                   aria-describedby="tooltip-550000"
-                  class="usa-tooltip__trigger mint-no-print margin-left-1"
+                  class="usa-tooltip__trigger mint-no-print"
                   data-testid="triggerElement"
                   position="right"
                   tabindex="0"
                   title=""
+                  wrapperclasses="top-2px"
                 >
                   <svg
                     class="usa-icon text-base-light"
@@ -896,7 +898,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
           class="read-only-section--question"
         >
           <span
-            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
           >
             Notes
           </span>

@@ -39,7 +39,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               What will be the funding source for payments?
             </span>
@@ -71,7 +71,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -98,7 +98,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               What is the funding source for reconciliation or other expenditures?
             </span>
@@ -130,7 +130,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -157,7 +157,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Who will you pay?
             </span>
@@ -189,7 +189,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Please specify who you will pay.
             </span>
@@ -216,7 +216,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -243,23 +243,24 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               What will you pay?
               <span
-                class="text-normal line-height-sans-2"
+                class="text-normal line-height-sans-2 margin-left-1 position-relative"
               >
                 <span
-                  class="usa-tooltip"
+                  class="usa-tooltip top-2px"
                   data-testid="tooltipWrapper"
                 >
                   <div
                     aria-describedby="tooltip-550000"
-                    class="usa-tooltip__trigger mint-no-print margin-left-1"
+                    class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     position="right"
                     tabindex="0"
                     title=""
+                    wrapperclasses="top-2px"
                   >
                     <svg
                       class="usa-icon text-base-light"
@@ -316,7 +317,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -351,23 +352,24 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Select which claims-based payments will you pay.
                 <span
-                  class="text-normal line-height-sans-2"
+                  class="text-normal line-height-sans-2 margin-left-1 position-relative"
                 >
                   <span
-                    class="usa-tooltip"
+                    class="usa-tooltip top-2px"
                     data-testid="tooltipWrapper"
                   >
                     <div
                       aria-describedby="tooltip-550000"
-                      class="usa-tooltip__trigger mint-no-print margin-left-1"
+                      class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       position="right"
                       tabindex="0"
                       title=""
+                      wrapperclasses="top-2px"
                     >
                       <svg
                         class="usa-icon text-base-light"
@@ -427,7 +429,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
               </span>
@@ -454,7 +456,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Should any model providers be excluded from existing Fee-for-Service payment systems?
               </span>
@@ -481,7 +483,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
               </span>
@@ -508,23 +510,24 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Will the model change the Medicare Physician Fee Schedule?
                 <span
-                  class="text-normal line-height-sans-2"
+                  class="text-normal line-height-sans-2 margin-left-1 position-relative"
                 >
                   <span
-                    class="usa-tooltip"
+                    class="usa-tooltip top-2px"
                     data-testid="tooltipWrapper"
                   >
                     <div
                       aria-describedby="tooltip-550000"
-                      class="usa-tooltip__trigger mint-no-print margin-left-1"
+                      class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       position="right"
                       tabindex="0"
                       title=""
+                      wrapperclasses="top-2px"
                     >
                       <svg
                         class="usa-icon text-base-light"
@@ -576,7 +579,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
               </span>
@@ -603,7 +606,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Does the model affect Medicare Secondary Payer claims? How so?
               </span>
@@ -638,7 +641,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
               </span>
@@ -665,7 +668,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
               </span>
@@ -692,23 +695,24 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Are you anticipating creating dependencies between services?
                 <span
-                  class="text-normal line-height-sans-2"
+                  class="text-normal line-height-sans-2 margin-left-1 position-relative"
                 >
                   <span
-                    class="usa-tooltip"
+                    class="usa-tooltip top-2px"
                     data-testid="tooltipWrapper"
                   >
                     <div
                       aria-describedby="tooltip-550000"
-                      class="usa-tooltip__trigger mint-no-print margin-left-1"
+                      class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       position="right"
                       tabindex="0"
                       title=""
+                      wrapperclasses="top-2px"
                     >
                       <svg
                         class="usa-icon text-base-light"
@@ -760,7 +764,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
               </span>
@@ -787,7 +791,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Will any additional data need to be collected for claims?
               </span>
@@ -814,7 +818,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
               </span>
@@ -841,23 +845,24 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Will your contractor be providing data (a Third Party File) that will be used in claims processing?
                 <span
-                  class="text-normal line-height-sans-2"
+                  class="text-normal line-height-sans-2 margin-left-1 position-relative"
                 >
                   <span
-                    class="usa-tooltip"
+                    class="usa-tooltip top-2px"
                     data-testid="tooltipWrapper"
                   >
                     <div
                       aria-describedby="tooltip-550000"
-                      class="usa-tooltip__trigger mint-no-print margin-left-1"
+                      class="usa-tooltip__trigger mint-no-print"
                       data-testid="triggerElement"
                       position="right"
                       tabindex="0"
                       title=""
+                      wrapperclasses="top-2px"
                     >
                       <svg
                         class="usa-icon text-base-light"
@@ -909,7 +914,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Is your contractor aware that test data will be needed, and when that test data must be available?
               </span>
@@ -999,7 +1004,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
               </span>
@@ -1080,7 +1085,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
               </span>
@@ -1116,7 +1121,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
               </span>
@@ -1146,7 +1151,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
               </span>
@@ -1176,7 +1181,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="read-only-section--question"
             >
               <span
-                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
               </span>
@@ -1204,7 +1209,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               What level of complexity do you expect calculations to be?
             </span>
@@ -1231,7 +1236,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -1258,7 +1263,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Are there any business requirement(s) that address claims processing precedence order with the other model(s)? If so, please specify.
             </span>
@@ -1288,7 +1293,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -1315,7 +1320,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will participants be allowed to select between multiple payment mechanisms? If so, please describe.
             </span>
@@ -1350,7 +1355,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -1377,7 +1382,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               How often do you anticipate making payments?
             </span>
@@ -1409,7 +1414,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -1436,7 +1441,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will you recover the payments?
             </span>
@@ -1463,7 +1468,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -1490,7 +1495,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Do you anticipate reconciling payments retrospectively?
             </span>
@@ -1517,7 +1522,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -1544,7 +1549,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               How often are payments reconciled?
             </span>
@@ -1582,7 +1587,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -1609,23 +1614,24 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               How frequently do you anticipate making demands/recoupments?
               <span
-                class="text-normal line-height-sans-2"
+                class="text-normal line-height-sans-2 margin-left-1 position-relative"
               >
                 <span
-                  class="usa-tooltip"
+                  class="usa-tooltip top-2px"
                   data-testid="tooltipWrapper"
                 >
                   <div
                     aria-describedby="tooltip-550000"
-                    class="usa-tooltip__trigger mint-no-print margin-left-1"
+                    class="usa-tooltip__trigger mint-no-print"
                     data-testid="triggerElement"
                     position="right"
                     tabindex="0"
                     title=""
+                    wrapperclasses="top-2px"
                   >
                     <svg
                       class="usa-icon text-base-light"
@@ -1688,7 +1694,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
@@ -1715,7 +1721,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               When will payments start?
             </span>
@@ -1742,7 +1748,7 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             class="read-only-section--question"
           >
             <span
-              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line display-flex flex-align-center"
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
             </span>
