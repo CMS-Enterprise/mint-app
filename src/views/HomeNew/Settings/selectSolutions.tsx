@@ -136,7 +136,7 @@ const SelectSolutionSettings = () => {
 
         // Allow state to hydrate before redirecting
         setTimeout(() => {
-          history.push('/homepage-settings');
+          history.push(state.fromHome ? '/' : '/homepage-settings');
         }, 0);
       })
       .catch(() => setMutationError(true));
@@ -262,7 +262,7 @@ const SelectSolutionSettings = () => {
 
           <div style={{ width: 'fit-content' }}>
             <UswdsReactLink
-              to="/homepage-settings"
+              to={state.fromHome ? '/' : '/homepage-settings'}
               className="display-flex flex-align-center"
             >
               <Icon.ArrowBack className="margin-right-2" />

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Header, PrimaryNav, Select } from '@trussworks/react-uswds';
+import { useTranslation } from 'react-i18next';
+import { Header, Icon, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { OperationalSolutionKey } from 'gql/gen/graphql';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import ModelsBySolutionTable from 'components/ModelsBySolution/table';
+import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import {
   HelpSolutionBaseType,
@@ -17,6 +20,8 @@ const ModelsBySolutions = ({
 }: {
   operationalSolutionKeys: OperationalSolutionKey[];
 }) => {
+  const { t: customHomeT } = useTranslation('customHome');
+
   const [isCurrent, setIsCurrent] = useState<OperationalSolutionKey>(
     operationalSolutionKeys[0]
   );
@@ -48,6 +53,33 @@ const ModelsBySolutions = ({
     </button>
   ));
 
+  if (operationalSolutionKeys.length === 0) {
+    return (
+      <Alert
+        type="info"
+        className="margin-top-4"
+        heading={customHomeT(
+          `settings.MODELS_BY_OPERATIONAL_SOLUTION.noResultsHeading`
+        )}
+      >
+        <UswdsReactLink
+          to={{
+            pathname: '/homepage-settings/solutions',
+            state: { fromHome: true }
+          }}
+          className="display-flex flex-align-center text-bold"
+        >
+          <span className="margin-right-1">
+            {customHomeT(
+              `settings.MODELS_BY_OPERATIONAL_SOLUTION.noResultsDescription`
+            )}
+          </span>
+          <Icon.ArrowForward />
+        </UswdsReactLink>
+      </Alert>
+    );
+  }
+
   return (
     <div className="models-by-solutions">
       {operationalSolutionKeys.length < 6 && (
@@ -67,25 +99,27 @@ const ModelsBySolutions = ({
       )}
 
       {(isTablet || operationalSolutionKeys.length > 5) && (
-        <Select
-          id="solutionKey"
-          name="solutionKey"
-          value={isCurrent}
-          onChange={e =>
-            setIsCurrent(e.currentTarget.value as OperationalSolutionKey)
-          }
-          className="margin-bottom-4 text-primary text-bold"
-        >
-          {operationalSolutionKeys.map(solution => {
-            return (
-              <option key={solution} value={solution}>
-                {getSolutionNameorAcronym(
-                  helpSolutions.find(sol => sol.enum === solution)
-                )}
-              </option>
-            );
-          })}
-        </Select>
+        <div className="maxw-mobile-lg">
+          <Select
+            id="solutionKey"
+            name="solutionKey"
+            value={isCurrent}
+            onChange={e =>
+              setIsCurrent(e.currentTarget.value as OperationalSolutionKey)
+            }
+            className="margin-bottom-4 text-primary text-bold"
+          >
+            {operationalSolutionKeys.map(solution => {
+              return (
+                <option key={solution} value={solution}>
+                  {getSolutionNameorAcronym(
+                    helpSolutions.find(sol => sol.enum === solution)
+                  )}
+                </option>
+              );
+            })}
+          </Select>
+        </div>
       )}
 
       <ModelsBySolutionTable operationalSolutionKey={isCurrent} />

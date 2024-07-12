@@ -60,6 +60,9 @@ const HomeNew = () => {
 
   const { data, loading } = useGetHomepageSettingsQuery();
 
+  const operationalSolutionKeys =
+    data?.userViewCustomization.possibleOperationalSolutions || [];
+
   const {
     data: favoritesData,
     loading: favoritesLoading,
@@ -192,17 +195,15 @@ const HomeNew = () => {
           )}
         </h2>
 
-        <p>
-          {t(
-            `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.description`
-          )}
-        </p>
+        {operationalSolutionKeys.length > 0 && (
+          <p>
+            {t(
+              `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.description`
+            )}
+          </p>
+        )}
 
-        <ModelsBySolutions
-          operationalSolutionKeys={
-            data?.userViewCustomization.possibleOperationalSolutions || []
-          }
-        />
+        <ModelsBySolutions operationalSolutionKeys={operationalSolutionKeys} />
       </>
     )
   };
