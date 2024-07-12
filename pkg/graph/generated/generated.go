@@ -9523,9 +9523,6 @@ extend type ModelPlan {
 }
 
 type ModelPlanAndOperationalSolution {
-  # TODO -- we can uncomment these if we want?
-  # modelPlanID: UUID!
-  # operationalSolutionID: UUID!
   operationalSolution: OperationalSolution!
   modelPlan: ModelPlan!
 }

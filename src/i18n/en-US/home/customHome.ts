@@ -40,9 +40,9 @@ const settings: HomepageSettingsType = {
     heading: 'Models using specific operational solutions',
     description:
       'This tabbed section displays the models using the operational solutions you care about.',
-    noResultsHeading: 'You haven’t been added to any Model Plans yet.',
-    noResultsDescription:
-      'Once you create one or are added as a team member to an existing plan, it will appear here.'
+    noResultsHeading:
+      'It looks like you forgot to select at least one operational solution.',
+    noResultsDescription: 'Select solutions'
   }
 };
 

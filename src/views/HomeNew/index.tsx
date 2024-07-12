@@ -22,6 +22,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import FavoritesTable from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import ModelsBySolutionTable from 'components/ModelsBySolution/table';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -179,7 +180,29 @@ const HomeNew = () => {
         />
       </>
     ),
-    [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: <></>
+    [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(
+            `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.heading`
+          )}
+        </h2>
+
+        <p>
+          {t(
+            `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.description`
+          )}
+        </p>
+
+        <ModelsBySolutionTable
+          operationalSolutionKey={
+            data?.userViewCustomization.possibleOperationalSolutions[0]!
+          }
+        />
+      </>
+    )
   };
 
   const renderView = () => {
