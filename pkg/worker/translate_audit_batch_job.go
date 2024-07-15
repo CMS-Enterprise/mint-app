@@ -16,6 +16,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/translatedaudit"
 )
 
+var translatedAuditJobMaxRetry = 2
+
 // TranslateAuditCronJob is the job the cron schedule calls
 // TranslateAuditBatchJob batches all the TranslateAuditJobs. When all are complete it will fire a callback
 // args are not currently being used.
@@ -50,6 +52,8 @@ func QueueTranslatedAuditJob(w *Worker, batch *faktory.Batch, queueObj *models.T
 		// Change ID not strictly needed here, the job can get it from queue id, but this is for convenience.
 		job := faktory.NewJob(translateAuditJobName, retQueueEntry.ChangeID, retQueueEntry.ID)
 		job.Queue = auditTranslateQueue
+
+		job.Retry = &translatedAuditJobMaxRetry
 		err = batch.Push(job)
 		if err != nil {
 			return nil, err
