@@ -46,5 +46,15 @@ func (suite *WorkerSuite) TestTranslateAuditJob() {
 	jobErr := perf.Execute(job, worker.TranslateAuditJob)
 	suite.NoError(jobErr)
 
-	suite.NoError(jobErr)
+	suite.Run("A queue entry for a duplicate translated audit will not fail the translation queue job", func() {
+		//Update the queue to set it as NEW again.
+		entryToTest.Status = models.TPSNew
+		_, err = storage.TranslatedAuditQueueUpdate(suite.testConfigs.Store, suite.testConfigs.Logger, entryToTest)
+		suite.NoError(err)
+
+		// We expect no error when there is a duplicate entry.
+		jobErr2 := perf.Execute(job, worker.TranslateAuditJob)
+		suite.NoError(jobErr2)
+	})
+
 }

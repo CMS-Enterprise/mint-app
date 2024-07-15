@@ -49,7 +49,6 @@ func TranslatedAuditQueueUpdate(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	translatedAuditQueue *models.TranslatedAuditQueue) (*models.TranslatedAuditQueue, error) {
-
 	retTranslatedAuditQueue, procErr := sqlutils.GetProcedure[models.TranslatedAuditQueue](np, sqlqueries.TranslatedAuditQueue.Update, translatedAuditQueue)
 
 	if procErr != nil {
