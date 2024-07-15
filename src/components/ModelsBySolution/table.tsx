@@ -49,8 +49,13 @@ const ModelsBySolutionTable = ({
   });
 
   const modelsBySolution = useMemo(() => {
-    return data?.modelPlansByOperationalSolutionKey || [];
-  }, [data?.modelPlansByOperationalSolutionKey]);
+    const models = data?.modelPlansByOperationalSolutionKey || [];
+    return (
+      [...models].sort((a, b) =>
+        a.modelPlan.modelName.localeCompare(b.modelPlan.modelName)
+      ) || []
+    );
+  }, [data]);
 
   const [filteredModels, setFilteredModels] = useState<ModelsBySolutionType>([
     ...modelsBySolution
@@ -124,7 +129,8 @@ const ModelsBySolutionTable = ({
         setSelectedStatus={setSelectedStatus}
       />
 
-      {filteredModels.length > 4 && (
+      {(filteredModels.length > 4 ||
+        statusHasModels(modelsBySolution, selectedStatus)) && (
         <div className="margin-top-3">
           <GlobalClientFilter
             globalFilter={query}
@@ -146,7 +152,7 @@ const ModelsBySolutionTable = ({
         </div>
       )}
 
-      {filteredModels.length === 0 && !query.trim() && (
+      {!statusHasModels(modelsBySolution, selectedStatus) && (
         <Alert type="info" heading={customHomeT('noModelSolutionHeading')}>
           <Trans
             i18nKey="customHome:noModelSolutionDescription"
@@ -165,7 +171,11 @@ const ModelsBySolutionTable = ({
       <>
         <Grid row gap={2} className="margin-bottom-2 margin-top-4">
           {currentModels.map(model => (
-            <Grid desktop={{ col: 4 }} tablet={{ col: 6 }}>
+            <Grid
+              desktop={{ col: 4 }}
+              tablet={{ col: 6 }}
+              key={model.modelPlan.id}
+            >
               <ModelSolutionCard
                 key={model.modelPlan.id}
                 modelPlan={model.modelPlan}
@@ -205,6 +215,14 @@ const ModelsBySolutionTable = ({
       </>
     </div>
   );
+};
+
+const statusHasModels = (
+  models: ModelsBySolutionType,
+  status: StatusCategories
+): boolean => {
+  if (status === 'total') return true;
+  return models.some(model => model.modelPlan.status === status);
 };
 
 const searchModelsFilter = (
