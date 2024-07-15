@@ -220,10 +220,17 @@ const modelsWithStatus = (
   models: ModelsBySolutionType,
   status: StatusCategories
 ): ModelsBySolutionType => {
-  if (status === 'total') return models;
   if (status === ModelStatus.ACTIVE || status === ModelStatus.ENDED) {
     return models.filter(model => model.modelPlan.status === status);
   }
+  if (status === 'planned') {
+    return models.filter(
+      model =>
+        model.modelPlan.status !== ModelStatus.ACTIVE &&
+        model.modelPlan.status !== ModelStatus.ENDED
+    );
+  }
+  // status === 'total'
   return models;
 };
 
@@ -243,11 +250,11 @@ const searchModelsFilter = (
         ?.toLowerCase()
         .includes(queryValueLower) ||
       formatDateUtc(
-        model.modelPlan?.basics?.applicationsStart,
+        model.modelPlan?.basics?.performancePeriodStarts,
         'MM/dd/yyyy'
       ).includes(queryValueLower) ||
       formatDateUtc(
-        model.modelPlan?.basics?.applicationsEnd,
+        model.modelPlan?.basics?.performancePeriodEnds,
         'MM/dd/yyyy'
       ).includes(queryValueLower)
     );

@@ -12,8 +12,8 @@ export default gql(/* GraphQL */ `
         basics {
           id
           modelCategory
-          applicationsStart
-          applicationsEnd
+          performancePeriodStarts
+          performancePeriodEnds
         }
       }
     }

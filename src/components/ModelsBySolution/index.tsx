@@ -69,8 +69,8 @@ const ModelSolutionCard = ({
                   {customHomeT('solutionCard.startDate')}
                 </p>
                 <p className="margin-top-0 margin-bottom-0">
-                  {basics.applicationsStart ? (
-                    formatDateUtc(basics.applicationsStart, 'MM/dd/yyyy')
+                  {basics.performancePeriodStarts ? (
+                    formatDateUtc(basics.performancePeriodStarts, 'MM/dd/yyyy')
                   ) : (
                     <i className="text-base">
                       {customHomeT('solutionCard.tbd')}
@@ -84,8 +84,8 @@ const ModelSolutionCard = ({
                   {customHomeT('solutionCard.endDate')}
                 </p>
                 <p className="margin-top-0 margin-bottom-0">
-                  {basics.applicationsEnd ? (
-                    formatDateUtc(basics.applicationsEnd, 'MM/dd/yyyy')
+                  {basics.performancePeriodEnds ? (
+                    formatDateUtc(basics.performancePeriodEnds, 'MM/dd/yyyy')
                   ) : (
                     <i className="text-base">
                       {customHomeT('solutionCard.tbd')}
