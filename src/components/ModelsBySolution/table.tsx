@@ -129,31 +129,33 @@ const ModelsBySolutionTable = ({
         setSelectedStatus={setSelectedStatus}
       />
 
-      {(filteredModels.length > 4 ||
-        statusHasModels(modelsBySolution, selectedStatus)) && (
-        <div className="margin-top-3">
-          <GlobalClientFilter
-            globalFilter={query}
-            setGlobalFilter={setQuery}
-            tableID="models-by-solution-table"
-            tableName={customHomeT(
-              'settings.MODELS_BY_OPERATIONAL_SOLUTION.heading'
-            )}
-            className="margin-bottom-3 maxw-none width-mobile-lg"
-          />
+      {modelsBySolution.length !== 0 &&
+        (filteredModels.length > 4 ||
+          statusHasModels(modelsBySolution, selectedStatus)) && (
+          <div className="margin-top-3">
+            <GlobalClientFilter
+              globalFilter={query}
+              setGlobalFilter={setQuery}
+              tableID="models-by-solution-table"
+              tableName={customHomeT(
+                'settings.MODELS_BY_OPERATIONAL_SOLUTION.heading'
+              )}
+              className="margin-bottom-3 maxw-none width-mobile-lg"
+            />
 
-          <TableResults
-            globalFilter={query}
-            pageIndex={pageOffset / itemsPerPage}
-            pageSize={itemsPerPage}
-            filteredRowLength={filteredModels.length}
-            currentRowLength={currentModels.length}
-            rowLength={modelsBySolution.length}
-          />
-        </div>
-      )}
+            <TableResults
+              globalFilter={query}
+              pageIndex={pageOffset / itemsPerPage}
+              pageSize={itemsPerPage}
+              filteredRowLength={filteredModels.length}
+              currentRowLength={currentModels.length}
+              rowLength={modelsBySolution.length}
+            />
+          </div>
+        )}
 
-      {!statusHasModels(modelsBySolution, selectedStatus) && (
+      {(!statusHasModels(modelsBySolution, selectedStatus) ||
+        modelsBySolution.length === 0) && (
         <Alert type="info" heading={customHomeT('noModelSolutionHeading')}>
           <Trans
             i18nKey="customHome:noModelSolutionDescription"
