@@ -11,6 +11,7 @@ type TableResultsProps = {
   pageIndex: number;
   pageSize: number;
   filteredRowLength: number;
+  currentRowLength?: number;
   rowLength: number;
   showNoResults?: boolean;
 };
@@ -31,6 +32,7 @@ const TableResults = ({
   pageIndex,
   pageSize,
   filteredRowLength,
+  currentRowLength,
   rowLength,
   showNoResults = true
 }: TableResultsProps) => {
@@ -41,8 +43,9 @@ const TableResults = ({
 
   const currentPage: number = pageIndex * pageSize + 1;
 
-  // If data or filter results are less than 10 (page size) - then default to the number of returned rows
-  const pageRange: number = rows < 10 ? rows : (pageIndex + 1) * pageSize;
+  const pageRange: number = Math.floor(
+    (pageIndex / pageSize) * 10 + (currentRowLength || filteredRowLength)
+  );
 
   return (
     <div className={classnames(className)} data-testid="page-results">

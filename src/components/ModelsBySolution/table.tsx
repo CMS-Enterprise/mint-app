@@ -144,10 +144,11 @@ const ModelsBySolutionTable = ({
 
           <TableResults
             globalFilter={query}
-            pageIndex={pageOffset}
+            pageIndex={pageOffset / itemsPerPage}
             pageSize={itemsPerPage}
-            filteredRowLength={currentModels.length}
-            rowLength={filteredModels.length}
+            filteredRowLength={filteredModels.length}
+            currentRowLength={currentModels.length}
+            rowLength={modelsBySolution.length}
           />
         </div>
       )}
