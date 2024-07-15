@@ -17,16 +17,16 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 
 	queueEntry, err := storage.TranslatedAuditQueueGetByID(store, queueID)
 	if err != nil {
-		decErr := fmt.Errorf("unable to return translatedAuditQueue entry  for translated_audit_queue_id (%s) for the translate audit job. Err %w", queueID, err)
-		logger.Warn(decErr.Error())
-		return nil, decErr
+		logger.Warn(err.Error(), zap.Error(err))
+		return nil, err
 	}
 	queueEntry.Attempts++
 	queueEntry.Status = models.TPSProcessing
 
 	queueEntry, err = storage.TranslatedAuditQueueUpdate(store, logger, queueEntry)
 	if err != nil {
-		return nil, fmt.Errorf("unable to return translatedAuditQueue entry, err: %w", err)
+		logger.Warn(err.Error(), zap.Error(err))
+		return nil, err
 	}
 
 	translatedAuditAndFields, translateErr := TranslateAudit(ctx, store, logger, auditID)
@@ -39,17 +39,21 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 			queueEntry.Status = models.TPSFailed
 			_, err = storage.TranslatedAuditQueueUpdate(store, logger, queueEntry)
 			if err != nil {
-				return nil, fmt.Errorf("unable to return translatedAuditQueue entry, err: %w", err)
+				logger.Warn(err.Error(), zap.Error(err))
+				return nil, err
 			}
 
-			return nil, fmt.Errorf("error translating audit for audit id %v. Err %w", auditID, translateErr)
+			logger.Warn(err.Error(), zap.Error(err))
+			return nil, err
 		}
 		queueEntry.Note = models.StringPointer("A translation already exists for this change.")
 	}
 	queueEntry.Status = models.TPSProcessed
 	_, err = storage.TranslatedAuditQueueUpdate(store, logger, queueEntry)
 	if err != nil {
-		return nil, fmt.Errorf("unable to return translatedAuditQueue entry, err: %w", err)
+		finalErr := fmt.Errorf("unable to return final translatedAuditQueue entry, err: %w", err)
+		logger.Warn(finalErr.Error(), zap.Error(finalErr))
+		return nil, finalErr
 	}
 	return translatedAuditAndFields, nil
 
