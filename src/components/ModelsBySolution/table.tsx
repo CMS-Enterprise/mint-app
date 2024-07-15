@@ -2,20 +2,8 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import {
-  Row,
-  useFilters,
-  useFlexLayout,
-  useGlobalFilter,
-  usePagination,
-  useTable
-} from 'react-table';
-import {
-  CardGroup,
-  Grid,
-  Link,
-  Table as UswdsTable
-} from '@trussworks/react-uswds';
+import ReactPaginate from 'react-paginate';
+import { Grid, Link } from '@trussworks/react-uswds';
 import {
   GetModelsBySolutionQuery,
   ModelCategory,
@@ -27,9 +15,9 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
 import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
-import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { TranslationBasics } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
 import ModelsBySolutionsBanner, {
   StatusCategories
@@ -42,12 +30,6 @@ export type ModelsBySolutionType = GetModelsBySolutionQuery['modelPlansByOperati
 type ModelPlansTableProps = {
   operationalSolutionKey: OperationalSolutionKey;
 };
-
-/**
- * Creating a bare table to house models by solution cards
- * Utilizing pagination if more than three favories
- * Possbility for sort functionality in future
- * */
 
 const ModelsBySolutionTable = ({
   operationalSolutionKey
@@ -74,100 +56,56 @@ const ModelsBySolutionTable = ({
     ...modelsBySolution
   ]);
 
-  const columns: any = useMemo(() => {
-    return [
-      {
-        accessor: 'id',
-        Cell: ({ row }: { row: Row<ModelsBySolutionType[0]> }) => {
-          return (
-            <CardGroup className="margin-top-2 margin-x-0">
-              <Grid desktop={{ col: 4 }} tablet={{ col: 6 }}>
-                <ModelSolutionCard
-                  key={row.original.modelPlan.id}
-                  modelPlan={row.original.modelPlan}
-                />
-              </Grid>
-            </CardGroup>
-          );
-        }
-      }
-    ];
-  }, []);
+  const [query, setQuery] = useState<string>('');
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setGlobalFilter,
-    setPageSize,
-    page,
-    state,
-    prepareRow
-  } = useTable(
-    {
-      columns,
-      data: filteredModels,
-      globalFilter: useMemo(
-        () => (
-          rows: Row<any>[],
-          columnIds: string[],
-          filterValue: string
-        ): Row<any>[] => {
-          const filterValueLower = filterValue.toLowerCase();
-          return rows.filter((row: Row<ModelsBySolutionType[0]>) => {
-            return (
-              row?.original?.modelPlan?.modelName
-                ?.toLowerCase()
-                .includes(filterValueLower) ||
-              row?.original?.modelPlan?.status
-                ?.toLowerCase()
-                .includes(filterValueLower) ||
-              basicsConfig.modelCategory.options[
-                row?.original?.modelPlan?.basics?.modelCategory as ModelCategory
-              ]
-                ?.toLowerCase()
-                .includes(filterValueLower) ||
-              formatDateUtc(
-                row?.original?.modelPlan?.basics?.applicationsStart,
-                'MM/dd/yyyy'
-              ).includes(filterValueLower) ||
-              formatDateUtc(
-                row?.original?.modelPlan?.basics?.applicationsEnd,
-                'MM/dd/yyyy'
-              ).includes(filterValueLower)
-            );
-          });
-        },
-        [basicsConfig.modelCategory.options]
-      ),
-      initialState: {
-        pageSize: 3
-      }
-    },
-    useFlexLayout,
-    useFilters,
-    useGlobalFilter,
-    usePagination
-  );
+  const [pageOffset, setPageOffset] = useState(0);
+
+  // Pagination Configuration
+  const itemsPerPage = 3;
+  const endOffset = pageOffset + itemsPerPage;
+  const currentModels = filteredModels?.slice(pageOffset, endOffset);
+  const pageCount = filteredModels
+    ? Math.ceil(filteredModels.length / itemsPerPage)
+    : 1;
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event: { selected: number }) => {
+    const newOffset = (event.selected * itemsPerPage) % filteredModels?.length;
+    setPageOffset(newOffset);
+  };
 
   useEffect(() => {
-    if (selectedStatus === 'total') {
+    if (selectedStatus === 'total' && query.trim() === '') {
       setFilteredModels([...modelsBySolution]);
       return;
     }
 
-    setFilteredModels(
-      [...modelsBySolution].filter(model => {
-        return model.modelPlan.status === selectedStatus;
-      })
-    );
-  }, [selectedStatus, modelsBySolution]);
+    if (selectedStatus === 'total' && query.trim() !== '') {
+      setFilteredModels(
+        searchModelsFilter(modelsBySolution, query, basicsConfig)
+      );
+      return;
+    }
+
+    if (selectedStatus !== 'total' && query.trim() === '') {
+      setFilteredModels(
+        [...modelsBySolution].filter(model => {
+          return model.modelPlan.status === selectedStatus;
+        })
+      );
+      return;
+    }
+
+    if (selectedStatus !== 'total' && query.trim() !== '') {
+      setFilteredModels(
+        searchModelsFilter(modelsBySolution, query, basicsConfig).filter(
+          model => {
+            return model.modelPlan.status === selectedStatus;
+          }
+        )
+      );
+    }
+  }, [selectedStatus, modelsBySolution, query, basicsConfig]);
 
   if (loading) {
     return (
@@ -187,9 +125,10 @@ const ModelsBySolutionTable = ({
       />
 
       {filteredModels.length > 4 && (
-        <div>
+        <div className="margin-top-3">
           <GlobalClientFilter
-            setGlobalFilter={setGlobalFilter}
+            globalFilter={query}
+            setGlobalFilter={setQuery}
             tableID="models-by-solution-table"
             tableName={customHomeT(
               'settings.MODELS_BY_OPERATIONAL_SOLUTION.heading'
@@ -198,16 +137,16 @@ const ModelsBySolutionTable = ({
           />
 
           <TableResults
-            globalFilter={state.globalFilter}
-            pageIndex={state.pageIndex}
-            pageSize={state.pageSize}
-            filteredRowLength={page.length}
+            globalFilter={query}
+            pageIndex={pageOffset}
+            pageSize={itemsPerPage}
+            filteredRowLength={currentModels.length}
             rowLength={filteredModels.length}
           />
         </div>
       )}
 
-      {filteredModels.length === 0 && (
+      {filteredModels.length === 0 && !query.trim() && (
         <Alert type="info" heading={customHomeT('noModelSolutionHeading')}>
           <Trans
             i18nKey="customHome:noModelSolutionDescription"
@@ -223,42 +162,76 @@ const ModelsBySolutionTable = ({
         </Alert>
       )}
 
-      <UswdsTable {...getTableProps()} fullWidth>
-        <tbody {...getTableBodyProps()}>
-          {page.map(row => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell, i) => {
-                  return (
-                    <td className="border-0 padding-0" {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </UswdsTable>
+      <>
+        <Grid row gap={2} className="margin-bottom-2 margin-top-4">
+          {currentModels.map(model => (
+            <Grid desktop={{ col: 4 }} tablet={{ col: 6 }}>
+              <ModelSolutionCard
+                key={model.modelPlan.id}
+                modelPlan={model.modelPlan}
+              />
+            </Grid>
+          ))}
+        </Grid>
 
-      {modelsBySolution.length > 3 && (
-        <TablePagination
-          gotoPage={gotoPage}
-          previousPage={previousPage}
-          nextPage={nextPage}
-          canNextPage={canNextPage}
-          pageIndex={state.pageIndex}
-          pageOptions={pageOptions}
-          canPreviousPage={canPreviousPage}
-          pageCount={pageCount}
-          pageSize={state.pageSize}
-          setPageSize={setPageSize}
-          page={[]}
-        />
-      )}
+        {pageCount > 1 && (
+          <ReactPaginate
+            data-testid="notification-pagination"
+            breakLabel="..."
+            breakClassName="usa-pagination__item usa-pagination__overflow"
+            nextLabel="Next >"
+            containerClassName="mint-pagination usa-pagination usa-pagination__list"
+            previousLinkClassName={
+              pageOffset === 0
+                ? 'display-none'
+                : 'usa-pagination__link usa-pagination__previous-page prev-page'
+            }
+            nextLinkClassName={
+              pageOffset / itemsPerPage === pageCount - 1
+                ? 'display-none'
+                : 'usa-pagination__link usa-pagination__previous-page next-page'
+            }
+            disabledClassName="pagination__link--disabled"
+            activeClassName="usa-current"
+            activeLinkClassName="usa-current"
+            pageClassName="usa-pagination__item"
+            pageLinkClassName="usa-pagination__button"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="< Previous"
+          />
+        )}
+      </>
     </div>
   );
+};
+
+const searchModelsFilter = (
+  models: ModelsBySolutionType,
+  query: string,
+  basicsConfig: TranslationBasics
+): ModelsBySolutionType => {
+  const queryValueLower = query.toLowerCase();
+  return models.filter(model => {
+    return (
+      model.modelPlan?.modelName?.toLowerCase().includes(queryValueLower) ||
+      model.modelPlan?.status?.toLowerCase().includes(queryValueLower) ||
+      basicsConfig.modelCategory.options[
+        model.modelPlan?.basics?.modelCategory as ModelCategory
+      ]
+        ?.toLowerCase()
+        .includes(queryValueLower) ||
+      formatDateUtc(
+        model.modelPlan?.basics?.applicationsStart,
+        'MM/dd/yyyy'
+      ).includes(queryValueLower) ||
+      formatDateUtc(
+        model.modelPlan?.basics?.applicationsEnd,
+        'MM/dd/yyyy'
+      ).includes(queryValueLower)
+    );
+  });
 };
 
 export default ModelsBySolutionTable;

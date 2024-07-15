@@ -489,6 +489,7 @@ const ModelPlansTable = ({
         <div>
           {canSearch && (
             <GlobalClientFilter
+              globalFilter={state.globalFilter}
               setGlobalFilter={setGlobalFilter}
               tableID={homeT('requestsTable.id')}
               tableName={homeT('requestsTable.title')}

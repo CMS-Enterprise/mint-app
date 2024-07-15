@@ -11,6 +11,7 @@ describe('Table Filter Componenet', () => {
     const { getByTestId } = render(
       <MemoryRouter>
         <GlobalClientFilter
+          globalFilter=""
           setGlobalFilter={() => true}
           tableID="table-id"
           tableName="table-name"
@@ -26,6 +27,7 @@ describe('Table Filter Componenet', () => {
     const { user } = setup(
       <MemoryRouter>
         <GlobalClientFilter
+          globalFilter=""
           setGlobalFilter={() => true}
           tableID="table-id"
           tableName="table-name"
@@ -42,6 +44,7 @@ describe('Table Filter Componenet', () => {
     const { asFragment } = render(
       <MemoryRouter>
         <GlobalClientFilter
+          globalFilter=""
           setGlobalFilter={() => true}
           tableID="table-id"
           tableName="table-name"

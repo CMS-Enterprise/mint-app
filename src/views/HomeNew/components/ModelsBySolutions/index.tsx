@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Header, Icon, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -22,11 +22,19 @@ const ModelsBySolutions = ({
 }) => {
   const { t: customHomeT } = useTranslation('customHome');
 
-  const [isCurrent, setIsCurrent] = useState<OperationalSolutionKey>(
-    operationalSolutionKeys[0]
-  );
-
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
+
+  const orderedOperationalSolutionKeys = useMemo(() => {
+    return [...operationalSolutionKeys].sort((a, b) =>
+      (helpSolutions.find(sol => sol.enum === a)?.name || '').localeCompare(
+        helpSolutions.find(sol => sol.enum === b)?.name || ''
+      )
+    );
+  }, [operationalSolutionKeys]);
+
+  const [isCurrent, setIsCurrent] = useState<OperationalSolutionKey>(
+    orderedOperationalSolutionKeys[0]
+  );
 
   const getSolutionNameorAcronym = (solution?: HelpSolutionBaseType) => {
     if (!solution) return '';
@@ -36,7 +44,7 @@ const ModelsBySolutions = ({
     return solution.name;
   };
 
-  const solutionNavs = operationalSolutionKeys.map(solutionKey => (
+  const solutionNavs = orderedOperationalSolutionKeys.map(solutionKey => (
     <button
       type="button"
       key={solutionKey}
@@ -109,7 +117,7 @@ const ModelsBySolutions = ({
             }
             className="margin-bottom-4 text-primary text-bold"
           >
-            {operationalSolutionKeys.map(solution => {
+            {orderedOperationalSolutionKeys.map(solution => {
               return (
                 <option key={solution} value={solution}>
                   {getSolutionNameorAcronym(

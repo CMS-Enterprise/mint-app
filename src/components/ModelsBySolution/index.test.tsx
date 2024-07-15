@@ -47,13 +47,11 @@ const mockModel: FavoritesType = {
   __typename: 'ModelPlan'
 };
 
-const mockRemove = () => null;
-
 describe('FavoriteCard', () => {
   it('matches the snapshot', () => {
     const { asFragment } = render(
       <MemoryRouter>
-        <FavoriteCard modelPlan={mockModel} removeFavorite={mockRemove} />
+        <FavoriteCard modelPlan={mockModel} />
       </MemoryRouter>
     );
     expect(asFragment()).toMatchSnapshot();
@@ -62,7 +60,7 @@ describe('FavoriteCard', () => {
   it('renders model plan info translated text', () => {
     const { getByText } = render(
       <MemoryRouter>
-        <FavoriteCard modelPlan={mockModel} removeFavorite={mockRemove} />
+        <FavoriteCard modelPlan={mockModel} />
       </MemoryRouter>
     );
 
