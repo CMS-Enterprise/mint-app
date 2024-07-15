@@ -12,9 +12,7 @@ jobs:
   run_tests:
     uses: ./.github/workflows/run_tests.yml
     secrets: inherit
-    with:
-      continue_on_error: true
-      
+
   build_frontend_assets:
     strategy:
       matrix:
