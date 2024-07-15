@@ -81,6 +81,8 @@ const ModelsBySolutionTable = ({
   };
 
   useEffect(() => {
+    setPageOffset(0);
+
     if (selectedStatus === 'total' && query.trim() === '') {
       setFilteredModels([...modelsBySolution]);
       return;
