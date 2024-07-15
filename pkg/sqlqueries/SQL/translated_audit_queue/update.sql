@@ -8,7 +8,7 @@ SET
     created_by= :created_by,
     created_dts= :created_dts,
     modified_by= :modified_by,
-    modified_dts= :modified_dts
+    modified_dts= CURRENT_TIMESTAMP
 WHERE id =  :id
 RETURNING
 id,
