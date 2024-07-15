@@ -11,7 +11,7 @@ import './index.scss';
 
 export type StatusCategories =
   | 'total'
-  | ModelStatus.PLAN_DRAFT
+  | 'planned'
   | ModelStatus.ACTIVE
   | ModelStatus.ENDED;
 
@@ -64,9 +64,9 @@ const ModelsBySolutionsBanner = ({
               </Button>
               <Button
                 type="button"
-                onClick={() => setSelectedStatus(ModelStatus.PLAN_DRAFT)}
+                onClick={() => setSelectedStatus('planned')}
                 className={classNames({
-                  'bg-primary-darker': selectedStatus === ModelStatus.PLAN_DRAFT
+                  'bg-primary-darker': selectedStatus === 'planned'
                 })}
               >
                 <div className="margin-bottom-1">
@@ -76,7 +76,8 @@ const ModelsBySolutionsBanner = ({
                   {
                     solutionModels.filter(
                       solution =>
-                        solution.modelPlan.status === ModelStatus.PLAN_DRAFT
+                        solution.modelPlan.status !== ModelStatus.ACTIVE &&
+                        solution.modelPlan.status !== ModelStatus.ENDED
                     ).length
                   }
                 </div>

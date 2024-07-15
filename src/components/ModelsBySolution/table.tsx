@@ -7,6 +7,7 @@ import { Grid, Link } from '@trussworks/react-uswds';
 import {
   GetModelsBySolutionQuery,
   ModelCategory,
+  ModelStatus,
   OperationalSolutionKey,
   useGetModelsBySolutionQuery
 } from 'gql/gen/graphql';
@@ -93,20 +94,15 @@ const ModelsBySolutionTable = ({
     }
 
     if (selectedStatus !== 'total' && query.trim() === '') {
-      setFilteredModels(
-        [...modelsBySolution].filter(model => {
-          return model.modelPlan.status === selectedStatus;
-        })
-      );
+      setFilteredModels(modelsWithStatus(modelsBySolution, selectedStatus));
       return;
     }
 
     if (selectedStatus !== 'total' && query.trim() !== '') {
       setFilteredModels(
-        searchModelsFilter(modelsBySolution, query, basicsConfig).filter(
-          model => {
-            return model.modelPlan.status === selectedStatus;
-          }
+        modelsWithStatus(
+          searchModelsFilter(modelsBySolution, query, basicsConfig),
+          selectedStatus
         )
       );
     }
@@ -131,7 +127,7 @@ const ModelsBySolutionTable = ({
 
       {modelsBySolution.length !== 0 &&
         (filteredModels.length > 4 ||
-          statusHasModels(modelsBySolution, selectedStatus)) && (
+          modelsWithStatus(modelsBySolution, selectedStatus).length > 0) && (
           <div className="margin-top-3">
             <GlobalClientFilter
               globalFilter={query}
@@ -154,7 +150,7 @@ const ModelsBySolutionTable = ({
           </div>
         )}
 
-      {(!statusHasModels(modelsBySolution, selectedStatus) ||
+      {(modelsWithStatus(modelsBySolution, selectedStatus).length === 0 ||
         modelsBySolution.length === 0) && (
         <Alert type="info" heading={customHomeT('noModelSolutionHeading')}>
           <Trans
@@ -220,12 +216,15 @@ const ModelsBySolutionTable = ({
   );
 };
 
-const statusHasModels = (
+const modelsWithStatus = (
   models: ModelsBySolutionType,
   status: StatusCategories
-): boolean => {
-  if (status === 'total') return true;
-  return models.some(model => model.modelPlan.status === status);
+): ModelsBySolutionType => {
+  if (status === 'total') return models;
+  if (status === ModelStatus.ACTIVE || status === ModelStatus.ENDED) {
+    return models.filter(model => model.modelPlan.status === status);
+  }
+  return models;
 };
 
 const searchModelsFilter = (
