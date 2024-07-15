@@ -127,7 +127,8 @@ const ModelsBySolutionTable = ({
 
       {modelsBySolution.length !== 0 &&
         (filteredModels.length > 4 ||
-          modelsWithStatus(modelsBySolution, selectedStatus).length > 0) && (
+          modelsWithStatus(modelsBySolution, selectedStatus).length > 4 ||
+          !!query.trim()) && (
           <div className="margin-top-3">
             <GlobalClientFilter
               globalFilter={query}
