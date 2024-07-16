@@ -279,7 +279,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation updateDataExchangeApproach ($id: UUID!, $changes: DataExchangeApproachChanges!) {\n    updateDataExchangeApproach (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        highLevelOverview\n        newMethods\n        feasibility\n        participantBurden\n        cmmiImpact\n        additionalConsiderations\n\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n    }\n}",
-								"variables": "{\n  \"id\": \"{{dataExchangeApproachID}}\",\n  \"changes\": {\n    \"highLevelOverview\": \"\",\n    \"newMethods\": \"\",\n    \"feasibility\": \"\",\n    \"participantBurden\": \"\",\n    \"cmmiImpact\": \"\",\n    \"additionalConsiderations\": \"\",\n    \"status\": \"\"\n  }\n}"
+								"variables": "{\n  \"id\": \"{{dataExchangeApproachID}}\",\n  \"changes\": {\n    \"highLevelOverview\": \"\",\n    \"newMethods\": \"\",\n    \"feasibility\": \"\",\n    \"participantBurden\": \"\",\n    \"cmmiImpact\": \"\",\n    \"additionalConsiderations\": \"\",\n    \"status\": \"IN_PROGRESS\"\n  }\n}"
 							}
 						},
 						"url": {
