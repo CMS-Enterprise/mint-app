@@ -60,7 +60,7 @@ const ModelsBySolutionsBanner = ({
                 <div className="margin-bottom-1">
                   {customHomeT(`solutionStatus.total`)}
                 </div>
-                <div>{solutionModels.length}</div>
+                <div data-testid="total-count">{solutionModels.length}</div>
               </Button>
               <Button
                 type="button"
@@ -72,7 +72,7 @@ const ModelsBySolutionsBanner = ({
                 <div className="margin-bottom-1">
                   {customHomeT(`solutionStatus.planned`)}
                 </div>
-                <div>
+                <div data-testid="planned-count">
                   {
                     solutionModels.filter(
                       solution =>
@@ -92,7 +92,7 @@ const ModelsBySolutionsBanner = ({
                 <div className="margin-bottom-1">
                   {customHomeT(`solutionStatus.active`)}
                 </div>
-                <div>
+                <div data-testid="active-count">
                   {
                     solutionModels.filter(
                       solution =>
@@ -111,7 +111,7 @@ const ModelsBySolutionsBanner = ({
                 <div className="margin-bottom-1">
                   {customHomeT(`solutionStatus.ended`)}
                 </div>
-                <div>
+                <div data-testid="ended-count">
                   {
                     solutionModels.filter(
                       solution =>

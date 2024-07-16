@@ -1,71 +1,169 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
-import { render } from '@testing-library/react';
-import { GetFavoritesQuery, ModelStatus, TeamRole } from 'gql/gen/graphql';
+import { MemoryRouter, Route } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
+import {
+  GetModelsBySolutionDocument,
+  ModelStatus,
+  OperationalSolutionKey
+} from 'gql/gen/graphql';
 
-import FavoriteCard from './index';
+import setup from 'utils/testing/setup';
 
-type FavoritesType = GetFavoritesQuery['modelPlanCollection'][0];
+import ModelsBySolutionTable from './table';
 
-const mockModel: FavoritesType = {
-  id: '0186774a-80b0-454c-b69e-c4e949343483',
-  modelName: 'Plan For General Characteristics',
-  nameHistory: ['first', 'second'],
-  isFavorite: true,
-  status: ModelStatus.PLAN_DRAFT,
-  isCollaborator: false,
-  basics: {
-    id: '123',
-    performancePeriodStarts: '2022-06-03T17:41:40.962971Z',
-    goal: 'The goal',
-    __typename: 'PlanBasics'
-  },
-  crs: [
-    {
-      __typename: 'PlanCR',
-      idNumber: 'CR 123'
+const mocks = [
+  {
+    request: {
+      query: GetModelsBySolutionDocument,
+      variables: { operationalSolutionKey: OperationalSolutionKey.INNOVATION }
+    },
+    result: {
+      data: {
+        modelPlansByOperationalSolutionKey: [
+          {
+            modelPlan: {
+              id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
+              modelName: 'Plan With CRs and TDLs',
+              status: ModelStatus.PLAN_DRAFT,
+              basics: {
+                id: '6a3c2f25-81ce-4364-b631-4c3b08eeb5af',
+                modelCategory: null,
+                performancePeriodStarts: null,
+                performancePeriodEnds: null,
+                __typename: 'PlanBasics'
+              },
+              __typename: 'ModelPlan'
+            },
+            __typename: 'ModelPlanAndOperationalSolution'
+          },
+          {
+            modelPlan: {
+              id: 'e671f056-2634-4af4-abad-a63850832a0a',
+              modelName: 'Plan With Collaborators',
+              status: ModelStatus.PLAN_DRAFT,
+              basics: {
+                id: '3a1584a5-6712-4ab8-8832-86faa183d3b1',
+                modelCategory: null,
+                performancePeriodStarts: null,
+                performancePeriodEnds: null,
+                __typename: 'PlanBasics'
+              },
+              __typename: 'ModelPlan'
+            },
+            __typename: 'ModelPlanAndOperationalSolution'
+          },
+          {
+            modelPlan: {
+              id: '598db9f0-54c0-4346-bb6b-da46a36eff1a',
+              modelName: 'Enhancing Oncology Model',
+              status: ModelStatus.PLAN_DRAFT,
+              basics: {
+                id: '3f77db11-da8c-4282-a5c7-c50282833244',
+                modelCategory: null,
+                performancePeriodStarts: null,
+                performancePeriodEnds: null,
+                __typename: 'PlanBasics'
+              },
+              __typename: 'ModelPlan'
+            },
+            __typename: 'ModelPlanAndOperationalSolution'
+          },
+          {
+            modelPlan: {
+              id: 'c9cf987d-8543-46bb-a668-2c560ce5b149',
+              modelName: 'Empty Plan',
+              status: ModelStatus.PLAN_DRAFT,
+              basics: {
+                id: '9a9547e2-b1d0-4ff7-a86b-9dc9339500fa',
+                modelCategory: 'STATE_BASED',
+                performancePeriodStarts: '2024-07-24T05:00:00Z',
+                performancePeriodEnds: '2024-07-31T05:00:00Z',
+                __typename: 'PlanBasics'
+              },
+              __typename: 'ModelPlan'
+            },
+            __typename: 'ModelPlanAndOperationalSolution'
+          },
+          {
+            modelPlan: {
+              id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae2',
+              modelName: 'Plan with Basics',
+              status: ModelStatus.ENDED,
+              basics: {
+                id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
+                modelCategory: null,
+                performancePeriodStarts: null,
+                performancePeriodEnds: null,
+                __typename: 'PlanBasics'
+              },
+              __typename: 'ModelPlan'
+            },
+            __typename: 'ModelPlanAndOperationalSolution'
+          }
+        ]
+      }
     }
-  ],
-  tdls: [
-    {
-      __typename: 'PlanTDL',
-      idNumber: 'TDL 456'
-    }
-  ],
-  collaborators: [
-    {
-      userAccount: {
-        id: '890',
-        __typename: 'UserAccount',
-        commonName: 'Test User'
-      },
-      id: '2134234',
-      teamRoles: [TeamRole.MODEL_LEAD],
-      __typename: 'PlanCollaborator'
-    }
-  ],
-  __typename: 'ModelPlan'
-};
+  }
+];
 
-describe('FavoriteCard', () => {
-  it('matches the snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter>
-        <FavoriteCard modelPlan={mockModel} />
+describe('ModelsBySolution Table and Card', () => {
+  it('renders solution models banner and cards', async () => {
+    const { getByText, getByTestId, user } = setup(
+      <MemoryRouter initialEntries={['/']}>
+        <Route path="/">
+          <MockedProvider mocks={mocks} addTypename={false}>
+            <ModelsBySolutionTable
+              operationalSolutionKey={OperationalSolutionKey.INNOVATION}
+            />
+          </MockedProvider>
+        </Route>
       </MemoryRouter>
     );
-    expect(asFragment()).toMatchSnapshot();
+
+    await waitForElementToBeRemoved(() => getByTestId('spinner'));
+
+    // Counts on banner should reflect the number of models with each status
+    await waitFor(() => {
+      expect(getByTestId('total-count')).toHaveTextContent('5');
+      expect(getByTestId('planned-count')).toHaveTextContent('4');
+      expect(getByTestId('active-count')).toHaveTextContent('0');
+      expect(getByTestId('ended-count')).toHaveTextContent('1');
+    });
+
+    await waitFor(async () => {
+      await user.click(getByTestId('active-count'));
+      expect(
+        getByText('There is no record of any models using this solution.')
+      ).toBeInTheDocument();
+    });
+
+    // First three models should be visible
+    await waitFor(async () => {
+      await user.click(getByTestId('total-count'));
+      expect(getByText('Empty Plan')).toBeInTheDocument();
+      expect(getByText('Enhancing Oncology Model')).toBeInTheDocument();
+      expect(getByText('Plan with Basics')).toBeInTheDocument();
+    });
   });
 
-  it('renders model plan info translated text', () => {
-    const { getByText } = render(
-      <MemoryRouter>
-        <FavoriteCard modelPlan={mockModel} />
+  it('matches snapshot', () => {
+    const { asFragment } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <Route path="/">
+          <MockedProvider mocks={mocks} addTypename={false}>
+            <ModelsBySolutionTable
+              operationalSolutionKey={OperationalSolutionKey.INNOVATION}
+            />
+          </MockedProvider>
+        </Route>
       </MemoryRouter>
     );
 
-    expect(getByText('Plan For General Characteristics')).toBeInTheDocument();
-    expect(getByText('The goal')).toBeInTheDocument();
-    expect(getByText('Draft Model Plan')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 });
