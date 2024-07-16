@@ -35,7 +35,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithoutNotification() {
 	}
 	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
 
-	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := createDummyTemplateCacheHelper(planName, plan)
 
 	mockEmailTemplateService.
 		EXPECT().
@@ -120,7 +120,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithNotification() {
 	}
 	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
 
-	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := createDummyTemplateCacheHelper(planName, plan)
 
 	mockEmailTemplateService.
 		EXPECT().

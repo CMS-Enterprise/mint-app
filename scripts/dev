@@ -381,6 +381,7 @@ namespace :db do
     operational_solution,
     operational_need,
     existing_model_link,
+    data_exchange_approach,
     model_plan,
     user_notification,
     activity,
