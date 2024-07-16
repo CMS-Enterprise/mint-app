@@ -224,7 +224,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                     To view Model Plans
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -244,7 +244,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                     To edit Model Plans
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -264,7 +264,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                     To share or export Model Plan content
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -284,7 +284,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                     To track operational solutions
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -304,7 +304,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                     To contribute to Model Discussions
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -324,7 +324,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                     To view the Help Center
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -344,7 +344,7 @@ exports[`Send feedback form > matches snapshot 1`] = `
                     Other (please specify)
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div

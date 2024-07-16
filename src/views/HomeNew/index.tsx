@@ -22,7 +22,6 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import FavoritesTable from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
-import ModelsBySolutionTable from 'components/ModelsBySolution/table';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';

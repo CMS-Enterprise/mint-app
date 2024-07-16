@@ -233,7 +233,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             Beneficiary
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -253,7 +253,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             Provider
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -273,7 +273,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             Part A
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -293,7 +293,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             Part B
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -313,7 +313,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
       </div>

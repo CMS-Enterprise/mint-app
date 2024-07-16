@@ -13,5 +13,6 @@
 
 .usa-tooltip__body {
   white-space: pre-wrap !important;
-  width: 20rem !important;
+  max-width: 20rem !important;
+  width: max-content !important;
 }
