@@ -4,8 +4,8 @@ import { Button, ButtonGroup, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { ModelStatus, OperationalSolutionKey } from 'gql/gen/graphql';
 
-import { ModelsBySolutionType } from 'components/ModelsBySolution/table';
 import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { ModelsBySolutionType } from 'views/HomeNew/components/ModelsBySolutions/table';
 
 import './index.scss';
 
@@ -37,7 +37,7 @@ const ModelsBySolutionsBanner = ({
       <div className="bg-primary-lighter radius-md padding-2">
         <Grid row className="flex-align-center">
           <Grid desktop={{ col: 7 }}>
-            <h3 className="margin-0">
+            <h3 className="margin-y-1">
               {selectedSolution?.name}{' '}
               {selectedSolution?.acronym
                 ? `(${selectedSolution?.acronym})`

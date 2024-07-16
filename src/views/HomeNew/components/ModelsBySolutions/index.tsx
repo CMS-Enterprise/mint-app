@@ -5,13 +5,13 @@ import classNames from 'classnames';
 import { OperationalSolutionKey } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import ModelsBySolutionTable from 'components/ModelsBySolution/table';
 import Alert from 'components/shared/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import {
   HelpSolutionBaseType,
   helpSolutions
 } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import ModelsBySolutionTable from 'views/HomeNew/components/ModelsBySolutions/table';
 
 import './index.scss';
 
@@ -32,9 +32,10 @@ const ModelsBySolutions = ({
     );
   }, [operationalSolutionKeys]);
 
-  const [isCurrent, setIsCurrent] = useState<OperationalSolutionKey>(
-    orderedOperationalSolutionKeys[0]
-  );
+  const [
+    isCurrentSolution,
+    setIsCurrentSolution
+  ] = useState<OperationalSolutionKey>(orderedOperationalSolutionKeys[0]);
 
   const getSolutionNameorAcronym = (solution?: HelpSolutionBaseType) => {
     if (!solution) return '';
@@ -48,9 +49,9 @@ const ModelsBySolutions = ({
     <button
       type="button"
       key={solutionKey}
-      onClick={() => setIsCurrent(solutionKey)}
+      onClick={() => setIsCurrentSolution(solutionKey)}
       className={classNames('usa-nav__link margin-left-neg-2 margin-right-2', {
-        'usa-current': isCurrent === solutionKey
+        'usa-current': isCurrentSolution === solutionKey
       })}
     >
       <span>
@@ -111,9 +112,11 @@ const ModelsBySolutions = ({
           <Select
             id="solutionKey"
             name="solutionKey"
-            value={isCurrent}
+            value={isCurrentSolution}
             onChange={e =>
-              setIsCurrent(e.currentTarget.value as OperationalSolutionKey)
+              setIsCurrentSolution(
+                e.currentTarget.value as OperationalSolutionKey
+              )
             }
             className="margin-bottom-4 text-primary text-bold"
           >
@@ -130,7 +133,7 @@ const ModelsBySolutions = ({
         </div>
       )}
 
-      <ModelsBySolutionTable operationalSolutionKey={isCurrent} />
+      <ModelsBySolutionTable operationalSolutionKey={isCurrentSolution} />
     </div>
   );
 };

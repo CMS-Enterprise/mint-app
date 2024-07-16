@@ -24,7 +24,7 @@ import ModelsBySolutionsBanner, {
   StatusCategories
 } from 'views/HomeNew/components/ModelsBySolutions/banner';
 
-import ModelSolutionCard from '.';
+import ModelSolutionCard from './card';
 
 export type ModelsBySolutionType = GetModelsBySolutionQuery['modelPlansByOperationalSolutionKey'];
 
