@@ -100,10 +100,10 @@ describe('Daily Digest in Notifications', () => {
         expect(screen.getByText(/Updates to Basics/i)).toBeInTheDocument();
         expect(screen.getByText(/2 new documents/i)).toBeInTheDocument();
         expect(
-          screen.getByText('View this Model Plan').closest('a')
+          screen.getByText('View all recent changes').closest('a')
         ).toHaveAttribute(
           'href',
-          `/models/${dailyDigestProps[0].modelPlanID}/read-only`
+          `/models/${dailyDigestProps[0].modelPlanID}/change-history`
         );
       });
     });
@@ -133,10 +133,10 @@ describe('Daily Digest in Notifications', () => {
       expect(screen.getByText(/Updates to Basics/i)).toBeInTheDocument();
       expect(screen.getByText(/2 new documents/i)).toBeInTheDocument();
       expect(
-        screen.getByText('View this Model Plan').closest('a')
+        screen.getByText('View all recent changes').closest('a')
       ).toHaveAttribute(
         'href',
-        `/models/${dailyDigestProps[0].modelPlanID}/read-only`
+        `/models/${dailyDigestProps[0].modelPlanID}/change-history`
       );
     });
 
