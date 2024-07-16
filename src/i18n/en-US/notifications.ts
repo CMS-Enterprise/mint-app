@@ -50,7 +50,7 @@ const notifications = {
     },
     dailyDigest: {
       heading: 'Your daily updates',
-      cta: 'View this Model Plan',
+      cta: 'View all recent changes',
       unsubscribe:
         'To stop receiving notifications for a specific model, unfollow the model at the top of the Model Plan page.',
       nameChange: 'This model has been renamed (previously {{-oldName}})',
