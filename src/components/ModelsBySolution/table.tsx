@@ -211,6 +211,7 @@ const ModelsBySolutionTable = ({
             onPageChange={handlePageClick}
             pageRangeDisplayed={5}
             pageCount={pageCount}
+            forcePage={pageOffset / itemsPerPage}
             previousLabel="< Previous"
           />
         )}
