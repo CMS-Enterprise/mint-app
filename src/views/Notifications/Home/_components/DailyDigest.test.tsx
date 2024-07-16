@@ -136,7 +136,7 @@ describe('Daily Digest in Notifications', () => {
         screen.getByText('View this Model Plan').closest('a')
       ).toHaveAttribute(
         'href',
-        `/models/${dailyDigestProps[0].modelPlanID}/read-only`
+        `/models/${dailyDigestProps[0].modelPlanID}/change-history`
       );
     });
 
