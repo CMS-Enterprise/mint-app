@@ -1,11 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Grid, Icon, Tag } from '@trussworks/react-uswds';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import { GetFavoritesQuery, TeamRole } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc } from 'utils/date';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
 import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus';
@@ -19,16 +20,18 @@ type FavoriteCardProps = {
   type?: 'plan'; // Built in for future iterations/varations of favorited datasets that ingest i18n translations for headers.
   modelPlan: FavoritesModelType;
   removeFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
+  toTaskList?: boolean;
 };
 
 const FavoriteCard = ({
   className,
   type = 'plan',
   modelPlan,
-  removeFavorite
+  removeFavorite,
+  toTaskList = false
 }: FavoriteCardProps) => {
   const { t } = useTranslation('plan');
-  const { t: h } = useTranslation('home');
+  const { t: h } = useTranslation('customHome');
 
   const {
     id,
@@ -48,29 +51,43 @@ const FavoriteCard = ({
     crtdl => crtdl.idNumber
   );
 
+  const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
+
   return (
     <Card
       data-testid={modelName}
-      className={classnames('grid-col-12', className)}
+      className={classNames('grid-col-12', className)}
     >
       <div>
         <div className="bookmark__header easi-header__basic">
-          <div className="display-flex bookmark__title">
-            <Button
-              onClick={() => removeFavorite(id, 'removeFavorite')}
-              type="button"
-              className="margin-right-2 width-auto"
-              unstyled
-            >
-              <Icon.Star size={5} />
-            </Button>
-            <h3 className="bookmark__title margin-0">
-              <UswdsReactLink to={`/models/${id}/read-only`}>
-                {modelName}
-              </UswdsReactLink>
-            </h3>
-          </div>
-          <TaskListStatus modelID={id} status={status} />
+          <Grid tablet={{ col: 9 }} mobile={{ col: 12 }}>
+            <div className="display-flex bookmark__title">
+              <Button
+                onClick={() => removeFavorite(id, 'removeFavorite')}
+                type="button"
+                className="margin-right-2 width-auto"
+                unstyled
+              >
+                <Icon.Star size={5} />
+              </Button>
+              <h3 className="bookmark__title margin-0">
+                <UswdsReactLink
+                  to={`/models/${id}/${toTaskList ? 'task-list' : 'read-view'}`}
+                >
+                  {modelName}
+                </UswdsReactLink>
+              </h3>
+            </div>
+          </Grid>
+          <Grid tablet={{ col: 3 }} mobile={{ col: 12 }}>
+            <TaskListStatus
+              modelID={id}
+              status={status}
+              className={classNames({
+                bookmark__status: !isMobile
+              })}
+            />
+          </Grid>
         </div>
         {nameHistory && nameHistory.length > 1 && (
           <p className="margin-y-0 font-body-xs line-height-sans-2">
@@ -85,7 +102,7 @@ const FavoriteCard = ({
 
         <Divider />
         <Grid row>
-          <Grid desktop={{ col: 4 }}>
+          <Grid tablet={{ col: 4 }} mobile={{ col: 12 }}>
             <p className="margin-bottom-0">{t(`${type}:favorite.modelLead`)}</p>
             <p className="text-bold margin-top-0 margin-bottom-0">
               {collaborators
@@ -95,8 +112,9 @@ const FavoriteCard = ({
                 .map(collaborator => collaborator.userAccount.commonName)
                 .join(', ')}
             </p>
+            {isMobile && <Divider className="margin-top-2" />}
           </Grid>
-          <Grid desktop={{ col: 4 }}>
+          <Grid tablet={{ col: 4 }} mobile={{ col: isMobile ? 6 : 12 }}>
             <p className="margin-bottom-0">{t(`${type}:favorite.startDate`)}</p>
             <p className="text-bold margin-top-0 margin-bottom-0">
               {basics.performancePeriodStarts ? (
@@ -106,7 +124,7 @@ const FavoriteCard = ({
               )}
             </p>
           </Grid>
-          <Grid desktop={{ col: 4 }}>
+          <Grid tablet={{ col: 4 }} mobile={{ col: isMobile ? 6 : 12 }}>
             <p className="margin-bottom-0">{t(`${type}:favorite.cRTDLs`)}</p>
             <p className="text-bold margin-top-0 margin-bottom-0">
               {crtdlIDs.length ? (
@@ -139,7 +157,7 @@ export const FavoriteIcon = ({
   const { t } = useTranslation('plan');
 
   return (
-    <div className={classnames('pointer', className)}>
+    <div className={classNames('pointer', className)}>
       <Tag
         className="text-primary bg-white bookmark__tag padding-1 padding-x-105"
         onClick={() =>

@@ -41,6 +41,10 @@
         }
     }
 
+    &__status {
+        display: flex;
+        flex-direction: row-reverse;
+    }
 }
 
 #main-content .usa-card {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { ModelStatus } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -17,6 +18,7 @@ type TaskListStatusProps = {
   modifiedDts?: string;
   readOnly?: boolean;
   modifiedOrCreateLabel?: boolean;
+  className?: string;
 };
 
 const TaskListStatus = ({
@@ -28,14 +30,18 @@ const TaskListStatus = ({
   updateLabel = false,
   modifiedDts,
   readOnly,
-  modifiedOrCreateLabel
+  modifiedOrCreateLabel,
+  className
 }: TaskListStatusProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('generalReadOnly');
   const { t: modelPlanT } = useTranslation('modelPlan');
 
   return (
-    <div className="padding-0" data-testid="task-list-status">
+    <div
+      className={classNames('padding-0', className)}
+      data-testid="task-list-status"
+    >
       <Grid row style={{ gap: '16px' }}>
         <Grid
           className="display-flex flex-align-center"
