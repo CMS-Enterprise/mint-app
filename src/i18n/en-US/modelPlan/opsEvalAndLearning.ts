@@ -91,6 +91,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       MULTIPLE: [() => opsEvalAndLearning.contractorSupportHow],
       OTHER: [() => opsEvalAndLearning.contractorSupportHow]
     },
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'contractorSupportHow'
+    },
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
@@ -122,6 +126,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dataType: 'string',
     formType: 'textarea',
     parentRelation: () => opsEvalAndLearning.contractorSupport,
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'contractorSupport'
+    },
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
