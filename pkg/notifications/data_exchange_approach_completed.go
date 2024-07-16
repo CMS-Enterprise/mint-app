@@ -15,13 +15,13 @@ func ActivityDataExchangeApproachCompletedCreate(
 	actorID uuid.UUID,
 	np sqlutils.NamedPreparer,
 	receivers []*models.UserAccountAndNotificationPreferences,
-	approach *models.DataExchangeApproach,
+	approachID uuid.UUID,
 	markedCompletedBy uuid.UUID,
 ) (*models.Activity, error) {
 
 	activity := models.NewDataExchangeApproachCompletedActivity(
 		actorID,
-		approach,
+		approachID,
 		markedCompletedBy,
 	)
 

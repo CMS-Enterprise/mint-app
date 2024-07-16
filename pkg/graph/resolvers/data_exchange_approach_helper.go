@@ -110,7 +110,7 @@ func SendDataExchangeApproachCompletedNotification(
 		actorID,
 		np,
 		inAppPreferences,
-		approach,
+		approach.ID,
 		markedCompletedBy,
 	)
 	if err != nil {

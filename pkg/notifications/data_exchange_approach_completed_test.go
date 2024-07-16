@@ -36,7 +36,7 @@ func (suite *NotificationsSuite) TestActivityDataExchangeApproachCompletedCreate
 		actorID,
 		suite.testConfigs.Store,
 		receivers,
-		approach,
+		approach.ID,
 		approachMarkedCompleteBy.Account().ID,
 	)
 

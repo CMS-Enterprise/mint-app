@@ -114,26 +114,10 @@ type DatesChangedActivityMeta {
   dateChanges: [DateChange!]!
 }
 
-# TODO: Change from this dummy type to the actual type when it is defined
-type DataExchangeApproach {
-  id: UUID!
-  name: String!
-  description: String
-  isComplete: Boolean!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
 type DataExchangeApproachCompletedActivityMeta {
   version: Int!
   type: ActivityType!
-  dataExchangeApproach: DataExchangeApproach!
+  dataExchangeApproachID: UUID!
   markedCompleteBy: UUID!
   markedCompleteByUserAccount: UserAccount!
 }

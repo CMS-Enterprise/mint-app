@@ -292,25 +292,9 @@ export type DailyDigestCompleteActivityMeta = {
   version: Scalars['Int']['output'];
 };
 
-export type DataExchangeApproach = {
-  __typename: 'DataExchangeApproach';
-  createdBy: Scalars['UUID']['output'];
-  createdByUserAccount: UserAccount;
-  createdDts: Scalars['Time']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['UUID']['output'];
-  isComplete: Scalars['Boolean']['output'];
-  modelPlan: ModelPlan;
-  modelPlanID: Scalars['UUID']['output'];
-  modifiedBy?: Maybe<Scalars['UUID']['output']>;
-  modifiedByUserAccount?: Maybe<UserAccount>;
-  modifiedDts?: Maybe<Scalars['Time']['output']>;
-  name: Scalars['String']['output'];
-};
-
 export type DataExchangeApproachCompletedActivityMeta = {
   __typename: 'DataExchangeApproachCompletedActivityMeta';
-  dataExchangeApproach: DataExchangeApproach;
+  dataExchangeApproachID: Scalars['UUID']['output'];
   markedCompleteBy: Scalars['UUID']['output'];
   markedCompleteByUserAccount: UserAccount;
   type: ActivityType;

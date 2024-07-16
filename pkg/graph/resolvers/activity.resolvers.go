@@ -34,11 +34,6 @@ func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Con
 	return loaders.AnalyzedAuditGetByModelPlanIDsAndDate(ctx, obj.ModelPlanIDs, obj.Date)
 }
 
-// ModelPlan is the resolver for the modelPlan field.
-func (r *dataExchangeApproachResolver) ModelPlan(ctx context.Context, obj *models.DataExchangeApproach) (*models.ModelPlan, error) {
-	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
-}
-
 // MarkedCompleteByUserAccount is the resolver for the markedCompleteByUserAccount field.
 func (r *dataExchangeApproachCompletedActivityMetaResolver) MarkedCompleteByUserAccount(ctx context.Context, obj *models.DataExchangeApproachCompletedActivityMeta) (*authentication.UserAccount, error) {
 	return UserAccountGetByIDLOADER(ctx, obj.MarkedCompleteBy)
@@ -117,11 +112,6 @@ func (r *Resolver) DailyDigestCompleteActivityMeta() generated.DailyDigestComple
 	return &dailyDigestCompleteActivityMetaResolver{r}
 }
 
-// DataExchangeApproach returns generated.DataExchangeApproachResolver implementation.
-func (r *Resolver) DataExchangeApproach() generated.DataExchangeApproachResolver {
-	return &dataExchangeApproachResolver{r}
-}
-
 // DataExchangeApproachCompletedActivityMeta returns generated.DataExchangeApproachCompletedActivityMetaResolver implementation.
 func (r *Resolver) DataExchangeApproachCompletedActivityMeta() generated.DataExchangeApproachCompletedActivityMetaResolver {
 	return &dataExchangeApproachCompletedActivityMetaResolver{r}
@@ -160,7 +150,6 @@ func (r *Resolver) TaggedInPlanDiscussionActivityMeta() generated.TaggedInPlanDi
 type activityResolver struct{ *Resolver }
 type addedAsCollaboratorMetaResolver struct{ *Resolver }
 type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
-type dataExchangeApproachResolver struct{ *Resolver }
 type dataExchangeApproachCompletedActivityMetaResolver struct{ *Resolver }
 type datesChangedActivityMetaResolver struct{ *Resolver }
 type modelPlanSharedActivityMetaResolver struct{ *Resolver }
