@@ -474,6 +474,8 @@ export const payments: TranslationPayments = {
     label: 'Will any additional data need to be collected for claims?',
     sublabel:
       'If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
+    questionTooltip:
+      'If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
     dataType: 'boolean',
     formType: 'radio',
     options: {
