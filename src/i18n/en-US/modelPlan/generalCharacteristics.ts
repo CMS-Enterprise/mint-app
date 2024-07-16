@@ -548,6 +548,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'community_partners_involved',
     label: 'Are community partners involved?',
     readonlyLabel: 'Are community partners involved? How so?',
+    questionTooltip:
+      "Community partners are typically not Medicare enrolled and are organizations in the participant's community. They may be involved with providing care, care coordination, or social services to beneficiaries or provide leadership, design, or implementation at the participant level. Example: Community-based organizations (CBO) like YMCA or United Way",
     dataType: 'boolean',
     formType: 'radio',
     options: {
