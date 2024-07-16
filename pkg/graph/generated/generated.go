@@ -47,6 +47,7 @@ type ResolverRoot interface {
 	AuditChange() AuditChangeResolver
 	CurrentUser() CurrentUserResolver
 	DailyDigestCompleteActivityMeta() DailyDigestCompleteActivityMetaResolver
+	DataExchangeApproachCompletedActivityMeta() DataExchangeApproachCompletedActivityMetaResolver
 	DatesChangedActivityMeta() DatesChangedActivityMetaResolver
 	DiscussionReply() DiscussionReplyResolver
 	ExistingModelLink() ExistingModelLinkResolver
@@ -193,6 +194,14 @@ type ComplexityRoot struct {
 		Type           func(childComplexity int) int
 		UserID         func(childComplexity int) int
 		Version        func(childComplexity int) int
+	}
+
+	DataExchangeApproachCompletedActivityMeta struct {
+		DataExchangeApproachID      func(childComplexity int) int
+		MarkedCompleteBy            func(childComplexity int) int
+		MarkedCompleteByUserAccount func(childComplexity int) int
+		Type                        func(childComplexity int) int
+		Version                     func(childComplexity int) int
 	}
 
 	DateChange struct {
@@ -1215,23 +1224,24 @@ type ComplexityRoot struct {
 	}
 
 	UserNotificationPreferences struct {
-		AddedAsCollaborator          func(childComplexity int) int
-		CreatedBy                    func(childComplexity int) int
-		CreatedByUserAccount         func(childComplexity int) int
-		CreatedDts                   func(childComplexity int) int
-		DailyDigestComplete          func(childComplexity int) int
-		DatesChanged                 func(childComplexity int) int
-		DatesChangedNotificationType func(childComplexity int) int
-		ID                           func(childComplexity int) int
-		ModelPlanShared              func(childComplexity int) int
-		ModifiedBy                   func(childComplexity int) int
-		ModifiedByUserAccount        func(childComplexity int) int
-		ModifiedDts                  func(childComplexity int) int
-		NewDiscussionReply           func(childComplexity int) int
-		NewModelPlan                 func(childComplexity int) int
-		TaggedInDiscussion           func(childComplexity int) int
-		TaggedInDiscussionReply      func(childComplexity int) int
-		UserID                       func(childComplexity int) int
+		AddedAsCollaborator           func(childComplexity int) int
+		CreatedBy                     func(childComplexity int) int
+		CreatedByUserAccount          func(childComplexity int) int
+		CreatedDts                    func(childComplexity int) int
+		DailyDigestComplete           func(childComplexity int) int
+		DataExchangeApproachCompleted func(childComplexity int) int
+		DatesChanged                  func(childComplexity int) int
+		DatesChangedNotificationType  func(childComplexity int) int
+		ID                            func(childComplexity int) int
+		ModelPlanShared               func(childComplexity int) int
+		ModifiedBy                    func(childComplexity int) int
+		ModifiedByUserAccount         func(childComplexity int) int
+		ModifiedDts                   func(childComplexity int) int
+		NewDiscussionReply            func(childComplexity int) int
+		NewModelPlan                  func(childComplexity int) int
+		TaggedInDiscussion            func(childComplexity int) int
+		TaggedInDiscussionReply       func(childComplexity int) int
+		UserID                        func(childComplexity int) int
 	}
 
 	UserNotifications struct {
@@ -1277,6 +1287,9 @@ type CurrentUserResolver interface {
 }
 type DailyDigestCompleteActivityMetaResolver interface {
 	AnalyzedAudits(ctx context.Context, obj *models.DailyDigestCompleteActivityMeta) ([]*models.AnalyzedAudit, error)
+}
+type DataExchangeApproachCompletedActivityMetaResolver interface {
+	MarkedCompleteByUserAccount(ctx context.Context, obj *models.DataExchangeApproachCompletedActivityMeta) (*authentication.UserAccount, error)
 }
 type DatesChangedActivityMetaResolver interface {
 	ModelPlan(ctx context.Context, obj *models.DatesChangedActivityMeta) (*models.ModelPlan, error)
@@ -1582,6 +1595,8 @@ type UserNotificationPreferencesResolver interface {
 	ModelPlanShared(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	NewModelPlan(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	DatesChanged(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+
+	DataExchangeApproachCompleted(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 }
 type UserViewCustomizationResolver interface {
 	ViewCustomization(ctx context.Context, obj *models.UserViewCustomization) ([]models.ViewCustomizationType, error)
@@ -2064,6 +2079,41 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.DailyDigestCompleteActivityMeta.Version(childComplexity), true
+
+	case "DataExchangeApproachCompletedActivityMeta.dataExchangeApproachID":
+		if e.complexity.DataExchangeApproachCompletedActivityMeta.DataExchangeApproachID == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproachCompletedActivityMeta.DataExchangeApproachID(childComplexity), true
+
+	case "DataExchangeApproachCompletedActivityMeta.markedCompleteBy":
+		if e.complexity.DataExchangeApproachCompletedActivityMeta.MarkedCompleteBy == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproachCompletedActivityMeta.MarkedCompleteBy(childComplexity), true
+
+	case "DataExchangeApproachCompletedActivityMeta.markedCompleteByUserAccount":
+		if e.complexity.DataExchangeApproachCompletedActivityMeta.MarkedCompleteByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproachCompletedActivityMeta.MarkedCompleteByUserAccount(childComplexity), true
+
+	case "DataExchangeApproachCompletedActivityMeta.type":
+		if e.complexity.DataExchangeApproachCompletedActivityMeta.Type == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproachCompletedActivityMeta.Type(childComplexity), true
+
+	case "DataExchangeApproachCompletedActivityMeta.version":
+		if e.complexity.DataExchangeApproachCompletedActivityMeta.Version == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproachCompletedActivityMeta.Version(childComplexity), true
 
 	case "DateChange.field":
 		if e.complexity.DateChange.Field == nil {
@@ -8592,6 +8642,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserNotificationPreferences.DailyDigestComplete(childComplexity), true
 
+	case "UserNotificationPreferences.dataExchangeApproachCompleted":
+		if e.complexity.UserNotificationPreferences.DataExchangeApproachCompleted == nil {
+			break
+		}
+
+		return e.complexity.UserNotificationPreferences.DataExchangeApproachCompleted(childComplexity), true
+
 	case "UserNotificationPreferences.datesChanged":
 		if e.complexity.UserNotificationPreferences.DatesChanged == nil {
 			break
@@ -8928,6 +8985,7 @@ enum ActivityType {
   MODEL_PLAN_SHARED
   NEW_MODEL_PLAN
   DATES_CHANGED
+  DATA_EXCHANGE_APPROACH_COMPLETED
 }
 
 enum DateChangeFieldType {
@@ -8942,7 +9000,7 @@ enum DateChangeFieldType {
 """
 ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | AddedAsCollaboratorMeta | ModelPlanSharedActivityMeta | NewModelPlanActivityMeta | DatesChangedActivityMeta
+union ActivityMetaData = TaggedInPlanDiscussionActivityMeta  | TaggedInDiscussionReplyActivityMeta | DailyDigestCompleteActivityMeta | NewDiscussionRepliedActivityMeta | AddedAsCollaboratorMeta | ModelPlanSharedActivityMeta | NewModelPlanActivityMeta | DatesChangedActivityMeta | DataExchangeApproachCompletedActivityMeta
 
 type AddedAsCollaboratorMeta {
   version: Int!
@@ -9029,6 +9087,14 @@ type DatesChangedActivityMeta {
   modelPlanID: UUID!
   modelPlan: ModelPlan!
   dateChanges: [DateChange!]!
+}
+
+type DataExchangeApproachCompletedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  dataExchangeApproachID: UUID!
+  markedCompleteBy: UUID!
+  markedCompleteByUserAccount: UserAccount!
 }
 
 """
@@ -9523,9 +9589,6 @@ extend type ModelPlan {
 }
 
 type ModelPlanAndOperationalSolution {
-  # TODO -- we can uncomment these if we want?
-  # modelPlanID: UUID!
-  # operationalSolutionID: UUID!
   operationalSolution: OperationalSolution!
   modelPlan: ModelPlan!
 }
@@ -11999,6 +12062,8 @@ type UserNotificationPreferences {
   datesChanged: [UserNotificationPreferenceFlag!]!
   datesChangedNotificationType: DatesChangedNotificationType
 
+  dataExchangeApproachCompleted: [UserNotificationPreferenceFlag!]!
+
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -12029,6 +12094,8 @@ input UserNotificationPreferencesChanges @goModel(model: "map[string]interface{}
 
   datesChanged: [UserNotificationPreferenceFlag!]
   datesChangedNotificationType: DatesChangedNotificationType
+
+  dataExchangeApproachCompleted: [UserNotificationPreferenceFlag!]
 }
 
 extend type Mutation {
@@ -16329,6 +16396,8 @@ func (ec *executionContext) fieldContext_CurrentUser_notificationPreferences(ctx
 				return ec.fieldContext_UserNotificationPreferences_datesChanged(ctx, field)
 			case "datesChangedNotificationType":
 				return ec.fieldContext_UserNotificationPreferences_datesChangedNotificationType(ctx, field)
+			case "dataExchangeApproachCompleted":
+				return ec.fieldContext_UserNotificationPreferences_dataExchangeApproachCompleted(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -16631,6 +16700,248 @@ func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_date(ct
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproachCompletedActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproachCompletedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproachCompletedActivityMeta_version(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Version, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproachCompletedActivityMeta_version(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproachCompletedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproachCompletedActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproachCompletedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproachCompletedActivityMeta_type(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.ActivityType)
+	fc.Result = res
+	return ec.marshalNActivityType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproachCompletedActivityMeta_type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproachCompletedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ActivityType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproachCompletedActivityMeta_dataExchangeApproachID(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproachCompletedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproachCompletedActivityMeta_dataExchangeApproachID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataExchangeApproachID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproachCompletedActivityMeta_dataExchangeApproachID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproachCompletedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproachCompletedActivityMeta_markedCompleteBy(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproachCompletedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproachCompletedActivityMeta_markedCompleteBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MarkedCompleteBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproachCompletedActivityMeta_markedCompleteBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproachCompletedActivityMeta",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproachCompletedActivityMeta_markedCompleteByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproachCompletedActivityMeta) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproachCompletedActivityMeta_markedCompleteByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.DataExchangeApproachCompletedActivityMeta().MarkedCompleteByUserAccount(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproachCompletedActivityMeta_markedCompleteByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproachCompletedActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
 		},
 	}
 	return fc, nil
@@ -27739,6 +28050,8 @@ func (ec *executionContext) fieldContext_Mutation_updateUserNotificationPreferen
 				return ec.fieldContext_UserNotificationPreferences_datesChanged(ctx, field)
 			case "datesChangedNotificationType":
 				return ec.fieldContext_UserNotificationPreferences_datesChangedNotificationType(ctx, field)
+			case "dataExchangeApproachCompleted":
+				return ec.fieldContext_UserNotificationPreferences_dataExchangeApproachCompleted(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 			case "createdByUserAccount":
@@ -63142,6 +63455,50 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_datesChange
 	return fc, nil
 }
 
+func (ec *executionContext) _UserNotificationPreferences_dataExchangeApproachCompleted(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserNotificationPreferences_dataExchangeApproachCompleted(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.UserNotificationPreferences().DataExchangeApproachCompleted(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.UserNotificationPreferenceFlag)
+	fc.Result = res
+	return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_UserNotificationPreferences_dataExchangeApproachCompleted(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "UserNotificationPreferences",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UserNotificationPreferenceFlag does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _UserNotificationPreferences_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 	if err != nil {
@@ -66715,6 +67072,11 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 			return graphql.Null
 		}
 		return ec._DatesChangedActivityMeta(ctx, sel, obj)
+	case *models.DataExchangeApproachCompletedActivityMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._DataExchangeApproachCompletedActivityMeta(ctx, sel, obj)
 	default:
 		panic(fmt.Errorf("unexpected type %T", obj))
 	}
@@ -67955,6 +68317,96 @@ func (ec *executionContext) _DailyDigestCompleteActivityMeta(ctx context.Context
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var dataExchangeApproachCompletedActivityMetaImplementors = []string{"DataExchangeApproachCompletedActivityMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _DataExchangeApproachCompletedActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.DataExchangeApproachCompletedActivityMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dataExchangeApproachCompletedActivityMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DataExchangeApproachCompletedActivityMeta")
+		case "version":
+			out.Values[i] = ec._DataExchangeApproachCompletedActivityMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._DataExchangeApproachCompletedActivityMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "dataExchangeApproachID":
+			out.Values[i] = ec._DataExchangeApproachCompletedActivityMeta_dataExchangeApproachID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "markedCompleteBy":
+			out.Values[i] = ec._DataExchangeApproachCompletedActivityMeta_markedCompleteBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "markedCompleteByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._DataExchangeApproachCompletedActivityMeta_markedCompleteByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -78666,6 +79118,42 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "datesChangedNotificationType":
 			out.Values[i] = ec._UserNotificationPreferences_datesChangedNotificationType(ctx, field, obj)
+		case "dataExchangeApproachCompleted":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_dataExchangeApproachCompleted(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "createdBy":
 			out.Values[i] = ec._UserNotificationPreferences_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
