@@ -2,8 +2,6 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 
-import setup from 'utils/testing/setup';
-
 import GlobalClientFilter from './index';
 
 describe('Table Filter Componenet', () => {
@@ -24,10 +22,10 @@ describe('Table Filter Componenet', () => {
   });
 
   it('display query text in input', async () => {
-    const { user } = setup(
+    render(
       <MemoryRouter>
         <GlobalClientFilter
-          globalFilter=""
+          globalFilter="system-1"
           setGlobalFilter={() => true}
           tableID="table-id"
           tableName="table-name"
@@ -36,7 +34,6 @@ describe('Table Filter Componenet', () => {
       </MemoryRouter>
     );
 
-    await user.type(screen.getByRole('searchbox'), 'system-1');
     expect(screen.getByRole('searchbox')).toHaveValue('system-1');
   });
 

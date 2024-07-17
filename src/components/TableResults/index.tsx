@@ -43,9 +43,8 @@ const TableResults = ({
 
   const currentPage: number = pageIndex * pageSize + 1;
 
-  const pageRange: number = Math.floor(
-    (pageIndex / pageSize) * 10 + (currentRowLength || filteredRowLength)
-  );
+  // If data or filter results are less than 10 (page size) - then default to the number of returned rows
+  const pageRange: number = rows < pageSize ? rows : (pageIndex + 1) * pageSize;
 
   return (
     <div className={classnames(className)} data-testid="page-results">
