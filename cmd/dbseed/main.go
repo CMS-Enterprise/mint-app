@@ -132,6 +132,28 @@ func (s *Seeder) SeedData() {
 		},
 	)
 	s.existingModelLinkCreate(planWithBasics, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[3].ID, links[4].ID}, nil)
+	s.updateModelPlan(planWithBasics, map[string]interface{}{
+		"category":     models.MCAccountableCare,
+		"abbreviation": "basics",
+		"status":       models.ModelStatusActive,
+	})
+
+	planWithBasicsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithBasics.ID)
+	if len(planWithBasicsOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		planWithBasics,
+		planWithBasicsOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	// Seed a plan with collaborators
 	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT")
@@ -172,7 +194,25 @@ func (s *Seeder) SeedData() {
 	s.updateModelPlan(archivedPlan, map[string]interface{}{
 		"archived":     true,
 		"abbreviation": "arch",
+		"status":       models.ModelStatusPaused,
 	})
+
+	archivedPlanOperationalNeeds := s.getOperationalNeedsByModelPlanID(archivedPlan.ID)
+	if len(archivedPlanOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		archivedPlan,
+		archivedPlanOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	// Seed a plan with some documents
 	planWithDocuments := s.createModelPlan("Plan with Documents", "MINT")

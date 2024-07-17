@@ -229,7 +229,7 @@ func (s *Seeder) addOperationalSolution(
 	changes map[string]interface{},
 ) *models.OperationalSolution {
 	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
-	solType := models.OpSKMarx
+	solType := models.OpSKInnovation
 
 	operationalSolution, err := resolvers.OperationalSolutionCreate(
 		s.Config.Context,
