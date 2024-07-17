@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strconv"
 
+	faktory_worker "github.com/contribsys/faktory_worker_go"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -20,6 +22,10 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 		// defer apperrors.RecoverPanicAsErrorFunction(&returnedError)
 		// fmt.Printf("translating audit job reached. Args %v", args)
 	*/
+
+	// Note, this will panic if the context doesn't have a faktory job context it will panic.
+	helper := faktory_worker.HelperFor(ctx)
+
 	w.Logger.Info("translating job reached.", zap.Any("args", args))
 	if len(args) < 2 {
 		return fmt.Errorf("no arguments were provided for this translateAuditJob")
@@ -36,9 +42,11 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 	if err != nil {
 		return fmt.Errorf("unable to convert argument  ( %v )to an uuid as expected for translated_audit_queue_id for the translate audit job. Err %w", args[1], err)
 	}
-	w.Logger.Debug("translating audit", zap.Any("auditID", auditID), zap.Any("queueID", queueID))
 
-	_, translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, w.Logger, auditID, queueID)
+	sugaredLogger := w.Logger.With(zap.Any("auditID", auditID), zap.Any("queueID", queueID))
+	sugaredLogger.Debug("translating audit", zap.Any("auditID", auditID), zap.Any("queueID", queueID), zap.Any("JID", helper.Jid()))
+
+	_, translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, sugaredLogger, auditID, queueID)
 	if translationErr != nil {
 		return translationErr
 	}

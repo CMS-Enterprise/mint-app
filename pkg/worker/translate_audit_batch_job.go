@@ -9,10 +9,14 @@ import (
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/constants"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/translatedaudit"
 )
+
+var translatedAuditJobMaxRetry = 2
 
 // TranslateAuditCronJob is the job the cron schedule calls
 // TranslateAuditBatchJob batches all the TranslateAuditJobs. When all are complete it will fire a callback
@@ -40,7 +44,7 @@ func QueueTranslatedAuditJob(w *Worker, batch *faktory.Batch, queueObj *models.T
 		queueObj.Status = models.TPSQueued
 		w.Logger.Debug("queuing job for translated audit.", zap.Any("queue entry", queueObj))
 
-		retQueueEntry, err := storage.TranslatedAuditQueueUpdate(w.Store, w.Logger, queueObj)
+		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(w.Store, w.Logger, queueObj, constants.GetSystemAccountUUID())
 		if err != nil {
 			return nil, fmt.Errorf("issue saving translatedAuditQueueEntry for audit %v, queueID %s", queueObj.ChangeID, queueObj.ID)
 		}
@@ -48,6 +52,8 @@ func QueueTranslatedAuditJob(w *Worker, batch *faktory.Batch, queueObj *models.T
 		// Change ID not strictly needed here, the job can get it from queue id, but this is for convenience.
 		job := faktory.NewJob(translateAuditJobName, retQueueEntry.ChangeID, retQueueEntry.ID)
 		job.Queue = auditTranslateQueue
+
+		job.Retry = &translatedAuditJobMaxRetry
 		err = batch.Push(job)
 		if err != nil {
 			return nil, err
