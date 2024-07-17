@@ -98,6 +98,7 @@ func seed(config *viper.Viper) {
 	seeder := newDefaultSeeder(config)
 	seeder.SeedData()
 	seeder.CreateAnalyzedAuditData()
+	seeder.SetDefaultUserViews()
 }
 
 // SeedData gets resolver dependencies and calls wrapped resolver functions to seed data.
@@ -390,4 +391,13 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 		}
 	}
 
+}
+
+func (s *Seeder) SetDefaultUserViews() {
+	mintPrinc := s.getTestPrincipalByUsername("MINT")
+	s.updateUserView(mintPrinc, map[string]interface{}{
+		"viewCustomization":            []models.ViewCustomizationType{models.ViewCustomizationTypeModelsByOperationalSolution, models.ViewCustomizationTypeFollowedModels, models.ViewCustomizationTypeAllModelPlans},
+		"possibleOperationalSolutions": []models.OperationalSolutionKey{models.OpSKInnovation, models.OpSKAcoOs},
+	},
+	)
 }

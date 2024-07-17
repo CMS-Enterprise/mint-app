@@ -353,3 +353,20 @@ func (s *Seeder) existingModelLinkCreate(
 	}
 	return links
 }
+
+// updateUserView is a wrapper that allows to set default user views for a user
+func (s *Seeder) updateUserView(principal authentication.Principal, changes map[string]interface{}) *models.UserViewCustomization {
+
+	view, err := resolvers.UserViewCustomizationUpdate(
+		s.Config.Logger,
+		s.Config.Store,
+		principal,
+		changes,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+	return view
+
+}
