@@ -7,7 +7,6 @@ import { Grid, Link } from '@trussworks/react-uswds';
 import {
   GetModelsBySolutionQuery,
   ModelCategory,
-  ModelStatus,
   OperationalSolutionKey,
   useGetModelsBySolutionQuery
 } from 'gql/gen/graphql';
@@ -223,18 +222,12 @@ const modelsWithStatus = (
   models: ModelsBySolutionType,
   status: StatusCategories
 ): ModelsBySolutionType => {
-  if (status === ModelStatus.ACTIVE || status === ModelStatus.ENDED) {
-    return models.filter(model => model.modelPlan.status === status);
+  if (status === 'total') {
+    return models;
   }
-  if (status === 'planned') {
-    return models.filter(
-      model =>
-        model.modelPlan.status !== ModelStatus.ACTIVE &&
-        model.modelPlan.status !== ModelStatus.ENDED
-    );
-  }
-  // status === 'total'
-  return models;
+  return models.filter(
+    model => model.modelPlan.statusPlannedActiveOrEnded === status
+  );
 };
 
 const searchModelsFilter = (

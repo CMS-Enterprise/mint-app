@@ -6,6 +6,7 @@ enum ModelBySolutionStatus {
 }
 
 extend type ModelPlan {
+  #TODO: Rename this to a more consistent name
   statusPlannedActiveOrEnded: ModelBySolutionStatus!
 }
 
