@@ -20,6 +20,7 @@ func (s *Store) DataExchangeApproachCreate(
 ) (*models.DataExchangeApproach, error) {
 
 	dataExchangeApproach.ID = utilityUUID.ValueOrNewUUID(dataExchangeApproach.ID)
+	//TODO: (data_exchange) Replace these calls with sqlutils.GetProcedure()
 
 	stmt, err := np.PrepareNamed(sqlqueries.DataExchangeApproach.Create)
 	if err != nil {
@@ -43,6 +44,7 @@ func (s *Store) DataExchangeApproachGetByIDLOADER(
 
 	var dataExchangeSlice []*models.DataExchangeApproach
 
+	//TODO: (data_exchange) Replace these calls with sqlutils.SelectProcedure()
 	stmt, err := s.db.PrepareNamed(sqlqueries.DataExchangeApproach.GetByIDLoader)
 	if err != nil {
 		return nil, err
@@ -68,7 +70,7 @@ func (s *Store) DataExchangeApproachGetByModelPlanIDLOADER(
 ) ([]*models.DataExchangeApproach, error) {
 
 	var dataExchangeSlice []*models.DataExchangeApproach
-
+	//TODO: (data_exchange) Replace these calls with sqlutils.SelectProcedure()
 	stmt, err := s.db.PrepareNamed(sqlqueries.DataExchangeApproach.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
@@ -92,7 +94,7 @@ func (s *Store) DataExchangeApproachUpdate(
 	logger *zap.Logger,
 	dataExchangeApproach *models.DataExchangeApproach,
 ) (*models.DataExchangeApproach, error) {
-
+	//TODO: (data_exchange) Replace these calls with sqlutils.GetProcedure()
 	stmt, err := s.db.PrepareNamed(sqlqueries.DataExchangeApproach.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, dataExchangeApproach)

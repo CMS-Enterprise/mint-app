@@ -17,6 +17,7 @@ CREATE TABLE data_exchange_approach (
     ready_for_review_dts TIMESTAMP WITH TIME ZONE,
     ready_for_clearance_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
     ready_for_clearance_dts TIMESTAMP WITH TIME ZONE,
+    -- TODO (data_exchange) This status is different from a standard task list. Verify to make it match figma.
     status TASK_STATUS NOT NULL DEFAULT 'READY'
 );
 

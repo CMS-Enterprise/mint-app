@@ -25,6 +25,7 @@ func (loaders *DataLoaders) GetDataExchangeApproachByIDBatch(
 	ctx context.Context,
 	keys dataloader.Keys,
 ) []*dataloader.Result {
+	//TODO: (data_exchange) Consider not exporting this method
 	dr := loaders.DataReader
 
 	logger := appcontext.ZLogger(ctx)
@@ -75,6 +76,7 @@ func (loaders *DataLoaders) GetDataExchangeApproachByModelPlanIDBatch(
 	ctx context.Context,
 	keys dataloader.Keys,
 ) []*dataloader.Result {
+	//TODO: (data_exchange) Consider not exporting this method
 	dr := loaders.DataReader
 
 	logger := appcontext.ZLogger(ctx)
