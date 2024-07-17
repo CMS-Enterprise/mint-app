@@ -1271,10 +1271,15 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         },
         {
           header: 'Complete onboarding questionnaire',
-          description:
-            'CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.',
-          description2:
-            '<link1>Go to Onboarding Request Form for MDM-POR</link1>'
+          description: `CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.
+            
+<link1>Go to Onboarding Request Form for MDM-POR</link1>`,
+          links: [
+            {
+              external: true,
+              link: `https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2FAll%2520Overlaps%2520Responses%2Easpx`
+            }
+          ]
         },
         {
           header: 'Meet with MDM operations team',
@@ -1283,8 +1288,15 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         },
         {
           header: 'Share ICD',
-          description:
-            'CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.'
+          description: `CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.
+            
+<link1>Go to ICD and Onboarding Mapping for MDM-POR</link1>`,
+          links: [
+            {
+              external: true,
+              link: `https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/MDMResources.aspx`
+            }
+          ]
         }
       ]
     }
