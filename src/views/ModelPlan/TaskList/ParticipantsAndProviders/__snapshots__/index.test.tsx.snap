@@ -532,7 +532,7 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
               <p
                 class="text-base margin-0 line-height-body-3"
               >
-                (e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
+                (e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
               </p>
               <textarea
                 aria-labelledby="label-participants-and-providers-application-level hint-participants-and-providers-application-level"

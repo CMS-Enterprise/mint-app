@@ -174,6 +174,8 @@ describe('exportTranslation Util', () => {
         goField: 'Goal',
         dbField: 'goal',
         label: 'Goal',
+        questionTooltip:
+          'The high level goal of the program and a description of the project.',
         sublabel:
           'Please include the high level goal of the program and a description of the project.',
         dataType: 'STRING',
@@ -258,6 +260,9 @@ describe('exportTranslation Util', () => {
         gqlField: 'performancePeriodStarts',
         goField: 'PerformancePeriodStarts',
         dbField: 'performance_period_starts',
+        groupLabel: 'Performance period',
+        groupLabelTooltip:
+          'When the model will be active beginning with the go-live date',
         label: 'Performance start date',
         dataType: 'DATE',
         formType: 'DATEPICKER',
@@ -300,6 +305,8 @@ describe('exportTranslation Util', () => {
           'If timelines are tight, might there be pieces of the model that can be phased in over time?',
         sublabel:
           'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
+        questionTooltip:
+          'That is, the basic model would start at the earliest possible date, but additional facets could be phased in at a later quarter.',
         dataType: 'BOOLEAN',
         formType: 'RADIO',
         order: 3.11,
