@@ -1,0 +1,42 @@
+type DataExchangeApproach {
+  id: UUID!
+  modelPlanID: UUID!
+  highLevelOverview: String
+  newMethods: String
+  feasibility: String
+  participantBurden: String
+  cmmiImpact: String
+  additionalConsiderations: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}
+
+input DataExchangeApproachChanges @goModel(model: "map[string]interface{}") {
+  highLevelOverview: String
+  newMethods: String
+  feasibility: String
+  participantBurden: String
+  cmmiImpact: String
+  additionalConsiderations: String
+
+  status: TaskStatusInput
+}
+
+extend type Mutation {
+  updateDataExchangeApproach(id: UUID!, changes: DataExchangeApproachChanges!): DataExchangeApproach!
+  @hasRole(role: MINT_USER)
+}

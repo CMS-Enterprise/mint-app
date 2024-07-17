@@ -26,6 +26,7 @@
 									"paymentsID = responseData.payments.id",
 									"firstOpNeed = responseData.operationalNeeds[0].id",
 									"userID = responseData.createdByUserAccount.id",
+									"dataExchangeApproachID = responseData.dataExchangeApproach.id",
 									"",
 									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);",
 									"pm.collectionVariables.set(\"basicsID\", basicsID);",
@@ -37,9 +38,11 @@
 									"pm.collectionVariables.set(\"modelLeadID\", modelLeadID);",
 									"pm.collectionVariables.set(\"paymentsID\", paymentsID);",
 									"pm.collectionVariables.set(\"operationalNeedID\", firstOpNeed);",
-									"pm.collectionVariables.set(\"userID\", userID);"
+									"pm.collectionVariables.set(\"userID\", userID);",
+									"pm.collectionVariables.set(\"dataExchangeApproachID\", dataExchangeApproachID)"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -49,7 +52,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    modelName\n    createdByUserAccount{\n        givenName\n        id\n    }\n    operationalNeeds {\n\n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        section    \n    }  \n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n    }\n    payments{\n        id\n    }\n  }\n}\n  ",
+								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    modelName\n    createdByUserAccount{\n        givenName\n        id\n    }\n    operationalNeeds {\n\n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        section    \n    }  \n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n    }\n    payments{\n        id\n    }\n    dataExchangeApproach{\n        id\n    }\n  }\n}\n  ",
 								"variables": ""
 							}
 						},
@@ -256,6 +259,27 @@
 							"graphql": {
 								"query": "mutation updatePlanBasics ($id: UUID!, $changes: PlanBasicsChanges!) {\n    updatePlanBasics (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        demoCode\n        amsModelID\n        modelCategory\n        cmsCenters\n        cmmiGroups\n        modelType\n        modelTypeOther\n        problem\n        goal\n        testInterventions\n        note\n        completeICIP\n        clearanceStarts\n        clearanceEnds\n        announced\n        applicationsStart\n        applicationsEnd\n        performancePeriodStarts\n        performancePeriodEnds\n        wrapUpEnds\n        highLevelNote\n        phasedIn\n        phasedInNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n    }\n}",
 								"variables": "{\n  \"id\": \"{{basicsID}}\",\n  \"changes\": {\n    \"demoCode\": \"\",\n    \"amsModelID\": \"\",\n    \"modelCategory\": \"\",\n    \"cmsCenters\": [\n      \"\"\n    ],\n    \"cmmiGroups\": [\n      \"\"\n    ],\n    \"modelType\": [\n        \"\"\n    ],\n    \"modelTypeOther\": \"\",\n    \"problem\": \"\",\n    \"goal\": \"\",\n    \"testInterventions\": \"\",\n    \"note\": \"\",\n    \"completeICIP\": \"\",\n    \"clearanceStarts\": \"\",\n    \"clearanceEnds\": \"\",\n    \"announced\": \"\",\n    \"applicationsStart\": \"\",\n    \"applicationsEnd\": \"\",\n    \"performancePeriodStarts\": \"\",\n    \"performancePeriodEnds\": \"\",\n    \"wrapUpEnds\": \"\",\n    \"highLevelNote\": \"\",\n    \"phasedIn\": true,\n    \"phasedInNote\": \"\",\n    \"status\": \"\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Data Exchange Approach",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateDataExchangeApproach ($id: UUID!, $changes: DataExchangeApproachChanges!) {\n    updateDataExchangeApproach (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        highLevelOverview\n        newMethods\n        feasibility\n        participantBurden\n        cmmiImpact\n        additionalConsiderations\n\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n    }\n}",
+								"variables": "{\n  \"id\": \"{{dataExchangeApproachID}}\",\n  \"changes\": {\n    \"highLevelOverview\": \"\",\n    \"newMethods\": \"\",\n    \"feasibility\": \"\",\n    \"participantBurden\": \"\",\n    \"cmmiImpact\": \"\",\n    \"additionalConsiderations\": \"\",\n    \"status\": \"IN_PROGRESS\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -2525,6 +2549,10 @@
 		},
 		{
 			"key": "userNotificationID",
+			"value": ""
+		},
+		{
+			"key": "dataExchangeApproachID",
 			"value": ""
 		}
 	]

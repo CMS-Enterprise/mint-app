@@ -196,6 +196,30 @@ type ComplexityRoot struct {
 		Version        func(childComplexity int) int
 	}
 
+	DataExchangeApproach struct {
+		AdditionalConsiderations       func(childComplexity int) int
+		CMMIImpact                     func(childComplexity int) int
+		CreatedBy                      func(childComplexity int) int
+		CreatedByUserAccount           func(childComplexity int) int
+		CreatedDts                     func(childComplexity int) int
+		Feasibility                    func(childComplexity int) int
+		HighLevelOverview              func(childComplexity int) int
+		ID                             func(childComplexity int) int
+		ModelPlanID                    func(childComplexity int) int
+		ModifiedBy                     func(childComplexity int) int
+		ModifiedByUserAccount          func(childComplexity int) int
+		ModifiedDts                    func(childComplexity int) int
+		NewMethods                     func(childComplexity int) int
+		ParticipantBurden              func(childComplexity int) int
+		ReadyForClearanceBy            func(childComplexity int) int
+		ReadyForClearanceByUserAccount func(childComplexity int) int
+		ReadyForClearanceDts           func(childComplexity int) int
+		ReadyForReviewBy               func(childComplexity int) int
+		ReadyForReviewByUserAccount    func(childComplexity int) int
+		ReadyForReviewDts              func(childComplexity int) int
+		Status                         func(childComplexity int) int
+	}
+
 	DataExchangeApproachCompletedActivityMeta struct {
 		DataExchangeApproachID      func(childComplexity int) int
 		MarkedCompleteBy            func(childComplexity int) int
@@ -305,6 +329,7 @@ type ComplexityRoot struct {
 		CreatedByUserAccount       func(childComplexity int) int
 		CreatedDts                 func(childComplexity int) int
 		Crs                        func(childComplexity int) int
+		DataExchangeApproach       func(childComplexity int) int
 		Discussions                func(childComplexity int) int
 		Documents                  func(childComplexity int) int
 		GeneralCharacteristics     func(childComplexity int) int
@@ -370,6 +395,7 @@ type ComplexityRoot struct {
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section models.TaskListSection) int
 		UpdateCustomOperationalNeedByID    func(childComplexity int, id uuid.UUID, customNeedType *string, needed bool) int
+		UpdateDataExchangeApproach         func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateExistingModelLinks           func(childComplexity int, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) int
 		UpdateModelPlan                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateOperationalSolution          func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
@@ -1322,6 +1348,7 @@ type ModelPlanResolver interface {
 	NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error)
 	OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error)
 	OpSolutionLastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error)
+	DataExchangeApproach(ctx context.Context, obj *models.ModelPlan) (*models.DataExchangeApproach, error)
 	StatusPlannedActiveOrEnded(ctx context.Context, obj *models.ModelPlan) (model.StatusPlannedActiveOrEnded, error)
 }
 type ModelPlanAndOperationalSolutionResolver interface {
@@ -1332,6 +1359,7 @@ type ModelPlanSharedActivityMetaResolver interface {
 	ModelPlan(ctx context.Context, obj *models.ModelPlanSharedActivityMeta) (*models.ModelPlan, error)
 }
 type MutationResolver interface {
+	UpdateDataExchangeApproach(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DataExchangeApproach, error)
 	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error)
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
@@ -2080,6 +2108,153 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.DailyDigestCompleteActivityMeta.Version(childComplexity), true
 
+	case "DataExchangeApproach.additionalConsiderations":
+		if e.complexity.DataExchangeApproach.AdditionalConsiderations == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.AdditionalConsiderations(childComplexity), true
+
+	case "DataExchangeApproach.cmmiImpact":
+		if e.complexity.DataExchangeApproach.CMMIImpact == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.CMMIImpact(childComplexity), true
+
+	case "DataExchangeApproach.createdBy":
+		if e.complexity.DataExchangeApproach.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.CreatedBy(childComplexity), true
+
+	case "DataExchangeApproach.createdByUserAccount":
+		if e.complexity.DataExchangeApproach.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.CreatedByUserAccount(childComplexity), true
+
+	case "DataExchangeApproach.createdDts":
+		if e.complexity.DataExchangeApproach.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.CreatedDts(childComplexity), true
+
+	case "DataExchangeApproach.feasibility":
+		if e.complexity.DataExchangeApproach.Feasibility == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.Feasibility(childComplexity), true
+
+	case "DataExchangeApproach.highLevelOverview":
+		if e.complexity.DataExchangeApproach.HighLevelOverview == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.HighLevelOverview(childComplexity), true
+
+	case "DataExchangeApproach.id":
+		if e.complexity.DataExchangeApproach.ID == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ID(childComplexity), true
+
+	case "DataExchangeApproach.modelPlanID":
+		if e.complexity.DataExchangeApproach.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ModelPlanID(childComplexity), true
+
+	case "DataExchangeApproach.modifiedBy":
+		if e.complexity.DataExchangeApproach.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ModifiedBy(childComplexity), true
+
+	case "DataExchangeApproach.modifiedByUserAccount":
+		if e.complexity.DataExchangeApproach.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ModifiedByUserAccount(childComplexity), true
+
+	case "DataExchangeApproach.modifiedDts":
+		if e.complexity.DataExchangeApproach.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ModifiedDts(childComplexity), true
+
+	case "DataExchangeApproach.newMethods":
+		if e.complexity.DataExchangeApproach.NewMethods == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.NewMethods(childComplexity), true
+
+	case "DataExchangeApproach.participantBurden":
+		if e.complexity.DataExchangeApproach.ParticipantBurden == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ParticipantBurden(childComplexity), true
+
+	case "DataExchangeApproach.readyForClearanceBy":
+		if e.complexity.DataExchangeApproach.ReadyForClearanceBy == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ReadyForClearanceBy(childComplexity), true
+
+	case "DataExchangeApproach.readyForClearanceByUserAccount":
+		if e.complexity.DataExchangeApproach.ReadyForClearanceByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ReadyForClearanceByUserAccount(childComplexity), true
+
+	case "DataExchangeApproach.readyForClearanceDts":
+		if e.complexity.DataExchangeApproach.ReadyForClearanceDts == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ReadyForClearanceDts(childComplexity), true
+
+	case "DataExchangeApproach.readyForReviewBy":
+		if e.complexity.DataExchangeApproach.ReadyForReviewBy == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ReadyForReviewBy(childComplexity), true
+
+	case "DataExchangeApproach.readyForReviewByUserAccount":
+		if e.complexity.DataExchangeApproach.ReadyForReviewByUserAccount == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ReadyForReviewByUserAccount(childComplexity), true
+
+	case "DataExchangeApproach.readyForReviewDts":
+		if e.complexity.DataExchangeApproach.ReadyForReviewDts == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.ReadyForReviewDts(childComplexity), true
+
+	case "DataExchangeApproach.status":
+		if e.complexity.DataExchangeApproach.Status == nil {
+			break
+		}
+
+		return e.complexity.DataExchangeApproach.Status(childComplexity), true
+
 	case "DataExchangeApproachCompletedActivityMeta.dataExchangeApproachID":
 		if e.complexity.DataExchangeApproachCompletedActivityMeta.DataExchangeApproachID == nil {
 			break
@@ -2647,6 +2822,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.Crs(childComplexity), true
 
+	case "ModelPlan.dataExchangeApproach":
+		if e.complexity.ModelPlan.DataExchangeApproach == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.DataExchangeApproach(childComplexity), true
+
 	case "ModelPlan.discussions":
 		if e.complexity.ModelPlan.Discussions == nil {
 			break
@@ -3183,6 +3365,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdateCustomOperationalNeedByID(childComplexity, args["id"].(uuid.UUID), args["customNeedType"].(*string), args["needed"].(bool)), true
+
+	case "Mutation.updateDataExchangeApproach":
+		if e.complexity.Mutation.UpdateDataExchangeApproach == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateDataExchangeApproach_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateDataExchangeApproach(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "Mutation.updateExistingModelLinks":
 		if e.complexity.Mutation.UpdateExistingModelLinks == nil {
@@ -9222,6 +9416,49 @@ type CurrentUser {
 extend type Query {
       currentUser: CurrentUser!
 }`, BuiltIn: false},
+	{Name: "../schema/types/data_exchange_approach.graphql", Input: `type DataExchangeApproach {
+  id: UUID!
+  modelPlanID: UUID!
+  highLevelOverview: String
+  newMethods: String
+  feasibility: String
+  participantBurden: String
+  cmmiImpact: String
+  additionalConsiderations: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  readyForReviewBy: UUID
+  readyForReviewByUserAccount: UserAccount
+  readyForReviewDts: Time
+  readyForClearanceBy: UUID
+  readyForClearanceByUserAccount: UserAccount
+  readyForClearanceDts: Time
+
+  status: TaskStatus!
+}
+
+input DataExchangeApproachChanges @goModel(model: "map[string]interface{}") {
+  highLevelOverview: String
+  newMethods: String
+  feasibility: String
+  participantBurden: String
+  cmmiImpact: String
+  additionalConsiderations: String
+
+  status: TaskStatusInput
+}
+
+extend type Mutation {
+  updateDataExchangeApproach(id: UUID!, changes: DataExchangeApproachChanges!): DataExchangeApproach!
+  @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
 	{Name: "../schema/types/directives.graphql", Input: `directive @hasRole(role: Role!) on FIELD_DEFINITION
 
 directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
@@ -9430,6 +9667,7 @@ type ModelPlan {
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
   opSolutionLastModifiedDts: Time!
+  dataExchangeApproach: DataExchangeApproach!
 }
 
 """
@@ -12739,6 +12977,30 @@ func (ec *executionContext) field_Mutation_updateCustomOperationalNeedByID_args(
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_updateDataExchangeApproach_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 map[string]interface{}
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
+		arg1, err = ec.unmarshalNDataExchangeApproachChanges2map(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["changes"] = arg1
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_updateExistingModelLinks_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -14288,6 +14550,8 @@ func (ec *executionContext) fieldContext_AddedAsCollaboratorMeta_modelPlan(ctx c
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -16705,6 +16969,973 @@ func (ec *executionContext) fieldContext_DailyDigestCompleteActivityMeta_date(ct
 	return fc, nil
 }
 
+func (ec *executionContext) _DataExchangeApproach_id(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_highLevelOverview(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_highLevelOverview(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.HighLevelOverview, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_highLevelOverview(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_newMethods(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_newMethods(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NewMethods, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_newMethods(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_feasibility(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_feasibility(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Feasibility, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_feasibility(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_participantBurden(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_participantBurden(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantBurden, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_participantBurden(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_cmmiImpact(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_cmmiImpact(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CMMIImpact, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_cmmiImpact(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_additionalConsiderations(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_additionalConsiderations(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AdditionalConsiderations, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_additionalConsiderations(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_createdByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_createdByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_modifiedByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_readyForReviewBy(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_readyForReviewBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForReviewBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_readyForReviewBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_readyForReviewByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_readyForReviewByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForReviewByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_readyForReviewByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_readyForReviewDts(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_readyForReviewDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForReviewDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_readyForReviewDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_readyForClearanceBy(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_readyForClearanceBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForClearanceBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_readyForClearanceBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_readyForClearanceByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_readyForClearanceByUserAccount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForClearanceByUserAccount(ctx), nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*authentication.UserAccount)
+	fc.Result = res
+	return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_readyForClearanceByUserAccount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_UserAccount_id(ctx, field)
+			case "username":
+				return ec.fieldContext_UserAccount_username(ctx, field)
+			case "isEUAID":
+				return ec.fieldContext_UserAccount_isEUAID(ctx, field)
+			case "commonName":
+				return ec.fieldContext_UserAccount_commonName(ctx, field)
+			case "locale":
+				return ec.fieldContext_UserAccount_locale(ctx, field)
+			case "email":
+				return ec.fieldContext_UserAccount_email(ctx, field)
+			case "givenName":
+				return ec.fieldContext_UserAccount_givenName(ctx, field)
+			case "familyName":
+				return ec.fieldContext_UserAccount_familyName(ctx, field)
+			case "zoneInfo":
+				return ec.fieldContext_UserAccount_zoneInfo(ctx, field)
+			case "hasLoggedIn":
+				return ec.fieldContext_UserAccount_hasLoggedIn(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type UserAccount", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_readyForClearanceDts(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_readyForClearanceDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForClearanceDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_readyForClearanceDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _DataExchangeApproach_status(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproach) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DataExchangeApproach_status(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Status, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.TaskStatus)
+	fc.Result = res
+	return ec.marshalNTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DataExchangeApproach_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DataExchangeApproach",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TaskStatus does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _DataExchangeApproachCompletedActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.DataExchangeApproachCompletedActivityMeta) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_DataExchangeApproachCompletedActivityMeta_version(ctx, field)
 	if err != nil {
@@ -17552,6 +18783,8 @@ func (ec *executionContext) fieldContext_DatesChangedActivityMeta_modelPlan(ctx 
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -22407,6 +23640,94 @@ func (ec *executionContext) fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx
 	return fc, nil
 }
 
+func (ec *executionContext) _ModelPlan_dataExchangeApproach(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().DataExchangeApproach(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.DataExchangeApproach)
+	fc.Result = res
+	return ec.marshalNDataExchangeApproach2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataExchangeApproach(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_dataExchangeApproach(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_DataExchangeApproach_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_DataExchangeApproach_modelPlanID(ctx, field)
+			case "highLevelOverview":
+				return ec.fieldContext_DataExchangeApproach_highLevelOverview(ctx, field)
+			case "newMethods":
+				return ec.fieldContext_DataExchangeApproach_newMethods(ctx, field)
+			case "feasibility":
+				return ec.fieldContext_DataExchangeApproach_feasibility(ctx, field)
+			case "participantBurden":
+				return ec.fieldContext_DataExchangeApproach_participantBurden(ctx, field)
+			case "cmmiImpact":
+				return ec.fieldContext_DataExchangeApproach_cmmiImpact(ctx, field)
+			case "additionalConsiderations":
+				return ec.fieldContext_DataExchangeApproach_additionalConsiderations(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_DataExchangeApproach_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_DataExchangeApproach_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_DataExchangeApproach_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_DataExchangeApproach_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_DataExchangeApproach_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_DataExchangeApproach_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_DataExchangeApproach_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_DataExchangeApproach_readyForReviewByUserAccount(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_DataExchangeApproach_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_DataExchangeApproach_readyForClearanceBy(ctx, field)
+			case "readyForClearanceByUserAccount":
+				return ec.fieldContext_DataExchangeApproach_readyForClearanceByUserAccount(ctx, field)
+			case "readyForClearanceDts":
+				return ec.fieldContext_DataExchangeApproach_readyForClearanceDts(ctx, field)
+			case "status":
+				return ec.fieldContext_DataExchangeApproach_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DataExchangeApproach", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ModelPlan_statusPlannedActiveOrEnded(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 	if err != nil {
@@ -22638,6 +23959,8 @@ func (ec *executionContext) fieldContext_ModelPlanAndOperationalSolution_modelPl
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -22874,6 +24197,8 @@ func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_modelPlan(c
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -22920,6 +24245,129 @@ func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_optionalMes
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateDataExchangeApproach(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateDataExchangeApproach(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdateDataExchangeApproach(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.DataExchangeApproach); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.DataExchangeApproach`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.DataExchangeApproach)
+	fc.Result = res
+	return ec.marshalNDataExchangeApproach2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataExchangeApproach(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updateDataExchangeApproach(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_DataExchangeApproach_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_DataExchangeApproach_modelPlanID(ctx, field)
+			case "highLevelOverview":
+				return ec.fieldContext_DataExchangeApproach_highLevelOverview(ctx, field)
+			case "newMethods":
+				return ec.fieldContext_DataExchangeApproach_newMethods(ctx, field)
+			case "feasibility":
+				return ec.fieldContext_DataExchangeApproach_feasibility(ctx, field)
+			case "participantBurden":
+				return ec.fieldContext_DataExchangeApproach_participantBurden(ctx, field)
+			case "cmmiImpact":
+				return ec.fieldContext_DataExchangeApproach_cmmiImpact(ctx, field)
+			case "additionalConsiderations":
+				return ec.fieldContext_DataExchangeApproach_additionalConsiderations(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_DataExchangeApproach_createdBy(ctx, field)
+			case "createdByUserAccount":
+				return ec.fieldContext_DataExchangeApproach_createdByUserAccount(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_DataExchangeApproach_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_DataExchangeApproach_modifiedBy(ctx, field)
+			case "modifiedByUserAccount":
+				return ec.fieldContext_DataExchangeApproach_modifiedByUserAccount(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_DataExchangeApproach_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_DataExchangeApproach_readyForReviewBy(ctx, field)
+			case "readyForReviewByUserAccount":
+				return ec.fieldContext_DataExchangeApproach_readyForReviewByUserAccount(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_DataExchangeApproach_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_DataExchangeApproach_readyForClearanceBy(ctx, field)
+			case "readyForClearanceByUserAccount":
+				return ec.fieldContext_DataExchangeApproach_readyForClearanceByUserAccount(ctx, field)
+			case "readyForClearanceDts":
+				return ec.fieldContext_DataExchangeApproach_readyForClearanceDts(ctx, field)
+			case "status":
+				return ec.fieldContext_DataExchangeApproach_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type DataExchangeApproach", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateDataExchangeApproach_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
 	}
 	return fc, nil
 }
@@ -23237,6 +24685,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -23376,6 +24826,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -28497,6 +29949,8 @@ func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_modelP
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -29007,6 +30461,8 @@ func (ec *executionContext) fieldContext_NewModelPlanActivityMeta_modelPlan(ctx 
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -39037,6 +40493,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_currentModel
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -57407,6 +58865,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -57546,6 +59006,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -60668,6 +62130,8 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_mod
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -61178,6 +62642,8 @@ func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_mode
 				return ec.fieldContext_ModelPlan_operationalNeeds(ctx, field)
 			case "opSolutionLastModifiedDts":
 				return ec.fieldContext_ModelPlan_opSolutionLastModifiedDts(ctx, field)
+			case "dataExchangeApproach":
+				return ec.fieldContext_ModelPlan_dataExchangeApproach(ctx, field)
 			case "statusPlannedActiveOrEnded":
 				return ec.fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx, field)
 			}
@@ -68340,6 +69806,224 @@ func (ec *executionContext) _DailyDigestCompleteActivityMeta(ctx context.Context
 	return out
 }
 
+var dataExchangeApproachImplementors = []string{"DataExchangeApproach"}
+
+func (ec *executionContext) _DataExchangeApproach(ctx context.Context, sel ast.SelectionSet, obj *models.DataExchangeApproach) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, dataExchangeApproachImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("DataExchangeApproach")
+		case "id":
+			out.Values[i] = ec._DataExchangeApproach_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._DataExchangeApproach_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "highLevelOverview":
+			out.Values[i] = ec._DataExchangeApproach_highLevelOverview(ctx, field, obj)
+		case "newMethods":
+			out.Values[i] = ec._DataExchangeApproach_newMethods(ctx, field, obj)
+		case "feasibility":
+			out.Values[i] = ec._DataExchangeApproach_feasibility(ctx, field, obj)
+		case "participantBurden":
+			out.Values[i] = ec._DataExchangeApproach_participantBurden(ctx, field, obj)
+		case "cmmiImpact":
+			out.Values[i] = ec._DataExchangeApproach_cmmiImpact(ctx, field, obj)
+		case "additionalConsiderations":
+			out.Values[i] = ec._DataExchangeApproach_additionalConsiderations(ctx, field, obj)
+		case "createdBy":
+			out.Values[i] = ec._DataExchangeApproach_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._DataExchangeApproach_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._DataExchangeApproach_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._DataExchangeApproach_modifiedBy(ctx, field, obj)
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._DataExchangeApproach_modifiedByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._DataExchangeApproach_modifiedDts(ctx, field, obj)
+		case "readyForReviewBy":
+			out.Values[i] = ec._DataExchangeApproach_readyForReviewBy(ctx, field, obj)
+		case "readyForReviewByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._DataExchangeApproach_readyForReviewByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "readyForReviewDts":
+			out.Values[i] = ec._DataExchangeApproach_readyForReviewDts(ctx, field, obj)
+		case "readyForClearanceBy":
+			out.Values[i] = ec._DataExchangeApproach_readyForClearanceBy(ctx, field, obj)
+		case "readyForClearanceByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._DataExchangeApproach_readyForClearanceByUserAccount(ctx, field, obj)
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "readyForClearanceDts":
+			out.Values[i] = ec._DataExchangeApproach_readyForClearanceDts(ctx, field, obj)
+		case "status":
+			out.Values[i] = ec._DataExchangeApproach_status(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var dataExchangeApproachCompletedActivityMetaImplementors = []string{"DataExchangeApproachCompletedActivityMeta", "ActivityMetaData"}
 
 func (ec *executionContext) _DataExchangeApproachCompletedActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.DataExchangeApproachCompletedActivityMeta) graphql.Marshaler {
@@ -69970,6 +71654,42 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "dataExchangeApproach":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_dataExchangeApproach(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "statusPlannedActiveOrEnded":
 			field := field
 
@@ -70241,6 +71961,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Mutation")
+		case "updateDataExchangeApproach":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateDataExchangeApproach(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "createDiscussionReply":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createDiscussionReply(ctx, field)
@@ -80876,6 +82603,24 @@ func (ec *executionContext) marshalNCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmint�
 		return graphql.Null
 	}
 	return ec._CurrentUser(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNDataExchangeApproach2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataExchangeApproach(ctx context.Context, sel ast.SelectionSet, v models.DataExchangeApproach) graphql.Marshaler {
+	return ec._DataExchangeApproach(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNDataExchangeApproach2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataExchangeApproach(ctx context.Context, sel ast.SelectionSet, v *models.DataExchangeApproach) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._DataExchangeApproach(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNDataExchangeApproachChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	return v.(map[string]interface{}), nil
 }
 
 func (ec *executionContext) unmarshalNDataForMonitoringType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataForMonitoringType(ctx context.Context, v interface{}) (model.DataForMonitoringType, error) {

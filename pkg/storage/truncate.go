@@ -30,6 +30,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     operational_need,
     analyzed_audit,
 	existing_model_link,
+    data_exchange_approach,
     model_plan,
 	user_notification,
 	activity,
@@ -58,7 +59,7 @@ func removeNonSystemAccounts(s *Store) error {
                    WHERE username NOT IN %s
                );`
 
-	scriptUser := `DELETE FROM user_account 
+	scriptUser := `DELETE FROM user_account
 					WHERE username NOT IN %s;`
 
 	systemAccounts := "( 'UNKNOWN_USER','MINT_SYSTEM')"

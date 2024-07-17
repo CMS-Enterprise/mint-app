@@ -1,24 +1,26 @@
 package models
 
-import (
-	"github.com/google/uuid"
-)
-
-// DataExchangeApproach represents the data exchange approach of a model plan
+// DataExchangeApproach represents the data exchange approach section of the model plan task list
 type DataExchangeApproach struct {
-	baseStruct
-	modelPlanRelation
-	Name        string  `json:"name" db:"name"`
-	Description *string `json:"description" db:"description"`
-	IsComplete  bool    `json:"isComplete" db:"is_complete"`
+	//TODO: (data_exchange) this section deviates from base task list section. As such we will likely need to embed individual base structs individually.
+	baseTaskListSection
+
+	// Page 1
+	HighLevelOverview *string `json:"highLevelOverview" db:"high_level_overview"`
+	NewMethods        *string `json:"newMethods" db:"new_methods"`
+
+	// Page 2
+	Feasibility       *string `json:"feasibility" db:"feasibility"`
+	ParticipantBurden *string `json:"participantBurden" db:"participant_burden"`
+
+	// Page 3
+	CMMIImpact               *string `json:"cmmiImpact" db:"cmmi_impact"`
+	AdditionalConsiderations *string `json:"additionalConsiderations" db:"additional_considerations"`
 }
 
-// NewDataExchangeApproach creates a new DataExchangeApproach with the required fields
-func NewDataExchangeApproach(name string, createdBy uuid.UUID, modelPlanID uuid.UUID) *DataExchangeApproach {
+// NewDataExchangeApproach returns a new DataExchangeApproach
+func NewDataExchangeApproach(tls baseTaskListSection) *DataExchangeApproach {
 	return &DataExchangeApproach{
-		baseStruct:        NewBaseStruct(createdBy),
-		modelPlanRelation: NewModelPlanRelation(modelPlanID),
-		Name:              name,
-		IsComplete:        false,
+		baseTaskListSection: tls,
 	}
 }

@@ -261,9 +261,7 @@ func (s *Seeder) SeedData() {
 
 	// Send a notification for Data Exchange Approach Completed
 	dataExchangeApproach := models.NewDataExchangeApproach(
-		"Data Exchange Approach",
-		planWithDocuments.CreatedBy,
-		planWithDocuments.ID,
+		models.NewBaseTaskListSection(planWithDocuments.CreatedBy, planWithDocuments.ID),
 	)
 
 	dataExchangeApproach.ID = uuid.MustParse("01020304-0506-0708-090a-0b0c0d0e0f10")
