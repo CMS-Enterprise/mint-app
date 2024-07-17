@@ -404,6 +404,7 @@ const OperationalNeedsTable = ({
         <>
           <div className="mint-header__basic">
             <GlobalClientFilter
+              globalFilter={state.globalFilter}
               setGlobalFilter={setGlobalFilter}
               tableID={opSolutionsMiscT('itSolutionsTable.id')}
               tableName={opSolutionsMiscT('itSolutionsTable.title')}

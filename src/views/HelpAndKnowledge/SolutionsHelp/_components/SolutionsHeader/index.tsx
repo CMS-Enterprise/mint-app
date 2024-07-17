@@ -93,6 +93,7 @@ const SolutionsHeader = ({
           <div>
             <Grid tablet={{ col: 6 }}>
               <GlobalClientFilter
+                globalFilter={query}
                 setGlobalFilter={setQuery}
                 tableID="table-id"
                 tableName="table-name"
