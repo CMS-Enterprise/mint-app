@@ -84,7 +84,7 @@ exports[`Model Plan CR and TDL page > matches snapshot 1`] = `
           Visit ECHIMP
         </a>
         <div
-          class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-1"
+          class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-bottom-1"
           data-testid="alert"
         >
           <div

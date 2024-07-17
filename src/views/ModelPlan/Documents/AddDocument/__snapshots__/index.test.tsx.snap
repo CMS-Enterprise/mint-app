@@ -438,7 +438,7 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
                 class="padding-top-2 margin-top-2"
               >
                 <div
-                  class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-4"
+                  class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-bottom-4"
                   data-testid="mandatory-fields-alert"
                 >
                   <div
