@@ -9523,9 +9523,6 @@ extend type ModelPlan {
 }
 
 type ModelPlanAndOperationalSolution {
-  # TODO -- we can uncomment these if we want?
-  # modelPlanID: UUID!
-  # operationalSolutionID: UUID!
   operationalSolution: OperationalSolution!
   modelPlan: ModelPlan!
 }
@@ -11743,7 +11740,7 @@ enum OperationalSolutionKey{
   INTERNAL_STAFF
   LDG
   LV
-  MDM
+  MDMPOR
   MARX
   OTHER_NEW_PROCESS
   OUTLOOK_MAILBOX

@@ -1222,9 +1222,9 @@ To achieve this mission, the Legal Vertical provides technical assistance and su
       ]
     }
   },
-  masterDataManagement: {
+  masterDataManagementProgramOrganizationRelationship: {
     about: {
-      description: `Master Data Management (MDM) at CMS produces integrated and harmonized Beneficiary and Provider data from various Medicare and Medicaid systems. To create this master version, MDM uses identity resolution to recognize distinct entities (e.g., a provider, beneficiary, organization, or program) by matching similar records across multiple data sets. MDM provides flexible and easy access to provider and beneficiary data through extracts, web services, and APIs.
+      description: `Master Data Management (MDM) at CMS produces integrated and harmonized Beneficiary and Provider data from various Medicare and Medicaid systems. To create this master version, MDM uses identity resolution to recognize distinct entities provider(e.g., a provider, beneficiary, organization, or program) by matching similar records across multiple data sets. MDM provides flexible and easy access to provider and beneficiary data through extracts, business intelligence reports and data lake mesh, and data share to IDRC Snowflake.
 
 MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
 
@@ -1242,9 +1242,16 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'Functions',
           items: [
-            'Identity resolution of CMS enterprise data entities (providers, beneficiaries, enrollees, ACO model participation)',
+            'Identity resolution of CMS enterprise data entities (providers)',
+            `Repository for CMMI’s APM alignment overlaps data`,
             'Federation of identity resolved CMS enterprise data'
           ]
+        }
+      ],
+      links: [
+        {
+          external: true,
+          link: `https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2FAll%2520Overlaps%2520Responses%2Easpx`
         }
       ]
     },
@@ -1265,7 +1272,9 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'Complete onboarding questionnaire',
           description:
-            'CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.'
+            'CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.',
+          description2:
+            '<link1>Go to Onboarding Request Form for MDM-POR</link1>'
         },
         {
           header: 'Meet with MDM operations team',

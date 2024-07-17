@@ -1231,7 +1231,7 @@ export enum OperationalSolutionKey {
   LOI = 'LOI',
   LV = 'LV',
   MARX = 'MARX',
-  MDM = 'MDM',
+  MDMPOR = 'MDMPOR',
   MIDS = 'MIDS',
   OTHER_NEW_PROCESS = 'OTHER_NEW_PROCESS',
   OUTLOOK_MAILBOX = 'OUTLOOK_MAILBOX',
