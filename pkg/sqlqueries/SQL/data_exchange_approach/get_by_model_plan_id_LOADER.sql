@@ -23,5 +23,5 @@ SELECT
     dea.ready_for_clearance_dts,
     dea.status
 
-FROM QUERIED_IDS AS qIDs
-INNER JOIN data_exchange_approach AS dea ON dea.model_plan_id = qIDs.model_plan_id;
+FROM data_exchange_approach AS dea
+INNER JOIN QUERIED_IDS AS qIDs ON dea.model_plan_id = qIDs.model_plan_id;
