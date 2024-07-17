@@ -20,7 +20,8 @@ export enum HelpArticle {
   UTILIZING_SOLUTIONS = 'UTILIZING_SOLUTIONS',
   MODEL_SOLUTION_IMPLEMENTATION = 'MODEL_SOLUTION_IMPLEMENTATION',
   MODEL_SOLUTION_DESIGN = 'MODEL_SOLUTION_DESIGN',
-  PHASES_INVOLVED = 'PHASES_INVOLVED'
+  PHASES_INVOLVED = 'PHASES_INVOLVED',
+  DATA_EXCHANGE_APPROACH = 'DATA_EXCHANGE_APPROACH'
 }
 
 export type ArticleProps = {
@@ -60,6 +61,12 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     key: HelpArticle.HIGH_LEVEL_PROJECT_PLAN,
     route: '/high-level-project-plan',
     translation: 'highLevelProjectPlans',
+    type: ArticleCategories.GETTING_STARTED
+  },
+  {
+    key: HelpArticle.DATA_EXCHANGE_APPROACH,
+    route: '/data-exchange-approach',
+    translation: 'dataExchangeApproach',
     type: ArticleCategories.GETTING_STARTED
   },
   {

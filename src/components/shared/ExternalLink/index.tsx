@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from '@trussworks/react-uswds';
 
 interface ExternalLinkProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   href: string;
   variant?: 'external' | 'unstyled' | 'nav';
