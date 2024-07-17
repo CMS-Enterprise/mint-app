@@ -111,7 +111,28 @@ func (s *Seeder) SeedData() {
 	}
 
 	// Seed an empty plan
-	s.createModelPlan("Empty Plan", "MINT")
+	emptyPlan := s.createModelPlan("Empty Plan", "MINT")
+	s.updateModelPlan(emptyPlan, map[string]interface{}{
+		"abbreviation": "emptyPlan",
+		"status":       models.ModelStatusCanceled,
+	})
+
+	emptyPlanOperationalNeeds := s.getOperationalNeedsByModelPlanID(emptyPlan.ID)
+	if len(emptyPlanOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		emptyPlan,
+		emptyPlanOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	// Seed a plan with some information already in it
 	planWithBasics := s.createModelPlan("Plan with Basics", "MINT")
