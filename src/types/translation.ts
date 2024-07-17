@@ -112,6 +112,8 @@ export type TranslationFieldProperties = Omit<
   hideRelatedQuestionAlert?: boolean; // Ex: CCW and Quality questions do not need to render the alert immediately following the question
   questionTooltip?: string; // Render tooltip next to the question
   hideFromReadonly?: boolean; // Hide question from readonly view
+  groupLabel?: string;
+  groupLabelTooltip?: string;
 };
 
 /*

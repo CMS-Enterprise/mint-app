@@ -90,19 +90,21 @@ const ReadOnlySection = <
       <div
         className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
       >
-        <div className="display-flex flex-align-center">
-          <p className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line">
+        <div className="read-only-section--question">
+          <span className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line">
             {heading}
-          </p>
-          {config.questionTooltip && (
-            <Tooltip
-              className="margin-left-1"
-              label={config.questionTooltip}
-              position="right"
-            >
-              <Icon.Info className="text-base-light" />
-            </Tooltip>
-          )}
+            {config.questionTooltip && (
+              <span className="text-normal line-height-sans-2 margin-left-1 position-relative">
+                <Tooltip
+                  wrapperclasses="top-2px"
+                  label={config.questionTooltip}
+                  position="right"
+                >
+                  <Icon.Info className="text-base-light" />
+                </Tooltip>
+              </span>
+            )}
+          </span>
         </div>
 
         <RenderReadonlyValue

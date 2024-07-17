@@ -263,6 +263,8 @@ export const payments: TranslationPayments = {
     label: 'What will you pay?',
     sublabel:
       'If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.',
+    questionTooltip:
+      'If claims-based payments or non-claims-based payments are selected, there will be additional questions to answer.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     order: 1.14,
@@ -318,6 +320,8 @@ export const payments: TranslationPayments = {
     label: 'Select which claims-based payments will you pay.',
     sublabel:
       'If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.',
+    questionTooltip:
+      'If reductions to beneficiary cost-sharing or other are selected, there will be additional questions to answer.',
     disconnectedLabel: `questionNotApplicableBeneficiary`,
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
@@ -415,6 +419,8 @@ export const payments: TranslationPayments = {
     label: 'Will the model change the Medicare Physician Fee Schedule?',
     sublabel:
       'If so, it might impact Critical Access Hospitals paid under Method II.',
+    questionTooltip:
+      'If so, it might impact Critical Access Hospitals paid under Method II.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 2.06,
@@ -500,6 +506,8 @@ export const payments: TranslationPayments = {
     label: 'Are you anticipating creating dependencies between services?',
     sublabel:
       'Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.',
+    questionTooltip:
+      'Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 3.01,
@@ -557,6 +565,8 @@ export const payments: TranslationPayments = {
     dbField: 'providing_third_party_file',
     label:
       'Will your contractor be providing data (a Third Party File) that will be used in claims processing?',
+    questionTooltip:
+      'Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 3.05,
@@ -760,6 +770,8 @@ export const payments: TranslationPayments = {
     dbField: 'number_payments_per_pay_cycle',
     label: 'Number of payments per payment cycle',
     sublabel: 'This only applies if you are making non-claims-based payments',
+    questionTooltip:
+      'Note: If there will be 30+ payees we recommend a contractor.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 5.05,
@@ -1141,6 +1153,8 @@ export const payments: TranslationPayments = {
     goField: 'PaymentDemandRecoupmentFrequency',
     dbField: 'payment_demand_recoupment_frequency',
     label: 'How frequently do you anticipate making demands/recoupments?',
+    questionTooltip:
+      'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     order: 7.09,

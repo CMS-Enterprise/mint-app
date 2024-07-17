@@ -350,6 +350,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       'What type of Alternative Payment Model (APM) do you think the model could be?',
     sublabel:
       'In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.',
+    questionTooltip:
+      'In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     order: 2.04,
@@ -529,6 +531,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'care_coordination_involved',
     label: 'Is care coordination involved?',
     readonlyLabel: 'Is care coordination involved? How so?',
+    questionTooltip:
+      'Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; if a certain service or diagnosis exists in history, then Service A cannot be paid.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 3.01,
@@ -1108,10 +1112,16 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
       PROGRAM_PAYMENT: 'Program/payment'
     },
     optionsLabels: {
-      FRAUD_ABUSE: '(Note: Federal Waiver team writes)',
+      FRAUD_ABUSE: 'Note: Federal Waiver team writes',
       MEDICAID: '(1115, other)',
       PROGRAM_PAYMENT:
-        '(Note: CMMI writes, Office of General Council (OGC) adivses, full clearance process is required)'
+        '(e.g., SNF 3-day stay, Inpatient-Only rule)\n Note: CMMI writes, Office of General Council (OGC) advises, full clearance process is required'
+    },
+    tooltips: {
+      FRAUD_ABUSE: 'Note: Federal Waiver team writes',
+      MEDICAID: '(1115, other)',
+      PROGRAM_PAYMENT:
+        '(e.g., SNF 3-day stay, Inpatient-Only rule)\n Note: CMMI writes, Office of General Council (OGC) advises, full clearance process is required'
     },
     filterGroups: [ModelViewFilter.CMMI]
   },

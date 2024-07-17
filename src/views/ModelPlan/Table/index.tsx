@@ -58,6 +58,7 @@ type ModelPlansTableProps =
       userModels: boolean;
       isAssessment: boolean;
       isMAC: boolean;
+      csvDownload?: boolean;
     }
   | {
       type: 'models';
@@ -68,6 +69,7 @@ type ModelPlansTableProps =
       userModels?: never;
       isAssessment?: never;
       isMAC?: never;
+      csvDownload?: boolean;
     };
 
 const ModelPlansTable = ({
@@ -78,7 +80,8 @@ const ModelPlansTable = ({
   tableHidden,
   userModels,
   isAssessment,
-  isMAC
+  isMAC,
+  csvDownload
 }: ModelPlansTableProps) => {
   const { t: homeT } = useTranslation('home');
 
@@ -101,10 +104,10 @@ const ModelPlansTable = ({
     const queryData = (modelPlans?.modelPlanCollection ??
       []) as AllModelPlansType[];
     // Combine crs and tdls into single data point for table column
-    queryData.forEach(plan => {
-      return { ...plan, crtdls: [...(plan.crs || []), ...(plan.tdls || [])] };
+    const mergedCRTDLS = queryData.map(plan => {
+      return { ...plan, crTdls: [...(plan.crs || []), ...(plan.tdls || [])] };
     });
-    return queryData;
+    return mergedCRTDLS;
   }, [modelPlans?.modelPlanCollection]);
 
   const columns = useMemo(() => {
@@ -496,6 +499,7 @@ const ModelPlansTable = ({
         <div>
           {!userModels && (
             <GlobalClientFilter
+              globalFilter={state.globalFilter}
               setGlobalFilter={setGlobalFilter}
               tableID={homeT('requestsTable.id')}
               tableName={homeT('requestsTable.title')}
@@ -514,7 +518,7 @@ const ModelPlansTable = ({
           )}
         </div>
 
-        <>{isAssessment && !userModels && <CsvExportLink />}</>
+        <>{csvDownload && <CsvExportLink />}</>
       </div>
 
       <UswdsTable {...getTableProps()} fullWidth scrollable>

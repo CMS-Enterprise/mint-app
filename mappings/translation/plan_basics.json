@@ -130,6 +130,7 @@
     "dbField": "goal",
     "label": "Goal",
     "sublabel": "Please include the high level goal of the program and a description of the project.",
+    "questionTooltip": "The high level goal of the program and a description of the project.",
     "dataType": "STRING",
     "formType": "TEXTAREA",
     "order": 2.04
@@ -215,7 +216,9 @@
     "label": "Performance start date",
     "dataType": "DATE",
     "formType": "DATEPICKER",
-    "order": 3.07
+    "order": 3.07,
+    "groupLabel": "Performance period",
+    "groupLabelTooltip": "When the model will be active beginning with the go-live date"
   },
   "performancePeriodEnds": {
     "gqlField": "performancePeriodEnds",
@@ -252,6 +255,7 @@
     "dbField": "phased_in",
     "label": "If timelines are tight, might there be pieces of the model that can be phased in over time?",
     "sublabel": "That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.",
+    "questionTooltip": "That is, the basic model would start at the earliest possible date, but additional facets could be phased in at a later quarter.",
     "dataType": "BOOLEAN",
     "formType": "RADIO",
     "order": 3.11,

@@ -413,6 +413,8 @@ export const beneficiaries: TranslationBeneficiaries = {
     label: 'Are there precedence rules between this model and other model(s)?',
     sublabel:
       'i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)',
+    questionTooltip:
+      'i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     order: 3.11,

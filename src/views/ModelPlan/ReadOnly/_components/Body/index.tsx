@@ -1,6 +1,8 @@
 import React from 'react';
+import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import Tooltip from 'components/shared/Tooltip';
 import { getKeys, TranslationPlanSection } from 'types/translation';
 
 import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
@@ -40,6 +42,23 @@ const ReadOnlyBody = ({
                   {config[field]?.readonlyHeader}
                 </h3>
               )}
+
+            {config[field]?.groupLabel && (
+              <div className="text-bold font-body-sm line-height-sans-4 margin-bottom-2">
+                {config[field]?.groupLabel}
+                {config[field]?.groupLabelTooltip && (
+                  <span className="top-2px position-relative text-normal">
+                    <Tooltip
+                      label={config[field]?.groupLabelTooltip!}
+                      position="right"
+                      className="margin-left-05"
+                    >
+                      <Icon.Info className="text-base-light" />
+                    </Tooltip>
+                  </span>
+                )}
+              </div>
+            )}
 
             {/* Checks if questions have config to be displayed side by side */}
             {config[field]?.adjacentPositioning ? (

@@ -13,6 +13,7 @@ type FavoritesModelType = GetFavoritesQuery['modelPlanCollection'][0];
 type ModelPlansTableProps = {
   favorites: FavoritesModelType[];
   removeFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
+  toTaskList?: boolean;
 };
 
 /**
@@ -23,7 +24,8 @@ type ModelPlansTableProps = {
 
 const FavoritesTable = ({
   favorites,
-  removeFavorite
+  removeFavorite,
+  toTaskList = false
 }: ModelPlansTableProps) => {
   const columns: any = useMemo(() => {
     return [
@@ -37,13 +39,14 @@ const FavoritesTable = ({
                 key={row.original.id}
                 modelPlan={row.original}
                 removeFavorite={removeFavorite}
+                toTaskList={toTaskList}
               />
             </CardGroup>
           );
         }
       }
     ];
-  }, [removeFavorite]);
+  }, [removeFavorite, toTaskList]);
 
   const {
     getTableProps,

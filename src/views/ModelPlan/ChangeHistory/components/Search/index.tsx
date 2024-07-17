@@ -30,6 +30,7 @@ const Search = ({
     <>
       {/* Search bar */}
       <GlobalClientFilter
+        globalFilter={query}
         setGlobalFilter={setQuery}
         tableID="table-id"
         tableName="table-name"

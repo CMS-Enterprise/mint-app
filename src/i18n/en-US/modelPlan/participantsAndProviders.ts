@@ -40,6 +40,15 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       STATE_MEDICAID_AGENCIES: 'State Medicaid agencies',
       OTHER: 'Other'
     },
+    optionsLabels: {
+      MEDICARE_PROVIDERS:
+        'Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.'
+    },
+    tooltips: {
+      MEDICARE_PROVIDERS:
+        'Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.'
+    },
+
     optionsRelatedInfo: {
       MEDICARE_PROVIDERS: 'medicareProviderType',
       STATES: 'statesEngagement',
@@ -134,6 +143,8 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Are the participants in CMMI models now?',
     sublabel:
       'If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.',
+    questionTooltip:
+      'If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 1.06,
@@ -160,7 +171,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'model_application_level',
     label: 'At what level will the model apply?',
     sublabel:
-      '(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)',
+      '(e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)',
+    questionTooltip:
+      '(e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)',
+
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 1.08,
@@ -248,6 +262,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       NA: 'Not applicable'
     },
     optionsLabels: {
+      NOFO: 'CMMI writes, Office of General Council (OGC) reviews and approves'
+    },
+    tooltips: {
       NOFO: 'CMMI writes, Office of General Council (OGC) reviews and approves'
     },
     optionsRelatedInfo: {

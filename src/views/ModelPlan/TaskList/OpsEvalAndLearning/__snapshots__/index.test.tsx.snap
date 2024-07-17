@@ -330,7 +330,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             One contractor to support implementation
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -350,7 +350,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             May have separate contractors for different implementation functions
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -370,7 +370,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             Do not plan to use an implemenation contractor
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -390,7 +390,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div

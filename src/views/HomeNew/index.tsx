@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
@@ -12,11 +12,14 @@ import {
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import {
+  ModelPlanFilter,
+  useGetFavoritesQuery,
   useGetHomepageSettingsQuery,
   ViewCustomizationType
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import FavoritesTable from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
@@ -24,13 +27,18 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
+import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
 import Landing from 'views/Landing';
-import ModelPlansTable from 'views/ModelPlan/Table';
+import ModelPlansTable from 'views/ModelPlan/HomeTable';
+
+import ModelsBySolutions from './components/ModelsBySolutions';
 
 import './index.scss';
+
+export type UpdateFavoriteProps = 'addFavorite' | 'removeFavorite';
 
 // TODO: Rename once old home is removed
 const HomeNew = () => {
@@ -51,22 +59,54 @@ const HomeNew = () => {
 
   const { data, loading } = useGetHomepageSettingsQuery();
 
+  const operationalSolutionKeys =
+    data?.userViewCustomization.possibleOperationalSolutions || [];
+
+  const {
+    data: favoritesData,
+    loading: favoritesLoading,
+    refetch
+  } = useGetFavoritesQuery({
+    variables: {
+      filter: ModelPlanFilter.INCLUDE_ALL,
+      isMAC: true
+    }
+  });
+
+  const favorites = favoritesData?.modelPlanCollection.filter(
+    modelPlan => modelPlan.isFavorite
+  );
+
+  const favoriteMutations = useFavoritePlan();
+
+  const handleUpdateFavorite = (
+    modelPlanID: string,
+    type: UpdateFavoriteProps
+  ) => {
+    favoriteMutations[type]({
+      variables: {
+        modelPlanID
+      }
+    }).then(() => refetch());
+  };
+
   const homepageComponents: Record<ViewCustomizationType, JSX.Element> = {
     [ViewCustomizationType.MY_MODEL_PLANS]: (
       <>
         <Divider className="margin-y-6" />
 
         <h2 className="margin-top-0 margin-bottom-2">
-          {t('requestsTable.basic.heading')}
+          {t(`settings.${ViewCustomizationType.MY_MODEL_PLANS}.heading`)}
         </h2>
 
-        <p>{t('requestsTable.basic.subheading')}</p>
+        <p>
+          {t(`settings.${ViewCustomizationType.MY_MODEL_PLANS}.description`)}
+        </p>
 
         <ModelPlansTable
-          type="home"
-          userModels
+          type={ViewCustomizationType.MY_MODEL_PLANS}
+          canSearch={false}
           isAssessment={isAssessment(userGroups, flags)}
-          isMAC={false}
         />
       </>
     ),
@@ -74,19 +114,97 @@ const HomeNew = () => {
       <>
         <Divider className="margin-y-6" />
 
-        <h2 className="margin-top-0">{t('requestsTable.admin.heading')}</h2>
+        <h2 className="margin-top-0">
+          {t(`settings.${ViewCustomizationType.ALL_MODEL_PLANS}.heading`)}
+        </h2>
 
         <ModelPlansTable
-          type="home"
-          userModels={false}
+          type={ViewCustomizationType.ALL_MODEL_PLANS}
           isAssessment={isAssessment(userGroups, flags)}
-          isMAC={false}
         />
       </>
     ),
-    [ViewCustomizationType.FOLLOWED_MODELS]: <></>,
-    [ViewCustomizationType.MODELS_WITH_CR_TDL]: <></>,
-    [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: <></>
+    [ViewCustomizationType.FOLLOWED_MODELS]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(`settings.${ViewCustomizationType.FOLLOWED_MODELS}.heading`)}
+        </h2>
+
+        <p>
+          {t(`settings.${ViewCustomizationType.FOLLOWED_MODELS}.description`)}
+        </p>
+
+        <>
+          {favoritesLoading && <PageLoading />}
+          {!favoritesLoading && favorites && favorites?.length > 0 && (
+            <FavoritesTable
+              favorites={favorites || []}
+              removeFavorite={handleUpdateFavorite}
+              toTaskList
+            />
+          )}
+          {!favoritesLoading && !favorites?.length && (
+            <Alert
+              type="info"
+              heading={t(
+                `settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsHeading`
+              )}
+              className="margin-y-2"
+            >
+              <Trans
+                i18nKey={`customHome:settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsDescription`}
+                components={{
+                  star: <Icon.StarOutline size={3} style={{ top: '6px' }} />
+                }}
+              />
+            </Alert>
+          )}
+        </>
+      </>
+    ),
+    [ViewCustomizationType.MODELS_WITH_CR_TDL]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(`settings.${ViewCustomizationType.MODELS_WITH_CR_TDL}.heading`)}
+        </h2>
+
+        <p>
+          {t(
+            `settings.${ViewCustomizationType.MODELS_WITH_CR_TDL}.description`
+          )}
+        </p>
+
+        <ModelPlansTable
+          type={ViewCustomizationType.MODELS_WITH_CR_TDL}
+          isAssessment={isAssessment(userGroups, flags)}
+        />
+      </>
+    ),
+    [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(
+            `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.heading`
+          )}
+        </h2>
+
+        {operationalSolutionKeys.length > 0 && (
+          <p>
+            {t(
+              `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.description`
+            )}
+          </p>
+        )}
+
+        <ModelsBySolutions operationalSolutionKeys={operationalSolutionKeys} />
+      </>
+    )
   };
 
   const renderView = () => {
@@ -98,10 +216,10 @@ const HomeNew = () => {
             {message}
 
             <Grid data-testid="homepage">
-              <Grid row>
-                <Grid tablet={{ col: 8 }}>
+              <Grid row className="padding-top-4">
+                <Grid desktop={{ col: 9 }}>
                   <div>
-                    <PageHeading className="margin-bottom-1">
+                    <PageHeading className="margin-bottom-1 margin-top-0">
                       {t('title')}
                     </PageHeading>
 
@@ -113,8 +231,8 @@ const HomeNew = () => {
                   </div>
                 </Grid>
 
-                <Grid tablet={{ col: 4 }}>
-                  <Card className="margin-top-4 margin-bottom-0 home__card display-flex">
+                <Grid desktop={{ col: 3 }}>
+                  <Card className="margin-y-0 home__card display-flex">
                     <p className="text-bold margin-top-0">
                       {t('customizeHomepage')}
                     </p>

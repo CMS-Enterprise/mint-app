@@ -13,7 +13,7 @@ import (
 func (suite *ResolverSuite) TestUserAccountGetByUsername() {
 	username := "USER NUMBER 1"
 
-	princ1 := getTestPrincipal(suite.testConfigs.Store, username)
+	princ1 := suite.getTestPrincipal(suite.testConfigs.Store, username)
 
 	account, err := UserAccountGetByUsername(suite.testConfigs.Logger, suite.testConfigs.Store, username)
 	suite.NoError(err)
@@ -24,11 +24,11 @@ func (suite *ResolverSuite) TestUserAccountGetByUsername() {
 
 // UserAccountGetByIDLOADER returns a user account by it's internal ID, utilizing a data loader
 func (suite *ResolverSuite) TestUserAccountGetByIDLOADER() {
-	princ1 := getTestPrincipal(suite.testConfigs.Store, "USER NUMBER 1")
-	princ2 := getTestPrincipal(suite.testConfigs.Store, "USER NUMBER 2")
-	princ3 := getTestPrincipal(suite.testConfigs.Store, "TEST")
-	princ4 := getTestPrincipal(suite.testConfigs.Store, "COLB")
-	princ5 := getTestPrincipal(suite.testConfigs.Store, "BTMN")
+	princ1 := suite.getTestPrincipal(suite.testConfigs.Store, "USER NUMBER 1")
+	princ2 := suite.getTestPrincipal(suite.testConfigs.Store, "USER NUMBER 2")
+	princ3 := suite.getTestPrincipal(suite.testConfigs.Store, "TEST")
+	princ4 := suite.getTestPrincipal(suite.testConfigs.Store, "COLB")
+	princ5 := suite.getTestPrincipal(suite.testConfigs.Store, "BTMN")
 
 	princArray := []*authentication.ApplicationPrincipal{princ1, princ2, princ3, princ4, princ5}
 

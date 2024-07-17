@@ -211,6 +211,8 @@ export const basics: TranslationBasics = {
     label: 'Goal',
     sublabel:
       'Please include the high level goal of the program and a description of the project.',
+    questionTooltip:
+      'The high level goal of the program and a description of the project.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 2.04,
@@ -327,6 +329,9 @@ export const basics: TranslationBasics = {
       position: 'left',
       adjacentField: 'performancePeriodEnds'
     },
+    groupLabel: 'Performance period',
+    groupLabelTooltip:
+      'When the model will be active beginning with the go-live date',
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CCW,
@@ -386,6 +391,8 @@ export const basics: TranslationBasics = {
       'If timelines are tight, might there be pieces of the model that can be phased in over time?',
     sublabel:
       'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
+    questionTooltip:
+      'That is, the basic model would start at the earliest possible date, but additional facets could be phased in at a later quarter.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 3.11,
@@ -481,7 +488,7 @@ export const basicsMisc: Record<string, string> = {
   highLevelTimeline: 'Anticipated high level timeline',
   clearance: 'Clearance',
   clearanceInfo:
-    'When you think you’ll begin internal (CMMI) clearance through when you’ll complete OMB/ASRF clearance',
+    'When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance',
   applicationPeriod: 'Application period',
   demonstrationPerformance: 'Performance period',
   demonstrationPerformanceInfo:

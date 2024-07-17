@@ -36,13 +36,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--what-stakeholders-do-you-plan-to-communicate-with margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               What stakeholders do you plan to communicate with?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -83,13 +83,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -110,13 +110,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--do-you-plan-to-use-a-helpdesk margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Do you plan to use a helpdesk?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -137,13 +137,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -164,13 +164,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--what-contractors-will-support-your-model margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               What contractors will support your model?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -211,13 +211,55 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--in-what-capacity-will-they-support-your-model margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               In what capacity will they support your model?
-            </p>
+              <span
+                class="text-normal line-height-sans-2 margin-left-1 position-relative"
+              >
+                <span
+                  class="usa-tooltip top-2px"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-550000"
+                    class="usa-tooltip__trigger mint-no-print"
+                    data-testid="triggerElement"
+                    position="right"
+                    tabindex="0"
+                    title=""
+                    wrapperclasses="top-2px"
+                  >
+                    <svg
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-550000"
+                    role="tooltip"
+                    title="(implementation, data analysis, quality, etc.)"
+                  >
+                    (implementation, data analysis, quality, etc.)
+                  </span>
+                </span>
+              </span>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -238,13 +280,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -270,13 +312,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--are-you-planning-to-use-iddoc-support margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Are you planning to use IDDOC support?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -297,13 +339,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -324,13 +366,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--are-technical-contacts-identified margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Are technical contacts identified?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -359,13 +401,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -386,13 +428,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--will-you-collect-participant-information margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will you collect participant information?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -413,13 +455,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -445,13 +487,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--icd-owner margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               ICD owner
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -472,13 +514,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--draft-icd-required-by margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Draft ICD required by
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -505,13 +547,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--user-acceptance-testing--uat----test-data-needs margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               User Acceptance Testing (UAT) – test data needs
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -532,13 +574,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--stc---test-data-needs margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               STC – test data needs
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -559,13 +601,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--define-the-testing-timelines margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Define the testing timelines
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -586,13 +628,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -618,13 +660,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--what-types-of-files margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               What types of files?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -659,13 +701,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--what-types-of-responses margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               What types of responses?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -686,13 +728,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--frequency-of-files margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Frequency of files?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -713,13 +755,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--full-time-or-incremental margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Full time or incremental?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -740,13 +782,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--are-electronic-file-transfer--eft--and-connectivity-set-up margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Are Electronic File Transfer (EFT) and connectivity set up?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -767,13 +809,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--will-unsolicited-adjustments-be-included margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will unsolicited adjustments be included?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -794,13 +836,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--are-data-flow-diagrams-needed margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Are data flow diagrams needed?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -821,13 +863,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--will-you-produce-benefit-enhancement-files margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will you produce Benefit Enhancement Files?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -848,13 +890,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--file-naming-conventions margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               File naming conventions
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -875,13 +917,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -902,13 +944,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--will-you-establish-a-benchmark-to-capture-performance margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will you establish a benchmark to capture performance?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -929,13 +971,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -956,13 +998,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--will-you-compute-performance-scores margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will you compute performance scores?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -983,13 +1025,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1018,13 +1060,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               class="read-only-section read-only-section--will-you-make-risk-adjustments-to-performance-scores margin-bottom-3"
             >
               <div
-                class="display-flex flex-align-center"
+                class="read-only-section--question"
               >
-                <p
+                <span
                   class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   Will you make risk adjustments to performance scores?
-                </p>
+                </span>
               </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1046,13 +1088,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               class="read-only-section read-only-section--will-you-make-risk-adjustments-to-feedback-results margin-bottom-3"
             >
               <div
-                class="display-flex flex-align-center"
+                class="read-only-section--question"
               >
-                <p
+                <span
                   class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   Will you make risk adjustments to feedback results?
-                </p>
+                </span>
               </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1086,13 +1128,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               class="read-only-section read-only-section--will-you-make-risk-adjustments-to-payments margin-bottom-3"
             >
               <div
-                class="display-flex flex-align-center"
+                class="read-only-section--question"
               >
-                <p
+                <span
                   class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   Will you make risk adjustments to payments?
-                </p>
+                </span>
               </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1114,13 +1156,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               class="read-only-section read-only-section--will-you-make-risk-adjustments-to-others margin-bottom-3"
             >
               <div
-                class="display-flex flex-align-center"
+                class="read-only-section--question"
               >
-                <p
+                <span
                   class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   Will you make risk adjustments to others?
-                </p>
+                </span>
               </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1146,13 +1188,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1181,13 +1223,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               class="read-only-section read-only-section--will-participants-be-able-to-appeal-performance-scores margin-bottom-3"
             >
               <div
-                class="display-flex flex-align-center"
+                class="read-only-section--question"
               >
-                <p
+                <span
                   class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   Will participants be able to appeal performance scores?
-                </p>
+                </span>
               </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1209,13 +1251,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               class="read-only-section read-only-section--will-participants-be-able-to-appeal-feedback-results margin-bottom-3"
             >
               <div
-                class="display-flex flex-align-center"
+                class="read-only-section--question"
               >
-                <p
+                <span
                   class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   Will participants be able to appeal feedback results?
-                </p>
+                </span>
               </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1249,13 +1291,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               class="read-only-section read-only-section--will-participants-be-able-to-appeal-payments margin-bottom-3"
             >
               <div
-                class="display-flex flex-align-center"
+                class="read-only-section--question"
               >
-                <p
+                <span
                   class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   Will participants be able to appeal payments?
-                </p>
+                </span>
               </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1277,13 +1319,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
               class="read-only-section read-only-section--will-participants-be-able-to-appeal-others margin-bottom-3"
             >
               <div
-                class="display-flex flex-align-center"
+                class="read-only-section--question"
               >
-                <p
+                <span
                   class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                 >
                   Will participants be able to appeal others?
-                </p>
+                </span>
               </div>
               <div
                 class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1309,13 +1351,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1336,13 +1378,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--what-type-of-evaluation-approach-are-you-considering margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               What type of evaluation approach are you considering?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -1383,13 +1425,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1410,13 +1452,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--is-chronic-conditions-warehouse--ccw--involved-in-the-model margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Is Chronic Conditions Warehouse (CCW) involved in the model?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -1457,13 +1499,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1484,13 +1526,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--what-data-do-you-need-to-monitor-the-model margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               What data do you need to monitor the model?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -1537,13 +1579,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1564,13 +1606,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--what-data-will-you-send-to-participants margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               What data will you send to participants?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -1617,13 +1659,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1644,13 +1686,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--does-the-model-require-that-identifiable-claim-and-claim-line-feed--cclfs--data-need-to-be-shared-with-participants margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1671,13 +1713,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1724,13 +1766,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="read-only-section read-only-section--will-you-need-to-send-files-between-the-ccw-and-other-applications margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
+              <span
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Will you need to send files between the CCW and other applications?
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1751,13 +1793,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
+              <span
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1778,13 +1820,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="read-only-section read-only-section--do-you-know-which-applications-will-be-on-the-other-sides-of-the-file-transfers--if-so--please-specify margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
+              <span
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Do you know which applications will be on the other sides of the file transfers? If so, please specify.
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1813,13 +1855,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
+              <span
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1840,13 +1882,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="read-only-section read-only-section--will-you-use-the-ccw-to-distribute-files-to-and-from-model-participants margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
+              <span
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Will you use the CCW to distribute files to and from model participants?
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -1867,13 +1909,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
+              <span
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -4383,13 +4425,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
+              <span
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -4416,13 +4458,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
             class="read-only-section read-only-section--notes margin-bottom-3"
           >
             <div
-              class="display-flex flex-align-center"
+              class="read-only-section--question"
             >
-              <p
+              <span
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Notes
-              </p>
+              </span>
             </div>
             <div
               class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -4447,13 +4489,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -4479,13 +4521,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--data-sharing-starts margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Data sharing starts
-            </p>
+            </span>
           </div>
           <em
             class="text-base"
@@ -4509,13 +4551,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--how-often-do-you-anticipate-sharing-data margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               How often do you anticipate sharing data?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -4547,13 +4589,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -4574,13 +4616,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--data-collection-starts margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Data collection starts
-            </p>
+            </span>
           </div>
           <em
             class="text-base"
@@ -4604,13 +4646,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--how-often-do-you-anticipate-collecting-data margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               How often do you anticipate collecting data?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -4642,13 +4684,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -4669,13 +4711,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--quality-reporting-starts margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Quality reporting starts
-            </p>
+            </span>
           </div>
           <em
             class="text-base"
@@ -4699,13 +4741,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -4726,13 +4768,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--how-frequently-does-quality-reporting-happen margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               How frequently does quality reporting happen?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -4770,13 +4812,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--will-the-model-have-a-learning-strategy margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Will the model have a learning strategy?
-            </p>
+            </span>
           </div>
           <ul
             class="margin-y-0 padding-left-3"
@@ -4823,13 +4865,13 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--notes margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               Notes
-            </p>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
@@ -4850,13 +4892,55 @@ exports[`Read Only Model Plan Summary -- Operations, Evaluation, and Learning > 
           class="read-only-section read-only-section--what-challenges-do-you-anticipate-during-model-design-and-implementation margin-bottom-3"
         >
           <div
-            class="display-flex flex-align-center"
+            class="read-only-section--question"
           >
-            <p
+            <span
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
-              What challenges do you anticipate during Model design and implementation?
-            </p>
+              What challenges do you anticipate during model design and implementation?
+              <span
+                class="text-normal line-height-sans-2 margin-left-1 position-relative"
+              >
+                <span
+                  class="usa-tooltip top-2px"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-550000"
+                    class="usa-tooltip__trigger mint-no-print"
+                    data-testid="triggerElement"
+                    position="right"
+                    tabindex="0"
+                    title=""
+                    wrapperclasses="top-2px"
+                  >
+                    <svg
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-550000"
+                    role="tooltip"
+                    title="Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability."
+                  >
+                    Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.
+                  </span>
+                </span>
+              </span>
+            </span>
           </div>
           <div
             class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
