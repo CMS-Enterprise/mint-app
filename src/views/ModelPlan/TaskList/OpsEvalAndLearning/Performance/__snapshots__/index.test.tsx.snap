@@ -522,7 +522,7 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
           Will participants be able to appeal the following?
         </label>
         <div
-          class="usa-alert usa-alert--info usa-alert--slim flex"
+          class="usa-alert usa-alert--info usa-alert--slim icon-padding flex"
           data-testid="alert"
         >
           <div

@@ -649,7 +649,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CPI 
       Timeline
     </h2>
     <div
-      class="usa-alert usa-alert--info flex line-height-body-5"
+      class="usa-alert usa-alert--info icon-padding flex line-height-body-5"
       data-testid="alert"
     >
       <div
@@ -1061,7 +1061,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Elec
       Timeline
     </h2>
     <div
-      class="usa-alert usa-alert--info flex line-height-body-5"
+      class="usa-alert usa-alert--info icon-padding flex line-height-body-5"
       data-testid="alert"
     >
       <div
@@ -1403,7 +1403,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
       Timeline
     </h2>
     <div
-      class="usa-alert usa-alert--info flex line-height-body-5"
+      class="usa-alert usa-alert--info icon-padding flex line-height-body-5"
       data-testid="alert"
     >
       <div
@@ -1749,7 +1749,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Inte
       Timeline
     </h2>
     <div
-      class="usa-alert usa-alert--info flex line-height-body-5"
+      class="usa-alert usa-alert--info icon-padding flex line-height-body-5"
       data-testid="alert"
     >
       <div
@@ -2134,7 +2134,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Medi
       Timeline
     </h2>
     <div
-      class="usa-alert usa-alert--info flex line-height-body-5"
+      class="usa-alert usa-alert--info icon-padding flex line-height-body-5"
       data-testid="alert"
     >
       <div

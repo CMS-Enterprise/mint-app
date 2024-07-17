@@ -695,7 +695,7 @@ exports[`Get Access Article > matches snapshot 1`] = `
               id="questions-or-issues"
             >
               <div
-                class="usa-alert usa-alert--info flex margin-bottom-2"
+                class="usa-alert usa-alert--info icon-padding flex margin-bottom-2"
                 data-testid="alert"
               >
                 <div
