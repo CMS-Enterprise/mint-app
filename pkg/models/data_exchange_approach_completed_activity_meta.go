@@ -10,6 +10,7 @@ import (
 // is relevant to completing a Data Exchange Approach
 type DataExchangeApproachCompletedActivityMeta struct {
 	ActivityMetaBaseStruct
+	// TODO: (data_exchange) Revisit this, we probably need model plan id on the struct as well.
 	DataExchangeApproachID uuid.UUID `json:"dataExchangeApproachID"`
 	MarkedCompleteBy       uuid.UUID `json:"markedCompleteBy"`
 }

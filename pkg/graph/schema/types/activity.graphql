@@ -118,6 +118,7 @@ type DataExchangeApproachCompletedActivityMeta {
   version: Int!
   type: ActivityType!
   dataExchangeApproachID: UUID!
+  # TODO: (data_exchange) Add a resolver to fetch the DataExchange Model as well
   markedCompleteBy: UUID!
   markedCompleteByUserAccount: UserAccount!
 }

@@ -62,6 +62,7 @@ func (r *userNotificationPreferencesResolver) DatesChanged(ctx context.Context, 
 
 // DataExchangeApproachCompleted is the resolver for the dataExchangeApproachCompleted field.
 func (r *userNotificationPreferencesResolver) DataExchangeApproachCompleted(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	//  TODO: (data_exchange) Revisit this, it should be auto mapped.
 	return obj.DataExchangeApproachCompleted, nil
 }
 
