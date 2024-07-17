@@ -226,7 +226,7 @@ const modelsWithStatus = (
     return models;
   }
   return models.filter(
-    model => model.modelPlan.statusPlannedActiveOrEnded === status
+    model => model.modelPlan.modelBySolutionStatus === status
   );
 };
 

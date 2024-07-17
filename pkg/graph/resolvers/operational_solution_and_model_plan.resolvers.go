@@ -12,8 +12,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// StatusPlannedActiveOrEnded is the resolver for the statusPlannedActiveOrEnded field.
-func (r *modelPlanResolver) StatusPlannedActiveOrEnded(ctx context.Context, obj *models.ModelPlan) (models.ModelBySolutionStatus, error) {
+// ModelBySolutionStatus is the resolver for the modelBySolutionStatus field.
+func (r *modelPlanResolver) ModelBySolutionStatus(ctx context.Context, obj *models.ModelPlan) (models.ModelBySolutionStatus, error) {
 	return ModelPlanByOperationalSolutionStatusPlannedActiveOrEnded(obj.Status), nil
 }
 

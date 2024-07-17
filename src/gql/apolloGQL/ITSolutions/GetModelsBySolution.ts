@@ -9,7 +9,7 @@ export default gql(/* GraphQL */ `
         id
         modelName
         status
-        statusPlannedActiveOrEnded
+        modelBySolutionStatus
         basics {
           id
           modelCategory

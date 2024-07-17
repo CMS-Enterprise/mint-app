@@ -77,7 +77,7 @@ const ModelsBySolutionsBanner = ({
                   {
                     solutionModels.filter(
                       solution =>
-                        solution.modelPlan.statusPlannedActiveOrEnded ===
+                        solution.modelPlan.modelBySolutionStatus ===
                         ModelBySolutionStatus.PLANNED
                     ).length
                   }
@@ -98,7 +98,7 @@ const ModelsBySolutionsBanner = ({
                   {
                     solutionModels.filter(
                       solution =>
-                        solution.modelPlan.statusPlannedActiveOrEnded ===
+                        solution.modelPlan.modelBySolutionStatus ===
                         ModelBySolutionStatus.ACTIVE
                     ).length
                   }
@@ -119,7 +119,7 @@ const ModelsBySolutionsBanner = ({
                   {
                     solutionModels.filter(
                       solution =>
-                        solution.modelPlan.statusPlannedActiveOrEnded ===
+                        solution.modelPlan.modelBySolutionStatus ===
                         ModelBySolutionStatus.ENDED
                     ).length
                   }
