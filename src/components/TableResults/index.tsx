@@ -11,7 +11,6 @@ type TableResultsProps = {
   pageIndex: number;
   pageSize: number;
   filteredRowLength: number;
-  currentRowLength?: number;
   rowLength: number;
   showNoResults?: boolean;
 };
@@ -32,7 +31,6 @@ const TableResults = ({
   pageIndex,
   pageSize,
   filteredRowLength,
-  currentRowLength,
   rowLength,
   showNoResults = true
 }: TableResultsProps) => {

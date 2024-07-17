@@ -147,7 +147,6 @@ const ModelsBySolutionTable = ({
               pageIndex={pageOffset / itemsPerPage}
               pageSize={itemsPerPage}
               filteredRowLength={filteredModels.length}
-              currentRowLength={currentModels.length}
               rowLength={modelsBySolution.length}
             />
           </div>
