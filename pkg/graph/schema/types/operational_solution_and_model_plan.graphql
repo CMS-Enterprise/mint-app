@@ -1,11 +1,12 @@
-enum StatusPlannedActiveOrEnded {
+enum ModelBySolutionStatus {
   PLANNED
   ACTIVE
   ENDED
+  OTHER
 }
 
 extend type ModelPlan {
-  statusPlannedActiveOrEnded: StatusPlannedActiveOrEnded!
+  statusPlannedActiveOrEnded: ModelBySolutionStatus!
 }
 
 type ModelPlanAndOperationalSolution {

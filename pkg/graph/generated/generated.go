@@ -1309,7 +1309,7 @@ type ModelPlanResolver interface {
 	NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error)
 	OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error)
 	OpSolutionLastModifiedDts(ctx context.Context, obj *models.ModelPlan) (*time.Time, error)
-	StatusPlannedActiveOrEnded(ctx context.Context, obj *models.ModelPlan) (model.StatusPlannedActiveOrEnded, error)
+	StatusPlannedActiveOrEnded(ctx context.Context, obj *models.ModelPlan) (models.ModelBySolutionStatus, error)
 }
 type ModelPlanAndOperationalSolutionResolver interface {
 	OperationalSolution(ctx context.Context, obj *models.ModelPlanAndOperationalSolution) (*models.OperationalSolution, error)
@@ -9512,14 +9512,15 @@ extend type Mutation {
   updateOperationalSolution(id: UUID!, changes: OperationalSolutionChanges!): OperationalSolution!
   @hasRole(role: MINT_USER)
 }`, BuiltIn: false},
-	{Name: "../schema/types/operational_solution_and_model_plan.graphql", Input: `enum StatusPlannedActiveOrEnded {
+	{Name: "../schema/types/operational_solution_and_model_plan.graphql", Input: `enum ModelBySolutionStatus {
   PLANNED
   ACTIVE
   ENDED
+  OTHER
 }
 
 extend type ModelPlan {
-  statusPlannedActiveOrEnded: StatusPlannedActiveOrEnded!
+  statusPlannedActiveOrEnded: ModelBySolutionStatus!
 }
 
 type ModelPlanAndOperationalSolution {
@@ -22119,9 +22120,9 @@ func (ec *executionContext) _ModelPlan_statusPlannedActiveOrEnded(ctx context.Co
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.StatusPlannedActiveOrEnded)
+	res := resTmp.(models.ModelBySolutionStatus)
 	fc.Result = res
-	return ec.marshalNStatusPlannedActiveOrEnded2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatusPlannedActiveOrEnded(ctx, field.Selections, res)
+	return ec.marshalNModelBySolutionStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelBySolutionStatus(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_statusPlannedActiveOrEnded(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -22131,7 +22132,7 @@ func (ec *executionContext) fieldContext_ModelPlan_statusPlannedActiveOrEnded(ct
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type StatusPlannedActiveOrEnded does not have child fields")
+			return nil, errors.New("field of type ModelBySolutionStatus does not have child fields")
 		},
 	}
 	return fc, nil
@@ -81486,6 +81487,22 @@ func (ec *executionContext) marshalNMintUses2githubᚗcomᚋcmsgovᚋmintᚑapp�
 	return v
 }
 
+func (ec *executionContext) unmarshalNModelBySolutionStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelBySolutionStatus(ctx context.Context, v interface{}) (models.ModelBySolutionStatus, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ModelBySolutionStatus(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNModelBySolutionStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelBySolutionStatus(ctx context.Context, sel ast.SelectionSet, v models.ModelBySolutionStatus) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
 func (ec *executionContext) unmarshalNModelCategory2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, v interface{}) (models.ModelCategory, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.ModelCategory(tmp)
@@ -83996,16 +84013,6 @@ func (ec *executionContext) marshalNStatesAndTerritories2ᚕgithubᚗcomᚋcmsgo
 	}
 
 	return ret
-}
-
-func (ec *executionContext) unmarshalNStatusPlannedActiveOrEnded2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatusPlannedActiveOrEnded(ctx context.Context, v interface{}) (model.StatusPlannedActiveOrEnded, error) {
-	var res model.StatusPlannedActiveOrEnded
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNStatusPlannedActiveOrEnded2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStatusPlannedActiveOrEnded(ctx context.Context, sel ast.SelectionSet, v model.StatusPlannedActiveOrEnded) graphql.Marshaler {
-	return v
 }
 
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {

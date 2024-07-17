@@ -1,6 +1,10 @@
 package resolvers
 
 import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -140,4 +144,51 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithDifferentSolutionTypes() {
 	suite.Len(modelPlanAndOpSols, 1)
 	suite.EqualValues(mpB.ID, modelPlanAndOpSols[0].ModelPlanID)
 	suite.EqualValues(opSolB.ID, modelPlanAndOpSols[0].OperationalSolutionID)
+}
+
+func TestModelPlanByOperationalSolutionStatusPlannedActiveOrEnded(t *testing.T) {
+	assert := assert.New(t)
+
+	testCases := []struct {
+		testName             string
+		inputStatus          models.ModelStatus
+		expectedOutputStatus models.ModelBySolutionStatus
+	}{
+		{
+			testName:             "Active_To_Active",
+			inputStatus:          models.ModelStatusActive,
+			expectedOutputStatus: models.MbSSActive,
+		},
+		{
+			testName:             "Ended_To_Ended",
+			inputStatus:          models.ModelStatusPlanDraft,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "Cancelled_To_Other",
+			inputStatus:          models.ModelStatusCanceled,
+			expectedOutputStatus: models.MbSSOther,
+		},
+		{
+			testName:             "Paused_To_Other",
+			inputStatus:          models.ModelStatusPaused,
+			expectedOutputStatus: models.MbSSOther,
+		},
+		// The remaining statuses all go to Planned
+		{
+			testName:             "Draft_To_Planned",
+			inputStatus:          models.ModelStatusPlanDraft,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		//TODO: Expand the test cases here
+	}
+
+	for _, test := range testCases {
+		t.Run(test.testName, func(t *testing.T) {
+			outputStatus := ModelPlanByOperationalSolutionStatusPlannedActiveOrEnded(test.inputStatus)
+			assert.EqualValues(test.expectedOutputStatus, outputStatus, "Expected status did not match")
+		})
+
+	}
+
 }

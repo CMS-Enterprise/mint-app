@@ -568,6 +568,13 @@ export enum MintUses {
   VIEW_MODEL = 'VIEW_MODEL'
 }
 
+export enum ModelBySolutionStatus {
+  ACTIVE = 'ACTIVE',
+  ENDED = 'ENDED',
+  OTHER = 'OTHER',
+  PLANNED = 'PLANNED'
+}
+
 export enum ModelCategory {
   ACCOUNTABLE_CARE = 'ACCOUNTABLE_CARE',
   DISEASE_SPECIFIC_AND_EPISODIC = 'DISEASE_SPECIFIC_AND_EPISODIC',
@@ -617,7 +624,7 @@ export type ModelPlan = {
   payments: PlanPayments;
   prepareForClearance: PrepareForClearance;
   status: ModelStatus;
-  statusPlannedActiveOrEnded: StatusPlannedActiveOrEnded;
+  statusPlannedActiveOrEnded: ModelBySolutionStatus;
   tdls: Array<PlanTdl>;
 };
 
@@ -2794,12 +2801,6 @@ export enum StatesAndTerritories {
   WI = 'WI',
   WV = 'WV',
   WY = 'WY'
-}
-
-export enum StatusPlannedActiveOrEnded {
-  ACTIVE = 'ACTIVE',
-  ENDED = 'ENDED',
-  PLANNED = 'PLANNED'
 }
 
 export type Subscription = {
