@@ -133,7 +133,6 @@ func (s *Seeder) SeedData() {
 	)
 	s.existingModelLinkCreate(planWithBasics, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[3].ID, links[4].ID}, nil)
 	s.updateModelPlan(planWithBasics, map[string]interface{}{
-		"category":     models.MCAccountableCare,
 		"abbreviation": "basics",
 		"status":       models.ModelStatusActive,
 	})
@@ -167,6 +166,28 @@ func (s *Seeder) SeedData() {
 			TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
 		})
 
+	s.updateModelPlan(planWithCollaborators, map[string]interface{}{
+		"abbreviation": "collab",
+		"status":       models.ModelStatusEnded,
+	})
+
+	planWithCollaboratorsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithCollaborators.ID)
+	if len(planWithBasicsOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		planWithCollaborators,
+		planWithCollaboratorsOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
+
 	s.existingModelLinkCreate(planWithCollaborators, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[4].ID}, nil)
 
 	// Seed a plan with CRs / TDLs
@@ -188,6 +209,28 @@ func (s *Seeder) SeedData() {
 		Note:          &tdlNote,
 	})
 	s.existingModelLinkCreate(planWithCrTDLs, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, nil, []uuid.UUID{planWithCollaborators.ID, planWithBasics.ID})
+
+	s.updateModelPlan(planWithCrTDLs, map[string]interface{}{
+		"abbreviation": "crTDLPlan",
+		"status":       models.ModelStatusAnnounced,
+	})
+
+	planWithCrTDLsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithCrTDLs.ID)
+	if len(planWithCrTDLsOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		planWithCrTDLs,
+		planWithCrTDLsOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	// Seed a plan that is already archived
 	archivedPlan := s.createModelPlan("Archived Plan", "MINT")
