@@ -61,6 +61,6 @@ func DataExchangeApproachUpdate(
 		return nil, err
 	}
 
-	retGeneralCharacteristics, err := store.DataExchangeApproachUpdate(logger, existing)
-	return retGeneralCharacteristics, err
+	retApproach, err := store.DataExchangeApproachUpdate(logger, existing)
+	return retApproach, err
 }
