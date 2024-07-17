@@ -19,12 +19,12 @@ import RelatedArticles from '../_components/RelatedArticles';
 import { ArticleCategories, HelpArticle } from '..';
 
 const DataExchangeApproachHelpArticle = () => {
-  const { t: decT } = useTranslation('dataExchangeConcept');
+  const { t: deaT } = useTranslation('dataExchangeApproach');
 
-  const headingRow: string[] = decT('table.headingRow', {
+  const headingRow: string[] = deaT('table.headingRow', {
     returnObjects: true
   });
-  const rows: string[] = decT('table.rows', {
+  const rows: string[] = deaT('table.rows', {
     returnObjects: true
   });
 
@@ -33,16 +33,16 @@ const DataExchangeApproachHelpArticle = () => {
       <MainContent>
         <GridContainer>
           <Grid>
-            <HelpBreadcrumb text={decT('title')} />
+            <HelpBreadcrumb text={deaT('title')} />
             <PageHeading className="margin-bottom-1">
-              {decT('title')}
+              {deaT('title')}
             </PageHeading>
             <HelpCategoryTag
               type={ArticleCategories.GETTING_STARTED}
               className="margin-bottom-1"
             />
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
-              {decT('description')}
+              {deaT('description')}
             </p>
 
             <Alert
@@ -51,7 +51,7 @@ const DataExchangeApproachHelpArticle = () => {
               noIcon
               className="margin-bottom-6"
             >
-              {decT('alert')}
+              {deaT('alert')}
             </Alert>
 
             <Grid row className="margin-bottom-6">
@@ -76,15 +76,15 @@ const DataExchangeApproachHelpArticle = () => {
                       className="border-bottom padding-y-2 padding-x-2"
                     >
                       <p className="margin-y-0 text-bold line-height-sans-4">
-                        {decT(`table.${row}.category`)}
+                        {deaT(`table.${row}.category`)}
                       </p>
-                      {decT(`table.${row}.description`).includes('<bullet>') ? (
+                      {deaT(`table.${row}.description`).includes('<bullet>') ? (
                         <ul className="margin-y-0 padding-left-0 line-height-sans-4">
-                          {decT(`table.${row}.description`)}
+                          {deaT(`table.${row}.description`)}
                         </ul>
                       ) : (
                         <p className="margin-y-0 line-height-sans-4">
-                          {decT(`table.${row}.description`)}
+                          {deaT(`table.${row}.description`)}
                         </p>
                       )}
                     </Grid>
@@ -95,7 +95,7 @@ const DataExchangeApproachHelpArticle = () => {
                       >
                         <p className="margin-y-0 line-height-sans-4 text-pre-line">
                           <Trans
-                            t={decT}
+                            t={deaT}
                             i18nKey={`table.${row}.exampleAnswer`}
                             components={{
                               bullet: <li className="margin-left-2" />,
@@ -112,11 +112,11 @@ const DataExchangeApproachHelpArticle = () => {
 
             <SummaryBox>
               <SummaryBoxHeading headingLevel="h3">
-                {decT('footerSummaryBox.title')}
+                {deaT('footerSummaryBox.title')}
               </SummaryBoxHeading>
               <SummaryBoxContent>
                 <Trans
-                  t={decT}
+                  t={deaT}
                   i18nKey="footerSummaryBox.body"
                   components={{
                     email1: (
@@ -134,7 +134,7 @@ const DataExchangeApproachHelpArticle = () => {
       </MainContent>
       <div className="margin-top-6 margin-bottom-neg-7">
         <RelatedArticles
-          currentArticle={decT('title')}
+          currentArticle={deaT('title')}
           specificArticles={[
             HelpArticle.TWO_PAGER_MEETING,
             HelpArticle.SIX_PAGER_MEETING,
