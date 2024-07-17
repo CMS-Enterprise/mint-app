@@ -18,7 +18,7 @@ import HelpCategoryTag from '../_components/HelpCategoryTag';
 import RelatedArticles from '../_components/RelatedArticles';
 import { ArticleCategories, HelpArticle } from '..';
 
-const DataExchangeConceptHelpArticle = () => {
+const DataExchangeApproachHelpArticle = () => {
   const { t: decT } = useTranslation('dataExchangeConcept');
 
   const headingRow: string[] = decT('table.headingRow', {
@@ -148,4 +148,4 @@ const DataExchangeConceptHelpArticle = () => {
   );
 };
 
-export default DataExchangeConceptHelpArticle;
+export default DataExchangeApproachHelpArticle;

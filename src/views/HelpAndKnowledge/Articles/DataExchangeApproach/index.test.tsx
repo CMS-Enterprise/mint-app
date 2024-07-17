@@ -2,16 +2,16 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
-import DataExchangeConceptHelpArticle from '.';
+import DataExchangeApproachHelpArticle from '.';
 
 describe('Get Access Article', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
-        initialEntries={['/help-and-knowledge/data-exchange-concept']}
+        initialEntries={['/help-and-knowledge/data-exchange-approach']}
       >
-        <Route path="/help-and-knowledge/data-exchange-concept">
-          <DataExchangeConceptHelpArticle />
+        <Route path="/help-and-knowledge/data-exchange-approach">
+          <DataExchangeApproachHelpArticle />
         </Route>
       </MemoryRouter>
     );
