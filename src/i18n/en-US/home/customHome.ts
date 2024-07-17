@@ -40,9 +40,9 @@ const settings: HomepageSettingsType = {
     heading: 'Models using specific operational solutions',
     description:
       'This tabbed section displays the models using the operational solutions you care about.',
-    noResultsHeading: 'You haven’t been added to any Model Plans yet.',
-    noResultsDescription:
-      'Once you create one or are added as a team member to an existing plan, it will appear here.'
+    noResultsHeading:
+      'It looks like you forgot to select at least one operational solution.',
+    noResultsDescription: 'Select solutions'
   }
 };
 
@@ -112,7 +112,24 @@ const customHome = {
   },
   emptyHome: 'Your homepage looks a little empty.',
   editHomepage: 'Edit homepage settings',
-  customizeHomepage: 'Did you know you can customize this page?'
+  customizeHomepage: 'Did you know you can customize this page?',
+  solutionCard: {
+    status: 'Status',
+    category: 'Category',
+    startDate: 'Start date',
+    endDate: 'End date',
+    tbd: 'To be determined'
+  },
+  noModelSolutionHeading:
+    'There is no record of any models using this solution.',
+  noModelSolutionDescription:
+    'If you believe this is an error, please <report>report a problem</report> or email the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
+  solutionStatus: {
+    total: 'Total',
+    planned: 'Planned',
+    active: 'Active',
+    ended: 'Ended'
+  }
 };
 
 export default customHome;

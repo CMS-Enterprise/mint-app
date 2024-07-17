@@ -37,6 +37,7 @@ export type HomepageSettingsLocationType = {
 
 export type HomepageLocationStateType = {
   homepageSettings: HomepageSettingsLocationType['homepageSettings'];
+  fromHome?: string;
 };
 
 type HomepageSettingsFormType = {
