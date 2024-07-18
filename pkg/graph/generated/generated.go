@@ -11741,6 +11741,7 @@ enum OperationalSolutionKey{
   LDG
   LV
   MDM
+  MDM_NCBP
   MARX
   OTHER_NEW_PROCESS
   OUTLOOK_MAILBOX
