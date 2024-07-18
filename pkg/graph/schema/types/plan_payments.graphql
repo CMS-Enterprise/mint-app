@@ -87,6 +87,8 @@ type PlanPayments {
   payModelDifferentiation:                        String
 
   # Page 3
+  willBePaymentAdjustments: Boolean
+  willBePaymentAdjustmentsNote: String
   creatingDependenciesBetweenServices:     Boolean
   creatingDependenciesBetweenServicesNote: String
   needsClaimsDataCollection:               Boolean
@@ -196,6 +198,8 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   payModelDifferentiation:                        String
 
   # Page 3
+  willBePaymentAdjustments: Boolean
+  willBePaymentAdjustmentsNote: String
   creatingDependenciesBetweenServices:     Boolean
   creatingDependenciesBetweenServicesNote: String
   needsClaimsDataCollection:               Boolean

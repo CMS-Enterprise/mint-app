@@ -2092,6 +2092,7 @@ export type PlanParticipantsAndProviders = {
   gainsharePaymentsNote?: Maybe<Scalars['String']['output']>;
   gainsharePaymentsTrack?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['UUID']['output'];
+  isNewTypeOfProvidersOrSuppliers?: Maybe<Scalars['Boolean']['output']>;
   medicareProviderType?: Maybe<Scalars['String']['output']>;
   modelApplicationLevel?: Maybe<Scalars['String']['output']>;
   modelPlanID: Scalars['UUID']['output'];
@@ -2319,6 +2320,8 @@ export type PlanPayments = {
   waiveBeneficiaryCostSharingNote?: Maybe<Scalars['String']['output']>;
   waiveBeneficiaryCostSharingServiceSpecification?: Maybe<Scalars['String']['output']>;
   waiverOnlyAppliesPartOfPayment?: Maybe<Scalars['Boolean']['output']>;
+  willBePaymentAdjustments?: Maybe<Scalars['Boolean']['output']>;
+  willBePaymentAdjustmentsNote?: Maybe<Scalars['String']['output']>;
   willRecoverPayments?: Maybe<Scalars['Boolean']['output']>;
   willRecoverPaymentsNote?: Maybe<Scalars['String']['output']>;
 };
@@ -2396,6 +2399,8 @@ export type PlanPaymentsChanges = {
   waiveBeneficiaryCostSharingNote?: InputMaybe<Scalars['String']['input']>;
   waiveBeneficiaryCostSharingServiceSpecification?: InputMaybe<Scalars['String']['input']>;
   waiverOnlyAppliesPartOfPayment?: InputMaybe<Scalars['Boolean']['input']>;
+  willBePaymentAdjustments?: InputMaybe<Scalars['Boolean']['input']>;
+  willBePaymentAdjustmentsNote?: InputMaybe<Scalars['String']['input']>;
   willRecoverPayments?: InputMaybe<Scalars['Boolean']['input']>;
   willRecoverPaymentsNote?: InputMaybe<Scalars['String']['input']>;
 };

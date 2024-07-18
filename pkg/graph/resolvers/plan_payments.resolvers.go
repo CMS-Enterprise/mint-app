@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -46,6 +47,11 @@ func (r *planPaymentsResolver) PayType(ctx context.Context, obj *models.PlanPaym
 // PayClaims is the resolver for the payClaims field.
 func (r *planPaymentsResolver) PayClaims(ctx context.Context, obj *models.PlanPayments) ([]models.ClaimsBasedPayType, error) {
 	return models.ConvertEnums[models.ClaimsBasedPayType](obj.PayClaims), nil
+}
+
+// WillBePaymentAdjustmentsNote is the resolver for the willBePaymentAdjustmentsNote field.
+func (r *planPaymentsResolver) WillBePaymentAdjustmentsNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented: WillBePaymentAdjustmentsNote - willBePaymentAdjustmentsNote"))
 }
 
 // NonClaimsPayments is the resolver for the nonClaimsPayments field.
