@@ -238,7 +238,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="usa-alert usa-alert--info usa-alert--slim flex margin-y-4"
+              class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-y-4"
               data-testid="mandatory-fields-alert"
             >
               <div
