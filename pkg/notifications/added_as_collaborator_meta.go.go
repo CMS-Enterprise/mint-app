@@ -10,7 +10,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 )
 
-// ActivityTAddedAsCollaboratorMetaCreate creates an activity for when a User is added as a collaborator for a model plan.
+// ActivityAddedAsCollaboratorCreate creates an activity for when a User is added as a collaborator for a model plan.
 // It also creates all the relevant notifications
 func ActivityAddedAsCollaboratorCreate(
 	ctx context.Context,

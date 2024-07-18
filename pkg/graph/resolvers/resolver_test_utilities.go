@@ -8,7 +8,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/local"
 	"github.com/cmsgov/mint-app/pkg/oktaapi"
-	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
+	"github.com/cmsgov/mint-app/pkg/shared/emailtemplates"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
@@ -124,11 +124,11 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 
 func createAddedAsCollaboratorTemplateCacheHelper(
 	planName string,
-	plan *models.ModelPlan) (*emailTemplates.EmailTemplate, string, string) {
-	templateCache := emailTemplates.NewTemplateCache()
+	plan *models.ModelPlan) (*emailtemplates.EmailTemplate, string, string) {
+	templateCache := emailtemplates.NewTemplateCache()
 	_ = templateCache.LoadTextTemplateFromString("testSubject", "{{.ModelName}}'s Test")
 	_ = templateCache.LoadHTMLTemplateFromString("testBody", "{{.ModelName}} {{.ModelID}}", nil)
-	testTemplate := emailTemplates.NewEmailTemplate(
+	testTemplate := emailtemplates.NewEmailTemplate(
 		templateCache,
 		"testSubject",
 		"testBody",

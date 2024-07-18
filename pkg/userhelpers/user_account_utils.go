@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -193,7 +193,7 @@ func GetOktaAccountInfo(ctx context.Context, _ string) (*OktaAccountInfo, error)
 		return nil, err
 	}
 
-	jsonDataFromHTTP, err := ioutil.ReadAll(resp.Body)
+	jsonDataFromHTTP, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}

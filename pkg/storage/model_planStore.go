@@ -8,7 +8,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
@@ -355,7 +355,7 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	}
 	defer stmt.Close()
 
-	sqlResult, err := stmt.Exec(utilitySQL.CreateIDQueryMap(id))
+	sqlResult, err := stmt.Exec(utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
 	}

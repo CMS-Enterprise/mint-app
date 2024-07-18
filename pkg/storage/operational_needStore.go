@@ -7,7 +7,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
@@ -166,7 +166,7 @@ func (s *Store) OperationalNeedInsertOrUpdate(
 	}
 	defer stmt.Close()
 
-	need.ID = utilityUUID.ValueOrNewUUID(need.ID)
+	need.ID = utilityuuid.ValueOrNewUUID(need.ID)
 	need.Key = &needTypeKey // This will set the need type id IN the db
 
 	err = stmt.Get(need, need)
@@ -189,7 +189,7 @@ func (s *Store) OperationalNeedInsertOrUpdateOther(
 	}
 	defer stmt.Close()
 
-	need.ID = utilityUUID.ValueOrNewUUID(need.ID)
+	need.ID = utilityuuid.ValueOrNewUUID(need.ID)
 	need.NameOther = &customNeedType // This will set the need type id IN the db
 
 	err = stmt.Get(need, need)

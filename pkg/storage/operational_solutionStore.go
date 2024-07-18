@@ -10,7 +10,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	_ "embed"
@@ -113,7 +113,7 @@ func (s *Store) OperationalSolutionInsert(
 	}
 	defer stmt.Close()
 
-	solution.ID = utilityUUID.ValueOrNewUUID(solution.ID)
+	solution.ID = utilityuuid.ValueOrNewUUID(solution.ID)
 	solution.Key = solutionTypeKey
 
 	err = stmt.Get(solution, solution)
