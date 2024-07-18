@@ -2177,6 +2177,7 @@ export type PlanParticipantsAndProvidersChanges = {
   gainsharePaymentsEligibilityOther?: InputMaybe<Scalars['String']['input']>;
   gainsharePaymentsNote?: InputMaybe<Scalars['String']['input']>;
   gainsharePaymentsTrack?: InputMaybe<Scalars['Boolean']['input']>;
+  isNewTypeOfProvidersOrSuppliers?: InputMaybe<Scalars['Boolean']['input']>;
   medicareProviderType?: InputMaybe<Scalars['String']['input']>;
   modelApplicationLevel?: InputMaybe<Scalars['String']['input']>;
   participantAddedFrequency?: InputMaybe<Array<FrequencyType>>;

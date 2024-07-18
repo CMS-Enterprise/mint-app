@@ -11078,6 +11078,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   #Page 1
   participants:                      [ParticipantsType!]
   medicareProviderType:              String
+  isNewTypeOfProvidersOrSuppliers: Boolean
   statesEngagement:                  String
   participantsOther:                 String
   participantsNote:                  String
