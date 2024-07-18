@@ -1844,7 +1844,7 @@ const helpCategories: Record<ArticleCategories, string> = {
 
 const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.MODEL_PLAN_OVERVIEW]: 'Overview for adding a model',
-  [HelpArticle.HIGH_LEVEL_PROJECT_PLAN]: 'High-Level Project Plans',
+  [HelpArticle.HIGH_LEVEL_PROJECT_PLAN]: 'High-Level Project Plan',
   [HelpArticle.SAMPLE_MODEL_PLAN]: 'Sample Model Plan',
   [HelpArticle.TWO_PAGER_MEETING]: 'How to have a successful 2-pager meeting',
   [HelpArticle.SIX_PAGER_MEETING]: 'How to have a successful 6-pager meeting',
