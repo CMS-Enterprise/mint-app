@@ -61,6 +61,57 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
+                  Evaluating your data exchange approach
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=getting-started"
+              >
+                <span
+                  aria-label="Articles under the Getting started category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Getting started
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body"
+                data-testid="CardBody"
+              >
+                <p>
+                  Exchanging data between CMS and model participants is an essential component of model operations. Sharing data with participants (such as claims data) provides a comprehensive view of a beneficiary, and collecting data can enable improved evaluation, drive our learning work, and enable participants to transform their care delivery processes.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Evaluating your data exchange approach article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
                   High-level project plans
                 </h3>
               </header>
@@ -455,56 +506,66 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               </div>
             </div>
           </li>
+        </ul>
+        <ul
+          aria-label="Pagination"
+          class="mint-pagination usa-pagination usa-pagination__list"
+          role="navigation"
+        >
           <li
-            class="usa-card desktop:grid-col-4 article article-card--isLink"
-            data-testid="article-card"
+            class="previous pagination__link--disabled"
           >
-            <div
-              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            <a
+              aria-disabled="true"
+              aria-label="Previous page"
+              class="display-none "
+              rel="prev"
+              role="button"
+              tabindex="-1"
             >
-              <header
-                class="usa-card__header padding-0"
-                data-testid="CardHeader"
-              >
-                <h3
-                  class="line-height-body-4 margin-bottom-1"
-                >
-                  Utilizing available operational solutions
-                </h3>
-              </header>
-              <a
-                class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/articles?category=it-implementation"
-              >
-                <span
-                  aria-label="Articles under the IT implementation category"
-                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                  data-testid="tag"
-                >
-                  IT implementation
-                </span>
-              </a>
-              <div
-                class="usa-card__body padding-x-0 article__body"
-                data-testid="CardBody"
-              >
-                <p>
-                  One model will require several operational solutions to complete the essential functions. This is an overview of timing and activities involved in working with existing systems and services.
-                </p>
-              </div>
-              <div
-                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-                data-testid="CardFooter"
-              >
-                <button
-                  aria-label="Read Utilizing available operational solutions article"
-                  class="usa-button usa-button--outline"
-                  type="button"
-                >
-                  Read
-                </button>
-              </div>
-            </div>
+              &lt; Previous
+            </a>
+          </li>
+          <li
+            class="usa-pagination__item usa-current"
+          >
+            <a
+              aria-current="page"
+              aria-label="Page 1 is your current page"
+              class="usa-pagination__button usa-current"
+              rel="canonical"
+              role="button"
+              tabindex="-1"
+            >
+              1
+            </a>
+          </li>
+          <li
+            class="usa-pagination__item"
+          >
+            <a
+              aria-label="Page 2"
+              class="usa-pagination__button"
+              rel="next"
+              role="button"
+              tabindex="0"
+            >
+              2
+            </a>
+          </li>
+          <li
+            class="next"
+          >
+            <a
+              aria-disabled="false"
+              aria-label="Next page"
+              class="usa-pagination__link usa-pagination__previous-page next-page"
+              rel="next"
+              role="button"
+              tabindex="0"
+            >
+              Next &gt;
+            </a>
           </li>
         </ul>
       </div>
