@@ -146,7 +146,7 @@ type PlanPayments struct {
 
 	// Page 3
 	WillBePaymentAdjustments                *bool   `json:"WillBePaymentAdjustments" db:"will_be_payment_adjustments"`
-	WillBePaymentAdjustmentsNote            *bool   `json:"WillBePaymentAdjustmentsNote" db:"will_be_payment_adjustments_note"`
+	WillBePaymentAdjustmentsNote            *string `json:"WillBePaymentAdjustmentsNote" db:"will_be_payment_adjustments_note"`
 	CreatingDependenciesBetweenServices     *bool   `json:"creatingDependenciesBetweenServices" db:"creating_dependencies_between_services" statusWeight:"1"`
 	CreatingDependenciesBetweenServicesNote *string `json:"creatingDependenciesBetweenServicesNote" db:"creating_dependencies_between_services_note"`
 	NeedsClaimsDataCollection               *bool   `json:"needsClaimsDataCollection" db:"needs_claims_data_collection" statusWeight:"1"`

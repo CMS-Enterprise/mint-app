@@ -1509,8 +1509,6 @@ type PlanPaymentsResolver interface {
 
 	PayClaims(ctx context.Context, obj *models.PlanPayments) ([]models.ClaimsBasedPayType, error)
 
-	WillBePaymentAdjustmentsNote(ctx context.Context, obj *models.PlanPayments) (*string, error)
-
 	NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error)
 	NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (*string, error)
 
@@ -51545,7 +51543,7 @@ func (ec *executionContext) _PlanPayments_willBePaymentAdjustmentsNote(ctx conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanPayments().WillBePaymentAdjustmentsNote(rctx, obj)
+		return obj.WillBePaymentAdjustmentsNote, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -51563,8 +51561,8 @@ func (ec *executionContext) fieldContext_PlanPayments_willBePaymentAdjustmentsNo
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -75792,38 +75790,7 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 		case "willBePaymentAdjustments":
 			out.Values[i] = ec._PlanPayments_willBePaymentAdjustments(ctx, field, obj)
 		case "willBePaymentAdjustmentsNote":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanPayments_willBePaymentAdjustmentsNote(ctx, field, obj)
-				return res
-			}
-
-			if field.Deferrable != nil {
-				dfs, ok := deferred[field.Deferrable.Label]
-				di := 0
-				if ok {
-					dfs.AddField(field)
-					di = len(dfs.Values) - 1
-				} else {
-					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
-					deferred[field.Deferrable.Label] = dfs
-				}
-				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, dfs)
-				})
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			out.Values[i] = ec._PlanPayments_willBePaymentAdjustmentsNote(ctx, field, obj)
 		case "creatingDependenciesBetweenServices":
 			out.Values[i] = ec._PlanPayments_creatingDependenciesBetweenServices(ctx, field, obj)
 		case "creatingDependenciesBetweenServicesNote":
