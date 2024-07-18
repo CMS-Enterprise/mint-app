@@ -174,13 +174,53 @@ func TestModelPlanByOperationalSolutionStatusPlannedActiveOrEnded(t *testing.T) 
 			inputStatus:          models.ModelStatusPaused,
 			expectedOutputStatus: models.MbSSOther,
 		},
+
 		// The remaining statuses all go to Planned
 		{
-			testName:             "Draft_To_Planned",
+			testName:             "PlanDraft_To_Planned",
 			inputStatus:          models.ModelStatusPlanDraft,
 			expectedOutputStatus: models.MbSSPlanned,
 		},
-		//TODO: Expand the test cases here
+		{
+			testName:             "PlanComplete_To_Planned",
+			inputStatus:          models.ModelStatusPlanComplete,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "IcipComplete_To_Planned",
+			inputStatus:          models.ModelStatusIcipComplete,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "InternalCmmiClearance_To_Planned",
+			inputStatus:          models.ModelStatusInternalCmmiClearance,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "CmsClearance_To_Planned",
+			inputStatus:          models.ModelStatusCmsClearance,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "HhsClearance_To_Planned",
+			inputStatus:          models.ModelStatusHhsClearance,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "OmbAsrfClearance_To_Planned",
+			inputStatus:          models.ModelStatusOmbAsrfClearance,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "Cleared_To_Planned",
+			inputStatus:          models.ModelStatusCleared,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "Announced_To_Planned",
+			inputStatus:          models.ModelStatusAnnounced,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
 	}
 
 	for _, test := range testCases {
