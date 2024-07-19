@@ -106,6 +106,40 @@ const mocks = [
               __typename: 'ModelPlan'
             },
             __typename: 'ModelPlanAndOperationalSolution'
+          },
+          {
+            modelPlan: {
+              id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae3',
+              modelName: 'Z Paused Model',
+              modelBySolutionStatus: ModelBySolutionStatus.OTHER,
+              status: ModelStatus.PAUSED,
+              basics: {
+                id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
+                modelCategory: null,
+                performancePeriodStarts: null,
+                performancePeriodEnds: null,
+                __typename: 'PlanBasics'
+              },
+              __typename: 'ModelPlan'
+            },
+            __typename: 'ModelPlanAndOperationalSolution'
+          },
+          {
+            modelPlan: {
+              id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae4',
+              modelName: 'Z Canceled Model',
+              modelBySolutionStatus: ModelBySolutionStatus.OTHER,
+              status: ModelStatus.CANCELED,
+              basics: {
+                id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
+                modelCategory: null,
+                performancePeriodStarts: null,
+                performancePeriodEnds: null,
+                __typename: 'PlanBasics'
+              },
+              __typename: 'ModelPlan'
+            },
+            __typename: 'ModelPlanAndOperationalSolution'
           }
         ]
       }
@@ -131,7 +165,7 @@ describe('ModelsBySolution Table and Card', () => {
 
     // Counts on banner should reflect the number of models with each status
     await waitFor(() => {
-      expect(getByTestId('total-count')).toHaveTextContent('5');
+      expect(getByTestId('total-count')).toHaveTextContent('7');
       expect(getByTestId('planned-count')).toHaveTextContent('4');
       expect(getByTestId('active-count')).toHaveTextContent('0');
       expect(getByTestId('ended-count')).toHaveTextContent('1');
