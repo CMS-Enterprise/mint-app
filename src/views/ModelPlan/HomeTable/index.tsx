@@ -53,6 +53,7 @@ type CRTDLType =
 
 type ModelPlansTableProps =
   | {
+      id: string;
       type: ViewCustomizationType;
       updateFavorite?: never;
       hiddenColumns?: number[]; // indexes of columns to be hidden
@@ -61,6 +62,7 @@ type ModelPlansTableProps =
       isAssessment?: boolean;
     }
   | {
+      id: string;
       type: ViewCustomizationType.FOLLOWED_MODELS;
       updateFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
       hiddenColumns?: number[]; // indexes of columns to be hidden
@@ -70,6 +72,7 @@ type ModelPlansTableProps =
     };
 
 const ModelPlansTable = ({
+  id,
   type,
   updateFavorite,
   hiddenColumns,
@@ -435,7 +438,7 @@ const ModelPlansTable = ({
   );
 
   if (!data.length && loading) {
-    return <PageLoading />;
+    return <PageLoading testId={id} />;
   }
 
   if (error) {
