@@ -92,6 +92,33 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
     />
     <div
       class=""
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-any-of-these-a-new-type-of-provider-supplier margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+            >
+              Are any of these a new type of provider/supplier?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
     />
     <div
       class=""
