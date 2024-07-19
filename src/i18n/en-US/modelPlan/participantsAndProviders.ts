@@ -74,6 +74,19 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       ModelViewFilter.PBG
     ]
   },
+  isNewTypeOfProvidersOrSuppliers: {
+    gqlField: 'isNewTypeOfProvidersOrSuppliers',
+    goField: 'IsNewTypeOfProvidersOrSuppliers',
+    dbField: 'is_new_type_of_providers_or_suppliers',
+    label: 'Are any of these a new type of provider/supplier?',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    filterGroups: [ModelViewFilter.PBG]
+  },
   statesEngagement: {
     gqlField: 'statesEngagement',
     goField: 'StatesEngagement',

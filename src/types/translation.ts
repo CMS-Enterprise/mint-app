@@ -417,6 +417,7 @@ export type TranslationGeneralCharacteristics = {
 export type TranslationParticipantsAndProviders = {
   participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
   medicareProviderType: TranslationFieldProperties;
+  isNewTypeOfProvidersOrSuppliers: TranslationFieldPropertiesWithOptions<Bool>;
   statesEngagement: TranslationFieldProperties;
   participantsOther: TranslationFieldProperties;
   participantsNote: TranslationFieldProperties;
