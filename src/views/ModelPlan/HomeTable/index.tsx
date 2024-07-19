@@ -52,6 +52,7 @@ type CRTDLType =
   | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 type ModelPlansTableProps = {
+  id: string;
   type: ViewCustomizationType;
   updateFavorite?: (modelPlanID: string, type: UpdateFavoriteProps) => void;
   hiddenColumns?: number[]; // indexes of columns to be hidden
@@ -61,6 +62,7 @@ type ModelPlansTableProps = {
 };
 
 const ModelPlansTable = ({
+  id,
   type,
   updateFavorite,
   hiddenColumns,
@@ -429,7 +431,7 @@ const ModelPlansTable = ({
   );
 
   if (!data.length && loading) {
-    return <PageLoading />;
+    return <PageLoading testId={id} />;
   }
 
   if (error) {

@@ -157,6 +157,7 @@ const ModelPlan = () => {
           </p>
 
           <ModelPlansTable
+            id="favorite-model-plans-table"
             type={ViewCustomizationType.ALL_MODEL_PLANS}
             isHome={false}
             updateFavorite={handleUpdateFavorite}

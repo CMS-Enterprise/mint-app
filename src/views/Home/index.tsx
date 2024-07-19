@@ -103,6 +103,7 @@ const Home = () => {
         </p>
 
         <ModelPlansTable
+          id="my-model-plans-table"
           type={ViewCustomizationType.MY_MODEL_PLANS}
           canSearch={false}
           isAssessment={isAssessment(userGroups, flags)}
@@ -118,6 +119,7 @@ const Home = () => {
         </h2>
 
         <ModelPlansTable
+          id="all-model-plans-table"
           type={ViewCustomizationType.ALL_MODEL_PLANS}
           isAssessment={isAssessment(userGroups, flags)}
         />
@@ -136,7 +138,7 @@ const Home = () => {
         </p>
 
         <>
-          {favoritesLoading && <PageLoading />}
+          {favoritesLoading && <PageLoading testId="favorites-page-loading" />}
           {!favoritesLoading && favorites && favorites?.length > 0 && (
             <FavoritesTable
               favorites={favorites || []}
@@ -178,6 +180,7 @@ const Home = () => {
         </p>
 
         <ModelPlansTable
+          id="models-with-cr-tdl-table"
           type={ViewCustomizationType.MODELS_WITH_CR_TDL}
           isAssessment={isAssessment(userGroups, flags)}
         />
