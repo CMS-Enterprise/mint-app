@@ -5,15 +5,15 @@ COMMIT;
 
 -- Insert MDM_NCBP into the possible operational solution table
 INSERT INTO possible_operational_solution("id", "sol_name", "sol_key", "created_by") VALUES
-(40, 'Master Data Management for Non-Claims Based Payments', 'MDM_NCBP', '00000001-0001-0001-0001-000000000001');
+(40, 'Master Data Management for Non-Claims Based Payments (MDM-NCBP)', 'MDM_NCBP', '00000001-0001-0001-0001-000000000001');
 
 WITH pocs(SolutionName, SolutionKey, Name, Email, Role, IsPrimary, IsTeam) AS (
     VALUES
 
-    ('Master Data Management for Non-Claims Based Payments', 'MDM_NCBP', 'Celia Shaunessy', 'celia.shaunessy@cms.hhs.gov', 'CMMI/BSG Point of Contact', TRUE, FALSE),
-    ('Master Data Management for Non-Claims Based Payments', 'MDM_NCBP', 'Glenn Eyler', 'glenn.eyler@cms.hhs.gov', 'OIT Government Task Lead', FALSE, FALSE),
-    ('Master Data Management for Non-Claims Based Payments', 'MDM_NCBP', 'Luiz Lee', 'luiz.lee1@cms.hhs.gov', 'Solutions Architect',FALSE, FALSE),
-    ('Master Data Management for Non-Claims Based Payments', 'MDM_NCBP', 'Sameera Gudipati', 'sameera.gudipati1@cms.hhs.gov', 'OIT Point of Contact',FALSE, FALSE)
+    ('Master Data Management for Non-Claims Based Payments (MDM-NCBP)', 'MDM_NCBP', 'Celia Shaunessy', 'celia.shaunessy@cms.hhs.gov', 'CMMI/BSG Point of Contact', TRUE, FALSE),
+    ('Master Data Management for Non-Claims Based Payments (MDM-NCBP)', 'MDM_NCBP', 'Glenn Eyler', 'glenn.eyler@cms.hhs.gov', 'OIT Government Task Lead', FALSE, FALSE),
+    ('Master Data Management for Non-Claims Based Payments (MDM-NCBP)', 'MDM_NCBP', 'Luiz Lee', 'luiz.lee1@cms.hhs.gov', 'Solutions Architect',FALSE, FALSE),
+    ('Master Data Management for Non-Claims Based Payments (MDM-NCBP)', 'MDM_NCBP', 'Sameera Gudipati', 'sameera.gudipati1@cms.hhs.gov', 'OIT Point of Contact',FALSE, FALSE)
 )
 
 -- Insert MDM_NCBP contacts into the possible operational solution contact table
