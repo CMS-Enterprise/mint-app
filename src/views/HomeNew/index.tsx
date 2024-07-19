@@ -156,6 +156,7 @@ const HomeNew = () => {
               <Trans
                 i18nKey={`customHome:settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsDescription`}
                 components={{
+                  link1: <UswdsReactLink to="/models"> </UswdsReactLink>,
                   star: <Icon.StarOutline size={3} style={{ top: '6px' }} />
                 }}
               />
