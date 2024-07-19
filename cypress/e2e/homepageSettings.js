@@ -1,6 +1,6 @@
 describe('Homepage Settings', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT' });
+    cy.localLogin({ name: 'ANON' });
     cy.visit('/homepage-settings');
   });
 
