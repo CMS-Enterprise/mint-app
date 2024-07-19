@@ -1,5 +1,3 @@
-None
-None
 -- Add MDM_NCBP to the ENUM type
 ALTER TYPE OPERATIONAL_SOLUTION_KEY ADD VALUE 'MDM_NCBP';
 
@@ -34,9 +32,9 @@ INSERT INTO possible_operational_solution_contact(
 SELECT
     gen_random_uuid() AS id,
     pos.id AS possible_operational_solution_id,
-    pocs.name AS name,
+    pocs.name AS name, --noqa
     pocs.email AS email,
-    pocs.role AS role,
+    pocs.role AS role, --noqa
     pocs.IsPrimary AS is_primary,
     pocs.IsTeam AS is_team,
     '00000001-0001-0001-0001-000000000001' AS created_by, --System account
