@@ -34,6 +34,8 @@ import { isAssessment, isMAC } from 'utils/user';
 import Landing from 'views/Landing';
 import ModelPlansTable from 'views/ModelPlan/HomeTable';
 
+import ModelsBySolutions from './components/ModelsBySolutions';
+
 import './index.scss';
 
 export type UpdateFavoriteProps = 'addFavorite' | 'removeFavorite';
@@ -56,6 +58,9 @@ const HomeNew = () => {
   const isLanding: boolean = pathname === '/' && !authState?.isAuthenticated;
 
   const { data, loading } = useGetHomepageSettingsQuery();
+
+  const operationalSolutionKeys =
+    data?.userViewCustomization.possibleOperationalSolutions || [];
 
   const {
     data: favoritesData,
@@ -179,7 +184,27 @@ const HomeNew = () => {
         />
       </>
     ),
-    [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: <></>
+    [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(
+            `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.heading`
+          )}
+        </h2>
+
+        {operationalSolutionKeys.length > 0 && (
+          <p>
+            {t(
+              `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.description`
+            )}
+          </p>
+        )}
+
+        <ModelsBySolutions operationalSolutionKeys={operationalSolutionKeys} />
+      </>
+    )
   };
 
   const renderView = () => {

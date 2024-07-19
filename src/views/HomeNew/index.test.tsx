@@ -4,6 +4,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import {
+  GetFavoritesDocument,
   GetHomepageSettingsDocument,
   ModelPlanFilter,
   ViewCustomizationType
@@ -43,6 +44,60 @@ const settingsMock = [
           possibleOperationalSolutions: [] as ViewCustomizationType[],
           __typename: 'UserViewCustomization'
         }
+      }
+    }
+  },
+  {
+    request: {
+      query: GetFavoritesDocument,
+      variables: {
+        filter: 'INCLUDE_ALL',
+        isMAC: true
+      }
+    },
+    result: {
+      data: {
+        modelPlanCollection: [
+          {
+            id: 'e671f056-2634-4af4-abad-a63850832a0a',
+            modelName: 'Plan With Collaborators',
+            isFavorite: true,
+            nameHistory: ['Plan With Collaborators'],
+            isCollaborator: true,
+            status: 'PLAN_DRAFT',
+            basics: {
+              id: '3a1584a5-6712-4ab8-8832-86faa183d3b1',
+              goal: null,
+              performancePeriodStarts: null,
+              __typename: 'PlanBasics'
+            },
+            collaborators: [
+              {
+                id: '064c52cf-854f-4c53-acdf-ab27ffb9cca5',
+                userAccount: {
+                  id: '83bb8c56-b871-43e5-9fe4-2701ad6c593e',
+                  commonName: 'MINT Doe',
+                  __typename: 'UserAccount'
+                },
+                teamRoles: ['MODEL_LEAD'],
+                __typename: 'PlanCollaborator'
+              },
+              {
+                id: 'c6866efe-30d3-4926-bf50-68d9a0150cb0',
+                userAccount: {
+                  id: 'ae6ed775-b4de-4b82-ab19-75c03a907726',
+                  commonName: 'BTAL Doe',
+                  __typename: 'UserAccount'
+                },
+                teamRoles: ['LEADERSHIP'],
+                __typename: 'PlanCollaborator'
+              }
+            ],
+            crs: [],
+            tdls: [],
+            __typename: 'ModelPlan'
+          }
+        ]
       }
     }
   }

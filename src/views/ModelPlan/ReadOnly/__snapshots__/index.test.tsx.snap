@@ -404,7 +404,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
       data-testid="gridContainer"
     >
       <div
-        class="usa-alert usa-alert--warning flex margin-top-2 margin-bottom-5 desktop:margin-y-3"
+        class="usa-alert usa-alert--warning icon-padding flex margin-top-2 margin-bottom-5 desktop:margin-y-3"
         data-testid="alert"
       >
         <div
