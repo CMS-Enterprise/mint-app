@@ -102,7 +102,7 @@ const AppRoutes = () => {
     <Switch>
       {/* General Routes */}
 
-      <SecureRoute path="/" exact component={Home} />
+      <Route path="/" exact component={Home} />
 
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />
