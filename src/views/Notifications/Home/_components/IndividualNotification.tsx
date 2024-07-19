@@ -13,6 +13,7 @@ import {
   activityText,
   isAddingCollaborator,
   isDailyDigest,
+  isDataExchangeApproach,
   isDatesChanged,
   isNewDiscussionReply,
   isNewModelPlan,
@@ -129,6 +130,7 @@ const IndividualNotification = ({
                   {activityText(metaData)}
                 </p>
                 {!isDailyDigest(metaData) &&
+                  !isDataExchangeApproach(metaData) &&
                   !isNewModelPlan(metaData) &&
                   !isSharedActivity(metaData) &&
                   !isDatesChanged(metaData) &&

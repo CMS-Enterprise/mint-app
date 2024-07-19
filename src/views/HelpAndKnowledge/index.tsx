@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from 'views/NotFound';
 
 import AllArticles from './Articles/AllArticles';
+import DataExchangeApproachHelpArticle from './Articles/DataExchangeApproach';
 import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import ModelSolutionDesign from './Articles/ModelSolutionDesign';
@@ -52,6 +53,10 @@ export const HelpAndKnowledge = () => {
         exact
       >
         <SixPagerMeeting />
+      </Route>
+
+      <Route path="/help-and-knowledge/data-exchange-approach" exact>
+        <DataExchangeApproachHelpArticle />
       </Route>
 
       <Redirect
