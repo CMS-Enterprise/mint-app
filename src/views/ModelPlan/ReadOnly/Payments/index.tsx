@@ -74,6 +74,8 @@ const ReadOnlyPayments = ({
     affectsMedicareSecondaryPayerClaimsNote:
       paymentsConfig.affectsMedicareSecondaryPayerClaimsNote,
     payModelDifferentiation: paymentsConfig.payModelDifferentiation,
+    willBePaymentAdjustments: paymentsConfig.willBePaymentAdjustments,
+    willBePaymentAdjustmentsNote: paymentsConfig.willBePaymentAdjustmentsNote,
     creatingDependenciesBetweenServices:
       paymentsConfig.creatingDependenciesBetweenServices,
     creatingDependenciesBetweenServicesNote:

@@ -244,6 +244,7 @@ export const payments: TranslationPayments = {
         () => payments.changesMedicarePhysicianFeeSchedule,
         () => payments.affectsMedicareSecondaryPayerClaims,
         () => payments.payModelDifferentiation,
+        () => payments.willBePaymentAdjustments,
         () => payments.creatingDependenciesBetweenServices,
         () => payments.needsClaimsDataCollection,
         () => payments.providingThirdPartyFile,
@@ -446,6 +447,8 @@ export const payments: TranslationPayments = {
     dbField: 'will_be_payment_adjustments',
     label: 'Will there be payment adjustments (positive or negative) applied?',
     sublabel:
+      'Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.',
+    questionTooltip:
       'Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.',
     dataType: 'boolean',
     formType: 'radio',
