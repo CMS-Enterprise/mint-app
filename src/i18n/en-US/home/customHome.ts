@@ -25,7 +25,7 @@ const settings: HomepageSettingsType = {
       'You will receive email notifications when models you’re following are updated.',
     noResultsHeading: 'You are not following any models yet.',
     noResultsDescription:
-      'Click the star icon (<star></star>) for any model to add it to this section.'
+      'To follow a model, <link1>view all models</link1> and click the star icon (<star></star>) for any model to add it to this section.'
   },
   [ViewCustomizationType.MODELS_WITH_CR_TDL]: {
     heading: 'Models with FFS CRs or TDLs',
