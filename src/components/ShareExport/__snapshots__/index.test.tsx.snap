@@ -2922,11 +2922,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   <div
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                   >
-                    <i
-                      class="text-base"
-                    >
-                      No answer entered
-                    </i>
+                    Yes
                   </div>
                 </div>
               </div>
@@ -8372,18 +8368,38 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     <div
                       class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                     >
-                      <i
-                        class="text-base"
-                      >
-                        No answer entered
-                      </i>
+                      Yes
                     </div>
                   </div>
                 </div>
               </div>
               <div
                 class=""
-              />
+              >
+                <div
+                  class="desktop:grid-col-12"
+                  data-testid="grid"
+                >
+                  <div
+                    class="read-only-section read-only-section--notes margin-bottom-3"
+                  >
+                    <div
+                      class="read-only-section--question"
+                    >
+                      <span
+                        class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+                      >
+                        Notes
+                      </span>
+                    </div>
+                    <div
+                      class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+                    >
+                      Payment adjustments note
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div
                 class=""
               >
