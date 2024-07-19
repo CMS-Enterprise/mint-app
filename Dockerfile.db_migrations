@@ -1,11 +1,12 @@
-ARG TAG=9.10
+ARG TAG=10.15
 FROM flyway/flyway:${TAG}
 
-COPY migrations/ /flyway/sql
+COPY migrations/ ./migrations
 
 ENV FLYWAY_CONNECT_RETRIES=10 \
     FLYWAY_CLEAN_DISABLED="true" \
     FLYWAY_SCHEMAS=public \
-    FLYWAY_DEFAULT_SCHEMA=public
+    FLYWAY_DEFAULT_SCHEMA=public \
+    FLYWAY_LOCATIONS=filesystem:./migrations
 
 ENTRYPOINT ["flyway", "-validateMigrationNaming=true", "migrate"]
