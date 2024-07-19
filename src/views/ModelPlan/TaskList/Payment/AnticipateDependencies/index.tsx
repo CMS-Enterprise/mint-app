@@ -70,6 +70,8 @@ const AnticipateDependencies = () => {
     id,
     payType,
     payClaims,
+    willBePaymentAdjustments,
+    willBePaymentAdjustmentsNote,
     creatingDependenciesBetweenServices,
     creatingDependenciesBetweenServicesNote,
     needsClaimsDataCollection,
@@ -131,6 +133,8 @@ const AnticipateDependencies = () => {
     id: id ?? '',
     payType: payType ?? [],
     payClaims: payClaims ?? [],
+    willBePaymentAdjustments: willBePaymentAdjustments ?? null,
+    willBePaymentAdjustmentsNote: willBePaymentAdjustmentsNote ?? '',
     creatingDependenciesBetweenServices:
       creatingDependenciesBetweenServices ?? null,
     creatingDependenciesBetweenServicesNote:

@@ -440,6 +440,31 @@ export const payments: TranslationPayments = {
     parentRelation: () => payments.payType,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
+  willBePaymentAdjustments: {
+    gqlField: 'willBePaymentAdjustments',
+    goField: 'WillBePaymentAdjustments',
+    dbField: 'will_be_payment_adjustments',
+    label: 'Will there be payment adjustments (positive or negative) applied?',
+    sublabel:
+      'Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.',
+    dataType: 'boolean',
+    formType: 'radio',
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
+  },
+  willBePaymentAdjustmentsNote: {
+    gqlField: 'willBePaymentAdjustmentsNote',
+    goField: 'WillBePaymentAdjustmentsNote',
+    dbField: 'will_be_payment_adjustments_note',
+    label: 'Notes',
+    dataType: 'string',
+    formType: 'textarea',
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
+  },
   creatingDependenciesBetweenServices: {
     gqlField: 'creatingDependenciesBetweenServices',
     goField: 'CreatingDependenciesBetweenServices',

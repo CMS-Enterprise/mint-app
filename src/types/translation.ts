@@ -722,6 +722,11 @@ export type TranslationPayments = {
   affectsMedicareSecondaryPayerClaimsNote: TranslationFieldProperties;
   payModelDifferentiation: TranslationFieldPropertiesWithParent<PayType>;
   // Anticipating Dependencies
+  willBePaymentAdjustments: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
+  willBePaymentAdjustmentsNote: TranslationFieldProperties;
   creatingDependenciesBetweenServices: TranslationFieldPropertiesWithOptionsAndParent<
     Bool,
     PayType
