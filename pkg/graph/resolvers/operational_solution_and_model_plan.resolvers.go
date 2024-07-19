@@ -14,7 +14,7 @@ import (
 
 // ModelBySolutionStatus is the resolver for the modelBySolutionStatus field.
 func (r *modelPlanResolver) ModelBySolutionStatus(ctx context.Context, obj *models.ModelPlan) (models.ModelBySolutionStatus, error) {
-	return ModelPlanByOperationalSolutionStatusPlannedActiveOrEnded(obj.Status), nil
+	return ModelBySolutionStatus(obj.Status), nil
 }
 
 // OperationalSolution is the resolver for the operationalSolution field.

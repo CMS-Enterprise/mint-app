@@ -15,8 +15,8 @@ func ModelPlansByOperationalSolutionKey(
 	return store.ModelPlanGetByOperationalSolutionKey(logger, operationalSolutionKey)
 }
 
-// ModelPlanByOperationalSolutionStatusPlannedActiveOrEnded converts a Model status to a ModelBySolutionStatus
-func ModelPlanByOperationalSolutionStatusPlannedActiveOrEnded(modelPlanStatus models.ModelStatus) models.ModelBySolutionStatus {
+// ModelBySolutionStatus converts a Model status to a ModelBySolutionStatus
+func ModelBySolutionStatus(modelPlanStatus models.ModelStatus) models.ModelBySolutionStatus {
 	switch modelPlanStatus {
 	case models.ModelStatusActive:
 		return models.MbSSActive

@@ -146,7 +146,7 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithDifferentSolutionTypes() {
 	suite.EqualValues(opSolB.ID, modelPlanAndOpSols[0].OperationalSolutionID)
 }
 
-func TestModelPlanByOperationalSolutionStatusPlannedActiveOrEnded(t *testing.T) {
+func TestModelBySolutionStatus(t *testing.T) {
 	assert := assert.New(t)
 
 	testCases := []struct {
@@ -225,7 +225,7 @@ func TestModelPlanByOperationalSolutionStatusPlannedActiveOrEnded(t *testing.T) 
 
 	for _, test := range testCases {
 		t.Run(test.testName, func(t *testing.T) {
-			outputStatus := ModelPlanByOperationalSolutionStatusPlannedActiveOrEnded(test.inputStatus)
+			outputStatus := ModelBySolutionStatus(test.inputStatus)
 			assert.EqualValues(test.expectedOutputStatus, outputStatus, "Expected status did not match")
 		})
 
