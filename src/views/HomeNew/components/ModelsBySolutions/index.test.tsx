@@ -1,11 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import {
-  render,
-  waitFor,
-  waitForElementToBeRemoved
-} from '@testing-library/react';
+import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import {
   GetModelsBySolutionDocument,
   ModelStatus,
@@ -112,8 +108,8 @@ const mocks = [
 ];
 
 describe('ModelsBySolution Table and Card', () => {
-  it('renders solution models banner and cards', async () => {
-    const { getByText, getByTestId, user } = setup(
+  it('renders solution models banner and cards and matches snapshot', async () => {
+    const { getByText, getByTestId, user, asFragment } = setup(
       <MemoryRouter initialEntries={['/']}>
         <Route path="/">
           <MockedProvider mocks={mocks} addTypename={false}>
@@ -149,20 +145,6 @@ describe('ModelsBySolution Table and Card', () => {
       expect(getByText('Enhancing Oncology Model')).toBeInTheDocument();
       expect(getByText('Plan with Basics')).toBeInTheDocument();
     });
-  });
-
-  it('matches snapshot', () => {
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={['/']}>
-        <Route path="/">
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <ModelsBySolutionTable
-              operationalSolutionKey={OperationalSolutionKey.INNOVATION}
-            />
-          </MockedProvider>
-        </Route>
-      </MemoryRouter>
-    );
 
     expect(asFragment()).toMatchSnapshot();
   });
