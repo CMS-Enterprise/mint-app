@@ -108,6 +108,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
       LDG: 'Learning and Diffusion Group',
       LV: 'Legal Vertical',
       MDM: 'Master Data Management',
+      MDM_NCBP: 'Master Data Management for Non-Claims Based Payments',
       MARX: 'Medicare Advantage Prescription Drug System',
       OTHER_NEW_PROCESS: 'Other',
       OUTLOOK_MAILBOX: 'Outlook Mailbox',

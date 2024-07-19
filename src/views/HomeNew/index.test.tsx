@@ -146,7 +146,7 @@ describe('The home page', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders settings with a predefined order', async () => {
+  it('renders settings with a predefined order and matches snapshot', async () => {
     const settingsWithOrder = set(
       [...settingsMock],
       '0.result.data.userViewCustomization.viewCustomization',
