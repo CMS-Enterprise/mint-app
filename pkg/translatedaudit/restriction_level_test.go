@@ -40,11 +40,11 @@ func TestCheckIfDocumentIsRestricted(t *testing.T) {
 		}
 		restricted, err := checkIfDocumentIsRestricted(fields, models.DBOpInsert)
 		assert.Error(err)
-		assert.False(restricted)
+		assert.True(restricted)
 
 		restricted, err = checkIfDocumentIsRestricted(fields, models.DBOpDelete)
 		assert.Error(err)
-		assert.False(restricted)
+		assert.True(restricted)
 	})
 
 	t.Run("Will return field, if restricted field is present, and relevant answer is not `true` or 'true' according to the db operation", func(t *testing.T) {
