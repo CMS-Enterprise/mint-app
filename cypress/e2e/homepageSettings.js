@@ -1,5 +1,6 @@
 describe('Homepage Settings', () => {
   beforeEach(() => {
+    // Using ANON since that user has no customized views
     cy.localLogin({ name: 'ANON' });
     cy.visit('/homepage-settings');
   });
