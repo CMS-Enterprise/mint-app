@@ -2,7 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import {
   GetFavoritesDocument,
   GetHomepageSettingsDocument,
@@ -179,5 +183,45 @@ describe('The home page', () => {
     expect(settingsHeaders.length).toEqual(2);
     expect(settingsHeaders[0].textContent).toEqual('All Model Plans');
     expect(settingsHeaders[1].textContent).toEqual('My Model Plans');
+  });
+
+  it('matches setting snapshot', async () => {
+    const settingsWithOrder = set(
+      [...settingsMock],
+      '0.result.data.userViewCustomization.viewCustomization',
+      [
+        ViewCustomizationType.ALL_MODEL_PLANS,
+        ViewCustomizationType.MY_MODEL_PLANS
+      ]
+    );
+
+    const { asFragment, getByTestId } = render(
+      <MemoryRouter initialEntries={[`/`]}>
+        <MockedProvider
+          mocks={[
+            ...settingsWithOrder,
+            ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
+            ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
+          ]}
+          addTypename={false}
+        >
+          <Route path="/">
+            <Provider store={store}>
+              <MessageProvider>
+                <HomeNew />
+              </MessageProvider>
+            </Provider>
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(async () => {
+      await waitForElementToBeRemoved(() =>
+        getByTestId('all-model-plans-table')
+      );
+    });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });
