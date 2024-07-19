@@ -9,6 +9,8 @@ export default gql(/* GraphQL */ `
         id
         payType
         payClaims
+        willBePaymentAdjustments
+        willBePaymentAdjustmentsNote
         creatingDependenciesBetweenServices
         creatingDependenciesBetweenServicesNote
         needsClaimsDataCollection
