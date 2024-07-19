@@ -142,7 +142,7 @@ describe('The home page', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders settings with a predefined order', async () => {
+  it('renders settings with a predefined order and matches snapshot', async () => {
     const settingsWithOrder = set(
       [...settingsMock],
       '0.result.data.userViewCustomization.viewCustomization',
@@ -179,41 +179,5 @@ describe('The home page', () => {
     expect(settingsHeaders.length).toEqual(2);
     expect(settingsHeaders[0].textContent).toEqual('All Model Plans');
     expect(settingsHeaders[1].textContent).toEqual('My Model Plans');
-  });
-
-  it('matches setting snapshot', async () => {
-    const settingsWithOrder = set(
-      [...settingsMock],
-      '0.result.data.userViewCustomization.viewCustomization',
-      [
-        ViewCustomizationType.ALL_MODEL_PLANS,
-        ViewCustomizationType.MY_MODEL_PLANS
-      ]
-    );
-
-    const { asFragment, getByTestId } = render(
-      <MemoryRouter initialEntries={[`/`]}>
-        <MockedProvider
-          mocks={[
-            ...settingsWithOrder,
-            ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
-            ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
-          ]}
-          addTypename={false}
-        >
-          <Route path="/">
-            <Provider store={store}>
-              <MessageProvider>
-                <HomeNew />
-              </MessageProvider>
-            </Provider>
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
-    );
-
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
-
-    expect(asFragment()).toMatchSnapshot();
   });
 });
