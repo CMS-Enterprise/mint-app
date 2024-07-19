@@ -1,9 +1,9 @@
--- Add MDM-NCBP to the ENUM type
+-- Add MDM_NCBP to the ENUM type
 ALTER TYPE OPERATIONAL_SOLUTION_KEY ADD VALUE 'MDM_NCBP';
 
 COMMIT;
 
--- Insert MDM-NCBP into the possible operational solution table
+-- Insert MDM_NCBP into the possible operational solution table
 INSERT INTO possible_operational_solution("id", "sol_name", "sol_key", "created_by") VALUES
 (40, 'Master Data Management for Non-Claims Based Payments', 'MDM_NCBP', '00000001-0001-0001-0001-000000000001');
 
@@ -16,7 +16,7 @@ WITH pocs(SolutionName, SolutionKey, Name, Email, Role, IsPrimary, IsTeam) AS (
 ('Master Data Management for Non-Claims Based Payments', 'MDM_NCBP', 'Sameera Gudipati', 'sameera.gudipati1@cms.hhs.gov', 'OIT Point of Contact',FALSE, FALSE)
 )
 
--- Insert MDM-NCBP contacts into the possible operational solution contact table
+-- Insert MDM_NCBP contacts into the possible operational solution contact table
 INSERT INTO possible_operational_solution_contact(
     id,
     possible_operational_solution_id,
