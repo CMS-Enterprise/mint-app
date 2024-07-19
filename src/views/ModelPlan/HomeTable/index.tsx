@@ -639,7 +639,7 @@ const ModelPlansTable = ({
 };
 
 const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
-  const { t } = useTranslation('home');
+  const { t } = useTranslation('customHome');
   const [isShowingAllNames, setShowAllNames] = useState(false);
 
   const firstThreeNames = names.slice(0, 3);

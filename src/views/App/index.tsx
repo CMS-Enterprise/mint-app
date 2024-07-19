@@ -26,10 +26,9 @@ import FlagsWrapper from 'views/FlagsWrapper';
 import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import GetAccess from 'views/HelpAndKnowledge/Articles/GetAccess';
 import Home from 'views/Home';
-import HomeNew from 'views/HomeNew';
-import HomePageSettings from 'views/HomeNew/Settings';
-import SelectSolutionSettings from 'views/HomeNew/Settings/selectSolutions';
-import SettingsOrder from 'views/HomeNew/Settings/settingsOrder';
+import HomePageSettings from 'views/Home/Settings';
+import SelectSolutionSettings from 'views/Home/Settings/selectSolutions';
+import SettingsOrder from 'views/Home/Settings/settingsOrder';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import ModelInfoWrapper from 'views/ModelInfoWrapper';
@@ -103,11 +102,7 @@ const AppRoutes = () => {
     <Switch>
       {/* General Routes */}
 
-      {flags.customHomepageEnabled ? (
-        <Route path="/" exact component={HomeNew} />
-      ) : (
-        <Route path="/" exact component={Home} />
-      )}
+      <SecureRoute path="/" exact component={Home} />
 
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { ModelStatus, OperationalSolutionKey } from 'gql/gen/graphql';
 
 import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { ModelsBySolutionType } from 'views/HomeNew/components/ModelsBySolutions/table';
+import { ModelsBySolutionType } from 'views/Home/components/ModelsBySolutions/table';
 
 import './index.scss';
 
