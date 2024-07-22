@@ -42,8 +42,7 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             helpScoutEnabled: false,
             feedbackEnabled: false,
             downgradeNonCMS: false,
-            notificationsEnabled: false,
-            customHomepageEnabled: false
+            notificationsEnabled: false
           }
         });
 

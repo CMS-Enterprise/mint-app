@@ -247,27 +247,23 @@ const AppRoutes = () => {
         component={LockedTaskListSection}
       />
 
-      {flags.customHomepageEnabled && (
-        <>
-          <SecureRoute
-            exact
-            path="/homepage-settings"
-            component={HomePageSettings}
-          />
+      <SecureRoute
+        exact
+        path="/homepage-settings"
+        component={HomePageSettings}
+      />
 
-          <SecureRoute
-            exact
-            path="/homepage-settings/order"
-            component={SettingsOrder}
-          />
+      <SecureRoute
+        exact
+        path="/homepage-settings/order"
+        component={SettingsOrder}
+      />
 
-          <SecureRoute
-            exact
-            path="/homepage-settings/solutions"
-            component={SelectSolutionSettings}
-          />
-        </>
-      )}
+      <SecureRoute
+        exact
+        path="/homepage-settings/solutions"
+        component={SelectSolutionSettings}
+      />
 
       <Redirect exact from="/models/:modelID" to="/models/:modelID/read-view" />
 
