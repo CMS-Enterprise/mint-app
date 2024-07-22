@@ -34,7 +34,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 	return helper.With(func(cl *faktory.Client) error {
 		batch := faktory.NewBatch(cl)
 		batch.Description = "Send Daily Digest Emails"
-		batch.Success = faktory.NewJob("DigestEmailBatchJobSuccess", dateAnalyzed)
+		batch.Success = faktory.NewJob(digestEmailBatchJobSuccessName, dateAnalyzed)
 		batch.Success.Queue = defaultQueue
 
 		return batch.Jobs(func() error {

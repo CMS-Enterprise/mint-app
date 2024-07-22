@@ -110,7 +110,7 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 		suite.Equal("2", batchStatusComplete.CompleteState)
 
 		callbackJob, err2 := cl.Fetch(defaultQueue)
-		suite.Equal("DigestEmailBatchJobSuccess", callbackJob.Type)
+		suite.Equal(digestEmailBatchJobSuccessName, callbackJob.Type)
 
 		return err2
 	})
