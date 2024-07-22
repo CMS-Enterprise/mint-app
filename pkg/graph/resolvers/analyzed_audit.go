@@ -25,16 +25,19 @@ func AnalyzeModelPlanForAnalyzedAudit(
 	modelPlanID uuid.UUID,
 ) (*models.AnalyzedAudit, error) {
 
+	logger.Info("fetching model plan")
 	mp, err := store.ModelPlanGetByID(store, logger, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
 
+	logger.Info("returning audit change collection")
 	audits, err := store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger, mp.ID, mp.ID, dayToAnalyze, models.SortDesc)
 	if err != nil {
 		return nil, err
 	}
 
+	logger.Info("generating changes from returned audits")
 	analyzedAuditChange, err := generateChanges(audits, store)
 	if err != nil {
 		return nil, err
@@ -42,14 +45,17 @@ func AnalyzeModelPlanForAnalyzedAudit(
 
 	// Don't create if there are no changes
 	if analyzedAuditChange.IsEmpty() {
+		logger.Info("model has no changes, not generating an analyzed audit")
 		return nil, nil
 	}
 
+	logger.Info("constructing analyzed audit struct")
 	analyzedAudit, err := models.NewAnalyzedAudit(constants.GetSystemAccountUUID(), mp.ID, mp.ModelName, dayToAnalyze, *analyzedAuditChange)
 	if err != nil {
 		return nil, err
 	}
 
+	logger.Info("saving analyzed audit to the database")
 	retAnalyzedAudit, err := store.AnalyzedAuditCreate(logger, analyzedAudit)
 
 	if err != nil {
