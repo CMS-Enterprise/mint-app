@@ -9,20 +9,12 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// StatusPlannedActiveOrEnded is the resolver for the statusPlannedActiveOrEnded field.
-func (r *modelPlanResolver) StatusPlannedActiveOrEnded(ctx context.Context, obj *models.ModelPlan) (model.StatusPlannedActiveOrEnded, error) {
-	switch obj.Status {
-	case models.ModelStatusActive:
-		return model.StatusPlannedActiveOrEndedActive, nil
-	case models.ModelStatusEnded:
-		return model.StatusPlannedActiveOrEndedEnded, nil
-	default:
-		return model.StatusPlannedActiveOrEndedPlanned, nil
-	}
+// ModelBySolutionStatus is the resolver for the modelBySolutionStatus field.
+func (r *modelPlanResolver) ModelBySolutionStatus(ctx context.Context, obj *models.ModelPlan) (models.ModelBySolutionStatus, error) {
+	return ModelBySolutionStatus(obj.Status), nil
 }
 
 // OperationalSolution is the resolver for the operationalSolution field.
