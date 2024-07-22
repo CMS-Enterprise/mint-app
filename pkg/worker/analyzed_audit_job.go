@@ -58,12 +58,19 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 		batch.Success = faktory.NewJob(analyzedAuditBatchJobSuccessName, dayToAnalyze)
 		batch.Success.Queue = criticalQueue
 
+		sugaredLogger := w.Logger.With(zap.Any("BID", batch.Bid))
+		sugaredLogger.Info("Creating a new batch for the analyze audit batch job")
+
 		return batch.Jobs(func() error {
 			for _, mp := range modelPlans {
+				moreSugaredLogger := sugaredLogger.With(zap.Any("date", dayToAnalyze), zap.Any("modelPlanID", mp.ID))
+				moreSugaredLogger.Info("creating analyzed audit job")
 				job := faktory.NewJob(analyzedAuditJobName, dayToAnalyze, mp.ID)
 				job.Queue = criticalQueue
+				moreSugaredLogger.Info("pushing analyzed audit job")
 				err = batch.Push(job)
 				if err != nil {
+					moreSugaredLogger.Error("issue pushing the analyzed audit job", zap.Error(err))
 					return err
 				}
 			}
