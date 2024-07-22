@@ -64,16 +64,16 @@ func (w *Worker) Work() {
 	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
 
 	// register jobs here
-	mgr.Register("DailyDigestCronJob", w.DigestCronJob)
+	mgr.Register("DailyDigestCronJob", JobWithPanicProtection(w.DigestCronJob))
 
-	mgr.Register("AnalyzedAuditJob", w.AnalyzedAuditJob)
-	mgr.Register("AnalyzedAuditBatchJob", w.AnalyzedAuditBatchJob)
-	mgr.Register("AnalyzedAuditBatchJobSuccess", w.AnalyzedAuditBatchJobSuccess)
+	mgr.Register("AnalyzedAuditJob", JobWithPanicProtection(w.AnalyzedAuditJob))
+	mgr.Register("AnalyzedAuditBatchJob", JobWithPanicProtection(w.AnalyzedAuditBatchJob))
+	mgr.Register("AnalyzedAuditBatchJobSuccess", JobWithPanicProtection(w.AnalyzedAuditBatchJobSuccess))
 
-	mgr.Register("DigestEmailBatchJob", w.DigestEmailBatchJob)
-	mgr.Register("DigestEmailBatchJobSuccess", w.DigestEmailBatchJobSuccess)
-	mgr.Register("DigestEmailJob", w.DigestEmailJob)
-	mgr.Register("AggregatedDigestEmailJob", w.AggregatedDigestEmailJob)
+	mgr.Register("DigestEmailBatchJob", JobWithPanicProtection(w.DigestEmailBatchJob))
+	mgr.Register("DigestEmailBatchJobSuccess", JobWithPanicProtection(w.DigestEmailBatchJobSuccess))
+	mgr.Register("DigestEmailJob", JobWithPanicProtection(w.DigestEmailJob))
+	mgr.Register("AggregatedDigestEmailJob", JobWithPanicProtection(w.AggregatedDigestEmailJob))
 
 	mgr.Register(translateAuditCronJobName, JobWithPanicProtection(w.TranslateAuditCronJob))
 	mgr.Register(translateAuditBatchJobName, JobWithPanicProtection(w.TranslateAuditBatchJob))
