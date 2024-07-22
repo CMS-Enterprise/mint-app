@@ -641,7 +641,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CPI 
       Timeline
     </h2>
     <div
-      class="usa-alert usa-alert--info flex line-height-body-5"
+      class="usa-alert usa-alert--info icon-padding flex line-height-body-5"
       data-testid="alert"
     >
       <div
@@ -1025,7 +1025,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Elec
       Timeline
     </h2>
     <div
-      class="usa-alert usa-alert--info flex line-height-body-5"
+      class="usa-alert usa-alert--info icon-padding flex line-height-body-5"
       data-testid="alert"
     >
       <div
@@ -1327,7 +1327,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
       Timeline
     </h2>
     <div
-      class="usa-alert usa-alert--info flex line-height-body-5"
+      class="usa-alert usa-alert--info icon-padding flex line-height-body-5"
       data-testid="alert"
     >
       <div
@@ -1629,7 +1629,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Inte
       Timeline
     </h2>
     <div
-      class="usa-alert usa-alert--info flex line-height-body-5"
+      class="usa-alert usa-alert--info icon-padding flex line-height-body-5"
       data-testid="alert"
     >
       <div
@@ -1862,6 +1862,105 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             target="_blank"
           >
             Go to ICD and Onboarding Mapping for MDM-POR
+        </li>
+      </ol>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions Timeline Components > matches the snapshot > Master Data Management for Non-Claims Based Payments 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+    >
+      <p>
+        Coordination with MDM-NCBP can happen prior to having an implementation contractor. Once the model has an implementation contractor, it takes an average of two months to onboard.
+      </p>
+      <ol
+        class="usa-process-list padding-top-1"
+      >
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            CMMI/BSG will reach out
+          </h3>
+          When CMMI/BSG is notified that a model will have non-claims-based payments and will use MDM, they will contact the model team. If your model has non-claims-based payments have not been contacted, email Celia Shaunessy.
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Discussion with the model team
+          </h3>
+          After initial communication, there is a discussion with the model team to check if they need to proceed. If so, CMMI/BSG will help shepherd the onboard process as necessary.
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Complete onboarding questionnaire
+          </h3>
+          CMMI/BSG will send the model team an onboarding questionnaire specific to MDM-NCBP. The model team should fill out the program ID and other business requirements.
+            
+
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire%20%20NCBP/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2520%2520NCBP%2FAll%2520NCBP%2520Responses%2Easpx"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Go to Onboarding Request Form for MDM-NCBP
+          </a>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Meet with MDM operations team
+          </h3>
+          CMMI/BSG meets with the MDM operations team to share the business requirements.
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Share ICD
+          </h3>
+          CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. Celia Shaunessey and her team can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
+  
+
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/NCBPResources.aspx"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Go to ICD and Onboarding Mapping for MDM-NCBP
           </a>
         </li>
       </ol>
@@ -1968,7 +2067,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Medi
       Timeline
     </h2>
     <div
-      class="usa-alert usa-alert--info flex line-height-body-5"
+      class="usa-alert usa-alert--info icon-padding flex line-height-body-5"
       data-testid="alert"
     >
       <div

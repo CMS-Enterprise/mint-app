@@ -544,6 +544,24 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
+    enum: OperationalSolutionKey.MDM_NCBP,
+    key: 'masterDataManagementForNCBP',
+    route: 'master-data-management-for-ncbp',
+    categories: [
+      OperationalSolutionCategories.DATA,
+      OperationalSolutionCategories.PAYMENT_FINANCIALS
+    ],
+    acronym: 'MDM-NCBP',
+    name: 'Master Data Management for Non-Claims Based Payments',
+    systemOwner: {
+      name: 'Enterprise Architecture and Data Group',
+      system: 'Office of Information Technology'
+    },
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
     enum: OperationalSolutionKey.MIDS,
     key: 'measureInstrumentDS',
     route: 'measure-and-instrument-development-and-support',

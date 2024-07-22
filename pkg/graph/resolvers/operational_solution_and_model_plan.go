@@ -14,3 +14,18 @@ func ModelPlansByOperationalSolutionKey(
 ) ([]*models.ModelPlanAndOperationalSolution, error) {
 	return store.ModelPlanGetByOperationalSolutionKey(logger, operationalSolutionKey)
 }
+
+// ModelBySolutionStatus converts a Model status to a ModelBySolutionStatus
+func ModelBySolutionStatus(modelPlanStatus models.ModelStatus) models.ModelBySolutionStatus {
+	switch modelPlanStatus {
+	case models.ModelStatusActive:
+		return models.MbSSActive
+	case models.ModelStatusEnded:
+		return models.MbSSEnded
+	// These status we don't want to show up in the PLANNED status column.
+	case models.ModelStatusCanceled, models.ModelStatusPaused:
+		return models.MbSSOther
+	default:
+		return models.MbSSPlanned
+	}
+}

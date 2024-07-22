@@ -108,7 +108,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
             Anticipated high level timeline
           </h3>
           <div
-            class="usa-alert usa-alert--info usa-alert--slim flex"
+            class="usa-alert usa-alert--info usa-alert--slim icon-padding flex"
             data-testid="alert"
           >
             <div
