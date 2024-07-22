@@ -43,8 +43,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 		return fmt.Errorf("unable to convert argument  ( %v )to an uuid as expected for translated_audit_queue_id for the translate audit job. Err %w", args[1], err)
 	}
 
-	sugaredLogger := w.Logger.With(zap.Any("auditID", auditID), zap.Any("queueID", queueID))
-	sugaredLogger.Debug("translating audit", zap.Any("auditID", auditID), zap.Any("queueID", queueID), zap.Any("JID", helper.Jid()))
+	sugaredLogger := w.Logger.With(zap.Any("auditID", auditID), zap.Any("queueID", queueID), zap.Any("JID", helper.Jid()))
 
 	_, translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, sugaredLogger, auditID, queueID)
 	if translationErr != nil {
