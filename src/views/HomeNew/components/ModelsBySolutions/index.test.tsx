@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import {
   GetModelsBySolutionDocument,
+  ModelBySolutionStatus,
   ModelStatus,
   OperationalSolutionKey
 } from 'gql/gen/graphql';
@@ -26,6 +27,7 @@ const mocks = [
               id: 'cfa415d8-312d-44fa-8ae8-4e3068e1fb34',
               modelName: 'Plan With CRs and TDLs',
               status: ModelStatus.PLAN_DRAFT,
+              modelBySolutionStatus: ModelBySolutionStatus.PLANNED,
               basics: {
                 id: '6a3c2f25-81ce-4364-b631-4c3b08eeb5af',
                 modelCategory: null,
@@ -42,6 +44,7 @@ const mocks = [
               id: 'e671f056-2634-4af4-abad-a63850832a0a',
               modelName: 'Plan With Collaborators',
               status: ModelStatus.PLAN_DRAFT,
+              modelBySolutionStatus: ModelBySolutionStatus.PLANNED,
               basics: {
                 id: '3a1584a5-6712-4ab8-8832-86faa183d3b1',
                 modelCategory: null,
@@ -58,6 +61,7 @@ const mocks = [
               id: '598db9f0-54c0-4346-bb6b-da46a36eff1a',
               modelName: 'Enhancing Oncology Model',
               status: ModelStatus.PLAN_DRAFT,
+              modelBySolutionStatus: ModelBySolutionStatus.PLANNED,
               basics: {
                 id: '3f77db11-da8c-4282-a5c7-c50282833244',
                 modelCategory: null,
@@ -74,6 +78,7 @@ const mocks = [
               id: 'c9cf987d-8543-46bb-a668-2c560ce5b149',
               modelName: 'Empty Plan',
               status: ModelStatus.PLAN_DRAFT,
+              modelBySolutionStatus: ModelBySolutionStatus.PLANNED,
               basics: {
                 id: '9a9547e2-b1d0-4ff7-a86b-9dc9339500fa',
                 modelCategory: 'STATE_BASED',
@@ -89,7 +94,42 @@ const mocks = [
             modelPlan: {
               id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae2',
               modelName: 'Plan with Basics',
+              modelBySolutionStatus: ModelBySolutionStatus.ENDED,
               status: ModelStatus.ENDED,
+              basics: {
+                id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
+                modelCategory: null,
+                performancePeriodStarts: null,
+                performancePeriodEnds: null,
+                __typename: 'PlanBasics'
+              },
+              __typename: 'ModelPlan'
+            },
+            __typename: 'ModelPlanAndOperationalSolution'
+          },
+          {
+            modelPlan: {
+              id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae3',
+              modelName: 'Z Paused Model',
+              modelBySolutionStatus: ModelBySolutionStatus.OTHER,
+              status: ModelStatus.PAUSED,
+              basics: {
+                id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
+                modelCategory: null,
+                performancePeriodStarts: null,
+                performancePeriodEnds: null,
+                __typename: 'PlanBasics'
+              },
+              __typename: 'ModelPlan'
+            },
+            __typename: 'ModelPlanAndOperationalSolution'
+          },
+          {
+            modelPlan: {
+              id: '4fc87324-dbb0-4867-8e4d-5a20a76c8ae4',
+              modelName: 'Z Canceled Model',
+              modelBySolutionStatus: ModelBySolutionStatus.OTHER,
+              status: ModelStatus.CANCELED,
               basics: {
                 id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
                 modelCategory: null,
@@ -125,7 +165,7 @@ describe('ModelsBySolution Table and Card', () => {
 
     // Counts on banner should reflect the number of models with each status
     await waitFor(() => {
-      expect(getByTestId('total-count')).toHaveTextContent('5');
+      expect(getByTestId('total-count')).toHaveTextContent('7');
       expect(getByTestId('planned-count')).toHaveTextContent('4');
       expect(getByTestId('active-count')).toHaveTextContent('0');
       expect(getByTestId('ended-count')).toHaveTextContent('1');

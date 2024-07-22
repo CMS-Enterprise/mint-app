@@ -48,7 +48,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                   <div
                     data-testid="total-count"
                   >
-                    5
+                    7
                   </div>
                 </button>
               </li>
@@ -170,7 +170,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
             aria-live="polite"
             role="status"
           >
-            Showing 1-3 of 5 results 
+            Showing 1-3 of 7 results 
           </div>
         </span>
       </div>
@@ -659,6 +659,18 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
           tabindex="0"
         >
           2
+        </a>
+      </li>
+      <li
+        class="usa-pagination__item"
+      >
+        <a
+          aria-label="Page 3"
+          class="usa-pagination__button"
+          role="button"
+          tabindex="0"
+        >
+          3
         </a>
       </li>
       <li

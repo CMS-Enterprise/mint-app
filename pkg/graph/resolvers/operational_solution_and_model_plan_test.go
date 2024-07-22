@@ -1,6 +1,10 @@
 package resolvers
 
 import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -140,4 +144,91 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithDifferentSolutionTypes() {
 	suite.Len(modelPlanAndOpSols, 1)
 	suite.EqualValues(mpB.ID, modelPlanAndOpSols[0].ModelPlanID)
 	suite.EqualValues(opSolB.ID, modelPlanAndOpSols[0].OperationalSolutionID)
+}
+
+func TestModelBySolutionStatus(t *testing.T) {
+	assert := assert.New(t)
+
+	testCases := []struct {
+		testName             string
+		inputStatus          models.ModelStatus
+		expectedOutputStatus models.ModelBySolutionStatus
+	}{
+		{
+			testName:             "Active_To_Active",
+			inputStatus:          models.ModelStatusActive,
+			expectedOutputStatus: models.MbSSActive,
+		},
+		{
+			testName:             "Ended_To_Ended",
+			inputStatus:          models.ModelStatusPlanDraft,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "Cancelled_To_Other",
+			inputStatus:          models.ModelStatusCanceled,
+			expectedOutputStatus: models.MbSSOther,
+		},
+		{
+			testName:             "Paused_To_Other",
+			inputStatus:          models.ModelStatusPaused,
+			expectedOutputStatus: models.MbSSOther,
+		},
+
+		// The remaining statuses all go to Planned
+		{
+			testName:             "PlanDraft_To_Planned",
+			inputStatus:          models.ModelStatusPlanDraft,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "PlanComplete_To_Planned",
+			inputStatus:          models.ModelStatusPlanComplete,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "IcipComplete_To_Planned",
+			inputStatus:          models.ModelStatusIcipComplete,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "InternalCmmiClearance_To_Planned",
+			inputStatus:          models.ModelStatusInternalCmmiClearance,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "CmsClearance_To_Planned",
+			inputStatus:          models.ModelStatusCmsClearance,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "HhsClearance_To_Planned",
+			inputStatus:          models.ModelStatusHhsClearance,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "OmbAsrfClearance_To_Planned",
+			inputStatus:          models.ModelStatusOmbAsrfClearance,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "Cleared_To_Planned",
+			inputStatus:          models.ModelStatusCleared,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+		{
+			testName:             "Announced_To_Planned",
+			inputStatus:          models.ModelStatusAnnounced,
+			expectedOutputStatus: models.MbSSPlanned,
+		},
+	}
+
+	for _, test := range testCases {
+		t.Run(test.testName, func(t *testing.T) {
+			outputStatus := ModelBySolutionStatus(test.inputStatus)
+			assert.EqualValues(test.expectedOutputStatus, outputStatus, "Expected status did not match")
+		})
+
+	}
+
 }

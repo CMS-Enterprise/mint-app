@@ -9,3 +9,12 @@ type ModelPlanAndOperationalSolution struct {
 	OperationalSolutionID uuid.UUID `json:"operationalSolutionId" db:"operational_solution_id"`
 	ModelPlanID           uuid.UUID `json:"modelPlanId" db:"model_plan_id"`
 }
+
+type ModelBySolutionStatus string
+
+const (
+	MbSSPlanned ModelBySolutionStatus = "PLANNED"
+	MbSSActive  ModelBySolutionStatus = "ACTIVE"
+	MbSSEnded   ModelBySolutionStatus = "ENDED"
+	MbSSOther   ModelBySolutionStatus = "OTHER"
+)
