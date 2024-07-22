@@ -7,6 +7,7 @@ import (
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
+	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 )
@@ -28,9 +29,13 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 	if err != nil {
 		return err
 	}
-	_, err = resolvers.AnalyzeModelPlanForAnalyzedAudit(ctx, w.Store, w.Logger, dayToAnalyze, modelPlanID)
+	// Note, this will panic if the context doesn't have a faktory job context it will panic.
+	helper := faktory_worker.HelperFor(ctx)
+	sugaredLogger := w.Logger.With(zap.Any("modelPlanID", modelPlanID), zap.Any("date", dayToAnalyze), zap.Any("JID", helper.Jid()))
+	_, err = resolvers.AnalyzeModelPlanForAnalyzedAudit(ctx, w.Store, sugaredLogger, dayToAnalyze, modelPlanID)
 
 	if err != nil {
+		sugaredLogger.Error("issue executing analyzed audit job", zap.Error(err))
 		return err
 	}
 	return nil
