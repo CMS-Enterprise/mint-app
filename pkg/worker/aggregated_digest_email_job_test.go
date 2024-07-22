@@ -108,8 +108,8 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 	pool, err2 := faktory.NewPool(1)
 	suite.NoError(err2)
 	perf := faktory_worker.NewTestExecutor(pool)
-	job := faktory.NewJob(translateAuditJobName, time.Now().UTC().Format("2006-01-02"), collaborator.UserID.String()) // pass user id as string because that is how it is returned from Faktory
-	jobErr := perf.Execute(job, worker.TranslateAuditJob)
+	job := faktory.NewJob(aggregatedDigestEmailJobName, time.Now().UTC().Format("2006-01-02"), collaborator.UserID.String()) // pass user id as string because that is how it is returned from Faktory
+	jobErr := perf.Execute(job, worker.AggregatedDigestEmailJob)
 	suite.NoError(jobErr)
 
 	mockController.Finish()
