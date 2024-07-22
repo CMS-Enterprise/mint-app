@@ -35,6 +35,7 @@ const (
 	auditTranslateQueue string = "auditTranslation"
 )
 
+// These constants represent the names of jobs for translating audits
 const (
 	// translateAuditBatchJobName is the name of the batch job for translating audits
 	translateAuditBatchJobName string = "TranslateAuditBatchJob"
@@ -47,6 +48,23 @@ const (
 
 	// translateAuditJobName is the name of the job that creates a translated audit from an audit
 	translateAuditJobName string = "TranslateAuditJob"
+)
+
+//TODO: update other references to use these constants instead of string literals
+
+// These constants represent the names of jobs for analyzing audits
+const (
+	analyzedAuditJobName             string = "AnalyzedAuditJob"
+	analyzedAuditBatchJobName        string = "AnalyzedAuditBatchJob"
+	analyzedAuditBatchJobSuccessName string = "AnalyzedAuditBatchJobSuccess"
+)
+
+const (
+	dailyDigestCronJobName         string = "DailyDigestCronJob"
+	digestEmailBatchJobName        string = "DigestEmailBatchJob"
+	digestEmailBatchJobSuccessName string = "DigestEmailBatchJobSuccess"
+	digestEmailJobName             string = "DigestEmailJob"
+	aggregatedDigestEmailJobName   string = "AggregatedDigestEmailJob"
 )
 
 // Work creates, configures, and starts worker
@@ -64,16 +82,16 @@ func (w *Worker) Work() {
 	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
 
 	// register jobs here
-	mgr.Register("DailyDigestCronJob", JobWithPanicProtection(w.DigestCronJob))
+	mgr.Register(dailyDigestCronJobName, JobWithPanicProtection(w.DigestCronJob))
 
-	mgr.Register("AnalyzedAuditJob", JobWithPanicProtection(w.AnalyzedAuditJob))
-	mgr.Register("AnalyzedAuditBatchJob", JobWithPanicProtection(w.AnalyzedAuditBatchJob))
-	mgr.Register("AnalyzedAuditBatchJobSuccess", JobWithPanicProtection(w.AnalyzedAuditBatchJobSuccess))
+	mgr.Register(analyzedAuditJobName, JobWithPanicProtection(w.AnalyzedAuditJob))
+	mgr.Register(analyzedAuditBatchJobName, JobWithPanicProtection(w.AnalyzedAuditBatchJob))
+	mgr.Register(analyzedAuditBatchJobSuccessName, JobWithPanicProtection(w.AnalyzedAuditBatchJobSuccess))
 
-	mgr.Register("DigestEmailBatchJob", JobWithPanicProtection(w.DigestEmailBatchJob))
-	mgr.Register("DigestEmailBatchJobSuccess", JobWithPanicProtection(w.DigestEmailBatchJobSuccess))
-	mgr.Register("DigestEmailJob", JobWithPanicProtection(w.DigestEmailJob))
-	mgr.Register("AggregatedDigestEmailJob", JobWithPanicProtection(w.AggregatedDigestEmailJob))
+	mgr.Register(digestEmailBatchJobName, JobWithPanicProtection(w.DigestEmailBatchJob))
+	mgr.Register(digestEmailBatchJobSuccessName, JobWithPanicProtection(w.DigestEmailBatchJobSuccess))
+	mgr.Register(digestEmailJobName, JobWithPanicProtection(w.DigestEmailJob))
+	mgr.Register(aggregatedDigestEmailJobName, JobWithPanicProtection(w.AggregatedDigestEmailJob))
 
 	mgr.Register(translateAuditCronJobName, JobWithPanicProtection(w.TranslateAuditCronJob))
 	mgr.Register(translateAuditBatchJobName, JobWithPanicProtection(w.TranslateAuditBatchJob))
