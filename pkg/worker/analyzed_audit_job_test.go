@@ -1,7 +1,6 @@
 package worker
 
 import (
-	"context"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -110,8 +109,13 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	_, paymentErr := resolvers.PlanPaymentsUpdate(worker.Logger, worker.Store, payment.ID, reviewChanges, suite.testConfigs.Principal)
 	suite.NoError(paymentErr)
 
-	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().Format("2006-01-02"), plan.ID.String())
+	// Test the job through a text executor, as we need the JID through the worker context
+	pool, err := faktory.NewPool(1)
 	suite.NoError(err)
+	job := faktory.NewJob(analyzedAuditJobName, time.Now().UTC().Format("2006-01-02"), plan.ID.String())
+	perf := faktory_worker.NewTestExecutor(pool)
+	jobErr := perf.Execute(job, worker.AnalyzedAuditJob)
+	suite.NoError(jobErr)
 
 	// Get Stored audit
 	analyzedAudit, err := worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, plan.ID, time.Now().UTC())
@@ -168,8 +172,13 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.NoError(err)
 	suite.NotNil(noChangeMp)
 
-	err = worker.AnalyzedAuditJob(context.Background(), time.Now().UTC().Format("2006-01-02"), noChangeMp.ID.String())
-	suite.NoError(err)
+	// Use test executor to provide context
+	pool2, err2 := faktory.NewPool(1)
+	suite.NoError(err2)
+	job2 := faktory.NewJob(analyzedAuditJobName, time.Now().UTC().Format("2006-01-02"), noChangeMp.ID.String())
+	perf2 := faktory_worker.NewTestExecutor(pool2)
+	jobErr2 := perf2.Execute(job2, worker.AnalyzedAuditJob)
+	suite.NoError(jobErr2)
 
 	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(worker.Logger, noChangeMp.ID, time.Now().UTC())
 	suite.Error(err)
