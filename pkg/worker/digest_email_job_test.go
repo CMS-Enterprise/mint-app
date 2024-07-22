@@ -56,7 +56,7 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 
 	// Test when DigestEmailBatchJob runs it enqueues
 	// the correct number of DigestEmailJobs (1 job per user (2))
-	batchJob := faktory.NewJob("DigestEmailBatchJob", date)
+	batchJob := faktory.NewJob(digestEmailBatchJobName, date)
 	batchJob.Queue = criticalQueue
 
 	err = perf.Execute(batchJob, worker.DigestEmailBatchJob)

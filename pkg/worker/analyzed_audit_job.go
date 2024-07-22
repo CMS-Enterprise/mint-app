@@ -80,7 +80,7 @@ func (w *Worker) AnalyzedAuditBatchJobSuccess(ctx context.Context, args ...inter
 
 	// Kick off DigestEmailBatchJob
 	return help.With(func(cl *faktory.Client) error {
-		job := faktory.NewJob("DigestEmailBatchJob", dateAnalyzed)
+		job := faktory.NewJob(digestEmailBatchJobName, dateAnalyzed)
 		job.Queue = criticalQueue
 		return cl.Push(job)
 	})

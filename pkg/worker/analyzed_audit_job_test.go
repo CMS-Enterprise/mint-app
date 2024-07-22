@@ -253,7 +253,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditBatchJobIntegration() {
 
 		emailBatchJob, err2 := cl.Fetch(criticalQueue)
 		suite.NoError(err2)
-		suite.Equal("DigestEmailBatchJob", emailBatchJob.Type)
+		suite.Equal(digestEmailBatchJobName, emailBatchJob.Type)
 
 		return err2
 	})
