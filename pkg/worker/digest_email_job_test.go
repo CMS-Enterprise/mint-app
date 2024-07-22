@@ -181,7 +181,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 
 	// Test when DigestEmailJob runs it enqueues
 	// the with the correct args
-	job := faktory.NewJob("DigestEmailJob", date, collaborator.UserID)
+	job := faktory.NewJob(digestEmailJobName, date, collaborator.UserID)
 	job.Queue = emailQueue
 
 	err = pool.With(func(cl *faktory.Client) error {

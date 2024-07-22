@@ -39,7 +39,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 
 		return batch.Jobs(func() error {
 			for _, id := range userIDs {
-				job := faktory.NewJob("DigestEmailJob", dateAnalyzed, id)
+				job := faktory.NewJob(digestEmailJobName, dateAnalyzed, id)
 				job.Queue = emailQueue
 				err = batch.Push(job)
 				if err != nil {
