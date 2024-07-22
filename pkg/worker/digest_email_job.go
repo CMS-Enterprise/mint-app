@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"go.uber.org/zap"
+
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -26,6 +28,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 
 	helper := faktory_worker.HelperFor(ctx)
 
+	w.Logger.Info("getting collection of unique userIds that have favorited a model", zap.Any("JID", helper.Jid()))
 	userIDs, err := w.Store.PlanFavoriteCollectionGetUniqueUserIDs()
 	if err != nil {
 		return err
@@ -36,13 +39,18 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 		batch.Description = "Send Daily Digest Emails"
 		batch.Success = faktory.NewJob(digestEmailBatchJobSuccessName, dateAnalyzed)
 		batch.Success.Queue = defaultQueue
-
+		sugaredLogger := w.Logger.With(zap.Any("JID", helper.Jid()), zap.Any("BID", batch.Bid))
+		sugaredLogger.Info("Creating a new batch for the daily digest email batch job")
 		return batch.Jobs(func() error {
 			for _, id := range userIDs {
+				moreSugaredLogger := sugaredLogger.With(zap.Any("date", dateAnalyzed), zap.Any("userID", id))
+				moreSugaredLogger.Info("creating digest email job")
 				job := faktory.NewJob(digestEmailJobName, dateAnalyzed, id)
 				job.Queue = emailQueue
+				moreSugaredLogger.Info("pushing digest email job")
 				err = batch.Push(job)
 				if err != nil {
+					moreSugaredLogger.Error(" issue pushing digest email job", zap.Error(err))
 					return err
 				}
 			}
@@ -57,6 +65,8 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 // DigestEmailBatchJobSuccess is the callback function forDigestEmailBatchJob
 // args[0] date
 func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interface{}) error {
+	help := faktory_worker.HelperFor(ctx)
+	w.Logger.Info("Digest Email Batch Job Succeeded", zap.Any("JID", help.Jid()), zap.Any("BID", help.Bid()))
 	// TODO: Add notification here if wanted in the future
 	return nil
 }
