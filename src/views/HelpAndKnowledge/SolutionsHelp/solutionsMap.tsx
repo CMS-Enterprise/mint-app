@@ -529,7 +529,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.MDMPOR,
+    enum: OperationalSolutionKey.MDM_POR,
     key: 'masterDataManagementProgramOrganizationRelationship',
     route: 'master-data-management-program-organization-relationship',
     categories: [OperationalSolutionCategories.DATA],
