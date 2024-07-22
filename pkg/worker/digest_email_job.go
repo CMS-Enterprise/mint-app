@@ -107,18 +107,22 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 	if err != nil {
 		return err
 	}
-
+	helper := faktory_worker.HelperFor(ctx)
+	sugaredLogger := w.Logger.With(zap.Any("date", dateAnalyzed), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()))
+	sugaredLogger.Info("preparing to send aggregated digest email")
 	err = AggregatedDigestEmailJob(
 		dateAnalyzed,
 		w.Store,
-		w.Logger,
+		sugaredLogger,
 		w.EmailTemplateService,
 		w.EmailService,
 		w.AddressBook,
 	)
 	if err != nil {
+		sugaredLogger.Error("error sending the aggregated digest email", zap.Error(err))
 		return err
 	}
 
+	sugaredLogger.Info("aggregated digest email sent successfully")
 	return nil
 }

@@ -1,9 +1,11 @@
 package worker
 
 import (
-	"context"
 	"strings"
 	"time"
+
+	faktory "github.com/contribsys/faktory/client"
+	faktory_worker "github.com/contribsys/faktory_worker_go"
 
 	"github.com/golang/mock/gomock"
 	"github.com/samber/lo"
@@ -103,8 +105,12 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 			gomock.Eq(emailBody),
 		).MinTimes(1).MaxTimes(1)
 
-	err = worker.AggregatedDigestEmailJob(context.Background(), time.Now().UTC().Format("2006-01-02"), collaborator.UserID.String()) // pass user id as string because that is how it is returned from Faktory
+	pool, err2 := faktory.NewPool(1)
+	suite.NoError(err2)
+	perf := faktory_worker.NewTestExecutor(pool)
+	job := faktory.NewJob(translateAuditJobName, time.Now().UTC().Format("2006-01-02"), collaborator.UserID.String()) // pass user id as string because that is how it is returned from Faktory
+	jobErr := perf.Execute(job, worker.TranslateAuditJob)
+	suite.NoError(jobErr)
 
-	suite.NoError(err)
 	mockController.Finish()
 }
