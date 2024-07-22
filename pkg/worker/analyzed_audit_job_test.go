@@ -240,7 +240,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditBatchJobIntegration() {
 
 		callbackJob, err2 := cl.Fetch(criticalQueue)
 		suite.NoError(err2)
-		suite.Equal("AnalyzedAuditBatchJobSuccess", callbackJob.Type)
+		suite.Equal(analyzedAuditBatchJobSuccessName, callbackJob.Type)
 
 		// AnalyzedAuditBatchJobSuccess should enquueue DigestEmailBatchJob
 		pool, err2 := faktory.NewPool(5)

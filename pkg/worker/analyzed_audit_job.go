@@ -55,7 +55,7 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 	return helper.With(func(cl *faktory.Client) error {
 		batch := faktory.NewBatch(cl)
 		batch.Description = "Analyze models audits by date"
-		batch.Success = faktory.NewJob("AnalyzedAuditBatchJobSuccess", dayToAnalyze)
+		batch.Success = faktory.NewJob(analyzedAuditBatchJobSuccessName, dayToAnalyze)
 		batch.Success.Queue = criticalQueue
 
 		return batch.Jobs(func() error {
