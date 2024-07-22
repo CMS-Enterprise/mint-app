@@ -47,7 +47,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 				}
 			}
 
-			job := faktory.NewJob("AggregatedDigestEmailJob", dateAnalyzed)
+			job := faktory.NewJob(aggregatedDigestEmailJobName, dateAnalyzed)
 			job.Queue = emailQueue
 			return batch.Push(job)
 		})
