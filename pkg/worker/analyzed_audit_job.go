@@ -60,7 +60,7 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 
 		return batch.Jobs(func() error {
 			for _, mp := range modelPlans {
-				job := faktory.NewJob("AnalyzedAuditJob", dayToAnalyze, mp.ID)
+				job := faktory.NewJob(analyzedAuditJobName, dayToAnalyze, mp.ID)
 				job.Queue = criticalQueue
 				err = batch.Push(job)
 				if err != nil {

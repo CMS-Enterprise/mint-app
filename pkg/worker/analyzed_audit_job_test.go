@@ -275,7 +275,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJobIntegration() {
 
 	// Test when AnalyzedAuditJob runs it enqueues
 	// the with the correct args
-	job := faktory.NewJob("AnalyzedAuditJob", date, mp1.ID)
+	job := faktory.NewJob(analyzedAuditJobName, date, mp1.ID)
 	job.Queue = criticalQueue
 
 	err = pool.With(func(cl *faktory.Client) error {
