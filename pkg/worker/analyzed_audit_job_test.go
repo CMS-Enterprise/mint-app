@@ -194,7 +194,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditBatchJobIntegration() {
 
 	// Test when AnalyzedAuditBatchJob runs it enqueues
 	// the correct number of AnalyzedAuditJobs (1 job per plan (2))
-	cronJob := faktory.NewJob("AnalyzedAuditBatchJob", date)
+	cronJob := faktory.NewJob(analyzedAuditBatchJobName, date)
 	cronJob.Queue = criticalQueue
 
 	err = perf.Execute(cronJob, worker.AnalyzedAuditBatchJob)
