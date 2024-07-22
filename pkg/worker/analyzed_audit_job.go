@@ -58,7 +58,7 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 		batch.Success = faktory.NewJob(analyzedAuditBatchJobSuccessName, dayToAnalyze)
 		batch.Success.Queue = criticalQueue
 
-		sugaredLogger := w.Logger.With(zap.Any("BID", batch.Bid))
+		sugaredLogger := w.Logger.With(zap.Any("JID", helper.Jid()), zap.Any("BID", batch.Bid))
 		sugaredLogger.Info("Creating a new batch for the analyze audit batch job")
 
 		return batch.Jobs(func() error {
@@ -84,11 +84,13 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 func (w *Worker) AnalyzedAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	dateAnalyzed := args[0]
 	help := faktory_worker.HelperFor(ctx)
-
+	sugaredLogger := w.Logger.With(zap.Any("JID", help.Jid()), zap.Any("BID", help.Bid()))
 	// Kick off DigestEmailBatchJob
 	return help.With(func(cl *faktory.Client) error {
+		sugaredLogger.Info("Analyzed Audit Batch Job was successful.")
 		job := faktory.NewJob(digestEmailBatchJobName, dateAnalyzed)
 		job.Queue = criticalQueue
+		sugaredLogger.Info("Pushing digest email batch job")
 		return cl.Push(job)
 	})
 }
