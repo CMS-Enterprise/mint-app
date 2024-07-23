@@ -258,7 +258,7 @@ const AppRoutes = () => {
           path="/homepage-settings"
           render={({ match: { url } }) => (
             <>
-              <Route path={`${url}/`} component={HomePageSettings} exact />
+              <Route path={`${url}`} component={HomePageSettings} exact />
               <Route path={`${url}/order`} component={SettingsOrder} />
               <Route
                 path={`${url}/solutions`}
