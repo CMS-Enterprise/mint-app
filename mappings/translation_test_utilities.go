@@ -18,6 +18,29 @@ var baseStructExcludeFields []string = []string{"ID", "CreatedBy", "CreatedDts",
 // taskListStructExcludeFields are the fields that aren't needed to be translated for most task list sections
 var taskListStructExcludeFields []string = append(baseStructExcludeFields, "ModelPlanID")
 
+// assertTranslationFuncAndReturnMap takes a translation function and verify it's not nil, then returns the result of it's ToMap call.
+// it returns true if successful, or false if not
+func assertTranslationFuncAndReturnMap[T Translation](t *testing.T, translationFunc func() (T, error)) (bool, map[string]models.ITranslationField) {
+	translation, err := translationFunc()
+	assert.NoError(t, err)
+	if assert.NotNil(t, translation) {
+		tMap, err := translation.ToMap()
+		assert.NoError(t, err)
+		assert.NotNil(t, tMap)
+		return true, tMap
+	}
+	return false, nil
+}
+
+// assertTranslationStructCoverageGeneric is a helper function that abstracts the logic to compare a translation to a source struct and assert that all fields have a
+// translated value. It abstracts away the logic to convert the translation to a map
+func assertTranslationStructCoverageGeneric[T Translation](t *testing.T, translationFunc func() (T, error), sourceStruct any, taskListStructExcludeFields []string) {
+	success, tMap := assertTranslationFuncAndReturnMap(t, translationFunc)
+	if assert.True(t, success) {
+		assertTranslationStructCoverage(t, tMap, sourceStruct, taskListStructExcludeFields)
+	}
+}
+
 // assertTranslationFields will iterate through all fields in a translation and make sure that they are populated correctly and valid
 func assertTranslationFields(t *testing.T, translation Translation) {
 	// Get the type & value of the object
