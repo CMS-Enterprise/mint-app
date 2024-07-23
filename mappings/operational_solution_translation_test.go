@@ -31,14 +31,6 @@ func TestOperationalSolutionTranslationVerifyFieldsArePopulated(t *testing.T) {
 }
 
 func TestOperationalSolutionTranslationCoverage(t *testing.T) {
-	translation, err := OperationalSolutionTranslation()
-
-	assert.NoError(t, err)
-	assert.NotNil(t, translation)
-
-	tMap, err := translation.ToMap()
-	assert.NoError(t, err)
-	assert.NotNil(t, tMap)
 	/*
 		Operational NeedID is captured in metadata
 		SolutionType is captured in MetaData
@@ -47,5 +39,5 @@ func TestOperationalSolutionTranslationCoverage(t *testing.T) {
 	*/
 	excludedFields := append(taskListStructExcludeFields, "OperationalNeedID", "SolutionType", "IsCommonSolution")
 
-	assertTranslationStructCoverage(t, tMap, models.OperationalSolution{}, excludedFields)
+	assertTranslationStructCoverageGeneric(t, OperationalSolutionTranslation, models.OperationalSolution{}, excludedFields)
 }

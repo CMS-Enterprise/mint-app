@@ -31,15 +31,7 @@ func TestOperationalSolutionSubtaskTranslationVerifyFieldsArePopulated(t *testin
 }
 
 func TestOperationalSolutionSubtaskTranslationCoverage(t *testing.T) {
-	translation, err := OperationalSolutionSubtaskTranslation()
-
-	assert.NoError(t, err)
-	assert.NotNil(t, translation)
-
-	tMap, err := translation.ToMap()
-	assert.NoError(t, err)
-	assert.NotNil(t, tMap)
 	excludedFields := append(taskListStructExcludeFields, "SolutionID")
 
-	assertTranslationStructCoverage(t, tMap, models.OperationalSolutionSubtask{}, excludedFields)
+	assertTranslationStructCoverageGeneric(t, OperationalSolutionSubtaskTranslation, models.OperationalSolutionSubtask{}, excludedFields)
 }

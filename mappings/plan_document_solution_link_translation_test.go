@@ -31,14 +31,5 @@ func TestPlanDocumentSolutionLinkTranslationVerifyFieldsArePopulated(t *testing.
 }
 
 func TestPlanDocumentSolutionLinkTranslationCoverage(t *testing.T) {
-	translation, err := PlanDocumentSolutionLinkTranslation()
-
-	assert.NoError(t, err)
-	assert.NotNil(t, translation)
-
-	tMap, err := translation.ToMap()
-	assert.NoError(t, err)
-	assert.NotNil(t, tMap)
-
-	assertTranslationStructCoverage(t, tMap, models.PlanDocumentSolutionLink{}, taskListStructExcludeFields)
+	assertTranslationStructCoverageGeneric(t, PlanDocumentSolutionLinkTranslation, models.PlanDocumentSolutionLink{}, taskListStructExcludeFields)
 }

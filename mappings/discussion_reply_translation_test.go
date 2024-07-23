@@ -31,14 +31,5 @@ func TestDiscussionReplyTranslationVerifyFieldsArePopulated(t *testing.T) {
 }
 
 func TestDiscussionReplyTranslationFieldCoverage(t *testing.T) {
-	translation, err := DiscussionReplyTranslation()
-
-	assert.NoError(t, err)
-	assert.NotNil(t, translation)
-
-	tMap, err := translation.ToMap()
-	assert.NoError(t, err)
-	assert.NotNil(t, tMap)
-
-	assertTranslationStructCoverage(t, tMap, models.PlanDiscussion{}, taskListStructExcludeFields)
+	assertTranslationStructCoverageGeneric(t, DiscussionReplyTranslation, models.PlanDiscussion{}, taskListStructExcludeFields)
 }

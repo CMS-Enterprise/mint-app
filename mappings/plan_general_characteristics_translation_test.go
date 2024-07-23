@@ -31,17 +31,8 @@ func TestPlanGeneralCharacteristicsTranslationVerifyFieldsArePopulated(t *testin
 }
 
 func TestPlanGeneralCharacteristicsTranslationCoverage(t *testing.T) {
-	translation, err := PlanGeneralCharacteristicsTranslation()
-
-	assert.NoError(t, err)
-	assert.NotNil(t, translation)
-
-	tMap, err := translation.ToMap()
-	assert.NoError(t, err)
-	assert.NotNil(t, tMap)
-
 	excludedFields := append(taskListStructExcludeFields, "ResemblesExistingModelOtherSelected", "ParticipationInModelPreconditionOtherSelected")
 	// ResemblesExistingModelOtherSelected and ParticipationInModelPreconditionOtherSelected are not translated on the frontend at all, it isn't needed as a translation
 
-	assertTranslationStructCoverage(t, tMap, models.PlanGeneralCharacteristics{}, excludedFields)
+	assertTranslationStructCoverageGeneric(t, PlanGeneralCharacteristicsTranslation, models.PlanGeneralCharacteristics{}, excludedFields)
 }

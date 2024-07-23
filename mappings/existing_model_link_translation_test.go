@@ -31,14 +31,5 @@ func TestExistingModelLinkTranslationVerifyFieldsArePopulated(t *testing.T) {
 }
 
 func TestExistingModelLinkTranslationCoverage(t *testing.T) {
-	translation, err := ExistingModelLinkTranslation()
-
-	assert.NoError(t, err)
-	assert.NotNil(t, translation)
-
-	tMap, err := translation.ToMap()
-	assert.NoError(t, err)
-	assert.NotNil(t, tMap)
-
-	assertTranslationStructCoverage(t, tMap, models.ExistingModelLink{}, taskListStructExcludeFields)
+	assertTranslationStructCoverageGeneric(t, ExistingModelLinkTranslation, models.ExistingModelLink{}, taskListStructExcludeFields)
 }

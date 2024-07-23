@@ -31,14 +31,5 @@ func TestPlanBeneficiariesTranslationVerifyFieldsArePopulated(t *testing.T) {
 }
 
 func TestPlanBeneficiariesTranslationCoverage(t *testing.T) {
-	translation, err := PlanBeneficiariesTranslation()
-
-	assert.NoError(t, err)
-	assert.NotNil(t, translation)
-
-	tMap, err := translation.ToMap()
-	assert.NoError(t, err)
-	assert.NotNil(t, tMap)
-
-	assertTranslationStructCoverage(t, tMap, models.PlanBeneficiaries{}, taskListStructExcludeFields)
+	assertTranslationStructCoverageGeneric(t, PlanBeneficiariesTranslation, models.PlanBeneficiaries{}, taskListStructExcludeFields)
 }

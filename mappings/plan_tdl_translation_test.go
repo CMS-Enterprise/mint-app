@@ -31,14 +31,5 @@ func TestPlanTDLTranslationVerifyFieldsArePopulated(t *testing.T) {
 }
 
 func TestPlanTDLTranslationCoverage(t *testing.T) {
-	translation, err := PlanTDLTranslation()
-
-	assert.NoError(t, err)
-	assert.NotNil(t, translation)
-
-	tMap, err := translation.ToMap()
-	assert.NoError(t, err)
-	assert.NotNil(t, tMap)
-
-	assertTranslationStructCoverage(t, tMap, models.PlanTDL{}, taskListStructExcludeFields)
+	assertTranslationStructCoverageGeneric(t, PlanTDLTranslation, models.PlanTDL{}, taskListStructExcludeFields)
 }
