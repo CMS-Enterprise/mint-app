@@ -254,13 +254,13 @@ const AppRoutes = () => {
 
       {/* Homepage Settings */}
       {flags.customHomepageEnabled && (
-        <Route
+        <SecureRoute
           path="/homepage-settings"
           render={({ match: { url } }) => (
             <>
-              <Route path={`${url}`} component={HomePageSettings} exact />
-              <Route path={`${url}/order`} component={SettingsOrder} />
-              <Route
+              <SecureRoute path={`${url}`} component={HomePageSettings} exact />
+              <SecureRoute path={`${url}/order`} component={SettingsOrder} />
+              <SecureRoute
                 path={`${url}/solutions`}
                 component={SelectSolutionSettings}
               />
