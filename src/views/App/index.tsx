@@ -7,7 +7,7 @@ import {
   Switch,
   useLocation
 } from 'react-router-dom';
-import { LoginCallback } from '@okta/okta-react';
+import { LoginCallback, useOktaAuth } from '@okta/okta-react';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Footer from 'components/Footer';
@@ -30,6 +30,7 @@ import HomeNew from 'views/HomeNew';
 import HomePageSettings from 'views/HomeNew/Settings';
 import SelectSolutionSettings from 'views/HomeNew/Settings/selectSolutions';
 import SettingsOrder from 'views/HomeNew/Settings/settingsOrder';
+import Landing from 'views/Landing';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import ModelInfoWrapper from 'views/ModelInfoWrapper';
@@ -77,6 +78,7 @@ import shouldScroll from './scrollConfig';
 import './index.scss';
 
 const AppRoutes = () => {
+  const { authState } = useOktaAuth();
   const location = useLocation();
   const prevLocation = usePrevLocation(location);
   const flags = useFlags();
@@ -110,11 +112,19 @@ const AppRoutes = () => {
       <ProtectedRoute path="/pre-decisional-notice" component={NDA} />
 
       {/* Home Routes */}
-      {flags.customHomepageEnabled ? (
-        <Route path="/" exact component={HomeNew} />
-      ) : (
-        <Route path="/" exact component={Home} />
-      )}
+      <Route
+        path="/"
+        exact
+        render={() => {
+          if (!authState?.isAuthenticated) {
+            return <Landing />;
+          }
+          if (flags.customHomepageEnabled) {
+            return <HomeNew />;
+          }
+          return <Home />;
+        }}
+      />
 
       <ProtectedRoute
         path="/homepage-settings"
