@@ -7,7 +7,7 @@ import {
   Switch,
   useLocation
 } from 'react-router-dom';
-import { LoginCallback, SecureRoute } from '@okta/okta-react';
+import { LoginCallback } from '@okta/okta-react';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Footer from 'components/Footer';
@@ -71,6 +71,7 @@ import UserInfoWrapper from 'views/UserInfoWrapper';
 
 import { NavContextProvider } from '../../components/Header/navContext';
 
+import ProtectedRoute from './ProtectedRoute';
 import shouldScroll from './scrollConfig';
 
 import './index.scss';
@@ -101,22 +102,119 @@ const AppRoutes = () => {
 
   return (
     <Switch>
-      {/* General Routes */}
+      {/* Auth Routes */}
+      <Redirect exact from="/login" to="/signin" />
 
+      <Route path="/signin" exact component={Login} />
+
+      <ProtectedRoute path="/pre-decisional-notice" component={NDA} />
+
+      {/* Home Routes */}
       {flags.customHomepageEnabled ? (
         <Route path="/" exact component={HomeNew} />
       ) : (
         <Route path="/" exact component={Home} />
       )}
 
-      <Redirect exact from="/login" to="/signin" />
-      <Route path="/signin" exact component={Login} />
-      <SecureRoute path="/user-diagnostics" component={UserInfo} />
+      <ProtectedRoute
+        path="/homepage-settings"
+        enabled={flags.customHomepageEnabled}
+        render={({ match: { url } }) => (
+          <>
+            <ProtectedRoute
+              path={`${url}`}
+              component={HomePageSettings}
+              exact
+            />
+            <ProtectedRoute path={`${url}/order`} component={SettingsOrder} />
+            <ProtectedRoute
+              path={`${url}/solutions`}
+              component={SelectSolutionSettings}
+            />
+          </>
+        )}
+      />
 
-      <SecureRoute path="/unfollow" exact component={Unfollow} />
+      <ProtectedRoute path="/notifications" component={Notifications} />
 
-      {/* Model Routes */}
-      <SecureRoute path="/models" exact component={ModelPlan} />
+      {/* New Plan Routes */}
+      <ProtectedRoute
+        path="/models/steps-overview"
+        exact
+        component={StepsOverview}
+      />
+
+      <ProtectedRoute path="/models/new-plan" component={NewPlan} />
+      <ProtectedRoute
+        path="/models/:modelID/collaborators"
+        component={Collaborators}
+      />
+
+      {/* Task List Routes */}
+      <ProtectedRoute path="/models/:modelID/documents" component={Documents} />
+
+      <ProtectedRoute path="/models/:modelID/cr-and-tdl" component={CRTDL} />
+
+      <ProtectedRoute path="/models/:modelID/status" exact component={Status} />
+
+      <ProtectedRoute
+        path="/models/:modelID/task-list"
+        exact
+        component={TaskList}
+      />
+
+      <ProtectedRoute
+        path="/models/:modelID/task-list/basics"
+        component={Basics}
+      />
+
+      <ProtectedRoute
+        path="/models/:modelID/task-list/beneficiaries"
+        component={Beneficiaries}
+      />
+
+      <ProtectedRoute
+        path="/models/:modelID/task-list/characteristics"
+        component={Characteristics}
+      />
+
+      <ProtectedRoute
+        path="/models/:modelID/task-list/cost-estimate"
+        component={CostEstimate}
+      />
+
+      <ProtectedRoute
+        path="/models/:modelID/task-list/ops-eval-and-learning"
+        component={OpsEvalAndLearning}
+      />
+
+      <ProtectedRoute
+        path="/models/:modelID/task-list/participants-and-providers"
+        component={Participants}
+      />
+
+      <ProtectedRoute
+        path="/models/:modelID/task-list/payment"
+        component={Payment}
+      />
+
+      <ProtectedRoute
+        path="/models/:modelID/task-list/it-solutions"
+        component={ITSolutions}
+      />
+
+      <ProtectedRoute
+        path="/models/:modelID/task-list/prepare-for-clearance"
+        component={PrepareForClearance}
+      />
+
+      <ProtectedRoute
+        path="/models/:modelID/task-list/submit-request"
+        component={SubmitRequest}
+      />
+
+      {/* Model/Read View Routes */}
+      <ProtectedRoute path="/models" exact component={ModelPlan} />
 
       <Redirect
         exact
@@ -130,8 +228,7 @@ const AppRoutes = () => {
         to="/models/:modelID/read-view/model-basics"
       />
 
-      {/* Wrap redirect as child of route to pass on query parameters */}
-      <Route
+      <ProtectedRoute // Wrap redirect as child of route to pass on query parameters
         path="/models/:modelID/read-only/:subinfo?"
         render={match => (
           <Redirect
@@ -144,95 +241,47 @@ const AppRoutes = () => {
         )}
       />
 
-      <SecureRoute
+      <ProtectedRoute
         path="/models/:modelID/read-view/:subinfo?"
         exact
         component={ReadOnly}
       />
 
-      <SecureRoute
-        path="/models/steps-overview"
-        exact
-        component={StepsOverview}
-      />
+      <Redirect exact from="/models/:modelID" to="/models/:modelID/read-view" />
 
-      <SecureRoute path="/models/new-plan" component={NewPlan} />
-      <SecureRoute
-        path="/models/:modelID/collaborators"
-        component={Collaborators}
-      />
-      <SecureRoute path="/models/:modelID/documents" component={Documents} />
-      <SecureRoute path="/models/:modelID/cr-and-tdl" component={CRTDL} />
-      <SecureRoute path="/models/:modelID/status" exact component={Status} />
-      <SecureRoute
-        path="/models/:modelID/task-list"
-        exact
-        component={TaskList}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/basics"
-        component={Basics}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/beneficiaries"
-        component={Beneficiaries}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/characteristics"
-        component={Characteristics}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/cost-estimate"
-        component={CostEstimate}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/ops-eval-and-learning"
-        component={OpsEvalAndLearning}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/participants-and-providers"
-        component={Participants}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/payment"
-        component={Payment}
-      />
-      {!flags.hideITLeadExperience && (
-        <SecureRoute
-          path="/models/:modelID/task-list/it-solutions"
-          component={ITSolutions}
-        />
-      )}
+      {/* Help and Knowledge Center Routes */}
+      <ProtectedRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
 
-      <SecureRoute
-        path="/models/:modelID/task-list/prepare-for-clearance"
-        component={PrepareForClearance}
+      {/* Misc Routes */}
+      <ProtectedRoute path="/user-diagnostics" component={UserInfo} />
+
+      <ProtectedRoute path="/report-a-problem" component={ReportAProblem} />
+
+      <ProtectedRoute path="/send-feedback" component={SendFeedback} />
+
+      <ProtectedRoute path="/feedback-received" component={FeedbackReceived} />
+
+      <ProtectedRoute path="/unfollow" exact component={Unfollow} />
+
+      {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
+
+      {/* Locked Task List Section */}
+      <ProtectedRoute
+        path="/models/:modelID/locked-task-list-section"
+        component={LockedTaskListSection}
       />
-      <SecureRoute
-        path="/models/:modelID/task-list/submit-request"
-        component={SubmitRequest}
-      />
-
-      <SecureRoute path="/notifications" component={Notifications} />
-
-      <SecureRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
-
-      <SecureRoute path="/pre-decisional-notice" component={NDA} />
-
-      <SecureRoute path="/report-a-problem" component={ReportAProblem} />
-
-      <SecureRoute path="/send-feedback" component={SendFeedback} />
-
-      <SecureRoute path="/feedback-received" component={FeedbackReceived} />
 
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />
+
       <Route path="/cookies" exact component={Cookies} />
+
       <Route
         path="/accessibility-statement"
         exact
         component={AccessibilityStatement}
       />
+
       <Route
         exact
         path="/terms-and-conditions"
@@ -241,35 +290,7 @@ const AppRoutes = () => {
 
       <Route exact path="/how-to-get-access" component={GetAccess} />
 
-      {/* Misc Routes */}
-      {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
-
       <Route path="/implicit/callback" component={LoginCallback} />
-
-      {/* Locked Task List Section */}
-      <SecureRoute
-        path="/models/:modelID/locked-task-list-section"
-        component={LockedTaskListSection}
-      />
-
-      {/* Homepage Settings */}
-      {flags.customHomepageEnabled && (
-        <SecureRoute
-          path="/homepage-settings"
-          render={({ match: { url } }) => (
-            <>
-              <SecureRoute path={`${url}`} component={HomePageSettings} exact />
-              <SecureRoute path={`${url}/order`} component={SettingsOrder} />
-              <SecureRoute
-                path={`${url}/solutions`}
-                component={SelectSolutionSettings}
-              />
-            </>
-          )}
-        />
-      )}
-
-      <Redirect exact from="/models/:modelID" to="/models/:modelID/read-view" />
 
       {/* 404 */}
       <Route path="*" component={NotFound} />
