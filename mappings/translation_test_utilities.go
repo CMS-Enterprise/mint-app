@@ -34,10 +34,10 @@ func assertTranslationFuncAndReturnMap[T Translation](t *testing.T, translationF
 
 // assertTranslationStructCoverageGeneric is a helper function that abstracts the logic to compare a translation to a source struct and assert that all fields have a
 // translated value. It abstracts away the logic to convert the translation to a map
-func assertTranslationStructCoverageGeneric[T Translation](t *testing.T, translationFunc func() (T, error), sourceStruct any, taskListStructExcludeFields []string) {
+func assertTranslationStructCoverageGeneric[T Translation](t *testing.T, translationFunc func() (T, error), sourceStruct any, excludeFields []string) {
 	success, tMap := assertTranslationFuncAndReturnMap(t, translationFunc)
 	if assert.True(t, success) {
-		assertTranslationStructCoverage(t, tMap, sourceStruct, taskListStructExcludeFields)
+		assertTranslationStructCoverage(t, tMap, sourceStruct, excludeFields)
 	}
 }
 
