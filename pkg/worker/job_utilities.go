@@ -8,6 +8,9 @@ import (
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 )
 
+const faktoryLoggingSection string = "faktory"
+const appSectionKey string = "app_section"
+
 // JobWithPanicProtection wraps a faktory Job in a wrapper function that will return an error instead of stopping the application.
 func JobWithPanicProtection(jobFunc faktory_worker.Perform) faktory_worker.Perform {
 	return func(ctx context.Context, args ...interface{}) (returnedError error) {

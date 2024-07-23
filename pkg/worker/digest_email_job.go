@@ -39,7 +39,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 		batch.Description = "Send Daily Digest Emails"
 		batch.Success = faktory.NewJob(digestEmailBatchJobSuccessName, dateAnalyzed)
 		batch.Success.Queue = defaultQueue
-		sugaredLogger := w.Logger.With(zap.Any("JID", helper.Jid()), zap.Any("BID", batch.Bid))
+		sugaredLogger := w.Logger.With(zap.Any("JID", helper.Jid()), zap.Any("BID", batch.Bid), zap.Any(appSectionKey, faktoryLoggingSection))
 		sugaredLogger.Info("Creating a new batch for the daily digest email batch job")
 		return batch.Jobs(func() error {
 			for _, id := range userIDs {
@@ -66,7 +66,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 // args[0] date
 func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	help := faktory_worker.HelperFor(ctx)
-	w.Logger.Info("Digest Email Batch Job Succeeded", zap.Any("JID", help.Jid()), zap.Any("BID", help.Bid()))
+	w.Logger.Info("Digest Email Batch Job Succeeded", zap.Any("JID", help.Jid()), zap.Any("BID", help.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
 	// TODO: Add notification here if wanted in the future
 	return nil
 }
@@ -86,7 +86,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := w.Logger.With(zap.Any("date", dateAnalyzed), zap.Any("userID", userID), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()))
+	sugaredLogger := w.Logger.With(zap.Any("date", dateAnalyzed), zap.Any("userID", userID), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
 	sugaredLogger.Info("preparing to send daily digest email")
 	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
 		return storage.UserNotificationPreferencesGetByUserID(w.Store, user_id)
@@ -108,7 +108,7 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := w.Logger.With(zap.Any("date", dateAnalyzed), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()))
+	sugaredLogger := w.Logger.With(zap.Any("date", dateAnalyzed), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
 	sugaredLogger.Info("preparing to send aggregated digest email")
 	err = AggregatedDigestEmailJob(
 		dateAnalyzed,
