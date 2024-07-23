@@ -190,6 +190,7 @@ const AppRoutes = () => {
           <ProtectedRoute
             path="/models/:modelID/task-list/cost-estimate"
             component={CostEstimate}
+            enabled={false} // This route is not yet implemented
           />
 
           <ProtectedRoute
@@ -220,6 +221,7 @@ const AppRoutes = () => {
           <ProtectedRoute
             path="/models/:modelID/task-list/submit-request"
             component={SubmitRequest}
+            enabled={false} // This route is not yet implemented
           />
 
           {/* Model/Read View Routes */}
