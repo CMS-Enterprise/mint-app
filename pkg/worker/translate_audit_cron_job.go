@@ -19,7 +19,7 @@ func (w *Worker) TranslateAuditCronJob(ctx context.Context, args ...interface{})
 	// Note, this function doesn't need a param, adding so it can be distinguished from another batch job call
 	return helper.With(func(cl *faktory.Client) error {
 		job := faktory.NewJob(translateAuditBatchJobName, now)
-		job.Queue = criticalQueue //TODO: (Job) Should we perhaps create a separate  queue for this? Is it making an issue?
+		job.Queue = criticalQueue
 		return cl.Push(job)
 	})
 }

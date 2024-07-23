@@ -50,8 +50,6 @@ const (
 	translateAuditJobName string = "TranslateAuditJob"
 )
 
-//TODO: update other references to use these constants instead of string literals
-
 // These constants represent the names of jobs for analyzing audits
 const (
 	analyzedAuditJobName             string = "AnalyzedAuditJob"
