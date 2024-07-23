@@ -26,9 +26,6 @@ func TestPlanCRTranslationVerifyFieldsArePopulated(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, translation)
 
-	assert.NoError(t, err)
-	assert.NotNil(t, translation)
-
 	assertTranslationFields(t, translation)
 
 }

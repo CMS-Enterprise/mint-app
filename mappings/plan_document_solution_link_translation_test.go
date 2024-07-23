@@ -26,9 +26,6 @@ func TestPlanDocumentSolutionLinkTranslationVerifyFieldsArePopulated(t *testing.
 	assert.NoError(t, err)
 	assert.NotNil(t, translation)
 
-	assert.NoError(t, err)
-	assert.NotNil(t, translation)
-
 	assertTranslationFields(t, translation)
 
 }
