@@ -16,7 +16,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
           data-testid="grid"
         >
           <div
-            class="desktop:grid-col-7"
+            class="tablet:grid-col-6 desktop:grid-col-7"
             data-testid="grid"
           >
             <h3
@@ -26,7 +26,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
             </h3>
           </div>
           <div
-            class="desktop:grid-col-5 models-by-solutions__banner-buttons"
+            class="tablet:grid-col-6 desktop:grid-col-5 models-by-solutions__banner-buttons row-reverse"
             data-testid="grid"
           >
             <ul

@@ -57,6 +57,7 @@ const HomeNew = () => {
   const { pathname } = useLocation();
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
+  const isTablet = useCheckResponsiveScreen('desktop', 'smaller');
 
   const isLanding: boolean = pathname === '/' && !authState?.isAuthenticated;
 
@@ -201,7 +202,7 @@ const HomeNew = () => {
           )}
         </h2>
 
-        {operationalSolutionKeys.length > 0 && (
+        {operationalSolutionKeys.length > 0 && !isTablet && (
           <p>
             {t(
               `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.description`
