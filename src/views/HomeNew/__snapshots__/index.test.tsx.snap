@@ -139,7 +139,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                 </p>
                 <div>
                   <a
-                    class="display-flex flex-align-center"
+                    class="display-flex flex-align-center usa-button--unstyled"
                     href="/homepage-settings"
                   >
                     <svg
