@@ -55,17 +55,6 @@ func assertAllTranslationDataGeneric[T Translation](t *testing.T, translationFun
 
 }
 
-// TODO REMOVE THIS when replaced
-// assertTranslationStructCoverageGeneric is a helper function that abstracts the logic to compare a translation to a source struct and assert that all fields have a
-// translated value. It abstracts away the logic to convert the translation to a map
-func assertTranslationStructCoverageGeneric[T Translation](t *testing.T, translationFunc func() (T, error), sourceStruct any, excludeFields []string) {
-	structName := fmt.Sprintf("%T", sourceStruct)
-	success, _, tMap := assertTranslationFuncAndReturnMap(t, translationFunc, structName)
-	if assert.True(t, success) {
-		assertTranslationStructCoverage(t, tMap, sourceStruct, excludeFields)
-	}
-}
-
 // assertTranslationFields will iterate through all fields in a translation and make sure that they are populated correctly and valid
 func assertTranslationFields(t *testing.T, translation Translation) {
 	// Get the type & value of the object
