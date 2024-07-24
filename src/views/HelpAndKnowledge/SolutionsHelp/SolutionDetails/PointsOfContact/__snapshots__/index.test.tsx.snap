@@ -1055,7 +1055,52 @@ exports[`Operational Solutions Points of Contact Components > matches the snapsh
 </DocumentFragment>
 `;
 
-exports[`Operational Solutions Points of Contact Components > matches the snapshot > Master Data Management 1`] = `
+exports[`Operational Solutions Points of Contact Components > matches the snapshot > Master Data Management Program-Organization Relationship 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Points of contact
+    </h2>
+    <div>
+      <div
+        class="mint-divider margin-y-6"
+      />
+      <h2>
+        System owner
+      </h2>
+      <li
+        class="usa-card margin-bottom-0"
+        data-testid="Card"
+      >
+        <div
+          class="usa-card__container radius-md padding-2 margin-bottom-2 margin-x-0"
+        >
+          <header
+            class="usa-card__header font-body-xs padding-0"
+            data-testid="CardHeader"
+          >
+            Office of Information Technology
+          </header>
+          <div
+            class="usa-card__footer padding-0"
+            data-testid="CardFooter"
+          >
+            <h3
+              class="margin-0 line-height-sans-2"
+            >
+              Enterprise Architecture and Data Group
+            </h3>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions Points of Contact Components > matches the snapshot > Master Data Management for Non-Claims Based Payments 1`] = `
 <DocumentFragment>
   <div>
     <h2
