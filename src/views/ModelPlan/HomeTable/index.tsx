@@ -356,10 +356,12 @@ const ModelPlansTable = ({
           if (!value || value.length === 0) {
             return <div>{homeT('requestsTable.tbd')}</div>;
           }
-          const crtdlIDs = value
-            .map((crtdl: CRTDLType) => crtdl.idNumber)
-            .join(', ');
-          return crtdlIDs;
+
+          return value.map((crtdl: CRTDLType) => (
+            <ul>
+              <li>{crtdl.idNumber}</li>
+            </ul>
+          ));
         }
       },
       modelPoc: {

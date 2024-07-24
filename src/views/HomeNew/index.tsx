@@ -245,7 +245,7 @@ const HomeNew = () => {
                       <UswdsReactLink
                         variant="unstyled"
                         to="/homepage-settings"
-                        className="display-flex flex-align-center"
+                        className="display-flex flex-align-center usa-button--unstyled"
                       >
                         <Icon.Edit className="margin-right-1 text-primary" />
                         {t('editHomepage')}
