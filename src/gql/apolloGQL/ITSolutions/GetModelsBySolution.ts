@@ -9,6 +9,7 @@ export default gql(/* GraphQL */ `
         id
         modelName
         status
+        modelBySolutionStatus
         basics {
           id
           modelCategory

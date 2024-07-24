@@ -14,7 +14,7 @@ type ListItemType = {
   description?: string;
 };
 
-type LinkType = {
+export type LinkType = {
   link: string;
   external: boolean;
 };

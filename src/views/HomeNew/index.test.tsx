@@ -2,7 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import {
   GetFavoritesDocument,
   GetHomepageSettingsDocument,
@@ -142,7 +146,7 @@ describe('The home page', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders settings with a predefined order', async () => {
+  it('renders settings with a predefined order and matches snapshot', async () => {
     const settingsWithOrder = set(
       [...settingsMock],
       '0.result.data.userViewCustomization.viewCustomization',
@@ -212,7 +216,11 @@ describe('The home page', () => {
       </MemoryRouter>
     );
 
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    await waitFor(async () => {
+      await waitForElementToBeRemoved(() =>
+        getByTestId('all-model-plans-table')
+      );
+    });
 
     expect(asFragment()).toMatchSnapshot();
   });

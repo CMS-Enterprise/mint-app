@@ -371,31 +371,23 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Auto
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Reach out to Project Lead
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Contact Aliza Kim and Ed Howard to start a discussion about your model concept.
-          </p>
+          Contact Aliza Kim and Ed Howard to start a discussion about your model concept.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Collaborate with APPS
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Early understanding of requirements and development strategy for any new project will assist in determining if the use of APPS is feasible.
-          </p>
+          Early understanding of requirements and development strategy for any new project will assist in determining if the use of APPS is feasible.
         </li>
       </ol>
     </div>
@@ -945,106 +937,78 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cons
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Begin onboarding activities
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Provide CBOSC with as much information about your model as you know by filling out their onboarding questionnaire. They’ll set up a discovery meeting with your team to identify any missing information and let you know what services CBOSC can provide to your model. During this time, CBOSC will form an internal onboarding team. They develop an onboarding timeline that assures readiness.
-          </p>
+          Provide CBOSC with as much information about your model as you know by filling out their onboarding questionnaire. They’ll set up a discovery meeting with your team to identify any missing information and let you know what services CBOSC can provide to your model. During this time, CBOSC will form an internal onboarding team. They develop an onboarding timeline that assures readiness.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Resource mailbox creation
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            If the model needs a mailbox, they should infrom CBOSC and provide a list of names and email addresses that should have access the mailbox. Any folders, auto reply messages, and templates are also set up.
-          </p>
+          If the model needs a mailbox, they should infrom CBOSC and provide a list of names and email addresses that should have access the mailbox. Any folders, auto reply messages, and templates are also set up.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Confirm final helpdesk requirements
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            CBOS will review and confirm the needs of the model. If the model intends to use phone, the call center must also evaluate interactive voice response (IVR) option tree at this phase. 
-          </p>
+          CBOS will review and confirm the needs of the model. If the model intends to use phone, the call center must also evaluate interactive voice response (IVR) option tree at this phase. 
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Build out IVR and test
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            During this stage, they will create routing, record model specific messages, update reports and test. CBOSC will then provide the call center phone number and IVR option. Model teams must communicate and update all appropriate stakeholders of the new numbers.
-          </p>
+          During this stage, they will create routing, record model specific messages, update reports and test. CBOSC will then provide the call center phone number and IVR option. Model teams must communicate and update all appropriate stakeholders of the new numbers.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Conduct support center / helpdesk training
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            The Help Desk Manager works with the Model Lead to review training materials. These will include any prepared materials, knowledge base articles, or other items. Each level of the support center will receive training. 
-          </p>
+          The Help Desk Manager works with the Model Lead to review training materials. These will include any prepared materials, knowledge base articles, or other items. Each level of the support center will receive training. 
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             ServiceNow (SNow) set up and training
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            During this phase, the model team receives the appropriate job codes and training for SNow. Knowledge base content is developed and published, and agents are trained on the content.
-          </p>
+          During this phase, the model team receives the appropriate job codes and training for SNow. Knowledge base content is developed and published, and agents are trained on the content.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             CBOSC is ready to support the model
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            After standard outreach procedures are defined and final testing is complete, CBOSC is ready to support the model. 
-          </p>
+          After standard outreach procedures are defined and final testing is complete, CBOSC is ready to support the model. 
         </li>
       </ol>
     </div>
@@ -1116,22 +1080,18 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Expa
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Reach out to eDFR 
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Once a model team knows they would like to use eDFR, they should reach out to Zach Nall.
-          </p>
+          Once a model team knows they would like to use eDFR, they should reach out to Zach Nall.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Meet to understand requirements
@@ -1141,7 +1101,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Expa
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Development starts
@@ -1151,16 +1111,12 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Expa
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Change is released
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Generally from first talks to first release, it can take 6 to 12 months to get a model using eDFR. Any future changes are released quarterly. 
-          </p>
+          Generally from first talks to first release, it can take 6 to 12 months to get a model using eDFR. Any future changes are released quarterly. 
         </li>
       </ol>
     </div>
@@ -1189,16 +1145,12 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > GovD
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Reach out to GovDelivery Admin
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            If you’re interested in using GovDelivery for your model, reach out to one of the Admins with the following information:
-          </p>
+          If you’re interested in using GovDelivery for your model, reach out to one of the Admins with the following information:
           <ul
             class="padding-left-4 margin-top-0"
           >
@@ -1218,31 +1170,23 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > GovD
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Configure GovDelivery and discuss guidelines
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            One of the GovDelivery Admins will set up your topic based on the information you provided. They can also talk you through some of the basic guidelines set by the Office of Communications if necessary.
-          </p>
+          One of the GovDelivery Admins will set up your topic based on the information you provided. They can also talk you through some of the basic guidelines set by the Office of Communications if necessary.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Access granted
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Once you’re comfortable with GovDelivery, you’re able to start using it. 
-          </p>
+          Once you’re comfortable with GovDelivery, you’re able to start using it. 
         </li>
       </ol>
     </div>
@@ -1268,31 +1212,23 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Gran
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Contact Mary Greene or Michelle Brown
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Reach out to Mary or Michelle during the development of a grant project.
-          </p>
+          Reach out to Mary or Michelle during the development of a grant project.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Point of contact assigned
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            A point of contact from the Division of Grants Management will be assigned to the model team. They will guide the model team through the whole process and can provide more in-depth training and resources about the grants management process.
-          </p>
+          A point of contact from the Division of Grants Management will be assigned to the model team. They will guide the model team through the whole process and can provide more in-depth training and resources about the grants management process.
         </li>
       </ol>
     </div>
@@ -1321,48 +1257,36 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Reach out to Product Owner
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to Curtis Naumann. 
-          </p>
+          If you’re interested in using HDR for your model or would like to learn more about the system, please reach out to Curtis Naumann. 
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Meet to understand requirements
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Tell HDR the type of data you’d like to collect for your model.
-          </p>
+          Tell HDR the type of data you’d like to collect for your model.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Development and validation
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            All models will need submission and validation templates to be built and tested prior to the first data submission. Any model requirements not met by HDR’s current functionality will also need built. This will take extra time, so please plan accordingly.
+          All models will need submission and validation templates to be built and tested prior to the first data submission. Any model requirements not met by HDR’s current functionality will also need built. This will take extra time, so please plan accordingly.
 
 If the model will use HDR’s pre-fill option, the model team’s implementation contractor will need to provide the following:
-          </p>
           <ul
             class="padding-left-4 margin-top-0"
           >
@@ -1382,7 +1306,7 @@ If the model will use HDR’s pre-fill option, the model team’s implementation
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Start submitting data
@@ -1485,33 +1409,25 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Inno
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Work with the IPC internal team
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            After learning about an upcoming model, the IPC internal team will reach out to the Model team to kick off discussions. Alternatively, Model teams can reach out to the IPC internal team if they have questions or would like to start discussions sooner.
+          After learning about an upcoming model, the IPC internal team will reach out to the Model team to kick off discussions. Alternatively, Model teams can reach out to the IPC internal team if they have questions or would like to start discussions sooner.
 
 The Model team will receive an implementation milestone schedule that identifies necessary tasks and completion dates to meet their scheduled first payment requirements.
-          </p>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Determine ROM and contract modification
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            The IPC internal team will establish a ROM based on several factors:
-          </p>
+          The IPC internal team will establish a ROM based on several factors:
           <ul
             class="padding-left-4 margin-top-0"
           >
@@ -1546,16 +1462,12 @@ The Model team will receive an implementation milestone schedule that identifies
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Implementation to the IPC
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            The Model team is provided a Welcome Packet which serves as an introduction to the IPC, an overview of the implementation process and a guide to the IPC payment and recoupment (demand) process. Additionally, workgroup meetings are established with the IPC, Model team, and, if necessary, their IT support contractor(s) to ensure a successful implementation. Some key implementation activities include:
-          </p>
+          The Model team is provided a Welcome Packet which serves as an introduction to the IPC, an overview of the implementation process and a guide to the IPC payment and recoupment (demand) process. Additionally, workgroup meetings are established with the IPC, Model team, and, if necessary, their IT support contractor(s) to ensure a successful implementation. Some key implementation activities include:
           <ul
             class="padding-left-4 margin-top-0"
           >
@@ -1595,16 +1507,12 @@ The Model team will receive an implementation milestone schedule that identifies
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Ready for payments
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            After the Model has been successfully implemented to the IPC, payments can be made to the Model participants.
-          </p>
+          After the Model has been successfully implemented to the IPC, payments can be made to the Model participants.
         </li>
       </ol>
     </div>
@@ -1633,106 +1541,78 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Inno
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Contact the ISP Team
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Contact Joe Pusateri if you’re interested in using ISP or want to learn more.
-          </p>
+          Contact Joe Pusateri if you’re interested in using ISP or want to learn more.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Initial discussion
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            The ISP team will discuss your needs and demonstrate the features available in the systems in ISP.
-          </p>
+          The ISP team will discuss your needs and demonstrate the features available in the systems in ISP.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Commit to using ISP
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            The ISP team will add your need to its backlog once you decide to use ISP. The backlog represents the work that ISP must deliver to CMMI model teams.
-          </p>
+          The ISP team will add your need to its backlog once you decide to use ISP. The backlog represents the work that ISP must deliver to CMMI model teams.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Discovery, user research, and roadmap
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            The ISP team will conduct user research to gain more insight into user behavior, to adjust the existing features, and design the user experience with the ISP systems. The ISP team will discuss requirements with you and identify the Minimal Viable Product (MVP) and a high-level roadmap for the initial go-live.
-          </p>
+          The ISP team will conduct user research to gain more insight into user behavior, to adjust the existing features, and design the user experience with the ISP systems. The ISP team will discuss requirements with you and identify the Minimal Viable Product (MVP) and a high-level roadmap for the initial go-live.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Sprints
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Develop and test the product iteratively. The ISP team will demonstrate the software product to you iteratively during the sprints.
-          </p>
+          Develop and test the product iteratively. The ISP team will demonstrate the software product to you iteratively during the sprints.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Prepare for live system operations
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            ISP will test the systems rigorously. The team will also work with you to onboard users, prepare the help desk, and to prepare any documentation that your participants may need.
-          </p>
+          ISP will test the systems rigorously. The team will also work with you to onboard users, prepare the help desk, and to prepare any documentation that your participants may need.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Monitor system performance
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            After go-live, the ISP team will monitor how the system performance and design continuing updates to the features.
-          </p>
+          After go-live, the ISP team will monitor how the system performance and design continuing updates to the features.
         </li>
       </ol>
     </div>
@@ -1799,31 +1679,23 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Lear
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             CMMI contacts LDG
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Someone from CMMI will reach out to the LDG team about the model’s needs.
-          </p>
+          Someone from CMMI will reach out to the LDG team about the model’s needs.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             LDG will be in contact
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Depending on the needs of the model, a team member from LDG may be assigned to your model.
-          </p>
+          Depending on the needs of the model, a team member from LDG may be assigned to your model.
         </li>
       </ol>
     </div>
@@ -1852,61 +1724,45 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Lega
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Reach out to Legal Vertical
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            When model teams have questions or when they start developing their ICIP, they should contact Megan Hyde or Erin Hagenbrok.
-          </p>
+          When model teams have questions or when they start developing their ICIP, they should contact Megan Hyde or Erin Hagenbrok.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Legal Vertical member assigned
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Model team management should reach out to Ann Vrabel and Melanie Dang to get an official LV team member assigned to assist with their legal needs. Team management should describe what their needs are and whether or not the model team will need a PA drafter. Ideally, the ask for a PA drafter would be included in the initial request. However, if the team management does not know whether or not they will need an LV PA drafter, then a separate request can be made later.
-          </p>
+          Model team management should reach out to Ann Vrabel and Melanie Dang to get an official LV team member assigned to assist with their legal needs. Team management should describe what their needs are and whether or not the model team will need a PA drafter. Ideally, the ask for a PA drafter would be included in the initial request. However, if the team management does not know whether or not they will need an LV PA drafter, then a separate request can be made later.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Draft governing documents
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            The assigned LV team member will draft the necessary documents with the assistance of the model SMEs. The governing document is an operational document. Thus, all policy decisions and operational decisions should be made before drafting begins. If model teams need to make policy or operational changes during the drafting and clearance process, their timelines may be delayed.
-          </p>
+          The assigned LV team member will draft the necessary documents with the assistance of the model SMEs. The governing document is an operational document. Thus, all policy decisions and operational decisions should be made before drafting begins. If model teams need to make policy or operational changes during the drafting and clearance process, their timelines may be delayed.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Clearance and approval
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            All governing documents must go through OGC clearance, and, if applicable, be approved by the waiver team. Clearance has several rounds, so this is a pretty lengthy process.
-          </p>
+          All governing documents must go through OGC clearance, and, if applicable, be approved by the waiver team. Clearance has several rounds, so this is a pretty lengthy process.
         </li>
       </ol>
     </div>
@@ -1914,7 +1770,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Lega
 </DocumentFragment>
 `;
 
-exports[`Operational Solutions Timeline Components > matches the snapshot > Master Data Management 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Master Data Management Program-Organization Relationship 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1935,76 +1791,178 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             CMMI/BSG will reach out
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Celia Shaunessy.
-          </p>
+          When CMMI/BSG is notified that a model will use MDM, they will contact the model team. If your model needs to utilize MDM and have not been contacted, email Celia Shaunessy.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Discussion with the model team
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            After initial communication, there is a discussion with the model team to check if they need to proceed. If so, CMMI/BSG will help shepherd the onboard process as necessary.
-          </p>
+          After initial communication, there is a discussion with the model team to check if they need to proceed. If so, CMMI/BSG will help shepherd the onboard process as necessary.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Complete onboarding questionnaire
           </h3>
-          <p
-            class="margin-bottom-0"
+          CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.
+            
+
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2FAll%2520Overlaps%2520Responses%2Easpx"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.
-          </p>
+            Go to Onboarding Request Form for MDM-POR
+          </a>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Meet with MDM operations team
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            CMMI/BSG meets with the MDM operations team to share the business requirements.
-          </p>
+          CMMI/BSG meets with the MDM operations team to share the business requirements.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Share ICD
           </h3>
-          <p
-            class="margin-bottom-0"
+          CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.
+            
+
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/MDMResources.aspx"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.
-          </p>
+            Go to ICD and Onboarding Mapping for MDM-POR
+          </a>
+        </li>
+      </ol>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions Timeline Components > matches the snapshot > Master Data Management for Non-Claims Based Payments 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      Timeline
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md text-pre-wrap"
+    >
+      <p>
+        Coordination with MDM-NCBP can happen prior to having an implementation contractor. Once the model has an implementation contractor, it takes an average of two months to onboard.
+      </p>
+      <ol
+        class="usa-process-list padding-top-1"
+      >
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            CMMI/BSG will reach out
+          </h3>
+          When CMMI/BSG is notified that a model will have non-claims-based payments and will use MDM, they will contact the model team. If your model has non-claims-based payments have not been contacted, email Celia Shaunessy.
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Discussion with the model team
+          </h3>
+          After initial communication, there is a discussion with the model team to check if they need to proceed. If so, CMMI/BSG will help shepherd the onboard process as necessary.
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Complete onboarding questionnaire
+          </h3>
+          CMMI/BSG will send the model team an onboarding questionnaire specific to MDM-NCBP. The model team should fill out the program ID and other business requirements.
+            
+
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire%20%20NCBP/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2520%2520NCBP%2FAll%2520NCBP%2520Responses%2Easpx"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Go to Onboarding Request Form for MDM-NCBP
+          </a>
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Meet with MDM operations team
+          </h3>
+          CMMI/BSG meets with the MDM operations team to share the business requirements.
+        </li>
+        <li
+          class="usa-process-list__item operational-solution-details__timeline-item"
+        >
+          <h3
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
+            data-testid="processListHeading"
+          >
+            Share ICD
+          </h3>
+          CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. Celia Shaunessey and her team can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
+  
+
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/NCBPResources.aspx"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Go to ICD and Onboarding Mapping for MDM-NCBP
+          </a>
         </li>
       </ol>
     </div>
@@ -2033,91 +1991,67 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Meas
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Reach out to Quality Vertical
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical Program Analyst, Dustin Allison. Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. 
-          </p>
+          Model teams interested in utilizing the CMMI MIDS contract for quality measure work should email the Quality Vertical Program Analyst, Dustin Allison. Dustin is responsible for the review and consideration of all quality measure requests being considered for the CMMI MIDS contract. The email should include a brief overview of what the model is, justification for the measure work, and also identify available funding to pay for this work. Dustin will meet with the QV team to review the request and determine if the work should move forward. If the request is approved, the model teams will reach out to the CMMI MIDS COR to move forward with their request. 
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             COR meets with the model team
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Once model teams receive approval from Dustin to utilize the CMMI MIDS contract, they should then reach out to the CMMI MIDS COR, Teresa Winder-Wells, and the CMMI MIDS Quality Subject Matter Expert (QSME), Tim Day to discuss their quality measure needs. Teresa and Tim will guide the model teams as they prepare justification to present their request to the Front Office (FO). 
-          </p>
+          Once model teams receive approval from Dustin to utilize the CMMI MIDS contract, they should then reach out to the CMMI MIDS COR, Teresa Winder-Wells, and the CMMI MIDS Quality Subject Matter Expert (QSME), Tim Day to discuss their quality measure needs. Teresa and Tim will guide the model teams as they prepare justification to present their request to the Front Office (FO). 
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Present justification to Front Office
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            The model teams will present their justification to the FO. The FO will determine if they want to move forward with the model team’s request and if additional funding is needed. If approval is given, the model teams will reach out to the CMMI MIDS COR to move forward with their quality measure work.
-          </p>
+          The model teams will present their justification to the FO. The FO will determine if they want to move forward with the model team’s request and if additional funding is needed. If approval is given, the model teams will reach out to the CMMI MIDS COR to move forward with their quality measure work.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             COR presents to the MIDS contractor
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            The CMMI MIDS COR will forward the model team’s request to the CMMI MIDS contractor who will assess whether they can do the work and how much it will cost based on the request. If the work can be completed utilizing the existing CMMI MIDS contract, then the CMMI MIDS COR will modify the contract and add the new work to the MIDS contract.
-          </p>
+          The CMMI MIDS COR will forward the model team’s request to the CMMI MIDS contractor who will assess whether they can do the work and how much it will cost based on the request. If the work can be completed utilizing the existing CMMI MIDS contract, then the CMMI MIDS COR will modify the contract and add the new work to the MIDS contract.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             COR and model team takes information back to FO
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            If the measure work cannot be completed under the existing CMMI MIDS contract, then the model teams would have to go back to the FO to request approval of funding to complete the work. If the FO approves the funding, then CMMI MIDS COR will complete a modification to the contract and once complete, instruct the CMMI MIDS contractor to begin working with the model team.
-          </p>
+          If the measure work cannot be completed under the existing CMMI MIDS contract, then the model teams would have to go back to the FO to request approval of funding to complete the work. If the FO approves the funding, then CMMI MIDS COR will complete a modification to the contract and once complete, instruct the CMMI MIDS contractor to begin working with the model team.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Contractor can begin working with model team
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            The CMMI MIDS COR, MIDS QSME, and MIDS Contractor will begin working with the model teams to develop and/or respecify their quality measures.
-          </p>
+          The CMMI MIDS COR, MIDS QSME, and MIDS Contractor will begin working with the model teams to develop and/or respecify their quality measures.
         </li>
       </ol>
     </div>
@@ -2324,46 +2258,34 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Qual
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             Reach out to Quality Vertical
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Early in modal development, model teams should reach out Susannah Bernheim. The QV team meetes Wednesdays to discuss, so new models should be prepared to join and share information about their model concept.
-          </p>
+          Early in modal development, model teams should reach out Susannah Bernheim. The QV team meetes Wednesdays to discuss, so new models should be prepared to join and share information about their model concept.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             QV assists the model team
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            The level of QV involvement varies by model. QV will provide a template to model teams to help decide which quality measures to use. A member of QV may also be assigned to attend weekly meetings with the model team to assist with their quality efforts throughout the development process.
-          </p>
+          The level of QV involvement varies by model. QV will provide a template to model teams to help decide which quality measures to use. A member of QV may also be assigned to attend weekly meetings with the model team to assist with their quality efforts throughout the development process.
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
         >
           <h3
-            class="usa-process-list__heading margin-top-neg-05"
+            class="usa-process-list__heading margin-top-neg-05 margin-bottom-1"
             data-testid="processListHeading"
           >
             QV reviews quality measures before clearance
           </h3>
-          <p
-            class="margin-bottom-0"
-          >
-            Before entering clearance, the model’s quality measures must be reviewed by QV.
-          </p>
+          Before entering clearance, the model’s quality measures must be reviewed by QV.
         </li>
       </ol>
     </div>
