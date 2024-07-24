@@ -69,7 +69,7 @@ const changeHistory = {
   resultsNoInfo: 'Showing {{resultsNum}} result {{query}}',
   resultsNoInfo_other: 'Showing {{resultsNum}} results {{query}}',
   noResults: {
-    heading: 'There are no results that match you search.',
+    heading: 'There are no results that match your search.',
     body: 'Please double-check you search and try again.'
   },
   solution: 'solution',

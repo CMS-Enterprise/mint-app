@@ -26,7 +26,7 @@
     "goField": "NameOther",
     "dbField": "name_other",
     "label": "Please add a name for your solution or contractor",
-    "exportLabel": "Operational solution",
+    "exportLabel": "Name",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.03
@@ -36,6 +36,7 @@
     "goField": "OtherHeader",
     "dbField": "other_header",
     "label": "Please add a name for your solution or contractor",
+    "exportLabel": "Name",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.04

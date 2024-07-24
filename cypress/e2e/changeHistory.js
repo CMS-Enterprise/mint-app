@@ -57,7 +57,7 @@ describe('Change History', () => {
     cy.get('li.change-record').should('have.length', 0);
     cy.get('[data-testid="alert"]').should(
       'contain.text',
-      'There are no results that match you search.'
+      'There are no results that match yor search.'
     );
   });
 });

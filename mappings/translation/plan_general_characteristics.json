@@ -1562,7 +1562,7 @@
     "dbField": "multiple_patricipation_agreements_needed_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "multiple_patricipation_agreements_needed",
+    "otherParentField": "agreement_types",
     "dataType": "STRING",
     "formType": "TEXTAREA",
     "order": 4.14

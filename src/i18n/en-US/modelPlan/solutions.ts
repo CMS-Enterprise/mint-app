@@ -33,7 +33,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     goField: 'NameOther',
     dbField: 'name_other',
     label: 'Please add a name for your solution or contractor',
-    exportLabel: 'Operational solution',
+    exportLabel: 'Name',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.03
@@ -43,6 +43,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
     goField: 'OtherHeader',
     dbField: 'other_header',
     label: 'Please add a name for your solution or contractor',
+    exportLabel: 'Name',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.04

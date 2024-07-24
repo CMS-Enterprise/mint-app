@@ -382,7 +382,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
                   values={{
                     action: t(`teamChangeType.${teamChangeType}`),
                     collaborator,
-                    role: !!role && `[${formattedRoles(role)}]`,
+                    role: !!role && `${formattedRoles(role)}`,
                     date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                     time: formatTime(changeRecord.date)
                   }}
