@@ -288,6 +288,7 @@ type ComplexityRoot struct {
 
 	ModelPlan struct {
 		Abbreviation              func(childComplexity int) int
+		AnticipatedStatuses       func(childComplexity int) int
 		Archived                  func(childComplexity int) int
 		Basics                    func(childComplexity int) int
 		Beneficiaries             func(childComplexity int) int
@@ -1301,6 +1302,7 @@ type ModelPlanResolver interface {
 	Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error)
 	Payments(ctx context.Context, obj *models.ModelPlan) (*models.PlanPayments, error)
 
+	AnticipatedStatuses(ctx context.Context, obj *models.ModelPlan) ([]models.ModelStatus, error)
 	IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error)
 	IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error)
 	Crs(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCR, error)
@@ -2540,6 +2542,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.Abbreviation(childComplexity), true
+
+	case "ModelPlan.anticipatedStatuses":
+		if e.complexity.ModelPlan.AnticipatedStatuses == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.AnticipatedStatuses(childComplexity), true
 
 	case "ModelPlan.archived":
 		if e.complexity.ModelPlan.Archived == nil {
@@ -9356,6 +9365,7 @@ type ModelPlan {
   discussions: [PlanDiscussion!]!
   payments: PlanPayments!
   status: ModelStatus!
+  anticipatedStatuses: [ModelStatus!]!
   isFavorite: Boolean!
   isCollaborator: Boolean!
   crs: [PlanCR!]!
@@ -14204,6 +14214,8 @@ func (ec *executionContext) fieldContext_AddedAsCollaboratorMeta_modelPlan(ctx c
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -17224,6 +17236,8 @@ func (ec *executionContext) fieldContext_DatesChangedActivityMeta_modelPlan(ctx 
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -21642,6 +21656,50 @@ func (ec *executionContext) fieldContext_ModelPlan_status(ctx context.Context, f
 	return fc, nil
 }
 
+func (ec *executionContext) _ModelPlan_anticipatedStatuses(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().AnticipatedStatuses(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.ModelStatus)
+	fc.Result = res
+	return ec.marshalNModelStatus2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatusᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_anticipatedStatuses(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ModelStatus does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ModelPlan_isFavorite(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 	if err != nil {
@@ -22310,6 +22368,8 @@ func (ec *executionContext) fieldContext_ModelPlanAndOperationalSolution_modelPl
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -22546,6 +22606,8 @@ func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_modelPlan(c
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -22909,6 +22971,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -23048,6 +23112,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -28167,6 +28233,8 @@ func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_modelP
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -28677,6 +28745,8 @@ func (ec *executionContext) fieldContext_NewModelPlanActivityMeta_modelPlan(ctx 
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -38707,6 +38777,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_currentModel
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -57077,6 +57149,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -57216,6 +57290,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -60338,6 +60414,8 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_mod
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -60848,6 +60926,8 @@ func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_mode
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
+			case "anticipatedStatuses":
+				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -69229,6 +69309,42 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "anticipatedStatuses":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_anticipatedStatuses(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.Deferrable != nil {
+				dfs, ok := deferred[field.Deferrable.Label]
+				di := 0
+				if ok {
+					dfs.AddField(field)
+					di = len(dfs.Values) - 1
+				} else {
+					dfs = graphql.NewFieldSet([]graphql.CollectedField{field})
+					deferred[field.Deferrable.Label] = dfs
+				}
+				dfs.Concurrently(di, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, dfs)
+				})
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "isFavorite":
 			field := field
 
@@ -81792,6 +81908,67 @@ func (ec *executionContext) marshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑa
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNModelStatus2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatusᚄ(ctx context.Context, v interface{}) ([]models.ModelStatus, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.ModelStatus, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNModelStatus2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatusᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ModelStatus) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalNModelType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelType(ctx context.Context, v interface{}) (models.ModelType, error) {

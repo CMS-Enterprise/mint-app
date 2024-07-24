@@ -598,6 +598,7 @@ export enum ModelLearningSystemType {
 export type ModelPlan = {
   __typename: 'ModelPlan';
   abbreviation?: Maybe<Scalars['String']['output']>;
+  anticipatedStatuses: Array<ModelStatus>;
   archived: Scalars['Boolean']['output'];
   basics: PlanBasics;
   beneficiaries: PlanBeneficiaries;

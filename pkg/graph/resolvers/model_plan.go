@@ -529,3 +529,39 @@ func ModelPlanShare(
 
 	return true, nil
 }
+
+// ModelPlanAnticipatedStatuses calculates a slice of ModelStatus values that a model plan can be transitioned to
+func ModelPlanAnticipatedStatuses(
+	logger *zap.Logger,
+	store *storage.Store,
+	modelPlanID uuid.UUID,
+) ([]models.ModelStatus, error) {
+
+	results := make([]models.ModelStatus, 0)
+
+	modelPlan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	// If the model plan is paused or canceled, we shouldn't evaluate any anticipated statuses
+	if modelPlan.Status == models.ModelStatusPaused || modelPlan.Status == models.ModelStatusCanceled {
+		return results, nil
+	}
+
+	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(context.Background(), modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	// Iterate over all status evaluation strategies and append valid statuses to the results slice
+	statusEvaluationStrategies := GetAllStatusEvaluationStrategies()
+	for _, strategy := range statusEvaluationStrategies {
+		status, ok := strategy.Evaluate(modelPlan.Status, planBasics)
+		if ok {
+			results = append(results, status)
+		}
+	}
+
+	return results, nil
+}
