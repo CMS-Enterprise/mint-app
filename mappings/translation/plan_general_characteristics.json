@@ -19,6 +19,7 @@
           "dbField": "existing_model",
           "label": "Which existing model?",
           "sublabel": "Start typing the name of the model",
+          "exportLabel": "Which model is this a track of?",
           "dataType": "STRING",
           "formType": "SELECT",
           "order": 1.04
@@ -54,6 +55,7 @@
     "dbField": "existing_model",
     "label": "Which existing model?",
     "sublabel": "Start typing the name of the model",
+    "exportLabel": "Which model is this a track of?",
     "dataType": "STRING",
     "formType": "SELECT",
     "order": 1.04,

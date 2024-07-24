@@ -205,7 +205,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                 {needName}{' '}
                 <span className="text-normal">
                   {t('solution')} {t(`auditUpdateType.${databaseAction}`)}
-                </span>{' '}
+                </span>
                 : {solutionName}
               </div>
             );

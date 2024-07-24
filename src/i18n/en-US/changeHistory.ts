@@ -3,14 +3,19 @@ const changeHistory = {
   subheading: 'for {{modelName}}',
   back: 'Back to the task list',
   backToReadView: 'Back to the Read view',
+  thisModelPlan: 'this Model Plan',
   change:
     'made {{count}} change in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   change_other:
     'made {{count}} changes in {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   planCreate:
     'created <planName>{{plan_name}}</planName> <datetime>on {{date}} at {{time}}</datetime>',
+  taskStartedUpdate:
+    'started {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   taskStatusUpdate:
     'marked {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
+  planStatusUpdate:
+    'updated the status to {{status}} <datetime>on {{date}} at {{time}}</datetime>',
   teamANSWERED:
     '{{action}} {{collaborator}} as {{role}} to the model team <datetime>on {{date}} at {{time}}</datetime>',
   teamUPDATED:
@@ -61,6 +66,7 @@ const changeHistory = {
     plan_document_solution_link:
       'Operational solutions and implementation status tracker'
   },
+  self: 'self',
   showDetails: 'Show details',
   hideDetails: 'Hide details',
   resultsInfo: 'Showing {{resultsNum}} of {{count}} result {{query}}',

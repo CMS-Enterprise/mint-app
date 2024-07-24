@@ -314,9 +314,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
               i18nKey="changeHistory:planCreate"
               shouldUnescape
               values={{
-                plan_name: changeRecord.translatedFields.find(
-                  field => field.fieldName === 'model_name'
-                )?.new,
+                plan_name: t('thisModelPlan'),
                 date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
                 time: formatTime(changeRecord.date)
               }}
@@ -329,24 +327,53 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
           )}
 
           {/* Task list and status audits */}
-          {(changeRecordType === 'Task list status update' ||
-            changeRecordType === 'Status update') && (
-            <Trans
-              i18nKey="changeHistory:taskStatusUpdate"
-              shouldUnescape
-              values={{
-                section: t(`sections.${changeRecord.tableName}`),
-                status: changeRecord.translatedFields.find(
-                  field => field.fieldName === 'status'
-                )?.newTranslated,
-                date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                time: formatTime(changeRecord.date)
-              }}
-              components={{
-                datetime: <span />
-              }}
-            />
-          )}
+          {changeRecordType === 'Status update' &&
+            (() => {
+              return (
+                <Trans
+                  i18nKey="changeHistory:planStatusUpdate"
+                  shouldUnescape
+                  values={{
+                    status: changeRecord.translatedFields.find(
+                      field => field.fieldName === 'status'
+                    )?.newTranslated,
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
+
+          {/* Task list and status audits */}
+          {changeRecordType === 'Task list status update' &&
+            (() => {
+              const status = changeRecord.translatedFields.find(
+                field => field.fieldName === 'status'
+              )?.newTranslated;
+
+              return (
+                <Trans
+                  i18nKey={
+                    status === 'In progress'
+                      ? 'changeHistory:taskStartedUpdate'
+                      : 'changeHistory:taskStatusUpdate'
+                  }
+                  shouldUnescape
+                  values={{
+                    section: t(`sections.${changeRecord.tableName}`),
+                    status,
+                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+                    time: formatTime(changeRecord.date)
+                  }}
+                  components={{
+                    datetime: <span />
+                  }}
+                />
+              );
+            })()}
 
           {/* Team audits */}
           {changeRecordType === 'Team update' &&
@@ -358,11 +385,15 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
                 field => field.fieldName === 'team_roles'
               )?.changeType;
 
-              const collaborator =
+              let collaborator =
                 changeRecord?.metaData &&
                 isGenericWithMetaData(changeRecord?.metaData)
                   ? changeRecord?.metaData.relationContent
                   : '';
+
+              if (collaborator === changeRecord.actorName) {
+                collaborator = t('self');
+              }
 
               const role = changeRecord.translatedFields.find(
                 field => field.fieldName === 'team_roles'

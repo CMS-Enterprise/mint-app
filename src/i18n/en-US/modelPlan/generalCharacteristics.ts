@@ -53,6 +53,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'existing_model',
     label: 'Which existing model?',
     sublabel: 'Start typing the name of the model',
+    exportLabel: 'Which model is this a track of?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.SELECT,
     order: 1.04,
