@@ -9,5 +9,6 @@ INNER JOIN possible_operational_solution AS pos ON os.solution_type = pos.id
 LEFT JOIN possible_need_solution_link AS pnsl ON pos.id = pnsl.solution_type AND opn.need_type = pnsl.need_type
 WHERE
     pos.sol_key = :operational_solution_key
+GROUP BY os.id, mp.id
 ORDER BY
     pos.sol_key, mp.status;
