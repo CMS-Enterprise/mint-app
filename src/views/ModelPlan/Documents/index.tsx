@@ -16,6 +16,7 @@ import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
@@ -122,12 +123,12 @@ const Documents = () => {
   return (
     <Switch>
       {/* Model Plan Documents Pages */}
-      <Route
+      <ProtectedRoute
         path="/models/:modelID/documents"
         exact
         render={() => <DocumentsContent />}
       />
-      <Route
+      <ProtectedRoute
         path="/models/:modelID/documents/add-document"
         exact
         render={() => <AddDocument />}

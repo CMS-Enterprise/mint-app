@@ -23,6 +23,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import flattenErrors from 'utils/flattenErrors';
 import NewModelPlanValidationSchema from 'validations/newModelPlan';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import NotFound from 'views/NotFound';
 
 const NewPlanContent = () => {
@@ -162,7 +163,11 @@ const NewPlan = () => {
   return (
     <Switch>
       {/* New Plan Pages */}
-      <Route path="/models/new-plan" exact render={() => <NewPlanContent />} />
+      <ProtectedRoute
+        path="/models/new-plan"
+        exact
+        render={() => <NewPlanContent />}
+      />
 
       {/* 404 */}
       <Route path="*" render={() => <NotFound />} />

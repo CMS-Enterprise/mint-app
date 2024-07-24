@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import NotFound from 'views/NotFound';
 
 import AddCRTDL from './AddCRTDL';
@@ -10,12 +11,12 @@ const CRTDL = () => {
   return (
     <Switch>
       {/* Model Plan CRTDL Pages */}
-      <Route
+      <ProtectedRoute
         path="/models/:modelID/cr-and-tdl"
         exact
         render={() => <CRTDLs />}
       />
-      <Route
+      <ProtectedRoute
         path="/models/:modelID/cr-and-tdl/add-cr-and-tdl"
         exact
         render={() => <AddCRTDL />}

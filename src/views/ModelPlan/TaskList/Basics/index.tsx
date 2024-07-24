@@ -42,6 +42,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
 import Milestones from './Milestones';
@@ -657,17 +658,17 @@ export const Basics = () => {
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Switch>
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/basics"
               exact
               render={() => <BasicsContent />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/basics/overview"
               exact
               render={() => <Overview />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/basics/milestones"
               exact
               render={() => <Milestones />}
