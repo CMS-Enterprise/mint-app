@@ -36,6 +36,11 @@ func assertTranslationFuncAndReturnMap[T Translation](t *testing.T, translationF
 }
 
 // assertAllTranslationDataGeneric is a helper function that abstracts all logic to validate a translation functions as expected
+// the translationFunc is the function that returns the translation to test
+// the source struct is the struct that the translation is for. The name of the test is based on that
+// excludedFields is the list of fields that  we expect not to have a matching translation. They are used by assertTranslationStructCoverage
+// the function tests that a Translation can be deserialized, converted to a mpe, and that there is a translation for every field
+// it will further assert that the specific translations have all data populated as we expect.
 func assertAllTranslationDataGeneric[T Translation](t *testing.T, translationFunc func() (T, error), sourceStruct any, excludeFields []string) {
 
 	structName := fmt.Sprintf("%T", sourceStruct)
