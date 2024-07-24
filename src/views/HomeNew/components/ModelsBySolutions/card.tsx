@@ -64,7 +64,7 @@ const ModelSolutionCard = ({
 
           <Grid desktop={{ col: 12 }}>
             <Grid row gap>
-              <Grid desktop={{ col: 6 }}>
+              <Grid desktop={{ col: 6 }} mobile={{ col: 6 }}>
                 <p className="text-bold margin-bottom-0 margin-right-1">
                   {customHomeT('solutionCard.startDate')}
                 </p>
@@ -79,7 +79,7 @@ const ModelSolutionCard = ({
                 </p>
               </Grid>
 
-              <Grid desktop={{ col: 6 }}>
+              <Grid desktop={{ col: 6 }} mobile={{ col: 6 }}>
                 <p className="text-bold margin-bottom-0 margin-right-1">
                   {customHomeT('solutionCard.endDate')}
                 </p>

@@ -280,7 +280,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                     data-testid="grid"
                   >
                     <div
-                      class="desktop:grid-col-6"
+                      class="mobile:grid-col-6 desktop:grid-col-6"
                       data-testid="grid"
                     >
                       <p
@@ -295,7 +295,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       </p>
                     </div>
                     <div
-                      class="desktop:grid-col-6"
+                      class="mobile:grid-col-6 desktop:grid-col-6"
                       data-testid="grid"
                     >
                       <p
@@ -421,7 +421,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                     data-testid="grid"
                   >
                     <div
-                      class="desktop:grid-col-6"
+                      class="mobile:grid-col-6 desktop:grid-col-6"
                       data-testid="grid"
                     >
                       <p
@@ -440,7 +440,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       </p>
                     </div>
                     <div
-                      class="desktop:grid-col-6"
+                      class="mobile:grid-col-6 desktop:grid-col-6"
                       data-testid="grid"
                     >
                       <p
@@ -570,7 +570,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                     data-testid="grid"
                   >
                     <div
-                      class="desktop:grid-col-6"
+                      class="mobile:grid-col-6 desktop:grid-col-6"
                       data-testid="grid"
                     >
                       <p
@@ -589,7 +589,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       </p>
                     </div>
                     <div
-                      class="desktop:grid-col-6"
+                      class="mobile:grid-col-6 desktop:grid-col-6"
                       data-testid="grid"
                     >
                       <p
