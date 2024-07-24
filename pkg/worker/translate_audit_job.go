@@ -26,7 +26,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 	// Note, this will panic if the context doesn't have a faktory job context it will panic.
 	helper := faktory_worker.HelperFor(ctx)
 
-	w.Logger.Info("translating job reached.", zap.Any("args", args))
+	w.Logger.Info("translating job reached.", zap.Any("args", args), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
 	if len(args) < 2 {
 		return fmt.Errorf("no arguments were provided for this translateAuditJob")
 	}
@@ -43,8 +43,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 		return fmt.Errorf("unable to convert argument  ( %v )to an uuid as expected for translated_audit_queue_id for the translate audit job. Err %w", args[1], err)
 	}
 
-	sugaredLogger := w.Logger.With(zap.Any("auditID", auditID), zap.Any("queueID", queueID))
-	sugaredLogger.Debug("translating audit", zap.Any("auditID", auditID), zap.Any("queueID", queueID), zap.Any("JID", helper.Jid()))
+	sugaredLogger := w.Logger.With(zap.Any("auditID", auditID), zap.Any("queueID", queueID), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
 
 	_, translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, sugaredLogger, auditID, queueID)
 	if translationErr != nil {

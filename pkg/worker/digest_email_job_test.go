@@ -56,7 +56,7 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 
 	// Test when DigestEmailBatchJob runs it enqueues
 	// the correct number of DigestEmailJobs (1 job per user (2))
-	batchJob := faktory.NewJob("DigestEmailBatchJob", date)
+	batchJob := faktory.NewJob(digestEmailBatchJobName, date)
 	batchJob.Queue = criticalQueue
 
 	err = perf.Execute(batchJob, worker.DigestEmailBatchJob)
@@ -110,7 +110,7 @@ func (suite *WorkerSuite) TestDigestEmailBatchJobIntegration() {
 		suite.Equal("2", batchStatusComplete.CompleteState)
 
 		callbackJob, err2 := cl.Fetch(defaultQueue)
-		suite.Equal("DigestEmailBatchJobSuccess", callbackJob.Type)
+		suite.Equal(digestEmailBatchJobSuccessName, callbackJob.Type)
 
 		return err2
 	})
@@ -181,7 +181,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 
 	// Test when DigestEmailJob runs it enqueues
 	// the with the correct args
-	job := faktory.NewJob("DigestEmailJob", date, collaborator.UserID)
+	job := faktory.NewJob(digestEmailJobName, date, collaborator.UserID)
 	job.Queue = emailQueue
 
 	err = pool.With(func(cl *faktory.Client) error {
