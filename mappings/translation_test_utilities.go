@@ -1,6 +1,7 @@
 package mappings
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -21,22 +22,45 @@ var taskListStructExcludeFields []string = append(baseStructExcludeFields, "Mode
 
 // assertTranslationFuncAndReturnMap takes a translation function and verify it's not nil, then returns the result of it's ToMap call.
 // it returns true if successful, or false if not
-func assertTranslationFuncAndReturnMap[T Translation](t *testing.T, translationFunc func() (T, error)) (bool, map[string]models.ITranslationField) {
+func assertTranslationFuncAndReturnMap[T Translation](t *testing.T, translationFunc func() (T, error), structName string) (bool, T, map[string]models.ITranslationField) {
+
 	translation, err := translationFunc()
-	assert.NoError(t, err)
-	if assert.NotNil(t, translation) {
+	assert.NoErrorf(t, err, "Issue deserializing with %s", structName)
+	if assert.NotNilf(t, translation, "Translation was nil for %s", structName) {
 		tMap, err := translation.ToMap()
-		assert.NoError(t, err)
-		assert.NotNil(t, tMap)
-		return true, tMap
+		assert.NoErrorf(t, err, "Issue converting translation to map for %s", structName)
+		assert.NotNilf(t, tMap, "Issue converting translation to map for %s, it is nil", structName)
+		return true, translation, tMap
 	}
-	return false, nil
+	return false, translation, nil
 }
 
+// assertAllTranslationDataGeneric is a helper function that abstracts all logic to validate a translation functions as expected
+func assertAllTranslationDataGeneric[T Translation](t *testing.T, translationFunc func() (T, error), sourceStruct any, excludeFields []string) {
+
+	structName := fmt.Sprintf("%T", sourceStruct)
+
+	// Assert that the type can be deserialized and returned as a map
+	success, translation, tMap := assertTranslationFuncAndReturnMap(t, translationFunc, structName)
+	if assert.True(t, success) {
+
+		t.Run(structName+"_Translation_Struct_Coverage", func(t *testing.T) {
+			assertTranslationStructCoverage(t, tMap, sourceStruct, excludeFields)
+		})
+
+		t.Run(structName+"_Verify_Fields_Are_Populated", func(t *testing.T) {
+			assertTranslationFields(t, translation)
+		})
+	}
+
+}
+
+// TODO REMOVE THIS when replaced
 // assertTranslationStructCoverageGeneric is a helper function that abstracts the logic to compare a translation to a source struct and assert that all fields have a
 // translated value. It abstracts away the logic to convert the translation to a map
 func assertTranslationStructCoverageGeneric[T Translation](t *testing.T, translationFunc func() (T, error), sourceStruct any, excludeFields []string) {
-	success, tMap := assertTranslationFuncAndReturnMap(t, translationFunc)
+	structName := fmt.Sprintf("%T", sourceStruct)
+	success, _, tMap := assertTranslationFuncAndReturnMap(t, translationFunc, structName)
 	if assert.True(t, success) {
 		assertTranslationStructCoverage(t, tMap, sourceStruct, excludeFields)
 	}
