@@ -1770,7 +1770,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Lega
 </DocumentFragment>
 `;
 
-exports[`Operational Solutions Timeline Components > matches the snapshot > Master Data Management 1`] = `
+exports[`Operational Solutions Timeline Components > matches the snapshot > Master Data Management Program-Organization Relationship 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -1819,6 +1819,17 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             Complete onboarding questionnaire
           </h3>
           CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.
+            
+
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2FAll%2520Overlaps%2520Responses%2Easpx"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Go to Onboarding Request Form for MDM-POR
+          </a>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1841,6 +1852,17 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             Share ICD
           </h3>
           CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.
+            
+
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/MDMResources.aspx"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Go to ICD and Onboarding Mapping for MDM-POR
+          </a>
         </li>
       </ol>
     </div>

@@ -107,7 +107,7 @@ const operationalSolutions: TranslationOperationalSolutions = {
       INTERNAL_STAFF: 'Internal staff',
       LDG: 'Learning and Diffusion Group',
       LV: 'Legal Vertical',
-      MDM: 'Master Data Management',
+      MDM_POR: 'Master Data Management Program-Organization Relationship',
       MDM_NCBP: 'Master Data Management for Non-Claims Based Payments',
       MARX: 'Medicare Advantage Prescription Drug System',
       OTHER_NEW_PROCESS: 'Other',
