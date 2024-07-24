@@ -224,7 +224,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
         data-testid="gridContainer"
       >
         <div
-          class="usa-alert usa-alert--warning flex margin-top-2 margin-bottom-5 desktop:margin-y-3"
+          class="usa-alert usa-alert--warning icon-padding flex margin-top-2 margin-bottom-5 desktop:margin-y-3"
           data-testid="alert"
         >
           <div
@@ -9527,7 +9527,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               This will email a link to view this Model Plan within MINT.
             </p>
             <div
-              class="usa-alert usa-alert--info flex margin-top-0 margin-bottom-3 text-base line-height-sans-2"
+              class="usa-alert usa-alert--info icon-padding flex margin-top-0 margin-bottom-3 text-base line-height-sans-2"
               data-testid="alert"
             >
               <div

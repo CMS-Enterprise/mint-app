@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonGroup, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { ModelStatus, OperationalSolutionKey } from 'gql/gen/graphql';
+import { ModelBySolutionStatus, OperationalSolutionKey } from 'gql/gen/graphql';
 
 import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { ModelsBySolutionType } from 'views/HomeNew/components/ModelsBySolutions/table';
@@ -11,9 +11,9 @@ import './index.scss';
 
 export type StatusCategories =
   | 'total'
-  | 'planned'
-  | ModelStatus.ACTIVE
-  | ModelStatus.ENDED;
+  | ModelBySolutionStatus.PLANNED
+  | ModelBySolutionStatus.ACTIVE
+  | ModelBySolutionStatus.ENDED;
 
 const ModelsBySolutionsBanner = ({
   solutionKey,
@@ -64,9 +64,10 @@ const ModelsBySolutionsBanner = ({
               </Button>
               <Button
                 type="button"
-                onClick={() => setSelectedStatus('planned')}
+                onClick={() => setSelectedStatus(ModelBySolutionStatus.PLANNED)}
                 className={classNames({
-                  'bg-primary-darker': selectedStatus === 'planned'
+                  'bg-primary-darker':
+                    selectedStatus === ModelBySolutionStatus.PLANNED
                 })}
               >
                 <div className="margin-bottom-1">
@@ -76,17 +77,18 @@ const ModelsBySolutionsBanner = ({
                   {
                     solutionModels.filter(
                       solution =>
-                        solution.modelPlan.status !== ModelStatus.ACTIVE &&
-                        solution.modelPlan.status !== ModelStatus.ENDED
+                        solution.modelPlan.modelBySolutionStatus ===
+                        ModelBySolutionStatus.PLANNED
                     ).length
                   }
                 </div>
               </Button>
               <Button
                 type="button"
-                onClick={() => setSelectedStatus(ModelStatus.ACTIVE)}
+                onClick={() => setSelectedStatus(ModelBySolutionStatus.ACTIVE)}
                 className={classNames({
-                  'bg-primary-darker': selectedStatus === ModelStatus.ACTIVE
+                  'bg-primary-darker':
+                    selectedStatus === ModelBySolutionStatus.ACTIVE
                 })}
               >
                 <div className="margin-bottom-1">
@@ -96,16 +98,18 @@ const ModelsBySolutionsBanner = ({
                   {
                     solutionModels.filter(
                       solution =>
-                        solution.modelPlan.status === ModelStatus.ACTIVE
+                        solution.modelPlan.modelBySolutionStatus ===
+                        ModelBySolutionStatus.ACTIVE
                     ).length
                   }
                 </div>
               </Button>
               <Button
                 type="button"
-                onClick={() => setSelectedStatus(ModelStatus.ENDED)}
+                onClick={() => setSelectedStatus(ModelBySolutionStatus.ENDED)}
                 className={classNames({
-                  'bg-primary-darker': selectedStatus === ModelStatus.ENDED
+                  'bg-primary-darker':
+                    selectedStatus === ModelBySolutionStatus.ENDED
                 })}
               >
                 <div className="margin-bottom-1">
@@ -115,7 +119,8 @@ const ModelsBySolutionsBanner = ({
                   {
                     solutionModels.filter(
                       solution =>
-                        solution.modelPlan.status === ModelStatus.ENDED
+                        solution.modelPlan.modelBySolutionStatus ===
+                        ModelBySolutionStatus.ENDED
                     ).length
                   }
                 </div>

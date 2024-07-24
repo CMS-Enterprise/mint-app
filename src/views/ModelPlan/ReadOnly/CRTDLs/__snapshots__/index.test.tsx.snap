@@ -26,7 +26,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
       Visit FFS CR and TDL details in ECHIMP
     </a>
     <div
-      class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-1"
+      class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-bottom-1"
       data-testid="alert"
     >
       <div

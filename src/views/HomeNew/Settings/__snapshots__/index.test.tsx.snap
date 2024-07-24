@@ -427,7 +427,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
             </div>
           </ul>
           <div
-            class="usa-alert usa-alert--info usa-alert--slim flex"
+            class="usa-alert usa-alert--info usa-alert--slim icon-padding flex"
             data-testid="alert"
           >
             <div
