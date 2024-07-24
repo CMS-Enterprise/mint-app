@@ -1,6 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Card, Grid, Icon } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import {
   DatabaseOperation,
   GetChangeHistoryQuery,
@@ -11,6 +12,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
 import { AvatarCircle } from 'components/shared/Avatar';
 import Spinner from 'components/Spinner';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
@@ -34,6 +36,8 @@ type ChangeRecordProps = {
 export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
   const { t } = useTranslation('changeHistory');
 
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
+
   let changeCount = 0;
 
   // Count the number of changes in the record
@@ -54,12 +58,16 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
   return (
     <Card className="mini-change-record">
       <Grid row className="padding-2" style={{ wordWrap: 'break-word' }}>
-        <Grid tablet={{ col: 2 }}>
+        <Grid desktop={{ col: 2 }} tablet={{ col: 1 }} mobileLg={{ col: 1 }}>
           <AvatarCircle user={changeRecords[0].actorName} />
         </Grid>
 
-        <Grid tablet={{ col: 10 }}>
-          <div className="padding-left-05">
+        <Grid desktop={{ col: 10 }} tablet={{ col: 11 }} mobileLg={{ col: 11 }}>
+          <div
+            className={classNames('padding-left-05', {
+              'padding-left-1': isMobile
+            })}
+          >
             {changeRecords[0].actorName}{' '}
             <Trans
               i18nKey="changeHistory:change"
@@ -105,7 +113,7 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
           <Spinner />
         </div>
       ) : (
-        <>
+        <div className="margin-bottom-2">
           {sortedChanges.length === 0 && (
             <Alert type="info" slim className="margin-bottom-2">
               {t('noChanges')}
@@ -118,7 +126,7 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
               key={changeRecords[0].id}
             />
           ))}
-        </>
+        </div>
       )}
 
       <UswdsReactLink

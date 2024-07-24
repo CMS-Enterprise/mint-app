@@ -90,7 +90,10 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
             {changeType !== DatabaseOperation.DELETE && (
               <div
                 className={classNames(
-                  'text-bold padding-top-105 padding-bottom-1'
+                  'text-bold padding-bottom-1 padding-top-105',
+                  {
+                    'padding-top-0': !change.newTranslated
+                  }
                 )}
               >
                 {change.questionType === TranslationQuestionType.NOTE
@@ -138,7 +141,9 @@ export const ActionText = ({
   if (changeType !== DatabaseOperation.DELETE) {
     return (
       <span className="text-normal">
-        {t(`changeType.${change.changeType}`)}
+        {change.questionType === TranslationQuestionType.NOTE
+          ? t(`teamChangeType.${change.changeType}`)
+          : t(`changeType.${change.changeType}`)}
       </span>
     );
   }
