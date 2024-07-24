@@ -530,7 +530,8 @@ func ModelPlanShare(
 	return true, nil
 }
 
-// ModelPlanAnticipatedStatuses calculates a slice of ModelStatus values that a model plan can be transitioned to
+// ModelPlanAnticipatedStatuses calculates a slice of ModelStatus values that are
+// anticipated to be reached based on the current status of a model plan
 func ModelPlanAnticipatedStatuses(
 	logger *zap.Logger,
 	store *storage.Store,
