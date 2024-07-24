@@ -1,4 +1,4 @@
-FROM flyway/flyway:9.10-alpine
+FROM flyway/flyway:10.15-alpine
 
 ENV FLYWAY_CONNECT_RETRIES=10 \
     FLYWAY_IGNORE_INVALID_MIGRATION_NAMES="false" \

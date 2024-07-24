@@ -2192,7 +2192,7 @@ To achieve this mission, the Legal Vertical provides technical assistance and su
 </DocumentFragment>
 `;
 
-exports[`Operational Solutions About Components > matches the snapshot > Master Data Management 1`] = `
+exports[`Operational Solutions About Components > matches the snapshot > Master Data Management Program-Organization Relationship 1`] = `
 <DocumentFragment>
   <div>
     <h2
@@ -2206,7 +2206,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Master 
       <p
         class="margin-top-0 text-pre-wrap margin-bottom-0"
       >
-        Master Data Management (MDM) at CMS produces integrated and harmonized Beneficiary and Provider data from various Medicare and Medicaid systems. To create this master version, MDM uses identity resolution to recognize distinct entities (e.g., a provider, beneficiary, organization, or program) by matching similar records across multiple data sets. MDM provides flexible and easy access to provider and beneficiary data through extracts, web services, and APIs.
+        Master Data Management (MDM) at CMS produces integrated and harmonized Beneficiary and Provider data from various Medicare and Medicaid systems. To create this master version, MDM uses identity resolution to recognize distinct entities provider(e.g., a provider, beneficiary, organization, or program) by matching similar records across multiple data sets. MDM provides flexible and easy access to provider and beneficiary data through extracts, business intelligence reports and data lake mesh, and data share to IDRC Snowflake.
 
 MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
 
@@ -2257,12 +2257,79 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
           <li
             class="list-item"
           >
-            Identity resolution of CMS enterprise data entities (providers, beneficiaries, enrollees, ACO model participation)
+            Identity resolution of CMS enterprise data entities (providers)
+          </li>
+          <li
+            class="list-item"
+          >
+            Repository for CMMI’s APM alignment overlaps data
           </li>
           <li
             class="list-item"
           >
             Federation of identity resolved CMS enterprise data
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Operational Solutions About Components > matches the snapshot > Master Data Management for Non-Claims Based Payments 1`] = `
+<DocumentFragment>
+  <div>
+    <h2
+      class="margin-top-0"
+    >
+      About this solution
+    </h2>
+    <div
+      class="operational-solution-details line-height-body-5 font-body-md"
+    >
+      <p
+        class="margin-top-0 text-pre-wrap margin-bottom-0"
+      >
+        Master Data Management (MDM) for non-claims-based payments (NCBP) is a medium-term solution that satisfies the CMS requirement for payment models participating in shared savings initiatives to store non-claims payment data in a central location. Based on discussions with representatives of the Office of Information Technology (OIT), the Office of Enterprise Management (OEM), and the technical advisors of CMMI, MDM stores non-claims payment files in a central repository as CMS considers long-term solutions for non-claims payment data. 
+
+MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
+
+MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritative data integrated and consolidated from various source systems. MDM helps address business challenges by linking data across multiple sources for various business needs. MDM-NCBP specifically provides:
+      </p>
+      <ul
+        class="padding-left-4 margin-top-0"
+      >
+        <li
+          class="list-item"
+        >
+          A record of non-claims-based payments
+        </li>
+      </ul>
+      <div
+        class="margin-top-4"
+      >
+        <h3
+          class="margin-bottom-2"
+        >
+          Functions
+        </h3>
+        <ul
+          class="padding-left-4 margin-top-0"
+        >
+          <li
+            class="list-item"
+          >
+            A centralized source of program non-claims-based payment data
+          </li>
+          <li
+            class="list-item"
+          >
+            A reusable service to access data
+          </li>
+          <li
+            class="list-item"
+          >
+            Improved visibility and incremental improvements into data quality through data profiling and data analysis
           </li>
         </ul>
       </div>

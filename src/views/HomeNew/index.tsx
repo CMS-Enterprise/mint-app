@@ -104,6 +104,7 @@ const HomeNew = () => {
         </p>
 
         <ModelPlansTable
+          id="my-model-plans-table"
           type={ViewCustomizationType.MY_MODEL_PLANS}
           canSearch={false}
           isAssessment={isAssessment(userGroups, flags)}
@@ -119,6 +120,7 @@ const HomeNew = () => {
         </h2>
 
         <ModelPlansTable
+          id="all-model-plans-table"
           type={ViewCustomizationType.ALL_MODEL_PLANS}
           isAssessment={isAssessment(userGroups, flags)}
         />
@@ -137,7 +139,7 @@ const HomeNew = () => {
         </p>
 
         <>
-          {favoritesLoading && <PageLoading />}
+          {favoritesLoading && <PageLoading testId="favorites-page-loading" />}
           {!favoritesLoading && favorites && favorites?.length > 0 && (
             <FavoritesTable
               favorites={favorites || []}
@@ -156,6 +158,7 @@ const HomeNew = () => {
               <Trans
                 i18nKey={`customHome:settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsDescription`}
                 components={{
+                  link1: <UswdsReactLink to="/models"> </UswdsReactLink>,
                   star: <Icon.StarOutline size={3} style={{ top: '6px' }} />
                 }}
               />
@@ -179,6 +182,7 @@ const HomeNew = () => {
         </p>
 
         <ModelPlansTable
+          id="models-with-cr-tdl-table"
           type={ViewCustomizationType.MODELS_WITH_CR_TDL}
           isAssessment={isAssessment(userGroups, flags)}
         />

@@ -139,6 +139,7 @@ func seed(config *viper.Viper) {
 	seeder := newDefaultSeeder(config)
 	seeder.SeedData()
 	seeder.CreateAnalyzedAuditData()
+	seeder.SetDefaultUserViews()
 }
 
 // SeedData gets resolver dependencies and calls wrapped resolver functions to seed data.
@@ -151,7 +152,28 @@ func (s *Seeder) SeedData() {
 	}
 
 	// Seed an empty plan
-	s.createModelPlan("Empty Plan", "MINT")
+	emptyPlan := s.createModelPlan("Empty Plan", "MINT")
+	s.updateModelPlan(emptyPlan, map[string]interface{}{
+		"abbreviation": "emptyPlan",
+		"status":       models.ModelStatusCanceled,
+	})
+
+	emptyPlanOperationalNeeds := s.getOperationalNeedsByModelPlanID(emptyPlan.ID)
+	if len(emptyPlanOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		emptyPlan,
+		emptyPlanOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	// Seed a plan with some information already in it
 	planWithBasics := s.createModelPlan("Plan with Basics", "MINT")
@@ -173,6 +195,27 @@ func (s *Seeder) SeedData() {
 		},
 	)
 	s.existingModelLinkCreate(planWithBasics, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[3].ID, links[4].ID}, nil)
+	s.updateModelPlan(planWithBasics, map[string]interface{}{
+		"abbreviation": "basics",
+		"status":       models.ModelStatusActive,
+	})
+
+	planWithBasicsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithBasics.ID)
+	if len(planWithBasicsOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		planWithBasics,
+		planWithBasicsOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	// Seed a plan with collaborators
 	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT")
@@ -185,6 +228,28 @@ func (s *Seeder) SeedData() {
 			UserName:    "BTAL",
 			TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
 		})
+
+	s.updateModelPlan(planWithCollaborators, map[string]interface{}{
+		"abbreviation": "collab",
+		"status":       models.ModelStatusEnded,
+	})
+
+	planWithCollaboratorsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithCollaborators.ID)
+	if len(planWithBasicsOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		planWithCollaborators,
+		planWithCollaboratorsOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	s.existingModelLinkCreate(planWithCollaborators, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[4].ID}, nil)
 
@@ -208,12 +273,52 @@ func (s *Seeder) SeedData() {
 	})
 	s.existingModelLinkCreate(planWithCrTDLs, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, nil, []uuid.UUID{planWithCollaborators.ID, planWithBasics.ID})
 
+	s.updateModelPlan(planWithCrTDLs, map[string]interface{}{
+		"abbreviation": "crTDLPlan",
+		"status":       models.ModelStatusAnnounced,
+	})
+
+	planWithCrTDLsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithCrTDLs.ID)
+	if len(planWithCrTDLsOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		planWithCrTDLs,
+		planWithCrTDLsOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
+
 	// Seed a plan that is already archived
 	archivedPlan := s.createModelPlan("Archived Plan", "MINT")
 	s.updateModelPlan(archivedPlan, map[string]interface{}{
 		"archived":     true,
 		"abbreviation": "arch",
+		"status":       models.ModelStatusPaused,
 	})
+
+	archivedPlanOperationalNeeds := s.getOperationalNeedsByModelPlanID(archivedPlan.ID)
+	if len(archivedPlanOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		archivedPlan,
+		archivedPlanOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	// Seed a plan with some documents
 	planWithDocuments := s.createModelPlan("Plan with Documents", "MINT")
@@ -298,5 +403,14 @@ func (s *Seeder) SeedData() {
 				Status: models.OperationalSolutionSubtaskStatusTodo,
 			},
 		},
+	)
+}
+
+func (s *Seeder) SetDefaultUserViews() {
+	mintPrinc := s.getTestPrincipalByUsername("MINT")
+	s.updateUserView(mintPrinc, map[string]interface{}{
+		"viewCustomization":            []models.ViewCustomizationType{models.ViewCustomizationTypeModelsByOperationalSolution, models.ViewCustomizationTypeFollowedModels, models.ViewCustomizationTypeAllModelPlans},
+		"possibleOperationalSolutions": []models.OperationalSolutionKey{models.OpSKInnovation, models.OpSKAcoOs},
+	},
 	)
 }

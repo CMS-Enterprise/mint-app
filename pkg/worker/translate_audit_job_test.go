@@ -40,7 +40,7 @@ func (suite *WorkerSuite) TestTranslateAuditJob() {
 	}
 	entryToTest := testableEntries[0]
 
-	pool, err := faktory.NewPool(5)
+	pool, err := faktory.NewPool(1)
 	suite.NoError(err)
 	job := faktory.NewJob(translateAuditJobName, entryToTest.ChangeID, entryToTest.ID)
 	perf := faktory_worker.NewTestExecutor(pool)
