@@ -53,7 +53,12 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       ModelViewFilter.IPC,
       ModelViewFilter.IDDOC,
       ModelViewFilter.PBG
-    ]
+    ],
+    childRelation: {
+      MEDICARE_PROVIDERS: [
+        () => participantsAndProviders.isNewTypeOfProvidersOrSuppliers
+      ]
+    }
   },
   medicareProviderType: {
     gqlField: 'medicareProviderType',
@@ -85,6 +90,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       true: 'Yes',
       false: 'No'
     },
+    parentRelation: () => participantsAndProviders.participants,
     filterGroups: [ModelViewFilter.PBG]
   },
   statesEngagement: {
