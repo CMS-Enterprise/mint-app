@@ -10,7 +10,7 @@ import {
   Icon,
   SummaryBox
 } from '@trussworks/react-uswds';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import {
   ModelPlanFilter,
   useGetFavoritesQuery,
@@ -27,6 +27,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
@@ -54,6 +55,8 @@ const HomeNew = () => {
   const { authState } = useOktaAuth();
 
   const { pathname } = useLocation();
+
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
   const isLanding: boolean = pathname === '/' && !authState?.isAuthenticated;
 
@@ -245,7 +248,12 @@ const HomeNew = () => {
                       <UswdsReactLink
                         variant="unstyled"
                         to="/homepage-settings"
-                        className="display-flex flex-align-center usa-button--unstyled"
+                        className={classNames(
+                          'display-flex flex-align-center usa-button--unstyled',
+                          {
+                            'row-reverse': !isMobile
+                          }
+                        )}
                       >
                         <Icon.Edit className="margin-right-1 text-primary" />
                         {t('editHomepage')}
@@ -262,7 +270,7 @@ const HomeNew = () => {
                   </p>
 
                   <UswdsReactLink
-                    className={classnames('usa-button', {
+                    className={classNames('usa-button', {
                       'usa-button--outline': isAssessment(userGroups, flags)
                     })}
                     variant="unstyled"

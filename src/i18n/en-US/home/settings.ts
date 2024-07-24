@@ -43,6 +43,8 @@ const homepageSettings = {
     'Arrange the content however you wish. You can update this at any time.',
   selection: 'Select which information to display on your homepage.',
   selectionTwo: 'Set the display order for your homepage.',
+  orderUp: 'Order setting up',
+  orderDown: 'Order setting down',
   settings,
   selectSolutions: 'Select solutions',
   updateSolutions: 'Update solutions',
