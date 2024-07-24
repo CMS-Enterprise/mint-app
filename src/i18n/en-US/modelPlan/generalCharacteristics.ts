@@ -983,7 +983,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     dbField: 'multiple_patricipation_agreements_needed_note',
     label: 'Notes',
     isNote: true,
-    otherParentField: 'multiplePatricipationAgreementsNeeded',
+    otherParentField: 'agreementTypes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 4.14,
