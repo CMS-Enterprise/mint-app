@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/samber/lo"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -320,12 +321,15 @@ func assertTranslationStructCoverage(t *testing.T, translationMap map[string]mod
 		t.Errorf("%s is not a struct", typ)
 		t.FailNow()
 	}
+	excludedMap := lo.SliceToMap(excludeFields, func(field string) (string, bool) {
+		return field, true
+	})
 
-	iterateTranslationFieldCoverage(t, translationMap, v, excludeFields)
+	iterateTranslationFieldCoverage(t, translationMap, v, excludedMap)
 
 }
 
-func iterateTranslationFieldCoverage(t *testing.T, translationMap map[string]models.ITranslationField, v reflect.Value, excludeFields []string) {
+func iterateTranslationFieldCoverage(t *testing.T, translationMap map[string]models.ITranslationField, v reflect.Value, excludeFields map[string]bool) {
 	typ := v.Type()
 
 	for i := 0; i < typ.NumField(); i++ {
@@ -333,7 +337,7 @@ func iterateTranslationFieldCoverage(t *testing.T, translationMap map[string]mod
 		value := v.Field(i)
 
 		// Check if this field is excluded
-		if isExcluded(field.Name, excludeFields) {
+		if _, isExcluded := excludeFields[field.Name]; isExcluded {
 			continue
 		}
 
@@ -356,13 +360,4 @@ func iterateTranslationFieldCoverage(t *testing.T, translationMap map[string]mod
 		assert.NotNil(t, translationInterface, "field (%s, tag %s) is expected to have a translation, but it is missing. Please add the translation according to the documentation, or exclude it if needed.", field.Name, translationKey)
 	}
 
-}
-
-func isExcluded(fieldName string, excludeFields []string) bool {
-	for _, excludedField := range excludeFields {
-		if fieldName == excludedField {
-			return true
-		}
-	}
-	return false
 }
