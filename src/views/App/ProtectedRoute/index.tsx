@@ -1,22 +1,15 @@
-import React from 'react';
-import { Route, RouteProps } from 'react-router-dom';
+import React, { ComponentProps } from 'react';
+import { Route } from 'react-router-dom';
 import { SecureRoute } from '@okta/okta-react';
-import { OnAuthRequiredFunction } from '@okta/okta-react/bundles/types/OktaContext';
 
 import NotFound from 'views/NotFound';
 
-// Prop used to pass Launch Darkly flag support to the component
-type WithFlagSupportProps = { enabled?: boolean };
+// Prop used to pass Launch Darkly flag support to the component or disabled the route completely
+type ShouldBeEnabled = { enabled?: boolean };
 
-type ProtectedRouteProps = {
-  onAuthRequired?: OnAuthRequiredFunction;
-  errorComponent?: React.ComponentType<{
-    error: Error;
-  }>;
-} & RouteProps &
-  React.HTMLAttributes<HTMLDivElement> & {
-    children?: React.ReactNode;
-  } & WithFlagSupportProps;
+type ProtectedRouteProps = ComponentProps<typeof SecureRoute> & {
+  children?: React.ReactNode;
+} & ShouldBeEnabled;
 
 /**
  * This component is a wrapper around Okta's SecureRoute component that adds support for Launch Darkly flags.
