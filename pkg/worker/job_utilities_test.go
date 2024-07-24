@@ -8,8 +8,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// func JobWith
-
 func TestJobWithPanicProtection(t *testing.T) {
 	panicMessage := "panic Time!"
 	panicFunc := func(ctx context.Context, args ...interface{}) (returnedError error) {

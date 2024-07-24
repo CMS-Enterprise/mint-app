@@ -7,7 +7,6 @@ import (
 )
 
 func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAuditID() {
-	// beforeYesterday := yesterday.AddDate(0, 0, -1)
 
 	// Note This could happen in the translated audit package, but we are testing in the resolver package for simplicity as an integration test
 	//Note This could potentially be combined with the audit change test, but duplicating some logic here instead for clarity
@@ -55,43 +54,45 @@ func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAud
 
 	retTranslatedAuditsWithFields := suite.dangerousQueueAndTranslateAllAudits()
 
-	suite.NotNil(retTranslatedAuditsWithFields)
-	suite.GreaterOrEqual(len(retTranslatedAuditsWithFields), 2) // Make sure there are at least 2 changes, and two fields
-	if len(retTranslatedAuditsWithFields) < 2 {
-		suite.Fail("there are not at least 2 audits for this model")
+	if suite.NotNil(retTranslatedAuditsWithFields) {
+
+		suite.GreaterOrEqual(len(retTranslatedAuditsWithFields), 2) // Make sure there are at least 2 changes, and two fields
+		if len(retTranslatedAuditsWithFields) < 2 {
+			suite.Fail("there are not at least 2 audits for this model")
+		}
+		change1 := retTranslatedAuditsWithFields[0]
+		change1FieldCount := len(change1.TranslatedFields)
+		suite.Greater(change1FieldCount, 0)
+
+		change2 := retTranslatedAuditsWithFields[1]
+		change2FieldCount := len(change2.TranslatedFields)
+		suite.Greater(change2FieldCount, 0)
+
+		g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+		g.Go(func() error {
+			fields, err := TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, change1.ID)
+			suite.NoError(err)
+			suite.NotNil(fields)
+			suite.Len(fields, change1FieldCount)
+
+			field := fields[0]
+			suite.Equal(change1.ID, field.TranslatedAuditID)
+			suite.NotNil(field.FieldOrder)
+			return nil
+
+		})
+		g.Go(func() error {
+			fields, err := TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, change2.ID)
+			suite.NoError(err)
+			suite.NotNil(fields)
+			suite.Len(fields, change2FieldCount)
+			field := fields[0]
+			suite.Equal(change2.ID, field.TranslatedAuditID)
+			suite.NotNil(field.FieldOrder)
+			return nil
+		})
+		err2 := g.Wait()
+		suite.NoError(err2)
 	}
-	change1 := retTranslatedAuditsWithFields[0]
-	change1FieldCount := len(change1.TranslatedFields) //CHANGES: NIL REFERENCE PANIC??
-	suite.Greater(change1FieldCount, 0)
-
-	change2 := retTranslatedAuditsWithFields[1]
-	change2FieldCount := len(change2.TranslatedFields)
-	suite.Greater(change2FieldCount, 0)
-
-	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
-	g.Go(func() error {
-		fields, err := TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, change1.ID)
-		suite.NoError(err)
-		suite.NotNil(fields)
-		suite.Len(fields, change1FieldCount)
-
-		field := fields[0]
-		suite.Equal(change1.ID, field.TranslatedAuditID)
-		suite.NotNil(field.FieldOrder)
-		return nil
-
-	})
-	g.Go(func() error {
-		fields, err := TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, change2.ID)
-		suite.NoError(err)
-		suite.NotNil(fields)
-		suite.Len(fields, change2FieldCount)
-		field := fields[0]
-		suite.Equal(change2.ID, field.TranslatedAuditID)
-		suite.NotNil(field.FieldOrder)
-		return nil
-	})
-	err2 := g.Wait()
-	suite.NoError(err2)
 
 }

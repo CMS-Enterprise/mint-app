@@ -1,9 +1,11 @@
 package mappings
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
+	"github.com/samber/lo"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -17,6 +19,46 @@ var baseStructExcludeFields []string = []string{"ID", "CreatedBy", "CreatedDts",
 
 // taskListStructExcludeFields are the fields that aren't needed to be translated for most task list sections
 var taskListStructExcludeFields []string = append(baseStructExcludeFields, "ModelPlanID")
+
+// assertTranslationFuncAndReturnMap takes a translation function and verify it's not nil, then returns the result of it's ToMap call.
+// it returns true if successful, or false if not
+func assertTranslationFuncAndReturnMap[T Translation](t *testing.T, translationFunc func() (T, error), structName string) (bool, T, map[string]models.ITranslationField) {
+
+	translation, err := translationFunc()
+	assert.NoErrorf(t, err, "Issue deserializing with %s", structName)
+	if assert.NotNilf(t, translation, "Translation was nil for %s", structName) {
+		tMap, err := translation.ToMap()
+		assert.NoErrorf(t, err, "Issue converting translation to map for %s", structName)
+		assert.NotNilf(t, tMap, "Issue converting translation to map for %s, it is nil", structName)
+		return true, translation, tMap
+	}
+	return false, translation, nil
+}
+
+// assertAllTranslationDataGeneric is a helper function that abstracts all logic to validate a translation functions as expected
+// the translationFunc is the function that returns the translation to test
+// the source struct is the struct that the translation is for. The name of the test is based on that
+// excludedFields is the list of fields that  we expect not to have a matching translation. They are used by assertTranslationStructCoverage
+// the function tests that a Translation can be deserialized, converted to a mpe, and that there is a translation for every field
+// it will further assert that the specific translations have all data populated as we expect.
+func assertAllTranslationDataGeneric[T Translation](t *testing.T, translationFunc func() (T, error), sourceStruct any, excludeFields []string) {
+
+	structName := fmt.Sprintf("%T", sourceStruct)
+
+	// Assert that the type can be deserialized and returned as a map
+	success, translation, tMap := assertTranslationFuncAndReturnMap(t, translationFunc, structName)
+	if assert.True(t, success) {
+
+		t.Run(structName+"_Translation_Struct_Coverage", func(t *testing.T) {
+			assertTranslationStructCoverage(t, tMap, sourceStruct, excludeFields)
+		})
+
+		t.Run(structName+"_Verify_Fields_Are_Populated", func(t *testing.T) {
+			assertTranslationFields(t, translation)
+		})
+	}
+
+}
 
 // assertTranslationFields will iterate through all fields in a translation and make sure that they are populated correctly and valid
 func assertTranslationFields(t *testing.T, translation Translation) {
@@ -297,12 +339,15 @@ func assertTranslationStructCoverage(t *testing.T, translationMap map[string]mod
 		t.Errorf("%s is not a struct", typ)
 		t.FailNow()
 	}
+	excludedMap := lo.SliceToMap(excludeFields, func(field string) (string, bool) {
+		return field, true
+	})
 
-	iterateTranslationFieldCoverage(t, translationMap, v, excludeFields)
+	iterateTranslationFieldCoverage(t, translationMap, v, excludedMap)
 
 }
 
-func iterateTranslationFieldCoverage(t *testing.T, translationMap map[string]models.ITranslationField, v reflect.Value, excludeFields []string) {
+func iterateTranslationFieldCoverage(t *testing.T, translationMap map[string]models.ITranslationField, v reflect.Value, excludeFields map[string]bool) {
 	typ := v.Type()
 
 	for i := 0; i < typ.NumField(); i++ {
@@ -310,7 +355,7 @@ func iterateTranslationFieldCoverage(t *testing.T, translationMap map[string]mod
 		value := v.Field(i)
 
 		// Check if this field is excluded
-		if isExcluded(field.Name, excludeFields) {
+		if _, isExcluded := excludeFields[field.Name]; isExcluded {
 			continue
 		}
 
@@ -333,13 +378,4 @@ func iterateTranslationFieldCoverage(t *testing.T, translationMap map[string]mod
 		assert.NotNil(t, translationInterface, "field (%s, tag %s) is expected to have a translation, but it is missing. Please add the translation according to the documentation, or exclude it if needed.", field.Name, translationKey)
 	}
 
-}
-
-func isExcluded(fieldName string, excludeFields []string) bool {
-	for _, excludedField := range excludeFields {
-		if fieldName == excludedField {
-			return true
-		}
-	}
-	return false
 }
