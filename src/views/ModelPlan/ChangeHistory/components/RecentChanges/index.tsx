@@ -3,7 +3,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Card, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
-  DatabaseOperation,
   GetChangeHistoryQuery,
   useGetChangeHistoryQuery
 } from 'gql/gen/graphql';
@@ -16,11 +15,12 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
-  batchedTables,
   isLinkingTable,
   linkingTableQuestions,
+  shouldRenderExistingLinkBatch,
   sortAllChanges
 } from '../../util';
+import { ChangeHeader } from '../ChangeRecord';
 
 import './index.scss';
 
@@ -38,23 +38,6 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
-  let changeCount = 0;
-
-  // Count the number of changes in the record
-  changeRecords.forEach(changeRecord => {
-    changeCount +=
-      changeRecord.action === DatabaseOperation.INSERT ||
-      changeRecord.action === DatabaseOperation.DELETE ||
-      batchedTables.includes(changeRecord.tableName)
-        ? 1
-        : changeRecord.translatedFields.length || 1;
-  });
-
-  // If the change is a linking table, count the unique number of questions
-  if (isLinkingTable(changeRecords[0].tableName)) {
-    changeCount = linkingTableQuestions(changeRecords).length;
-  }
-
   return (
     <Card className="mini-change-record">
       <Grid row className="padding-2" style={{ wordWrap: 'break-word' }}>
@@ -69,20 +52,31 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
             })}
           >
             {changeRecords[0].actorName}{' '}
-            <Trans
-              i18nKey="changeHistory:change"
-              shouldUnescape
-              count={changeCount}
-              values={{
-                count: changeCount,
-                section: t(`sections.${changeRecords[0].tableName}`),
-                date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
-                time: formatTime(changeRecords[0].date)
-              }}
-              components={{
-                datetime: <span className="text-base" />
-              }}
-            />
+            {shouldRenderExistingLinkBatch(changeRecords) ? (
+              <Trans
+                i18nKey="changeHistory:change"
+                shouldUnescape
+                count={changeRecords.length}
+                values={{
+                  count: isLinkingTable(changeRecords[0].tableName)
+                    ? linkingTableQuestions(changeRecords).length
+                    : changeRecords.length,
+                  section: t(`sections.${changeRecords[0].tableName}`),
+                  date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
+                  time: formatTime(changeRecords[0].date)
+                }}
+                components={{
+                  datetime: <span className="text-base" />
+                }}
+              />
+            ) : (
+              <ChangeHeader
+                changeRecord={changeRecords[0]}
+                miniRecord
+                isOpen={false}
+                setOpen={() => null}
+              />
+            )}
           </div>
         </Grid>
       </Grid>

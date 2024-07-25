@@ -39,10 +39,300 @@ type ChangeRecordProps = {
   index: number;
 };
 
+type ChangeHeaderProps = {
+  changeRecord: ChangeRecordType;
+  miniRecord?: boolean;
+  isOpen: boolean;
+  setOpen: (isOpen: boolean) => void;
+};
+
 type SingleChangeProps = {
   change: ChangeRecordType['translatedFields'][0];
   changeType: DatabaseOperation;
   tableName: TranslationTables;
+};
+
+export const ChangeHeader = ({
+  changeRecord,
+  miniRecord = false,
+  isOpen,
+  setOpen
+}: ChangeHeaderProps) => {
+  const { t } = useTranslation('changeHistory');
+
+  // Identify the type of change record
+  const changeRecordType = identifyChangeType(changeRecord);
+
+  const DateSpan = miniRecord ? <span className="text-base" /> : <span />;
+
+  // New plan audit
+  if (changeRecordType === 'New plan') {
+    return (
+      <Trans
+        i18nKey="changeHistory:planCreate"
+        shouldUnescape
+        values={{
+          plan_name: t('thisModelPlan'),
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan,
+          // data-testid is used for cypress testing/sorting
+          planName: <span data-testid="new-plan" />
+        }}
+      />
+    );
+  }
+
+  // Model plan status audits
+  if (changeRecordType === 'Status update') {
+    return (
+      <Trans
+        i18nKey="changeHistory:planStatusUpdate"
+        shouldUnescape
+        values={{
+          status: changeRecord.translatedFields.find(
+            field => field.fieldName === 'status'
+          )?.newTranslated,
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: <span />
+        }}
+      />
+    );
+  }
+
+  // Task list status audits
+  if (changeRecordType === 'Task list status update') {
+    const status = changeRecord.translatedFields.find(
+      field => field.fieldName === 'status'
+    )?.newTranslated;
+
+    return (
+      <Trans
+        i18nKey={
+          status === 'In progress'
+            ? 'changeHistory:taskStartedUpdate'
+            : 'changeHistory:taskStatusUpdate'
+        }
+        shouldUnescape
+        values={{
+          section: t(`sections.${changeRecord.tableName}`),
+          status,
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
+
+  // Team audits
+  if (changeRecordType === 'Team update') {
+    const teamChange = (teamType: string | undefined) =>
+      teamType === 'REMOVED' ? 'oldTranslated' : 'newTranslated';
+
+    const teamChangeType = changeRecord.translatedFields.find(
+      field => field.fieldName === 'team_roles'
+    )?.changeType;
+
+    let collaborator =
+      changeRecord?.metaData && isGenericWithMetaData(changeRecord?.metaData)
+        ? changeRecord?.metaData.relationContent
+        : '';
+
+    if (collaborator === changeRecord.actorName) {
+      collaborator = t('self');
+    }
+
+    const role = changeRecord.translatedFields.find(
+      field => field.fieldName === 'team_roles'
+    )?.[teamChange(teamChangeType)];
+
+    const formattedRoles = (inputString: string) => {
+      return inputString
+        .replace(/{|}|\\|"|'/g, '')
+        .split(',')
+        .join(', ');
+    };
+
+    return (
+      <Trans
+        i18nKey={`changeHistory:team${teamChangeType}`}
+        shouldUnescape
+        values={{
+          action: t(`teamChangeType.${teamChangeType}`),
+          collaborator,
+          role: !!role && `${formattedRoles(role)}`,
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
+
+  // Document add/upload audits
+  if (changeRecordType === 'Document update') {
+    return (
+      <Trans
+        i18nKey="changeHistory:documentUpdate"
+        shouldUnescape
+        values={{
+          isLink: documentType(changeRecord) ? ' link' : '',
+          action: t(`documentChangeType.${documentUpdateType(changeRecord)}`),
+          documentName: documentName(changeRecord),
+          toFrom: changeRecord.action === 'INSERT' ? 'to' : 'from',
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
+
+  // CR and TDL audits
+  if (changeRecordType === 'CR update' || changeRecordType === 'TDL update') {
+    const crTdlName =
+      changeRecord?.metaData && isGenericWithMetaData(changeRecord?.metaData)
+        ? changeRecord?.metaData.relationContent
+        : '';
+
+    return (
+      <Trans
+        i18nKey="changeHistory:crTdlUpdate"
+        shouldUnescape
+        values={{
+          action: t(`auditUpdateType.${changeRecord.action}`),
+          crTdlName,
+          toFrom: t(`toFromIn.${changeRecord.action}`),
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
+
+  // Discussion audits
+  if (changeRecordType === 'Discussion update') {
+    const metaDiscussion =
+      changeRecord?.metaData &&
+      isDiscussionReplyWithMetaData(changeRecord?.metaData)
+        ? changeRecord?.metaData.discussionContent
+        : '';
+
+    const content = changeRecord.translatedFields.find(
+      field => field.fieldName === 'content'
+    )?.newTranslated;
+
+    const replyCount =
+      changeRecord?.metaData &&
+      isDiscussionReplyWithMetaData(changeRecord?.metaData)
+        ? changeRecord?.metaData.numberOfReplies - 1
+        : 0;
+
+    return (
+      <>
+        <Trans
+          i18nKey={`changeHistory:${changeRecord.tableName}Answered`}
+          shouldUnescape
+          values={{
+            date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+            time: formatTime(changeRecord.date)
+          }}
+          components={{
+            datetime: DateSpan
+          }}
+        />
+        <ul
+          className={classNames(
+            {
+              'change-record__discussion-expanded margin-bottom-2': isOpen,
+              'padding-left-4': !isOpen
+            },
+            'margin-y-1'
+          )}
+        >
+          <li>
+            <MentionTextArea
+              className={classNames('text-base-darkest margin-bottom-0')}
+              id={`mention-${changeRecord.id}`}
+              editable={false}
+              initialContent={
+                changeRecord.tableName === TableName.DISCUSSION_REPLY
+                  ? metaDiscussion
+                  : content
+              }
+            />
+          </li>
+        </ul>
+
+        {changeRecord.tableName === TableName.DISCUSSION_REPLY && (
+          <CollapsableLink
+            id={changeRecord.id}
+            label={t('showDetails')}
+            closeLabel={t('hideDetails')}
+            labelPosition="bottom"
+            setParentOpen={setOpen}
+            styleLeftBar={false}
+          >
+            <div className="margin-bottom-neg-1 padding-left-3 change-record__answer margin-top-neg-2">
+              {replyCount > 0 && (
+                <div className="padding-bottom-1 text-italic">
+                  {t('replyCount', {
+                    count: replyCount
+                  })}
+                </div>
+              )}
+              <MentionTextArea
+                className="text-base-darkest"
+                id={`mention-${changeRecord.id}`}
+                editable={false}
+                initialContent={content}
+              />
+            </div>
+          </CollapsableLink>
+        )}
+      </>
+    );
+  }
+
+  // Standard update audits
+  if (
+    changeRecordType === 'Standard update' ||
+    changeRecordType === 'Operational need update'
+  ) {
+    return (
+      <Trans
+        i18nKey="changeHistory:change"
+        shouldUnescape
+        count={changeRecord.translatedFields.length}
+        values={{
+          count: changeRecord.translatedFields.length,
+          section: t(`sections.${changeRecord.tableName}`),
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
+
+  return <></>;
 };
 
 // Render a single change record, showing the field name, the change type, and the old and new values
@@ -313,279 +603,11 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
         >
           <span className="text-bold">{changeRecord.actorName} </span>
 
-          {/* New Plan audit */}
-          {changeRecordType === 'New plan' && (
-            <Trans
-              i18nKey="changeHistory:planCreate"
-              shouldUnescape
-              values={{
-                plan_name: t('thisModelPlan'),
-                date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                time: formatTime(changeRecord.date)
-              }}
-              components={{
-                datetime: <span />,
-                // data-testid is used for cypress testing/sorting
-                planName: <span data-testid="new-plan" />
-              }}
-            />
-          )}
-
-          {/* Task list and status audits */}
-          {changeRecordType === 'Status update' &&
-            (() => {
-              return (
-                <Trans
-                  i18nKey="changeHistory:planStatusUpdate"
-                  shouldUnescape
-                  values={{
-                    status: changeRecord.translatedFields.find(
-                      field => field.fieldName === 'status'
-                    )?.newTranslated,
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
-          {/* Task list and status audits */}
-          {changeRecordType === 'Task list status update' &&
-            (() => {
-              const status = changeRecord.translatedFields.find(
-                field => field.fieldName === 'status'
-              )?.newTranslated;
-
-              return (
-                <Trans
-                  i18nKey={
-                    status === 'In progress'
-                      ? 'changeHistory:taskStartedUpdate'
-                      : 'changeHistory:taskStatusUpdate'
-                  }
-                  shouldUnescape
-                  values={{
-                    section: t(`sections.${changeRecord.tableName}`),
-                    status,
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
-          {/* Team audits */}
-          {changeRecordType === 'Team update' &&
-            (() => {
-              const teamChange = (teamType: string | undefined) =>
-                teamType === 'REMOVED' ? 'oldTranslated' : 'newTranslated';
-
-              const teamChangeType = changeRecord.translatedFields.find(
-                field => field.fieldName === 'team_roles'
-              )?.changeType;
-
-              let collaborator =
-                changeRecord?.metaData &&
-                isGenericWithMetaData(changeRecord?.metaData)
-                  ? changeRecord?.metaData.relationContent
-                  : '';
-
-              if (collaborator === changeRecord.actorName) {
-                collaborator = t('self');
-              }
-
-              const role = changeRecord.translatedFields.find(
-                field => field.fieldName === 'team_roles'
-              )?.[teamChange(teamChangeType)];
-
-              const formattedRoles = (inputString: string) => {
-                return inputString
-                  .replace(/{|}|\\|"|'/g, '')
-                  .split(',')
-                  .join(', ');
-              };
-
-              return (
-                <Trans
-                  i18nKey={`changeHistory:team${teamChangeType}`}
-                  shouldUnescape
-                  values={{
-                    action: t(`teamChangeType.${teamChangeType}`),
-                    collaborator,
-                    role: !!role && `${formattedRoles(role)}`,
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
-          {/* Document add/upload audits */}
-          {changeRecordType === 'Document update' &&
-            (() => {
-              return (
-                <Trans
-                  i18nKey="changeHistory:documentUpdate"
-                  shouldUnescape
-                  values={{
-                    isLink: documentType(changeRecord) ? ' link' : '',
-                    action: t(
-                      `documentChangeType.${documentUpdateType(changeRecord)}`
-                    ),
-                    documentName: documentName(changeRecord),
-                    toFrom: changeRecord.action === 'INSERT' ? 'to' : 'from',
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
-          {/* CR and TDL audits */}
-          {(changeRecordType === 'CR update' ||
-            changeRecordType === 'TDL update') &&
-            (() => {
-              const crTdlName =
-                changeRecord?.metaData &&
-                isGenericWithMetaData(changeRecord?.metaData)
-                  ? changeRecord?.metaData.relationContent
-                  : '';
-
-              return (
-                <Trans
-                  i18nKey="changeHistory:crTdlUpdate"
-                  shouldUnescape
-                  values={{
-                    action: t(`auditUpdateType.${changeRecord.action}`),
-                    crTdlName,
-                    toFrom: t(`toFromIn.${changeRecord.action}`),
-                    date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                    time: formatTime(changeRecord.date)
-                  }}
-                  components={{
-                    datetime: <span />
-                  }}
-                />
-              );
-            })()}
-
-          {/* Discussion audits */}
-          {changeRecordType === 'Discussion update' &&
-            (() => {
-              const metaDiscussion =
-                changeRecord?.metaData &&
-                isDiscussionReplyWithMetaData(changeRecord?.metaData)
-                  ? changeRecord?.metaData.discussionContent
-                  : '';
-
-              const content = changeRecord.translatedFields.find(
-                field => field.fieldName === 'content'
-              )?.newTranslated;
-
-              const replyCount =
-                changeRecord?.metaData &&
-                isDiscussionReplyWithMetaData(changeRecord?.metaData)
-                  ? changeRecord?.metaData.numberOfReplies - 1
-                  : 0;
-
-              return (
-                <>
-                  <Trans
-                    i18nKey={`changeHistory:${changeRecord.tableName}Answered`}
-                    shouldUnescape
-                    values={{
-                      date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                      time: formatTime(changeRecord.date)
-                    }}
-                    components={{
-                      datetime: <span />
-                    }}
-                  />
-                  <ul
-                    className={classNames(
-                      {
-                        'change-record__discussion-expanded margin-bottom-2': isOpen,
-                        'padding-left-4': !isOpen
-                      },
-                      'margin-y-1'
-                    )}
-                  >
-                    <li>
-                      <MentionTextArea
-                        className={classNames(
-                          'text-base-darkest margin-bottom-0'
-                        )}
-                        id={`mention-${changeRecord.id}`}
-                        editable={false}
-                        initialContent={
-                          changeRecord.tableName === TableName.DISCUSSION_REPLY
-                            ? metaDiscussion
-                            : content
-                        }
-                      />
-                    </li>
-                  </ul>
-
-                  {changeRecord.tableName === TableName.DISCUSSION_REPLY && (
-                    <CollapsableLink
-                      id={changeRecord.id}
-                      label={t('showDetails')}
-                      closeLabel={t('hideDetails')}
-                      labelPosition="bottom"
-                      setParentOpen={setOpen}
-                      styleLeftBar={false}
-                    >
-                      <div className="margin-bottom-neg-1 padding-left-3 change-record__answer margin-top-neg-2">
-                        {replyCount > 0 && (
-                          <div className="padding-bottom-1 text-italic">
-                            {t('replyCount', {
-                              count: replyCount
-                            })}
-                          </div>
-                        )}
-                        <MentionTextArea
-                          className="text-base-darkest"
-                          id={`mention-${changeRecord.id}`}
-                          editable={false}
-                          initialContent={content}
-                        />
-                      </div>
-                    </CollapsableLink>
-                  )}
-                </>
-              );
-            })()}
-
-          {/* Standard update audits */}
-          {(changeRecordType === 'Standard update' ||
-            changeRecordType === 'Operational need update') && (
-            <Trans
-              i18nKey="changeHistory:change"
-              shouldUnescape
-              count={changeRecord.translatedFields.length}
-              values={{
-                count: changeRecord.translatedFields.length,
-                section: t(`sections.${changeRecord.tableName}`),
-                date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
-                time: formatTime(changeRecord.date)
-              }}
-              components={{
-                datetime: <span />
-              }}
-            />
-          )}
+          <ChangeHeader
+            changeRecord={changeRecord}
+            isOpen={isOpen}
+            setOpen={setOpen}
+          />
         </span>
       </div>
 
