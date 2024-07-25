@@ -243,7 +243,6 @@ const SettingsOrder = () => {
                                     )
                                   )
                                 }
-                                data-testid={`move-${index}-up`}
                               >
                                 <Icon.ArrowDropUp
                                   className={classNames(
@@ -252,6 +251,7 @@ const SettingsOrder = () => {
                                     },
                                     'settings__icon margin-right-1 pointer'
                                   )}
+                                  data-testid={`move-${index}-up`}
                                   size={5}
                                 />
                               </Button>
@@ -269,7 +269,6 @@ const SettingsOrder = () => {
                                     )
                                   )
                                 }
-                                data-testid={`move-${index}-down`}
                               >
                                 <Icon.ArrowDropDown
                                   className={classNames(
@@ -282,6 +281,7 @@ const SettingsOrder = () => {
                                     },
                                     'settings__icon pointer'
                                   )}
+                                  data-testid={`move-${index}-down`}
                                   size={5}
                                 />
                               </Button>
