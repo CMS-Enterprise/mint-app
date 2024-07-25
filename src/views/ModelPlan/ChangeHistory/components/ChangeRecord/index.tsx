@@ -20,6 +20,7 @@ import {
   documentName,
   documentType,
   documentUpdateType,
+  getActionText,
   hiddenFields,
   identifyChangeType,
   isDiscussionReplyWithMetaData,
@@ -66,7 +67,7 @@ export const ChangeHeader = ({
   const DateSpan = miniRecord ? <span className="text-base" /> : <span />;
 
   // New plan audit
-  if (changeRecordType === 'New plan') {
+  if (changeRecordType === 'newPlan') {
     return (
       <Trans
         i18nKey="changeHistory:planCreate"
@@ -86,7 +87,7 @@ export const ChangeHeader = ({
   }
 
   // Model plan status audits
-  if (changeRecordType === 'Status update') {
+  if (changeRecordType === 'statusUpdate') {
     return (
       <Trans
         i18nKey="changeHistory:planStatusUpdate"
@@ -106,7 +107,7 @@ export const ChangeHeader = ({
   }
 
   // Task list status audits
-  if (changeRecordType === 'Task list status update') {
+  if (changeRecordType === 'taskListStatusUpdate') {
     const status = changeRecord.translatedFields.find(
       field => field.fieldName === 'status'
     )?.newTranslated;
@@ -133,7 +134,7 @@ export const ChangeHeader = ({
   }
 
   // Team audits
-  if (changeRecordType === 'Team update') {
+  if (changeRecordType === 'teamUpdate') {
     const teamChange = (teamType: string | undefined) =>
       teamType === 'REMOVED' ? 'oldTranslated' : 'newTranslated';
 
@@ -180,7 +181,7 @@ export const ChangeHeader = ({
   }
 
   // Document add/upload audits
-  if (changeRecordType === 'Document update') {
+  if (changeRecordType === 'documentUpdate') {
     return (
       <Trans
         i18nKey="changeHistory:documentUpdate"
@@ -201,7 +202,7 @@ export const ChangeHeader = ({
   }
 
   // CR and TDL audits
-  if (changeRecordType === 'CR update' || changeRecordType === 'TDL update') {
+  if (changeRecordType === 'cRUpdate' || changeRecordType === 'tDLUpdate') {
     const crTdlName =
       changeRecord?.metaData && isGenericWithMetaData(changeRecord?.metaData)
         ? changeRecord?.metaData.relationContent
@@ -226,7 +227,7 @@ export const ChangeHeader = ({
   }
 
   // Discussion audits
-  if (changeRecordType === 'Discussion update') {
+  if (changeRecordType === 'discussionUpdate') {
     const metaDiscussion =
       changeRecord?.metaData &&
       isDiscussionReplyWithMetaData(changeRecord?.metaData)
@@ -311,8 +312,8 @@ export const ChangeHeader = ({
 
   // Standard update audits
   if (
-    changeRecordType === 'Standard update' ||
-    changeRecordType === 'Operational need update'
+    changeRecordType === 'standardUpdate' ||
+    changeRecordType === 'operationalNeedUpdate'
   ) {
     return (
       <Trans
@@ -362,11 +363,9 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
             <span />
           )}{' '}
           {/* Post text action - updated, created, removed, etc */}
-          <ActionText
-            change={change}
-            changeType={changeType}
-            tableName={tableName}
-          />
+          <span className="text-normal">
+            {getActionText(change, changeType, tableName)}
+          </span>
         </span>
       </div>
 
@@ -413,32 +412,6 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
       </div>
     </div>
   );
-};
-
-// Render the action type of a change record - answered, removed, updated, etc.
-export const ActionText = ({
-  change,
-  changeType,
-  tableName
-}: SingleChangeProps) => {
-  const { t } = useTranslation('changeHistory');
-
-  // If the change is an insert, render created text rather than answered/updated, etc.
-  if (tableName === TableName.OPERATIONAL_NEED && changeType === 'INSERT') {
-    return <span className="text-normal">{t(`changeType.CREATED`)}</span>;
-  }
-  // Render the change type - answered, removed, updated
-  if (changeType !== DatabaseOperation.DELETE) {
-    return (
-      <span className="text-normal">
-        {change.questionType === TranslationQuestionType.NOTE
-          ? t(`teamChangeType.${change.changeType}`)
-          : t(`changeType.${change.changeType}`)}
-      </span>
-    );
-  }
-
-  return <span />;
 };
 
 // Render a single value, either as a string or as a list of strings
@@ -546,11 +519,9 @@ export const ChangedQuestion = ({
       {change.fieldNameTranslated}{' '}
       {/* Post text action - updated, created, removed, etc */}
       {tableName === TableName.OPERATIONAL_NEED && (
-        <ActionText
-          change={change}
-          changeType={changeType}
-          tableName={tableName}
-        />
+        <span className="text-normal">
+          {getActionText(change, changeType, tableName)}
+        </span>
       )}
     </>
   );
@@ -567,20 +538,20 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
 
   // Change record types that generate table insertions into the db.  These types should be expanded to show more data
   const uploadAudit: boolean =
-    changeRecordType === 'CR update' ||
-    changeRecordType === 'TDL update' ||
-    changeRecordType === 'Document update' ||
-    changeRecordType === 'Operational need update';
+    changeRecordType === 'cRUpdate' ||
+    changeRecordType === 'tDLUpdate' ||
+    changeRecordType === 'documentUpdate' ||
+    changeRecordType === 'operationalNeedUpdate';
 
   // Determine if the change record should be expanded to show more data
   const showMoreData: boolean =
-    uploadAudit || changeRecordType === 'Standard update';
+    uploadAudit || changeRecordType === 'standardUpdate';
 
   // Determines if the change record should show a list of translated fields before expanding
   const renderList: boolean =
-    changeRecordType === 'Standard update' ||
-    changeRecordType === 'Operational need update' ||
-    changeRecordType === 'Operational need create';
+    changeRecordType === 'standardUpdate' ||
+    changeRecordType === 'operationalNeedUpdate' ||
+    changeRecordType === 'operationalNeedCreate';
 
   return (
     <Card className="change-record">

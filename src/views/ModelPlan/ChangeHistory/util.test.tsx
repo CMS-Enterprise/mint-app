@@ -12,6 +12,7 @@ import {
   documentUpdateType,
   extractReadyForReviewChanges,
   filterQueryAudits,
+  getActionText,
   getSolutionOperationStatus,
   groupBatchedChanges,
   handleSortOptions,
@@ -325,7 +326,7 @@ describe('util.tsx', () => {
       actorName: 'MINT Doe',
       __typename: 'TranslatedAudit'
     };
-    expect(identifyChangeType(change)).toBe('Task list status update');
+    expect(identifyChangeType(change)).toBe('taskListStatusUpdate');
   });
 
   // Test for isInitialCreatedSection
@@ -352,7 +353,7 @@ describe('util.tsx', () => {
       actorName: 'MINT Doe',
       __typename: 'TranslatedAudit'
     };
-    const changeType: ChangeType = 'Task list status update';
+    const changeType: ChangeType = 'taskListStatusUpdate';
     expect(isInitialCreatedSection(change, changeType)).toBe(true);
   });
 
@@ -830,6 +831,58 @@ describe('util.tsx', () => {
     expect(result3).toEqual(DatabaseOperation.UPDATE);
   });
 
+  it('should return the correct action text for the database operation', () => {
+    const change = {
+      id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',
+      changeType: AuditFieldChangeType.ANSWERED,
+      fieldName: 'status',
+      fieldNameTranslated: 'Model Plan status',
+      old: null,
+      oldTranslated: null,
+      new: 'READY',
+      newTranslated: 'Ready',
+      __typename: 'TranslatedAuditField',
+      dataType: TranslationDataType.ENUM
+    } as ChangeRecordType['translatedFields'][0];
+
+    // should return created text for insert operation on OPERATIONAL_NEED table
+    const result1 = getActionText(
+      change,
+      DatabaseOperation.INSERT,
+      TableName.OPERATIONAL_NEED
+    );
+    expect(result1).toBe('created');
+
+    // should return team change type text for non-delete operation with questionType NOTE
+    const result2 = getActionText(
+      change,
+      DatabaseOperation.UPDATE,
+      TableName.OPERATIONAL_NEED
+    );
+    expect(result2).toBe('answered');
+
+    // should return change type text for non-delete operation with non-NOTE questionType
+    const changeWithDifferentQuestionType = {
+      ...change,
+      questionType: 'OTHER'
+    } as ChangeRecordType['translatedFields'][0];
+
+    const result3 = getActionText(
+      changeWithDifferentQuestionType,
+      DatabaseOperation.UPDATE,
+      TableName.OPERATIONAL_NEED
+    );
+    expect(result3).toBe('answered');
+
+    // should return empty string for delete operation
+    const result4 = getActionText(
+      change,
+      DatabaseOperation.DELETE,
+      TableName.OPERATIONAL_NEED
+    );
+    expect(result4).toBe('');
+  });
+
   // Test for getSolutionOperationStatus
   it('should return the correct text for document changes', () => {
     const change = {
@@ -845,7 +898,7 @@ describe('util.tsx', () => {
           id: '631e0ac6-1f52-4ed4-8c1e-f94fd742011f',
           changeType: AuditFieldChangeType.ANSWERED,
           dataType: TranslationDataType.STRING,
-          fieldName: 'is_link',
+          fieldName: 'url',
           fieldNameTranslated:
             'Accountable Care Organization Realizing Equity, Access, and Community Health Model (ACO REACH) ',
           referenceLabel: null,
@@ -854,7 +907,7 @@ describe('util.tsx', () => {
           old: null,
           oldTranslated: null,
           new: 'false',
-          newTranslated: 'true'
+          newTranslated: 'http://google.com'
         }
       ]
     };
@@ -863,7 +916,7 @@ describe('util.tsx', () => {
 
     expect(result).toEqual('added');
 
-    change.translatedFields[0].newTranslated = 'false';
+    change.translatedFields[0].newTranslated = '';
 
     const result2 = documentUpdateType(change as ChangeRecordType);
 
