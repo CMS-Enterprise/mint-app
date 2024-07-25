@@ -3,6 +3,7 @@ package resolvers
 import (
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -47,7 +48,7 @@ func (suite *ResolverSuite) TestModelPlanGetByOperationalSolutionKey() {
 	needType := models.OpNKManageCd
 	solType := models.OpSKMarx
 
-	plan, opSol := suite.createModelPlanWithNeedAndOpSol(
+	plan, _ := suite.createModelPlanWithNeedAndOpSol(
 		needType,
 		solType,
 	)
@@ -59,7 +60,7 @@ func (suite *ResolverSuite) TestModelPlanGetByOperationalSolutionKey() {
 	suite.NoError(err)
 	suite.Len(modelPlanAndOpSols, 1)
 	suite.EqualValues(plan.ID, modelPlanAndOpSols[0].ModelPlanID)
-	suite.EqualValues(opSol.ID, modelPlanAndOpSols[0].OperationalSolutionID)
+	suite.EqualValues(solType, modelPlanAndOpSols[0].Key)
 }
 
 // TestModelPlanWithoutOperationalSolution checks if a model plan without a valid operational solution is not fetched
@@ -89,12 +90,12 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithSameSolutionType() {
 	needType := models.OpNKManageCd
 	solType := models.OpSKMarx
 
-	mpA, opSolA := suite.createModelPlanWithNeedAndOpSol(
+	mpA, _ := suite.createModelPlanWithNeedAndOpSol(
 		needType,
 		solType,
 	)
 
-	mpB, opSolB := suite.createModelPlanWithNeedAndOpSol(
+	mpB, _ := suite.createModelPlanWithNeedAndOpSol(
 		needType,
 		solType,
 	)
@@ -103,12 +104,16 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithSameSolutionType() {
 		suite.testConfigs.Logger,
 		solType,
 	)
+	mpIDS := []uuid.UUID{mpA.ID, mpB.ID}
 	suite.NoError(err)
-	suite.Len(modelPlanAndOpSols, 2)
-	suite.EqualValues(mpA.ID, modelPlanAndOpSols[1].ModelPlanID)
-	suite.EqualValues(opSolA.ID, modelPlanAndOpSols[1].OperationalSolutionID)
-	suite.EqualValues(mpB.ID, modelPlanAndOpSols[0].ModelPlanID)
-	suite.EqualValues(opSolB.ID, modelPlanAndOpSols[0].OperationalSolutionID)
+	if suite.NotNil(modelPlanAndOpSols) {
+		suite.Len(modelPlanAndOpSols, 2)
+		suite.Contains(mpIDS, modelPlanAndOpSols[0].ModelPlanID)
+		suite.EqualValues(solType, modelPlanAndOpSols[0].Key)
+
+		suite.Contains(mpIDS, modelPlanAndOpSols[1].ModelPlanID)
+		suite.EqualValues(solType, modelPlanAndOpSols[1].Key)
+	}
 }
 
 // TestMultipleModelPlansWithDifferentSolutionTypes checks if only the matching solution type is fetched
@@ -117,12 +122,12 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithDifferentSolutionTypes() {
 	solTypeA := models.OpSKMarx
 	solTypeB := models.OpSKCcw
 
-	mpA, opSolA := suite.createModelPlanWithNeedAndOpSol(
+	mpA, _ := suite.createModelPlanWithNeedAndOpSol(
 		needType,
 		solTypeA,
 	)
 
-	mpB, opSolB := suite.createModelPlanWithNeedAndOpSol(
+	mpB, _ := suite.createModelPlanWithNeedAndOpSol(
 		needType,
 		solTypeB,
 	)
@@ -134,7 +139,7 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithDifferentSolutionTypes() {
 	suite.NoError(err)
 	suite.Len(modelPlanAndOpSols, 1)
 	suite.EqualValues(mpA.ID, modelPlanAndOpSols[0].ModelPlanID)
-	suite.EqualValues(opSolA.ID, modelPlanAndOpSols[0].OperationalSolutionID)
+	suite.EqualValues(solTypeA, modelPlanAndOpSols[0].Key)
 
 	modelPlanAndOpSols, err = suite.testConfigs.Store.ModelPlanGetByOperationalSolutionKey(
 		suite.testConfigs.Logger,
@@ -143,7 +148,7 @@ func (suite *ResolverSuite) TestMultipleModelPlansWithDifferentSolutionTypes() {
 	suite.NoError(err)
 	suite.Len(modelPlanAndOpSols, 1)
 	suite.EqualValues(mpB.ID, modelPlanAndOpSols[0].ModelPlanID)
-	suite.EqualValues(opSolB.ID, modelPlanAndOpSols[0].OperationalSolutionID)
+	suite.EqualValues(solTypeB, modelPlanAndOpSols[0].Key)
 }
 
 func TestModelBySolutionStatus(t *testing.T) {
