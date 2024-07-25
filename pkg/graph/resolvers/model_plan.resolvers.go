@@ -71,7 +71,7 @@ func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan)
 func (r *modelPlanResolver) AnticipatedStatuses(ctx context.Context, obj *models.ModelPlan) ([]models.ModelStatus, error) {
 	logger := appcontext.ZLogger(ctx)
 
-	return ModelPlanAnticipatedStatuses(logger, r.store, obj.ID)
+	return ModelPlanAnticipatedStatuses(ctx, logger, r.store, obj.ID)
 }
 
 // IsFavorite is the resolver for the isFavorite field.

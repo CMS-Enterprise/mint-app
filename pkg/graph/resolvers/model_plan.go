@@ -533,6 +533,7 @@ func ModelPlanShare(
 // ModelPlanAnticipatedStatuses calculates a slice of ModelStatus values that are
 // anticipated to be reached based on the current status of a model plan
 func ModelPlanAnticipatedStatuses(
+	ctx context.Context,
 	logger *zap.Logger,
 	store *storage.Store,
 	modelPlanID uuid.UUID,
@@ -550,7 +551,7 @@ func ModelPlanAnticipatedStatuses(
 		return results, nil
 	}
 
-	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(context.Background(), modelPlanID)
+	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
