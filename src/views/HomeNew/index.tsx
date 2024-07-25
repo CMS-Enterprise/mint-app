@@ -245,16 +245,15 @@ const HomeNew = () => {
                       {t('customizeHomepage')}
                     </p>
 
-                    <div>
+                    <div
+                      className={classNames({
+                        'row-reverse': !isMobile
+                      })}
+                    >
                       <UswdsReactLink
                         variant="unstyled"
                         to="/homepage-settings"
-                        className={classNames(
-                          'display-flex flex-align-center usa-button--unstyled',
-                          {
-                            'row-reverse': !isMobile
-                          }
-                        )}
+                        className="display-flex flex-align-center usa-button--unstyled"
                       >
                         <Icon.Edit className="margin-right-1 text-primary" />
                         {t('editHomepage')}

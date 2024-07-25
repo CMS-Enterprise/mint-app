@@ -298,7 +298,10 @@ const ModelPlansTable = ({
             <>
               {formattedUpdatedDate}
               {discussions.length > 0 && (
-                <div className="display-flex flex-align-center text-bold">
+                <div
+                  className="display-flex flex-align-center text-bold"
+                  style={{ whiteSpace: 'nowrap' }}
+                >
                   <Icon.Comment className="text-primary margin-right-05" />{' '}
                   {discussions.length}{' '}
                   {i18next.t('discussionsMisc:discussionBanner.discussion', {
@@ -357,11 +360,13 @@ const ModelPlansTable = ({
             return <div>{homeT('requestsTable.tbd')}</div>;
           }
 
-          return value.map((crtdl: CRTDLType) => (
-            <ul>
-              <li>{crtdl.idNumber}</li>
+          return (
+            <ul className="margin-0">
+              {value.map((crtdl: CRTDLType) => (
+                <li>{crtdl.idNumber}</li>
+              ))}
             </ul>
-          ));
+          );
         }
       },
       modelPoc: {

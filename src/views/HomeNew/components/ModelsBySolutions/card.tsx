@@ -25,7 +25,7 @@ const ModelSolutionCard = ({
 
   const basicsConfig = usePlanTranslation('basics');
 
-  const { id, basics, modelName, status } = modelPlan;
+  const { id, basics, modelName, abbreviation, status } = modelPlan;
 
   return (
     <Card
@@ -38,6 +38,7 @@ const ModelSolutionCard = ({
             <h3 className="model-solution-card__title margin-top-0">
               <UswdsReactLink to={`/models/${id}/read-view`}>
                 {modelName}
+                {abbreviation ? ` (${abbreviation})` : ''}
               </UswdsReactLink>
             </h3>
           </Grid>
