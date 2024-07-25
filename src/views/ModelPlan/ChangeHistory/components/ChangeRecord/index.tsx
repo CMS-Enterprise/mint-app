@@ -21,6 +21,8 @@ import {
   documentType,
   documentUpdateType,
   getActionText,
+  getHeaderText,
+  getNestedActionText,
   hiddenFields,
   identifyChangeType,
   isDiscussionReplyWithMetaData,
@@ -70,7 +72,7 @@ export const ChangeHeader = ({
   if (changeRecordType === 'newPlan') {
     return (
       <Trans
-        i18nKey="changeHistory:planCreate"
+        i18nKey={getHeaderText(changeRecord)}
         shouldUnescape
         values={{
           plan_name: t('thisModelPlan'),
@@ -90,7 +92,7 @@ export const ChangeHeader = ({
   if (changeRecordType === 'statusUpdate') {
     return (
       <Trans
-        i18nKey="changeHistory:planStatusUpdate"
+        i18nKey={getHeaderText(changeRecord)}
         shouldUnescape
         values={{
           status: changeRecord.translatedFields.find(
@@ -114,11 +116,7 @@ export const ChangeHeader = ({
 
     return (
       <Trans
-        i18nKey={
-          status === 'In progress'
-            ? 'changeHistory:taskStartedUpdate'
-            : 'changeHistory:taskStatusUpdate'
-        }
+        i18nKey={getHeaderText(changeRecord)}
         shouldUnescape
         values={{
           section: t(`sections.${changeRecord.tableName}`),
@@ -164,10 +162,10 @@ export const ChangeHeader = ({
 
     return (
       <Trans
-        i18nKey={`changeHistory:team${teamChangeType}`}
+        i18nKey={getHeaderText(changeRecord)}
         shouldUnescape
         values={{
-          action: t(`teamChangeType.${teamChangeType}`),
+          action: getActionText(changeRecord),
           collaborator,
           role: !!role && `${formattedRoles(role)}`,
           date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
@@ -184,11 +182,11 @@ export const ChangeHeader = ({
   if (changeRecordType === 'documentUpdate') {
     return (
       <Trans
-        i18nKey="changeHistory:documentUpdate"
+        i18nKey={getHeaderText(changeRecord)}
         shouldUnescape
         values={{
           isLink: documentType(changeRecord) ? ' link' : '',
-          action: t(`documentChangeType.${documentUpdateType(changeRecord)}`),
+          action: getActionText(changeRecord),
           documentName: documentName(changeRecord),
           toFrom: changeRecord.action === 'INSERT' ? 'to' : 'from',
           date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
@@ -210,10 +208,10 @@ export const ChangeHeader = ({
 
     return (
       <Trans
-        i18nKey="changeHistory:crTdlUpdate"
+        i18nKey={getHeaderText(changeRecord)}
         shouldUnescape
         values={{
-          action: t(`auditUpdateType.${changeRecord.action}`),
+          action: getActionText(changeRecord),
           crTdlName,
           toFrom: t(`toFromIn.${changeRecord.action}`),
           date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
@@ -247,7 +245,7 @@ export const ChangeHeader = ({
     return (
       <>
         <Trans
-          i18nKey={`changeHistory:${changeRecord.tableName}Answered`}
+          i18nKey={getHeaderText(changeRecord)}
           shouldUnescape
           values={{
             date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
@@ -317,7 +315,7 @@ export const ChangeHeader = ({
   ) {
     return (
       <Trans
-        i18nKey="changeHistory:change"
+        i18nKey={getHeaderText(changeRecord)}
         shouldUnescape
         count={changeRecord.translatedFields.length}
         values={{
@@ -364,7 +362,7 @@ const SingleChange = ({ change, changeType, tableName }: SingleChangeProps) => {
           )}{' '}
           {/* Post text action - updated, created, removed, etc */}
           <span className="text-normal">
-            {getActionText(change, changeType, tableName)}
+            {getNestedActionText(change, changeType, tableName)}
           </span>
         </span>
       </div>
@@ -520,7 +518,7 @@ export const ChangedQuestion = ({
       {/* Post text action - updated, created, removed, etc */}
       {tableName === TableName.OPERATIONAL_NEED && (
         <span className="text-normal">
-          {getActionText(change, changeType, tableName)}
+          {getNestedActionText(change, changeType, tableName)}
         </span>
       )}
     </>
