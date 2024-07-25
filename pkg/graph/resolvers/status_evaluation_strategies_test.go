@@ -17,7 +17,8 @@ func (suite *ResolverSuite) TestICIPCompleteStrategy_Update() {
 
 	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.True(shouldUpdate)
-	suite.Equal(models.ModelStatusIcipComplete, status)
+	suite.Len(status, 1)
+	suite.Equal(models.ModelStatusIcipComplete, status[0])
 }
 
 func (suite *ResolverSuite) TestICIPCompleteStrategy_NoUpdate() {
@@ -44,7 +45,11 @@ func (suite *ResolverSuite) TestClearanceStartStrategy_Update() {
 
 	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.True(shouldUpdate)
-	suite.Equal(models.ModelStatusInternalCmmiClearance, status)
+	suite.Len(status, 4)
+	suite.Equal(models.ModelStatusInternalCmmiClearance, status[0])
+	suite.Equal(models.ModelStatusCmsClearance, status[1])
+	suite.Equal(models.ModelStatusHhsClearance, status[2])
+	suite.Equal(models.ModelStatusOmbAsrfClearance, status[3])
 }
 
 func (suite *ResolverSuite) TestClearanceStartStrategy_NoUpdate() {
@@ -71,7 +76,8 @@ func (suite *ResolverSuite) TestClearanceEndStrategy_Update() {
 
 	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.True(shouldUpdate)
-	suite.Equal(models.ModelStatusCleared, status)
+	suite.Len(status, 1)
+	suite.Equal(models.ModelStatusCleared, status[0])
 }
 
 func (suite *ResolverSuite) TestClearanceEndStrategy_NoUpdate() {
@@ -97,7 +103,8 @@ func (suite *ResolverSuite) TestAnnounceStrategy_Update() {
 	}
 	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.True(shouldUpdate)
-	suite.Equal(models.ModelStatusAnnounced, status)
+	suite.Len(status, 1)
+	suite.Equal(models.ModelStatusAnnounced, status[0])
 }
 
 func (suite *ResolverSuite) TestAnnounceStrategy_NoUpdate() {
@@ -124,7 +131,8 @@ func (suite *ResolverSuite) TestActiveStrategy_Update() {
 
 	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.True(shouldUpdate)
-	suite.Equal(models.ModelStatusActive, status)
+	suite.Len(status, 1)
+	suite.Equal(models.ModelStatusActive, status[0])
 }
 
 func (suite *ResolverSuite) TestActiveStrategy_NoUpdate() {
@@ -151,7 +159,8 @@ func (suite *ResolverSuite) TestEndedStrategy_Update() {
 
 	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
 	suite.True(shouldUpdate)
-	suite.Equal(models.ModelStatusEnded, status)
+	suite.Len(status, 1)
+	suite.Equal(models.ModelStatusEnded, status[0])
 }
 
 func (suite *ResolverSuite) TestEndedStrategy_NoUpdate() {

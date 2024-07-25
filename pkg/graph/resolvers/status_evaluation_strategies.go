@@ -3,18 +3,20 @@ package resolvers
 import (
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/shared/utilitytime"
+
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // GetAllStatusEvaluationStrategies returns all status evaluation strategies
 func GetAllStatusEvaluationStrategies() []StatusEvaluationStrategy {
 	return []StatusEvaluationStrategy{
-		&ICIPCompleteStrategy{},
-		&ClearanceStartStrategy{},
-		&ClearanceEndStrategy{},
-		&AnnounceStrategy{},
-		&ActiveStrategy{},
 		&EndedStrategy{},
+		&ActiveStrategy{},
+		&AnnounceStrategy{},
+		&ClearanceEndStrategy{},
+		&ClearanceStartStrategy{},
+		&ICIPCompleteStrategy{},
 	}
 }
 
@@ -23,7 +25,7 @@ type StatusEvaluationStrategy interface {
 	Evaluate(
 		modelPlanStatus models.ModelStatus,
 		planBasics *models.PlanBasics,
-	) (models.ModelStatus, bool)
+	) ([]models.ModelStatus, bool)
 }
 
 // ICIPCompleteStrategy is a strategy for evaluating the ICIP complete status of a model plan
@@ -34,14 +36,14 @@ type ICIPCompleteStrategy struct{}
 func (s *ICIPCompleteStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) (models.ModelStatus, bool) {
+) ([]models.ModelStatus, bool) {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusIcipComplete) &&
-		planBasics.CompleteICIP != nil &&
+		!utilitytime.IsTimeNilOrZero(planBasics.CompleteICIP) &&
 		planBasics.CompleteICIP.Before(time.Now()) {
-		return models.ModelStatusIcipComplete, true
+		return []models.ModelStatus{models.ModelStatusIcipComplete}, true
 	}
-	return "", false
+	return nil, false
 }
 
 // ClearanceStartStrategy is a strategy for evaluating the clearance start status of a model plan
@@ -53,14 +55,19 @@ type ClearanceStartStrategy struct{}
 func (s *ClearanceStartStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) (models.ModelStatus, bool) {
+) ([]models.ModelStatus, bool) {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusInternalCmmiClearance) &&
-		planBasics.ClearanceStarts != nil &&
+		!utilitytime.IsTimeNilOrZero(planBasics.ClearanceStarts) &&
 		planBasics.ClearanceStarts.Before(time.Now()) {
-		return models.ModelStatusInternalCmmiClearance, true
+		return []models.ModelStatus{
+			models.ModelStatusInternalCmmiClearance,
+			models.ModelStatusCmsClearance,
+			models.ModelStatusHhsClearance,
+			models.ModelStatusOmbAsrfClearance,
+		}, true
 	}
-	return "", false
+	return nil, false
 }
 
 // ClearanceEndStrategy is a strategy for evaluating the clearance end status of a model plan
@@ -71,14 +78,14 @@ type ClearanceEndStrategy struct{}
 func (s *ClearanceEndStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) (models.ModelStatus, bool) {
+) ([]models.ModelStatus, bool) {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) &&
-		planBasics.ClearanceEnds != nil &&
+		!utilitytime.IsTimeNilOrZero(planBasics.ClearanceEnds) &&
 		planBasics.ClearanceEnds.Before(time.Now()) {
-		return models.ModelStatusCleared, true
+		return []models.ModelStatus{models.ModelStatusCleared}, true
 	}
-	return "", false
+	return nil, false
 }
 
 // AnnounceStrategy is a strategy for evaluating the announcement status of a model plan
@@ -89,14 +96,14 @@ type AnnounceStrategy struct{}
 func (s *AnnounceStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) (models.ModelStatus, bool) {
+) ([]models.ModelStatus, bool) {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusAnnounced) &&
-		planBasics.Announced != nil &&
+		!utilitytime.IsTimeNilOrZero(planBasics.Announced) &&
 		planBasics.Announced.Before(time.Now()) {
-		return models.ModelStatusAnnounced, true
+		return []models.ModelStatus{models.ModelStatusAnnounced}, true
 	}
-	return "", false
+	return nil, false
 }
 
 // ActiveStrategy is a strategy for evaluating the active status of a model plan
@@ -107,14 +114,14 @@ type ActiveStrategy struct{}
 func (s *ActiveStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) (models.ModelStatus, bool) {
+) ([]models.ModelStatus, bool) {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusActive) &&
-		planBasics.PerformancePeriodStarts != nil &&
+		!utilitytime.IsTimeNilOrZero(planBasics.PerformancePeriodStarts) &&
 		planBasics.PerformancePeriodStarts.Before(time.Now()) {
-		return models.ModelStatusActive, true
+		return []models.ModelStatus{models.ModelStatusActive}, true
 	}
-	return "", false
+	return nil, false
 }
 
 // EndedStrategy is a strategy for evaluating the ended status of a model plan
@@ -125,12 +132,12 @@ type EndedStrategy struct{}
 func (s *EndedStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) (models.ModelStatus, bool) {
+) ([]models.ModelStatus, bool) {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusEnded) &&
-		planBasics.PerformancePeriodEnds != nil &&
+		!utilitytime.IsTimeNilOrZero(planBasics.PerformancePeriodEnds) &&
 		planBasics.PerformancePeriodEnds.Before(time.Now()) {
-		return models.ModelStatusEnded, true
+		return []models.ModelStatus{models.ModelStatusEnded}, true
 	}
-	return "", false
+	return nil, false
 }
