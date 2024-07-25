@@ -20,10 +20,8 @@ func (r *modelPlanResolver) ModelBySolutionStatus(ctx context.Context, obj *mode
 
 // PossibleOperationalSolution is the resolver for the possibleOperationalSolution field.
 func (r *modelPlanAndPossibleOperationalSolutionResolver) PossibleOperationalSolution(ctx context.Context, obj *models.ModelPlanAndPossibleOperationalSolution) (*models.PossibleOperationalSolution, error) {
-	logger := appcontext.ZLogger(ctx)
 
-	// TODO: get this from a dataloader instead of just a store method as is happening here.
-	return PossibleOperationalSolutionGetByID(logger, r.store, obj.PossibleOperationalSolutionID)
+	return PossibleOperationalSolutionGetByKey(ctx, obj.Key)
 }
 
 // ModelPlan is the resolver for the modelPlan field.
