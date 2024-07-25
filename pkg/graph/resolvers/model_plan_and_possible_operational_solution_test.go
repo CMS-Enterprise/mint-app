@@ -85,6 +85,65 @@ func (suite *ResolverSuite) TestModelPlanWithoutOperationalSolution() {
 	suite.Empty(modelPlanAndOpSols)
 }
 
+// TestModelPlanWithMultipleSolutionsOfSameType asserts that when a model plan uses a solution multiple times ( for different needs), you only get on instance of the plan returned
+func (suite *ResolverSuite) TestModelPlanWithMultipleSolutionsOfSameType() {
+
+	plan := suite.createModelPlan("plan without multiple uses of the same solution")
+
+	needed := true
+	customNeed := "To test my Operational Solution resolver Logic"
+	need1, err := OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, plan.ID, customNeed, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(need1)
+
+	customNeed2 := "To test my Operational Solution resolver Logic 2"
+	need2, err := OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, plan.ID, customNeed2, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(need2)
+
+	changes := map[string]interface{}{}
+	changes["needed"] = true
+
+	solType := models.OpSKAcoOs
+
+	opSol1, err := OperationalSolutionCreate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		need1.ID,
+		&solType,
+		changes,
+		suite.testConfigs.Principal,
+	)
+	suite.NoError(err)
+	suite.NotNil(opSol1)
+	opSol2, err := OperationalSolutionCreate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		need2.ID,
+		&solType,
+		changes,
+		suite.testConfigs.Principal,
+	)
+	suite.NoError(err)
+	suite.NotNil(opSol2)
+
+	modelPlanAndOpSols, err := suite.testConfigs.Store.ModelPlanGetByOperationalSolutionKey(
+		suite.testConfigs.Logger,
+		solType,
+	)
+	suite.NoError(err)
+	suite.Len(modelPlanAndOpSols, 1)
+
+}
+
 // TestMultipleModelPlansWithSameSolutionType checks if multiple model plans with the same solution type are fetched
 func (suite *ResolverSuite) TestMultipleModelPlansWithSameSolutionType() {
 	needType := models.OpNKManageCd
