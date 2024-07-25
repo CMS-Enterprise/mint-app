@@ -8,6 +8,7 @@ export default gql(/* GraphQL */ `
       modelPlan {
         id
         modelName
+        abbreviation
         status
         modelBySolutionStatus
         basics {
