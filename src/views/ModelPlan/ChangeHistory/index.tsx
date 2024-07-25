@@ -119,16 +119,12 @@ const ChangeHistory = () => {
     Math.floor(auditChanges.length / itemsPerPage)
   );
 
-  const [beginOffset, setBeginOffset] = useState<number>(
-    currentPage * itemsPerPage
-  );
-  const [endOffset, setEndOffset] = useState<number>(
-    currentPage * itemsPerPage + itemsPerPage
-  );
-
   // Current items to dsiplay on the current page - contains search and sort data
   const [currentItems, setCurrentItems] = useState(
-    auditChanges.slice(beginOffset, endOffset)
+    auditChanges.slice(
+      currentPage * itemsPerPage,
+      currentPage * itemsPerPage + itemsPerPage
+    )
   );
 
   // searchChanges is a function to filter audits based on query
@@ -161,8 +157,6 @@ const ChangeHistory = () => {
 
     // Return the page to the first page when the query changes
     setCurrentPage(1);
-    setBeginOffset(0);
-    setEndOffset(itemsPerPage);
   }, [query, searchChanges, setCurrentPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update the audit changes when the data is loaded.
@@ -206,8 +200,6 @@ const ChangeHistory = () => {
     const nextPage = currentPage + 1;
     params.set('page', nextPage.toString());
     history.push({ search: params.toString() });
-    setBeginOffset((nextPage - 1) * itemsPerPage);
-    setEndOffset((nextPage - 1) * itemsPerPage + endOffset);
     setCurrentPage(nextPage);
   };
 
@@ -215,8 +207,6 @@ const ChangeHistory = () => {
     const prevPage = currentPage - 1;
     params.set('page', prevPage.toString());
     history.push({ search: params.toString() });
-    setBeginOffset((prevPage - 1) * itemsPerPage);
-    setEndOffset((prevPage - 1) * itemsPerPage + endOffset);
     setCurrentPage(prevPage);
   };
 
@@ -226,8 +216,6 @@ const ChangeHistory = () => {
   ) => {
     params.set('page', pageNum.toString());
     history.push({ search: params.toString() });
-    setBeginOffset((pageNum - 1) * itemsPerPage);
-    setEndOffset((pageNum - 1) * itemsPerPage + endOffset);
     setCurrentPage(pageNum);
   };
 
@@ -293,7 +281,7 @@ const ChangeHistory = () => {
                     query={query}
                     resultsNum={resultsNum}
                     itemsPerPage={itemsPerPage}
-                    pageOffset={beginOffset}
+                    currentPage={currentPage - 1}
                     setQuery={setQuery}
                     results={auditChanges}
                     currentResults={currentItems}

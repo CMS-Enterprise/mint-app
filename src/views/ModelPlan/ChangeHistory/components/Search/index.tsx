@@ -11,7 +11,7 @@ type SearchProps = {
   currentResults: ChangeRecordType[][];
   resultsNum: number;
   itemsPerPage: number;
-  pageOffset: number;
+  currentPage: number;
   setQuery: (query: string) => void;
 };
 
@@ -21,7 +21,7 @@ const Search = ({
   currentResults,
   resultsNum,
   itemsPerPage,
-  pageOffset,
+  currentPage,
   setQuery
 }: SearchProps) => {
   const { t } = useTranslation('changeHistory');
@@ -44,9 +44,8 @@ const Search = ({
           <p className="margin-y-0">
             {results.length > itemsPerPage
               ? t('resultsInfo', {
-                  resultsNum: (pageOffset / itemsPerPage) * 10 + 1,
-                  count:
-                    (pageOffset / itemsPerPage) * 10 + currentResults?.length,
+                  resultsNum: currentPage * 10 + 1,
+                  count: currentPage * 10 + currentResults?.length,
                   total: resultsNum,
                   query: 'for'
                 })
