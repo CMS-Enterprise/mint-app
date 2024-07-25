@@ -39,7 +39,8 @@
 									"pm.collectionVariables.set(\"operationalNeedID\", firstOpNeed);",
 									"pm.collectionVariables.set(\"userID\", userID);"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -49,7 +50,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    modelName\n    createdByUserAccount{\n        givenName\n        id\n    }\n    operationalNeeds {\n\n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        section    \n    }  \n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n    }\n    payments{\n        id\n    }\n  }\n}\n  ",
+								"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    modelName\n    createdByUserAccount{\n        givenName\n        id\n    }\n    operationalNeeds {\n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        section    \n    }  \n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n    }\n    payments{\n        id\n    }\n  }\n}\n  ",
 								"variables": ""
 							}
 						},
@@ -102,7 +103,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
+								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        anticipatedStatuses\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\",\n  \"changes\": {\n    \"modelName\": \"My Updated Model\",\n    \"archived\": true,\n    \"status\": \"PLAN_DRAFT\"\n  }\n}"
 							}
 						},
@@ -123,7 +124,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
+								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        anticipatedStatuses\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\"\n}"
 							}
 						},
@@ -144,7 +145,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n        lastModifiedDts\n    }\n}",
+								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        anticipatedStatuses\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -165,7 +166,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
+								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        anticipatedStatuses\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
 								"variables": "{\n    \"filter\": \"INCLUDE_ALL\"\n}"
 							}
 						},
@@ -228,7 +229,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlansByOperationalSolutionKey ($operationalSolutionKey: OperationalSolutionKey!) {\n    modelPlansByOperationalSolutionKey (operationalSolutionKey: $operationalSolutionKey) {\n        operationalSolution {\n            id\n            isCommonSolution\n            operationalNeedID\n            solutionType\n            needed\n            name\n            key\n            nameOther\n            pocName\n            pocEmail\n            mustStartDts\n            mustFinishDts\n            status\n            documents {\n                id\n                modelPlanID\n                fileType\n                bucket\n                fileKey\n                virusScanned\n                virusClean\n                restricted\n                fileName\n                fileSize\n                documentType\n                otherType\n                optionalNotes\n                downloadUrl\n                deletedAt\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            operationalSolutionSubtasks {\n                id\n                solutionID\n                name\n                status\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            createdByUserAccount \n            {\n                commonName\n            }   \n            modifiedByUserAccount\n            {\n                commonName\n            }\n        }\n        \n        modelPlan{\n            id\n            modelName\n            abbreviation\n            archived\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            status\n            isFavorite\n            isCollaborator\n            opSolutionLastModifiedDts\n        }\n    }\n}",
+								"query": "query modelPlansByOperationalSolutionKey ($operationalSolutionKey: OperationalSolutionKey!) {\n    modelPlansByOperationalSolutionKey (operationalSolutionKey: $operationalSolutionKey) {\n        operationalSolution {\n            id\n            isCommonSolution\n            operationalNeedID\n            solutionType\n            needed\n            name\n            key\n            nameOther\n            pocName\n            pocEmail\n            mustStartDts\n            mustFinishDts\n            status\n            documents {\n                id\n                modelPlanID\n                fileType\n                bucket\n                fileKey\n                virusScanned\n                virusClean\n                restricted\n                fileName\n                fileSize\n                documentType\n                otherType\n                optionalNotes\n                downloadUrl\n                deletedAt\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            operationalSolutionSubtasks {\n                id\n                solutionID\n                name\n                status\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            createdByUserAccount \n            {\n                commonName\n            }   \n            modifiedByUserAccount\n            {\n                commonName\n            }\n        }\n        \n        modelPlan{\n            id\n            modelName\n            abbreviation\n            archived\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            status\n            anticipatedStatuses\n            isFavorite\n            isCollaborator\n            opSolutionLastModifiedDts\n        }\n    }\n}",
 								"variables": "{\n  \"operationalSolutionKey\": \"MARX\"\n}"
 							}
 						},
