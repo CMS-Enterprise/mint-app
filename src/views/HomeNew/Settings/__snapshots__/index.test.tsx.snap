@@ -238,7 +238,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                     />
                   </div>
                   <p
-                    class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
+                    class="padding-left-4 padding-right-2 margin-y-neg-05 font-body-xs"
                   >
                     This section displays all of the Model Plans that you’re a team member of. Model links go to the Task List.
                   </p>
@@ -278,7 +278,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                     />
                   </div>
                   <p
-                    class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
+                    class="padding-left-4 padding-right-2 margin-y-neg-05 font-body-xs"
                   >
                     This searchable table displays all Model Plans (like the one on the Models tab).
                   </p>
@@ -318,7 +318,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                     />
                   </div>
                   <p
-                    class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
+                    class="padding-left-4 padding-right-2 margin-y-neg-05 font-body-xs"
                   >
                     This section shows only the models you’re following (like the one on the Models tab).
                   </p>
@@ -358,7 +358,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                     />
                   </div>
                   <p
-                    class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
+                    class="padding-left-4 padding-right-2 margin-y-neg-05 font-body-xs"
                   >
                     This searchable table displays models with Fee-for-Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs).
                   </p>
@@ -398,7 +398,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                     />
                   </div>
                   <p
-                    class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
+                    class="padding-left-4 padding-right-2 margin-y-neg-05 font-body-xs"
                   >
                     This tabbed section displays the models using the operational solutions you care about.
                   </p>

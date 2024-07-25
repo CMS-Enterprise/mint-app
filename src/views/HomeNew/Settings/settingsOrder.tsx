@@ -230,13 +230,10 @@ const SettingsOrder = () => {
                             </div>
 
                             <div className="display-flex flex-align-center">
-                              <Icon.ArrowDropUp
-                                className={classNames(
-                                  {
-                                    settings__icon__disabled: index === 0
-                                  },
-                                  'settings__icon margin-right-1 pointer'
-                                )}
+                              <Button
+                                type="button"
+                                className="usa-button--unstyled"
+                                aria-label={homepageSettingsT('orderUp')}
                                 onClick={() =>
                                   setSelectedSettings(
                                     moveItem(
@@ -246,21 +243,23 @@ const SettingsOrder = () => {
                                     )
                                   )
                                 }
-                                data-testid={`move-${index}-up`}
-                                size={5}
-                              />
+                              >
+                                <Icon.ArrowDropUp
+                                  className={classNames(
+                                    {
+                                      settings__icon__disabled: index === 0
+                                    },
+                                    'settings__icon margin-right-1 pointer'
+                                  )}
+                                  data-testid={`move-${index}-up`}
+                                  size={5}
+                                />
+                              </Button>
 
-                              <Icon.ArrowDropDown
-                                className={classNames(
-                                  {
-                                    settings__icon__disabled:
-                                      index ===
-                                      selectedSettings.viewCustomization
-                                        .length -
-                                        1
-                                  },
-                                  'settings__icon pointer'
-                                )}
+                              <Button
+                                type="button"
+                                className="usa-button--unstyled"
+                                aria-label={homepageSettingsT('orderDown')}
                                 onClick={() =>
                                   setSelectedSettings(
                                     moveItem(
@@ -270,9 +269,22 @@ const SettingsOrder = () => {
                                     )
                                   )
                                 }
-                                data-testid={`move-${index}-down`}
-                                size={5}
-                              />
+                              >
+                                <Icon.ArrowDropDown
+                                  className={classNames(
+                                    {
+                                      settings__icon__disabled:
+                                        index ===
+                                        selectedSettings.viewCustomization
+                                          .length -
+                                          1
+                                    },
+                                    'settings__icon pointer'
+                                  )}
+                                  data-testid={`move-${index}-down`}
+                                  size={5}
+                                />
+                              </Button>
                             </div>
                           </div>
                         </Card>

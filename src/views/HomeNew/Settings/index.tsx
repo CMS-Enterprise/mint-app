@@ -177,7 +177,7 @@ const HomePageSettings = () => {
                               className="text-bold"
                             />
 
-                            <p className="padding-left-4 padding-right-2 margin-y-0 font-body-xs">
+                            <p className="padding-left-4 padding-right-2 margin-y-neg-05 font-body-xs">
                               {settingOptions[settionOption].description}
                             </p>
 

@@ -20,7 +20,6 @@ func (r *modelPlanResolver) ModelBySolutionStatus(ctx context.Context, obj *mode
 
 // PossibleOperationalSolution is the resolver for the possibleOperationalSolution field.
 func (r *modelPlanAndPossibleOperationalSolutionResolver) PossibleOperationalSolution(ctx context.Context, obj *models.ModelPlanAndPossibleOperationalSolution) (*models.PossibleOperationalSolution, error) {
-
 	return PossibleOperationalSolutionGetByKey(ctx, obj.Key)
 }
 
