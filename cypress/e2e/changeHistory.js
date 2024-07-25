@@ -40,7 +40,7 @@ describe('Change History', () => {
     cy.get('li.change-record')
       .first()
       .find('[data-testid="new-plan"]')
-      .should('contain.text', 'Plan with Documents');
+      .should('contain.text', 'this Model Plan');
 
     // Searches changes correctly
     cy.get('#table-id-search')
