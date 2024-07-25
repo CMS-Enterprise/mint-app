@@ -21,6 +21,7 @@ func (r *possibleOperationalSolutionResolver) PointsOfContact(ctx context.Contex
 func (r *possibleOperationalSolutionResolver) PrimaryContact(ctx context.Context, obj *models.PossibleOperationalSolution) (*models.PossibleOperationalSolutionContact, error) {
 	logger := appcontext.ZLogger(ctx)
 
+	// Future Enhancement: This should be a dataloader
 	return r.store.PossibleOperationalSolutionPrimaryContactGetByPossibleSolutionID(r.store, logger, obj.ID)
 }
 
