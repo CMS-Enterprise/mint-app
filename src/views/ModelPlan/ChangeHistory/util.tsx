@@ -343,10 +343,10 @@ export const documentName = (change: ChangeRecordType) =>
 // Returns the document type (link/upload)
 export const documentType = (change: ChangeRecordType): boolean =>
   !!(
-    change.translatedFields.find(field => field.fieldName === 'is_link')
-      ?.newTranslated === 'true' ||
-    change.translatedFields.find(field => field.fieldName === 'is_link')
-      ?.oldTranslated === 'true'
+    !!change.translatedFields.find(field => field.fieldName === 'url')
+      ?.newTranslated ||
+    !!change.translatedFields.find(field => field.fieldName === 'url')
+      ?.oldTranslated
   );
 
 export const getSolutionName = (change: ChangeRecordType) =>

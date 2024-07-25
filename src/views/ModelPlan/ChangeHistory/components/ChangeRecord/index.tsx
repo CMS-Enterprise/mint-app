@@ -429,6 +429,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
               );
             })()}
 
+          {/* Document add/upload audits */}
           {changeRecordType === 'Document update' &&
             (() => {
               return (
