@@ -15,10 +15,12 @@ describe('The Model Plan Form', () => {
       expect(loc.pathname).to.eq('/');
     });
 
-    cy.get('table').within(() => {
-      cy.get('tbody').within(() => {
-        cy.contains('th', 'Empty Plan').should('not.exist');
+    cy.get('table')
+      .first()
+      .within(() => {
+        cy.get('tbody').within(() => {
+          cy.contains('th', 'Empty Plan').should('not.exist');
+        });
       });
-    });
   });
 });
