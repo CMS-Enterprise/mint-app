@@ -19,7 +19,6 @@ import {
   datesWithNoDay,
   documentName,
   documentType,
-  documentUpdateType,
   getActionText,
   getHeaderText,
   getNestedActionText,
