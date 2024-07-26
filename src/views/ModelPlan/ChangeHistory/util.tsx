@@ -447,6 +447,7 @@ export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
   return filteredReviewChanges;
 };
 
+// Action text that is rendered on an open state of a collapsable audit change
 export const getNestedActionText = (
   change: ChangeRecordType['translatedFields'][0],
   changeType: DatabaseOperation,
