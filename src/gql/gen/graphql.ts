@@ -634,10 +634,13 @@ export type ModelPlanNameHistoryArgs = {
   sort?: SortDirection;
 };
 
-export type ModelPlanAndOperationalSolution = {
-  __typename: 'ModelPlanAndOperationalSolution';
+export type ModelPlanAndPossibleOperationalSolution = {
+  __typename: 'ModelPlanAndPossibleOperationalSolution';
+  key: OperationalSolutionKey;
   modelPlan: ModelPlan;
-  operationalSolution: OperationalSolution;
+  modelPlanID: Scalars['UUID']['output'];
+  possibleOperationalSolution: PossibleOperationalSolution;
+  possibleOperationalSolutionID: Scalars['Int']['output'];
 };
 
 /**
@@ -2531,7 +2534,7 @@ export type Query = {
   existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;
   modelPlanCollection: Array<ModelPlan>;
-  modelPlansByOperationalSolutionKey: Array<ModelPlanAndOperationalSolution>;
+  modelPlansByOperationalSolutionKey: Array<ModelPlanAndPossibleOperationalSolution>;
   mostRecentDiscussionRoleSelection?: Maybe<DiscussionRoleSelection>;
   ndaInfo: NdaInfo;
   operationalNeed: OperationalNeed;
@@ -3476,7 +3479,7 @@ export type GetModelsBySolutionQueryVariables = Exact<{
 }>;
 
 
-export type GetModelsBySolutionQuery = { __typename: 'Query', modelPlansByOperationalSolutionKey: Array<{ __typename: 'ModelPlanAndOperationalSolution', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, status: ModelStatus, modelBySolutionStatus: ModelBySolutionStatus, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null } } }> };
+export type GetModelsBySolutionQuery = { __typename: 'Query', modelPlansByOperationalSolutionKey: Array<{ __typename: 'ModelPlanAndPossibleOperationalSolution', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, abbreviation?: string | null, status: ModelStatus, modelBySolutionStatus: ModelBySolutionStatus, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null } } }> };
 
 export type GetOperationalNeedQueryVariables = Exact<{
   id: Scalars['UUID']['input'];

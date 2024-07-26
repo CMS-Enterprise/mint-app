@@ -5,7 +5,10 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/lib/pq"
+
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 
 	"go.uber.org/zap"
 
@@ -169,4 +172,19 @@ func (s *Store) PossibleOperationalSolutionGetByKey(logger *zap.Logger, solKey m
 	}
 
 	return &opSol, nil
+}
+
+// PossibleOperationalSolutionGetByKeys returns a collection of possible operational solutions by a provided list of keys
+func PossibleOperationalSolutionGetByKeys(np sqlutils.NamedPreparer, logger *zap.Logger, solKeys []models.OperationalSolutionKey) ([]*models.PossibleOperationalSolution, error) {
+
+	args := map[string]interface{}{
+		"sol_keys": pq.Array(solKeys),
+	}
+	retSolutions, err := sqlutils.SelectProcedure[models.PossibleOperationalSolution](np, sqlqueries.PossibleOperationalSolution.GetByKeys, args)
+	if err != nil {
+		return nil, err
+	}
+
+	return retSolutions, nil
+
 }

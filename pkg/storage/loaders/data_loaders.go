@@ -3,6 +3,9 @@ package loaders
 
 import "github.com/cmsgov/mint-app/pkg/storage"
 
+const appSectionKey string = "app_section"
+const dataLoaderSection string = "dataLoader"
+
 // DataLoaders wrap your data loaders to inject via middleware
 type DataLoaders struct {
 	BasicsLoader                          *WrappedDataLoader
@@ -30,6 +33,7 @@ type DataLoaders struct {
 	ModelPlanLoader                                *WrappedDataLoader
 	ModelPlanOpSolutionLastModifiedDtsLoader       *WrappedDataLoader
 
+	PossibleOperationSolutionByKeyLoader   *WrappedDataLoader
 	PossibleOperationSolutionContactLoader *WrappedDataLoader
 
 	ActivityLoader                    *WrappedDataLoader
@@ -70,6 +74,7 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.ModelPlanLoader = newWrappedDataLoader(loaders.GetModelPlanByModelPlanID)
 	loaders.ModelPlanOpSolutionLastModifiedDtsLoader = newWrappedDataLoader(loaders.GetModelPlanOpSolutionLastModifiedDtsByModelPlanID)
 
+	loaders.PossibleOperationSolutionByKeyLoader = newWrappedDataLoader(loaders.possibleOperationalSolutionByKeyBatch)
 	loaders.PossibleOperationSolutionContactLoader = newWrappedDataLoader(loaders.PossibleOperationalSolutionContactsGetByPossibleSolutionID)
 
 	loaders.ActivityLoader = newWrappedDataLoader(loaders.activityGetByIDLoaderBatch)
