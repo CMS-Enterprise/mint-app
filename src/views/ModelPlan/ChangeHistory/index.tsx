@@ -7,13 +7,13 @@ import React, {
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import ReactPaginate from 'react-paginate';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Grid,
   GridContainer,
   Icon,
   Label,
+  Pagination,
   Select,
   SummaryBox
 } from '@trussworks/react-uswds';
@@ -39,6 +39,8 @@ import {
   sortAllChanges,
   sortChangesByDay
 } from './util';
+
+import './index.scss';
 
 type LocationProps = {
   state: {
@@ -111,17 +113,18 @@ const ChangeHistory = () => {
 
   // Pagination Configuration
   const itemsPerPage = 10;
-  const [pageOffset, setPageOffset] = useState(
-    Number.isNaN(Number(pageParam)) ? 0 : Number(pageParam)
-  );
-  const endOffset = pageOffset + itemsPerPage;
-  const [pageCount, setPageCount] = useState(
-    auditChanges ? Math.ceil(auditChanges.length / itemsPerPage) : 1
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageCount, setPageCount] = useState<number>(
+    Math.floor(auditChanges.length / itemsPerPage)
   );
 
   // Current items to dsiplay on the current page - contains search and sort data
   const [currentItems, setCurrentItems] = useState(
-    auditChanges.slice(pageOffset, endOffset)
+    auditChanges.slice(
+      currentPage * itemsPerPage,
+      currentPage * itemsPerPage + itemsPerPage
+    )
   );
 
   // searchChanges is a function to filter audits based on query
@@ -153,8 +156,8 @@ const ChangeHistory = () => {
     }
 
     // Return the page to the first page when the query changes
-    setPageOffset(0);
-  }, [query, searchChanges, setPageOffset]); // eslint-disable-line react-hooks/exhaustive-deps
+    setCurrentPage(1);
+  }, [query, searchChanges, setCurrentPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update the audit changes when the data is loaded.
   useEffect(() => {
@@ -171,32 +174,50 @@ const ChangeHistory = () => {
       }, 0);
 
       // Set the page offset based on the page parameter
-      const newOffset = pageParam ? (Number(pageParam) - 1) * itemsPerPage : 0;
-      setPageOffset(newOffset);
+      setCurrentPage(pageParam ? Number(pageParam) - 1 : 1);
+      setPageCount(Math.ceil(auditChanges.length / itemsPerPage));
     }
   }, [loading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update the current items when the page offset changes.
   useEffect(() => {
-    setCurrentItems(auditChanges.slice(pageOffset, endOffset));
-    setPageCount(
-      auditChanges ? Math.ceil(auditChanges.length / itemsPerPage) : 1
+    setCurrentItems(
+      auditChanges.slice(
+        (currentPage - 1) * itemsPerPage,
+        (currentPage - 1) * itemsPerPage + itemsPerPage
+      )
     );
-  }, [auditChanges, endOffset, pageOffset]);
-
-  // Invoke when user click to request another page.
-  const handlePageClick = (event: { selected: number }) => {
-    const newOffset = (event.selected * itemsPerPage) % auditChanges?.length;
-    setPageOffset(newOffset);
-    params.set('page', (newOffset / itemsPerPage + 1).toString());
-    history.push({ search: params.toString() });
-  };
+    setPageCount(Math.ceil(auditChanges.length / itemsPerPage));
+  }, [auditChanges, currentPage, setPageCount]);
 
   // Sort the changes when the sort option changes.
   useEffect(() => {
     setAuditChanges(handleSortOptions(auditChanges, sort));
     setSortedAudits(handleSortOptions(sortedChanges, sort));
   }, [sort]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleNext = () => {
+    const nextPage = currentPage + 1;
+    params.set('page', nextPage.toString());
+    history.push({ search: params.toString() });
+    setCurrentPage(nextPage);
+  };
+
+  const handlePrevious = () => {
+    const prevPage = currentPage - 1;
+    params.set('page', prevPage.toString());
+    history.push({ search: params.toString() });
+    setCurrentPage(prevPage);
+  };
+
+  const handlePageNumber = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    pageNum: number
+  ) => {
+    params.set('page', pageNum.toString());
+    history.push({ search: params.toString() });
+    setCurrentPage(pageNum);
+  };
 
   // Group changes by day
   const changesByDay = useMemo(() => sortChangesByDay(currentItems), [
@@ -208,7 +229,7 @@ const ChangeHistory = () => {
   }
 
   return (
-    <MainContent>
+    <MainContent className="change-history">
       {/* Summary banner */}
       <SummaryBox
         className="padding-y-6 padding-x-2 border-0 bg-primary-lighter radius-0 margin-top-0"
@@ -260,7 +281,7 @@ const ChangeHistory = () => {
                     query={query}
                     resultsNum={resultsNum}
                     itemsPerPage={itemsPerPage}
-                    pageOffset={pageOffset}
+                    currentPage={currentPage - 1}
                     setQuery={setQuery}
                     results={auditChanges}
                     currentResults={currentItems}
@@ -359,33 +380,14 @@ const ChangeHistory = () => {
 
             {/* Pagination */}
             {pageCount > 1 && (
-              <ReactPaginate
-                breakLabel="..."
-                breakClassName="usa-pagination__item usa-pagination__overflow"
-                nextLabel="Next >"
-                containerClassName="mint-pagination usa-pagination usa-pagination__list margin-top-2"
-                previousLinkClassName={
-                  pageOffset === 0
-                    ? 'display-none'
-                    : 'usa-pagination__link usa-pagination__previous-page prev-page'
-                }
-                nextLinkClassName={
-                  pageOffset / itemsPerPage === pageCount - 1
-                    ? 'display-none'
-                    : 'usa-pagination__link usa-pagination__previous-page next-page'
-                }
-                disabledClassName="pagination__link--disabled"
-                activeClassName="usa-current"
-                activeLinkClassName="usa-current"
-                pageClassName="usa-pagination__item"
-                pageLinkClassName="usa-pagination__button"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="< Previous"
-                onClick={() => window.scrollTo(0, 0)}
-                forcePage={pageOffset / itemsPerPage}
-                renderOnZeroPageCount={null}
+              <Pagination
+                pathname={history.location.pathname}
+                currentPage={currentPage}
+                maxSlots={7}
+                onClickNext={handleNext}
+                onClickPageNumber={handlePageNumber}
+                onClickPrevious={handlePrevious}
+                totalPages={pageCount}
               />
             )}
           </>

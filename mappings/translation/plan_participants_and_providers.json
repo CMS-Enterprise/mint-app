@@ -144,7 +144,7 @@
     "dbField": "confidence_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "estimate_confidence",
+    "otherParentField": "expected_number_of_participants",
     "dataType": "STRING",
     "formType": "TEXTAREA",
     "order": 2.03
@@ -635,7 +635,7 @@
     "dbField": "gainshare_payments_note",
     "label": "Notes",
     "isNote": true,
-    "otherParentField": "gainshare_payments_eligibility",
+    "otherParentField": "gainshare_payments",
     "dataType": "STRING",
     "formType": "TEXTAREA",
     "order": 4.11

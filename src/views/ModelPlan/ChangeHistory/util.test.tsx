@@ -2,8 +2,10 @@ import {
   AuditFieldChangeType,
   DatabaseOperation,
   TableName,
+  TranslatedAuditField,
   TranslationDataType
 } from 'gql/gen/graphql';
+import i18next from 'i18next';
 
 import {
   ChangeRecordType,
@@ -12,6 +14,9 @@ import {
   documentUpdateType,
   extractReadyForReviewChanges,
   filterQueryAudits,
+  getActionText,
+  getHeaderText,
+  getNestedActionText,
   getSolutionOperationStatus,
   groupBatchedChanges,
   handleSortOptions,
@@ -325,7 +330,7 @@ describe('util.tsx', () => {
       actorName: 'MINT Doe',
       __typename: 'TranslatedAudit'
     };
-    expect(identifyChangeType(change)).toBe('Task list status update');
+    expect(identifyChangeType(change)).toBe('taskListStatusUpdate');
   });
 
   // Test for isInitialCreatedSection
@@ -352,7 +357,7 @@ describe('util.tsx', () => {
       actorName: 'MINT Doe',
       __typename: 'TranslatedAudit'
     };
-    const changeType: ChangeType = 'Task list status update';
+    const changeType: ChangeType = 'taskListStatusUpdate';
     expect(isInitialCreatedSection(change, changeType)).toBe(true);
   });
 
@@ -830,6 +835,324 @@ describe('util.tsx', () => {
     expect(result3).toEqual(DatabaseOperation.UPDATE);
   });
 
+  describe('getActionText', () => {
+    it('should return the correct text for teamUpdate', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_COLLABORATOR,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: [
+          {
+            fieldName: 'team_roles',
+            old: null,
+            new: 'active',
+            changeType: AuditFieldChangeType.ANSWERED
+          }
+        ] as TranslatedAuditField[]
+      };
+      const result = getActionText(change);
+      expect(result).toBe(
+        i18next.t(
+          `changeHistory:teamChangeType.${AuditFieldChangeType.ANSWERED}`
+        )
+      );
+    });
+
+    it('should return the correct text for discussionUpdate', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_DISCUSSION,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.INSERT,
+        actorName: 'John Doe',
+        translatedFields: []
+      };
+
+      const result = getActionText(change);
+      expect(result).toBe(
+        i18next.t(`changeHistory:${change.tableName}Answered`)
+      );
+    });
+
+    it('should return the correct text for cRUpdate', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_CR,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: []
+      };
+
+      const result = getActionText(change);
+      expect(result).toBe(
+        i18next.t(`changeHistory:auditUpdateType.${change.action}`)
+      );
+    });
+
+    it('should return the correct text for tDLUpdate', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_TDL,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: []
+      };
+
+      const result = getActionText(change);
+      expect(result).toBe(
+        i18next.t(`changeHistory:auditUpdateType.${change.action}`)
+      );
+    });
+
+    it('should return the correct text for documentUpdate', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_DOCUMENT,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: []
+      };
+
+      const result = getActionText(change);
+      expect(result).toBe(
+        i18next.t(
+          `changeHistory:documentChangeType.${documentUpdateType(change)}`
+        )
+      );
+    });
+
+    it('should return an empty string for unknown change type', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.EXISTING_MODEL_LINK,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: []
+      };
+
+      const result = getActionText(change);
+      expect(result).toBe('');
+    });
+  });
+
+  describe('getHeaderText', () => {
+    it('should return newPlan for new model plan', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.MODEL_PLAN,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.INSERT,
+        actorName: 'John Doe',
+        translatedFields: [
+          { fieldName: 'status', old: null, new: 'active' }
+        ] as TranslatedAuditField[]
+      };
+      const result = getHeaderText(change);
+      expect(result).toBe(i18next.t(`changeHistory:planCreate`));
+    });
+
+    it('should return statusUpdate for model plan status update', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.MODEL_PLAN,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: [
+          { fieldName: 'status', old: 'inactive', new: 'active' }
+        ] as TranslatedAuditField[]
+      };
+      const result = getHeaderText(change);
+      expect(result).toBe(i18next.t(`changeHistory:planStatusUpdate`));
+    });
+
+    it('should return taskListStatusUpdate for task list status update', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_BENEFICIARIES,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: [
+          { fieldName: 'status', newTranslated: 'In progress' }
+        ] as TranslatedAuditField[]
+      };
+      const result = getHeaderText(change);
+      expect(result).toBe(i18next.t(`changeHistory:taskStartedUpdate`));
+    });
+
+    it('should return teamUpdate for plan collaborator change', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_COLLABORATOR,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: [
+          {
+            fieldName: 'team_roles',
+            old: 'inactive',
+            newTranslated: 'In progress',
+            changeType: AuditFieldChangeType.ANSWERED
+          }
+        ] as TranslatedAuditField[]
+      };
+
+      const teamChangeType = change.translatedFields.find(
+        field => field.fieldName === 'team_roles'
+      )?.changeType;
+
+      const result = getHeaderText(change);
+      expect(result).toBe(i18next.t(`changeHistory:team${teamChangeType}`));
+    });
+
+    it('should return discussionUpdate for plan discussion change', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_DISCUSSION,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: [
+          {
+            fieldName: 'team_roles',
+            old: 'inactive',
+            newTranslated: 'In progress',
+            changeType: AuditFieldChangeType.ANSWERED
+          }
+        ] as TranslatedAuditField[]
+      };
+
+      const result = getHeaderText(change);
+      expect(result).toBe(
+        i18next.t(`changeHistory:${change.tableName}Answered`)
+      );
+    });
+
+    it('should return documentUpdate for plan document change', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_DOCUMENT,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: [
+          {
+            fieldName: 'team_roles',
+            old: 'inactive',
+            newTranslated: 'In progress',
+            changeType: AuditFieldChangeType.ANSWERED
+          }
+        ] as TranslatedAuditField[]
+      };
+
+      const result = getHeaderText(change);
+      expect(result).toBe(i18next.t('changeHistory:documentUpdate'));
+    });
+
+    it('should return cRUpdate for plan CR change', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_CR,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: [
+          {
+            fieldName: 'team_roles',
+            old: 'inactive',
+            newTranslated: 'In progress',
+            changeType: AuditFieldChangeType.ANSWERED
+          }
+        ] as TranslatedAuditField[]
+      };
+
+      const result = getHeaderText(change);
+      expect(result).toBe(i18next.t('changeHistory:crTdlUpdate'));
+    });
+
+    it('should return tDLUpdate for plan TDL change', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_TDL,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: [
+          {
+            fieldName: 'team_roles',
+            old: 'inactive',
+            newTranslated: 'In progress',
+            changeType: AuditFieldChangeType.ANSWERED
+          }
+        ] as TranslatedAuditField[]
+      };
+      const result = getHeaderText(change);
+      expect(result).toBe(i18next.t('changeHistory:crTdlUpdate'));
+    });
+  });
+
+  it('should return the correct nested action text for the database operation', () => {
+    const change = sortData[0][0].translatedFields[0];
+
+    // should return created text for insert operation on OPERATIONAL_NEED table
+    const result1 = getNestedActionText(
+      change,
+      DatabaseOperation.INSERT,
+      TableName.OPERATIONAL_NEED
+    );
+    expect(result1).toBe('created');
+
+    // should return team change type text for non-delete operation with questionType NOTE
+    const result2 = getNestedActionText(
+      change,
+      DatabaseOperation.UPDATE,
+      TableName.OPERATIONAL_NEED
+    );
+    expect(result2).toBe('answered');
+
+    // should return change type text for non-delete operation with non-NOTE questionType
+    const changeWithDifferentQuestionType = {
+      ...change,
+      questionType: 'OTHER'
+    } as ChangeRecordType['translatedFields'][0];
+
+    const result3 = getNestedActionText(
+      changeWithDifferentQuestionType,
+      DatabaseOperation.UPDATE,
+      TableName.OPERATIONAL_NEED
+    );
+    expect(result3).toBe('answered');
+
+    // should return empty string for delete operation
+    const result4 = getNestedActionText(
+      change,
+      DatabaseOperation.DELETE,
+      TableName.OPERATIONAL_NEED
+    );
+    expect(result4).toBe('');
+  });
+
   // Test for getSolutionOperationStatus
   it('should return the correct text for document changes', () => {
     const change = {
@@ -845,7 +1168,7 @@ describe('util.tsx', () => {
           id: '631e0ac6-1f52-4ed4-8c1e-f94fd742011f',
           changeType: AuditFieldChangeType.ANSWERED,
           dataType: TranslationDataType.STRING,
-          fieldName: 'is_link',
+          fieldName: 'url',
           fieldNameTranslated:
             'Accountable Care Organization Realizing Equity, Access, and Community Health Model (ACO REACH) ',
           referenceLabel: null,
@@ -854,7 +1177,7 @@ describe('util.tsx', () => {
           old: null,
           oldTranslated: null,
           new: 'false',
-          newTranslated: 'true'
+          newTranslated: 'http://google.com'
         }
       ]
     };
@@ -863,7 +1186,7 @@ describe('util.tsx', () => {
 
     expect(result).toEqual('added');
 
-    change.translatedFields[0].newTranslated = 'false';
+    change.translatedFields[0].newTranslated = '';
 
     const result2 = documentUpdateType(change as ChangeRecordType);
 

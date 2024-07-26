@@ -54,6 +54,7 @@ export const documents: TranslationDocuments = {
     goField: 'documentType',
     dbField: 'document_type',
     label: 'What type of document are you uploading?',
+    exportLabel: 'Document type',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.RADIO,
     order: 1.05,
@@ -102,6 +103,7 @@ export const documents: TranslationDocuments = {
     goField: 'OptionalNotes',
     dbField: 'optional_notes',
     label: 'Optional notes about the document',
+    exportLabel: 'Notes',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 1.08

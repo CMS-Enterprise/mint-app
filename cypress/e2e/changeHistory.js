@@ -40,7 +40,7 @@ describe('Change History', () => {
     cy.get('li.change-record')
       .first()
       .find('[data-testid="new-plan"]')
-      .should('contain.text', 'Plan with Documents');
+      .should('contain.text', 'this Model Plan');
 
     // Searches changes correctly
     cy.get('#table-id-search')
@@ -57,7 +57,7 @@ describe('Change History', () => {
     cy.get('li.change-record').should('have.length', 0);
     cy.get('[data-testid="alert"]').should(
       'contain.text',
-      'There are no results that match you search.'
+      'There are no results that match your search.Please double-check your search and try again.'
     );
   });
 });

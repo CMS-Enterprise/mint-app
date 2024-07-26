@@ -234,7 +234,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'confidence_note',
     label: 'Notes',
     isNote: true,
-    otherParentField: 'estimateConfidence',
+    otherParentField: 'expectedNumberOfParticipants',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 2.03,
@@ -748,7 +748,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'gainshare_payments_note',
     label: 'Notes',
     isNote: true,
-    otherParentField: 'gainsharePaymentsEligibility',
+    otherParentField: 'gainsharePayments',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 4.11

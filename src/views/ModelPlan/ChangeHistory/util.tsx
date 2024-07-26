@@ -11,7 +11,8 @@ import {
   TranslatedAuditMetaGeneric,
   TranslatedAuditMetaOperationalSolution,
   TranslatedAuditMetaOperationalSolutionSubtask,
-  TranslationDataType
+  TranslationDataType,
+  TranslationQuestionType
 } from 'gql/gen/graphql';
 import i18next from 'i18next';
 
@@ -28,21 +29,21 @@ type HiddenFieldTypes = {
 
 // Identifies the type of change
 export type ChangeType =
-  | 'New plan'
-  | 'Status update'
-  | 'Task list status update'
-  | 'Team update'
-  | 'Discussion update'
-  | 'Document update'
-  | 'CR update'
-  | 'TDL update'
-  | 'Subtask update'
-  | 'Document solution link update'
-  | 'Operational solution create'
-  | 'Operational solution update'
-  | 'Operational need create'
-  | 'Operational need update'
-  | 'Standard update';
+  | 'newPlan'
+  | 'statusUpdate'
+  | 'taskListStatusUpdate'
+  | 'teamUpdate'
+  | 'discussionUpdate'
+  | 'documentUpdate'
+  | 'cRUpdate'
+  | 'tDLUpdate'
+  | 'subtaskupdate'
+  | 'documentSolutionLinkUpdate'
+  | 'operationalSolutionCreate'
+  | 'operationalSolutionUpdate'
+  | 'operationalNeedCreate'
+  | 'operationalNeedUpdate'
+  | 'standardUpdate';
 
 export type TranslationTables =
   | TableName.MODEL_PLAN
@@ -343,10 +344,10 @@ export const documentName = (change: ChangeRecordType) =>
 // Returns the document type (link/upload)
 export const documentType = (change: ChangeRecordType): boolean =>
   !!(
-    change.translatedFields.find(field => field.fieldName === 'is_link')
-      ?.newTranslated === 'true' ||
-    change.translatedFields.find(field => field.fieldName === 'is_link')
-      ?.oldTranslated === 'true'
+    !!change.translatedFields.find(field => field.fieldName === 'url')
+      ?.newTranslated ||
+    !!change.translatedFields.find(field => field.fieldName === 'url')
+      ?.oldTranslated
   );
 
 export const getSolutionName = (change: ChangeRecordType) =>
@@ -417,8 +418,8 @@ export const sortCreateChangeFirst = (
     const aType = identifyChangeType(a[0]);
     const bType = identifyChangeType(b[0]);
 
-    if (aType === 'New plan') return direction === 'asc' ? -1 : 1;
-    if (bType === 'New plan') return direction === 'asc' ? 1 : -1;
+    if (aType === 'newPlan') return direction === 'asc' ? -1 : 1;
+    if (bType === 'newPlan') return direction === 'asc' ? 1 : -1;
 
     return 0;
   });
@@ -446,14 +447,67 @@ export const extractReadyForReviewChanges = (changes: ChangeRecordType[]) => {
   return filteredReviewChanges;
 };
 
+// Action text that is rendered on an open state of a collapsable audit change
+export const getNestedActionText = (
+  change: ChangeRecordType['translatedFields'][0],
+  changeType: DatabaseOperation,
+  tableName: TranslationTables
+) => {
+  // If the change is an insert, render created text rather than answered/updated, etc.
+  if (
+    tableName === TableName.OPERATIONAL_NEED &&
+    changeType === DatabaseOperation.INSERT
+  ) {
+    return i18next.t(`changeHistory:changeType.CREATED`);
+  }
+  // Render the change type - answered, removed, updated
+  if (changeType !== DatabaseOperation.DELETE) {
+    return change.questionType === TranslationQuestionType.NOTE ||
+      tableName === TableName.PLAN_COLLABORATOR
+      ? i18next.t(`changeHistory:teamChangeType.${change.changeType}`)
+      : i18next.t(`changeHistory:changeType.${change.changeType}`);
+  }
+
+  return '';
+};
+
 export const filterQueryAudits = (
   queryString: string,
   groupedAudits: ChangeRecordType[][]
 ): ChangeRecordType[][] => {
   return groupedAudits.filter(audits => {
     const filteredAudits = audits.filter(audit => {
-      const lowerCaseQuery = queryString.toLowerCase();
+      const lowerCaseQuery = queryString.toLowerCase().trim();
 
+      const actionText = getActionText(audit);
+
+      if (actionText.toLowerCase().includes(lowerCaseQuery)) {
+        return true;
+      }
+
+      // Gets translated nested action text for fields and checks for a match
+      const nestedActionTexts = audit.translatedFields.map(field =>
+        getNestedActionText(
+          field,
+          audit.action,
+          audit.tableName as TranslationTables
+        )
+      );
+
+      if (
+        nestedActionTexts.some(text =>
+          text.toLowerCase().includes(lowerCaseQuery)
+        )
+      ) {
+        return true;
+      }
+
+      // Check for a match on the header text
+      if (getHeaderText(audit).toLowerCase().includes(lowerCaseQuery)) {
+        return true;
+      }
+
+      // Check for a match on any part of metdata
       const metaDataMatch =
         audit.metaData &&
         Object.values(audit.metaData).find(
@@ -603,7 +657,7 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
       field => field.fieldName === 'status' && field.old === null
     )
   ) {
-    return 'New plan';
+    return 'newPlan';
   }
 
   // If the change is a model plan status update and not a new plan, return 'Status update'
@@ -613,7 +667,7 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
       field => field.fieldName === 'status' && field.old !== null
     )
   ) {
-    return 'Status update';
+    return 'statusUpdate';
   }
 
   // If the change is a task list status update, return 'Task list status update'
@@ -621,57 +675,136 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     isTranslationTaskListTable(change.tableName) &&
     change.translatedFields.find(field => field.fieldName === 'status')
   ) {
-    return 'Task list status update';
+    return 'taskListStatusUpdate';
   }
 
   if (change.tableName === TableName.PLAN_COLLABORATOR) {
-    return 'Team update';
+    return 'teamUpdate';
   }
 
   if (
     change.tableName === TableName.PLAN_DISCUSSION ||
     change.tableName === TableName.DISCUSSION_REPLY
   ) {
-    return 'Discussion update';
+    return 'discussionUpdate';
   }
 
   if (change.tableName === TableName.PLAN_DOCUMENT) {
-    return 'Document update';
+    return 'documentUpdate';
   }
 
   if (change.tableName === TableName.PLAN_CR) {
-    return 'CR update';
+    return 'cRUpdate';
   }
 
   if (change.tableName === TableName.PLAN_TDL) {
-    return 'TDL update';
+    return 'tDLUpdate';
   }
 
   if (change.tableName === TableName.OPERATIONAL_SOLUTION_SUBTASK) {
-    return 'Subtask update';
+    return 'subtaskupdate';
   }
 
   if (change.tableName === TableName.PLAN_DOCUMENT_SOLUTION_LINK) {
-    return 'Document solution link update';
+    return 'documentSolutionLinkUpdate';
   }
 
   // If the change is an operational solution create/no translatedFields, return 'Operational solution create'
   if (change.tableName === TableName.OPERATIONAL_SOLUTION) {
     if (change.action === 'INSERT') {
-      return 'Operational solution create';
+      return 'operationalSolutionCreate';
     }
-    return 'Operational solution update';
+    return 'operationalSolutionUpdate';
   }
 
   // If the change is an operational need create/no translatedFields, return 'Operational need create'
   if (change.tableName === TableName.OPERATIONAL_NEED) {
     if (change.translatedFields.length === 0) {
-      return 'Operational need create';
+      return 'operationalNeedCreate';
     }
-    return 'Operational need update';
+    return 'operationalNeedUpdate';
   }
 
-  return 'Standard update';
+  return 'standardUpdate';
+};
+
+export const getHeaderText = (change: ChangeRecordType): string => {
+  let headerText: string = '';
+
+  const status = change.translatedFields.find(
+    field => field.fieldName === 'status'
+  )?.newTranslated;
+
+  const teamChangeType = change.translatedFields.find(
+    field => field.fieldName === 'team_roles'
+  )?.changeType;
+
+  switch (identifyChangeType(change)) {
+    case 'newPlan':
+      headerText = i18next.t(`changeHistory:planCreate`);
+      break;
+    case 'statusUpdate':
+      headerText = i18next.t(`changeHistory:planStatusUpdate`);
+      break;
+    case 'taskListStatusUpdate':
+      if (status === 'In progress') {
+        headerText = i18next.t(`changeHistory:taskStartedUpdate`);
+      } else {
+        headerText = i18next.t(`changeHistory:taskStatusUpdate`);
+      }
+      break;
+    case 'teamUpdate':
+      headerText = i18next.t(`changeHistory:team${teamChangeType}`);
+      break;
+    case 'discussionUpdate':
+      headerText = i18next.t(`changeHistory:${change.tableName}Answered`);
+      break;
+    case 'cRUpdate':
+    case 'tDLUpdate':
+      headerText = i18next.t('changeHistory:crTdlUpdate');
+      break;
+    case 'standardUpdate':
+    case 'operationalNeedUpdate':
+      headerText = i18next.t('changeHistory:change');
+      break;
+    case 'documentUpdate':
+      headerText = i18next.t('changeHistory:documentUpdate');
+      break;
+    default:
+      break;
+  }
+
+  return headerText;
+};
+
+export const getActionText = (change: ChangeRecordType): string => {
+  let actionText: string = '';
+
+  const teamChangeType = change.translatedFields.find(
+    field => field.fieldName === 'team_roles'
+  )?.changeType;
+
+  switch (identifyChangeType(change)) {
+    case 'teamUpdate':
+      actionText = i18next.t(`changeHistory:teamChangeType.${teamChangeType}`);
+      break;
+    case 'discussionUpdate':
+      actionText = i18next.t(`changeHistory:${change.tableName}Answered`);
+      break;
+    case 'cRUpdate':
+    case 'tDLUpdate':
+      actionText = i18next.t(`changeHistory:auditUpdateType.${change.action}`);
+      break;
+    case 'documentUpdate':
+      actionText = i18next.t(
+        `changeHistory:documentChangeType.${documentUpdateType(change)}`
+      );
+      break;
+    default:
+      break;
+  }
+
+  return actionText;
 };
 
 export const isInitialCreatedSection = (
@@ -679,11 +812,11 @@ export const isInitialCreatedSection = (
   changeType: ChangeType
 ): boolean =>
   !!(
-    (changeType === 'Task list status update' &&
+    (changeType === 'taskListStatusUpdate' &&
       change.translatedFields.find(
         field => field.fieldName === 'status' && field.old === null
       )) ||
-    identifyChangeType(change) === 'Operational need create'
+    identifyChangeType(change) === 'operationalNeedCreate'
   );
 
 // Some fields exist in translation/audit data, but are not displayed in the change history. Filter out these fields

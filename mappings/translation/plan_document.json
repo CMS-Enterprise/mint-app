@@ -46,6 +46,7 @@
     "goField": "documentType",
     "dbField": "document_type",
     "label": "What type of document are you uploading?",
+    "exportLabel": "Document type",
     "dataType": "ENUM",
     "formType": "RADIO",
     "order": 1.05,
@@ -92,6 +93,7 @@
     "goField": "OptionalNotes",
     "dbField": "optional_notes",
     "label": "Optional notes about the document",
+    "exportLabel": "Notes",
     "dataType": "STRING",
     "formType": "TEXTAREA",
     "order": 1.08

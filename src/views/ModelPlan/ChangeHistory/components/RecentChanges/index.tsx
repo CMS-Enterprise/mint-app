@@ -1,8 +1,8 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Card, Grid, Icon } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import {
-  DatabaseOperation,
   GetChangeHistoryQuery,
   useGetChangeHistoryQuery
 } from 'gql/gen/graphql';
@@ -11,14 +11,16 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
 import { AvatarCircle } from 'components/shared/Avatar';
 import Spinner from 'components/Spinner';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
-  batchedTables,
   isLinkingTable,
   linkingTableQuestions,
+  shouldRenderExistingLinkBatch,
   sortAllChanges
 } from '../../util';
+import { ChangeHeader } from '../ChangeRecord';
 
 import './index.scss';
 
@@ -34,47 +36,47 @@ type ChangeRecordProps = {
 export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
   const { t } = useTranslation('changeHistory');
 
-  let changeCount = 0;
-
-  // Count the number of changes in the record
-  changeRecords.forEach(changeRecord => {
-    changeCount +=
-      changeRecord.action === DatabaseOperation.INSERT ||
-      changeRecord.action === DatabaseOperation.DELETE ||
-      batchedTables.includes(changeRecord.tableName)
-        ? 1
-        : changeRecord.translatedFields.length || 1;
-  });
-
-  // If the change is a linking table, count the unique number of questions
-  if (isLinkingTable(changeRecords[0].tableName)) {
-    changeCount = linkingTableQuestions(changeRecords).length;
-  }
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
   return (
     <Card className="mini-change-record">
       <Grid row className="padding-2" style={{ wordWrap: 'break-word' }}>
-        <Grid tablet={{ col: 2 }}>
+        <Grid desktop={{ col: 2 }} tablet={{ col: 1 }} mobileLg={{ col: 1 }}>
           <AvatarCircle user={changeRecords[0].actorName} />
         </Grid>
 
-        <Grid tablet={{ col: 10 }}>
-          <div className="padding-left-05">
+        <Grid desktop={{ col: 10 }} tablet={{ col: 11 }} mobileLg={{ col: 11 }}>
+          <div
+            className={classNames('padding-left-05', {
+              'padding-left-1': isMobile
+            })}
+          >
             {changeRecords[0].actorName}{' '}
-            <Trans
-              i18nKey="changeHistory:change"
-              shouldUnescape
-              count={changeCount}
-              values={{
-                count: changeCount,
-                section: t(`sections.${changeRecords[0].tableName}`),
-                date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
-                time: formatTime(changeRecords[0].date)
-              }}
-              components={{
-                datetime: <span className="text-base" />
-              }}
-            />
+            {shouldRenderExistingLinkBatch(changeRecords) ? (
+              <Trans
+                i18nKey="changeHistory:change"
+                shouldUnescape
+                count={changeRecords.length}
+                values={{
+                  count: isLinkingTable(changeRecords[0].tableName)
+                    ? linkingTableQuestions(changeRecords).length
+                    : changeRecords.length,
+                  section: t(`sections.${changeRecords[0].tableName}`),
+                  date: formatDateUtc(changeRecords[0].date, 'MMMM d, yyyy'),
+                  time: formatTime(changeRecords[0].date)
+                }}
+                components={{
+                  datetime: <span className="text-base" />
+                }}
+              />
+            ) : (
+              <ChangeHeader
+                changeRecord={changeRecords[0]}
+                miniRecord
+                isOpen={false}
+                setOpen={() => null}
+              />
+            )}
           </div>
         </Grid>
       </Grid>
@@ -105,7 +107,7 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
           <Spinner />
         </div>
       ) : (
-        <>
+        <div className="margin-bottom-2">
           {sortedChanges.length === 0 && (
             <Alert type="info" slim className="margin-bottom-2">
               {t('noChanges')}
@@ -118,7 +120,7 @@ const RecentChanges = ({ modelID }: { modelID: string }) => {
               key={changeRecords[0].id}
             />
           ))}
-        </>
+        </div>
       )}
 
       <UswdsReactLink

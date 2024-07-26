@@ -205,7 +205,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
                 {needName}{' '}
                 <span className="text-normal">
                   {t('solution')} {t(`auditUpdateType.${databaseAction}`)}
-                </span>{' '}
+                </span>
                 : {solutionName}
               </div>
             );
@@ -276,7 +276,7 @@ const BatchChanges = ({ change, connected }: BatchChangeProps) => {
           // If the table is a linking table, show the fields in a list
           if (isLinkingTable(change.tableName)) {
             return (
-              <ul className="padding-left-3">
+              <ul className="padding-left-3 margin-top-0">
                 {fieldsToMap.map(field => (
                   <li>
                     {t(`linkUpdateType.${field.newTranslated}`)}:{' '}
