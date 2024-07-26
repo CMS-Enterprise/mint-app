@@ -26,7 +26,10 @@ import Alert from 'components/shared/Alert';
 import useMessage from 'hooks/useMessage';
 import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
-import { HomepageLocationStateType, HomepageSettingsLocationType } from '.';
+import {
+  HomepageLocationStateType,
+  HomepageSettingsLocationType
+} from './settings';
 
 import './index.scss';
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import MainContent from 'components/MainContent';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
 import AnticipateDependencies from './AnticipateDependencies';
@@ -43,39 +44,41 @@ export const Payment = () => {
   return (
     <MainContent className="grid-container" data-testid="model-payment">
       <Switch>
-        <Route path="/models/:modelID/task-list/payment" exact>
-          <FundingSource />
-        </Route>
-        <Route
+        <ProtectedRoute
+          path="/models/:modelID/task-list/payment"
+          component={FundingSource}
+          exact
+        />
+        <ProtectedRoute
           path="/models/:modelID/task-list/payment/claims-based-payment"
+          component={ClaimsBasedPayment}
           exact
-        >
-          <ClaimsBasedPayment />
-        </Route>
-        <Route
+        />
+        <ProtectedRoute
           path="/models/:modelID/task-list/payment/non-claims-based-payment"
+          component={NonClaimsBasedPayment}
           exact
-        >
-          <NonClaimsBasedPayment />
-        </Route>
-        <Route
+        />
+        <ProtectedRoute
           path="/models/:modelID/task-list/payment/anticipating-dependencies"
+          component={AnticipateDependencies}
           exact
-        >
-          <AnticipateDependencies />
-        </Route>
-        <Route
+        />
+        <ProtectedRoute
           path="/models/:modelID/task-list/payment/beneficiary-cost-sharing"
+          component={BeneficiaryCostSharing}
           exact
-        >
-          <BeneficiaryCostSharing />
-        </Route>
-        <Route path="/models/:modelID/task-list/payment/complexity" exact>
-          <Complexity />
-        </Route>
-        <Route path="/models/:modelID/task-list/payment/recover-payment" exact>
-          <Recover />
-        </Route>
+        />
+        <ProtectedRoute
+          path="/models/:modelID/task-list/payment/complexity"
+          component={Complexity}
+          exact
+        />
+        <ProtectedRoute
+          path="/models/:modelID/task-list/payment/recover-payment"
+          component={Recover}
+          exact
+        />
         <Route path="*" render={() => <NotFoundPartial />} />
       </Switch>
     </MainContent>

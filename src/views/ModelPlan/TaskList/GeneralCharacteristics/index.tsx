@@ -48,6 +48,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
 import Authority from './Authority';
@@ -1007,27 +1008,27 @@ export const Characteristics = () => {
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Switch>
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/characteristics"
               exact
               render={() => <CharacteristicsContent />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/characteristics/key-characteristics"
               exact
               render={() => <KeyCharacteristics />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/characteristics/involvements"
               exact
               render={() => <Involvements />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/characteristics/targets-and-options"
               exact
               render={() => <TargetsAndOptions />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/characteristics/authority"
               exact
               render={() => <Authority />}

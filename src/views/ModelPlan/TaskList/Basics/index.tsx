@@ -660,7 +660,7 @@ export const Basics = () => {
             <Route
               path="/models/:modelID/task-list/basics"
               exact
-              render={() => <BasicsContent />}
+              component={() => <BasicsContent />}
             />
             <Route
               path="/models/:modelID/task-list/basics/overview"
