@@ -11,6 +11,7 @@ type PlanParticipantsAndProviders struct {
 	//page 1
 	Participants                      pq.StringArray `json:"participants" db:"participants"`
 	MedicareProviderType              *string        `json:"medicareProviderType" db:"medicare_provider_type"`
+	IsNewTypeOfProvidersOrSuppliers   *bool          `json:"isNewTypeOfProvidersOrSuppliers" db:"is_new_type_of_providers_or_suppliers"`
 	StatesEngagement                  *string        `json:"statesEngagement" db:"states_engagement"`
 	ParticipantsOther                 *string        `json:"participantsOther" db:"participants_other"`
 	ParticipantsNote                  *string        `json:"participantsNote" db:"participants_note"`

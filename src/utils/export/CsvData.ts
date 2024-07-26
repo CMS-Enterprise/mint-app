@@ -164,6 +164,7 @@ const csvFields = [
   'participantsAndProviders.selectionNote',
   'participantsAndProviders.participants', // array
   'participantsAndProviders.medicareProviderType',
+  'participantsAndProviders.isNewTypeOfProvidersOrSuppliers',
   'participantsAndProviders.statesEngagement',
   'participantsAndProviders.participantsOther',
   'participantsAndProviders.participantsNote',
@@ -350,6 +351,8 @@ const csvFields = [
   'payments.affectsMedicareSecondaryPayerClaimsHow',
   'payments.affectsMedicareSecondaryPayerClaimsNote',
   'payments.payModelDifferentiation',
+  'payments.willBePaymentAdjustments',
+  'payments.willBePaymentAdjustmentsNote',
   'payments.expectedCalculationComplexityLevel',
   'payments.expectedCalculationComplexityLevelNote',
   'payments.claimsProcessingPrecedence',

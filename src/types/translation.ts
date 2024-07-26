@@ -415,8 +415,12 @@ export type TranslationGeneralCharacteristics = {
 
 // Participants and Providers
 export type TranslationParticipantsAndProviders = {
-  participants: TranslationFieldPropertiesWithOptions<ParticipantsType>;
+  participants: TranslationFieldPropertiesWithOptionsAndChildren<ParticipantsType>;
   medicareProviderType: TranslationFieldProperties;
+  isNewTypeOfProvidersOrSuppliers: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    ParticipantsType
+  >;
   statesEngagement: TranslationFieldProperties;
   participantsOther: TranslationFieldProperties;
   participantsNote: TranslationFieldProperties;
@@ -722,6 +726,11 @@ export type TranslationPayments = {
   affectsMedicareSecondaryPayerClaimsNote: TranslationFieldProperties;
   payModelDifferentiation: TranslationFieldPropertiesWithParent<PayType>;
   // Anticipating Dependencies
+  willBePaymentAdjustments: TranslationFieldPropertiesWithOptionsAndParent<
+    Bool,
+    PayType
+  >;
+  willBePaymentAdjustmentsNote: TranslationFieldProperties;
   creatingDependenciesBetweenServices: TranslationFieldPropertiesWithOptionsAndParent<
     Bool,
     PayType

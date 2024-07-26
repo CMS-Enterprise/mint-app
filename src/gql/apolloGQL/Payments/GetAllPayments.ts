@@ -31,6 +31,8 @@ export default gql(/* GraphQL */ `
         affectsMedicareSecondaryPayerClaimsHow
         affectsMedicareSecondaryPayerClaimsNote
         payModelDifferentiation
+        willBePaymentAdjustments
+        willBePaymentAdjustmentsNote
         creatingDependenciesBetweenServices
         creatingDependenciesBetweenServicesNote
         needsClaimsDataCollection

@@ -62,6 +62,7 @@ export const ParticipantsAndProvidersContent = () => {
 
   const {
     participants: participantsConfig,
+    isNewTypeOfProvidersOrSuppliers: isNewTypeOfProvidersOrSuppliersConfig,
     participantsCurrentlyInModels: participantsCurrentlyInModelsConfig
   } = usePlanTranslation('participantsAndProviders');
 
@@ -81,6 +82,7 @@ export const ParticipantsAndProvidersContent = () => {
     id,
     participants,
     medicareProviderType,
+    isNewTypeOfProvidersOrSuppliers,
     statesEngagement,
     participantsOther,
     participantsNote,
@@ -125,6 +127,7 @@ export const ParticipantsAndProvidersContent = () => {
     id: id ?? '',
     participants: participants ?? [],
     medicareProviderType: medicareProviderType ?? '',
+    isNewTypeOfProvidersOrSuppliers: isNewTypeOfProvidersOrSuppliers ?? null,
     statesEngagement: statesEngagement ?? '',
     participantsOther: participantsOther ?? '',
     participantsNote: participantsNote ?? '',
@@ -271,34 +274,63 @@ export const ParticipantsAndProvidersContent = () => {
                           {(values?.participants || []).includes(
                             ParticipantsType.MEDICARE_PROVIDERS
                           ) && (
-                            <FieldGroup
-                              scrollElement="medicareProviderType"
-                              error={!!flatErrors.medicareProviderType}
-                            >
-                              <Label
-                                htmlFor="participants-and-providers-medicare-type"
-                                className="text-normal"
+                            <>
+                              <FieldGroup
+                                scrollElement="medicareProviderType"
+                                error={!!flatErrors.medicareProviderType}
                               >
-                                {participantsAndProvidersT(
-                                  'medicareProviderType.label'
-                                )}
-                              </Label>
-                              <p className="text-base margin-0 line-height-body-3">
-                                {participantsAndProvidersT(
-                                  'medicareProviderType.sublabel'
-                                )}
-                              </p>
-                              <FieldErrorMsg>
-                                {flatErrors.medicareProviderType}
-                              </FieldErrorMsg>
-                              <Field
-                                as={TextAreaField}
-                                error={flatErrors.medicareProviderType}
-                                id="participants-and-providers-medicare-type"
-                                data-testid="participants-and-providers-medicare-type"
-                                name="medicareProviderType"
-                              />
-                            </FieldGroup>
+                                <Label
+                                  htmlFor="participants-and-providers-medicare-type"
+                                  className="text-normal"
+                                >
+                                  {participantsAndProvidersT(
+                                    'medicareProviderType.label'
+                                  )}
+                                </Label>
+                                <p className="text-base margin-0 line-height-body-3">
+                                  {participantsAndProvidersT(
+                                    'medicareProviderType.sublabel'
+                                  )}
+                                </p>
+                                <FieldErrorMsg>
+                                  {flatErrors.medicareProviderType}
+                                </FieldErrorMsg>
+                                <Field
+                                  as={TextAreaField}
+                                  error={flatErrors.medicareProviderType}
+                                  id="participants-and-providers-medicare-type"
+                                  data-testid="participants-and-providers-medicare-type"
+                                  name="medicareProviderType"
+                                />
+                              </FieldGroup>
+
+                              <FieldGroup
+                                scrollElement="isNewTypeOfProvidersOrSuppliers"
+                                error={
+                                  !!flatErrors.isNewTypeOfProvidersOrSuppliers
+                                }
+                              >
+                                <Label htmlFor="participants-and-providers-is-new-type">
+                                  {participantsAndProvidersT(
+                                    'isNewTypeOfProvidersOrSuppliers.label'
+                                  )}
+                                </Label>
+
+                                <FieldErrorMsg>
+                                  {flatErrors.isNewTypeOfProvidersOrSuppliers}
+                                </FieldErrorMsg>
+
+                                <BooleanRadio
+                                  field="isNewTypeOfProvidersOrSuppliers"
+                                  id="participants-and-providers-is-new-type"
+                                  value={values.isNewTypeOfProvidersOrSuppliers}
+                                  setFieldValue={setFieldValue}
+                                  options={
+                                    isNewTypeOfProvidersOrSuppliersConfig.options
+                                  }
+                                />
+                              </FieldGroup>
+                            </>
                           )}
 
                           {(values?.participants || []).includes(
