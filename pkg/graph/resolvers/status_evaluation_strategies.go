@@ -8,7 +8,10 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// GetAllStatusEvaluationStrategies returns all status evaluation strategies
+// GetAllStatusEvaluationStrategies returns all status evaluation strategies.
+// Strategies are typically evaluated in order they are returned, so it is important
+// to sort them in reverse chronological order so that the suggested status is the
+// most chronologically advanced possible suggestion.
 func GetAllStatusEvaluationStrategies() []StatusEvaluationStrategy {
 	return []StatusEvaluationStrategy{
 		&EndedStrategy{},
