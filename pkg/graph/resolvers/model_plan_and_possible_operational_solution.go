@@ -11,7 +11,7 @@ func ModelPlansByOperationalSolutionKey(
 	logger *zap.Logger,
 	store *storage.Store,
 	operationalSolutionKey models.OperationalSolutionKey,
-) ([]*models.ModelPlanAndOperationalSolution, error) {
+) ([]*models.ModelPlanAndPossibleOperationalSolution, error) {
 	return store.ModelPlanGetByOperationalSolutionKey(logger, operationalSolutionKey)
 }
 

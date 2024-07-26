@@ -1,8 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { useOktaAuth } from '@okta/okta-react';
 import {
   Card,
   Grid,
@@ -31,7 +29,6 @@ import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
-import Landing from 'views/Landing';
 import ModelPlansTable from 'views/ModelPlan/HomeTable';
 
 import ModelsBySolutions from './components/ModelsBySolutions';
@@ -49,12 +46,6 @@ const Home = () => {
   const flags = useFlags();
 
   const { message } = useMessage();
-
-  const { authState } = useOktaAuth();
-
-  const { pathname } = useLocation();
-
-  const isLanding: boolean = pathname === '/' && !authState?.isAuthenticated;
 
   const { data, loading } = useGetHomepageSettingsQuery();
 
@@ -313,7 +304,7 @@ const Home = () => {
         </>
       );
     }
-    return <>{isLanding ? <Landing /> : <NDABanner />}</>;
+    return <NDABanner />;
   };
 
   return <MainContent>{renderView()}</MainContent>;

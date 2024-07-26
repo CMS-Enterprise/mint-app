@@ -4,6 +4,7 @@ import { Button, ButtonGroup, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { ModelBySolutionStatus, OperationalSolutionKey } from 'gql/gen/graphql';
 
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { ModelsBySolutionType } from 'views/Home/components/ModelsBySolutions/table';
 
@@ -28,6 +29,8 @@ const ModelsBySolutionsBanner = ({
 }) => {
   const { t: customHomeT } = useTranslation('customHome');
 
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
+
   const selectedSolution = helpSolutions.find(
     solution => solution.enum === solutionKey
   );
@@ -36,7 +39,7 @@ const ModelsBySolutionsBanner = ({
     <div className="models-by-solutions">
       <div className="bg-primary-lighter radius-md padding-2">
         <Grid row className="flex-align-center">
-          <Grid desktop={{ col: 7 }}>
+          <Grid desktop={{ col: 7 }} tablet={{ col: 6 }}>
             <h3 className="margin-y-1">
               {selectedSolution?.name}{' '}
               {selectedSolution?.acronym
@@ -47,7 +50,10 @@ const ModelsBySolutionsBanner = ({
 
           <Grid
             desktop={{ col: 5 }}
-            className="models-by-solutions__banner-buttons"
+            tablet={{ col: 6 }}
+            className={classNames('models-by-solutions__banner-buttons', {
+              'row-reverse': !isMobile
+            })}
           >
             <ButtonGroup type="segmented">
               <Button

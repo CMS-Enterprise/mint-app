@@ -29,7 +29,10 @@ import Alert from 'components/shared/Alert';
 import MultiSelect from 'components/shared/MultiSelect';
 import { treatAsOtherSolutions } from 'views/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 
-import { HomepageLocationStateType, HomepageSettingsLocationType } from '.';
+import {
+  HomepageLocationStateType,
+  HomepageSettingsLocationType
+} from './settings';
 
 import './index.scss';
 

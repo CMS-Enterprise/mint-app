@@ -1,7 +1,11 @@
 .model-plan-table {
   th, td {
     position: relative;
-    word-break: break-word;
+    word-break: break-word;    
+  }
+
+  .usa-button {
+    line-height: inherit !important;
   }
 
   .usa-table-container--scrollable {

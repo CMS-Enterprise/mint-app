@@ -39,6 +39,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
 import Communication from './Communication';
@@ -496,27 +497,27 @@ export const ParticipantsAndProviders = () => {
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Switch>
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/participants-and-providers"
               exact
               render={() => <ParticipantsAndProvidersContent />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/participants-and-providers/participants-options"
               exact
               render={() => <ParticipantOptions />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/participants-and-providers/communication"
               exact
               render={() => <Communication />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/participants-and-providers/coordination"
               exact
               render={() => <Coordination />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/participants-and-providers/provider-options"
               exact
               render={() => <ProviderOptions />}
