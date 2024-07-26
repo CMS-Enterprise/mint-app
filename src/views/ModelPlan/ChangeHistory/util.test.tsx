@@ -14,6 +14,7 @@ import {
   documentUpdateType,
   extractReadyForReviewChanges,
   filterQueryAudits,
+  getActionText,
   getHeaderText,
   getNestedActionText,
   getSolutionOperationStatus,
@@ -834,7 +835,119 @@ describe('util.tsx', () => {
     expect(result3).toEqual(DatabaseOperation.UPDATE);
   });
 
-  describe('should return the correct header text for the database operation', () => {
+  describe('getActionText', () => {
+    it('should return the correct text for teamUpdate', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_COLLABORATOR,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: [
+          {
+            fieldName: 'team_roles',
+            old: null,
+            new: 'active',
+            changeType: AuditFieldChangeType.ANSWERED
+          }
+        ] as TranslatedAuditField[]
+      };
+      const result = getActionText(change);
+      expect(result).toBe(
+        i18next.t(
+          `changeHistory:teamChangeType.${AuditFieldChangeType.ANSWERED}`
+        )
+      );
+    });
+
+    it('should return the correct text for discussionUpdate', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_DISCUSSION,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.INSERT,
+        actorName: 'John Doe',
+        translatedFields: []
+      };
+
+      const result = getActionText(change);
+      expect(result).toBe(
+        i18next.t(`changeHistory:${change.tableName}Answered`)
+      );
+    });
+
+    it('should return the correct text for cRUpdate', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_CR,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: []
+      };
+
+      const result = getActionText(change);
+      expect(result).toBe(
+        i18next.t(`changeHistory:auditUpdateType.${change.action}`)
+      );
+    });
+
+    it('should return the correct text for tDLUpdate', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_TDL,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: []
+      };
+
+      const result = getActionText(change);
+      expect(result).toBe(
+        i18next.t(`changeHistory:auditUpdateType.${change.action}`)
+      );
+    });
+
+    it('should return the correct text for documentUpdate', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.PLAN_DOCUMENT,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: []
+      };
+
+      const result = getActionText(change);
+      expect(result).toBe(
+        i18next.t(
+          `changeHistory:documentChangeType.${documentUpdateType(change)}`
+        )
+      );
+    });
+
+    it('should return an empty string for unknown change type', () => {
+      const change: ChangeRecordType = {
+        __typename: 'TranslatedAudit',
+        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+        tableName: TableName.EXISTING_MODEL_LINK,
+        date: '2024-06-07T19:14:30.145659Z',
+        action: DatabaseOperation.UPDATE,
+        actorName: 'John Doe',
+        translatedFields: []
+      };
+
+      const result = getActionText(change);
+      expect(result).toBe('');
+    });
+  });
+
+  describe('getHeaderText', () => {
     it('should return newPlan for new model plan', () => {
       const change: ChangeRecordType = {
         __typename: 'TranslatedAudit',
