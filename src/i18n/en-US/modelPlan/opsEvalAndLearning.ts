@@ -314,7 +314,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     dbField: 'icd_note',
     label: 'Notes',
     isNote: true,
-    parentReferencesLabel: 'Interface Control Document (IDC) questions',
+    parentReferencesLabel: 'Interface Control Document (ICD) questions',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 2.08,
