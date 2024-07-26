@@ -92,6 +92,9 @@ var ModelStatusHumanized = map[ModelStatus]string{
 	ModelStatusCanceled:              "Canceled",
 }
 
+// modelStatusChronologicalIndex maps ModelStatus to a chronological index as defined by product
+// A lower index indicates an earlier status. If a value is not found for the provided status, -1 is returned.
+// This allows for easy comparison of statuses, which is useful for status calculation strategies
 var modelStatusChronologicalIndex = map[ModelStatus]int{
 	ModelStatusPlanDraft:             0,
 	ModelStatusPlanComplete:          1,
