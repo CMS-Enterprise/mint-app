@@ -11,7 +11,7 @@ type CsvExportLinkType = {
 export const CsvExportLink = ({
   modelPlanID
 }: CsvExportLinkType): React.ReactElement => {
-  const { t } = useTranslation('home');
+  const { t } = useTranslation('customHome');
 
   const { fetchSingleData, fetchAllData } = useFetchCSVData();
 

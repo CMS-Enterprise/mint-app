@@ -53,7 +53,6 @@ import feedback from './feedback';
 import footer from './footer';
 import general from './general';
 import header from './header';
-import home from './home';
 import landing from './landing';
 import plan from './modelPlan';
 import modelPlanTaskList from './modelPlanTaskList';
@@ -77,7 +76,6 @@ const enUS = {
   getAccess,
   header,
   helpAndKnowledge,
-  home,
   homepageSettings,
   landing,
   plan,
