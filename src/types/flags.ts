@@ -6,7 +6,6 @@ export type Flags = {
   feedbackEnabled: boolean;
   notificationsEnabled: boolean;
   changeHistoryEnabled: boolean;
-  customHomepageEnabled: boolean;
   changeHistoryReleaseDate: string;
 };
 

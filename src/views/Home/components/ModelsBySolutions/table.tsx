@@ -21,7 +21,7 @@ import { TranslationBasics } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
 import ModelsBySolutionsBanner, {
   StatusCategories
-} from 'views/HomeNew/components/ModelsBySolutions/banner';
+} from 'views/Home/components/ModelsBySolutions/banner';
 
 import ModelSolutionCard from './card';
 

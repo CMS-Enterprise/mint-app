@@ -46,7 +46,6 @@ describe('user', () => {
             feedbackEnabled: false,
             notificationsEnabled: false,
             changeHistoryEnabled: false,
-            customHomepageEnabled: false,
             changeHistoryReleaseDate: ''
           })
         ).toBe(false);

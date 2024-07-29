@@ -26,8 +26,7 @@ import FlagsWrapper from 'views/FlagsWrapper';
 import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import GetAccess from 'views/HelpAndKnowledge/Articles/GetAccess';
 import Home from 'views/Home';
-import HomeNew from 'views/HomeNew';
-import HomePageSettings from 'views/HomeNew/Settings';
+import HomePageSettings from 'views/Home/Settings';
 import Landing from 'views/Landing';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
@@ -118,18 +117,11 @@ const AppRoutes = () => {
           if (!authState?.isAuthenticated) {
             return <Landing />;
           }
-          if (flags.customHomepageEnabled) {
-            return <HomeNew />;
-          }
           return <Home />;
         }}
       />
 
-      <ProtectedRoute
-        path="/homepage-settings"
-        enabled={flags.customHomepageEnabled}
-        component={HomePageSettings}
-      />
+      <ProtectedRoute path="/homepage-settings" component={HomePageSettings} />
 
       <ProtectedRoute path="/notifications" component={Notifications} />
 

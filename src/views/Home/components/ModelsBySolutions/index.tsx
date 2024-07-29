@@ -11,7 +11,7 @@ import {
   HelpSolutionBaseType,
   helpSolutions
 } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import ModelsBySolutionTable from 'views/HomeNew/components/ModelsBySolutions/table';
+import ModelsBySolutionTable from 'views/Home/components/ModelsBySolutions/table';
 
 import './index.scss';
 

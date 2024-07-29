@@ -51,25 +51,15 @@ type CRTDLType =
   | GetCrtdLsQuery['modelPlan']['crs'][0]
   | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
-type ModelPlansTableProps =
-  | {
-      id: string;
-      type: ViewCustomizationType;
-      updateFavorite?: never;
-      hiddenColumns?: number[]; // indexes of columns to be hidden
-      canSearch?: boolean;
-      isHome?: boolean;
-      isAssessment?: boolean;
-    }
-  | {
-      id: string;
-      type: ViewCustomizationType.FOLLOWED_MODELS;
-      updateFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
-      hiddenColumns?: number[]; // indexes of columns to be hidden
-      canSearch?: boolean;
-      isHome?: boolean;
-      isAssessment?: boolean;
-    };
+type ModelPlansTableProps = {
+  id: string;
+  type: ViewCustomizationType;
+  updateFavorite?: (modelPlanID: string, type: UpdateFavoriteProps) => void;
+  hiddenColumns?: number[]; // indexes of columns to be hidden
+  canSearch?: boolean;
+  isHome?: boolean;
+  isAssessment?: boolean;
+};
 
 const ModelPlansTable = ({
   id,
@@ -122,7 +112,10 @@ const ModelPlansTable = ({
 
     const tableColumns: Record<ViewCustomizationType, string[]> = {
       [ViewCustomizationType.MY_MODEL_PLANS]: [...homeColumns],
-      [ViewCustomizationType.ALL_MODEL_PLANS]: [...homeColumns],
+      [ViewCustomizationType.ALL_MODEL_PLANS]: [
+        ...(!isHome ? ['isFavorite'] : []),
+        ...homeColumns
+      ],
       [ViewCustomizationType.FOLLOWED_MODELS]: ['isFavorite', ...homeColumns],
       [ViewCustomizationType.MODELS_WITH_CR_TDL]: [
         'modelName',
@@ -337,8 +330,12 @@ const ModelPlansTable = ({
           if (value) {
             return value
               .map(characteristics => {
-                return i18next.t(
-                  `generalCharacteristics:keyCharacteristics.options.${characteristics}`
+                return (
+                  <div key={characteristics}>
+                    {i18next.t(
+                      `generalCharacteristics:keyCharacteristics.options.${characteristics}`
+                    )}
+                  </div>
                 );
               })
               .join(', ');
@@ -363,7 +360,7 @@ const ModelPlansTable = ({
           return (
             <ul className="margin-0">
               {value.map((crtdl: CRTDLType) => (
-                <li>{crtdl.idNumber}</li>
+                <li key={crtdl.idNumber}>{crtdl.idNumber}</li>
               ))}
             </ul>
           );
@@ -476,15 +473,9 @@ const ModelPlansTable = ({
   const modelsStyle = (index: number) => {
     return {
       minWidth:
-        (type === ViewCustomizationType.FOLLOWED_MODELS &&
-          index === 0 &&
-          '50px') ||
-        (type === ViewCustomizationType.FOLLOWED_MODELS &&
-          index === 2 &&
-          '100px') ||
-        (type === ViewCustomizationType.FOLLOWED_MODELS &&
-          index === 3 &&
-          '100px') ||
+        (!isHome && index === 0 && '50px') ||
+        (!isHome && index === 2 && '100px') ||
+        (!isHome && index === 3 && '100px') ||
         '138px',
       padding: index === 0 ? '0' : 'auto',
       paddingTop: index === 0 ? '0rem' : 'auto',
@@ -542,11 +533,7 @@ const ModelPlansTable = ({
                     aria-sort={getColumnSortStatus(column)}
                     className="table-header"
                     scope="col"
-                    style={
-                      type === ViewCustomizationType.FOLLOWED_MODELS
-                        ? modelsStyle(index)
-                        : homeStyle(index)
-                    }
+                    style={!isHome ? modelsStyle(index) : homeStyle(index)}
                   >
                     <button
                       className={classNames(
@@ -649,7 +636,7 @@ const ModelPlansTable = ({
 };
 
 const RenderFilteredNameHistory = ({ names }: { names: string[] }) => {
-  const { t } = useTranslation('home');
+  const { t } = useTranslation('customHome');
   const [isShowingAllNames, setShowAllNames] = useState(false);
 
   const firstThreeNames = names.slice(0, 3);
