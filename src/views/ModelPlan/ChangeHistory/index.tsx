@@ -264,7 +264,8 @@ const ChangeHistory = () => {
             })}
           </span>
 
-          {createdDts < new Date().toISOString() && (
+          {createdDts <
+            new Date(flags.changeHistoryReleaseDate).toISOString() && (
             <div className="bg-white-opacity-50 margin-top-4 padding-y-1 padding-x-2">
               {t('changesSinceRelease', {
                 date: flags.changeHistoryReleaseDate
