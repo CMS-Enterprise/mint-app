@@ -92,6 +92,36 @@ var ModelStatusHumanized = map[ModelStatus]string{
 	ModelStatusCanceled:              "Canceled",
 }
 
+// modelStatusChronologicalIndex maps ModelStatus to a chronological index as defined by product
+// A lower index indicates an earlier status. If a value is not found for the provided status, -1 is returned.
+// This allows for easy comparison of statuses, which is useful for status calculation strategies
+var modelStatusChronologicalIndex = map[ModelStatus]int{
+	ModelStatusPlanDraft:             0,
+	ModelStatusPlanComplete:          1,
+	ModelStatusIcipComplete:          2,
+	ModelStatusInternalCmmiClearance: 3,
+	ModelStatusCmsClearance:          4,
+	ModelStatusHhsClearance:          5,
+	ModelStatusOmbAsrfClearance:      6,
+	ModelStatusCleared:               7,
+	ModelStatusAnnounced:             8,
+	ModelStatusActive:                9,
+	ModelStatusEnded:                 10,
+	ModelStatusPaused:                11,
+	ModelStatusCanceled:              12,
+}
+
+// GetModelStatusChronologicalIndex returns the chronological index of the ModelStatus
+// If a value is not found for the provided status, -1 is returned
+func GetModelStatusChronologicalIndex(ms ModelStatus) int {
+	index, ok := modelStatusChronologicalIndex[ms]
+	if !ok {
+		return -1
+	}
+
+	return index
+}
+
 // Humanize returns the human-readable string of a Model Status
 // if a value is not found for the provided status, an empty string is returned
 func (ms ModelStatus) Humanize() string {

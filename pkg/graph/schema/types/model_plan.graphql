@@ -62,6 +62,7 @@ type ModelPlan {
   discussions: [PlanDiscussion!]!
   payments: PlanPayments!
   status: ModelStatus!
+  anticipatedStatuses: [ModelStatus!]!
   isFavorite: Boolean!
   isCollaborator: Boolean!
   crs: [PlanCR!]!
