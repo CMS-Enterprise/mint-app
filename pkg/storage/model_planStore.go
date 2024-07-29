@@ -366,7 +366,7 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 func (s *Store) ModelPlanGetByOperationalSolutionKey(
 	logger *zap.Logger,
 	opSolKey models.OperationalSolutionKey,
-) ([]*models.ModelPlanAndOperationalSolution, error) {
+) ([]*models.ModelPlanAndPossibleOperationalSolution, error) {
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.GetByOperationalSolutionKey)
 	if err != nil {
@@ -378,7 +378,7 @@ func (s *Store) ModelPlanGetByOperationalSolutionKey(
 		"operational_solution_key": opSolKey,
 	}
 
-	var modelPlanAndOpSols []*models.ModelPlanAndOperationalSolution
+	var modelPlanAndOpSols []*models.ModelPlanAndPossibleOperationalSolution
 	err = stmt.Select(&modelPlanAndOpSols, arg)
 	if err != nil {
 		logger.Error(
@@ -387,7 +387,7 @@ func (s *Store) ModelPlanGetByOperationalSolutionKey(
 		)
 		return nil, &apperrors.QueryError{
 			Err:       err,
-			Model:     models.ModelPlanAndOperationalSolution{},
+			Model:     models.ModelPlanAndPossibleOperationalSolution{},
 			Operation: apperrors.QueryFetch,
 		}
 	}

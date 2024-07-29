@@ -72,18 +72,23 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersUpdate() {
 
 	pp, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
+	isNewTypeOfProvidersOrSuppliersExpected := true
 
 	changes := map[string]interface{}{
 		"confidenceNote":                       "This is a confidence note",
 		"recruitmentNote":                      "This is a recruitment note",
 		"estimateConfidence":                   string(models.ConfidenceSlightly),
 		"providerAdditionFrequencyContinually": "This is a provider addition frequency continually note",
+		"isNewTypeOfProvidersOrSuppliers":      isNewTypeOfProvidersOrSuppliersExpected,
 	}
 
 	updatedPP, err := PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	suite.EqualValues("This is a provider addition frequency continually note", *updatedPP.ProviderAdditionFrequencyContinually)
+	if suite.NotNil(updatedPP.IsNewTypeOfProvidersOrSuppliers) {
+		suite.EqualValues(isNewTypeOfProvidersOrSuppliersExpected, *updatedPP.IsNewTypeOfProvidersOrSuppliers)
+	}
 
 	suite.Nil(updatedPP.Participants)
 	suite.Nil(updatedPP.MedicareProviderType)

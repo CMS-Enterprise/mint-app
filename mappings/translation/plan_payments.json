@@ -297,6 +297,21 @@
           "order": 2.11
         },
         {
+          "gqlField": "willBePaymentAdjustments",
+          "goField": "WillBePaymentAdjustments",
+          "dbField": "will_be_payment_adjustments",
+          "label": "Will there be payment adjustments (positive or negative) applied?",
+          "sublabel": "Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.",
+          "questionTooltip": "Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          },
+          "order": 2.001
+        },
+        {
           "gqlField": "creatingDependenciesBetweenServices",
           "goField": "CreatingDependenciesBetweenServices",
           "dbField": "creating_dependencies_between_services",
@@ -695,6 +710,46 @@
         "GRANTS": "Grants"
       }
     }
+  },
+  "willBePaymentAdjustments": {
+    "gqlField": "willBePaymentAdjustments",
+    "goField": "WillBePaymentAdjustments",
+    "dbField": "will_be_payment_adjustments",
+    "label": "Will there be payment adjustments (positive or negative) applied?",
+    "sublabel": "Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.",
+    "questionTooltip": "Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "order": 2.001,
+    "parentRelation": {
+      "gqlField": "payType",
+      "goField": "PayType",
+      "dbField": "pay_type",
+      "label": "What will you pay?",
+      "sublabel": "If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.",
+      "questionTooltip": "If claims-based payments or non-claims-based payments are selected, there will be additional questions to answer.",
+      "dataType": "ENUM",
+      "formType": "CHECKBOX",
+      "order": 1.14,
+      "options": {
+        "CLAIMS_BASED_PAYMENTS": "Claims-Based Payments",
+        "NON_CLAIMS_BASED_PAYMENTS": "Non-Claims-Based Payments",
+        "GRANTS": "Grants"
+      }
+    }
+  },
+  "willBePaymentAdjustmentsNote": {
+    "gqlField": "willBePaymentAdjustmentsNote",
+    "goField": "WillBePaymentAdjustmentsNote",
+    "dbField": "will_be_payment_adjustments_note",
+    "label": "Notes",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.002
   },
   "creatingDependenciesBetweenServices": {
     "gqlField": "creatingDependenciesBetweenServices",

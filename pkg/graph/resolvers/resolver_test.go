@@ -38,7 +38,7 @@ func (suite *ResolverSuite) SetupTest() {
 // getTestPrincipal gets a user principal from database
 func (suite *ResolverSuite) getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(),
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(suite.testConfigs.Context,
 		store,
 		store,
 		userName,

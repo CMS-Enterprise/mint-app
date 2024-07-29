@@ -442,6 +442,7 @@ type PlanOpsEvalAndLearningTranslation struct {
 type PlanParticipantsAndProvidersTranslation struct {
 	Participants                              models.TranslationFieldWithOptions            `json:"participants" db:"participants"`
 	MedicareProviderType                      models.TranslationField                       `json:"medicareProviderType" db:"medicare_provider_type"`
+	IsNewTypeOfProvidersOrSuppliers           models.TranslationFieldWithOptionsAndParent   `json:"isNewTypeOfProvidersOrSuppliers" db:"is_new_type_of_providers_or_suppliers"`
 	StatesEngagement                          models.TranslationField                       `json:"statesEngagement" db:"states_engagement"`
 	ParticipantsOther                         models.TranslationField                       `json:"participantsOther" db:"participants_other"`
 	ParticipantsNote                          models.TranslationField                       `json:"participantsNote" db:"participants_note"`
@@ -539,6 +540,8 @@ type PlanPaymentsTranslation struct {
 	AffectsMedicareSecondaryPayerClaimsHow            models.TranslationField                       `json:"affectsMedicareSecondaryPayerClaimsHow" db:"affects_medicare_secondary_payer_claims_how"`
 	AffectsMedicareSecondaryPayerClaimsNote           models.TranslationField                       `json:"affectsMedicareSecondaryPayerClaimsNote" db:"affects_medicare_secondary_payer_claims_note"`
 	PayModelDifferentiation                           models.TranslationFieldWithParent             `json:"payModelDifferentiation" db:"pay_model_differentiation"`
+	WillBePaymentAdjustments                          models.TranslationFieldWithOptionsAndParent   `json:"willBePaymentAdjustments" db:"will_be_payment_adjustments"`
+	WillBePaymentAdjustmentsNote                      models.TranslationField                       `json:"willBePaymentAdjustmentsNote" db:"will_be_payment_adjustments_note"`
 	CreatingDependenciesBetweenServices               models.TranslationFieldWithOptionsAndParent   `json:"creatingDependenciesBetweenServices" db:"creating_dependencies_between_services"`
 	CreatingDependenciesBetweenServicesNote           models.TranslationField                       `json:"creatingDependenciesBetweenServicesNote" db:"creating_dependencies_between_services_note"`
 	NeedsClaimsDataCollection                         models.TranslationFieldWithOptionsAndParent   `json:"needsClaimsDataCollection" db:"needs_claims_data_collection"`

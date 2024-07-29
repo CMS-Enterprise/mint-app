@@ -5,6 +5,7 @@ type PlanParticipantsAndProvidersTranslation {
   #Page 1
   participants: TranslationFieldWithOptions! @goTag(key: "db", value: "participants")
   medicareProviderType: TranslationField! @goTag(key: "db", value: "medicare_provider_type")
+  isNewTypeOfProvidersOrSuppliers: TranslationFieldWithOptionsAndParent! @goTag(key: "db" value: "is_new_type_of_providers_or_suppliers")
   statesEngagement: TranslationField! @goTag(key: "db", value: "states_engagement")
   participantsOther: TranslationField! @goTag(key: "db", value: "participants_other")
   participantsNote: TranslationField! @goTag(key: "db", value: "participants_note")

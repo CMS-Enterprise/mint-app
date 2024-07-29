@@ -33,6 +33,8 @@ type PlanPaymentsTranslation {
   payModelDifferentiation: TranslationFieldWithParent! @goTag(key: "db", value: "pay_model_differentiation")
 
   # Page 3
+  willBePaymentAdjustments:TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "will_be_payment_adjustments")
+  willBePaymentAdjustmentsNote: TranslationField! @goTag(key: "db", value: "will_be_payment_adjustments_note")
   creatingDependenciesBetweenServices: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "creating_dependencies_between_services")
   creatingDependenciesBetweenServicesNote: TranslationField! @goTag(key: "db", value: "creating_dependencies_between_services_note")
   needsClaimsDataCollection: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "needs_claims_data_collection")

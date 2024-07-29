@@ -137,9 +137,11 @@ exports[`The home page > matches setting snapshot 1`] = `
                 >
                   Did you know you can customize this page?
                 </p>
-                <div>
+                <div
+                  class="row-reverse"
+                >
                   <a
-                    class="display-flex flex-align-center"
+                    class="display-flex flex-align-center usa-button--unstyled"
                     href="/homepage-settings"
                   >
                     <svg

@@ -29,6 +29,23 @@
     },
     "optionsLabels": {
       "MEDICARE_PROVIDERS": "Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc."
+    },
+    "childRelation": {
+      "MEDICARE_PROVIDERS": [
+        {
+          "gqlField": "isNewTypeOfProvidersOrSuppliers",
+          "goField": "IsNewTypeOfProvidersOrSuppliers",
+          "dbField": "is_new_type_of_providers_or_suppliers",
+          "label": "Are any of these a new type of provider/supplier?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          },
+          "order": 1.021
+        }
+      ]
     }
   },
   "medicareProviderType": {
@@ -42,6 +59,51 @@
     "order": 1.02,
     "isOtherType": true,
     "otherParentField": "participants"
+  },
+  "isNewTypeOfProvidersOrSuppliers": {
+    "gqlField": "isNewTypeOfProvidersOrSuppliers",
+    "goField": "IsNewTypeOfProvidersOrSuppliers",
+    "dbField": "is_new_type_of_providers_or_suppliers",
+    "label": "Are any of these a new type of provider/supplier?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "order": 1.021,
+    "parentRelation": {
+      "gqlField": "participants",
+      "goField": "Participants",
+      "dbField": "participants",
+      "label": "Who are the participants? Select all that apply.",
+      "readonlyLabel": "Who are the participants?",
+      "exportLabel": "Who are the participants?",
+      "multiSelectLabel": "Selected participants",
+      "dataType": "ENUM",
+      "formType": "MULTISELECT",
+      "order": 1.01,
+      "options": {
+        "ACCOUNTABLE_CARE_ORGANIZATION": "Accountable Care Organization (ACO)",
+        "COMMERCIAL_PAYERS": "Commercial payers",
+        "COMMUNITY_BASED_ORGANIZATIONS": "Community-based organizations (CBO)",
+        "CONVENER": "Convener",
+        "ENTITIES": "Legal Entities",
+        "MEDICAID_MANAGED_CARE_ORGANIZATIONS": "Medicaid Managed Care organizations",
+        "MEDICAID_PROVIDERS": "Medicaid providers",
+        "MEDICARE_ADVANTAGE_PLANS": "Medicare Advantage plans",
+        "MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS": "Medicare Advantage Prescription Drug (MAPD) plans",
+        "MEDICARE_PROVIDERS": "Medicare providers/suppliers",
+        "NON_PROFIT_ORGANIZATIONS": "Non-profit organizations",
+        "STANDALONE_PART_D_PLANS": "Standalone Part D plans",
+        "STATES": "States",
+        "STATE_MEDICAID_AGENCIES": "State Medicaid agencies",
+        "OTHER": "Other"
+      },
+      "optionsLabels": {
+        "MEDICARE_PROVIDERS": "Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc."
+      }
+    }
   },
   "statesEngagement": {
     "gqlField": "statesEngagement",

@@ -281,6 +281,7 @@ export const payments: TranslationPayments = {
         () => payments.changesMedicarePhysicianFeeSchedule,
         () => payments.affectsMedicareSecondaryPayerClaims,
         () => payments.payModelDifferentiation,
+        () => payments.willBePaymentAdjustments,
         () => payments.creatingDependenciesBetweenServices,
         () => payments.needsClaimsDataCollection,
         () => payments.providingThirdPartyFile,
@@ -497,6 +498,35 @@ export const payments: TranslationPayments = {
     formType: TranslationFormType.TEXTAREA,
     order: 2.11,
     parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
+  },
+  willBePaymentAdjustments: {
+    gqlField: 'willBePaymentAdjustments',
+    goField: 'WillBePaymentAdjustments',
+    dbField: 'will_be_payment_adjustments',
+    label: 'Will there be payment adjustments (positive or negative) applied?',
+    sublabel:
+      'Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.',
+    questionTooltip:
+      'Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    order: 2.001,
+    parentRelation: () => payments.payType,
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
+  },
+  willBePaymentAdjustmentsNote: {
+    gqlField: 'willBePaymentAdjustmentsNote',
+    goField: 'WillBePaymentAdjustmentsNote',
+    dbField: 'will_be_payment_adjustments_note',
+    label: 'Notes',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.002,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   creatingDependenciesBetweenServices: {
