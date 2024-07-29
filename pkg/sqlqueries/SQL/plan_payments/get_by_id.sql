@@ -23,6 +23,8 @@ SELECT
     affects_medicare_secondary_payer_claims_how,
     affects_medicare_secondary_payer_claims_note,
     pay_model_differentiation,
+    will_be_payment_adjustments,
+    will_be_payment_adjustments_note,
     creating_dependencies_between_services,
     creating_dependencies_between_services_note,
     needs_claims_data_collection,

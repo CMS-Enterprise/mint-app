@@ -870,6 +870,7 @@ type ComplexityRoot struct {
 		GainsharePaymentsNote                     func(childComplexity int) int
 		GainsharePaymentsTrack                    func(childComplexity int) int
 		ID                                        func(childComplexity int) int
+		IsNewTypeOfProvidersOrSuppliers           func(childComplexity int) int
 		MedicareProviderType                      func(childComplexity int) int
 		ModelApplicationLevel                     func(childComplexity int) int
 		ModelPlanID                               func(childComplexity int) int
@@ -1021,6 +1022,8 @@ type ComplexityRoot struct {
 		WaiveBeneficiaryCostSharingNote                   func(childComplexity int) int
 		WaiveBeneficiaryCostSharingServiceSpecification   func(childComplexity int) int
 		WaiverOnlyAppliesPartOfPayment                    func(childComplexity int) int
+		WillBePaymentAdjustments                          func(childComplexity int) int
+		WillBePaymentAdjustmentsNote                      func(childComplexity int) int
 		WillRecoverPayments                               func(childComplexity int) int
 		WillRecoverPaymentsNote                           func(childComplexity int) int
 	}
@@ -6429,6 +6432,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanParticipantsAndProviders.ID(childComplexity), true
 
+	case "PlanParticipantsAndProviders.isNewTypeOfProvidersOrSuppliers":
+		if e.complexity.PlanParticipantsAndProviders.IsNewTypeOfProvidersOrSuppliers == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.IsNewTypeOfProvidersOrSuppliers(childComplexity), true
+
 	case "PlanParticipantsAndProviders.medicareProviderType":
 		if e.complexity.PlanParticipantsAndProviders.MedicareProviderType == nil {
 			break
@@ -7464,6 +7474,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanPayments.WaiverOnlyAppliesPartOfPayment(childComplexity), true
+
+	case "PlanPayments.willBePaymentAdjustments":
+		if e.complexity.PlanPayments.WillBePaymentAdjustments == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.WillBePaymentAdjustments(childComplexity), true
+
+	case "PlanPayments.willBePaymentAdjustmentsNote":
+		if e.complexity.PlanPayments.WillBePaymentAdjustmentsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.WillBePaymentAdjustmentsNote(childComplexity), true
 
 	case "PlanPayments.willRecoverPayments":
 		if e.complexity.PlanPayments.WillRecoverPayments == nil {
@@ -10983,6 +11007,7 @@ type PlanParticipantsAndProviders {
   #Page 1
   participants:                      [ParticipantsType!]!
   medicareProviderType:              String
+  isNewTypeOfProvidersOrSuppliers: Boolean
   statesEngagement:                  String
   participantsOther:                 String
   participantsNote:                  String
@@ -11082,6 +11107,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   #Page 1
   participants:                      [ParticipantsType!]
   medicareProviderType:              String
+  isNewTypeOfProvidersOrSuppliers: Boolean
   statesEngagement:                  String
   participantsOther:                 String
   participantsNote:                  String
@@ -11249,6 +11275,8 @@ type PlanPayments {
   payModelDifferentiation:                        String
 
   # Page 3
+  willBePaymentAdjustments: Boolean
+  willBePaymentAdjustmentsNote: String
   creatingDependenciesBetweenServices:     Boolean
   creatingDependenciesBetweenServicesNote: String
   needsClaimsDataCollection:               Boolean
@@ -11358,6 +11386,8 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   payModelDifferentiation:                        String
 
   # Page 3
+  willBePaymentAdjustments: Boolean
+  willBePaymentAdjustmentsNote: String
   creatingDependenciesBetweenServices:     Boolean
   creatingDependenciesBetweenServicesNote: String
   needsClaimsDataCollection:               Boolean
@@ -20609,6 +20639,8 @@ func (ec *executionContext) fieldContext_ModelPlan_participantsAndProviders(ctx 
 				return ec.fieldContext_PlanParticipantsAndProviders_participants(ctx, field)
 			case "medicareProviderType":
 				return ec.fieldContext_PlanParticipantsAndProviders_medicareProviderType(ctx, field)
+			case "isNewTypeOfProvidersOrSuppliers":
+				return ec.fieldContext_PlanParticipantsAndProviders_isNewTypeOfProvidersOrSuppliers(ctx, field)
 			case "statesEngagement":
 				return ec.fieldContext_PlanParticipantsAndProviders_statesEngagement(ctx, field)
 			case "participantsOther":
@@ -21499,6 +21531,10 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
 			case "payModelDifferentiation":
 				return ec.fieldContext_PlanPayments_payModelDifferentiation(ctx, field)
+			case "willBePaymentAdjustments":
+				return ec.fieldContext_PlanPayments_willBePaymentAdjustments(ctx, field)
+			case "willBePaymentAdjustmentsNote":
+				return ec.fieldContext_PlanPayments_willBePaymentAdjustmentsNote(ctx, field)
 			case "creatingDependenciesBetweenServices":
 				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx, field)
 			case "creatingDependenciesBetweenServicesNote":
@@ -26541,6 +26577,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 				return ec.fieldContext_PlanParticipantsAndProviders_participants(ctx, field)
 			case "medicareProviderType":
 				return ec.fieldContext_PlanParticipantsAndProviders_medicareProviderType(ctx, field)
+			case "isNewTypeOfProvidersOrSuppliers":
+				return ec.fieldContext_PlanParticipantsAndProviders_isNewTypeOfProvidersOrSuppliers(ctx, field)
 			case "statesEngagement":
 				return ec.fieldContext_PlanParticipantsAndProviders_statesEngagement(ctx, field)
 			case "participantsOther":
@@ -26828,6 +26866,10 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
 			case "payModelDifferentiation":
 				return ec.fieldContext_PlanPayments_payModelDifferentiation(ctx, field)
+			case "willBePaymentAdjustments":
+				return ec.fieldContext_PlanPayments_willBePaymentAdjustments(ctx, field)
+			case "willBePaymentAdjustmentsNote":
+				return ec.fieldContext_PlanPayments_willBePaymentAdjustmentsNote(ctx, field)
 			case "creatingDependenciesBetweenServices":
 				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx, field)
 			case "creatingDependenciesBetweenServicesNote":
@@ -47168,6 +47210,47 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_medicarePr
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanParticipantsAndProviders_isNewTypeOfProvidersOrSuppliers(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_isNewTypeOfProvidersOrSuppliers(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsNewTypeOfProvidersOrSuppliers, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_isNewTypeOfProvidersOrSuppliers(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanParticipantsAndProviders_statesEngagement(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanParticipantsAndProviders_statesEngagement(ctx, field)
 	if err != nil {
@@ -51536,6 +51619,88 @@ func (ec *executionContext) _PlanPayments_payModelDifferentiation(ctx context.Co
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_payModelDifferentiation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_willBePaymentAdjustments(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_willBePaymentAdjustments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WillBePaymentAdjustments, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_willBePaymentAdjustments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_willBePaymentAdjustmentsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_willBePaymentAdjustmentsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WillBePaymentAdjustmentsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_willBePaymentAdjustmentsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -58378,6 +58543,10 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
 			case "payModelDifferentiation":
 				return ec.fieldContext_PlanPayments_payModelDifferentiation(ctx, field)
+			case "willBePaymentAdjustments":
+				return ec.fieldContext_PlanPayments_willBePaymentAdjustments(ctx, field)
+			case "willBePaymentAdjustmentsNote":
+				return ec.fieldContext_PlanPayments_willBePaymentAdjustmentsNote(ctx, field)
 			case "creatingDependenciesBetweenServices":
 				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx, field)
 			case "creatingDependenciesBetweenServicesNote":
@@ -74820,6 +74989,8 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "medicareProviderType":
 			out.Values[i] = ec._PlanParticipantsAndProviders_medicareProviderType(ctx, field, obj)
+		case "isNewTypeOfProvidersOrSuppliers":
+			out.Values[i] = ec._PlanParticipantsAndProviders_isNewTypeOfProvidersOrSuppliers(ctx, field, obj)
 		case "statesEngagement":
 			out.Values[i] = ec._PlanParticipantsAndProviders_statesEngagement(ctx, field, obj)
 		case "participantsOther":
@@ -75780,6 +75951,10 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			out.Values[i] = ec._PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field, obj)
 		case "payModelDifferentiation":
 			out.Values[i] = ec._PlanPayments_payModelDifferentiation(ctx, field, obj)
+		case "willBePaymentAdjustments":
+			out.Values[i] = ec._PlanPayments_willBePaymentAdjustments(ctx, field, obj)
+		case "willBePaymentAdjustmentsNote":
+			out.Values[i] = ec._PlanPayments_willBePaymentAdjustmentsNote(ctx, field, obj)
 		case "creatingDependenciesBetweenServices":
 			out.Values[i] = ec._PlanPayments_creatingDependenciesBetweenServices(ctx, field, obj)
 		case "creatingDependenciesBetweenServicesNote":

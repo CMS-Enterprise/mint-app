@@ -70,6 +70,8 @@ const AnticipateDependencies = () => {
     id,
     payType,
     payClaims,
+    willBePaymentAdjustments,
+    willBePaymentAdjustmentsNote,
     creatingDependenciesBetweenServices,
     creatingDependenciesBetweenServicesNote,
     needsClaimsDataCollection,
@@ -131,6 +133,8 @@ const AnticipateDependencies = () => {
     id: id ?? '',
     payType: payType ?? [],
     payClaims: payClaims ?? [],
+    willBePaymentAdjustments: willBePaymentAdjustments ?? null,
+    willBePaymentAdjustmentsNote: willBePaymentAdjustmentsNote ?? '',
     creatingDependenciesBetweenServices:
       creatingDependenciesBetweenServices ?? null,
     creatingDependenciesBetweenServicesNote:
@@ -235,6 +239,42 @@ const AnticipateDependencies = () => {
                         >
                           {paymentsMiscT('claimSpecificQuestionsContinued')}
                         </PageHeading>
+
+                        <FieldGroup
+                          scrollElement="willBePaymentAdjustments"
+                          error={!!flatErrors.willBePaymentAdjustments}
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="willBePaymentAdjustments"
+                            className="maxw-none"
+                          >
+                            {paymentsT('willBePaymentAdjustments.label')}
+                          </Label>
+
+                          <p className="text-base margin-y-1">
+                            {paymentsT('willBePaymentAdjustments.sublabel')}
+                          </p>
+
+                          <FieldErrorMsg>
+                            {flatErrors.willBePaymentAdjustments}
+                          </FieldErrorMsg>
+
+                          <BooleanRadio
+                            field="willBePaymentAdjustments"
+                            id="payment-will-be-payment-adjustments"
+                            value={values.willBePaymentAdjustments}
+                            setFieldValue={setFieldValue}
+                            options={
+                              creatingDependenciesBetweenServicesConfig.options
+                            }
+                          />
+
+                          <AddNote
+                            id="payment-will-be-payment-adjustments-note"
+                            field="willBePaymentAdjustmentsNote"
+                          />
+                        </FieldGroup>
 
                         <FieldGroup
                           scrollElement="creatingDependenciesBetweenServices"
