@@ -503,34 +503,29 @@ task :mockgen do
     dir_name.split('/').any? { |dir| dir.start_with?(mock_prefix) }
   end
 
-  progressbar = TTY::ProgressBar.new("Generating mocks [:bar] :percent :eta", total: files.length, clear: true)
+  # Filter out files that do not need to be regenerated
+  files_to_process = files.reject do |file|
+    package_name = File.basename(File.dirname(file))
+    mock_package_name = "mock#{package_name}"
+    mock_dir = File.join(File.dirname(file), mock_package_name)
+    mock_file = File.join(mock_dir, "mock_#{File.basename(file)}")
 
-  files.each do |file|
+    File.exist?(mock_file) && File.mtime(mock_file) >= File.mtime(file)
+  end
+
+  progressbar = TTY::ProgressBar.new("Generating mocks [:bar] :percent :eta", total: files_to_process.length, clear: true)
+
+  files_to_process.each do |file|
     package_name = File.basename(File.dirname(file))
     mock_package_name = "mock#{package_name}"
     mock_dir = File.join(File.dirname(file), mock_package_name)
     FileUtils.mkdir_p(mock_dir)
     mock_file = File.join(mock_dir, "mock_#{File.basename(file)}")
-    temp_file = "#{mock_file}.tmp"
 
-    # Check if the mock file needs to be updated
-    if File.exist?(mock_file) && File.mtime(mock_file) >= File.mtime(file)
-      puts "Skipped up-to-date mock file for #{file}"
-      progressbar.advance
-      next
-    end
+    sh "mockgen -source=#{file} -destination=#{mock_file} -package=#{mock_package_name}"
+    puts "Generated #{mock_file}"
 
-    sh "mockgen -source=#{file} -destination=#{temp_file} -package=#{mock_package_name}"
-
-    if File.size(temp_file) > 100 # Adjust the size threshold as needed
-      FileUtils.mv(temp_file, mock_file)
-      puts "Generated #{mock_file}"
-    else
-      File.delete(temp_file)
-      puts "Skipped empty mock file for #{file}"
-    end
-
-    progressbar.advance
+    progressbar.advance(1)
   end
 
   progressbar.finish
