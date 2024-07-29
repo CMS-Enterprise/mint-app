@@ -25,7 +25,7 @@ const ModelSolutionCard = ({
 
   const basicsConfig = usePlanTranslation('basics');
 
-  const { id, basics, modelName, status } = modelPlan;
+  const { id, basics, modelName, abbreviation, status } = modelPlan;
 
   return (
     <Card
@@ -38,6 +38,7 @@ const ModelSolutionCard = ({
             <h3 className="model-solution-card__title margin-top-0">
               <UswdsReactLink to={`/models/${id}/read-view`}>
                 {modelName}
+                {abbreviation ? ` (${abbreviation})` : ''}
               </UswdsReactLink>
             </h3>
           </Grid>
@@ -64,7 +65,7 @@ const ModelSolutionCard = ({
 
           <Grid desktop={{ col: 12 }}>
             <Grid row gap>
-              <Grid desktop={{ col: 6 }}>
+              <Grid desktop={{ col: 6 }} mobile={{ col: 6 }}>
                 <p className="text-bold margin-bottom-0 margin-right-1">
                   {customHomeT('solutionCard.startDate')}
                 </p>
@@ -79,7 +80,7 @@ const ModelSolutionCard = ({
                 </p>
               </Grid>
 
-              <Grid desktop={{ col: 6 }}>
+              <Grid desktop={{ col: 6 }} mobile={{ col: 6 }}>
                 <p className="text-bold margin-bottom-0 margin-right-1">
                   {customHomeT('solutionCard.endDate')}
                 </p>

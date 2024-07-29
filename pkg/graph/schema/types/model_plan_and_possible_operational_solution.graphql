@@ -1,0 +1,23 @@
+enum ModelBySolutionStatus {
+  PLANNED
+  ACTIVE
+  ENDED
+  OTHER
+}
+
+extend type ModelPlan {
+  modelBySolutionStatus: ModelBySolutionStatus!
+}
+
+type ModelPlanAndPossibleOperationalSolution {
+  possibleOperationalSolution: PossibleOperationalSolution!
+  possibleOperationalSolutionID: Int!
+  key: OperationalSolutionKey!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+}
+
+extend type Query {
+  modelPlansByOperationalSolutionKey(operationalSolutionKey: OperationalSolutionKey!): [ModelPlanAndPossibleOperationalSolution!]!
+  @hasRole(role: MINT_USER)
+}

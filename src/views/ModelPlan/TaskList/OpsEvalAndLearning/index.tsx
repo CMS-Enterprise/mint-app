@@ -45,6 +45,7 @@ import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
 import CCWAndQuality from './CCWAndQuality';
@@ -558,47 +559,47 @@ export const OpsEvalAndLearning = () => {
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Switch>
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/ops-eval-and-learning"
               exact
               render={() => <OpsEvalAndLearningContent />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/ops-eval-and-learning/iddoc"
               exact
               render={() => <IDDOC />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/ops-eval-and-learning/iddoc-testing"
               exact
               render={() => <IDDOCTesting />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/ops-eval-and-learning/iddoc-monitoring"
               exact
               render={() => <IDDOCMonitoring />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/ops-eval-and-learning/performance"
               exact
               render={() => <Performance />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/ops-eval-and-learning/evaluation"
               exact
               render={() => <Evaluation />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/ops-eval-and-learning/ccw-and-quality"
               exact
               render={() => <CCWAndQuality />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/ops-eval-and-learning/data-sharing"
               exact
               render={() => <DataSharing />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/ops-eval-and-learning/learning"
               exact
               render={() => <Learning />}

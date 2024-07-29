@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
 import AddCustomSolution from './AddCustomSolution';
@@ -21,79 +22,71 @@ const ITSolutions = () => {
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Switch>
-            <Route path="/models/:modelID/task-list/it-solutions" exact>
-              <ITSolutionsHome />
-            </Route>
+            <ProtectedRoute
+              path="/models/:modelID/task-list/it-solutions"
+              component={ITSolutionsHome}
+              exact
+            />
 
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/it-solutions/add-an-operational-need"
+              component={AddOrUpdateOperationalNeed}
               exact
-            >
-              <AddOrUpdateOperationalNeed />
-            </Route>
+            />
 
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/it-solutions/update-need/:operationalNeedID?"
+              component={AddOrUpdateOperationalNeed}
               exact
-            >
-              <AddOrUpdateOperationalNeed />
-            </Route>
+            />
 
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions"
+              component={SelectSolutions}
               exact
-            >
-              <SelectSolutions />
-            </Route>
+            />
 
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution/:operationalSolutionID?"
+              component={AddSolution}
               exact
-            >
-              <AddSolution />
-            </Route>
+            />
 
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID?"
+              component={AddCustomSolution}
               exact
-            >
-              <AddCustomSolution />
-            </Route>
+            />
 
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details/:solutionId?"
+              component={SolutionImplementation}
               exact
-            >
-              <SolutionImplementation />
-            </Route>
+            />
 
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/solution-details"
+              component={SolutionDetails}
               exact
-            >
-              <SolutionDetails />
-            </Route>
+            />
 
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks"
+              component={Subtasks}
               exact
-            >
-              <Subtasks />
-            </Route>
+            />
 
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/manage-subtasks"
+              render={props => <Subtasks {...props} managingSubtasks />}
               exact
-            >
-              <Subtasks managingSubtasks />
-            </Route>
+            />
 
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents"
+              component={LinkDocuments}
               exact
-            >
-              <LinkDocuments />
-            </Route>
+            />
 
             <Route path="*" render={() => <NotFoundPartial />} />
           </Switch>

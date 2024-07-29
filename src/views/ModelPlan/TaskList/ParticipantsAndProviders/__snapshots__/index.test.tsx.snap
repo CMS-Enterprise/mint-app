@@ -367,6 +367,61 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
               </div>
               <div
                 class="usa-form-group"
+                data-scroll="isNewTypeOfProvidersOrSuppliers"
+              >
+                <label
+                  class="usa-label"
+                  data-testid="label"
+                  for="participants-and-providers-is-new-type"
+                >
+                  Are any of these a new type of provider/supplier?
+                </label>
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="participants-and-providers-is-new-type-true"
+                      id="participants-and-providers-is-new-type-true"
+                      name="isNewTypeOfProvidersOrSuppliers"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="participants-and-providers-is-new-type-true"
+                    >
+                      Yes
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="participants-and-providers-is-new-type-false"
+                      id="participants-and-providers-is-new-type-false"
+                      name="isNewTypeOfProvidersOrSuppliers"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="participants-and-providers-is-new-type-false"
+                    >
+                      No
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div
+                class="usa-form-group"
                 data-scroll="statesEngagement"
               >
                 <label

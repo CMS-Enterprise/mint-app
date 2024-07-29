@@ -17,12 +17,16 @@ var possibleOperationalSolutionGetByIDSQL string
 //go:embed SQL/possible_operational_solution/get_by_key.sql
 var possibleOperationalSolutionGetByKeySQL string
 
+//go:embed SQL/possible_operational_solution/get_by_keys.sql
+var possibleOperationalSolutionGetByKeysSQL string
+
 type possibleOperationalSolutionScripts struct {
 	CollectionByNeedType        string
 	CollectionGetAll            string
 	CollectionByOperationalNeed string
 	GetByID                     string
 	GetByKey                    string
+	GetByKeys                   string
 }
 
 // PossibleOperationalSolution houses all the sql for getting data for possible operational solution from the database
@@ -32,4 +36,5 @@ var PossibleOperationalSolution = possibleOperationalSolutionScripts{
 	CollectionByOperationalNeed: possibleOperationalSolutionCollectionByOperationalNeedIDSQL,
 	GetByID:                     possibleOperationalSolutionGetByIDSQL,
 	GetByKey:                    possibleOperationalSolutionGetByKeySQL,
+	GetByKeys:                   possibleOperationalSolutionGetByKeysSQL,
 }

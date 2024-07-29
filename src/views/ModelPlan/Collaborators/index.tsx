@@ -27,6 +27,7 @@ import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
@@ -310,12 +311,12 @@ export const CollaboratorsContent = () => {
 const Collaborators = () => {
   return (
     <Switch>
-      <Route
+      <ProtectedRoute
         path="/models/:modelID/collaborators"
         exact
         render={() => <CollaboratorsContent />}
       />
-      <Route
+      <ProtectedRoute
         path="/models/:modelID/collaborators/add-collaborator/:collaboratorId?"
         exact
         render={() => <AddCollaborator />}

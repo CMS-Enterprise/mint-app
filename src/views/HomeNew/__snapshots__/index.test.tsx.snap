@@ -137,9 +137,11 @@ exports[`The home page > matches setting snapshot 1`] = `
                 >
                   Did you know you can customize this page?
                 </p>
-                <div>
+                <div
+                  class="row-reverse"
+                >
                   <a
-                    class="display-flex flex-align-center"
+                    class="display-flex flex-align-center usa-button--unstyled"
                     href="/homepage-settings"
                   >
                     <svg
@@ -193,6 +195,7 @@ exports[`The home page > matches setting snapshot 1`] = `
           </h2>
           <div
             class="model-plan-table"
+            data-testid="all-model-plans-table-wrapper"
           >
             <div
               class="mint-header__basic display-flex flex-justify flex-align-self-start"
@@ -632,6 +635,7 @@ exports[`The home page > matches setting snapshot 1`] = `
           </p>
           <div
             class="model-plan-table"
+            data-testid="my-model-plans-table-wrapper"
           >
             <div
               class="mint-header__basic display-flex flex-justify flex-align-self-start"

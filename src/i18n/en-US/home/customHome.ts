@@ -20,7 +20,7 @@ const settings: HomepageSettingsType = {
     noResultsDescription: 'Once a plan is created, it will appear here.'
   },
   [ViewCustomizationType.FOLLOWED_MODELS]: {
-    heading: 'Models I’m following',
+    heading: 'Models you’re following',
     description:
       'You will receive email notifications when models you’re following are updated.',
     noResultsHeading: 'You are not following any models yet.',

@@ -5,7 +5,10 @@ describe('Change History', () => {
   });
 
   it('Displays changes correctly', () => {
-    cy.clickPlanTableByName('Plan with Documents');
+    cy.clickPlanTableByName(
+      'Plan with Documents',
+      'all-model-plans-table-wrapper'
+    );
 
     cy.exec('go run ./cmd/dbseed/*go translate', {
       timeout: 120000,

@@ -206,6 +206,12 @@ const Involvements = () => {
                       )}
                     </Label>
 
+                    <p className="text-base margin-y-1">
+                      {generalCharacteristicsT(
+                        'careCoordinationInvolved.sublabel'
+                      )}
+                    </p>
+
                     <FieldErrorMsg>
                       {flatErrors.careCoordinationInvolved}
                     </FieldErrorMsg>
@@ -344,6 +350,12 @@ const Involvements = () => {
                     <FieldErrorMsg>
                       {flatErrors.communityPartnersInvolved}
                     </FieldErrorMsg>
+
+                    <p className="text-base margin-y-1">
+                      {generalCharacteristicsT(
+                        'communityPartnersInvolved.sublabel'
+                      )}
+                    </p>
 
                     <BooleanRadio
                       field="communityPartnersInvolved"

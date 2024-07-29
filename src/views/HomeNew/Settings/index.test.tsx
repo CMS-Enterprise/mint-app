@@ -12,8 +12,8 @@ import {
 import { MessageProvider } from 'hooks/useMessage';
 
 import SelectSolutionSettings from './selectSolutions';
+import HomePageSettings from './settings';
 import SettingsOrder, { moveItem } from './settingsOrder';
-import HomePageSettings from '.';
 
 const mocks = [
   {
