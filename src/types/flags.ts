@@ -7,6 +7,7 @@ export type Flags = {
   notificationsEnabled: boolean;
   changeHistoryEnabled: boolean;
   customHomepageEnabled: boolean;
+  changeHistoryReleaseDate: string;
 };
 
 export type FlagsState = {

@@ -18,6 +18,7 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 import { useGetChangeHistoryQuery } from 'gql/gen/graphql';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -70,6 +71,17 @@ const sortOptions: SortProps[] = [
 const ChangeHistory = () => {
   const { t } = useTranslation('changeHistory');
 
+  const flags = useFlags();
+
+  let chReleaseDate: string = flags.changeHistoryReleaseDate;
+
+  // Attempt to parse LD date string to ISO string for date comparison of model plan creation
+  try {
+    chReleaseDate = new Date(chReleaseDate).toISOString();
+  } catch (e) {
+    chReleaseDate = '';
+  }
+
   const { modelID } = useParams<{
     modelID: string;
   }>();
@@ -86,7 +98,7 @@ const ChangeHistory = () => {
   const queryParam = params.get('query');
   const sortParam = params.get('sort') as SortProps['value'];
 
-  const { modelName } = useContext(ModelInfoContext);
+  const { modelName, createdDts } = useContext(ModelInfoContext);
 
   const { data, loading, error } = useGetChangeHistoryQuery({
     variables: {
@@ -261,10 +273,13 @@ const ChangeHistory = () => {
             })}
           </span>
 
-          {/* TODO: implement once we have a definitive release date */}
-          <div className="bg-white-opacity-50 margin-top-4 padding-y-1 padding-x-2">
-            {t('changesSinceRelease')}
-          </div>
+          {chReleaseDate && createdDts < chReleaseDate && (
+            <div className="bg-white-opacity-50 margin-top-4 padding-y-1 padding-x-2">
+              {t('changesSinceRelease', {
+                date: flags.changeHistoryReleaseDate
+              })}
+            </div>
+          )}
         </GridContainer>
       </SummaryBox>
 
