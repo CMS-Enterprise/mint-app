@@ -73,6 +73,15 @@ const ChangeHistory = () => {
 
   const flags = useFlags();
 
+  let chReleaseDate: string = flags.changeHistoryReleaseDate;
+
+  // Attempt to parse LD date string to ISO string for date comparison of model plan creation
+  try {
+    chReleaseDate = new Date(chReleaseDate).toISOString();
+  } catch (e) {
+    chReleaseDate = '';
+  }
+
   const { modelID } = useParams<{
     modelID: string;
   }>();
@@ -264,8 +273,7 @@ const ChangeHistory = () => {
             })}
           </span>
 
-          {createdDts <
-            new Date(flags.changeHistoryReleaseDate).toISOString() && (
+          {chReleaseDate && createdDts < chReleaseDate && (
             <div className="bg-white-opacity-50 margin-top-4 padding-y-1 padding-x-2">
               {t('changesSinceRelease', {
                 date: flags.changeHistoryReleaseDate
