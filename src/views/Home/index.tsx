@@ -29,7 +29,7 @@ import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
-import ModelPlansTable from 'views/ModelPlan/HomeTable';
+import ModelPlansTable from 'views/Home/Table';
 
 import ModelsBySolutions from './components/ModelsBySolutions';
 
@@ -148,6 +148,7 @@ const Home = () => {
               <Trans
                 i18nKey={`customHome:settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsDescription`}
                 components={{
+                  link1: <UswdsReactLink to="/models"> </UswdsReactLink>,
                   star: <Icon.StarOutline size={3} style={{ top: '6px' }} />
                 }}
               />

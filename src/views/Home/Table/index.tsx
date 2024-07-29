@@ -330,8 +330,12 @@ const ModelPlansTable = ({
           if (value) {
             return value
               .map(characteristics => {
-                return i18next.t(
-                  `generalCharacteristics:keyCharacteristics.options.${characteristics}`
+                return (
+                  <div key={characteristics}>
+                    {i18next.t(
+                      `generalCharacteristics:keyCharacteristics.options.${characteristics}`
+                    )}
+                  </div>
                 );
               })
               .join(', ');
@@ -356,7 +360,7 @@ const ModelPlansTable = ({
           return (
             <ul className="margin-0">
               {value.map((crtdl: CRTDLType) => (
-                <li>{crtdl.idNumber}</li>
+                <li key={crtdl.idNumber}>{crtdl.idNumber}</li>
               ))}
             </ul>
           );

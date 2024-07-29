@@ -28,7 +28,7 @@ import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isMAC } from 'utils/user';
 
-import ModelPlansTable from '../HomeTable';
+import ModelPlansTable from '../../Home/Table';
 
 type GetFavoritesModelPlanCollection = GetFavoritesQuery['modelPlanCollection'][0];
 
