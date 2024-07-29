@@ -5,6 +5,8 @@ require "json"
 require "yaml"
 require "irb"        # debugging
 require "io/console" # for IO#getch
+require 'tty-progressbar'
+require 'fileutils'
 
 # ExtraArguments is a hack that alters how the command line arguments are parsed.
 #
@@ -50,6 +52,7 @@ needs "pgcli", install_with: "brew install pgcli"
 
 needs "swagger"
 needs "jq"
+needs "mockgen", install_with: "go install github.com/golang/mock/mockgen@v1.6.0"
 
 # Gracefully handle folks trying to explore using common help flags
 ["--help", "-help", "--h", "-h"].each do |flag|
@@ -484,6 +487,54 @@ end
 desc "Send a test email of all the email templates"
 task :email do
   sh "go run cmd/test_email/*.go"
+end
+
+desc "Generate mocks for Go interfaces in the ./pkg/ directory"
+task :mockgen do
+  exclude_dirs = ['pkg/testconfig', 'pkg/sqlqueries', 'pkg/local', 'pkg/constants']
+  mock_prefix = 'mock'
+
+  files = Dir.glob("pkg/**/*.go").reject do |file|
+    base_name = File.basename(file)
+    dir_name = File.dirname(file)
+
+    base_name.start_with?("mock_") || base_name.end_with?("_test.go") ||
+    exclude_dirs.any? { |exclude_dir| dir_name.include?(exclude_dir) } ||
+    dir_name.split('/').any? { |dir| dir.start_with?(mock_prefix) }
+  end
+
+  progressbar = TTY::ProgressBar.new("Generating mocks [:bar] :percent :eta", total: files.length, clear: true)
+
+  files.each do |file|
+    package_name = File.basename(File.dirname(file))
+    mock_package_name = "mock#{package_name}"
+    mock_dir = File.join(File.dirname(file), mock_package_name)
+    FileUtils.mkdir_p(mock_dir)
+    mock_file = File.join(mock_dir, "mock_#{File.basename(file)}")
+    temp_file = "#{mock_file}.tmp"
+
+    # Check if the mock file needs to be updated
+    if File.exist?(mock_file) && File.mtime(mock_file) >= File.mtime(file)
+      puts "Skipped up-to-date mock file for #{file}"
+      progressbar.advance
+      next
+    end
+
+    sh "mockgen -source=#{file} -destination=#{temp_file} -package=#{mock_package_name}"
+
+    if File.size(temp_file) > 100 # Adjust the size threshold as needed
+      FileUtils.mv(temp_file, mock_file)
+      puts "Generated #{mock_file}"
+    else
+      File.delete(temp_file)
+      puts "Skipped empty mock file for #{file}"
+    end
+
+    progressbar.advance
+  end
+
+  progressbar.finish
+  puts "Mock generation completed."
 end
 
 begin
