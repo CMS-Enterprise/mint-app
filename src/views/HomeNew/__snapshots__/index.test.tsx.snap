@@ -195,6 +195,7 @@ exports[`The home page > matches setting snapshot 1`] = `
           </h2>
           <div
             class="model-plan-table"
+            data-testid="all-model-plans-table-wrapper"
           >
             <div
               class="mint-header__basic display-flex flex-justify flex-align-self-start"
@@ -634,6 +635,7 @@ exports[`The home page > matches setting snapshot 1`] = `
           </p>
           <div
             class="model-plan-table"
+            data-testid="my-model-plans-table-wrapper"
           >
             <div
               class="mint-header__basic display-flex flex-justify flex-align-self-start"

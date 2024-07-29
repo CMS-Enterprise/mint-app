@@ -494,7 +494,7 @@ const ModelPlansTable = ({
   };
 
   return (
-    <div className="model-plan-table" data-testid={id}>
+    <div className="model-plan-table" data-testid={`${id}-wrapper`}>
       <div className="mint-header__basic display-flex flex-justify flex-align-self-start">
         <div>
           {canSearch && (
