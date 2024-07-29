@@ -1,7 +1,7 @@
-Cypress.Commands.add('clickPlanTableByName', planName => {
+Cypress.Commands.add('clickPlanTableByName', (planName, table) => {
   cy.visit('/');
 
-  cy.get('[data-testid="all-model-plans-table-wrapper"] a')
+  cy.get(`[data-testid="${table || 'table'}"] a`)
     .contains(planName)
     .click();
   cy.url().should('include', '/task-list');
