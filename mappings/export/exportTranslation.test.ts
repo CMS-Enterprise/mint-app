@@ -379,10 +379,10 @@ describe('exportTranslation Util', () => {
         formType: 'CHECKBOX',
         order: 3.17,
         options: {
-          READY: 'ready',
-          IN_PROGRESS: 'in progress',
-          READY_FOR_REVIEW: 'ready for review',
-          READY_FOR_CLEARANCE: 'ready for clearance'
+          READY: 'Ready',
+          IN_PROGRESS: 'In progress',
+          READY_FOR_REVIEW: 'Ready for review',
+          READY_FOR_CLEARANCE: 'Ready for clearance'
         },
         hideFromReadonly: true
       }
