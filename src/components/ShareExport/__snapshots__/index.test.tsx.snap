@@ -3004,11 +3004,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     aria-controls="related-who-are-the-participants"
                     aria-expanded="false"
                     class="usa-button usa-button--unstyled mint-no-print"
-                    data-testid="collapsable-link"
+                    data-testid="related-who-are-the-participants"
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05"
+                      class="usa-icon top-05 margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
