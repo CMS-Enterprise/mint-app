@@ -120,11 +120,7 @@ const AppRoutes = () => {
         }}
       />
 
-      <ProtectedRoute
-        path="/homepage-settings"
-        enabled={flags.customHomepageEnabled}
-        component={HomePageSettings}
-      />
+      <ProtectedRoute path="/homepage-settings" component={HomePageSettings} />
 
       <ProtectedRoute path="/notifications" component={Notifications} />
 
