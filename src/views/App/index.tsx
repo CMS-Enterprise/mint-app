@@ -265,6 +265,13 @@ const AppRoutes = () => {
             to="/models/:modelID/read-view"
           />
 
+          {/* Change History Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/change-history"
+            component={ChangeHistory}
+            enabled={flags.changeHistoryEnabled}
+          />
+
           {/* Locked Task List Section */}
           <ProtectedRoute
             path="/models/:modelID/locked-task-list-section"
@@ -286,12 +293,6 @@ const AppRoutes = () => {
       <ProtectedRoute path="/feedback-received" component={FeedbackReceived} />
 
       <ProtectedRoute path="/unfollow" exact component={Unfollow} />
-
-      <ProtectedRoute
-        path="/models/:modelID/change-history"
-        component={ChangeHistory}
-        enabled={flags.changeHistoryEnabled}
-      />
 
       {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
 
