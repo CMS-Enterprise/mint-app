@@ -14,7 +14,6 @@ import {
 } from '@trussworks/react-uswds';
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
 import { ModelStatus, useUpdateModelPlanMutation } from 'gql/gen/graphql';
-import * as Yup from 'yup';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -38,9 +37,6 @@ const Status = () => {
 
   const history = useHistory();
   const formikRef = useRef<FormikProps<StatusFormProps>>(null);
-  const validationSchema = Yup.object().shape({
-    status: Yup.string().required('Enter a role for this team member')
-  });
 
   const { status } = useContext(ModelInfoContext);
 
@@ -102,10 +98,6 @@ const Status = () => {
             initialValues={initialValues}
             enableReinitialize
             onSubmit={handleFormSubmit}
-            validationSchema={validationSchema}
-            validateOnBlur={false}
-            validateOnChange={false}
-            validateOnMount={false}
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<StatusFormProps>) => {
