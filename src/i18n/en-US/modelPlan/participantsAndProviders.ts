@@ -1138,7 +1138,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   }
 };
 
-export const participantsAndProvidersMisc: Record<string, string> = {
+export const participantsAndProvidersMisc: Record<string, string | object> = {
   heading: 'Participants and providers',
   clearanceHeading: 'Review participants and providers',
   breadcrumb: 'Participants and providers',
@@ -1155,7 +1155,16 @@ export const participantsAndProvidersMisc: Record<string, string> = {
   participantQuestions: 'Participant specific questions',
   numberOfParticipants: 'Number of participants',
   zero: '0',
-  tenThousand: '10,000+'
+  tenThousand: '10,000+',
+  modal: {
+    title: 'Existing provider/supplier types',
+    asOfDate: 'as of 06/25/2024',
+    types: {
+      PROVIDER_TYPES_INSTITUTIONAL: 'Provider Types (Institutional)',
+      PHYSICIANS: 'Physicians',
+      NON_PHYSICIANS_SUPPLIERS: 'Non-Physicians/Suppliers'
+    }
+  }
 };
 
 export default participantsAndProviders;
