@@ -286,7 +286,7 @@ const AppRoutes = () => {
 
       <ProtectedRoute path="/unfollow" exact component={Unfollow} />
 
-      {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
+      <Route path="/sandbox" exact component={Sandbox} />
 
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />
