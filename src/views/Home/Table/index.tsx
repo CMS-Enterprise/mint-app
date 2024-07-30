@@ -330,12 +330,8 @@ const ModelPlansTable = ({
           if (value) {
             return value
               .map(characteristics => {
-                return (
-                  <div key={characteristics}>
-                    {i18next.t(
-                      `generalCharacteristics:keyCharacteristics.options.${characteristics}`
-                    )}
-                  </div>
+                return i18next.t(
+                  `generalCharacteristics:keyCharacteristics.options.${characteristics}`
                 );
               })
               .join(', ');
