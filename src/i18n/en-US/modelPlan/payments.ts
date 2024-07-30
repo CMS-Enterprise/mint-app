@@ -567,6 +567,8 @@ export const payments: TranslationPayments = {
     label: 'Will any additional data need to be collected for claims?',
     sublabel:
       'If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
+    questionTooltip:
+      'If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 3.03,
@@ -690,6 +692,8 @@ export const payments: TranslationPayments = {
     dbField: 'waiver_only_applies_part_of_payment',
     label: 'Would the waiver only apply for part of the payment?',
     sublabel:
+      'For example, we would assess cost-sharing for the service itself, but not for an add-on payment',
+    questionTooltip:
       'For example, we would assess cost-sharing for the service itself, but not for an add-on payment',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
@@ -854,6 +858,8 @@ export const payments: TranslationPayments = {
     dbField: 'planning_to_use_innovation_payment_contractor',
     label: 'Are you planning to use the Innovation Payment Contractor?',
     sublabel: 'Note: If there will be 30+ payees we recommend a contractor.',
+    questionTooltip:
+      'Note: If there will be 30+ payees we recommend a contractor.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.09,
