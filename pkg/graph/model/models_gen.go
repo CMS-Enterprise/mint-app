@@ -1667,6 +1667,7 @@ const (
 	ModelPlanFilterCollabOnly ModelPlanFilter = "COLLAB_ONLY"
 	ModelPlanFilterWithCrTdls ModelPlanFilter = "WITH_CR_TDLS"
 	ModelPlanFilterFavorited  ModelPlanFilter = "FAVORITED"
+	ModelPlanFilterApproachingClearance  ModelPlanFilter = "APPROACHING_CLEARANCE"
 )
 
 var AllModelPlanFilter = []ModelPlanFilter{
