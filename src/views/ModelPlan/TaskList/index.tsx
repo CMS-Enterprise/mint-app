@@ -42,6 +42,7 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -131,20 +132,25 @@ const TaskList = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
+  const { status: statusConfig } = usePlanTranslation('modelPlan');
+
   const history = useHistory();
   const location = useLocation();
 
   const params = useMemo(() => {
     return new URLSearchParams(location.search);
   }, [location.search]);
+
   // Get discussionID from generated email link
   const discussionID = params.get('discussionID');
+
   // Get model status from generated email link
   const modelStatus = params.get('model-status') as ModelStatus;
 
   const flags = useFlags();
 
   const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
+
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
   );
@@ -226,12 +232,14 @@ const TaskList = () => {
 
   useEffect(() => {
     if (modelStatus && !loading) {
+      const translatedStatus = statusConfig.options[modelStatus];
+
       if (modelStatus.toUpperCase() !== status) {
         updateModelStatus({
           variables: {
             id: modelID,
             changes: {
-              status: modelStatus.toUpperCase() as ModelStatus
+              status: modelStatus
             }
           }
         })
@@ -239,7 +247,7 @@ const TaskList = () => {
             if (!response?.errors) {
               setStatusMessage({
                 message: t('statusUpdateSuccess', {
-                  status: modelStatus.toUpperCase()
+                  status: translatedStatus
                 }),
                 status: 'success'
               });
@@ -255,7 +263,7 @@ const TaskList = () => {
           .catch(errors => {
             setStatusMessage({
               message: t('statusUpdateError', {
-                status: modelStatus.toUpperCase()
+                status: translatedStatus
               }),
               status: 'error'
             });
@@ -263,7 +271,7 @@ const TaskList = () => {
       } else {
         setStatusMessage({
           message: t('statusUpdateErrorExists', {
-            status: modelStatus.toUpperCase()
+            status: translatedStatus
           }),
           status: 'error'
         });
@@ -283,7 +291,8 @@ const TaskList = () => {
     params,
     history,
     status,
-    loading
+    loading,
+    statusConfig.options
   ]);
 
   return (

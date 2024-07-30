@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import {
@@ -36,6 +36,14 @@ const Status = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
+
+  const params = useMemo(() => {
+    return new URLSearchParams(history.location.search);
+  }, [history.location.search]);
+
+  // Get model status from generated email link
+  const modelStatus = params.get('model-status') as ModelStatus;
+
   const formikRef = useRef<FormikProps<StatusFormProps>>(null);
 
   const { status } = useContext(ModelInfoContext);
@@ -128,7 +136,7 @@ const Status = () => {
                         as={Select}
                         id="Status-Dropdown"
                         name="role"
-                        value={values.status}
+                        value={modelStatus || values.status}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           setFieldValue('status', e.target.value);
                         }}
@@ -149,7 +157,7 @@ const Status = () => {
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="submit"
-                        disabled={!dirty}
+                        disabled={!dirty && !modelStatus}
                         className=""
                         onClick={() => setErrors({})}
                       >
