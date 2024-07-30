@@ -216,9 +216,6 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
     />
     <div
       class=""
-    />
-    <div
-      class=""
     >
       <div
         class="desktop:grid-col-12"
@@ -318,9 +315,6 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
         </div>
       </div>
     </div>
-    <div
-      class=""
-    />
     <div
       class=""
     />
@@ -698,11 +692,11 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             aria-controls="related-what-are-the-model-key-characteristics"
             aria-expanded="false"
             class="usa-button usa-button--unstyled mint-no-print"
-            data-testid="collapsable-link"
+            data-testid="related-what-are-the-model-key-characteristics"
             type="button"
           >
             <svg
-              class="usa-icon top-05"
+              class="usa-icon top-05 margin-right-05"
               focusable="false"
               height="1em"
               role="img"
@@ -1396,11 +1390,11 @@ exports[`Read Only Model Plan Summary -- General Characteristics > matches snaps
             aria-controls="related-what-is-the-agreement-type"
             aria-expanded="false"
             class="usa-button usa-button--unstyled mint-no-print"
-            data-testid="collapsable-link"
+            data-testid="related-what-is-the-agreement-type"
             type="button"
           >
             <svg
-              class="usa-icon top-05"
+              class="usa-icon top-05 margin-right-05"
               focusable="false"
               height="1em"
               role="img"

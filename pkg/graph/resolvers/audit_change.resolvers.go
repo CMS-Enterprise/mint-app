@@ -20,7 +20,7 @@ func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChang
 }
 
 // AuditChanges is the resolver for the auditChanges field.
-func (r *queryResolver) AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error) {
+func (r *queryResolver) AuditChanges(ctx context.Context, tableName models.TableName, primaryKey uuid.UUID) ([]*models.AuditChange, error) {
 	logger := appcontext.ZLogger(ctx)
 	return AuditChangeCollectionByIDAndTable(logger, tableName, primaryKey, r.store)
 }

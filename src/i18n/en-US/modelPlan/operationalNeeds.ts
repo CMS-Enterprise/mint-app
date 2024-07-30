@@ -1,30 +1,38 @@
 import { TranslationOperationalNeeds } from 'types/translation';
 
+import {
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
+
 const operationalNeeds: TranslationOperationalNeeds = {
   name: {
     gqlField: 'name',
     goField: 'Name',
     dbField: 'name',
     label: 'Operational need',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.01
   },
   nameOther: {
     gqlField: 'nameOther',
     goField: 'NameOther',
     dbField: 'name_other',
     label: 'What operational need are you solving?',
-    exportLabel: 'Operational need',
-    dataType: 'string',
-    formType: 'text'
+    exportLabel: 'Custom operational need',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.02
   },
   key: {
     gqlField: 'key',
     goField: 'Key',
     dbField: 'key',
-    label: '',
-    dataType: 'enum',
-    formType: 'checkbox',
+    label: 'The key representing the type of operational need.',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 1.03,
     options: {
       MANAGE_CD: 'Manage Part C/D enrollment',
       REV_COL_BIDS: 'Review and collect plan bids',
@@ -66,8 +74,9 @@ const operationalNeeds: TranslationOperationalNeeds = {
     goField: 'Needed',
     dbField: 'needed',
     label: 'Status',
-    dataType: 'boolean',
-    formType: 'checkbox',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.CHECKBOX,
+    order: 1.04,
     options: {
       true: 'Needed',
       false: 'Not needed'
@@ -78,8 +87,9 @@ const operationalNeeds: TranslationOperationalNeeds = {
     goField: 'section',
     dbField: 'section',
     label: '	Model Plan section',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.05,
     options: {
       BASICS: 'Model Basics',
       GENERAL_CHARACTERISTICS: 'General characteristics',

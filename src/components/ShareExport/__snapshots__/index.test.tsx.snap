@@ -142,7 +142,15 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   </div>
                   <div
                     class="mint-no-print"
-                  />
+                  >
+                    <div
+                      class="display-flex flex-align-center"
+                    >
+                      <div
+                        class="height-2 border-left-2px border-base-light margin-right-2 "
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1366,9 +1374,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             />
             <div
               class=""
-            />
-            <div
-              class=""
             >
               <div
                 class="desktop:grid-col-12"
@@ -1468,9 +1473,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </div>
               </div>
             </div>
-            <div
-              class=""
-            />
             <div
               class=""
             />
@@ -1848,11 +1850,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     aria-controls="related-what-are-the-model-key-characteristics"
                     aria-expanded="false"
                     class="usa-button usa-button--unstyled mint-no-print"
-                    data-testid="collapsable-link"
+                    data-testid="related-what-are-the-model-key-characteristics"
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05"
+                      class="usa-icon top-05 margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -2546,11 +2548,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     aria-controls="related-what-is-the-agreement-type"
                     aria-expanded="false"
                     class="usa-button usa-button--unstyled mint-no-print"
-                    data-testid="collapsable-link"
+                    data-testid="related-what-is-the-agreement-type"
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05"
+                      class="usa-icon top-05 margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -3002,11 +3004,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     aria-controls="related-who-are-the-participants"
                     aria-expanded="false"
                     class="usa-button usa-button--unstyled mint-no-print"
-                    data-testid="collapsable-link"
+                    data-testid="related-who-are-the-participants"
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05"
+                      class="usa-icon top-05 margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -3211,9 +3213,9 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                             data-testid="tooltipBody"
                             id="tooltip-550000"
                             role="tooltip"
-                            title="(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)"
+                            title="(e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)"
                           >
-                            (e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
+                            (e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
                           </span>
                         </span>
                       </span>
@@ -4463,11 +4465,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     aria-controls="related-will-the-providers-overlap-with-other-models"
                     aria-expanded="false"
                     class="usa-button usa-button--unstyled mint-no-print"
-                    data-testid="collapsable-link"
+                    data-testid="related-will-the-providers-overlap-with-other-models"
                     type="button"
                   >
                     <svg
-                      class="usa-icon top-05"
+                      class="usa-icon top-05 margin-right-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -7164,11 +7166,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   aria-controls="data-needed-for-monitoring-questions"
                   aria-expanded="false"
                   class="usa-button usa-button--unstyled mint-no-print"
-                  data-testid="collapsable-link"
+                  data-testid="data-needed-for-monitoring-questions"
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05"
+                    class="usa-icon top-05 margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -8780,11 +8782,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   aria-controls="cost-sharing-questions"
                   aria-expanded="false"
                   class="usa-button usa-button--unstyled mint-no-print"
-                  data-testid="collapsable-link"
+                  data-testid="cost-sharing-questions"
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05"
+                    class="usa-icon top-05 margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -8870,11 +8872,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                   aria-controls="cost-sharing-questions"
                   aria-expanded="false"
                   class="usa-button usa-button--unstyled mint-no-print"
-                  data-testid="collapsable-link"
+                  data-testid="cost-sharing-questions"
                   type="button"
                 >
                   <svg
-                    class="usa-icon top-05"
+                    class="usa-icon top-05 margin-right-05"
                     focusable="false"
                     height="1em"
                     role="img"

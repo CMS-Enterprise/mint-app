@@ -19,6 +19,7 @@
             "request": "launch",
             "mode": "debug",
             "program": "${relativeFileDirname}",
+            "console": "integratedTerminal",
             "cwd": "${workspaceFolder}"            
         }
     ]

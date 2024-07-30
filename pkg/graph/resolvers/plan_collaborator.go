@@ -20,7 +20,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// CreatePlanCollaboratorTransaction implements resolver logic to create a plan collaborator
+// PlanCollaboratorCreate implements resolver logic to create a plan collaborator
 // If the email service or email template service is not provided this method will not
 //
 //	send the collaborator a notification email

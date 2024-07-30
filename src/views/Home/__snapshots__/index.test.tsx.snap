@@ -63,12 +63,12 @@ exports[`The home page > matches setting snapshot 1`] = `
                         aria-controls="pre-decisional-collapse"
                         aria-expanded="false"
                         class="usa-button usa-button--unstyled mint-no-print"
-                        data-testid="collapsable-link"
+                        data-testid="pre-decisional-collapse"
                         type="button"
                       >
                         Read more
                         <svg
-                          class="usa-icon top-05"
+                          class="usa-icon top-05 margin-right-05"
                           focusable="false"
                           height="1em"
                           role="img"
@@ -193,6 +193,7 @@ exports[`The home page > matches setting snapshot 1`] = `
           </h2>
           <div
             class="model-plan-table"
+            data-testid="all-model-plans-table-wrapper"
           >
             <div
               class="mint-header__basic display-flex flex-justify flex-align-self-start"
@@ -632,6 +633,7 @@ exports[`The home page > matches setting snapshot 1`] = `
           </p>
           <div
             class="model-plan-table"
+            data-testid="my-model-plans-table-wrapper"
           >
             <div
               class="mint-header__basic display-flex flex-justify flex-align-self-start"

@@ -31,6 +31,7 @@ import Landing from 'views/Landing';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import ModelInfoWrapper from 'views/ModelInfoWrapper';
+import ChangeHistory from 'views/ModelPlan/ChangeHistory';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import CRTDL from 'views/ModelPlan/CRTDL';
 import Documents from 'views/ModelPlan/Documents';
@@ -254,6 +255,13 @@ const AppRoutes = () => {
             exact
             from="/models/:modelID"
             to="/models/:modelID/read-view"
+          />
+
+          {/* Change History Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/change-history"
+            component={ChangeHistory}
+            enabled={flags.changeHistoryEnabled}
           />
 
           {/* Locked Task List Section */}

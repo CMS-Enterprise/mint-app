@@ -53,7 +53,7 @@ func (suite *ResolverSuite) TestOperationalSolutionSubtaskGetByID() {
 }
 
 func (suite *ResolverSuite) TestOperationalSolutionSubtaskGetBySolutionID() {
-	solution := suite.createOperationalSolution()
+	solution, _, _ := suite.createOperationalSolution()
 	subtask := suite.createOperationalSolutionSubtaskWithSolution(solution)
 
 	result, err := OperationalSolutionSubtaskGetBySolutionIDLOADER(

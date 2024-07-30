@@ -1,7 +1,10 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { act, render, screen, waitFor } from '@testing-library/react';
-import { AnalyzedAudit as AnalyzedAuditsTypes } from 'gql/gen/graphql';
+import {
+  AnalyzedAudit as AnalyzedAuditsTypes,
+  TableName
+} from 'gql/gen/graphql';
 
 import setup from 'utils/testing/setup';
 
@@ -41,7 +44,7 @@ const dailyDigestProps: AnalyzedAuditsTypes[] = [
       crTdls: null,
       planSections: {
         __typename: 'AnalyzedPlanSections',
-        updated: ['plan_basics'],
+        updated: [TableName.PLAN_BASICS],
         readyForReview: [],
         readyForClearance: []
       },
@@ -97,10 +100,10 @@ describe('Daily Digest in Notifications', () => {
         expect(screen.getByText(/Updates to Basics/i)).toBeInTheDocument();
         expect(screen.getByText(/2 new documents/i)).toBeInTheDocument();
         expect(
-          screen.getByText('View this Model Plan').closest('a')
+          screen.getByText('View all recent changes').closest('a')
         ).toHaveAttribute(
           'href',
-          `/models/${dailyDigestProps[0].modelPlanID}/read-only`
+          `/models/${dailyDigestProps[0].modelPlanID}/change-history`
         );
       });
     });
@@ -130,10 +133,10 @@ describe('Daily Digest in Notifications', () => {
       expect(screen.getByText(/Updates to Basics/i)).toBeInTheDocument();
       expect(screen.getByText(/2 new documents/i)).toBeInTheDocument();
       expect(
-        screen.getByText('View this Model Plan').closest('a')
+        screen.getByText('View all recent changes').closest('a')
       ).toHaveAttribute(
         'href',
-        `/models/${dailyDigestProps[0].modelPlanID}/read-only`
+        `/models/${dailyDigestProps[0].modelPlanID}/change-history`
       );
     });
 

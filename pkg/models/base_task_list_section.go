@@ -2,6 +2,7 @@ package models
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -94,25 +95,37 @@ func (b baseTaskListSection) GetModelPlanID() uuid.UUID {
 }
 
 // ReadyForClearanceByUserAccount returns the user account for user ID set for Ready for Clearance By
-func (b *baseTaskListSection) ReadyForClearanceByUserAccount(ctx context.Context) *authentication.UserAccount {
+func (b *baseTaskListSection) ReadyForClearanceByUserAccount(ctx context.Context) (*authentication.UserAccount, error) {
 
 	if b.ReadyForClearanceBy == nil {
-		return nil
+		return nil, nil
 	}
 
-	service := appcontext.UserAccountService(ctx)
-	account, _ := service(ctx, *b.ReadyForClearanceBy)
-	return account
+	service, err := appcontext.UserAccountService(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("unable to get ready for clearance by user account, there is an issue with the user account service. err %w", err)
+	}
+	account, err := service(ctx, *b.ReadyForClearanceBy)
+	if err != nil {
+		return nil, err
+	}
+	return account, nil
 }
 
 // ReadyForReviewByUserAccount returns the user account for user ID set for Ready for Review By
-func (b *baseTaskListSection) ReadyForReviewByUserAccount(ctx context.Context) *authentication.UserAccount {
+func (b *baseTaskListSection) ReadyForReviewByUserAccount(ctx context.Context) (*authentication.UserAccount, error) {
 
 	if b.ReadyForReviewBy == nil {
-		return nil
+		return nil, nil
 	}
 
-	service := appcontext.UserAccountService(ctx)
-	account, _ := service(ctx, *b.ReadyForReviewBy)
-	return account
+	service, err := appcontext.UserAccountService(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("unable to get ready for review by user account, there is an issue with the user account service. err %w", err)
+	}
+	account, err := service(ctx, *b.ReadyForReviewBy)
+	if err != nil {
+		return nil, err
+	}
+	return account, nil
 }

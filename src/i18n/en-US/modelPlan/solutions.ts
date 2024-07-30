@@ -1,47 +1,70 @@
 import { TranslationOperationalSolutions } from 'types/translation';
 
+import {
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
+
 const operationalSolutions: TranslationOperationalSolutions = {
   name: {
     gqlField: 'name',
     goField: 'Name',
     dbField: 'name',
     label: 'Solution',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.01
+  },
+  isOther: {
+    gqlField: 'isOther',
+    goField: 'isOther',
+    dbField: 'is_other_',
+    label: 'Is this a solution considered an other option?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.BOOLEAN,
+    order: 1.02,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
   },
   nameOther: {
     gqlField: 'nameOther',
     goField: 'NameOther',
     dbField: 'name_other',
     label: 'Please add a name for your solution or contractor',
-    exportLabel: 'Operational solution',
-    dataType: 'string',
-    formType: 'text'
+    exportLabel: 'Name',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.03
   },
   otherHeader: {
     gqlField: 'otherHeader',
     goField: 'OtherHeader',
     dbField: 'other_header',
     label: 'Please add a name for your solution or contractor',
-    dataType: 'string',
-    formType: 'text'
+    exportLabel: 'Name',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.04
   },
   pocName: {
     gqlField: 'pocName',
     goField: 'PocName',
     dbField: 'poc_name',
     label: 'Point of contact',
-    sublabel: '',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.05
   },
   pocEmail: {
     gqlField: 'pocEmail',
     goField: 'PocEmail',
     dbField: 'poc_email',
     label: 'Email',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.06
   },
   mustStartDts: {
     gqlField: 'mustStartDts',
@@ -49,8 +72,9 @@ const operationalSolutions: TranslationOperationalSolutions = {
     dbField: 'must_start_dts',
     label: 'Must start by',
     sublabel: 'mm/dd/yyyy',
-    dataType: 'date',
-    formType: 'datePicker'
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.07
   },
   mustFinishDts: {
     gqlField: 'mustFinishDts',
@@ -58,16 +82,18 @@ const operationalSolutions: TranslationOperationalSolutions = {
     dbField: 'must_finish_dts',
     label: 'Must be ready by',
     sublabel: 'mm/dd/yyyy',
-    dataType: 'date',
-    formType: 'datePicker'
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.08
   },
   needed: {
     gqlField: 'needed',
     goField: 'Needed',
     dbField: 'needed',
-    label: '',
-    dataType: 'boolean',
-    formType: 'checkbox',
+    label: 'Is the solution needed?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.CHECKBOX,
+    order: 1.09,
     options: {
       true: 'Needed',
       false: 'Not needed'
@@ -80,8 +106,9 @@ const operationalSolutions: TranslationOperationalSolutions = {
     label: 'How will you solve this?',
     sublabel:
       'Select an operational solution or select "Other" if you’ll solve this a different way.',
-    dataType: 'boolean',
-    formType: 'checkbox',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.CHECKBOX,
+    order: 1.1,
     options: {
       INNOVATION: '4innovation',
       ACO_OS: 'Accountable Care Organization - Operational System',
@@ -131,8 +158,9 @@ const operationalSolutions: TranslationOperationalSolutions = {
     dbField: 'status',
     label: 'What is the status of this solution?',
     exportLabel: 'Status',
-    dataType: 'boolean',
-    formType: 'checkbox',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.CHECKBOX,
+    order: 1.11,
     options: {
       NOT_STARTED: 'Not started',
       ONBOARDING: 'Onboarding',

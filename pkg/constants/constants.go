@@ -12,6 +12,7 @@ const systemAccountUUIDString = "00000001-0001-0001-0001-000000000001"
 // SampleModelName is the name of the sample model
 const SampleModelName = "Enhancing Oncology Model"
 
+// Future Enhancement: Utilize the shared translation package instead of trying to translate these constants
 // Constants for database table names
 const (
 	PlanCollaborator             = "plan_collaborator"

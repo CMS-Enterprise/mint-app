@@ -18,26 +18,27 @@ import {
   GetParticipantOptionsQuery,
   ParticipantSelectionType,
   RecruitmentType,
-  useGetParticipantOptionsQuery,
-  useUpdatePlanParticipantsAndProvidersMutation
+  TypedUpdatePlanParticipantsAndProvidersDocument,
+  useGetParticipantOptionsQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ConfirmLeave from 'components/ConfirmLeave';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -92,41 +93,13 @@ export const ParticipantOptions = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
-
-  const handleFormSubmit = (
-    redirect?: 'next' | 'back' | 'task-list' | string
-  ) => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/participants-and-providers/communication`
-            );
-          } else if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/participants-and-providers`
-            );
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanParticipantsAndProvidersDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: ParticipantOptionsFormType = {
     __typename: 'PlanParticipantsAndProviders',
@@ -148,6 +121,12 @@ export const ParticipantOptions = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -182,7 +161,9 @@ export const ParticipantOptions = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/task-list/participants-and-providers/communication`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -216,6 +197,9 @@ export const ParticipantOptions = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
+
               <Form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="participants-and-providers-options-form"
@@ -339,7 +323,7 @@ export const ParticipantOptions = () => {
                       <ITSolutionsWarning
                         id="participants-and-providers-recruitment-method-warning"
                         onClick={() =>
-                          handleFormSubmit(
+                          history.push(
                             `/models/${modelID}/task-list/it-solutions`
                           )
                         }
@@ -417,7 +401,7 @@ export const ParticipantOptions = () => {
                       <ITSolutionsWarning
                         id="participants-and-providers-selection-method-warning"
                         onClick={() =>
-                          handleFormSubmit(
+                          history.push(
                             `/models/${modelID}/task-list/it-solutions`
                           )
                         }
@@ -482,7 +466,9 @@ export const ParticipantOptions = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        handleFormSubmit('back');
+                        history.push(
+                          `/models/${modelID}/task-list/participants-and-providers`
+                        );
                       }}
                     >
                       {miscellaneousT('back')}
@@ -496,23 +482,13 @@ export const ParticipantOptions = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
+                    onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
                     {miscellaneousT('saveAndReturn')}
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

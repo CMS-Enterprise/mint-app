@@ -48,9 +48,9 @@ type AnalyzedCrTdls {
 
 }
 type AnalyzedPlanSections {
-    updated: [String!]!
-    readyForReview: [String!]!
-    readyForClearance: [String!]!
+    updated: [TableName!]!
+    readyForReview: [TableName!]!
+    readyForClearance: [TableName!]!
 
 }
 

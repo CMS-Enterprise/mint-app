@@ -1,0 +1,10 @@
+"""
+Represents discussion reply translation data
+"""
+
+type DiscussionReplyTranslation {
+    userRole: TranslationFieldWithOptions! @goTag(key: "db", value: "user_role")
+    userRoleDescription: TranslationField! @goTag(key: "db", value: "user_role_description")
+    content: TranslationField! @goTag(key: "db", value: "content")
+    isAssessment: TranslationFieldWithOptions! @goTag(key: "db", value: "is_assessment")
+}

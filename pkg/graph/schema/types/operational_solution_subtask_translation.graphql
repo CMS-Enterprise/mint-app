@@ -1,0 +1,8 @@
+"""
+Represents operational solution subtask translation data
+"""
+
+type OperationalSolutionSubtaskTranslation {
+    name: TranslationField! @goTag(key: "db", value: "name")
+    status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+}

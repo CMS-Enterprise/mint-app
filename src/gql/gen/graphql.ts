@@ -16,6 +16,11 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  /**
+   * https://gqlgen.com/reference/scalars/#any
+   * Maps an arbitrary GraphQL value to a interface{} Go type.
+   */
+  Any: { input: any; output: any; }
   /** Maps an arbitrary GraphQL value to a map[string]interface{} Go type. */
   Map: { input: any; output: any; }
   /** TaggedHTML represents an input type for HTML that could also include tags that reference another entity */
@@ -163,9 +168,9 @@ export type AnalyzedPlanDiscussions = {
 
 export type AnalyzedPlanSections = {
   __typename: 'AnalyzedPlanSections';
-  readyForClearance: Array<Scalars['String']['output']>;
-  readyForReview: Array<Scalars['String']['output']>;
-  updated: Array<Scalars['String']['output']>;
+  readyForClearance: Array<TableName>;
+  readyForReview: Array<TableName>;
+  updated: Array<TableName>;
 };
 
 export type AuditChange = {
@@ -178,8 +183,16 @@ export type AuditChange = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   primaryKey: Scalars['UUID']['output'];
-  tableName: Scalars['String']['output'];
+  tableName: TableName;
 };
+
+export enum AuditFieldChangeType {
+  ANSWERED = 'ANSWERED',
+  REMOVED = 'REMOVED',
+  /** This type should not appear for all intents and purposes. It shows up if a value changes from null to empty array or vice versa. */
+  UNCHANGED = 'UNCHANGED',
+  UPDATED = 'UPDATED'
+}
 
 export enum AuthorityAllowance {
   ACA = 'ACA',
@@ -332,6 +345,13 @@ export enum DataToSendParticipantsType {
   PROVIDER_LEVEL_DATA = 'PROVIDER_LEVEL_DATA'
 }
 
+export enum DatabaseOperation {
+  DELETE = 'DELETE',
+  INSERT = 'INSERT',
+  TRUNCATE = 'TRUNCATE',
+  UPDATE = 'UPDATE'
+}
+
 export type DateChange = {
   __typename: 'DateChange';
   field: DateChangeFieldType;
@@ -392,6 +412,15 @@ export type DiscussionReplyCreateInput = {
   discussionID: Scalars['UUID']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents discussion reply translation data */
+export type DiscussionReplyTranslation = {
+  __typename: 'DiscussionReplyTranslation';
+  content: TranslationField;
+  isAssessment: TranslationFieldWithOptions;
+  userRole: TranslationFieldWithOptions;
+  userRoleDescription: TranslationField;
 };
 
 export type DiscussionRoleSelection = {
@@ -482,6 +511,14 @@ export type ExistingModelLink = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+/** Represents existing model link translation data */
+export type ExistingModelLinkTranslation = {
+  __typename: 'ExistingModelLinkTranslation';
+  currentModelPlanID: TranslationField;
+  existingModelID: TranslationField;
+  fieldName: TranslationFieldWithOptions;
 };
 
 export type ExistingModelLinks = {
@@ -670,6 +707,17 @@ export type ModelPlanSharedActivityMeta = {
   optionalMessage?: Maybe<Scalars['String']['output']>;
   type: ActivityType;
   version: Scalars['Int']['output'];
+};
+
+/** Represents model plan base translation data */
+export type ModelPlanTranslation = {
+  __typename: 'ModelPlanTranslation';
+  abbreviation: TranslationField;
+  archived: TranslationFieldWithOptions;
+  modelName: TranslationField;
+  nameHistory: TranslationField;
+  previousName: TranslationField;
+  status: TranslationFieldWithOptions;
 };
 
 export enum ModelStatus {
@@ -1172,6 +1220,18 @@ export enum OperationalNeedKey {
   VET_PROVIDERS_FOR_PROGRAM_INTEGRITY = 'VET_PROVIDERS_FOR_PROGRAM_INTEGRITY'
 }
 
+/** Represents operational need translation data */
+export type OperationalNeedTranslation = {
+  __typename: 'OperationalNeedTranslation';
+  /** Key comes from the possible operational need table. It is not returned in an audit */
+  key: TranslationFieldWithOptions;
+  /** Name comes from the possible operational need table. It is not returned in an audit */
+  name: TranslationField;
+  nameOther: TranslationField;
+  needed: TranslationFieldWithOptions;
+  section: TranslationFieldWithOptions;
+};
+
 export type OperationalSolution = {
   __typename: 'OperationalSolution';
   createdBy: Scalars['UUID']['output'];
@@ -1272,6 +1332,31 @@ export enum OperationalSolutionSubtaskStatus {
   IN_PROGRESS = 'IN_PROGRESS',
   TODO = 'TODO'
 }
+
+/** Represents operational solution subtask translation data */
+export type OperationalSolutionSubtaskTranslation = {
+  __typename: 'OperationalSolutionSubtaskTranslation';
+  name: TranslationField;
+  status: TranslationFieldWithOptions;
+};
+
+/** Represents operational solution translation data */
+export type OperationalSolutionTranslation = {
+  __typename: 'OperationalSolutionTranslation';
+  isOther: TranslationFieldWithOptions;
+  /** Key comes from the possible operational solution table. It is not returned in an audit */
+  key: TranslationFieldWithOptions;
+  mustFinishDts: TranslationField;
+  mustStartDts: TranslationField;
+  /** Name comes from the possible operational solution table. It is not returned in an audit */
+  name: TranslationField;
+  nameOther: TranslationField;
+  needed: TranslationFieldWithOptions;
+  otherHeader: TranslationField;
+  pocEmail: TranslationField;
+  pocName: TranslationField;
+  status: TranslationFieldWithOptions;
+};
 
 export enum OverlapType {
   NO = 'NO',
@@ -1429,6 +1514,40 @@ export type PlanBasicsChanges = {
   wrapUpEnds?: InputMaybe<Scalars['Time']['input']>;
 };
 
+/** Represents plan basics translation data */
+export type PlanBasicsTranslation = {
+  __typename: 'PlanBasicsTranslation';
+  additionalModelCategories: TranslationFieldWithOptions;
+  amsModelID: TranslationField;
+  announced: TranslationField;
+  applicationsEnd: TranslationField;
+  applicationsStart: TranslationField;
+  clearanceEnds: TranslationField;
+  clearanceStarts: TranslationField;
+  cmmiGroups: TranslationFieldWithOptions;
+  cmsCenters: TranslationFieldWithOptions;
+  completeICIP: TranslationField;
+  demoCode: TranslationField;
+  goal: TranslationField;
+  highLevelNote: TranslationField;
+  modelCategory: TranslationFieldWithOptions;
+  modelType: TranslationFieldWithOptions;
+  modelTypeOther: TranslationField;
+  note: TranslationField;
+  performancePeriodEnds: TranslationField;
+  performancePeriodStarts: TranslationField;
+  phasedIn: TranslationFieldWithOptions;
+  phasedInNote: TranslationField;
+  problem: TranslationField;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
+  status: TranslationFieldWithOptions;
+  testInterventions: TranslationField;
+  wrapUpEnds: TranslationField;
+};
+
 /** Plan Beneficiaries represents the the beneficiaries section of the task list */
 export type PlanBeneficiaries = {
   __typename: 'PlanBeneficiaries';
@@ -1513,6 +1632,46 @@ export type PlanBeneficiariesChanges = {
   treatDualElligibleDifferentNote?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents plan beneficiaries translation data */
+export type PlanBeneficiariesTranslation = {
+  __typename: 'PlanBeneficiariesTranslation';
+  beneficiaries: TranslationFieldWithOptions;
+  beneficiariesNote: TranslationField;
+  beneficiariesOther: TranslationField;
+  beneficiaryOverlap: TranslationFieldWithOptions;
+  beneficiaryOverlapNote: TranslationField;
+  beneficiaryRemovalFrequency: TranslationFieldWithOptions;
+  beneficiaryRemovalFrequencyContinually: TranslationField;
+  beneficiaryRemovalFrequencyNote: TranslationField;
+  beneficiaryRemovalFrequencyOther: TranslationField;
+  beneficiarySelectionFrequency: TranslationFieldWithOptions;
+  beneficiarySelectionFrequencyContinually: TranslationField;
+  beneficiarySelectionFrequencyNote: TranslationField;
+  beneficiarySelectionFrequencyOther: TranslationField;
+  beneficiarySelectionMethod: TranslationFieldWithOptions;
+  beneficiarySelectionNote: TranslationField;
+  beneficiarySelectionOther: TranslationField;
+  confidenceNote: TranslationField;
+  diseaseSpecificGroup: TranslationField;
+  estimateConfidence: TranslationFieldWithOptions;
+  excludeCertainCharacteristics: TranslationFieldWithOptions;
+  excludeCertainCharacteristicsCriteria: TranslationField;
+  excludeCertainCharacteristicsNote: TranslationField;
+  numberPeopleImpacted: TranslationField;
+  precedenceRules: TranslationFieldWithOptions;
+  precedenceRulesNo: TranslationField;
+  precedenceRulesNote: TranslationField;
+  precedenceRulesYes: TranslationField;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
+  status: TranslationFieldWithOptions;
+  treatDualElligibleDifferent: TranslationFieldWithOptions;
+  treatDualElligibleDifferentHow: TranslationField;
+  treatDualElligibleDifferentNote: TranslationField;
+};
+
 export type PlanCr = {
   __typename: 'PlanCR';
   createdBy: Scalars['UUID']['output'];
@@ -1547,6 +1706,16 @@ export type PlanCrCreateInput = {
   title: Scalars['String']['input'];
 };
 
+/** Represents plan cr translation data */
+export type PlanCrTranslation = {
+  __typename: 'PlanCRTranslation';
+  dateImplemented: TranslationField;
+  dateInitiated: TranslationField;
+  idNumber: TranslationField;
+  note: TranslationField;
+  title: TranslationField;
+};
+
 /** PlanCollaborator represents a collaborator on a plan */
 export type PlanCollaborator = {
   __typename: 'PlanCollaborator';
@@ -1568,6 +1737,14 @@ export type PlanCollaboratorCreateInput = {
   modelPlanID: Scalars['UUID']['input'];
   teamRoles: Array<TeamRole>;
   userName: Scalars['String']['input'];
+};
+
+/** Represents plan collaborator translation data */
+export type PlanCollaboratorTranslation = {
+  __typename: 'PlanCollaboratorTranslation';
+  teamRoles: TranslationFieldWithOptions;
+  userID: TranslationField;
+  username: TranslationField;
 };
 
 /** PlanDiscussion represents plan discussion */
@@ -1594,6 +1771,15 @@ export type PlanDiscussionCreateInput = {
   modelPlanID: Scalars['UUID']['input'];
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents plan discussion translation data */
+export type PlanDiscussionTranslation = {
+  __typename: 'PlanDiscussionTranslation';
+  content: TranslationField;
+  isAssessment: TranslationField;
+  userRole: TranslationFieldWithOptions;
+  userRoleDescription: TranslationField;
 };
 
 /** PlanDocument represents a document on a plan */
@@ -1659,6 +1845,26 @@ export type PlanDocumentSolutionLink = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   solutionID: Scalars['UUID']['output'];
+};
+
+/** Represents document solution link translation data */
+export type PlanDocumentSolutionLinkTranslation = {
+  __typename: 'PlanDocumentSolutionLinkTranslation';
+  documentID: TranslationField;
+  solutionID: TranslationField;
+};
+
+/** Represents plan document translation data */
+export type PlanDocumentTranslation = {
+  __typename: 'PlanDocumentTranslation';
+  documentType: TranslationFieldWithOptions;
+  fileName: TranslationField;
+  fileType: TranslationField;
+  isLink: TranslationField;
+  optionalNotes: TranslationField;
+  otherType: TranslationField;
+  restricted: TranslationFieldWithOptions;
+  url: TranslationField;
 };
 
 export type PlanFavorite = {
@@ -1859,6 +2065,83 @@ export type PlanGeneralCharacteristicsChanges = {
   waiversRequired?: InputMaybe<Scalars['Boolean']['input']>;
   waiversRequiredNote?: InputMaybe<Scalars['String']['input']>;
   waiversRequiredTypes?: InputMaybe<Array<WaiverType>>;
+};
+
+/** Represents plan general characteristics translation data */
+export type PlanGeneralCharacteristicsTranslation = {
+  __typename: 'PlanGeneralCharacteristicsTranslation';
+  additionalServicesInvolved: TranslationFieldWithOptions;
+  additionalServicesInvolvedDescription: TranslationField;
+  additionalServicesInvolvedNote: TranslationField;
+  agencyOrStateHelp: TranslationFieldWithOptions;
+  agencyOrStateHelpNote: TranslationField;
+  agencyOrStateHelpOther: TranslationField;
+  agreementTypes: TranslationFieldWithOptionsAndChildren;
+  agreementTypesOther: TranslationField;
+  alternativePaymentModelNote: TranslationField;
+  alternativePaymentModelTypes: TranslationFieldWithOptions;
+  authorityAllowances: TranslationFieldWithOptions;
+  authorityAllowancesNote: TranslationField;
+  authorityAllowancesOther: TranslationField;
+  careCoordinationInvolved: TranslationFieldWithOptions;
+  careCoordinationInvolvedDescription: TranslationField;
+  careCoordinationInvolvedNote: TranslationField;
+  collectPlanBids: TranslationFieldWithOptionsAndParent;
+  collectPlanBidsNote: TranslationField;
+  communityPartnersInvolved: TranslationFieldWithOptions;
+  communityPartnersInvolvedDescription: TranslationField;
+  communityPartnersInvolvedNote: TranslationField;
+  currentModelPlanID: TranslationField;
+  /** Existing model doesn't exist in the database, it is returned based on if there is a current model plan ID or current model plan ID returned */
+  existingModel: TranslationFieldWithParent;
+  existingModelID: TranslationField;
+  geographiesRegionTypes: TranslationFieldWithOptionsAndParent;
+  geographiesStatesAndTerritories: TranslationFieldWithOptionsAndParent;
+  geographiesTargeted: TranslationFieldWithOptionsAndChildren;
+  geographiesTargetedAppliedTo: TranslationFieldWithOptionsAndParent;
+  geographiesTargetedAppliedToOther: TranslationField;
+  geographiesTargetedNote: TranslationField;
+  geographiesTargetedTypes: TranslationFieldWithParentAndChildren;
+  geographiesTargetedTypesOther: TranslationField;
+  hasComponentsOrTracks: TranslationFieldWithOptions;
+  hasComponentsOrTracksDiffer: TranslationField;
+  hasComponentsOrTracksNote: TranslationField;
+  isNewModel: TranslationFieldWithOptionsAndChildren;
+  keyCharacteristics: TranslationFieldWithOptionsAndChildren;
+  keyCharacteristicsNote: TranslationField;
+  keyCharacteristicsOther: TranslationField;
+  managePartCDEnrollment: TranslationFieldWithOptionsAndParent;
+  managePartCDEnrollmentNote: TranslationField;
+  multiplePatricipationAgreementsNeeded: TranslationFieldWithOptionsAndParent;
+  multiplePatricipationAgreementsNeededNote: TranslationField;
+  participationInModelPrecondition: TranslationFieldWithOptionsAndChildren;
+  participationInModelPreconditionNote: TranslationField;
+  participationInModelPreconditionOtherOption: TranslationField;
+  participationInModelPreconditionOtherSpecify: TranslationField;
+  participationInModelPreconditionWhich: TranslationFieldWithOptionsAndParent;
+  participationInModelPreconditionWhyHow: TranslationFieldWithParent;
+  participationOptions: TranslationFieldWithOptions;
+  participationOptionsNote: TranslationField;
+  planContractUpdated: TranslationFieldWithOptionsAndParent;
+  planContractUpdatedNote: TranslationField;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
+  resemblesExistingModel: TranslationFieldWithOptionsAndChildren;
+  resemblesExistingModelHow: TranslationFieldWithParent;
+  resemblesExistingModelNote: TranslationField;
+  resemblesExistingModelOtherOption: TranslationField;
+  resemblesExistingModelOtherSpecify: TranslationField;
+  resemblesExistingModelWhich: TranslationFieldWithOptionsAndParent;
+  resemblesExistingModelWhyHow: TranslationField;
+  rulemakingRequired: TranslationFieldWithOptions;
+  rulemakingRequiredDescription: TranslationField;
+  rulemakingRequiredNote: TranslationField;
+  status: TranslationFieldWithOptions;
+  waiversRequired: TranslationFieldWithOptions;
+  waiversRequiredNote: TranslationField;
+  waiversRequiredTypes: TranslationFieldWithOptions;
 };
 
 /** PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning */
@@ -2083,6 +2366,112 @@ export type PlanOpsEvalAndLearningChanges = {
   useCcwForFileDistribiutionToParticipantsNote?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents plan ops eval and learning translation data */
+export type PlanOpsEvalAndLearningTranslation = {
+  __typename: 'PlanOpsEvalAndLearningTranslation';
+  anticipatedChallenges: TranslationField;
+  appToSendFilesToKnown: TranslationFieldWithOptionsAndParent;
+  appToSendFilesToNote: TranslationField;
+  appToSendFilesToWhich: TranslationField;
+  appealFeedback: TranslationFieldWithOptions;
+  appealNote: TranslationField;
+  appealOther: TranslationFieldWithOptions;
+  appealPayments: TranslationFieldWithOptions;
+  appealPerformance: TranslationFieldWithOptions;
+  benchmarkForPerformance: TranslationFieldWithOptions;
+  benchmarkForPerformanceNote: TranslationField;
+  captureParticipantInfo: TranslationFieldWithOptionsAndParent;
+  captureParticipantInfoNote: TranslationField;
+  ccmInvolvment: TranslationFieldWithOptionsAndChildren;
+  ccmInvolvmentNote: TranslationField;
+  ccmInvolvmentOther: TranslationField;
+  computePerformanceScores: TranslationFieldWithOptions;
+  computePerformanceScoresNote: TranslationField;
+  contractorSupport: TranslationFieldWithOptionsAndChildren;
+  contractorSupportHow: TranslationFieldWithParent;
+  contractorSupportNote: TranslationField;
+  contractorSupportOther: TranslationField;
+  dataCollectionFrequency: TranslationFieldWithOptions;
+  dataCollectionFrequencyContinually: TranslationField;
+  dataCollectionFrequencyNote: TranslationField;
+  dataCollectionFrequencyOther: TranslationField;
+  dataCollectionStarts: TranslationFieldWithOptions;
+  dataCollectionStartsOther: TranslationField;
+  dataFlowDiagramsNeeded: TranslationFieldWithOptionsAndParent;
+  dataFullTimeOrIncremental: TranslationFieldWithOptionsAndParent;
+  dataMonitoringFileOther: TranslationField;
+  dataMonitoringFileTypes: TranslationFieldWithOptionsAndParent;
+  dataMonitoringNote: TranslationField;
+  dataNeededForMonitoring: TranslationFieldWithOptionsAndChildren;
+  dataNeededForMonitoringNote: TranslationField;
+  dataNeededForMonitoringOther: TranslationField;
+  dataResponseFileFrequency: TranslationFieldWithParent;
+  dataResponseType: TranslationFieldWithParent;
+  dataSharingFrequency: TranslationFieldWithOptions;
+  dataSharingFrequencyContinually: TranslationField;
+  dataSharingFrequencyOther: TranslationField;
+  dataSharingStarts: TranslationFieldWithOptions;
+  dataSharingStartsNote: TranslationField;
+  dataSharingStartsOther: TranslationField;
+  dataToSendParticicipants: TranslationFieldWithOptions;
+  dataToSendParticicipantsNote: TranslationField;
+  dataToSendParticicipantsOther: TranslationField;
+  developNewQualityMeasures: TranslationFieldWithOptionsAndParent;
+  developNewQualityMeasuresNote: TranslationField;
+  draftIcdDueDate: TranslationFieldWithParent;
+  eftSetUp: TranslationFieldWithOptionsAndParent;
+  evaluationApproachOther: TranslationField;
+  evaluationApproaches: TranslationFieldWithOptions;
+  evalutaionApproachNote: TranslationField;
+  fileNamingConventions: TranslationFieldWithParent;
+  helpdeskUse: TranslationFieldWithOptions;
+  helpdeskUseNote: TranslationField;
+  icdNote: TranslationFieldWithParent;
+  icdOwner: TranslationFieldWithParent;
+  iddocSupport: TranslationFieldWithOptionsAndChildren;
+  iddocSupportNote: TranslationField;
+  modelLearningSystems: TranslationFieldWithOptions;
+  modelLearningSystemsNote: TranslationField;
+  modelLearningSystemsOther: TranslationField;
+  produceBenefitEnhancementFiles: TranslationFieldWithOptionsAndParent;
+  qualityPerformanceImpactsPayment: TranslationFieldWithOptionsAndParent;
+  qualityPerformanceImpactsPaymentNote: TranslationField;
+  qualityPerformanceImpactsPaymentOther: TranslationField;
+  qualityReportingFrequency: TranslationFieldWithOptions;
+  qualityReportingFrequencyContinually: TranslationField;
+  qualityReportingFrequencyOther: TranslationField;
+  qualityReportingStarts: TranslationFieldWithOptions;
+  qualityReportingStartsNote: TranslationField;
+  qualityReportingStartsOther: TranslationField;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
+  riskAdjustFeedback: TranslationFieldWithOptions;
+  riskAdjustNote: TranslationField;
+  riskAdjustOther: TranslationFieldWithOptions;
+  riskAdjustPayments: TranslationFieldWithOptions;
+  riskAdjustPerformance: TranslationFieldWithOptions;
+  sendFilesBetweenCcw: TranslationFieldWithOptionsAndParent;
+  sendFilesBetweenCcwNote: TranslationField;
+  shareCclfData: TranslationFieldWithOptions;
+  shareCclfDataNote: TranslationField;
+  stakeholders: TranslationFieldWithOptions;
+  stakeholdersNote: TranslationField;
+  stakeholdersOther: TranslationField;
+  status: TranslationFieldWithOptions;
+  stcNeeds: TranslationFieldWithParent;
+  technicalContactsIdentified: TranslationFieldWithOptionsAndParent;
+  technicalContactsIdentifiedDetail: TranslationField;
+  technicalContactsIdentifiedNote: TranslationField;
+  testingNote: TranslationField;
+  testingTimelines: TranslationFieldWithParent;
+  uatNeeds: TranslationFieldWithParent;
+  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptionsAndParent;
+  useCcwForFileDistribiutionToParticipants: TranslationFieldWithOptionsAndParent;
+  useCcwForFileDistribiutionToParticipantsNote: TranslationField;
+};
+
 /** PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants */
 export type PlanParticipantsAndProviders = {
   __typename: 'PlanParticipantsAndProviders';
@@ -2241,6 +2630,81 @@ export type PlanParticipantsAndProvidersChanges = {
   status?: InputMaybe<TaskStatusInput>;
   willRiskChange?: InputMaybe<Scalars['Boolean']['input']>;
   willRiskChangeNote?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents plan participants and providers translation data */
+export type PlanParticipantsAndProvidersTranslation = {
+  __typename: 'PlanParticipantsAndProvidersTranslation';
+  communicationMethod: TranslationFieldWithOptions;
+  communicationMethodOther: TranslationField;
+  communicationNote: TranslationField;
+  confidenceNote: TranslationField;
+  coordinateWork: TranslationFieldWithOptions;
+  coordinateWorkNote: TranslationField;
+  estimateConfidence: TranslationFieldWithOptions;
+  expectedNumberOfParticipants: TranslationField;
+  gainsharePayments: TranslationFieldWithOptionsAndChildren;
+  gainsharePaymentsEligibility: TranslationFieldWithOptionsAndParent;
+  gainsharePaymentsEligibilityOther: TranslationField;
+  gainsharePaymentsNote: TranslationField;
+  gainsharePaymentsTrack: TranslationFieldWithOptionsAndParent;
+  isNewTypeOfProvidersOrSuppliers: TranslationFieldWithOptionsAndParent;
+  medicareProviderType: TranslationField;
+  modelApplicationLevel: TranslationField;
+  participantAddedFrequency: TranslationFieldWithOptions;
+  participantAddedFrequencyContinually: TranslationField;
+  participantAddedFrequencyNote: TranslationField;
+  participantAddedFrequencyOther: TranslationField;
+  participantRemovedFrequency: TranslationFieldWithOptions;
+  participantRemovedFrequencyContinually: TranslationField;
+  participantRemovedFrequencyNote: TranslationField;
+  participantRemovedFrequencyOther: TranslationField;
+  participantRequireFinancialGuarantee: TranslationFieldWithOptions;
+  participantRequireFinancialGuaranteeNote: TranslationField;
+  participantRequireFinancialGuaranteeOther: TranslationField;
+  participantRequireFinancialGuaranteeType: TranslationFieldWithOptions;
+  participants: TranslationFieldWithOptions;
+  participantsCurrentlyInModels: TranslationFieldWithOptions;
+  participantsCurrentlyInModelsNote: TranslationField;
+  participantsIDSNote: TranslationField;
+  participantsIds: TranslationFieldWithOptions;
+  participantsIdsOther: TranslationField;
+  participantsNote: TranslationField;
+  participantsOther: TranslationField;
+  providerAddMethod: TranslationFieldWithOptions;
+  providerAddMethodNote: TranslationField;
+  providerAddMethodOther: TranslationField;
+  providerAdditionFrequency: TranslationFieldWithOptions;
+  providerAdditionFrequencyContinually: TranslationField;
+  providerAdditionFrequencyNote: TranslationField;
+  providerAdditionFrequencyOther: TranslationField;
+  providerLeaveMethod: TranslationFieldWithOptions;
+  providerLeaveMethodNote: TranslationField;
+  providerLeaveMethodOther: TranslationField;
+  providerOverlap: TranslationFieldWithOptionsAndChildren;
+  providerOverlapHierarchy: TranslationFieldWithParent;
+  providerOverlapNote: TranslationField;
+  providerRemovalFrequency: TranslationFieldWithOptions;
+  providerRemovalFrequencyContinually: TranslationField;
+  providerRemovalFrequencyNote: TranslationField;
+  providerRemovalFrequencyOther: TranslationField;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
+  recruitmentMethod: TranslationFieldWithOptions;
+  recruitmentNote: TranslationField;
+  recruitmentOther: TranslationField;
+  riskNote: TranslationField;
+  riskOther: TranslationField;
+  riskType: TranslationFieldWithOptions;
+  selectionMethod: TranslationFieldWithOptions;
+  selectionNote: TranslationField;
+  selectionOther: TranslationField;
+  statesEngagement: TranslationField;
+  status: TranslationFieldWithOptions;
+  willRiskChange: TranslationFieldWithOptions;
+  willRiskChangeNote: TranslationField;
 };
 
 /** PlanPayments is the task list section that deals with information regarding Payments */
@@ -2417,6 +2881,91 @@ export type PlanPaymentsChanges = {
   willRecoverPaymentsNote?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents payments translation data */
+export type PlanPaymentsTranslation = {
+  __typename: 'PlanPaymentsTranslation';
+  affectsMedicareSecondaryPayerClaims: TranslationFieldWithOptionsAndParent;
+  affectsMedicareSecondaryPayerClaimsHow: TranslationField;
+  affectsMedicareSecondaryPayerClaimsNote: TranslationField;
+  anticipateReconcilingPaymentsRetrospectively: TranslationFieldWithOptions;
+  anticipateReconcilingPaymentsRetrospectivelyNote: TranslationField;
+  anticipatedPaymentFrequency: TranslationFieldWithOptions;
+  anticipatedPaymentFrequencyContinually: TranslationField;
+  anticipatedPaymentFrequencyNote: TranslationField;
+  anticipatedPaymentFrequencyOther: TranslationField;
+  beneficiaryCostSharingLevelAndHandling: TranslationFieldWithParent;
+  canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldWithOptions;
+  canParticipantsSelectBetweenPaymentMechanismsHow: TranslationField;
+  canParticipantsSelectBetweenPaymentMechanismsNote: TranslationField;
+  changesMedicarePhysicianFeeSchedule: TranslationFieldWithOptionsAndParent;
+  changesMedicarePhysicianFeeScheduleNote: TranslationField;
+  claimsProcessingPrecedence: TranslationFieldWithOptions;
+  claimsProcessingPrecedenceNote: TranslationField;
+  claimsProcessingPrecedenceOther: TranslationField;
+  creatingDependenciesBetweenServices: TranslationFieldWithOptionsAndParent;
+  creatingDependenciesBetweenServicesNote: TranslationField;
+  expectedCalculationComplexityLevel: TranslationFieldWithOptions;
+  expectedCalculationComplexityLevelNote: TranslationField;
+  fundingSource: TranslationFieldWithOptions;
+  fundingSourceMedicareAInfo: TranslationField;
+  fundingSourceMedicareBInfo: TranslationField;
+  fundingSourceNote: TranslationField;
+  fundingSourceOther: TranslationField;
+  fundingSourceR: TranslationFieldWithOptions;
+  fundingSourceRMedicareAInfo: TranslationField;
+  fundingSourceRMedicareBInfo: TranslationField;
+  fundingSourceRNote: TranslationField;
+  fundingSourceROther: TranslationField;
+  isContractorAwareTestDataRequirements: TranslationFieldWithOptionsAndParent;
+  needsClaimsDataCollection: TranslationFieldWithOptionsAndParent;
+  needsClaimsDataCollectionNote: TranslationField;
+  nonClaimsPaymentOther: TranslationField;
+  nonClaimsPayments: TranslationFieldWithOptionsAndParent;
+  nonClaimsPaymentsNote: TranslationField;
+  numberPaymentsPerPayCycle: TranslationFieldWithParent;
+  numberPaymentsPerPayCycleNote: TranslationField;
+  payClaims: TranslationFieldWithOptions;
+  payClaimsNote: TranslationField;
+  payClaimsOther: TranslationField;
+  payModelDifferentiation: TranslationFieldWithParent;
+  payRecipients: TranslationFieldWithOptions;
+  payRecipientsNote: TranslationField;
+  payRecipientsOtherSpecification: TranslationField;
+  payType: TranslationFieldWithOptionsAndChildren;
+  payTypeNote: TranslationField;
+  paymentCalculationOwner: TranslationFieldWithParent;
+  paymentDemandRecoupmentFrequency: TranslationFieldWithOptions;
+  paymentDemandRecoupmentFrequencyContinually: TranslationField;
+  paymentDemandRecoupmentFrequencyNote: TranslationField;
+  paymentDemandRecoupmentFrequencyOther: TranslationField;
+  paymentReconciliationFrequency: TranslationFieldWithOptions;
+  paymentReconciliationFrequencyContinually: TranslationField;
+  paymentReconciliationFrequencyNote: TranslationField;
+  paymentReconciliationFrequencyOther: TranslationField;
+  paymentStartDate: TranslationField;
+  paymentStartDateNote: TranslationField;
+  planningToUseInnovationPaymentContractor: TranslationFieldWithOptionsAndParent;
+  planningToUseInnovationPaymentContractorNote: TranslationField;
+  providingThirdPartyFile: TranslationFieldWithOptionsAndParent;
+  readyForClearanceBy: TranslationField;
+  readyForClearanceDts: TranslationField;
+  readyForReviewBy: TranslationField;
+  readyForReviewDts: TranslationField;
+  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldWithOptionsAndParent;
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: TranslationField;
+  shouldAnyProviderExcludedFFSSystemsNote: TranslationField;
+  shouldAnyProvidersExcludedFFSSystems: TranslationFieldWithOptionsAndParent;
+  status: TranslationFieldWithOptions;
+  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldWithOptionsAndParent;
+  waiveBeneficiaryCostSharingNote: TranslationField;
+  waiveBeneficiaryCostSharingServiceSpecification: TranslationField;
+  waiverOnlyAppliesPartOfPayment: TranslationFieldWithOptionsAndParent;
+  willBePaymentAdjustments: TranslationFieldWithOptionsAndParent;
+  willBePaymentAdjustmentsNote: TranslationField;
+  willRecoverPayments: TranslationFieldWithOptions;
+  willRecoverPaymentsNote: TranslationField;
+};
+
 export type PlanTdl = {
   __typename: 'PlanTDL';
   createdBy: Scalars['UUID']['output'];
@@ -2446,6 +2995,15 @@ export type PlanTdlCreateInput = {
   modelPlanID: Scalars['UUID']['input'];
   note?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
+};
+
+/** Represents plan tdl translation data */
+export type PlanTdlTranslation = {
+  __typename: 'PlanTDLTranslation';
+  dateInitiated: TranslationField;
+  idNumber: TranslationField;
+  note: TranslationField;
+  title: TranslationField;
 };
 
 export type PossibleOperationalNeed = {
@@ -2555,6 +3113,14 @@ export type Query = {
   possibleOperationalSolutions: Array<PossibleOperationalSolution>;
   searchOktaUsers: Array<UserInfo>;
   taskListSectionLocks: Array<TaskListSectionLockStatus>;
+  /**
+   * TranslatedAuditCollection returns a collection of translated audits, with access dependant on who is viewing the audits.
+   * if a user has privileged access, they will see audit changes that are restricted, otherwise only unrestricted
+   * Optional Params
+   *     limit: this controls how many records will be returned at once. A null entry will return all records
+   *     offset: how many records to skip before returning results. If null, no records will be skipped.
+   */
+  translatedAuditCollection?: Maybe<Array<TranslatedAudit>>;
   userAccount: UserAccount;
   userViewCustomization: UserViewCustomization;
 };
@@ -2569,7 +3135,7 @@ export type QueryAnalyzedAuditsArgs = {
 /** Query definition for the schema */
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
-  tableName: Scalars['String']['input'];
+  tableName: TableName;
 };
 
 
@@ -2655,6 +3221,14 @@ export type QuerySearchOktaUsersArgs = {
 /** Query definition for the schema */
 export type QueryTaskListSectionLocksArgs = {
   modelPlanID: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryTranslatedAuditCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  modelPlanID: Scalars['UUID']['input'];
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2829,6 +3403,45 @@ export type SubscriptionOnTaskListSectionLocksChangedArgs = {
   modelPlanID: Scalars['UUID']['input'];
 };
 
+/** These represent all the possible tables in the database, in the public schema. */
+export enum TableName {
+  ACTIVITY = 'activity',
+  ANALYZED_AUDIT = 'analyzed_audit',
+  DISCUSSION_REPLY = 'discussion_reply',
+  EXISTING_MODEL = 'existing_model',
+  EXISTING_MODEL_LINK = 'existing_model_link',
+  MODEL_PLAN = 'model_plan',
+  NDA_AGREEMENT = 'nda_agreement',
+  OPERATIONAL_NEED = 'operational_need',
+  OPERATIONAL_SOLUTION = 'operational_solution',
+  OPERATIONAL_SOLUTION_SUBTASK = 'operational_solution_subtask',
+  PLAN_BASICS = 'plan_basics',
+  PLAN_BENEFICIARIES = 'plan_beneficiaries',
+  PLAN_COLLABORATOR = 'plan_collaborator',
+  PLAN_CR = 'plan_cr',
+  PLAN_DISCUSSION = 'plan_discussion',
+  PLAN_DOCUMENT = 'plan_document',
+  PLAN_DOCUMENT_SOLUTION_LINK = 'plan_document_solution_link',
+  PLAN_FAVORITE = 'plan_favorite',
+  PLAN_GENERAL_CHARACTERISTICS = 'plan_general_characteristics',
+  PLAN_OPS_EVAL_AND_LEARNING = 'plan_ops_eval_and_learning',
+  PLAN_PARTICIPANTS_AND_PROVIDERS = 'plan_participants_and_providers',
+  PLAN_PAYMENTS = 'plan_payments',
+  PLAN_TDL = 'plan_tdl',
+  POSSIBLE_NEED_SOLUTION_LINK = 'possible_need_solution_link',
+  POSSIBLE_OPERATIONAL_NEED = 'possible_operational_need',
+  POSSIBLE_OPERATIONAL_SOLUTION = 'possible_operational_solution',
+  POSSIBLE_OPERATIONAL_SOLUTION_CONTACT = 'possible_operational_solution_contact',
+  TAG = 'tag',
+  TRANSLATED_AUDIT = 'translated_audit',
+  TRANSLATED_AUDIT_FIELD = 'translated_audit_field',
+  TRANSLATED_AUDIT_QUEUE = 'translated_audit_queue',
+  USER_ACCOUNT = 'user_account',
+  USER_NOTIFICATION = 'user_notification',
+  USER_NOTIFICATION_PREFERENCES = 'user_notification_preferences',
+  USER_VIEW_CUSTOMIZATION = 'user_view_customization'
+}
+
 /** Tag represents an entity tagged in the database */
 export type Tag = {
   __typename: 'Tag';
@@ -2938,6 +3551,382 @@ export enum TeamRole {
   OACT = 'OACT',
   PAYMENT = 'PAYMENT',
   QUALITY = 'QUALITY'
+}
+
+/** TranslatedAudit represent a point in time change made to part of application. */
+export type TranslatedAudit = {
+  __typename: 'TranslatedAudit';
+  action: DatabaseOperation;
+  actorID: Scalars['UUID']['output'];
+  /** The Common name of the actor who made the changes. This comes from the user account table. */
+  actorName: Scalars['String']['output'];
+  /** The id of the audit.Change record that was translated. */
+  changeID: Scalars['Int']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  date: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  /** The actual meta data stored for this record */
+  metaData?: Maybe<TranslatedAuditMetaData>;
+  /** The type of meta data that is stored for this record */
+  metaDataType?: Maybe<TranslatedAuditMetaDataType>;
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  primaryKey: Scalars['UUID']['output'];
+  /** Restricted denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user */
+  restricted: Scalars['Boolean']['output'];
+  tableID: Scalars['Int']['output'];
+  tableName: TableName;
+  /** The specific fields that were changed by the transaction */
+  translatedFields: Array<TranslatedAuditField>;
+};
+
+export type TranslatedAuditField = {
+  __typename: 'TranslatedAuditField';
+  /** This represents whether a field was answered, updated, or had the answer removed */
+  changeType: AuditFieldChangeType;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dataType: TranslationDataType;
+  fieldName: Scalars['String']['output'];
+  fieldNameTranslated: Scalars['String']['output'];
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
+  fieldOrder: Scalars['Float']['output'];
+  formType: TranslationFormType;
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  new?: Maybe<Scalars['Any']['output']>;
+  newTranslated?: Maybe<Scalars['Any']['output']>;
+  /** Translated Label for questions that are no longer applicable  */
+  notApplicableQuestions?: Maybe<Array<Scalars['String']['output']>>;
+  old?: Maybe<Scalars['Any']['output']>;
+  oldTranslated?: Maybe<Scalars['Any']['output']>;
+  /** Specifies if this is a specific category of question. Needed for conditionally rendering note details etc */
+  questionType?: Maybe<TranslationQuestionType>;
+  /** The label for the parent question that this question refers to */
+  referenceLabel?: Maybe<Scalars['String']['output']>;
+  translatedAuditID: Scalars['UUID']['output'];
+};
+
+export type TranslatedAuditMetaBaseStruct = {
+  __typename: 'TranslatedAuditMetaBaseStruct';
+  tableName: TableName;
+  version: Scalars['Int']['output'];
+};
+
+/** TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit */
+export type TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaDiscussionReply | TranslatedAuditMetaDocumentSolutionLink | TranslatedAuditMetaGeneric | TranslatedAuditMetaOperationalNeed | TranslatedAuditMetaOperationalSolution | TranslatedAuditMetaOperationalSolutionSubtask;
+
+export enum TranslatedAuditMetaDataType {
+  BASE = 'BASE',
+  DISCUSSION_REPLY = 'DISCUSSION_REPLY',
+  DOCUMENT_SOLUTION_LINK = 'DOCUMENT_SOLUTION_LINK',
+  GENERIC = 'GENERIC',
+  OPERATIONAL_NEED = 'OPERATIONAL_NEED',
+  OPERATIONAL_SOLUTION = 'OPERATIONAL_SOLUTION',
+  OPERATIONAL_SOLUTION_SUBTASK = 'OPERATIONAL_SOLUTION_SUBTASK'
+}
+
+/** TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a translated audit is for a discussion reply */
+export type TranslatedAuditMetaDiscussionReply = {
+  __typename: 'TranslatedAuditMetaDiscussionReply';
+  discussionContent: Scalars['String']['output'];
+  discussionID: Scalars['UUID']['output'];
+  numberOfReplies: Scalars['Int']['output'];
+  tableName: TableName;
+  version: Scalars['Int']['output'];
+};
+
+/** TranslatedAuditMetaDocumentSolutionLink is the meta data type for a document solution link */
+export type TranslatedAuditMetaDocumentSolutionLink = {
+  __typename: 'TranslatedAuditMetaDocumentSolutionLink';
+  /** Document ID  will always be present, regardless of if a document was deleted or not */
+  documentID: Scalars['UUID']['output'];
+  /** Document Name will be present if the document is still present and not deleted */
+  documentName?: Maybe<Scalars['String']['output']>;
+  documentNote?: Maybe<Scalars['String']['output']>;
+  documentOtherType?: Maybe<Scalars['String']['output']>;
+  documentRestricted?: Maybe<Scalars['Boolean']['output']>;
+  /** Document type is the translated value of the document type enum */
+  documentType?: Maybe<Scalars['String']['output']>;
+  /** Document URL will only be visible if the user is a collaborator, or has assessment permission */
+  documentURL?: Maybe<Scalars['String']['output']>;
+  /** Document Visibility is the translated value of the restricted bool for a document */
+  documentVisibility?: Maybe<Scalars['String']['output']>;
+  needIsOther: Scalars['Boolean']['output'];
+  needName: Scalars['String']['output'];
+  solutionIsOther: Scalars['Boolean']['output'];
+  solutionName: Scalars['String']['output'];
+  solutionOtherHeader?: Maybe<Scalars['String']['output']>;
+  tableName: TableName;
+  version: Scalars['Int']['output'];
+};
+
+export type TranslatedAuditMetaGeneric = {
+  __typename: 'TranslatedAuditMetaGeneric';
+  relation: Scalars['String']['output'];
+  /** Relation content can be nil under certain situations, for example if a record was deleted before the audit was translated */
+  relationContent?: Maybe<Scalars['String']['output']>;
+  tableName: TableName;
+  version: Scalars['Int']['output'];
+};
+
+/** TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a translated audit is for an operational need */
+export type TranslatedAuditMetaOperationalNeed = {
+  __typename: 'TranslatedAuditMetaOperationalNeed';
+  isOther: Scalars['Boolean']['output'];
+  needName: Scalars['String']['output'];
+  tableName: TableName;
+  version: Scalars['Int']['output'];
+};
+
+/** TranslatedAuditMetaOperationalSolution is the meta data type that is provided when a translated audit is for an operational solution */
+export type TranslatedAuditMetaOperationalSolution = {
+  __typename: 'TranslatedAuditMetaOperationalSolution';
+  needIsOther: Scalars['Boolean']['output'];
+  needName: Scalars['String']['output'];
+  numberOfSubtasks: Scalars['Int']['output'];
+  solutionIsOther: Scalars['Boolean']['output'];
+  solutionMustFinish?: Maybe<Scalars['Time']['output']>;
+  solutionMustStart?: Maybe<Scalars['Time']['output']>;
+  solutionName: Scalars['String']['output'];
+  solutionOtherHeader?: Maybe<Scalars['String']['output']>;
+  /** SolutionStatus is the translated value for the type of solution */
+  solutionStatus: Scalars['String']['output'];
+  tableName: TableName;
+  version: Scalars['Int']['output'];
+};
+
+/** TranslatedAuditMetaOperationalSolutionSubtask is the meta data type that is provided when a translated audit is for an operational solution subtask */
+export type TranslatedAuditMetaOperationalSolutionSubtask = {
+  __typename: 'TranslatedAuditMetaOperationalSolutionSubtask';
+  needIsOther: Scalars['Boolean']['output'];
+  needName: Scalars['String']['output'];
+  numberOfSubtasks: Scalars['Int']['output'];
+  solutionIsOther: Scalars['Boolean']['output'];
+  solutionName: Scalars['String']['output'];
+  solutionOtherHeader?: Maybe<Scalars['String']['output']>;
+  /** The name of the subtask. If a subtask is updated, and then deleted before being translated, it is possible for this field to be nil. */
+  subtaskName?: Maybe<Scalars['String']['output']>;
+  tableName: TableName;
+  version: Scalars['Int']['output'];
+};
+
+/** Represents the data type of the translation field */
+export enum TranslationDataType {
+  BOOLEAN = 'BOOLEAN',
+  DATE = 'DATE',
+  ENUM = 'ENUM',
+  NUMBER = 'NUMBER',
+  OBJECT = 'OBJECT',
+  STRING = 'STRING',
+  UUID = 'UUID'
+}
+
+/** Represents a translation question with no options */
+export type TranslationField = {
+  __typename: 'TranslationField';
+  dataType: TranslationDataType;
+  dbField: Scalars['String']['output'];
+  /** Labels specifically for export/change history.  Takes priority over all other labels */
+  exportLabel?: Maybe<Scalars['String']['output']>;
+  formType: TranslationFormType;
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
+  order: Scalars['Float']['output'];
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
+  otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<TableName>;
+};
+
+/** Represents a translation question with options */
+export type TranslationFieldWithOptions = {
+  __typename: 'TranslationFieldWithOptions';
+  dataType: TranslationDataType;
+  dbField: Scalars['String']['output'];
+  /** Labels specifically for export/change history.  Takes priority over all other labels */
+  exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
+  formType: TranslationFormType;
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  options: Scalars['Map']['output'];
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
+  order: Scalars['Float']['output'];
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
+  otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<TableName>;
+};
+
+/** Represents a translation question with options and child/children */
+export type TranslationFieldWithOptionsAndChildren = {
+  __typename: 'TranslationFieldWithOptionsAndChildren';
+  childRelation: Scalars['Map']['output'];
+  dataType: TranslationDataType;
+  dbField: Scalars['String']['output'];
+  /** Labels specifically for export/change history.  Takes priority over all other labels */
+  exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
+  formType: TranslationFormType;
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  options: Scalars['Map']['output'];
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
+  order: Scalars['Float']['output'];
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
+  otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<TableName>;
+};
+
+/** Represents a translation question with options and parent */
+export type TranslationFieldWithOptionsAndParent = {
+  __typename: 'TranslationFieldWithOptionsAndParent';
+  dataType: TranslationDataType;
+  dbField: Scalars['String']['output'];
+  /** Labels specifically for export/change history.  Takes priority over all other labels */
+  exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
+  formType: TranslationFormType;
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  options: Scalars['Map']['output'];
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
+  order: Scalars['Float']['output'];
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
+  otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
+  parentRelation: TranslationFieldWithOptionsAndChildren;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<TableName>;
+};
+
+/** Represents a translation question with no options and a parent */
+export type TranslationFieldWithParent = {
+  __typename: 'TranslationFieldWithParent';
+  dataType: TranslationDataType;
+  dbField: Scalars['String']['output'];
+  /** Labels specifically for export/change history.  Takes priority over all other labels */
+  exportLabel?: Maybe<Scalars['String']['output']>;
+  formType: TranslationFormType;
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
+  order: Scalars['Float']['output'];
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
+  otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
+  parentRelation: TranslationField;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<TableName>;
+};
+
+/** Represents a translation question with options and parent and children */
+export type TranslationFieldWithParentAndChildren = {
+  __typename: 'TranslationFieldWithParentAndChildren';
+  childRelation: Scalars['Map']['output'];
+  dataType: TranslationDataType;
+  dbField: Scalars['String']['output'];
+  /** Labels specifically for export/change history.  Takes priority over all other labels */
+  exportLabel?: Maybe<Scalars['String']['output']>;
+  exportOptions?: Maybe<Scalars['Map']['output']>;
+  formType: TranslationFormType;
+  goField: Scalars['String']['output'];
+  gqlField: Scalars['String']['output'];
+  isArray?: Maybe<Scalars['Boolean']['output']>;
+  isNote?: Maybe<Scalars['Boolean']['output']>;
+  /** Is a question a followup to another that doesn't designate it's own readonly question/line */
+  isOtherType?: Maybe<Scalars['Boolean']['output']>;
+  label: Scalars['String']['output'];
+  multiSelectLabel?: Maybe<Scalars['String']['output']>;
+  options: Scalars['Map']['output'];
+  /** Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02 */
+  order: Scalars['Float']['output'];
+  /** Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context */
+  otherParentField?: Maybe<Scalars['String']['output']>;
+  /** Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics' */
+  parentReferencesLabel?: Maybe<Scalars['String']['output']>;
+  parentRelation: TranslationFieldWithOptionsAndChildren;
+  readonlyLabel?: Maybe<Scalars['String']['output']>;
+  sublabel?: Maybe<Scalars['String']['output']>;
+  /** Table reference for fields that are of dataType UUID and reference a table in the database */
+  tableReference?: Maybe<TableName>;
+};
+
+/** Represents the FORM type of the translation field */
+export enum TranslationFormType {
+  BOOLEAN = 'BOOLEAN',
+  CHECKBOX = 'CHECKBOX',
+  DATEPICKER = 'DATEPICKER',
+  MULTISELECT = 'MULTISELECT',
+  NUMBER = 'NUMBER',
+  RADIO = 'RADIO',
+  RANGEINPUT = 'RANGEINPUT',
+  SELECT = 'SELECT',
+  TEXT = 'TEXT',
+  TEXTAREA = 'TEXTAREA'
+}
+
+export enum TranslationQuestionType {
+  NOTE = 'NOTE',
+  OTHER = 'OTHER'
 }
 
 export enum TriStateAnswer {
@@ -3240,6 +4229,13 @@ export type UpdateTdlMutationVariables = Exact<{
 
 
 export type UpdateTdlMutation = { __typename: 'Mutation', updatePlanTDL: { __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, idNumber: string, dateInitiated: Time, title: string, note?: string | null } };
+
+export type GetChangeHistoryQueryVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+}>;
+
+
+export type GetChangeHistoryQuery = { __typename: 'Query', translatedAuditCollection?: Array<{ __typename: 'TranslatedAudit', id: UUID, tableName: TableName, date: Time, action: DatabaseOperation, actorName: string, translatedFields: Array<{ __typename: 'TranslatedAuditField', id: UUID, changeType: AuditFieldChangeType, dataType: TranslationDataType, fieldName: string, fieldNameTranslated: string, referenceLabel?: string | null, questionType?: TranslationQuestionType | null, notApplicableQuestions?: Array<string> | null, old?: any | null, oldTranslated?: any | null, new?: any | null, newTranslated?: any | null }>, metaData?: { __typename: 'TranslatedAuditMetaBaseStruct', version: number, tableName: TableName } | { __typename: 'TranslatedAuditMetaDiscussionReply', version: number, tableName: TableName, discussionID: UUID, discussionContent: string, numberOfReplies: number } | { __typename: 'TranslatedAuditMetaDocumentSolutionLink', version: number, tableName: TableName, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, needName: string, needIsOther: boolean, documentName?: string | null, documentType?: string | null, documentOtherType?: string | null, documentVisibility?: string | null, documentNote?: string | null, documentURL?: string | null, documentID: UUID } | { __typename: 'TranslatedAuditMetaGeneric', version: number, tableName: TableName, relation: string, relationContent?: string | null } | { __typename: 'TranslatedAuditMetaOperationalNeed', version: number, tableName: TableName, needName: string, isOther: boolean } | { __typename: 'TranslatedAuditMetaOperationalSolution', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, solutionStatus: string, solutionMustStart?: Time | null, solutionMustFinish?: Time | null, numberOfSubtasks: number } | { __typename: 'TranslatedAuditMetaOperationalSolutionSubtask', version: number, tableName: TableName, needName: string, needIsOther: boolean, solutionName: string, solutionOtherHeader?: string | null, solutionIsOther: boolean, subtaskName?: string | null, numberOfSubtasks: number } | null }> | null };
 
 export type CreateModelPlanCollaboratorMutationVariables = Exact<{
   input: PlanCollaboratorCreateInput;
@@ -3668,7 +4664,7 @@ export type GetModelPlanBaseQueryVariables = Exact<{
 }>;
 
 
-export type GetModelPlanBaseQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, status: ModelStatus } };
+export type GetModelPlanBaseQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, modifiedDts?: Time | null, createdDts: Time, status: ModelStatus } };
 
 export type GetModelPlansQueryVariables = Exact<{
   filter: ModelPlanFilter;
@@ -3713,7 +4709,7 @@ export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: {
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'AddedAsCollaboratorMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<string>, readyForReview: Array<string>, readyForClearance: Array<string> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'DatesChangedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string }, dateChanges: Array<{ __typename: 'DateChange', isChanged: boolean, field: DateChangeFieldType, isRange: boolean, oldDate?: Time | null, newDate?: Time | null, oldRangeStart?: Time | null, oldRangeEnd?: Time | null, newRangeStart?: Time | null, newRangeEnd?: Time | null }> } | { __typename: 'ModelPlanSharedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, optionalMessage?: string | null, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewModelPlanActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
+export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'AddedAsCollaboratorMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<TableName>, readyForReview: Array<TableName>, readyForClearance: Array<TableName> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'DatesChangedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string }, dateChanges: Array<{ __typename: 'DateChange', isChanged: boolean, field: DateChangeFieldType, isRange: boolean, oldDate?: Time | null, newDate?: Time | null, oldRangeStart?: Time | null, oldRangeEnd?: Time | null, newRangeStart?: Time | null, newRangeEnd?: Time | null }> } | { __typename: 'ModelPlanSharedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, optionalMessage?: string | null, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewModelPlanActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
 
 export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5029,6 +6025,129 @@ export function useUpdateTdlMutation(baseOptions?: Apollo.MutationHookOptions<Up
 export type UpdateTdlMutationHookResult = ReturnType<typeof useUpdateTdlMutation>;
 export type UpdateTdlMutationResult = Apollo.MutationResult<UpdateTdlMutation>;
 export type UpdateTdlMutationOptions = Apollo.BaseMutationOptions<UpdateTdlMutation, UpdateTdlMutationVariables>;
+export const GetChangeHistoryDocument = gql`
+    query GetChangeHistory($modelPlanID: UUID!) {
+  translatedAuditCollection(modelPlanID: $modelPlanID) {
+    id
+    tableName
+    date
+    action
+    actorName
+    translatedFields {
+      id
+      changeType
+      dataType
+      fieldName
+      fieldNameTranslated
+      referenceLabel
+      questionType
+      notApplicableQuestions
+      old
+      oldTranslated
+      new
+      newTranslated
+    }
+    metaData {
+      ... on TranslatedAuditMetaBaseStruct {
+        version
+        tableName
+      }
+      ... on TranslatedAuditMetaGeneric {
+        version
+        tableName
+        relation
+        relationContent
+      }
+      ... on TranslatedAuditMetaDiscussionReply {
+        version
+        tableName
+        discussionID
+        discussionContent
+        numberOfReplies
+      }
+      ... on TranslatedAuditMetaOperationalNeed {
+        version
+        tableName
+        needName
+        isOther
+      }
+      ... on TranslatedAuditMetaOperationalSolution {
+        version
+        tableName
+        needName
+        needIsOther
+        solutionName
+        solutionOtherHeader
+        solutionIsOther
+        solutionStatus
+        solutionMustStart
+        solutionMustFinish
+        numberOfSubtasks
+      }
+      ... on TranslatedAuditMetaOperationalSolutionSubtask {
+        version
+        tableName
+        needName
+        needIsOther
+        solutionName
+        solutionOtherHeader
+        solutionIsOther
+        subtaskName
+        numberOfSubtasks
+      }
+      ... on TranslatedAuditMetaDocumentSolutionLink {
+        version
+        tableName
+        solutionName
+        solutionOtherHeader
+        solutionIsOther
+        needName
+        needIsOther
+        documentName
+        documentType
+        documentOtherType
+        documentVisibility
+        documentNote
+        documentURL
+        documentID
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetChangeHistoryQuery__
+ *
+ * To run a query within a React component, call `useGetChangeHistoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChangeHistoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChangeHistoryQuery({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *   },
+ * });
+ */
+export function useGetChangeHistoryQuery(baseOptions: Apollo.QueryHookOptions<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>(GetChangeHistoryDocument, options);
+      }
+export function useGetChangeHistoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>(GetChangeHistoryDocument, options);
+        }
+export function useGetChangeHistorySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>(GetChangeHistoryDocument, options);
+        }
+export type GetChangeHistoryQueryHookResult = ReturnType<typeof useGetChangeHistoryQuery>;
+export type GetChangeHistoryLazyQueryHookResult = ReturnType<typeof useGetChangeHistoryLazyQuery>;
+export type GetChangeHistorySuspenseQueryHookResult = ReturnType<typeof useGetChangeHistorySuspenseQuery>;
+export type GetChangeHistoryQueryResult = Apollo.QueryResult<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>;
 export const CreateModelPlanCollaboratorDocument = gql`
     mutation CreateModelPlanCollaborator($input: PlanCollaboratorCreateInput!) {
   createPlanCollaborator(input: $input) {
@@ -8666,6 +9785,7 @@ export const GetModelPlanBaseDocument = gql`
     id
     modelName
     modifiedDts
+    createdDts
     status
   }
 }
@@ -11819,6 +12939,7 @@ export const TypedGetCrtdLsDocument = {"kind":"Document","definitions":[{"kind":
 export const TypedGetTdlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTDL"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planTDL"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}},{"kind":"Field","name":{"kind":"Name","value":"dateInitiated"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]} as unknown as DocumentNode<GetTdlQuery, GetTdlQueryVariables>;
 export const TypedUpdateCrDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateCR"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanCRChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanCR"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}},{"kind":"Field","name":{"kind":"Name","value":"dateInitiated"}},{"kind":"Field","name":{"kind":"Name","value":"dateImplemented"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]} as unknown as DocumentNode<UpdateCrMutation, UpdateCrMutationVariables>;
 export const TypedUpdateTdlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateTDL"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanTDLChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanTDL"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}},{"kind":"Field","name":{"kind":"Name","value":"dateInitiated"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]} as unknown as DocumentNode<UpdateTdlMutation, UpdateTdlMutationVariables>;
+export const TypedGetChangeHistoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetChangeHistory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"translatedAuditCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"action"}},{"kind":"Field","name":{"kind":"Name","value":"actorName"}},{"kind":"Field","name":{"kind":"Name","value":"translatedFields"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"dataType"}},{"kind":"Field","name":{"kind":"Name","value":"fieldName"}},{"kind":"Field","name":{"kind":"Name","value":"fieldNameTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"referenceLabel"}},{"kind":"Field","name":{"kind":"Name","value":"questionType"}},{"kind":"Field","name":{"kind":"Name","value":"notApplicableQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"old"}},{"kind":"Field","name":{"kind":"Name","value":"oldTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"new"}},{"kind":"Field","name":{"kind":"Name","value":"newTranslated"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaBaseStruct"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaGeneric"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"relation"}},{"kind":"Field","name":{"kind":"Name","value":"relationContent"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDiscussionReply"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"discussionContent"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfReplies"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalNeed"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"isOther"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolution"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionStatus"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustStart"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustFinish"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolutionSubtask"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"subtaskName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDocumentSolutionLink"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"documentName"}},{"kind":"Field","name":{"kind":"Name","value":"documentType"}},{"kind":"Field","name":{"kind":"Name","value":"documentOtherType"}},{"kind":"Field","name":{"kind":"Name","value":"documentVisibility"}},{"kind":"Field","name":{"kind":"Name","value":"documentNote"}},{"kind":"Field","name":{"kind":"Name","value":"documentURL"}},{"kind":"Field","name":{"kind":"Name","value":"documentID"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>;
 export const TypedCreateModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanCollaboratorCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPlanCollaborator"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}}]}}]}}]} as unknown as DocumentNode<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>;
 export const TypedDeleteModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePlanCollaborator"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}}]}}]}}]} as unknown as DocumentNode<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>;
 export const TypedGetIndividualModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIndividualModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planCollaboratorByID"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}}]}}]} as unknown as DocumentNode<GetIndividualModelPlanCollaboratorQuery, GetIndividualModelPlanCollaboratorQueryVariables>;
@@ -11874,7 +12995,7 @@ export const TypedGetAllSingleModelDataDocument = {"kind":"Document","definition
 export const TypedGetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"currentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"launchDarkly"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userKey"}},{"kind":"Field","name":{"kind":"Name","value":"signedHash"}}]}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
 export const TypedGetFavoritesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFavorites"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}},{"kind":"Field","name":{"kind":"Name","value":"crs"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"idNumber"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tdls"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"idNumber"}}]}}]}}]}}]} as unknown as DocumentNode<GetFavoritesQuery, GetFavoritesQueryVariables>;
 export const TypedGetModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"archived"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"crs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tdls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participantsAndProviders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"opsEvalAndLearning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"operationalNeeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"prepareForClearance"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","alias":{"kind":"Name","value":"modifiedDts"},"name":{"kind":"Name","value":"latestClearanceDts"}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlanQuery, GetModelPlanQueryVariables>;
-export const TypedGetModelPlanBaseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlanBase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>;
+export const TypedGetModelPlanBaseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlanBase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<GetModelPlanBaseQuery, GetModelPlanBaseQueryVariables>;
 export const TypedGetModelPlansDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlans"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}]}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}}]}},{"kind":"Field","name":{"kind":"Name","value":"payments"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"paymentStartDate"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"replies"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"crs"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"idNumber"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tdls"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"isMAC"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"idNumber"}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlansQuery, GetModelPlansQueryVariables>;
 export const TypedGetUserInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}}]}}]} as unknown as DocumentNode<GetUserInfoQuery, GetUserInfoQueryVariables>;
 export const TypedSearchOktaUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchOktaUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchOktaUsers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchTerm"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>;

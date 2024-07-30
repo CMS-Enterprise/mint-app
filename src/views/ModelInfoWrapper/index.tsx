@@ -25,6 +25,7 @@ export const ModelInfoContext = createContext<GetModelPlanBaseModelPlan>({
   id: '',
   modelName: '',
   modifiedDts: '',
+  createdDts: '2024-01-01T00:00:00Z',
   status: ModelStatus.PLAN_DRAFT
 });
 
@@ -48,6 +49,7 @@ const ModelInfoWrapper = ({ children }: ModelInfoWrapperProps) => {
     id: '',
     modelName: '',
     modifiedDts: '',
+    createdDts: '2024-01-01T00:00:00Z',
     status: ModelStatus.PLAN_DRAFT
   });
 

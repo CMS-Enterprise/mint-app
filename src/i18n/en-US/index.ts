@@ -38,6 +38,7 @@ import {
   participantsAndProvidersMisc
 } from './modelPlan/participantsAndProviders';
 import { payments, paymentsMisc } from './modelPlan/payments';
+import replies from './modelPlan/replies';
 import solutions from './modelPlan/solutions';
 import tdls from './modelPlan/tdls';
 import filterView from './readOnly/filterView';
@@ -46,6 +47,7 @@ import modelSummary from './readOnly/modelSummary';
 import readOnlyModelPlan from './readOnly/readOnlyModelPlan';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
+import changeHistory from './changeHistory';
 import cookies from './cookies';
 import error from './error';
 import externalLinkModal from './externalLinkModal';
@@ -66,6 +68,7 @@ const enUS = {
   accessibilityStatement,
   auth,
   cookies,
+  changeHistory,
   customHome,
   draftModelPlan,
   error,
@@ -109,6 +112,7 @@ const enUS = {
   collaboratorsMisc,
   discussions,
   discussionsMisc,
+  replies,
   crs,
   tdls,
   crtdlsMisc,

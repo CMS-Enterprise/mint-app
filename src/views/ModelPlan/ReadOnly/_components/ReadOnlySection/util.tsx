@@ -164,7 +164,10 @@ export const getRelatedUneededQuestions = <
     if (childrenToCheck) {
       childRelations = childRelations?.filter(child =>
         childrenToCheck.includes(child().gqlField)
-      );
+      ) as (
+        | Partial<Record<T, (() => TranslationConfigType<T, C>)[]>>
+        | Partial<Record<T, (() => TranslationConfigType<T, void>)[]>>
+      )[T];
     }
 
     // If the evaluation of the parent value triggers a child question, sort into appropriate arrays

@@ -1,0 +1,37 @@
+"""
+Represents plan basics translation data
+"""
+type PlanBasicsTranslation {
+  modelCategory: TranslationFieldWithOptions! @goTag(key: "db", value: "model_category")
+  additionalModelCategories: TranslationFieldWithOptions! @goTag(key: "db", value: "additional_model_categories")
+  demoCode: TranslationField! @goTag(key: "db", value: "demo_code")
+  amsModelID: TranslationField! @goTag(key: "db", value: "ams_model_id")
+  cmsCenters: TranslationFieldWithOptions! @goTag(key: "db", value: "cms_centers")
+  cmmiGroups: TranslationFieldWithOptions! @goTag(key: "db", value: "cmmi_groups")
+  modelType: TranslationFieldWithOptions! @goTag(key: "db", value: "model_type")
+  modelTypeOther: TranslationField! @goTag(key: "db", value: "model_type_other")
+  problem: TranslationField! @goTag(key: "db", value: "problem")
+  goal: TranslationField! @goTag(key: "db", value: "goal")
+  testInterventions: TranslationField! @goTag(key: "db", value: "test_interventions")
+  note: TranslationField! @goTag(key: "db", value: "note")
+
+  # Milestones
+  completeICIP: TranslationField! @goTag(key: "db", value: "complete_icip")
+  clearanceStarts: TranslationField! @goTag(key: "db", value: "clearance_starts")
+  clearanceEnds: TranslationField! @goTag(key: "db", value: "clearance_ends")
+  announced: TranslationField! @goTag(key: "db", value: "announced")
+  applicationsStart: TranslationField! @goTag(key: "db", value: "applications_starts")
+  applicationsEnd: TranslationField! @goTag(key: "db", value: "applications_ends")
+  performancePeriodStarts: TranslationField! @goTag(key: "db", value: "performance_period_starts")
+  performancePeriodEnds: TranslationField! @goTag(key: "db", value: "performance_period_ends")
+  wrapUpEnds: TranslationField! @goTag(key: "db", value: "wrap_up_ends")
+  highLevelNote: TranslationField! @goTag(key: "db", value: "high_level_note")
+  phasedIn: TranslationFieldWithOptions! @goTag(key: "db", value: "phased_in")
+  phasedInNote: TranslationField! @goTag(key: "db", value: "phased_in_note")
+
+  readyForReviewBy: TranslationField! @goTag(key: "db", value: "ready_for_review_by")
+  readyForReviewDts: TranslationField! @goTag(key: "db", value: "ready_for_review_dts")
+  readyForClearanceBy: TranslationField! @goTag(key: "db", value: "ready_for_clearance_by")
+  readyForClearanceDts: TranslationField! @goTag(key: "db", value: "ready_for_clearance_dts")
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+}

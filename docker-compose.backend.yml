@@ -64,6 +64,7 @@ services:
        # This is not ideal (perhaps it should be in the root directory?), but for now we just volume mount cypress as a workaround.
        # NOTE: This is only really the case if you set FLAG_SOURCE=FILE locally, or (more importantly) in ./github/workflows/run_tests.yml
       - ./cypress/:/mint/cypress/
+      - ./mappings/:/mint/mappings/
     entrypoint: air ${AIR_CONFIG}
     ports:
       - 8085:8080
