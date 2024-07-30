@@ -1189,8 +1189,6 @@ export const payments: TranslationPayments = {
     goField: 'PaymentDemandRecoupmentFrequency',
     dbField: 'payment_demand_recoupment_frequency',
     label: 'How frequently do you anticipate making demands/recoupments?',
-    questionTooltip:
-      'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     order: 7.09,
@@ -1242,6 +1240,8 @@ export const payments: TranslationPayments = {
     label: 'When will payments start? (Enter an approximate date)',
     readonlyLabel: 'When will payments start?',
     sublabel:
+      'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
+    questionTooltip:
       'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
