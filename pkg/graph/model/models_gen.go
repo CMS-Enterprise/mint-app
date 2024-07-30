@@ -1663,11 +1663,11 @@ func (e ModelLearningSystemType) MarshalGQL(w io.Writer) {
 type ModelPlanFilter string
 
 const (
-	ModelPlanFilterIncludeAll ModelPlanFilter = "INCLUDE_ALL"
-	ModelPlanFilterCollabOnly ModelPlanFilter = "COLLAB_ONLY"
-	ModelPlanFilterWithCrTdls ModelPlanFilter = "WITH_CR_TDLS"
-	ModelPlanFilterFavorited  ModelPlanFilter = "FAVORITED"
-	ModelPlanFilterApproachingClearance  ModelPlanFilter = "APPROACHING_CLEARANCE"
+	ModelPlanFilterIncludeAll           ModelPlanFilter = "INCLUDE_ALL"
+	ModelPlanFilterCollabOnly           ModelPlanFilter = "COLLAB_ONLY"
+	ModelPlanFilterWithCrTdls           ModelPlanFilter = "WITH_CR_TDLS"
+	ModelPlanFilterFavorited            ModelPlanFilter = "FAVORITED"
+	ModelPlanFilterApproachingClearance ModelPlanFilter = "APPROACHING_CLEARANCE"
 )
 
 var AllModelPlanFilter = []ModelPlanFilter{
@@ -1675,11 +1675,12 @@ var AllModelPlanFilter = []ModelPlanFilter{
 	ModelPlanFilterCollabOnly,
 	ModelPlanFilterWithCrTdls,
 	ModelPlanFilterFavorited,
+	ModelPlanFilterApproachingClearance,
 }
 
 func (e ModelPlanFilter) IsValid() bool {
 	switch e {
-	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls, ModelPlanFilterFavorited:
+	case ModelPlanFilterIncludeAll, ModelPlanFilterCollabOnly, ModelPlanFilterWithCrTdls, ModelPlanFilterFavorited, ModelPlanFilterApproachingClearance:
 		return true
 	}
 	return false
