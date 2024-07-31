@@ -495,6 +495,8 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     label: 'Will you produce Benefit Enhancement Files?',
     sublabel:
       'This means we would use these files for Participating and Preferred Providers.',
+    questionTooltip:
+      'This means we would use these files for Participating and Preferred Providers.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 4.05,
