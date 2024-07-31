@@ -567,6 +567,8 @@ export const payments: TranslationPayments = {
     label: 'Will any additional data need to be collected for claims?',
     sublabel:
       'If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
+    questionTooltip:
+      'If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 3.03,
@@ -691,6 +693,8 @@ export const payments: TranslationPayments = {
     label: 'Would the waiver only apply for part of the payment?',
     sublabel:
       'For example, we would assess cost-sharing for the service itself, but not for an add-on payment',
+    questionTooltip:
+      'For example, we would assess cost-sharing for the service itself, but not for an add-on payment',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 4.04,
@@ -800,8 +804,6 @@ export const payments: TranslationPayments = {
     dbField: 'number_payments_per_pay_cycle',
     label: 'Number of payments per payment cycle',
     sublabel: 'This only applies if you are making non-claims-based payments',
-    questionTooltip:
-      'Note: If there will be 30+ payees we recommend a contractor.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 5.05,
@@ -854,6 +856,8 @@ export const payments: TranslationPayments = {
     dbField: 'planning_to_use_innovation_payment_contractor',
     label: 'Are you planning to use the Innovation Payment Contractor?',
     sublabel: 'Note: If there will be 30+ payees we recommend a contractor.',
+    questionTooltip:
+      'Note: If there will be 30+ payees we recommend a contractor.',
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.09,
@@ -1183,8 +1187,6 @@ export const payments: TranslationPayments = {
     goField: 'PaymentDemandRecoupmentFrequency',
     dbField: 'payment_demand_recoupment_frequency',
     label: 'How frequently do you anticipate making demands/recoupments?',
-    questionTooltip:
-      'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     order: 7.09,
@@ -1236,6 +1238,8 @@ export const payments: TranslationPayments = {
     label: 'When will payments start? (Enter an approximate date)',
     readonlyLabel: 'When will payments start?',
     sublabel:
+      'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
+    questionTooltip:
       'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
