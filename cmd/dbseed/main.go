@@ -408,7 +408,7 @@ func (s *Seeder) SeedData() {
 
 	// Seed a plan that is has a clearance start date 3 months from today
 	planApproachingClearance := s.createModelPlan("Plan Approaching Clearance in 3 months", "MINT")
-	s.updateModelPlan(archivedPlan, map[string]interface{}{
+	s.updateModelPlan(planApproachingClearance, map[string]interface{}{
 		"abbreviation": "Clearance",
 		"status":       models.ModelStatusPaused,
 	})

@@ -118,6 +118,112 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 1)
+
+	suite.Run("Models Approaching Clearance grabs models approaching clearance within 6 months", func() {
+		// Will show up, in date range
+		planApproachingClearanceTomorrow := suite.createModelPlan("Approaching Clearance tomorrow")
+		basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceTomorrow.ID)
+		suite.NoError(err)
+
+		changes := map[string]interface{}{
+			"clearanceStarts": time.Now().AddDate(0, 0, 1),
+		}
+		_, err = UpdatePlanBasics(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			basics.ID,
+			changes,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+
+		// Won't show up, out of date range
+		planApproachingClearanceSixMonthsPlusDay := suite.createModelPlan("Approaching Clearance in six months and a day")
+		basicsSeven, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceSixMonthsPlusDay.ID)
+		suite.NoError(err)
+
+		changes = map[string]interface{}{
+			"clearanceStarts": time.Now().AddDate(0, 6, 1),
+		}
+		_, err = UpdatePlanBasics(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			basicsSeven.ID,
+			changes,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+
+		// Won't show up, out of date range
+		planApproachingClearanceYesterday := suite.createModelPlan("Approaching Clearance yesterday")
+		basicsYesterday, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceYesterday.ID)
+		suite.NoError(err)
+
+		changes = map[string]interface{}{
+			"clearanceStarts": time.Now().AddDate(0, 0, -1),
+		}
+		_, err = UpdatePlanBasics(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			basicsYesterday.ID,
+			changes,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+
+		result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterApproachingClearance)
+		suite.NoError(err)
+		if suite.NotNil(result) {
+			if suite.Len(result, 1) {
+				suite.EqualValues(planApproachingClearanceTomorrow.ID, result[0].ID)
+			}
+		}
+
+		// Will show up
+		planApproachingClearanceSixMonths := suite.createModelPlan("Approaching Clearance six months")
+		basicsSix, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceSixMonths.ID)
+		suite.NoError(err)
+
+		changes = map[string]interface{}{
+			"clearanceStarts": time.Now().AddDate(0, 0, 1),
+		}
+		_, err = UpdatePlanBasics(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			basicsSix.ID,
+			changes,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+
+		// Assert that we see the additional model as approaching clearance now. Assert that the results are ordered from soonest, to latest
+		result, err = ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, model.ModelPlanFilterApproachingClearance)
+		suite.NoError(err)
+		if suite.NotNil(result) {
+			if suite.Len(result, 2) {
+				suite.EqualValues(planApproachingClearanceTomorrow.ID, result[0].ID)
+				suite.EqualValues(planApproachingClearanceSixMonths.ID, result[1].ID)
+			}
+
+		}
+
+	})
 }
 
 func (suite *ResolverSuite) TestModelPlanNameHistory() {
