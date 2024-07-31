@@ -1,0 +1,50 @@
+{{template "shared_header.html"}}
+
+<p>Your model's anticipated timeline suggests that </p>
+  {{if eq .Phase "CLEARANCE"}}
+    <p>it is now in clearance</p>
+  {{else if eq .Phase "ICIP_COMPLETE"}}
+    <p>your ICIP is now complete</p>
+  {{else if eq .Phase "CLEARED"}}
+    <p>it is now cleared</p>
+  {{else if eq .Phase "ANNOUNCED"}}
+    <p>it is now announced</p>
+  {{else if eq .Phase "ACTIVE"}}
+    <p>it is now active</p>
+  {{else if eq .Phase "ENDED"}}
+    <p>it is now ended</p>
+  {{end}}
+<p>. Would you like to update the status of your model to reflect that? If your </p>
+  {{if eq .Phase "CLEARANCE"}}
+    <p>model is not yet in clearance</p>
+  {{else if eq .Phase "ICIP_COMPLETE"}}
+    <p>model's ICIP is not yet complete</p>
+  {{else if eq .Phase "CLEARED"}}
+    <p>model is not yet cleared</p>
+  {{else if eq .Phase "ANNOUNCED"}}
+    <p>model is not yet announced</p>
+  {{else if eq .Phase "ACTIVE"}}
+    <p>model is not yet active</p>
+  {{else if eq .Phase "ENDED"}}
+    <p>model has not yet ended</p>
+  {{end}}
+<p>, please adjust your model’s anticipated timeline.</p>
+<br/>
+<br/>
+<b>Current status: </b>{{.ModelStatus}}
+<br/>
+<b>New status: </b>
+{{if gt (len .NewAnticipatedStatuses) 1}}
+    <p>You will be asked to select from one of the available clearance stage statuses</p>
+{{else}}
+    <p>{{index .NewAnticipatedStatuses 0}}</p>
+{{end}}
+<br />
+<br />
+<a href="{{.ClientAddress}}/models/{{.ModelID}}/anticipated-status?{{range .NewAnticipatedStatuses}}status={{.}}&{{end}}">Yes, update my model’s status</a>
+<br/>
+
+<p>If you’re not ready to update your model’s status, please <a href="{{.ClientAddress}}/models/{{.ModelID}}">adjust your model’s anticipated timeline</a>.</p>
+<hr />
+<br />
+<p>You’re receiving this notification because you are listed as the model lead for Maryland Total Cost Care. If this is incorrect, <a href="mailto:{{.ClientEmail}}">please update the model team</a>.</p>
