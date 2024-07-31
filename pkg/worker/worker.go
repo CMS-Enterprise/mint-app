@@ -103,6 +103,10 @@ func (w *Worker) Work() {
 	mgr.Register(translateAuditBatchJobSuccessName, JobWithPanicProtection(w.TranslateAuditBatchJobSuccess))
 	mgr.Register(translateAuditJobName, JobWithPanicProtection(w.TranslateAuditJob))
 
+	mgr.Register(modelStatusUpdateCronJobName, JobWithPanicProtection(w.ModelStatusUpdateCronJob))
+	mgr.Register(modelStatusUpdateBatchJobName, JobWithPanicProtection(w.ModelStatusUpdateBatchJob))
+	mgr.Register(modelStatusUpdateBatchJobSuccessName, JobWithPanicProtection(w.ModelStatusUpdateBatchJobSuccess))
+
 	/**********************
 	* //Future Enhancement
 	* Consider providing workers with dataloaders, and potentially a shared context. As these run separate go routines for each worker,

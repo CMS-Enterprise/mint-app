@@ -73,3 +73,11 @@ func CreateModelStatusJobInBatch(logger *zap.Logger, w *Worker, batch *faktory.B
 	sugaredLogger.Info("finished queueing model status update.")
 	return nil
 }
+
+// ModelStatusUpdateBatchJobSuccess is called when the model status update job has completed.
+func (w *Worker) ModelStatusUpdateBatchJobSuccess(ctx context.Context, args ...interface{}) error {
+	help := faktory_worker.HelperFor(ctx)
+	sugaredLogger := w.Logger.With(zap.Any("JID", help.Jid()), zap.Any("BID", help.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
+	sugaredLogger.Info("Model Status update job completed successfully")
+	return nil
+}
