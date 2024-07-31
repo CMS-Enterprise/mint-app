@@ -804,8 +804,6 @@ export const payments: TranslationPayments = {
     dbField: 'number_payments_per_pay_cycle',
     label: 'Number of payments per payment cycle',
     sublabel: 'This only applies if you are making non-claims-based payments',
-    questionTooltip:
-      'Note: If there will be 30+ payees we recommend a contractor.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 5.05,
