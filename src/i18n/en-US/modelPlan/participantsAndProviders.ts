@@ -1163,7 +1163,12 @@ export const participantsAndProvidersMisc: Record<string, string | object> = {
       PROVIDER_TYPES_INSTITUTIONAL: 'Provider Types (Institutional)',
       PHYSICIANS: 'Physicians',
       NON_PHYSICIANS_SUPPLIERS: 'Non-Physicians/Suppliers'
-    }
+    },
+    typeTwo: [
+      'Provider Types (Institutional)',
+      'Physicians',
+      'Non-Physicians/Suppliers'
+    ]
   }
 };
 

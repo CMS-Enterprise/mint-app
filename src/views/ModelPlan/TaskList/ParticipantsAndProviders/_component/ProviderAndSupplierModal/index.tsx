@@ -1,13 +1,69 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
-import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import {
+  Grid,
+  GridContainer,
+  Icon,
+  SideNav as TrussSideNav
+} from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import { formatQueryParam } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import {
+  ReadOnlyComponents,
+  subComponentsProps
+} from 'views/ModelPlan/ReadOnly';
+import SideNav from 'views/ModelPlan/ReadOnly/_components/Sidenav';
 
 type ProviderAndSupplierModalProps = {
   isOpen: boolean;
   closeModal: () => void;
+};
+
+// const subComponents = (
+//   solution: HelpSolutionType,
+//   location: any,
+//   closeRoute: string
+// ): subComponentsProps => {
+//   const paramValues = location.search.substring(1).split('&');
+
+//   return {
+//     about: {
+//       route: formatQueryParam(paramValues, 'about', closeRoute),
+//       helpRoute: formatQueryParam(paramValues, 'about', closeRoute),
+//       component: <About solution={solution} />
+//     },
+//     timeline: {
+//       route: formatQueryParam(paramValues, 'timeline', closeRoute),
+//       helpRoute: formatQueryParam(paramValues, 'timeline', closeRoute),
+//       component: <Timeline solution={solution} />
+//     },
+//     'points-of-contact': {
+//       route: formatQueryParam(paramValues, 'points-of-contact', closeRoute),
+//       helpRoute: formatQueryParam(paramValues, 'points-of-contact', closeRoute),
+//       component: <PointsOfContact solution={solution} />
+//     }
+//   };
+// };
+
+const subComponents = {
+  PROVIDER: {
+    route: '',
+    helpRoute: '',
+    component: <>hello world</>
+  },
+  PHYSICIAN: {
+    route: '',
+    helpRoute: '',
+    component: <>hello world</>
+  },
+  NON_PHYSICIAN_SUPPLIER: {
+    route: '',
+    helpRoute: '',
+    component: <>hello world</>
+  }
 };
 
 const ProviderAndSupplierModal = ({
@@ -16,6 +72,10 @@ const ProviderAndSupplierModal = ({
 }: ProviderAndSupplierModalProps) => {
   const { t: modalT } = useTranslation('participantsAndProvidersMisc');
   const isMobile = useCheckResponsiveScreen('tablet');
+
+  const providerAndSupplierTypes: string[] = modalT('modal.typeTwo', {
+    returnObjects: true
+  });
 
   const renderModal = () => {
     return (
@@ -65,28 +125,17 @@ const ProviderAndSupplierModal = ({
             <Grid row gap>
               {!isMobile && (
                 <Grid desktop={{ col: 3 }}>
-                  {/* <SideNav
-                    subComponents={subComponents(
-                      solution,
-                      location,
-                      closeRoute
-                    )}
-                    isHelpArticle
+                  <SideNav
+                    subComponents={subComponents}
                     solutionNavigation
                     paramActive
-                  /> */}
-                  <p>hello world</p>
+                  />
                 </Grid>
               )}
 
-              {/* <Grid desktop={{ col: 8 }}>
-                {
-                  subComponents(solution, location, closeRoute)[section]
-                    ?.component
-                }
-              </Grid> */}
-
-              <Grid desktop={{ col: 1 }} />
+              <Grid desktop={{ col: 8 }}>
+                <p className="width-100 border-1px ">hello world</p>
+              </Grid>
             </Grid>
           </GridContainer>
         </div>
