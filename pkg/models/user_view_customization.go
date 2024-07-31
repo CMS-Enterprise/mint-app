@@ -12,6 +12,7 @@ const (
 	ViewCustomizationTypeFollowedModels              ViewCustomizationType = "FOLLOWED_MODELS"
 	ViewCustomizationTypeModelsWithCrTdl             ViewCustomizationType = "MODELS_WITH_CR_TDL"
 	ViewCustomizationTypeModelsByOperationalSolution ViewCustomizationType = "MODELS_BY_OPERATIONAL_SOLUTION"
+	ViewCustomizationTypeModelsApproachingClearance  ViewCustomizationType = "MODELS_APPROACHING_CLEARANCE"
 )
 
 // UserViewCustomization represents a user's choices to customize their homepage
