@@ -266,7 +266,7 @@ const TaskList = () => {
           .catch(errors => {
             setStatusMessage({
               message: t('statusUpdateError', {
-                status: translatedStatus
+                status: translatedStatus || modelStatus
               }),
               status: 'error'
             });
