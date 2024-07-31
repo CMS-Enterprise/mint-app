@@ -3,6 +3,7 @@ enum ModelPlanFilter {
   COLLAB_ONLY,
   WITH_CR_TDLS,
   FAVORITED,
+  APPROACHING_CLEARANCE,
 }
 
 enum ModelStatus {

@@ -150,6 +150,7 @@ func (s *Seeder) SeedData() {
 	if err != nil {
 		panic(err)
 	}
+	now := time.Now()
 
 	// Seed an empty plan
 	emptyPlan := s.createModelPlan("Empty Plan", "MINT")
@@ -190,7 +191,7 @@ func (s *Seeder) SeedData() {
 			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
 			"phasedIn":        true,
-			"clearanceStarts": time.Now(),
+			"clearanceStarts": now,
 			"highLevelNote":   "Some high level note",
 		},
 	)
@@ -258,8 +259,8 @@ func (s *Seeder) SeedData() {
 	s.addCR(planWithCrTDLs, &model.PlanCRCreateInput{
 		ModelPlanID:     planWithCrTDLs.ID,
 		IDNumber:        "CR-123",
-		DateInitiated:   time.Now(),
-		DateImplemented: time.Now(),
+		DateInitiated:   now,
+		DateImplemented: now,
 		Title:           "My CR",
 		Note:            nil,
 	})
@@ -267,7 +268,7 @@ func (s *Seeder) SeedData() {
 	s.addTDL(planWithCrTDLs, &model.PlanTDLCreateInput{
 		ModelPlanID:   planWithCrTDLs.ID,
 		IDNumber:      "TDL-123",
-		DateInitiated: time.Now(),
+		DateInitiated: now,
 		Title:         "My TDL",
 		Note:          &tdlNote,
 	})
@@ -331,7 +332,7 @@ func (s *Seeder) SeedData() {
 	s.addTDL(planWithCrTDLs, &model.PlanTDLCreateInput{
 		ModelPlanID:   sampleModelPlan.ID,
 		IDNumber:      "TDL-123",
-		DateInitiated: time.Now(),
+		DateInitiated: now,
 		Title:         "My TDL",
 		Note:          &tdlNote,
 	})
@@ -360,7 +361,7 @@ func (s *Seeder) SeedData() {
 			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
 			"phasedIn":        true,
-			"clearanceStarts": time.Now(),
+			"clearanceStarts": now,
 			"highLevelNote":   "Some high level note",
 		},
 	)
@@ -402,6 +403,31 @@ func (s *Seeder) SeedData() {
 				Name:   "Do the thing!",
 				Status: models.OperationalSolutionSubtaskStatusTodo,
 			},
+		},
+	)
+
+	// Seed a plan that is has a clearance start date 3 months from today
+	planApproachingClearance := s.createModelPlan("Plan Approaching Clearance in 3 months", "MINT")
+	s.updateModelPlan(planApproachingClearance, map[string]interface{}{
+		"abbreviation": "Clearance",
+		"status":       models.ModelStatusPaused,
+	})
+
+	s.updatePlanBasics(
+		s.Config.Context,
+		nil,
+		nil,
+		email.AddressBook{},
+		planApproachingClearance,
+		map[string]interface{}{
+			"modelType":       []models.ModelType{models.MTVoluntary},
+			"goal":            "Some goal",
+			"cmsCenters":      []string{"CMMI"},
+			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+			"completeICIP":    "2020-05-13T20:47:50.12Z",
+			"phasedIn":        true,
+			"clearanceStarts": now.AddDate(0, 3, 0),
+			"highLevelNote":   "Some high level note",
 		},
 	)
 }
