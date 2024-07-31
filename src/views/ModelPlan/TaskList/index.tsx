@@ -270,6 +270,10 @@ const TaskList = () => {
               }),
               status: 'error'
             });
+            params.delete('model-status');
+            history.replace({
+              search: params.toString()
+            });
           });
       } else {
         setStatusMessage({
