@@ -1,3 +1,5 @@
+import { ModelStatus } from 'gql/gen/graphql';
+
 const modelPlanTaskList = {
   navigation: {
     home: 'Home',
@@ -154,7 +156,34 @@ const modelPlanTaskList = {
     payment: 'payment'
   },
   lockErrorHeading: 'Sorry, an has error occured.',
-  lockErrorInfo: 'Please return to the task list and try again.'
+  lockErrorInfo: 'Please return to the task list and try again.',
+  statusUpdateSuccess:
+    'You have successfully updated the status to {{status}}.',
+  statusUpdateError:
+    'There was an error updating the status to {{status}}. Please try again.',
+  statusUpdateErrorExists: 'The status has already been updated to {{status}}.',
+  statusModal: {
+    heading: 'Update model status?',
+    currentStatus: 'Current status: ',
+    newStatus: 'New status ',
+    update: 'Yes, update status',
+    goToTimeline: 'No, go to timeline',
+    hint: 'Select the specific clearance phase.',
+    statusText: {
+      [ModelStatus.ICIP_COMPLETE]:
+        'Your model’s anticipated timeline suggests that your ICIP is now complete. Would you like to update the status of your model to reflect that? If your model’s ICIP is not yet complete, please adjust your model’s anticipated timeline.',
+      IN_CLEARANCE:
+        'Your model’s anticipated timeline suggests that it is now in clearance. Would you like to update the status of your model to reflect that? If your model is not yet in clearance, please adjust your model’s anticipated timeline.',
+      [ModelStatus.CLEARED]:
+        'Your model’s anticipated timeline suggests that it is now cleared. Would you like to update the status of your model to reflect that? If your model is not yet cleared, please adjust your model’s anticipated timeline.',
+      [ModelStatus.ANNOUNCED]:
+        'Your model’s anticipated timeline suggests that it is now announced. Would you like to update the status of your model to reflect that? If your model is not yet announced, please adjust your model’s anticipated timeline.',
+      [ModelStatus.ACTIVE]:
+        'Your model’s anticipated timeline suggests that it is now active. Would you like to update the status of your model to reflect that? If your model is not yet active, please adjust your model’s anticipated timeline.',
+      [ModelStatus.ENDED]:
+        'Your model’s anticipated timeline suggests that it is now ended. Would you like to update the status of your model to reflect that? If your model has not yet ended, please adjust your model’s anticipated timeline.'
+    }
+  }
 };
 
 export default modelPlanTaskList;
