@@ -18,6 +18,7 @@ import { ModelStatus, useUpdateModelPlanMutation } from 'gql/gen/graphql';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
+import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -28,10 +29,13 @@ type StatusFormProps = {
 
 const Status = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
+  const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
   const { t: modelPlanMiscT } = useTranslation('modelPlanMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const { status: statusConfig } = usePlanTranslation('modelPlan');
+
+  const { showMessageOnNextPage } = useMessage();
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -51,26 +55,33 @@ const Status = () => {
   const [update] = useUpdateModelPlanMutation();
 
   const handleFormSubmit = (formikValues: StatusFormProps) => {
-    update({
-      variables: {
-        id: modelID,
-        changes: {
-          status: formikValues.status
-        }
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          history.push(`/models/${modelID}/task-list/`);
+    if (formikValues.status) {
+      update({
+        variables: {
+          id: modelID,
+          changes: {
+            status: formikValues.status
+          }
         }
       })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+        .then(response => {
+          if (!response?.errors) {
+            showMessageOnNextPage(
+              modelPlanTaskListT('statusUpdateSuccess', {
+                status: statusConfig.options[formikValues.status as ModelStatus]
+              })
+            );
+            history.push(`/models/${modelID}/task-list/`);
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
+    }
   };
 
   const initialValues: StatusFormProps = {
-    status: status ?? undefined
+    status: modelStatus ?? status ?? undefined
   };
 
   return (
@@ -136,7 +147,7 @@ const Status = () => {
                         as={Select}
                         id="Status-Dropdown"
                         name="role"
-                        value={modelStatus || values.status}
+                        value={values.status}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           setFieldValue('status', e.target.value);
                         }}
