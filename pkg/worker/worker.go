@@ -65,6 +65,13 @@ const (
 	aggregatedDigestEmailJobName   string = "AggregatedDigestEmailJob"
 )
 
+const (
+	modelStatusUpdateCronJobName         string = "ModelStatusUpdateCronJob"
+	modelStatusUpdateBatchJobName        string = "ModelStatusUpdateBatchJob"
+	modelStatusUpdateBatchJobSuccessName string = "ModelStatusUpdateBatchJobSuccess"
+	modelStatusUpdateJobName             string = "ModelStatusUpdateJob"
+)
+
 // Work creates, configures, and starts worker
 func (w *Worker) Work() {
 	if !w.ProcessJobs {
