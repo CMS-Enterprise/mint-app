@@ -1,11 +1,11 @@
 <!--
 REQUIRED
     Ensure that your PR title has the relevant Jira ticket number(s) in the title.
-    Follow this pattern: [EASI-1234] [EASI-4567] Title of the PR.
+    Follow this pattern: [MINT-1234] [MINT-4567] Title of the PR.
     Use [NOREF] in place of a ticket number when there's no associated Jira ticket.
     The heading below should just have the ticket numbers (for easy linking in Jira)
 -->
-# EASI-0000
+# MINT-0000
 
 ## Description
 <!--
@@ -23,7 +23,7 @@ REQUIRED
     This can be a list of steps to reproduce a bug, or a list of steps to verify a feature in the application
     Include any example shell commands, SQL queries/commands, or Postman requests that reviewers can run to test the changes
 -->
-- 
+1.  
 
 ## PR Author Checklist
 <!--
