@@ -39,7 +39,7 @@ const settings: HomepageSettingsType = {
   [ViewCustomizationType.MODELS_APPROACHING_CLEARANCE]: {
     heading: 'Models approaching clearance',
     description:
-      'This simplified section displays the models within six months of clearance organized chronologically.',
+      'These models are scheduled for clearance within the next six months.',
     noResultsHeading: 'There are no Models approaching clearance.',
     noResultsDescription: 'Check back later.'
   },

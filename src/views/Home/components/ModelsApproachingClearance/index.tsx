@@ -12,11 +12,14 @@ import classNames from 'classnames';
 import {
   GetModelPlansQuery,
   ModelPlanFilter,
-  useGetModelPlansQuery
+  useGetModelPlansQuery,
+  ViewCustomizationType
 } from 'gql/gen/graphql';
 
+import CalendarDate from 'components/CalendarDate';
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
+import Spinner from 'components/Spinner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePagination from 'hooks/usePagination';
 
@@ -47,18 +50,58 @@ const ModelsApproachingClearance = () => {
   });
 
   return (
-    <Grid row className="models-approaching-clearance">
-      <Grid desktop={{ col: 6 }}>
-        <h2>{customHomeT(`settings.MODELS_APPROACHING_CLEARANCE.heading`)}</h2>
+    <Grid row gap={6} className="models-approaching-clearance">
+      <Grid desktop={{ col: 5 }} className="flex-align-self-center">
+        <h2>
+          {customHomeT(
+            `settings.${ViewCustomizationType.MODELS_APPROACHING_CLEARANCE}.heading`
+          )}
+        </h2>
+
+        <p className="line-height-body-5 font-body-md">
+          {customHomeT(
+            `settings.${ViewCustomizationType.MODELS_APPROACHING_CLEARANCE}.description`
+          )}
+        </p>
       </Grid>
 
-      <Grid desktop={{ col: 6 }}>
+      <Grid desktop={{ col: 7 }}>
         <>
-          {currentItems.map(model => (
-            <Card key={model.id}>{model.modelName}</Card>
-          ))}
+          {loading ? (
+            <div className="display-flex flex-justify-center margin-top-4">
+              <Spinner />
+            </div>
+          ) : (
+            <>
+              {currentItems.length === 0 ? (
+                <Alert
+                  type="info"
+                  className="margin-top-4"
+                  heading={customHomeT(
+                    `settings.${ViewCustomizationType.MODELS_APPROACHING_CLEARANCE}.noResultsHeading`
+                  )}
+                >
+                  {customHomeT(
+                    `settings.${ViewCustomizationType.MODELS_APPROACHING_CLEARANCE}.noResultsDescription`
+                  )}
+                </Alert>
+              ) : (
+                <>
+                  {currentItems.map(model => (
+                    <Card key={model.id}>
+                      <CalendarDate
+                        dateISO={model.basics.clearanceStarts}
+                        link={`/models/${model.id}/read-view`}
+                        linkText={model.modelName}
+                      />
+                    </Card>
+                  ))}
 
-          {Pagination}
+                  {Pagination}
+                </>
+              )}
+            </>
+          )}
         </>
       </Grid>
     </Grid>
