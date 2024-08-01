@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -97,7 +95,7 @@ const ModelPlansTable = ({
     return mergedCRTDLS;
   }, [modelPlans?.modelPlanCollection]);
 
-  const columns = useMemo(() => {
+  const columns = useMemo<Column<any>[]>(() => {
     const homeColumns: string[] = [
       'modelName',
       'abbreviation',
@@ -552,9 +550,11 @@ const ModelPlansTable = ({
 
         <tbody {...getTableBodyProps()}>
           {page.map(row => {
+            // need to destructure row and getRowProps to avoid TS error for prop-types
+            const { getRowProps, cells } = { ...row };
             return (
-              <tr {...row.getRowProps()}>
-                {row.cells
+              <tr {...getRowProps()}>
+                {cells
                   .filter((cell, index) => {
                     // @ts-ignore
                     return !hiddenColumns?.includes(index);
