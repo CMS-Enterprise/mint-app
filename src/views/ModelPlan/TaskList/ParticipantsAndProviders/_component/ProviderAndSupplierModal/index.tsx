@@ -10,7 +10,10 @@ import {
 } from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import { ExistingProviderSupplierTypes } from 'i18n/en-US/modelPlan/participantsAndProviders';
+import {
+  ExistingProviderSupplierTypes,
+  existingProviderSupplierTypesNames
+} from 'i18n/en-US/modelPlan/participantsAndProviders';
 
 import './index.scss';
 
@@ -109,7 +112,9 @@ const ProviderAndSupplierModal = ({
               )}
 
               <Grid desktop={{ col: 8 }}>
-                {/* <h2 className="margin-top-0">{t('navigation.about')}</h2> */}
+                <h2 className="margin-top-0">
+                  {existingProviderSupplierTypesNames[activeType]}
+                </h2>
               </Grid>
             </Grid>
           </GridContainer>
