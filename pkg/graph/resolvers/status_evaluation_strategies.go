@@ -3,6 +3,8 @@ package resolvers
 import (
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+
 	"github.com/cmsgov/mint-app/pkg/shared/utilitytime"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -28,7 +30,7 @@ type StatusEvaluationStrategy interface {
 	Evaluate(
 		modelPlanStatus models.ModelStatus,
 		planBasics *models.PlanBasics,
-	) ([]models.ModelStatus, bool)
+	) *model.PhaseSuggestion
 }
 
 // ICIPCompleteStrategy is a strategy for evaluating the ICIP complete status of a model plan
@@ -39,14 +41,17 @@ type ICIPCompleteStrategy struct{}
 func (s *ICIPCompleteStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) ([]models.ModelStatus, bool) {
+) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusIcipComplete) &&
 		!utilitytime.IsTimeNilOrZero(planBasics.CompleteICIP) &&
 		planBasics.CompleteICIP.Before(time.Now()) {
-		return []models.ModelStatus{models.ModelStatusIcipComplete}, true
+		return &model.PhaseSuggestion{
+			Phase:             model.ModelPhaseIcipComplete,
+			SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
+		}
 	}
-	return nil, false
+	return nil
 }
 
 // ClearanceStartStrategy is a strategy for evaluating the clearance start status of a model plan
@@ -58,19 +63,22 @@ type ClearanceStartStrategy struct{}
 func (s *ClearanceStartStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) ([]models.ModelStatus, bool) {
+) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusInternalCmmiClearance) &&
 		!utilitytime.IsTimeNilOrZero(planBasics.ClearanceStarts) &&
 		planBasics.ClearanceStarts.Before(time.Now()) {
-		return []models.ModelStatus{
-			models.ModelStatusInternalCmmiClearance,
-			models.ModelStatusCmsClearance,
-			models.ModelStatusHhsClearance,
-			models.ModelStatusOmbAsrfClearance,
-		}, true
+		return &model.PhaseSuggestion{
+			Phase: model.ModelPhaseInClearance,
+			SuggestedStatuses: []models.ModelStatus{
+				models.ModelStatusInternalCmmiClearance,
+				models.ModelStatusCmsClearance,
+				models.ModelStatusHhsClearance,
+				models.ModelStatusOmbAsrfClearance,
+			},
+		}
 	}
-	return nil, false
+	return nil
 }
 
 // ClearanceEndStrategy is a strategy for evaluating the clearance end status of a model plan
@@ -81,14 +89,17 @@ type ClearanceEndStrategy struct{}
 func (s *ClearanceEndStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) ([]models.ModelStatus, bool) {
+) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) &&
 		!utilitytime.IsTimeNilOrZero(planBasics.ClearanceEnds) &&
 		planBasics.ClearanceEnds.Before(time.Now()) {
-		return []models.ModelStatus{models.ModelStatusCleared}, true
+		return &model.PhaseSuggestion{
+			Phase:             model.ModelPhaseCleared,
+			SuggestedStatuses: []models.ModelStatus{models.ModelStatusCleared},
+		}
 	}
-	return nil, false
+	return nil
 }
 
 // AnnounceStrategy is a strategy for evaluating the announcement status of a model plan
@@ -99,14 +110,17 @@ type AnnounceStrategy struct{}
 func (s *AnnounceStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) ([]models.ModelStatus, bool) {
+) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusAnnounced) &&
 		!utilitytime.IsTimeNilOrZero(planBasics.Announced) &&
 		planBasics.Announced.Before(time.Now()) {
-		return []models.ModelStatus{models.ModelStatusAnnounced}, true
+		return &model.PhaseSuggestion{
+			Phase:             model.ModelPhaseAnnounced,
+			SuggestedStatuses: []models.ModelStatus{models.ModelStatusAnnounced},
+		}
 	}
-	return nil, false
+	return nil
 }
 
 // ActiveStrategy is a strategy for evaluating the active status of a model plan
@@ -117,14 +131,17 @@ type ActiveStrategy struct{}
 func (s *ActiveStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) ([]models.ModelStatus, bool) {
+) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusActive) &&
 		!utilitytime.IsTimeNilOrZero(planBasics.PerformancePeriodStarts) &&
 		planBasics.PerformancePeriodStarts.Before(time.Now()) {
-		return []models.ModelStatus{models.ModelStatusActive}, true
+		return &model.PhaseSuggestion{
+			Phase:             model.ModelPhaseActive,
+			SuggestedStatuses: []models.ModelStatus{models.ModelStatusActive},
+		}
 	}
-	return nil, false
+	return nil
 }
 
 // EndedStrategy is a strategy for evaluating the ended status of a model plan
@@ -135,12 +152,15 @@ type EndedStrategy struct{}
 func (s *EndedStrategy) Evaluate(
 	modelPlanStatus models.ModelStatus,
 	planBasics *models.PlanBasics,
-) ([]models.ModelStatus, bool) {
+) *model.PhaseSuggestion {
 	if models.GetModelStatusChronologicalIndex(modelPlanStatus) <
 		models.GetModelStatusChronologicalIndex(models.ModelStatusEnded) &&
 		!utilitytime.IsTimeNilOrZero(planBasics.PerformancePeriodEnds) &&
 		planBasics.PerformancePeriodEnds.Before(time.Now()) {
-		return []models.ModelStatus{models.ModelStatusEnded}, true
+		return &model.PhaseSuggestion{
+			Phase:             model.ModelPhaseEnded,
+			SuggestedStatuses: []models.ModelStatus{models.ModelStatusEnded},
+		}
 	}
-	return nil, false
+	return nil
 }

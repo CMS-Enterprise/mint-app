@@ -288,7 +288,6 @@ type ComplexityRoot struct {
 
 	ModelPlan struct {
 		Abbreviation              func(childComplexity int) int
-		AnticipatedStatuses       func(childComplexity int) int
 		Archived                  func(childComplexity int) int
 		Basics                    func(childComplexity int) int
 		Beneficiaries             func(childComplexity int) int
@@ -316,6 +315,7 @@ type ComplexityRoot struct {
 		Payments                  func(childComplexity int) int
 		PrepareForClearance       func(childComplexity int) int
 		Status                    func(childComplexity int) int
+		SuggestedPhase            func(childComplexity int) int
 		Tdls                      func(childComplexity int) int
 	}
 
@@ -458,6 +458,11 @@ type ComplexityRoot struct {
 		Name                  func(childComplexity int) int
 		SolutionID            func(childComplexity int) int
 		Status                func(childComplexity int) int
+	}
+
+	PhaseSuggestion struct {
+		Phase             func(childComplexity int) int
+		SuggestedStatuses func(childComplexity int) int
 	}
 
 	PlanBasics struct {
@@ -1302,7 +1307,7 @@ type ModelPlanResolver interface {
 	Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error)
 	Payments(ctx context.Context, obj *models.ModelPlan) (*models.PlanPayments, error)
 
-	AnticipatedStatuses(ctx context.Context, obj *models.ModelPlan) ([]models.ModelStatus, error)
+	SuggestedPhase(ctx context.Context, obj *models.ModelPlan) (*model.PhaseSuggestion, error)
 	IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error)
 	IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error)
 	Crs(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCR, error)
@@ -2543,13 +2548,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.Abbreviation(childComplexity), true
 
-	case "ModelPlan.anticipatedStatuses":
-		if e.complexity.ModelPlan.AnticipatedStatuses == nil {
-			break
-		}
-
-		return e.complexity.ModelPlan.AnticipatedStatuses(childComplexity), true
-
 	case "ModelPlan.archived":
 		if e.complexity.ModelPlan.Archived == nil {
 			break
@@ -2743,6 +2741,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.Status(childComplexity), true
+
+	case "ModelPlan.suggestedPhase":
+		if e.complexity.ModelPlan.SuggestedPhase == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.SuggestedPhase(childComplexity), true
 
 	case "ModelPlan.tdls":
 		if e.complexity.ModelPlan.Tdls == nil {
@@ -3773,6 +3778,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.OperationalSolutionSubtask.Status(childComplexity), true
+
+	case "PhaseSuggestion.phase":
+		if e.complexity.PhaseSuggestion.Phase == nil {
+			break
+		}
+
+		return e.complexity.PhaseSuggestion.Phase(childComplexity), true
+
+	case "PhaseSuggestion.suggestedStatuses":
+		if e.complexity.PhaseSuggestion.SuggestedStatuses == nil {
+			break
+		}
+
+		return e.complexity.PhaseSuggestion.SuggestedStatuses(childComplexity), true
 
 	case "PlanBasics.additionalModelCategories":
 		if e.complexity.PlanBasics.AdditionalModelCategories == nil {
@@ -9341,6 +9360,23 @@ enum ModelViewFilter {
   PBG, # PROVIDER_BILLING_GROUP
 }
 
+enum ModelPhase {
+  ICIP_COMPLETE,
+  IN_CLEARANCE,
+  CLEARED,
+  ANNOUNCED,
+  ACTIVE,
+  ENDED,
+}
+
+"""
+PhaseSuggestion is a suggestion response for a potential next phase and corresponding statuses for a model plan
+"""
+type PhaseSuggestion {
+  phase: ModelPhase!
+  suggestedStatuses: [ModelStatus!]!
+}
+
 """
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
@@ -9365,7 +9401,7 @@ type ModelPlan {
   discussions: [PlanDiscussion!]!
   payments: PlanPayments!
   status: ModelStatus!
-  anticipatedStatuses: [ModelStatus!]!
+  suggestedPhase: PhaseSuggestion
   isFavorite: Boolean!
   isCollaborator: Boolean!
   crs: [PlanCR!]!
@@ -14214,8 +14250,8 @@ func (ec *executionContext) fieldContext_AddedAsCollaboratorMeta_modelPlan(ctx c
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -17236,8 +17272,8 @@ func (ec *executionContext) fieldContext_DatesChangedActivityMeta_modelPlan(ctx 
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -21656,8 +21692,8 @@ func (ec *executionContext) fieldContext_ModelPlan_status(ctx context.Context, f
 	return fc, nil
 }
 
-func (ec *executionContext) _ModelPlan_anticipatedStatuses(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+func (ec *executionContext) _ModelPlan_suggestedPhase(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -21670,31 +21706,34 @@ func (ec *executionContext) _ModelPlan_anticipatedStatuses(ctx context.Context, 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().AnticipatedStatuses(rctx, obj)
+		return ec.resolvers.ModelPlan().SuggestedPhase(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.ModelStatus)
+	res := resTmp.(*model.PhaseSuggestion)
 	fc.Result = res
-	return ec.marshalNModelStatus2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatusᚄ(ctx, field.Selections, res)
+	return ec.marshalOPhaseSuggestion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPhaseSuggestion(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_ModelPlan_anticipatedStatuses(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_ModelPlan_suggestedPhase(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "ModelPlan",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type ModelStatus does not have child fields")
+			switch field.Name {
+			case "phase":
+				return ec.fieldContext_PhaseSuggestion_phase(ctx, field)
+			case "suggestedStatuses":
+				return ec.fieldContext_PhaseSuggestion_suggestedStatuses(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PhaseSuggestion", field.Name)
 		},
 	}
 	return fc, nil
@@ -22368,8 +22407,8 @@ func (ec *executionContext) fieldContext_ModelPlanAndOperationalSolution_modelPl
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -22606,8 +22645,8 @@ func (ec *executionContext) fieldContext_ModelPlanSharedActivityMeta_modelPlan(c
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -22971,8 +23010,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -23112,8 +23151,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -28233,8 +28272,8 @@ func (ec *executionContext) fieldContext_NewDiscussionRepliedActivityMeta_modelP
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -28745,8 +28784,8 @@ func (ec *executionContext) fieldContext_NewModelPlanActivityMeta_modelPlan(ctx 
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -31026,6 +31065,94 @@ func (ec *executionContext) fieldContext_OperationalSolutionSubtask_modifiedDts(
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PhaseSuggestion_phase(ctx context.Context, field graphql.CollectedField, obj *model.PhaseSuggestion) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PhaseSuggestion_phase(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Phase, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.ModelPhase)
+	fc.Result = res
+	return ec.marshalNModelPhase2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPhase(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PhaseSuggestion_phase(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PhaseSuggestion",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ModelPhase does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PhaseSuggestion_suggestedStatuses(ctx context.Context, field graphql.CollectedField, obj *model.PhaseSuggestion) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PhaseSuggestion_suggestedStatuses(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SuggestedStatuses, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]models.ModelStatus)
+	fc.Result = res
+	return ec.marshalNModelStatus2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatusᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PhaseSuggestion_suggestedStatuses(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PhaseSuggestion",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ModelStatus does not have child fields")
 		},
 	}
 	return fc, nil
@@ -38777,8 +38904,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_currentModel
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -57149,8 +57276,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -57290,8 +57417,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -60414,8 +60541,8 @@ func (ec *executionContext) fieldContext_TaggedInDiscussionReplyActivityMeta_mod
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -60926,8 +61053,8 @@ func (ec *executionContext) fieldContext_TaggedInPlanDiscussionActivityMeta_mode
 				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "status":
 				return ec.fieldContext_ModelPlan_status(ctx, field)
-			case "anticipatedStatuses":
-				return ec.fieldContext_ModelPlan_anticipatedStatuses(ctx, field)
+			case "suggestedPhase":
+				return ec.fieldContext_ModelPlan_suggestedPhase(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
 			case "isCollaborator":
@@ -69309,7 +69436,7 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "anticipatedStatuses":
+		case "suggestedPhase":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -69318,10 +69445,7 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._ModelPlan_anticipatedStatuses(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
+				res = ec._ModelPlan_suggestedPhase(ctx, field, obj)
 				return res
 			}
 
@@ -71052,6 +71176,50 @@ func (ec *executionContext) _OperationalSolutionSubtask(ctx context.Context, sel
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "modifiedDts":
 			out.Values[i] = ec._OperationalSolutionSubtask_modifiedDts(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
+var phaseSuggestionImplementors = []string{"PhaseSuggestion"}
+
+func (ec *executionContext) _PhaseSuggestion(ctx context.Context, sel ast.SelectionSet, obj *model.PhaseSuggestion) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, phaseSuggestionImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PhaseSuggestion")
+		case "phase":
+			out.Values[i] = ec._PhaseSuggestion_phase(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "suggestedStatuses":
+			out.Values[i] = ec._PhaseSuggestion_suggestedStatuses(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -81768,6 +81936,16 @@ func (ec *executionContext) marshalNModelLearningSystemType2ᚕgithubᚗcomᚋcm
 	return ret
 }
 
+func (ec *executionContext) unmarshalNModelPhase2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPhase(ctx context.Context, v interface{}) (model.ModelPhase, error) {
+	var res model.ModelPhase
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNModelPhase2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPhase(ctx context.Context, sel ast.SelectionSet, v model.ModelPhase) graphql.Marshaler {
+	return v
+}
+
 func (ec *executionContext) marshalNModelPlan2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v models.ModelPlan) graphql.Marshaler {
 	return ec._ModelPlan(ctx, sel, &v)
 }
@@ -88177,6 +88355,13 @@ func (ec *executionContext) marshalOPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑap
 	}
 
 	return ret
+}
+
+func (ec *executionContext) marshalOPhaseSuggestion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPhaseSuggestion(ctx context.Context, sel ast.SelectionSet, v *model.PhaseSuggestion) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._PhaseSuggestion(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOPlanDocumentSolutionLink2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentSolutionLinkᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanDocumentSolutionLink) graphql.Marshaler {

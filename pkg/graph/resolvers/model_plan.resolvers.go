@@ -67,11 +67,11 @@ func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan)
 	return PlanPaymentsGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
-// AnticipatedStatuses is the resolver for the anticipatedStatuses field.
-func (r *modelPlanResolver) AnticipatedStatuses(ctx context.Context, obj *models.ModelPlan) ([]models.ModelStatus, error) {
+// SuggestedPhase is the resolver for the suggestedPhase field.
+func (r *modelPlanResolver) SuggestedPhase(ctx context.Context, obj *models.ModelPlan) (*model.PhaseSuggestion, error) {
 	logger := appcontext.ZLogger(ctx)
 
-	return ModelPlanAnticipatedStatuses(ctx, logger, r.store, obj.ID)
+	return ModelPlanAnticipatedPhase(ctx, logger, r.store, obj.ID)
 }
 
 // IsFavorite is the resolver for the isFavorite field.
