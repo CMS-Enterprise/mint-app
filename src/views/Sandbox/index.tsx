@@ -5,7 +5,7 @@ import MainContent from 'components/MainContent';
 import ProviderAndSupplierModal from 'views/ModelPlan/TaskList/ParticipantsAndProviders/_component/ProviderAndSupplierModal';
 
 const Sandbox = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     document.title = 'Sandbox';
