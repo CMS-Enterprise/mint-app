@@ -356,6 +356,8 @@ func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal,
 		modelPlans, err = store.ModelPlanCollectionWithCRTDLS(logger, false)
 	case model.ModelPlanFilterFavorited:
 		modelPlans, err = store.ModelPlanCollectionFavorited(logger, false, principal.Account().ID)
+	case model.ModelPlanFilterApproachingClearance:
+		modelPlans, err = storage.ModelPlanCollectionApproachingClearance(store, logger)
 	default:
 		modelPlans = nil
 		err = fmt.Errorf("model plan filter not defined for filter: %s", filter)

@@ -23,6 +23,9 @@ var modelPlanCollectionByCollaboratorSQL string
 //go:embed SQL/model_plan/collection_with_crtdl.sql
 var modelPlanCollectionWithCRTDlSQL string
 
+//go:embed SQL/model_plan/collection_approaching_clearance.sql
+var modelPlanCollectionApproachingClearanceSQL string
+
 //go:embed SQL/model_plan/delete_by_id.sql
 var modelPlanDeleteByID string
 
@@ -46,6 +49,7 @@ type modelPlanScripts struct {
 	CollectionWhereArchived                string
 	CollectionByCollaborator               string
 	CollectionWithCRTDL                    string
+	CollectionApproachingClearance         string
 	DeleteByID                             string
 	GetByIDLoader                          string
 	GetOpSolutionLastModifiedDtsByIDLoader string
@@ -62,6 +66,7 @@ var ModelPlan = modelPlanScripts{
 	CollectionWhereArchived:                modelPlanCollectionWhereArchivedSQL,
 	CollectionByCollaborator:               modelPlanCollectionByCollaboratorSQL,
 	CollectionWithCRTDL:                    modelPlanCollectionWithCRTDlSQL,
+	CollectionApproachingClearance:         modelPlanCollectionApproachingClearanceSQL,
 	DeleteByID:                             modelPlanDeleteByID,
 	GetByIDLoader:                          modelPlanGetByIDLoaderSQL,
 	GetOpSolutionLastModifiedDtsByIDLoader: modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL,

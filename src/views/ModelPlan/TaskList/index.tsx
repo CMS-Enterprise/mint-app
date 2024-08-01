@@ -4,11 +4,12 @@ import React, {
   SetStateAction,
   useContext,
   useEffect,
+  useMemo,
   useState
 } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -26,9 +27,11 @@ import {
   GetCrtdLsQuery,
   GetModelPlanQuery,
   GetTaskListSubscriptionsQuery,
+  ModelStatus,
   TaskListSection,
   TaskStatus,
-  useGetModelPlanQuery
+  useGetModelPlanQuery,
+  useUpdateModelPlanMutation
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -40,6 +43,8 @@ import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import UpdateStatusModal from 'components/UpdateStatusModal';
+import useMessage from 'hooks/useMessage';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -129,14 +134,27 @@ const TaskList = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  // Get discussionID from generated email link
+  const { message } = useMessage();
+
+  const { status: statusConfig } = usePlanTranslation('modelPlan');
+
+  const history = useHistory();
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
+
+  const params = useMemo(() => {
+    return new URLSearchParams(location.search);
+  }, [location.search]);
+
+  // Get discussionID from generated email link
   const discussionID = params.get('discussionID');
+
+  // Get model status from generated email link
+  const modelStatus = params.get('model-status') as ModelStatus;
 
   const flags = useFlags();
 
   const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
+
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
   );
@@ -216,6 +234,77 @@ const TaskList = () => {
     );
   };
 
+  const [updateModelStatus] = useUpdateModelPlanMutation();
+
+  useEffect(() => {
+    if (modelStatus && !loading) {
+      const translatedStatus = statusConfig.options[modelStatus];
+
+      if (modelStatus.toUpperCase() !== status) {
+        updateModelStatus({
+          variables: {
+            id: modelID,
+            changes: {
+              status: modelStatus
+            }
+          }
+        })
+          .then(response => {
+            if (!response?.errors) {
+              setStatusMessage({
+                message: t('statusUpdateSuccess', {
+                  status: translatedStatus
+                }),
+                status: 'success'
+              });
+
+              params.delete('model-status');
+              history.replace({
+                search: params.toString()
+              });
+
+              refetch();
+            }
+          })
+          .catch(errors => {
+            setStatusMessage({
+              message: t('statusUpdateError', {
+                status: translatedStatus || modelStatus
+              }),
+              status: 'error'
+            });
+            params.delete('model-status');
+            history.replace({
+              search: params.toString()
+            });
+          });
+      } else {
+        setStatusMessage({
+          message: t('statusUpdateErrorExists', {
+            status: translatedStatus
+          }),
+          status: 'error'
+        });
+        params.delete('model-status');
+        history.replace({
+          search: params.toString()
+        });
+      }
+    }
+  }, [
+    modelStatus,
+    modelID,
+    updateModelStatus,
+    setStatusMessage,
+    t,
+    refetch,
+    params,
+    history,
+    status,
+    loading,
+    statusConfig.options
+  ]);
+
   return (
     <MainContent
       className="model-plan-task-list"
@@ -256,19 +345,26 @@ const TaskList = () => {
           </ErrorAlert>
         )}
 
-        {statusMessage && (
+        {message && (
+          <Alert slim type="success">
+            {message}
+          </Alert>
+        )}
+
+        {!loading && statusMessage && !modelStatus && (
           <Alert slim type={statusMessage.status} closeAlert={setStatusMessage}>
             {statusMessage.message}
           </Alert>
         )}
 
-        {loading && (
+        {/* Wait for model status query param to be removed */}
+        {(loading || !!modelStatus) && (
           <div className="height-viewport">
             <PageLoading />
           </div>
         )}
 
-        {!loading && data && (
+        {!loading && !modelStatus && data && (
           <Grid row gap>
             <Grid desktop={{ col: 9 }}>
               <PageHeading className="margin-top-4 margin-bottom-0">
