@@ -6,8 +6,8 @@ import {
   Grid,
   GridContainer,
   Icon,
-  SideNav as TrussSideNav,
-  Table as UswdsTable
+  SideNav as TrussSideNav
+  // Table as UswdsTable
 } from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -126,7 +126,7 @@ const ProviderAndSupplierModal = ({
                   scrollable
                 >
                   <caption className="usa-sr-only">
-                    {modalT('modal.caption')}
+                    {modalT('modal.table.caption')}
                   </caption>
                 </UswdsTable> */}
               </Grid>

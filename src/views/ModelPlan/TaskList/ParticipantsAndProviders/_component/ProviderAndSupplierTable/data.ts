@@ -1,7 +1,7 @@
 export const PROVIDER_TYPES_INSTITUTIONAL = [
   {
-    providerType: '00',
-    description: 'or blanks Short Term Facility (Acute Care Hospital)'
+    providerType: '00 or blanks',
+    description: 'Short Term Facility (Acute Care Hospital)'
   },
   {
     providerType: '02',
