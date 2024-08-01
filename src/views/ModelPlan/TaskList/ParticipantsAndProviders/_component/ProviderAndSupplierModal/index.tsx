@@ -6,7 +6,8 @@ import {
   Grid,
   GridContainer,
   Icon,
-  SideNav as TrussSideNav
+  SideNav as TrussSideNav,
+  Table as UswdsTable
 } from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
@@ -14,6 +15,8 @@ import {
   ExistingProviderSupplierTypes,
   existingProviderSupplierTypesNames
 } from 'i18n/en-US/modelPlan/participantsAndProviders';
+
+import ProviderAndSupplierTable from '../ProviderAndSupplierTable';
 
 import './index.scss';
 
@@ -115,6 +118,17 @@ const ProviderAndSupplierModal = ({
                 <h2 className="margin-top-0">
                   {existingProviderSupplierTypesNames[activeType]}
                 </h2>
+                <ProviderAndSupplierTable type={activeType} />
+                {/* <UswdsTable
+                  bordered={false}
+                  {...getTableProps()}
+                  fullWidth
+                  scrollable
+                >
+                  <caption className="usa-sr-only">
+                    {modalT('modal.caption')}
+                  </caption>
+                </UswdsTable> */}
               </Grid>
             </Grid>
           </GridContainer>
