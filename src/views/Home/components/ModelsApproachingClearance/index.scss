@@ -1,0 +1,14 @@
+.models-approaching-clearance {
+    .usa-pagination__page-no {
+        margin-left: 0 !important;
+    }
+
+    .usa-card__container {
+        padding: 1rem;
+        border-radius: .25rem;
+        border: 2px solid color('base-lighter');    
+        box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.1);
+        height: auto !important;
+        margin: 0 !important;
+    }
+}

@@ -31,6 +31,7 @@ import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
 import ModelPlansTable from 'views/Home/Table';
 
+import ModelsApproachingClearance from './components/ModelsApproachingClearance';
 import ModelsBySolutions from './components/ModelsBySolutions';
 
 import './index.scss';
@@ -176,6 +177,13 @@ const Home = () => {
           type={ViewCustomizationType.MODELS_WITH_CR_TDL}
           isAssessment={isAssessment(userGroups, flags)}
         />
+      </>
+    ),
+    [ViewCustomizationType.MODELS_APPROACHING_CLEARANCE]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <ModelsApproachingClearance />
       </>
     ),
     [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: (
