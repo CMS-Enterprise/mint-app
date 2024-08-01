@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Pagination as TrussPagination } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -8,15 +8,7 @@ type PaginationProps = {
   items: any[];
   itemsPerPage: number;
   loading?: boolean;
-} & {
-  pathname?: string;
-  currentPage?: number;
-  onClickNext?: () => void;
-  onClickPrevious?: () => void;
-  onClickPageNumber?: (
-    event: React.MouseEvent<HTMLButtonElement>,
-    page: number
-  ) => void;
+  withQueryParams?: string; // Query parameter to use for pagination - ex: withQueryParams: 'page' -> ?page=1'
 } & JSX.IntrinsicElements['div'];
 
 // Takes in default props for Truss' Pagination component, items to paginates and returns the current items and the Pagination component
@@ -25,18 +17,22 @@ const usePagination = <T extends any[]>({
   items,
   itemsPerPage = 3,
   loading = false,
-  pathname,
-  currentPage,
-  onClickPrevious,
-  onClickNext,
-  onClickPageNumber
+  withQueryParams
 }: PaginationProps): { currentItems: T; Pagination: JSX.Element } => {
   const location = useLocation();
+  const history = useHistory();
+
+  // Query parameters
+  const params = useMemo(() => {
+    return new URLSearchParams(location.search);
+  }, [location.search]);
+
+  const pageParam = withQueryParams ? params.get(withQueryParams) : undefined;
+
+  const defaultPage = pageParam ? Number(pageParam) : 1;
 
   // Current page number
-  const [currentPageNum, setCurrentPageNum] = useState<number>(
-    currentPage || 1
-  );
+  const [currentPageNum, setCurrentPageNum] = useState<number>(defaultPage);
 
   // Total number of pages
   const [pageCount, setPageCount] = useState<number>(
@@ -54,10 +50,18 @@ const usePagination = <T extends any[]>({
   // Update the audit changes when the data is loaded.
   useEffect(() => {
     if (!loading) {
-      setCurrentPageNum(1);
+      setCurrentPageNum(defaultPage);
       setPageCount(Math.ceil(items.length / itemsPerPage));
     }
-  }, [loading, items.length, itemsPerPage]);
+  }, [
+    loading,
+    items.length,
+    itemsPerPage,
+    history,
+    params,
+    withQueryParams,
+    defaultPage
+  ]);
 
   // Update the current items when the page offset changes.
   useEffect(() => {
@@ -72,11 +76,23 @@ const usePagination = <T extends any[]>({
 
   const handleNext = () => {
     const nextPage = currentPageNum + 1;
+
+    if (withQueryParams) {
+      params.set(withQueryParams, nextPage.toString());
+      history.push({ search: params.toString() });
+    }
+
     setCurrentPageNum(nextPage);
   };
 
   const handlePrevious = () => {
     const prevPage = currentPageNum - 1;
+
+    if (withQueryParams) {
+      params.set(withQueryParams, prevPage.toString());
+      history.push({ search: params.toString() });
+    }
+
     setCurrentPageNum(prevPage);
   };
 
@@ -84,6 +100,11 @@ const usePagination = <T extends any[]>({
     event: React.MouseEvent<HTMLButtonElement>,
     pageNum: number
   ) => {
+    if (withQueryParams) {
+      params.set(withQueryParams, pageNum.toString());
+      history.push({ search: params.toString() });
+    }
+
     setCurrentPageNum(pageNum);
   };
 
@@ -93,12 +114,12 @@ const usePagination = <T extends any[]>({
       <div className={classNames(className)}>
         {pageCount > 1 && (
           <TrussPagination
-            pathname={pathname || location.pathname}
+            pathname={location.pathname}
             currentPage={currentPageNum}
             maxSlots={7}
-            onClickNext={onClickNext || handleNext}
-            onClickPageNumber={onClickPageNumber || handlePageNumber}
-            onClickPrevious={onClickPrevious || handlePrevious}
+            onClickNext={handleNext}
+            onClickPageNumber={handlePageNumber}
+            onClickPrevious={handlePrevious}
             totalPages={pageCount}
           />
         )}
