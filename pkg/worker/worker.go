@@ -106,6 +106,7 @@ func (w *Worker) Work() {
 	mgr.Register(modelStatusUpdateCronJobName, JobWithPanicProtection(w.ModelStatusUpdateCronJob))
 	mgr.Register(modelStatusUpdateBatchJobName, JobWithPanicProtection(w.ModelStatusUpdateBatchJob))
 	mgr.Register(modelStatusUpdateBatchJobSuccessName, JobWithPanicProtection(w.ModelStatusUpdateBatchJobSuccess))
+	mgr.Register(modelStatusUpdateJobName, JobWithPanicProtection(w.ModelStatusUpdateJob))
 
 	/**********************
 	* //Future Enhancement
