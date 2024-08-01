@@ -31,20 +31,20 @@
 <p>, please adjust your model’s anticipated timeline.</p>
 <br/>
 <br/>
-<b>Current status: </b>{{.ModelStatus}}
+<b>Current status: </b>{{index .SuggestedStatuses 0}}
 <br/>
 <b>New status: </b>
-{{if gt (len .NewAnticipatedStatuses) 1}}
+{{if gt (len .SuggestedStatuses) 1}}
     <p>You will be asked to select from one of the available clearance stage statuses</p>
 {{else}}
-    <p>{{index .NewAnticipatedStatuses 0}}</p>
+    <p>{{index .SuggestedStatuses 0}}</p>
 {{end}}
 <br />
 <br />
-<a href="{{.ClientAddress}}/models/{{.ModelID}}/anticipated-status?{{range .NewAnticipatedStatuses}}status={{.}}&{{end}}">Yes, update my model’s status</a>
+<a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list?{{range .NewAnticipatedStatuses}}model-status={{.}}&{{end}}">Yes, update my model’s status</a>
 <br/>
-
-<p>If you’re not ready to update your model’s status, please <a href="{{.ClientAddress}}/models/{{.ModelID}}">adjust your model’s anticipated timeline</a>.</p>
+<br/>
+<p>If you’re not ready to update your model’s status, please <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list/basics/milestones">adjust your model’s anticipated timeline</a>.</p>
 <hr />
 <br />
 <p>You’re receiving this notification because you are listed as the model lead for Maryland Total Cost Care. If this is incorrect, <a href="mailto:{{.ClientEmail}}">please update the model team</a>.</p>
