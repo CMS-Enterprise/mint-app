@@ -1,14 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Card,
-  Grid,
-  Header,
-  Icon,
-  PrimaryNav,
-  Select
-} from '@trussworks/react-uswds';
-import classNames from 'classnames';
+import { Card, Grid } from '@trussworks/react-uswds';
 import {
   GetModelPlansQuery,
   ModelPlanFilter,
@@ -17,10 +9,8 @@ import {
 } from 'gql/gen/graphql';
 
 import CalendarDate from 'components/CalendarDate';
-import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
 import Spinner from 'components/Spinner';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePagination from 'hooks/usePagination';
 
 import './index.scss';
@@ -28,9 +18,7 @@ import './index.scss';
 const ModelsApproachingClearance = () => {
   const { t: customHomeT } = useTranslation('customHome');
 
-  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
-
-  const { data, loading, error } = useGetModelPlansQuery({
+  const { data, loading } = useGetModelPlansQuery({
     variables: {
       filter: ModelPlanFilter.APPROACHING_CLEARANCE,
       isMAC: false
@@ -52,7 +40,7 @@ const ModelsApproachingClearance = () => {
   return (
     <Grid row gap={6} className="models-approaching-clearance">
       <Grid desktop={{ col: 5 }} className="flex-align-self-center">
-        <h2>
+        <h2 className="margin-bottom-2">
           {customHomeT(
             `settings.${ViewCustomizationType.MODELS_APPROACHING_CLEARANCE}.heading`
           )}
