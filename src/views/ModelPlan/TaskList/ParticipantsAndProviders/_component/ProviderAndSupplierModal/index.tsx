@@ -109,7 +109,6 @@ const ProviderAndSupplierModal = ({
               )}
 
               <Grid desktop={{ col: 8 }}>
-                <p className="width-100 border-1px ">hello world</p>
                 {/* <h2 className="margin-top-0">{t('navigation.about')}</h2> */}
               </Grid>
             </Grid>

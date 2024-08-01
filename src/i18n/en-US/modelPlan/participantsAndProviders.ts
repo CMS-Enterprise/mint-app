@@ -1176,17 +1176,7 @@ export const participantsAndProvidersMisc: Record<string, string | object> = {
   modal: {
     title: 'Existing provider/supplier types',
     asOfDate: 'as of 06/25/2024',
-    existingProviderSupplierTypesNames,
-    types: {
-      PROVIDER_TYPES_INSTITUTIONAL: 'Provider Types (Institutional)',
-      PHYSICIANS: 'Physicians',
-      NON_PHYSICIANS_SUPPLIERS: 'Non-Physicians/Suppliers'
-    },
-    typeTwo: [
-      'Provider Types (Institutional)',
-      'Physicians',
-      'Non-Physicians/Suppliers'
-    ]
+    existingProviderSupplierTypesNames
   }
 };
 
