@@ -317,6 +317,28 @@ func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool)
 
 	return modelPlans, nil
 }
+func ModelPlanCollectionApproachingClearance(np sqlutils.NamedPreparer, logger *zap.Logger) ([]*models.ModelPlan, error) {
+	logger.Info("fetching model plans approaching clearance")
+	args := map[string]interface{}{}
+
+	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.CollectionApproachingClearance, args)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+		logger.Error(
+			"failed to fetch model plans approaching clearance",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+	return modelPlans, err
+
+}
 
 // ModelPlanCollectionFavorited returns a list of all model plans which are favorited by the user
 // Note: Externally, this is called "followed" but internally we call it "favorited"

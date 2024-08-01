@@ -694,6 +694,7 @@ export type ModelPlanChanges = {
 };
 
 export enum ModelPlanFilter {
+  APPROACHING_CLEARANCE = 'APPROACHING_CLEARANCE',
   COLLAB_ONLY = 'COLLAB_ONLY',
   FAVORITED = 'FAVORITED',
   INCLUDE_ALL = 'INCLUDE_ALL',
