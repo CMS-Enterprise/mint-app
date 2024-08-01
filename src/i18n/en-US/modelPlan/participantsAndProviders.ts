@@ -1138,6 +1138,23 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   }
 };
 
+export enum ExistingProviderSupplierTypes {
+  PROVIDER_TYPES_INSTITUTIONAL = 'PROVIDER_TYPES_INSTITUTIONAL',
+  PHYSICIANS = 'PHYSICIANS',
+  NON_PHYSICIANS_SUPPLIERS = 'NON_PHYSICIANS_SUPPLIERS'
+}
+
+export const existingProviderSupplierTypesNames: Record<
+  ExistingProviderSupplierTypes,
+  string
+> = {
+  [ExistingProviderSupplierTypes.PROVIDER_TYPES_INSTITUTIONAL]:
+    'Provider Types (Institutional)',
+  [ExistingProviderSupplierTypes.PHYSICIANS]: 'Physicians',
+  [ExistingProviderSupplierTypes.NON_PHYSICIANS_SUPPLIERS]:
+    'Non-Physicians/Suppliers'
+};
+
 export const participantsAndProvidersMisc: Record<string, string | object> = {
   heading: 'Participants and providers',
   clearanceHeading: 'Review participants and providers',
@@ -1159,6 +1176,7 @@ export const participantsAndProvidersMisc: Record<string, string | object> = {
   modal: {
     title: 'Existing provider/supplier types',
     asOfDate: 'as of 06/25/2024',
+    existingProviderSupplierTypesNames,
     types: {
       PROVIDER_TYPES_INSTITUTIONAL: 'Provider Types (Institutional)',
       PHYSICIANS: 'Physicians',

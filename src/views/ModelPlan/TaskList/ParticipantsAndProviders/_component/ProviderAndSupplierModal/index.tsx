@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import {
@@ -10,6 +10,7 @@ import {
 } from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import { ExistingProviderSupplierTypes } from 'i18n/en-US/modelPlan/participantsAndProviders';
 
 import './index.scss';
 
@@ -25,21 +26,28 @@ const ProviderAndSupplierModal = ({
   const { t: modalT } = useTranslation('participantsAndProvidersMisc');
   const isMobile = useCheckResponsiveScreen('tablet');
 
-  const providerAndSupplierTypes: string[] = modalT('modal.typeTwo', {
+  const [activeType, setActiveType] = useState<ExistingProviderSupplierTypes>(
+    ExistingProviderSupplierTypes.PROVIDER_TYPES_INSTITUTIONAL
+  );
+
+  const providerAndSupplierTypes: Record<
+    ExistingProviderSupplierTypes,
+    string
+  > = modalT('modal.existingProviderSupplierTypesNames', {
     returnObjects: true
   });
 
-  const sidenavItems = providerAndSupplierTypes.map(
-    (value: string, index: number) => {
+  const sidenavItems = Object.entries(providerAndSupplierTypes).map(
+    ([key, value]) => {
       return (
         <Button
           type="button"
           unstyled
           className={`sidenav-button line-height-sans-3 width-full ${
-            index === 0 ? 'current' : ''
+            activeType === key ? 'current' : ''
           }`}
+          onClick={() => setActiveType(key as ExistingProviderSupplierTypes)}
         >
-          {' '}
           {value}
         </Button>
       );
@@ -102,6 +110,7 @@ const ProviderAndSupplierModal = ({
 
               <Grid desktop={{ col: 8 }}>
                 <p className="width-100 border-1px ">hello world</p>
+                {/* <h2 className="margin-top-0">{t('navigation.about')}</h2> */}
               </Grid>
             </Grid>
           </GridContainer>
