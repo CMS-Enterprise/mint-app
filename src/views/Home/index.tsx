@@ -291,11 +291,20 @@ const Home = () => {
                 <PageLoading />
               ) : (
                 data?.userViewCustomization.viewCustomization.map(
-                  customization => (
-                    <div key={customization}>
-                      {homepageComponents[customization]}
-                    </div>
-                  )
+                  customization => {
+                    if (
+                      !flags.modelsApproachingClearanceEnabled &&
+                      customization ===
+                        ViewCustomizationType.MODELS_APPROACHING_CLEARANCE
+                    ) {
+                      return null;
+                    }
+                    return (
+                      <div key={customization}>
+                        {homepageComponents[customization]}
+                      </div>
+                    );
+                  }
                 )
               )}
 
