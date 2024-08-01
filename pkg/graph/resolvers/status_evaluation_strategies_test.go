@@ -15,10 +15,10 @@ func (suite *ResolverSuite) TestICIPCompleteStrategy_Update() {
 		CompleteICIP: &completeICIPTime,
 	}
 
-	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.True(shouldUpdate)
-	suite.Len(status, 1)
-	suite.Equal(models.ModelStatusIcipComplete, status[0])
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
+	suite.Len(suggestedPhase.SuggestedStatuses, 1)
+	suite.Equal(models.ModelStatusIcipComplete, suggestedPhase.SuggestedStatuses[0])
 }
 
 func (suite *ResolverSuite) TestICIPCompleteStrategy_NoUpdate() {
@@ -30,8 +30,8 @@ func (suite *ResolverSuite) TestICIPCompleteStrategy_NoUpdate() {
 		CompleteICIP: &completeICIPTime,
 	}
 
-	_, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.False(shouldUpdate)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
 }
 
 func (suite *ResolverSuite) TestClearanceStartStrategy_Update() {
@@ -43,13 +43,13 @@ func (suite *ResolverSuite) TestClearanceStartStrategy_Update() {
 		ClearanceStarts: &clearanceStartTime,
 	}
 
-	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.True(shouldUpdate)
-	suite.Len(status, 4)
-	suite.Equal(models.ModelStatusInternalCmmiClearance, status[0])
-	suite.Equal(models.ModelStatusCmsClearance, status[1])
-	suite.Equal(models.ModelStatusHhsClearance, status[2])
-	suite.Equal(models.ModelStatusOmbAsrfClearance, status[3])
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
+	suite.Len(suggestedPhase.SuggestedStatuses, 4)
+	suite.Equal(models.ModelStatusInternalCmmiClearance, suggestedPhase.SuggestedStatuses[0])
+	suite.Equal(models.ModelStatusCmsClearance, suggestedPhase.SuggestedStatuses[1])
+	suite.Equal(models.ModelStatusHhsClearance, suggestedPhase.SuggestedStatuses[2])
+	suite.Equal(models.ModelStatusOmbAsrfClearance, suggestedPhase.SuggestedStatuses[3])
 }
 
 func (suite *ResolverSuite) TestClearanceStartStrategy_NoUpdate() {
@@ -61,8 +61,8 @@ func (suite *ResolverSuite) TestClearanceStartStrategy_NoUpdate() {
 		ClearanceStarts: &clearanceStartTime,
 	}
 
-	_, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.False(shouldUpdate)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
 }
 
 func (suite *ResolverSuite) TestClearanceEndStrategy_Update() {
@@ -74,10 +74,10 @@ func (suite *ResolverSuite) TestClearanceEndStrategy_Update() {
 		ClearanceEnds: &clearanceEndTime,
 	}
 
-	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.True(shouldUpdate)
-	suite.Len(status, 1)
-	suite.Equal(models.ModelStatusCleared, status[0])
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
+	suite.Len(suggestedPhase.SuggestedStatuses, 1)
+	suite.Equal(models.ModelStatusCleared, suggestedPhase.SuggestedStatuses[0])
 }
 
 func (suite *ResolverSuite) TestClearanceEndStrategy_NoUpdate() {
@@ -89,8 +89,8 @@ func (suite *ResolverSuite) TestClearanceEndStrategy_NoUpdate() {
 		ClearanceEnds: &clearanceEndTime,
 	}
 
-	_, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.False(shouldUpdate)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
 }
 
 func (suite *ResolverSuite) TestAnnounceStrategy_Update() {
@@ -101,10 +101,10 @@ func (suite *ResolverSuite) TestAnnounceStrategy_Update() {
 	planBasics := &models.PlanBasics{
 		Announced: &announceTime,
 	}
-	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.True(shouldUpdate)
-	suite.Len(status, 1)
-	suite.Equal(models.ModelStatusAnnounced, status[0])
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
+	suite.Len(suggestedPhase.SuggestedStatuses, 1)
+	suite.Equal(models.ModelStatusAnnounced, suggestedPhase.SuggestedStatuses[0])
 }
 
 func (suite *ResolverSuite) TestAnnounceStrategy_NoUpdate() {
@@ -116,8 +116,8 @@ func (suite *ResolverSuite) TestAnnounceStrategy_NoUpdate() {
 		Announced: &announceTime,
 	}
 
-	_, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.False(shouldUpdate)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
 }
 
 func (suite *ResolverSuite) TestActiveStrategy_Update() {
@@ -129,10 +129,10 @@ func (suite *ResolverSuite) TestActiveStrategy_Update() {
 		PerformancePeriodStarts: &performancePeriodStarts,
 	}
 
-	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.True(shouldUpdate)
-	suite.Len(status, 1)
-	suite.Equal(models.ModelStatusActive, status[0])
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
+	suite.Len(suggestedPhase.SuggestedStatuses, 1)
+	suite.Equal(models.ModelStatusActive, suggestedPhase.SuggestedStatuses[0])
 }
 
 func (suite *ResolverSuite) TestActiveStrategy_NoUpdate() {
@@ -144,8 +144,8 @@ func (suite *ResolverSuite) TestActiveStrategy_NoUpdate() {
 		PerformancePeriodStarts: &performancePeriodStarts,
 	}
 
-	_, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.False(shouldUpdate)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
 }
 
 func (suite *ResolverSuite) TestEndedStrategy_Update() {
@@ -157,10 +157,10 @@ func (suite *ResolverSuite) TestEndedStrategy_Update() {
 		PerformancePeriodEnds: &performancePeriodEnds,
 	}
 
-	status, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.True(shouldUpdate)
-	suite.Len(status, 1)
-	suite.Equal(models.ModelStatusEnded, status[0])
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
+	suite.Len(suggestedPhase.SuggestedStatuses, 1)
+	suite.Equal(models.ModelStatusEnded, suggestedPhase.SuggestedStatuses[0])
 }
 
 func (suite *ResolverSuite) TestEndedStrategy_NoUpdate() {
@@ -172,6 +172,6 @@ func (suite *ResolverSuite) TestEndedStrategy_NoUpdate() {
 		PerformancePeriodEnds: &performancePeriodEnds,
 	}
 
-	_, shouldUpdate := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.False(shouldUpdate)
+	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
+	suite.NotNil(suggestedPhase)
 }
