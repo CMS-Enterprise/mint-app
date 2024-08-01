@@ -103,7 +103,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        anticipatedStatuses\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
+								"query": "mutation updateModelPlan ($id: UUID!, $changes: ModelPlanChanges!) {\n    updateModelPlan (id: $id, changes: $changes) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        suggestedPhase {\n            phase\n            suggestedStatuses\n        }\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\",\n  \"changes\": {\n    \"modelName\": \"My Updated Model\",\n    \"archived\": true,\n    \"status\": \"PLAN_DRAFT\"\n  }\n}"
 							}
 						},
@@ -124,7 +124,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        anticipatedStatuses\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
+								"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        suggestedPhase {\n            phase\n            suggestedStatuses\n        }\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
 								"variables": "{\n  \"id\": \"{{modelPlanID}}\"\n}"
 							}
 						},
@@ -145,7 +145,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        anticipatedStatuses\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
+								"query": "query modelPlanCollection {\n    modelPlanCollection(filter: WITH_CR_TDLS) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        suggestedPhase {\n            phase\n            suggestedStatuses\n        }\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -166,7 +166,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        anticipatedStatuses\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
+								"query": "query modelPlanCollection($filter: ModelPlanFilter!) {\n    modelPlanCollection(filter: $filter) {\n        id\n        modelName\n        abbreviation\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        suggestedPhase {\n            phase\n            suggestedStatuses\n        }\n        isFavorite\n        isCollaborator\n        opSolutionLastModifiedDts\n    }\n}",
 								"variables": "{\n    \"filter\": \"INCLUDE_ALL\"\n}"
 							}
 						},
