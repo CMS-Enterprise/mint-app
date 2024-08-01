@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import {
+  Button,
   Grid,
   GridContainer,
   Icon,
@@ -9,61 +10,12 @@ import {
 } from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import { formatQueryParam } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import {
-  ReadOnlyComponents,
-  subComponentsProps
-} from 'views/ModelPlan/ReadOnly';
-import SideNav from 'views/ModelPlan/ReadOnly/_components/Sidenav';
+
+import './index.scss';
 
 type ProviderAndSupplierModalProps = {
   isOpen: boolean;
   closeModal: () => void;
-};
-
-// const subComponents = (
-//   solution: HelpSolutionType,
-//   location: any,
-//   closeRoute: string
-// ): subComponentsProps => {
-//   const paramValues = location.search.substring(1).split('&');
-
-//   return {
-//     about: {
-//       route: formatQueryParam(paramValues, 'about', closeRoute),
-//       helpRoute: formatQueryParam(paramValues, 'about', closeRoute),
-//       component: <About solution={solution} />
-//     },
-//     timeline: {
-//       route: formatQueryParam(paramValues, 'timeline', closeRoute),
-//       helpRoute: formatQueryParam(paramValues, 'timeline', closeRoute),
-//       component: <Timeline solution={solution} />
-//     },
-//     'points-of-contact': {
-//       route: formatQueryParam(paramValues, 'points-of-contact', closeRoute),
-//       helpRoute: formatQueryParam(paramValues, 'points-of-contact', closeRoute),
-//       component: <PointsOfContact solution={solution} />
-//     }
-//   };
-// };
-
-const subComponents = {
-  PROVIDER: {
-    route: '',
-    helpRoute: '',
-    component: <>hello world</>
-  },
-  PHYSICIAN: {
-    route: '',
-    helpRoute: '',
-    component: <>hello world</>
-  },
-  NON_PHYSICIAN_SUPPLIER: {
-    route: '',
-    helpRoute: '',
-    component: <>hello world</>
-  }
 };
 
 const ProviderAndSupplierModal = ({
@@ -76,6 +28,23 @@ const ProviderAndSupplierModal = ({
   const providerAndSupplierTypes: string[] = modalT('modal.typeTwo', {
     returnObjects: true
   });
+
+  const sidenavItems = providerAndSupplierTypes.map(
+    (value: string, index: number) => {
+      return (
+        <Button
+          type="button"
+          unstyled
+          className={`sidenav-button line-height-sans-3 width-full ${
+            index === 0 ? 'current' : ''
+          }`}
+        >
+          {' '}
+          {value}
+        </Button>
+      );
+    }
+  );
 
   const renderModal = () => {
     return (
@@ -125,11 +94,9 @@ const ProviderAndSupplierModal = ({
             <Grid row gap>
               {!isMobile && (
                 <Grid desktop={{ col: 3 }}>
-                  <SideNav
-                    subComponents={subComponents}
-                    solutionNavigation
-                    paramActive
-                  />
+                  <div id="provider-supplier-modal--sidenav">
+                    <TrussSideNav items={sidenavItems} />
+                  </div>
                 </Grid>
               )}
 
