@@ -42,7 +42,7 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import UpdateStatusModal from 'components/UpdateStatusModal';
+// import UpdateStatusModal from 'components/UpdateStatusModal';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
@@ -159,7 +159,7 @@ const TaskList = () => {
     null
   );
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
 
   const { euaId, groups } = useSelector((state: RootStateOrAny) => state.auth);
 
@@ -322,7 +322,7 @@ const TaskList = () => {
           </BreadcrumbBar>
         </Grid>
 
-        <UpdateStatusModal
+        {/* <UpdateStatusModal
           modelID={modelID}
           isOpen={isModalOpen}
           closeModal={() => setIsModalOpen(false)}
@@ -330,7 +330,7 @@ const TaskList = () => {
           newStatus="IN_CLEARANCE"
           setStatusMessage={setStatusMessage}
           refetch={refetch}
-        />
+        /> */}
 
         {error && (
           <ErrorAlert
