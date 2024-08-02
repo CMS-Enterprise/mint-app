@@ -84,7 +84,8 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 func (w *Worker) AnalyzedAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	dateAnalyzed := args[0]
 	help := faktory_worker.HelperFor(ctx)
-	sugaredLogger := w.Logger.With(zap.Any("JID", help.Jid()), zap.Any("BID", help.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
+	sugaredLogger := decorateFaktoryLoggerFieldWithHelper(w.Logger, help)
+
 	// Kick off DigestEmailBatchJob
 	return help.With(func(cl *faktory.Client) error {
 		sugaredLogger.Info("Analyzed Audit Batch Job was successful.")
