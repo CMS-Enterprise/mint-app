@@ -31,8 +31,8 @@ func JobWithPanicProtection(jobFunc faktory_worker.Perform) faktory_worker.Perfo
 
 }
 
-// decorateFaktoryLoggerFieldWithHelper decorated a faktory logger with standard fields using a faktory worker helper to provide the JID and BID
-func decorateFaktoryLoggerFieldWithHelper(logger *zap.Logger, helper faktory_worker.Helper, extraFields ...zapcore.Field) *zap.Logger {
+// decorateFaktoryLoggerStandardFieldsWithHelper decorated a faktory logger with standard fields using a faktory worker helper to provide the JID and BID
+func decorateFaktoryLoggerStandardFieldsWithHelper(logger *zap.Logger, helper faktory_worker.Helper, extraFields ...zapcore.Field) *zap.Logger {
 	return decorateFaktoryLoggerStandardFields(logger, helper.Bid(), helper.Jid(), helper.JobType(), extraFields...)
 }
 
