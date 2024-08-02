@@ -40,6 +40,7 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -128,6 +129,8 @@ const TaskList = () => {
   const { t: h } = useTranslation('draftModelPlan');
 
   const { modelID } = useParams<{ modelID: string }>();
+
+  const { message } = useMessage();
 
   const location = useLocation();
 
@@ -247,6 +250,12 @@ const TaskList = () => {
               message={t('errorMessage')}
             />
           </ErrorAlert>
+        )}
+
+        {message && (
+          <Alert slim type="success">
+            {message}
+          </Alert>
         )}
 
         {!loading && statusMessage && (
