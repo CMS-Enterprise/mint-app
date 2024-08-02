@@ -5,8 +5,11 @@ type ModelPlanSuggestedPhaseSubjectContent struct {
 }
 
 type ModelPlanSuggestedPhaseBodyContent struct {
-	ClientAddress  string
-	ModelTeamEmail string
-	Phase          string
-	ModelPlanID    string
+	ClientAddress              string
+	Phase                      string
+	SuggestedStatusesRaw       []string
+	SuggestedStatusesHumanized []string
+	CurrentStatusHumanized     string
+	ModelPlanID                string
+	ModelPlanName              string
 }

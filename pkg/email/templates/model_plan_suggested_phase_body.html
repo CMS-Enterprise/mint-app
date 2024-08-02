@@ -1,50 +1,34 @@
 {{template "shared_header.html"}}
 
-<p>Your model's anticipated timeline suggests that </p>
-  {{if eq .Phase "CLEARANCE"}}
-    <p>it is now in clearance</p>
-  {{else if eq .Phase "ICIP_COMPLETE"}}
-    <p>your ICIP is now complete</p>
-  {{else if eq .Phase "CLEARED"}}
-    <p>it is now cleared</p>
-  {{else if eq .Phase "ANNOUNCED"}}
-    <p>it is now announced</p>
-  {{else if eq .Phase "ACTIVE"}}
-    <p>it is now active</p>
-  {{else if eq .Phase "ENDED"}}
-    <p>it is now ended</p>
-  {{end}}
-<p>. Would you like to update the status of your model to reflect that? If your </p>
-  {{if eq .Phase "CLEARANCE"}}
-    <p>model is not yet in clearance</p>
-  {{else if eq .Phase "ICIP_COMPLETE"}}
-    <p>model's ICIP is not yet complete</p>
-  {{else if eq .Phase "CLEARED"}}
-    <p>model is not yet cleared</p>
-  {{else if eq .Phase "ANNOUNCED"}}
-    <p>model is not yet announced</p>
-  {{else if eq .Phase "ACTIVE"}}
-    <p>model is not yet active</p>
-  {{else if eq .Phase "ENDED"}}
-    <p>model has not yet ended</p>
-  {{end}}
-<p>, please adjust your model’s anticipated timeline.</p>
+<p>Your model's anticipated timeline suggests that
+{{- if eq .Phase "IN_CLEARANCE"}} it will be in clearance
+{{- else if eq .Phase "ICIP_COMPLETE"}} its ICIP will be complete
+{{- else if eq .Phase "CLEARED"}} it will be cleared
+{{- else if eq .Phase "ANNOUNCED"}} it will be announced
+{{- else if eq .Phase "ACTIVE"}} it will be active
+{{- else if eq .Phase "ENDED"}} it will be ended
+{{end}} soon. Would you like to update the status of your model to reflect that? If your
+{{- if eq .Phase "IN_CLEARANCE"}} model is not yet in clearance
+{{- else if eq .Phase "ICIP_COMPLETE"}} model's ICIP is not yet complete
+{{- else if eq .Phase "CLEARED"}} model is not yet cleared
+{{- else if eq .Phase "ANNOUNCED"}} model is not yet announced
+{{- else if eq .Phase "ACTIVE"}} model is not yet active
+{{- else if eq .Phase "ENDED"}} model has not yet ended
+{{end}}, please adjust your model’s anticipated timeline.</p>
 <br/>
 <br/>
-<b>Current status: </b>{{index .SuggestedStatuses 0}}
+<b>Current status: </b>{{.CurrentStatusHumanized}}
 <br/>
-<b>New status: </b>
-{{if gt (len .SuggestedStatuses) 1}}
-    <p>You will be asked to select from one of the available clearance stage statuses</p>
-{{else}}
-    <p>{{index .SuggestedStatuses 0}}</p>
+<b>New status:</b>
+{{- if gt (len .SuggestedStatusesHumanized) 1}} You will be asked to select from one of the available clearance stage statuses
+{{- else}} {{index .SuggestedStatusesHumanized 0}}
 {{end}}
 <br />
 <br />
-<a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list?{{range .NewAnticipatedStatuses}}model-status={{.}}&{{end}}">Yes, update my model’s status</a>
+<a href="{{.ClientAddress}}/models/{{.ModelPlanID}}/task-list?model-status={{index .SuggestedStatusesRaw 0}}">Yes, update my model’s status</a>
 <br/>
 <br/>
-<p>If you’re not ready to update your model’s status, please <a href="{{.ClientAddress}}/models/{{.ModelID}}/task-list/basics/milestones">adjust your model’s anticipated timeline</a>.</p>
+<p>If you’re not ready to update your model’s status, please <a href="{{.ClientAddress}}/models/{{.ModelPlanID}}/task-list/basics/milestones">adjust your model’s anticipated timeline</a>.</p>
 <hr />
 <br />
-<p>You’re receiving this notification because you are listed as the model lead for Maryland Total Cost Care. If this is incorrect, <a href="mailto:{{.ClientEmail}}">please update the model team</a>.</p>
+<p>You’re receiving this notification because you are listed as the model lead for {{.ModelPlanName}}. If this is incorrect, <a href="{{.ClientAddress}}/models/{{.ModelPlanID}}/collaborators">please update the model team</a>.</p>
