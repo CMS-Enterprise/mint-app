@@ -69,9 +69,7 @@ func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan)
 
 // SuggestedPhase is the resolver for the suggestedPhase field.
 func (r *modelPlanResolver) SuggestedPhase(ctx context.Context, obj *models.ModelPlan) (*model.PhaseSuggestion, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return ModelPlanAnticipatedPhase(ctx, logger, r.store, obj.ID)
+	return ModelPlanAnticipatedPhase(ctx, obj.Status, obj.ID)
 }
 
 // IsFavorite is the resolver for the isFavorite field.

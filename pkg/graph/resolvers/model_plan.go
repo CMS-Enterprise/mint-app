@@ -543,18 +543,12 @@ func ModelPlanShare(
 // If no phase is suggested, it returns nil
 func ModelPlanAnticipatedPhase(
 	ctx context.Context,
-	logger *zap.Logger,
-	store *storage.Store,
+	modelStatus models.ModelStatus,
 	modelPlanID uuid.UUID,
 ) (*model.PhaseSuggestion, error) {
 
-	modelPlan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
-	if err != nil {
-		return nil, err
-	}
-
 	// If the model plan is paused or canceled, we shouldn't suggest a new phase
-	if modelPlan.Status == models.ModelStatusPaused || modelPlan.Status == models.ModelStatusCanceled {
+	if modelStatus == models.ModelStatusPaused || modelStatus == models.ModelStatusCanceled {
 		return nil, nil
 	}
 
@@ -566,7 +560,7 @@ func ModelPlanAnticipatedPhase(
 	// Iterate over all status evaluation strategies and append valid statuses to the results slice
 	statusEvaluationStrategies := GetAllStatusEvaluationStrategies()
 	for _, strategy := range statusEvaluationStrategies {
-		phaseSuggestion := strategy.Evaluate(modelPlan.Status, planBasics)
+		phaseSuggestion := strategy.Evaluate(modelStatus, planBasics)
 		if nil != phaseSuggestion {
 			return phaseSuggestion, nil
 		}
