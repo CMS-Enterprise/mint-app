@@ -172,3 +172,19 @@ func IsCollaboratorByOperationalNeedID(logger *zap.Logger, principal authenticat
 	return false, fmt.Errorf(errString)
 
 }
+
+// HasPrivilegedDocumentAccessByModelPlanID checks if a user should be able to view restricted documents or not. True means that they can see restricted document
+func HasPrivilegedDocumentAccessByModelPlanID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
+
+	isCollaborator, err := IsCollaboratorModelPlanID(logger, principal, store, modelPlanID)
+	if err != nil {
+		return false, err
+	}
+
+	// users who aren't collaborators or are non-cms users should not see privileged documents.
+	if !isCollaborator || principal.AllowNonCMSUser() {
+		return false, nil
+	}
+	return isCollaborator, nil
+
+}

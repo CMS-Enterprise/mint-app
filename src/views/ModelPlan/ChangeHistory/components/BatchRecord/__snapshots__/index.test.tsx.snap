@@ -1,0 +1,74 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ChangeRecord > matches snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card change-record"
+    data-testid="Card"
+  >
+    <div
+      class="usa-card__container"
+    >
+      <div
+        class="display-flex flex-align-center"
+      >
+        <div
+          class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1 flex-align-self-start"
+          data-testid="avatar--basic"
+        >
+          QD
+        </div>
+        <span
+          class="padding-top-05"
+        >
+          <span
+            class="text-bold"
+          >
+            QWER Doe 
+          </span>
+          made 2 changes in Operational solutions and implementation status tracker 
+          <span>
+            on June 6, 2024 at 9:54 PM
+          </span>
+        </span>
+      </div>
+      <ul
+        class="margin-top-1 margin-bottom-1 margin-left-4"
+      >
+        <li>
+          Helpdesk support solution added: Consolidated Business Operations Support Center (CBOSC)
+        </li>
+        <li>
+          Helpdesk support solution added: Contractor
+        </li>
+      </ul>
+      <div
+        class="margin-left-5 mint-collapsable-link"
+      >
+        <button
+          aria-controls="batch-record-1"
+          aria-expanded="false"
+          class="usa-button usa-button--unstyled mint-no-print"
+          data-testid="batch-record-1"
+          type="button"
+        >
+          <svg
+            class="usa-icon top-05 margin-right-05"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+            />
+          </svg>
+          Show details
+        </button>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

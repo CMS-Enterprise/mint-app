@@ -121,7 +121,7 @@ enum OperationalSolutionKey{
   INTERNAL_STAFF
   LDG
   LV
-  MDM
+  MDM_POR
   MDM_NCBP
   MARX
   OTHER_NEW_PROCESS
@@ -157,4 +157,46 @@ enum Role {
   A MINT MAC user
   """
   MINT_MAC
+}
+
+
+"""
+These represent all the possible tables in the database, in the public schema.
+"""
+enum TableName {
+  activity
+  analyzed_audit
+  discussion_reply
+  existing_model
+  existing_model_link
+  model_plan
+  nda_agreement
+  operational_need
+  operational_solution
+  operational_solution_subtask
+  plan_basics
+  plan_beneficiaries
+  plan_collaborator
+  plan_cr
+  plan_discussion
+  plan_document
+  plan_document_solution_link
+  plan_favorite
+  plan_general_characteristics
+  plan_ops_eval_and_learning
+  plan_participants_and_providers
+  plan_payments
+  plan_tdl
+  possible_need_solution_link
+  possible_operational_need
+  possible_operational_solution
+  possible_operational_solution_contact
+  tag
+  translated_audit
+  translated_audit_field
+  translated_audit_queue
+  user_account
+  user_notification
+  user_notification_preferences
+  user_view_customization
 }

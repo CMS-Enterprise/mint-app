@@ -3,6 +3,7 @@ import { Route, Switch, useParams } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
 import PrepareForClearanceCheckList from './Checklist';
@@ -17,13 +18,13 @@ export const PrepareForClearance = () => {
         <Grid desktop={{ col: 12 }}>
           <Switch>
             {/* Model Plan Prepare for clearance Pages */}
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/prepare-for-clearance"
               exact
               render={() => <PrepareForClearanceCheckList modelID={modelID} />}
             />
 
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID"
               exact
               render={() => <ClearanceReview modelID={modelID} />}

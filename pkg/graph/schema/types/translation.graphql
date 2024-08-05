@@ -1,0 +1,294 @@
+# Base types that represents FE translation structure
+# Translations are exported from FE for change history, and mapped to these types on the BE
+
+
+"""
+Represents the data type of the translation field
+"""
+enum TranslationDataType {
+  STRING
+  NUMBER
+  BOOLEAN
+  DATE
+  ENUM
+  OBJECT
+  UUID
+}
+
+"""
+Represents the FORM type of the translation field
+"""
+enum TranslationFormType {
+  TEXT
+  TEXTAREA
+  NUMBER
+  BOOLEAN
+  RADIO
+  CHECKBOX
+  SELECT
+  MULTISELECT
+  DATEPICKER
+  RANGEINPUT
+}
+
+"""
+Represents a translation question with no options
+"""
+type TranslationField {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
+}
+
+"""
+Represents a translation question with options
+"""
+type TranslationFieldWithOptions {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
+  options: Map!
+  exportOptions: Map
+}
+
+"""
+Represents a translation question with no options and a parent
+"""
+type TranslationFieldWithParent {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
+  parentRelation: TranslationField!
+}
+
+"""
+Represents a translation question with options and child/children
+"""
+type TranslationFieldWithOptionsAndChildren {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
+  options: Map!
+  exportOptions: Map
+  childRelation: Map!
+}
+
+"""
+Represents a translation question with options and parent
+"""
+type TranslationFieldWithOptionsAndParent {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String! 
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
+  options: Map!
+  exportOptions: Map
+  parentRelation: TranslationFieldWithOptionsAndChildren!
+}
+
+"""
+Represents a translation question with options and parent and children
+"""
+type TranslationFieldWithParentAndChildren {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
+  options: Map!
+  exportOptions: Map
+  parentRelation: TranslationFieldWithOptionsAndChildren!
+  childRelation: Map!
+}
+
+
+

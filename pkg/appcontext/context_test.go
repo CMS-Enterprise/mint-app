@@ -128,3 +128,29 @@ func TestContextPrincipal(t *testing.T) {
 		})
 	}
 }
+
+func TestUserAccountService(t *testing.T) {
+
+	t.Run("User account service not being found results in error", func(t *testing.T) {
+
+		service, err := UserAccountService(context.Background())
+		assert.Nil(t, service)
+		assert.Error(t, err)
+	})
+
+	t.Run("User account on context returns the service", func(t *testing.T) {
+		accountFunction := func(ctx context.Context, id uuid.UUID) (*authentication.UserAccount, error) {
+			return &authentication.UserAccount{
+				ID: id,
+			}, nil
+		}
+
+		typedFunction := authentication.GetUserAccountFromDBFunc(accountFunction)
+		ctxWithAccountService := WithUserAccountService(context.Background(), typedFunction)
+
+		service, err := UserAccountService(ctxWithAccountService)
+		assert.IsType(t, typedFunction, service)
+		assert.NoError(t, err)
+	})
+
+}

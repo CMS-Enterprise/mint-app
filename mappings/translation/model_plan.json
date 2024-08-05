@@ -1,0 +1,77 @@
+{
+  "modelName": {
+    "gqlField": "modelName",
+    "goField": "ModelName",
+    "dbField": "model_name",
+    "label": "Model name",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.01
+  },
+  "previousName": {
+    "gqlField": "previousName",
+    "goField": "PreviousName",
+    "dbField": "previous_name",
+    "label": "Previous names",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.02
+  },
+  "nameHistory": {
+    "gqlField": "nameHistory",
+    "goField": "NameHistory",
+    "dbField": "name_history",
+    "label": "Previous names",
+    "dataType": "STRING",
+    "isArray": true,
+    "formType": "TEXT",
+    "order": 1.03
+  },
+  "abbreviation": {
+    "gqlField": "abbreviation",
+    "goField": "Abbreviation",
+    "dbField": "abbreviation",
+    "label": "Short name",
+    "sublabel": "The abbreviation, acronym, or other common name used for the model.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.04
+  },
+  "archived": {
+    "gqlField": "archived",
+    "goField": "Archived",
+    "dbField": "archived",
+    "label": "Archived",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.05,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "What is the status of your Model Plan?",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "order": 1.06,
+    "options": {
+      "PLAN_DRAFT": "Draft Model Plan",
+      "PLAN_COMPLETE": "Model Plan complete",
+      "ICIP_COMPLETE": "ICIP complete",
+      "INTERNAL_CMMI_CLEARANCE": "In internal (CMMI) clearance",
+      "CMS_CLEARANCE": "In CMS clearance",
+      "HHS_CLEARANCE": "In HHS clearance",
+      "OMB_ASRF_CLEARANCE": "In OMB clearance",
+      "CLEARED": "Cleared",
+      "ANNOUNCED": "Announced",
+      "ACTIVE": "Active",
+      "ENDED": "Ended",
+      "PAUSED": "Paused",
+      "CANCELED": "Canceled"
+    }
+  }
+}

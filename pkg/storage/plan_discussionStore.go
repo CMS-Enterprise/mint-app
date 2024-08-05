@@ -5,8 +5,7 @@ import (
 	_ "embed"
 	"errors"
 	"fmt"
-
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"time"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -14,6 +13,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
@@ -35,6 +35,8 @@ var getUserRoleSQL string
 
 //go:embed SQL/plan_discussion/get_by_model_plan_id_LOADER.sql
 var planDiscussionGetByModelPlanIDLoaderSQL string
+
+//TODO: Migrate all these queries to the sql_queries package
 
 // DiscussionReplyGetByDiscussionIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) DiscussionReplyGetByDiscussionIDLOADER(
@@ -234,6 +236,21 @@ func (s *Store) PlanDiscussionByID(_ *zap.Logger, id uuid.UUID) (*models.PlanDis
 	}
 
 	return discussion, nil
+}
+
+// PlanDiscussionByID retrieves the plan discussion for a given id, and also returns the number of replies the discussion has
+func PlanDiscussionByIDWithNumberOfReplies(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID, timeToCheck time.Time) (*models.PlanDiscussionWithNumberOfReplies, error) {
+	args := map[string]interface{}{
+		"id":            id,
+		"time_to_check": timeToCheck,
+	}
+
+	discussionWithNumberOfReplies, procError := sqlutils.GetProcedure[models.PlanDiscussionWithNumberOfReplies](np, sqlqueries.PlanDiscussion.GetWithNumberOfRepliesAtTimeByID, args)
+	if procError != nil {
+		return nil, fmt.Errorf("issue returning PlanDiscussion With Number of Replies object: %w", procError)
+	}
+	return discussionWithNumberOfReplies, nil
+
 }
 
 // DiscussionReplyDelete deletes the discussion reply for a given id

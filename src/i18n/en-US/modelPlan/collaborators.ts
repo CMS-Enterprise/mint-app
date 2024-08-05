@@ -1,21 +1,39 @@
 import { TranslationCollaborators } from 'types/translation';
 
+import {
+  TableName,
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
+
 export const collaborators: TranslationCollaborators = {
+  userID: {
+    gqlField: 'userID',
+    goField: 'UserID',
+    dbField: 'user_id',
+    label: 'User ID',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.TEXT,
+    order: 1.01,
+    tableReference: TableName.USER_ACCOUNT
+  },
   username: {
     gqlField: 'username',
     goField: 'Username',
-    dbField: 'username',
+    dbField: 'user_account.username',
     label: 'Team member name',
-    dataType: 'string',
-    formType: 'select'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.SELECT,
+    order: 1.02
   },
   teamRoles: {
     gqlField: 'teamRoles',
     goField: 'TeamRoles',
     dbField: 'team_roles',
     label: 'Team member role(s)',
-    dataType: 'enum',
-    formType: 'select',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    order: 1.03,
     options: {
       CM_FFS_COUNTERPART: 'CM FFS counterpart',
       COR: `Contracting Officer's Representative (COR)`,

@@ -1,0 +1,43 @@
+{
+  "userID": {
+    "gqlField": "userID",
+    "goField": "UserID",
+    "dbField": "user_id",
+    "label": "User ID",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 1.01,
+    "tableReference": "user_account"
+  },
+  "username": {
+    "gqlField": "username",
+    "goField": "Username",
+    "dbField": "user_account.username",
+    "label": "Team member name",
+    "dataType": "STRING",
+    "formType": "SELECT",
+    "order": 1.02
+  },
+  "teamRoles": {
+    "gqlField": "teamRoles",
+    "goField": "TeamRoles",
+    "dbField": "team_roles",
+    "label": "Team member role(s)",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "order": 1.03,
+    "options": {
+      "CM_FFS_COUNTERPART": "CM FFS counterpart",
+      "COR": "Contracting Officer's Representative (COR)",
+      "EVALUATION": "Evaluation",
+      "IT_LEAD": "IT Lead",
+      "LEADERSHIP": "Leadership",
+      "LEARNING": "Learning",
+      "MODEL_LEAD": "Model Lead",
+      "MODEL_TEAM": "Model Team",
+      "OACT": "Office of the Actuary (OACT)",
+      "PAYMENT": "Payment",
+      "QUALITY": "Quality"
+    }
+  }
+}

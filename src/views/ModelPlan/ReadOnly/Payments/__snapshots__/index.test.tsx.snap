@@ -689,6 +689,102 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           data-testid="grid"
         >
           <div
+            class="read-only-section read-only-section--will-there-be-payment-adjustments--positive-or-negative--applied margin-bottom-3"
+          >
+            <div
+              class="read-only-section--question"
+            >
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Will there be payment adjustments (positive or negative) applied?
+                <span
+                  class="text-normal line-height-sans-2 margin-left-1 position-relative"
+                >
+                  <span
+                    class="usa-tooltip top-2px"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-550000"
+                      class="usa-tooltip__trigger mint-no-print"
+                      data-testid="triggerElement"
+                      position="right"
+                      tabindex="0"
+                      title=""
+                      wrapperclasses="top-2px"
+                    >
+                      <svg
+                        class="usa-icon text-base-light"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-550000"
+                      role="tooltip"
+                      title="Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments."
+                    >
+                      Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </div>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            >
+              Yes
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <div
+              class="read-only-section--question"
+            >
+              <span
+                class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </span>
+            </div>
+            <div
+              class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            >
+              Payment adjustments note
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+      >
+        <div
+          class="desktop:grid-col-12"
+          data-testid="grid"
+        >
+          <div
             class="read-only-section read-only-section--are-you-anticipating-creating-dependencies-between-services margin-bottom-3"
           >
             <div
@@ -794,6 +890,48 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
                 class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
               >
                 Will any additional data need to be collected for claims?
+                <span
+                  class="text-normal line-height-sans-2 margin-left-1 position-relative"
+                >
+                  <span
+                    class="usa-tooltip top-2px"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-550000"
+                      class="usa-tooltip__trigger mint-no-print"
+                      data-testid="triggerElement"
+                      position="right"
+                      tabindex="0"
+                      title=""
+                      wrapperclasses="top-2px"
+                    >
+                      <svg
+                        class="usa-icon text-base-light"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-550000"
+                      role="tooltip"
+                      title="If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)"
+                    >
+                      If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)
+                    </span>
+                  </span>
+                </span>
               </span>
             </div>
             <div
@@ -959,11 +1097,11 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           aria-controls="cost-sharing-questions"
           aria-expanded="false"
           class="usa-button usa-button--unstyled mint-no-print"
-          data-testid="collapsable-link"
+          data-testid="cost-sharing-questions"
           type="button"
         >
           <svg
-            class="usa-icon top-05"
+            class="usa-icon top-05 margin-right-05"
             focusable="false"
             height="1em"
             role="img"
@@ -1049,11 +1187,11 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
           aria-controls="cost-sharing-questions"
           aria-expanded="false"
           class="usa-button usa-button--unstyled mint-no-print"
-          data-testid="collapsable-link"
+          data-testid="cost-sharing-questions"
           type="button"
         >
           <svg
-            class="usa-icon top-05"
+            class="usa-icon top-05 margin-right-05"
             focusable="false"
             height="1em"
             role="img"
@@ -1617,48 +1755,6 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               How frequently do you anticipate making demands/recoupments?
-              <span
-                class="text-normal line-height-sans-2 margin-left-1 position-relative"
-              >
-                <span
-                  class="usa-tooltip top-2px"
-                  data-testid="tooltipWrapper"
-                >
-                  <div
-                    aria-describedby="tooltip-550000"
-                    class="usa-tooltip__trigger mint-no-print"
-                    data-testid="triggerElement"
-                    position="right"
-                    tabindex="0"
-                    title=""
-                    wrapperclasses="top-2px"
-                  >
-                    <svg
-                      class="usa-icon text-base-light"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                      />
-                    </svg>
-                  </div>
-                  <span
-                    aria-hidden="true"
-                    class="usa-tooltip__body"
-                    data-testid="tooltipBody"
-                    id="tooltip-550000"
-                    role="tooltip"
-                    title="Note: If you are unsure of an approximate date, please select the first day of the approximate month."
-                  >
-                    Note: If you are unsure of an approximate date, please select the first day of the approximate month.
-                  </span>
-                </span>
-              </span>
             </span>
           </div>
           <ul
@@ -1724,6 +1820,48 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
               class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
             >
               When will payments start?
+              <span
+                class="text-normal line-height-sans-2 margin-left-1 position-relative"
+              >
+                <span
+                  class="usa-tooltip top-2px"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-550000"
+                    class="usa-tooltip__trigger mint-no-print"
+                    data-testid="triggerElement"
+                    position="right"
+                    tabindex="0"
+                    title=""
+                    wrapperclasses="top-2px"
+                  >
+                    <svg
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-550000"
+                    role="tooltip"
+                    title="Note: If you are unsure of an approximate date, please select the first day of the approximate month."
+                  >
+                    Note: If you are unsure of an approximate date, please select the first day of the approximate month.
+                  </span>
+                </span>
+              </span>
             </span>
           </div>
           <div

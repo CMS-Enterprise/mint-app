@@ -148,7 +148,7 @@ const NavigationBar = ({
     <nav
       aria-label={t('header:navigation')}
       data-testid="navigation-bar"
-      className={className}
+      className={classNames(className, 'z-400')}
     >
       <GridContainer>
         <PrimaryNav

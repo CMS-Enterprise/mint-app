@@ -7,6 +7,7 @@ import {
   GetModelPlanQuery,
   useArchiveModelPlanMutation
 } from 'gql/gen/graphql';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
@@ -16,6 +17,7 @@ import { Avatar } from 'components/shared/Avatar';
 import ShareExportModal from 'components/ShareExport';
 import useMessage from 'hooks/useMessage';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
+import RecentChanges from 'views/ModelPlan/ChangeHistory/components/RecentChanges';
 
 import { StatusMessageType } from '../..';
 
@@ -37,6 +39,8 @@ const TaskListSideNav = ({
 
   const { t } = useTranslation('modelPlanTaskList');
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
+
+  const flags = useFlags();
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
@@ -159,7 +163,7 @@ const TaskListSideNav = ({
           {t('sideNav.remove')}
         </Button>
 
-        <div className="margin-top-4 margin-bottom-7">
+        <div className="margin-top-4 margin-bottom-6">
           <h4 className="margin-bottom-1">{t('sideNav.relatedContent')}</h4>
           <Button
             type="button"
@@ -187,6 +191,8 @@ const TaskListSideNav = ({
             </Trans>
           </Button>
         </div>
+
+        {flags.changeHistoryEnabled && <RecentChanges modelID={modelID} />}
 
         <div>
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>

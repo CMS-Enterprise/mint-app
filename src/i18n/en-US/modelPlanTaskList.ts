@@ -154,7 +154,12 @@ const modelPlanTaskList = {
     payment: 'payment'
   },
   lockErrorHeading: 'Sorry, an has error occured.',
-  lockErrorInfo: 'Please return to the task list and try again.'
+  lockErrorInfo: 'Please return to the task list and try again.',
+  statusUpdateSuccess:
+    'You have successfully updated the status to {{status}}.',
+  statusUpdateError:
+    'There was an error updating the status to {{status}}. Please try again.',
+  statusUpdateErrorExists: 'The status has already been updated to {{status}}.'
 };
 
 export default modelPlanTaskList;

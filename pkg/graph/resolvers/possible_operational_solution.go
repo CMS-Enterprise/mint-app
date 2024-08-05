@@ -1,10 +1,13 @@
 package resolvers
 
 import (
+	"context"
+
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 )
 
 // PossibleOperationalSolutionCollectionGetByNeedType returns all possible operational Solutions linked to Operational Need Type
@@ -20,4 +23,9 @@ func PossibleOperationalSolutionCollectionGetAll(logger *zap.Logger, store *stor
 // PossibleOperationalSolutionGetByID returns a possible operational Solutions according to it's id
 func PossibleOperationalSolutionGetByID(logger *zap.Logger, store *storage.Store, id int) (*models.PossibleOperationalSolution, error) {
 	return store.PossibleOperationalSolutionGetByID(logger, id)
+}
+
+// PossibleOperationalSolutionGetByKey returns a possible operational Solutions according to it's operational solution key
+func PossibleOperationalSolutionGetByKey(ctx context.Context, key models.OperationalSolutionKey) (*models.PossibleOperationalSolution, error) {
+	return loaders.PossibleOperationalSolutionByKey(ctx, key)
 }

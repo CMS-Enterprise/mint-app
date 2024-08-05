@@ -150,7 +150,7 @@ const DailyDigest = ({
                 )}
               </ul>
               <UswdsReactLink
-                to={`/models/${modelPlanID}/read-only`}
+                to={`/models/${modelPlanID}/change-history`}
                 className="display width-fit-content"
               >
                 <div className="display-flex flex-align-center">

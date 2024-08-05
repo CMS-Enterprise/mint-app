@@ -1,0 +1,47 @@
+"""
+Represents plan beneficiaries translation data
+"""
+
+type PlanBeneficiariesTranslation {
+  #Page 1
+  beneficiaries: TranslationFieldWithOptions! @goTag(key: "db", value: "beneficiaries")
+  beneficiariesOther: TranslationField! @goTag(key: "db", value: "beneficiaries_other")
+  beneficiariesNote: TranslationField! @goTag(key: "db", value: "beneficiaries_note")
+  diseaseSpecificGroup: TranslationField! @goTag(key: "db", value: "disease_specific_group")
+  treatDualElligibleDifferent: TranslationFieldWithOptions! @goTag(key: "db", value: "treat_dual_elligible_different")
+  treatDualElligibleDifferentHow: TranslationField! @goTag(key: "db", value: "treat_dual_elligible_different_how")
+  treatDualElligibleDifferentNote: TranslationField! @goTag(key: "db", value: "treat_dual_elligible_different_note")
+  excludeCertainCharacteristics: TranslationFieldWithOptions! @goTag(key: "db", value: "exclude_certain_characteristics")
+  excludeCertainCharacteristicsCriteria: TranslationField! @goTag(key: "db", value: "exclude_certain_characteristics_criteria")
+  excludeCertainCharacteristicsNote: TranslationField! @goTag(key: "db", value: "exclude_certain_characteristics_note")
+
+  #Page 2
+  numberPeopleImpacted: TranslationField! @goTag(key: "db", value: "number_people_impacted")
+  estimateConfidence: TranslationFieldWithOptions! @goTag(key: "db", value: "estimate_confidence")
+  confidenceNote: TranslationField! @goTag(key: "db", value: "confidence_note")
+  beneficiarySelectionMethod: TranslationFieldWithOptions! @goTag(key: "db", value: "beneficiary_selection_method")
+  beneficiarySelectionOther: TranslationField! @goTag(key: "db", value: "beneficiary_selection_other")
+  beneficiarySelectionNote: TranslationField! @goTag(key: "db", value: "beneficiary_selection_note")
+
+  #Page 3
+  beneficiarySelectionFrequency: TranslationFieldWithOptions! @goTag(key: "db", value: "beneficiary_selection_frequency")
+  beneficiarySelectionFrequencyContinually: TranslationField! @goTag(key: "db", value: "beneficiary_selection_frequency_continually")
+  beneficiarySelectionFrequencyOther: TranslationField! @goTag(key: "db", value: "beneficiary_selection_frequency_other")
+  beneficiarySelectionFrequencyNote: TranslationField! @goTag(key: "db", value: "beneficiary_selection_frequency_note")
+  beneficiaryRemovalFrequency: TranslationFieldWithOptions! @goTag(key: "db", value: "beneficiary_removal_frequency")
+  beneficiaryRemovalFrequencyContinually: TranslationField! @goTag(key: "db", value: "beneficiary_removal_frequency_continually")
+  beneficiaryRemovalFrequencyOther: TranslationField! @goTag(key: "db", value: "beneficiary_removal_frequency_other")
+  beneficiaryRemovalFrequencyNote: TranslationField! @goTag(key: "db", value: "beneficiary_removal_frequency_note")
+  beneficiaryOverlap: TranslationFieldWithOptions! @goTag(key: "db", value: "beneficiary_overlap")
+  beneficiaryOverlapNote: TranslationField! @goTag(key: "db", value: "beneficiary_overlap_note")
+  precedenceRules: TranslationFieldWithOptions! @goTag(key: "db", value: "precedence_rules")
+  precedenceRulesYes: TranslationField! @goTag(key: "db", value: "precedence_rules_yes")
+  precedenceRulesNo: TranslationField! @goTag(key: "db", value: "precedence_rules_no")
+  precedenceRulesNote: TranslationField! @goTag(key: "db", value: "precedence_rules_note")
+
+  readyForReviewBy: TranslationField! @goTag(key: "db", value: "ready_for_review_by")
+  readyForReviewDts: TranslationField! @goTag(key: "db", value: "ready_for_review_dts")
+  readyForClearanceBy: TranslationField! @goTag(key: "db", value: "ready_for_clearance_by")
+  readyForClearanceDts: TranslationField! @goTag(key: "db", value: "ready_for_clearance_dts")
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+}

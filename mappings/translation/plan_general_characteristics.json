@@ -1,0 +1,1754 @@
+{
+  "isNewModel": {
+    "gqlField": "isNewModel",
+    "goField": "IsNewModel",
+    "dbField": "is_new_model",
+    "label": "Is this a new track of an existing model or a new model?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.01,
+    "options": {
+      "true": "New model",
+      "false": "New track of an existing model"
+    },
+    "childRelation": {
+      "false": [
+        {
+          "gqlField": "existingModel",
+          "goField": "ExistingModel",
+          "dbField": "existing_model",
+          "label": "Which existing model?",
+          "sublabel": "Start typing the name of the model",
+          "exportLabel": "Which model is this a new track of?",
+          "dataType": "STRING",
+          "formType": "SELECT",
+          "order": 1.04
+        }
+      ]
+    }
+  },
+  "existingModelID": {
+    "gqlField": "existingModelID",
+    "goField": "ExistingModelID",
+    "dbField": "existing_model_id",
+    "label": "Which existing model is this a new track of?",
+    "dataType": "NUMBER",
+    "formType": "TEXT",
+    "order": 1.02,
+    "tableReference": "existing_model",
+    "hideFromReadonly": true
+  },
+  "currentModelPlanID": {
+    "gqlField": "currentModelPlanID",
+    "goField": "CurrentModelPlanID",
+    "dbField": "current_model_plan_id",
+    "label": "Which model is this a new track of?",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 1.03,
+    "tableReference": "model_plan",
+    "hideFromReadonly": true
+  },
+  "existingModel": {
+    "gqlField": "existingModel",
+    "goField": "ExistingModel",
+    "dbField": "existing_model",
+    "label": "Which existing model?",
+    "sublabel": "Start typing the name of the model",
+    "exportLabel": "Which model is this a new track of?",
+    "dataType": "STRING",
+    "formType": "SELECT",
+    "order": 1.04,
+    "parentRelation": {
+      "gqlField": "isNewModel",
+      "goField": "IsNewModel",
+      "dbField": "is_new_model",
+      "label": "Is this a new track of an existing model or a new model?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 1.01,
+      "options": {
+        "true": "New model",
+        "false": "New track of an existing model"
+      }
+    }
+  },
+  "resemblesExistingModel": {
+    "gqlField": "resemblesExistingModel",
+    "goField": "ResemblesExistingModel",
+    "dbField": "resembles_existing_model",
+    "label": "Does your proposed track/model resemble any existing models?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
+    "order": 1.05,
+    "options": {
+      "YES": "Yes",
+      "NO": "No",
+      "OTHER": "Other"
+    },
+    "childRelation": {
+      "YES": [
+        {
+          "gqlField": "resemblesExistingModelWhyHow",
+          "goField": "ResemblesExistingModelWhyHow",
+          "dbField": "resembles_existing_model_why_how",
+          "label": "Explain why and how the model made this decision.",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 1.06
+        },
+        {
+          "gqlField": "resemblesExistingModelWhich",
+          "goField": "ResemblesExistingModelWhich",
+          "dbField": "resembles_existing_model_which",
+          "label": "Which existing models does your proposed track/model most closely resemble?",
+          "sublabel": "Start typing the name of the model",
+          "multiSelectLabel": "Selected models",
+          "dataType": "STRING",
+          "formType": "MULTISELECT",
+          "order": 1.07,
+          "isArray": true,
+          "options": {
+            "Other": "Other"
+          }
+        },
+        {
+          "gqlField": "resemblesExistingModelHow",
+          "goField": "ResemblesExistingModelHow",
+          "dbField": "resembles_existing_model_how",
+          "label": "In what way does the new model resemble the selected model(s)?",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 1.08
+        }
+      ],
+      "NO": [
+        {
+          "gqlField": "resemblesExistingModelWhyHow",
+          "goField": "ResemblesExistingModelWhyHow",
+          "dbField": "resembles_existing_model_why_how",
+          "label": "Explain why and how the model made this decision.",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 1.06
+        }
+      ]
+    }
+  },
+  "resemblesExistingModelWhyHow": {
+    "gqlField": "resemblesExistingModelWhyHow",
+    "goField": "ResemblesExistingModelWhyHow",
+    "dbField": "resembles_existing_model_why_how",
+    "label": "Explain why and how the model made this decision.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.06
+  },
+  "resemblesExistingModelWhich": {
+    "gqlField": "resemblesExistingModelWhich",
+    "goField": "ResemblesExistingModelWhich",
+    "dbField": "resembles_existing_model_which",
+    "label": "Which existing models does your proposed track/model most closely resemble?",
+    "sublabel": "Start typing the name of the model",
+    "multiSelectLabel": "Selected models",
+    "dataType": "STRING",
+    "formType": "MULTISELECT",
+    "order": 1.07,
+    "isArray": true,
+    "parentRelation": {
+      "gqlField": "resemblesExistingModel",
+      "goField": "ResemblesExistingModel",
+      "dbField": "resembles_existing_model",
+      "label": "Does your proposed track/model resemble any existing models?",
+      "dataType": "ENUM",
+      "formType": "RADIO",
+      "order": 1.05,
+      "options": {
+        "YES": "Yes",
+        "NO": "No",
+        "OTHER": "Other"
+      }
+    },
+    "options": {
+      "Other": "Other"
+    }
+  },
+  "resemblesExistingModelHow": {
+    "gqlField": "resemblesExistingModelHow",
+    "goField": "ResemblesExistingModelHow",
+    "dbField": "resembles_existing_model_how",
+    "label": "In what way does the new model resemble the selected model(s)?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.08,
+    "parentRelation": {
+      "gqlField": "resemblesExistingModel",
+      "goField": "ResemblesExistingModel",
+      "dbField": "resembles_existing_model",
+      "label": "Does your proposed track/model resemble any existing models?",
+      "dataType": "ENUM",
+      "formType": "RADIO",
+      "order": 1.05,
+      "options": {
+        "YES": "Yes",
+        "NO": "No",
+        "OTHER": "Other"
+      }
+    }
+  },
+  "resemblesExistingModelOtherSpecify": {
+    "gqlField": "resemblesExistingModelOtherSpecify",
+    "goField": "ResemblesExistingModelOtherSpecify",
+    "dbField": "resembles_existing_model_other_specify",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.09,
+    "isOtherType": true,
+    "otherParentField": "resembles_existing_model"
+  },
+  "resemblesExistingModelOtherOption": {
+    "gqlField": "resemblesExistingModelOtherOption",
+    "goField": "ResemblesExistingModelOtherOption",
+    "dbField": "resembles_existing_model_other_option",
+    "label": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.1,
+    "isOtherType": true,
+    "otherParentField": "resembles_existing_model_which"
+  },
+  "resemblesExistingModelNote": {
+    "gqlField": "resemblesExistingModelNote",
+    "goField": "ResemblesExistingModelNote",
+    "dbField": "resembles_existing_model_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "resembles_existing_model",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.11
+  },
+  "participationInModelPrecondition": {
+    "gqlField": "participationInModelPrecondition",
+    "goField": "ParticipationInModelPrecondition",
+    "dbField": "participation_in_model_precondition",
+    "label": "Is participation in another model a precondition for participation in this model?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
+    "order": 1.12,
+    "options": {
+      "YES": "Yes",
+      "NO": "No",
+      "OTHER": "Other"
+    },
+    "childRelation": {
+      "YES": [
+        {
+          "gqlField": "participationInModelPreconditionWhich",
+          "goField": "ParticipationInModelPreconditionWhich",
+          "dbField": "participation_in_model_precondition_which",
+          "label": "Which models?",
+          "sublabel": "Start typing the name of the model",
+          "multiSelectLabel": "Selected models",
+          "dataType": "STRING",
+          "formType": "MULTISELECT",
+          "order": 1.14,
+          "isArray": true,
+          "options": {
+            "Other": "Other"
+          }
+        },
+        {
+          "gqlField": "participationInModelPreconditionWhyHow",
+          "goField": "ParticipationInModelPreconditionWhyHow",
+          "dbField": "participation_in_model_precondition_why_how",
+          "label": "Explain any details including if it is just part of the model.",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 1.16
+        }
+      ]
+    }
+  },
+  "participationInModelPreconditionOtherSpecify": {
+    "gqlField": "participationInModelPreconditionOtherSpecify",
+    "goField": "ParticipationInModelPreconditionOtherSpecify",
+    "dbField": "participation_in_model_precondition_other_specify",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.13,
+    "isOtherType": true,
+    "otherParentField": "participation_in_model_precondition"
+  },
+  "participationInModelPreconditionWhich": {
+    "gqlField": "participationInModelPreconditionWhich",
+    "goField": "ParticipationInModelPreconditionWhich",
+    "dbField": "participation_in_model_precondition_which",
+    "label": "Which models?",
+    "sublabel": "Start typing the name of the model",
+    "multiSelectLabel": "Selected models",
+    "dataType": "STRING",
+    "formType": "MULTISELECT",
+    "order": 1.14,
+    "isArray": true,
+    "parentRelation": {
+      "gqlField": "participationInModelPrecondition",
+      "goField": "ParticipationInModelPrecondition",
+      "dbField": "participation_in_model_precondition",
+      "label": "Is participation in another model a precondition for participation in this model?",
+      "dataType": "ENUM",
+      "formType": "RADIO",
+      "order": 1.12,
+      "options": {
+        "YES": "Yes",
+        "NO": "No",
+        "OTHER": "Other"
+      }
+    },
+    "options": {
+      "Other": "Other"
+    }
+  },
+  "participationInModelPreconditionOtherOption": {
+    "gqlField": "participationInModelPreconditionOtherOption",
+    "goField": "ParticipationInModelPreconditionOtherOption",
+    "dbField": "participation_in_model_precondition_other_option",
+    "label": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.15,
+    "isOtherType": true,
+    "parentReferencesLabel": "Which models require participation as a precondition for participation in this model?"
+  },
+  "participationInModelPreconditionWhyHow": {
+    "gqlField": "participationInModelPreconditionWhyHow",
+    "goField": "ParticipationInModelPreconditionWhyHow",
+    "dbField": "participation_in_model_precondition_why_how",
+    "label": "Explain any details including if it is just part of the model.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.16,
+    "parentRelation": {
+      "gqlField": "participationInModelPrecondition",
+      "goField": "ParticipationInModelPrecondition",
+      "dbField": "participation_in_model_precondition",
+      "label": "Is participation in another model a precondition for participation in this model?",
+      "dataType": "ENUM",
+      "formType": "RADIO",
+      "order": 1.12,
+      "options": {
+        "YES": "Yes",
+        "NO": "No",
+        "OTHER": "Other"
+      }
+    }
+  },
+  "participationInModelPreconditionNote": {
+    "gqlField": "participationInModelPreconditionNote",
+    "goField": "ParticipationInModelPreconditionNote",
+    "dbField": "participation_in_model_precondition_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participation_in_model_precondition",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.17
+  },
+  "hasComponentsOrTracks": {
+    "gqlField": "hasComponentsOrTracks",
+    "goField": "HasComponentsOrTracks",
+    "dbField": "has_components_or_tracks",
+    "label": "Are there different components/tracks?",
+    "readonlyLabel": "Are there different components/tracks? If so, how do the tracks differ?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.18,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "hasComponentsOrTracksDiffer": {
+    "gqlField": "hasComponentsOrTracksDiffer",
+    "goField": "HasComponentsOrTracksDiffer",
+    "dbField": "has_components_or_tracks_differ",
+    "label": "How do the tracks differ?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.19,
+    "isOtherType": true,
+    "otherParentField": "has_components_or_tracks"
+  },
+  "hasComponentsOrTracksNote": {
+    "gqlField": "hasComponentsOrTracksNote",
+    "goField": "HasComponentsOrTracksNote",
+    "dbField": "has_components_or_tracks_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "has_components_or_tracks",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.2
+  },
+  "agencyOrStateHelp": {
+    "gqlField": "agencyOrStateHelp",
+    "goField": "AgencyOrStateHelp",
+    "dbField": "agency_or_state_help",
+    "label": "Will another Agency or State help design/operate the model? Select all that apply.",
+    "readonlyLabel": "Will another Agency or State help design/operate the model?",
+    "exportLabel": "Will another Agency or State help design/operate the model?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 2.01,
+    "options": {
+      "YES_STATE": "Yes, we will partner with states",
+      "YES_AGENCY_IDEAS": "Yes, we will get ideas from another agency",
+      "YES_AGENCY_IAA": "Yes, we will get support from another agency through Inter Agency Agreement (IAA)",
+      "NO": "No",
+      "OTHER": "Other"
+    }
+  },
+  "agencyOrStateHelpOther": {
+    "gqlField": "agencyOrStateHelpOther",
+    "goField": "AgencyOrStateHelpOther",
+    "dbField": "agency_or_state_help_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.02,
+    "isOtherType": true,
+    "otherParentField": "agency_or_state_help"
+  },
+  "agencyOrStateHelpNote": {
+    "gqlField": "agencyOrStateHelpNote",
+    "goField": "AgencyOrStateHelpNote",
+    "dbField": "agency_or_state_help_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "agency_or_state_help",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.03
+  },
+  "alternativePaymentModelTypes": {
+    "gqlField": "alternativePaymentModelTypes",
+    "goField": "AlternativePaymentModelTypes",
+    "dbField": "alternative_payment_model_types",
+    "label": "What type of Alternative Payment Model (APM) do you think the model could be?",
+    "sublabel": "In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.",
+    "questionTooltip": "In order to be considered by the Quality Payment Program (QPP), and to be MIPS or Advanced APM, you will need to collect TINs and NPIs for providers.",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 2.04,
+    "options": {
+      "ADVANCED": "Advanced APM",
+      "MIPS": "MIPS APM",
+      "REGULAR": "Regular APM",
+      "NOT_APM": "It is not an APM"
+    }
+  },
+  "alternativePaymentModelNote": {
+    "gqlField": "alternativePaymentModelNote",
+    "goField": "AlternativePaymentModelNote",
+    "dbField": "alternative_payment_model_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "alternative_payment_model_types",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.05
+  },
+  "keyCharacteristics": {
+    "gqlField": "keyCharacteristics",
+    "goField": "KeyCharacteristics",
+    "dbField": "key_characteristics",
+    "label": "What are the model key characteristics? Select all that apply.",
+    "readonlyLabel": "What are the model key characteristics?",
+    "exportLabel": "What are the model key characteristics?",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
+    "order": 2.06,
+    "multiSelectLabel": "Selected key characteristics",
+    "options": {
+      "EPISODE_BASED": "Episode-Based Model",
+      "MEDICAID_MODEL": "Medicaid Model",
+      "PART_C": "Medicare-Advantage (Part C) Model",
+      "MEDICARE_FFS_MODEL": "Medicare Fee-for-Service (FFS) Model",
+      "PART_D": "Medicare Prescription Drug (Part D) Model",
+      "PAYMENT": "Payment Model",
+      "POPULATION_BASED": "Population-based Model",
+      "PREVENTATIVE": "Preventative Model",
+      "SERVICE_DELIVERY": "Service Delivery Model",
+      "SHARED_SAVINGS": "Shared Savings Model",
+      "OTHER": "Other"
+    },
+    "childRelation": {
+      "PART_C": [
+        {
+          "gqlField": "collectPlanBids",
+          "goField": "CollectPlanBids",
+          "dbField": "collect_plan_bids",
+          "label": "Will you review and collect plan bids?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 2.09,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "managePartCDEnrollment",
+          "goField": "ManagePartCDEnrollment",
+          "dbField": "manage_part_c_d_enrollment",
+          "label": "Will you manage Part C/D enrollment?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 2.11,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "planContractUpdated",
+          "goField": "PlanContractUpdated",
+          "dbField": "plan_contract_updated",
+          "label": "Have you updated the plan’s contract?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 2.13,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        }
+      ],
+      "PART_D": [
+        {
+          "gqlField": "collectPlanBids",
+          "goField": "CollectPlanBids",
+          "dbField": "collect_plan_bids",
+          "label": "Will you review and collect plan bids?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 2.09,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "managePartCDEnrollment",
+          "goField": "ManagePartCDEnrollment",
+          "dbField": "manage_part_c_d_enrollment",
+          "label": "Will you manage Part C/D enrollment?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 2.11,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "planContractUpdated",
+          "goField": "PlanContractUpdated",
+          "dbField": "plan_contract_updated",
+          "label": "Have you updated the plan’s contract?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 2.13,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        }
+      ]
+    }
+  },
+  "keyCharacteristicsOther": {
+    "gqlField": "keyCharacteristicsOther",
+    "goField": "KeyCharacteristicsOther",
+    "dbField": "key_characteristics_other",
+    "label": "Please describe the other key characteristics",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 2.07,
+    "isOtherType": true
+  },
+  "keyCharacteristicsNote": {
+    "gqlField": "keyCharacteristicsNote",
+    "goField": "KeyCharacteristicsNote",
+    "dbField": "key_characteristics_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "key_characteristics",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.08
+  },
+  "collectPlanBids": {
+    "gqlField": "collectPlanBids",
+    "goField": "CollectPlanBids",
+    "dbField": "collect_plan_bids",
+    "label": "Will you review and collect plan bids?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 2.09,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "keyCharacteristics",
+      "goField": "KeyCharacteristics",
+      "dbField": "key_characteristics",
+      "label": "What are the model key characteristics? Select all that apply.",
+      "readonlyLabel": "What are the model key characteristics?",
+      "exportLabel": "What are the model key characteristics?",
+      "dataType": "ENUM",
+      "formType": "MULTISELECT",
+      "order": 2.06,
+      "multiSelectLabel": "Selected key characteristics",
+      "options": {
+        "EPISODE_BASED": "Episode-Based Model",
+        "MEDICAID_MODEL": "Medicaid Model",
+        "PART_C": "Medicare-Advantage (Part C) Model",
+        "MEDICARE_FFS_MODEL": "Medicare Fee-for-Service (FFS) Model",
+        "PART_D": "Medicare Prescription Drug (Part D) Model",
+        "PAYMENT": "Payment Model",
+        "POPULATION_BASED": "Population-based Model",
+        "PREVENTATIVE": "Preventative Model",
+        "SERVICE_DELIVERY": "Service Delivery Model",
+        "SHARED_SAVINGS": "Shared Savings Model",
+        "OTHER": "Other"
+      }
+    }
+  },
+  "collectPlanBidsNote": {
+    "gqlField": "collectPlanBidsNote",
+    "goField": "CollectPlanBidsNote",
+    "dbField": "collect_plan_bids_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "collect_plan_bids",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.1
+  },
+  "managePartCDEnrollment": {
+    "gqlField": "managePartCDEnrollment",
+    "goField": "ManagePartCDEnrollment",
+    "dbField": "manage_part_c_d_enrollment",
+    "label": "Will you manage Part C/D enrollment?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 2.11,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "keyCharacteristics",
+      "goField": "KeyCharacteristics",
+      "dbField": "key_characteristics",
+      "label": "What are the model key characteristics? Select all that apply.",
+      "readonlyLabel": "What are the model key characteristics?",
+      "exportLabel": "What are the model key characteristics?",
+      "dataType": "ENUM",
+      "formType": "MULTISELECT",
+      "order": 2.06,
+      "multiSelectLabel": "Selected key characteristics",
+      "options": {
+        "EPISODE_BASED": "Episode-Based Model",
+        "MEDICAID_MODEL": "Medicaid Model",
+        "PART_C": "Medicare-Advantage (Part C) Model",
+        "MEDICARE_FFS_MODEL": "Medicare Fee-for-Service (FFS) Model",
+        "PART_D": "Medicare Prescription Drug (Part D) Model",
+        "PAYMENT": "Payment Model",
+        "POPULATION_BASED": "Population-based Model",
+        "PREVENTATIVE": "Preventative Model",
+        "SERVICE_DELIVERY": "Service Delivery Model",
+        "SHARED_SAVINGS": "Shared Savings Model",
+        "OTHER": "Other"
+      }
+    }
+  },
+  "managePartCDEnrollmentNote": {
+    "gqlField": "managePartCDEnrollmentNote",
+    "goField": "ManagePartCDEnrollmentNote",
+    "dbField": "manage_part_c_d_enrollment_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "manage_part_c_d_enrollment",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.12
+  },
+  "planContractUpdated": {
+    "gqlField": "planContractUpdated",
+    "goField": "PlanContractUpdated",
+    "dbField": "plan_contract_updated",
+    "label": "Have you updated the plan’s contract?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 2.13,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "keyCharacteristics",
+      "goField": "KeyCharacteristics",
+      "dbField": "key_characteristics",
+      "label": "What are the model key characteristics? Select all that apply.",
+      "readonlyLabel": "What are the model key characteristics?",
+      "exportLabel": "What are the model key characteristics?",
+      "dataType": "ENUM",
+      "formType": "MULTISELECT",
+      "order": 2.06,
+      "multiSelectLabel": "Selected key characteristics",
+      "options": {
+        "EPISODE_BASED": "Episode-Based Model",
+        "MEDICAID_MODEL": "Medicaid Model",
+        "PART_C": "Medicare-Advantage (Part C) Model",
+        "MEDICARE_FFS_MODEL": "Medicare Fee-for-Service (FFS) Model",
+        "PART_D": "Medicare Prescription Drug (Part D) Model",
+        "PAYMENT": "Payment Model",
+        "POPULATION_BASED": "Population-based Model",
+        "PREVENTATIVE": "Preventative Model",
+        "SERVICE_DELIVERY": "Service Delivery Model",
+        "SHARED_SAVINGS": "Shared Savings Model",
+        "OTHER": "Other"
+      }
+    }
+  },
+  "planContractUpdatedNote": {
+    "gqlField": "planContractUpdatedNote",
+    "goField": "PlanContractUpdatedNote",
+    "dbField": "plan_contract_updated_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "plan_contract_updated",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.14
+  },
+  "careCoordinationInvolved": {
+    "gqlField": "careCoordinationInvolved",
+    "goField": "CareCoordinationInvolved",
+    "dbField": "care_coordination_involved",
+    "label": "Is care coordination involved?",
+    "readonlyLabel": "Is care coordination involved? How so?",
+    "sublabel": "Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; if a certain service or diagnosis exists in history, then Service A cannot be paid.",
+    "questionTooltip": "Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; if a certain service or diagnosis exists in history, then Service A cannot be paid.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.01,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "careCoordinationInvolvedDescription": {
+    "gqlField": "careCoordinationInvolvedDescription",
+    "goField": "CareCoordinationInvolvedDescription",
+    "dbField": "care_coordination_involved_description",
+    "label": "How so?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.02,
+    "isOtherType": true,
+    "otherParentField": "care_coordination_involved"
+  },
+  "careCoordinationInvolvedNote": {
+    "gqlField": "careCoordinationInvolvedNote",
+    "goField": "CareCoordinationInvolvedNote",
+    "dbField": "care_coordination_involved_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "care_coordination_involved",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.03
+  },
+  "additionalServicesInvolved": {
+    "gqlField": "additionalServicesInvolved",
+    "goField": "AdditionalServicesInvolved",
+    "dbField": "additional_services_involved",
+    "label": "Are additional services involved?",
+    "readonlyLabel": "Are additional services involved? How so?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.04,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "additionalServicesInvolvedDescription": {
+    "gqlField": "additionalServicesInvolvedDescription",
+    "goField": "AdditionalServicesInvolvedDescription",
+    "dbField": "additional_services_involved_description",
+    "label": "How so?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.05,
+    "isOtherType": true,
+    "otherParentField": "additional_services_involved"
+  },
+  "additionalServicesInvolvedNote": {
+    "gqlField": "additionalServicesInvolvedNote",
+    "goField": "AdditionalServicesInvolvedNote",
+    "dbField": "additional_services_involved_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "additional_services_involved",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.06
+  },
+  "communityPartnersInvolved": {
+    "gqlField": "communityPartnersInvolved",
+    "goField": "CommunityPartnersInvolved",
+    "dbField": "community_partners_involved",
+    "label": "Are community partners involved?",
+    "readonlyLabel": "Are community partners involved? How so?",
+    "sublabel": "Community partners are typically not Medicare enrolled and are organizations in the participant's community. They may be involved with providing care, care coordination, or social services to beneficiaries or provide leadership, design, or implementation at the participant level. Example: Community-based organizations (CBO) like YMCA or United Way",
+    "questionTooltip": "Community partners are typically not Medicare enrolled and are organizations in the participant's community. They may be involved with providing care, care coordination, or social services to beneficiaries or provide leadership, design, or implementation at the participant level. Example: Community-based organizations (CBO) like YMCA or United Way",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.07,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "communityPartnersInvolvedDescription": {
+    "gqlField": "communityPartnersInvolvedDescription",
+    "goField": "CommunityPartnersInvolvedDescription",
+    "dbField": "community_partners_involved_description",
+    "label": "How so?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.08,
+    "isOtherType": true,
+    "otherParentField": "community_partners_involved"
+  },
+  "communityPartnersInvolvedNote": {
+    "gqlField": "communityPartnersInvolvedNote",
+    "goField": "CommunityPartnersInvolvedNote",
+    "dbField": "community_partners_involved_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "community_partners_involved",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.09
+  },
+  "geographiesTargeted": {
+    "gqlField": "geographiesTargeted",
+    "goField": "GeographiesTargeted",
+    "dbField": "geographies_targeted",
+    "label": "Is the model targeted at specific geographies?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.01,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "geographiesTargetedTypes",
+          "goField": "GeographiesTargetedTypes",
+          "dbField": "geographies_targeted_types",
+          "label": "Geography type is",
+          "dataType": "ENUM",
+          "formType": "CHECKBOX",
+          "order": 4.02,
+          "options": {
+            "STATE": "States and territories",
+            "REGION": "Region",
+            "OTHER": "Other"
+          },
+          "childRelation": {
+            "STATE": [
+              {
+                "gqlField": "geographiesStatesAndTerritories",
+                "goField": "GeographiesStatesAndTerritories",
+                "dbField": "geographies_states_and_territories",
+                "label": "Which states and territories?",
+                "multiSelectLabel": "States and territories",
+                "dataType": "ENUM",
+                "formType": "MULTISELECT",
+                "order": 4.03,
+                "isOtherType": true,
+                "otherParentField": "geographiesTargetedTypes",
+                "options": {
+                  "AL": "AL - Alabama",
+                  "AK": "AK - Alaska",
+                  "AZ": "AZ - Arizona",
+                  "AR": "AR - Arkansas",
+                  "CA": "CA - California",
+                  "CO": "CO - Colorado",
+                  "CT": "CT - Connecticut",
+                  "DE": "DE - Delaware",
+                  "DC": "DC - District of Columbia",
+                  "FL": "FL - Florida",
+                  "GA": "GA - Georgia",
+                  "HI": "HI - Hawaii",
+                  "ID": "ID - Idaho",
+                  "IL": "IL - Illinois",
+                  "IN": "IN - Indiana",
+                  "IA": "IA - Iowa",
+                  "KS": "KS - Kansas",
+                  "KY": "KY - Kentucky",
+                  "LA": "LA - Louisiana",
+                  "ME": "ME - Maine",
+                  "MD": "MD - Maryland",
+                  "MA": "MA - Massachusetts",
+                  "MI": "MI - Michigan",
+                  "MN": "MN - Minnesota",
+                  "MS": "MS - Mississippi",
+                  "MO": "MO - Missouri",
+                  "MT": "MT - Montana",
+                  "NE": "NE - Nebraska",
+                  "NV": "NV - Nevada",
+                  "NH": "NH - New Hampshire",
+                  "NJ": "NJ - New Jersey",
+                  "NM": "NM - New Mexico",
+                  "NY": "NY - New York",
+                  "NC": "NC - North Carolina",
+                  "ND": "ND - North Dakota",
+                  "OH": "OH - Ohio",
+                  "OK": "OK - Oklahoma",
+                  "OR": "OR - Oregon",
+                  "PA": "PA - Pennsylvania",
+                  "RI": "RI - Rhode Island",
+                  "SC": "SC - South Carolina",
+                  "SD": "SD - South Dakota",
+                  "TN": "TN - Tennessee",
+                  "TX": "TX - Texas",
+                  "UT": "UT - Utah",
+                  "VT": "VT - Vermont",
+                  "VA": "VA - Virginia",
+                  "WA": "WA - Washington",
+                  "WV": "WV - West Virginia",
+                  "WI": "WI - Wisconsin",
+                  "WY": "WY - Wyoming",
+                  "AS": "AS - American Samoa",
+                  "GU": "GU - Guam",
+                  "MP": "MP - Northern Mariana Islands",
+                  "PR": "PR - Puerto Rico",
+                  "UM": "UM - U.S. Minor Outlying Islands",
+                  "VI": "VI - U.S. Virgin Islands"
+                },
+                "readonlyOptions": {
+                  "AL": "Alabama",
+                  "AK": "Alaska",
+                  "AZ": "Arizona",
+                  "AR": "Arkansas",
+                  "CA": "California",
+                  "CO": "Colorado",
+                  "CT": "Connecticut",
+                  "DE": "Delaware",
+                  "DC": "District of Columbia",
+                  "FL": "Florida",
+                  "GA": "Georgia",
+                  "HI": "Hawaii",
+                  "ID": "Idaho",
+                  "IL": "Illinois",
+                  "IN": "Indiana",
+                  "IA": "Iowa",
+                  "KS": "Kansas",
+                  "KY": "Kentucky",
+                  "LA": "Louisiana",
+                  "ME": "Maine",
+                  "MD": "Maryland",
+                  "MA": "Massachusetts",
+                  "MI": "Michigan",
+                  "MN": "Minnesota",
+                  "MS": "Mississippi",
+                  "MO": "Missouri",
+                  "MT": "Montana",
+                  "NE": "Nebraska",
+                  "NV": "Nevada",
+                  "NH": "New Hampshire",
+                  "NJ": "New Jersey",
+                  "NM": "New Mexico",
+                  "NY": "New York",
+                  "NC": "North Carolina",
+                  "ND": "North Dakota",
+                  "OH": "Ohio",
+                  "OK": "Oklahoma",
+                  "OR": "Oregon",
+                  "PA": "Pennsylvania",
+                  "RI": "Rhode Island",
+                  "SC": "South Carolina",
+                  "SD": "South Dakota",
+                  "TN": "Tennessee",
+                  "TX": "Texas",
+                  "UT": "Utah",
+                  "VT": "Vermont",
+                  "VA": "Virginia",
+                  "WA": "Washington",
+                  "WV": "West Virginia",
+                  "WI": "Wisconsin",
+                  "WY": "Wyoming",
+                  "AS": "American Samoa",
+                  "GU": "Guam",
+                  "MP": "Northern Mariana Islands",
+                  "PR": "Puerto Rico",
+                  "UM": "U.S. Minor Outlying Islands",
+                  "VI": "U.S. Virgin Islands"
+                }
+              }
+            ],
+            "REGION": [
+              {
+                "gqlField": "geographiesRegionTypes",
+                "goField": "GeographiesRegionTypes",
+                "dbField": "geographies_region_types",
+                "label": "Geography region types",
+                "dataType": "ENUM",
+                "formType": "CHECKBOX",
+                "order": 4.04,
+                "isOtherType": true,
+                "otherParentField": "geographiesTargetedTypes",
+                "options": {
+                  "CBSA": "Core-based statistical areas (CBSAs)",
+                  "HRR": "Hospital Referral Regions (HRR)",
+                  "MSA": "Metropolitan Statistical Areas (MSAs)"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "gqlField": "geographiesTargetedAppliedTo",
+          "goField": "GeographiesTargetedAppliedTo",
+          "dbField": "geographies_targeted_applied_to",
+          "label": "Geographies are applied to",
+          "dataType": "ENUM",
+          "formType": "CHECKBOX",
+          "order": 4.06,
+          "options": {
+            "BENEFICIARIES": "Beneficiaries",
+            "PARTICIPANTS": "Participants",
+            "PROVIDERS": "Providers",
+            "OTHER": "Other"
+          }
+        }
+      ]
+    }
+  },
+  "geographiesTargetedTypes": {
+    "gqlField": "geographiesTargetedTypes",
+    "goField": "GeographiesTargetedTypes",
+    "dbField": "geographies_targeted_types",
+    "label": "Geography type is",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 4.02,
+    "options": {
+      "STATE": "States and territories",
+      "REGION": "Region",
+      "OTHER": "Other"
+    },
+    "parentRelation": {
+      "gqlField": "geographiesTargeted",
+      "goField": "GeographiesTargeted",
+      "dbField": "geographies_targeted",
+      "label": "Is the model targeted at specific geographies?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 4.01,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    },
+    "childRelation": {
+      "STATE": [
+        {
+          "gqlField": "geographiesStatesAndTerritories",
+          "goField": "GeographiesStatesAndTerritories",
+          "dbField": "geographies_states_and_territories",
+          "label": "Which states and territories?",
+          "multiSelectLabel": "States and territories",
+          "dataType": "ENUM",
+          "formType": "MULTISELECT",
+          "order": 4.03,
+          "isOtherType": true,
+          "otherParentField": "geographiesTargetedTypes",
+          "options": {
+            "AL": "AL - Alabama",
+            "AK": "AK - Alaska",
+            "AZ": "AZ - Arizona",
+            "AR": "AR - Arkansas",
+            "CA": "CA - California",
+            "CO": "CO - Colorado",
+            "CT": "CT - Connecticut",
+            "DE": "DE - Delaware",
+            "DC": "DC - District of Columbia",
+            "FL": "FL - Florida",
+            "GA": "GA - Georgia",
+            "HI": "HI - Hawaii",
+            "ID": "ID - Idaho",
+            "IL": "IL - Illinois",
+            "IN": "IN - Indiana",
+            "IA": "IA - Iowa",
+            "KS": "KS - Kansas",
+            "KY": "KY - Kentucky",
+            "LA": "LA - Louisiana",
+            "ME": "ME - Maine",
+            "MD": "MD - Maryland",
+            "MA": "MA - Massachusetts",
+            "MI": "MI - Michigan",
+            "MN": "MN - Minnesota",
+            "MS": "MS - Mississippi",
+            "MO": "MO - Missouri",
+            "MT": "MT - Montana",
+            "NE": "NE - Nebraska",
+            "NV": "NV - Nevada",
+            "NH": "NH - New Hampshire",
+            "NJ": "NJ - New Jersey",
+            "NM": "NM - New Mexico",
+            "NY": "NY - New York",
+            "NC": "NC - North Carolina",
+            "ND": "ND - North Dakota",
+            "OH": "OH - Ohio",
+            "OK": "OK - Oklahoma",
+            "OR": "OR - Oregon",
+            "PA": "PA - Pennsylvania",
+            "RI": "RI - Rhode Island",
+            "SC": "SC - South Carolina",
+            "SD": "SD - South Dakota",
+            "TN": "TN - Tennessee",
+            "TX": "TX - Texas",
+            "UT": "UT - Utah",
+            "VT": "VT - Vermont",
+            "VA": "VA - Virginia",
+            "WA": "WA - Washington",
+            "WV": "WV - West Virginia",
+            "WI": "WI - Wisconsin",
+            "WY": "WY - Wyoming",
+            "AS": "AS - American Samoa",
+            "GU": "GU - Guam",
+            "MP": "MP - Northern Mariana Islands",
+            "PR": "PR - Puerto Rico",
+            "UM": "UM - U.S. Minor Outlying Islands",
+            "VI": "VI - U.S. Virgin Islands"
+          },
+          "readonlyOptions": {
+            "AL": "Alabama",
+            "AK": "Alaska",
+            "AZ": "Arizona",
+            "AR": "Arkansas",
+            "CA": "California",
+            "CO": "Colorado",
+            "CT": "Connecticut",
+            "DE": "Delaware",
+            "DC": "District of Columbia",
+            "FL": "Florida",
+            "GA": "Georgia",
+            "HI": "Hawaii",
+            "ID": "Idaho",
+            "IL": "Illinois",
+            "IN": "Indiana",
+            "IA": "Iowa",
+            "KS": "Kansas",
+            "KY": "Kentucky",
+            "LA": "Louisiana",
+            "ME": "Maine",
+            "MD": "Maryland",
+            "MA": "Massachusetts",
+            "MI": "Michigan",
+            "MN": "Minnesota",
+            "MS": "Mississippi",
+            "MO": "Missouri",
+            "MT": "Montana",
+            "NE": "Nebraska",
+            "NV": "Nevada",
+            "NH": "New Hampshire",
+            "NJ": "New Jersey",
+            "NM": "New Mexico",
+            "NY": "New York",
+            "NC": "North Carolina",
+            "ND": "North Dakota",
+            "OH": "Ohio",
+            "OK": "Oklahoma",
+            "OR": "Oregon",
+            "PA": "Pennsylvania",
+            "RI": "Rhode Island",
+            "SC": "South Carolina",
+            "SD": "South Dakota",
+            "TN": "Tennessee",
+            "TX": "Texas",
+            "UT": "Utah",
+            "VT": "Vermont",
+            "VA": "Virginia",
+            "WA": "Washington",
+            "WV": "West Virginia",
+            "WI": "Wisconsin",
+            "WY": "Wyoming",
+            "AS": "American Samoa",
+            "GU": "Guam",
+            "MP": "Northern Mariana Islands",
+            "PR": "Puerto Rico",
+            "UM": "U.S. Minor Outlying Islands",
+            "VI": "U.S. Virgin Islands"
+          }
+        }
+      ],
+      "REGION": [
+        {
+          "gqlField": "geographiesRegionTypes",
+          "goField": "GeographiesRegionTypes",
+          "dbField": "geographies_region_types",
+          "label": "Geography region types",
+          "dataType": "ENUM",
+          "formType": "CHECKBOX",
+          "order": 4.04,
+          "isOtherType": true,
+          "otherParentField": "geographiesTargetedTypes",
+          "options": {
+            "CBSA": "Core-based statistical areas (CBSAs)",
+            "HRR": "Hospital Referral Regions (HRR)",
+            "MSA": "Metropolitan Statistical Areas (MSAs)"
+          }
+        }
+      ]
+    }
+  },
+  "geographiesStatesAndTerritories": {
+    "gqlField": "geographiesStatesAndTerritories",
+    "goField": "GeographiesStatesAndTerritories",
+    "dbField": "geographies_states_and_territories",
+    "label": "Which states and territories?",
+    "multiSelectLabel": "States and territories",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
+    "order": 4.03,
+    "isOtherType": true,
+    "otherParentField": "geographies_targeted_types",
+    "options": {
+      "AL": "AL - Alabama",
+      "AK": "AK - Alaska",
+      "AZ": "AZ - Arizona",
+      "AR": "AR - Arkansas",
+      "CA": "CA - California",
+      "CO": "CO - Colorado",
+      "CT": "CT - Connecticut",
+      "DE": "DE - Delaware",
+      "DC": "DC - District of Columbia",
+      "FL": "FL - Florida",
+      "GA": "GA - Georgia",
+      "HI": "HI - Hawaii",
+      "ID": "ID - Idaho",
+      "IL": "IL - Illinois",
+      "IN": "IN - Indiana",
+      "IA": "IA - Iowa",
+      "KS": "KS - Kansas",
+      "KY": "KY - Kentucky",
+      "LA": "LA - Louisiana",
+      "ME": "ME - Maine",
+      "MD": "MD - Maryland",
+      "MA": "MA - Massachusetts",
+      "MI": "MI - Michigan",
+      "MN": "MN - Minnesota",
+      "MS": "MS - Mississippi",
+      "MO": "MO - Missouri",
+      "MT": "MT - Montana",
+      "NE": "NE - Nebraska",
+      "NV": "NV - Nevada",
+      "NH": "NH - New Hampshire",
+      "NJ": "NJ - New Jersey",
+      "NM": "NM - New Mexico",
+      "NY": "NY - New York",
+      "NC": "NC - North Carolina",
+      "ND": "ND - North Dakota",
+      "OH": "OH - Ohio",
+      "OK": "OK - Oklahoma",
+      "OR": "OR - Oregon",
+      "PA": "PA - Pennsylvania",
+      "RI": "RI - Rhode Island",
+      "SC": "SC - South Carolina",
+      "SD": "SD - South Dakota",
+      "TN": "TN - Tennessee",
+      "TX": "TX - Texas",
+      "UT": "UT - Utah",
+      "VT": "VT - Vermont",
+      "VA": "VA - Virginia",
+      "WA": "WA - Washington",
+      "WV": "WV - West Virginia",
+      "WI": "WI - Wisconsin",
+      "WY": "WY - Wyoming",
+      "AS": "AS - American Samoa",
+      "GU": "GU - Guam",
+      "MP": "MP - Northern Mariana Islands",
+      "PR": "PR - Puerto Rico",
+      "UM": "UM - U.S. Minor Outlying Islands",
+      "VI": "VI - U.S. Virgin Islands"
+    },
+    "readonlyOptions": {
+      "AL": "Alabama",
+      "AK": "Alaska",
+      "AZ": "Arizona",
+      "AR": "Arkansas",
+      "CA": "California",
+      "CO": "Colorado",
+      "CT": "Connecticut",
+      "DE": "Delaware",
+      "DC": "District of Columbia",
+      "FL": "Florida",
+      "GA": "Georgia",
+      "HI": "Hawaii",
+      "ID": "Idaho",
+      "IL": "Illinois",
+      "IN": "Indiana",
+      "IA": "Iowa",
+      "KS": "Kansas",
+      "KY": "Kentucky",
+      "LA": "Louisiana",
+      "ME": "Maine",
+      "MD": "Maryland",
+      "MA": "Massachusetts",
+      "MI": "Michigan",
+      "MN": "Minnesota",
+      "MS": "Mississippi",
+      "MO": "Missouri",
+      "MT": "Montana",
+      "NE": "Nebraska",
+      "NV": "Nevada",
+      "NH": "New Hampshire",
+      "NJ": "New Jersey",
+      "NM": "New Mexico",
+      "NY": "New York",
+      "NC": "North Carolina",
+      "ND": "North Dakota",
+      "OH": "Ohio",
+      "OK": "Oklahoma",
+      "OR": "Oregon",
+      "PA": "Pennsylvania",
+      "RI": "Rhode Island",
+      "SC": "South Carolina",
+      "SD": "South Dakota",
+      "TN": "Tennessee",
+      "TX": "Texas",
+      "UT": "Utah",
+      "VT": "Vermont",
+      "VA": "Virginia",
+      "WA": "Washington",
+      "WV": "West Virginia",
+      "WI": "Wisconsin",
+      "WY": "Wyoming",
+      "AS": "American Samoa",
+      "GU": "Guam",
+      "MP": "Northern Mariana Islands",
+      "PR": "Puerto Rico",
+      "UM": "U.S. Minor Outlying Islands",
+      "VI": "U.S. Virgin Islands"
+    },
+    "parentRelation": {
+      "gqlField": "geographiesTargetedTypes",
+      "goField": "GeographiesTargetedTypes",
+      "dbField": "geographies_targeted_types",
+      "label": "Geography type is",
+      "dataType": "ENUM",
+      "formType": "CHECKBOX",
+      "order": 4.02,
+      "options": {
+        "STATE": "States and territories",
+        "REGION": "Region",
+        "OTHER": "Other"
+      }
+    }
+  },
+  "geographiesRegionTypes": {
+    "gqlField": "geographiesRegionTypes",
+    "goField": "GeographiesRegionTypes",
+    "dbField": "geographies_region_types",
+    "label": "Geography region types",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 4.04,
+    "isOtherType": true,
+    "otherParentField": "geographies_targeted_types",
+    "options": {
+      "CBSA": "Core-based statistical areas (CBSAs)",
+      "HRR": "Hospital Referral Regions (HRR)",
+      "MSA": "Metropolitan Statistical Areas (MSAs)"
+    },
+    "parentRelation": {
+      "gqlField": "geographiesTargetedTypes",
+      "goField": "GeographiesTargetedTypes",
+      "dbField": "geographies_targeted_types",
+      "label": "Geography type is",
+      "dataType": "ENUM",
+      "formType": "CHECKBOX",
+      "order": 4.02,
+      "options": {
+        "STATE": "States and territories",
+        "REGION": "Region",
+        "OTHER": "Other"
+      }
+    }
+  },
+  "geographiesTargetedTypesOther": {
+    "gqlField": "geographiesTargetedTypesOther",
+    "goField": "GeographiesTargetedTypesOther",
+    "dbField": "geographies_targeted_types_other",
+    "label": "Please specify what the other geography type is.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 4.05,
+    "isOtherType": true,
+    "otherParentField": "geographies_targeted_types"
+  },
+  "geographiesTargetedAppliedTo": {
+    "gqlField": "geographiesTargetedAppliedTo",
+    "goField": "GeographiesTargetedAppliedTo",
+    "dbField": "geographies_targeted_applied_to",
+    "label": "Geographies are applied to",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 4.06,
+    "options": {
+      "BENEFICIARIES": "Beneficiaries",
+      "PARTICIPANTS": "Participants",
+      "PROVIDERS": "Providers",
+      "OTHER": "Other"
+    },
+    "parentRelation": {
+      "gqlField": "geographiesTargeted",
+      "goField": "GeographiesTargeted",
+      "dbField": "geographies_targeted",
+      "label": "Is the model targeted at specific geographies?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 4.01,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "geographiesTargetedAppliedToOther": {
+    "gqlField": "geographiesTargetedAppliedToOther",
+    "goField": "GeographiesTargetedAppliedToOther",
+    "dbField": "geographies_targeted_applied_to_other",
+    "label": "Please specify what the geographies are applied to.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 4.07,
+    "isOtherType": true
+  },
+  "geographiesTargetedNote": {
+    "gqlField": "geographiesTargetedNote",
+    "goField": "GeographiesTargetedNote",
+    "dbField": "geographies_targeted_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "geographies_targeted",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.08
+  },
+  "participationOptions": {
+    "gqlField": "participationOptions",
+    "goField": "ParticipationOptions",
+    "dbField": "participation_options",
+    "label": "Does the model offer different options for participation?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.09,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "participationOptionsNote": {
+    "gqlField": "participationOptionsNote",
+    "goField": "ParticipationOptionsNote",
+    "dbField": "participation_options_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participation_options",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.1
+  },
+  "agreementTypes": {
+    "gqlField": "agreementTypes",
+    "goField": "AgreementTypes",
+    "dbField": "agreement_types",
+    "label": "What is the agreement type?",
+    "sublabel": "Note: CMMI writes, Office of General Council (OGC) approves both types of agreements",
+    "dataType": "BOOLEAN",
+    "formType": "CHECKBOX",
+    "order": 4.11,
+    "options": {
+      "COOPERATIVE": "Co-Operative Agreement/Grant",
+      "PARTICIPATION": "Participation Agreement",
+      "OTHER": "Other"
+    },
+    "childRelation": {
+      "PARTICIPATION": [
+        {
+          "gqlField": "multiplePatricipationAgreementsNeeded",
+          "goField": "MultiplePatricipationAgreementsNeeded",
+          "dbField": "multiple_patricipation_agreements_needed",
+          "label": "Will more than one participation agreement be needed?",
+          "sublabel": "depending on awardee selections or characteristics such as risk/type/size",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 4.13,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        }
+      ]
+    }
+  },
+  "agreementTypesOther": {
+    "gqlField": "agreementTypesOther",
+    "goField": "AgreementTypesOther",
+    "dbField": "agreement_types_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 4.12,
+    "isOtherType": true,
+    "otherParentField": "agreement_types"
+  },
+  "multiplePatricipationAgreementsNeeded": {
+    "gqlField": "multiplePatricipationAgreementsNeeded",
+    "goField": "MultiplePatricipationAgreementsNeeded",
+    "dbField": "multiple_patricipation_agreements_needed",
+    "label": "Will more than one participation agreement be needed?",
+    "sublabel": "depending on awardee selections or characteristics such as risk/type/size",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.13,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "agreementTypes",
+      "goField": "AgreementTypes",
+      "dbField": "agreement_types",
+      "label": "What is the agreement type?",
+      "sublabel": "Note: CMMI writes, Office of General Council (OGC) approves both types of agreements",
+      "dataType": "BOOLEAN",
+      "formType": "CHECKBOX",
+      "order": 4.11,
+      "options": {
+        "COOPERATIVE": "Co-Operative Agreement/Grant",
+        "PARTICIPATION": "Participation Agreement",
+        "OTHER": "Other"
+      }
+    }
+  },
+  "multiplePatricipationAgreementsNeededNote": {
+    "gqlField": "multiplePatricipationAgreementsNeededNote",
+    "goField": "MultiplePatricipationAgreementsNeededNote",
+    "dbField": "multiple_patricipation_agreements_needed_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "agreement_types",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 4.14
+  },
+  "rulemakingRequired": {
+    "gqlField": "rulemakingRequired",
+    "goField": "RulemakingRequired",
+    "dbField": "rulemaking_required",
+    "label": "Is rulemaking required?",
+    "readonlyLabel": "Is rulemaking required? If so, which rule do you anticipate using and what is the target date of display for that regulation?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 5.01,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "rulemakingRequiredDescription": {
+    "gqlField": "rulemakingRequiredDescription",
+    "goField": "RulemakingRequiredDescription",
+    "dbField": "rulemaking_required_description",
+    "label": "Which rule do you anticipate using and what is the target date of display for that regulation?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.02,
+    "isOtherType": true,
+    "otherParentField": "rulemaking_required"
+  },
+  "rulemakingRequiredNote": {
+    "gqlField": "rulemakingRequiredNote",
+    "goField": "RulemakingRequiredNote",
+    "dbField": "rulemaking_required_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "rulemaking_required",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.03
+  },
+  "authorityAllowances": {
+    "gqlField": "authorityAllowances",
+    "goField": "AuthorityAllowances",
+    "dbField": "authority_allowances",
+    "label": "What authority allows CMMI to test the model?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 5.04,
+    "options": {
+      "ACA": "3021 Affordable Care Act (ACA)",
+      "CONGRESSIONALLY_MANDATED": "Congressionally Mandated Demonstration",
+      "SSA_PART_B": "Section 1833(e) (Part B services) of the Social Security Act",
+      "OTHER": "Other"
+    }
+  },
+  "authorityAllowancesOther": {
+    "gqlField": "authorityAllowancesOther",
+    "goField": "AuthorityAllowancesOther",
+    "dbField": "authority_allowances_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.05,
+    "isOtherType": true,
+    "otherParentField": "authority_allowances"
+  },
+  "authorityAllowancesNote": {
+    "gqlField": "authorityAllowancesNote",
+    "goField": "AuthorityAllowancesNote",
+    "dbField": "authority_allowances_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "authority_allowances",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.06
+  },
+  "waiversRequired": {
+    "gqlField": "waiversRequired",
+    "goField": "WaiversRequired",
+    "dbField": "waivers_required",
+    "label": "Are waivers required?",
+    "readonlyLabel": "Are waivers required? If so, which types of waivers?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 5.07,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "waiversRequiredTypes": {
+    "gqlField": "waiversRequiredTypes",
+    "goField": "WaiversRequiredTypes",
+    "dbField": "waivers_required_types",
+    "label": "Which types of waivers are required? Select all that apply.",
+    "readonlyLabel": "Which types of waivers are required?",
+    "exportLabel": "Which types of waivers are required?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 5.08,
+    "isOtherType": true,
+    "options": {
+      "FRAUD_ABUSE": "Fraud and Abuse",
+      "MEDICAID": "Medicaid",
+      "PROGRAM_PAYMENT": "Program/payment"
+    },
+    "optionsLabels": {
+      "FRAUD_ABUSE": "Note: Federal Waiver team writes",
+      "MEDICAID": "(1115, other)",
+      "PROGRAM_PAYMENT": "(e.g., SNF 3-day stay, Inpatient-Only rule)\n Note: CMMI writes, Office of General Council (OGC) advises, full clearance process is required"
+    }
+  },
+  "waiversRequiredNote": {
+    "gqlField": "waiversRequiredNote",
+    "goField": "WaiversRequiredNote",
+    "dbField": "waivers_required_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "waivers_required",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.09
+  },
+  "readyForReviewBy": {
+    "gqlField": "readyForReviewBy",
+    "goField": "ReadyForReviewBy",
+    "dbField": "ready_for_review_by",
+    "label": "This section of the Model Plan (General characteristics) is ready for review.",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 5.1,
+    "tableReference": "user_account",
+    "hideFromReadonly": true
+  },
+  "readyForReviewDts": {
+    "gqlField": "readyForReviewDts",
+    "goField": "ReadyForReviewDts",
+    "dbField": "ready_for_review_dts",
+    "label": "Ready for review date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 5.11,
+    "hideFromReadonly": true
+  },
+  "readyForClearanceBy": {
+    "gqlField": "readyForClearanceBy",
+    "goField": "ReadyForClearanceBy",
+    "dbField": "ready_for_clearance_by",
+    "label": "This section of the Model Plan (General characteristics) is ready for clearance.",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 5.12,
+    "tableReference": "user_account",
+    "hideFromReadonly": true
+  },
+  "readyForClearanceDts": {
+    "gqlField": "readyForClearanceDts",
+    "goField": "ReadyForClearanceDts",
+    "dbField": "ready_for_clearance_dts",
+    "label": "Ready for clearance date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 5.13,
+    "hideFromReadonly": true
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "Model Plan status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 5.14,
+    "options": {
+      "READY": "Ready",
+      "IN_PROGRESS": "In progress",
+      "READY_FOR_REVIEW": "Ready for review",
+      "READY_FOR_CLEARANCE": "Ready for clearance"
+    },
+    "hideFromReadonly": true
+  }
+}

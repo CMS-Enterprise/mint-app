@@ -1,48 +1,212 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useLocation, withRouter } from 'react-router-dom';
-import { useOktaAuth } from '@okta/okta-react';
-import { Grid, GridContainer, SummaryBox } from '@trussworks/react-uswds';
+import {
+  Card,
+  Grid,
+  GridContainer,
+  Icon,
+  SummaryBox
+} from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import {
+  ModelPlanFilter,
+  useGetFavoritesQuery,
+  useGetHomepageSettingsQuery,
+  ViewCustomizationType
+} from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import FavoritesTable from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
+import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
-import JOB_CODES from 'constants/jobCodes';
+import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
-import Landing from 'views/Landing';
-import ModelPlansTable from 'views/ModelPlan/Table';
+import ModelPlansTable from 'views/Home/Table';
+
+import ModelsApproachingClearance from './components/ModelsApproachingClearance';
+import ModelsBySolutions from './components/ModelsBySolutions';
 
 import './index.scss';
 
+export type UpdateFavoriteProps = 'addFavorite' | 'removeFavorite';
+
 const Home = () => {
-  const { t } = useTranslation('home');
+  const { t } = useTranslation('customHome');
+
   const userGroups = useSelector((state: AppState) => state.auth.groups);
   const isUserSet = useSelector((state: AppState) => state.auth.isUserSet);
-  const flags = useFlags();
 
-  const [tableHidden, hideTable] = useState<boolean>(false);
+  const flags = useFlags();
 
   const { message } = useMessage();
 
-  const { authState } = useOktaAuth();
-  const { pathname } = useLocation();
-  const isLanding: boolean = pathname === '/' && !authState?.isAuthenticated;
+  const { data, loading } = useGetHomepageSettingsQuery();
 
-  const headingType = (groups: typeof JOB_CODES) => {
-    if (isAssessment(groups, flags)) {
-      return t('requestsTable.admin.heading');
+  const operationalSolutionKeys =
+    data?.userViewCustomization.possibleOperationalSolutions || [];
+
+  const {
+    data: favoritesData,
+    loading: favoritesLoading,
+    refetch
+  } = useGetFavoritesQuery({
+    variables: {
+      filter: ModelPlanFilter.INCLUDE_ALL,
+      isMAC: true
     }
-    if (isMAC(userGroups)) {
-      return t('requestsTable.mac.heading');
-    }
-    return t('requestsTable.basic.heading');
+  });
+
+  const favorites = favoritesData?.modelPlanCollection.filter(
+    modelPlan => modelPlan.isFavorite
+  );
+
+  const favoriteMutations = useFavoritePlan();
+
+  const handleUpdateFavorite = (
+    modelPlanID: string,
+    type: UpdateFavoriteProps
+  ) => {
+    favoriteMutations[type]({
+      variables: {
+        modelPlanID
+      }
+    }).then(() => refetch());
+  };
+
+  const homepageComponents: Record<ViewCustomizationType, JSX.Element> = {
+    [ViewCustomizationType.MY_MODEL_PLANS]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(`settings.${ViewCustomizationType.MY_MODEL_PLANS}.heading`)}
+        </h2>
+
+        <p>
+          {t(`settings.${ViewCustomizationType.MY_MODEL_PLANS}.description`)}
+        </p>
+
+        <ModelPlansTable
+          id="my-model-plans-table"
+          type={ViewCustomizationType.MY_MODEL_PLANS}
+          canSearch={false}
+          isAssessment={isAssessment(userGroups, flags)}
+        />
+      </>
+    ),
+    [ViewCustomizationType.ALL_MODEL_PLANS]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0">
+          {t(`settings.${ViewCustomizationType.ALL_MODEL_PLANS}.heading`)}
+        </h2>
+
+        <ModelPlansTable
+          id="all-model-plans-table"
+          type={ViewCustomizationType.ALL_MODEL_PLANS}
+          isAssessment={isAssessment(userGroups, flags)}
+        />
+      </>
+    ),
+    [ViewCustomizationType.FOLLOWED_MODELS]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(`settings.${ViewCustomizationType.FOLLOWED_MODELS}.heading`)}
+        </h2>
+
+        <p>
+          {t(`settings.${ViewCustomizationType.FOLLOWED_MODELS}.description`)}
+        </p>
+
+        <>
+          {favoritesLoading && <PageLoading testId="favorites-page-loading" />}
+          {!favoritesLoading && favorites && favorites?.length > 0 && (
+            <FavoritesTable
+              favorites={favorites || []}
+              removeFavorite={handleUpdateFavorite}
+              toTaskList
+            />
+          )}
+          {!favoritesLoading && !favorites?.length && (
+            <Alert
+              type="info"
+              heading={t(
+                `settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsHeading`
+              )}
+              className="margin-y-2"
+            >
+              <Trans
+                i18nKey={`customHome:settings.${ViewCustomizationType.FOLLOWED_MODELS}.noResultsDescription`}
+                components={{
+                  link1: <UswdsReactLink to="/models"> </UswdsReactLink>,
+                  star: <Icon.StarOutline size={3} style={{ top: '6px' }} />
+                }}
+              />
+            </Alert>
+          )}
+        </>
+      </>
+    ),
+    [ViewCustomizationType.MODELS_WITH_CR_TDL]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(`settings.${ViewCustomizationType.MODELS_WITH_CR_TDL}.heading`)}
+        </h2>
+
+        <p>
+          {t(
+            `settings.${ViewCustomizationType.MODELS_WITH_CR_TDL}.description`
+          )}
+        </p>
+
+        <ModelPlansTable
+          id="models-with-cr-tdl-table"
+          type={ViewCustomizationType.MODELS_WITH_CR_TDL}
+          isAssessment={isAssessment(userGroups, flags)}
+        />
+      </>
+    ),
+    [ViewCustomizationType.MODELS_APPROACHING_CLEARANCE]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <ModelsApproachingClearance />
+      </>
+    ),
+    [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <h2 className="margin-top-0 margin-bottom-2">
+          {t(
+            `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.heading`
+          )}
+        </h2>
+
+        {operationalSolutionKeys.length > 0 && (
+          <p>
+            {t(
+              `settings.${ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION}.description`
+            )}
+          </p>
+        )}
+
+        <ModelsBySolutions operationalSolutionKeys={operationalSolutionKeys} />
+      </>
+    )
   };
 
   const renderView = () => {
@@ -53,14 +217,41 @@ const Home = () => {
           <GridContainer>
             {message}
 
-            <Grid>
-              <PageHeading className="margin-bottom-1">
-                {t('title')}
-              </PageHeading>
+            <Grid data-testid="homepage">
+              <Grid row className="padding-top-4">
+                <Grid desktop={{ col: 9 }}>
+                  <div>
+                    <PageHeading className="margin-bottom-1 margin-top-0">
+                      {t('title')}
+                    </PageHeading>
 
-              <p className="line-height-body-5 font-body-lg text-light margin-top-0 margin-bottom-3">
-                {!isMAC(userGroups) ? t('subheading') : t('macSubheading')}
-              </p>
+                    <p className="line-height-body-5 font-body-lg text-light margin-top-0 margin-bottom-3">
+                      {!isMAC(userGroups)
+                        ? t('subheading')
+                        : t('macSubheading')}
+                    </p>
+                  </div>
+                </Grid>
+
+                <Grid desktop={{ col: 3 }}>
+                  <Card className="margin-y-0 home__card display-flex">
+                    <p className="text-bold margin-top-0">
+                      {t('customizeHomepage')}
+                    </p>
+
+                    <div>
+                      <UswdsReactLink
+                        variant="unstyled"
+                        to="/homepage-settings"
+                        className="display-flex flex-align-center"
+                      >
+                        <Icon.Edit className="margin-right-1 text-primary" />
+                        {t('editHomepage')}
+                      </UswdsReactLink>
+                    </div>
+                  </Card>
+                </Grid>
+              </Grid>
 
               {!isMAC(userGroups) && (
                 <SummaryBox className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3">
@@ -80,47 +271,41 @@ const Home = () => {
                 </SummaryBox>
               )}
 
-              {!isMAC(userGroups) && !tableHidden && (
-                <>
-                  <Divider className="margin-top-6" />
-                  <div className="mint-header__basic">
-                    <h2 className="margin-top-4 margin-bottom-1">
-                      {t('requestsTable.basic.heading')}
-                    </h2>
-                  </div>
-                  <p className="margin-top-0 margin-bottom-2">
-                    {t('yourModels')}
-                  </p>
-                </>
-              )}
+              {!loading &&
+                data?.userViewCustomization.viewCustomization.length === 0 && (
+                  <Alert type="info" heading={t('emptyHome')}>
+                    <div className="display-flex flex-align-center">
+                      <UswdsReactLink
+                        variant="unstyled"
+                        to="/homepage-settings"
+                        className="margin-right-1"
+                      >
+                        {t('editHomepage')}
+                      </UswdsReactLink>
+                      <Icon.ArrowForward />
+                    </div>
+                  </Alert>
+                )}
 
-              {!isMAC(userGroups) && (
-                <ModelPlansTable
-                  type="home"
-                  userModels
-                  isAssessment={isAssessment(userGroups, flags)}
-                  isMAC={isMAC(userGroups)}
-                  hideTable={hideTable}
-                  tableHidden={tableHidden}
-                />
-              )}
-
-              {(isAssessment(userGroups, flags) || isMAC(userGroups)) && (
-                <>
-                  <Divider className="margin-top-6" />
-
-                  <div className="mint-header__basic">
-                    <h2 className="margin-top-4">{headingType(userGroups)}</h2>
-                  </div>
-
-                  <ModelPlansTable
-                    type={isAssessment(userGroups, flags) ? 'home' : 'mac'}
-                    userModels={false}
-                    isAssessment={isAssessment(userGroups, flags)}
-                    isMAC={isMAC(userGroups)}
-                    csvDownload={isAssessment(userGroups, flags)}
-                  />
-                </>
+              {loading ? (
+                <PageLoading />
+              ) : (
+                data?.userViewCustomization.viewCustomization.map(
+                  customization => {
+                    if (
+                      !flags.modelsApproachingClearanceEnabled &&
+                      customization ===
+                        ViewCustomizationType.MODELS_APPROACHING_CLEARANCE
+                    ) {
+                      return null;
+                    }
+                    return (
+                      <div key={customization}>
+                        {homepageComponents[customization]}
+                      </div>
+                    );
+                  }
+                )
               )}
 
               <SummaryBox className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-top-6">
@@ -128,11 +313,7 @@ const Home = () => {
                   {t('allModels.copy')}
                 </p>
 
-                <UswdsReactLink
-                  className="usa-button usa-button--outline"
-                  variant="unstyled"
-                  to="/models"
-                >
+                <UswdsReactLink variant="unstyled" to="/models">
                   {t('allModels.cta')}
                 </UswdsReactLink>
               </SummaryBox>
@@ -141,10 +322,10 @@ const Home = () => {
         </>
       );
     }
-    return <>{isLanding ? <Landing /> : <NDABanner />}</>;
+    return <NDABanner />;
   };
 
   return <MainContent>{renderView()}</MainContent>;
 };
 
-export default withRouter(Home);
+export default Home;

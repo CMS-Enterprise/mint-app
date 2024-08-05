@@ -1,5 +1,10 @@
 import { TranslationDiscussions } from 'types/translation';
 
+import {
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
+
 export const discussions: TranslationDiscussions = {
   userRole: {
     gqlField: 'userRole',
@@ -7,8 +12,9 @@ export const discussions: TranslationDiscussions = {
     dbField: 'user_role',
     label: 'Your role',
     sublabel: 'This will display with your name to help others identify you.',
-    dataType: 'enum',
-    formType: 'select',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    order: 1.01,
     options: {
       CMS_SYSTEM_SERVICE_TEAM: 'CMS System/Service Team',
       IT_ARCHITECT: 'IT Architect',
@@ -27,8 +33,9 @@ export const discussions: TranslationDiscussions = {
     goField: 'UserRoleDescription',
     dbField: 'user_role_description',
     label: 'Enter a short description for your role',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.02
   },
   content: {
     gqlField: 'content',
@@ -37,8 +44,22 @@ export const discussions: TranslationDiscussions = {
     label: 'Type your question or discussion topic',
     sublabel:
       'To tag a solution team or individual, type "@" and begin typing the name. Then, select the team or individual from the list you wish to notify.',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.03
+  },
+  isAssessment: {
+    gqlField: 'isAssessment',
+    goField: 'IsAssessment',
+    dbField: 'is_assessment',
+    label: 'Is the user an assessment user?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.BOOLEAN,
+    order: 1.04,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
   }
 };
 

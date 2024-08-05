@@ -3,6 +3,7 @@ SELECT
     model_plan_id,
     participants,
     medicare_provider_type,
+    is_new_type_of_providers_or_suppliers,
     states_engagement,
     participants_other,
     participants_note,

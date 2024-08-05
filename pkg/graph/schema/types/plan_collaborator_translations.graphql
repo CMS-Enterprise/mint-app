@@ -1,0 +1,9 @@
+
+"""
+Represents plan collaborator translation data
+"""
+type PlanCollaboratorTranslation {
+  username: TranslationField! @goTag(key: "db", value: "user_account.username")
+  userID: TranslationField! @goTag(key: "db", value: "user_id")
+  teamRoles: TranslationFieldWithOptions! @goTag(key: "db", value: "team_roles")
+}

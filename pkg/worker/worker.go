@@ -30,9 +30,42 @@ const (
 
 	// emailQueue the email queue in Faktory
 	emailQueue string = "email"
+
+	// auditTranslateQueue the audit translation queue in Faktory
+	auditTranslateQueue string = "auditTranslation"
 )
 
-// Work creates, configues, and starts worker
+// These constants represent the names of jobs for translating audits
+const (
+	// translateAuditBatchJobName is the name of the batch job for translating audits
+	translateAuditBatchJobName string = "TranslateAuditBatchJob"
+
+	// translateAuditBatchJobSuccessName is the name of the job that is called when a group of translate Audit Jobs is completed
+	translateAuditBatchJobSuccessName string = "TranslateAuditBatchJobSuccess"
+
+	// translateAuditCronJobName is the name of the job called that initiates the translate audit batch job
+	translateAuditCronJobName string = "TranslateAuditCronJob"
+
+	// translateAuditJobName is the name of the job that creates a translated audit from an audit
+	translateAuditJobName string = "TranslateAuditJob"
+)
+
+// These constants represent the names of jobs for analyzing audits
+const (
+	analyzedAuditJobName             string = "AnalyzedAuditJob"
+	analyzedAuditBatchJobName        string = "AnalyzedAuditBatchJob"
+	analyzedAuditBatchJobSuccessName string = "AnalyzedAuditBatchJobSuccess"
+)
+
+const (
+	dailyDigestCronJobName         string = "DailyDigestCronJob"
+	digestEmailBatchJobName        string = "DigestEmailBatchJob"
+	digestEmailBatchJobSuccessName string = "DigestEmailBatchJobSuccess"
+	digestEmailJobName             string = "DigestEmailJob"
+	aggregatedDigestEmailJobName   string = "AggregatedDigestEmailJob"
+)
+
+// Work creates, configures, and starts worker
 func (w *Worker) Work() {
 	if !w.ProcessJobs {
 		return
@@ -40,23 +73,28 @@ func (w *Worker) Work() {
 
 	mgr := faktory_worker.NewManager()
 
-	// Setup Monager
+	// Setup Manager
 	mgr.Concurrency = w.Connections
 
 	// pull jobs from these queues, in this order of precedence
-	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, emailQueue)
+	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
 
 	// register jobs here
-	mgr.Register("DailyDigestCronJob", w.DigestCronJob)
+	mgr.Register(dailyDigestCronJobName, JobWithPanicProtection(w.DigestCronJob))
 
-	mgr.Register("AnalyzedAuditJob", w.AnalyzedAuditJob)
-	mgr.Register("AnalyzedAuditBatchJob", w.AnalyzedAuditBatchJob)
-	mgr.Register("AnalyzedAuditBatchJobSuccess", w.AnalyzedAuditBatchJobSuccess)
+	mgr.Register(analyzedAuditJobName, JobWithPanicProtection(w.AnalyzedAuditJob))
+	mgr.Register(analyzedAuditBatchJobName, JobWithPanicProtection(w.AnalyzedAuditBatchJob))
+	mgr.Register(analyzedAuditBatchJobSuccessName, JobWithPanicProtection(w.AnalyzedAuditBatchJobSuccess))
 
-	mgr.Register("DigestEmailBatchJob", w.DigestEmailBatchJob)
-	mgr.Register("DigestEmailBatchJobSuccess", w.DigestEmailBatchJobSuccess)
-	mgr.Register("DigestEmailJob", w.DigestEmailJob)
-	mgr.Register("AggregatedDigestEmailJob", w.AggregatedDigestEmailJob)
+	mgr.Register(digestEmailBatchJobName, JobWithPanicProtection(w.DigestEmailBatchJob))
+	mgr.Register(digestEmailBatchJobSuccessName, JobWithPanicProtection(w.DigestEmailBatchJobSuccess))
+	mgr.Register(digestEmailJobName, JobWithPanicProtection(w.DigestEmailJob))
+	mgr.Register(aggregatedDigestEmailJobName, JobWithPanicProtection(w.AggregatedDigestEmailJob))
+
+	mgr.Register(translateAuditCronJobName, JobWithPanicProtection(w.TranslateAuditCronJob))
+	mgr.Register(translateAuditBatchJobName, JobWithPanicProtection(w.TranslateAuditBatchJob))
+	mgr.Register(translateAuditBatchJobSuccessName, JobWithPanicProtection(w.TranslateAuditBatchJobSuccess))
+	mgr.Register(translateAuditJobName, JobWithPanicProtection(w.TranslateAuditJob))
 
 	/**********************
 	* //Future Enhancement
@@ -65,6 +103,19 @@ func (w *Worker) Work() {
 	*dataLoaders := loaders.NewDataLoaders(w.Store)
 	*ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
 	*err := mgr.RunWithContext(ctx)
+	******************************/
+
+	/**********************
+	* // Future Enhancement
+	Re-work this to consider wrapping a representation of the job with the name of the job itself. Consider a struct that is built with both a name and function.
+	This requires rework because all jobs are currently methods on a worker, instead of functions that take a worker
+
+	Something like:
+		// var TranslateAuditJob = JobWrapper{
+		// 	Name: "TranslateAuditJob",
+		// 	Job:  ,
+		// }
+
 	******************************/
 
 	err := mgr.Run()

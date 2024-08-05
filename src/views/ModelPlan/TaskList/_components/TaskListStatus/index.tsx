@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { ModelStatus } from 'gql/gen/graphql';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
@@ -35,7 +36,10 @@ const TaskListStatus = ({
 }: TaskListStatusProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('generalReadOnly');
+  const { t: changeHistoryT } = useTranslation('changeHistory');
   const { t: modelPlanT } = useTranslation('modelPlan');
+
+  const flags = useFlags();
 
   return (
     <div
@@ -74,21 +78,41 @@ const TaskListStatus = ({
         </Grid>
         {readOnly && (
           <div className="mint-no-print">
-            {hasEditAccess && (
-              <div className="display-flex flex-align-center">
-                <div className="height-2 border-left-2px border-base-light margin-right-2 " />
+            <div className="display-flex flex-align-center">
+              <div className="height-2 border-left-2px border-base-light margin-right-2 " />
 
-                <div>
+              {flags.changeHistoryEnabled && (
+                <>
                   <UswdsReactLink
-                    to={`/models/${modelID}/task-list`}
-                    className="display-flex flex-align-center"
+                    to={{
+                      pathname: `/models/${modelID}/change-history`,
+                      state: {
+                        from: 'readview'
+                      }
+                    }}
+                    className="display-flex flex-align-center margin-right-2"
                   >
-                    <Icon.Edit className="margin-right-1" />
-                    {t('edit')}
+                    <Icon.History className="margin-right-1" />
+
+                    {changeHistoryT('viewChangeHistory')}
                   </UswdsReactLink>
-                </div>
-              </div>
-            )}
+
+                  {hasEditAccess && (
+                    <div className="height-2 border-left-2px border-base-light margin-right-2 " />
+                  )}
+                </>
+              )}
+
+              {hasEditAccess && (
+                <UswdsReactLink
+                  to={`/models/${modelID}/task-list`}
+                  className="display-flex flex-align-center"
+                >
+                  <Icon.Edit className="margin-right-1" />
+                  {t('edit')}
+                </UswdsReactLink>
+              )}
+            </div>
           </div>
         )}
       </Grid>

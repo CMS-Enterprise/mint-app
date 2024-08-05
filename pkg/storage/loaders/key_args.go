@@ -51,6 +51,27 @@ func ConvertToKeyArgsArray(Keys dataloader.Keys) (KeyArgsArray, *error) {
 
 }
 
+// ConvertKeysToArray converts a dataloader.Keys object to a typed array
+func ConvertKeysToArray[T any](Keys dataloader.Keys, valueKey string) ([]T, error) {
+
+	tArray := make([]T, len(Keys))
+	for index, key := range Keys {
+		keyArgs, ok := key.Raw().(KeyArgs)
+		if !ok {
+			return nil, fmt.Errorf("could not retrieve %s key from %s", valueKey, key.String())
+		}
+		resKey := keyArgs.Args[valueKey]
+		typedKey, ok := resKey.(T)
+		if !ok {
+			return nil, fmt.Errorf("could not cast dataloader key to %T", tArray)
+		}
+		tArray[index] = typedKey
+	}
+
+	return tArray, nil
+
+}
+
 // CovertToJSONArray converts dataloader keys to a json string
 func CovertToJSONArray(Keys dataloader.Keys) (string, error) {
 	arrayCK, err := ConvertToKeyArgsArray(Keys)

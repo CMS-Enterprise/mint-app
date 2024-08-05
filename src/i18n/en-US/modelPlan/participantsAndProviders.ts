@@ -1,6 +1,11 @@
-import { ModelViewFilter } from 'gql/gen/graphql';
-
 import { TranslationParticipantsAndProviders } from 'types/translation';
+
+import {
+  ModelViewFilter,
+  TableName,
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
 
 import { frequencyOptions } from './miscellaneous';
 
@@ -11,9 +16,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'participants',
     label: 'Who are the participants? Select all that apply.',
     readonlyLabel: 'Who are the participants?',
+    exportLabel: 'Who are the participants?',
     multiSelectLabel: 'Selected participants',
-    dataType: 'enum',
-    formType: 'multiSelect',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.MULTISELECT,
+    order: 1.01,
     options: {
       ACCOUNTABLE_CARE_ORGANIZATION: 'Accountable Care Organization (ACO)',
       COMMERCIAL_PAYERS: 'Commercial payers',
@@ -53,7 +60,12 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       ModelViewFilter.IPC,
       ModelViewFilter.IDDOC,
       ModelViewFilter.PBG
-    ]
+    ],
+    childRelation: {
+      MEDICARE_PROVIDERS: [
+        () => participantsAndProviders.isNewTypeOfProvidersOrSuppliers
+      ]
+    }
   },
   medicareProviderType: {
     gqlField: 'medicareProviderType',
@@ -62,8 +74,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Which type of Medicare providers/suppliers?',
     sublabel:
       'Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.02,
     isOtherType: true,
     otherParentField: 'participants',
     filterGroups: [
@@ -74,14 +87,31 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       ModelViewFilter.PBG
     ]
   },
+  isNewTypeOfProvidersOrSuppliers: {
+    gqlField: 'isNewTypeOfProvidersOrSuppliers',
+    goField: 'IsNewTypeOfProvidersOrSuppliers',
+    dbField: 'is_new_type_of_providers_or_suppliers',
+    label: 'Are any of these a new type of provider/supplier?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    order: 1.021,
+    parentRelation: () => participantsAndProviders.participants,
+    filterGroups: [ModelViewFilter.PBG]
+  },
   statesEngagement: {
     gqlField: 'statesEngagement',
     goField: 'StatesEngagement',
     dbField: 'states_engagement',
     label: 'Please describe how states will engage with your model.',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.03,
     isOtherType: true,
+    otherParentField: 'participants',
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,
@@ -93,11 +123,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   participantsOther: {
     gqlField: 'participantsOther',
     goField: 'ParticipantsOther',
-    dbField: 'participantsOther',
+    dbField: 'participants_other',
     label: 'Please describe the other participants engaging with this model',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.04,
     isOtherType: true,
+    otherParentField: 'participants',
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,
@@ -109,10 +141,13 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   participantsNote: {
     gqlField: 'participantsNote',
     goField: 'ParticipantsNote',
-    dbField: 'participantsNote',
+    dbField: 'participants_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    isNote: true,
+    otherParentField: 'participants',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.05,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CMMI,
@@ -124,14 +159,15 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   participantsCurrentlyInModels: {
     gqlField: 'participantsCurrentlyInModels',
     goField: 'ParticipantsCurrentlyInModels',
-    dbField: 'participants_currently_in_models_note',
+    dbField: 'participants_currently_in_models',
     label: 'Are the participants in CMMI models now?',
     sublabel:
       'If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.',
     questionTooltip:
       'If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 1.06,
     options: {
       true: 'Yes',
       false: 'No'
@@ -143,20 +179,25 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantsCurrentlyInModelsNote',
     dbField: 'participants_currently_in_models_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    isNote: true,
+    otherParentField: 'participantsCurrentlyInModels',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.07
   },
   modelApplicationLevel: {
     gqlField: 'modelApplicationLevel',
     goField: 'ModelApplicationLevel',
-    dbField: 'modelApplicationLevel',
+    dbField: 'model_application_level',
     label: 'At what level will the model apply?',
     sublabel:
-      '(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)',
+      '(e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)',
     questionTooltip:
-      '(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)',
-    dataType: 'string',
-    formType: 'textarea',
+      '(e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)',
+
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.08,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
 
@@ -167,8 +208,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'How many participants do you expect?',
     sublabel:
       'Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating.',
-    dataType: 'number',
-    formType: 'rangeInput',
+    dataType: TranslationDataType.NUMBER,
+    formType: TranslationFormType.RANGEINPUT,
+    order: 2.01,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CCW,
@@ -186,8 +228,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'EstimateConfidence',
     dbField: 'estimate_confidence',
     label: 'What is your level of confidence on this estimate?',
-    dataType: 'enum',
-    formType: 'radio',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.RADIO,
+    order: 2.02,
     options: {
       NOT_AT_ALL: 'Not at all confident',
       SLIGHTLY: 'Slightly confident',
@@ -210,8 +253,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ConfidenceNote',
     dbField: 'confidence_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    isNote: true,
+    otherParentField: 'expectedNumberOfParticipants',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.03,
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.CCW,
@@ -224,8 +270,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'RecruitmentMethod',
     dbField: 'recruitment_method',
     label: 'How will you recruit the participants?',
-    dataType: 'enum',
-    formType: 'radio',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.RADIO,
+    order: 2.04,
     options: {
       APPLICATION_COLLECTION_TOOL: 'Use an application collection tool',
       LOI: 'LOI (Letter of intent)',
@@ -250,8 +297,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'RecruitmentOther',
     dbField: 'recruitment_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea',
+    exportLabel: 'Please specify other',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.05,
     isOtherType: true,
     otherParentField: 'recruitmentMethod'
   },
@@ -260,8 +309,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'RecruitmentNote',
     dbField: 'recruitment_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    isNote: true,
+    otherParentField: 'recruitmentMethod',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.06
   },
   selectionMethod: {
     gqlField: 'selectionMethod',
@@ -269,9 +321,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'selection_method',
     label: 'How will you select participants? Select all that apply.',
     readonlyLabel: 'How will you select participants?',
+    exportLabel: 'How will you select participants?',
     multiSelectLabel: 'Selected participants',
-    dataType: 'enum',
-    formType: 'multiSelect',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.MULTISELECT,
+    order: 2.07,
     options: {
       APPLICATION_REVIEW_AND_SCORING_TOOL:
         'Use an application review and scoring tool',
@@ -299,8 +353,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'SelectionOther',
     dbField: 'selection_other',
     label: 'Please describe the other participants engaging with this model',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.08,
     isOtherType: true,
     filterGroups: [
       ModelViewFilter.CMMI,
@@ -313,8 +368,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'SelectionNote',
     dbField: 'selection_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    isNote: true,
+    otherParentField: 'selectionMethod',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.09,
     filterGroups: [
       ModelViewFilter.CMMI,
       ModelViewFilter.IDDOC,
@@ -326,8 +384,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantAddedFrequency',
     dbField: 'participant_added_frequency',
     label: 'How frequently are participants added?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 3.01,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'participantAddedFrequencyContinually',
@@ -341,8 +400,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantAddedFrequencyContinually',
     dbField: 'participant_added_frequency_continually',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    exportLabel: 'Please specify continually',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.02,
     isOtherType: true,
     otherParentField: 'participantAddedFrequency',
     filterGroups: [ModelViewFilter.IPC]
@@ -352,8 +413,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantAddedFrequencyOther',
     dbField: 'participant_added_frequency_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    exportLabel: 'Please specify other',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.03,
     isOtherType: true,
     otherParentField: 'participantAddedFrequency',
     filterGroups: [ModelViewFilter.IPC]
@@ -363,8 +426,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantAddedFrequencyNote',
     dbField: 'participant_added_frequency_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'text',
+    isNote: true,
+    otherParentField: 'participantAddedFrequency',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.04,
     filterGroups: [ModelViewFilter.IPC]
   },
   participantRemovedFrequency: {
@@ -372,8 +438,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantRemovedFrequency',
     dbField: 'participant_removed_frequency',
     label: 'How frequently are participants removed?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 3.05,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'participantRemovedFrequencyContinually',
@@ -386,8 +453,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantRemovedFrequencyContinually',
     dbField: 'participant_removed_frequency_continually',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    exportLabel: 'Please specify continually',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.06,
     isOtherType: true,
     otherParentField: 'participantRemovedFrequency',
     filterGroups: [ModelViewFilter.IPC]
@@ -397,8 +466,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantRemovedFrequencyOther',
     dbField: 'participant_removed_frequency_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    exportLabel: 'Please specify other',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.07,
     isOtherType: true,
     otherParentField: 'participantRemovedFrequency',
     filterGroups: [ModelViewFilter.IPC]
@@ -408,8 +479,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantRemovedFrequencyNote',
     dbField: 'participant_removed_frequency_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'text',
+    isNote: true,
+    otherParentField: 'participantRemovedFrequency',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 3.08,
     filterGroups: [ModelViewFilter.IPC]
   },
   communicationMethod: {
@@ -417,8 +491,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'CommunicationMethod',
     dbField: 'communication_method',
     label: 'How will you communicate with participants?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 3.09,
     options: {
       IT_TOOL:
         'Manage ongoing communications with participants using an IT tool',
@@ -434,10 +509,12 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   communicationMethodOther: {
     gqlField: 'communicationMethodOther',
     goField: 'CommunicationMethodOther',
-    dbField: 'communication_method',
+    dbField: 'communication_method_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea',
+    exportLabel: 'Please specify other',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.1,
     isOtherType: true,
     otherParentField: 'communicationMethod',
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
@@ -447,8 +524,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'CommunicationNote',
     dbField: 'communication_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    isNote: true,
+    otherParentField: 'communicationMethod',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.11,
     filterGroups: [ModelViewFilter.CBOSC, ModelViewFilter.IPC]
   },
   riskType: {
@@ -456,8 +536,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'RiskType',
     dbField: 'risk_type',
     label: 'What type of risk will the participant assume?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 3.12,
     options: {
       TWO_SIDED: 'Two-sided',
       ONE_SIDED: 'One-sided',
@@ -474,8 +555,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'RiskOther',
     dbField: 'risk_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea',
+    exportLabel: 'Please specify other',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.13,
     isOtherType: true,
     otherParentField: 'riskType'
   },
@@ -484,16 +567,20 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'RiskNote',
     dbField: 'risk_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    isNote: true,
+    otherParentField: 'riskType',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.14
   },
   willRiskChange: {
     gqlField: 'willRiskChange',
     goField: 'WillRiskChange',
     dbField: 'will_risk_change',
     label: 'Will the risk arrangement change as the model progresses?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 3.15,
     options: {
       true: 'Yes',
       false: 'No'
@@ -504,8 +591,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'WillRiskChangeNote',
     dbField: 'will_risk_change_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    isNote: true,
+    otherParentField: 'willRiskChange',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.16
   },
   participantRequireFinancialGuarantee: {
     gqlField: 'participantRequireFinancialGuarantee',
@@ -518,8 +608,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       'Financial guarantees are commitments made by one party, typically a financial institution or a company, to assume responsibility for the payment of a debt or the performance of an obligation if the debtor or obligor fails to fulfill their obligations.',
     readonlyLabel:
       'Are participants required to retain a financial guarantee? If so, are there any limitations on the type?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 4.01,
     isPageStart: true,
     options: {
       true: 'Yes',
@@ -535,8 +626,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantRequireFinancialGuaranteeType',
     dbField: 'participant_require_financial_guarantee_type',
     label: 'If so, are there any limitations on the type?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 4.02,
     options: {
       SURETY_BOND: 'Surety Bond',
       LETTER_OF_CREDIT: 'Letter of Credit',
@@ -547,6 +639,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       OTHER: 'participantRequireFinancialGuaranteeOther'
     },
     isOtherType: true,
+    otherParentField: 'participantRequireFinancialGuarantee',
     filterGroups: [ModelViewFilter.IPC]
   },
   participantRequireFinancialGuaranteeOther: {
@@ -554,8 +647,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantRequireFinancialGuaranteeOther',
     dbField: 'participant_require_financial_guarantee_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 4.03,
     isOtherType: true,
     filterGroups: [ModelViewFilter.IPC]
   },
@@ -564,8 +658,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantRequireFinancialGuaranteeNote',
     dbField: 'participant_require_financial_guarantee_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    isNote: true,
+    otherParentField: 'participantRequireFinancialGuaranteeType',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 4.04,
     filterGroups: [ModelViewFilter.IPC]
   },
   coordinateWork: {
@@ -574,8 +671,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'coordinate_work',
     label: 'Will the participants coordinate the work of others?',
     sublabel: '(e.g. conveners)',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 4.05,
     options: {
       true: 'Yes',
       false: 'No'
@@ -586,16 +684,20 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'CoordinateWorkNote',
     dbField: 'coordinate_work_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    isNote: true,
+    otherParentField: 'coordinateWork',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 4.06
   },
   gainsharePayments: {
     gqlField: 'gainsharePayments',
     goField: 'GainsharePayments',
     dbField: 'gainshare_payments',
     label: 'Will there be gainsharing payments?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 4.07,
     options: {
       true: 'Yes',
       false: 'No'
@@ -616,8 +718,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'GainsharePaymentsTrack',
     dbField: 'gainshare_payments_track',
     label: 'Will you track gainsharing payments?',
-    dataType: 'boolean',
-    formType: 'radio',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 4.08,
     options: {
       true: 'Yes',
       false: 'No'
@@ -633,8 +736,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'GainsharePaymentsEligibility',
     dbField: 'gainshare_payments_eligibility',
     label: 'Are providers eligible to participate in gainsharing arrangements?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 4.09,
     options: {
       ALL_PROVIDERS: 'All providers',
       SOME_PROVIDERS: 'Some providers',
@@ -651,8 +755,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'GainsharePaymentsEligibilityOther',
     dbField: 'gainshare_payments_eligibility_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    exportLabel: 'Please specify other',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 4.1,
     isOtherType: true,
     otherParentField: 'gainsharePaymentsEligibility'
   },
@@ -661,8 +767,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'GainsharePaymentsNote',
     dbField: 'gainshare_payments_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    isNote: true,
+    otherParentField: 'gainsharePayments',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 4.11
   },
   participantsIds: {
     gqlField: 'participantsIds',
@@ -672,8 +781,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     sublabel:
       'Note: If this will be a MIPS or Advanced APM, you need to collect provider TIN-NPIs for participants to benefit from QPP. In addition, CPI vetting needs to be preformed.',
     readonlyLabel: 'Will you collect participant IDs?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 4.12,
     options: {
       CCNS: 'CCNs',
       NPIS: 'NPIs',
@@ -691,8 +801,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantsIdsOther',
     dbField: 'participants_ids_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea',
+    exportLabel: 'Please specify other',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 4.13,
     isOtherType: true,
     otherParentField: 'participantsIds',
     filterGroups: [ModelViewFilter.IDDOC]
@@ -702,8 +814,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ParticipantsIDSNote',
     dbField: 'participants_ids_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    isNote: true,
+    otherParentField: 'participantsIds',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 4.14,
     filterGroups: [ModelViewFilter.IDDOC]
   },
   providerAdditionFrequency: {
@@ -711,8 +826,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderAdditionFrequency',
     dbField: 'provider_addition_frequency',
     label: 'How frequently are providers added?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 5.01,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'providerAdditionFrequencyContinually',
@@ -726,8 +842,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderAdditionFrequencyContinually',
     dbField: 'provide_addition_frequency_continually',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea',
+    exportLabel: 'Please specify continually',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.02,
     isOtherType: true,
     otherParentField: 'providerAdditionFrequency',
     filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
@@ -737,8 +855,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderAdditionFrequencyOther',
     dbField: 'provider_addition_frequency_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea',
+    exportLabel: 'Please specify other',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.03,
     isOtherType: true,
     otherParentField: 'providerAdditionFrequency',
     filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
@@ -748,8 +868,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderAdditionFrequencyNote',
     dbField: 'provider_addition_frequency_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    isNote: true,
+    otherParentField: 'providerAdditionFrequency',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.04,
     filterGroups: [ModelViewFilter.OACT, ModelViewFilter.IPC]
   },
   providerAddMethod: {
@@ -760,8 +883,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     sublabel:
       'Please include details on decision points, timing, and implications of adding them to the model in an additional note.',
     readonlyLabel: 'How will you decide to add providers?',
-    dataType: 'enum',
-    formType: 'multiSelect',
+    exportLabel: 'How will you decide to add providers?',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.MULTISELECT,
+    order: 5.05,
     multiSelectLabel: 'How will you add providers?',
     options: {
       PROSPECTIVELY:
@@ -786,8 +911,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_add_method_other',
     label:
       'Please describe the other method for deciding which providers to add.',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.06,
     isOtherType: true,
     filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
@@ -796,8 +922,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderAddMethodNote',
     dbField: 'provider_add_method_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    isNote: true,
+    otherParentField: 'providerAddMethod',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.07,
     filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerLeaveMethod: {
@@ -806,10 +935,12 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_leave_method',
     label: 'Can providers leave the model? Select all that apply.',
     readonlyLabel: 'Can providers leave the model?',
+    exportLabel: 'Can providers leave the model?',
     sublabel:
       'Please include details on decision points, timing, and implications of leaving the model in an additional note.',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 5.08,
     options: {
       VARIES_BY_TYPE_OF_PROVIDER: 'It varies by type of provider',
       NOT_ALLOWED_TO_LEAVE: 'They are not allowed to leave',
@@ -830,8 +961,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderLeaveMethodOther',
     dbField: 'provider_leave_method_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'textarea',
+    exportLabel: 'Please specify other',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.09,
     isOtherType: true,
     otherParentField: 'providerLeaveMethod',
     filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
@@ -841,8 +974,11 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderLeaveMethodNote',
     dbField: 'provider_leave_method_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    isNote: true,
+    otherParentField: 'providerLeaveMethod',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.1,
     filterGroups: [ModelViewFilter.IPC, ModelViewFilter.OACT]
   },
   providerRemovalFrequency: {
@@ -850,8 +986,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderRemovalFrequency',
     dbField: 'provider_removal_frequency',
     label: 'How frequently are providers removed?',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 5.11,
     options: frequencyOptions,
     optionsRelatedInfo: {
       CONTINUALLY: 'providerRemovalFrequencyContinually',
@@ -863,8 +1000,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderRemovalFrequencyContinually',
     dbField: 'provide_removal_frequency_continually',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    exportLabel: 'Please specify continually',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 5.12,
     isOtherType: true,
     otherParentField: 'providerRemovalFrequency'
   },
@@ -873,8 +1012,10 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderRemovalFrequencyOther',
     dbField: 'provider_removal_frequency_other',
     label: 'Please specify',
-    dataType: 'string',
-    formType: 'text',
+    exportLabel: 'Please specify other',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 5.13,
     isOtherType: true,
     otherParentField: 'providerRemovalFrequency'
   },
@@ -883,16 +1024,20 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderRemovalFrequencyNote',
     dbField: 'provider_removal_frequency_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea'
+    isNote: true,
+    otherParentField: 'providerRemovalFrequency',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.14
   },
   providerOverlap: {
     gqlField: 'providerOverlap',
     goField: 'ProviderOverlap',
     dbField: 'provider_overlap',
     label: 'Will the providers overlap with other models?',
-    dataType: 'enum',
-    formType: 'radio',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.RADIO,
+    order: 5.15,
     options: {
       YES_NEED_POLICIES:
         'Yes, we expect to develop policies to manage the overlaps',
@@ -913,8 +1058,9 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     dbField: 'provider_overlap_hierarchy',
     label:
       'If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.',
-    dataType: 'string',
-    formType: 'textarea',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.16,
     parentRelation: () => participantsAndProviders.providerOverlap,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
@@ -923,23 +1069,72 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     goField: 'ProviderOverlapNote',
     dbField: 'provider_overlap_note',
     label: 'Notes',
-    dataType: 'string',
-    formType: 'textarea',
+    isNote: true,
+    otherParentField: 'providerOverlap',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.17,
     filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
+  },
+  readyForReviewBy: {
+    gqlField: 'readyForReviewBy',
+    goField: 'ReadyForReviewBy',
+    dbField: 'ready_for_review_by',
+    label:
+      'This section of the Model Plan (Participants and providers) is ready for review.',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.TEXT,
+    order: 5.18,
+    tableReference: TableName.USER_ACCOUNT,
+    hideFromReadonly: true
+  },
+  readyForReviewDts: {
+    gqlField: 'readyForReviewDts',
+    goField: 'ReadyForReviewDts',
+    dbField: 'ready_for_review_dts',
+    label: 'Ready for review date',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 5.19,
+    hideFromReadonly: true
+  },
+  readyForClearanceBy: {
+    gqlField: 'readyForClearanceBy',
+    goField: 'ReadyForClearanceBy',
+    dbField: 'ready_for_clearance_by',
+    label:
+      'This section of the Model Plan (Participants and providers) is ready for clearance.',
+    dataType: TranslationDataType.UUID,
+    formType: TranslationFormType.TEXT,
+    order: 5.2,
+    tableReference: TableName.USER_ACCOUNT,
+    hideFromReadonly: true
+  },
+  readyForClearanceDts: {
+    gqlField: 'readyForClearanceDts',
+    goField: 'ReadyForClearanceDts',
+    dbField: 'ready_for_clearance_dts',
+    label: 'Ready for clearance date',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 5.21,
+    hideFromReadonly: true
   },
   status: {
     gqlField: 'status',
     goField: 'Status',
     dbField: 'status',
     label: 'Model Plan status',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 5.22,
     options: {
       READY: 'Ready',
       IN_PROGRESS: 'In progress',
       READY_FOR_REVIEW: 'Ready for review',
       READY_FOR_CLEARANCE: 'Ready for clearance'
-    }
+    },
+    hideFromReadonly: true
   }
 };
 

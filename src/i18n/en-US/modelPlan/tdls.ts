@@ -1,5 +1,10 @@
 import { TranslationTDLs } from 'types/translation';
 
+import {
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
+
 export const tdls: TranslationTDLs = {
   idNumber: {
     gqlField: 'idNumber',
@@ -7,16 +12,18 @@ export const tdls: TranslationTDLs = {
     dbField: 'id_number',
     label: 'ID number',
     sublabel: 'Please include the prefix. Ex. TDL-123456',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.01
   },
   title: {
     gqlField: 'title',
     goField: 'title',
     dbField: 'title',
     label: 'TDL title',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.02
   },
   dateInitiated: {
     gqlField: 'dateInitiated',
@@ -24,8 +31,9 @@ export const tdls: TranslationTDLs = {
     dbField: 'date_initiated',
     label: 'Initiated date',
     sublabel: 'mm/dd/yyyy',
-    dataType: 'date',
-    formType: 'datePicker'
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.03
   },
   note: {
     gqlField: 'note',
@@ -34,8 +42,9 @@ export const tdls: TranslationTDLs = {
     label: 'Optional notes',
     sublabel:
       'Add any details about this TDL that would be helpful to know at a glance',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.04
   }
 };
 

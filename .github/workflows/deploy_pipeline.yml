@@ -16,9 +16,7 @@ jobs:
   build_frontend_assets:
     strategy:
       matrix:
-        # EASI-4179: Temporary disable dev build
-        # env: [dev, test, impl, prod]
-        env: [test, impl, prod]
+        env: [dev, test, impl, prod]
     uses: ./.github/workflows/build_frontend_assets.yml
     with:
       env: ${{ matrix.env }}
@@ -29,13 +27,12 @@ jobs:
     needs: run_tests
     secrets: inherit
 
-  # EASI-4179: Temporary disable deploy_dev
-  # deploy_dev:
-  #   needs: [build_application_images, build_frontend_assets]
-  #   uses: ./.github/workflows/deploy_to_environment.yml
-  #   with:
-  #     env: dev
-  #   secrets: inherit
+  deploy_dev:
+    needs: [build_application_images, build_frontend_assets]
+    uses: ./.github/workflows/deploy_to_environment.yml
+    with:
+      env: dev
+    secrets: inherit
 
   deploy_test:
     needs: [build_application_images, build_frontend_assets]
@@ -45,9 +42,7 @@ jobs:
     secrets: inherit
 
   deploy_impl:
-    # EASI-4179: Temporary disable needs deploy_dev
-    # needs: [deploy_dev, deploy_test]
-    needs: deploy_test
+    needs: [deploy_dev, deploy_test]
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: impl

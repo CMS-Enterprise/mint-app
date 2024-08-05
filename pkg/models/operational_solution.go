@@ -25,6 +25,11 @@ type OperationalSolution struct {
 	Status           OpSolutionStatus        `json:"status" db:"status"`
 }
 
+type OperationalSolutionWithNumberOfSubtasks struct {
+	OperationalSolution
+	NumberOfSubtasks int `json:"numberOfSubtasks" db:"number_of_subtasks"`
+}
+
 // NewOperationalSolution creates a Operation Solution with the required fields
 func NewOperationalSolution(createdBy uuid.UUID, operationalNeedID uuid.UUID) *OperationalSolution {
 	needed := true
@@ -64,4 +69,24 @@ var opSolutionStatusHumanized = map[OpSolutionStatus]string{
 // if a value is not found for the provided status, an empty string is returned
 func (oss OpSolutionStatus) Humanize() string {
 	return opSolutionStatusHumanized[oss]
+}
+
+// GetName returns either the type name from the Possible Operational Solution Table if it is a defined type, or the other name if an other type.
+// if both are nil, it returns an empty string
+func (opSol OperationalSolution) GetName() string {
+	if opSol.SolutionType != nil {
+		if opSol.Name != nil {
+			return *opSol.Name
+		}
+	}
+	if opSol.NameOther != nil {
+		return *opSol.NameOther
+	}
+	return ""
+
+}
+
+// GetIsOther checks if this is a custom need, or a predefined possible operational need
+func (opSol OperationalSolution) GetIsOther() bool {
+	return opSol.SolutionType == nil
 }

@@ -54,12 +54,12 @@ exports[`Daily Digest in Notifications > matches snapshot 1`] = `
       </ul>
       <a
         class="usa-link display width-fit-content"
-        href="/models/1bf249a6-577b-42fd-8dd2-46563e3d1d9e/read-only"
+        href="/models/1bf249a6-577b-42fd-8dd2-46563e3d1d9e/change-history"
       >
         <div
           class="display-flex flex-align-center"
         >
-          View this Model Plan
+          View all recent changes
           <svg
             aria-hidden="true"
             class="usa-icon margin-left-1"

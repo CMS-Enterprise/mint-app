@@ -36,7 +36,7 @@ exports[`The TaskListSideNavActions > matches snapshot 1`] = `
       Remove your Model Plan
     </button>
     <div
-      class="margin-top-4 margin-bottom-7"
+      class="margin-top-4 margin-bottom-6"
     >
       <h4
         class="margin-bottom-1"

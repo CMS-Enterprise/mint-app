@@ -20,26 +20,27 @@ import {
   GetFundingQuery,
   PayRecipient,
   PayType,
-  useGetFundingQuery,
-  useUpdatePaymentsMutation
+  TypedUpdatePaymentsDocument,
+  useGetFundingQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ConfirmLeave from 'components/ConfirmLeave';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import Tooltip from 'components/shared/Tooltip';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -102,9 +103,12 @@ const FundingSource = () => {
     need => need.modifiedDts
   );
 
-  const [update] = useUpdatePaymentsMutation();
+  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
+    id,
+    formikRef
+  });
 
-  const handleFormSubmit = (redirect?: 'next' | 'back' | string) => {
+  const nextPage = () => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.CLAIMS_BASED_PAYMENTS
     );
@@ -113,39 +117,15 @@ const FundingSource = () => {
       PayType.NON_CLAIMS_BASED_PAYMENTS
     );
 
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            if (hasClaimsBasedPayment) {
-              history.push(
-                `/models/${modelID}/task-list/payment/claims-based-payment`
-              );
-            } else if (hasNonClaimBasedPayment) {
-              history.push(
-                `/models/${modelID}/task-list/payment/non-claims-based-payment`
-              );
-            } else {
-              history.push(`/models/${modelID}/task-list/payment/complexity`);
-            }
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+    if (hasClaimsBasedPayment) {
+      history.push(`/models/${modelID}/task-list/payment/claims-based-payment`);
+    } else if (hasNonClaimBasedPayment) {
+      history.push(
+        `/models/${modelID}/task-list/payment/non-claims-based-payment`
+      );
+    } else {
+      history.push(`/models/${modelID}/task-list/payment/complexity`);
+    }
   };
 
   const initialValues: FundingFormType = {
@@ -300,6 +280,12 @@ const FundingSource = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -335,7 +321,7 @@ const FundingSource = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          nextPage();
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -364,6 +350,9 @@ const FundingSource = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
+
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
@@ -502,7 +491,7 @@ const FundingSource = () => {
                             <ITSolutionsWarning
                               id="payment-pay-recipients-warning"
                               onClick={() =>
-                                handleFormSubmit(
+                                history.push(
                                   `/models/${modelID}/task-list/it-solutions`
                                 )
                               }
@@ -546,7 +535,9 @@ const FundingSource = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() => handleFormSubmit('back')}
+                          onClick={() =>
+                            history.push(`/models/${modelID}/task-list`)
+                          }
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -560,16 +551,6 @@ const FundingSource = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

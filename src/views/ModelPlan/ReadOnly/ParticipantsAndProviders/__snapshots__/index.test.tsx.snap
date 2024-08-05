@@ -85,8 +85,53 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             </ul>
           </ul>
         </div>
+        <div
+          class="usa-alert usa-alert--info usa-alert--no-icon flex margin-bottom-3"
+          data-testid="alert"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                There is 1 additional question that is not applicable for this model based on the answers selected in the question above.
+              </span>
+            </p>
+          </div>
+        </div>
+        <div
+          class="margin-bottom-3 mint-collapsable-link"
+        >
+          <button
+            aria-controls="related-who-are-the-participants"
+            aria-expanded="false"
+            class="usa-button usa-button--unstyled mint-no-print"
+            data-testid="related-who-are-the-participants"
+            type="button"
+          >
+            <svg
+              class="usa-icon top-05 margin-right-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+              />
+            </svg>
+            Show other question
+          </button>
+        </div>
       </div>
     </div>
+    <div
+      class=""
+    />
     <div
       class=""
     />
@@ -272,9 +317,9 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
                     data-testid="tooltipBody"
                     id="tooltip-550000"
                     role="tooltip"
-                    title="(e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)"
+                    title="(e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)"
                   >
-                    (e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
+                    (e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
                   </span>
                 </span>
               </span>
@@ -1524,11 +1569,11 @@ exports[`Read Only Model Plan Summary -- Participants And Providers > matches sn
             aria-controls="related-will-the-providers-overlap-with-other-models"
             aria-expanded="false"
             class="usa-button usa-button--unstyled mint-no-print"
-            data-testid="collapsable-link"
+            data-testid="related-will-the-providers-overlap-with-other-models"
             type="button"
           >
             <svg
-              class="usa-icon top-05"
+              class="usa-icon top-05 margin-right-05"
               focusable="false"
               height="1em"
               role="img"

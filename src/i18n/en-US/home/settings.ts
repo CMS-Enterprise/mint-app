@@ -26,6 +26,11 @@ const settings: HomepageSettingsType = {
     description:
       'This searchable table displays models with Fee-for-Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs).'
   },
+  [ViewCustomizationType.MODELS_APPROACHING_CLEARANCE]: {
+    heading: 'Models approaching clearance',
+    description:
+      'This simplified section displays the models within six months of clearance organized chronologically.'
+  },
   [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: {
     heading: 'Models using specific operational solutions',
     description:
@@ -43,6 +48,8 @@ const homepageSettings = {
     'Arrange the content however you wish. You can update this at any time.',
   selection: 'Select which information to display on your homepage.',
   selectionTwo: 'Set the display order for your homepage.',
+  orderUp: 'Order setting up',
+  orderDown: 'Order setting down',
   settings,
   selectSolutions: 'Select solutions',
   updateSolutions: 'Update solutions',
