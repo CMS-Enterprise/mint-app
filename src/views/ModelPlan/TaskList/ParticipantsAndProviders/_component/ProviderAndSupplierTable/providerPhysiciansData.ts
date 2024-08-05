@@ -600,10 +600,10 @@ const NON_PHYSICIANS_SUPPLIERS = [
 //   ...PROVIDER_TYPES_INSTITUTIONAL
 // ];
 
-const tableData = {
+const providerPhysiciansData = {
   NON_PHYSICIANS_SUPPLIERS,
   PHYSICIANS,
   PROVIDER_TYPES_INSTITUTIONAL
 };
 
-export default tableData;
+export default providerPhysiciansData;

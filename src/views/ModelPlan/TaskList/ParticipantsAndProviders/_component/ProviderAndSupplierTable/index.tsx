@@ -1,11 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTable } from 'react-table';
+import { useSortBy, useTable } from 'react-table';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 
 import { ExistingProviderSupplierTypes } from 'i18n/en-US/modelPlan/participantsAndProviders';
+import { getHeaderSortIcon } from 'utils/tableSort';
 
-import tableData from './tableData';
+import providerPhysiciansData from './providerPhysiciansData';
 
 type dataType = {
   providerType: string;
@@ -21,19 +22,18 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
     headerGroups,
     rows,
     prepareRow
-  } = useTable({
-    columns,
-    data
-  });
+  } = useTable(
+    {
+      columns,
+      data
+    },
+    useSortBy
+  );
 
   // Render the UI for your table
   return (
-    <UswdsTable
-      bordered={false}
-      {...getTableProps()}
-      fullWidth
-      caption={modalT('modal.table.caption')}
-    >
+    <UswdsTable bordered={false} {...getTableProps()} fullWidth>
+      <caption className="usa-sr-only">{modalT('modal.table.caption')}</caption>
       <thead>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -41,8 +41,16 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
               <th
                 {...column.getHeaderProps()}
                 className="border-width-2px padding-bottom-1"
+                scope="col"
               >
-                {column.render('Header')}
+                <button
+                  className="usa-button usa-button--unstyled position-relative"
+                  type="button"
+                  {...column.getSortByToggleProps()}
+                >
+                  {column.render('Header')}
+                  {getHeaderSortIcon(column, false)}
+                </button>
               </th>
             ))}
           </tr>
@@ -88,7 +96,7 @@ const ProviderAndSupplierTable = ({
     [modalT, type]
   );
 
-  return <Table columns={columns} data={tableData[type]} />;
+  return <Table columns={columns} data={providerPhysiciansData[type]} />;
 };
 
 export default ProviderAndSupplierTable;
