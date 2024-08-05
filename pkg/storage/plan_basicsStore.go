@@ -2,6 +2,7 @@ package storage
 
 import (
 	_ "embed"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
@@ -98,4 +99,15 @@ func (s *Store) PlanBasicsGetByModelPlanIDLOADER(
 	}
 
 	return basicSlice, nil
+}
+
+// PlanBasicsGetByModelPlanID returns the plan basics for a given model plan id
+func (s *Store) PlanBasicsGetByModelPlanID(modelPlanID uuid.UUID) (*models.PlanBasics, error) {
+	arg := utilitySQL.CreateModelPlanIDQueryMap(modelPlanID)
+
+	planBasics, err := sqlutils.GetProcedure[models.PlanBasics](s, sqlqueries.PlanBasics.GetByModelPlanID, arg)
+	if err != nil {
+		return nil, fmt.Errorf("issue selecting activities by ID with the data loader, %w", err)
+	}
+	return planBasics, nil
 }

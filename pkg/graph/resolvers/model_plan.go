@@ -544,7 +544,7 @@ func ModelPlanShare(
 // It uses a series of status evaluation strategies to determine the suggested phase
 // If no phase is suggested, it returns nil
 func ModelPlanAnticipatedPhase(
-	ctx context.Context,
+	store *storage.Store,
 	modelStatus models.ModelStatus,
 	modelPlanID uuid.UUID,
 ) (*model.PhaseSuggestion, error) {
@@ -554,7 +554,7 @@ func ModelPlanAnticipatedPhase(
 		return nil, nil
 	}
 
-	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlanID)
+	planBasics, err := store.PlanBasicsGetByModelPlanID(modelPlanID)
 	if err != nil {
 		return nil, err
 	}
