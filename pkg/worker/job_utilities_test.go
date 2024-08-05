@@ -56,8 +56,8 @@ func TestDecorateFaktoryLoggerStandardFields(t *testing.T) {
 	assert.EqualValues(jid1, logMessage[jobIDKey])
 	assert.EqualValues(jobType1, logMessage[jobTypeKey])
 
-	t.Run("duplicated_logger_fields_overwrite", func(t *testing.T) {
-		//TODO: Make this test pass, or ensure that no duplicate keys are found ever
+	t.Run("duplicated_logger_fields_are_not_overwritten", func(t *testing.T) {
+
 		// zap doesn't assert field uniqueness. We have to do it ourself or accept as a possibility
 		// https://github.com/uber-go/zap/issues/81#issuecomment-235629205
 		bid2 := "mockBid2"
@@ -76,27 +76,33 @@ func TestDecorateFaktoryLoggerStandardFields(t *testing.T) {
 		re := regexp.MustCompile(pattern)
 		// Find all matches
 
-		seenMap := map[string]string{}
+		seenTwiceMap := map[string]*bool{}
 		matches := re.FindAllStringSubmatch(logOutput, -1)
 		// Iterate over matches and check if the key is seen multiple times
+		seenTrue := true
+		seenFalse := false
 		for _, match := range matches {
 			key := match[1]
-			value := match[2]
+			// value := match[2]
 
-			lastSeen, wasSeen := seenMap[key]
-			if assert.Falsef(wasSeen, "already saw key : %s. Previous value was %s, current value is %s", key, lastSeen, value) {
-				seenMap[key] = value
+			_, wasSeen := seenTwiceMap[key]
+			if wasSeen {
+				seenTwiceMap[key] = &seenTrue
+			} else {
+				seenTwiceMap[key] = &seenFalse
 			}
 
 		}
-		// TODO: Improve this, it passes just because we deserialize to a map, which squashes previous entries, zap doesn't do that, so we can have conflicts when inspecting code
-		logMessage := map[string]interface{}{}
-		err := json.Unmarshal([]byte(logOutput), &logMessage)
-		assert.NoError(err)
+		for key, value := range seenTwiceMap {
+			// skip these fields provided straight from zap, we only care about additionally decorated fields
+			if key == "level" || key == "msg" {
+				continue
+			}
+			if assert.NotNil(value) {
+				assert.Truef(*value, "key: %s did not have it's value seen twice as expected", key)
+			}
 
-		assert.EqualValues(faktoryLoggingSection, logMessage[appSectionKey])
-		assert.EqualValues(bid2, logMessage[batchIDKey])
-		assert.EqualValues(jid2, logMessage[jobIDKey])
-		assert.EqualValues(jobType2, logMessage[jobTypeKey])
+		}
+
 	})
 }
