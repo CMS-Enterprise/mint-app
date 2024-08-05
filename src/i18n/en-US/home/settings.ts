@@ -26,6 +26,11 @@ const settings: HomepageSettingsType = {
     description:
       'This searchable table displays models with Fee-for-Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs).'
   },
+  [ViewCustomizationType.MODELS_APPROACHING_CLEARANCE]: {
+    heading: 'Models approaching clearance',
+    description:
+      'This simplified section displays the models within six months of clearance organized chronologically.'
+  },
   [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: {
     heading: 'Models using specific operational solutions',
     description:

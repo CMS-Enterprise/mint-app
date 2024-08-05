@@ -4,6 +4,7 @@ enum ViewCustomizationType {
   FOLLOWED_MODELS
   MODELS_WITH_CR_TDL
   MODELS_BY_OPERATIONAL_SOLUTION
+  MODELS_APPROACHING_CLEARANCE
 }
 
 type UserViewCustomization {
