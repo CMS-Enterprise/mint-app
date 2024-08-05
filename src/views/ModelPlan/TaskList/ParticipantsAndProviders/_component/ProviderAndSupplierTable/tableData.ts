@@ -522,83 +522,75 @@ const NON_PHYSICIANS_SUPPLIERS = [
   {
     providerType: '73',
     description:
-      'Mass Immunization Roster Billers (Mass Immunizers have to roster bill'
+      'Mass Immunization Roster Billers (Mass Immunizers have to roster bill assigned claims and can only bill for immunizations)'
   },
   {
-    providerType: 'assigned claims and can only bill for immunizations)',
-    description: '74'
+    providerType: '74',
+    description: 'Radiation Therapy Centers'
   },
   {
-    providerType: 'Radiation Therapy Centers',
-    description: '75'
+    providerType: '75',
+    description: 'Slide Preparation Facilities'
   },
   {
-    providerType: 'Slide Preparation Facilities',
-    description: '80'
+    providerType: '80',
+    description: 'Licensed Clinical Social Worker'
   },
   {
-    providerType: 'Licensed Clinical Social Worker',
-    description: '88'
+    providerType: '88',
+    description: 'Unknown Provider'
   },
   {
-    providerType: 'Unknown Provider',
-    description: '89'
+    providerType: '89',
+    description: 'Certified Clinical Nurse Specialist'
   },
   {
-    providerType: 'Certified Clinical Nurse Specialist',
-    description: '95'
+    providerType: '95',
+    description: 'Unknown Supplier'
   },
   {
-    providerType: 'Unknown Supplier',
-    description: '97'
+    providerType: '97',
+    description: 'Physician Assistant'
   },
   {
-    providerType: 'Physician Assistant',
-    description: 'A5'
+    providerType: 'A5',
+    description: 'Pharmacy'
   },
   {
-    providerType: 'Pharmacy',
-    description: 'C1'
+    providerType: 'C1',
+    description: 'Centralized Flu'
   },
   {
-    providerType: 'Centralized Flu',
-    description: 'C2'
+    providerType: 'C2',
+    description: 'Indirect Payment Procedure'
   },
   {
-    providerType: 'Indirect Payment Procedure',
-    description: 'C4'
+    providerType: 'C4',
+    description: 'Restricted use'
   },
   {
-    providerType: 'Restricted use',
-    description: 'D1'
+    providerType: 'D1',
+    description: 'Medicare Diabetes Prevention Program'
   },
   {
-    providerType: 'Medicare Diabetes Prevention Program',
-    description: 'D2'
+    providerType: 'D2',
+    description: 'Restricted Use'
   },
   {
-    providerType: 'Restricted Use',
-    description: 'D5'
+    providerType: 'D5',
+    description: 'Opioid Treatment Program'
   },
   {
-    providerType: 'Opioid Treatment Program',
-    description: 'D6'
+    providerType: 'D6',
+    description: 'Home Infusion Therapy Services'
   },
   {
-    providerType: 'Home Infusion Therapy Services',
-    description: 'E1'
+    providerType: 'E1',
+    description: 'Marriage and Family Therapist'
   },
   {
-    providerType: 'Marriage and Family Therapist',
-    description: 'E2'
-  },
-  {
-    providerType: 'Mental Health Counselor',
-    description: ''
-  },
-  {
-    providerType: '',
-    description: ''
+    providerType: 'E2',
+    description: 'Mental Health Counselor'
   }
 ];
 
@@ -608,10 +600,10 @@ const NON_PHYSICIANS_SUPPLIERS = [
 //   ...PROVIDER_TYPES_INSTITUTIONAL
 // ];
 
-const data = {
+const tableData = {
   NON_PHYSICIANS_SUPPLIERS,
   PHYSICIANS,
   PROVIDER_TYPES_INSTITUTIONAL
 };
 
-export default data;
+export default tableData;
