@@ -50,14 +50,19 @@ func TranslateAudit(
 		return nil, nil
 	}
 
+	logger.Info("translating audit")
 	translatedAuditWithFields, err := genericAuditTranslation(ctx, store, auditWithModelPlan)
 	if err != nil {
-		return nil, fmt.Errorf("issue translating audit. %w", err)
+		err = fmt.Errorf("issue translating audit. %w", err)
+		logger.Error(err.Error(), zap.Error(err))
+		return nil, err
 	}
 
 	retTranslatedChanges, err := saveTranslatedAuditAndFields(store, translatedAuditWithFields)
 	if err != nil {
-		return nil, fmt.Errorf("issue saving translated audit. %w", err)
+		err = fmt.Errorf("issue saving translated audit. %w", err)
+		logger.Error(err.Error(), zap.Error(err))
+		return nil, err
 	}
 
 	return retTranslatedChanges, err

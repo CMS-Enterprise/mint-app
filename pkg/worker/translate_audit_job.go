@@ -19,7 +19,6 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 	/*
 		// Future Enhancement: the job is wrapped in panic protection when it is registered, BUT it won't update the queue on a panic. If desired we can also defer the panic here, and try to enable the recover on the parent function to update the queue item
 		// defer apperrors.RecoverPanicAsErrorFunction(&returnedError)
-		// fmt.Printf("translating audit job reached. Args %v", args)
 	*/
 
 	// Note, this will panic if the context doesn't have a faktory job context it will panic.
