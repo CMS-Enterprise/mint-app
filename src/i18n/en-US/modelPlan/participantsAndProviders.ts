@@ -1181,6 +1181,7 @@ export const participantsAndProvidersMisc: Record<string, string | object> = {
       caption: 'Below is a list of existing provider/supplier types.',
       headers: {
         providerType: 'Provider Type',
+        specialtyCode: 'Specialty Code',
         description: 'Description'
       }
     }

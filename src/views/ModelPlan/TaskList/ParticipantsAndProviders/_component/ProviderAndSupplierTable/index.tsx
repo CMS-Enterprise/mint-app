@@ -1,12 +1,17 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSortBy, useTable } from 'react-table';
+import { useTable } from 'react-table';
 
 import { ExistingProviderSupplierTypes } from 'i18n/en-US/modelPlan/participantsAndProviders';
 
-import data from './data';
+import tableData from './tableData';
 
-function Table({ columns, data }) {
+type dataType = {
+  providerType: string;
+  description: string;
+};
+
+function Table({ columns, data }: { columns: any; data: dataType[] }) {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -57,18 +62,21 @@ const ProviderAndSupplierTable = ({
   const columns = React.useMemo(
     () => [
       {
-        Header: 'providerType',
+        Header:
+          type === ExistingProviderSupplierTypes.PROVIDER_TYPES_INSTITUTIONAL
+            ? modalT('modal.table.headers.providerType')
+            : modalT('modal.table.headers.specialtyCode'),
         accessor: 'providerType'
       },
       {
-        Header: 'description',
+        Header: modalT('modal.table.headers.description'),
         accessor: 'description'
       }
     ],
-    []
+    [modalT, type]
   );
 
-  return <Table columns={columns} data={data[type]} />;
+  return <Table columns={columns} data={tableData[type]} />;
 };
 
 export default ProviderAndSupplierTable;
