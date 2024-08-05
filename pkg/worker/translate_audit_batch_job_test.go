@@ -55,7 +55,7 @@ func (suite *WorkerSuite) TestTranslateAuditBatchJob() {
 			if len(currentJob.Args) == 2 {
 				suite.IsType(float64(0), currentJob.Args[0], "the translated audit job is not a float64, it is type %T", currentJob.Args[0])
 
-				suite.IsType("string", currentJob.Args[1], "the translated audit job is not a string, it is type %T", currentJob.Args[0])
+				suite.IsType("string", currentJob.Args[1], "the translated audit job is not a string, it is type %T", currentJob.Args[1])
 				_, err4 := uuid.Parse(fmt.Sprint(currentJob.Args[1]))
 				suite.NoError(err4, "%v, cannot be parsed to a UUID", currentJob.Args[1])
 

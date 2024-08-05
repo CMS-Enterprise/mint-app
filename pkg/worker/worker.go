@@ -65,6 +65,13 @@ const (
 	aggregatedDigestEmailJobName   string = "AggregatedDigestEmailJob"
 )
 
+const (
+	modelStatusUpdateCronJobName         string = "ModelStatusUpdateCronJob"
+	modelStatusUpdateBatchJobName        string = "ModelStatusUpdateBatchJob"
+	modelStatusUpdateBatchJobSuccessName string = "ModelStatusUpdateBatchJobSuccess"
+	modelStatusUpdateJobName             string = "ModelStatusUpdateJob"
+)
+
 // Work creates, configures, and starts worker
 func (w *Worker) Work() {
 	if !w.ProcessJobs {
@@ -95,6 +102,11 @@ func (w *Worker) Work() {
 	mgr.Register(translateAuditBatchJobName, JobWithPanicProtection(w.TranslateAuditBatchJob))
 	mgr.Register(translateAuditBatchJobSuccessName, JobWithPanicProtection(w.TranslateAuditBatchJobSuccess))
 	mgr.Register(translateAuditJobName, JobWithPanicProtection(w.TranslateAuditJob))
+
+	mgr.Register(modelStatusUpdateCronJobName, JobWithPanicProtection(w.ModelStatusUpdateCronJob))
+	mgr.Register(modelStatusUpdateBatchJobName, JobWithPanicProtection(w.ModelStatusUpdateBatchJob))
+	mgr.Register(modelStatusUpdateBatchJobSuccessName, JobWithPanicProtection(w.ModelStatusUpdateBatchJobSuccess))
+	mgr.Register(modelStatusUpdateJobName, JobWithPanicProtection(w.ModelStatusUpdateJob))
 
 	/**********************
 	* //Future Enhancement
