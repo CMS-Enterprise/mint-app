@@ -366,4 +366,18 @@ describe('Notification Center', () => {
       'You are already unsubscribed from email notifications when model dates change.'
     );
   });
+
+  it('tests model plan status update from email', () => {
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/');
+    cy.clickPlanTableByName('Empty Plan');
+
+    cy.url().then(url => {
+      cy.visit(`${url}?model-status=ACTIVE`);
+    });
+
+    cy.get('[data-testid="alert"]').contains(
+      'You have successfully updated the status to Active.'
+    );
+  });
 });

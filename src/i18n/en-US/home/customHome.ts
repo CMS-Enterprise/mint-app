@@ -36,6 +36,13 @@ const settings: HomepageSettingsType = {
     noResultsDescription:
       'Once a FFS CR or TDL plan is created, it will appear here.'
   },
+  [ViewCustomizationType.MODELS_APPROACHING_CLEARANCE]: {
+    heading: 'Models approaching clearance',
+    description:
+      'These models are scheduled for clearance within the next six months.',
+    noResultsHeading: 'There are no Models approaching clearance.',
+    noResultsDescription: 'Check back later.'
+  },
   [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: {
     heading: 'Models using specific operational solutions',
     description:

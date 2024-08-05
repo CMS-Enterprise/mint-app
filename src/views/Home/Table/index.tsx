@@ -47,13 +47,19 @@ import './index.scss';
 type AllModelPlansType = GetModelPlansQuery['modelPlanCollection'][0];
 type CollaboratorsType = GetModelPlansQuery['modelPlanCollection'][0]['collaborators'][0];
 
+type HomeTableTypes =
+  | ViewCustomizationType.ALL_MODEL_PLANS
+  | ViewCustomizationType.MODELS_WITH_CR_TDL
+  | ViewCustomizationType.MY_MODEL_PLANS
+  | ViewCustomizationType.FOLLOWED_MODELS;
+
 type CRTDLType =
   | GetCrtdLsQuery['modelPlan']['crs'][0]
   | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 type ModelPlansTableProps = {
   id: string;
-  type: ViewCustomizationType;
+  type: HomeTableTypes;
   updateFavorite?: (modelPlanID: string, type: UpdateFavoriteProps) => void;
   hiddenColumns?: number[]; // indexes of columns to be hidden
   canSearch?: boolean;
@@ -110,7 +116,7 @@ const ModelPlansTable = ({
       'recentActivity'
     ];
 
-    const tableColumns: Record<ViewCustomizationType, string[]> = {
+    const tableColumns: Record<HomeTableTypes, string[]> = {
       [ViewCustomizationType.MY_MODEL_PLANS]: [...homeColumns],
       [ViewCustomizationType.ALL_MODEL_PLANS]: [
         ...(!isHome ? ['isFavorite'] : []),
@@ -126,8 +132,7 @@ const ModelPlansTable = ({
         'demoCode',
         'crTdls',
         'modelPoc'
-      ],
-      [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: [...homeColumns]
+      ]
     };
 
     const columnOptions: Record<string, Column> = {
