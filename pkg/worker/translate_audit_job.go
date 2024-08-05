@@ -8,7 +8,6 @@ import (
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/translatedaudit"
 )
@@ -25,8 +24,9 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 
 	// Note, this will panic if the context doesn't have a faktory job context it will panic.
 	helper := faktory_worker.HelperFor(ctx)
+	logger := loggerWithFaktoryFields(w.Logger, helper)
 
-	w.Logger.Info("translating job reached.", zap.Any("args", args), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
+	logger.Info("translating job reached")
 	if len(args) < 2 {
 		return fmt.Errorf("no arguments were provided for this translateAuditJob")
 	}
@@ -43,9 +43,9 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 		return fmt.Errorf("unable to convert argument  ( %v )to an uuid as expected for translated_audit_queue_id for the translate audit job. Err %w", args[1], err)
 	}
 
-	sugaredLogger := w.Logger.With(zap.Any("auditID", auditID), zap.Any("queueID", queueID), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
+	logger = logger.With(auditChangeIDZapField(auditID), TranslatedAuditQueueIDZapField(queueID))
 
-	_, translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, sugaredLogger, auditID, queueID)
+	_, translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, logger, auditID, queueID)
 	if translationErr != nil {
 		return translationErr
 	}

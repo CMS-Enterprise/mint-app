@@ -42,7 +42,7 @@ func JIDZapField(jid string) zapcore.Field {
 func JobTypeZapField(jobType string) zapcore.Field {
 	return zap.String(jobTypeKey, jobType)
 }
-func TranslatedAuditIDZapField(translatedAuditQueueID uuid.UUID) zapcore.Field {
+func TranslatedAuditQueueIDZapField(translatedAuditQueueID uuid.UUID) zapcore.Field {
 	return zap.Any(translatedAuditQueueIDKey, translatedAuditQueueID)
 }
 func auditChangeIDZapField(changeID interface{}) zapcore.Field {

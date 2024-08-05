@@ -43,7 +43,7 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 // QueueTranslatedAuditJob takes a given queueObj and creates a job as part of the provided batch
 func QueueTranslatedAuditJob(w *Worker, logger *zap.Logger, batch *faktory.Batch, queueObj *models.TranslatedAuditQueue) (*models.TranslatedAuditQueue, error) {
 	// Wrap everything in a transaction, so if the job doesn't push, the queue entry doesn't get updated, (so it will be picked up in another job)
-	logger = logger.With(TranslatedAuditIDZapField(queueObj.ID), auditChangeIDZapField(queueObj.ChangeID), auditQueueAttemptsField(queueObj.Attempts))
+	logger = logger.With(TranslatedAuditQueueIDZapField(queueObj.ID), auditChangeIDZapField(queueObj.ChangeID), auditQueueAttemptsField(queueObj.Attempts))
 	return sqlutils.WithTransaction[models.TranslatedAuditQueue](w.Store, func(tx *sqlx.Tx) (*models.TranslatedAuditQueue, error) {
 		queueObj.Status = models.TPSQueued
 		logger.Info("queuing job for translated audit.", zap.Any("queue entry", queueObj))

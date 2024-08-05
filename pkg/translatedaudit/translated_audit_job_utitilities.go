@@ -18,6 +18,7 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 
 	queueEntry, err := storage.TranslatedAuditQueueGetByID(store, queueID)
 	if err != nil {
+		// We only warn here because there could be inconsistencies caused by timing, and not something that needs alerting
 		logger.Warn(err.Error(), zap.Error(err))
 		return nil, err
 	}
@@ -26,7 +27,7 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 
 	queueEntry, err = TranslatedAuditQueueUpdate(store, logger, queueEntry, constants.GetSystemAccountUUID())
 	if err != nil {
-		logger.Warn(err.Error(), zap.Error(err))
+		logger.Error(err.Error(), zap.Error(err))
 		return nil, err
 	}
 
@@ -53,7 +54,7 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 	_, err = TranslatedAuditQueueUpdate(store, logger, queueEntry, constants.GetSystemAccountUUID())
 	if err != nil {
 		finalErr := fmt.Errorf("unable to return final translatedAuditQueue entry, err: %w", err)
-		logger.Warn(finalErr.Error(), zap.Error(finalErr))
+		logger.Error(finalErr.Error(), zap.Error(finalErr))
 		return nil, finalErr
 	}
 	return translatedAuditAndFields, nil
