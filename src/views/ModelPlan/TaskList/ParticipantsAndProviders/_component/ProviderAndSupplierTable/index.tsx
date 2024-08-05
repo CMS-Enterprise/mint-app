@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable } from 'react-table';
+import { Table as UswdsTable } from '@trussworks/react-uswds';
 
 import { ExistingProviderSupplierTypes } from 'i18n/en-US/modelPlan/participantsAndProviders';
 
@@ -12,6 +13,7 @@ type dataType = {
 };
 
 function Table({ columns, data }: { columns: any; data: dataType[] }) {
+  const { t: modalT } = useTranslation('participantsAndProvidersMisc');
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -26,12 +28,22 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
 
   // Render the UI for your table
   return (
-    <table {...getTableProps()}>
+    <UswdsTable
+      bordered={false}
+      {...getTableProps()}
+      fullWidth
+      caption={modalT('modal.table.caption')}
+    >
       <thead>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              <th
+                {...column.getHeaderProps()}
+                className="border-width-2px padding-bottom-1"
+              >
+                {column.render('Header')}
+              </th>
             ))}
           </tr>
         ))}
@@ -48,7 +60,7 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
           );
         })}
       </tbody>
-    </table>
+    </UswdsTable>
   );
 }
 
