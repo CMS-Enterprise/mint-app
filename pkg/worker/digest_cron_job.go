@@ -14,7 +14,7 @@ func (w *Worker) DigestCronJob(ctx context.Context, args ...interface{}) error {
 
 	// Call AnalyzedAuditBatchJob
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := decorateFaktoryLoggerStandardFieldsWithHelper(w.Logger, helper, true)
+	sugaredLogger := loggerWithFaktoryFieldsAndBatchID(w.Logger, helper)
 	sugaredLogger.Info("creating Daily Analyzed Audit Cron Job")
 
 	return helper.With(func(cl *faktory.Client) error {

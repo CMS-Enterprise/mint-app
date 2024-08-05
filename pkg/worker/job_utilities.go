@@ -4,21 +4,29 @@ import (
 	"context"
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
+	"github.com/google/uuid"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 )
 
-const faktoryLoggingSection string = "faktory"
-const appSectionKey string = "app_section"
-
 // faktoryAppSectionField provides the zap field for specifying the part of the application is faktory
 var faktoryAppSectionField = zap.String(appSectionKey, faktoryLoggingSection)
 
-const batchIDKey string = "BID"
-const jobIDKey string = "JID"
-const jobTypeKey string = "job_type"
+// these constants represents the keys to get these data fields out of a zap logger.
+const (
+	faktoryLoggingSection string = "faktory"
+	appSectionKey         string = "app_section"
+
+	batchIDKey string = "BID"
+	jobIDKey   string = "JID"
+	jobTypeKey string = "job_type"
+
+	translatedAuditQueueIDKey = "translated_audit_queue_id"
+	auditQueueAttemptsKey     = "audit_queue_attempts"
+	auditChangeKey            = "change_id"
+)
 
 // BIDZapField returns the zap core field for a worker BatchID
 func BIDZapField(bid string) zapcore.Field {
@@ -33,6 +41,15 @@ func JIDZapField(jid string) zapcore.Field {
 // JobTypeZapField returns the zap core field for a worker job type
 func JobTypeZapField(jobType string) zapcore.Field {
 	return zap.String(jobTypeKey, jobType)
+}
+func TranslatedAuditIDZapField(translatedAuditQueueID uuid.UUID) zapcore.Field {
+	return zap.Any(translatedAuditQueueIDKey, translatedAuditQueueID)
+}
+func auditChangeIDZapField(changeID interface{}) zapcore.Field {
+	return zap.Any(auditChangeKey, changeID)
+}
+func auditQueueAttemptsField(attempts interface{}) zapcore.Field {
+	return zap.Any(auditQueueAttemptsKey, attempts)
 }
 
 // JobWithPanicProtection wraps a faktory Job in a wrapper function that will return an error instead of stopping the application.
@@ -49,12 +66,22 @@ func JobWithPanicProtection(jobFunc faktory_worker.Perform) faktory_worker.Perfo
 
 }
 
-// decorateFaktoryLoggerStandardFieldsWithHelper decorated a faktory logger with standard fields using a faktory worker helper to provide the JID and BID
-func decorateFaktoryLoggerStandardFieldsWithHelper(logger *zap.Logger, helper faktory_worker.Helper, includeBID bool, extraFields ...zapcore.Field) *zap.Logger {
+// loggerWithFaktoryFields decorated a faktory logger with standard fields using a faktory worker helper to provide the JID and BID
+func loggerWithFaktoryFields(
+	logger *zap.Logger,
+	helper faktory_worker.Helper,
+	extraFields ...zapcore.Field,
+) *zap.Logger {
 
-	if includeBID {
-		extraFields = append(extraFields, BIDZapField(helper.Bid()))
-	}
+	return decorateFaktoryLoggerStandardFields(logger, helper.Jid(), helper.JobType(), extraFields...)
+}
+func loggerWithFaktoryFieldsAndBatchID(
+	logger *zap.Logger,
+	helper faktory_worker.Helper,
+	extraFields ...zapcore.Field,
+) *zap.Logger {
+
+	extraFields = append(extraFields, BIDZapField(helper.Bid()))
 	return decorateFaktoryLoggerStandardFields(logger, helper.Jid(), helper.JobType(), extraFields...)
 }
 

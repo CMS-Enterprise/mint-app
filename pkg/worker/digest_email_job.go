@@ -67,7 +67,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 // args[0] date
 func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	help := faktory_worker.HelperFor(ctx)
-	w.Logger.Info("Digest Email Batch Job Succeeded", zap.Any("JID", help.Jid()), zap.Any("BID", help.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
+	w.Logger.Info("Digest Email Batch Job Succeeded", JIDZapField(help.Jid()), BIDZapField(help.Bid()), faktoryAppSectionField)
 	// TODO: Add notification here if wanted in the future
 	return nil
 }
@@ -87,7 +87,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := decorateFaktoryLoggerStandardFieldsWithHelper(w.Logger, helper, true, zap.Any("date", dateAnalyzed), zap.Any("userID", userID))
+	sugaredLogger := loggerWithFaktoryFieldsAndBatchID(w.Logger, helper, zap.Any("date", dateAnalyzed), zap.Any("userID", userID))
 	sugaredLogger.Info("preparing to send daily digest email")
 	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
 		return storage.UserNotificationPreferencesGetByUserID(w.Store, user_id)
@@ -109,7 +109,7 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := decorateFaktoryLoggerStandardFieldsWithHelper(w.Logger, helper, true, zap.Any("date", dateAnalyzed))
+	sugaredLogger := loggerWithFaktoryFieldsAndBatchID(w.Logger, helper, zap.Any("date", dateAnalyzed))
 	sugaredLogger.Info("preparing to send aggregated digest email")
 	err = AggregatedDigestEmailJob(
 		dateAnalyzed,
