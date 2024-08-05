@@ -28,10 +28,6 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 
 	helper := faktory_worker.HelperFor(ctx)
 
-	//TODO: try to make the logger able to check if a field is duplicated, and just overwrite instead
-	// sugaredLogger := decorateFaktoryLoggerStandardFieldsWithHelper(w.Logger, helper)
-	// sugaredLogger.Info("getting collection of unique userIds that have favorited a model")
-
 	w.Logger.Info("getting collection of unique userIds that have favorited a model", zap.Any("JID", helper.Jid()))
 
 	userIDs, err := w.Store.PlanFavoriteCollectionGetUniqueUserIDs()
