@@ -1,10 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePagination, useSortBy, useTable } from 'react-table';
-import { Pagination, Table as UswdsTable } from '@trussworks/react-uswds';
+import { Table as UswdsTable } from '@trussworks/react-uswds';
 
 import TablePagination from 'components/TablePagination';
-import getVisiblePages from 'components/TablePagination/util';
 import { ExistingProviderSupplierTypes } from 'i18n/en-US/modelPlan/participantsAndProviders';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
@@ -27,6 +26,10 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
     page,
     pageOptions,
     previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageCount,
+    setPageSize,
     // setGlobalFilter,
     state,
     prepareRow
@@ -83,23 +86,9 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
             );
           })}
         </tbody>
-
-        {/* <tbody {...getTableBodyProps()}>
-          {page.map(row => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody> */}
       </UswdsTable>
-      {/* <TablePagination
+      <TablePagination
+        className="flex-justify-start"
         gotoPage={gotoPage}
         previousPage={previousPage}
         nextPage={nextPage}
@@ -111,18 +100,6 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
         pageSize={state.pageSize}
         setPageSize={setPageSize}
         page={[]}
-      /> */}
-      {console.log(state.pageIndex)}
-      {getVisiblePages(state.pageIndex + 1, pageOptions.length)}
-      <Pagination
-        pathname=""
-        onClickPageNumber={() => gotoPage(state.pageIndex - 1)}
-        className="flex-justify-start"
-        currentPage={state.pageIndex + 1}
-        // maxSlots={pageOptions.length}
-        onClickNext={() => nextPage()}
-        onClickPrevious={() => previousPage()}
-        totalPages={pageOptions.length}
       />
     </>
   );
