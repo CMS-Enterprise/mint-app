@@ -38,9 +38,13 @@ const CalendarDate = ({
           </span>
         </time>
       </div>
-      <UswdsReactLink to={link} className="display-flex flex-align-center">
-        <h4 className="usa-collection__heading">{linkText}</h4>
-        <Icon.ArrowForward />
+      <UswdsReactLink to={link}>
+        <span>
+          <h4 className="usa-collection__heading display-inline margin-right-1">
+            {linkText}
+          </h4>
+          <Icon.ArrowForward className="top-3px" />
+        </span>
       </UswdsReactLink>
     </div>
   );

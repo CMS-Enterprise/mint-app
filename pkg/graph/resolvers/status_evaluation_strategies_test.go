@@ -31,7 +31,7 @@ func (suite *ResolverSuite) TestICIPCompleteStrategy_NoUpdate() {
 	}
 
 	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.NotNil(suggestedPhase)
+	suite.Nil(suggestedPhase)
 }
 
 func (suite *ResolverSuite) TestClearanceStartStrategy_Update() {
@@ -62,7 +62,7 @@ func (suite *ResolverSuite) TestClearanceStartStrategy_NoUpdate() {
 	}
 
 	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.NotNil(suggestedPhase)
+	suite.Nil(suggestedPhase)
 }
 
 func (suite *ResolverSuite) TestClearanceEndStrategy_Update() {
@@ -90,7 +90,7 @@ func (suite *ResolverSuite) TestClearanceEndStrategy_NoUpdate() {
 	}
 
 	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.NotNil(suggestedPhase)
+	suite.Nil(suggestedPhase)
 }
 
 func (suite *ResolverSuite) TestAnnounceStrategy_Update() {
@@ -117,7 +117,7 @@ func (suite *ResolverSuite) TestAnnounceStrategy_NoUpdate() {
 	}
 
 	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.NotNil(suggestedPhase)
+	suite.Nil(suggestedPhase)
 }
 
 func (suite *ResolverSuite) TestActiveStrategy_Update() {
@@ -145,7 +145,7 @@ func (suite *ResolverSuite) TestActiveStrategy_NoUpdate() {
 	}
 
 	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.NotNil(suggestedPhase)
+	suite.Nil(suggestedPhase)
 }
 
 func (suite *ResolverSuite) TestEndedStrategy_Update() {
@@ -173,5 +173,5 @@ func (suite *ResolverSuite) TestEndedStrategy_NoUpdate() {
 	}
 
 	suggestedPhase := strategy.Evaluate(modelPlanStatus, planBasics)
-	suite.NotNil(suggestedPhase)
+	suite.Nil(suggestedPhase)
 }
