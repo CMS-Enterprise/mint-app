@@ -105,8 +105,8 @@ func CreateTranslatedAuditBatch(w *Worker, logger *zap.Logger, cl *faktory.Clien
 // TranslateAuditBatchJobSuccess is the call back that gets called when the TranslatedAuditBatchJob Completes
 func (w *Worker) TranslateAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := loggerWithFaktoryFields(w.Logger, helper)
-	sugaredLogger.Info("Digest Email Batch Job Succeeded")
+	logger := loggerWithFaktoryFields(w.Logger, helper)
+	logger.Info("Digest Email Batch Job Succeeded")
 	//  Add notification here if wanted in the future
 	return nil
 }
