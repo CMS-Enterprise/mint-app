@@ -238,7 +238,7 @@ func (s *Store) PlanDiscussionByID(_ *zap.Logger, id uuid.UUID) (*models.PlanDis
 	return discussion, nil
 }
 
-// PlanDiscussionByID retrieves the plan discussion for a given id, and also returns the number of replies the discussion has
+// PlanDiscussionByIDWithNumberOfReplies retrieves the plan discussion for a given id, and also returns the number of replies the discussion has
 func PlanDiscussionByIDWithNumberOfReplies(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID, timeToCheck time.Time) (*models.PlanDiscussionWithNumberOfReplies, error) {
 	args := map[string]interface{}{
 		"id":            id,
