@@ -1,8 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSortBy, useTable } from 'react-table';
-import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { usePagination, useSortBy, useTable } from 'react-table';
+import { Pagination, Table as UswdsTable } from '@trussworks/react-uswds';
 
+import TablePagination from 'components/TablePagination';
+import getVisiblePages from 'components/TablePagination/util';
 import { ExistingProviderSupplierTypes } from 'i18n/en-US/modelPlan/participantsAndProviders';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
@@ -19,56 +21,110 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
   const {
     getTableProps,
     getTableBodyProps,
+    gotoPage,
     headerGroups,
-    rows,
+    nextPage,
+    page,
+    pageOptions,
+    previousPage,
+    // setGlobalFilter,
+    state,
     prepareRow
   } = useTable(
     {
       columns,
-      data
+      data,
+      initialState: { pageIndex: 0 }
     },
-    useSortBy
+    useSortBy,
+    usePagination
   );
 
   // Render the UI for your table
   return (
-    <UswdsTable bordered={false} {...getTableProps()} fullWidth>
-      <caption className="usa-sr-only">{modalT('modal.table.caption')}</caption>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th
-                {...column.getHeaderProps()}
-                className="border-width-2px padding-bottom-1"
-                scope="col"
-              >
-                <button
-                  className="usa-button usa-button--unstyled position-relative"
-                  type="button"
-                  {...column.getSortByToggleProps()}
+    <>
+      <UswdsTable bordered={false} {...getTableProps()} fullWidth>
+        <caption className="usa-sr-only">
+          {modalT('modal.table.caption')}
+        </caption>
+        <thead>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th
+                  {...column.getHeaderProps()}
+                  className="border-width-2px padding-bottom-1"
+                  scope="col"
                 >
-                  {column.render('Header')}
-                  {getHeaderSortIcon(column, false)}
-                </button>
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-              })}
+                  <button
+                    className="usa-button usa-button--unstyled position-relative"
+                    type="button"
+                    {...column.getSortByToggleProps()}
+                  >
+                    {column.render('Header')}
+                    {getHeaderSortIcon(column, false)}
+                  </button>
+                </th>
+              ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </UswdsTable>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+
+        {/* <tbody {...getTableBodyProps()}>
+          {page.map(row => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody> */}
+      </UswdsTable>
+      {/* <TablePagination
+        gotoPage={gotoPage}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        canNextPage={canNextPage}
+        pageIndex={state.pageIndex}
+        pageOptions={pageOptions}
+        canPreviousPage={canPreviousPage}
+        pageCount={pageCount}
+        pageSize={state.pageSize}
+        setPageSize={setPageSize}
+        page={[]}
+      /> */}
+      {console.log(state.pageIndex)}
+      {getVisiblePages(state.pageIndex + 1, pageOptions.length)}
+      <Pagination
+        pathname=""
+        onClickPageNumber={() => gotoPage(state.pageIndex - 1)}
+        className="flex-justify-start"
+        currentPage={state.pageIndex + 1}
+        // maxSlots={pageOptions.length}
+        onClickNext={() => nextPage()}
+        onClickPrevious={() => previousPage()}
+        totalPages={pageOptions.length}
+      />
+    </>
   );
 }
 
