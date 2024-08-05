@@ -17,7 +17,7 @@ var modelStatusUpdateJobMaxRetry = 2
 // It will batch all child jobs, and when complete it will fire a callback
 func (w *Worker) ModelStatusUpdateBatchJob(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := w.Logger.With(zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
+	sugaredLogger := w.Logger.With(zap.Any("JID", helper.Jid()), zap.Any(appSectionKey, faktoryLoggingSection))
 	sugaredLogger.Info("Getting collection of model plans that require status checking")
 
 	// TODO: Implement the logic to return the models to check? Or do we check every model plan?
@@ -36,7 +36,7 @@ func CreateModelStatusUpdateBatch(logger *zap.Logger, w *Worker, cl *faktory.Cli
 	batch.Description = "Check if model status should be updated"
 	batch.Success = faktory.NewJob(modelStatusUpdateBatchJobSuccessName)
 	batch.Success.Queue = criticalQueue
-	// TODO: verify this overides the parent BID
+
 	sugaredLogger := logger.With(zap.Any("BID", batch.Bid))
 
 	err := batch.Jobs(func() error {
@@ -62,7 +62,7 @@ func CreateModelStatusJobInBatch(logger *zap.Logger, w *Worker, batch *faktory.B
 	sugaredLogger := logger.With(zap.Any("modelPlanID", plan.ID))
 	sugaredLogger.Info("creating job for model status update.")
 	job := faktory.NewJob(modelStatusUpdateJobName, plan.ID)
-	//TODO: verify, do we want to just use the critical queue? Or should we generate another queue for this? Or perhaps choose a different existing queue?
+	//TODO: (MINT-3036) verify, if this should use the critical queue? Or should we generate another queue for this?
 	job.Queue = criticalQueue
 	job.Retry = &modelStatusUpdateJobMaxRetry
 	err := batch.Push(job)
