@@ -98,6 +98,12 @@ type OperationalSolutionTranslation struct {
 	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
+// PhaseSuggestion is a suggestion response for a potential next phase and corresponding statuses for a model plan
+type PhaseSuggestion struct {
+	Phase             ModelPhase           `json:"phase"`
+	SuggestedStatuses []models.ModelStatus `json:"suggestedStatuses"`
+}
+
 // Represents plan basics translation data
 type PlanBasicsTranslation struct {
 	ModelCategory             models.TranslationFieldWithOptions `json:"modelCategory" db:"model_category"`
@@ -1657,6 +1663,55 @@ func (e *ModelLearningSystemType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e ModelLearningSystemType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type ModelPhase string
+
+const (
+	ModelPhaseIcipComplete ModelPhase = "ICIP_COMPLETE"
+	ModelPhaseInClearance  ModelPhase = "IN_CLEARANCE"
+	ModelPhaseCleared      ModelPhase = "CLEARED"
+	ModelPhaseAnnounced    ModelPhase = "ANNOUNCED"
+	ModelPhaseActive       ModelPhase = "ACTIVE"
+	ModelPhaseEnded        ModelPhase = "ENDED"
+)
+
+var AllModelPhase = []ModelPhase{
+	ModelPhaseIcipComplete,
+	ModelPhaseInClearance,
+	ModelPhaseCleared,
+	ModelPhaseAnnounced,
+	ModelPhaseActive,
+	ModelPhaseEnded,
+}
+
+func (e ModelPhase) IsValid() bool {
+	switch e {
+	case ModelPhaseIcipComplete, ModelPhaseInClearance, ModelPhaseCleared, ModelPhaseAnnounced, ModelPhaseActive, ModelPhaseEnded:
+		return true
+	}
+	return false
+}
+
+func (e ModelPhase) String() string {
+	return string(e)
+}
+
+func (e *ModelPhase) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ModelPhase(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ModelPhase", str)
+	}
+	return nil
+}
+
+func (e ModelPhase) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

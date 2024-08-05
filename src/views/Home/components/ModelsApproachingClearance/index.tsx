@@ -80,7 +80,9 @@ const ModelsApproachingClearance = () => {
                       <CalendarDate
                         dateISO={model.basics.clearanceStarts}
                         link={`/models/${model.id}/read-view`}
-                        linkText={model.modelName}
+                        linkText={`${model.modelName}${
+                          model.abbreviation ? ` (${model.abbreviation})` : ''
+                        }`}
                       />
                     </Card>
                   ))}
