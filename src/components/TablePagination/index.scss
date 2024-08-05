@@ -1,4 +1,4 @@
-#main-content .usa-pagination {
+.usa-pagination {
     justify-content: left;
 
     &__page-no {
@@ -8,5 +8,9 @@
     &__link {
         border: none;
         background-color: transparent;
+    }
+
+    &__button {
+      background-color: #fff;
     }
 }

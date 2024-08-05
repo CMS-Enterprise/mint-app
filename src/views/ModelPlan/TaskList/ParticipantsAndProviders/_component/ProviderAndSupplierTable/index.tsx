@@ -56,7 +56,9 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
               {headerGroup.headers.map(column => (
                 <th
                   {...column.getHeaderProps()}
-                  className="border-width-2px padding-bottom-1"
+                  className={`border-width-2px padding-bottom-1 ${
+                    column.id === 'providerType' ? 'width-card' : ''
+                  }`}
                   scope="col"
                 >
                   <button
