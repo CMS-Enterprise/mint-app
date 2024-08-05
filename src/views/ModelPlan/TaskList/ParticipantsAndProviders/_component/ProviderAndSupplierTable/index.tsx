@@ -62,15 +62,13 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
         tableName={modalT('modal.table.title')}
         className="margin-bottom-4 maxw-none width-mobile"
       />
-      {!!state.globalFilter && (
-        <TableResults
-          globalFilter={state.globalFilter}
-          pageIndex={state.pageIndex}
-          pageSize={state.pageSize}
-          filteredRowLength={rows.length}
-          rowLength={data.length}
-        />
-      )}
+      <TableResults
+        globalFilter={state.globalFilter}
+        pageIndex={state.pageIndex}
+        pageSize={state.pageSize}
+        filteredRowLength={rows.length}
+        rowLength={data.length}
+      />
       <UswdsTable bordered={false} {...getTableProps()} fullWidth>
         <caption className="usa-sr-only">
           {modalT('modal.table.caption')}
