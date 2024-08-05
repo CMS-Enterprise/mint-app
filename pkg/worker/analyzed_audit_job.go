@@ -31,7 +31,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 	}
 	// Note, this will panic if the context doesn't have a faktory job context it will panic.
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsAndBatchID(w.Logger, helper, modelPlanIDZapField(modelPlanID), dateZapField(dayToAnalyze))
+	logger := loggerWithFaktoryFields(w.Logger, helper, modelPlanIDZapField(modelPlanID), dateZapField(dayToAnalyze))
 	_, err = resolvers.AnalyzeModelPlanForAnalyzedAudit(ctx, w.Store, logger, dayToAnalyze, modelPlanID)
 
 	if err != nil {
@@ -45,7 +45,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 // args[0] date
 func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper)
+	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
 	logger.Info("starting analyzed audit batch job")
 
 	dayToAnalyze := args[0]
@@ -87,7 +87,7 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 func (w *Worker) AnalyzedAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	dateAnalyzed := args[0]
 	help := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsAndBatchID(w.Logger, help)
+	logger := loggerWithFaktoryFields(w.Logger, help)
 
 	// Kick off DigestEmailBatchJob
 	return help.With(func(cl *faktory.Client) error {

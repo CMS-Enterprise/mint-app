@@ -40,7 +40,7 @@ func TestDecorateFaktoryLoggerStandardFields(t *testing.T) {
 	writeSyncer, logger := createTestLogger()
 
 	// Call the function under test
-	decoratedLogger := decorateFaktoryLoggerStandardFields(logger, jid1, jobType1, BIDZapField(bid1))
+	decoratedLogger := loggerWithFaktoryStandardFields(logger, jid1, jobType1, BIDZapField(bid1))
 
 	// Trigger a log entry to populate fields
 	decoratedLogger.Info("test message")
@@ -64,7 +64,7 @@ func TestDecorateFaktoryLoggerStandardFields(t *testing.T) {
 		jid2 := "mockJid2"
 		jobType2 := "mockJobType2"
 		writeSyncer2, logger2 := createTestLogger()
-		doubleDecoratedLogger := decorateFaktoryLoggerStandardFields(decorateFaktoryLoggerStandardFields(logger2, jid1, jobType1, BIDZapField(bid1)), jid2, jobType2, BIDZapField(bid2))
+		doubleDecoratedLogger := loggerWithFaktoryStandardFields(loggerWithFaktoryStandardFields(logger2, jid1, jobType1, BIDZapField(bid1)), jid2, jobType2, BIDZapField(bid2))
 
 		doubleDecoratedLogger.Info("test message")
 

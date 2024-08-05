@@ -27,7 +27,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 	dateAnalyzed := args[0].(string)
 
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper)
+	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
 
 	logger.Info("getting collection of unique userIds that have favorited a model")
 
@@ -68,7 +68,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 // args[0] date
 func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsAndBatchID(w.Logger, helper)
+	logger := loggerWithFaktoryFields(w.Logger, helper)
 	logger.Info("Digest Email Batch Job Succeeded")
 	// TODO: Add notification here if wanted in the future
 	return nil
@@ -89,7 +89,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsAndBatchID(w.Logger, helper, dateZapField(dateAnalyzed), userIDZapField(userID))
+	logger := loggerWithFaktoryFields(w.Logger, helper, dateZapField(dateAnalyzed), userIDZapField(userID))
 	logger.Info("preparing to send daily digest email")
 	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
 		return storage.UserNotificationPreferencesGetByUserID(w.Store, user_id)
@@ -111,7 +111,7 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFieldsAndBatchID(w.Logger, helper, dateZapField(dateAnalyzed))
+	logger := loggerWithFaktoryFields(w.Logger, helper, dateZapField(dateAnalyzed))
 	logger.Info("preparing to send aggregated digest email")
 	err = AggregatedDigestEmailJob(
 		dateAnalyzed,
