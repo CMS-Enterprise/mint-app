@@ -1,9 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePagination, useSortBy, useTable } from 'react-table';
+import {
+  useGlobalFilter,
+  usePagination,
+  useSortBy,
+  useTable
+} from 'react-table';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 
+import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
+import TableResults from 'components/TableResults';
 import { ExistingProviderSupplierTypes } from 'i18n/en-US/modelPlan/participantsAndProviders';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
@@ -30,8 +37,9 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
     canPreviousPage,
     pageCount,
     setPageSize,
-    // setGlobalFilter,
+    setGlobalFilter,
     state,
+    rows,
     prepareRow
   } = useTable(
     {
@@ -39,6 +47,7 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
       data,
       initialState: { pageIndex: 0 }
     },
+    useGlobalFilter,
     useSortBy,
     usePagination
   );
@@ -46,6 +55,22 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
   // Render the UI for your table
   return (
     <>
+      <GlobalClientFilter
+        globalFilter={state.globalFilter}
+        setGlobalFilter={setGlobalFilter}
+        tableID={modalT('modal.table.id')}
+        tableName={modalT('modal.table.title')}
+        className="margin-bottom-4 maxw-none width-mobile"
+      />
+      {!!state.globalFilter && (
+        <TableResults
+          globalFilter={state.globalFilter}
+          pageIndex={state.pageIndex}
+          pageSize={state.pageSize}
+          filteredRowLength={rows.length}
+          rowLength={data.length}
+        />
+      )}
       <UswdsTable bordered={false} {...getTableProps()} fullWidth>
         <caption className="usa-sr-only">
           {modalT('modal.table.caption')}

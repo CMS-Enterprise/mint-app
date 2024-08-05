@@ -1174,6 +1174,7 @@ export const participantsAndProvidersMisc: Record<string, string | object> = {
   zero: '0',
   tenThousand: '10,000+',
   modal: {
+    id: 'provider-and-supplier-types',
     title: 'Existing provider/supplier types',
     asOfDate: 'as of 06/25/2024',
     existingProviderSupplierTypesNames,
