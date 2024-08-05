@@ -44,8 +44,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 		batch.Description = "Send Daily Digest Emails"
 		batch.Success = faktory.NewJob(digestEmailBatchJobSuccessName, dateAnalyzed)
 		batch.Success.Queue = defaultQueue
-		//TODO, should we just use the earlier logger and override the bid?
-		sugaredLogger := decorateFaktoryLoggerStandardFields(w.Logger, batch.Bid, helper.Jid(), helper.JobType())
+		sugaredLogger := decorateFaktoryLoggerStandardFields(w.Logger, helper.Jid(), helper.JobType(), BIDZapField(batch.Bid))
 		sugaredLogger.Info("Creating a new batch for the daily digest email batch job")
 		return batch.Jobs(func() error {
 			for _, id := range userIDs {
@@ -92,7 +91,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := decorateFaktoryLoggerStandardFieldsWithHelper(w.Logger, helper, zap.Any("date", dateAnalyzed), zap.Any("userID", userID))
+	sugaredLogger := decorateFaktoryLoggerStandardFieldsWithHelper(w.Logger, helper, true, zap.Any("date", dateAnalyzed), zap.Any("userID", userID))
 	sugaredLogger.Info("preparing to send daily digest email")
 	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
 		return storage.UserNotificationPreferencesGetByUserID(w.Store, user_id)
@@ -114,7 +113,7 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := decorateFaktoryLoggerStandardFieldsWithHelper(w.Logger, helper, zap.Any("date", dateAnalyzed))
+	sugaredLogger := decorateFaktoryLoggerStandardFieldsWithHelper(w.Logger, helper, true, zap.Any("date", dateAnalyzed))
 	sugaredLogger.Info("preparing to send aggregated digest email")
 	err = AggregatedDigestEmailJob(
 		dateAnalyzed,
