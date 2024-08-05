@@ -168,7 +168,10 @@ const Status = () => {
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="submit"
-                        disabled={!dirty && !modelStatus}
+                        disabled={
+                          (!dirty && !modelStatus) ||
+                          (!dirty && modelStatus === status)
+                        }
                         className=""
                         onClick={() => setErrors({})}
                       >
