@@ -7,6 +7,7 @@ export type Flags = {
   notificationsEnabled: boolean;
   changeHistoryEnabled: boolean;
   changeHistoryReleaseDate: string;
+  modelsApproachingClearanceEnabled: boolean;
 };
 
 export type FlagsState = {
