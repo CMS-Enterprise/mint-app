@@ -26,6 +26,9 @@ const (
 	translatedAuditQueueIDKey = "translated_audit_queue_id"
 	auditQueueAttemptsKey     = "audit_queue_attempts"
 	auditChangeKey            = "change_id"
+	modelPlanIDKey            = "model_plan_id"
+	dateKey                   = "date"
+	userIDKey                 = "userID"
 )
 
 // BIDZapField returns the zap core field for a worker BatchID
@@ -42,14 +45,35 @@ func JIDZapField(jid string) zapcore.Field {
 func JobTypeZapField(jobType string) zapcore.Field {
 	return zap.String(jobTypeKey, jobType)
 }
+
+// TranslatedAuditQueueIDZapField provides the zap field for a TranslatedAuditQueueID
 func TranslatedAuditQueueIDZapField(translatedAuditQueueID uuid.UUID) zapcore.Field {
 	return zap.Any(translatedAuditQueueIDKey, translatedAuditQueueID)
 }
+
+// auditChangeIDZapField provides the zap field for an audit change id
 func auditChangeIDZapField(changeID interface{}) zapcore.Field {
 	return zap.Any(auditChangeKey, changeID)
 }
-func auditQueueAttemptsField(attempts interface{}) zapcore.Field {
+
+// auditQueueAttemptsZapField provides the zap field for the number of attempts
+func auditQueueAttemptsZapField(attempts interface{}) zapcore.Field {
 	return zap.Any(auditQueueAttemptsKey, attempts)
+}
+
+// dateZapField provides the zap field for the date
+func dateZapField(date interface{}) zapcore.Field {
+	return zap.Any(dateKey, date)
+}
+
+// modelPlanIDZapField provides the zap field for the modelPlanID
+func modelPlanIDZapField(modelPlanID uuid.UUID) zapcore.Field {
+	return zap.Any(modelPlanIDKey, modelPlanID)
+}
+
+// userIDZapField provides the zap field for the userID
+func userIDZapField(userID uuid.UUID) zapcore.Field {
+	return zap.Any(userIDKey, userID)
 }
 
 // JobWithPanicProtection wraps a faktory Job in a wrapper function that will return an error instead of stopping the application.
