@@ -64,7 +64,7 @@ jobs:
           context: .
           cache-from: type=gha,scope=${{ env.GIT_REF_NAME }}-db_migrate
           build-args: |
-            TAG=9.10-alpine
+            TAG=10.15-alpine
           # As of Buildx verion 0.10, image are build with provenance by default.
           # Lambda currently does not support functions that use multi-architecture container images (https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-reqs)
           # As such, the Lambda for vulnerability scanning will fail if the image is built with provenance.

@@ -1,6 +1,20 @@
-import React, { Fragment, useCallback, useMemo, useRef } from 'react';
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
+import {
+  Link,
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  useParams
+} from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -35,10 +49,11 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import ConfirmLeave from 'components/ConfirmLeave';
 import MainContent from 'components/MainContent';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -48,6 +63,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
 import Authority from './Authority';
@@ -90,6 +106,7 @@ export const CharacteristicsContent = () => {
   >(null);
 
   const history = useHistory();
+  const location = useLocation();
 
   const {
     data: modelData,
@@ -232,103 +249,141 @@ export const CharacteristicsContent = () => {
     formatExistingLinkData
   ]);
 
+  const [destinationURL, setDestinationURL] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const [update] = useUpdatePlanGeneralCharacteristicsMutation();
 
   const [updateExistingLinks] = useUpdateExistingModelLinksMutation();
 
-  // Submit handler for existing links as well as regular form updates
-  const handleFormSubmit = async (redirect?: 'next' | 'back') => {
-    const formValues = formikRef?.current?.values!;
-
-    // Getting the inital values of model links
-    const {
-      resemblesExistingModelLinks: resemblesExistingModelLinksInitial,
-      participationInModelPreconditionLinks: participationInModelPreconditionLinksInitial,
-      ...initialValues
-    } = formikRef?.current?.initialValues || {};
-
-    // Getting the current form values of model links
-    const {
-      resemblesExistingModelLinks: resemblesExistingModelLinksValues,
-      participationInModelPreconditionLinks: participationInModelPreconditionLinksValues,
-      ...values
-    } = formValues || {};
-
-    // Separates the resemblesExistingModelLinks by type (string/number) to pass into the appropriate mutation
-    const resemblesExistingModelLinksToUpdate = separateLinksByType(
-      resemblesExistingModelLinksValues || [],
-      modelData?.modelPlanCollection || [],
-      existingModelData?.existingModelCollection || []
-    );
-
-    // Separates the participationInModelPreconditionLinks by type (string/number) to pass into the appropriate mutation
-    const participationInModelPreconditionLinksToUpdate = separateLinksByType(
-      participationInModelPreconditionLinksValues || [],
-      modelData?.modelPlanCollection || [],
-      existingModelData?.existingModelCollection || []
-    );
-
-    const genCharUpdates = dirtyInput(initialValues, values);
-
-    // Checking if the existing model is a MINT model plan or an import/existing model plan
-    if (typeof genCharUpdates.existingModel === 'number') {
-      genCharUpdates.existingModelID = genCharUpdates.existingModel;
-    } else if (typeof genCharUpdates.existingModel === 'string') {
-      genCharUpdates.currentModelPlanID = genCharUpdates.existingModel;
-    } else if (genCharUpdates.existingModel === null) {
-      genCharUpdates.existingModelID = null;
-      genCharUpdates.currentModelPlanID = null;
-    }
-
-    // As existingModel is only a FE value/not persisted on BE, we want to remove it from the payload
-    delete genCharUpdates.existingModel;
-
-    await Promise.allSettled([
-      update({
-        variables: {
-          id,
-          changes: genCharUpdates
-        }
-      }),
-      updateExistingLinks({
-        variables: {
-          modelPlanID: modelID,
-          fieldName:
-            ExisitingModelLinkFieldType.GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH,
-          ...resemblesExistingModelLinksToUpdate
-        }
-      }),
-      updateExistingLinks({
-        variables: {
-          modelPlanID: modelID,
-          fieldName:
-            ExisitingModelLinkFieldType.GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH,
-          ...participationInModelPreconditionLinksToUpdate
-        }
-      })
-    ])
-      .then(response => {
-        const anyError = response.find(res => res.status === 'rejected');
-
-        if (anyError) {
-          formikRef?.current?.setErrors({
-            resemblesExistingModelLinks: miscellaneousT('apolloFailField')
+  useEffect(() => {
+    if (!isModalOpen && id) {
+      // Submit handler for existing links as well as regular form updates
+      const unblock = history.block(destination => {
+        // Don't call mutation if attempting to access a locked section
+        if (destination.pathname.includes('locked-task-list-section')) {
+          unblock();
+          history.push({
+            pathname: destination.pathname,
+            state: destination.state
           });
-          return;
+          return false;
         }
 
-        if (redirect === 'next') {
-          history.push(
-            `/models/${modelID}/task-list/characteristics/key-characteristics`
-          );
-        } else if (redirect === 'back') {
-          history.push(`/models/${modelID}/task-list/`);
+        if (destination.pathname === location.pathname) {
+          return false;
         }
-      })
-      .catch(err => {
-        formikRef?.current?.setErrors(err);
+
+        const formValues = formikRef?.current?.values;
+
+        // Getting the initial values of model links
+        const {
+          resemblesExistingModelLinks: resemblesExistingModelLinksInitial,
+          participationInModelPreconditionLinks: participationInModelPreconditionLinksInitial,
+          ...initialValues
+        } = formikRef?.current?.initialValues || {};
+
+        // Getting the current form values of model links
+        const {
+          resemblesExistingModelLinks: resemblesExistingModelLinksValues,
+          participationInModelPreconditionLinks: participationInModelPreconditionLinksValues,
+          ...values
+        } = formValues || {};
+
+        // Separates the resemblesExistingModelLinks by type (string/number) to pass into the appropriate mutation
+        const resemblesExistingModelLinksToUpdate = separateLinksByType(
+          resemblesExistingModelLinksValues || [],
+          modelData?.modelPlanCollection || [],
+          existingModelData?.existingModelCollection || []
+        );
+
+        // Separates the participationInModelPreconditionLinks by type (string/number) to pass into the appropriate mutation
+        const participationInModelPreconditionLinksToUpdate = separateLinksByType(
+          participationInModelPreconditionLinksValues || [],
+          modelData?.modelPlanCollection || [],
+          existingModelData?.existingModelCollection || []
+        );
+
+        const genCharUpdates = dirtyInput(initialValues, values);
+
+        // Checking if the existing model is a MINT model plan or an import/existing model plan
+        if (typeof genCharUpdates.existingModel === 'number') {
+          genCharUpdates.existingModelID = genCharUpdates.existingModel;
+        } else if (typeof genCharUpdates.existingModel === 'string') {
+          genCharUpdates.currentModelPlanID = genCharUpdates.existingModel;
+        } else if (genCharUpdates.existingModel === null) {
+          genCharUpdates.existingModelID = null;
+          genCharUpdates.currentModelPlanID = null;
+        }
+
+        // As existingModel is only a FE value/not persisted on BE, we want to remove it from the payload
+        delete genCharUpdates.existingModel;
+
+        Promise.allSettled([
+          update({
+            variables: {
+              id,
+              changes: genCharUpdates
+            }
+          }),
+          updateExistingLinks({
+            variables: {
+              modelPlanID: modelID,
+              fieldName:
+                ExisitingModelLinkFieldType.GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH,
+              ...resemblesExistingModelLinksToUpdate
+            }
+          }),
+          updateExistingLinks({
+            variables: {
+              modelPlanID: modelID,
+              fieldName:
+                ExisitingModelLinkFieldType.GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH,
+              ...participationInModelPreconditionLinksToUpdate
+            }
+          })
+        ])
+          .then(response => {
+            unblock();
+            const anyError = response.find(res => res.status === 'rejected');
+
+            if (anyError) {
+              formikRef?.current?.setErrors({
+                resemblesExistingModelLinks: miscellaneousT('apolloFailField')
+              });
+            } else {
+              history.push(destination.pathname);
+            }
+          })
+          .catch(errors => {
+            unblock();
+            setDestinationURL(destination.pathname);
+            setIsModalOpen(true);
+
+            formikRef?.current?.setErrors(errors);
+          });
+        return false;
       });
-  };
+
+      return () => {
+        unblock();
+      };
+    }
+    return () => {};
+  }, [
+    history,
+    id,
+    update,
+    isModalOpen,
+    formikRef,
+    setIsModalOpen,
+    existingModelData?.existingModelCollection,
+    miscellaneousT,
+    modelData?.modelPlanCollection,
+    updateExistingLinks,
+    modelID,
+    location.pathname
+  ]);
 
   const initialValues: GetGeneralCharacteristicsFormTypeWithLinks = {
     __typename: 'PlanGeneralCharacteristics',
@@ -369,6 +424,12 @@ export const CharacteristicsContent = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        url={destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -404,7 +465,9 @@ export const CharacteristicsContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/task-list/characteristics/key-characteristics`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -440,6 +503,8 @@ export const CharacteristicsContent = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
 
               <Form
                 className="desktop:grid-col-6 margin-top-6"
@@ -973,7 +1038,7 @@ export const CharacteristicsContent = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('back')}
+                    onClick={() => history.push(`/models/${modelID}/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
@@ -981,16 +1046,6 @@ export const CharacteristicsContent = () => {
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && !(loading || modelLoading || existingModelLoading) && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}
@@ -1007,27 +1062,27 @@ export const Characteristics = () => {
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Switch>
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/characteristics"
               exact
               render={() => <CharacteristicsContent />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/characteristics/key-characteristics"
               exact
               render={() => <KeyCharacteristics />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/characteristics/involvements"
               exact
               render={() => <Involvements />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/characteristics/targets-and-options"
               exact
               render={() => <TargetsAndOptions />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/characteristics/authority"
               exact
               render={() => <Authority />}

@@ -1222,9 +1222,9 @@ To achieve this mission, the Legal Vertical provides technical assistance and su
       ]
     }
   },
-  masterDataManagement: {
+  masterDataManagementProgramOrganizationRelationship: {
     about: {
-      description: `Master Data Management (MDM) at CMS produces integrated and harmonized Beneficiary and Provider data from various Medicare and Medicaid systems. To create this master version, MDM uses identity resolution to recognize distinct entities (e.g., a provider, beneficiary, organization, or program) by matching similar records across multiple data sets. MDM provides flexible and easy access to provider and beneficiary data through extracts, web services, and APIs.
+      description: `Master Data Management (MDM) at CMS produces integrated and harmonized Beneficiary and Provider data from various Medicare and Medicaid systems. To create this master version, MDM uses identity resolution to recognize distinct entities provider(e.g., a provider, beneficiary, organization, or program) by matching similar records across multiple data sets. MDM provides flexible and easy access to provider and beneficiary data through extracts, business intelligence reports and data lake mesh, and data share to IDRC Snowflake.
 
 MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
 
@@ -1242,9 +1242,16 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'Functions',
           items: [
-            'Identity resolution of CMS enterprise data entities (providers, beneficiaries, enrollees, ACO model participation)',
+            'Identity resolution of CMS enterprise data entities (providers)',
+            `Repository for CMMI’s APM alignment overlaps data`,
             'Federation of identity resolved CMS enterprise data'
           ]
+        }
+      ],
+      links: [
+        {
+          external: true,
+          link: `https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2FAll%2520Overlaps%2520Responses%2Easpx`
         }
       ]
     },
@@ -1264,8 +1271,15 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         },
         {
           header: 'Complete onboarding questionnaire',
-          description:
-            'CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.'
+          description: `CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.
+            
+<link1>Go to Onboarding Request Form for MDM-POR</link1>`,
+          links: [
+            {
+              external: true,
+              link: `https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2FAll%2520Overlaps%2520Responses%2Easpx`
+            }
+          ]
         },
         {
           header: 'Meet with MDM operations team',
@@ -1274,8 +1288,83 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         },
         {
           header: 'Share ICD',
+          description: `CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.
+            
+<link1>Go to ICD and Onboarding Mapping for MDM-POR</link1>`,
+          links: [
+            {
+              external: true,
+              link: `https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/MDMResources.aspx`
+            }
+          ]
+        }
+      ]
+    }
+  },
+  masterDataManagementForNCBP: {
+    about: {
+      description: `Master Data Management (MDM) for non-claims-based payments (NCBP) is a medium-term solution that satisfies the CMS requirement for payment models participating in shared savings initiatives to store non-claims payment data in a central location. Based on discussions with representatives of the Office of Information Technology (OIT), the Office of Enterprise Management (OEM), and the technical advisors of CMMI, MDM stores non-claims payment files in a central repository as CMS considers long-term solutions for non-claims payment data. 
+
+MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
+
+MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritative data integrated and consolidated from various source systems. MDM helps address business challenges by linking data across multiple sources for various business needs. MDM-NCBP specifically provides:`,
+      items: ['A record of non-claims-based payments'],
+      components: [
+        {
+          header: 'Functions',
+          items: [
+            'A centralized source of program non-claims-based payment data',
+            'A reusable service to access data',
+            'Improved visibility and incremental improvements into data quality through data profiling and data analysis'
+          ]
+        }
+      ]
+    },
+    timeline: {
+      description:
+        'Coordination with MDM-NCBP can happen prior to having an implementation contractor. Once the model has an implementation contractor, it takes an average of two months to onboard.',
+      items: [
+        {
+          header: 'CMMI/BSG will reach out',
           description:
-            'CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.'
+            'When CMMI/BSG is notified that a model will have non-claims-based payments and will use MDM, they will contact the model team. If your model has non-claims-based payments have not been contacted, email Celia Shaunessy.'
+        },
+        {
+          header: 'Discussion with the model team',
+          description:
+            'After initial communication, there is a discussion with the model team to check if they need to proceed. If so, CMMI/BSG will help shepherd the onboard process as necessary.'
+        },
+        {
+          header: 'Complete onboarding questionnaire',
+          description: `CMMI/BSG will send the model team an onboarding questionnaire specific to MDM-NCBP. The model team should fill out the program ID and other business requirements.
+            
+<link1>Go to Onboarding Request Form for MDM-NCBP</link1>`,
+
+          links: [
+            {
+              external: true,
+              link:
+                'https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire%20%20NCBP/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2520%2520NCBP%2FAll%2520NCBP%2520Responses%2Easpx'
+            }
+          ]
+        },
+        {
+          header: 'Meet with MDM operations team',
+          description:
+            'CMMI/BSG meets with the MDM operations team to share the business requirements.'
+        },
+        {
+          header: 'Share ICD',
+          description: `CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. Celia Shaunessey and her team can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
+  
+<link1>Go to ICD and Onboarding Mapping for MDM-NCBP</link1>`,
+          links: [
+            {
+              external: true,
+              link:
+                'https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/NCBPResources.aspx'
+            }
+          ]
         }
       ]
     }
@@ -1844,7 +1933,7 @@ const helpCategories: Record<ArticleCategories, string> = {
 
 const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.MODEL_PLAN_OVERVIEW]: 'Overview for adding a model',
-  [HelpArticle.HIGH_LEVEL_PROJECT_PLAN]: 'High-Level Project Plans',
+  [HelpArticle.HIGH_LEVEL_PROJECT_PLAN]: 'High-Level Project Plan',
   [HelpArticle.SAMPLE_MODEL_PLAN]: 'Sample Model Plan',
   [HelpArticle.TWO_PAGER_MEETING]: 'How to have a successful 2-pager meeting',
   [HelpArticle.SIX_PAGER_MEETING]: 'How to have a successful 6-pager meeting',

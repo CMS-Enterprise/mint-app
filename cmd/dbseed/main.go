@@ -1,12 +1,11 @@
 package main
 
 import (
-	"context"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/lib/pq"
 
 	"github.com/guregu/null/zero"
 
@@ -27,23 +26,65 @@ import (
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 )
 
+var viperConfig = viper.New()
+var rootCmd = &cobra.Command{
+	Use:   "seeder",
+	Short: "Runs the seed commands as an interactive tui",
+	Long:  "Runs the seed commands as an interactive tui",
+	Run: func(cmd *cobra.Command, args []string) {
+		RunSeedCommandTuiModel()
+	},
+}
+var seedCmd = &cobra.Command{
+	Use:   "seed",
+	Short: "Seed the DB",
+	Long:  "Seeds the Database with Model Plans and associated data",
+	Run: func(cmd *cobra.Command, args []string) {
+		seed(viperConfig)
+	},
+}
+
+var cleanCmd = &cobra.Command{
+	Use:   "clean",
+	Short: "Clean the DB",
+	Long:  "Truncates all user entered data in the Database",
+	Run: func(cmd *cobra.Command, args []string) {
+		clean(viperConfig)
+	},
+}
+
+// clean uses seeder to remove all data in the database
+func clean(config *viper.Viper) {
+	seeder := newDefaultSeeder(config)
+	err := seeder.Config.Store.TruncateAllTablesDANGEROUS(seeder.Config.Logger)
+	if err != nil {
+		fmt.Print(err)
+	}
+}
+
 // The main entrypoint for the dbseed command.
 // Invoke with "go run cmd/dbseed"
 func main() {
-	var rootCmd = &cobra.Command{
-		Use:   "dbseed",
-		Short: "Seed the DB",
-		Long:  "Seeds the Database with Model Plans and associated data",
-		Run: func(cmd *cobra.Command, args []string) {
-			config := viper.New()
-			config.AutomaticEnv()
-			seed(config)
-		},
-	}
+	execute()
+}
 
-	err := rootCmd.Execute()
-	if err != nil {
-		panic(err)
+func init() {
+	viperConfig.AutomaticEnv()
+	rootCmd.AddCommand(seedCmd)
+	rootCmd.AddCommand(analyzeAuditCommand)
+	rootCmd.AddCommand(cleanCmd)
+	rootCmd.AddCommand(translationExportCmd)
+
+	// job based audit translation commands
+	rootCmd.AddCommand(queueAndProcessAllTranslatedAuditChangesCommand)
+
+}
+
+func execute() {
+	// get Variables once instead of in multiple places
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
 	}
 }
 
@@ -98,6 +139,7 @@ func seed(config *viper.Viper) {
 	seeder := newDefaultSeeder(config)
 	seeder.SeedData()
 	seeder.CreateAnalyzedAuditData()
+	seeder.SetDefaultUserViews()
 }
 
 // SeedData gets resolver dependencies and calls wrapped resolver functions to seed data.
@@ -108,9 +150,31 @@ func (s *Seeder) SeedData() {
 	if err != nil {
 		panic(err)
 	}
+	now := time.Now()
 
 	// Seed an empty plan
-	s.createModelPlan("Empty Plan", "MINT")
+	emptyPlan := s.createModelPlan("Empty Plan", "MINT")
+	s.updateModelPlan(emptyPlan, map[string]interface{}{
+		"abbreviation": "emptyPlan",
+		"status":       models.ModelStatusCanceled,
+	})
+
+	emptyPlanOperationalNeeds := s.getOperationalNeedsByModelPlanID(emptyPlan.ID)
+	if len(emptyPlanOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		emptyPlan,
+		emptyPlanOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	// Seed a plan with some information already in it
 	planWithBasics := s.createModelPlan("Plan with Basics", "MINT")
@@ -127,11 +191,32 @@ func (s *Seeder) SeedData() {
 			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
 			"phasedIn":        true,
-			"clearanceStarts": time.Now(),
+			"clearanceStarts": now,
 			"highLevelNote":   "Some high level note",
 		},
 	)
 	s.existingModelLinkCreate(planWithBasics, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[3].ID, links[4].ID}, nil)
+	s.updateModelPlan(planWithBasics, map[string]interface{}{
+		"abbreviation": "basics",
+		"status":       models.ModelStatusActive,
+	})
+
+	planWithBasicsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithBasics.ID)
+	if len(planWithBasicsOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		planWithBasics,
+		planWithBasicsOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	// Seed a plan with collaborators
 	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT")
@@ -145,6 +230,28 @@ func (s *Seeder) SeedData() {
 			TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
 		})
 
+	s.updateModelPlan(planWithCollaborators, map[string]interface{}{
+		"abbreviation": "collab",
+		"status":       models.ModelStatusEnded,
+	})
+
+	planWithCollaboratorsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithCollaborators.ID)
+	if len(planWithBasicsOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		planWithCollaborators,
+		planWithCollaboratorsOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
+
 	s.existingModelLinkCreate(planWithCollaborators, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[4].ID}, nil)
 
 	// Seed a plan with CRs / TDLs
@@ -152,8 +259,8 @@ func (s *Seeder) SeedData() {
 	s.addCR(planWithCrTDLs, &model.PlanCRCreateInput{
 		ModelPlanID:     planWithCrTDLs.ID,
 		IDNumber:        "CR-123",
-		DateInitiated:   time.Now(),
-		DateImplemented: time.Now(),
+		DateInitiated:   now,
+		DateImplemented: now,
 		Title:           "My CR",
 		Note:            nil,
 	})
@@ -161,18 +268,58 @@ func (s *Seeder) SeedData() {
 	s.addTDL(planWithCrTDLs, &model.PlanTDLCreateInput{
 		ModelPlanID:   planWithCrTDLs.ID,
 		IDNumber:      "TDL-123",
-		DateInitiated: time.Now(),
+		DateInitiated: now,
 		Title:         "My TDL",
 		Note:          &tdlNote,
 	})
 	s.existingModelLinkCreate(planWithCrTDLs, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, nil, []uuid.UUID{planWithCollaborators.ID, planWithBasics.ID})
+
+	s.updateModelPlan(planWithCrTDLs, map[string]interface{}{
+		"abbreviation": "crTDLPlan",
+		"status":       models.ModelStatusAnnounced,
+	})
+
+	planWithCrTDLsOperationalNeeds := s.getOperationalNeedsByModelPlanID(planWithCrTDLs.ID)
+	if len(planWithCrTDLsOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		planWithCrTDLs,
+		planWithCrTDLsOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	// Seed a plan that is already archived
 	archivedPlan := s.createModelPlan("Archived Plan", "MINT")
 	s.updateModelPlan(archivedPlan, map[string]interface{}{
 		"archived":     true,
 		"abbreviation": "arch",
+		"status":       models.ModelStatusPaused,
 	})
+
+	archivedPlanOperationalNeeds := s.getOperationalNeedsByModelPlanID(archivedPlan.ID)
+	if len(archivedPlanOperationalNeeds) < 1 {
+		panic("operational needs must be populated in order to create an operational solution")
+	}
+
+	_ = s.addOperationalSolution(
+		archivedPlan,
+		archivedPlanOperationalNeeds[0].ID,
+		map[string]interface{}{
+			"needed":        false,
+			"pocName":       "The Gump",
+			"pocEmail":      "shrimpKing@gump.com",
+			"mustStartDts":  "2023-02-04T21:39:57.484167Z",
+			"mustFinishDts": "2023-12-04T21:39:57.484167Z",
+		},
+	)
 
 	// Seed a plan with some documents
 	planWithDocuments := s.createModelPlan("Plan with Documents", "MINT")
@@ -185,7 +332,7 @@ func (s *Seeder) SeedData() {
 	s.addTDL(planWithCrTDLs, &model.PlanTDLCreateInput{
 		ModelPlanID:   sampleModelPlan.ID,
 		IDNumber:      "TDL-123",
-		DateInitiated: time.Now(),
+		DateInitiated: now,
 		Title:         "My TDL",
 		Note:          &tdlNote,
 	})
@@ -214,7 +361,7 @@ func (s *Seeder) SeedData() {
 			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
 			"phasedIn":        true,
-			"clearanceStarts": time.Now(),
+			"clearanceStarts": now,
 			"highLevelNote":   "Some high level note",
 		},
 	)
@@ -258,53 +405,38 @@ func (s *Seeder) SeedData() {
 			},
 		},
 	)
+
+	// Seed a plan that is has a clearance start date 3 months from today
+	planApproachingClearance := s.createModelPlan("Plan Approaching Clearance in 3 months", "MINT")
+	s.updateModelPlan(planApproachingClearance, map[string]interface{}{
+		"abbreviation": "Clearance",
+		"status":       models.ModelStatusPaused,
+	})
+
+	s.updatePlanBasics(
+		s.Config.Context,
+		nil,
+		nil,
+		email.AddressBook{},
+		planApproachingClearance,
+		map[string]interface{}{
+			"modelType":       []models.ModelType{models.MTVoluntary},
+			"goal":            "Some goal",
+			"cmsCenters":      []string{"CMMI"},
+			"cmmiGroups":      []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+			"completeICIP":    "2020-05-13T20:47:50.12Z",
+			"phasedIn":        true,
+			"clearanceStarts": now.AddDate(0, 3, 0),
+			"highLevelNote":   "Some high level note",
+		},
+	)
 }
 
-// CreateAnalyzedAuditData uses the seeder to generate analyzed audits. It will make one record for all changes just seeded
-func (s *Seeder) CreateAnalyzedAuditData() {
-	dayToAnalyze := time.Now()
-
-	// Step 1. Get all model plans
-	modelPlans, err := s.Config.Store.ModelPlanCollection(s.Config.Logger, false)
-	if err != nil {
-		panic(fmt.Errorf("couldn't retrieve model plan collection"))
-	}
-
-	// Step 2. Iterate through all model plans, and generate analyzed audit data
-	for _, mp := range modelPlans {
-		_, err2 := resolvers.AnalyzeModelPlanForAnalyzedAudit(s.Config.Context, s.Config.Store, s.Config.Logger, dayToAnalyze, mp.ID)
-		// Notice:  that this will create an error if you run this a second time, because there is already an analyzed audit record.
-		// For simplicity, we check if it is that error, and if so just continue.
-		if err2 != nil {
-			if pqErr, ok := err2.(*pq.Error); ok {
-
-				if pqErr.Code.Name() == "unique_violation" {
-					continue
-				}
-				fmt.Printf("pq error: Severity: %s, Code: %s, Message: %s\n", pqErr.Severity, pqErr.Code, pqErr.Message)
-
-			} else {
-				fmt.Printf("there was an issue analyzing model plan: %s, ID: %s. Err: %v", mp.ModelName, mp.ID, err2)
-			}
-
-		}
-	}
-
-	// Step 4. Get all Users who have a favorited model (See worker.DigestEmailBatchJob in pkg/worker/digest_email_job.go)
-
-	// Try to send the emails for the daily digest (which also generates a notification)
-	userIDs, err := s.Config.Store.PlanFavoriteCollectionGetUniqueUserIDs()
-	if err != nil {
-		panic(fmt.Errorf("couldn't get user ids for users with plan favorites, %w", err))
-	}
-	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
-		return storage.UserNotificationPreferencesGetByUserID(s.Config.Store, user_id)
-	}
-	for _, id := range userIDs {
-		err := resolvers.DailyDigestNotificationSend(s.Config.Context, s.Config.Store, s.Config.Logger, dayToAnalyze, id, preferenceFunctions, s.Config.EmailService, s.Config.EmailTemplateService, s.Config.AddressBook)
-		if err != nil {
-			fmt.Printf("there was an issue sending digest emails for userID: %s", id)
-		}
-	}
-
+func (s *Seeder) SetDefaultUserViews() {
+	mintPrinc := s.getTestPrincipalByUsername("MINT")
+	s.updateUserView(mintPrinc, map[string]interface{}{
+		"viewCustomization":            []models.ViewCustomizationType{models.ViewCustomizationTypeModelsByOperationalSolution, models.ViewCustomizationTypeFollowedModels, models.ViewCustomizationTypeAllModelPlans},
+		"possibleOperationalSolutions": []models.OperationalSolutionKey{models.OpSKInnovation, models.OpSKAcoOs},
+	},
+	)
 }

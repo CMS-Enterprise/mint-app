@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   ProcessList,
   ProcessListHeading,
@@ -7,6 +7,8 @@ import {
 } from '@trussworks/react-uswds';
 
 import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+
+import { getTransLinkComponents, LinkType } from './about';
 
 import '../index.scss';
 
@@ -16,6 +18,7 @@ export type TimelineItemType = {
   description2?: string;
   ordered?: boolean;
   items?: any[];
+  links?: LinkType[];
 };
 
 export type TimelineConfigType = {
@@ -46,17 +49,26 @@ export const GenericTimeline = ({
       {timelineConfig.description && <p>{timelineConfig.description}</p>}
 
       <ProcessList className="padding-top-1">
-        {timelineConfig.items?.map(item => (
+        {timelineConfig.items?.map((item, index) => (
           <ProcessListItem
             key={item.header}
             className="operational-solution-details__timeline-item"
           >
-            <ProcessListHeading type="h3" className="margin-top-neg-05">
+            <ProcessListHeading
+              type="h3"
+              className="margin-top-neg-05 margin-bottom-1"
+            >
               {item.header}
             </ProcessListHeading>
 
             {item.description && (
-              <p className="margin-bottom-0">{item.description}</p>
+              <Trans
+                i18nKey={`helpAndKnowledge:solutions.${solution.key}.timeline.items.${index}.description`}
+                components={{
+                  ...getTransLinkComponents(item.links),
+                  bold: <strong />
+                }}
+              />
             )}
 
             {item.items && (

@@ -19,26 +19,28 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetParticipantsAndProvidersQuery,
   ParticipantsType,
-  useGetParticipantsAndProvidersQuery,
-  useUpdatePlanParticipantsAndProvidersMutation
+  TypedUpdatePlanParticipantsAndProvidersDocument,
+  useGetParticipantsAndProvidersQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import ConfirmLeave from 'components/ConfirmLeave';
 import MainContent from 'components/MainContent';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
 import Communication from './Communication';
@@ -61,6 +63,7 @@ export const ParticipantsAndProvidersContent = () => {
 
   const {
     participants: participantsConfig,
+    isNewTypeOfProvidersOrSuppliers: isNewTypeOfProvidersOrSuppliersConfig,
     participantsCurrentlyInModels: participantsCurrentlyInModelsConfig
   } = usePlanTranslation('participantsAndProviders');
 
@@ -80,6 +83,7 @@ export const ParticipantsAndProvidersContent = () => {
     id,
     participants,
     medicareProviderType,
+    isNewTypeOfProvidersOrSuppliers,
     statesEngagement,
     participantsOther,
     participantsNote,
@@ -91,39 +95,20 @@ export const ParticipantsAndProvidersContent = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useUpdatePlanParticipantsAndProvidersMutation();
-
-  const handleFormSubmit = (redirect?: 'next' | 'back') => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/participants-and-providers/participants-options`
-            );
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/`);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanParticipantsAndProvidersDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: ParticipantsAndProvidersFormType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
     participants: participants ?? [],
     medicareProviderType: medicareProviderType ?? '',
+    isNewTypeOfProvidersOrSuppliers: isNewTypeOfProvidersOrSuppliers ?? null,
     statesEngagement: statesEngagement ?? '',
     participantsOther: participantsOther ?? '',
     participantsNote: participantsNote ?? '',
@@ -138,6 +123,12 @@ export const ParticipantsAndProvidersContent = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -174,7 +165,9 @@ export const ParticipantsAndProvidersContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/task-list/participants-and-providers/participants-options`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -208,6 +201,9 @@ export const ParticipantsAndProvidersContent = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
+
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap className="participants-and-providers__info">
                   <Grid desktop={{ col: 6 }}>
@@ -270,34 +266,63 @@ export const ParticipantsAndProvidersContent = () => {
                           {(values?.participants || []).includes(
                             ParticipantsType.MEDICARE_PROVIDERS
                           ) && (
-                            <FieldGroup
-                              scrollElement="medicareProviderType"
-                              error={!!flatErrors.medicareProviderType}
-                            >
-                              <Label
-                                htmlFor="participants-and-providers-medicare-type"
-                                className="text-normal"
+                            <>
+                              <FieldGroup
+                                scrollElement="medicareProviderType"
+                                error={!!flatErrors.medicareProviderType}
                               >
-                                {participantsAndProvidersT(
-                                  'medicareProviderType.label'
-                                )}
-                              </Label>
-                              <p className="text-base margin-0 line-height-body-3">
-                                {participantsAndProvidersT(
-                                  'medicareProviderType.sublabel'
-                                )}
-                              </p>
-                              <FieldErrorMsg>
-                                {flatErrors.medicareProviderType}
-                              </FieldErrorMsg>
-                              <Field
-                                as={TextAreaField}
-                                error={flatErrors.medicareProviderType}
-                                id="participants-and-providers-medicare-type"
-                                data-testid="participants-and-providers-medicare-type"
-                                name="medicareProviderType"
-                              />
-                            </FieldGroup>
+                                <Label
+                                  htmlFor="participants-and-providers-medicare-type"
+                                  className="text-normal"
+                                >
+                                  {participantsAndProvidersT(
+                                    'medicareProviderType.label'
+                                  )}
+                                </Label>
+                                <p className="text-base margin-0 line-height-body-3">
+                                  {participantsAndProvidersT(
+                                    'medicareProviderType.sublabel'
+                                  )}
+                                </p>
+                                <FieldErrorMsg>
+                                  {flatErrors.medicareProviderType}
+                                </FieldErrorMsg>
+                                <Field
+                                  as={TextAreaField}
+                                  error={flatErrors.medicareProviderType}
+                                  id="participants-and-providers-medicare-type"
+                                  data-testid="participants-and-providers-medicare-type"
+                                  name="medicareProviderType"
+                                />
+                              </FieldGroup>
+
+                              <FieldGroup
+                                scrollElement="isNewTypeOfProvidersOrSuppliers"
+                                error={
+                                  !!flatErrors.isNewTypeOfProvidersOrSuppliers
+                                }
+                              >
+                                <Label htmlFor="participants-and-providers-is-new-type">
+                                  {participantsAndProvidersT(
+                                    'isNewTypeOfProvidersOrSuppliers.label'
+                                  )}
+                                </Label>
+
+                                <FieldErrorMsg>
+                                  {flatErrors.isNewTypeOfProvidersOrSuppliers}
+                                </FieldErrorMsg>
+
+                                <BooleanRadio
+                                  field="isNewTypeOfProvidersOrSuppliers"
+                                  id="participants-and-providers-is-new-type"
+                                  value={values.isNewTypeOfProvidersOrSuppliers}
+                                  setFieldValue={setFieldValue}
+                                  options={
+                                    isNewTypeOfProvidersOrSuppliersConfig.options
+                                  }
+                                />
+                              </FieldGroup>
+                            </>
                           )}
 
                           {(values?.participants || []).includes(
@@ -436,7 +461,9 @@ export const ParticipantsAndProvidersContent = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() => handleFormSubmit('back')}
+                          onClick={() =>
+                            history.push(`/models/${modelID}/task-list`)
+                          }
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -470,16 +497,6 @@ export const ParticipantsAndProvidersContent = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}
@@ -496,27 +513,27 @@ export const ParticipantsAndProviders = () => {
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Switch>
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/participants-and-providers"
               exact
               render={() => <ParticipantsAndProvidersContent />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/participants-and-providers/participants-options"
               exact
               render={() => <ParticipantOptions />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/participants-and-providers/communication"
               exact
               render={() => <Communication />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/participants-and-providers/coordination"
               exact
               render={() => <Coordination />}
             />
-            <Route
+            <ProtectedRoute
               path="/models/:modelID/task-list/participants-and-providers/provider-options"
               exact
               render={() => <ProviderOptions />}

@@ -1,0 +1,264 @@
+"""
+TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit
+"""
+union TranslatedAuditMetaData = TranslatedAuditMetaBaseStruct | TranslatedAuditMetaGeneric | TranslatedAuditMetaDiscussionReply 
+| TranslatedAuditMetaOperationalNeed | TranslatedAuditMetaOperationalSolution | TranslatedAuditMetaOperationalSolutionSubtask
+| TranslatedAuditMetaDocumentSolutionLink
+
+
+type TranslatedAuditMetaBaseStruct {
+    version: Int!
+    tableName: TableName!
+}
+type TranslatedAuditMetaGeneric {
+    version: Int!
+    tableName: TableName!
+    relation: String!
+    """
+    Relation content can be nil under certain situations, for example if a record was deleted before the audit was translated
+    """
+    relationContent: String
+}
+
+"""
+TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a translated audit is for a discussion reply
+"""
+type TranslatedAuditMetaDiscussionReply {
+    version: Int!
+    tableName: TableName!
+    discussionID: UUID!
+    discussionContent: String!
+    numberOfReplies: Int!
+}
+
+"""
+TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a translated audit is for an operational need
+"""
+type TranslatedAuditMetaOperationalNeed {
+    version: Int!
+    tableName: TableName!
+    needName: String!
+    isOther: Boolean!
+}
+"""
+TranslatedAuditMetaOperationalSolution is the meta data type that is provided when a translated audit is for an operational solution
+"""
+type TranslatedAuditMetaOperationalSolution {
+    version: Int!
+    tableName: TableName!
+    solutionName: String!
+    solutionOtherHeader: String
+    solutionIsOther: Boolean!
+    numberOfSubtasks: Int!
+    needName: String!
+    needIsOther: Boolean!
+    """
+    SolutionStatus is the translated value for the type of solution
+    """
+    solutionStatus: String!
+    solutionMustStart: Time
+    solutionMustFinish: Time
+}
+"""
+TranslatedAuditMetaOperationalSolutionSubtask is the meta data type that is provided when a translated audit is for an operational solution subtask
+"""
+type TranslatedAuditMetaOperationalSolutionSubtask {
+    version: Int!
+    tableName: TableName!
+    solutionName: String!
+    solutionOtherHeader: String
+    solutionIsOther: Boolean!
+    numberOfSubtasks: Int!
+    needName: String!
+    needIsOther: Boolean!
+    """
+    The name of the subtask. If a subtask is updated, and then deleted before being translated, it is possible for this field to be nil.
+    """
+    subtaskName: String
+}
+
+"""
+TranslatedAuditMetaDocumentSolutionLink is the meta data type for a document solution link
+
+"""
+type TranslatedAuditMetaDocumentSolutionLink {
+    version: Int!
+    tableName: TableName!
+    solutionName: String!
+    solutionOtherHeader: String
+    solutionIsOther: Boolean!
+    needName: String!
+    needIsOther: Boolean!
+
+    # These fields are only present if the document wasn't deleted
+
+    """
+    Document Name will be present if the document is still present and not deleted
+    """
+    documentName: String
+    """
+    Document type is the translated value of the document type enum
+    """
+    documentType: String
+    documentOtherType: String
+    documentNote: String
+    """
+    Document URL will only be visible if the user is a collaborator, or has assessment permission
+    """
+    documentURL: String
+    """
+    Document Visibility is the translated value of the restricted bool for a document
+    """
+    documentVisibility: String
+    documentRestricted: Boolean
+
+    
+    """
+    Document ID  will always be present, regardless of if a document was deleted or not
+    """
+    documentID: UUID!
+}
+
+
+enum TranslatedAuditMetaDataType {
+    GENERIC
+    BASE
+    DISCUSSION_REPLY
+    OPERATIONAL_NEED
+    OPERATIONAL_SOLUTION
+    OPERATIONAL_SOLUTION_SUBTASK
+    DOCUMENT_SOLUTION_LINK
+}
+
+enum DatabaseOperation {
+    INSERT
+    UPDATE
+    DELETE
+    TRUNCATE
+}
+
+"""
+TranslatedAudit represent a point in time change made to part of application.
+"""
+type TranslatedAudit {
+    id: UUID!
+    modelPlanID: UUID!
+    
+    tableID: Int!
+    tableName: TableName!
+    primaryKey: UUID!
+    
+    date: Time!
+    action: DatabaseOperation!
+
+    """
+	Restricted denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user
+    """
+    restricted: Boolean!
+
+
+    actorID: UUID!
+    """
+    The Common name of the actor who made the changes. This comes from the user account table.
+    """
+    actorName: String!
+    """
+    The id of the audit.Change record that was translated.
+    """
+    changeID: Int! # This points to a specific audit change.
+    """
+    The type of meta data that is stored for this record
+    """
+    metaDataType: TranslatedAuditMetaDataType 
+    """
+    The actual meta data stored for this record
+    """
+    metaData: TranslatedAuditMetaData
+
+    """
+    The specific fields that were changed by the transaction
+    """
+    translatedFields: [TranslatedAuditField!]!
+
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
+}
+enum AuditFieldChangeType {
+    ANSWERED
+    UPDATED
+    REMOVED
+    """
+    This type should not appear for all intents and purposes. It shows up if a value changes from null to empty array or vice versa.
+    """
+    UNCHANGED
+}
+
+enum TranslationQuestionType {
+    OTHER
+    NOTE
+}
+
+
+type TranslatedAuditField {
+    id: UUID!
+    translatedAuditID: UUID!
+
+    """
+    This represents whether a field was answered, updated, or had the answer removed
+    """
+    changeType: AuditFieldChangeType! 
+
+    dataType: TranslationDataType!
+    formType: TranslationFormType!
+
+    fieldName: String!
+    fieldNameTranslated: String!
+    """
+    Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+    """
+    fieldOrder: Float!
+    """
+    The label for the parent question that this question refers to
+    """
+    referenceLabel: String
+    """
+    Specifies if this is a specific category of question. Needed for conditionally rendering note details etc
+    """
+    questionType: TranslationQuestionType
+    """
+    Translated Label for questions that are no longer applicable 
+    """
+    notApplicableQuestions: [String!]
+
+
+    
+    old: Any 
+    oldTranslated: Any
+    new: Any
+    newTranslated: Any
+
+
+    createdBy: UUID!
+    createdByUserAccount: UserAccount!
+    createdDts: Time!
+    modifiedBy: UUID
+    modifiedByUserAccount: UserAccount
+    modifiedDts: Time
+}
+
+extend type Query {
+    """
+    TranslatedAuditCollection returns a collection of translated audits, with access dependant on who is viewing the audits.
+    if a user has privileged access, they will see audit changes that are restricted, otherwise only unrestricted
+    Optional Params 
+        limit: this controls how many records will be returned at once. A null entry will return all records
+        offset: how many records to skip before returning results. If null, no records will be skipped.
+    """
+    translatedAuditCollection(modelPlanID: UUID!, limit: Int, offset: Int): [TranslatedAudit!]
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}  

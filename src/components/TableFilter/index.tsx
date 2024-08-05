@@ -15,6 +15,7 @@ type GlobalClientFilterProps = {
   tableID: string;
   tableName: string;
   className?: string;
+  initialFilter?: string;
 };
 
 // Component for Global Filter for Client Side filtering
@@ -23,7 +24,8 @@ const GlobalClientFilter = ({
   setGlobalFilter,
   tableID,
   tableName,
-  className
+  className,
+  initialFilter
 }: GlobalClientFilterProps) => {
   const { t } = useTranslation('tableAndPagination');
 

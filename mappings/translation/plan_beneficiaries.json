@@ -1,0 +1,449 @@
+{
+  "beneficiaries": {
+    "gqlField": "beneficiaries",
+    "goField": "Beneficiaries",
+    "dbField": "beneficiaries",
+    "label": "Who are the beneficiaries of this model? Select all that apply.",
+    "readonlyLabel": "Who are the beneficiaries of this model?",
+    "exportLabel": "Who are the beneficiaries of this model?",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
+    "order": 1.01,
+    "multiSelectLabel": "Selected groups",
+    "options": {
+      "DISEASE_SPECIFIC": "Disease-specific",
+      "DUALLY_ELIGIBLE": "Dually-eligible beneficiaries",
+      "MEDICAID": "Medicaid/Children's Health Insurance Program (CHIP)",
+      "MEDICARE_ADVANTAGE": "Medicare Advantage",
+      "MEDICARE_FFS": "Medicare FFS beneficiaries",
+      "MEDICARE_PART_D": "Prescription Drug (Medicare Part D)",
+      "UNDERSERVED": "Underserved",
+      "NA": "Not applicable",
+      "OTHER": "Other"
+    },
+    "optionsLabels": {
+      "DISEASE_SPECIFIC": "(based on a diagnosis, procedure code, condition, etc.)"
+    }
+  },
+  "diseaseSpecificGroup": {
+    "gqlField": "diseaseSpecificGroup",
+    "goField": "DiseaseSpecificGroup",
+    "dbField": "disease_specific_group",
+    "label": "Please describe the disease-specific groups this model will impact.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.02,
+    "isOtherType": true,
+    "otherParentField": "beneficiaries"
+  },
+  "beneficiariesOther": {
+    "gqlField": "beneficiariesOther",
+    "goField": "BeneficiariesOther",
+    "dbField": "beneficiaries_other",
+    "label": "Please describe the other groups this model will impact.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.03,
+    "isOtherType": true,
+    "otherParentField": "beneficiaries"
+  },
+  "beneficiariesNote": {
+    "gqlField": "beneficiariesNote",
+    "goField": "BeneficiariesNote",
+    "dbField": "beneficiaries_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "beneficiaries",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.04
+  },
+  "treatDualElligibleDifferent": {
+    "gqlField": "treatDualElligibleDifferent",
+    "goField": "TreatDualElligibleDifferent",
+    "dbField": "treat_dual_elligible_different",
+    "label": "Should dually-eligible beneficiaries be treated differently than non-dually eligibles?",
+    "readonlyLabel": "Should dually-eligible beneficiaries be treated differently than non-dually eligibles? How so?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.05,
+    "options": {
+      "YES": "Yes",
+      "NO": "No",
+      "TBD": "Not applicable"
+    }
+  },
+  "treatDualElligibleDifferentHow": {
+    "gqlField": "treatDualElligibleDifferentHow",
+    "goField": "TreatDualElligibleDifferentHow",
+    "dbField": "treat_dual_elligible_different_how",
+    "label": "How so?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.06,
+    "isOtherType": true,
+    "otherParentField": "treat_dual_elligible_different"
+  },
+  "treatDualElligibleDifferentNote": {
+    "gqlField": "treatDualElligibleDifferentNote",
+    "goField": "TreatDualElligibleDifferentNote",
+    "dbField": "treat_dual_elligible_different_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "treat_dual_elligible_different",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.07
+  },
+  "excludeCertainCharacteristics": {
+    "gqlField": "excludeCertainCharacteristics",
+    "goField": "ExcludeCertainCharacteristics",
+    "dbField": "exclude_certain_characteristics",
+    "label": "Should beneficiaries with certain characteristics or enrollments be excluded?",
+    "readonlyLabel": "Should beneficiaries with certain characteristics or enrollments be excluded? How so, what are the exclusionary criteria?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.08,
+    "options": {
+      "YES": "Yes",
+      "NO": "No",
+      "TBD": "Not applicable"
+    }
+  },
+  "excludeCertainCharacteristicsCriteria": {
+    "gqlField": "excludeCertainCharacteristicsCriteria",
+    "goField": "ExcludeCertainCharacteristicsCriteria",
+    "dbField": "exclude_certain_characteristics_criteria",
+    "label": "What are the exclusionary criteria?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.09,
+    "isOtherType": true,
+    "otherParentField": "exclude_certain_characteristics"
+  },
+  "excludeCertainCharacteristicsNote": {
+    "gqlField": "excludeCertainCharacteristicsNote",
+    "goField": "ExcludeCertainCharacteristicsNote",
+    "dbField": "exclude_certain_characteristics_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "exclude_certain_characteristics",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.1
+  },
+  "numberPeopleImpacted": {
+    "gqlField": "numberPeopleImpacted",
+    "goField": "NumberPeopleImpacted",
+    "dbField": "number_people_impacted",
+    "label": "How many people do you think will be impacted by this model?",
+    "dataType": "NUMBER",
+    "formType": "RANGEINPUT",
+    "order": 2.01
+  },
+  "estimateConfidence": {
+    "gqlField": "estimateConfidence",
+    "goField": "EstimateConfidence",
+    "dbField": "estimate_confidence",
+    "label": "What is your level of confidence on this estimate?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
+    "order": 2.02,
+    "options": {
+      "NOT_AT_ALL": "Not at all confident",
+      "SLIGHTLY": "Slightly confident",
+      "FAIRLY": "Fairly confident",
+      "COMPLETELY": "Completely confident"
+    }
+  },
+  "confidenceNote": {
+    "gqlField": "confidenceNote",
+    "goField": "ConfidenceNote",
+    "dbField": "confidence_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "number_people_impacted",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.03
+  },
+  "beneficiarySelectionMethod": {
+    "gqlField": "beneficiarySelectionMethod",
+    "goField": "BeneficiarySelectionMethod",
+    "dbField": "beneficiary_selection_method",
+    "label": "How will you choose beneficiaries? Select all that apply.",
+    "readonlyLabel": "How will you choose beneficiaries?",
+    "exportLabel": "How will you choose beneficiaries?",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
+    "order": 2.04,
+    "multiSelectLabel": "Selected methods",
+    "options": {
+      "HISTORICAL": "Historical claims",
+      "PROSPECTIVE": "Prospective selection",
+      "RETROSPECTIVE": "Retrospective selection",
+      "VOLUNTARY": "Voluntary alignment",
+      "PROVIDER_SIGN_UP": "Beneficiary will sign up through their provider",
+      "OTHER": "Other",
+      "NA": "Not applicable"
+    }
+  },
+  "beneficiarySelectionOther": {
+    "gqlField": "beneficiarySelectionOther",
+    "goField": "BeneficiarySelectionOther",
+    "dbField": "beneficiary_selection_other",
+    "label": "Please describe the other method for choosing beneficiaries.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.05,
+    "isOtherType": true
+  },
+  "beneficiarySelectionNote": {
+    "gqlField": "beneficiarySelectionNote",
+    "goField": "BeneficiarySelectionNote",
+    "dbField": "beneficiary_selection_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "beneficiary_selection_method",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.06
+  },
+  "beneficiarySelectionFrequency": {
+    "gqlField": "beneficiarySelectionFrequency",
+    "goField": "BeneficiarySelectionFrequency",
+    "dbField": "beneficiary_selection_frequency",
+    "label": "How frequently are beneficiaries added?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 3.01,
+    "options": {
+      "ANNUALLY": "Annually",
+      "SEMIANNUALLY": "Semi-annually",
+      "QUARTERLY": "Quarterly",
+      "MONTHLY": "Monthly",
+      "CONTINUALLY": "Continually",
+      "OTHER": "Other"
+    }
+  },
+  "beneficiarySelectionFrequencyContinually": {
+    "gqlField": "beneficiarySelectionFrequencyContinually",
+    "goField": "BeneficiarySelectionFrequencyContinually",
+    "dbField": "beneficiary_selection_frequency_continually",
+    "label": "Please specify",
+    "exportLabel": "Please specify continually",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.02,
+    "isOtherType": true,
+    "otherParentField": "beneficiary_selection_frequency"
+  },
+  "beneficiarySelectionFrequencyOther": {
+    "gqlField": "beneficiarySelectionFrequencyOther",
+    "goField": "BeneficiarySelectionFrequencyOther",
+    "dbField": "beneficiary_selection_frequency_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.03,
+    "isOtherType": true,
+    "otherParentField": "beneficiary_selection_frequency"
+  },
+  "beneficiarySelectionFrequencyNote": {
+    "gqlField": "beneficiarySelectionFrequencyNote",
+    "goField": "BeneficiarySelectionFrequencyNote",
+    "dbField": "beneficiary_selection_frequency_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "beneficiary_selection_frequency",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.04
+  },
+  "beneficiaryRemovalFrequency": {
+    "gqlField": "beneficiaryRemovalFrequency",
+    "goField": "BeneficiaryRemovalFrequency",
+    "dbField": "beneficiary_removal_frequency",
+    "label": "How frequently are beneficiaries removed?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 3.05,
+    "options": {
+      "ANNUALLY": "Annually",
+      "SEMIANNUALLY": "Semi-annually",
+      "QUARTERLY": "Quarterly",
+      "MONTHLY": "Monthly",
+      "CONTINUALLY": "Continually",
+      "OTHER": "Other"
+    }
+  },
+  "beneficiaryRemovalFrequencyContinually": {
+    "gqlField": "beneficiaryRemovalFrequencyContinually",
+    "goField": "BeneficiaryRemovalFrequencyContinually",
+    "dbField": "beneficiary_removal_frequency_continually",
+    "label": "Please specify",
+    "exportLabel": "Please specify continually",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.06,
+    "isOtherType": true,
+    "otherParentField": "beneficiary_removal_frequency"
+  },
+  "beneficiaryRemovalFrequencyOther": {
+    "gqlField": "beneficiaryRemovalFrequencyOther",
+    "goField": "BeneficiaryRemovalFrequencyOther",
+    "dbField": "beneficiary_removal_frequency_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.07,
+    "isOtherType": true,
+    "otherParentField": "beneficiary_removal_frequency"
+  },
+  "beneficiaryRemovalFrequencyNote": {
+    "gqlField": "beneficiaryRemovalFrequencyNote",
+    "goField": "BeneficiaryRemovalFrequencyNote",
+    "dbField": "beneficiary_removal_frequency_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "beneficiary_removal_frequency",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.08
+  },
+  "beneficiaryOverlap": {
+    "gqlField": "beneficiaryOverlap",
+    "goField": "BeneficiaryOverlap",
+    "dbField": "beneficiary_overlap",
+    "label": "Will the beneficiaries overlap with other models?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
+    "order": 3.09,
+    "options": {
+      "YES_NEED_POLICIES": "Yes, we expect to develop policies to manage the overlaps",
+      "YES_NO_ISSUES": "Yes, and the overlaps would not be an issue",
+      "NO": "No"
+    }
+  },
+  "beneficiaryOverlapNote": {
+    "gqlField": "beneficiaryOverlapNote",
+    "goField": "BeneficiaryOverlapNote",
+    "dbField": "beneficiary_overlap_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "beneficiary_overlap",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.1
+  },
+  "precedenceRules": {
+    "gqlField": "precedenceRules",
+    "goField": "PrecedenceRules",
+    "dbField": "precedence_rules",
+    "label": "Are there precedence rules between this model and other model(s)?",
+    "sublabel": "i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)",
+    "questionTooltip": "i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 3.11,
+    "options": {
+      "YES": "Yes",
+      "NO": "No"
+    }
+  },
+  "precedenceRulesYes": {
+    "gqlField": "precedenceRulesYes",
+    "goField": "PrecedenceRulesYes",
+    "dbField": "precedence_rules_yes",
+    "label": "Please describe",
+    "exportLabel": "Please describe yes",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.121,
+    "isOtherType": true,
+    "otherParentField": "precedence_rules"
+  },
+  "precedenceRulesNo": {
+    "gqlField": "precedenceRulesNo",
+    "goField": "PrecedenceRulesNo",
+    "dbField": "precedence_rules_no",
+    "label": "Please describe",
+    "exportLabel": "Please describe no",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.13,
+    "isOtherType": true,
+    "otherParentField": "precedence_rules"
+  },
+  "precedenceRulesNote": {
+    "gqlField": "precedenceRulesNote",
+    "goField": "PrecedenceRulesNote",
+    "dbField": "precedence_rules_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "precedence_rules",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.14
+  },
+  "readyForReviewBy": {
+    "gqlField": "readyForReviewBy",
+    "goField": "ReadyForReviewBy",
+    "dbField": "ready_for_review_by",
+    "label": "This section of the Model Plan (Beneficiaries) is ready for review.",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 3.15,
+    "tableReference": "user_account",
+    "hideFromReadonly": true
+  },
+  "readyForReviewDts": {
+    "gqlField": "readyForReviewDts",
+    "goField": "ReadyForReviewDts",
+    "dbField": "ready_for_review_dts",
+    "label": "Ready for review date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.16,
+    "hideFromReadonly": true
+  },
+  "readyForClearanceBy": {
+    "gqlField": "readyForClearanceBy",
+    "goField": "ReadyForClearanceBy",
+    "dbField": "ready_for_clearance_by",
+    "label": "This section of the Model Plan (Beneficiaries) is ready for clearance.",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 3.17,
+    "tableReference": "user_account",
+    "hideFromReadonly": true
+  },
+  "readyForClearanceDts": {
+    "gqlField": "readyForClearanceDts",
+    "goField": "ReadyForClearanceDts",
+    "dbField": "ready_for_clearance_dts",
+    "label": "Ready for clearance date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 3.18,
+    "hideFromReadonly": true
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "Model Plan status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 3.19,
+    "options": {
+      "READY": "Ready",
+      "IN_PROGRESS": "In progress",
+      "READY_FOR_REVIEW": "Ready for review",
+      "READY_FOR_CLEARANCE": "Ready for clearance"
+    },
+    "hideFromReadonly": true
+  }
+}

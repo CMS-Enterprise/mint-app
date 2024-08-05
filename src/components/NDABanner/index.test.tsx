@@ -8,7 +8,7 @@ describe('NDA Banner Component', () => {
     const { getByTestId } = render(<NDABanner collapsable />);
 
     await waitFor(() => {
-      expect(getByTestId('collapsable-link')).toBeInTheDocument();
+      expect(getByTestId('pre-decisional-collapse')).toBeInTheDocument();
     });
   });
 

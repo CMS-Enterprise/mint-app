@@ -269,6 +269,7 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
     ParticipantsType.OTHER
   ],
   medicareProviderType: null,
+  isNewTypeOfProvidersOrSuppliers: true,
   statesEngagement: 'State',
   participantsOther: 'This is the other',
   participantsNote: 'Participant note',
@@ -593,6 +594,8 @@ const paymentsData: PaymentTypes = {
   affectsMedicareSecondaryPayerClaimsHow: 'Affect how',
   affectsMedicareSecondaryPayerClaimsNote: 'Affect payer note',
   payModelDifferentiation: 'Differ pay model',
+  willBePaymentAdjustments: true,
+  willBePaymentAdjustmentsNote: 'Payment adjustments note',
   creatingDependenciesBetweenServices: true,
   creatingDependenciesBetweenServicesNote: 'Creating dependencies note',
   needsClaimsDataCollection: true,

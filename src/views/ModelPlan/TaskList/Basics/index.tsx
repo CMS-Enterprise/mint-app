@@ -1,6 +1,13 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
+import {
+  Link,
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  useParams
+} from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -27,10 +34,11 @@ import {
 } from 'gql/gen/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
+import ConfirmLeave from 'components/ConfirmLeave';
 import MainContent from 'components/MainContent';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -41,6 +49,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
+import dirtyInput from 'utils/formDiff';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -69,6 +78,10 @@ const BasicsContent = () => {
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
 
   const history = useHistory();
+  const location = useLocation();
+
+  const [destinationURL, setDestinationURL] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const { data, loading, error } = useGetBasicsQuery({
     variables: {
@@ -96,53 +109,91 @@ const BasicsContent = () => {
 
   const [update] = useUpdateModelPlanAndBasicsMutation();
 
-  const handleFormSubmit = (
-    formikValues: ModelPlanInfoFormType,
-    redirect?: 'next' | 'back'
-  ) => {
-    if (!formikValues.modelName) {
-      formikRef?.current?.setFieldError('modelName', 'Enter the Model name');
-      return;
-    }
+  useEffect(() => {
+    if (!isModalOpen && modelID) {
+      const unblock = history.block(destination => {
+        // Don't call mutation if attempting to access a locked section
+        if (destination.pathname.includes('locked-task-list-section')) {
+          unblock();
+          history.push({
+            pathname: destination.pathname,
+            state: destination.state
+          });
+          return false;
+        }
 
-    const {
-      id: updateId,
-      modelName: updateModelName,
-      abbreviation: updateAbbreviation,
-      basics: updateBasics
-    } = formikValues;
+        if (destination.pathname === location.pathname) {
+          return false;
+        }
 
-    update({
-      variables: {
-        id: updateId,
-        changes: {
+        if (!formikRef.current?.values.modelName) {
+          formikRef?.current?.setFieldError(
+            'modelName',
+            'Enter the Model name'
+          );
+          return false;
+        }
+
+        const { id: updateId } = formikRef?.current?.initialValues;
+        const basicsId = formikRef?.current?.values.basics.id;
+
+        const changes = dirtyInput(
+          formikRef?.current?.initialValues,
+          formikRef?.current?.values
+        );
+
+        const basicsChanges = dirtyInput(
+          formikRef?.current?.initialValues.basics,
+          formikRef?.current?.values.basics
+        );
+
+        const {
           modelName: updateModelName,
           abbreviation: updateAbbreviation
-        },
-        basicsId: updateBasics.id,
-        basicsChanges: {
-          demoCode: updateBasics.demoCode,
-          amsModelID: updateBasics.amsModelID,
-          modelCategory: updateBasics.modelCategory,
-          additionalModelCategories: updateBasics.additionalModelCategories,
-          cmsCenters: updateBasics.cmsCenters,
-          cmmiGroups: updateBasics.cmmiGroups
-        }
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/basics/overview`);
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/`);
+        } = changes;
+
+        update({
+          variables: {
+            id: updateId,
+            changes: {
+              modelName: updateModelName,
+              abbreviation: updateAbbreviation
+            },
+            basicsId,
+            basicsChanges
           }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
+        })
+          .then(response => {
+            if (!response?.errors) {
+              unblock();
+              history.push(destination.pathname);
+            }
+          })
+          .catch(errors => {
+            unblock();
+            setDestinationURL(destination.pathname);
+            setIsModalOpen(true);
+
+            formikRef?.current?.setErrors(errors);
+          });
+        return false;
       });
-  };
+
+      return () => {
+        unblock();
+      };
+    }
+    return () => {};
+  }, [
+    history,
+    id,
+    update,
+    isModalOpen,
+    formikRef,
+    setIsModalOpen,
+    modelID,
+    location.pathname
+  ]);
 
   const initialValues: ModelPlanInfoFormType = {
     __typename: 'ModelPlan',
@@ -167,6 +218,12 @@ const BasicsContent = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        url={destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -199,7 +256,7 @@ const BasicsContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit(values, 'next');
+          history.push(`/models/${modelID}/task-list/basics/overview`);
         }}
         enableReinitialize
         validationSchema={planBasicsSchema.pageOneSchema}
@@ -222,6 +279,8 @@ const BasicsContent = () => {
 
           return (
             <>
+              <ConfirmLeave />
+
               {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
@@ -594,7 +653,9 @@ const BasicsContent = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() => handleFormSubmit(values, 'back')}
+                          onClick={() =>
+                            history.push(`/models/${modelID}/task-list`)
+                          }
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -630,17 +691,6 @@ const BasicsContent = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    if (formikRef.current!.values.modelName)
-                      handleFormSubmit(formikRef.current!.values);
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}
@@ -660,7 +710,7 @@ export const Basics = () => {
             <Route
               path="/models/:modelID/task-list/basics"
               exact
-              render={() => <BasicsContent />}
+              component={() => <BasicsContent />}
             />
             <Route
               path="/models/:modelID/task-list/basics/overview"

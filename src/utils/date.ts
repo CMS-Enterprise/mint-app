@@ -54,6 +54,10 @@ export const getTimeElapsed = (discussionCreated: string) => {
   return dateString;
 };
 
+// Returns only the time from an ISO string -> 1:57 pm
+export const formatTime = (date: string) =>
+  DateTime.fromISO(date).toLocaleString(DateTime.TIME_SIMPLE);
+
 export const getDaysElapsed = (discussionCreated: string) => {
   const now = DateTime.local();
   const creationTime = DateTime.fromISO(discussionCreated);

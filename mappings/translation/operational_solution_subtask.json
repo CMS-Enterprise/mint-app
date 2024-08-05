@@ -1,0 +1,27 @@
+{
+  "name": {
+    "gqlField": "name",
+    "goField": "Name",
+    "dbField": "name",
+    "label": "Subtask name",
+    "exportLabel": "Subtasks",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.01
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "What is the status of this subtask?",
+    "exportLabel": "Status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 1.02,
+    "options": {
+      "DONE": "Done",
+      "IN_PROGRESS": "In progress",
+      "TODO": "To do"
+    }
+  }
+}

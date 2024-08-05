@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { TeamRole } from 'gql/gen/graphql';
 
 import { getUserInitials } from 'utils/modelPlan';
@@ -94,13 +95,15 @@ type AvatarProps = {
   className?: string;
   teamRoles?: TeamRole[];
   isAssessment?: boolean;
+  bold?: boolean;
 };
 
 export const Avatar = ({
   user,
   className,
   teamRoles,
-  isAssessment
+  isAssessment,
+  bold
 }: AvatarProps) => {
   const { t: collaboratorsT } = useTranslation('collaborators');
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
@@ -124,7 +127,7 @@ export const Avatar = ({
         isAssessment={isAssessment}
       />
       <div className="margin-y-0">
-        <span>
+        <span className={classNames({ 'text-bold': bold })}>
           {isAssessment && `${discussionsMiscT('assessment')} | `}
           {user}
         </span>

@@ -17,7 +17,7 @@ func (suite *WorkerSuite) TestDigestCronJobIntegration() {
 
 	// Test when DigestCronJob runs it enqueues
 	// analyzedAuditBatchJob (1 job in queue)
-	cronJob := faktory.NewJob("DailyDigestCronJob", "")
+	cronJob := faktory.NewJob(dailyDigestCronJobName, "")
 	cronJob.Queue = criticalQueue
 
 	err = perf.Execute(cronJob, worker.DigestCronJob)

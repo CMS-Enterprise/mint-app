@@ -228,8 +228,46 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlansByOperationalSolutionKey ($operationalSolutionKey: OperationalSolutionKey!) {\n    modelPlansByOperationalSolutionKey (operationalSolutionKey: $operationalSolutionKey) {\n        operationalSolution {\n            id\n            isCommonSolution\n            operationalNeedID\n            solutionType\n            needed\n            name\n            key\n            nameOther\n            pocName\n            pocEmail\n            mustStartDts\n            mustFinishDts\n            status\n            documents {\n                id\n                modelPlanID\n                fileType\n                bucket\n                fileKey\n                virusScanned\n                virusClean\n                restricted\n                fileName\n                fileSize\n                documentType\n                otherType\n                optionalNotes\n                downloadUrl\n                deletedAt\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            operationalSolutionSubtasks {\n                id\n                solutionID\n                name\n                status\n                createdBy\n                createdDts\n                modifiedBy\n                modifiedDts\n            }\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            createdByUserAccount \n            {\n                commonName\n            }   \n            modifiedByUserAccount\n            {\n                commonName\n            }\n        }\n        \n        modelPlan{\n            id\n            modelName\n            abbreviation\n            archived\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            status\n            isFavorite\n            isCollaborator\n            opSolutionLastModifiedDts\n        }\n    }\n}",
-								"variables": "{\n  \"operationalSolutionKey\": \"MARX\"\n}"
+								"query": "query modelPlansByOperationalSolutionKey ($operationalSolutionKey: OperationalSolutionKey!) {\n    modelPlansByOperationalSolutionKey (operationalSolutionKey: $operationalSolutionKey) {\n        possibleOperationalSolution{\n            name\n        }\n        possibleOperationalSolutionID\n        key\n        \n        modelPlan{\n            id\n            modelName\n            abbreviation\n            archived\n            createdBy\n            createdDts\n            modifiedBy\n            modifiedDts\n            status\n            isFavorite\n            isCollaborator\n            opSolutionLastModifiedDts\n        }\n    }\n}",
+								"variables": "{\n  \"operationalSolutionKey\": \"INNOVATION\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sample Model Plan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.modelPlan",
+									"",
+									"modelPlanID = responseData.id",
+									"",
+									"",
+									"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{sampleModelPlanID}}\"){\n    id\n    modelName\n    prepareForClearance \n    {\n        status\n        latestClearanceDts\n    }\n\n    basics{\n        id\n        modelCategory\n        cmmiGroups\n        cmsCenters\n        # testInterventions\n    }\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    # participantsAndProviders{\n    #     participants\n    # }\n    beneficiaries {\n        beneficiaries\n        id\n        numberPeopleImpacted\n    }\n    # opsEvalAndLearning{\n    #     agencyOrStateHelp\n    # }\n  }\n  \n  \n}",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -296,7 +334,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanParticipantsAndProviders ($id: UUID!, $changes: PlanParticipantsAndProvidersChanges!) {\n    updatePlanParticipantsAndProviders (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        participantAddedFrequency\n        participantAddedFrequencyContinually\n        participantAddedFrequencyOther\n        participantAddedFrequencyNote\n        participantRemovedFrequency\n        participantRemovedFrequencyContinually\n        participantRemovedFrequencyOther\n        participantRemovedFrequencyNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsEligibility\n        gainsharePaymentsEligibilityOther\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        \n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n\n        status\n    }\n}",
+								"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\nupdatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n    status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    isNewTypeOfProvidersOrSuppliers: true\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: true\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: YES_NEED_POLICIES\n    # providerOverlapHierarchy:\n    # providerOverlapNote:\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        isNewTypeOfProvidersOrSuppliers\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
 								"variables": "{\n  \"id\": \"{{participantsAndProvidersID}}\",\n  \"changes\": {\n    \"participants\": [\n      \"\"\n    ],\n    \"medicareProviderType\": \"\",\n    \"statesEngagement\": \"\",\n    \"participantsOther\": \"\",\n    \"participantsNote\": \"\",\n    \"participantsCurrentlyInModels\": true,\n    \"participantsCurrentlyInModelsNote\": \"\",\n    \"modelApplicationLevel\": \"\",\n    \"expectedNumberOfParticipants\": 0,\n    \"estimateConfidence\": \"\",\n    \"confidenceNote\": \"\",\n    \"recruitmentMethod\": \"\",\n    \"recruitmentOther\": \"\",\n    \"recruitmentNote\": \"\",\n    \"selectionMethod\": [\n      \"\"\n    ],\n    \"selectionOther\": \"\",\n    \"selectionNote\": \"\",\n    \"participantAddedFrequency\": [\n        \"\"\n    ],\n    \"participantAddedFrequencyContinually\": \"\",\n    \"participantAddedFrequencyOther\": \"\",\n    \"participantAddedFrequencyNote\": \"\",\n    \"participantRemovedFrequency\": [\n        \"\"\n    ],    \n    \"participantRemovedFrequencyContinually\": \"\",\n    \"participantRemovedFrequencyOther\": \"\",\n    \"participantRemovedFrequencyNote\": \"\",\n    \"communicationMethod\": [\n      \"\"\n    ],\n    \"communicationMethodOther\": \"\",\n    \"communicationNote\": \"\",\n    \"riskType\": [\n        \"OTHER\"\n    ],\n    \"riskOther\": \"\",\n    \"riskNote\": \"\",\n    \"willRiskChange\": true,\n    \"willRiskChangeNote\": \"\",\n    \"coordinateWork\": true,\n    \"coordinateWorkNote\": \"\",\n    \"gainsharePayments\": true,\n    \"gainsharePaymentsTrack\": true,\n    \"gainsharePaymentsNote\": \"\",\n    \"gainsharePaymentsEligibility\": [\"\"],\n    \"gainsharePaymentsEligibilityOther\": \"\",\n    \"participantsIds\": [\n      \"\"\n    ],\n    \"participantsIdsOther\": \"\",\n    \"participantsIDSNote\": \"\",\n    \"providerAdditionFrequency\": \"\",\n    \"providerAdditionFrequencyOther\": \"\",\n    \"providerAdditionFrequencyNote\": \"\",\n    \"providerAddMethod\": [\n      \"\"\n    ],\n    \"providerAddMethodOther\": \"\",\n    \"providerAddMethodNote\": \"\",\n    \"providerLeaveMethod\": [\n      \"\"\n    ],\n    \"providerLeaveMethodOther\": \"\",\n    \"providerLeaveMethodNote\": \"\",\n    \"providerOverlap\": \"\",\n    \"providerOverlapHierarchy\": \"\",\n    \"providerOverlapNote\": \"\",\n    \"status\": \"\"\n  }\n}"
 							}
 						},
@@ -359,8 +397,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanPayments ($id: UUID!, $changes: PlanPaymentsChanges!) {\n    updatePlanPayments (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        fundingSource\n        fundingSourceTrustFund\n        fundingSourceTrustFundType\n        fundingSourceOther\n        fundingSourceNote\n        fundingSourceR\n        fundingSourceRTrustFund\n        fundingSourceRTrustFundType\n        fundingSourceROther\n        fundingSourceRNote\n        payRecipients\n        payRecipientsOtherSpecification\n        payRecipientsNote\n        payType\n        payTypeNote\n        payClaims\n        payClaimsOther\n        payClaimsNote\n        shouldAnyProvidersExcludedFFSSystems\n        shouldAnyProviderExcludedFFSSystemsNote\n        changesMedicarePhysicianFeeSchedule\n        changesMedicarePhysicianFeeScheduleNote\n        affectsMedicareSecondaryPayerClaims\n        affectsMedicareSecondaryPayerClaimsHow\n        affectsMedicareSecondaryPayerClaimsNote\n        payModelDifferentiation\n        creatingDependenciesBetweenServices\n        creatingDependenciesBetweenServicesNote\n        needsClaimsDataCollection\n        needsClaimsDataCollectionNote\n        providingThirdPartyFile\n        isContractorAwareTestDataRequirements\n        beneficiaryCostSharingLevelAndHandling\n        waiveBeneficiaryCostSharingForAnyServices\n        waiveBeneficiaryCostSharingServiceSpecification\n        waiverOnlyAppliesPartOfPayment\n        waiveBeneficiaryCostSharingNote\n        nonClaimsPayments\n        nonClaimsPaymentOther\n        nonClaimsPaymentsNote\n        paymentCalculationOwner\n        numberPaymentsPerPayCycle\n        numberPaymentsPerPayCycleNote\n        sharedSystemsInvolvedAdditionalClaimPayment\n        sharedSystemsInvolvedAdditionalClaimPaymentNote\n        planningToUseInnovationPaymentContractor\n        planningToUseInnovationPaymentContractorNote\n        expectedCalculationComplexityLevel\n        expectedCalculationComplexityLevelNote\n        claims_processing_precedence\n        claims_processing_precedence_yes\n        claims_processing_precedence_note\n        canParticipantsSelectBetweenPaymentMechanisms\n        canParticipantsSelectBetweenPaymentMechanismsHow\n        canParticipantsSelectBetweenPaymentMechanismsNote\n        anticipatedPaymentFrequency\n        anticipatedPaymentFrequencyOther\n        anticipatedPaymentFrequencyNote\n        willRecoverPayments\n        willRecoverPaymentsNote\n        anticipateReconcilingPaymentsRetrospectively\n        anticipateReconcilingPaymentsRetrospectivelyNote\n        paymentReconciliationFrequency\n        paymentReconciliationFrequencyContinually\n        paymentReconciliationFrequencyOther\n        paymentReconciliationFrequencyNote\n        paymentStartDate\n        paymentStartDateNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n    }\n}",
-								"variables": "{\n  \"id\": \"{{paymentsID}}\",\n  \"changes\": {\n    \"fundingSource\": [\n      \"\"\n    ],\n    \"fundingSourceTrustFund\": \"\",\n    \"fundingSourceTrustFundType\": \"\",\n    \"fundingSourceOther\": \"\",\n    \"fundingSourceNote\": \"\",\n    \"fundingSourceR\": [\n      \"\"\n    ],\n    \"fundingSourceRTrustFund\": \"\",\n    \"fundingSourceRTrustFundType\": \"\",\n    \"fundingSourceROther\": \"\",\n    \"fundingSourceRNote\": \"\",\n    \"payRecipients\": [\n      \"\"\n    ],\n    \"payRecipientsOtherSpecification\": \"\",\n    \"payRecipientsNote\": \"\",\n    \"payType\": [\n      \"\"\n    ],\n    \"payTypeNote\": \"\",\n    \"payClaims\": [\n      \"\"\n    ],\n    \"payClaimsOther\": \"\",\n    \"payClaimsNote\": \"\",\n    \"shouldAnyProvidersExcludedFFSSystems\": true,\n    \"shouldAnyProviderExcludedFFSSystemsNote\": \"\",\n    \"changesMedicarePhysicianFeeSchedule\": true,\n    \"changesMedicarePhysicianFeeScheduleNote\": \"\",\n    \"affectsMedicareSecondaryPayerClaims\": true,\n    \"affectsMedicareSecondaryPayerClaimsHow\": \"\",\n    \"affectsMedicareSecondaryPayerClaimsNote\": \"\",\n    \"payModelDifferentiation\": \"\",\n    \"creatingDependenciesBetweenServices\": true,\n    \"creatingDependenciesBetweenServicesNote\": \"\",\n    \"needsClaimsDataCollection\": true,\n    \"needsClaimsDataCollectionNote\": \"\",\n    \"providingThirdPartyFile\": true,\n    \"isContractorAwareTestDataRequirements\": true,\n    \"beneficiaryCostSharingLevelAndHandling\": \"\",\n    \"waiveBeneficiaryCostSharingForAnyServices\": true,\n    \"waiveBeneficiaryCostSharingServiceSpecification\": \"\",\n    \"waiverOnlyAppliesPartOfPayment\": true,\n    \"waiveBeneficiaryCostSharingNote\": \"\",\n    \"nonClaimsPayments\": [\n      \"\"\n    ],\n    \"nonClaimsPaymentOther\": \"\",\n    \"nonClaimsPaymentsNote\": \"\",\n    \"paymentCalculationOwner\": \"\",\n    \"numberPaymentsPerPayCycle\": \"\",\n    \"numberPaymentsPerPayCycleNote\": \"\",\n    \"sharedSystemsInvolvedAdditionalClaimPayment\": true,\n    \"sharedSystemsInvolvedAdditionalClaimPaymentNote\": \"\",\n    \"planningToUseInnovationPaymentContractor\": true,\n    \"planningToUseInnovationPaymentContractorNote\": \"\",\n    \"expectedCalculationComplexityLevel\": \"\",\n    \"expectedCalculationComplexityLevelNote\": \"\",\n    \"claims_processing_precedence\": true,\n    \"claims_processing_precedence_yes\": \"\",\n    \"claims_processing_precedence_note\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanisms\": true,\n    \"canParticipantsSelectBetweenPaymentMechanismsHow\": \"\",\n    \"canParticipantsSelectBetweenPaymentMechanismsNote\": \"\",\n    \"anticipatedPaymentFrequency\": [\n      \"\"\n    ],\n    \"anticipatedPaymentFrequencyOther\": \"\",\n    \"anticipatedPaymentFrequencyNote\": \"\",\n    \"willRecoverPayments\": true,\n    \"willRecoverPaymentsNote\": \"\",\n    \"anticipateReconcilingPaymentsRetrospectively\": true,\n    \"anticipateReconcilingPaymentsRetrospectivelyNote\": \"\",\n    \"paymentReconciliationFrequency\": [\n        \"\"\n    ],\n    \"paymentReconciliationFrequencyContinually\": \"\",\n    \"paymentReconciliationFrequencyOther\": \"\",\n    \"paymentReconciliationFrequencyNote\": \"\",\n    \"paymentStartDate\": \"\",\n    \"paymentStartDateNote\": \"\",\n    \"status\": \"\"\n  }\n}"
+								"query": "mutation updatePlanPayments\n{\n    updatePlanPayments (id: \"{{paymentsID}}\",changes:     \n    {\n            status: READY_FOR_CLEARANCE\n        # Page 1\n        fundingSource: [PATIENT_PROTECTION_AFFORDABLE_CARE_ACT,  MEDICARE_PART_A_HI_TRUST_FUND,MEDICARE_PART_B_SMI_TRUST_FUND,   OTHER]\n        fundingSourceMedicareAInfo: \"hello medicare A\"\n        fundingSourceMedicareBInfo: \"hello medicare B\"\n        fundingSourceOther: \"My cool note\"\n        fundingSourceNote: \"hello this is a note\"\n        fundingSourceR: [PATIENT_PROTECTION_AFFORDABLE_CARE_ACT,   OTHER]\n        fundingSourceRMedicareAInfo: \"hello medicare A --> R\"\n        fundingSourceRMedicareBInfo: \"hello medicare B ---> R\"\n        fundingSourceROther: \"Trust others\"\n        fundingSourceRNote: \" Please trust us\"\n        payRecipients: [PROVIDERS, BENEFICIARIES, PARTICIPANTS, STATES, OTHER]\n        payRecipientsOtherSpecification: \"asdhjkasdlhjk\"\n        payRecipientsNote: \"hasdjkaskhjd\"\n        payType: [CLAIMS_BASED_PAYMENTS, NON_CLAIMS_BASED_PAYMENTS]\n        payTypeNote: \"ashjkdasdhjkasd\"\n\n        # Page 2\n        payClaims:   [ADJUSTMENTS_TO_FFS_PAYMENTS, CARE_MANAGEMENT_HOME_VISITS, REDUCTIONS_TO_BENEFICIARY_COST_SHARING, SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS, TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE, SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE, OTHER]\n        \n        #Page 3\n        willBePaymentAdjustments: true\n        willBePaymentAdjustmentsNote: \"Yes this is a note about payment adjustments\"\n\n\n    })\n     {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n    nonClaimsPaymentsNote\n  \n    id\n    modelPlanID\n\n    # Page 1\n    fundingSource\n    fundingSourceMedicareAInfo\n    fundingSourceMedicareBInfo\n    fundingSourceOther\n    fundingSourceNote\n    fundingSourceR\n    fundingSourceRMedicareAInfo\n    fundingSourceRMedicareBInfo\n    fundingSourceROther\n    fundingSourceRNote\n    payRecipients\n    payRecipientsOtherSpecification\n    payRecipientsNote\n    payType\n    payTypeNote\n\n    # Page 2\n    payClaims\n    payClaimsOther\n    shouldAnyProvidersExcludedFFSSystems\n    shouldAnyProviderExcludedFFSSystemsNote\n    changesMedicarePhysicianFeeSchedule\n    changesMedicarePhysicianFeeScheduleNote\n    affectsMedicareSecondaryPayerClaims\n    affectsMedicareSecondaryPayerClaimsHow\n    affectsMedicareSecondaryPayerClaimsNote\n    payModelDifferentiation\n\n    # Page 3\n    willBePaymentAdjustments\n    willBePaymentAdjustmentsNote\n    creatingDependenciesBetweenServices\n    creatingDependenciesBetweenServicesNote\n    needsClaimsDataCollection\n    needsClaimsDataCollectionNote\n    providingThirdPartyFile\n    isContractorAwareTestDataRequirements\n\n    # Page 4\n    beneficiaryCostSharingLevelAndHandling\n    waiveBeneficiaryCostSharingForAnyServices\n    waiveBeneficiaryCostSharingServiceSpecification\n    waiverOnlyAppliesPartOfPayment\n    waiveBeneficiaryCostSharingNote\n\n    # Page 5\n    nonClaimsPayments\n    nonClaimsPaymentOther\n    paymentCalculationOwner\n    numberPaymentsPerPayCycle\n    numberPaymentsPerPayCycleNote\n    sharedSystemsInvolvedAdditionalClaimPayment\n    sharedSystemsInvolvedAdditionalClaimPaymentNote\n    planningToUseInnovationPaymentContractor\n    planningToUseInnovationPaymentContractorNote\n\n\n    # Page 6\n    expectedCalculationComplexityLevel\n    expectedCalculationComplexityLevelNote\n    canParticipantsSelectBetweenPaymentMechanisms\n    canParticipantsSelectBetweenPaymentMechanismsHow\n    canParticipantsSelectBetweenPaymentMechanismsNote\n    anticipatedPaymentFrequency\n    anticipatedPaymentFrequencyOther\n    anticipatedPaymentFrequencyNote\n\n    # Page 7\n    willRecoverPayments\n    willRecoverPaymentsNote\n    anticipateReconcilingPaymentsRetrospectively\n    anticipateReconcilingPaymentsRetrospectivelyNote\n    paymentStartDate\n    paymentStartDateNote\n\n    # Meta\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    \n    \n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }    \n\n    }\n}",
+								"variables": ""
 							}
 						},
 						"url": {
@@ -2322,6 +2360,222 @@
 								"exec": [
 									""
 								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: [EMAIL,IN_APP]\n    \n    addedAsCollaborator: [EMAIL,IN_APP]\n\n    taggedInDiscussion:[IN_APP]\n\n    taggedInDiscussionReply:[EMAIL,IN_APP]\n\n    newDiscussionReply: [EMAIL,IN_APP]\n\n    modelPlanShared: [EMAIL,IN_APP]\n\n    newModelPlan: [EMAIL, IN_APP]\n\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n        newModelPlan\n    }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/graph/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"graph",
+								"query"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Translated Audit",
+			"item": [
+				{
+					"name": "TestChanges For Translated Changes",
+					"item": [
+						{
+							"name": "ModelPlanCreate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let responseData = pm.response.json().data.createModelPlan",
+											"",
+											"modelPlanID = responseData.id",
+											"basicsID = responseData.basics.id",
+											"generalCharacteristicsID = responseData.generalCharacteristics.id",
+											"participantsAndProvidersID = responseData.participantsAndProviders.id",
+											"beneficiariesID = responseData.beneficiaries.id",
+											"opsEvalAndLearningID = responseData.opsEvalAndLearning.id",
+											"modelLeadID = responseData.collaborators[0].id",
+											"paymentsID = responseData.payments.id",
+											"firstOpNeed = responseData.operationalNeeds[0].id",
+											"userID = responseData.createdByUserAccount.id",
+											"",
+											"pm.collectionVariables.set(\"modelPlanID\", modelPlanID);",
+											"pm.collectionVariables.set(\"basicsID\", basicsID);",
+											"",
+											"pm.collectionVariables.set(\"generalCharacteristicsID\", generalCharacteristicsID);",
+											"pm.collectionVariables.set(\"participantsAndProvidersID\", participantsAndProvidersID);",
+											"pm.collectionVariables.set(\"beneficiariesID\", beneficiariesID);",
+											"pm.collectionVariables.set(\"opsEvalAndLearningID\", opsEvalAndLearningID);",
+											"pm.collectionVariables.set(\"modelLeadID\", modelLeadID);",
+											"pm.collectionVariables.set(\"paymentsID\", paymentsID);",
+											"pm.collectionVariables.set(\"operationalNeedID\", firstOpNeed);",
+											"pm.collectionVariables.set(\"userID\", userID);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation createModelPlan{\n  \n  createModelPlan(modelName:\"Excellent Model\" ){\n    id\n    modelName\n    createdByUserAccount{\n        givenName\n        id\n    }\n    operationalNeeds {\n        id\n        modelPlanID\n        name\n        key\n        nameOther\n        needed\n        section    \n    }  \n    basics{\n        id        \n    }\n    generalCharacteristics {\n        id\n    }\n    participantsAndProviders {\n        id\n    }\n    beneficiaries {\n        id\n    }\n    opsEvalAndLearning {\n        id\n    }\n    collaborators {\n      id\n    }\n    payments{\n        id\n    }\n  }\n}\n  ",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{url}}",
+									"host": [
+										"{{url}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PlanBasicsUpdate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation UPDATEPlanBasics{\n  \n  updatePlanBasics(id:\"{{basicsID}}\" changes:{   \n\n    cmmiGroups : [\n        # STATE_INNOVATIONS_GROUP\n        ,PATIENT_CARE_MODELS_GROUP\n        ,POLICY_AND_PROGRAMS_GROUP\n        # ,PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP\n        ,SEAMLESS_CARE_MODELS_GROUP\n        ]\n    modelType: [VOLUNTARY, OTHER]\n    modelTypeOther: \"Test type\"\n    # problem:\" A interesting problem\"\n    goal: \" Be a good solution\"\n    testInterventions: \"A Kazoo that plays Brahms Lullaby\"\n    note: \"Notes are now cool again\"\n    status: READY_FOR_REVIEW\n    clearanceStarts: \"2023-11-18T16:28:24.26322738Z\"\n    performancePeriodStarts: \"2023-11-18T16:28:24.26322738Z\"\n  } \n  \n  \n  )\n  \n  \n  {\n   id\n   cmmiGroups\n    modelPlanID\n    modelType\n    # modelTypeOther\n    problem\n    goal\n    testInterventions\n    note\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    status \n    readyForReviewBy\n    readyForReviewDts\n    readyForClearanceBy\n    readyForClearanceDts\n    \n    \n  }\n  \n  \n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/api/graph/query",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"graph",
+										"query"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PlanParticipantsAndProvidersUpdate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: true\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: YES_NEED_POLICIES\n    # providerOverlapHierarchy:\n    # providerOverlapNote:\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/api/graph/query",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"graph",
+										"query"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PlanParticipantsAndProvidersUpdateGainshareNotApplicable",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: false\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: YES_NO_ISSUES\n    # providerOverlapHierarchy:\n    providerOverlapNote: \"Note, that changing this to Yes_No_Issues doesn't make the hierarchy question not apply. Make it null if you want to do that instead.\"\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/api/graph/query",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"graph",
+										"query"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PlanParticipantsAndProvidersUpdate OverlapNotApplicable",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation updatePlanParticipantsAndProviders #($input: PlanMilestonesInput!) \n{\n    updatePlanParticipantsAndProviders (id: \"{{participantsAndProvidersID}}\",changes:     \n    {\n        status: READY_FOR_CLEARANCE\n\n\n    #Page 1\n    participants: [ACCOUNTABLE_CARE_ORGANIZATION, MEDICARE_PROVIDERS, STATE_MEDICAID_AGENCIES]\n    # medicareProviderType:\n    statesEngagement: \"Very good engagement\"\n    # participantsOther:\n    # participantsNote:\n    participantsCurrentlyInModels: null\n    # participantsCurrentlyInModelsNote:\n    # modelApplicationLevel:\n\n    #Page 2\n    # expectedNumberOfParticipants:\n    # estimateConfidence:\n    # confidenceNote:\n    recruitmentMethod: APPLICATION_COLLECTION_TOOL\n    # recruitmentOther:\n    # recruitmentNote:\n    selectionMethod: [APPLICATION_REVIEW_AND_SCORING_TOOL\n    ,APPLICATION_SUPPORT_CONTRACTOR]\n    # selectionOther:\n    # selectionNote:\n\n    #Page 3\n    communicationMethod: [IT_TOOL]\n    communicationMethodOther: \"New And Awesome Method\"\n    # communicationNote:\n    # participantAssumeRisk:\n    # riskType:\n    # riskOther:\n    # riskNote:\n    # willRiskChange:\n    # willRiskChangeNote:\n\n    #Page 4\n    # coordinateWork:\n    # coordinateWorkNote:\n    gainsharePayments: false\n    # gainsharePaymentsTrack:\n    # gainsharePaymentsNote:\n    participantsIds: [TINS,CCNS]\n    # participantsIdsOther:\n    # participantsIDSNote:\n\n    #Page 5\n    # providerAdditionFrequency:\n    # providerAdditionFrequencyOther:\n    # providerAdditionFrequencyNote:\n    # providerAddMethod:\n    # providerAddMethodOther:\n    # providerAddMethodNote:\n    # providerLeaveMethod:\n    # providerLeaveMethodOther:\n    # providerLeaveMethodNote:\n    providerOverlap: null\n    # providerOverlapHierarchy:\n    providerOverlapNote: \"Note, that changing this to null makes the hierarchy question not apply.\"\n\n\n\n\n\n    }) {\n        readyForReviewBy\n        readyForReviewDts\n        readyForClearanceBy\n        readyForClearanceDts\n        status\n        id\n        modelPlanID\n        participants\n        medicareProviderType\n        statesEngagement\n        participantsOther\n        participantsNote\n        participantsCurrentlyInModels\n        participantsCurrentlyInModelsNote\n        modelApplicationLevel\n        expectedNumberOfParticipants\n        estimateConfidence\n        confidenceNote\n        recruitmentMethod\n        recruitmentOther\n        recruitmentNote\n        selectionMethod\n        selectionOther\n        selectionNote\n        communicationMethod\n        communicationMethodOther\n        communicationNote\n        # participantAssumeRisk\n        riskType\n        riskOther\n        riskNote\n        willRiskChange\n        willRiskChangeNote\n        coordinateWork\n        coordinateWorkNote\n        gainsharePayments\n        gainsharePaymentsTrack\n        gainsharePaymentsNote\n        participantsIds\n        participantsIdsOther\n        participantsIDSNote\n        providerAdditionFrequency\n        providerAdditionFrequencyOther\n        providerAdditionFrequencyNote\n        providerAddMethod\n        providerAddMethodOther\n        providerAddMethodNote\n        providerLeaveMethod\n        providerLeaveMethodOther\n        providerLeaveMethodNote\n        providerOverlap\n        providerOverlapHierarchy\n        providerOverlapNote\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n\n        createdByUserAccount \n        {\n            commonName\n        }   \n        modifiedByUserAccount\n        {\n            commonName\n        }     \n        readyForReviewByUserAccount \n        {\n            commonName\n        }\n        readyForClearanceByUserAccount \n        {\n            commonName\n        }\n\n        status\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8085/api/graph/query",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"api",
+										"graph",
+										"query"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TranslatedAuditCollectionGET NORMALIZED",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
 								"type": "text/javascript",
 								"packages": {}
 							}
@@ -2333,7 +2587,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation NotificationUpdate {\nupdateUserNotificationPreferences( changes:{\n    dailyDigestComplete: [EMAIL,IN_APP]\n    \n    addedAsCollaborator: [EMAIL,IN_APP]\n\n    taggedInDiscussion:[IN_APP]\n\n    taggedInDiscussionReply:[EMAIL,IN_APP]\n\n    newDiscussionReply: [EMAIL,IN_APP]\n\n    modelPlanShared: [EMAIL,IN_APP]\n\n    newModelPlan: [EMAIL, IN_APP]\n\n    datesChanged: [EMAIL, IN_APP]\n    datesChangedNotificationType: ALL_MODELS\n}) {\n\n        dailyDigestComplete\n\n        addedAsCollaborator\n\n        taggedInDiscussion\n\n        taggedInDiscussionReply\n\n        newDiscussionReply\n\n        modelPlanShared\n\n        newModelPlan\n\n        datesChanged\n        datesChangedNotificationType\n    }\n}\n",
+								"query": "query translatedAuditCollection {\n  translatedAuditCollection(modelPlanID: \"{{modelPlanID}}\"\n    # limit: 5 \n    # offset: 3\n  ) {\n    id\n    modelName\n    tableID\n    tableName\n    primaryKey\n    date\n    action\n\n    actorID\n    actorName\n\n    changeID\n    metaDataType\n    metaData {\n    ... on TranslatedAuditMetaBaseStruct{\n            version\n            tableName\n        }\n        ... on TranslatedAuditMetaGeneric {\n            version\n            tableName\n            relation\n            relationContent\n        }        \n        ... on TranslatedAuditMetaDiscussionReply {\n            version\n            tableName\n            discussionID\n            discussionContent\n            numberOfReplies\n        }    \n        ... on TranslatedAuditMetaOperationalNeed {\n            version\n            tableName\n            needName\n            isOther\n        }    \n        ... on TranslatedAuditMetaOperationalSolution {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            solutionOtherHeader\n            solutionIsOther\n            numberOfSubtasks\n        }    \n        ... on TranslatedAuditMetaOperationalSolutionSubtask {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            numberOfSubtasks\n            solutionOtherHeader\n            solutionIsOther\n            subtaskName\n        } \n       ... on TranslatedAuditMetaDocumentSolutionLink {\n            version\n            tableName\n            needName\n            needIsOther\n            solutionName\n            solutionOtherHeader\n            solutionIsOther\n\n            documentID\n            \n            documentName\n            documentType\n            documentOtherType\n            documentVisibility\n        }            \n    }\n\n    createdBy\n    # createdByUserAccount\n    createdDts\n    modifiedBy\n    # modifiedByUserAccount\n    modifiedDts\n\n    translatedFields {\n        fieldName\n        fieldNameTranslated\n        id\n\n        changeType\n        dataType\n        formType\n\n        referenceLabel\n        questionType\n        notApplicableQuestions\n        old\n        oldTranslated\n        new\n        newTranslated\n\n    }\n\n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -2526,6 +2780,11 @@
 		{
 			"key": "userNotificationID",
 			"value": ""
+		},
+		{
+			"key": "sampleModelPlanID",
+			"value": "f25d8f70-6470-47e6-a6d9-debc10f26567",
+			"type": "string"
 		}
 	]
 }

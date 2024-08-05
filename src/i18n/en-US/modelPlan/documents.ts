@@ -1,13 +1,29 @@
 import { TranslationDocuments } from 'types/translation';
 
+import {
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
+
 export const documents: TranslationDocuments = {
+  fileName: {
+    gqlField: 'fileName',
+    goField: 'FileName',
+    dbField: 'file_name',
+    label: 'File Name',
+    sublabel: 'Enter a Name for your document.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.01
+  },
   isLink: {
     gqlField: 'isLink',
     goField: 'IsLink',
     dbField: 'is_link',
-    label: '',
-    dataType: 'boolean',
-    formType: 'radio',
+    label: 'Is this a link to a document?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 1.02,
     options: {
       true: 'Link to document',
       false: 'Upload document'
@@ -20,25 +36,28 @@ export const documents: TranslationDocuments = {
     label: 'Link',
     sublabel:
       'Paste the link for your document. Make sure it includes http:// or https://.',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.03
   },
-  name: {
-    gqlField: 'name',
-    goField: 'name',
-    dbField: 'name',
-    label: 'File name',
-    sublabel: 'Enter a name for your document.',
-    dataType: 'string',
-    formType: 'text'
+  fileType: {
+    gqlField: 'fileType',
+    goField: 'FileType',
+    dbField: 'file_type',
+    label: 'File Type',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.04
   },
   documentType: {
     gqlField: 'documentType',
     goField: 'documentType',
     dbField: 'document_type',
     label: 'What type of document are you uploading?',
-    dataType: 'enum',
-    formType: 'radio',
+    exportLabel: 'Document type',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.RADIO,
+    order: 1.05,
     options: {
       CONCEPT_PAPER: 'Concept Paper',
       DESIGN_PARAMETERS_MEMO: 'Design Parameter Memo',
@@ -50,13 +69,14 @@ export const documents: TranslationDocuments = {
       OTHER: 'Other'
     }
   },
-  otherTypeDescription: {
-    gqlField: 'otherTypeDescription',
-    goField: 'OtherTypeDescription',
-    dbField: 'other_type_description',
+  otherType: {
+    gqlField: 'otherType',
+    goField: 'OtherType',
+    dbField: 'other_type',
     label: 'What kind of document is this?',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.06
   },
   restricted: {
     gqlField: 'restricted',
@@ -65,11 +85,17 @@ export const documents: TranslationDocuments = {
     label: 'Does this document contain cost information?',
     sublabel:
       'Cost information would include any content relating to budget, funding, cost, or other monetary considerations.',
-    dataType: 'boolean',
-    formType: 'radio',
+    exportLabel: 'Visibility',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 1.07,
     options: {
       true: 'Yes',
       false: 'No'
+    },
+    exportOptions: {
+      true: 'Restricted',
+      false: 'All'
     }
   },
   optionalNotes: {
@@ -77,8 +103,10 @@ export const documents: TranslationDocuments = {
     goField: 'OptionalNotes',
     dbField: 'optional_notes',
     label: 'Optional notes about the document',
-    dataType: 'string',
-    formType: 'textarea'
+    exportLabel: 'Notes',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.08
   }
 };
 

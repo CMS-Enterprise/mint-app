@@ -1,5 +1,6 @@
 SELECT
-    os.id               AS operational_solution_id,
+    pos.id               AS possible_operational_solution_id,
+    pos.sol_key               AS sol_key,
     mp.id               AS model_plan_id
 FROM
     model_plan AS mp
@@ -9,5 +10,6 @@ INNER JOIN possible_operational_solution AS pos ON os.solution_type = pos.id
 LEFT JOIN possible_need_solution_link AS pnsl ON pos.id = pnsl.solution_type AND opn.need_type = pnsl.need_type
 WHERE
     pos.sol_key = :operational_solution_key
+GROUP BY pos.id, mp.id, pos.sol_key
 ORDER BY
     pos.sol_key, mp.status;

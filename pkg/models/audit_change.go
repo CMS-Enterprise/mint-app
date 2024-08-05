@@ -5,6 +5,7 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -25,13 +26,18 @@ const (
 // AuditChange represents a change to a table row in the database
 type AuditChange struct {
 	ID          int         `json:"id" db:"id"`
-	TableName   string      `json:"tableName" db:"table_name"`
+	TableID     int         `json:"tableID" db:"table_id"`
+	TableName   TableName   `json:"tableName" db:"table_name"`
 	PrimaryKey  uuid.UUID   `json:"primaryKey" db:"primary_key"`
 	ForeignKey  uuid.UUID   `json:"foreignKey" db:"foreign_key"`
 	Action      string      `json:"action" db:"action"`
 	Fields      AuditFields `json:"fields" db:"fields"`
-	ModifiedBy  *uuid.UUID  `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time  `json:"modifiedDts" db:"modified_dts"`
+	ModifiedBy  uuid.UUID   `json:"modifiedBy" db:"modified_by"`
+	ModifiedDts time.Time   `json:"modifiedDts" db:"modified_dts"`
+}
+type AuditChangeWithModelPlanID struct {
+	AuditChange
+	modelPlanRelation
 }
 
 // AuditFields is a map of changes by field name from the database
@@ -83,12 +89,13 @@ func (a *AuditFields) Scan(src interface{}) error {
 }
 
 // ModifiedByUserAccount returns the user account of the user who created the struct from the DB using the UserAccount service
-func (ac *AuditChange) ModifiedByUserAccount(ctx context.Context) *authentication.UserAccount { //TODO should this be moved to a shared struct? This isn't a base struct
-	if ac.ModifiedBy == nil {
-		return nil
+func (ac *AuditChange) ModifiedByUserAccount(ctx context.Context) (*authentication.UserAccount, error) { //TODO should this be moved to a shared struct? This isn't a base struct
+
+	service, err := appcontext.UserAccountService(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("unable to get modified by user account, there is an issue with the user account service. err %w", err)
 	}
-	service := appcontext.UserAccountService(ctx)
-	account, _ := service(ctx, *ac.ModifiedBy)
-	return account
+	account, err := service(ctx, ac.ModifiedBy)
+	return account, err
 
 }

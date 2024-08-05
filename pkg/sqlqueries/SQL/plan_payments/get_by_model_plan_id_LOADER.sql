@@ -31,6 +31,8 @@ SELECT
     pay.affects_medicare_secondary_payer_claims_how,
     pay.affects_medicare_secondary_payer_claims_note,
     pay.pay_model_differentiation,
+    pay.will_be_payment_adjustments,
+    pay.will_be_payment_adjustments_note,
     pay.creating_dependencies_between_services,
     pay.creating_dependencies_between_services_note,
     pay.needs_claims_data_collection,

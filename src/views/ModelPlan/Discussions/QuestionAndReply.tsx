@@ -60,6 +60,7 @@ const QuestionAndReply = ({
 }: QuestionAndReplyProps) => {
   const { t: discussionsT } = useTranslation('discussions');
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
+  const { t: repliesT } = useTranslation('replies');
   const { t: h } = useTranslation('draftModelPlan');
 
   const { userRole: userRoleConfig } = usePlanTranslation('discussions');
@@ -263,7 +264,7 @@ const QuestionAndReply = ({
                     >
                       {renderType === 'question'
                         ? discussionsT('content.label')
-                        : discussionsMiscT('typeReply')}
+                        : repliesT('content.label')}
                       <RequiredAsterisk />
                     </Label>
 

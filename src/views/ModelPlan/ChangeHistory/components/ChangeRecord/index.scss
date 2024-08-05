@@ -1,0 +1,26 @@
+@use 'uswds-core' as *;
+
+.change-record {
+    margin-bottom: .5rem !important;
+
+    .usa-card__container {
+        padding: 1.5rem;
+        border-radius: .25rem;
+        border-width: 1px;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    &__answer {
+        border-left: .25rem solid color('base-lighter') !important;
+        padding-left: 1.5rem !important;
+    }
+
+    &__discussion-expanded {
+        list-style-type: none;
+        margin: 0;
+        padding: 0 !important;
+        font-weight: bold;
+    }
+}

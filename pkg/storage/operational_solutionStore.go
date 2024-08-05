@@ -1,16 +1,17 @@
 package storage
 
 import (
+	"fmt"
+
 	"github.com/pkg/errors"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
-	"github.com/cmsgov/mint-app/pkg/sqlutils"
-
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	_ "embed"
@@ -75,6 +76,19 @@ func (s *Store) OperationalSolutionGetByID(_ *zap.Logger, id uuid.UUID) (*models
 	}
 
 	return &solution, err
+}
+
+// OperationalSolutionGetByIDWithNumberOfSubtasks returns an operational solution by ID, along with a count of the number of subtasks
+func OperationalSolutionGetByIDWithNumberOfSubtasks(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.OperationalSolutionWithNumberOfSubtasks, error) {
+
+	args := map[string]interface{}{
+		"id": id,
+	}
+	solutionWithNumberOfSubtasks, procError := sqlutils.GetProcedure[models.OperationalSolutionWithNumberOfSubtasks](np, sqlqueries.OperationalSolution.GetWithNumberOfSubtasksByID, args)
+	if procError != nil {
+		return nil, fmt.Errorf("issue returning Operational Solution With Number of Subtasks object: %w", procError)
+	}
+	return solutionWithNumberOfSubtasks, nil
 }
 
 // OperationalSolutionGetByIDLOADER returns an operational solution by ID using a DataLoader

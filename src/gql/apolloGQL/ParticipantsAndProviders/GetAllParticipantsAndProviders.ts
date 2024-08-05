@@ -8,6 +8,7 @@ export default gql(/* GraphQL */ `
         id
         participants
         medicareProviderType
+        isNewTypeOfProvidersOrSuppliers
         statesEngagement
         participantsOther
         participantsNote

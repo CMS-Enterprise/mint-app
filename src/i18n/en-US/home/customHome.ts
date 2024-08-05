@@ -20,12 +20,12 @@ const settings: HomepageSettingsType = {
     noResultsDescription: 'Once a plan is created, it will appear here.'
   },
   [ViewCustomizationType.FOLLOWED_MODELS]: {
-    heading: 'Models I’m following',
+    heading: 'Models you’re following',
     description:
       'You will receive email notifications when models you’re following are updated.',
     noResultsHeading: 'You are not following any models yet.',
     noResultsDescription:
-      'Click the star icon (<star></star>) for any model to add it to this section.'
+      'To follow a model, <link1>view all models</link1> and click the star icon (<star></star>) for any model to add it to this section.'
   },
   [ViewCustomizationType.MODELS_WITH_CR_TDL]: {
     heading: 'Models with FFS CRs or TDLs',
@@ -35,6 +35,13 @@ const settings: HomepageSettingsType = {
       'There are no model plans in FFS CRs or TDLs in MINT yet.',
     noResultsDescription:
       'Once a FFS CR or TDL plan is created, it will appear here.'
+  },
+  [ViewCustomizationType.MODELS_APPROACHING_CLEARANCE]: {
+    heading: 'Models approaching clearance',
+    description:
+      'These models are scheduled for clearance within the next six months.',
+    noResultsHeading: 'There are no Models approaching clearance.',
+    noResultsDescription: 'Check back later.'
   },
   [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: {
     heading: 'Models using specific operational solutions',

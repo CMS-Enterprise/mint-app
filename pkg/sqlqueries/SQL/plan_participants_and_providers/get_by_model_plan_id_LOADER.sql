@@ -11,6 +11,7 @@ SELECT
     pAndP.model_plan_id,
     pAndP.participants,
     pAndP.medicare_provider_type,
+    pAndP.is_new_type_of_providers_or_suppliers,
     pAndP.states_engagement,
     pAndP.participants_other,
     pAndP.participants_note,

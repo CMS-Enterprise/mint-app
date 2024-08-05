@@ -1,5 +1,10 @@
 import { TranslationCRs } from 'types/translation';
 
+import {
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
+
 export const crs: TranslationCRs = {
   idNumber: {
     gqlField: 'idNumber',
@@ -7,16 +12,18 @@ export const crs: TranslationCRs = {
     dbField: 'id_number',
     label: 'ID number',
     sublabel: 'Please include the prefix. Ex. CR-123456',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.01
   },
   title: {
     gqlField: 'title',
     goField: 'title',
     dbField: 'title',
     label: 'CR title',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.02
   },
   dateInitiated: {
     gqlField: 'dateInitiated',
@@ -24,8 +31,9 @@ export const crs: TranslationCRs = {
     dbField: 'date_initiated',
     label: 'Initiated date',
     sublabel: 'mm/dd/yyyy',
-    dataType: 'date',
-    formType: 'datePicker'
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.03
   },
   dateImplemented: {
     gqlField: 'dateImplemented',
@@ -33,8 +41,9 @@ export const crs: TranslationCRs = {
     dbField: 'date_implemented',
     label: 'Implementation date',
     sublabel: 'For example: April 2024',
-    dataType: 'date',
-    formType: 'select'
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.SELECT,
+    order: 1.04
   },
   note: {
     gqlField: 'note',
@@ -43,8 +52,9 @@ export const crs: TranslationCRs = {
     label: 'Optional notes',
     sublabel:
       'Add any details about this CR that would be helpful to know at a glance',
-    dataType: 'string',
-    formType: 'textarea'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.05
   }
 };
 

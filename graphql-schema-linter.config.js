@@ -19,5 +19,36 @@ module.exports = {
     // "relay-page-info-spec",
     // 'type-fields-sorted-alphabetically',
     'types-are-capitalized'
-  ]
+  ],
+  ignore: {
+    'defined-types-are-used': [
+      'TranslationField',
+      'TranslationFieldWithOptions',
+      'TranslationDataType',
+      'TranslationFormType',
+      'ModelPlanTranslation',
+      'PlanBasicsTranslation',
+      'PlanGeneralCharacteristicsTranslation',
+      'PlanParticipantsAndProvidersTranslation',
+      'PlanBeneficiariesTranslation',
+      'PlanOpsEvalAndLearningTranslation',
+      'PlanPaymentsTranslation',
+      'PlanCollaboratorTranslation',
+      'PlanDiscussionTranslation',
+      'DiscussionReplyTranslation',
+      'PlanCRTranslation',
+      'PlanTDLTranslation',
+      'PlanDocumentTranslation',
+      'OperationalNeedTranslation',
+      'OperationalSolutionTranslation',
+      'OperationalSolutionSubtaskTranslation',
+      'PlanDocumentSolutionLinkTranslation',
+      'ExistingModelLinkTranslation',
+      'TranslationFieldWithParent',
+      'TranslationFieldWithOptionsAndChildren',
+      'TranslationFieldWithOptionsAndParent',
+      'TranslationFieldWithParentAndChildren'
+    ],
+    'enum-values-all-caps': ['TableName']
+  }
 };

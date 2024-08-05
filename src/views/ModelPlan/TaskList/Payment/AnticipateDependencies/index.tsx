@@ -17,24 +17,25 @@ import {
   ClaimsBasedPayType,
   GetAnticipateDependenciesQuery,
   PayType,
-  useGetAnticipateDependenciesQuery,
-  useUpdatePaymentsMutation
+  TypedUpdatePaymentsDocument,
+  useGetAnticipateDependenciesQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import ConfirmLeave from 'components/ConfirmLeave';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -70,6 +71,8 @@ const AnticipateDependencies = () => {
     id,
     payType,
     payClaims,
+    willBePaymentAdjustments,
+    willBePaymentAdjustmentsNote,
     creatingDependenciesBetweenServices,
     creatingDependenciesBetweenServicesNote,
     needsClaimsDataCollection,
@@ -80,50 +83,30 @@ const AnticipateDependencies = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useUpdatePaymentsMutation();
+  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
+    id,
+    formikRef
+  });
 
-  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
+  const nextPage = () => {
     const hasReductionToCostSharing = formikRef?.current?.values.payClaims.includes(
       ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
     );
     const hasNonClaimBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.NON_CLAIMS_BASED_PAYMENTS
     );
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            if (hasReductionToCostSharing) {
-              history.push(
-                `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
-              );
-            } else if (hasNonClaimBasedPayment) {
-              history.push(
-                `/models/${modelID}/task-list/payment/non-claims-based-payment`
-              );
-            } else {
-              history.push(`/models/${modelID}/task-list/payment/complexity`);
-            }
-          } else if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/payment/claims-based-payment`
-            );
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list/`);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+
+    if (hasReductionToCostSharing) {
+      history.push(
+        `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
+      );
+    } else if (hasNonClaimBasedPayment) {
+      history.push(
+        `/models/${modelID}/task-list/payment/non-claims-based-payment`
+      );
+    } else {
+      history.push(`/models/${modelID}/task-list/payment/complexity`);
+    }
   };
 
   const initialValues: AnticipateDependenciesFormType = {
@@ -131,6 +114,8 @@ const AnticipateDependencies = () => {
     id: id ?? '',
     payType: payType ?? [],
     payClaims: payClaims ?? [],
+    willBePaymentAdjustments: willBePaymentAdjustments ?? null,
+    willBePaymentAdjustmentsNote: willBePaymentAdjustmentsNote ?? '',
     creatingDependenciesBetweenServices:
       creatingDependenciesBetweenServices ?? null,
     creatingDependenciesBetweenServicesNote:
@@ -148,6 +133,12 @@ const AnticipateDependencies = () => {
 
   return (
     <>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -184,7 +175,7 @@ const AnticipateDependencies = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          nextPage();
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -218,6 +209,9 @@ const AnticipateDependencies = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
+
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
@@ -235,6 +229,42 @@ const AnticipateDependencies = () => {
                         >
                           {paymentsMiscT('claimSpecificQuestionsContinued')}
                         </PageHeading>
+
+                        <FieldGroup
+                          scrollElement="willBePaymentAdjustments"
+                          error={!!flatErrors.willBePaymentAdjustments}
+                          className="margin-top-4"
+                        >
+                          <Label
+                            htmlFor="willBePaymentAdjustments"
+                            className="maxw-none"
+                          >
+                            {paymentsT('willBePaymentAdjustments.label')}
+                          </Label>
+
+                          <p className="text-base margin-y-1">
+                            {paymentsT('willBePaymentAdjustments.sublabel')}
+                          </p>
+
+                          <FieldErrorMsg>
+                            {flatErrors.willBePaymentAdjustments}
+                          </FieldErrorMsg>
+
+                          <BooleanRadio
+                            field="willBePaymentAdjustments"
+                            id="payment-will-be-payment-adjustments"
+                            value={values.willBePaymentAdjustments}
+                            setFieldValue={setFieldValue}
+                            options={
+                              creatingDependenciesBetweenServicesConfig.options
+                            }
+                          />
+
+                          <AddNote
+                            id="payment-will-be-payment-adjustments-note"
+                            field="willBePaymentAdjustmentsNote"
+                          />
+                        </FieldGroup>
 
                         <FieldGroup
                           scrollElement="creatingDependenciesBetweenServices"
@@ -377,7 +407,9 @@ const AnticipateDependencies = () => {
                             type="button"
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
-                              handleFormSubmit('back');
+                              history.push(
+                                `/models/${modelID}/task-list/payment/claims-based-payment`
+                              );
                             }}
                           >
                             {miscellaneousT('back')}
@@ -391,7 +423,9 @@ const AnticipateDependencies = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() => handleFormSubmit('task-list')}
+                          onClick={() =>
+                            history.push(`/models/${modelID}/task-list`)
+                          }
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -405,16 +439,6 @@ const AnticipateDependencies = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

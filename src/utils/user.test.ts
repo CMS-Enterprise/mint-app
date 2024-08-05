@@ -45,7 +45,9 @@ describe('user', () => {
             helpScoutEnabled: false,
             feedbackEnabled: false,
             notificationsEnabled: false,
-            customHomepageEnabled: false
+            changeHistoryEnabled: false,
+            changeHistoryReleaseDate: '',
+            modelsApproachingClearanceEnabled: false
           })
         ).toBe(false);
       });

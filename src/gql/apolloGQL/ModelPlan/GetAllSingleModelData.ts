@@ -164,6 +164,7 @@ export default gql(/* GraphQL */ `
         selectionNote
         participants
         medicareProviderType
+        isNewTypeOfProvidersOrSuppliers
         statesEngagement
         participantsOther
         participantsNote
@@ -359,6 +360,8 @@ export default gql(/* GraphQL */ `
         affectsMedicareSecondaryPayerClaimsHow
         affectsMedicareSecondaryPayerClaimsNote
         payModelDifferentiation
+        willBePaymentAdjustments
+        willBePaymentAdjustmentsNote
         expectedCalculationComplexityLevel
         expectedCalculationComplexityLevelNote
         claimsProcessingPrecedence

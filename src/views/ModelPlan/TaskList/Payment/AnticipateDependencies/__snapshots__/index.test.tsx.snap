@@ -118,6 +118,91 @@ exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
             </h3>
             <div
               class="usa-form-group margin-top-4"
+              data-scroll="willBePaymentAdjustments"
+            >
+              <label
+                class="usa-label maxw-none"
+                data-testid="label"
+                for="willBePaymentAdjustments"
+              >
+                Will there be payment adjustments (positive or negative) applied?
+              </label>
+              <p
+                class="text-base margin-y-1"
+              >
+                Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.
+              </p>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-will-be-payment-adjustments-true"
+                    id="payment-will-be-payment-adjustments-true"
+                    name="willBePaymentAdjustments"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-will-be-payment-adjustments-true"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-will-be-payment-adjustments-false"
+                    id="payment-will-be-payment-adjustments-false"
+                    name="willBePaymentAdjustments"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-will-be-payment-adjustments-false"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-3 margin-bottom-6"
+              >
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-4"
               data-scroll="creatingDependenciesBetweenServices"
             >
               <label

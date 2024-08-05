@@ -254,9 +254,9 @@ func (a *AnalyzedCrTdls) Humanize() string {
 
 // AnalyzedPlanSections represents an AnalyzedPlanSections in an AnalyzedAuditChange
 type AnalyzedPlanSections struct {
-	Updated           []string `json:"updated,omitempty"`
-	ReadyForReview    []string `json:"readyForReview,omitempty"`
-	ReadyForClearance []string `json:"readyForClearance,omitempty"`
+	Updated           []TableName `json:"updated,omitempty"`
+	ReadyForReview    []TableName `json:"readyForReview,omitempty"`
+	ReadyForClearance []TableName `json:"readyForClearance,omitempty"`
 }
 
 const (
@@ -332,14 +332,15 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 	return humanizedAnalyzedPlanSections
 }
 
-func (a AnalyzedPlanSections) humanizeDatabaseTableNames(x []string) []string {
-	return lo.Map(x, func(name string, _ int) string {
+func (a AnalyzedPlanSections) humanizeDatabaseTableNames(x []TableName) []string {
+	return lo.Map(x, func(name TableName, _ int) string {
 		return a.getHumanizedTableName(name)
 	})
 }
 
-func (a AnalyzedPlanSections) getHumanizedTableName(name string) string {
-	humanizedName, _ := constants.GetHumanizedTableName(name)
+func (a AnalyzedPlanSections) getHumanizedTableName(name TableName) string {
+	//Future Enhancement: Utilize the shared mapping package instead of utilizing the constants package
+	humanizedName, _ := constants.GetHumanizedTableName(string(name))
 	return strings.Trim(humanizedName, " ")
 }
 

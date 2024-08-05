@@ -1,0 +1,101 @@
+{
+  "fileName": {
+    "gqlField": "fileName",
+    "goField": "FileName",
+    "dbField": "file_name",
+    "label": "File Name",
+    "sublabel": "Enter a Name for your document.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.01
+  },
+  "isLink": {
+    "gqlField": "isLink",
+    "goField": "IsLink",
+    "dbField": "is_link",
+    "label": "Is this a link to a document?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.02,
+    "options": {
+      "true": "Link to document",
+      "false": "Upload document"
+    }
+  },
+  "url": {
+    "gqlField": "url",
+    "goField": "url",
+    "dbField": "url",
+    "label": "Link",
+    "sublabel": "Paste the link for your document. Make sure it includes http:// or https://.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.03
+  },
+  "fileType": {
+    "gqlField": "fileType",
+    "goField": "FileType",
+    "dbField": "file_type",
+    "label": "File Type",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.04
+  },
+  "documentType": {
+    "gqlField": "documentType",
+    "goField": "documentType",
+    "dbField": "document_type",
+    "label": "What type of document are you uploading?",
+    "exportLabel": "Document type",
+    "dataType": "ENUM",
+    "formType": "RADIO",
+    "order": 1.05,
+    "options": {
+      "CONCEPT_PAPER": "Concept Paper",
+      "DESIGN_PARAMETERS_MEMO": "Design Parameter Memo",
+      "ICIP_DRAFT": "ICIP Draft",
+      "MARKET_RESEARCH": "Market Research",
+      "OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION": "Office of the Administrator Presentation",
+      "POLICY_PAPER": "Policy Paper",
+      "OTHER": "Other"
+    }
+  },
+  "otherType": {
+    "gqlField": "otherType",
+    "goField": "OtherType",
+    "dbField": "other_type",
+    "label": "What kind of document is this?",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.06
+  },
+  "restricted": {
+    "gqlField": "restricted",
+    "goField": "restricted",
+    "dbField": "restricted",
+    "label": "Does this document contain cost information?",
+    "sublabel": "Cost information would include any content relating to budget, funding, cost, or other monetary considerations.",
+    "exportLabel": "Visibility",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.07,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "exportOptions": {
+      "true": "Restricted",
+      "false": "All"
+    }
+  },
+  "optionalNotes": {
+    "gqlField": "optionalNotes",
+    "goField": "OptionalNotes",
+    "dbField": "optional_notes",
+    "label": "Optional notes about the document",
+    "exportLabel": "Notes",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.08
+  }
+}
