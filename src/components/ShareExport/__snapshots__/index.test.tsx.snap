@@ -6078,6 +6078,48 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
                       Will you produce Benefit Enhancement Files?
+                      <span
+                        class="text-normal line-height-sans-2 margin-left-1 position-relative"
+                      >
+                        <span
+                          class="usa-tooltip top-2px"
+                          data-testid="tooltipWrapper"
+                        >
+                          <div
+                            aria-describedby="tooltip-550000"
+                            class="usa-tooltip__trigger mint-no-print"
+                            data-testid="triggerElement"
+                            position="right"
+                            tabindex="0"
+                            title=""
+                            wrapperclasses="top-2px"
+                          >
+                            <svg
+                              class="usa-icon text-base-light"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="usa-tooltip__body"
+                            data-testid="tooltipBody"
+                            id="tooltip-550000"
+                            role="tooltip"
+                            title="This means we would use these files for Participating and Preferred Providers."
+                          >
+                            This means we would use these files for Participating and Preferred Providers.
+                          </span>
+                        </span>
+                      </span>
                     </span>
                   </div>
                   <div
@@ -8617,6 +8659,48 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                         class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                       >
                         Will any additional data need to be collected for claims?
+                        <span
+                          class="text-normal line-height-sans-2 margin-left-1 position-relative"
+                        >
+                          <span
+                            class="usa-tooltip top-2px"
+                            data-testid="tooltipWrapper"
+                          >
+                            <div
+                              aria-describedby="tooltip-550000"
+                              class="usa-tooltip__trigger mint-no-print"
+                              data-testid="triggerElement"
+                              position="right"
+                              tabindex="0"
+                              title=""
+                              wrapperclasses="top-2px"
+                            >
+                              <svg
+                                class="usa-icon text-base-light"
+                                focusable="false"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                                />
+                              </svg>
+                            </div>
+                            <span
+                              aria-hidden="true"
+                              class="usa-tooltip__body"
+                              data-testid="tooltipBody"
+                              id="tooltip-550000"
+                              role="tooltip"
+                              title="If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)"
+                            >
+                              If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)
+                            </span>
+                          </span>
+                        </span>
                       </span>
                     </div>
                     <div
@@ -9440,48 +9524,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
                       How frequently do you anticipate making demands/recoupments?
-                      <span
-                        class="text-normal line-height-sans-2 margin-left-1 position-relative"
-                      >
-                        <span
-                          class="usa-tooltip top-2px"
-                          data-testid="tooltipWrapper"
-                        >
-                          <div
-                            aria-describedby="tooltip-550000"
-                            class="usa-tooltip__trigger mint-no-print"
-                            data-testid="triggerElement"
-                            position="right"
-                            tabindex="0"
-                            title=""
-                            wrapperclasses="top-2px"
-                          >
-                            <svg
-                              class="usa-icon text-base-light"
-                              focusable="false"
-                              height="1em"
-                              role="img"
-                              viewBox="0 0 24 24"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                              />
-                            </svg>
-                          </div>
-                          <span
-                            aria-hidden="true"
-                            class="usa-tooltip__body"
-                            data-testid="tooltipBody"
-                            id="tooltip-550000"
-                            role="tooltip"
-                            title="Note: If you are unsure of an approximate date, please select the first day of the approximate month."
-                          >
-                            Note: If you are unsure of an approximate date, please select the first day of the approximate month.
-                          </span>
-                        </span>
-                      </span>
                     </span>
                   </div>
                   <ul
@@ -9547,6 +9589,48 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       class="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line"
                     >
                       When will payments start?
+                      <span
+                        class="text-normal line-height-sans-2 margin-left-1 position-relative"
+                      >
+                        <span
+                          class="usa-tooltip top-2px"
+                          data-testid="tooltipWrapper"
+                        >
+                          <div
+                            aria-describedby="tooltip-550000"
+                            class="usa-tooltip__trigger mint-no-print"
+                            data-testid="triggerElement"
+                            position="right"
+                            tabindex="0"
+                            title=""
+                            wrapperclasses="top-2px"
+                          >
+                            <svg
+                              class="usa-icon text-base-light"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                              />
+                            </svg>
+                          </div>
+                          <span
+                            aria-hidden="true"
+                            class="usa-tooltip__body"
+                            data-testid="tooltipBody"
+                            id="tooltip-550000"
+                            role="tooltip"
+                            title="Note: If you are unsure of an approximate date, please select the first day of the approximate month."
+                          >
+                            Note: If you are unsure of an approximate date, please select the first day of the approximate month.
+                          </span>
+                        </span>
+                      </span>
                     </span>
                   </div>
                   <div
