@@ -95,15 +95,6 @@ const ProviderAndSupplierModal = ({
             </div>
           </div>
 
-          {/* {isMobile && (
-            <MobileNav
-              subComponents={subComponents(solution, location, closeRoute)}
-              subinfo={section}
-              isHelpArticle
-              solutionDetailRoute={prevRoute}
-            />
-          )} */}
-
           <GridContainer className="padding-y-6 margin-left-0">
             <Grid row gap>
               {!isMobile && (
@@ -119,16 +110,6 @@ const ProviderAndSupplierModal = ({
                   {existingProviderSupplierTypesNames[activeType]}
                 </h2>
                 <ProviderAndSupplierTable type={activeType} />
-                {/* <UswdsTable
-                  bordered={false}
-                  {...getTableProps()}
-                  fullWidth
-                  scrollable
-                >
-                  <caption className="usa-sr-only">
-                    {modalT('modal.table.caption')}
-                  </caption>
-                </UswdsTable> */}
               </Grid>
             </Grid>
           </GridContainer>

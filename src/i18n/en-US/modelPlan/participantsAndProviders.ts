@@ -1183,7 +1183,13 @@ export const participantsAndProvidersMisc: Record<string, string | object> = {
       headers: {
         providerType: 'Provider Type',
         specialtyCode: 'Specialty Code',
-        description: 'Description'
+        description: {
+          PROVIDER_TYPES_INSTITUTIONAL: 'Description',
+          PHYSICIANS:
+            'Physician/Limited License Physician (LLP) Specialty Description',
+          NON_PHYSICIANS_SUPPLIERS:
+            'Non-Physician/Supplier Specialty Description'
+        }
       }
     }
   }

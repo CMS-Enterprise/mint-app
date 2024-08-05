@@ -147,7 +147,7 @@ const ProviderAndSupplierTable = ({
         accessor: 'providerType'
       },
       {
-        Header: modalT('modal.table.headers.description'),
+        Header: modalT(`modal.table.headers.description.${type}`),
         accessor: 'description'
       }
     ],
