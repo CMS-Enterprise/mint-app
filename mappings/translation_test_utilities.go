@@ -94,9 +94,9 @@ func assertTranslationFields(t *testing.T, translation Translation) {
 				orderSeen[tField.Order] = tField.GoField
 			}
 			// test that there is only one translation per field so non get overridden. Struct coverage is handled by assertTranslationStructCoverage
-			previousDBTag, dbWasSeen := dbTagSeen[tField.DbField]
+			previousDBTag, dbWasSeen := dbTagSeen[tField.DBField]
 			if assert.Falsef(t, dbWasSeen, "there was a duplicate db tag for this translation. Previously seen for GQLField %s. Current entry %s", previousDBTag, tField.GqlField) {
-				dbTagSeen[tField.DbField] = tField.GqlField
+				dbTagSeen[tField.DBField] = tField.GqlField
 			}
 
 		}
@@ -224,7 +224,7 @@ func assertTFieldBase(t *testing.T, field reflect.StructField, base models.Trans
 
 	assert.NotZerof(base.GqlField, "issue for field %s", field.Name)
 	assert.NotZerof(base.GoField, "issue for field %s", field.Name)
-	assert.NotZerof(base.DbField, "issue for field %s", field.Name)
+	assert.NotZerof(base.DBField, "issue for field %s", field.Name)
 	assert.NotZerof(base.Label, "issue for field %s", field.Name)
 
 	assertStringPointerNilOrNotEmpty(t, base.ReadOnlyLabel, "ReadOnlyLabel", field)

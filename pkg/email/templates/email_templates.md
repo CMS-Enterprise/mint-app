@@ -103,7 +103,7 @@ For HTML email templates:
       _ "embed"
       "fmt"
 
-      "github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
+      "github.com/cmsgov/mint-app/pkg/shared/emailtemplates"
     )
 
     // {emailName}TemplateName is the template name definition for the corresponding email template

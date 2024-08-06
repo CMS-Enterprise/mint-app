@@ -65,17 +65,17 @@ func NewTranslatedAuditMetaDocumentSolutionLink(
 }
 
 // isActivityMetaData implements the IActivityMetaGeneric
-func (hmb TranslatedAuditMetaDocumentSolutionLink) isAuditMetaData() {}
+func (tam TranslatedAuditMetaDocumentSolutionLink) isAuditMetaData() {}
 
 // Value allows us to satisfy the valuer interface so we can write to the database
-func (hmb TranslatedAuditMetaDocumentSolutionLink) Value() (driver.Value, error) {
+func (tam TranslatedAuditMetaDocumentSolutionLink) Value() (driver.Value, error) {
 
-	j, err := json.Marshal(hmb)
+	j, err := json.Marshal(tam)
 	return j, err
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (hmb *TranslatedAuditMetaDocumentSolutionLink) Scan(src interface{}) error {
+func (tam *TranslatedAuditMetaDocumentSolutionLink) Scan(src interface{}) error {
 	if src == nil {
 		return nil
 	}
@@ -83,7 +83,7 @@ func (hmb *TranslatedAuditMetaDocumentSolutionLink) Scan(src interface{}) error 
 	if !ok {
 		return errors.New("type assertion .([]byte) failed")
 	}
-	err := json.Unmarshal(source, hmb)
+	err := json.Unmarshal(source, tam)
 	if err != nil {
 		return err
 	}

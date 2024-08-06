@@ -52,7 +52,7 @@ func TestTranslationFieldLabel(t *testing.T) {
 
 	parentTranslationTest := TranslationField{
 		TranslationFieldBase: TranslationFieldBase{
-			DbField: otherParentField,
+			DBField: otherParentField,
 
 			Label:                 parentLabel,
 			ReadOnlyLabel:         nil,
@@ -188,7 +188,7 @@ func TestGetOptions(t *testing.T) {
 
 	TranslationField := TranslationFieldWithOptions{
 		TranslationFieldBase: TranslationFieldBase{
-			DbField: dbField,
+			DBField: dbField,
 
 			Label:                 label,
 			ReadOnlyLabel:         nil,

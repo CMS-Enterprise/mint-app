@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
 )
 
 // ReadyForClearanceGetByModelPlanID reads information about a model plan's clearance
@@ -26,7 +26,7 @@ func (s *Store) ReadyForClearanceGetByModelPlanID(
 	}
 	defer stmt.Close()
 
-	err = stmt.Get(dbResult, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	err = stmt.Get(dbResult, utilitysql.CreateModelPlanIDQueryMap(modelPlanID))
 
 	if err != nil {
 		return nil, err

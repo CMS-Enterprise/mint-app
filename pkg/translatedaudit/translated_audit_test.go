@@ -59,7 +59,7 @@ func TestTranslateField(t *testing.T) {
 
 	parentTranslationTest := models.TranslationField{
 		TranslationFieldBase: models.TranslationFieldBase{
-			DbField: otherParentField,
+			DBField: otherParentField,
 
 			Label:                 parentLabel,
 			ReadOnlyLabel:         nil,
