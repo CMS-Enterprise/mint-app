@@ -1,7 +1,7 @@
 {{template "shared_header.html"}}
 
 <p>Your model's anticipated timeline suggests that
-{{- if eq .Phase "IN_CLEARANCE"}} it will be in clearance
+{{- if eq .Phase "IN_CLEARANCE"}} it is now in clearance
 {{- else if eq .Phase "ICIP_COMPLETE"}} its ICIP will be complete
 {{- else if eq .Phase "CLEARED"}} it will be cleared
 {{- else if eq .Phase "ANNOUNCED"}} it will be announced
