@@ -7,11 +7,11 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-// traceFieldKey is the key to check the trace of a logging chain
-const traceFieldKey string = "traceID"
+// TraceFieldKey is the key to check the trace of a logging chain
+const TraceFieldKey string = "traceID"
 
 func TraceField(traceID string) zapcore.Field {
-	return zap.String(traceFieldKey, traceID)
+	return zap.String(TraceFieldKey, traceID)
 }
 
 // these constants represents the keys to get these data fields out of a zap logger.

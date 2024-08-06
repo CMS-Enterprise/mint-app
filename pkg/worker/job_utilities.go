@@ -4,6 +4,7 @@ import (
 	"context"
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
+	"github.com/google/uuid"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
@@ -57,10 +58,13 @@ func loggerWithFaktoryFields(
 // jid is job id,
 // job type is the type of job that is being run
 func loggerWithFaktoryStandardFields(logger *zap.Logger, jid string, jobType string, extraFields ...zapcore.Field) *zap.Logger {
+	//instantiate a traceID
+	trace := uuid.New()
 	fields := append([]zapcore.Field{
 		logfields.FaktoryAppSection,
 		logfields.JID(jid),
 		logfields.JobType(jobType),
+		logfields.TraceField(trace.String()),
 	}, extraFields...)
 	return logger.With(fields...)
 }

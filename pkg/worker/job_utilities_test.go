@@ -57,6 +57,12 @@ func TestDecorateFaktoryLoggerStandardFields(t *testing.T) {
 	assert.EqualValues(bid1, logMessage[logfields.BatchIDKey])
 	assert.EqualValues(jid1, logMessage[logfields.JobIDKey])
 	assert.EqualValues(jobType1, logMessage[logfields.JobTypeKey])
+	assert.EqualValues(jobType1, logMessage[logfields.JobTypeKey])
+
+	trace := logMessage[logfields.TraceFieldKey]
+
+	assert.NotNil(trace)
+	assert.IsType("string", trace)
 
 	t.Run("duplicated_logger_fields_are_not_overwritten", func(t *testing.T) {
 
