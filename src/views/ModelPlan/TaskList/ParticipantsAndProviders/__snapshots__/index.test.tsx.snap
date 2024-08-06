@@ -355,6 +355,13 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
                 >
                   Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.
                 </p>
+                <button
+                  class="usa-button usa-button--unstyled margin-top-1"
+                  data-testid="button"
+                  type="button"
+                >
+                  View existing provider/supplier types
+                </button>
                 <textarea
                   aria-labelledby="label-participants-and-providers-medicare-type hint-participants-and-providers-medicare-type"
                   class="usa-textarea"
