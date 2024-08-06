@@ -32,7 +32,6 @@ import {
   useGetModelPlanQuery
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
-import { sessionService } from 'redux-react-session';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -213,16 +212,26 @@ const TaskList = () => {
     prepareForClearance
   };
 
-  const [statusChecked, setStatusChecked] = useState<boolean>(true);
+  // Gets the sessions storage variable for statusChecked of modelPlan
+  const statusCheckedStorage =
+    sessionStorage.getItem(`statusChecked-${modelID}`) === 'true';
 
-  sessionService.loadSession().then(loadedSession => {
-    setStatusChecked(loadedSession.statusChecked);
-  });
+  // Aligns session with default value of state
+  const [statusChecked, setStatusChecked] = useState<boolean>(
+    statusCheckedStorage
+  );
 
+  // Status phase modal state
   const [isStatusPhaseModalOpen, setStatusPhaseModalOpen] = useState<boolean>(
     !!suggestedPhase || false
   );
 
+  // Updates state if session value changes
+  useEffect(() => {
+    setStatusChecked(statusCheckedStorage);
+  }, [statusCheckedStorage]);
+
+  // Sets the modal open state based on session state and suggested phase
   useEffect(() => {
     if (suggestedPhase && !statusChecked) setStatusPhaseModalOpen(true);
   }, [suggestedPhase, statusChecked]);
@@ -261,7 +270,7 @@ const TaskList = () => {
             modelID={modelID}
             isOpen={isStatusPhaseModalOpen}
             closeModal={() => {
-              sessionService.saveSession({ statusChecked: true });
+              sessionStorage.setItem(`statusChecked-${modelID}`, 'true');
               setStatusPhaseModalOpen(false);
             }}
             currentStatus={status}

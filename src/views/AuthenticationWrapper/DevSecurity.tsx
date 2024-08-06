@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AuthTransaction, OktaAuth } from '@okta/okta-auth-js';
 import { OktaContext } from '@okta/okta-react';
-import { sessionService } from 'redux-react-session';
 
 import { localAuthStorageKey } from 'constants/localAuth';
 
@@ -44,7 +43,7 @@ const DevSecurity = ({ children }: ParentComponentProps) => {
   };
   oktaAuth.signOut = (): Promise<void> => {
     window.localStorage.removeItem(localAuthStorageKey);
-    sessionService.deleteSession();
+    sessionStorage.clear();
     window.location.href = '/';
     return new Promise(() => {});
   };

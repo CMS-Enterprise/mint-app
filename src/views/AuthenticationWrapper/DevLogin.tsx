@@ -1,5 +1,4 @@
 import React, { Fragment, ReactEventHandler, useState } from 'react';
-import { sessionService } from 'redux-react-session';
 
 import { NONPROD_JOB_CODES } from 'constants/jobCodes';
 import { localAuthStorageKey } from 'constants/localAuth';
@@ -31,7 +30,6 @@ const DevLogin = () => {
       favorLocalAuth: true
     };
     localStorage.setItem(localAuthStorageKey, JSON.stringify(value));
-    sessionService.saveSession({ statusChecked: false });
     window.location.href = '/pre-decisional-notice';
   };
 
