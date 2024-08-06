@@ -12,3 +12,4 @@ const (
 
 // FaktoryAppSection provides the zap field for specifying the part of the application is faktory
 var FaktoryAppSection = zap.String(appSectionKey, faktorySection)
+var DataLoaderAppSection = zap.String(appSectionKey, dataLoaderSection)
