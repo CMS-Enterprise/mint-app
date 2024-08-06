@@ -30,17 +30,17 @@ const CalendarDate = ({
         data-testid="collection-calendar-date"
       >
         <time dateTime={dateISO || undefined}>
-          <span className="usa-collection__calendar-date-month padding-05">
+          <span className="usa-collection__calendar-date-month padding-05 font-body-2xs">
             {DateTime.fromISO(dateISO || '').toFormat('MMM')}
           </span>
-          <span className="usa-collection__calendar-date-day padding-05">
+          <span className="usa-collection__calendar-date-day padding-05 font-body-2xs">
             {DateTime.fromISO(dateISO || '').toFormat('dd')}
           </span>
         </time>
       </div>
       <UswdsReactLink to={link}>
         <span>
-          <h4 className="usa-collection__heading display-inline margin-right-1">
+          <h4 className="usa-collection__heading display-inline margin-right-1 font-body-md">
             {linkText}
           </h4>
           <Icon.ArrowForward className="top-3px" />
