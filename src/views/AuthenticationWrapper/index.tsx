@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { Security } from '@okta/okta-react';
+import { sessionService } from 'redux-react-session';
 
 import { localAuthStorageKey } from 'constants/localAuth';
 import { isLocalAuthEnabled } from 'utils/auth';
@@ -32,6 +33,7 @@ const AuthenticationWrapper = ({ children }: ParentComponentProps) => {
     _oktaAuth: OktaAuth,
     originalUri: string
   ) => {
+    sessionService.saveSession({ statusChecked: false });
     history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
   };
 

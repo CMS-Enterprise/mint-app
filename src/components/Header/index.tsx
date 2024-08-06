@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { GovBanner, Icon, NavMenuButton } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import { sessionService } from 'redux-react-session';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import NavigationBar from 'components/NavigationBar';
@@ -53,6 +54,7 @@ const Header = () => {
 
   const signout = () => {
     localStorage.removeItem(localAuthStorageKey);
+    sessionService.deleteSession();
     oktaAuth.signOut();
   };
 

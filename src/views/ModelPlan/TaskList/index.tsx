@@ -32,6 +32,7 @@ import {
   useGetModelPlanQuery
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { sessionService } from 'redux-react-session';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -212,13 +213,19 @@ const TaskList = () => {
     prepareForClearance
   };
 
-  const [isStautsPhaseModalOpen, setStatusPhaseModalOpen] = useState<boolean>(
+  const [statusChecked, setStatusChecked] = useState<boolean>(true);
+
+  sessionService.loadSession().then(loadedSession => {
+    setStatusChecked(loadedSession.statusChecked);
+  });
+
+  const [isStatusPhaseModalOpen, setStatusPhaseModalOpen] = useState<boolean>(
     !!suggestedPhase || false
   );
 
   useEffect(() => {
-    if (suggestedPhase) setStatusPhaseModalOpen(true);
-  }, [suggestedPhase]);
+    if (suggestedPhase && !statusChecked) setStatusPhaseModalOpen(true);
+  }, [suggestedPhase, statusChecked]);
 
   useEffect(() => {
     if (discussionID) setIsDiscussionOpen(true);
@@ -249,11 +256,14 @@ const TaskList = () => {
           </BreadcrumbBar>
         </Grid>
 
-        {!!modelPlan.suggestedPhase && (
+        {!!modelPlan.suggestedPhase && !statusChecked && (
           <UpdateStatusModal
             modelID={modelID}
-            isOpen={isStautsPhaseModalOpen}
-            closeModal={() => setStatusPhaseModalOpen(false)}
+            isOpen={isStatusPhaseModalOpen}
+            closeModal={() => {
+              sessionService.saveSession({ statusChecked: true });
+              setStatusPhaseModalOpen(false);
+            }}
             currentStatus={status}
             suggestedPhase={modelPlan.suggestedPhase}
             setStatusMessage={setStatusMessage}
