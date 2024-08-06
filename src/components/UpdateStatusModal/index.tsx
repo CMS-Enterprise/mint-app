@@ -1,7 +1,12 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Select } from '@trussworks/react-uswds';
-import { ModelStatus, useUpdateModelPlanMutation } from 'gql/gen/graphql';
+import {
+  ModelPhase,
+  ModelStatus,
+  PhaseSuggestion,
+  useUpdateModelPlanMutation
+} from 'gql/gen/graphql';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
@@ -15,13 +20,7 @@ type MutationErrorModalType = {
   setStatusMessage: Dispatch<SetStateAction<StatusMessageType | null>>;
   modelID: string;
   currentStatus: ModelStatus;
-  newStatus:
-    | 'IN_CLEARANCE' // TODO: temp status phases pending BE
-    | ModelStatus.ICIP_COMPLETE
-    | ModelStatus.CLEARED
-    | ModelStatus.ANNOUNCED
-    | ModelStatus.ACTIVE
-    | ModelStatus.ENDED;
+  suggestedPhase: PhaseSuggestion;
   refetch: () => void;
 };
 
@@ -31,26 +30,17 @@ const UpdateStatusModal = ({
   setStatusMessage,
   modelID,
   currentStatus,
-  newStatus,
+  suggestedPhase,
   refetch
 }: MutationErrorModalType) => {
   const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
 
   const { status: statusConfig } = usePlanTranslation('modelPlan');
 
-  const clearanceOptions = [
-    ModelStatus.INTERNAL_CMMI_CLEARANCE,
-    ModelStatus.CMS_CLEARANCE,
-    ModelStatus.HHS_CLEARANCE,
-    ModelStatus.OMB_ASRF_CLEARANCE
-  ];
-
   const [updateModelStatus] = useUpdateModelPlanMutation();
 
   const [status, setStatus] = useState<ModelStatus>(
-    newStatus !== 'IN_CLEARANCE'
-      ? newStatus
-      : ModelStatus.INTERNAL_CMMI_CLEARANCE
+    suggestedPhase.suggestedStatuses[0]
   );
 
   const handleUpdateStatus = () => {
@@ -103,7 +93,7 @@ const UpdateStatusModal = ({
         </PageHeading>
 
         <p className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-2">
-          {modelPlanTaskListT(`statusModal.statusText.${newStatus}`)}
+          {modelPlanTaskListT(`statusModal.statusText.${suggestedPhase.phase}`)}
         </p>
 
         <p className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-2 text-bold">
@@ -114,12 +104,12 @@ const UpdateStatusModal = ({
         </p>
 
         <p className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-2 text-bold">
-          {newStatus !== 'IN_CLEARANCE' ? (
+          {suggestedPhase.phase !== ModelPhase.IN_CLEARANCE ? (
             <span className="display-flex">
               {modelPlanTaskListT('statusModal.newStatus')}
               <span className="margin-right-05">: </span>
               <span className="text-normal">
-                {statusConfig.options[newStatus]}
+                {statusConfig.options[suggestedPhase.suggestedStatuses[0]]}
               </span>
             </span>
           ) : (
@@ -139,7 +129,7 @@ const UpdateStatusModal = ({
               >
                 {getKeys(statusConfig.options)
                   .filter(statusOption =>
-                    clearanceOptions.includes(statusOption)
+                    suggestedPhase.suggestedStatuses.includes(statusOption)
                   )
                   .map(statusOption => {
                     return (

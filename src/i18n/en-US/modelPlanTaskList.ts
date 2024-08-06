@@ -1,4 +1,19 @@
-import { ModelStatus } from 'gql/gen/graphql';
+import { ModelPhase } from 'gql/gen/graphql';
+
+const statusText: Record<ModelPhase, string> = {
+  [ModelPhase.ICIP_COMPLETE]:
+    'Your model’s anticipated timeline suggests that your ICIP is now complete. Would you like to update the status of your model to reflect that? If your model’s ICIP is not yet complete, please adjust your model’s anticipated timeline.',
+  [ModelPhase.IN_CLEARANCE]:
+    'Your model’s anticipated timeline suggests that it is now in clearance. Would you like to update the status of your model to reflect that? If your model is not yet in clearance, please adjust your model’s anticipated timeline.',
+  [ModelPhase.CLEARED]:
+    'Your model’s anticipated timeline suggests that it is now cleared. Would you like to update the status of your model to reflect that? If your model is not yet cleared, please adjust your model’s anticipated timeline.',
+  [ModelPhase.ANNOUNCED]:
+    'Your model’s anticipated timeline suggests that it is now announced. Would you like to update the status of your model to reflect that? If your model is not yet announced, please adjust your model’s anticipated timeline.',
+  [ModelPhase.ACTIVE]:
+    'Your model’s anticipated timeline suggests that it is now active. Would you like to update the status of your model to reflect that? If your model is not yet active, please adjust your model’s anticipated timeline.',
+  [ModelPhase.ENDED]:
+    'Your model’s anticipated timeline suggests that it is now ended. Would you like to update the status of your model to reflect that? If your model has not yet ended, please adjust your model’s anticipated timeline.'
+};
 
 const modelPlanTaskList = {
   navigation: {
@@ -169,20 +184,7 @@ const modelPlanTaskList = {
     update: 'Yes, update status',
     goToTimeline: 'No, go to timeline',
     hint: 'Select the specific clearance phase.',
-    statusText: {
-      [ModelStatus.ICIP_COMPLETE]:
-        'Your model’s anticipated timeline suggests that your ICIP is now complete. Would you like to update the status of your model to reflect that? If your model’s ICIP is not yet complete, please adjust your model’s anticipated timeline.',
-      IN_CLEARANCE:
-        'Your model’s anticipated timeline suggests that it is now in clearance. Would you like to update the status of your model to reflect that? If your model is not yet in clearance, please adjust your model’s anticipated timeline.',
-      [ModelStatus.CLEARED]:
-        'Your model’s anticipated timeline suggests that it is now cleared. Would you like to update the status of your model to reflect that? If your model is not yet cleared, please adjust your model’s anticipated timeline.',
-      [ModelStatus.ANNOUNCED]:
-        'Your model’s anticipated timeline suggests that it is now announced. Would you like to update the status of your model to reflect that? If your model is not yet announced, please adjust your model’s anticipated timeline.',
-      [ModelStatus.ACTIVE]:
-        'Your model’s anticipated timeline suggests that it is now active. Would you like to update the status of your model to reflect that? If your model is not yet active, please adjust your model’s anticipated timeline.',
-      [ModelStatus.ENDED]:
-        'Your model’s anticipated timeline suggests that it is now ended. Would you like to update the status of your model to reflect that? If your model has not yet ended, please adjust your model’s anticipated timeline.'
-    }
+    statusText
   }
 };
 

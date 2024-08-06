@@ -40,7 +40,7 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-// import UpdateStatusModal from 'components/UpdateStatusModal';
+import UpdateStatusModal from 'components/UpdateStatusModal';
 import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
@@ -150,8 +150,6 @@ const TaskList = () => {
     null
   );
 
-  // const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
-
   const { euaId, groups } = useSelector((state: RootStateOrAny) => state.auth);
 
   // Used to conditonally render role specific text in task list
@@ -159,7 +157,7 @@ const TaskList = () => {
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
-  const { data, loading, error } = useGetModelPlanQuery({
+  const { data, loading, error, refetch } = useGetModelPlanQuery({
     variables: {
       id: modelID
     }
@@ -182,7 +180,8 @@ const TaskList = () => {
     payments,
     operationalNeeds = [],
     prepareForClearance,
-    collaborators
+    collaborators,
+    suggestedPhase
   } = modelPlan;
 
   const planCRs = crs || [];
@@ -213,6 +212,14 @@ const TaskList = () => {
     prepareForClearance
   };
 
+  const [isStautsPhaseModalOpen, setStatusPhaseModalOpen] = useState<boolean>(
+    !!suggestedPhase || false
+  );
+
+  useEffect(() => {
+    if (suggestedPhase) setStatusPhaseModalOpen(true);
+  }, [suggestedPhase]);
+
   useEffect(() => {
     if (discussionID) setIsDiscussionOpen(true);
   }, [discussionID]);
@@ -242,15 +249,17 @@ const TaskList = () => {
           </BreadcrumbBar>
         </Grid>
 
-        {/* <UpdateStatusModal
-          modelID={modelID}
-          isOpen={isModalOpen}
-          closeModal={() => setIsModalOpen(false)}
-          currentStatus={status}
-          newStatus="IN_CLEARANCE"
-          setStatusMessage={setStatusMessage}
-          refetch={refetch}
-        /> */}
+        {!!modelPlan.suggestedPhase && (
+          <UpdateStatusModal
+            modelID={modelID}
+            isOpen={isStautsPhaseModalOpen}
+            closeModal={() => setStatusPhaseModalOpen(false)}
+            currentStatus={status}
+            suggestedPhase={modelPlan.suggestedPhase}
+            setStatusMessage={setStatusMessage}
+            refetch={refetch}
+          />
+        )}
 
         {error && (
           <ErrorAlert

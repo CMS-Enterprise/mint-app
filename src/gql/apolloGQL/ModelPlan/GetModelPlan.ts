@@ -8,6 +8,10 @@ export default gql(/* GraphQL */ `
       modifiedDts
       archived
       status
+      suggestedPhase {
+        phase
+        suggestedStatuses
+      }
       basics {
         id
         clearanceStarts
