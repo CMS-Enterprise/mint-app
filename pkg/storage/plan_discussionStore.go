@@ -11,8 +11,8 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
@@ -99,7 +99,7 @@ func (s *Store) PlanDiscussionCreate(
 	np sqlutils.NamedPreparer,
 ) (*models.PlanDiscussion, error) {
 
-	discussion.ID = utilityUUID.ValueOrNewUUID(discussion.ID)
+	discussion.ID = utilityuuid.ValueOrNewUUID(discussion.ID)
 
 	stmt, err := np.PrepareNamed(planDiscussionCreateSQL)
 	if err != nil {
@@ -128,7 +128,7 @@ func DiscussionReplyCreate(
 	np sqlutils.NamedPreparer,
 ) (*models.DiscussionReply, error) {
 
-	reply.ID = utilityUUID.ValueOrNewUUID(reply.ID)
+	reply.ID = utilityuuid.ValueOrNewUUID(reply.ID)
 
 	stmt, err := np.PrepareNamed(sqlqueries.DiscussionReply.Create)
 	if err != nil {
@@ -207,7 +207,7 @@ func (s *Store) PlanDiscussionDelete(
 	defer stmt.Close()
 
 	discussion := &models.PlanDiscussion{}
-	err = stmt.Get(discussion, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(discussion, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -230,7 +230,7 @@ func (s *Store) PlanDiscussionByID(_ *zap.Logger, id uuid.UUID) (*models.PlanDis
 	defer stmt.Close()
 
 	discussion := &models.PlanDiscussion{}
-	err = stmt.Get(discussion, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(discussion, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -238,7 +238,7 @@ func (s *Store) PlanDiscussionByID(_ *zap.Logger, id uuid.UUID) (*models.PlanDis
 	return discussion, nil
 }
 
-// PlanDiscussionByID retrieves the plan discussion for a given id, and also returns the number of replies the discussion has
+// PlanDiscussionByIDWithNumberOfReplies retrieves the plan discussion for a given id, and also returns the number of replies the discussion has
 func PlanDiscussionByIDWithNumberOfReplies(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID, timeToCheck time.Time) (*models.PlanDiscussionWithNumberOfReplies, error) {
 	args := map[string]interface{}{
 		"id":            id,
@@ -295,7 +295,7 @@ func (s *Store) DiscussionReplyByID(_ *zap.Logger, id uuid.UUID) (*models.Discus
 	defer stmt.Close()
 
 	discussionReply := &models.DiscussionReply{}
-	err = stmt.Get(discussionReply, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(discussionReply, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}

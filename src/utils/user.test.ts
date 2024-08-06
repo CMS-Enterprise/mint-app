@@ -46,7 +46,8 @@ describe('user', () => {
             feedbackEnabled: false,
             notificationsEnabled: false,
             changeHistoryEnabled: false,
-            changeHistoryReleaseDate: ''
+            changeHistoryReleaseDate: '',
+            modelsApproachingClearanceEnabled: false
           })
         ).toBe(false);
       });

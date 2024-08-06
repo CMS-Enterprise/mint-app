@@ -61,7 +61,7 @@ type TranslatedAuditField struct {
 	NewTranslated interface{} `json:"newTranslated" db:"new_translated"`
 }
 
-// NewTranslatedAuditField
+// NewTranslatedAuditField creates a new TranslatedAuditField
 func NewTranslatedAuditField(
 	createdBy uuid.UUID,
 	fieldName string,

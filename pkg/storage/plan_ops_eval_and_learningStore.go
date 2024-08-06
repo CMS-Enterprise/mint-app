@@ -9,8 +9,8 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
@@ -48,7 +48,7 @@ func (s *Store) PlanOpsEvalAndLearningCreate(
 	oel *models.PlanOpsEvalAndLearning,
 ) (*models.PlanOpsEvalAndLearning, error) {
 
-	oel.ID = utilityUUID.ValueOrNewUUID(oel.ID)
+	oel.ID = utilityuuid.ValueOrNewUUID(oel.ID)
 
 	stmt, err := np.PrepareNamed(sqlqueries.PlanOpsEvalAndLearning.Create)
 	if err != nil {
@@ -101,7 +101,7 @@ func (s *Store) PlanOpsEvalAndLearningGetByID(
 	}
 	defer stmt.Close()
 
-	err = stmt.Get(&oel, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&oel, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}

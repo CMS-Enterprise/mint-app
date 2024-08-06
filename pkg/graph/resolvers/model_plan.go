@@ -356,6 +356,8 @@ func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal,
 		modelPlans, err = store.ModelPlanCollectionWithCRTDLS(logger, false)
 	case model.ModelPlanFilterFavorited:
 		modelPlans, err = store.ModelPlanCollectionFavorited(logger, false, principal.Account().ID)
+	case model.ModelPlanFilterApproachingClearance:
+		modelPlans, err = storage.ModelPlanCollectionApproachingClearance(store, logger)
 	default:
 		modelPlans = nil
 		err = fmt.Errorf("model plan filter not defined for filter: %s", filter)
@@ -536,4 +538,41 @@ func ModelPlanShare(
 	}
 
 	return true, nil
+}
+
+// ModelPlanAnticipatedPhase calculates a suggested phase for a model plan based on its current status and timeline
+// It uses a series of status evaluation strategies to determine the suggested phase
+// If no phase is suggested, it returns nil
+func ModelPlanAnticipatedPhase(
+	ctx context.Context,
+	logger *zap.Logger,
+	store *storage.Store,
+	modelPlanID uuid.UUID,
+) (*model.PhaseSuggestion, error) {
+
+	modelPlan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	// If the model plan is paused or canceled, we shouldn't suggest a new phase
+	if modelPlan.Status == models.ModelStatusPaused || modelPlan.Status == models.ModelStatusCanceled {
+		return nil, nil
+	}
+
+	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	// Iterate over all status evaluation strategies and append valid statuses to the results slice
+	statusEvaluationStrategies := GetAllStatusEvaluationStrategies()
+	for _, strategy := range statusEvaluationStrategies {
+		phaseSuggestion := strategy.Evaluate(modelPlan.Status, planBasics)
+		if nil != phaseSuggestion {
+			return phaseSuggestion, nil
+		}
+	}
+
+	return nil, nil
 }

@@ -104,7 +104,7 @@ func (j *JobCodesConfig) GetMINTContractorJobCode() string {
 	return j.mintContractor
 }
 
-// GetNonCMSJobCode returns this JobCodesConfig's MINT Non-CMS User job code
+// GetMINTNonCMSJobCode returns this JobCodesConfig's MINT Non-CMS User job code
 func (j *JobCodesConfig) GetMINTNonCMSJobCode() string {
 	return j.nonCMSUser
 }

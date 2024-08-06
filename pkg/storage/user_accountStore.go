@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
@@ -175,7 +175,7 @@ func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(
 	}
 	defer stmt.Close()
 
-	arg := utilitySQL.CreateModelPlanIDQueryMap(modelPlanID)
+	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
 
 	err = stmt.Select(&recipients, arg)
 	if err != nil {

@@ -60,13 +60,13 @@ var (
 			Border(tabBorder, true).
 			BorderForeground(oddballBlueCyan).
 			Padding(0, 1)
-	activeTabStyle       = tabStyle.Copy().Border(activeTabBorder, true)
-	fullBorderStyle      = tabStyle.Copy().Border(fullBorder, true)
-	tabStyleFilled       = tabStyle.Copy().Background(lightForegroundGreen)
-	activeTabStyleFilled = activeTabStyle.Copy().Background(lightForegroundGreen)
+	activeTabStyle       = tabStyle.Border(activeTabBorder, true)
+	fullBorderStyle      = tabStyle.Border(fullBorder, true)
+	tabStyleFilled       = tabStyle.Background(lightForegroundGreen)
+	activeTabStyleFilled = activeTabStyle.Background(lightForegroundGreen)
 	_                    = tabStyleFilled
 
-	tabGapStyle = tabStyle.Copy().
+	tabGapStyle = tabStyle.
 			BorderTop(false).
 			BorderLeft(false).
 			BorderRight(false)

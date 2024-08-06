@@ -10,7 +10,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 )
 
 // NDAAgreementGetByUserID returns an NDA based on a UserID
@@ -59,7 +59,7 @@ func (s *Store) NDAAgreementUpdate(_ *zap.Logger, nda *models.NDAAgreement) (*mo
 // NDAAgreementCreate creates a new nda agreement based on an EUA
 func (s *Store) NDAAgreementCreate(_ *zap.Logger, nda *models.NDAAgreement) (*models.NDAAgreement, error) {
 
-	nda.ID = utilityUUID.ValueOrNewUUID(nda.ID)
+	nda.ID = utilityuuid.ValueOrNewUUID(nda.ID)
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.NDAAgreement.Insert)
 	if err != nil {

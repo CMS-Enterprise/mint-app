@@ -631,6 +631,15 @@ export enum ModelLearningSystemType {
   PARTICIPANT_COLLABORATION = 'PARTICIPANT_COLLABORATION'
 }
 
+export enum ModelPhase {
+  ACTIVE = 'ACTIVE',
+  ANNOUNCED = 'ANNOUNCED',
+  CLEARED = 'CLEARED',
+  ENDED = 'ENDED',
+  ICIP_COMPLETE = 'ICIP_COMPLETE',
+  IN_CLEARANCE = 'IN_CLEARANCE'
+}
+
 /** ModelPlan represent the data point for plans about a model. It is the central data type in the application */
 export type ModelPlan = {
   __typename: 'ModelPlan';
@@ -662,6 +671,7 @@ export type ModelPlan = {
   payments: PlanPayments;
   prepareForClearance: PrepareForClearance;
   status: ModelStatus;
+  suggestedPhase?: Maybe<PhaseSuggestion>;
   tdls: Array<PlanTdl>;
 };
 
@@ -694,6 +704,7 @@ export type ModelPlanChanges = {
 };
 
 export enum ModelPlanFilter {
+  APPROACHING_CLEARANCE = 'APPROACHING_CLEARANCE',
   COLLAB_ONLY = 'COLLAB_ONLY',
   FAVORITED = 'FAVORITED',
   INCLUDE_ALL = 'INCLUDE_ALL',
@@ -1436,6 +1447,13 @@ export enum PayType {
   GRANTS = 'GRANTS',
   NON_CLAIMS_BASED_PAYMENTS = 'NON_CLAIMS_BASED_PAYMENTS'
 }
+
+/** PhaseSuggestion is a suggestion response for a potential next phase and corresponding statuses for a model plan */
+export type PhaseSuggestion = {
+  __typename: 'PhaseSuggestion';
+  phase: ModelPhase;
+  suggestedStatuses: Array<ModelStatus>;
+};
 
 /** Represents plan basics */
 export type PlanBasics = {
@@ -4061,6 +4079,7 @@ export type UserViewCustomizationChanges = {
 export enum ViewCustomizationType {
   ALL_MODEL_PLANS = 'ALL_MODEL_PLANS',
   FOLLOWED_MODELS = 'FOLLOWED_MODELS',
+  MODELS_APPROACHING_CLEARANCE = 'MODELS_APPROACHING_CLEARANCE',
   MODELS_BY_OPERATIONAL_SOLUTION = 'MODELS_BY_OPERATIONAL_SOLUTION',
   MODELS_WITH_CR_TDL = 'MODELS_WITH_CR_TDL',
   MY_MODEL_PLANS = 'MY_MODEL_PLANS'

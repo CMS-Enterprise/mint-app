@@ -20,7 +20,7 @@ type operationalSolutionScripts struct {
 	GetByIDLOADER string
 }
 
-// operationalSolution holds all the SQL scrips related to the operationalSolution Entity
+// OperationalSolution holds all the SQL scrips related to the operationalSolution Entity
 var OperationalSolution = operationalSolutionScripts{
 	GetWithNumberOfSubtasksByID: operationalSolutionAndNumberOfSubtasksGetByID,
 	GetByIDLOADER:               operationalSolutionGetByIDLOADER,

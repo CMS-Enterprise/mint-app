@@ -4,6 +4,7 @@ import React, {
   SetStateAction,
   useContext,
   useEffect,
+  useMemo,
   useState
 } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -39,6 +40,7 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -128,14 +130,21 @@ const TaskList = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  // Get discussionID from generated email link
+  const { message } = useMessage();
+
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
+
+  const params = useMemo(() => {
+    return new URLSearchParams(location.search);
+  }, [location.search]);
+
+  // Get discussionID from generated email link
   const discussionID = params.get('discussionID');
 
   const flags = useFlags();
 
   const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
+
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
   );
@@ -243,12 +252,19 @@ const TaskList = () => {
           </ErrorAlert>
         )}
 
-        {statusMessage && (
+        {message && (
+          <Alert slim type="success">
+            {message}
+          </Alert>
+        )}
+
+        {!loading && statusMessage && (
           <Alert slim type={statusMessage.status} closeAlert={setStatusMessage}>
             {statusMessage.message}
           </Alert>
         )}
 
+        {/* Wait for model status query param to be removed */}
         {loading && (
           <div className="height-viewport">
             <PageLoading />

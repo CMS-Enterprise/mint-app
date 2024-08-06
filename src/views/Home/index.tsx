@@ -31,6 +31,7 @@ import { AppState } from 'reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
 import ModelPlansTable from 'views/Home/Table';
 
+import ModelsApproachingClearance from './components/ModelsApproachingClearance';
 import ModelsBySolutions from './components/ModelsBySolutions';
 
 import './index.scss';
@@ -178,6 +179,13 @@ const Home = () => {
         />
       </>
     ),
+    [ViewCustomizationType.MODELS_APPROACHING_CLEARANCE]: (
+      <>
+        <Divider className="margin-y-6" />
+
+        <ModelsApproachingClearance />
+      </>
+    ),
     [ViewCustomizationType.MODELS_BY_OPERATIONAL_SOLUTION]: (
       <>
         <Divider className="margin-y-6" />
@@ -283,11 +291,20 @@ const Home = () => {
                 <PageLoading />
               ) : (
                 data?.userViewCustomization.viewCustomization.map(
-                  customization => (
-                    <div key={customization}>
-                      {homepageComponents[customization]}
-                    </div>
-                  )
+                  customization => {
+                    if (
+                      !flags.modelsApproachingClearanceEnabled &&
+                      customization ===
+                        ViewCustomizationType.MODELS_APPROACHING_CLEARANCE
+                    ) {
+                      return null;
+                    }
+                    return (
+                      <div key={customization}>
+                        {homepageComponents[customization]}
+                      </div>
+                    );
+                  }
                 )
               )}
 
