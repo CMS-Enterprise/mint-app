@@ -107,6 +107,14 @@ func (g GoSimpleMailService) sendEmail(email *mail.Email) error {
 		return nil
 	}
 
+	// Before we send the email, we need to check to see if it actually has any recipients and return early if not
+	// This is because the go-simple-mail actually returns an error if there are no recipients, but we don't want to treat that as an error
+	// and would rather just return early when this happens
+	// TODO: It would be nice to have access to a logger/context here so we could logger.Warn() in this case
+	if len(email.GetRecipients()) == 0 {
+		return nil
+	}
+
 	smtpClient, err := g.smtpServer.Connect()
 	if err != nil {
 		return err
