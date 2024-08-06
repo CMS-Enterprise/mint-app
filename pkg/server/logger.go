@@ -8,16 +8,15 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/logfields"
 )
-
-const traceField string = "traceID"
 
 func loggerMiddleware(logger *zap.Logger, environment appconfig.Environment, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		traceID, ok := appcontext.Trace(ctx)
 		if ok {
-			logger = logger.With(zap.String(traceField, traceID.String()))
+			logger = logger.With(logfields.TraceField(traceID.String()))
 		} else {
 			logger.Error("Failed to get trace ID from context")
 		}
