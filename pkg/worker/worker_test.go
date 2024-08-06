@@ -221,7 +221,7 @@ func TestWorkerSuite(t *testing.T) {
 // getTestPrincipal gets a user principal from database
 func (suite *WorkerSuite) getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, store, userName, true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.testConfigs.OktaClient.FetchUserInfo))
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(suite.testConfigs.Context, store, store, userName, true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.testConfigs.OktaClient.FetchUserInfo))
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,
