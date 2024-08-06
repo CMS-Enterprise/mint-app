@@ -98,11 +98,11 @@ func (g GoSimpleMailService) Send(
 		return err
 	}
 
-	return g.SendEmail(email)
+	return g.sendEmail(email)
 }
 
-// SendEmail is a GoSimpleMail specific method allowing for dispatching an email using a mail.Email object
-func (g GoSimpleMailService) SendEmail(email *mail.Email) error {
+// sendEmail is a GoSimpleMail specific method allowing for dispatching an email using a mail.Email object
+func (g GoSimpleMailService) sendEmail(email *mail.Email) error {
 	if !g.config.GetEnabled() {
 		return nil
 	}
