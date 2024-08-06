@@ -84,7 +84,7 @@ const UpdateStatusModal = ({
       className="maxw-mobile-lg radius-lg"
       navigation={false}
     >
-      <div>
+      <div data-testid="update-status-modal">
         <PageHeading
           headingLevel="h3"
           className="margin-top-neg-2 margin-bottom-2"
@@ -149,6 +149,7 @@ const UpdateStatusModal = ({
         <div className="margin-top-4 margin-bottom-1">
           <Button
             type="button"
+            data-testid="update-status"
             onClick={() => {
               handleUpdateStatus();
             }}
@@ -159,6 +160,7 @@ const UpdateStatusModal = ({
           <Button
             type="button"
             className="margin-left-2 text-red"
+            data-testid="go-to-timeline"
             unstyled
             onClick={() => {
               closeModal();
