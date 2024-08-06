@@ -48,7 +48,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       MEDICARE_PROVIDERS:
         'Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.'
     },
-
     optionsRelatedInfo: {
       MEDICARE_PROVIDERS: 'medicareProviderType',
       STATES: 'statesEngagement',
@@ -74,6 +73,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Which type of Medicare providers/suppliers?',
     sublabel:
       'Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.',
+    modalLink: 'View existing provider/supplier types',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 1.02,
