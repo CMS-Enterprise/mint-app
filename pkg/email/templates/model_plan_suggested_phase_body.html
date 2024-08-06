@@ -2,12 +2,12 @@
 
 <p>Your model's anticipated timeline suggests that
 {{- if eq .Phase "IN_CLEARANCE"}} it is now in clearance
-{{- else if eq .Phase "ICIP_COMPLETE"}} its ICIP will be complete
-{{- else if eq .Phase "CLEARED"}} it will be cleared
-{{- else if eq .Phase "ANNOUNCED"}} it will be announced
-{{- else if eq .Phase "ACTIVE"}} it will be active
-{{- else if eq .Phase "ENDED"}} it will be ended
-{{end}} soon. Would you like to update the status of your model to reflect that? If your
+{{- else if eq .Phase "ICIP_COMPLETE"}} your ICIP is now complete
+{{- else if eq .Phase "CLEARED"}} it is now cleared
+{{- else if eq .Phase "ANNOUNCED"}} it is now announced
+{{- else if eq .Phase "ACTIVE"}} it is now active
+{{- else if eq .Phase "ENDED"}} it is now ended
+{{end}}. Would you like to update the status of your model to reflect that? If your
 {{- if eq .Phase "IN_CLEARANCE"}} model is not yet in clearance
 {{- else if eq .Phase "ICIP_COMPLETE"}} model's ICIP is not yet complete
 {{- else if eq .Phase "CLEARED"}} model is not yet cleared
