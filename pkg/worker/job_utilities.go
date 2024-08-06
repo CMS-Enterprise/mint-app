@@ -9,10 +9,11 @@ import (
 	"go.uber.org/zap/zapcore"
 
 	"github.com/cmsgov/mint-app/pkg/apperrors"
+	"github.com/cmsgov/mint-app/pkg/logfields"
 )
 
-// faktoryAppSectionField provides the zap field for specifying the part of the application is faktory
-var faktoryAppSectionField = zap.String(appSectionKey, faktoryLoggingSection)
+// // faktoryAppSectionField provides the zap field for specifying the part of the application is faktory
+// var faktoryAppSectionField = zap.String(appSectionKey, faktoryLoggingSection)
 
 // these constants represents the keys to get these data fields out of a zap logger.
 const (
@@ -123,7 +124,7 @@ func loggerWithFaktoryFields(
 // job type is the type of job that is being run
 func loggerWithFaktoryStandardFields(logger *zap.Logger, jid string, jobType string, extraFields ...zapcore.Field) *zap.Logger {
 	fields := append([]zapcore.Field{
-		faktoryAppSectionField,
+		logfields.FaktoryAppSection,
 		JIDZapField(jid),
 		JobTypeZapField(jobType),
 	}, extraFields...)
