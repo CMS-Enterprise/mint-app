@@ -3,7 +3,6 @@ package translatedaudit
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -14,12 +13,14 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
+const unableToUpdateQueueMessage = "unable to update audit queue entity"
+
 func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *zap.Logger, auditID int, queueID uuid.UUID) (*models.TranslatedAuditWithTranslatedFields, error) {
 
 	queueEntry, err := storage.TranslatedAuditQueueGetByID(store, queueID)
 	if err != nil {
 		// We only warn here because there could be inconsistencies caused by timing, and not something that needs alerting
-		logger.Warn(err.Error(), zap.Error(err))
+		logger.Warn("unable to get audit queue entity", zap.Error(err))
 		return nil, err
 	}
 	queueEntry.Attempts++
@@ -27,7 +28,7 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 
 	queueEntry, err = TranslatedAuditQueueUpdate(store, logger, queueEntry, constants.GetSystemAccountUUID())
 	if err != nil {
-		logger.Error(err.Error(), zap.Error(err))
+		logger.Error(unableToUpdateQueueMessage, zap.Error(err))
 		return nil, err
 	}
 
@@ -41,11 +42,11 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 			queueEntry.Status = models.TPSFailed
 			_, err = TranslatedAuditQueueUpdate(store, logger, queueEntry, constants.GetSystemAccountUUID())
 			if err != nil {
-				logger.Warn(err.Error(), zap.Error(err))
+				logger.Warn(unableToUpdateQueueMessage, zap.Error(err))
 				return nil, err
 			}
 
-			logger.Warn(err.Error(), zap.Error(err))
+			logger.Warn("duplicate entry found for this translated audit", zap.Error(err))
 			return nil, err
 		}
 		queueEntry.Note = models.StringPointer("A translation already exists for this change.")
@@ -53,9 +54,8 @@ func TranslateAuditJobByID(ctx context.Context, store *storage.Store, logger *za
 	queueEntry.Status = models.TPSProcessed
 	_, err = TranslatedAuditQueueUpdate(store, logger, queueEntry, constants.GetSystemAccountUUID())
 	if err != nil {
-		finalErr := fmt.Errorf("unable to return final translatedAuditQueue entry, err: %w", err)
-		logger.Error(finalErr.Error(), zap.Error(finalErr))
-		return nil, finalErr
+		logger.Error("unable to return final translatedAuditQueue entry", zap.Error(err))
+		return nil, err
 	}
 	return translatedAuditAndFields, nil
 
