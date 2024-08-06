@@ -4,6 +4,11 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
+	"github.com/cmsgov/mint-app/pkg/models"
+
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -29,8 +34,74 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 	sugaredLogger = sugaredLogger.With(zap.Any("modelPlanID", modelPlanID))
 
 	sugaredLogger.Info("checking if model status should be updated, and creating notification")
-	// TODO: call the business logic code that will check if the status should be updated. Return an error if err. Use the provided logger so we pass around JID and BID
-	// returnedError = businessLogicCheck(modelPlanID)
-	return returnedError
 
+	modelPlan, err := w.Store.ModelPlanGetByID(w.Store, w.Logger, modelPlanID)
+	if err != nil {
+		err = fmt.Errorf("unable to get model plan for model plan id %s. Err %w", modelPlanID, err)
+		sugaredLogger.Error(err.Error(), zap.Error(err))
+		return err
+	}
+
+	// Check if the model status should be updated
+	phaseSuggestion, err := resolvers.ModelPlanAnticipatedPhase(w.Store, modelPlan.Status, modelPlanID)
+	if err != nil {
+		err = fmt.Errorf("unable to get anticipated phase for model plan id %s. Err %w", modelPlanID, err)
+		sugaredLogger.Error(err.Error(), zap.Error(err))
+		return err
+	}
+
+	if nil == phaseSuggestion {
+		return nil
+	}
+
+	emailTemplate, err := w.EmailTemplateService.GetEmailTemplate(email.ModelPlanSuggestedPhaseTemplateName)
+	if err != nil {
+		err = fmt.Errorf("unable to get email template for model plan id %s. Err %w", modelPlanID, err)
+		sugaredLogger.Error(err.Error(), zap.Error(err))
+		return err
+	}
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanSuggestedPhaseSubjectContent{
+		ModelName: modelPlan.ModelName,
+	})
+	if err != nil {
+		err = fmt.Errorf("unable to get email subject for model plan id %s. Err %w", modelPlanID, err)
+		sugaredLogger.Error(err.Error(), zap.Error(err))
+		return err
+	}
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanSuggestedPhaseBodyContent{
+		ClientAddress: w.EmailService.GetConfig().GetClientAddress(),
+		Phase:         string(model.ModelPhaseIcipComplete),
+		SuggestedStatusesRaw: []string{
+			string(models.ModelStatusIcipComplete),
+		},
+		SuggestedStatusesHumanized: []string{
+			models.ModelStatusIcipComplete.Humanize(),
+		},
+		CurrentStatusHumanized: modelPlan.Status.Humanize(),
+		ModelPlanID:            modelPlan.GetModelPlanID().String(),
+		ModelPlanName:          modelPlan.ModelName,
+	})
+	if err != nil {
+		err = fmt.Errorf("unable to get email body for model plan id %s. Err %w", modelPlanID, err)
+		sugaredLogger.Error(err.Error(), zap.Error(err))
+		return err
+	}
+
+	err = w.EmailService.Send(
+		w.AddressBook.DefaultSender,
+		w.AddressBook.ModelPlanDateChangedRecipients,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	if err != nil {
+		err = fmt.Errorf("unable to send email for model plan id %s. Err %w", modelPlanID, err)
+		sugaredLogger.Error(err.Error(), zap.Error(err))
+		return err
+	}
+
+	return returnedError
 }
