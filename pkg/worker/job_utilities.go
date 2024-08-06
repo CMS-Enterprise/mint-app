@@ -4,78 +4,12 @@ import (
 	"context"
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
-	"github.com/google/uuid"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/logfields"
 )
-
-// // faktoryAppSectionField provides the zap field for specifying the part of the application is faktory
-// var faktoryAppSectionField = zap.String(appSectionKey, faktoryLoggingSection)
-
-// these constants represents the keys to get these data fields out of a zap logger.
-const (
-	faktoryLoggingSection string = "faktory"
-	appSectionKey         string = "app_section"
-
-	batchIDKey string = "BID"
-	jobIDKey   string = "JID"
-	jobTypeKey string = "job_type"
-
-	translatedAuditQueueIDKey = "translated_audit_queue_id"
-	auditQueueAttemptsKey     = "audit_queue_attempts"
-	auditChangeKey            = "change_id"
-	modelPlanIDKey            = "model_plan_id"
-	dateKey                   = "date"
-	userIDKey                 = "userID"
-)
-
-// BIDZapField returns the zap core field for a worker BatchID
-func BIDZapField(bid string) zapcore.Field {
-	return zap.String(batchIDKey, bid)
-}
-
-// JIDZapField returns the zap core field for a worker JobID
-func JIDZapField(jid string) zapcore.Field {
-	return zap.String(jobIDKey, jid)
-}
-
-// JobTypeZapField returns the zap core field for a worker job type
-func JobTypeZapField(jobType string) zapcore.Field {
-	return zap.String(jobTypeKey, jobType)
-}
-
-// TranslatedAuditQueueIDZapField provides the zap field for a TranslatedAuditQueueID
-func TranslatedAuditQueueIDZapField(translatedAuditQueueID uuid.UUID) zapcore.Field {
-	return zap.Any(translatedAuditQueueIDKey, translatedAuditQueueID)
-}
-
-// auditChangeIDZapField provides the zap field for an audit change id
-func auditChangeIDZapField(changeID interface{}) zapcore.Field {
-	return zap.Any(auditChangeKey, changeID)
-}
-
-// auditQueueAttemptsZapField provides the zap field for the number of attempts
-func auditQueueAttemptsZapField(attempts interface{}) zapcore.Field {
-	return zap.Any(auditQueueAttemptsKey, attempts)
-}
-
-// dateZapField provides the zap field for the date
-func dateZapField(date interface{}) zapcore.Field {
-	return zap.Any(dateKey, date)
-}
-
-// modelPlanIDZapField provides the zap field for the modelPlanID
-func modelPlanIDZapField(modelPlanID uuid.UUID) zapcore.Field {
-	return zap.Any(modelPlanIDKey, modelPlanID)
-}
-
-// userIDZapField provides the zap field for the userID
-func userIDZapField(userID uuid.UUID) zapcore.Field {
-	return zap.Any(userIDKey, userID)
-}
 
 // JobWithPanicProtection wraps a faktory Job in a wrapper function that will return an error instead of stopping the application.
 func JobWithPanicProtection(jobFunc faktory_worker.Perform) faktory_worker.Perform {
@@ -113,7 +47,7 @@ func loggerWithFaktoryFields(
 	extraFields ...zapcore.Field,
 ) *zap.Logger {
 
-	extraFields = append(extraFields, BIDZapField(helper.Bid()))
+	extraFields = append(extraFields, logfields.BID(helper.Bid()))
 	return loggerWithFaktoryStandardFields(logger, helper.Jid(), helper.JobType(), extraFields...)
 }
 
@@ -125,8 +59,8 @@ func loggerWithFaktoryFields(
 func loggerWithFaktoryStandardFields(logger *zap.Logger, jid string, jobType string, extraFields ...zapcore.Field) *zap.Logger {
 	fields := append([]zapcore.Field{
 		logfields.FaktoryAppSection,
-		JIDZapField(jid),
-		JobTypeZapField(jobType),
+		logfields.JID(jid),
+		logfields.JobType(jobType),
 	}, extraFields...)
 	return logger.With(fields...)
 }

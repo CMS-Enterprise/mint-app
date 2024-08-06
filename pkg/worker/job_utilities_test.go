@@ -8,6 +8,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"github.com/cmsgov/mint-app/pkg/logfields"
 )
 
 func TestJobWithPanicProtection(t *testing.T) {
@@ -40,7 +42,7 @@ func TestDecorateFaktoryLoggerStandardFields(t *testing.T) {
 	writeSyncer, logger := createTestLogger()
 
 	// Call the function under test
-	decoratedLogger := loggerWithFaktoryStandardFields(logger, jid1, jobType1, BIDZapField(bid1))
+	decoratedLogger := loggerWithFaktoryStandardFields(logger, jid1, jobType1, logfields.BID(bid1))
 
 	// Trigger a log entry to populate fields
 	decoratedLogger.Info("test message")
@@ -51,10 +53,10 @@ func TestDecorateFaktoryLoggerStandardFields(t *testing.T) {
 	err := json.Unmarshal([]byte(logOutput), &logMessage)
 	assert.NoError(err)
 
-	assert.EqualValues(faktoryLoggingSection, logMessage[appSectionKey])
-	assert.EqualValues(bid1, logMessage[batchIDKey])
-	assert.EqualValues(jid1, logMessage[jobIDKey])
-	assert.EqualValues(jobType1, logMessage[jobTypeKey])
+	assert.EqualValues(logfields.FaktorySectionKey, logMessage[logfields.AppSectionKey])
+	assert.EqualValues(bid1, logMessage[logfields.BatchIDKey])
+	assert.EqualValues(jid1, logMessage[logfields.JobIDKey])
+	assert.EqualValues(jobType1, logMessage[logfields.JobTypeKey])
 
 	t.Run("duplicated_logger_fields_are_not_overwritten", func(t *testing.T) {
 
@@ -64,7 +66,7 @@ func TestDecorateFaktoryLoggerStandardFields(t *testing.T) {
 		jid2 := "mockJid2"
 		jobType2 := "mockJobType2"
 		writeSyncer2, logger2 := createTestLogger()
-		doubleDecoratedLogger := loggerWithFaktoryStandardFields(loggerWithFaktoryStandardFields(logger2, jid1, jobType1, BIDZapField(bid1)), jid2, jobType2, BIDZapField(bid2))
+		doubleDecoratedLogger := loggerWithFaktoryStandardFields(loggerWithFaktoryStandardFields(logger2, jid1, jobType1, logfields.BID(bid1)), jid2, jobType2, logfields.BID(bid2))
 
 		doubleDecoratedLogger.Info("test message")
 

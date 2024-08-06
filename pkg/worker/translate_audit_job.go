@@ -9,6 +9,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/logfields"
 	"github.com/cmsgov/mint-app/pkg/translatedaudit"
 )
 
@@ -42,7 +43,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 		return fmt.Errorf("unable to convert argument  ( %v )to an uuid as expected for translated_audit_queue_id for the translate audit job. Err %w", args[1], err)
 	}
 
-	logger = logger.With(auditChangeIDZapField(auditID), TranslatedAuditQueueIDZapField(queueID))
+	logger = logger.With(logfields.AuditChangeID(auditID), logfields.TranslatedAuditQueueID(queueID))
 
 	_, translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, logger, auditID, queueID)
 	if translationErr != nil {

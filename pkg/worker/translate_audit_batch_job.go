@@ -10,6 +10,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/constants"
+	"github.com/cmsgov/mint-app/pkg/logfields"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -43,7 +44,7 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 // QueueTranslatedAuditJob takes a given queueObj and creates a job as part of the provided batch
 func QueueTranslatedAuditJob(w *Worker, logger *zap.Logger, batch *faktory.Batch, queueObj *models.TranslatedAuditQueue) (*models.TranslatedAuditQueue, error) {
 	// Wrap everything in a transaction, so if the job doesn't push, the queue entry doesn't get updated, (so it will be picked up in another job)
-	logger = logger.With(TranslatedAuditQueueIDZapField(queueObj.ID), auditChangeIDZapField(queueObj.ChangeID), auditQueueAttemptsZapField(queueObj.Attempts))
+	logger = logger.With(logfields.TranslatedAuditQueueID(queueObj.ID), logfields.AuditChangeID(queueObj.ChangeID), logfields.AuditQueueAttempts(queueObj.Attempts))
 	return sqlutils.WithTransaction[models.TranslatedAuditQueue](w.Store, func(tx *sqlx.Tx) (*models.TranslatedAuditQueue, error) {
 		queueObj.Status = models.TPSQueued
 		logger.Info("queuing job for translated audit.", zap.Any("queue entry", queueObj))
@@ -77,7 +78,7 @@ func QueueTranslatedAuditJob(w *Worker, logger *zap.Logger, batch *faktory.Batch
 func CreateTranslatedAuditBatch(w *Worker, logger *zap.Logger, cl *faktory.Client, queueObjects []*models.TranslatedAuditQueue) error {
 
 	batch := faktory.NewBatch(cl)
-	logger = logger.With(BIDZapField(batch.Bid))
+	logger = logger.With(logfields.BID(batch.Bid))
 	batch.Description = "Translate models"
 	batch.Success = faktory.NewJob(translateAuditBatchJobSuccessName)
 	batch.Success.Queue = criticalQueue

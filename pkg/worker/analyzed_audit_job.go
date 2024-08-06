@@ -10,6 +10,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
+	"github.com/cmsgov/mint-app/pkg/logfields"
 )
 
 /*
@@ -31,7 +32,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 	}
 	// Note, this will panic if the context doesn't have a faktory job context it will panic.
 	helper := faktory_worker.HelperFor(ctx)
-	logger := loggerWithFaktoryFields(w.Logger, helper, modelPlanIDZapField(modelPlanID), dateZapField(dayToAnalyze))
+	logger := loggerWithFaktoryFields(w.Logger, helper, logfields.ModelPlanID(modelPlanID), logfields.Date(dayToAnalyze))
 	_, err = resolvers.AnalyzeModelPlanForAnalyzedAudit(ctx, w.Store, logger, dayToAnalyze, modelPlanID)
 
 	if err != nil {
@@ -61,12 +62,12 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 		batch.Success = faktory.NewJob(analyzedAuditBatchJobSuccessName, dayToAnalyze)
 		batch.Success.Queue = criticalQueue
 
-		logger = logger.With(BIDZapField(batch.Bid))
+		logger = logger.With(logfields.BID(batch.Bid))
 		logger.Info("Creating a new batch for the analyze audit batch job")
 
 		return batch.Jobs(func() error {
 			for _, mp := range modelPlans {
-				innerLogger := logger.With(dateZapField(dayToAnalyze), modelPlanIDZapField(mp.ID))
+				innerLogger := logger.With(logfields.Date(dayToAnalyze), logfields.ModelPlanID(mp.ID))
 				innerLogger.Info("creating analyzed audit job")
 				job := faktory.NewJob(analyzedAuditJobName, dayToAnalyze, mp.ID)
 				job.Queue = criticalQueue
