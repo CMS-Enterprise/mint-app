@@ -139,6 +139,15 @@ var solutionSelectedBodyTemplate string
 //go:embed templates/solution_selected_subject.html
 var solutionSelectedSubjectTemplate string
 
+// ModelPlanSuggestedPhaseTemplateName is the template name for the model plan suggested phase email
+const ModelPlanSuggestedPhaseTemplateName string = "model_plan_suggested_phase"
+
+//go:embed templates/model_plan_suggested_phase_subject.html
+var modelPlanSuggestedPhaseSubjectTemplate string
+
+//go:embed templates/model_plan_suggested_phase_body.html
+var modelPlanSuggestedPhaseBodyTemplate string
+
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
 	templateCache  *emailTemplates.TemplateCache
@@ -224,6 +233,12 @@ func (t *TemplateServiceImpl) Load() error {
 	if err != nil {
 		return err
 	}
+
+	err = t.loadEmailTemplate(ModelPlanSuggestedPhaseTemplateName, modelPlanSuggestedPhaseSubjectTemplate, modelPlanSuggestedPhaseBodyTemplate)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
