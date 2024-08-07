@@ -593,13 +593,12 @@ const TargetsAndOptions = () => {
                           }
                         />
                       </FieldGroup>
-
-                      <AddNote
-                        id="plan-characteristics-multiple-participation-needed-note"
-                        field="multiplePatricipationAgreementsNeededNote"
-                      />
                     </>
                   )}
+                  <AddNote
+                    id="plan-characteristics-multiple-participation-needed-note"
+                    field="multiplePatricipationAgreementsNeededNote"
+                  />
 
                   <div className="margin-top-6 margin-bottom-3">
                     <Button
