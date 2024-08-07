@@ -69,10 +69,15 @@ const TableResults = ({
           )
         ) : (
           <div role="status" aria-live="polite">
-            <Trans i18nKey="tableAndPagination:results.results">
-              indexZero {{ currentPage }} indexOne {{ pageRange }} indexTwo{' '}
-              {{ rows }}
-            </Trans>
+            <Trans
+              t={t}
+              i18nKey="results.results"
+              values={{
+                currentPage,
+                pageRange,
+                rows
+              }}
+            />
             {displayResult(globalFilter)}
           </div>
         )}
