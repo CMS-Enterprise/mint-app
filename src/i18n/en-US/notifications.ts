@@ -67,7 +67,7 @@ const notifications = {
         plan_participants_and_providers: 'Participants and providers',
         plan_beneficiaries: 'Beneficiaries',
         plan_general_characteristics: 'General characteristics',
-        plan_basics: 'Basics'
+        plan_basics: 'Model Basics'
       },
       statusChange: {
         PLAN_DRAFT: 'This model has been announced',
