@@ -1,3 +1,85 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UpdateStatusModal > matches snapshot 1`] = `<DocumentFragment />`;
+exports[`UpdateStatusModal > matches snapshot 1`] = `
+<div
+  data-testid="update-status-modal"
+>
+  <h3
+    aria-live="polite"
+    class="mint-h1 margin-top-neg-2 margin-bottom-2"
+    tabindex="-1"
+  >
+    Update model status?
+  </h3>
+  <p
+    class="font-body-md line-height-sans-4 margin-top-0 margin-bottom-2"
+  >
+    Your model’s anticipated timeline suggests that it is now in clearance. Would you like to update the status of your model to reflect that? If your model is not yet in clearance, please adjust your model’s anticipated timeline.
+  </p>
+  <p
+    class="font-body-md line-height-sans-4 margin-top-0 margin-bottom-2 text-bold"
+  >
+    Current status: 
+    <span
+      class="text-normal"
+    >
+      Draft Model Plan
+    </span>
+  </p>
+  <p
+    class="font-body-md line-height-sans-4 margin-top-0 margin-bottom-2 text-bold"
+  >
+    New status 
+    <div
+      class="text-normal text-base"
+    >
+      Select the specific clearance phase.
+    </div>
+    <select
+      class="usa-select margin-bottom-2 margin-top-1"
+      data-testid="Select"
+      id="sort"
+      name="status"
+    >
+      <option
+        value="INTERNAL_CMMI_CLEARANCE"
+      >
+        In internal (CMMI) clearance
+      </option>
+      <option
+        value="CMS_CLEARANCE"
+      >
+        In CMS clearance
+      </option>
+      <option
+        value="HHS_CLEARANCE"
+      >
+        In HHS clearance
+      </option>
+      <option
+        value="OMB_ASRF_CLEARANCE"
+      >
+        In OMB clearance
+      </option>
+    </select>
+  </p>
+  <div
+    class="margin-top-4 margin-bottom-1"
+  >
+    <button
+      class="usa-button"
+      data-testid="update-status"
+      type="button"
+    >
+      Yes, update status
+    </button>
+    <button
+      class="usa-button usa-button--unstyled margin-left-2"
+      data-testid="go-to-timeline"
+      type="button"
+    >
+      No, go to timeline
+    </button>
+  </div>
+</div>
+`;

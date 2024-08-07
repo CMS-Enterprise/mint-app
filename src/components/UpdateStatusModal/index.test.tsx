@@ -85,21 +85,8 @@ describe('UpdateStatusModal', () => {
     expect(select.value).toBe(ModelStatus.CMS_CLEARANCE);
   });
 
-  it('matches snapshot', () => {
-    const { asFragment } = render(
-      <MockedProvider mocks={statusMock} addTypename={false}>
-        <UpdateStatusModal
-          modelID="123"
-          isOpen
-          closeModal={mockCloseModal}
-          currentStatus={ModelStatus.PLAN_DRAFT}
-          suggestedPhase={mockSuggestedPhase}
-          setStatusMessage={() => null}
-          refetch={() => null}
-        />
-      </MockedProvider>
-    );
-
-    expect(asFragment()).toMatchSnapshot();
+  it('matches snapshot', async () => {
+    const modalComponent = screen.getByTestId('update-status-modal');
+    expect(modalComponent).toMatchSnapshot();
   });
 });

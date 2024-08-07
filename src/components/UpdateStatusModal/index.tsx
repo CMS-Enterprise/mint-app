@@ -1,5 +1,6 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { Button, Select } from '@trussworks/react-uswds';
 import {
   ModelPhase,
@@ -34,6 +35,8 @@ const UpdateStatusModal = ({
   refetch
 }: MutationErrorModalType) => {
   const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
+
+  const history = useHistory();
 
   const { status: statusConfig } = usePlanTranslation('modelPlan');
 
@@ -159,11 +162,12 @@ const UpdateStatusModal = ({
 
           <Button
             type="button"
-            className="margin-left-2 text-red"
+            className="margin-left-2"
             data-testid="go-to-timeline"
             unstyled
             onClick={() => {
               closeModal();
+              history.push(`/models/${modelID}/task-list/basics/milestones`);
             }}
           >
             {modelPlanTaskListT('statusModal.goToTimeline')}
