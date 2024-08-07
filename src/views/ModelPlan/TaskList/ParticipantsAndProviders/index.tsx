@@ -297,7 +297,7 @@ export const ParticipantsAndProvidersContent = () => {
                                 <Button
                                   type="button"
                                   unstyled
-                                  className="margin-top-1"
+                                  className="margin-top-2"
                                   onClick={() => setIsModalOpen(true)}
                                 >
                                   {participantsAndProvidersT(

@@ -356,7 +356,7 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
                   Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.
                 </p>
                 <button
-                  class="usa-button usa-button--unstyled margin-top-1"
+                  class="usa-button usa-button--unstyled margin-top-2"
                   data-testid="button"
                   type="button"
                 >
