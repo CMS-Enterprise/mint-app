@@ -32,7 +32,7 @@
         <br/>
         - */}}
         <p style="font-weight: normal">
-          <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-only{{ if .FilterView }}?filter-view={{.FilterView}} {{end}}">
+          <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view/model-basics{{ if .FilterView }}?filter-view={{.FilterView}} {{end}}">
             View {{ if .FilterView}} {{.FilterView}} {{ else }} more {{end}} details in MINT
           </a>
         </p>
