@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	_ "embed"
@@ -129,7 +129,7 @@ func (s *Store) ExistingModelLinkGetByID(logger *zap.Logger, id uuid.UUID) (*mod
 	}
 	defer stmt.Close()
 
-	err = stmt.Get(&link, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&link, utilitysql.CreateIDQueryMap(id))
 
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, id)

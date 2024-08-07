@@ -19,6 +19,7 @@ import {
   useGetHomepageSettingsQuery,
   ViewCustomizationType
 } from 'gql/gen/graphql';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -47,6 +48,8 @@ type HomepageSettingsFormType = {
 const SettingsForm = () => {
   const { t: homepageSettingsT } = useTranslation('homepageSettings');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const flags = useFlags();
 
   const history = useHistory();
 
@@ -147,6 +150,13 @@ const SettingsForm = () => {
                 >
                   <CardGroup>
                     {getKeys(settingOptions).map(settionOption => {
+                      if (
+                        !flags.modelsApproachingClearanceEnabled &&
+                        settionOption ===
+                          ViewCustomizationType.MODELS_APPROACHING_CLEARANCE
+                      ) {
+                        return null;
+                      }
                       return (
                         <Grid
                           desktop={{ col: 6 }}

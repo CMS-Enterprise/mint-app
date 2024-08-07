@@ -141,8 +141,6 @@ func translateField(
 	//Check if any value is "", if so, update to nil instead.
 	old := setEmptyStringsToNil(field.Old)
 	new := setEmptyStringsToNil(field.New)
-	translatedOld := old
-	translatedNew := new
 	changeType := getChangeType(old, new)
 	if changeType == models.AFCUnchanged {
 		// If a field is actually unchanged (null to empty array or v versa), don't write an entry.
@@ -193,6 +191,7 @@ func translateField(
 
 	options, hasOptions := translationInterface.GetOptions()
 	tableReference, hasTableReference := translationInterface.GetTableReference()
+	var translatedOld, translatedNew interface{}
 	if hasOptions {
 		translatedOld = translateValue(old, options)
 		translatedNew = translateValue(new, options)

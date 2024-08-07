@@ -19,7 +19,6 @@ import (
 
 var translatedAuditJobMaxRetry = 2
 
-// TranslateAuditCronJob is the job the cron schedule calls
 // TranslateAuditBatchJob batches all the TranslateAuditJobs. When all are complete it will fire a callback
 // args are not currently being used.
 func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}) error {

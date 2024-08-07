@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -30,7 +29,7 @@ type requestPayload struct {
 func (h PDFHandler) Handle() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		body, readErr := ioutil.ReadAll(r.Body)
+		body, readErr := io.ReadAll(r.Body)
 		if readErr != nil {
 			h.WriteErrorResponse(r.Context(), w, readErr)
 			return

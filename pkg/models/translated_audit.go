@@ -69,7 +69,8 @@ Fields include
   * primary key
 */
 
-// NewTranslatedAuditChange
+// NewTranslatedAuditChange creates a new TranslatedAudit
+// TODO: Should the naming on this change to something like `NewTranslatedAudit`?
 func NewTranslatedAuditChange(
 	createdBy uuid.UUID,
 	actorID uuid.UUID,

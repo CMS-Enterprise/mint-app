@@ -31,7 +31,7 @@ type translatedAuditFieldScripts struct {
 	CollectionGetByTranslatedAuditIDLoader string
 }
 
-// TranslatedAuditChange holds all the SQL scrips related to the translatedAuditChange Entity
+// TranslatedAuditField holds all the SQL scrips related to the translatedAuditField Entity
 var TranslatedAuditField = translatedAuditFieldScripts{
 	Create:                                 translatedAuditFieldCreateSQL,
 	CollectionGetByTranslatedAuditID:       translatedAuditFieldCollectionGetByTranslatedAuditID,

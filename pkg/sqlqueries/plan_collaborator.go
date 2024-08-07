@@ -54,7 +54,7 @@ type planCollaboratorScripts struct {
 	GetCountByUserID string
 }
 
-// planCollaborator holds all the SQL scrips related to the planCollaborator Entity
+// PlanCollaborator holds all the SQL scrips related to the Plan Collaborator Entity
 var PlanCollaborator = planCollaboratorScripts{
 	Create:                           planCollaboratorCreateSQL,
 	Update:                           planCollaboratorUpdateSQL,

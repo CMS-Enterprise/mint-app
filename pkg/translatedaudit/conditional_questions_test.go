@@ -91,13 +91,13 @@ func testChildMap() map[string][]models.TranslationField {
 	answer1TranslationsQuestion := []models.TranslationField{
 		{
 			TranslationFieldBase: models.TranslationFieldBase{
-				DbField: "conditional1",
+				DBField: "conditional1",
 				Label:   "conditional1",
 			},
 		},
 		{
 			TranslationFieldBase: models.TranslationFieldBase{
-				DbField: "conditional2",
+				DBField: "conditional2",
 				Label:   "conditional2",
 			},
 		},
@@ -107,13 +107,13 @@ func testChildMap() map[string][]models.TranslationField {
 	answer2TranslationsQuestion := []models.TranslationField{
 		{
 			TranslationFieldBase: models.TranslationFieldBase{
-				DbField: "conditional3",
+				DBField: "conditional3",
 				Label:   "conditional3",
 			},
 		},
 		{
 			TranslationFieldBase: models.TranslationFieldBase{
-				DbField: "conditional2",
+				DBField: "conditional2",
 				Label:   "conditional2",
 			},
 		},
@@ -122,13 +122,13 @@ func testChildMap() map[string][]models.TranslationField {
 	answer3TranslationsQuestion := []models.TranslationField{
 		{
 			TranslationFieldBase: models.TranslationFieldBase{
-				DbField: "conditional1",
+				DBField: "conditional1",
 				Label:   "conditional1",
 			},
 		},
 		{
 			TranslationFieldBase: models.TranslationFieldBase{
-				DbField: "conditional4",
+				DBField: "conditional4",
 				Label:   "conditional4",
 			},
 		},
@@ -137,7 +137,7 @@ func testChildMap() map[string][]models.TranslationField {
 	just1TranslationsQuestion := []models.TranslationField{
 		{
 			TranslationFieldBase: models.TranslationFieldBase{
-				DbField: "conditional1",
+				DBField: "conditional1",
 				Label:   "conditional1",
 			},
 		},
@@ -146,7 +146,7 @@ func testChildMap() map[string][]models.TranslationField {
 	just2TranslationsQuestion := []models.TranslationField{
 		{
 			TranslationFieldBase: models.TranslationFieldBase{
-				DbField: "conditional2",
+				DBField: "conditional2",
 				Label:   "conditional2",
 			},
 		},
@@ -155,7 +155,7 @@ func testChildMap() map[string][]models.TranslationField {
 	just3TranslationsQuestion := []models.TranslationField{
 		{
 			TranslationFieldBase: models.TranslationFieldBase{
-				DbField: "conditional3",
+				DBField: "conditional3",
 				Label:   "conditional3",
 			},
 		},

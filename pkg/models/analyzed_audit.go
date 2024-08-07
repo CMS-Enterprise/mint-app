@@ -108,7 +108,7 @@ func (a AnalyzedAuditChange) Humanize() []string {
 	humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.Humanize())
 	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.Humanize())
 
-	return lo.WithoutEmpty(humanizedAuditChanges)
+	return lo.Compact(humanizedAuditChanges)
 }
 
 // AnalyzedModelPlan represents an AnalyzedModelPlan in an AnalyzedAuditChange
