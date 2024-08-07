@@ -97,7 +97,9 @@ describe('Daily Digest in Notifications', () => {
         expect(
           screen.getByText(/This Model Plan is complete/i)
         ).toBeInTheDocument();
-        expect(screen.getByText(/Updates to Basics/i)).toBeInTheDocument();
+        expect(
+          screen.getByText(/Updates to Model Basics/i)
+        ).toBeInTheDocument();
         expect(screen.getByText(/2 new documents/i)).toBeInTheDocument();
         expect(
           screen.getByText('View all recent changes').closest('a')
@@ -130,7 +132,7 @@ describe('Daily Digest in Notifications', () => {
       expect(
         screen.getByText(/This Model Plan is complete/i)
       ).toBeInTheDocument();
-      expect(screen.getByText(/Updates to Basics/i)).toBeInTheDocument();
+      expect(screen.getByText(/Updates to Model Basics/i)).toBeInTheDocument();
       expect(screen.getByText(/2 new documents/i)).toBeInTheDocument();
       expect(
         screen.getByText('View all recent changes').closest('a')
