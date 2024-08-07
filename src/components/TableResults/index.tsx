@@ -44,6 +44,12 @@ const TableResults = ({
   // If data or filter results are less than 10 (page size) - then default to the number of returned rows
   const pageRange: number = rows < pageSize ? rows : (pageIndex + 1) * pageSize;
 
+  // Determine the number of rows to display on the current page.
+  // If the calculated pageRange is less than the total number of rows, use pageRange.
+  // Otherwise, use the total number of rows.
+  // To account for times when it is "Showing 31-XX of 36 results"
+  const displayedRowsCount = pageRange < rows ? pageRange : rows;
+
   return (
     <div className={classnames(className)} data-testid="page-results">
       <span>
@@ -69,15 +75,11 @@ const TableResults = ({
           )
         ) : (
           <div role="status" aria-live="polite">
-            <Trans
-              t={t}
-              i18nKey="results.results"
-              values={{
-                currentPage,
-                pageRange,
-                rows
-              }}
-            />
+            {t('results.results', {
+              currentPage,
+              pageRange: displayedRowsCount,
+              rows
+            })}
             {displayResult(globalFilter)}
           </div>
         )}
