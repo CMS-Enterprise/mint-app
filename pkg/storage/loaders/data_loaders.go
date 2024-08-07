@@ -3,9 +3,6 @@ package loaders
 
 import "github.com/cmsgov/mint-app/pkg/storage"
 
-const appSectionKey string = "app_section"
-const dataLoaderSection string = "dataLoader"
-
 // DataLoaders wrap your data loaders to inject via middleware
 type DataLoaders struct {
 	BasicsLoader                          *WrappedDataLoader

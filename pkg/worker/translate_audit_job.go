@@ -8,8 +8,8 @@ import (
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/logfields"
 	"github.com/cmsgov/mint-app/pkg/translatedaudit"
 )
 
@@ -20,13 +20,13 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 	/*
 		// Future Enhancement: the job is wrapped in panic protection when it is registered, BUT it won't update the queue on a panic. If desired we can also defer the panic here, and try to enable the recover on the parent function to update the queue item
 		// defer apperrors.RecoverPanicAsErrorFunction(&returnedError)
-		// fmt.Printf("translating audit job reached. Args %v", args)
 	*/
 
 	// Note, this will panic if the context doesn't have a faktory job context it will panic.
 	helper := faktory_worker.HelperFor(ctx)
+	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
 
-	w.Logger.Info("translating job reached.", zap.Any("args", args), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
+	logger.Info("translating job reached")
 	if len(args) < 2 {
 		return fmt.Errorf("no arguments were provided for this translateAuditJob")
 	}
@@ -43,9 +43,9 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (re
 		return fmt.Errorf("unable to convert argument  ( %v )to an uuid as expected for translated_audit_queue_id for the translate audit job. Err %w", args[1], err)
 	}
 
-	sugaredLogger := w.Logger.With(zap.Any("auditID", auditID), zap.Any("queueID", queueID), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
+	logger = logger.With(logfields.AuditChangeID(auditID), logfields.TranslatedAuditQueueID(queueID))
 
-	_, translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, sugaredLogger, auditID, queueID)
+	_, translationErr := translatedaudit.TranslateAuditJobByID(ctx, w.Store, logger, auditID, queueID)
 	if translationErr != nil {
 		return translationErr
 	}
