@@ -55,6 +55,11 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 		return nil
 	}
 
+	if nil != modelPlan.PreviousSuggestedPhase &&
+		phaseSuggestion.Phase == *modelPlan.PreviousSuggestedPhase {
+		return nil
+	}
+
 	emailTemplate, err := w.EmailTemplateService.GetEmailTemplate(email.ModelPlanSuggestedPhaseTemplateName)
 	if err != nil {
 		err = fmt.Errorf("unable to get email template for model plan id %s. Err %w", modelPlanID, err)
