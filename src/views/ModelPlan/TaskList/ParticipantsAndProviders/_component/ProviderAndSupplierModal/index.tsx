@@ -14,6 +14,7 @@ import {
   ExistingProviderSupplierTypes,
   existingProviderSupplierTypesNames
 } from 'i18n/en-US/modelPlan/participantsAndProviders';
+import { getKeys } from 'types/translation';
 
 import ProviderAndSupplierTable from '../ProviderAndSupplierTable';
 
@@ -42,16 +43,18 @@ const ProviderAndSupplierModal = ({
     returnObjects: true
   });
 
-  const sidenavItems = Object.entries(providerAndSupplierTypes).map(
-    ([key, value]) => {
+  const sidenavItems = getKeys(providerAndSupplierTypes).map(
+    (key: ExistingProviderSupplierTypes) => {
+      const value = providerAndSupplierTypes[key];
       return (
         <Button
+          key={key}
           type="button"
           unstyled
           className={`sidenav-button line-height-sans-3 width-full ${
             activeType === key ? 'current' : ''
           }`}
-          onClick={() => setActiveType(key as ExistingProviderSupplierTypes)}
+          onClick={() => setActiveType(key)}
         >
           {value}
         </Button>
