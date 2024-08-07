@@ -1,5 +1,3 @@
-/* eslint react/prop-types: 0 */
-
 /*
 Table component for rendering both Other Operational Needs and Operational Need Solutions
 Queries operationalNeeds which contains possible needs and needs
