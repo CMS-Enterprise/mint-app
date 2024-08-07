@@ -6,6 +6,7 @@ import {
   Grid,
   GridContainer,
   Icon,
+  Select,
   SideNav as TrussSideNav
 } from '@trussworks/react-uswds';
 
@@ -99,6 +100,26 @@ const ProviderAndSupplierModal = ({
 
           <GridContainer className="padding-y-6 margin-left-0">
             <Grid row gap>
+              {isMobile && (
+                <Grid desktop={{ col: 12 }} className="margin-bottom-4">
+                  <Select
+                    id="provider-supplier-modal--select"
+                    name="provider-supplier-modal--select"
+                    value={activeType}
+                    onChange={e =>
+                      setActiveType(
+                        e.currentTarget.value as ExistingProviderSupplierTypes
+                      )
+                    }
+                  >
+                    {getKeys(providerAndSupplierTypes).map(key => (
+                      <option key={key} value={key}>
+                        {providerAndSupplierTypes[key]}
+                      </option>
+                    ))}
+                  </Select>
+                </Grid>
+              )}
               {!isMobile && (
                 <Grid desktop={{ col: 3 }}>
                   <div id="provider-supplier-modal--sidenav">
