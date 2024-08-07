@@ -10,7 +10,7 @@
         background-color: transparent;
     }
 
-    &__button {
+    &__button:not(.usa-current) {
       background-color: #fff;
     }
 }

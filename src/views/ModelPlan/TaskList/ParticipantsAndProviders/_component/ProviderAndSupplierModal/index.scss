@@ -26,6 +26,15 @@
     @media screen and (max-width: $desktop) {
       width: 100%;
     }
+
+    .usa-pagination__button {
+      background-color: #fff
+    }
+    .usa-pagination__link {
+      background: transparent;
+      border: 0;
+    }
+
   }
   &__x-button-container {
     width: 100%;
@@ -42,6 +51,8 @@
       cursor: pointer;
     }
   }
+
+
 }
 
 #provider-supplier-modal--sidenav {
