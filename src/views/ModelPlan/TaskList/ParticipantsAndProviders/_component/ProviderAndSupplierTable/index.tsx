@@ -60,7 +60,7 @@ function Table({ columns, data }: { columns: any; data: dataType[] }) {
         setGlobalFilter={setGlobalFilter}
         tableID={modalT('modal.table.id')}
         tableName={modalT('modal.table.title')}
-        className="margin-bottom-4 maxw-none width-mobile"
+        className="margin-bottom-4 maxw-none desktop:width-mobile width-full"
       />
       <TableResults
         globalFilter={state.globalFilter}
