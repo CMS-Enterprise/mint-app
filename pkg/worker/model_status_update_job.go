@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
@@ -89,14 +91,35 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 		return err
 	}
 
+	/*planCollaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return false, fmt.Errorf("failed to get plan collaborators: %w", err)
+	}
+
+	var emailRecipients []string
+	for _, collaborator := range planCollaborators {
+		for _, role := range collaborator.TeamRoles {
+			if role == string(models.TeamRoleModelLead) {
+				collabAccount, accountErr := collaborator.UserAccount(ctx)
+				if accountErr != nil {
+					return false, fmt.Errorf("failed to get model lead collaborator user account for model_plan_share")
+				}
+				modelLeads = append(modelLeads, collabAccount.CommonName)
+				break
+			}
+		}
+	}*/
+
 	err = w.EmailService.Send(
 		w.AddressBook.DefaultSender,
-		w.AddressBook.ModelPlanDateChangedRecipients,
+		nil,
 		nil,
 		emailSubject,
 		"text/html",
 		emailBody,
+		oddmail.WithBCC([]string{w.AddressBook.MINTTeamEmail}),
 	)
+
 	if err != nil {
 		err = fmt.Errorf("unable to send email for model plan id %s. Err %w", modelPlanID, err)
 		sugaredLogger.Error(err.Error(), zap.Error(err))
