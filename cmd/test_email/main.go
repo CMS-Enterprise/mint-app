@@ -473,7 +473,7 @@ func sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanSuggestedPhaseBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
-		Phase:         string(model.ModelPhaseInClearance),
+		Phase:         string(models.ModelPhaseInClearance),
 		SuggestedStatusesRaw: []string{
 			string(models.ModelStatusInternalCmmiClearance),
 			string(models.ModelStatusCmsClearance),
@@ -523,7 +523,7 @@ func sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanSuggestedPhaseBodyContent{
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
-		Phase:         string(model.ModelPhaseIcipComplete),
+		Phase:         string(models.ModelPhaseIcipComplete),
 		SuggestedStatusesRaw: []string{
 			string(models.ModelStatusIcipComplete),
 		},

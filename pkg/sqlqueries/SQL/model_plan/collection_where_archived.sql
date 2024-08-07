@@ -3,6 +3,7 @@ SELECT
     model_name,
     abbreviation,
     status,
+    previous_suggested_phase,
     archived,
     created_by,
     created_dts,

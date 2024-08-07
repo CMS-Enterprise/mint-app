@@ -7,7 +7,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 
 	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
 
@@ -74,7 +73,7 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanSuggestedPhaseBodyContent{
 		ClientAddress: w.EmailService.GetConfig().GetClientAddress(),
-		Phase:         string(model.ModelPhaseIcipComplete),
+		Phase:         string(models.ModelPhaseIcipComplete),
 		SuggestedStatusesRaw: []string{
 			string(models.ModelStatusIcipComplete),
 		},
