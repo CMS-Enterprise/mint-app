@@ -9,7 +9,7 @@ import './index.scss';
 
 interface SideNavProps {
   subComponents: subComponentsProps;
-  isHelpArticle?: boolean;
+  isHelpArticle: boolean | undefined;
   solutionNavigation?: boolean;
   paramActive?: boolean;
 }

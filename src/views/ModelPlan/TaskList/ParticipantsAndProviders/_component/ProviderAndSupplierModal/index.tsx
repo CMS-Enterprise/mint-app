@@ -7,7 +7,6 @@ import {
   GridContainer,
   Icon,
   SideNav as TrussSideNav
-  // Table as UswdsTable
 } from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
