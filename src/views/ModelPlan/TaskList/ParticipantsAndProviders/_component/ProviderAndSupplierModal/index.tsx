@@ -66,18 +66,18 @@ const ProviderAndSupplierModal = ({
     return (
       <ReactModal
         isOpen={isOpen}
-        overlayClassName="mint-discussions__overlay overflow-y-scroll"
-        className="mint-discussions__content solution-details-modal"
+        overlayClassName="provider-supplier-modal__overlay overflow-y-scroll"
+        className="provider-supplier-modal__content"
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick
         appElement={document.getElementById('root')! as HTMLElement}
       >
-        <div data-testid="provider-physician-type-modal">
-          <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
+        <div>
+          <div className="provider-supplier-modal__x-button-container display-flex text-base flex-align-center">
             <button
               type="button"
-              data-testid="close-discussions"
-              className="mint-discussions__x-button margin-right-2"
+              data-testid="close-button"
+              className="provider-supplier-modal__x-button margin-right-2"
               aria-label="Close Modal"
               onClick={closeModal}
             >
