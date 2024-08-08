@@ -31,7 +31,7 @@ const ProviderAndSupplierModal = ({
   closeModal
 }: ProviderAndSupplierModalProps) => {
   const { t: modalT } = useTranslation('participantsAndProvidersMisc');
-  const isMobile = useCheckResponsiveScreen('tablet');
+  const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
   const [activeType, setActiveType] = useState<ExistingProviderSupplierTypes>(
     ExistingProviderSupplierTypes.PROVIDER_TYPES_INSTITUTIONAL
