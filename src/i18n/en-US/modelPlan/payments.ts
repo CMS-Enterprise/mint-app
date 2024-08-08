@@ -29,6 +29,7 @@ export const payments: TranslationPayments = {
       OTHER: 'Other'
     },
     tooltips: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:
@@ -36,6 +37,8 @@ export const payments: TranslationPayments = {
       OTHER: ''
     },
     optionsRelatedInfo: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT:
+        'fundingSourcePatientProtectionInfo',
       MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceMedicareAInfo',
       MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceMedicareBInfo',
       OTHER: 'fundingSourceOther'
@@ -55,7 +58,7 @@ export const payments: TranslationPayments = {
       'Additional details for Patient Protection Affordable Care Act (Sec 3021)',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.02,
+    order: 1.011,
     isOtherType: true,
     otherParentField: 'fundingSource',
     filterGroups: [
@@ -152,6 +155,7 @@ export const payments: TranslationPayments = {
       OTHER: 'Other'
     },
     tooltips: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT: '',
       MEDICARE_PART_A_HI_TRUST_FUND:
         'Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.',
       MEDICARE_PART_B_SMI_TRUST_FUND:
@@ -159,6 +163,8 @@ export const payments: TranslationPayments = {
       OTHER: ''
     },
     optionsRelatedInfo: {
+      PATIENT_PROTECTION_AFFORDABLE_CARE_ACT:
+        'fundingSourceRPatientProtectionInfo',
       MEDICARE_PART_A_HI_TRUST_FUND: 'fundingSourceRMedicareAInfo',
       MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceRMedicareBInfo',
       OTHER: 'fundingSourceROther'
@@ -178,7 +184,7 @@ export const payments: TranslationPayments = {
       'Additional details for Patient Protection Affordable Care Act (Sec 3021)',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.02,
+    order: 1.061,
     isOtherType: true,
     otherParentField: 'fundingSourceR',
     filterGroups: [
