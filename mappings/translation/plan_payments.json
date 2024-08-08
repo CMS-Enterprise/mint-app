@@ -24,7 +24,7 @@
     "exportLabel": "Additional details for Patient Protection Affordable Care Act (Sec 3021)",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 1.02,
+    "order": 1.011,
     "isOtherType": true,
     "otherParentField": "funding_source"
   },
@@ -100,7 +100,7 @@
     "exportLabel": "Additional details for Patient Protection Affordable Care Act (Sec 3021)",
     "dataType": "STRING",
     "formType": "TEXT",
-    "order": 1.02,
+    "order": 1.061,
     "isOtherType": true,
     "otherParentField": "funding_source_r"
   },
