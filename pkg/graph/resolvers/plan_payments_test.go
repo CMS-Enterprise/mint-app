@@ -47,12 +47,12 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	if suite.NotNil(updatedPP.WillBePaymentAdjustmentsNote) {
 		suite.EqualValues(willBePaymentAdjustmentsNoteExpected, *updatedPP.WillBePaymentAdjustmentsNote)
 	}
-	if suite.NotNil(updatedPP.FundingSourcePatientProtectionInfo) {
-		suite.EqualValues(patientProtectionString, updatedPP.FundingSourcePatientProtectionInfo)
-	}
 
+	if suite.NotNil(updatedPP.FundingSourcePatientProtectionInfo) {
+		suite.EqualValues(patientProtectionString, *updatedPP.FundingSourcePatientProtectionInfo)
+	}
 	if suite.NotNil(updatedPP.FundingSourceRPatientProtectionInfo) {
-		suite.EqualValues(patientProtectionRString, updatedPP.FundingSourceRPatientProtectionInfo)
+		suite.EqualValues(patientProtectionRString, *updatedPP.FundingSourceRPatientProtectionInfo)
 	}
 
 	suite.Nil(pp.ModifiedBy)
