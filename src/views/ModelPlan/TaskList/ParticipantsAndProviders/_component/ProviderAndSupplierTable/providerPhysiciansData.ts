@@ -594,12 +594,6 @@ const NON_PHYSICIANS_SUPPLIERS = [
   }
 ];
 
-// const data = [
-//   ...NON_PHYSICIANS_SUPPLIERS,
-//   ...PHYSICIANS,
-//   ...PROVIDER_TYPES_INSTITUTIONAL
-// ];
-
 const providerPhysiciansData = {
   NON_PHYSICIANS_SUPPLIERS,
   PHYSICIANS,
