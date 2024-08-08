@@ -14,14 +14,17 @@ import TableResults from 'components/TableResults';
 import { ExistingProviderSupplierTypes } from 'i18n/en-US/modelPlan/participantsAndProviders';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
-import providerPhysiciansData from './providerPhysiciansData';
+import providerPhysiciansData, {
+  SingleProviderSupplierType
+} from './providerPhysiciansData';
 
-type dataType = {
-  providerType: string;
-  description: string;
-};
-
-function Table({ columns, data }: { columns: any; data: dataType[] }) {
+function Table({
+  columns,
+  data
+}: {
+  columns: any;
+  data: SingleProviderSupplierType[];
+}) {
   const { t: modalT } = useTranslation('participantsAndProvidersMisc');
   // Use the state and functions returned from useTable to build your UI
   const {
