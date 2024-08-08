@@ -55,7 +55,7 @@ export const payments: TranslationPayments = {
       'Additional details for Patient Protection Affordable Care Act (Sec 3021)',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.02,
+    order: 1.0105,
     isOtherType: true,
     otherParentField: 'fundingSource',
     filterGroups: [
@@ -178,7 +178,7 @@ export const payments: TranslationPayments = {
       'Additional details for Patient Protection Affordable Care Act (Sec 3021)',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
-    order: 1.02,
+    order: 1.0605,
     isOtherType: true,
     otherParentField: 'fundingSourceR',
     filterGroups: [
