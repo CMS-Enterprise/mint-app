@@ -46,6 +46,24 @@ export const payments: TranslationPayments = {
       ModelViewFilter.OACT
     ]
   },
+  fundingSourcePatientProtectionInfo: {
+    gqlField: 'fundingSourcePatientProtectionInfo',
+    goField: 'FundingSourcePatientProtectionInfo',
+    dbField: 'funding_source_patient_protection_info',
+    label: 'Additional details',
+    exportLabel:
+      'Additional details for Patient Protection Affordable Care Act (Sec 3021)',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.02,
+    isOtherType: true,
+    otherParentField: 'fundingSource',
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
+  },
   fundingSourceMedicareAInfo: {
     gqlField: 'fundingSourceMedicareAInfo',
     goField: 'FundingSourceMedicareAInfo',
@@ -145,6 +163,24 @@ export const payments: TranslationPayments = {
       MEDICARE_PART_B_SMI_TRUST_FUND: 'fundingSourceRMedicareBInfo',
       OTHER: 'fundingSourceROther'
     },
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.OACT
+    ]
+  },
+  fundingSourceRPatientProtectionInfo: {
+    gqlField: 'fundingSourceRPatientProtectionInfo',
+    goField: 'FundingSourceRPatientProtectionInfo',
+    dbField: 'funding_source_r_patient_protection_info',
+    label: 'Additional details',
+    exportLabel:
+      'Additional details for Patient Protection Affordable Care Act (Sec 3021)',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.02,
+    isOtherType: true,
+    otherParentField: 'fundingSourceR',
     filterGroups: [
       ModelViewFilter.DFSDM,
       ModelViewFilter.IPC,

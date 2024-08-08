@@ -779,11 +779,13 @@ export type TranslationOpsEvalAndLearning = {
 // Payments
 export type TranslationPaymentsForm = {
   fundingSource: TranslationFieldPropertiesWithOptions<FundingSource>;
+  fundingSourcePatientProtectionInfo: TranslationFieldProperties;
   fundingSourceMedicareAInfo: TranslationFieldProperties;
   fundingSourceMedicareBInfo: TranslationFieldProperties;
   fundingSourceOther: TranslationFieldProperties;
   fundingSourceNote: TranslationFieldProperties;
   fundingSourceR: TranslationFieldPropertiesWithOptions<FundingSource>;
+  fundingSourceRPatientProtectionInfo: TranslationFieldProperties;
   fundingSourceRMedicareAInfo: TranslationFieldProperties;
   fundingSourceRMedicareBInfo: TranslationFieldProperties;
   fundingSourceROther: TranslationFieldProperties;
