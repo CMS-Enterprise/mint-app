@@ -43,6 +43,7 @@ const DevSecurity = ({ children }: ParentComponentProps) => {
   };
   oktaAuth.signOut = (): Promise<void> => {
     window.localStorage.removeItem(localAuthStorageKey);
+    sessionStorage.clear();
     window.location.href = '/';
     return new Promise(() => {});
   };
