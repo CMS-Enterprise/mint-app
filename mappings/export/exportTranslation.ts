@@ -60,7 +60,10 @@ export const parseTypscriptToJSON = (translations: any, outputFile: string) => {
     translationSections
   );
 
-  const allTranslationExports = { tables, ...transformedTranslationSections };
+  const allTranslationExports = {
+    table_name: tables,
+    ...transformedTranslationSections
+  };
 
   // Create JSON file for each translation task list section
   getKeys(allTranslationExports).forEach(section =>

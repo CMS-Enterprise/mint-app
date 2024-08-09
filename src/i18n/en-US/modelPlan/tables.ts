@@ -55,7 +55,7 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
     generalName: 'Possible need solution links'
   },
   [TableName.POSSIBLE_OPERATIONAL_NEED]: {
-    generalName: 'Possibe operational needs',
+    generalName: 'Possible operational needs',
     groupedName: 'Operational solutions and implementation status tracker'
   },
   [TableName.POSSIBLE_OPERATIONAL_SOLUTION]: {
