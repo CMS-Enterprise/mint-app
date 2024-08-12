@@ -570,7 +570,7 @@ export const payments: TranslationPayments = {
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 2.002,
-    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
+    filterGroups: [ModelViewFilter.IDDOC]
   },
   creatingDependenciesBetweenServices: {
     gqlField: 'creatingDependenciesBetweenServices',
