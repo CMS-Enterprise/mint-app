@@ -6,8 +6,7 @@ const tableAndPagination = {
   search: 'Search Table',
   results: {
     noResults: 'No results found',
-    results:
-      'Showing <1>{{currentPage}}</1>-<1>{{pageRange}}</1> of <1>{{rows}}</1> results ',
+    results: 'Showing {{currentPage}}-{{pageRange}} of {{rows}} results ',
     searchInput: 'for',
     alertHeading: `We couldn't find any matches for "{{query}}".`,
     alertDescription:

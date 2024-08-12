@@ -9,4 +9,8 @@
         border: none;
         background-color: transparent;
     }
+
+    &__button:not(.usa-current) {
+      background-color: #fff;
+    }
 }

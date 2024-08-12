@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import {
@@ -43,6 +43,7 @@ import { composeMultiSelectOptions } from 'utils/modelPlan';
 import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
+import ProviderAndSupplierModal from './_component/ProviderAndSupplierModal';
 import Communication from './Communication';
 import Coordination from './Coordination';
 import ParticipantOptions from './ParticipantOptions';
@@ -66,6 +67,8 @@ export const ParticipantsAndProvidersContent = () => {
     isNewTypeOfProvidersOrSuppliers: isNewTypeOfProvidersOrSuppliersConfig,
     participantsCurrentlyInModels: participantsCurrentlyInModelsConfig
   } = usePlanTranslation('participantsAndProviders');
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -127,6 +130,10 @@ export const ParticipantsAndProvidersContent = () => {
         isOpen={mutationError.isModalOpen}
         closeModal={() => mutationError.setIsModalOpen(false)}
         url={mutationError.destinationURL}
+      />
+      <ProviderAndSupplierModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
       />
 
       <BreadcrumbBar variant="wrap">
@@ -287,6 +294,16 @@ export const ParticipantsAndProvidersContent = () => {
                                 <FieldErrorMsg>
                                   {flatErrors.medicareProviderType}
                                 </FieldErrorMsg>
+                                <Button
+                                  type="button"
+                                  unstyled
+                                  className="margin-top-2"
+                                  onClick={() => setIsModalOpen(true)}
+                                >
+                                  {participantsAndProvidersT(
+                                    'medicareProviderType.modalLink'
+                                  )}
+                                </Button>
                                 <Field
                                   as={TextAreaField}
                                   error={flatErrors.medicareProviderType}
