@@ -92,6 +92,8 @@ SELECT
     pay.funding_source_medicare_a_info,
     pay.funding_source_medicare_b_info,
     pay.funding_source_r_medicare_a_info,
-    pay.funding_source_r_medicare_b_info
+    pay.funding_source_r_medicare_b_info,
+    pay.funding_source_patient_protection_info,
+    pay.funding_source_r_patient_protection_info
 FROM QUERIED_IDS AS qIDs
 INNER JOIN plan_payments AS pay ON pay.model_plan_id = qIDs.model_plan_id;

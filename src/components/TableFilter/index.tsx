@@ -50,7 +50,7 @@ const GlobalClientFilter = ({
           // Currently only client-side filtering - updates search filter onChange
           setGlobalFilter(e.target.value);
         }}
-        value={globalFilter}
+        value={globalFilter ?? ''}
         name={`${tableName} Search`}
       />
       {/* Right not search button doesn't need to do anything, it searches onChange -

@@ -44,8 +44,12 @@ const ReadOnlyPayments = ({
 
   const paymentsConfigOne = {
     fundingSource: paymentsConfig.fundingSource,
+    fundingSourcePatientProtectionInfo:
+      paymentsConfig.fundingSourcePatientProtectionInfo,
     fundingSourceNote: paymentsConfig.fundingSourceNote,
     fundingSourceR: paymentsConfig.fundingSourceR,
+    fundingSourceRPatientProtectionInfo:
+      paymentsConfig.fundingSourceRPatientProtectionInfo,
     fundingSourceRNote: paymentsConfig.fundingSourceRNote,
     payRecipients: paymentsConfig.payRecipients,
     payRecipientsOtherSpecification:

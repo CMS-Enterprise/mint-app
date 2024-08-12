@@ -4,11 +4,13 @@ Represents payments translation data
 type PlanPaymentsTranslation {
   # Page 1
   fundingSource: TranslationFieldWithOptions! @goTag(key: "db", value: "funding_source")
+  fundingSourcePatientProtectionInfo: TranslationField! @goTag(key: "db", value: "funding_source_patient_protection_info")
   fundingSourceMedicareAInfo: TranslationField! @goTag(key: "db", value: "funding_source_medicare_a_info")
   fundingSourceMedicareBInfo: TranslationField! @goTag(key: "db", value: "funding_source_medicare_b_info")
   fundingSourceOther: TranslationField! @goTag(key: "db", value: "funding_source_other")
   fundingSourceNote: TranslationField! @goTag(key: "db", value: "funding_source_note")
   fundingSourceR: TranslationFieldWithOptions! @goTag(key: "db", value: "funding_source_r")
+  fundingSourceRPatientProtectionInfo: TranslationField! @goTag(key: "db", value: "funding_source_r_patient_protection_info")
   fundingSourceRMedicareAInfo: TranslationField! @goTag(key: "db", value: "funding_source_r_medicare_a_info")
   fundingSourceRMedicareBInfo: TranslationField! @goTag(key: "db", value: "funding_source_r_medicare_b_info")
   fundingSourceROther: TranslationField! @goTag(key: "db", value: "funding_source_r_other")

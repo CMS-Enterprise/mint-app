@@ -48,7 +48,6 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
       MEDICARE_PROVIDERS:
         'Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.'
     },
-
     optionsRelatedInfo: {
       MEDICARE_PROVIDERS: 'medicareProviderType',
       STATES: 'statesEngagement',
@@ -74,6 +73,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     label: 'Which type of Medicare providers/suppliers?',
     sublabel:
       'Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.',
+    modalLink: 'View existing provider/supplier types',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 1.02,
@@ -1138,7 +1138,24 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
   }
 };
 
-export const participantsAndProvidersMisc: Record<string, string> = {
+export enum ExistingProviderSupplierTypes {
+  PROVIDER_TYPES_INSTITUTIONAL = 'PROVIDER_TYPES_INSTITUTIONAL',
+  PHYSICIANS = 'PHYSICIANS',
+  NON_PHYSICIANS_SUPPLIERS = 'NON_PHYSICIANS_SUPPLIERS'
+}
+
+export const existingProviderSupplierTypesNames: Record<
+  ExistingProviderSupplierTypes,
+  string
+> = {
+  [ExistingProviderSupplierTypes.PROVIDER_TYPES_INSTITUTIONAL]:
+    'Provider Types (Institutional)',
+  [ExistingProviderSupplierTypes.PHYSICIANS]: 'Physicians',
+  [ExistingProviderSupplierTypes.NON_PHYSICIANS_SUPPLIERS]:
+    'Non-Physicians/Suppliers'
+};
+
+export const participantsAndProvidersMisc: Record<string, string | object> = {
   heading: 'Participants and providers',
   clearanceHeading: 'Review participants and providers',
   breadcrumb: 'Participants and providers',
@@ -1155,7 +1172,27 @@ export const participantsAndProvidersMisc: Record<string, string> = {
   participantQuestions: 'Participant specific questions',
   numberOfParticipants: 'Number of participants',
   zero: '0',
-  tenThousand: '10,000+'
+  tenThousand: '10,000+',
+  modal: {
+    id: 'provider-and-supplier-types',
+    title: 'Existing provider/supplier types',
+    asOfDate: 'as of 06/25/2024',
+    existingProviderSupplierTypesNames,
+    table: {
+      caption: 'Below is a list of existing provider/supplier types.',
+      headers: {
+        providerType: 'Provider Type',
+        specialtyCode: 'Specialty Code',
+        description: {
+          PROVIDER_TYPES_INSTITUTIONAL: 'Description',
+          PHYSICIANS:
+            'Physician/Limited License Physician (LLP) Specialty Description',
+          NON_PHYSICIANS_SUPPLIERS:
+            'Non-Physician/Supplier Specialty Description'
+        }
+      }
+    }
+  }
 };
 
 export default participantsAndProviders;
