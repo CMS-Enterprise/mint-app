@@ -84,6 +84,8 @@ SELECT
     funding_source_medicare_a_info,
     funding_source_medicare_b_info,
     funding_source_r_medicare_a_info,
-    funding_source_r_medicare_b_info
+    funding_source_r_medicare_b_info,
+    funding_source_patient_protection_info,
+    funding_source_r_patient_protection_info
 FROM plan_payments
 WHERE id = :id

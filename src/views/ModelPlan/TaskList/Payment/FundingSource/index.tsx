@@ -80,11 +80,13 @@ const FundingSource = () => {
   const {
     id,
     fundingSource,
+    fundingSourcePatientProtectionInfo,
     fundingSourceMedicareAInfo,
     fundingSourceMedicareBInfo,
     fundingSourceOther,
     fundingSourceNote,
     fundingSourceR,
+    fundingSourceRPatientProtectionInfo,
     fundingSourceRMedicareAInfo,
     fundingSourceRMedicareBInfo,
     fundingSourceROther,
@@ -132,11 +134,15 @@ const FundingSource = () => {
     __typename: 'PlanPayments',
     id: id ?? '',
     fundingSource: fundingSource ?? [],
+    fundingSourcePatientProtectionInfo:
+      fundingSourcePatientProtectionInfo ?? '',
     fundingSourceMedicareAInfo: fundingSourceMedicareAInfo ?? '',
     fundingSourceMedicareBInfo: fundingSourceMedicareBInfo ?? '',
     fundingSourceOther: fundingSourceOther ?? '',
     fundingSourceNote: fundingSourceNote ?? '',
     fundingSourceR: fundingSourceR ?? [],
+    fundingSourceRPatientProtectionInfo:
+      fundingSourceRPatientProtectionInfo ?? '',
     fundingSourceRMedicareAInfo: fundingSourceRMedicareAInfo ?? '',
     fundingSourceRMedicareBInfo: fundingSourceRMedicareBInfo ?? '',
     fundingSourceROther: fundingSourceROther ?? '',
@@ -197,6 +203,33 @@ const FundingSource = () => {
                 </Tooltip>
               )}
             </div>
+
+            {trustType ===
+              FundingSourceEnum.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT &&
+              values[fieldName]?.includes(trustType) && (
+                <FieldGroup
+                  className="margin-left-4 margin-top-1 margin-bottom-2"
+                  error={!!flatErrors[`${fieldName}PatientProtectionInfo`]}
+                >
+                  <Label
+                    htmlFor={`${fieldName}PatientProtectionInfo`}
+                    className="text-normal"
+                  >
+                    {paymentsT(`${fieldName}PatientProtectionInfo.label`)}
+                  </Label>
+
+                  <FieldErrorMsg>
+                    {flatErrors[`${fieldName}PatientProtectionInfo`]}
+                  </FieldErrorMsg>
+
+                  <Field
+                    as={TextInput}
+                    id={`payment-${fieldName}-patient-protection-info`}
+                    maxLength={50}
+                    name={`${fieldName}PatientProtectionInfo`}
+                  />
+                </FieldGroup>
+              )}
 
             {trustType === FundingSourceEnum.MEDICARE_PART_A_HI_TRUST_FUND &&
               values[fieldName]?.includes(trustType) && (
