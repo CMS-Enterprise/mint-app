@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CardGroup } from '@trussworks/react-uswds';
 
@@ -34,9 +34,11 @@ const HelpCardGroup = ({
       .localeCompare(articleNames[b.key].toLowerCase())
   );
 
-  const articles = filter
-    ? helpAndKnowledgeArticles.filter(article => article.type === filter)
-    : helpAndKnowledgeArticles;
+  const articles = useMemo(() => {
+    return filter
+      ? helpAndKnowledgeArticles.filter(article => article.type === filter)
+      : helpAndKnowledgeArticles;
+  }, [filter]);
 
   const { currentItems, Pagination } = usePagination<ArticleProps[]>({
     items: articles,
@@ -52,7 +54,13 @@ const HelpCardGroup = ({
     <>
       <CardGroup className={className}>
         {firstThreeArticles.map(article => (
-          <ArticleCard {...article} isLink tag={tag} type={article.type} />
+          <ArticleCard
+            {...article}
+            isLink
+            tag={tag}
+            type={article.type}
+            key={article.key}
+          />
         ))}
       </CardGroup>
 
