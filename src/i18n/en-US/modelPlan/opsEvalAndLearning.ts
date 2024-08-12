@@ -206,7 +206,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
         () => opsEvalAndLearning.fileNamingConventions
       ]
     },
-    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.IPC]
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   iddocSupportNote: {
     gqlField: 'iddocSupportNote',

@@ -18,7 +18,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
     </p>
     <a
       aria-label="Open EUA in a new tab"
-      class="usa-link usa-link--external"
+      class="usa-link usa-link--external display-block margin-y-3"
       href="https://echimp.cmsnet/"
       rel="noopener noreferrer"
       target="_blank"
