@@ -401,7 +401,8 @@ export const payments: TranslationPayments = {
     filterGroups: [
       ModelViewFilter.CMMI,
       ModelViewFilter.IPC,
-      ModelViewFilter.OACT
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
     ]
   },
   payClaimsOther: {
@@ -1286,7 +1287,11 @@ export const payments: TranslationPayments = {
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
     order: 7.13,
-    filterGroups: [ModelViewFilter.DFSDM, ModelViewFilter.IPC]
+    filterGroups: [
+      ModelViewFilter.DFSDM,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   paymentStartDateNote: {
     gqlField: 'paymentStartDateNote',
