@@ -458,6 +458,13 @@ export enum EaseOfUse {
   UNSURE = 'UNSURE'
 }
 
+/** Represents a translation of enum values.  generalName is the human readable name of the enum value, groupedName is an optional field if usually referenced by a difference table/name */
+export type EnumTranslation = {
+  __typename: 'EnumTranslation';
+  generalName: Scalars['String']['output'];
+  groupedName?: Maybe<Scalars['String']['output']>;
+};
+
 export enum EvaluationApproachType {
   COMPARISON_MATCH = 'COMPARISON_MATCH',
   CONTROL_INTERVENTION = 'CONTROL_INTERVENTION',

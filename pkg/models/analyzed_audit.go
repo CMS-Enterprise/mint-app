@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/constants"
-
 	"github.com/google/uuid"
 	"github.com/samber/lo"
+
+	"github.com/cmsgov/mint-app/pkg/constants"
 )
 
 // AnalyzedAudit represents a analyzed_audit to a table row in the database
@@ -341,6 +341,8 @@ func (a AnalyzedPlanSections) humanizeDatabaseTableNames(x []TableName) []string
 func (a AnalyzedPlanSections) getHumanizedTableName(name TableName) string {
 	//Future Enhancement: Utilize the shared mapping package instead of utilizing the constants package
 	humanizedName, _ := constants.GetHumanizedTableName(string(name))
+	//TODO: extract translation logic from the models package, so we can use mappings in the models package
+	// humanizedName, _ :=mappings.TranslateTableName(name)
 	return strings.Trim(humanizedName, " ")
 }
 

@@ -1,0 +1,117 @@
+{
+  "activity": {
+    "generalName": "Activities"
+  },
+  "analyzed_audit": {
+    "generalName": "Analyzed audits"
+  },
+  "discussion_reply": {
+    "generalName": "Replies",
+    "groupedName": "Discussions"
+  },
+  "existing_model": {
+    "generalName": "Existing models"
+  },
+  "existing_model_link": {
+    "generalName": "Existing model links",
+    "groupedName": "General characteristics"
+  },
+  "model_plan": {
+    "generalName": "Model plan"
+  },
+  "nda_agreement": {
+    "generalName": "NDA agreements"
+  },
+  "operational_need": {
+    "generalName": "Operational needs",
+    "groupedName": "Operational solutions and implementation status tracker"
+  },
+  "operational_solution": {
+    "generalName": "Operational solutions",
+    "groupedName": "Operational solutions and implementation status tracker"
+  },
+  "operational_solution_subtask": {
+    "generalName": "Operational solution subtasks",
+    "groupedName": "Operational solutions and implementation status tracker"
+  },
+  "plan_basics": {
+    "generalName": "Model basics"
+  },
+  "plan_beneficiaries": {
+    "generalName": "Beneficiaries"
+  },
+  "plan_collaborator": {
+    "generalName": "Model team"
+  },
+  "plan_cr": {
+    "generalName": "CRs",
+    "groupedName": "FFS CRs and TDLs"
+  },
+  "plan_discussion": {
+    "generalName": "Discussions"
+  },
+  "plan_document": {
+    "generalName": "Documents"
+  },
+  "plan_document_solution_link": {
+    "generalName": "Document solution links",
+    "groupedName": "Operational solutions and implementation status tracker"
+  },
+  "plan_favorite": {
+    "generalName": "Favorites"
+  },
+  "plan_general_characteristics": {
+    "generalName": "General characteristics"
+  },
+  "plan_ops_eval_and_learning": {
+    "generalName": "Operations, evaluation, and learning"
+  },
+  "plan_participants_and_providers": {
+    "generalName": "Participants and providers"
+  },
+  "plan_payments": {
+    "generalName": "Payments"
+  },
+  "plan_tdl": {
+    "generalName": "TDLs",
+    "groupedName": "FFS CRs and TDLs"
+  },
+  "possible_need_solution_link": {
+    "generalName": "Possible need solution links"
+  },
+  "possible_operational_need": {
+    "generalName": "Possible operational needs",
+    "groupedName": "Operational solutions and implementation status tracker"
+  },
+  "possible_operational_solution": {
+    "generalName": "Possible operational solutions",
+    "groupedName": "Operational solutions and implementation status tracker"
+  },
+  "possible_operational_solution_contact": {
+    "generalName": "Possible Operational Solution Contact"
+  },
+  "tag": {
+    "generalName": "Tags"
+  },
+  "translated_audit": {
+    "generalName": "Translated audits"
+  },
+  "translated_audit_field": {
+    "generalName": "Translated audit fields"
+  },
+  "translated_audit_queue": {
+    "generalName": "Translated audit queues"
+  },
+  "user_account": {
+    "generalName": "User accounts"
+  },
+  "user_notification": {
+    "generalName": "User notifications"
+  },
+  "user_notification_preferences": {
+    "generalName": "User notification preferences"
+  },
+  "user_view_customization": {
+    "generalName": "User view customizations"
+  }
+}
