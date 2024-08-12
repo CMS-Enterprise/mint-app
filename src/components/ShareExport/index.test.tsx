@@ -82,7 +82,7 @@ describe('ShareExportModal', () => {
           initialEntries={[`/models/${modelID}/read-only/model-basics`]}
         >
           <VerboseMockedProvider
-            mocks={[...allMocks, ...summaryMock]}
+            mocks={[...allMocks, ...summaryMock, ...operationalNeedsMock]}
             addTypename={false}
           >
             <Route path="/models/:modelID/read-only/model-basics">
