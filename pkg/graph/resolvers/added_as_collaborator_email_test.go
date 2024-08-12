@@ -25,7 +25,7 @@ func (suite *ResolverSuite) TestAddedAsCollaboratorEmail() {
 	}
 	expectedEmail := "CLAB.doe@local.fake" // This comes from the stub fetch user info function
 
-	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(planName, plan)
 	mockEmailTemplateService.
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).

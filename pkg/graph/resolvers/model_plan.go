@@ -539,34 +539,3 @@ func ModelPlanShare(
 
 	return true, nil
 }
-
-// ModelPlanAnticipatedPhase calculates a suggested phase for a model plan based on its current status and timeline
-// It uses a series of status evaluation strategies to determine the suggested phase
-// If no phase is suggested, it returns nil
-func ModelPlanAnticipatedPhase(
-	store *storage.Store,
-	modelStatus models.ModelStatus,
-	modelPlanID uuid.UUID,
-) (*model.PhaseSuggestion, error) {
-
-	// If the model plan is paused or canceled, we shouldn't suggest a new phase
-	if modelStatus == models.ModelStatusPaused || modelStatus == models.ModelStatusCanceled {
-		return nil, nil
-	}
-
-	planBasics, err := store.PlanBasicsGetByModelPlanID(modelPlanID)
-	if err != nil {
-		return nil, err
-	}
-
-	// Iterate over all status evaluation strategies and append valid statuses to the results slice
-	statusEvaluationStrategies := GetAllStatusEvaluationStrategies()
-	for _, strategy := range statusEvaluationStrategies {
-		phaseSuggestion := strategy.Evaluate(modelStatus, planBasics)
-		if nil != phaseSuggestion {
-			return phaseSuggestion, nil
-		}
-	}
-
-	return nil, nil
-}

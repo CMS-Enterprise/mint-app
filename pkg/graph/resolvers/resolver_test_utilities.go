@@ -122,7 +122,7 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	return config, ldClient, logger, userInfo, ps
 }
 
-func createAddedAsCollaboratorTemplateCacheHelper(
+func createTemplateCacheHelper(
 	planName string,
 	plan *models.ModelPlan) (*emailTemplates.EmailTemplate, string, string) {
 	templateCache := emailTemplates.NewTemplateCache()

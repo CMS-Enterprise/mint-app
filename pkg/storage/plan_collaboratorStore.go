@@ -177,3 +177,18 @@ func (s *Store) PlanCollaboratorGetCountByUserID(userID uuid.UUID) (int, error) 
 
 	return count, nil
 }
+
+// PlanCollaboratorGetByModelPlanID returns a slice of plan collaborators corresponding with a model plan id
+func (s *Store) PlanCollaboratorGetByModelPlanID(
+	_ *zap.Logger,
+	modelPlanID uuid.UUID,
+) ([]*models.PlanCollaborator, error) {
+	arg := utilitySQL.CreateModelPlanIDQueryMap(modelPlanID)
+
+	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](s, sqlqueries.PlanCollaborator.CollectionGetByModelPlanID, arg)
+	if err != nil {
+		return nil, fmt.Errorf("issue selecting plan collaborators by ids with the data loader, %w", err)
+	}
+
+	return retCollaborators, nil
+}

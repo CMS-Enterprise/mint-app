@@ -4,11 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
-
-	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
-	"github.com/cmsgov/mint-app/pkg/models"
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
@@ -36,99 +32,13 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 
 	sugaredLogger.Info("checking if model status should be updated, and creating notification")
 
-	modelPlan, err := w.Store.ModelPlanGetByID(w.Store, w.Logger, modelPlanID)
-	if err != nil {
-		err = fmt.Errorf("unable to get model plan for model plan id %s. Err %w", modelPlanID, err)
-		sugaredLogger.Error(err.Error(), zap.Error(err))
-		return err
-	}
-
-	// Check if the model status should be updated
-	phaseSuggestion, err := resolvers.ModelPlanAnticipatedPhase(w.Store, modelPlan.Status, modelPlanID)
-	if err != nil {
-		err = fmt.Errorf("unable to get anticipated phase for model plan id %s. Err %w", modelPlanID, err)
-		sugaredLogger.Error(err.Error(), zap.Error(err))
-		return err
-	}
-
-	if nil == phaseSuggestion {
-		return nil
-	}
-
-	if nil != modelPlan.PreviousSuggestedPhase &&
-		phaseSuggestion.Phase == *modelPlan.PreviousSuggestedPhase {
-		return nil
-	}
-
-	emailTemplate, err := w.EmailTemplateService.GetEmailTemplate(email.ModelPlanSuggestedPhaseTemplateName)
-	if err != nil {
-		err = fmt.Errorf("unable to get email template for model plan id %s. Err %w", modelPlanID, err)
-		sugaredLogger.Error(err.Error(), zap.Error(err))
-		return err
-	}
-
-	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanSuggestedPhaseSubjectContent{
-		ModelName: modelPlan.ModelName,
-	})
-	if err != nil {
-		err = fmt.Errorf("unable to get email subject for model plan id %s. Err %w", modelPlanID, err)
-		sugaredLogger.Error(err.Error(), zap.Error(err))
-		return err
-	}
-
-	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanSuggestedPhaseBodyContent{
-		ClientAddress: w.EmailService.GetConfig().GetClientAddress(),
-		Phase:         string(models.ModelPhaseIcipComplete),
-		SuggestedStatusesRaw: []string{
-			string(models.ModelStatusIcipComplete),
-		},
-		SuggestedStatusesHumanized: []string{
-			models.ModelStatusIcipComplete.Humanize(),
-		},
-		CurrentStatusHumanized: modelPlan.Status.Humanize(),
-		ModelPlanID:            modelPlan.GetModelPlanID().String(),
-		ModelPlanName:          modelPlan.ModelName,
-	})
-	if err != nil {
-		err = fmt.Errorf("unable to get email body for model plan id %s. Err %w", modelPlanID, err)
-		sugaredLogger.Error(err.Error(), zap.Error(err))
-		return err
-	}
-
-	/*planCollaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, modelPlanID)
-	if err != nil {
-		return false, fmt.Errorf("failed to get plan collaborators: %w", err)
-	}
-
-	var emailRecipients []string
-	for _, collaborator := range planCollaborators {
-		for _, role := range collaborator.TeamRoles {
-			if role == string(models.TeamRoleModelLead) {
-				collabAccount, accountErr := collaborator.UserAccount(ctx)
-				if accountErr != nil {
-					return false, fmt.Errorf("failed to get model lead collaborator user account for model_plan_share")
-				}
-				modelLeads = append(modelLeads, collabAccount.CommonName)
-				break
-			}
-		}
-	}*/
-
-	err = w.EmailService.Send(
-		w.AddressBook.DefaultSender,
-		nil,
-		nil,
-		emailSubject,
-		"text/html",
-		emailBody,
-		oddmail.WithBCC([]string{w.AddressBook.MINTTeamEmail}),
+	return resolvers.SendEmailForPhaseSuggestionByModelPlanID(
+		ctx,
+		w.Store,
+		sugaredLogger,
+		w.EmailService,
+		&w.EmailTemplateService,
+		w.AddressBook,
+		modelPlanID,
 	)
-
-	if err != nil {
-		err = fmt.Errorf("unable to send email for model plan id %s. Err %w", modelPlanID, err)
-		sugaredLogger.Error(err.Error(), zap.Error(err))
-		return err
-	}
-
-	return returnedError
 }
