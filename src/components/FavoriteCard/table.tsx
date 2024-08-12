@@ -20,7 +20,7 @@ type ModelPlansTableProps = {
  * Possbility for sort functionality in future
  * */
 
-const FavoritesTable = ({
+const FavoritesCards = ({
   favorites,
   removeFavorite,
   toTaskList = false
@@ -48,4 +48,4 @@ const FavoritesTable = ({
   );
 };
 
-export default FavoritesTable;
+export default FavoritesCards;
