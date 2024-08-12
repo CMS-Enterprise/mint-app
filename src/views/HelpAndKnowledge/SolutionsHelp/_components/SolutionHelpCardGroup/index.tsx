@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import ReactPaginate from 'react-paginate';
-import { useHistory, useLocation } from 'react-router-dom';
 import { Grid, GridContainer, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -10,6 +8,7 @@ import {
   OperationalSolutionCategoryRoute,
   OperationalSolutionSubCategories
 } from 'data/operationalSolutionCategories';
+import usePagination from 'hooks/usePagination';
 
 import {
   HelpSolutionType,
@@ -106,36 +105,11 @@ const SolutionHelpCardGroup = ({
   const { t } = useTranslation('helpAndKnowledge');
   const { t: h } = useTranslation('generalReadOnly');
 
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const page = params.get('page');
-
-  const history = useHistory();
-
-  let pageNumber = Number(page);
-  pageNumber =
-    pageNumber === 0 || Number.isNaN(pageNumber) ? 0 : pageNumber - 1;
-
-  const itemsPerPage = 9;
-  const [itemOffset, setItemOffset] = useState(
-    (pageNumber * itemsPerPage) % solutions.length
-  );
-  const endOffset = itemOffset + itemsPerPage;
-
-  const currentItems = solutions.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(solutions.length / itemsPerPage);
-
-  // Invoke when user click to request another page.
-  const handlePageClick = (event: { selected: number }) => {
-    history.push(
-      `/help-and-knowledge/operational-solutions?page=${event.selected + 1}`
-    );
-  };
-
-  // Resets page offset when route or query changes
-  useEffect(() => {
-    setItemOffset((pageNumber * itemsPerPage) % solutions.length);
-  }, [pageNumber, setItemOffset, solutions]);
+  const { currentItems, Pagination } = usePagination<HelpSolutionType[]>({
+    items: solutions,
+    itemsPerPage: 9,
+    withQueryParams: 'page'
+  });
 
   // Updates the result nums
   useEffect(() => {
@@ -166,34 +140,7 @@ const SolutionHelpCardGroup = ({
       ) : (
         <>
           <Solutions currentSolutions={currentItems} category={category} />
-          {pageCount > 1 && (
-            <ReactPaginate
-              breakLabel="..."
-              breakClassName="usa-pagination__item usa-pagination__overflow"
-              nextLabel="Next >"
-              containerClassName="mint-pagination usa-pagination usa-pagination__list"
-              previousLinkClassName={
-                itemOffset === 0
-                  ? 'display-none'
-                  : 'usa-pagination__link usa-pagination__previous-page prev-page'
-              }
-              nextLinkClassName={
-                itemOffset / itemsPerPage === pageCount - 1
-                  ? 'display-none'
-                  : 'usa-pagination__link usa-pagination__previous-page next-page'
-              }
-              disabledClassName="pagination__link--disabled"
-              activeClassName="usa-current"
-              activeLinkClassName="usa-current"
-              pageClassName="usa-pagination__item"
-              pageLinkClassName="usa-pagination__button"
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={5}
-              pageCount={pageCount}
-              forcePage={pageNumber}
-              previousLabel="< Previous"
-            />
-          )}
+          {Pagination}
         </>
       )}
     </GridContainer>

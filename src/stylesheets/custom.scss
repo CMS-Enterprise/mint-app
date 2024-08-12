@@ -188,3 +188,9 @@
 .top-3px {
   top: 3px !important;
 }
+
+.mint-pagination {
+  .usa-pagination__page-no {
+    margin-left: 0 !important;
+  }
+}
