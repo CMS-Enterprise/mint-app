@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import {
@@ -33,7 +33,10 @@ const NotificationsHome = () => {
   const numUnreadNotifications =
     data?.currentUser.notifications.numUnreadNotifications;
 
-  const allNotifications = data?.currentUser.notifications.notifications || [];
+  const allNotifications = useMemo(
+    () => data?.currentUser.notifications.notifications || [],
+    [data?.currentUser.notifications.notifications]
+  );
 
   const { currentItems, Pagination } = usePagination<
     GetNotificationsQuery['currentUser']['notifications']['notifications']
