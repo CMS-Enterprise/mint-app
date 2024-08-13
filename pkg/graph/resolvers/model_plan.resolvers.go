@@ -69,7 +69,7 @@ func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan)
 
 // SuggestedPhase is the resolver for the suggestedPhase field.
 func (r *modelPlanResolver) SuggestedPhase(ctx context.Context, obj *models.ModelPlan) (*model.PhaseSuggestion, error) {
-	return ModelPlanAnticipatedPhase(r.store, obj.Status, obj.ID)
+	return ModelPlanAnticipatedPhase(ctx, obj.Status, obj.ID)
 }
 
 // IsFavorite is the resolver for the isFavorite field.
