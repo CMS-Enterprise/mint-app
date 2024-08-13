@@ -8,6 +8,7 @@ import (
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/logfields"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -17,34 +18,35 @@ var modelStatusUpdateJobMaxRetry = 2
 // It will batch all child jobs, and when complete it will fire a callback
 func (w *Worker) ModelStatusUpdateBatchJob(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := w.Logger.With(zap.Any("JID", helper.Jid()), zap.Any(appSectionKey, faktoryLoggingSection))
-	sugaredLogger.Info("Getting collection of model plans that require status checking")
+	// decorate the logger, but exclude the bid, the bid will be decorated when we create the batch
+	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
+	logger.Info("Getting collection of model plans that require status checking")
 
 	// TODO: Implement the logic to return the models to check? Or do we check every model plan?
-	modelsToUpdate, err := w.Store.ModelPlanCollection(sugaredLogger, false)
+	modelsToUpdate, err := w.Store.ModelPlanCollection(logger, false)
 	if err != nil {
-		sugaredLogger.Error("unable to get model plan collection for the model status update batch job", zap.Error(err))
+		logger.Error("unable to get model plan collection for the model status update batch job", zap.Error(err))
 		return err
 	}
 	return helper.With(func(cl *faktory.Client) error {
-		return CreateModelStatusUpdateBatch(sugaredLogger, w, cl, modelsToUpdate)
+		return CreateModelStatusUpdateBatch(logger, w, cl, modelsToUpdate)
 	})
 }
 
 func CreateModelStatusUpdateBatch(logger *zap.Logger, w *Worker, cl *faktory.Client, modelPlans []*models.ModelPlan) error {
 	batch := faktory.NewBatch(cl)
+	// decorate the logger with the BID
+	logger = logger.With(logfields.BID(batch.Bid))
 	batch.Description = "Check if model status should be updated"
 	batch.Success = faktory.NewJob(modelStatusUpdateBatchJobSuccessName)
 	batch.Success.Queue = criticalQueue
 
-	sugaredLogger := logger.With(zap.Any("BID", batch.Bid))
-
 	err := batch.Jobs(func() error {
 		for _, plan := range modelPlans {
-			err := CreateModelStatusJobInBatch(sugaredLogger, w, batch, plan)
+			err := CreateModelStatusJobInBatch(logger, w, batch, plan)
 			if err != nil {
 				err = fmt.Errorf(" error creating job for ModelStatus Update. modelPlanID %v. Err %w", plan.ID, err)
-				sugaredLogger.Error("issue creating ModelStatusUpdateJob", zap.Error(err))
+				logger.Error("issue creating ModelStatusUpdateJob", zap.Error(err))
 				return err
 			}
 		}
@@ -59,25 +61,26 @@ func CreateModelStatusUpdateBatch(logger *zap.Logger, w *Worker, cl *faktory.Cli
 }
 
 func CreateModelStatusJobInBatch(logger *zap.Logger, w *Worker, batch *faktory.Batch, plan *models.ModelPlan) error {
-	sugaredLogger := logger.With(zap.Any("modelPlanID", plan.ID))
-	sugaredLogger.Info("creating job for model status update.")
+	// decorate the logger with the model plan id
+	logger = logger.With(logfields.ModelPlanID(plan.ID))
+	logger.Info("creating job for model status update.")
 	job := faktory.NewJob(modelStatusUpdateJobName, plan.ID)
 	//TODO: (MINT-3036) verify, if this should use the critical queue? Or should we generate another queue for this?
 	job.Queue = criticalQueue
 	job.Retry = &modelStatusUpdateJobMaxRetry
 	err := batch.Push(job)
 	if err != nil {
-		sugaredLogger.Error("issue pushing job to batch", zap.Error(err))
+		logger.Error("issue pushing job to batch", zap.Error(err))
 		return err
 	}
-	sugaredLogger.Info("finished queueing model status update.")
+	logger.Info("finished queueing model status update.")
 	return nil
 }
 
 // ModelStatusUpdateBatchJobSuccess is called when the model status update job has completed.
 func (w *Worker) ModelStatusUpdateBatchJobSuccess(ctx context.Context, args ...interface{}) error {
-	help := faktory_worker.HelperFor(ctx)
-	sugaredLogger := w.Logger.With(zap.Any("JID", help.Jid()), zap.Any("BID", help.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
-	sugaredLogger.Info("Model Status update job completed successfully")
+	helper := faktory_worker.HelperFor(ctx)
+	logger := loggerWithFaktoryFields(w.Logger, helper)
+	logger.Info("Model Status update job completed successfully")
 	return nil
 }
