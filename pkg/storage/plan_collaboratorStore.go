@@ -187,7 +187,7 @@ func (s *Store) PlanCollaboratorGetByModelPlanID(
 
 	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](s, sqlqueries.PlanCollaborator.CollectionGetByModelPlanID, arg)
 	if err != nil {
-		return nil, fmt.Errorf("issue selecting plan collaborators by ids with the data loader, %w", err)
+		return nil, fmt.Errorf("issue selecting plan collaborators by model plan id, %w", err)
 	}
 
 	return retCollaborators, nil
