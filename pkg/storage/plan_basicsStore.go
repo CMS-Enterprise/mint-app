@@ -107,7 +107,7 @@ func (s *Store) PlanBasicsGetByModelPlanID(modelPlanID uuid.UUID) (*models.PlanB
 
 	planBasics, err := sqlutils.GetProcedure[models.PlanBasics](s, sqlqueries.PlanBasics.GetByModelPlanID, arg)
 	if err != nil {
-		return nil, fmt.Errorf("issue selecting activities by ID with the data loader, %w", err)
+		return nil, fmt.Errorf("error getting plan basics by model plan id: %w", err)
 	}
 	return planBasics, nil
 }
