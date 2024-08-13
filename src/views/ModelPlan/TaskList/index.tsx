@@ -33,6 +33,7 @@ import {
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -255,14 +256,7 @@ const TaskList = () => {
     >
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{t('navigation.home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs items={['home', 'taskList']} />
         </Grid>
 
         {!!modelPlan.suggestedPhase && !statusChecked && (

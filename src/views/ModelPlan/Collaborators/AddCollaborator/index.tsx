@@ -12,6 +12,7 @@ import {
   useUpdateModelPlanCollaboratorMutation
 } from 'gql/gen/graphql';
 
+import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import OktaUserSelect from 'components/OktaUserSelect';
@@ -187,6 +188,16 @@ const Collaborators = () => {
     <MainContent>
       <div className="grid-container">
         <div className="desktop:grid-col-6">
+          <Breadcrumbs
+            items={[
+              'home',
+              'collaborators',
+              collaboratorId
+                ? collaboratorsMiscT('collaboratorsMisc:updateATeamMember')
+                : collaboratorsMiscT('collaboratorsMisc:addATeamMember')
+            ]}
+          />
+
           <PageHeading className="margin-top-6 margin-bottom-2">
             {collaboratorId
               ? collaboratorsMiscT('updateATeamMember')

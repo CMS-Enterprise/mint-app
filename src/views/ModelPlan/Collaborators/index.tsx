@@ -187,20 +187,6 @@ export const CollaboratorsContent = () => {
     return <div>{JSON.stringify(error)}</div>;
   }
 
-  const breadcrumbs = [
-    { text: miscellaneousT('home'), url: '/' },
-    { text: collaboratorsMiscT('teamBreadcrumb') }
-  ];
-
-  const breadcrumbsFromTaskList = [
-    { text: miscellaneousT('home'), url: '/' },
-    {
-      text: miscellaneousT('tasklistBreadcrumb'),
-      url: `/models/${modelID}/task-list/`
-    },
-    { text: collaboratorsMiscT('manageModelTeam') }
-  ];
-
   return (
     <MainContent>
       {RemoveCollaborator()}
@@ -212,7 +198,12 @@ export const CollaboratorsContent = () => {
 
             <Breadcrumbs
               items={
-                manageOrAdd === 'manage' ? breadcrumbsFromTaskList : breadcrumbs
+                manageOrAdd === 'manage'
+                  ? ['home', 'collaborators']
+                  : [
+                      'home',
+                      collaboratorsMiscT('collaboratorsMisc:addATeamMember')
+                    ]
               }
             />
 

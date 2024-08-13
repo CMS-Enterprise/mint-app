@@ -32,6 +32,7 @@ import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import ModelInfoWrapper from 'views/ModelInfoWrapper';
 import ChangeHistory from 'views/ModelPlan/ChangeHistory';
+import CollaborationArea from 'views/ModelPlan/CollaborationArea';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import CRTDL from 'views/ModelPlan/CRTDL';
 import Documents from 'views/ModelPlan/Documents';
@@ -140,6 +141,13 @@ const AppRoutes = () => {
           <ProtectedRoute
             path="/models/:modelID/collaborators"
             component={Collaborators}
+          />
+
+          {/* Collaboration Area Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area"
+            exact
+            component={CollaborationArea}
           />
 
           {/* Task List Routes */}

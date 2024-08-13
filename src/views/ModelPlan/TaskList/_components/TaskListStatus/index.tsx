@@ -105,7 +105,7 @@ const TaskListStatus = ({
 
               {hasEditAccess && (
                 <UswdsReactLink
-                  to={`/models/${modelID}/task-list`}
+                  to={`/models/${modelID}/collaboration-area`}
                   className="display-flex flex-align-center"
                 >
                   <Icon.Edit className="margin-right-1" />

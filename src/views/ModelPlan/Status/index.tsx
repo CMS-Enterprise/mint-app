@@ -1,10 +1,7 @@
 import React, { useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Grid,
   GridContainer,
@@ -15,6 +12,7 @@ import {
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
 import { ModelStatus, useUpdateModelPlanMutation } from 'gql/gen/graphql';
 
+import Breadcrumbs from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -31,7 +29,6 @@ const Status = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
   const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
   const { t: modelPlanMiscT } = useTranslation('modelPlanMisc');
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const { status: statusConfig } = usePlanTranslation('modelPlan');
 
@@ -71,7 +68,7 @@ const Status = () => {
                 status: statusConfig.options[formikValues.status as ModelStatus]
               })
             );
-            history.push(`/models/${modelID}/task-list/`);
+            history.push(`/models/${modelID}/collaboration-area/`);
           }
         })
         .catch(errors => {
@@ -88,22 +85,7 @@ const Status = () => {
     <MainContent>
       <GridContainer>
         <Grid desktop={{ col: 6 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{miscellaneousT('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink
-                asCustom={Link}
-                to={`/models/${modelID}/task-list/`}
-              >
-                <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{modelPlanMiscT('headingStatus')}</Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs items={['home', 'collaborationArea', 'status']} />
 
           <PageHeading className="margin-bottom-1">
             {modelPlanMiscT('headingStatus')}
