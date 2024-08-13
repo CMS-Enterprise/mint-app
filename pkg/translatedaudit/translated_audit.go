@@ -50,14 +50,17 @@ func TranslateAudit(
 		return nil, nil
 	}
 
+	logger.Info("translating audit")
 	translatedAuditWithFields, err := genericAuditTranslation(ctx, store, auditWithModelPlan)
 	if err != nil {
-		return nil, fmt.Errorf("issue translating audit. %w", err)
+		logger.Error("issue translating audit.", zap.Error(err))
+		return nil, err
 	}
 
 	retTranslatedChanges, err := saveTranslatedAuditAndFields(store, translatedAuditWithFields)
 	if err != nil {
-		return nil, fmt.Errorf("issue saving translated audit. %w", err)
+		logger.Error("issue saving translated audit.", zap.Error(err))
+		return nil, err
 	}
 
 	return retTranslatedChanges, err
@@ -138,8 +141,6 @@ func translateField(
 	//Check if any value is "", if so, update to nil instead.
 	old := setEmptyStringsToNil(field.Old)
 	new := setEmptyStringsToNil(field.New)
-	translatedOld := old
-	translatedNew := new
 	changeType := getChangeType(old, new)
 	if changeType == models.AFCUnchanged {
 		// If a field is actually unchanged (null to empty array or v versa), don't write an entry.
@@ -190,6 +191,7 @@ func translateField(
 
 	options, hasOptions := translationInterface.GetOptions()
 	tableReference, hasTableReference := translationInterface.GetTableReference()
+	var translatedOld, translatedNew interface{}
 	if hasOptions {
 		translatedOld = translateValue(old, options)
 		translatedNew = translateValue(new, options)

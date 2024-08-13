@@ -1,6 +1,6 @@
 package models
 
-// Represents the data type of the translation field
+// TranslationDataType represents the data type of the translation field
 type TranslationDataType string
 
 // These constants represent the different values of TranslationDataType
@@ -14,7 +14,7 @@ const (
 	TDTUuid    TranslationDataType = "UUID"
 )
 
-// Represents the FORM type of the translation field
+// TranslationFormType represents the FORM type of the translation field
 type TranslationFormType string
 
 // These constants represent the different values of TranslationFormType
@@ -45,7 +45,7 @@ func (tf TranslationField) isTranslationParent() {}
 type TranslationFieldBase struct {
 	GqlField         string              `json:"gqlField"`
 	GoField          string              `json:"goField"`
-	DbField          string              `json:"dbField"`
+	DBField          string              `json:"dbField"`
 	Label            string              `json:"label"`
 	ReadOnlyLabel    *string             `json:"readonlyLabel"`
 	SubLabel         *string             `json:"sublabel"`

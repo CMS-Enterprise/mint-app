@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
+	"github.com/cmsgov/mint-app/pkg/logfields"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 
@@ -27,8 +28,10 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 	dateAnalyzed := args[0].(string)
 
 	helper := faktory_worker.HelperFor(ctx)
+	logger := loggerWithFaktoryFieldsWithoutBatchID(w.Logger, helper)
 
-	w.Logger.Info("getting collection of unique userIds that have favorited a model", zap.Any("JID", helper.Jid()))
+	logger.Info("getting collection of unique userIds that have favorited a model")
+
 	userIDs, err := w.Store.PlanFavoriteCollectionGetUniqueUserIDs()
 	if err != nil {
 		return err
@@ -39,18 +42,18 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 		batch.Description = "Send Daily Digest Emails"
 		batch.Success = faktory.NewJob(digestEmailBatchJobSuccessName, dateAnalyzed)
 		batch.Success.Queue = defaultQueue
-		sugaredLogger := w.Logger.With(zap.Any("JID", helper.Jid()), zap.Any("BID", batch.Bid), zap.Any(appSectionKey, faktoryLoggingSection))
-		sugaredLogger.Info("Creating a new batch for the daily digest email batch job")
+		logger = logger.With(logfields.BID(batch.Bid))
+		logger.Info("Creating a new batch for the daily digest email batch job")
 		return batch.Jobs(func() error {
 			for _, id := range userIDs {
-				moreSugaredLogger := sugaredLogger.With(zap.Any("date", dateAnalyzed), zap.Any("userID", id))
-				moreSugaredLogger.Info("creating digest email job")
+				innerLogger := logger.With(logfields.Date(dateAnalyzed), logfields.UserID(id))
+				innerLogger.Info("creating digest email job")
 				job := faktory.NewJob(digestEmailJobName, dateAnalyzed, id)
 				job.Queue = emailQueue
-				moreSugaredLogger.Info("pushing digest email job")
+				innerLogger.Info("pushing digest email job")
 				err = batch.Push(job)
 				if err != nil {
-					moreSugaredLogger.Error(" issue pushing digest email job", zap.Error(err))
+					innerLogger.Error(" issue pushing digest email job", zap.Error(err))
 					return err
 				}
 			}
@@ -65,8 +68,9 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 // DigestEmailBatchJobSuccess is the callback function forDigestEmailBatchJob
 // args[0] date
 func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interface{}) error {
-	help := faktory_worker.HelperFor(ctx)
-	w.Logger.Info("Digest Email Batch Job Succeeded", zap.Any("JID", help.Jid()), zap.Any("BID", help.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
+	helper := faktory_worker.HelperFor(ctx)
+	logger := loggerWithFaktoryFields(w.Logger, helper)
+	logger.Info("Digest Email Batch Job Succeeded")
 	// TODO: Add notification here if wanted in the future
 	return nil
 }
@@ -86,16 +90,16 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := w.Logger.With(zap.Any("date", dateAnalyzed), zap.Any("userID", userID), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
-	sugaredLogger.Info("preparing to send daily digest email")
+	logger := loggerWithFaktoryFields(w.Logger, helper, logfields.Date(dateAnalyzed), logfields.UserID(userID))
+	logger.Info("preparing to send daily digest email")
 	preferenceFunctions := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
 		return storage.UserNotificationPreferencesGetByUserID(w.Store, user_id)
 	}
 	// Note, if desired we can wrap this in a transaction so if there is a failure sending an email, the notification in the database also gets rolled back.
 	// This is not needed currently.
-	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, sugaredLogger, dateAnalyzed, userID, preferenceFunctions, w.EmailService, &w.EmailTemplateService, w.AddressBook)
+	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, logger, dateAnalyzed, userID, preferenceFunctions, w.EmailService, &w.EmailTemplateService, w.AddressBook)
 	if sendErr != nil {
-		sugaredLogger.Error("error sending daily digest notification", zap.Error(sendErr))
+		logger.Error("error sending daily digest notification", zap.Error(sendErr))
 	}
 	return sendErr
 
@@ -108,21 +112,21 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 		return err
 	}
 	helper := faktory_worker.HelperFor(ctx)
-	sugaredLogger := w.Logger.With(zap.Any("date", dateAnalyzed), zap.Any("JID", helper.Jid()), zap.Any("BID", helper.Bid()), zap.Any(appSectionKey, faktoryLoggingSection))
-	sugaredLogger.Info("preparing to send aggregated digest email")
+	logger := loggerWithFaktoryFields(w.Logger, helper, logfields.Date(dateAnalyzed))
+	logger.Info("preparing to send aggregated digest email")
 	err = AggregatedDigestEmailJob(
 		dateAnalyzed,
 		w.Store,
-		sugaredLogger,
+		logger,
 		w.EmailTemplateService,
 		w.EmailService,
 		w.AddressBook,
 	)
 	if err != nil {
-		sugaredLogger.Error("error sending the aggregated digest email", zap.Error(err))
+		logger.Error("error sending the aggregated digest email", zap.Error(err))
 		return err
 	}
 
-	sugaredLogger.Info("aggregated digest email sent successfully")
+	logger.Info("aggregated digest email sent successfully")
 	return nil
 }

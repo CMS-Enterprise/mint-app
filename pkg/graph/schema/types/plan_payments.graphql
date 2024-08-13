@@ -58,11 +58,13 @@ type PlanPayments {
 
   # Page 1
   fundingSource:                      [FundingSource!]!
+  fundingSourcePatientProtectionInfo: String
   fundingSourceMedicareAInfo:         String
   fundingSourceMedicareBInfo:         String
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]!
+  fundingSourceRPatientProtectionInfo: String
   fundingSourceRMedicareAInfo:        String
   fundingSourceRMedicareBInfo:        String
   fundingSourceROther:                String
@@ -166,16 +168,16 @@ type PlanPayments {
 
 input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
-  fundingSource:                      [FundingSource!] #Combine these
+  fundingSource:                      [FundingSource!]
+  fundingSourcePatientProtectionInfo: String
   fundingSourceMedicareAInfo:         String
   fundingSourceMedicareBInfo:         String
-  # fundingSourceTrustFundType:         [TrustFundType!]
   fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
+  fundingSourceRPatientProtectionInfo: String  
   fundingSourceRMedicareAInfo:        String
   fundingSourceRMedicareBInfo:        String
-  # fundingSourceRTrustFundType:        [TrustFundType!]
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]

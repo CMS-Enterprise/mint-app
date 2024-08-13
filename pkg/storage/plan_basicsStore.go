@@ -10,8 +10,8 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
@@ -19,7 +19,7 @@ import (
 // PlanBasicsCreate creates a new plan basics
 func (s *Store) PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
 
-	basics.ID = utilityUUID.ValueOrNewUUID(basics.ID)
+	basics.ID = utilityuuid.ValueOrNewUUID(basics.ID)
 
 	stmt, err := np.PrepareNamed(sqlqueries.PlanBasics.Create)
 	if err != nil {
@@ -66,7 +66,7 @@ func (s *Store) PlanBasicsGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanBasi
 	}
 	defer stmt.Close()
 
-	err = stmt.Get(&plan, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&plan, utilitysql.CreateIDQueryMap(id))
 
 	if err != nil {
 		return nil, err
@@ -103,7 +103,7 @@ func (s *Store) PlanBasicsGetByModelPlanIDLOADER(
 
 // PlanBasicsGetByModelPlanID returns the plan basics for a given model plan id
 func (s *Store) PlanBasicsGetByModelPlanID(modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	arg := utilitySQL.CreateModelPlanIDQueryMap(modelPlanID)
+	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
 
 	planBasics, err := sqlutils.GetProcedure[models.PlanBasics](s, sqlqueries.PlanBasics.GetByModelPlanID, arg)
 	if err != nil {

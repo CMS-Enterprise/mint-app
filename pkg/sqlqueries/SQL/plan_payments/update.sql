@@ -83,7 +83,9 @@ SET
     funding_source_medicare_a_info = :funding_source_medicare_a_info,
     funding_source_medicare_b_info = :funding_source_medicare_b_info,
     funding_source_r_medicare_a_info = :funding_source_r_medicare_a_info,
-    funding_source_r_medicare_b_info = :funding_source_r_medicare_b_info
+    funding_source_r_medicare_b_info = :funding_source_r_medicare_b_info,
+    funding_source_patient_protection_info = :funding_source_patient_protection_info,
+    funding_source_r_patient_protection_info = :funding_source_r_patient_protection_info
 WHERE plan_payments.id = :id
 RETURNING id,
 model_plan_id,
@@ -170,4 +172,6 @@ status,
 funding_source_medicare_a_info,
 funding_source_medicare_b_info,
 funding_source_r_medicare_a_info,
-funding_source_r_medicare_b_info;
+funding_source_r_medicare_b_info,
+funding_source_patient_protection_info,
+funding_source_r_patient_protection_info;

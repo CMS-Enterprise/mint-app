@@ -33,7 +33,7 @@ const (
 	// ClaimsBasedPayTypeTeleHealthServicesNotTraditionalMedicare indicates TeleHealth services not traditional medicare
 	ClaimsBasedPayTypeTeleHealthServicesNotTraditionalMedicare ClaimsBasedPayType = "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE"
 	// ClaimsBasedPayTypePaymentsForPostDischargeHomeVisits indicates payments for post discharge home visits
-	PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS ClaimsBasedPayType = "PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS"
+	ClaimsBasedPayTypePaymentsForPostDischargeHomeVisits ClaimsBasedPayType = "PAYMENTS_FOR_POST_DISCHARGE_HOME_VISITS"
 )
 
 // FundingSource is an enumeration of options for this category
@@ -115,21 +115,23 @@ type PlanPayments struct {
 	baseTaskListSection
 
 	// Page 1
-	FundingSource                   pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
-	FundingSourceMedicareAInfo      *string        `json:"fundingSourceMedicareAInfo" db:"funding_source_medicare_a_info"`
-	FundingSourceMedicareBInfo      *string        `json:"fundingSourceMedicareBInfo" db:"funding_source_medicare_b_info"`
-	FundingSourceOther              *string        `json:"fundingSourceOther" db:"funding_source_other"`
-	FundingSourceNote               *string        `json:"fundingSourceNote" db:"funding_source_note"`
-	FundingSourceR                  pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
-	FundingSourceRMedicareAInfo     *string        `json:"fundingSourceRMedicareAInfo" db:"funding_source_r_medicare_a_info"`
-	FundingSourceRMedicareBInfo     *string        `json:"fundingSourceRMedicareBInfo" db:"funding_source_r_medicare_b_info"`
-	FundingSourceROther             *string        `json:"fundingSourceROther" db:"funding_source_r_other"`
-	FundingSourceRNote              *string        `json:"fundingSourceRNote" db:"funding_source_r_note"`
-	PayRecipients                   pq.StringArray `json:"payRecipients" db:"pay_recipients" statusWeight:"1"`
-	PayRecipientsOtherSpecification *string        `json:"payRecipientsOtherSpecification" db:"pay_recipients_other_specification"`
-	PayRecipientsNote               *string        `json:"payRecipientsNote" db:"pay_recipients_note"`
-	PayType                         pq.StringArray `json:"payType" db:"pay_type" statusWeight:"1"`
-	PayTypeNote                     *string        `json:"payTypeNote" db:"pay_type_note"`
+	FundingSource                       pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
+	FundingSourcePatientProtectionInfo  *string        `json:"fundingSourcePatientProtectionInfo" db:"funding_source_patient_protection_info"`
+	FundingSourceMedicareAInfo          *string        `json:"fundingSourceMedicareAInfo" db:"funding_source_medicare_a_info"`
+	FundingSourceMedicareBInfo          *string        `json:"fundingSourceMedicareBInfo" db:"funding_source_medicare_b_info"`
+	FundingSourceOther                  *string        `json:"fundingSourceOther" db:"funding_source_other"`
+	FundingSourceNote                   *string        `json:"fundingSourceNote" db:"funding_source_note"`
+	FundingSourceR                      pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
+	FundingSourceRPatientProtectionInfo *string        `json:"fundingSourceRPatientProtectionInfo" db:"funding_source_r_patient_protection_info"`
+	FundingSourceRMedicareAInfo         *string        `json:"fundingSourceRMedicareAInfo" db:"funding_source_r_medicare_a_info"`
+	FundingSourceRMedicareBInfo         *string        `json:"fundingSourceRMedicareBInfo" db:"funding_source_r_medicare_b_info"`
+	FundingSourceROther                 *string        `json:"fundingSourceROther" db:"funding_source_r_other"`
+	FundingSourceRNote                  *string        `json:"fundingSourceRNote" db:"funding_source_r_note"`
+	PayRecipients                       pq.StringArray `json:"payRecipients" db:"pay_recipients" statusWeight:"1"`
+	PayRecipientsOtherSpecification     *string        `json:"payRecipientsOtherSpecification" db:"pay_recipients_other_specification"`
+	PayRecipientsNote                   *string        `json:"payRecipientsNote" db:"pay_recipients_note"`
+	PayType                             pq.StringArray `json:"payType" db:"pay_type" statusWeight:"1"`
+	PayTypeNote                         *string        `json:"payTypeNote" db:"pay_type_note"`
 
 	// Page 2
 	PayClaims                               pq.StringArray `json:"payClaims" db:"pay_claims" statusWeight:"1"`

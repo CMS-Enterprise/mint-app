@@ -1,4 +1,4 @@
-package utilitySQL
+package utilitysql
 
 import (
 	"github.com/google/uuid"

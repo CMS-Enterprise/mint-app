@@ -274,7 +274,7 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 	return nil
 }
 
-// GetEmailTemplate fetches an emailTemplates.EmailTemplate by name from the emailTemplates.TemplateCache
+// GetEmailTemplate fetches an emailtemplates.EmailTemplate by name from the emailtemplates.TemplateCache
 func (t *TemplateServiceImpl) GetEmailTemplate(emailTemplateName string) (*emailtemplates.EmailTemplate, error) {
 	emailTemplate, emailTemplateExists := t.emailTemplates[emailTemplateName]
 

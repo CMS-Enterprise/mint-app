@@ -33,7 +33,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 		Return(&emailtestconfigs.TestEmailServiceConfig).
 		AnyTimes()
 
-	// 	testTemplate  := *emailTemplates.EmailTemplate{}
+	// 	testTemplate  := *emailtemplates.EmailTemplate{}
 	// mockTemplateService.EXPECT().GetEmailTemplate(gomock.Eq(email.DailyDigestTemplateName)).Return(testTemplate,nil).MinTimes(1).MaxTimes(1)
 
 	mp := suite.createModelPlan("Test Plan")

@@ -114,6 +114,7 @@ export type TranslationFieldProperties = Omit<
   hideFromReadonly?: boolean; // Hide question from readonly view
   groupLabel?: string;
   groupLabelTooltip?: string;
+  modalLink?: string; // Adds a modal link
 };
 
 /*
@@ -334,7 +335,7 @@ type TranslationBasicsGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -446,7 +447,7 @@ type TranslationGeneralCharacteristicsGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -552,7 +553,7 @@ type TranslationPlanParticipantsAndProvidersGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -606,7 +607,7 @@ type TranslationBeneficiariesGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -768,7 +769,7 @@ type TranslationOpsEvalAndLearningGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -779,11 +780,13 @@ export type TranslationOpsEvalAndLearning = {
 // Payments
 export type TranslationPaymentsForm = {
   fundingSource: TranslationFieldPropertiesWithOptions<FundingSource>;
+  fundingSourcePatientProtectionInfo: TranslationFieldProperties;
   fundingSourceMedicareAInfo: TranslationFieldProperties;
   fundingSourceMedicareBInfo: TranslationFieldProperties;
   fundingSourceOther: TranslationFieldProperties;
   fundingSourceNote: TranslationFieldProperties;
   fundingSourceR: TranslationFieldPropertiesWithOptions<FundingSource>;
+  fundingSourceRPatientProtectionInfo: TranslationFieldProperties;
   fundingSourceRMedicareAInfo: TranslationFieldProperties;
   fundingSourceRMedicareBInfo: TranslationFieldProperties;
   fundingSourceROther: TranslationFieldProperties;
@@ -913,7 +916,7 @@ type TranslationPaymentsGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -933,7 +936,7 @@ type TranslationCollaboratorGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -954,7 +957,7 @@ type TranslationDiscussionsGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -975,7 +978,7 @@ type TranslationRepliesGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -997,7 +1000,7 @@ type TranslationCRsGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -1018,7 +1021,7 @@ type TranslationTDLsGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -1043,7 +1046,7 @@ type TranslationDocumentsGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -1065,7 +1068,7 @@ type TranslationOperationalNeedsGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -1093,7 +1096,7 @@ type TranslationOperationalSolutionsGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -1112,7 +1115,7 @@ type TranslationOperationalSolutionSubtasksGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -1131,7 +1134,7 @@ type TranslationDocumentSolutionLinkGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
@@ -1151,7 +1154,7 @@ type TranslationExistingModelLinkGQL = Omit<
   '__typename'
 >;
 
-/* 
+/*
   Merged keys from graphql gen with FE form types
   Create a tighter connection between BE/FE translation types
 */
