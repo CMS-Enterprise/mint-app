@@ -1,11 +1,11 @@
 CREATE TYPE MODEL_PHASE AS ENUM (
-  'ICIP_COMPLETE',
-  'IN_CLEARANCE',
-  'CLEARED',
-  'ANNOUNCED',
-  'ACTIVE',
-  'ENDED'
-  );
+    'ICIP_COMPLETE',
+    'IN_CLEARANCE',
+    'CLEARED',
+    'ANNOUNCED',
+    'ACTIVE',
+    'ENDED'
+);
 
 ALTER TABLE model_plan
 ADD COLUMN previous_suggested_phase MODEL_PHASE DEFAULT NULL;
