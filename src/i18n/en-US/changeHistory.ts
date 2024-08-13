@@ -1,7 +1,7 @@
 const changeHistory = {
   heading: 'Change history',
   subheading: 'for {{modelName}}',
-  back: 'Back to the task list',
+  back: 'Back to the model collaboration area',
   backToReadView: 'Back to the Read view',
   thisModelPlan: 'this Model Plan',
   change:
