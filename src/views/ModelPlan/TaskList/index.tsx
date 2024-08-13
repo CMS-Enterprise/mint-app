@@ -9,11 +9,8 @@ import React, {
 } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Grid,
   GridContainer,
@@ -33,7 +30,7 @@ import {
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -256,7 +253,13 @@ const TaskList = () => {
     >
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <Breadcrumbs items={['home', 'taskList']} />
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.COLLABORATION_AREA,
+              BreadcrumbItemOptions.TASK_LIST
+            ]}
+          />
         </Grid>
 
         {!!modelPlan.suggestedPhase && !statusChecked && (
@@ -310,7 +313,7 @@ const TaskList = () => {
           <Grid row gap>
             <Grid desktop={{ col: 9 }}>
               <PageHeading className="margin-top-4 margin-bottom-0">
-                {t('navigation.modelPlanTaskList')}
+                {t('heading')}
               </PageHeading>
               <p
                 className="margin-top-0 margin-bottom-2 font-body-lg"
@@ -329,12 +332,14 @@ const TaskList = () => {
                 </DiscussionModalWrapper>
               )}
 
-              <TaskListStatus
-                modelID={modelID}
-                status={status}
-                updateLabel
-                statusLabel
-              />
+              <div className="padding-y-1">
+                <UswdsReactLink to={`/models/${modelID}/collaboration-area`}>
+                  <span>
+                    <Icon.ArrowBack className="top-3px margin-right-1" />
+                    {t('returnToCollaboration')}
+                  </span>
+                </UswdsReactLink>
+              </div>
 
               <DicussionBanner
                 discussions={discussions}

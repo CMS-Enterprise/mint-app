@@ -182,7 +182,8 @@ const modelPlanTaskList = {
     goToTimeline: 'No, go to timeline',
     hint: 'Select the specific clearance phase.',
     statusText
-  }
+  },
+  returnToCollaboration: 'Return to model collaboration area'
 };
 
 export default modelPlanTaskList;

@@ -12,7 +12,7 @@ import {
   useUpdateModelPlanCollaboratorMutation
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import OktaUserSelect from 'components/OktaUserSelect';
@@ -184,20 +184,30 @@ const Collaborators = () => {
     }
   };
 
+  const breadcrumbs = [BreadcrumbItemOptions.HOME];
+
+  if (manageOrAdd === 'manage') {
+    breadcrumbs.push(
+      BreadcrumbItemOptions.COLLABORATION_AREA,
+      BreadcrumbItemOptions.TASK_LIST,
+      BreadcrumbItemOptions.COLLABORATORS
+    );
+  } else {
+    breadcrumbs.push(BreadcrumbItemOptions.COLLABORATORS);
+  }
+
   return (
     <MainContent>
       <div className="grid-container">
+        <Breadcrumbs
+          items={breadcrumbs}
+          customItem={
+            collaboratorId
+              ? collaboratorsMiscT('collaboratorsMisc:updateATeamMember')
+              : collaboratorsMiscT('collaboratorsMisc:addATeamMember')
+          }
+        />
         <div className="desktop:grid-col-6">
-          <Breadcrumbs
-            items={[
-              'home',
-              'collaborators',
-              collaboratorId
-                ? collaboratorsMiscT('collaboratorsMisc:updateATeamMember')
-                : collaboratorsMiscT('collaboratorsMisc:addATeamMember')
-            ]}
-          />
-
           <PageHeading className="margin-top-6 margin-bottom-2">
             {collaboratorId
               ? collaboratorsMiscT('updateATeamMember')

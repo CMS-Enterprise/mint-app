@@ -12,7 +12,7 @@ import {
   useGetModelPlanBaseQuery
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -46,7 +46,13 @@ export const CRTDLs = () => {
     <MainContent data-testid="model-crtdls">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <Breadcrumbs items={['home', 'taskList', 'crTDLs']} />
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.TASK_LIST,
+              BreadcrumbItemOptions.CR_TDLS
+            ]}
+          />
 
           {message && <Expire delay={45000}>{message}</Expire>}
 

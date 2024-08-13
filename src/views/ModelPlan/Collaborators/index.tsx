@@ -17,7 +17,7 @@ import {
   useGetModelCollaboratorsQuery
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
@@ -199,11 +199,21 @@ export const CollaboratorsContent = () => {
             <Breadcrumbs
               items={
                 manageOrAdd === 'manage'
-                  ? ['home', 'collaborators']
-                  : [
-                      'home',
-                      collaboratorsMiscT('collaboratorsMisc:addATeamMember')
+                  ? [
+                      BreadcrumbItemOptions.HOME,
+                      BreadcrumbItemOptions.COLLABORATION_AREA,
+                      BreadcrumbItemOptions.TASK_LIST,
+                      BreadcrumbItemOptions.COLLABORATORS
                     ]
+                  : [
+                      BreadcrumbItemOptions.HOME,
+                      BreadcrumbItemOptions.COLLABORATORS
+                    ]
+              }
+              customItem={
+                manageOrAdd === 'manage'
+                  ? null
+                  : collaboratorsMiscT('collaboratorsMisc:addATeamMember')
               }
             />
 

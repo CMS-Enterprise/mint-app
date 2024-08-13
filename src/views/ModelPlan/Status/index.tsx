@@ -12,7 +12,7 @@ import {
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
 import { ModelStatus, useUpdateModelPlanMutation } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -85,7 +85,13 @@ const Status = () => {
     <MainContent>
       <GridContainer>
         <Grid desktop={{ col: 6 }}>
-          <Breadcrumbs items={['home', 'collaborationArea', 'status']} />
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.COLLABORATION_AREA,
+              BreadcrumbItemOptions.STATUS
+            ]}
+          />
 
           <PageHeading className="margin-bottom-1">
             {modelPlanMiscT('headingStatus')}

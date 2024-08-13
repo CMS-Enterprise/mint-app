@@ -30,7 +30,7 @@ import {
   useUpdateTdlMutation
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -239,7 +239,13 @@ const AddCRTDL = () => {
   return (
     <MainContent className="margin-bottom-6">
       <GridContainer>
-        <Breadcrumbs items={['home', 'taskList', 'crTDLs']} />
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.TASK_LIST,
+            BreadcrumbItemOptions.CR_TDLS
+          ]}
+        />
 
         <div className="desktop:grid-col-6">
           <PageHeading className="margin-top-6 margin-bottom-2">

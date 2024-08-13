@@ -9,7 +9,7 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
@@ -36,13 +36,16 @@ const AddDocument = () => {
   const solutionDetailsLink = state?.solutionDetailsLink;
   const solutionID = state?.solutionID;
 
-  const breadcrumbs = ['home', 'taskList', 'documents', t('addADocument')];
+  const breadcrumbs = [
+    BreadcrumbItemOptions.HOME,
+    BreadcrumbItemOptions.TASK_LIST,
+    BreadcrumbItemOptions.DOCUMENTS
+  ];
 
   const solutionDocumentBreadcrumb = [
-    'home',
-    'taskList',
-    'itTracker',
-    t('solutionDetails')
+    BreadcrumbItemOptions.HOME,
+    BreadcrumbItemOptions.TASK_LIST,
+    BreadcrumbItemOptions.IT_TRACKER
   ];
 
   return (
@@ -52,6 +55,9 @@ const AddDocument = () => {
           <Breadcrumbs
             items={
               solutionDetailsLink ? solutionDocumentBreadcrumb : breadcrumbs
+            }
+            customItem={
+              solutionDetailsLink ? t('addDocument') : t('solutionDetails')
             }
           />
         </Grid>

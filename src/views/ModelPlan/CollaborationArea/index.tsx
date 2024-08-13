@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  Grid,
-  GridContainer
-} from '@trussworks/react-uswds';
+import { useParams } from 'react-router-dom';
+import { Grid, GridContainer } from '@trussworks/react-uswds';
 // import classNames from 'classnames';
 import {
   //   GetCrtdLsQuery,
@@ -15,7 +9,7 @@ import {
   useGetModelPlanQuery
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 // import { useFlags } from 'launchdarkly-react-client-sdk';
 // import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -132,7 +126,12 @@ const CollaborationArea = () => {
     >
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <Breadcrumbs items={['home', 'collaborationArea']} />
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.COLLABORATION_AREA
+            ]}
+          />
         </Grid>
 
         {error && (
