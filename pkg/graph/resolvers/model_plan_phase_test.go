@@ -104,3 +104,76 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestionByModelPlanID() {
 	)
 	suite.NoError(err)
 }
+
+func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
+	planName := "Test Plan"
+	plan := suite.createModelPlan(planName)
+
+	collaboratorInput := &model.PlanCollaboratorCreateInput{
+		ModelPlanID: plan.ID,
+		UserName:    "CLAB",
+		TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
+	}
+	expectedEmail := "Terry.Thompson@local.fake" // This comes from the stub fetch user info function
+
+	_, _, err := PlanCollaboratorCreate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		collaboratorInput,
+		suite.testConfigs.Principal,
+		false,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+		false,
+	)
+	suite.NoError(err)
+
+	// Ensure collaborator creation is correct
+	collaborators, err := suite.testConfigs.Store.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Logger, plan.ID)
+	suite.NoError(err)
+	suite.NotEmpty(collaborators)
+
+	// Fetch emails
+	emails, err := GetEmailsForModelPlanLeads(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	suite.NoError(err)
+	suite.Equal([]string{expectedEmail}, emails)
+
+	// Add another collaborator
+	collaboratorInput = &model.PlanCollaboratorCreateInput{
+		ModelPlanID: plan.ID,
+		UserName:    "TST2",
+		TeamRoles:   []models.TeamRole{models.TeamRoleModelLead},
+	}
+
+	expectedEmail2 := "TST2.doe@local.fake"
+
+	_, _, err = PlanCollaboratorCreate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		nil,
+		nil,
+		email.AddressBook{},
+		collaboratorInput,
+		suite.testConfigs.Principal,
+		false,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
+		false,
+	)
+	suite.NoError(err)
+
+	// Ensure the second collaborator is also created
+	collaborators, err = suite.testConfigs.Store.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Logger, plan.ID)
+	suite.NoError(err)
+	suite.NotEmpty(collaborators)
+
+	// Fetch emails again
+	emails, err = GetEmailsForModelPlanLeads(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
+	suite.NoError(err)
+	suite.ElementsMatch([]string{expectedEmail, expectedEmail2}, emails)
+}

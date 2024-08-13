@@ -132,21 +132,28 @@ func GetEmailsForModelPlanLeads(
 		return nil, fmt.Errorf("failed to get plan collaborators: %w", err)
 	}
 
+	logger.Info("Fetched collaborators", zap.Any("collaborators", planCollaborators))
+
 	var modelLeadEmails []string
 	for _, collaborator := range planCollaborators {
 		teamRoles := models.ConvertEnums[models.TeamRole](collaborator.TeamRoles)
+		logger.Info("Converted roles", zap.Any("roles", teamRoles))
+
 		for _, role := range teamRoles {
 			if role == models.TeamRoleModelLead {
 				account, accountErr := collaborator.UserAccount(ctx)
 				if accountErr != nil {
+					logger.Error("Failed to get user account", zap.Error(accountErr))
 					continue
 				}
+				logger.Info("Fetched user account", zap.String("email", account.Email))
 				modelLeadEmails = append(modelLeadEmails, account.Email)
 				break
 			}
 		}
 	}
 
+	logger.Info("Final model lead emails", zap.Strings("emails", modelLeadEmails))
 	return modelLeadEmails, nil
 }
 
