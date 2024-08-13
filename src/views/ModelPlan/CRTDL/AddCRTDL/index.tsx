@@ -2,9 +2,6 @@ import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   ButtonGroup,
   DateInput,
@@ -33,6 +30,7 @@ import {
   useUpdateTdlMutation
 } from 'gql/gen/graphql';
 
+import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -241,22 +239,7 @@ const AddCRTDL = () => {
   return (
     <MainContent className="margin-bottom-6">
       <GridContainer>
-        <BreadcrumbBar variant="wrap">
-          <Breadcrumb>
-            <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-              <span>{h('home')}</span>
-            </BreadcrumbLink>
-          </Breadcrumb>
-          <Breadcrumb>
-            <BreadcrumbLink
-              asCustom={UswdsReactLink}
-              to={`/models/${modelID}/task-list`}
-            >
-              <span>{t('breadcrumb')}</span>
-            </BreadcrumbLink>
-          </Breadcrumb>
-          <Breadcrumb current>{t('heading')}</Breadcrumb>
-        </BreadcrumbBar>
+        <Breadcrumbs items={['home', 'taskList', 'crTDLs']} />
 
         <div className="desktop:grid-col-6">
           <PageHeading className="margin-top-6 margin-bottom-2">

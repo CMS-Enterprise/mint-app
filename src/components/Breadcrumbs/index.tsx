@@ -32,7 +32,6 @@ const breadcrumbItemOptions = [
   'collaborators',
   'documents',
   'crTDLs',
-  'changeHistory',
   'status'
 ] as const;
 
@@ -104,19 +103,15 @@ export const commonBreadCrumbs = (
   },
   documents: {
     text: 'documentsMisc:heading',
-    url: '/documents'
+    url: `/models/${modelID}/documents`
   },
   crTDLs: {
-    text: 'crTDLs:heading',
-    url: '/crs-tdls'
-  },
-  changeHistory: {
-    text: 'changeHistory:heading',
-    url: '/change-history'
+    text: 'crtdlsMisc:heading',
+    url: `/models/${modelID}/cr-tdls`
   },
   status: {
     text: 'modelPlanMisc:headingStatus',
-    url: '/status'
+    url: `/models/${modelID}/status`
   }
 });
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
@@ -18,9 +18,7 @@ import DocumentUpload from './documentUpload';
 import LinkDocument from './LinkDocument';
 
 const AddDocument = () => {
-  const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('documentsMisc');
-  const { modelID } = useParams<{ modelID: string }>();
 
   const [formState, setFormState] = useState<'upload' | 'link'>('upload');
 
@@ -38,20 +36,13 @@ const AddDocument = () => {
   const solutionDetailsLink = state?.solutionDetailsLink;
   const solutionID = state?.solutionID;
 
-  const breadcrumbs = [
-    { text: h('home'), url: '/' },
-    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/` },
-    {
-      text: solutionDetailsLink ? t('itTracker') : t('heading'),
-      url: solutionDetailsLink
-        ? `/models/${modelID}/task-list/it-solutions`
-        : `/models/${modelID}/documents`
-    },
-    {
-      text: t('solutionDetails'),
-      url: solutionDetailsLink
-    },
-    { text: t('breadcrumb2') }
+  const breadcrumbs = ['home', 'taskList', 'documents', t('addADocument')];
+
+  const solutionDocumentBreadcrumb = [
+    'home',
+    'taskList',
+    'itTracker',
+    t('solutionDetails')
   ];
 
   return (
@@ -60,9 +51,7 @@ const AddDocument = () => {
         <Grid desktop={{ col: 12 }}>
           <Breadcrumbs
             items={
-              solutionDetailsLink
-                ? breadcrumbs
-                : breadcrumbs.filter(item => item.text !== t('solutionDetails'))
+              solutionDetailsLink ? solutionDocumentBreadcrumb : breadcrumbs
             }
           />
         </Grid>

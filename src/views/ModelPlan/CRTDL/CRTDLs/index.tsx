@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Grid,
   GridContainer,
   Icon,
@@ -15,6 +12,7 @@ import {
   useGetModelPlanBaseQuery
 } from 'gql/gen/graphql';
 
+import Breadcrumbs from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -48,22 +46,7 @@ export const CRTDLs = () => {
     <MainContent data-testid="model-crtdls">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{h('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink
-                asCustom={Link}
-                to={`/models/${modelID}/task-list`}
-              >
-                <span>{t('breadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{t('heading')}</Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs items={['home', 'taskList', 'crTDLs']} />
 
           {message && <Expire delay={45000}>{message}</Expire>}
 
