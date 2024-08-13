@@ -42,6 +42,7 @@ func ModelPlanAnticipatedPhase(
 }
 
 // EvaluateSuggestedStatus evaluates the suggested status for a model plan based on its current status and timeline
+// A nil result indicates that no phase is suggested
 func EvaluateSuggestedStatus(modelStatus models.ModelStatus, planBasics *models.PlanBasics) (*model.PhaseSuggestion, error) {
 
 	// Iterate over all status evaluation strategies and append valid statuses to the results slice
