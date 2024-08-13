@@ -41,6 +41,7 @@ func ModelPlanAnticipatedPhase(
 	return suggestion, nil
 }
 
+// EvaluateSuggestedStatus evaluates the suggested status for a model plan based on its current status and timeline
 func EvaluateSuggestedStatus(modelStatus models.ModelStatus, planBasics *models.PlanBasics) (*model.PhaseSuggestion, error) {
 
 	// Iterate over all status evaluation strategies and append valid statuses to the results slice
@@ -55,6 +56,7 @@ func EvaluateSuggestedStatus(modelStatus models.ModelStatus, planBasics *models.
 	return nil, nil
 }
 
+// ShouldSendEmailForPhaseSuggestion determines if an email should be sent for a phase suggestion
 func ShouldSendEmailForPhaseSuggestion(
 	currentPhaseSuggestion *model.PhaseSuggestion,
 	previousSuggestedPhase *models.ModelPhase,
@@ -74,6 +76,7 @@ func ShouldSendEmailForPhaseSuggestion(
 	return true
 }
 
+// TrySendEmailForPhaseSuggestion sends an email to the model plan leads if the suggested phase has changed
 func TrySendEmailForPhaseSuggestion(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -120,6 +123,7 @@ func TrySendEmailForPhaseSuggestion(
 	return err
 }
 
+// GetEmailsForModelPlanLeads returns the email addresses of the model leads for a given model plan
 func GetEmailsForModelPlanLeads(
 	ctx context.Context,
 	logger *zap.Logger,
