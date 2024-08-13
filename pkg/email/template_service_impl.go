@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
+	"github.com/cmsgov/mint-app/pkg/shared/emailtemplates"
 )
 
 // AddedAsCollaboratorTemplateName is the template name definition for the corresponding email template
@@ -150,13 +150,13 @@ var modelPlanSuggestedPhaseBodyTemplate string
 
 // TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
 type TemplateServiceImpl struct {
-	templateCache  *emailTemplates.TemplateCache
-	emailTemplates map[string]*emailTemplates.EmailTemplate
+	templateCache  *emailtemplates.TemplateCache
+	emailTemplates map[string]*emailtemplates.EmailTemplate
 }
 
 // NewTemplateServiceImpl is a constructor for TemplateServiceImpl
 func NewTemplateServiceImpl() (*TemplateServiceImpl, error) {
-	service := &TemplateServiceImpl{templateCache: emailTemplates.NewTemplateCache()}
+	service := &TemplateServiceImpl{templateCache: emailtemplates.NewTemplateCache()}
 
 	err := service.Load()
 	if err != nil {
@@ -168,7 +168,7 @@ func NewTemplateServiceImpl() (*TemplateServiceImpl, error) {
 
 // Load caches all email templates which will be used by the template service
 func (t *TemplateServiceImpl) Load() error {
-	t.emailTemplates = make(map[string]*emailTemplates.EmailTemplate)
+	t.emailTemplates = make(map[string]*emailtemplates.EmailTemplate)
 
 	err := t.loadEmailTemplate(AddedAsCollaboratorTemplateName, addedAsCollaboratorSubjectTemplate, addedAsCollaboratorBodyTemplate)
 	if err != nil {
@@ -269,13 +269,13 @@ func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjec
 		return err
 	}
 
-	t.emailTemplates[emailTemplateName] = emailTemplates.NewEmailTemplate(t.templateCache, subjectEmailTemplateName, bodyEmailTemplateName)
+	t.emailTemplates[emailTemplateName] = emailtemplates.NewEmailTemplate(t.templateCache, subjectEmailTemplateName, bodyEmailTemplateName)
 
 	return nil
 }
 
 // GetEmailTemplate fetches an emailTemplates.EmailTemplate by name from the emailTemplates.TemplateCache
-func (t *TemplateServiceImpl) GetEmailTemplate(emailTemplateName string) (*emailTemplates.EmailTemplate, error) {
+func (t *TemplateServiceImpl) GetEmailTemplate(emailTemplateName string) (*emailtemplates.EmailTemplate, error) {
 	emailTemplate, emailTemplateExists := t.emailTemplates[emailTemplateName]
 
 	if !emailTemplateExists {
