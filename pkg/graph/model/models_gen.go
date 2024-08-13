@@ -35,12 +35,6 @@ type DiscussionReplyTranslation struct {
 	IsAssessment        models.TranslationFieldWithOptions `json:"isAssessment" db:"is_assessment"`
 }
 
-// Represents a translation of enum values.  generalName is the human readable name of the enum value, groupedName is an optional field if usually referenced by a difference table/name
-type EnumTranslation struct {
-	GeneralName string  `json:"generalName"`
-	GroupedName *string `json:"groupedName,omitempty"`
-}
-
 // Represents existing model link translation data
 type ExistingModelLinkTranslation struct {
 	ExistingModelID    models.TranslationField            `json:"existingModelID" db:"existing_model_id"`

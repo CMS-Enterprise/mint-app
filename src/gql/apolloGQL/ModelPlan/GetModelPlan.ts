@@ -8,6 +8,7 @@ export default gql(/* GraphQL */ `
       modifiedDts
       archived
       status
+      isFavorite
       suggestedPhase {
         phase
         suggestedStatuses

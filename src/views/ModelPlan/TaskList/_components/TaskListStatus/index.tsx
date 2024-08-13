@@ -51,7 +51,7 @@ const TaskListStatus = ({
           className="display-flex flex-align-center"
           style={{ gap: '10px' }}
         >
-          {statusLabel && <p className="margin-y-0">{t('status')}</p>}
+          {statusLabel && <p className="margin-y-0 text-bold">{t('status')}</p>}
           <Tag className="bg-base text-white margin-right-0">
             {modelPlanT(`status.options.${status}`)}
           </Tag>

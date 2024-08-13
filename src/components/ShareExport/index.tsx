@@ -462,7 +462,7 @@ const ShareExportModal = ({
       <nav
         aria-label={generalReadOnlyT('label')}
         data-testid="share-export-navigation-bar"
-        className="border-base-lighter display-flex width-full padding-x-4 border-bottom-2px"
+        className="border-base-lighter display-flex width-full padding-x-4 border-bottom-2px padding-top-05"
         style={{ gap: '2rem' }}
       >
         {primaryLinks}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Grid, GridContainer } from '@trussworks/react-uswds';
+import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 // import classNames from 'classnames';
 import {
   //   GetCrtdLsQuery,
@@ -10,17 +10,22 @@ import {
 } from 'gql/gen/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import { FavoriteIcon } from 'components/FavoriteCard';
 // import { useFlags } from 'launchdarkly-react-client-sdk';
 // import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 // import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import ShareExportModal from 'components/ShareExport';
 import UpdateStatusModal from 'components/UpdateStatusModal';
+import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 
+import { UpdateFavoriteProps } from '../ModelPlanOverview';
 // import { formatDateLocal } from 'utils/date';
 // import { isAssessment } from 'utils/user';
 // import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -63,6 +68,8 @@ const CollaborationArea = () => {
 
   //   const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
 
+  const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
+
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
   );
@@ -83,6 +90,7 @@ const CollaborationArea = () => {
     // tdls,
     status,
     // collaborators,
+    isFavorite,
     suggestedPhase
   } = modelPlan;
 
@@ -119,6 +127,19 @@ const CollaborationArea = () => {
   //     if (discussionID) setIsDiscussionOpen(true);
   //   }, [discussionID]);
 
+  const favoriteMutations = useFavoritePlan();
+
+  const handleUpdateFavorite = (
+    modelPlanID: string,
+    type: UpdateFavoriteProps
+  ) => {
+    favoriteMutations[type]({
+      variables: {
+        modelPlanID
+      }
+    }).then(() => refetch());
+  };
+
   return (
     <MainContent
       className="collaboration-area"
@@ -133,6 +154,20 @@ const CollaborationArea = () => {
             ]}
           />
         </Grid>
+
+        <Modal
+          isOpen={isExportModalOpen}
+          closeModal={() => setIsExportModalOpen(false)}
+          className="padding-0 radius-md share-export-modal__container"
+          navigation
+          shouldCloseOnOverlayClick
+        >
+          <ShareExportModal
+            closeModal={() => setIsExportModalOpen(false)}
+            modelID={modelID}
+            setStatusMessage={setStatusMessage}
+          />
+        </Modal>
 
         {error && (
           <ErrorAlert
@@ -173,7 +208,7 @@ const CollaborationArea = () => {
                 {collaborationAreaT('heading')}
               </PageHeading>
               <p
-                className="margin-top-0 margin-bottom-2 font-body-lg"
+                className="margin-top-1 margin-bottom-2 font-body-lg"
                 data-testid="model-plan-name"
               >
                 {collaborationAreaT('modelPlan', {
@@ -206,13 +241,33 @@ const CollaborationArea = () => {
                 </DiscussionModalWrapper>
               )} */}
 
-              <TaskListStatus
-                modelID={modelID}
-                status={status}
-                updateLabel
-                statusLabel
-                isCollaborationArea
-              />
+              <div className="display-flex flex-justify">
+                <TaskListStatus
+                  modelID={modelID}
+                  status={status}
+                  updateLabel
+                  statusLabel
+                  isCollaborationArea
+                />
+
+                <div className="display-flex">
+                  <FavoriteIcon
+                    isFavorite={isFavorite}
+                    modelPlanID={modelID}
+                    updateFavorite={handleUpdateFavorite}
+                    isCollaborationArea
+                  />
+
+                  <Button
+                    onClick={() => setIsExportModalOpen(true)}
+                    type="button"
+                    className="margin-left-1 bg-primary-lighter padding-y-1 padding-x-105 text-bold text-no-underline"
+                    unstyled
+                  >
+                    ...
+                  </Button>
+                </div>
+              </div>
             </Grid>
           </Grid>
         )}

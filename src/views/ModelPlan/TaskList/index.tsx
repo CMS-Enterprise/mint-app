@@ -51,7 +51,6 @@ import TaskListButton from './_components/TaskListButton';
 import TaskListItem, { TaskListDescription } from './_components/TaskListItem';
 import TaskListLock from './_components/TaskListLock';
 import TaskListSideNav from './_components/TaskListSideNav';
-import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
 

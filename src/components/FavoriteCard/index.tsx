@@ -147,6 +147,7 @@ type FavoriteIconProps = {
   isFavorite: boolean;
   modelPlanID: string;
   updateFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
+  isCollaborationArea?: boolean;
 };
 
 // Icon favorite tag/toggle for readonly summary box
@@ -154,29 +155,33 @@ export const FavoriteIcon = ({
   className,
   modelPlanID,
   isFavorite,
-  updateFavorite
+  updateFavorite,
+  isCollaborationArea
 }: FavoriteIconProps) => {
   const { t } = useTranslation('plan');
 
   return (
-    <div className={classNames('pointer', className)}>
-      <Tag
-        className="text-primary bg-white bookmark__tag padding-1 padding-x-105"
-        onClick={() =>
-          isFavorite
-            ? updateFavorite(modelPlanID, 'removeFavorite')
-            : updateFavorite(modelPlanID, 'addFavorite')
+    <Tag
+      className={classNames(
+        'text-primary bookmark__tag padding-1 padding-x-105 bg-white pointer',
+        {
+          'bg-primary-lighter': isCollaborationArea
         }
-      >
-        {isFavorite ? (
-          <Icon.Star className="margin-right-05 bookmark__tag__icon" />
-        ) : (
-          <Icon.StarOutline className="margin-right-05 bookmark__tag__icon" />
-        )}
+      )}
+      onClick={() =>
+        isFavorite
+          ? updateFavorite(modelPlanID, 'removeFavorite')
+          : updateFavorite(modelPlanID, 'addFavorite')
+      }
+    >
+      {isFavorite ? (
+        <Icon.Star className="margin-right-05 bookmark__tag__icon" />
+      ) : (
+        <Icon.StarOutline className="margin-right-05 bookmark__tag__icon" />
+      )}
 
-        {isFavorite ? t('favorite.following') : t('favorite.follow')}
-      </Tag>
-    </div>
+      {isFavorite ? t('favorite.following') : t('favorite.follow')}
+    </Tag>
   );
 };
 
