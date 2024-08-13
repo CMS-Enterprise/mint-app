@@ -1,16 +1,7 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  Button,
-  Fieldset,
-  Icon,
-  Label,
-  Select
-} from '@trussworks/react-uswds';
+import { useHistory, useParams } from 'react-router-dom';
+import { Button, Fieldset, Icon, Label, Select } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   DataStartsType,
@@ -21,6 +12,7 @@ import {
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FrequencyForm from 'components/FrequencyForm';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -163,19 +155,15 @@ const DataSharing = () => {
         url={mutationError.destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {opsEvalAndLearningMiscT('heading')}
       </PageHeading>

@@ -35,6 +35,7 @@ import {
   useUpdateClearancePaymentsMutation
 } from 'gql/gen/graphql';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
@@ -243,32 +244,15 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     <MainContent data-testid="clearance-review">
       <GridContainer className="padding-x-0">
         <Grid desktop={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap" className="margin-bottom-4">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-                <span>{t('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink
-                asCustom={UswdsReactLink}
-                to={`/models/${modelID}/task-list/`}
-              >
-                <span>{t('tasklistBreadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink
-                asCustom={UswdsReactLink}
-                to={`/models/${modelID}/task-list/prepare-for-clearance`}
-              >
-                <span>{p('breadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>
-              {p(`reviewBreadcrumbs.${routeMap[section]}`)}
-            </Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.COLLABORATION_AREA,
+              BreadcrumbItemOptions.TASK_LIST,
+              BreadcrumbItemOptions.PREPARE_FOR_CLEARANCE
+            ]}
+            customItem={p(`reviewBreadcrumbs.${routeMap[section]}`)}
+          />
 
           {errors && (
             <ErrorAlert

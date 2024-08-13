@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Link,
   Route,
   Switch,
   useHistory,
@@ -9,9 +8,6 @@ import {
   useParams
 } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -34,6 +30,7 @@ import {
 } from 'gql/gen/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -224,19 +221,14 @@ const BasicsContent = () => {
         url={destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{basicsMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.BASICS
+        ]}
+      />
 
       <PageHeading className="margin-top-4">
         {basicsMiscT('heading')}

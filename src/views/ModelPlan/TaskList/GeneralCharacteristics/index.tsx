@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Link,
   Route,
   Switch,
   useHistory,
@@ -16,9 +15,6 @@ import {
   useParams
 } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   ComboBox,
   Fieldset,
@@ -49,6 +45,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -430,21 +427,15 @@ export const CharacteristicsContent = () => {
         url={destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>
-          {generalCharacteristicsMiscT('breadcrumb')}
-        </Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.GENERAL_CHARACTERISTICS
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {generalCharacteristicsMiscT('heading')}
       </PageHeading>
