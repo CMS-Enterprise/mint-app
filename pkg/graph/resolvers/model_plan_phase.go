@@ -74,7 +74,7 @@ func ShouldSendEmailForPhaseSuggestion(
 	return true
 }
 
-func SendEmailForPhaseSuggestion(
+func TrySendEmailForPhaseSuggestion(
 	ctx context.Context,
 	logger *zap.Logger,
 	store *storage.Store,
@@ -232,7 +232,7 @@ func SendEmailForPhaseSuggestionByModelPlanID(
 		return err
 	}
 
-	return SendEmailForPhaseSuggestion(
+	return TrySendEmailForPhaseSuggestion(
 		ctx,
 		logger,
 		store,
