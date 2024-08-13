@@ -38,12 +38,14 @@ const AddDocument = () => {
 
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
+    BreadcrumbItemOptions.COLLABORATION_AREA,
     BreadcrumbItemOptions.TASK_LIST,
     BreadcrumbItemOptions.DOCUMENTS
   ];
 
   const solutionDocumentBreadcrumb = [
     BreadcrumbItemOptions.HOME,
+    BreadcrumbItemOptions.COLLABORATION_AREA,
     BreadcrumbItemOptions.TASK_LIST,
     BreadcrumbItemOptions.IT_TRACKER
   ];
