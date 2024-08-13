@@ -1,4 +1,5 @@
 @use 'uswds-core' as *;
+@use 'colors' as *;
 
 .share-export-modal {
 
@@ -43,5 +44,11 @@
         bottom: -6.65rem;
         right: .5rem;
         width: 17rem !important;
+    }
+
+    &__menu-item {
+        &:hover {
+            background-color: color('primary-lighter') !important;
+        }
     }
 }

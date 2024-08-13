@@ -37,6 +37,8 @@ import './index.scss';
 
 const navElement = ['share', 'export'] as const;
 
+export type NavModelElemet = typeof navElement[number];
+
 export type FitlerGroup = FilterGroup | 'all';
 
 const FileTypes = ['csv', 'pdf'] as const;
@@ -44,6 +46,7 @@ const FileTypes = ['csv', 'pdf'] as const;
 type ShareExportModalProps = {
   modelID: string;
   closeModal: () => void;
+  defaultTab?: NavModelElemet;
   filteredView?: FilterGroup | 'all' | null;
   setStatusMessage: (message: StatusMessageType) => void;
 } & JSX.IntrinsicElements['button'];
@@ -54,6 +57,7 @@ type ShareExportModalProps = {
 const ShareExportModal = ({
   modelID,
   closeModal,
+  defaultTab = 'share',
   filteredView,
   setStatusMessage
 }: ShareExportModalProps) => {
@@ -72,7 +76,7 @@ const ShareExportModal = ({
   const [optionalMessage, setOptionalMessage] = useState<string>('');
 
   // State for modal navigation elements
-  const [isActive, setIsActive] = useState<typeof navElement[number]>('share');
+  const [isActive, setIsActive] = useState<NavModelElemet>(defaultTab);
 
   const {
     fetchSingleData,

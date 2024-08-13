@@ -5,7 +5,7 @@ import { Button, Menu } from '@trussworks/react-uswds';
 import Modal from 'components/Modal';
 import { StatusMessageType } from 'views/ModelPlan/TaskList';
 
-import ShareExportModal from '.';
+import ShareExportModal, { NavModelElemet } from '.';
 
 import './index.scss';
 
@@ -21,6 +21,8 @@ const ShareExportButton = ({
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
+
+  const [defaultTab, setDefaultTab] = useState<NavModelElemet>('share');
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -50,6 +52,7 @@ const ShareExportButton = ({
           closeModal={() => setIsExportModalOpen(false)}
           modelID={modelID}
           setStatusMessage={setStatusMessage}
+          defaultTab={defaultTab}
         />
       </Modal>
 
@@ -68,10 +71,11 @@ const ShareExportButton = ({
             <Button
               type="button"
               onClick={() => {
+                setDefaultTab('share');
                 setIsExportModalOpen(true);
                 setIsMenuOpen(false);
               }}
-              className="text-left padding-y-1 padding-x-2 width-full text-no-underline text-black"
+              className="share-export-modal__menu-item text-left padding-y-1 padding-x-2 width-full text-no-underline text-black"
               unstyled
             >
               {generalReadOnlyT('modal.shareModel')}
@@ -79,10 +83,11 @@ const ShareExportButton = ({
             <Button
               type="button"
               onClick={() => {
+                setDefaultTab('export');
                 setIsExportModalOpen(true);
                 setIsMenuOpen(false);
               }}
-              className="text-left padding-y-1 padding-x-2 width-full text-no-underline text-black"
+              className="share-export-modal__menu-item text-left padding-y-1 padding-x-2 width-full text-no-underline text-black"
               unstyled
             >
               {generalReadOnlyT('modal.exportModel')}
@@ -93,7 +98,7 @@ const ShareExportButton = ({
                 setIsExportModalOpen(true);
                 setIsMenuOpen(false);
               }}
-              className="text-left padding-y-1 padding-x-2 width-full text-no-underline text-red"
+              className="share-export-modal__menu-item text-left padding-y-1 padding-x-2 width-full text-no-underline text-red"
               unstyled
             >
               {generalReadOnlyT('modal.removeModel')}

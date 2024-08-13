@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Button, Grid, GridContainer, Menu } from '@trussworks/react-uswds';
+import { Grid, GridContainer } from '@trussworks/react-uswds';
 // import classNames from 'classnames';
 import {
   //   GetCrtdLsQuery,
@@ -14,13 +14,11 @@ import { FavoriteIcon } from 'components/FavoriteCard';
 // import { useFlags } from 'launchdarkly-react-client-sdk';
 // import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
-import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 // import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import ShareExportModal from 'components/ShareExport';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
@@ -68,10 +66,6 @@ const CollaborationArea = () => {
   //   const flags = useFlags();
 
   //   const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
-
-  // const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
-
-  // const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
@@ -143,19 +137,6 @@ const CollaborationArea = () => {
     }).then(() => refetch());
   };
 
-  // const menuRef = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     setIsMenuOpen(false);
-  //   };
-
-  //   document.addEventListener('mousedown', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, []);
-
   return (
     <MainContent
       className="collaboration-area"
@@ -170,20 +151,6 @@ const CollaborationArea = () => {
             ]}
           />
         </Grid>
-
-        {/* <Modal
-          isOpen={isExportModalOpen}
-          closeModal={() => setIsExportModalOpen(false)}
-          className="padding-0 radius-md share-export-modal__container"
-          navigation
-          shouldCloseOnOverlayClick
-        >
-          <ShareExportModal
-            closeModal={() => setIsExportModalOpen(false)}
-            modelID={modelID}
-            setStatusMessage={setStatusMessage}
-          />
-        </Modal> */}
 
         {error && (
           <ErrorAlert
@@ -257,44 +224,33 @@ const CollaborationArea = () => {
                 </DiscussionModalWrapper>
               )} */}
 
-              <div className="display-flex flex-justify">
-                <TaskListStatus
-                  modelID={modelID}
-                  status={status}
-                  updateLabel
-                  statusLabel
-                  isCollaborationArea
-                />
-
-                <div className="display-flex">
-                  <FavoriteIcon
-                    isFavorite={isFavorite}
-                    modelPlanID={modelID}
-                    updateFavorite={handleUpdateFavorite}
+              <Grid row>
+                <Grid desktop={{ col: 9 }}>
+                  <TaskListStatus
+                    modelID={modelID}
+                    status={status}
+                    updateLabel
+                    statusLabel
                     isCollaborationArea
                   />
+                </Grid>
 
-                  <ShareExportButton
-                    modelID={modelID}
-                    setStatusMessage={setStatusMessage}
-                  />
-                  {/* 
-                  <div ref={menuRef}>
-                    <Button
-                      onClick={() => setIsMenuOpen(true)}
-                      type="button"
-                      className="margin-left-1 bg-primary-lighter padding-y-1 padding-x-105 text-bold text-no-underline"
-                      unstyled
-                    >
-                      ...
-                      <Menu
-                        items={[<Button type="button">{collaborationAreaT('')}</Button>]}
-                        isOpen={isMenuOpen}
-                      />
-                    </Button>
-                  </div> */}
-                </div>
-              </div>
+                <Grid desktop={{ col: 3 }}>
+                  <div className="display-flex flex-justify-end">
+                    <FavoriteIcon
+                      isFavorite={isFavorite}
+                      modelPlanID={modelID}
+                      updateFavorite={handleUpdateFavorite}
+                      isCollaborationArea
+                    />
+
+                    <ShareExportButton
+                      modelID={modelID}
+                      setStatusMessage={setStatusMessage}
+                    />
+                  </div>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         )}
