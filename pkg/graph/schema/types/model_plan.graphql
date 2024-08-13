@@ -89,6 +89,7 @@ type ModelPlan {
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
   opSolutionLastModifiedDts: Time!
+  previousSuggestedPhase: ModelPhase
 }
 
 """
