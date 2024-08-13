@@ -8,7 +8,7 @@ import {
   useUpdateAllNotificationsAsReadMutation
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -24,7 +24,6 @@ const NotificationsHome = () => {
 
   const { t: notificationsT } = useTranslation('notifications');
   const { t: generalT } = useTranslation('general');
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const { message } = useMessage();
 
@@ -35,11 +34,6 @@ const NotificationsHome = () => {
     data?.currentUser.notifications.numUnreadNotifications;
 
   const allNotifications = data?.currentUser.notifications.notifications || [];
-
-  const breadcrumbs = [
-    { text: miscellaneousT('home'), url: '/' },
-    { text: notificationsT('breadcrumb') }
-  ];
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
     return <NotFoundPartial />;
@@ -64,7 +58,13 @@ const NotificationsHome = () => {
     <MainContent data-testid="notification-index">
       <GridContainer>
         <Grid desktop={{ col: 12 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
-          <Breadcrumbs className="margin-bottom-4" items={breadcrumbs} />
+          <Breadcrumbs
+            className="margin-bottom-4"
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.NOTIFICATIONS
+            ]}
+          />
 
           {message && <Expire delay={45000}>{message}</Expire>}
 

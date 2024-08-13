@@ -24,6 +24,7 @@ import {
   useUpdateNotificationSettingsMutation
 } from 'gql/gen/graphql';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
@@ -316,21 +317,14 @@ const NotificationSettings = () => {
     <MainContent data-testid="new-plan">
       <GridContainer>
         <Grid desktop={{ col: 12 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{miscellaneousT('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/notifications">
-                <span>{notificationsT('breadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>
-              {notificationsT('settings.heading')}
-            </Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs
+            className="margin-bottom-4"
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.NOTIFICATIONS
+            ]}
+            customItem={notificationsT('settings.heading')}
+          />
 
           {message && <Expire delay={45000}>{message}</Expire>}
 
