@@ -356,7 +356,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         </PageHeading>
 
         <TaskListStatus
-          readOnly
+          isReadView
           modelID={modelID}
           status={status}
           statusLabel

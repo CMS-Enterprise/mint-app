@@ -211,6 +211,7 @@ const CollaborationArea = () => {
                 status={status}
                 updateLabel
                 statusLabel
+                isCollaborationArea
               />
             </Grid>
           </Grid>

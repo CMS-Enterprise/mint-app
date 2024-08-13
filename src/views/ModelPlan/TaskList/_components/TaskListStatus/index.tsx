@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { ModelStatus } from 'gql/gen/graphql';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
@@ -17,7 +16,8 @@ type TaskListStatusProps = {
   statusLabel?: boolean;
   updateLabel?: boolean;
   modifiedDts?: string;
-  readOnly?: boolean;
+  isReadView?: boolean;
+  isCollaborationArea?: boolean;
   modifiedOrCreateLabel?: boolean;
   className?: string;
 };
@@ -30,7 +30,8 @@ const TaskListStatus = ({
   statusLabel = false,
   updateLabel = false,
   modifiedDts,
-  readOnly,
+  isReadView,
+  isCollaborationArea,
   modifiedOrCreateLabel,
   className
 }: TaskListStatusProps) => {
@@ -38,15 +39,14 @@ const TaskListStatus = ({
   const { t: h } = useTranslation('generalReadOnly');
   const { t: changeHistoryT } = useTranslation('changeHistory');
   const { t: modelPlanT } = useTranslation('modelPlan');
-
-  const flags = useFlags();
+  const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
   return (
     <div
       className={classNames('padding-0', className)}
       data-testid="task-list-status"
     >
-      <Grid row style={{ gap: '16px' }}>
+      <Grid row style={{ gap: '8px' }}>
         <Grid
           className="display-flex flex-align-center"
           style={{ gap: '10px' }}
@@ -56,65 +56,67 @@ const TaskListStatus = ({
             {modelPlanT(`status.options.${status}`)}
           </Tag>
         </Grid>
-        <Grid className="display-flex flex-align-center flex-wrap">
+        <Grid className="display-flex flex-align-center flex-wrap margin-right-1">
           {!!modifiedDts && (
             <p className="margin-y-0 text-normal">
               {modifiedOrCreateLabel ? h('lastUpdate') : h('createdOn')}
               {formatDateLocal(modifiedDts, 'MM/dd/yyyy')}
             </p>
           )}
+        </Grid>
+        <div className="mint-no-print display-flex flex-align-center">
+          <div className="display-flex flex-align-center">
+            <div className="border-base-light" />
 
-          {!readOnly && (
-            <div className="mint-no-print">
+            {!isReadView && (
+              <div className="mint-no-print border-right-2px border-base-light margin-right-2">
+                <UswdsReactLink
+                  to={`/models/${modelID}/status`}
+                  className="display-flex flex-align-center margin-right-2"
+                >
+                  {icon && <Icon.Edit className="margin-right-1" />}
+                  {updateLabel && t('update')}
+                </UswdsReactLink>
+              </div>
+            )}
+
+            <div className="border-right-2px border-base-light margin-right-2">
               <UswdsReactLink
-                to={`/models/${modelID}/status`}
-                className="display-flex flex-align-center"
+                to={{
+                  pathname: `/models/${modelID}/change-history`,
+                  state: {
+                    from: 'readview'
+                  }
+                }}
+                className="display-flex flex-align-center margin-right-2"
               >
-                {icon && <Icon.Edit className="margin-right-1" />}
-                {updateLabel && t('update')}
+                <Icon.History className="margin-right-1" />
+
+                {changeHistoryT('viewChangeHistory')}
               </UswdsReactLink>
             </div>
-          )}
-        </Grid>
-        {readOnly && (
-          <div className="mint-no-print">
-            <div className="display-flex flex-align-center">
-              <div className="height-2 border-left-2px border-base-light margin-right-2 " />
 
-              {flags.changeHistoryEnabled && (
-                <>
-                  <UswdsReactLink
-                    to={{
-                      pathname: `/models/${modelID}/change-history`,
-                      state: {
-                        from: 'readview'
-                      }
-                    }}
-                    className="display-flex flex-align-center margin-right-2"
-                  >
-                    <Icon.History className="margin-right-1" />
+            {hasEditAccess && !isCollaborationArea && (
+              <UswdsReactLink
+                to={`/models/${modelID}/collaboration-area`}
+                className="display-flex flex-align-center"
+              >
+                <Icon.Edit className="margin-right-1" />
+                {t('edit')}
+              </UswdsReactLink>
+            )}
 
-                    {changeHistoryT('viewChangeHistory')}
-                  </UswdsReactLink>
-
-                  {hasEditAccess && (
-                    <div className="height-2 border-left-2px border-base-light margin-right-2 " />
-                  )}
-                </>
-              )}
-
-              {hasEditAccess && (
-                <UswdsReactLink
-                  to={`/models/${modelID}/collaboration-area`}
-                  className="display-flex flex-align-center"
-                >
-                  <Icon.Edit className="margin-right-1" />
-                  {t('edit')}
-                </UswdsReactLink>
-              )}
-            </div>
+            {isCollaborationArea && (
+              <UswdsReactLink
+                to={`/models/${modelID}/read-view`}
+                className="display-flex flex-align-center"
+              >
+                <Icon.Visibility className="margin-right-1" />
+                {collaborationAreaT('switchToReadView')}
+              </UswdsReactLink>
+            )}
           </div>
-        )}
+        </div>
       </Grid>
     </div>
   );
