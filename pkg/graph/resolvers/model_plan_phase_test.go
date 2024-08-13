@@ -1,7 +1,6 @@
 package resolvers
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/golang/mock/gomock"
@@ -93,16 +92,6 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestionByModelPlanID() {
 		GetConfig().
 		Return(emailServiceConfig).
 		AnyTimes()
-
-	// Print all the dependencies to the console for debugging
-	fmt.Println("context: ", suite.testConfigs.Context)
-	fmt.Println("store: ", suite.testConfigs.Store)
-	fmt.Println("logger: ", suite.testConfigs.Logger)
-	fmt.Println("mockEmailService: ", mockEmailService)
-	fmt.Println("mockEmailTemplateService: ", mockEmailTemplateService)
-	fmt.Println("addressBook: ", addressBook)
-	fmt.Println("plan: ", plan)
-	fmt.Println("plan.ID: ", plan.ID)
 
 	err = SendEmailForPhaseSuggestionByModelPlanID(
 		suite.testConfigs.Context,
