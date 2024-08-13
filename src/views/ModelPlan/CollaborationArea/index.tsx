@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
+import { Button, Grid, GridContainer, Menu } from '@trussworks/react-uswds';
 // import classNames from 'classnames';
 import {
   //   GetCrtdLsQuery,
@@ -21,6 +21,7 @@ import Alert from 'components/shared/Alert';
 // import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ShareExportModal from 'components/ShareExport';
+import ShareExportButton from 'components/ShareExport/ShareExportButton';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
@@ -68,7 +69,9 @@ const CollaborationArea = () => {
 
   //   const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
 
-  const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
+  // const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
+
+  // const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
@@ -140,6 +143,19 @@ const CollaborationArea = () => {
     }).then(() => refetch());
   };
 
+  // const menuRef = useRef<HTMLDivElement>(null);
+
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     setIsMenuOpen(false);
+  //   };
+
+  //   document.addEventListener('mousedown', handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // }, []);
+
   return (
     <MainContent
       className="collaboration-area"
@@ -155,7 +171,7 @@ const CollaborationArea = () => {
           />
         </Grid>
 
-        <Modal
+        {/* <Modal
           isOpen={isExportModalOpen}
           closeModal={() => setIsExportModalOpen(false)}
           className="padding-0 radius-md share-export-modal__container"
@@ -167,7 +183,7 @@ const CollaborationArea = () => {
             modelID={modelID}
             setStatusMessage={setStatusMessage}
           />
-        </Modal>
+        </Modal> */}
 
         {error && (
           <ErrorAlert
@@ -258,14 +274,25 @@ const CollaborationArea = () => {
                     isCollaborationArea
                   />
 
-                  <Button
-                    onClick={() => setIsExportModalOpen(true)}
-                    type="button"
-                    className="margin-left-1 bg-primary-lighter padding-y-1 padding-x-105 text-bold text-no-underline"
-                    unstyled
-                  >
-                    ...
-                  </Button>
+                  <ShareExportButton
+                    modelID={modelID}
+                    setStatusMessage={setStatusMessage}
+                  />
+                  {/* 
+                  <div ref={menuRef}>
+                    <Button
+                      onClick={() => setIsMenuOpen(true)}
+                      type="button"
+                      className="margin-left-1 bg-primary-lighter padding-y-1 padding-x-105 text-bold text-no-underline"
+                      unstyled
+                    >
+                      ...
+                      <Menu
+                        items={[<Button type="button">{collaborationAreaT('')}</Button>]}
+                        isOpen={isMenuOpen}
+                      />
+                    </Button>
+                  </div> */}
                 </div>
               </div>
             </Grid>

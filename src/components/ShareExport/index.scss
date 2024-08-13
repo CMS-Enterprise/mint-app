@@ -35,4 +35,13 @@
         max-width: 95%;
         overflow: auto;
     }
+
+    &__menu {
+        border: 2px solid color('base-lighter');    
+        box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.1);
+        text-decoration: none !important;
+        bottom: -6.65rem;
+        right: .5rem;
+        width: 17rem !important;
+    }
 }
