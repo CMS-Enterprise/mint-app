@@ -60,7 +60,7 @@ const ShareExportButton = ({
         <Button
           onClick={() => setIsMenuOpen(true)}
           type="button"
-          className="margin-left-1 bg-primary-lighter padding-y-1 padding-x-105 text-bold text-no-underline"
+          className="margin-left-1 bg-primary-lighter padding-bottom-105 padding-top-05 padding-x-2 text-bold text-no-underline"
           unstyled
         >
           ...

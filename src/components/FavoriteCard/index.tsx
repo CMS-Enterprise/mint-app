@@ -163,7 +163,7 @@ export const FavoriteIcon = ({
   return (
     <Tag
       className={classNames(
-        'text-primary bookmark__tag padding-1 padding-x-105 bg-white pointer',
+        'text-primary text-bold bookmark__tag padding-1 padding-top-05 padding-bottom-105 padding-x-2 bg-white pointer',
         {
           'bg-primary-lighter': isCollaborationArea
         }
@@ -175,9 +175,9 @@ export const FavoriteIcon = ({
       }
     >
       {isFavorite ? (
-        <Icon.Star className="margin-right-05 bookmark__tag__icon" />
+        <Icon.Star className="margin-right-1 bookmark__tag__icon" />
       ) : (
-        <Icon.StarOutline className="margin-right-05 bookmark__tag__icon" />
+        <Icon.StarOutline className="margin-right-1 bookmark__tag__icon" />
       )}
 
       {isFavorite ? t('favorite.following') : t('favorite.follow')}

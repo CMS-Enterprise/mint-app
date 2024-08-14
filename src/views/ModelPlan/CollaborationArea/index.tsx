@@ -187,37 +187,41 @@ const CollaborationArea = () => {
         )}
 
         {data && (
-          <Grid row gap>
-            <Grid desktop={{ col: 12 }}>
-              <PageHeading className="margin-top-4 margin-bottom-0">
-                {collaborationAreaT('heading')}
-              </PageHeading>
-              <p
-                className="margin-top-1 margin-bottom-2 font-body-lg"
-                data-testid="model-plan-name"
-              >
-                {collaborationAreaT('modelPlan', {
-                  modelName
-                })}
-              </p>
+          <Grid>
+            <Grid row className="collaboration-area__header">
+              <Grid desktop={{ col: 9 }}>
+                <PageHeading className="margin-top-4 margin-bottom-0">
+                  {collaborationAreaT('heading')}
+                </PageHeading>
+                <p
+                  className="margin-top-1 margin-bottom-2 font-body-lg"
+                  data-testid="model-plan-name"
+                >
+                  {collaborationAreaT('modelPlan', {
+                    modelName
+                  })}
+                </p>
+              </Grid>
 
-              {!!modelPlan.suggestedPhase && !statusChecked && (
-                <UpdateStatusModal
-                  modelID={modelID}
-                  isOpen={isStatusPhaseModalOpen}
-                  closeModal={() => {
-                    sessionStorage.setItem(`statusChecked-${modelID}`, 'true');
-                    setStatusPhaseModalOpen(false);
-                  }}
-                  currentStatus={status}
-                  suggestedPhase={modelPlan.suggestedPhase}
-                  setStatusMessage={setStatusMessage}
-                  refetch={refetch}
-                />
-              )}
+              <Grid desktop={{ col: 3 }} className="margin-top-4">
+                <div className="display-flex flex-justify-end">
+                  <FavoriteIcon
+                    isFavorite={isFavorite}
+                    modelPlanID={modelID}
+                    updateFavorite={handleUpdateFavorite}
+                    isCollaborationArea
+                  />
 
-              {/* Discussion modal */}
-              {/* {isDiscussionOpen && (
+                  <ShareExportButton
+                    modelID={modelID}
+                    setStatusMessage={setStatusMessage}
+                  />
+                </div>
+              </Grid>
+            </Grid>
+
+            {/* Discussion modal */}
+            {/* {isDiscussionOpen && (
                 <DiscussionModalWrapper
                   isOpen={isDiscussionOpen}
                   closeModal={() => setIsDiscussionOpen(false)}
@@ -226,54 +230,48 @@ const CollaborationArea = () => {
                 </DiscussionModalWrapper>
               )} */}
 
-              <Grid row>
-                <Grid desktop={{ col: 9 }}>
-                  <TaskListStatus
-                    modelID={modelID}
-                    status={status}
-                    updateLabel
-                    statusLabel
-                    isCollaborationArea
-                  />
-                </Grid>
+            <Grid desktop={{ col: 12 }}>
+              <TaskListStatus
+                modelID={modelID}
+                status={status}
+                updateLabel
+                statusLabel
+                isCollaborationArea
+              />
+            </Grid>
 
-                <Grid desktop={{ col: 3 }}>
-                  <div className="display-flex flex-justify-end">
-                    <FavoriteIcon
-                      isFavorite={isFavorite}
-                      modelPlanID={modelID}
-                      updateFavorite={handleUpdateFavorite}
-                      isCollaborationArea
-                    />
+            <Divider className="margin-y-6" />
 
-                    <ShareExportButton
-                      modelID={modelID}
-                      setStatusMessage={setStatusMessage}
-                    />
-                  </div>
-                </Grid>
-              </Grid>
+            <Grid row gap>
+              <Grid col={12}>
+                <h2 className="margin-top-0">{collaborationAreaT('areas')}</h2>
 
-              <Divider className="margin-y-6" />
-
-              <Grid row gap>
-                <Grid col={12}>
-                  <h2 className="margin-top-0">
-                    {collaborationAreaT('areas')}
-                  </h2>
-
-                  <UswdsReactLink
-                    className="usa-button"
-                    variant="unstyled"
-                    data-testid="to-task-list"
-                    to={`/models/${modelID}/collaboration-area/task-list`}
-                  >
-                    {collaborationAreaT('goToModelPlan')}
-                  </UswdsReactLink>
-                </Grid>
+                <UswdsReactLink
+                  className="usa-button"
+                  variant="unstyled"
+                  data-testid="to-task-list"
+                  to={`/models/${modelID}/collaboration-area/task-list`}
+                >
+                  {collaborationAreaT('goToModelPlan')}
+                </UswdsReactLink>
               </Grid>
             </Grid>
           </Grid>
+        )}
+
+        {!!modelPlan.suggestedPhase && !statusChecked && (
+          <UpdateStatusModal
+            modelID={modelID}
+            isOpen={isStatusPhaseModalOpen}
+            closeModal={() => {
+              sessionStorage.setItem(`statusChecked-${modelID}`, 'true');
+              setStatusPhaseModalOpen(false);
+            }}
+            currentStatus={status}
+            suggestedPhase={modelPlan.suggestedPhase}
+            setStatusMessage={setStatusMessage}
+            refetch={refetch}
+          />
         )}
       </GridContainer>
     </MainContent>

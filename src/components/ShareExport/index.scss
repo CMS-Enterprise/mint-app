@@ -41,9 +41,13 @@
         border: 2px solid color('base-lighter');    
         box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.1);
         text-decoration: none !important;
-        bottom: -6.65rem;
-        right: .5rem;
+        margin-top: 2.45rem !important;
         width: 17rem !important;
+        z-index: 1000;
+
+        .usa-nav__submenu-item {
+            border: 0 !important
+        }
     }
 
     &__menu-item {

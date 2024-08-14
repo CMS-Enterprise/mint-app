@@ -1,0 +1,15 @@
+@use 'viewports' as *;
+
+.task-list-status {
+    display: flex;
+    @media screen and (max-width: $desktop) {
+        display: block;
+    }
+
+    &__border {
+        border-right: 2px solid;
+        @media screen and (max-width: $desktop) {
+            border: none;
+        }
+    }
+}
