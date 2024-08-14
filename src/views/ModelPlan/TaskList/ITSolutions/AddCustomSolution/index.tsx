@@ -19,7 +19,7 @@ import {
   useUpdateOperationalSolutionMutation
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
@@ -173,21 +173,6 @@ const AddCustomSolution = () => {
     }
   };
 
-  const breadcrumbs = [
-    { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/` },
-    { text: t('breadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/it-solutions` },
-    {
-      text: t('addSolution'),
-      url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-solution`
-    },
-    {
-      text: operationalSolutionID
-        ? t('updateSolutionDetails')
-        : t('addSolutionDetails')
-    }
-  ];
-
   if (!data && loading) {
     return <PageLoading />;
   }
@@ -201,7 +186,19 @@ const AddCustomSolution = () => {
 
   return (
     <>
-      <Breadcrumbs items={breadcrumbs} />
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.ADD_SOLUTION
+        ]}
+        customItem={
+          operationalSolutionID
+            ? t('updateSolutionDetails')
+            : t('addSolutionDetails')
+        }
+      />
 
       {mutationError && (
         <Alert type="error" slim>

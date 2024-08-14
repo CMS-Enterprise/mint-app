@@ -29,6 +29,8 @@ export enum BreadcrumbItemOptions {
   OPS_EVAL_AND_LEARNING = 'OPS_EVAL_AND_LEARNING',
   PAYMENTS = 'PAYMENTS',
   IT_TRACKER = 'IT_TRACKER',
+  ADD_SOLUTION = 'ADD_SOLUTION',
+  SOLUTION_DETAILS = 'SOLUTION_DETAILS',
   PREPARE_FOR_CLEARANCE = 'PREPARE_FOR_CLEARANCE',
   COLLABORATORS = 'COLLABORATORS',
   DOCUMENTS = 'DOCUMENTS',
@@ -43,7 +45,9 @@ export interface BreadcrumbsProps {
 }
 
 export const commonBreadCrumbs = (
-  modelID: string
+  modelID: string,
+  operationalNeedID?: string,
+  operationalSolutionID?: string
 ): Record<BreadcrumbItemOptions, BreadcrumbItems> => ({
   HOME: {
     text: 'plan:home',
@@ -97,6 +101,14 @@ export const commonBreadCrumbs = (
     text: 'opSolutionsMisc:heading',
     url: `/models/${modelID}/collaboration-area/task-list/it-solutions`
   },
+  ADD_SOLUTION: {
+    text: 'opSolutionsMisc:addSolution',
+    url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-solution`
+  },
+  SOLUTION_DETAILS: {
+    text: 'opSolutionsMisc:solutionDetails',
+    url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+  },
   PREPARE_FOR_CLEARANCE: {
     text: 'prepareForClearance:heading',
     url: `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
@@ -125,6 +137,7 @@ const Breadcrumbs = ({ items, customItem, className }: BreadcrumbsProps) => {
 
   const { modelID } = useParams<{
     modelID: string;
+    operationalNeedID?: string;
   }>();
 
   return (

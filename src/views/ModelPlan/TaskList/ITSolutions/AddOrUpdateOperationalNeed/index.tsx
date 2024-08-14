@@ -18,7 +18,7 @@ import {
   useUpdateCustomOperationalNeedMutation
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import Expire from 'components/shared/Expire';
@@ -95,7 +95,9 @@ const AddOrUpdateOperationalNeed = () => {
                 </span>
               </Alert>
             );
-            history.push(`/models/${modelID}/collaboration-area/task-list/it-solutions`);
+            history.push(
+              `/models/${modelID}/collaboration-area/task-list/it-solutions`
+            );
           }
         })
         .catch(errors => {
@@ -129,7 +131,9 @@ const AddOrUpdateOperationalNeed = () => {
                 </Alert>
               );
               // Save without adding solution
-              history.push(`/models/${modelID}/collaboration-area/task-list/it-solutions`);
+              history.push(
+                `/models/${modelID}/collaboration-area/task-list/it-solutions`
+              );
             } else {
               // Contiues to add solution
               history.push(
@@ -144,24 +148,24 @@ const AddOrUpdateOperationalNeed = () => {
     }
   };
 
-  const breadcrumbs = [
-    { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/` },
-    { text: t('breadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/it-solutions` },
-    {
-      text: isUpdating
-        ? t('updateThisOpertationalNeed')
-        : t('addOpertationalNeed')
-    }
-  ];
-
   const initialValues: CustomOperationalNeedFormType = {
     nameOther: data?.operationalNeed.nameOther ?? ''
   };
 
   return (
     <>
-      <Breadcrumbs items={breadcrumbs} />
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST
+        ]}
+        customItem={
+          isUpdating
+            ? t('updateThisOpertationalNeed')
+            : t('addOpertationalNeed')
+        }
+      />
 
       <Expire delay={45000}>{message}</Expire>
 

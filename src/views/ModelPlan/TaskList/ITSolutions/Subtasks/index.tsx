@@ -21,7 +21,7 @@ import {
   useUpdateOperationalSolutionSubtasksMutation
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -298,28 +298,23 @@ const Subtasks = ({
     );
   };
 
-  const breadcrumbs = [
-    { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/` },
-    {
-      text: opSolutionsMiscT('subtasks.itSolutionsTrackerBreadcrumb'),
-      url: `/models/${modelID}/collaboration-area/task-list/it-solutions`
-    },
-    {
-      text: opSolutionsMiscT('subtasks.solutionDetails'),
-      url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
-    },
-    {
-      text: managingSubtasks
-        ? opSolutionsMiscT('subtasks.manageSubtasks')
-        : opSolutionsMiscT('subtasks.addSubtask')
-    }
-  ];
-
   return (
     <>
       {renderModal()}
-      <Breadcrumbs items={breadcrumbs} />
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.IT_TRACKER,
+          BreadcrumbItemOptions.SOLUTION_DETAILS
+        ]}
+        customItem={
+          managingSubtasks
+            ? opSolutionsMiscT('subtasks.manageSubtasks')
+            : opSolutionsMiscT('subtasks.addSubtask')
+        }
+      />
 
       {message}
 

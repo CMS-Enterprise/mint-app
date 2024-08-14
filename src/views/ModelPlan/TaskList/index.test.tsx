@@ -57,6 +57,7 @@ describe('The Model Plan Task List', () => {
 
   const modelPlan = {
     __typename: 'ModelPlan',
+    isFavorite: true,
     id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
     status: ModelStatus.PLAN_DRAFT,
     modelName: 'Test',
