@@ -57,6 +57,7 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestionByModelPlanID() {
 
 	oneHourAgo := time.Now().Add(-time.Hour)
 	planBasics.CompleteICIP = &oneHourAgo
+	println("CompleteICIP: ", planBasics.CompleteICIP)
 	_, err = suite.testConfigs.Store.PlanBasicsUpdate(suite.testConfigs.Logger, planBasics)
 	suite.NotNil(err)
 
@@ -65,7 +66,7 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestionByModelPlanID() {
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.ModelPlanSuggestedPhaseTemplateName)).
 		Return(testTemplate, nil).
-		AnyTimes()
+		Times(1)
 
 	mockEmailService.
 		EXPECT().
@@ -77,7 +78,7 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestionByModelPlanID() {
 			gomock.Any(),
 			gomock.Eq(expectedBody),
 		).
-		AnyTimes()
+		Times(1)
 
 	addressBook := email.AddressBook{
 		DefaultSender: "unit-test-execution@mint.cms.gov",
@@ -109,28 +110,7 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 	planName := "Test Plan"
 	plan := suite.createModelPlan(planName)
 
-	collaboratorInput := &model.PlanCollaboratorCreateInput{
-		ModelPlanID: plan.ID,
-		UserName:    "CLAB",
-		TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
-	}
 	expectedEmail := "Terry.Thompson@local.fake" // This comes from the stub fetch user info function
-
-	_, _, err := PlanCollaboratorCreate(
-		suite.testConfigs.Context,
-		suite.testConfigs.Store,
-		suite.testConfigs.Store,
-		suite.testConfigs.Logger,
-		nil,
-		nil,
-		email.AddressBook{},
-		collaboratorInput,
-		suite.testConfigs.Principal,
-		false,
-		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
-		false,
-	)
-	suite.NoError(err)
 
 	// Ensure collaborator creation is correct
 	collaborators, err := suite.testConfigs.Store.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Logger, plan.ID)
@@ -143,7 +123,7 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 	suite.Equal([]string{expectedEmail}, emails)
 
 	// Add another collaborator
-	collaboratorInput = &model.PlanCollaboratorCreateInput{
+	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: plan.ID,
 		UserName:    "TST2",
 		TeamRoles:   []models.TeamRole{models.TeamRoleModelLead},
@@ -176,4 +156,26 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 	emails, err = GetEmailsForModelPlanLeads(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 	suite.ElementsMatch([]string{expectedEmail, expectedEmail2}, emails)
+}
+
+func (suite *ResolverSuite) TestGetAllStatusEvaluationStrategies() {
+	strategies := GetAllStatusEvaluationStrategies()
+
+	// Ensure all strategies are returned
+	expectedStrategies := []StatusEvaluationStrategy{
+		&EndedStrategy{},
+		&ActiveStrategy{},
+		&AnnounceStrategy{},
+		&ClearanceEndStrategy{},
+		&ClearanceStartStrategy{},
+		&ICIPCompleteStrategy{},
+	}
+
+	// Ensure the number of strategies match
+	suite.Equal(len(expectedStrategies), len(strategies), "The number of returned strategies should match the expected number")
+
+	// Check each strategy type
+	for i, strategy := range strategies {
+		suite.IsType(expectedStrategies[i], strategy, "Strategy type mismatch at index %d", i)
+	}
 }
