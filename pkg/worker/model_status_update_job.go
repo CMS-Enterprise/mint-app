@@ -33,7 +33,7 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 
 	logger.Info("checking if model status should be updated, and creating notification")
 
-	return resolvers.SendEmailForPhaseSuggestionByModelPlanID(
+	return resolvers.TrySendEmailForPhaseSuggestionByModelPlanID(
 		ctx,
 		w.Store,
 		logger,

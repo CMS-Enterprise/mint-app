@@ -79,9 +79,8 @@ func ShouldSendEmailForPhaseSuggestion(
 
 // TrySendEmailForPhaseSuggestion sends an email to the model plan leads if the suggested phase has changed
 func TrySendEmailForPhaseSuggestion(
-	ctx context.Context,
 	logger *zap.Logger,
-	store *storage.Store,
+	emailRecipients []string,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook *email.AddressBook,
@@ -98,11 +97,6 @@ func TrySendEmailForPhaseSuggestion(
 		emailTemplateService,
 		modelPlan,
 	)
-	if err != nil {
-		return err
-	}
-
-	emailRecipients, err := GetEmailsForModelPlanLeads(ctx, logger, store, modelPlan.ID)
 	if err != nil {
 		return err
 	}
@@ -208,7 +202,7 @@ func ConstructPhaseSuggestionEmailTemplates(
 	return emailSubject, emailBody, nil
 }
 
-func SendEmailForPhaseSuggestionByModelPlanID(
+func TrySendEmailForPhaseSuggestionByModelPlanID(
 	ctx context.Context,
 	store *storage.Store,
 	logger *zap.Logger,
@@ -237,10 +231,14 @@ func SendEmailForPhaseSuggestionByModelPlanID(
 		return err
 	}
 
+	emailRecipients, err := GetEmailsForModelPlanLeads(ctx, logger, store, modelPlan.ID)
+	if err != nil {
+		return err
+	}
+
 	return TrySendEmailForPhaseSuggestion(
-		ctx,
 		logger,
-		store,
+		emailRecipients,
 		emailService,
 		emailTemplateService,
 		&addressBook,

@@ -1,11 +1,8 @@
 package resolvers
 
 import (
-	"time"
-
 	"github.com/golang/mock/gomock"
 
-	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -14,52 +11,23 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 )
 
-func (suite *ResolverSuite) TestSendEmailForPhaseSuggestionByModelPlanID() {
+func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
 	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
 	planName := "Plan For Milestones"
 	plan := suite.createModelPlan(planName)
+	plan.PreviousSuggestedPhase = nil
 
-	collaboratorInput := &model.PlanCollaboratorCreateInput{
-		ModelPlanID: plan.ID,
-		UserName:    "CLAB",
-		TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
+	println("Plan Name: ", planName)
+
+	expectedBCCEmail := "Terry.Thompson@local.fake" // This comes from the stub fetch user info function
+	emailRecipients := []string{"TEST1@local.mock", "TEST2@local.mock"}
+	phaseSuggestion := model.PhaseSuggestion{
+		Phase:             models.ModelPhaseIcipComplete,
+		SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
 	}
-
-	expectedEmail := "CLAB.doe@local.fake" // This comes from the stub fetch user info function
-
-	_, _, err := PlanCollaboratorCreate(
-		suite.testConfigs.Context,
-		suite.testConfigs.Store,
-		suite.testConfigs.Store,
-		suite.testConfigs.Logger,
-		nil,
-		nil,
-		email.AddressBook{},
-		collaboratorInput,
-		suite.testConfigs.Principal,
-		false,
-		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
-		false,
-	)
-	suite.NoError(err)
-
-	//Asset that making a collaborator also creates an account
-	account, uAccountErr := storage.UserAccountGetByUsername(suite.testConfigs.Store, collaboratorInput.UserName)
-	suite.NoError(uAccountErr)
-	suite.NotNil(account)
-
-	planBasics, err := suite.testConfigs.Store.PlanBasicsGetByModelPlanID(plan.ID)
-	suite.NoError(err)
-	suite.NotNil(planBasics)
-
-	oneHourAgo := time.Now().Add(-time.Hour)
-	planBasics.CompleteICIP = &oneHourAgo
-	println("CompleteICIP: ", planBasics.CompleteICIP)
-	_, err = suite.testConfigs.Store.PlanBasicsUpdate(suite.testConfigs.Logger, planBasics)
-	suite.NotNil(err)
 
 	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(planName, plan)
 	mockEmailTemplateService.
@@ -71,12 +39,13 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestionByModelPlanID() {
 	mockEmailService.
 		EXPECT().
 		Send(
-			gomock.Any(),
-			gomock.Eq([]string{expectedEmail}),
-			gomock.Any(),
+			gomock.Eq("unit-test-execution@mint.cms.gov"),
+			gomock.Eq(emailRecipients),
+			gomock.Nil(), // CC
 			gomock.Eq(expectedSubject),
-			gomock.Any(),
+			gomock.Eq("text/html"),
 			gomock.Eq(expectedBody),
+			oddmail.WithBCC([]string{expectedBCCEmail}),
 		).
 		Times(1)
 
@@ -92,16 +61,16 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestionByModelPlanID() {
 		EXPECT().
 		GetConfig().
 		Return(emailServiceConfig).
-		AnyTimes()
+		Times(1)
 
-	err = SendEmailForPhaseSuggestionByModelPlanID(
-		suite.testConfigs.Context,
-		suite.testConfigs.Store,
+	err := TrySendEmailForPhaseSuggestion(
 		suite.testConfigs.Logger,
+		emailRecipients,
 		mockEmailService,
 		mockEmailTemplateService,
-		addressBook,
-		plan.ID,
+		&addressBook,
+		&phaseSuggestion,
+		plan,
 	)
 	suite.NoError(err)
 }
