@@ -1,15 +1,10 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  SummaryBox
-} from '@trussworks/react-uswds';
+import { SummaryBox } from '@trussworks/react-uswds';
 
 import AskAQuestion from 'components/AskAQuestion';
-import UswdsReactLink from 'components/LinkWrapper';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
 import Expire from 'components/shared/Expire';
@@ -32,22 +27,14 @@ const ITSolutionsHome = () => {
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-            <span>{h('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/collaboration-area/task-list/`}
-          >
-            <span>{h('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST
+        ]}
+        customItem={t('breadcrumb')}
+      />
 
       <Expire delay={45000}>{message}</Expire>
 

@@ -17,6 +17,7 @@ type BreadcrumbItems = {
 
 export enum BreadcrumbItemOptions {
   HOME = 'HOME',
+  HOME_SETTINGS = 'HOME_SETTINGS',
   TASK_LIST = 'TASK_LIST',
   COLLABORATION_AREA = 'COLLABORATION_AREA',
   NOTIFICATIONS = 'NOTIFICATIONS',
@@ -52,6 +53,10 @@ export const commonBreadCrumbs = (
   HOME: {
     text: 'plan:home',
     url: '/'
+  },
+  HOME_SETTINGS: {
+    text: 'homepageSettings:heading',
+    url: '/homepage-settings'
   },
   TASK_LIST: {
     text: 'modelPlanTaskList:heading',

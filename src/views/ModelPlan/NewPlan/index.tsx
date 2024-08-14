@@ -1,10 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Grid,
   GridContainer,
@@ -14,6 +11,7 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { useCreateModelPlanMutation } from 'gql/gen/graphql';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -50,14 +48,10 @@ const NewPlanContent = () => {
     <MainContent data-testid="new-plan">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{miscellaneousT('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{modelPlanMiscT('breadcrumb')}</Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs
+            items={[BreadcrumbItemOptions.HOME]}
+            customItem={modelPlanMiscT('breadcrumb')}
+          />
 
           <PageHeading className="margin-top-4">
             {modelPlanMiscT('heading')}
