@@ -277,6 +277,9 @@ const AppRoutes = () => {
             path="/models/:modelID/locked-task-list-section"
             component={LockedTaskListSection}
           />
+
+          {/* 404 */}
+          <Route path="*" component={NotFound} />
         </Switch>
       </ProtectedRoute>
 
