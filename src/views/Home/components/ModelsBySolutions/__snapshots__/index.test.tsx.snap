@@ -223,39 +223,52 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       Status
                     </p>
                     <div
-                      class="padding-0"
+                      class="padding-0 task-list-status "
                       data-testid="task-list-status"
                     >
                       <div
-                        class="grid-row"
-                        data-testid="grid"
-                        style="gap: 16px;"
+                        class="display-flex flex-align-center"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                          data-testid="grid"
-                          style="gap: 10px;"
+                        <span
+                          class="mint-tag bg-base text-white margin-right-1"
+                          data-testid="tag"
                         >
-                          <span
-                            class="mint-tag bg-base text-white margin-right-0"
-                            data-testid="tag"
-                          >
-                            Draft Model Plan
-                          </span>
+                          Draft Model Plan
+                        </span>
+                        <div
+                          class="display-flex flex-align-center flex-wrap margin-right-1"
+                        />
+                        <div
+                          class="mint-no-print task-list-status__border border-base-light margin-right-2"
+                        >
+                          <a
+                            class="usa-link display-flex flex-align-center margin-right-2"
+                            href="/models/c9cf987d-8543-46bb-a668-2c560ce5b149/collaboration-area/status"
+                          />
                         </div>
-                        <div
-                          class="display-flex flex-align-center flex-wrap"
-                          data-testid="grid"
+                      </div>
+                      <div
+                        class="display-flex flex-align-center task-list-status__border border-base-light margin-right-2"
+                      >
+                        <a
+                          class="usa-link display-flex flex-align-center margin-right-2"
+                          href="/models/c9cf987d-8543-46bb-a668-2c560ce5b149/change-history"
                         >
-                          <div
-                            class="mint-no-print"
+                          <svg
+                            class="usa-icon margin-right-1"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <a
-                              class="usa-link display-flex flex-align-center"
-                              href="/models/c9cf987d-8543-46bb-a668-2c560ce5b149/collaboration-area/status"
+                            <path
+                              d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
                             />
-                          </div>
-                        </div>
+                          </svg>
+                          View change history
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -360,39 +373,52 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       Status
                     </p>
                     <div
-                      class="padding-0"
+                      class="padding-0 task-list-status "
                       data-testid="task-list-status"
                     >
                       <div
-                        class="grid-row"
-                        data-testid="grid"
-                        style="gap: 16px;"
+                        class="display-flex flex-align-center"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                          data-testid="grid"
-                          style="gap: 10px;"
+                        <span
+                          class="mint-tag bg-base text-white margin-right-1"
+                          data-testid="tag"
                         >
-                          <span
-                            class="mint-tag bg-base text-white margin-right-0"
-                            data-testid="tag"
-                          >
-                            Draft Model Plan
-                          </span>
+                          Draft Model Plan
+                        </span>
+                        <div
+                          class="display-flex flex-align-center flex-wrap margin-right-1"
+                        />
+                        <div
+                          class="mint-no-print task-list-status__border border-base-light margin-right-2"
+                        >
+                          <a
+                            class="usa-link display-flex flex-align-center margin-right-2"
+                            href="/models/598db9f0-54c0-4346-bb6b-da46a36eff1a/collaboration-area/status"
+                          />
                         </div>
-                        <div
-                          class="display-flex flex-align-center flex-wrap"
-                          data-testid="grid"
+                      </div>
+                      <div
+                        class="display-flex flex-align-center task-list-status__border border-base-light margin-right-2"
+                      >
+                        <a
+                          class="usa-link display-flex flex-align-center margin-right-2"
+                          href="/models/598db9f0-54c0-4346-bb6b-da46a36eff1a/change-history"
                         >
-                          <div
-                            class="mint-no-print"
+                          <svg
+                            class="usa-icon margin-right-1"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <a
-                              class="usa-link display-flex flex-align-center"
-                              href="/models/598db9f0-54c0-4346-bb6b-da46a36eff1a/collaboration-area/status"
+                            <path
+                              d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
                             />
-                          </div>
-                        </div>
+                          </svg>
+                          View change history
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -509,39 +535,52 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       Status
                     </p>
                     <div
-                      class="padding-0"
+                      class="padding-0 task-list-status "
                       data-testid="task-list-status"
                     >
                       <div
-                        class="grid-row"
-                        data-testid="grid"
-                        style="gap: 16px;"
+                        class="display-flex flex-align-center"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                          data-testid="grid"
-                          style="gap: 10px;"
+                        <span
+                          class="mint-tag bg-base text-white margin-right-1"
+                          data-testid="tag"
                         >
-                          <span
-                            class="mint-tag bg-base text-white margin-right-0"
-                            data-testid="tag"
-                          >
-                            Ended
-                          </span>
+                          Ended
+                        </span>
+                        <div
+                          class="display-flex flex-align-center flex-wrap margin-right-1"
+                        />
+                        <div
+                          class="mint-no-print task-list-status__border border-base-light margin-right-2"
+                        >
+                          <a
+                            class="usa-link display-flex flex-align-center margin-right-2"
+                            href="/models/4fc87324-dbb0-4867-8e4d-5a20a76c8ae2/collaboration-area/status"
+                          />
                         </div>
-                        <div
-                          class="display-flex flex-align-center flex-wrap"
-                          data-testid="grid"
+                      </div>
+                      <div
+                        class="display-flex flex-align-center task-list-status__border border-base-light margin-right-2"
+                      >
+                        <a
+                          class="usa-link display-flex flex-align-center margin-right-2"
+                          href="/models/4fc87324-dbb0-4867-8e4d-5a20a76c8ae2/change-history"
                         >
-                          <div
-                            class="mint-no-print"
+                          <svg
+                            class="usa-icon margin-right-1"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <a
-                              class="usa-link display-flex flex-align-center"
-                              href="/models/4fc87324-dbb0-4867-8e4d-5a20a76c8ae2/collaboration-area/status"
+                            <path
+                              d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
                             />
-                          </div>
-                        </div>
+                          </svg>
+                          View change history
+                        </a>
                       </div>
                     </div>
                   </div>

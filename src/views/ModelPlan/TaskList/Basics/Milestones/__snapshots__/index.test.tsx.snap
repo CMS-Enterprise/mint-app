@@ -14,7 +14,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
           class="usa-breadcrumb__list-item"
         >
           <a
-            class="usa-breadcrumb__link"
+            class="usa-link usa-breadcrumb__link"
             href="/"
           >
             <span>
@@ -26,11 +26,23 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
           class="usa-breadcrumb__list-item"
         >
           <a
-            class="usa-breadcrumb__link"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/"
+            class="usa-link usa-breadcrumb__link"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
           >
             <span>
-              Model Plan task list
+              Model collaboration area
+            </span>
+          </a>
+        </li>
+        <li
+          class="usa-breadcrumb__list-item"
+        >
+          <a
+            class="usa-link usa-breadcrumb__link"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
+          >
+            <span>
+              Model Plan Task List
             </span>
           </a>
         </li>
@@ -38,7 +50,9 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
           aria-current="page"
           class="usa-breadcrumb__list-item usa-current"
         >
-          Model basics
+          <span>
+            Model basics
+          </span>
         </li>
       </ol>
     </nav>

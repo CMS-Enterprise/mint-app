@@ -28,7 +28,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
+                class="usa-link usa-breadcrumb__link"
                 href="/"
               >
                 <span>
@@ -40,11 +40,23 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
+                class="usa-link usa-breadcrumb__link"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+              >
+                <span>
+                  Model collaboration area
+                </span>
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-link usa-breadcrumb__link"
                 href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
               >
                 <span>
-                  Model Plan task list
+                  Model Plan Task List
                 </span>
               </a>
             </li>
@@ -52,7 +64,9 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
               aria-current="page"
               class="usa-breadcrumb__list-item usa-current"
             >
-              Documents
+              <span>
+                Documents
+              </span>
             </li>
           </ol>
         </nav>
@@ -502,10 +516,22 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
       >
         <a
           class="usa-link usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
         >
           <span>
-            Model Plan task list
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+        >
+          <span>
+            Model Plan Task List
           </span>
         </a>
       </li>
@@ -517,7 +543,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
           href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/it-solutions"
         >
           <span>
-            Operational solutions tracker
+            Operational solutions and implementation status tracker
           </span>
         </a>
       </li>
@@ -526,7 +552,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
       >
         <a
           class="usa-link usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/081cb879-bd6f-4ead-b9cb-3a299de76390/solution-details"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/it-solutions/undefined/undefined/solution-details"
         >
           <span>
             Solution details

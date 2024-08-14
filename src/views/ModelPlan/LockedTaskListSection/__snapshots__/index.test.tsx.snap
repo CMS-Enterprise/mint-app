@@ -32,10 +32,22 @@ exports[`Locked Task List Section Page > matches snapshot 1`] = `
         >
           <a
             class="usa-link usa-breadcrumb__link"
-            href="/models/53e06174-83b9-462a-86d0-3a936f3c2670/collaboration-area/task-list/"
+            href="/models/53e06174-83b9-462a-86d0-3a936f3c2670/collaboration-area"
           >
             <span>
-              Model Plan task list
+              Model collaboration area
+            </span>
+          </a>
+        </li>
+        <li
+          class="usa-breadcrumb__list-item"
+        >
+          <a
+            class="usa-link usa-breadcrumb__link"
+            href="/models/53e06174-83b9-462a-86d0-3a936f3c2670/collaboration-area/task-list"
+          >
+            <span>
+              Model Plan Task List
             </span>
           </a>
         </li>
@@ -43,7 +55,9 @@ exports[`Locked Task List Section Page > matches snapshot 1`] = `
           aria-current="page"
           class="usa-breadcrumb__list-item usa-current"
         >
-          Model basics
+          <span>
+            Model basics
+          </span>
         </li>
       </ol>
     </nav>

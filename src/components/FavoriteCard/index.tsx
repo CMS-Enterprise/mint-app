@@ -163,7 +163,7 @@ export const FavoriteIcon = ({
   return (
     <Tag
       className={classNames(
-        'text-primary text-bold bookmark__tag padding-1 padding-top-05 padding-bottom-105 padding-x-2 bg-white pointer',
+        'text-primary text-bold bookmark__tag padding-y-1 padding-x-2 bg-white pointer',
         {
           'bg-primary-lighter': isCollaborationArea
         }

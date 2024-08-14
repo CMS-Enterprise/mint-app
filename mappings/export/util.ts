@@ -5,7 +5,7 @@
 
 import basics from '../../src/i18n/en-US/modelPlan/basics';
 import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
-import collaborator from '../../src/i18n/en-US/modelPlan/collaboration-area/collaborators';
+import collaborator from '../../src/i18n/en-US/modelPlan/collaborators';
 import crs from '../../src/i18n/en-US/modelPlan/crs';
 import discussion from '../../src/i18n/en-US/modelPlan/discussions';
 import document from '../../src/i18n/en-US/modelPlan/documents';
