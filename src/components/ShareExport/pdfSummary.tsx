@@ -73,6 +73,7 @@ const PDFSummary = ({
             modelID={modelID}
             status={status}
             statusLabel
+            changeHistoryLink={false}
             modifiedOrCreateLabel={!!modifiedDts}
             modifiedDts={modifiedDts ?? createdDts}
           />

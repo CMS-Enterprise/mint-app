@@ -161,7 +161,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
             </span>
           </h1>
           <div
-            class="padding-0 task-list-status "
+            class="padding-0 task-list-status"
             data-testid="task-list-status"
           >
             <div

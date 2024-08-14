@@ -18,6 +18,7 @@ type TaskListStatusProps = {
   hasEditAccess?: boolean;
   statusLabel?: boolean;
   updateLabel?: boolean;
+  changeHistoryLink?: boolean;
   modifiedDts?: string;
   isReadView?: boolean;
   isCollaborationArea?: boolean;
@@ -32,6 +33,7 @@ const TaskListStatus = ({
   hasEditAccess = false,
   statusLabel = false,
   updateLabel = false,
+  changeHistoryLink = true,
   modifiedDts,
   isReadView,
   isCollaborationArea,
@@ -48,7 +50,9 @@ const TaskListStatus = ({
 
   return (
     <div
-      className={classNames('padding-0 task-list-status ', className)}
+      className={classNames('padding-0', className, {
+        'task-list-status': isCollaborationArea || isReadView
+      })}
       data-testid="task-list-status"
     >
       <div
@@ -86,26 +90,28 @@ const TaskListStatus = ({
         )}
       </div>
 
-      <div className="display-flex flex-align-center task-list-status__border border-base-light margin-right-2">
-        <UswdsReactLink
-          to={{
-            pathname: `/models/${modelID}/change-history`,
-            state: {
-              from: isCollaborationArea ? null : 'readview'
-            }
-          }}
-          className={classNames(
-            'display-flex flex-align-center margin-right-2',
-            {
-              'padding-y-2': isTablet
-            }
-          )}
-        >
-          <Icon.History className="margin-right-1" />
+      {changeHistoryLink && (
+        <div className="display-flex flex-align-center task-list-status__border border-base-light margin-right-2">
+          <UswdsReactLink
+            to={{
+              pathname: `/models/${modelID}/change-history`,
+              state: {
+                from: isCollaborationArea ? null : 'readview'
+              }
+            }}
+            className={classNames(
+              'display-flex flex-align-center margin-right-2',
+              {
+                'padding-y-2': isTablet
+              }
+            )}
+          >
+            <Icon.History className="margin-right-1" />
 
-          {changeHistoryT('viewChangeHistory')}
-        </UswdsReactLink>
-      </div>
+            {changeHistoryT('viewChangeHistory')}
+          </UswdsReactLink>
+        </div>
+      )}
 
       {hasEditAccess && !isCollaborationArea && (
         <div className="display-flex flex-align-center">

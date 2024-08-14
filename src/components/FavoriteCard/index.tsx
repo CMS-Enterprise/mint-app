@@ -85,6 +85,7 @@ const FavoriteCard = ({
             <TaskListStatus
               modelID={id}
               status={status}
+              changeHistoryLink={false}
               className={classNames({
                 bookmark__status: !isMobile
               })}

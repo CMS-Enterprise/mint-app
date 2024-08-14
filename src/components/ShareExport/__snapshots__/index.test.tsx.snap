@@ -105,7 +105,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </span>
               </h1>
               <div
-                class="padding-0 task-list-status "
+                class="padding-0 task-list-status"
                 data-testid="task-list-status"
               >
                 <div
@@ -131,29 +131,6 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       Last updated on 08/27/2022
                     </p>
                   </div>
-                </div>
-                <div
-                  class="display-flex flex-align-center task-list-status__border border-base-light margin-right-2"
-                >
-                  <a
-                    class="usa-link display-flex flex-align-center margin-right-2"
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/change-history"
-                  >
-                    <svg
-                      class="usa-icon margin-right-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
-                      />
-                    </svg>
-                    View change history
-                  </a>
                 </div>
               </div>
             </div>
