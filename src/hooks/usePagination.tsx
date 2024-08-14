@@ -3,11 +3,14 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { Pagination as TrussPagination } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import TableResults from 'components/TableResults';
+
 type PaginationProps = {
   className?: string;
   items: any[];
   itemsPerPage: number;
   loading?: boolean;
+  query?: string;
   withQueryParams?: string; // Query parameter to use for pagination - ex: withQueryParams: 'page' -> ?page=1'
 } & JSX.IntrinsicElements['div'];
 
@@ -17,8 +20,13 @@ const usePagination = <T extends any[]>({
   items,
   itemsPerPage = 3,
   loading = false,
+  query = '',
   withQueryParams
-}: PaginationProps): { currentItems: T; Pagination: JSX.Element } => {
+}: PaginationProps): {
+  currentItems: T;
+  Pagination: JSX.Element;
+  Results: JSX.Element;
+} => {
   const location = useLocation();
   const history = useHistory();
 
@@ -108,12 +116,15 @@ const usePagination = <T extends any[]>({
     setCurrentPageNum(pageNum);
   };
 
+  const pageOffset = (currentPageNum - 1) * itemsPerPage;
+
   return {
     currentItems: currentItems as T,
     Pagination: (
       <div className={classNames(className)}>
         {pageCount > 1 && (
           <TrussPagination
+            className="mint-pagination"
             pathname={location.pathname}
             currentPage={currentPageNum}
             maxSlots={7}
@@ -124,6 +135,15 @@ const usePagination = <T extends any[]>({
           />
         )}
       </div>
+    ),
+    Results: (
+      <TableResults
+        globalFilter={query}
+        pageIndex={pageOffset / itemsPerPage}
+        pageSize={itemsPerPage}
+        filteredRowLength={items.length}
+        rowLength={items.length}
+      />
     )
   };
 };

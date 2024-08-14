@@ -134,6 +134,7 @@ export const modelBasicsMocks = [
           __typename: 'ModelPlan',
           id: modelID,
           nameHistory: ['First Name', 'Second Name'],
+          isCollaborator: true,
           basics: modelBasicsData
         }
       }
@@ -686,7 +687,6 @@ const summaryData: GetModelSummaryTypes = {
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
   isCollaborator: true,
-
   collaborators: [
     {
       userAccount: {

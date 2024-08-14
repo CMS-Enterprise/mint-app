@@ -28,6 +28,7 @@ const mocks = [
               modelName: 'Plan With CRs and TDLs',
               status: ModelStatus.PLAN_DRAFT,
               modelBySolutionStatus: ModelBySolutionStatus.PLANNED,
+              abbreviation: 'PWCRT',
               basics: {
                 id: '6a3c2f25-81ce-4364-b631-4c3b08eeb5af',
                 modelCategory: null,
@@ -45,6 +46,7 @@ const mocks = [
               modelName: 'Plan With Collaborators',
               status: ModelStatus.PLAN_DRAFT,
               modelBySolutionStatus: ModelBySolutionStatus.PLANNED,
+              abbreviation: 'PWCLB',
               basics: {
                 id: '3a1584a5-6712-4ab8-8832-86faa183d3b1',
                 modelCategory: null,
@@ -62,6 +64,7 @@ const mocks = [
               modelName: 'Enhancing Oncology Model',
               status: ModelStatus.PLAN_DRAFT,
               modelBySolutionStatus: ModelBySolutionStatus.PLANNED,
+              abbreviation: 'EOM',
               basics: {
                 id: '3f77db11-da8c-4282-a5c7-c50282833244',
                 modelCategory: null,
@@ -79,6 +82,7 @@ const mocks = [
               modelName: 'Empty Plan',
               status: ModelStatus.PLAN_DRAFT,
               modelBySolutionStatus: ModelBySolutionStatus.PLANNED,
+              abbreviation: 'EP',
               basics: {
                 id: '9a9547e2-b1d0-4ff7-a86b-9dc9339500fa',
                 modelCategory: 'STATE_BASED',
@@ -96,6 +100,7 @@ const mocks = [
               modelName: 'Plan with Basics',
               modelBySolutionStatus: ModelBySolutionStatus.ENDED,
               status: ModelStatus.ENDED,
+              abbreviation: 'PWB',
               basics: {
                 id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
                 modelCategory: null,
@@ -113,6 +118,7 @@ const mocks = [
               modelName: 'Z Paused Model',
               modelBySolutionStatus: ModelBySolutionStatus.OTHER,
               status: ModelStatus.PAUSED,
+              abbreviation: 'ZPM',
               basics: {
                 id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
                 modelCategory: null,
@@ -130,6 +136,7 @@ const mocks = [
               modelName: 'Z Canceled Model',
               modelBySolutionStatus: ModelBySolutionStatus.OTHER,
               status: ModelStatus.CANCELED,
+              abbreviation: 'ZCM',
               basics: {
                 id: 'f34b62fa-4ad4-4e6b-a60d-fb77fdf23831',
                 modelCategory: null,
@@ -181,9 +188,9 @@ describe('ModelsBySolution Table and Card', () => {
     // First three models should be visible
     await waitFor(async () => {
       await user.click(getByTestId('total-count'));
-      expect(getByText('Empty Plan')).toBeInTheDocument();
-      expect(getByText('Enhancing Oncology Model')).toBeInTheDocument();
-      expect(getByText('Plan with Basics')).toBeInTheDocument();
+      expect(getByText('Empty Plan (EP)')).toBeInTheDocument();
+      expect(getByText('Enhancing Oncology Model (EOM)')).toBeInTheDocument();
+      expect(getByText('Plan with Basics (PWB)')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();
