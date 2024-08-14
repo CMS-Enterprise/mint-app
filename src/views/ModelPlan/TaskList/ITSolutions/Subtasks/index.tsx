@@ -160,7 +160,7 @@ const Subtasks = ({
               </Alert>
             );
             history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+              `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
             );
           }
         }
@@ -206,7 +206,7 @@ const Subtasks = ({
                 </Alert>
               );
               history.push(
-                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+                `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
               );
             }
           })
@@ -242,7 +242,7 @@ const Subtasks = ({
                 </Alert>
               );
               history.push(
-                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+                `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
               );
             }
           })
@@ -300,14 +300,14 @@ const Subtasks = ({
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
+    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/` },
     {
       text: opSolutionsMiscT('subtasks.itSolutionsTrackerBreadcrumb'),
-      url: `/models/${modelID}/task-list/it-solutions`
+      url: `/models/${modelID}/collaboration-area/task-list/it-solutions`
     },
     {
       text: opSolutionsMiscT('subtasks.solutionDetails'),
-      url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+      url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
     },
     {
       text: managingSubtasks
@@ -535,7 +535,7 @@ const Subtasks = ({
                                     onClick={() =>
                                       managingSubtasks
                                         ? history.push(
-                                            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks?from=manage-subtasks`
+                                            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks?from=manage-subtasks`
                                           )
                                         : push({
                                             __typename:
@@ -585,10 +585,10 @@ const Subtasks = ({
                         onClick={() =>
                           fromManageSubtasks
                             ? history.push(
-                                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/manage-subtasks`
+                                `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/manage-subtasks`
                               )
                             : history.push(
-                                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+                                `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
                               )
                         }
                       >

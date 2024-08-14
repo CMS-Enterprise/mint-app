@@ -102,7 +102,7 @@ export const CRTDLs = () => {
           </Alert>
 
           <UswdsReactLink
-            to={`/models/${modelID}/task-list`}
+            to={`/models/${modelID}/collaboration-area/task-list`}
             className="display-inline-flex flex-align-center margin-y-3"
           >
             <Icon.ArrowBack className="margin-right-1" aria-hidden />
@@ -114,7 +114,7 @@ export const CRTDLs = () => {
           <UswdsReactLink
             className="usa-button"
             variant="unstyled"
-            to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
+            to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
           >
             {t('addCRTDL')}
           </UswdsReactLink>

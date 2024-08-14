@@ -124,7 +124,7 @@ const Collaborators = () => {
               </>
             );
             history.push(
-              `/models/${modelID}/collaborators?view=${manageOrAdd}`
+              `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
             );
           }
         })
@@ -163,7 +163,7 @@ const Collaborators = () => {
               </>
             );
             history.push(
-              `/models/${modelID}/collaborators?view=${manageOrAdd}`
+              `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
             );
           }
         })
@@ -396,7 +396,7 @@ const Collaborators = () => {
           </Formik>
 
           <UswdsReactLink
-            to={`/models/${modelID}/collaborators?view=${manageOrAdd}`}
+            to={`/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`}
           >
             <span>&larr; </span>{' '}
             {!collaboratorId

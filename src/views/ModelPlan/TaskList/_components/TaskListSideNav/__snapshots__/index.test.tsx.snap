@@ -79,7 +79,7 @@ exports[`The TaskListSideNavActions > matches snapshot 1`] = `
       >
         <a
           class="usa-link"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators?view=manage"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators?view=manage"
         >
           Edit team
         </a>

@@ -41,7 +41,7 @@ exports[`Model Plan CR and TDL page > matches snapshot 1`] = `
             >
               <a
                 class="usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
               >
                 <span>
                   Model Plan task list
@@ -101,7 +101,7 @@ exports[`Model Plan CR and TDL page > matches snapshot 1`] = `
         </div>
         <a
           class="usa-link display-inline-flex flex-align-center margin-y-3"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
         >
           <svg
             aria-hidden="true"
@@ -126,7 +126,7 @@ exports[`Model Plan CR and TDL page > matches snapshot 1`] = `
         </h4>
         <a
           class="usa-button"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/cr-and-tdl/add-cr-and-tdl"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/cr-and-tdl/add-cr-and-tdl"
         >
           Add a CR or TDL
         </a>
@@ -387,7 +387,7 @@ exports[`Model Plan CR and TDL page > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link margin-right-2"
-                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/cr-and-tdl/add-cr-and-tdl?type=cr&id=123"
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/cr-and-tdl/add-cr-and-tdl?type=cr&id=123"
                     >
                       Edit
                     </a>
@@ -630,7 +630,7 @@ exports[`Model Plan CR and TDL page > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link margin-right-2"
-                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/cr-and-tdl/add-cr-and-tdl?type=tdl&id=456"
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/cr-and-tdl/add-cr-and-tdl?type=tdl&id=456"
                     >
                       Edit
                     </a>

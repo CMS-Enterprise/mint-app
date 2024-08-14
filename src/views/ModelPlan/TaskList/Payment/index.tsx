@@ -45,37 +45,37 @@ export const Payment = () => {
     <MainContent className="grid-container" data-testid="model-payment">
       <Switch>
         <ProtectedRoute
-          path="/models/:modelID/task-list/payment"
+          path="/models/:modelID/collaboration-area/task-list/payment"
           component={FundingSource}
           exact
         />
         <ProtectedRoute
-          path="/models/:modelID/task-list/payment/claims-based-payment"
+          path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment"
           component={ClaimsBasedPayment}
           exact
         />
         <ProtectedRoute
-          path="/models/:modelID/task-list/payment/non-claims-based-payment"
+          path="/models/:modelID/collaboration-area/task-list/payment/non-claims-based-payment"
           component={NonClaimsBasedPayment}
           exact
         />
         <ProtectedRoute
-          path="/models/:modelID/task-list/payment/anticipating-dependencies"
+          path="/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies"
           component={AnticipateDependencies}
           exact
         />
         <ProtectedRoute
-          path="/models/:modelID/task-list/payment/beneficiary-cost-sharing"
+          path="/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing"
           component={BeneficiaryCostSharing}
           exact
         />
         <ProtectedRoute
-          path="/models/:modelID/task-list/payment/complexity"
+          path="/models/:modelID/collaboration-area/task-list/payment/complexity"
           component={Complexity}
           exact
         />
         <ProtectedRoute
-          path="/models/:modelID/task-list/payment/recover-payment"
+          path="/models/:modelID/collaboration-area/task-list/payment/recover-payment"
           component={Recover}
           exact
         />

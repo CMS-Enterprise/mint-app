@@ -170,7 +170,7 @@ const TargetsAndOptions = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/characteristics/authority`
+            `/models/${modelID}/collaboration-area/task-list/characteristics/authority`
           );
         }}
         enableReinitialize
@@ -492,7 +492,7 @@ const TargetsAndOptions = () => {
                         id="ops-eval-and-learning-data-needed-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -597,7 +597,7 @@ const TargetsAndOptions = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/characteristics/involvements`
+                          `/models/${modelID}/collaboration-area/task-list/characteristics/involvements`
                         );
                       }}
                     >
@@ -610,7 +610,7 @@ const TargetsAndOptions = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
                     {miscellaneousT('saveAndReturn')}

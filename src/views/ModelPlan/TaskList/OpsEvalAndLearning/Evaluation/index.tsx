@@ -119,11 +119,11 @@ const Evaluation = () => {
       isQualityMeasures(formikRef?.current?.values.dataNeededForMonitoring)
     ) {
       history.push(
-        `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
+        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality`
       );
     } else {
       history.push(
-        `/models/${modelID}/task-list/ops-eval-and-learning/data-sharing`
+        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/data-sharing`
       );
     }
   };
@@ -251,7 +251,7 @@ const Evaluation = () => {
                         id="ops-eval-and-learning-evaluation-approach-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -389,7 +389,7 @@ const Evaluation = () => {
                         id="ops-eval-and-learning-data-needed-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -471,7 +471,7 @@ const Evaluation = () => {
                         id="ops-eval-and-learning-data-to-send-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -565,7 +565,7 @@ const Evaluation = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/ops-eval-and-learning/performance`
+                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/performance`
                         );
                       }}
                     >
@@ -580,7 +580,7 @@ const Evaluation = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

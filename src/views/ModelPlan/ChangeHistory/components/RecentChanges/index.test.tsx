@@ -66,7 +66,7 @@ describe('RecentChanges', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -80,7 +80,7 @@ describe('RecentChanges', () => {
     const { getByText } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -99,7 +99,7 @@ describe('RecentChanges', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>

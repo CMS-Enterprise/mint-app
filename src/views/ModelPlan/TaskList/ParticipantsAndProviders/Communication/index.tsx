@@ -171,7 +171,7 @@ export const Communication = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/participants-and-providers/coordination`
+            `/models/${modelID}/collaboration-area/task-list/participants-and-providers/coordination`
           );
         }}
         enableReinitialize
@@ -254,7 +254,7 @@ export const Communication = () => {
                         id="participants-and-providers-communication-method-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -392,7 +392,7 @@ export const Communication = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/participants-and-providers/participants-options`
+                          `/models/${modelID}/collaboration-area/task-list/participants-and-providers/participants-options`
                         );
                       }}
                     >
@@ -407,7 +407,7 @@ export const Communication = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

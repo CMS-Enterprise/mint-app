@@ -20,10 +20,10 @@ export default {
     Story => (
       <MemoryRouter
         initialEntries={[
-          '/models/602287ff-d9d5-4203-86eb-e168fbd47242/task-list/it-solutions/f92a8a35-86de-4e03-a81a-bd8bec2e30e3/select-solutions'
+          '/models/602287ff-d9d5-4203-86eb-e168fbd47242/collaboration-area/task-list/it-solutions/f92a8a35-86de-4e03-a81a-bd8bec2e30e3/select-solutions'
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
+        <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/select-solutions">
           <Story />
         </Route>
       </MemoryRouter>

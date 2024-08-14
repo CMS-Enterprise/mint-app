@@ -26,7 +26,7 @@ exports[`Operational Solutions Add Subtasks > matches snapshot 1`] = `
       >
         <a
           class="usa-link usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/"
         >
           <span>
             Model Plan task list
@@ -38,7 +38,7 @@ exports[`Operational Solutions Add Subtasks > matches snapshot 1`] = `
       >
         <a
           class="usa-link usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/it-solutions"
         >
           <span>
             Operational solutions tracker
@@ -50,7 +50,7 @@ exports[`Operational Solutions Add Subtasks > matches snapshot 1`] = `
       >
         <a
           class="usa-link usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/786f6717-f718-4657-8df9-58ec9bca5c1c/solution-details"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/786f6717-f718-4657-8df9-58ec9bca5c1c/solution-details"
         >
           <span>
             Solution details
@@ -332,7 +332,7 @@ exports[`Operational Solutions Manage Subtasks > matches snapshot 1`] = `
       >
         <a
           class="usa-link usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/"
         >
           <span>
             Model Plan task list
@@ -344,7 +344,7 @@ exports[`Operational Solutions Manage Subtasks > matches snapshot 1`] = `
       >
         <a
           class="usa-link usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/it-solutions"
         >
           <span>
             Operational solutions tracker
@@ -356,7 +356,7 @@ exports[`Operational Solutions Manage Subtasks > matches snapshot 1`] = `
       >
         <a
           class="usa-link usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/786f6717-f718-4657-8df9-58ec9bca5c1c/solution-details"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/786f6717-f718-4657-8df9-58ec9bca5c1c/solution-details"
         >
           <span>
             Solution details

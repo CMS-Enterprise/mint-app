@@ -118,13 +118,13 @@ const FundingSource = () => {
     );
 
     if (hasClaimsBasedPayment) {
-      history.push(`/models/${modelID}/task-list/payment/claims-based-payment`);
+      history.push(`/models/${modelID}/collaboration-area/task-list/payment/claims-based-payment`);
     } else if (hasNonClaimBasedPayment) {
       history.push(
-        `/models/${modelID}/task-list/payment/non-claims-based-payment`
+        `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
       );
     } else {
-      history.push(`/models/${modelID}/task-list/payment/complexity`);
+      history.push(`/models/${modelID}/collaboration-area/task-list/payment/complexity`);
     }
   };
 
@@ -519,7 +519,7 @@ const FundingSource = () => {
                               id="payment-pay-recipients-warning"
                               onClick={() =>
                                 history.push(
-                                  `/models/${modelID}/task-list/it-solutions`
+                                  `/models/${modelID}/collaboration-area/task-list/it-solutions`
                                 )
                               }
                             />
@@ -563,7 +563,7 @@ const FundingSource = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(`/models/${modelID}/collaboration-area/task-list`)
                           }
                         >
                           <Icon.ArrowBack

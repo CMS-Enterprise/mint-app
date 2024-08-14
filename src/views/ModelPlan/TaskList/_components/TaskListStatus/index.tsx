@@ -71,7 +71,7 @@ const TaskListStatus = ({
             {!isReadView && (
               <div className="mint-no-print border-right-2px border-base-light margin-right-2">
                 <UswdsReactLink
-                  to={`/models/${modelID}/status`}
+                  to={`/models/${modelID}/collaboration-area/status`}
                   className="display-flex flex-align-center margin-right-2"
                 >
                   {icon && <Icon.Edit className="margin-right-1" />}
@@ -85,7 +85,7 @@ const TaskListStatus = ({
                 to={{
                   pathname: `/models/${modelID}/change-history`,
                   state: {
-                    from: 'readview'
+                    from: isCollaborationArea ? null : 'readview'
                   }
                 }}
                 className="display-flex flex-align-center margin-right-2"

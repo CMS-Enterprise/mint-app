@@ -158,7 +158,9 @@ const Milestones = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={() => {
-            history.push(`/models/${modelID}/task-list/characteristics`);
+            history.push(
+              `/models/${modelID}/collaboration-area/task-list/characteristics`
+            );
           }}
           enableReinitialize
           validateOnBlur={false}
@@ -534,7 +536,7 @@ const Milestones = () => {
                                 window.scrollTo(0, 0);
                               } else {
                                 history.push(
-                                  `/models/${modelID}/task-list/basics/overview`
+                                  `/models/${modelID}/collaboration-area/task-list/basics/overview`
                                 );
                               }
                             });
@@ -557,7 +559,9 @@ const Milestones = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
-                        history.push(`/models/${modelID}/task-list`)
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list`
+                        )
                       }
                     >
                       <Icon.ArrowBack className="margin-right-1" aria-hidden />

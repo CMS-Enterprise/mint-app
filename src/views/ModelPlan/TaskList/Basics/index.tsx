@@ -248,7 +248,9 @@ const BasicsContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          history.push(`/models/${modelID}/task-list/basics/overview`);
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/basics/overview`
+          );
         }}
         enableReinitialize
         validationSchema={planBasicsSchema.pageOneSchema}
@@ -646,7 +648,9 @@ const BasicsContent = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list`
+                            )
                           }
                         >
                           <Icon.ArrowBack
@@ -700,17 +704,17 @@ export const Basics = () => {
         <Grid desktop={{ col: 12 }}>
           <Switch>
             <Route
-              path="/models/:modelID/task-list/basics"
+              path="/models/:modelID/collaboration-area/task-list/basics"
               exact
               component={() => <BasicsContent />}
             />
             <Route
-              path="/models/:modelID/task-list/basics/overview"
+              path="/models/:modelID/collaboration-area/task-list/basics/overview"
               exact
               render={() => <Overview />}
             />
             <Route
-              path="/models/:modelID/task-list/basics/milestones"
+              path="/models/:modelID/collaboration-area/task-list/basics/milestones"
               exact
               render={() => <Milestones />}
             />

@@ -173,7 +173,7 @@ const AddSolution = () => {
 
     if (updateMutation && !updateMutation.errors) {
       history.push(
-        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions?isCustomNeed=${isCustomNeed}`
+        `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/select-solutions?isCustomNeed=${isCustomNeed}`
       );
     } else if (!updateMutation || updateMutation.errors) {
       setMutationError(true);
@@ -199,7 +199,7 @@ const AddSolution = () => {
         <Breadcrumb>
           <BreadcrumbLink
             asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/`}
+            to={`/models/${modelID}/collaboration-area/task-list/`}
           >
             <span>{h('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
@@ -207,7 +207,7 @@ const AddSolution = () => {
         <Breadcrumb>
           <BreadcrumbLink
             asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/it-solutions`}
+            to={`/models/${modelID}/collaboration-area/task-list/it-solutions`}
           >
             <span>{t('breadcrumb')}</span>
           </BreadcrumbLink>
@@ -347,11 +347,11 @@ const AddSolution = () => {
                                       OperationalSolutionKey.OTHER_NEW_PROCESS
                                     ) {
                                       history.push(
-                                        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
+                                        `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
                                       );
                                     } else {
                                       history.push(
-                                        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution?selectedSolution=${values.key}`
+                                        `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution?selectedSolution=${values.key}`
                                       );
                                     }
                                   }}
@@ -407,8 +407,8 @@ const AddSolution = () => {
                               history.push(
                                 isCustomNeed
                                   ? // To update this to go to new update operational need page
-                                    `/models/${modelID}/task-list/it-solutions`
-                                  : `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+                                    `/models/${modelID}/collaboration-area/task-list/it-solutions`
+                                  : `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/select-solutions`
                               );
                             }}
                           >

@@ -273,7 +273,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
         </form>
         <a
           class="usa-link"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators?view=add"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators?view=add"
         >
           <span>
             ← 

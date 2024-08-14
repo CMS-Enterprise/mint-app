@@ -73,13 +73,13 @@ describe('Collaborator/Team Member page w/table', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators?view=add'
+          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators?view=add'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
             <MessageProvider>
-              <Route path="models/:modelID/collaborators">
+              <Route path="models/:modelID/collaboration-area/collaborators">
                 <CollaboratorsContent />
               </Route>
             </MessageProvider>
@@ -103,13 +103,13 @@ describe('Collaborator/Team Member page w/table', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators?view=add'
+          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators?view=add'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
             <MessageProvider>
-              <Route path="models/:modelID/collaborators">
+              <Route path="models/:modelID/collaboration-area/collaborators">
                 <CollaboratorsContent />
               </Route>
             </MessageProvider>

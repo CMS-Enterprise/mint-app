@@ -27,7 +27,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
         >
           <a
             class="usa-breadcrumb__link"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/"
           >
             <span>
               Model Plan task list

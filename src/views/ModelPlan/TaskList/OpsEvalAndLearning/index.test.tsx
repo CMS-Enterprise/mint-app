@@ -106,11 +106,11 @@ describe('Model Plan Ops Eval and Learning', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning'
         ]}
       >
         <MockedProvider mocks={opsEvalAndLearningMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/ops-eval-and-learning">
+          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning">
             <OpsEvalAndLearningContent />
           </Route>
         </MockedProvider>
@@ -134,11 +134,11 @@ describe('Model Plan Ops Eval and Learning', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning'
         ]}
       >
         <MockedProvider mocks={opsEvalAndLearningMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/ops-eval-and-learning">
+          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning">
             <OpsEvalAndLearningContent />
           </Route>
         </MockedProvider>

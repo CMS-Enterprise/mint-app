@@ -187,7 +187,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push(`/models/${modelID}/task-list/prepare-for-clearance`);
+          history.push(`/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`);
         }
       })
       .catch(() => {
@@ -219,8 +219,8 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
           className="margin-right-2 usa-button text-white text-no-underline"
           to={
             !locked
-              ? `/models/${modelID}/task-list/${section}`
-              : `/models/${modelID}/task-list`
+              ? `/models/${modelID}/collaboration-area/task-list/${section}`
+              : `/models/${modelID}/collaboration-area/task-list`
           }
         >
           {!locked ? p('modal.update') : i('modal.return')}
@@ -274,7 +274,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
               className="usa-button usa-button--outline margin-bottom-1"
               onClick={() => {
                 history.push(
-                  `/models/${modelID}/task-list/prepare-for-clearance`
+                  `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
                 );
               }}
             >
@@ -299,7 +299,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
                 if (taskListLocked || readyForClearance) {
                   setModalOpen(true);
                 } else {
-                  history.push(`/models/${modelID}/task-list/${section}`);
+                  history.push(`/models/${modelID}/collaboration-area/task-list/${section}`);
                 }
               }}
             >

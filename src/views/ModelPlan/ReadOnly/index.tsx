@@ -326,11 +326,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         )}
 
         {!isHelpArticle && (
-          <div className="mint-no-print">
+          <div className="mint-no-print margin-bottom-3">
             <div className="display-flex flex-justify">
               <UswdsReactLink
                 to="/models"
-                className="display-flex flex-align-center margin-bottom-3"
+                className="display-flex flex-align-center"
               >
                 <Icon.ArrowBack className="text-primary margin-right-1" />
                 {h('back')}

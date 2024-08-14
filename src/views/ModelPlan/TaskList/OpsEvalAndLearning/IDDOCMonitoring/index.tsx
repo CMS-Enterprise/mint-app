@@ -150,7 +150,7 @@ const IDDOCMonitoring = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/ops-eval-and-learning/performance`
+            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/performance`
           );
         }}
         enableReinitialize
@@ -359,7 +359,7 @@ const IDDOCMonitoring = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/ops-eval-and-learning/iddoc-testing`
+                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing`
                         );
                       }}
                     >
@@ -374,7 +374,7 @@ const IDDOCMonitoring = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

@@ -40,7 +40,7 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
             >
               <a
                 class="usa-breadcrumb__link"
-                href="/models/undefined/task-list/"
+                href="/models/undefined/collaboration-area/task-list/"
               >
                 <span>
                   Model Plan task list

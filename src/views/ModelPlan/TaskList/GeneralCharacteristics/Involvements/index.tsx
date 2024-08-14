@@ -136,7 +136,7 @@ const Involvements = () => {
         initialValues={initialValues}
         onSubmit={values => {
           history.push(
-            `/models/${modelID}/task-list/characteristics/targets-and-options`
+            `/models/${modelID}/collaboration-area/task-list/characteristics/targets-and-options`
           );
         }}
         enableReinitialize
@@ -402,7 +402,7 @@ const Involvements = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/characteristics/key-characteristics`
+                          `/models/${modelID}/collaboration-area/task-list/characteristics/key-characteristics`
                         );
                       }}
                     >
@@ -417,7 +417,11 @@ const Involvements = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

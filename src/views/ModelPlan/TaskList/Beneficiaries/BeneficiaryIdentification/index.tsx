@@ -154,7 +154,7 @@ const BeneficiaryIdentification = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/beneficiaries/people-impact`
+            `/models/${modelID}/collaboration-area/task-list/beneficiaries/people-impact`
           );
         }}
         enableReinitialize
@@ -555,7 +555,9 @@ const BeneficiaryIdentification = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list/`)
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list/`
+                            )
                           }
                         >
                           <Icon.ArrowBack

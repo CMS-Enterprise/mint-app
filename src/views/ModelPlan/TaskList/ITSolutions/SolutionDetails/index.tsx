@@ -122,7 +122,7 @@ const SolutionDetails = () => {
         <Breadcrumb>
           <BreadcrumbLink
             asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/`}
+            to={`/models/${modelID}/collaboration-area/task-list/`}
           >
             <span>{h('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>
@@ -130,7 +130,7 @@ const SolutionDetails = () => {
         <Breadcrumb>
           <BreadcrumbLink
             asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/it-solutions`}
+            to={`/models/${modelID}/collaboration-area/task-list/it-solutions`}
           >
             <span>{t('breadcrumb')}</span>
           </BreadcrumbLink>
@@ -205,7 +205,7 @@ const SolutionDetails = () => {
                   className="usa-button usa-button--outline"
                   onClick={() => {
                     history.push(
-                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
+                      `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
                     );
                   }}
                 >
@@ -219,10 +219,10 @@ const SolutionDetails = () => {
                   className="usa-button usa-button--outline"
                   onClick={() => {
                     history.push({
-                      pathname: `/models/${modelID}/documents/add-document`,
+                      pathname: `/models/${modelID}/collaboration-area/documents/add-document`,
                       state: {
                         solutionID: operationalSolutionID,
-                        solutionDetailsLink: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+                        solutionDetailsLink: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
                       }
                     });
                   }}

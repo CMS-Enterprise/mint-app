@@ -182,7 +182,7 @@ const PrepareForClearanceCheckList = ({
         const errors = responses?.find(result => result?.errors);
 
         if (!errors) {
-          history.push(`/models/${modelID}/task-list`);
+          history.push(`/models/${modelID}/collaboration-area/task-list`);
         }
       })
       .catch(errors => {
@@ -353,7 +353,7 @@ const PrepareForClearanceCheckList = ({
                                   {/* Need to pass in section ID to update readyForClearance state on next route */}
                                   <UswdsReactLink
                                     data-testid={`clearance-${section}`}
-                                    to={`/models/${modelID}/task-list/prepare-for-clearance/${taskListSections[section].path}/${sectionID}`}
+                                    to={`/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/${taskListSections[section].path}/${sectionID}`}
                                     className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                                   >
                                     {t('review', {
@@ -388,7 +388,7 @@ const PrepareForClearanceCheckList = ({
                       data-testid="dont-update-clearance"
                       className="usa-button usa-button--unstyled display-flex"
                       onClick={() =>
-                        history.push(`/models/${modelID}/task-list`)
+                        history.push(`/models/${modelID}/collaboration-area/task-list`)
                       }
                     >
                       <Icon.ArrowBack className="margin-right-1" aria-hidden />

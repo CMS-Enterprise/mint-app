@@ -20,7 +20,7 @@ import { ASSESSMENT } from 'constants/jobCodes';
 import allMocks from 'data/mock/readonly';
 import basics from 'i18n/en-US/modelPlan/basics';
 import beneficiaries from 'i18n/en-US/modelPlan/beneficiaries';
-import collaborators from 'i18n/en-US/modelPlan/collaborators';
+import collaborators from 'i18n/en-US/modelPlan/collaboration-area/collaborators';
 import generalCharacteristics from 'i18n/en-US/modelPlan/generalCharacteristics';
 import modelPlan from 'i18n/en-US/modelPlan/modelPlan';
 import opsEvalAndLearning from 'i18n/en-US/modelPlan/opsEvalAndLearning';

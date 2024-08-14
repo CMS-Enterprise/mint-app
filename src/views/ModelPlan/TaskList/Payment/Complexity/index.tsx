@@ -105,20 +105,20 @@ const Complexity = () => {
 
     if (hasNonClaimBasedPayment) {
       history.push(
-        `/models/${modelID}/task-list/payment/non-claims-based-payment`
+        `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
       );
     } else if (hasClaimsBasedPayment) {
       if (hasReductionToCostSharing) {
         history.push(
-          `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
+          `/models/${modelID}/collaboration-area/task-list/payment/beneficiary-cost-sharing`
         );
       } else {
         history.push(
-          `/models/${modelID}/task-list/payment/anticipating-dependencies`
+          `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
         );
       }
     } else {
-      history.push(`/models/${modelID}/task-list/payment`);
+      history.push(`/models/${modelID}/collaboration-area/task-list/payment`);
     }
   };
 
@@ -190,7 +190,7 @@ const Complexity = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/task-list/payment/recover-payment`);
+          history.push(`/models/${modelID}/collaboration-area/task-list/payment/recover-payment`);
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -445,7 +445,7 @@ const Complexity = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(`/models/${modelID}/collaboration-area/task-list`)
                           }
                         >
                           <Icon.ArrowBack

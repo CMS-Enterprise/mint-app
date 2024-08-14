@@ -11,10 +11,10 @@ describe('Model Plan Status Update page', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
-        initialEntries={['models/f11eb129-2c80-4080-9440-439cbe1a286f/status']}
+        initialEntries={['models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/status']}
       >
         <MockedProvider>
-          <Route path="models/f11eb129-2c80-4080-9440-439cbe1a286f/status">
+          <Route path="models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/status">
             <MessageProvider>
               <Status />
             </MessageProvider>

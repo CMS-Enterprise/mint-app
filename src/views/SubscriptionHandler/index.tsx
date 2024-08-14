@@ -88,7 +88,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   const modelID = to.split('/')[2];
 
-  const isTaskList = to.split('/')[3] === 'task-list';
+  const isTaskList = to.split('/')[4] === 'task-list';
 
   const taskListRoute = taskListRouteParser(to);
 

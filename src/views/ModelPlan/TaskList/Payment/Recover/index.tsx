@@ -190,7 +190,7 @@ const Recover = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/task-list/it-solutions`);
+          history.push(`/models/${modelID}/collaboration-area/task-list/it-solutions`);
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -272,7 +272,7 @@ const Recover = () => {
                               id="payment-recover-payment-warning"
                               onClick={() =>
                                 history.push(
-                                  `/models/${modelID}/task-list/it-solutions`
+                                  `/models/${modelID}/collaboration-area/task-list/it-solutions`
                                 )
                               }
                             />
@@ -402,7 +402,7 @@ const Recover = () => {
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
                               history.push(
-                                `/models/${modelID}/task-list/payment/complexity`
+                                `/models/${modelID}/collaboration-area/task-list/payment/complexity`
                               );
                             }}
                           >
@@ -420,7 +420,7 @@ const Recover = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(`/models/${modelID}/collaboration-area/task-list`)
                           }
                         >
                           <Icon.ArrowBack

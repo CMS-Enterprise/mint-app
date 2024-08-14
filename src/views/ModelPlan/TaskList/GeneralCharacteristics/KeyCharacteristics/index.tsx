@@ -170,7 +170,7 @@ const KeyCharacteristics = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/characteristics/involvements`
+            `/models/${modelID}/collaboration-area/task-list/characteristics/involvements`
           );
         }}
         enableReinitialize
@@ -456,7 +456,7 @@ const KeyCharacteristics = () => {
                             id="plan-characteristics-collect-bids-warning"
                             onClick={() =>
                               history.push(
-                                `/models/${modelID}/task-list/it-solutions`
+                                `/models/${modelID}/collaboration-area/task-list/it-solutions`
                               )
                             }
                           />
@@ -500,7 +500,7 @@ const KeyCharacteristics = () => {
                             id="plan-characteristics-manage-enrollment-warning"
                             onClick={() =>
                               history.push(
-                                `/models/${modelID}/task-list/it-solutions`
+                                `/models/${modelID}/collaboration-area/task-list/it-solutions`
                               )
                             }
                           />
@@ -542,7 +542,7 @@ const KeyCharacteristics = () => {
                             id="plan-characteristics-contact-updated-warning"
                             onClick={() =>
                               history.push(
-                                `/models/${modelID}/task-list/it-solutions`
+                                `/models/${modelID}/collaboration-area/task-list/it-solutions`
                               )
                             }
                           />
@@ -574,7 +574,7 @@ const KeyCharacteristics = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/characteristics`
+                          `/models/${modelID}/collaboration-area/task-list/characteristics`
                         );
                       }}
                     >
@@ -588,7 +588,7 @@ const KeyCharacteristics = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

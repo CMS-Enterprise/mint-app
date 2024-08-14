@@ -95,7 +95,7 @@ const AddOrUpdateOperationalNeed = () => {
                 </span>
               </Alert>
             );
-            history.push(`/models/${modelID}/task-list/it-solutions`);
+            history.push(`/models/${modelID}/collaboration-area/task-list/it-solutions`);
           }
         })
         .catch(errors => {
@@ -129,11 +129,11 @@ const AddOrUpdateOperationalNeed = () => {
                 </Alert>
               );
               // Save without adding solution
-              history.push(`/models/${modelID}/task-list/it-solutions`);
+              history.push(`/models/${modelID}/collaboration-area/task-list/it-solutions`);
             } else {
               // Contiues to add solution
               history.push(
-                `/models/${modelID}/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution?isCustomNeed=true`
+                `/models/${modelID}/collaboration-area/task-list/it-solutions/${response?.data?.addOrUpdateCustomOperationalNeed?.id}/add-solution?isCustomNeed=true`
               );
             }
           }
@@ -146,8 +146,8 @@ const AddOrUpdateOperationalNeed = () => {
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
+    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/` },
+    { text: t('breadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/it-solutions` },
     {
       text: isUpdating
         ? t('updateThisOpertationalNeed')
@@ -288,7 +288,7 @@ const AddOrUpdateOperationalNeed = () => {
                           className="usa-button usa-button--unstyled display-flex flex-align-center"
                           onClick={() => {
                             history.push(
-                              `/models/${modelID}/task-list/it-solutions`
+                              `/models/${modelID}/collaboration-area/task-list/it-solutions`
                             );
                           }}
                         >

@@ -41,7 +41,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/"
               >
                 <span>
                   Model Plan task list
@@ -53,7 +53,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/prepare-for-clearance"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/prepare-for-clearance"
               >
                 <span>
                   Prepare for clearance

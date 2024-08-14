@@ -166,7 +166,7 @@ const SolutionImplementation = () => {
             if (fromSolutionDetails) {
               history.goBack();
             } else {
-              history.push(`/models/${modelID}/task-list/it-solutions`);
+              history.push(`/models/${modelID}/collaboration-area/task-list/it-solutions`);
             }
 
             // Go back but still save solution details
@@ -174,7 +174,7 @@ const SolutionImplementation = () => {
             history.goBack();
             // Dont save solution details, solutions no needed, and return to tracker
           } else {
-            history.push(`/models/${modelID}/task-list/it-solutions`);
+            history.push(`/models/${modelID}/collaboration-area/task-list/it-solutions`);
           }
         } else if (errors) {
           setMutationError(true);
@@ -204,7 +204,7 @@ const SolutionImplementation = () => {
       return history.goBack();
     }
     if (solutionId) {
-      return history.push(`/models/${modelID}/task-list/it-solutions`);
+      return history.push(`/models/${modelID}/collaboration-area/task-list/it-solutions`);
     }
     return handleFormSubmit(values, null, true);
   };
@@ -223,11 +223,11 @@ const SolutionImplementation = () => {
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
+    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/` },
+    { text: t('breadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/it-solutions` },
     {
       text: t('solutionDetails'),
-      url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
+      url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
     },
     { text: statusBreadcrumb() }
   ];

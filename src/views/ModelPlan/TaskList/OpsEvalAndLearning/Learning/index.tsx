@@ -160,7 +160,7 @@ const Learning = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/task-list/payment`);
+          history.push(`/models/${modelID}/collaboration-area/task-list/payment`);
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -218,7 +218,7 @@ const Learning = () => {
                         id="ops-eval-and-learning-learning-systems-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -321,7 +321,7 @@ const Learning = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/ops-eval-and-learning/data-sharing`
+                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/data-sharing`
                         );
                       }}
                     >
@@ -336,7 +336,7 @@ const Learning = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

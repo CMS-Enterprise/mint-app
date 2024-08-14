@@ -298,7 +298,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
               >
                 <a
                   class="usa-link margin-right-2"
-                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/cr-and-tdl/add-cr-and-tdl?type=cr&id=123#read-only"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/cr-and-tdl/add-cr-and-tdl?type=cr&id=123#read-only"
                 >
                   Edit
                 </a>
@@ -541,7 +541,7 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
               >
                 <a
                   class="usa-link margin-right-2"
-                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/cr-and-tdl/add-cr-and-tdl?type=tdl&id=456#read-only"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/cr-and-tdl/add-cr-and-tdl?type=tdl&id=456#read-only"
                 >
                   Edit
                 </a>

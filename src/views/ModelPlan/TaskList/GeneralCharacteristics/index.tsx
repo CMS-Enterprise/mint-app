@@ -457,7 +457,7 @@ export const CharacteristicsContent = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/characteristics/key-characteristics`
+            `/models/${modelID}/collaboration-area/task-list/characteristics/key-characteristics`
           );
         }}
         enableReinitialize
@@ -1029,7 +1029,11 @@ export const CharacteristicsContent = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
@@ -1054,27 +1058,27 @@ export const Characteristics = () => {
         <Grid desktop={{ col: 12 }}>
           <Switch>
             <ProtectedRoute
-              path="/models/:modelID/task-list/characteristics"
+              path="/models/:modelID/collaboration-area/task-list/characteristics"
               exact
               render={() => <CharacteristicsContent />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/characteristics/key-characteristics"
+              path="/models/:modelID/collaboration-area/task-list/characteristics/key-characteristics"
               exact
               render={() => <KeyCharacteristics />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/characteristics/involvements"
+              path="/models/:modelID/collaboration-area/task-list/characteristics/involvements"
               exact
               render={() => <Involvements />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/characteristics/targets-and-options"
+              path="/models/:modelID/collaboration-area/task-list/characteristics/targets-and-options"
               exact
               render={() => <TargetsAndOptions />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/characteristics/authority"
+              path="/models/:modelID/collaboration-area/task-list/characteristics/authority"
               exact
               render={() => <Authority />}
             />

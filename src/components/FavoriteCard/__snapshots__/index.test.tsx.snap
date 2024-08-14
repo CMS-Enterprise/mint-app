@@ -85,7 +85,7 @@ exports[`FavoriteCard > matches the snapshot 1`] = `
                   >
                     <a
                       class="usa-link display-flex flex-align-center"
-                      href="/models/0186774a-80b0-454c-b69e-c4e949343483/status"
+                      href="/models/0186774a-80b0-454c-b69e-c4e949343483/collaboration-area/status"
                     />
                   </div>
                 </div>

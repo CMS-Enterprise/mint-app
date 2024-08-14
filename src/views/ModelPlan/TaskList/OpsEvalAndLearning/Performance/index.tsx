@@ -112,10 +112,10 @@ const Performance = () => {
   const backPage = () => {
     if (iddocSupport) {
       history.push(
-        `/models/${modelID}/task-list/ops-eval-and-learning/iddoc-monitoring`
+        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring`
       );
     } else {
-      history.push(`/models/${modelID}/task-list/ops-eval-and-learning`);
+      history.push(`/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`);
     }
   };
 
@@ -183,7 +183,7 @@ const Performance = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/ops-eval-and-learning/evaluation`
+            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`
           );
         }}
         enableReinitialize
@@ -242,7 +242,7 @@ const Performance = () => {
                         id="ops-eval-and-learning-benchmark-performance-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -407,7 +407,7 @@ const Performance = () => {
                         id="ops-eval-and-learning-appeal-performance-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                         className="margin-top-2"
@@ -513,7 +513,7 @@ const Performance = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

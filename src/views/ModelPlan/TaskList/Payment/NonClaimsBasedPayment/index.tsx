@@ -110,15 +110,15 @@ const NonClaimsBasedPayment = () => {
     if (hasClaimsBasedPayment) {
       if (hasReductionToCostSharing) {
         history.push(
-          `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
+          `/models/${modelID}/collaboration-area/task-list/payment/beneficiary-cost-sharing`
         );
       } else {
         history.push(
-          `/models/${modelID}/task-list/payment/anticipating-dependencies`
+          `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
         );
       }
     } else {
-      history.push(`/models/${modelID}/task-list/payment`);
+      history.push(`/models/${modelID}/collaboration-area/task-list/payment`);
     }
   };
 
@@ -186,7 +186,7 @@ const NonClaimsBasedPayment = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/task-list/payment/complexity`);
+          history.push(`/models/${modelID}/collaboration-area/task-list/payment/complexity`);
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -258,7 +258,7 @@ const NonClaimsBasedPayment = () => {
                               id="payment-nonclaims-payments-warning"
                               onClick={() =>
                                 history.push(
-                                  `/models/${modelID}/task-list/it-solutions`
+                                  `/models/${modelID}/collaboration-area/task-list/it-solutions`
                                 )
                               }
                             />
@@ -476,7 +476,7 @@ const NonClaimsBasedPayment = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(`/models/${modelID}/collaboration-area/task-list`)
                           }
                         >
                           <Icon.ArrowBack

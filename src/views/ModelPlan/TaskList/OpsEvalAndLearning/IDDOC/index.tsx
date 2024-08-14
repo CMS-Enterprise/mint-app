@@ -150,7 +150,7 @@ const IDDOC = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/ops-eval-and-learning/iddoc-testing`
+            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing`
           );
         }}
         enableReinitialize
@@ -354,7 +354,7 @@ const IDDOC = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/ops-eval-and-learning`
+                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
                         );
                       }}
                     >
@@ -369,7 +369,7 @@ const IDDOC = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

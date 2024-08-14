@@ -156,7 +156,7 @@ const AddCustomSolution = () => {
 
       if (!operationalSolutionID) {
         history.push(
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+          `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/select-solutions`
         );
       } else {
         showMessageOnNextPage(
@@ -175,11 +175,11 @@ const AddCustomSolution = () => {
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
+    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/` },
+    { text: t('breadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/it-solutions` },
     {
       text: t('addSolution'),
-      url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+      url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-solution`
     },
     {
       text: operationalSolutionID

@@ -7,7 +7,7 @@ import * as fs from 'fs';
 
 import basics from '../../src/i18n/en-US/modelPlan/basics';
 import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
-import collaborators from '../../src/i18n/en-US/modelPlan/collaborators';
+import collaborators from '../../src/i18n/en-US/modelPlan/collaboration-area/collaborators';
 import crs from '../../src/i18n/en-US/modelPlan/crs';
 import discussions from '../../src/i18n/en-US/modelPlan/discussions';
 import documents from '../../src/i18n/en-US/modelPlan/documents';

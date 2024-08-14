@@ -59,12 +59,12 @@ describe('Model Plan CR and TDL table', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/cr-and-tdl'
+          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/cr-and-tdl'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
-            <Route path="/models/:modelID/cr-and-tdl">
+            <Route path="/models/:modelID/collaboration-area/cr-and-tdl">
               <Provider store={store}>
                 <PlanCRTDLsTable
                   modelID={modelID}
@@ -89,12 +89,12 @@ describe('Model Plan CR and TDL table', () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/cr-and-tdl'
+          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/cr-and-tdl'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
-            <Route path="/models/:modelID/cr-and-tdl">
+            <Route path="/models/:modelID/collaboration-area/cr-and-tdl">
               <Provider store={store}>
                 <PlanCRTDLsTable
                   modelID={modelID}

@@ -9,10 +9,10 @@ describe('The ITSolutionsWarning component', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning'
         ]}
       >
-        <Route path="/models/:modelID/task-list/ops-eval-and-learning">
+        <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning">
           <ITSolutionsWarning id="test-id" onClick={() => null} />
         </Route>
       </MemoryRouter>

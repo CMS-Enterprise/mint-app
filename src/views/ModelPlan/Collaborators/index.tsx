@@ -210,11 +210,6 @@ export const CollaboratorsContent = () => {
                       BreadcrumbItemOptions.COLLABORATORS
                     ]
               }
-              customItem={
-                manageOrAdd === 'manage'
-                  ? null
-                  : collaboratorsMiscT('collaboratorsMisc:addATeamMember')
-              }
             />
 
             {manageOrAdd === 'manage' ? (
@@ -233,7 +228,9 @@ export const CollaboratorsContent = () => {
                   {collaboratorsMiscT('manageModelTeamInfo')}
                 </div>
 
-                <UswdsReactLink to={`/models/${modelID}/task-list/`}>
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area/task-list/`}
+                >
                   <span>&larr; </span> {miscellaneousT('returnToTaskList')}
                 </UswdsReactLink>
               </>
@@ -256,7 +253,7 @@ export const CollaboratorsContent = () => {
             <UswdsReactLink
               className="usa-button margin-bottom-2"
               variant="unstyled"
-              to={`/models/${modelID}/collaborators/add-collaborator?view=${manageOrAdd}`}
+              to={`/models/${modelID}/collaboration-area/collaborators/add-collaborator?view=${manageOrAdd}`}
             >
               {collaboratorsMiscT('addTeamMemberButton')}
             </UswdsReactLink>
@@ -294,7 +291,7 @@ export const CollaboratorsContent = () => {
                   data-testid="continue-to-tasklist"
                   className="usa-button usa-button--outline"
                   variant="unstyled"
-                  to={`/models/${modelID}/task-list`}
+                  to={`/models/${modelID}/collaboration-area/task-list`}
                 >
                   {collaborators.length > 0
                     ? miscellaneousT('continueToTaskList')
@@ -313,12 +310,12 @@ const Collaborators = () => {
   return (
     <Switch>
       <ProtectedRoute
-        path="/models/:modelID/collaborators"
+        path="/models/:modelID/collaboration-area/collaborators"
         exact
         render={() => <CollaboratorsContent />}
       />
       <ProtectedRoute
-        path="/models/:modelID/collaborators/add-collaborator/:collaboratorId?"
+        path="/models/:modelID/collaboration-area/collaborators/add-collaborator/:collaboratorId?"
         exact
         render={() => <AddCollaborator />}
       />

@@ -166,7 +166,7 @@ const AddCRTDL = () => {
             </span>
           </Alert>
         );
-        history.push(`/models/${modelID}/cr-and-tdl`);
+        history.push(`/models/${modelID}/collaboration-area/cr-and-tdl`);
       }
     };
 
@@ -586,7 +586,7 @@ const AddCRTDL = () => {
             to={
               readOnly
                 ? `/models/${modelID}/read-only/crs-and-tdl`
-                : `/models/${modelID}/cr-and-tdl`
+                : `/models/${modelID}/collaboration-area/cr-and-tdl`
             }
           >
             <span>&larr; </span>{' '}

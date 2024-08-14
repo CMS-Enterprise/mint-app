@@ -61,7 +61,7 @@ const LinkDocuments = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const solutionDetailsURL = `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`;
+  const solutionDetailsURL = `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`;
 
   // State management for linking/unlinking docs
   const [linkedDocs, setLinkedDocs] = useState<string[]>([]);
@@ -156,8 +156,8 @@ const LinkDocuments = () => {
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    { text: t('itTracker'), url: `/models/${modelID}/task-list/it-solutions` },
+    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/` },
+    { text: t('itTracker'), url: `/models/${modelID}/collaboration-area/task-list/it-solutions` },
     {
       text: t('solutionDetails'),
       url: solutionDetailsURL

@@ -171,7 +171,7 @@ export const Coordination = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/participants-and-providers/provider-options`
+            `/models/${modelID}/collaboration-area/task-list/participants-and-providers/provider-options`
           );
         }}
         enableReinitialize
@@ -494,7 +494,7 @@ export const Coordination = () => {
                         id="ops-eval-and-learning-data-needed-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -559,7 +559,7 @@ export const Coordination = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/participants-and-providers/communication`
+                          `/models/${modelID}/collaboration-area/task-list/participants-and-providers/communication`
                         );
                       }}
                     >
@@ -574,7 +574,7 @@ export const Coordination = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

@@ -74,6 +74,6 @@ describe('The Model Plan Beneficiaries Form', () => {
 
     cy.contains('button', 'Save and return to task list').click();
 
-    cy.url().should('include', '/task-list');
+    cy.url().should('include', '/collaboration-area/task-list');
   });
 });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Grid, GridContainer } from '@trussworks/react-uswds';
+import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 // import classNames from 'classnames';
 import {
   //   GetCrtdLsQuery,
@@ -11,12 +11,14 @@ import {
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import { FavoriteIcon } from 'components/FavoriteCard';
+import UswdsReactLink from 'components/LinkWrapper';
 // import { useFlags } from 'launchdarkly-react-client-sdk';
 // import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
+import Divider from 'components/shared/Divider';
 // import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
@@ -178,13 +180,13 @@ const CollaborationArea = () => {
         )}
 
         {/* Wait for model status query param to be removed */}
-        {loading && (
+        {!data && (
           <div className="height-viewport">
             <PageLoading />
           </div>
         )}
 
-        {!loading && data && (
+        {data && (
           <Grid row gap>
             <Grid desktop={{ col: 12 }}>
               <PageHeading className="margin-top-4 margin-bottom-0">
@@ -249,6 +251,24 @@ const CollaborationArea = () => {
                       setStatusMessage={setStatusMessage}
                     />
                   </div>
+                </Grid>
+              </Grid>
+
+              <Divider className="margin-y-6" />
+
+              <Grid row gap>
+                <Grid col={12}>
+                  <h2 className="margin-top-0">
+                    {collaborationAreaT('areas')}
+                  </h2>
+
+                  <UswdsReactLink
+                    className="usa-button"
+                    variant="unstyled"
+                    to={`/models/${modelID}/collaboration-area/task-list`}
+                  >
+                    {collaborationAreaT('goToModelPlan')}
+                  </UswdsReactLink>
                 </Grid>
               </Grid>
             </Grid>

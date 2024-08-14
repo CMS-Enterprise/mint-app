@@ -539,14 +539,14 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
             <UswdsReactLink
               variant="unstyled"
               className="margin-right-4 display-block margin-bottom-1"
-              to={`/models/${modelID}/documents`}
+              to={`/models/${modelID}/collaboration-area/documents`}
             >
               {t('documentSummaryBox.viewAll')}
             </UswdsReactLink>
 
             <UswdsReactLink
               variant="unstyled"
-              to={`/models/${modelID}/documents/add-document`}
+              to={`/models/${modelID}/collaboration-area/documents/add-document`}
             >
               {t('documentSummaryBox.addAnother')}
             </UswdsReactLink>
@@ -560,7 +560,7 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
             <UswdsReactLink
               className="usa-button usa-button--outline"
               variant="unstyled"
-              to={`/models/${modelID}/documents/add-document`}
+              to={`/models/${modelID}/collaboration-area/documents/add-document`}
             >
               {t('documentSummaryBox.cta')}
             </UswdsReactLink>
@@ -610,14 +610,14 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
             <UswdsReactLink
               variant="unstyled"
               className="margin-right-4 display-block margin-bottom-1"
-              to={`/models/${modelID}/cr-and-tdl`}
+              to={`/models/${modelID}/collaboration-area/cr-and-tdl`}
             >
               {t('crTDLsSummaryBox.viewAll')}
             </UswdsReactLink>
 
             <UswdsReactLink
               variant="unstyled"
-              to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
+              to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
             >
               {t('crTDLsSummaryBox.uploadAnother')}
             </UswdsReactLink>
@@ -633,7 +633,7 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
             <UswdsReactLink
               className="usa-button usa-button--outline"
               variant="unstyled"
-              to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
+              to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
             >
               {t('crTDLsSummaryBox.add')}
             </UswdsReactLink>

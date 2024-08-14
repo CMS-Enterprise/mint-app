@@ -84,7 +84,7 @@ export const DocumentsContent = () => {
           </p>
 
           <UswdsReactLink
-            to={`/models/${modelID}/task-list`}
+            to={`/models/${modelID}/collaboration-area/task-list`}
             className="display-inline-flex flex-align-center margin-y-3"
           >
             <Icon.ArrowBack className="margin-right-1" aria-hidden />
@@ -96,7 +96,7 @@ export const DocumentsContent = () => {
           <UswdsReactLink
             className="usa-button"
             variant="unstyled"
-            to={`/models/${modelID}/documents/add-document`}
+            to={`/models/${modelID}/collaboration-area/documents/add-document`}
           >
             {t('addADocument')}
           </UswdsReactLink>
@@ -117,12 +117,12 @@ const Documents = () => {
     <Switch>
       {/* Model Plan Documents Pages */}
       <ProtectedRoute
-        path="/models/:modelID/documents"
+        path="/models/:modelID/collaboration-area/documents"
         exact
         render={() => <DocumentsContent />}
       />
       <ProtectedRoute
-        path="/models/:modelID/documents/add-document"
+        path="/models/:modelID/collaboration-area/documents/add-document"
         exact
         render={() => <AddDocument />}
       />

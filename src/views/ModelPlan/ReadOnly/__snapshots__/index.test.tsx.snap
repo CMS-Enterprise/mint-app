@@ -211,7 +211,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                   />
                   <a
                     class="usa-link display-flex flex-align-center"
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
                   >
                     <svg
                       class="usa-icon margin-right-1"

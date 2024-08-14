@@ -252,7 +252,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                           >
                             <a
                               class="usa-link display-flex flex-align-center"
-                              href="/models/c9cf987d-8543-46bb-a668-2c560ce5b149/status"
+                              href="/models/c9cf987d-8543-46bb-a668-2c560ce5b149/collaboration-area/status"
                             />
                           </div>
                         </div>
@@ -389,7 +389,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                           >
                             <a
                               class="usa-link display-flex flex-align-center"
-                              href="/models/598db9f0-54c0-4346-bb6b-da46a36eff1a/status"
+                              href="/models/598db9f0-54c0-4346-bb6b-da46a36eff1a/collaboration-area/status"
                             />
                           </div>
                         </div>
@@ -538,7 +538,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                           >
                             <a
                               class="usa-link display-flex flex-align-center"
-                              href="/models/4fc87324-dbb0-4867-8e4d-5a20a76c8ae2/status"
+                              href="/models/4fc87324-dbb0-4867-8e4d-5a20a76c8ae2/collaboration-area/status"
                             />
                           </div>
                         </div>

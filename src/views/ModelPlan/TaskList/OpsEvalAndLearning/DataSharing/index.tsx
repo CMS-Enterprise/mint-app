@@ -106,11 +106,11 @@ const DataSharing = () => {
       isQualityMeasures(formikRef?.current?.values.dataNeededForMonitoring)
     ) {
       history.push(
-        `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
+        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality`
       );
     } else {
       history.push(
-        `/models/${modelID}/task-list/ops-eval-and-learning/evaluation`
+        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`
       );
     }
   };
@@ -185,7 +185,7 @@ const DataSharing = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/ops-eval-and-learning/learning`
+            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/learning`
           );
         }}
         enableReinitialize
@@ -502,7 +502,7 @@ const DataSharing = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

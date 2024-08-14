@@ -51,7 +51,11 @@ const TaskListButton = ({
           disabled={disabled}
           data-testid={path}
           className="usa-button margin-bottom-2 width-auto"
-          onClick={() => history.push(`/models/${modelID}/task-list/${path}`)}
+          onClick={() =>
+            history.push(
+              `/models/${modelID}/collaboration-area/task-list/${path}`
+            )
+          }
           aria-label={`${ctaCopy()} ${ariaLabel?.toLowerCase()}`}
         >
           {ctaCopy()}

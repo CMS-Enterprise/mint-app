@@ -168,7 +168,7 @@ const ClaimsBasedPayment = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/payment/anticipating-dependencies`
+            `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
           );
         }}
         enableReinitialize
@@ -312,7 +312,7 @@ const ClaimsBasedPayment = () => {
                               className="margin-top-neg-5"
                               onClick={() =>
                                 history.push(
-                                  `/models/${modelID}/task-list/it-solutions`
+                                  `/models/${modelID}/collaboration-area/task-list/it-solutions`
                                 )
                               }
                             />
@@ -487,7 +487,7 @@ const ClaimsBasedPayment = () => {
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
                               history.push(
-                                `/models/${modelID}/task-list/payment`
+                                `/models/${modelID}/collaboration-area/task-list/payment`
                               );
                             }}
                           >
@@ -503,7 +503,7 @@ const ClaimsBasedPayment = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(`/models/${modelID}/collaboration-area/task-list`)
                           }
                         >
                           <Icon.ArrowBack

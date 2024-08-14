@@ -78,12 +78,12 @@ describe('Operational Solutions NeedQuestionAndAnswer', () => {
         <MemoryRouter
           initialEntries={[
             {
-              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+              pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
             }
           ]}
         >
           <MockedProvider mocks={mocks} addTypename={false}>
-            <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+            <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
               <MessageProvider>
                 <SolutionImplmentation />
               </MessageProvider>
@@ -121,12 +121,12 @@ describe('Operational Solutions NeedQuestionAndAnswer', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+            pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
           }
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
             <MessageProvider>
               <SolutionImplmentation />
             </MessageProvider>

@@ -41,7 +41,7 @@ const NewPlanContent = () => {
     }).then(response => {
       if (!response.errors && response.data) {
         const { id } = response.data.createModelPlan;
-        history.push(`/models/${id}/collaborators?view=add`);
+        history.push(`/models/${id}/collaboration-area/collaborators?view=add`);
       }
     });
   };

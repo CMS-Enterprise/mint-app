@@ -41,7 +41,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
             >
               <a
                 class="usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/"
               >
                 <span>
                   Model Plan task list
@@ -1454,7 +1454,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
             >
               <a
                 class="usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/"
               >
                 <span>
                   Model Plan task list

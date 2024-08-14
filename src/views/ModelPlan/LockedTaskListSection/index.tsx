@@ -37,7 +37,7 @@ const LockedTaskListSection = () => {
           <Breadcrumb>
             <BreadcrumbLink
               asCustom={UswdsReactLink}
-              to={`/models/${modelID}/task-list/`}
+              to={`/models/${modelID}/collaboration-area/task-list/`}
             >
               <span>{t('navigation.modelPlanTaskList')}</span>
             </BreadcrumbLink>
@@ -56,7 +56,7 @@ const LockedTaskListSection = () => {
           <UswdsReactLink
             className="usa-button margin-top-6"
             variant="unstyled"
-            to={`/models/${modelID}/task-list`}
+            to={`/models/${modelID}/collaboration-area/task-list`}
           >
             {t('returnToTaskList')}
           </UswdsReactLink>
@@ -71,7 +71,7 @@ const LockedTaskListSection = () => {
           <UswdsReactLink
             className="usa-button margin-top-6"
             variant="unstyled"
-            to={`/models/${modelID}/task-list`}
+            to={`/models/${modelID}/collaboration-area/task-list`}
           >
             {t('returnToTaskList')}
           </UswdsReactLink>

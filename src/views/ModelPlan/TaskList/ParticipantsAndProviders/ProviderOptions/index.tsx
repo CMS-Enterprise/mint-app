@@ -186,7 +186,7 @@ export const ProviderOptions = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/task-list/beneficiaries`);
+          history.push(`/models/${modelID}/collaboration-area/task-list/beneficiaries`);
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -408,7 +408,7 @@ export const ProviderOptions = () => {
                         id="participants-and-providers-provider-overlap-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -485,7 +485,7 @@ export const ProviderOptions = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/participants-and-providers/coordination`
+                          `/models/${modelID}/collaboration-area/task-list/participants-and-providers/coordination`
                         );
                       }}
                     >
@@ -500,7 +500,7 @@ export const ProviderOptions = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

@@ -164,7 +164,7 @@ export const ParticipantsAndProvidersContent = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/participants-and-providers/participants-options`
+            `/models/${modelID}/collaboration-area/task-list/participants-and-providers/participants-options`
           );
         }}
         enableReinitialize
@@ -470,7 +470,7 @@ export const ParticipantsAndProvidersContent = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(`/models/${modelID}/collaboration-area/task-list`)
                           }
                         >
                           <Icon.ArrowBack
@@ -522,27 +522,27 @@ export const ParticipantsAndProviders = () => {
         <Grid desktop={{ col: 12 }}>
           <Switch>
             <ProtectedRoute
-              path="/models/:modelID/task-list/participants-and-providers"
+              path="/models/:modelID/collaboration-area/task-list/participants-and-providers"
               exact
               render={() => <ParticipantsAndProvidersContent />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/participants-and-providers/participants-options"
+              path="/models/:modelID/collaboration-area/task-list/participants-and-providers/participants-options"
               exact
               render={() => <ParticipantOptions />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/participants-and-providers/communication"
+              path="/models/:modelID/collaboration-area/task-list/participants-and-providers/communication"
               exact
               render={() => <Communication />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/participants-and-providers/coordination"
+              path="/models/:modelID/collaboration-area/task-list/participants-and-providers/coordination"
               exact
               render={() => <Coordination />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/participants-and-providers/provider-options"
+              path="/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options"
               exact
               render={() => <ProviderOptions />}
             />

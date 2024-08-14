@@ -51,7 +51,7 @@ export const commonBreadCrumbs = (
   },
   TASK_LIST: {
     text: 'modelPlanTaskList:heading',
-    url: `/models/${modelID}/task-list`
+    url: `/models/${modelID}/collaboration-area/task-list`
   },
   COLLABORATION_AREA: {
     text: 'collaborationArea:heading',
@@ -71,51 +71,51 @@ export const commonBreadCrumbs = (
   },
   BASICS: {
     text: 'basicsMisc:heading',
-    url: `/models/${modelID}/task-list/basics`
+    url: `/models/${modelID}/collaboration-area/task-list/basics`
   },
   GENERAL_CHARACTERISTICS: {
     text: 'generalCharacteristicsMisc:heading',
-    url: `/models/${modelID}/task-list/characteristics`
+    url: `/models/${modelID}/collaboration-area/task-list/characteristics`
   },
   PARTICIPANTS_AND_PROVIDERS: {
     text: 'participantsAndProvidersMisc:heading',
-    url: `/models/${modelID}/task-list/participants-and-providers`
+    url: `/models/${modelID}/collaboration-area/task-list/participants-and-providers`
   },
   BENEFICIARIES: {
     text: 'beneficiariesMisc:heading',
-    url: `/models/${modelID}/task-list/beneficiaries`
+    url: `/models/${modelID}/collaboration-area/task-list/beneficiaries`
   },
   OPS_EVAL_AND_LEARNING: {
     text: 'opsEvalAndLearningMisc:heading',
-    url: `/models/${modelID}/task-list/ops-eval-and-learning`
+    url: `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
   },
   PAYMENTS: {
     text: 'paymentsMisc:heading',
-    url: `/models/${modelID}/task-list/payments`
+    url: `/models/${modelID}/collaboration-area/task-list/payments`
   },
   IT_TRACKER: {
     text: 'opSolutionsMisc:heading',
-    url: `/models/${modelID}/task-list/it-solutions`
+    url: `/models/${modelID}/collaboration-area/task-list/it-solutions`
   },
   PREPARE_FOR_CLEARANCE: {
     text: 'prepareForClearance:heading',
-    url: `/models/${modelID}/task-list/prepare-for-clearance`
+    url: `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
   },
   COLLABORATORS: {
     text: 'collaboratorsMisc:manageModelTeam',
-    url: `/models/${modelID}/collaborators`
+    url: `/models/${modelID}}/collaboration-area/collaborators`
   },
   DOCUMENTS: {
     text: 'documentsMisc:heading',
-    url: `/models/${modelID}/documents`
+    url: `/models/${modelID}/collaboration-area/documents`
   },
   CR_TDLS: {
     text: 'crtdlsMisc:heading',
-    url: `/models/${modelID}/cr-tdls`
+    url: `/models/${modelID}}/collaboration-area/cr-tdls`
   },
   STATUS: {
     text: 'modelPlanMisc:headingStatus',
-    url: `/models/${modelID}/status`
+    url: `/models/${modelID}}/collaboration-area/status`
   }
 });
 

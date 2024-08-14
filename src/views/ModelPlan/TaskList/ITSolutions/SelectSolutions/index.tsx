@@ -156,7 +156,7 @@ const SelectSolutions = () => {
         if (responses && !errors) {
           showMessageOnNextPage(removedSolutions);
           history.push(
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
+            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${
               update
                 ? `solution-implementation-details?isCustomNeed=${!!isCustomNeed}&update-details=true`
                 : `solution-implementation-details?isCustomNeed=${!!isCustomNeed}`
@@ -173,11 +173,11 @@ const SelectSolutions = () => {
 
   const breadcrumbs = [
     { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
+    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/` },
+    { text: t('breadcrumb'), url: `/models/${modelID}/collaboration-area/task-list/it-solutions` },
     {
       text: t('solutionDetails'),
-      url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
+      url: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
     },
     { text: update ? t('updateSolutions') : t('selectSolution') }
   ];
@@ -361,7 +361,7 @@ const SelectSolutions = () => {
                         className="usa-button usa-button--outline margin-top-2 margin-bottom-3"
                         onClick={() => {
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${!!isCustomNeed}`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${!!isCustomNeed}`
                           );
                         }}
                       >
@@ -394,7 +394,7 @@ const SelectSolutions = () => {
                         className="usa-button usa-button--unstyled display-flex flex-align-center"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       >

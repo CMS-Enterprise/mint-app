@@ -73,11 +73,11 @@ describe('Model Plan -- Recover', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment/recover-payment'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/recover-payment'
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/payment/recover-payment">
+          <Route path="/models/:modelID/collaboration-area/task-list/payment/recover-payment">
             <Recover />
           </Route>
         </MockedProvider>
@@ -98,11 +98,11 @@ describe('Model Plan -- Recover', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment/recover-payment'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/recover-payment'
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/payment/recover-payment">
+          <Route path="/models/:modelID/collaboration-area/task-list/payment/recover-payment">
             <Recover />
           </Route>
         </MockedProvider>

@@ -17,17 +17,17 @@ export const Beneficiaries = () => {
         <Grid desktop={{ col: 12 }}>
           <Switch>
             <ProtectedRoute
-              path="/models/:modelID/task-list/beneficiaries" // page-* may change pending UX clarifcation
+              path="/models/:modelID/collaboration-area/task-list/beneficiaries" // page-* may change pending UX clarifcation
               exact
               render={() => <BeneficiaryIdentification />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/beneficiaries/people-impact"
+              path="/models/:modelID/collaboration-area/task-list/beneficiaries/people-impact"
               exact
               render={() => <PeopleImpact />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/beneficiaries/beneficiary-frequency"
+              path="/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency"
               exact
               render={() => <Frequency />}
             />

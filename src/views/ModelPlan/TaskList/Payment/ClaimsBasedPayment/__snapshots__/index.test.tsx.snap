@@ -26,7 +26,7 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
       >
         <a
           class="usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/"
         >
           <span>
             Model Plan task list

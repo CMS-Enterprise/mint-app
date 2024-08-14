@@ -41,7 +41,7 @@ const ITSolutionsHome = () => {
         <Breadcrumb>
           <BreadcrumbLink
             asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/`}
+            to={`/models/${modelID}/collaboration-area/task-list/`}
           >
             <span>{h('tasklistBreadcrumb')}</span>
           </BreadcrumbLink>

@@ -123,7 +123,9 @@ const Overview = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/task-list/basics/milestones`);
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/basics/milestones`
+          );
         }}
         enableReinitialize
         validateOnBlur={false}
@@ -262,7 +264,9 @@ const Overview = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() =>
-                        history.push(`/models/${modelID}/task-list/basics`)
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list/basics`
+                        )
                       }
                     >
                       {miscellaneousT('back')}
@@ -280,7 +284,11 @@ const Overview = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

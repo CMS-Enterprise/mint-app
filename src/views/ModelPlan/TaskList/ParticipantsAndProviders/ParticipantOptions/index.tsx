@@ -154,7 +154,7 @@ export const ParticipantOptions = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/participants-and-providers/communication`
+            `/models/${modelID}/collaboration-area/task-list/participants-and-providers/communication`
           );
         }}
         enableReinitialize
@@ -316,7 +316,7 @@ export const ParticipantOptions = () => {
                         id="participants-and-providers-recruitment-method-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -394,7 +394,7 @@ export const ParticipantOptions = () => {
                         id="participants-and-providers-selection-method-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -459,7 +459,7 @@ export const ParticipantOptions = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/participants-and-providers`
+                          `/models/${modelID}/collaboration-area/task-list/participants-and-providers`
                         );
                       }}
                     >
@@ -474,7 +474,7 @@ export const ParticipantOptions = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
                     {miscellaneousT('saveAndReturn')}

@@ -4,6 +4,6 @@ Cypress.Commands.add('clickPlanTableByName', (planName, table) => {
   cy.get(`[data-testid="${table || 'table'}"] a`)
     .contains(planName)
     .click();
-  cy.url().should('include', '/task-list');
+  cy.url().should('include', '/collaboration-area/task-list');
   cy.get('[data-testid="page-loading"]').should('not.exist');
 });

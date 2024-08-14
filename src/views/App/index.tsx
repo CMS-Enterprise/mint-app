@@ -138,11 +138,6 @@ const AppRoutes = () => {
 
           <ProtectedRoute path="/models/new-plan" component={NewPlan} />
 
-          <ProtectedRoute
-            path="/models/:modelID/collaborators"
-            component={Collaborators}
-          />
-
           {/* Collaboration Area Routes */}
           <ProtectedRoute
             path="/models/:modelID/collaboration-area"
@@ -150,77 +145,82 @@ const AppRoutes = () => {
             component={CollaborationArea}
           />
 
-          {/* Task List Routes */}
           <ProtectedRoute
-            path="/models/:modelID/documents"
+            path="/models/:modelID/collaboration-area/collaborators"
+            component={Collaborators}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/documents"
             component={Documents}
           />
 
           <ProtectedRoute
-            path="/models/:modelID/cr-and-tdl"
+            path="/models/:modelID/collaboration-area/cr-and-tdl"
             component={CRTDL}
           />
 
           <ProtectedRoute
-            path="/models/:modelID/status"
+            path="/models/:modelID/collaboration-area/status"
             exact
             component={Status}
           />
 
+          {/* Task List Routes */}
           <ProtectedRoute
-            path="/models/:modelID/task-list"
+            path="/models/:modelID/collaboration-area/task-list"
             exact
             component={TaskList}
           />
 
           <ProtectedRoute
-            path="/models/:modelID/task-list/basics"
+            path="/models/:modelID/collaboration-area/task-list/basics"
             component={Basics}
           />
 
           <ProtectedRoute
-            path="/models/:modelID/task-list/beneficiaries"
+            path="/models/:modelID/collaboration-area/task-list/beneficiaries"
             component={Beneficiaries}
           />
 
           <ProtectedRoute
-            path="/models/:modelID/task-list/characteristics"
+            path="/models/:modelID/collaboration-area/task-list/characteristics"
             component={Characteristics}
           />
 
           <ProtectedRoute
-            path="/models/:modelID/task-list/cost-estimate"
+            path="/models/:modelID/collaboration-area/task-list/cost-estimate"
             component={CostEstimate}
             enabled={false} // This route is not yet implemented
           />
 
           <ProtectedRoute
-            path="/models/:modelID/task-list/ops-eval-and-learning"
+            path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning"
             component={OpsEvalAndLearning}
           />
 
           <ProtectedRoute
-            path="/models/:modelID/task-list/participants-and-providers"
+            path="/models/:modelID/collaboration-area/task-list/participants-and-providers"
             component={Participants}
           />
 
           <ProtectedRoute
-            path="/models/:modelID/task-list/payment"
+            path="/models/:modelID/collaboration-area/task-list/payment"
             component={Payment}
           />
 
           <ProtectedRoute
-            path="/models/:modelID/task-list/it-solutions"
+            path="/models/:modelID/collaboration-area/task-list/it-solutions"
             component={ITSolutions}
           />
 
           <ProtectedRoute
-            path="/models/:modelID/task-list/prepare-for-clearance"
+            path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance"
             component={PrepareForClearance}
           />
 
           <ProtectedRoute
-            path="/models/:modelID/task-list/submit-request"
+            path="/models/:modelID/collaboration-area/task-list/submit-request"
             component={SubmitRequest}
             enabled={false} // This route is not yet implemented
           />

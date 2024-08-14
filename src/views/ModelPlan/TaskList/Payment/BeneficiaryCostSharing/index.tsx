@@ -88,10 +88,10 @@ const BeneficiaryCostSharing = () => {
       )
     ) {
       history.push(
-        `/models/${modelID}/task-list/payment/non-claims-based-payment`
+        `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
       );
     } else {
-      history.push(`/models/${modelID}/task-list/payment/complexity`);
+      history.push(`/models/${modelID}/collaboration-area/task-list/payment/complexity`);
     }
   };
 
@@ -361,7 +361,7 @@ const BeneficiaryCostSharing = () => {
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
                               history.push(
-                                `/models/${modelID}/task-list/payment/anticipating-dependencies`
+                                `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
                               );
                             }}
                           >
@@ -377,7 +377,7 @@ const BeneficiaryCostSharing = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(`/models/${modelID}/collaboration-area/task-list`)
                           }
                         >
                           <Icon.ArrowBack

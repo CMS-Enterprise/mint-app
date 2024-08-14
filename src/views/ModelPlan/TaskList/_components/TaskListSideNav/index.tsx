@@ -198,7 +198,7 @@ const TaskListSideNav = ({
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>
 
           <div className="margin-bottom-2">
-            <UswdsReactLink to={`/models/${modelID}/collaborators?view=manage`}>
+            <UswdsReactLink to={`/models/${modelID}/collaboration-area/collaborators?view=manage`}>
               {t('sideNav.editTeam')}
             </UswdsReactLink>
           </div>

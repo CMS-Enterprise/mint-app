@@ -68,7 +68,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
           </h4>
           <a
             class="usa-button margin-bottom-2"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator?view=add"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators/add-collaborator?view=add"
           >
             Add team member
           </a>
@@ -261,7 +261,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     <a
                       aria-label="Edit John Doe"
                       class="usa-link margin-right-2"
-                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator/61c7b30c-969d-4dd4-b13b-a5065f43be43?view=add"
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators/add-collaborator/61c7b30c-969d-4dd4-b13b-a5065f43be43?view=add"
                     >
                       Edit
                     </a>
@@ -289,7 +289,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
             <a
               class="usa-button usa-button--outline"
               data-testid="continue-to-tasklist"
-              href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+              href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
             >
               Continue to Model Plan task list
             </a>

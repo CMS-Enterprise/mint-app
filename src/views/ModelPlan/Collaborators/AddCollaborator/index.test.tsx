@@ -13,12 +13,12 @@ describe('Adding a collaborator page', () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator?view=add'
+          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators/add-collaborator?view=add'
         ]}
       >
         <MessageProvider>
           <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
-            <Route path="models/:modelID/collaborators/add-collaborator">
+            <Route path="models/:modelID/collaboration-area/collaborators/add-collaborator">
               <AddCollaborator />
             </Route>
           </MockedProvider>
