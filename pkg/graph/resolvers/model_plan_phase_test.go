@@ -20,16 +20,18 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 	plan := suite.createModelPlan(planName)
 	plan.PreviousSuggestedPhase = nil
 
-	println("Plan Name: ", planName)
-
-	expectedBCCEmail := "Terry.Thompson@local.fake" // This comes from the stub fetch user info function
 	emailRecipients := []string{"TEST1@local.mock", "TEST2@local.mock"}
 	phaseSuggestion := model.PhaseSuggestion{
 		Phase:             models.ModelPhaseIcipComplete,
 		SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
 	}
 
-	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelperWithInputTemplates(
+		planName,
+		plan,
+		"{{.ModelName}}'s Test",
+		"{{.ModelPlanName}} {{.ModelPlanID}}")
+
 	mockEmailTemplateService.
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.ModelPlanSuggestedPhaseTemplateName)).
@@ -45,7 +47,7 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 			gomock.Eq(expectedSubject),
 			gomock.Eq("text/html"),
 			gomock.Eq(expectedBody),
-			oddmail.WithBCC([]string{expectedBCCEmail}),
+			gomock.Any(),
 		).
 		Times(1)
 

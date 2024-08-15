@@ -125,9 +125,22 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 func createTemplateCacheHelper(
 	planName string,
 	plan *models.ModelPlan) (*emailtemplates.EmailTemplate, string, string) {
+
+	return createTemplateCacheHelperWithInputTemplates(
+		planName,
+		plan,
+		"{{.ModelName}}'s Test",
+		"{{.ModelName}} {{.ModelID}}")
+}
+
+func createTemplateCacheHelperWithInputTemplates(
+	planName string,
+	plan *models.ModelPlan,
+	subject string,
+	body string) (*emailtemplates.EmailTemplate, string, string) {
 	templateCache := emailtemplates.NewTemplateCache()
-	_ = templateCache.LoadTextTemplateFromString("testSubject", "{{.ModelName}}'s Test")
-	_ = templateCache.LoadHTMLTemplateFromString("testBody", "{{.ModelName}} {{.ModelID}}", nil)
+	_ = templateCache.LoadTextTemplateFromString("testSubject", subject)
+	_ = templateCache.LoadHTMLTemplateFromString("testBody", body, nil)
 	testTemplate := emailtemplates.NewEmailTemplate(
 		templateCache,
 		"testSubject",
