@@ -6,8 +6,10 @@ import {
   CardFooter,
   CardHeader
 } from '@trussworks/react-uswds';
+import { TaskStatus } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
 import './index.scss';
 
@@ -19,6 +21,19 @@ const ModelPlanCard = () => {
       <CardHeader>
         <h3 className="usa-card__heading">{modelPlanCardT('heading')}</h3>
       </CardHeader>
+      <div className="card__section-status">
+        <TaskListStatusTag
+          status={TaskStatus.READY}
+          classname="width-fit-content"
+        />
+        <span>
+          {modelPlanCardT('sectionsStarted', {
+            sectionsStarted: 1,
+            totalSections: 7
+          })}
+        </span>
+      </div>
+
       <CardBody>
         <p>{modelPlanCardT('body')}</p>
       </CardBody>
