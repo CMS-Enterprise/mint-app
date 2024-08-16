@@ -42,6 +42,7 @@ import UpdateStatusModal from 'components/UpdateStatusModal';
 import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
+import ModelPlanCard from 'views/ModelCollabArea/Cards/ModelPlan';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
 import Discussions from '../Discussions';
@@ -300,6 +301,8 @@ const TaskList = () => {
             {statusMessage.message}
           </Alert>
         )}
+
+        <ModelPlanCard modelID={modelID} />
 
         {/* Wait for model status query param to be removed */}
         {loading && (

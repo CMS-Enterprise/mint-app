@@ -12,7 +12,7 @@ const Sandbox = () => {
   return (
     <MainContent>
       <GridContainer>
-        <ModelPlanCard />
+        <ModelPlanCard modelID="123" />
       </GridContainer>
     </MainContent>
   );

@@ -13,7 +13,17 @@ import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskList
 
 import './index.scss';
 
-const ModelPlanCard = () => {
+type ModelPlanCardType = {
+  modelID: string;
+  modifiedDts?: string;
+  modifiedBy?: string;
+};
+
+const ModelPlanCard = ({
+  modelID,
+  modifiedDts,
+  modifiedBy
+}: ModelPlanCardType) => {
   const { t: modelPlanCardT } = useTranslation('modelPlanCard');
 
   return (
@@ -39,7 +49,7 @@ const ModelPlanCard = () => {
       </CardBody>
       <CardFooter>
         <UswdsReactLink
-          to="/model-plan"
+          to={`/models/${modelID}/task-list`}
           className="usa-button"
           variant="unstyled"
         >
