@@ -26,7 +26,7 @@ const ModelPlanCard = () => {
           status={TaskStatus.READY}
           classname="width-fit-content"
         />
-        <span>
+        <span className="text-base">
           {modelPlanCardT('sectionsStarted', {
             sectionsStarted: 1,
             totalSections: 7

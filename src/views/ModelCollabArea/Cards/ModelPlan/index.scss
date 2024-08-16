@@ -1,5 +1,12 @@
+@use 'uswds-core' as *;
+
 .card--model-plan {
   height: 420px;
+  .usa-card__container {
+    border-radius: 4px;
+    border-color: #e6e6e6;
+    @include u-shadow(2)
+  }
 
   .card__section-status {
     display: flex;
