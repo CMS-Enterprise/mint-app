@@ -13,6 +13,7 @@ import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import customHome from './home/customHome';
 import homepageSettings from './home/settings';
+import modelPlanCard from './modelCollab/Cards/modelPlanCard';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
 import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
@@ -136,7 +137,9 @@ const enUS = {
   // End Help and Knowledge Center Articles
   tableAndPagination,
   termsAndConditions,
-  externalLinkModal
+  externalLinkModal,
+  // Model Collaboration Area
+  modelPlanCard
 };
 
 export default enUS;

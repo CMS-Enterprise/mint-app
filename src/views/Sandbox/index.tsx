@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
+import { GridContainer } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
+import ModelPlanCard from 'views/ModelCollabArea/Cards/ModelPlan';
 
 const Sandbox = () => {
   useEffect(() => {
@@ -9,7 +11,9 @@ const Sandbox = () => {
 
   return (
     <MainContent>
-      <></>
+      <GridContainer>
+        <ModelPlanCard />
+      </GridContainer>
     </MainContent>
   );
 };
