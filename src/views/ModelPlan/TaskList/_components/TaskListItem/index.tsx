@@ -16,9 +16,11 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
 };
 
 export const TaskListStatusTag = ({
-  status
+  status,
+  classname
 }: {
   status: TaskStatus | PrepareForClearanceStatus | undefined;
+  classname?: string;
 }) => {
   const { t } = useTranslation('modelPlanTaskList');
 
@@ -53,7 +55,9 @@ export const TaskListStatusTag = ({
   return (
     <div
       data-testid="tasklist-tag"
-      className={`model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print ${tagStyle}`}
+      className={`model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print ${tagStyle} ${
+        classname ?? ''
+      }`}
     >
       <span>{tagCopy}</span>
     </div>
