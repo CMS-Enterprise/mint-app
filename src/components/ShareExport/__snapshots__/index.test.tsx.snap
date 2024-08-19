@@ -10007,13 +10007,13 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       >
                         <a
                           class="usa-link margin-right-2 display-block"
-                          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/it-solutions/123/solution-implementation-details/123"
+                          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/it-solutions/123/solution-implementation-details/123"
                         >
                           Update status
                         </a>
                         <a
                           class="usa-link"
-                          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/it-solutions/123/123/solution-details"
+                          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/it-solutions/123/123/solution-details"
                         >
                           View details
                         </a>
