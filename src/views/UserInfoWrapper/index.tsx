@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
+import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
+import CryptoJS from 'crypto-js';
 import GetNDA from 'gql/apolloGQL/Miscellaneous/GetNDA';
 
 import { localAuthStorageKey } from 'constants/localAuth';
@@ -16,6 +18,15 @@ type oktaUserProps = {
   name?: string;
   euaId?: string;
   groups?: string[];
+  email?: string;
+};
+
+const generateUserId = (euaID: string) => {
+  // Convert the name to a SHA-256 hash
+  const hash = CryptoJS.SHA256(euaID);
+  // Convert the hash to a string
+  const userId = hash.toString(CryptoJS.enc.Hex);
+  return userId;
 };
 
 const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
@@ -41,6 +52,17 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
         acceptedNDA: data?.ndaInfo
       };
 
+      if (oktaUser.euaId) {
+        ReactGA.set({
+          userId: generateUserId(oktaUser.euaId)
+        });
+
+        ReactGA.gtag('set', 'user_properties', {
+          user_group: (oktaUser.groups || []).join(', '),
+          domain: oktaUser.email?.replace(/.*@/, '')
+        });
+      }
+
       dispatch(setUser(user));
     } else {
       const user = {
@@ -50,6 +72,19 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
         groups: authState?.accessToken?.claims['mint-groups'] || [],
         acceptedNDA: data?.ndaInfo
       };
+
+      if (authState?.idToken?.claims.preferred_username) {
+        ReactGA.set({
+          userId: generateUserId(authState?.idToken?.claims.preferred_username)
+        });
+
+        ReactGA.gtag('set', 'user_properties', {
+          user_group:
+            // @ts-ignore
+            (authState?.accessToken?.claims['mint-groups'] || []).join(', '),
+          domain: authState?.accessToken?.claims.email?.replace(/.*@/, '')
+        });
+      }
 
       dispatch(setUser(user));
     }
