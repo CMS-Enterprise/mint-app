@@ -34,7 +34,9 @@ const trackingID = import.meta.env.VITE_GA_TRACKING_ID;
 if (trackingID) {
   ReactGA.initialize([
     {
-      trackingId: trackingID
+      trackingId: trackingID,
+      gaOptions: {}, // optional
+      gtagOptions: {} // optional
     }
   ]);
 }
