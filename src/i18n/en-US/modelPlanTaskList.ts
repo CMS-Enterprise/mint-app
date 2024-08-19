@@ -16,7 +16,7 @@ const statusText: Record<ModelPhase, string> = {
 };
 
 const modelPlanTaskList = {
-  heading: 'Model Plan Task List',
+  heading: 'Model Plan task list',
   subheading: 'for <1>{{modelName}}</1>',
   status: 'Status:',
   update: 'Update',
