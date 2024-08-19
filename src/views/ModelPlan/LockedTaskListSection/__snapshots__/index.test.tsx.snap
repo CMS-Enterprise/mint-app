@@ -47,7 +47,7 @@ exports[`Locked Task List Section Page > matches snapshot 1`] = `
             href="/models/53e06174-83b9-462a-86d0-3a936f3c2670/collaboration-area/task-list"
           >
             <span>
-              Model Plan Task List
+              Model Plan task list
             </span>
           </a>
         </li>
