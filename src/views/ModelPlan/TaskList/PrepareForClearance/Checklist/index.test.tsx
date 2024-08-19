@@ -95,7 +95,9 @@ describe('Prepare for clearance checklist', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`]}
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+        ]}
       >
         <MockedProvider mocks={clearanceMock} addTypename={false}>
           <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance">

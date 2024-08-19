@@ -89,7 +89,9 @@ const store = mockStore({ auth: mockAuthReducer });
 describe('Model Plan CR and TDL page', () => {
   it('matches snapshot', async () => {
     const { asFragment, getByTestId } = render(
-      <MemoryRouter initialEntries={[`/models/${modelID}/collaboration-area/cr-and-tdl`]}>
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/collaboration-area/cr-and-tdl`]}
+      >
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/models/:modelID/collaboration-area/cr-and-tdl">

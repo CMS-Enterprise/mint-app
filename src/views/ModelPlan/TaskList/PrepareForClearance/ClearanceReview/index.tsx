@@ -7,15 +7,7 @@ Link to each task list section and checks if task list sections are locked
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  Button,
-  Grid,
-  GridContainer,
-  Icon
-} from '@trussworks/react-uswds';
+import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import {
   PrepareForClearanceStatus,
   TaskStatus,
@@ -187,7 +179,9 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push(`/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`);
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+          );
         }
       })
       .catch(() => {
@@ -299,7 +293,9 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
                 if (taskListLocked || readyForClearance) {
                   setModalOpen(true);
                 } else {
-                  history.push(`/models/${modelID}/collaboration-area/task-list/${section}`);
+                  history.push(
+                    `/models/${modelID}/collaboration-area/task-list/${section}`
+                  );
                 }
               }}
             >

@@ -5,7 +5,6 @@ import { GridContainer, Icon, PrimaryNav } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useGetPollNotificationsQuery } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
-import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
 import './index.scss';
 

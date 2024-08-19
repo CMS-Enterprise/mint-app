@@ -186,7 +186,9 @@ export const ProviderOptions = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/collaboration-area/task-list/beneficiaries`);
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/beneficiaries`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -500,7 +502,11 @@ export const ProviderOptions = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

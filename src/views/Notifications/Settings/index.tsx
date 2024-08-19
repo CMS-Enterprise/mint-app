@@ -1,10 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Checkbox,
   Fieldset,
@@ -42,7 +39,6 @@ type NotificationSettingsFormType = Omit<
 >;
 
 const NotificationSettings = () => {
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: notificationsT } = useTranslation('notifications');
 
   const notificationSettings: Record<

@@ -190,7 +190,9 @@ const Recover = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/collaboration-area/task-list/it-solutions`);
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/it-solutions`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -420,7 +422,9 @@ const Recover = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/collaboration-area/task-list`)
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list`
+                            )
                           }
                         >
                           <Icon.ArrowBack

@@ -77,7 +77,9 @@ describe('Operational Solutions Home', () => {
 
     const { getByText } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/collaboration-area/task-list/it-solutions`]}
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/it-solutions`
+        ]}
       >
         <Provider store={store}>
           <MockedProvider mocks={returnNeeds(needed)} addTypename={false}>
@@ -99,7 +101,9 @@ describe('Operational Solutions Home', () => {
 
     const { getByText } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/collaboration-area/task-list/it-solutions`]}
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/it-solutions`
+        ]}
       >
         <Provider store={store}>
           <MockedProvider mocks={returnNeeds(needed)} addTypename={false}>
@@ -122,7 +126,9 @@ describe('Operational Solutions Home', () => {
 
     const { asFragment, getByText } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/collaboration-area/task-list/it-solutions`]}
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/it-solutions`
+        ]}
       >
         <Provider store={store}>
           <MockedProvider mocks={returnNeeds(needed)} addTypename={false}>

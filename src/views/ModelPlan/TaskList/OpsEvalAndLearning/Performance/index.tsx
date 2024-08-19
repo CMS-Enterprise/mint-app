@@ -115,7 +115,9 @@ const Performance = () => {
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring`
       );
     } else {
-      history.push(`/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`);
+      history.push(
+        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
+      );
     }
   };
 
@@ -513,7 +515,11 @@ const Performance = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

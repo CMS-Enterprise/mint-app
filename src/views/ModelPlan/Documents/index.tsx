@@ -1,14 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useParams } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  Grid,
-  GridContainer,
-  Icon
-} from '@trussworks/react-uswds';
+import { Route, Switch, useParams } from 'react-router-dom';
+import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';

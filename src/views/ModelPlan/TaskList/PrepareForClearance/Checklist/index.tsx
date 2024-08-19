@@ -388,7 +388,9 @@ const PrepareForClearanceCheckList = ({
                       data-testid="dont-update-clearance"
                       className="usa-button usa-button--unstyled display-flex"
                       onClick={() =>
-                        history.push(`/models/${modelID}/collaboration-area/task-list`)
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list`
+                        )
                       }
                     >
                       <Icon.ArrowBack className="margin-right-1" aria-hidden />

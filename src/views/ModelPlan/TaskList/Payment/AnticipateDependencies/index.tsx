@@ -103,7 +103,9 @@ const AnticipateDependencies = () => {
         `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
       );
     } else {
-      history.push(`/models/${modelID}/collaboration-area/task-list/payment/complexity`);
+      history.push(
+        `/models/${modelID}/collaboration-area/task-list/payment/complexity`
+      );
     }
   };
 
@@ -417,7 +419,9 @@ const AnticipateDependencies = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/collaboration-area/task-list`)
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list`
+                            )
                           }
                         >
                           <Icon.ArrowBack

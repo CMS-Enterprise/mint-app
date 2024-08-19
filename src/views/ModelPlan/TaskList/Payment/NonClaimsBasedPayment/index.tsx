@@ -186,7 +186,9 @@ const NonClaimsBasedPayment = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/collaboration-area/task-list/payment/complexity`);
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/payment/complexity`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -476,7 +478,9 @@ const NonClaimsBasedPayment = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/collaboration-area/task-list`)
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list`
+                            )
                           }
                         >
                           <Icon.ArrowBack

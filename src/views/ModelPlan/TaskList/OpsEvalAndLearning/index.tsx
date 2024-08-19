@@ -167,7 +167,9 @@ export const OpsEvalAndLearningContent = () => {
 
   const nextPage = () => {
     if (formikRef?.current?.values.iddocSupport) {
-      history.push(`/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc`);
+      history.push(
+        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc`
+      );
     } else {
       history.push(
         `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/performance`
@@ -515,7 +517,11 @@ export const OpsEvalAndLearningContent = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/collaboration-area/task-list`)}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
                     {miscellaneousT('saveAndReturn')}
