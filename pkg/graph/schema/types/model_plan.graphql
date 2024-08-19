@@ -80,6 +80,7 @@ type ModelPlan {
   discussions: [PlanDiscussion!]!
   payments: PlanPayments!
   status: ModelStatus!
+  taskListStatus: TaskStatus!
   suggestedPhase: PhaseSuggestion
   isFavorite: Boolean!
   isCollaborator: Boolean!

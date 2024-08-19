@@ -576,3 +576,19 @@ func ModelPlanAnticipatedPhase(
 
 	return nil, nil
 }
+
+func ModelPlanGetTaskListStatus(
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	store *storage.Store,
+) (
+	models.TaskStatus,
+	error,
+) {
+	taskListStatus, err := store.ModelPlanGetTaskListStatus(logger, modelPlanID)
+	if err != nil {
+		return "", err
+	}
+
+	return taskListStatus, nil
+}
