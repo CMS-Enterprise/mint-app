@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import ReactPaginate from 'react-paginate';
 import { Alert, Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import {
   Activity,
+  GetNotificationsQuery,
   useGetNotificationsQuery,
   useUpdateAllNotificationsAsReadMutation
 } from 'gql/gen/graphql';
@@ -15,13 +15,12 @@ import PageHeading from 'components/PageHeading';
 import Expire from 'components/shared/Expire';
 import Spinner from 'components/Spinner';
 import useMessage from 'hooks/useMessage';
+import usePagination from 'hooks/usePagination';
 import { NotFoundPartial } from 'views/NotFound';
 
 import IndividualNotification from './_components/IndividualNotification';
 
 const NotificationsHome = () => {
-  const [pageOffset, setPageOffset] = useState(0);
-
   const { t: notificationsT } = useTranslation('notifications');
   const { t: generalT } = useTranslation('general');
 
@@ -33,26 +32,22 @@ const NotificationsHome = () => {
   const numUnreadNotifications =
     data?.currentUser.notifications.numUnreadNotifications;
 
-  const allNotifications = data?.currentUser.notifications.notifications || [];
+  const allNotifications = useMemo(
+    () => data?.currentUser.notifications.notifications || [],
+    [data?.currentUser.notifications.notifications]
+  );
+
+  const { currentItems, Pagination } = usePagination<
+    GetNotificationsQuery['currentUser']['notifications']['notifications']
+  >({
+    items: allNotifications,
+    itemsPerPage: 3,
+    loading
+  });
 
   if ((!loading && error) || (!loading && !data?.currentUser)) {
     return <NotFoundPartial />;
   }
-
-  // Pagination Configuration
-  const itemsPerPage = 10;
-  const endOffset = pageOffset + itemsPerPage;
-  const currentNotifications = allNotifications?.slice(pageOffset, endOffset);
-  const pageCount = allNotifications
-    ? Math.ceil(allNotifications.length / itemsPerPage)
-    : 1;
-
-  // Invoke when user click to request another page.
-  const handlePageClick = (event: { selected: number }) => {
-    const newOffset =
-      (event.selected * itemsPerPage) % allNotifications?.length;
-    setPageOffset(newOffset);
-  };
 
   return (
     <MainContent data-testid="notification-index">
@@ -126,7 +121,7 @@ const NotificationsHome = () => {
 
           <div className="margin-bottom-4">
             {allNotifications?.length !== 0 &&
-              currentNotifications?.map(notification => (
+              currentItems?.map(notification => (
                 <IndividualNotification
                   {...notification}
                   activity={notification.activity as Activity}
@@ -135,34 +130,7 @@ const NotificationsHome = () => {
               ))}
           </div>
 
-          {pageCount > 1 && (
-            <ReactPaginate
-              data-testid="notification-pagination"
-              breakLabel="..."
-              breakClassName="usa-pagination__item usa-pagination__overflow"
-              nextLabel="Next >"
-              containerClassName="mint-pagination usa-pagination usa-pagination__list"
-              previousLinkClassName={
-                pageOffset === 0
-                  ? 'display-none'
-                  : 'usa-pagination__link usa-pagination__previous-page prev-page'
-              }
-              nextLinkClassName={
-                pageOffset / itemsPerPage === pageCount - 1
-                  ? 'display-none'
-                  : 'usa-pagination__link usa-pagination__previous-page next-page'
-              }
-              disabledClassName="pagination__link--disabled"
-              activeClassName="usa-current"
-              activeLinkClassName="usa-current"
-              pageClassName="usa-pagination__item"
-              pageLinkClassName="usa-pagination__button"
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={5}
-              pageCount={pageCount}
-              previousLabel="< Previous"
-            />
-          )}
+          {Pagination}
         </Grid>
       </GridContainer>
     </MainContent>

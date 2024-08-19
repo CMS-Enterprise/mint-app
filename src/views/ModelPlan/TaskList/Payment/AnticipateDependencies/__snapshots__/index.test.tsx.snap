@@ -192,27 +192,26 @@ exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
               <div
                 class="margin-top-3 margin-bottom-6"
               >
-                <button
-                  class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
-                  type="button"
+                <div
+                  class="usa-form-group"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="usa-icon margin-right-1"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <label
+                    class="usa-label"
+                    for="payment-will-be-payment-adjustments-note"
+                    id="label-payment-will-be-payment-adjustments-note"
                   >
-                    <path
-                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                    />
-                  </svg>
-                  Add an additional note
-                </button>
+                    Notes
+                  </label>
+                  <textarea
+                    aria-labelledby="label-payment-will-be-payment-adjustments-note hint-payment-will-be-payment-adjustments-note"
+                    class="usa-textarea"
+                    data-testid="payment-will-be-payment-adjustments-note"
+                    id="payment-will-be-payment-adjustments-note"
+                    name="willBePaymentAdjustmentsNote"
+                  >
+                    Payment adjustments note
+                  </textarea>
+                </div>
               </div>
             </div>
             <div

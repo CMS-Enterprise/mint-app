@@ -269,6 +269,9 @@ exports[`Notification Page > matches snapshot 1`] = `
             </div>
           </div>
         </div>
+        <div
+          class=""
+        />
       </div>
     </div>
   </main>

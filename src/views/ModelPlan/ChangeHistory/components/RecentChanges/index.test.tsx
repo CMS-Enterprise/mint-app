@@ -27,6 +27,10 @@ const mocks = [
             tableName: 'plan_basics',
             date: '2024-04-22T13:55:13.725192Z',
             action: DatabaseOperation.INSERT,
+            metaData: {
+              version: 1,
+              tableName: 'plan_basics'
+            },
             translatedFields: [
               {
                 id: 'b23eceab-fbf6-433a-ba2a-fd4482c4484e',

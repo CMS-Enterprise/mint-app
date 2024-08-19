@@ -206,7 +206,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       class="usa-link"
                       href="/models/c9cf987d-8543-46bb-a668-2c560ce5b149/read-view"
                     >
-                      Empty Plan
+                      Empty Plan (EP)
                     </a>
                   </h3>
                 </div>
@@ -333,7 +333,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       class="usa-link"
                       href="/models/598db9f0-54c0-4346-bb6b-da46a36eff1a/read-view"
                     >
-                      Enhancing Oncology Model
+                      Enhancing Oncology Model (EOM)
                     </a>
                   </h3>
                 </div>
@@ -472,7 +472,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       class="usa-link"
                       href="/models/4fc87324-dbb0-4867-8e4d-5a20a76c8ae2/read-view"
                     >
-                      Plan with Basics
+                      Plan with Basics (PWB)
                     </a>
                   </h3>
                 </div>
@@ -585,79 +585,85 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
         </li>
       </div>
     </div>
-    <ul
-      aria-label="Pagination"
-      class="mint-pagination usa-pagination usa-pagination__list"
-      role="navigation"
+    <div
+      class=""
     >
-      <li
-        class="previous pagination__link--disabled"
+      <nav
+        aria-label="Pagination"
+        class="usa-pagination mint-pagination"
       >
-        <a
-          aria-disabled="true"
-          aria-label="Previous page"
-          class="display-none "
-          rel="prev"
-          role="button"
-          tabindex="-1"
+        <ul
+          class="usa-pagination__list"
         >
-          &lt; Previous
-        </a>
-      </li>
-      <li
-        class="usa-pagination__item usa-current"
-      >
-        <a
-          aria-current="page"
-          aria-label="Page 1 is your current page"
-          class="usa-pagination__button usa-current"
-          rel="canonical"
-          role="button"
-          tabindex="-1"
-        >
-          1
-        </a>
-      </li>
-      <li
-        class="usa-pagination__item"
-      >
-        <a
-          aria-label="Page 2"
-          class="usa-pagination__button"
-          rel="next"
-          role="button"
-          tabindex="0"
-        >
-          2
-        </a>
-      </li>
-      <li
-        class="usa-pagination__item"
-      >
-        <a
-          aria-label="Page 3"
-          class="usa-pagination__button"
-          role="button"
-          tabindex="0"
-        >
-          3
-        </a>
-      </li>
-      <li
-        class="next"
-      >
-        <a
-          aria-disabled="false"
-          aria-label="Next page"
-          class="usa-pagination__link usa-pagination__previous-page next-page"
-          rel="next"
-          role="button"
-          tabindex="0"
-        >
-          Next &gt;
-        </a>
-      </li>
-    </ul>
+          <li
+            class="usa-pagination__item usa-pagination__page-no"
+          >
+            <button
+              aria-current="page"
+              aria-label="Page 1"
+              class="usa-button usa-button--unstyled usa-pagination__button usa-current"
+              data-testid="pagination-page-number"
+              type="button"
+            >
+              1
+            </button>
+          </li>
+          <li
+            class="usa-pagination__item usa-pagination__page-no"
+          >
+            <button
+              aria-label="Page 2"
+              class="usa-button usa-button--unstyled usa-pagination__button"
+              data-testid="pagination-page-number"
+              type="button"
+            >
+              2
+            </button>
+          </li>
+          <li
+            class="usa-pagination__item usa-pagination__page-no"
+          >
+            <button
+              aria-label="Page 3"
+              class="usa-button usa-button--unstyled usa-pagination__button"
+              data-testid="pagination-page-number"
+              type="button"
+            >
+              3
+            </button>
+          </li>
+          <li
+            class="usa-pagination__item usa-pagination__arrow"
+          >
+            <button
+              aria-label="Next page"
+              class="usa-button usa-button--unstyled usa-pagination__link usa-pagination__next-page"
+              data-testid="pagination-next"
+              type="button"
+            >
+              <span
+                class="usa-pagination__link-text"
+              >
+                Next
+              </span>
+              <svg
+                class="usa-icon"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                />
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </DocumentFragment>
 `;

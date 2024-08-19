@@ -507,6 +507,9 @@ exports[`The AllArticles component > matches snapshot 1`] = `
             </div>
           </li>
         </ul>
+        <div
+          class=""
+        />
       </div>
     </div>
   </main>

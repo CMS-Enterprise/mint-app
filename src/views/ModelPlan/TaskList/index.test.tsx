@@ -47,6 +47,10 @@ Object.defineProperty(window, 'sessionStorage', {
 });
 
 describe('The Model Plan Task List', () => {
+  // ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
+  // eslint-disable-next-line
+  console.error = vi.fn();
+
   beforeEach(() => {
     sessionStorage.clear();
   });
@@ -227,10 +231,6 @@ describe('The Model Plan Task List', () => {
   });
 
   it('reads from sessionStorage and renders modal', async () => {
-    // ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
-    // eslint-disable-next-line
-    console.error = vi.fn();
-
     const { getByTestId } = render(
       <Provider store={store}>
         <MemoryRouter

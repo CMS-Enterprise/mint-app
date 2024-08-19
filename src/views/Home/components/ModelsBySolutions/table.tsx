@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import ReactPaginate from 'react-paginate';
 import { Grid, Link } from '@trussworks/react-uswds';
 import {
   GetModelsBySolutionQuery,
@@ -15,7 +14,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
 import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
-import TableResults from 'components/TableResults';
+import usePagination from 'hooks/usePagination';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { TranslationBasics } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
@@ -63,25 +62,18 @@ const ModelsBySolutionTable = ({
 
   const [query, setQuery] = useState<string>('');
 
-  const [pageOffset, setPageOffset] = useState(0);
-
-  // Pagination Configuration
-  const itemsPerPage = 3;
-  const endOffset = pageOffset + itemsPerPage;
-  const currentModels = filteredModels?.slice(pageOffset, endOffset);
-  const pageCount = filteredModels
-    ? Math.ceil(filteredModels.length / itemsPerPage)
-    : 1;
-
-  // Invoke when user click to request another page.
-  const handlePageClick = (event: { selected: number }) => {
-    const newOffset = (event.selected * itemsPerPage) % filteredModels?.length;
-    setPageOffset(newOffset);
-  };
+  const {
+    currentItems,
+    Pagination,
+    Results
+  } = usePagination<ModelsBySolutionType>({
+    items: filteredModels,
+    itemsPerPage: 3,
+    loading,
+    query
+  });
 
   useEffect(() => {
-    setPageOffset(0);
-
     if (selectedStatus === 'total' && query.trim() === '') {
       setFilteredModels([...modelsBySolution]);
       return;
@@ -141,13 +133,7 @@ const ModelsBySolutionTable = ({
               className="margin-bottom-3 maxw-none width-mobile-lg"
             />
 
-            <TableResults
-              globalFilter={query}
-              pageIndex={pageOffset / itemsPerPage}
-              pageSize={itemsPerPage}
-              filteredRowLength={filteredModels.length}
-              rowLength={modelsBySolution.length}
-            />
+            {Results}
           </div>
         )}
 
@@ -170,7 +156,7 @@ const ModelsBySolutionTable = ({
 
       <>
         <Grid row gap={2} className="margin-bottom-2 margin-top-4">
-          {currentModels.map(model => (
+          {currentItems.map(model => (
             <Grid
               desktop={{ col: 4 }}
               tablet={{ col: 6 }}
@@ -184,35 +170,7 @@ const ModelsBySolutionTable = ({
           ))}
         </Grid>
 
-        {pageCount > 1 && (
-          <ReactPaginate
-            data-testid="notification-pagination"
-            breakLabel="..."
-            breakClassName="usa-pagination__item usa-pagination__overflow"
-            nextLabel="Next >"
-            containerClassName="mint-pagination usa-pagination usa-pagination__list"
-            previousLinkClassName={
-              pageOffset === 0
-                ? 'display-none'
-                : 'usa-pagination__link usa-pagination__previous-page prev-page'
-            }
-            nextLinkClassName={
-              pageOffset / itemsPerPage === pageCount - 1
-                ? 'display-none'
-                : 'usa-pagination__link usa-pagination__previous-page next-page'
-            }
-            disabledClassName="pagination__link--disabled"
-            activeClassName="usa-current"
-            activeLinkClassName="usa-current"
-            pageClassName="usa-pagination__item"
-            pageLinkClassName="usa-pagination__button"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
-            pageCount={pageCount}
-            forcePage={pageOffset / itemsPerPage}
-            previousLabel="< Previous"
-          />
-        )}
+        {Pagination}
       </>
     </div>
   );

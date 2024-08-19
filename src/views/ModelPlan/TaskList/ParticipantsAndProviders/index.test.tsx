@@ -27,7 +27,8 @@ const participantsAndProvidersMockData: GetParticipantsAndProvidersType = {
   participantsNote: '',
   participantsCurrentlyInModels: null,
   participantsCurrentlyInModelsNote: '',
-  modelApplicationLevel: 'c92.00 and c92.01'
+  modelApplicationLevel: 'c92.00 and c92.01',
+  isNewTypeOfProvidersOrSuppliers: null
 };
 
 const participantsAndProvidersMock = [

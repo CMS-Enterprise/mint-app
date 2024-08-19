@@ -18,6 +18,8 @@ const mockData: GetAnticipateDependenciesType = {
   id: '123',
   payType: [PayType.CLAIMS_BASED_PAYMENTS],
   payClaims: [ClaimsBasedPayType.OTHER],
+  willBePaymentAdjustments: true,
+  willBePaymentAdjustmentsNote: 'Payment adjustments note',
   creatingDependenciesBetweenServices: null,
   creatingDependenciesBetweenServicesNote: null,
   needsClaimsDataCollection: true,

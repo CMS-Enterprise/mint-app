@@ -9672,42 +9672,363 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
           class="margin-top-6"
         >
           <div
-            class="margin-y-7"
+            class="read-only-model-plan--operational-needs"
+            data-testid="read-only-model-plan--operational-needs"
           >
-            <h1
-              aria-live="polite"
-              class="mint-h1"
-              tabindex="-1"
+            <div
+              class="display-flex flex-justify flex-align-start"
             >
-              This page cannot be found.
-            </h1>
-            <p>
-              Here is a list of things you could try to check and fix:
-            </p>
-            <ul
-              class="mint-not-found__error_suggestions"
+              <h2
+                class="margin-top-0 margin-bottom-4"
+              >
+                Operational solutions
+              </h2>
+              <div
+                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                data-testid="tasklist-tag"
+              >
+                <span>
+                  In progress
+                </span>
+              </div>
+            </div>
+            <div
+              class="model-plan-table"
+              data-testid="needs-table"
             >
-              <li>
-                Please check if the address you typed in is correct.
-              </li>
-              <li>
-                If you've typed the address correctly, check the spelling.
-              </li>
-              <li>
-                If you've copied and pasted the address, check that you've copied the entire address.
-              </li>
-            </ul>
-            <p
-              class="margin-bottom-5"
-            >
-              If none of the above have solved the problem, please return to the home page and try again.
-            </p>
-            <a
-              class="usa-button"
-              href="/"
-            >
-              Go back to the home page
-            </a>
+              <div
+                class="mint-header__basic"
+              >
+                <form
+                  class="usa-form usa-search margin-bottom-4 width-mobile-lg maxw-full"
+                  data-testid="table-client-filter"
+                  role="search"
+                >
+                  <label
+                    class="usa-sr-only"
+                    data-testid="label"
+                    for="operational-needs-search"
+                  >
+                    Search Table
+                  </label>
+                  <input
+                    class="usa-input"
+                    data-testid="textInput"
+                    id="operational-needs-search"
+                    name="Operational Needs Table Search"
+                    role="searchbox"
+                    type="search"
+                    value=""
+                  />
+                  <button
+                    class="usa-button grid-row flex-justify-center flex-align-center no-pointer"
+                    data-testid="button"
+                    type="submit"
+                  >
+                    <svg
+                      class="usa-icon usa-icon--size-3"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                      />
+                    </svg>
+                  </button>
+                </form>
+              </div>
+              <div
+                class="margin-bottom-4"
+                data-testid="page-results"
+              >
+                <span>
+                  <div
+                    aria-live="polite"
+                    role="status"
+                  >
+                    Showing 1-1 of 1 results 
+                  </div>
+                </span>
+              </div>
+              <div
+                class="usa-table-container--scrollable"
+                data-testid="scrollable-table-container"
+                tabindex="0"
+              >
+                <table
+                  class="usa-table usa-table--borderless width-full"
+                  data-testid="table"
+                >
+                  <thead>
+                    <tr
+                      role="row"
+                    >
+                      <th
+                        aria-sort="none"
+                        class="table-header"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: .5em; width: auto;"
+                      >
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          style="cursor: pointer;"
+                          title="Toggle SortBy"
+                          type="button"
+                        >
+                          Solution
+                          <svg
+                            class="usa-icon margin-left-05 position-absolute"
+                            data-testid="caret--sort"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                      <th
+                        aria-sort="ascending"
+                        class="table-header"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
+                      >
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          style="cursor: pointer;"
+                          title="Toggle SortBy"
+                          type="button"
+                        >
+                          Operational need
+                          <svg
+                            class="usa-icon margin-left-05 position-absolute"
+                            data-testid="caret--up"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                      <th
+                        aria-sort="none"
+                        class="table-header"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: 170px;"
+                      >
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          style="cursor: pointer;"
+                          title="Toggle SortBy"
+                          type="button"
+                        >
+                          Must be ready by
+                          <svg
+                            class="usa-icon margin-left-05 position-absolute"
+                            data-testid="caret--sort"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                      <th
+                        aria-sort="none"
+                        class="table-header"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="padding-bottom: .5rem; position: relative; padding-left: 0px; width: 100px;"
+                      >
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          style="cursor: pointer;"
+                          title="Toggle SortBy"
+                          type="button"
+                        >
+                          Subtasks
+                          <svg
+                            class="usa-icon margin-left-05 position-absolute"
+                            data-testid="caret--sort"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                      <th
+                        aria-sort="none"
+                        class="table-header"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: auto;"
+                      >
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          style="cursor: pointer;"
+                          title="Toggle SortBy"
+                          type="button"
+                        >
+                          Status
+                          <svg
+                            class="usa-icon margin-left-05 position-absolute"
+                            data-testid="caret--sort"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                      <th
+                        aria-sort="none"
+                        class="table-header"
+                        colspan="1"
+                        role="columnheader"
+                        scope="col"
+                        style="min-width: 138px; padding-bottom: .5rem; position: relative; padding-left: 0px; width: 235px;"
+                      >
+                        <button
+                          class="usa-button usa-button--unstyled position-relative"
+                          style="cursor: pointer;"
+                          title="Toggle SortBy"
+                          type="button"
+                        >
+                          Actions
+                          <svg
+                            class="usa-icon margin-left-05 position-absolute"
+                            data-testid="caret--sort"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                            />
+                          </svg>
+                        </button>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    role="rowgroup"
+                  >
+                    <tr
+                      role="row"
+                    >
+                      <th
+                        class="padding-x-1"
+                        role="cell"
+                        scope="row"
+                        style="padding-left: 0px; border-bottom: 1px solid black; white-space: normal;"
+                      >
+                        Shared Systems
+                      </th>
+                      <td
+                        class=""
+                        role="cell"
+                        style="padding-left: 0px; white-space: normal; max-width: 275px; border-bottom: 1px solid black;"
+                      >
+                        Recruit participants
+                      </td>
+                      <td
+                        class=""
+                        role="cell"
+                        style="padding-left: 0px; white-space: normal; max-width: auto; border-bottom: 1px solid black;"
+                      />
+                      <td
+                        class=""
+                        role="cell"
+                        style="padding-left: 0px; white-space: normal; max-width: auto; border-bottom: 1px solid black;"
+                      >
+                        0
+                      </td>
+                      <td
+                        class=""
+                        role="cell"
+                        style="padding-left: 0px; white-space: normal; max-width: auto; border-bottom: 1px solid black;"
+                      >
+                        <span
+                          class="mint-tag line-height-body-1 text-bold bg-gold text-base-darkest"
+                          data-testid="tag"
+                        >
+                          In progress
+                        </span>
+                      </td>
+                      <td
+                        class=""
+                        role="cell"
+                        style="padding-left: 0px; white-space: normal; max-width: auto; border-bottom: 1px solid black;"
+                      >
+                        <a
+                          class="usa-link margin-right-2 display-block"
+                          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/it-solutions/123/solution-implementation-details/123"
+                        >
+                          Update status
+                        </a>
+                        <a
+                          class="usa-link"
+                          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/it-solutions/123/123/solution-details"
+                        >
+                          View details
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                aria-live="polite"
+                class="usa-sr-only usa-table__announcement-region"
+              >
+                Requests table sorted by Operational need ascending
+              </div>
+            </div>
           </div>
         </div>
       </div>
