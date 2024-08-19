@@ -89,7 +89,7 @@ exports[`Read Only Model Plan Summary -- Model Basics > matches snapshot 1`] = `
         >
           CMMI Analysis & Management System (AMS).
         </span>
-         They will be blank until the model is added to AMS. Not all models will have demo codes.
+         Skip these fields until your model has been added to AMS. Not all models will have demo codes.
       </p>
       <div
         class="grid-row grid-gap"

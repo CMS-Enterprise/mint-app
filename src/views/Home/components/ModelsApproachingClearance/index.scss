@@ -1,10 +1,6 @@
 @use 'uswds-core' as *;
 
 .models-approaching-clearance {
-    .usa-pagination__page-no {
-        margin-left: 0 !important;
-    }
-
     .usa-card__container {
         padding: 1rem;
         border-radius: .25rem;
