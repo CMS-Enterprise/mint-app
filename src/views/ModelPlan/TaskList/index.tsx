@@ -332,7 +332,10 @@ const TaskList = () => {
               )}
 
               <div className="padding-y-1">
-                <UswdsReactLink to={`/models/${modelID}/collaboration-area`}>
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area`}
+                  data-testid="return-to-collaboration"
+                >
                   <span>
                     <Icon.ArrowBack className="top-3px margin-right-1" />
                     {t('returnToCollaboration')}

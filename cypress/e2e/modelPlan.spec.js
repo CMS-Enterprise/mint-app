@@ -188,6 +188,8 @@ describe('The Model Plan Form', () => {
 
     cy.get('[data-testid="tasklist-tag"]').first().contains('In progress');
 
+    cy.get('[data-testid="return-to-collaboration"]').click();
+
     // updates model plan status
 
     cy.get('.mint-tag').contains('Draft Model Plan');
@@ -216,9 +218,7 @@ describe('The Model Plan Form', () => {
       .click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list/
-      );
+      expect(loc.pathname).to.match(/\/models\/.{36}\/collaboration-area/);
     });
 
     cy.get('.mint-tag').contains('Cleared');
