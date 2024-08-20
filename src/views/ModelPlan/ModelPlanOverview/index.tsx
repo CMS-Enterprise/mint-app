@@ -16,7 +16,7 @@ import {
   ViewCustomizationType
 } from 'gql/gen/graphql';
 
-import FavoritesTable from 'components/FavoriteCard/table';
+import FavoritesCards from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
@@ -69,7 +69,7 @@ const ModelPlan = () => {
   const { message } = useMessage();
 
   const Favorites = favorites.length ? (
-    <FavoritesTable
+    <FavoritesCards
       favorites={favorites}
       removeFavorite={handleUpdateFavorite}
     />
