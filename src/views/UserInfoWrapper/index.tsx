@@ -64,8 +64,8 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
         ReactGA.gtag('set', 'user_properties', {
           user_group:
             // @ts-ignore
-            (authState?.accessToken?.claims['mint-groups'] || []).join(', '),
-          domain: authState?.accessToken?.claims.email?.replace(/.*@/, '')
+            (authState?.idToken?.claims['mint-groups'] || []).join(', '),
+          domain: authState?.idToken?.claims.email?.replace(/.*@/, '')
         });
       }
 
