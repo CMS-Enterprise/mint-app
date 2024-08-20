@@ -127,7 +127,6 @@
     ]
   },
   "devDependencies": {
-    "@apollo/react-testing": "^4.0.0",
     "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.23.9",
     "@cypress/webpack-preprocessor": "^6.0.1",
