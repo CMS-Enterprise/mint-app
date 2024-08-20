@@ -43,7 +43,7 @@ export const basics: TranslationBasics = {
         'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: ''
     },
-    filterGroups: [ModelViewFilter.IPC]
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.PBG]
   },
   additionalModelCategories: {
     gqlField: 'additionalModelCategories',
@@ -82,7 +82,7 @@ export const basics: TranslationBasics = {
         'Models and demonstrations requiring testing as determined by Congress and/or the Secretary of Health and Human Services.',
       TO_BE_DETERMINED: ''
     },
-    filterGroups: [ModelViewFilter.IPC]
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.PBG]
   },
   amsModelID: {
     gqlField: 'amsModelID',

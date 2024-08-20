@@ -4,6 +4,7 @@ SELECT
     abbreviation,
     archived,
     status,
+    previous_suggested_phase,
     created_by,
     created_dts,
     modified_by,

@@ -149,12 +149,14 @@ describe('Operational Solutions Home', () => {
 
   it('renders filter view solutions alert', async () => {
     const { asFragment } = render(
-      <FilterViewSolutionsAlert
-        filterSolutions={[OperationalSolutionKey.CCW]}
-        operationalNeeds={
-          returnNeeds(true)[0].result.data.modelPlan.operationalNeeds
-        }
-      />
+      <MockedProvider mocks={returnNeeds(true)} addTypename={false}>
+        <FilterViewSolutionsAlert
+          filterSolutions={[OperationalSolutionKey.CCW]}
+          operationalNeeds={
+            returnNeeds(true)[0].result.data.modelPlan.operationalNeeds
+          }
+        />
+      </MockedProvider>
     );
 
     expect(asFragment()).toMatchSnapshot();

@@ -46,6 +46,37 @@ func UpdatePlanBasics(
 		return nil, err
 	}
 
+	// Reset the previous suggested phase on the corresponding model plan
+	// if any dates have changed
+	datesChanged, err := extractChangedDates(changes, existing)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(datesChanged) > 0 {
+		resetSuggestedPhaseChanges := map[string]interface{}{
+			"previousSuggestedPhase": nil,
+		}
+
+		err = BaseStructPreUpdate(
+			logger,
+			modelPlan,
+			resetSuggestedPhaseChanges,
+			principal,
+			store,
+			true,
+			true,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		_, mpUpdateErr := store.ModelPlanUpdate(logger, modelPlan)
+		if mpUpdateErr != nil {
+			return nil, mpUpdateErr
+		}
+	}
+
 	if emailService != nil &&
 		emailTemplateService != nil &&
 		len(addressBook.ModelPlanDateChangedRecipients) > 0 {

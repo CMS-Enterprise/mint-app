@@ -12,6 +12,7 @@ SELECT
     plan.abbreviation,
     plan.archived,
     plan.status,
+    plan.previous_suggested_phase,
     plan.created_by,
     plan.created_dts,
     plan.modified_by,
