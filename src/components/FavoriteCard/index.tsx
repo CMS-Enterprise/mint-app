@@ -181,7 +181,9 @@ export const FavoriteIcon = ({
         <Icon.StarOutline className="margin-right-1 bookmark__tag__icon" />
       )}
 
-      {isFavorite ? t('favorite.following') : t('favorite.follow')}
+      <span className="bookmark__text">
+        {isFavorite ? t('favorite.following') : t('favorite.follow')}
+      </span>
     </Tag>
   );
 };
