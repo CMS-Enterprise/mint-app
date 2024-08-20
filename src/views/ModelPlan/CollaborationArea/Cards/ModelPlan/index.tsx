@@ -13,6 +13,7 @@ import {
 } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { Avatar } from 'components/shared/Avatar';
 import { formatDateLocal } from 'utils/date';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
@@ -68,14 +69,18 @@ const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
       </CardBody>
 
       {modifiedDts && modifiedByUserAccount && (
-        <>
-          <p className="text-base margin-left-3">
+        <div className="display-flex margin-top-2 margin-bottom-3">
+          <span className="text-base margin-left-3 margin-right-1">
             {modelPlanCardT('mostRecentEdit', {
               date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
             })}
-          </p>
-          <span>{modifiedByUserAccount.commonName}</span>
-        </>
+          </span>
+          <Avatar
+            className="text-base-darkest"
+            user={modifiedByUserAccount.commonName}
+          />
+          {/* <span>{modifiedByUserAccount.commonName}</span> */}
+        </div>
       )}
       <CardFooter>
         <UswdsReactLink
