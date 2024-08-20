@@ -106,6 +106,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       MULTIPLE: [() => opsEvalAndLearning.contractorSupportHow],
       OTHER: [() => opsEvalAndLearning.contractorSupportHow]
     },
+    adjacentPositioning: {
+      position: 'left',
+      adjacentField: 'contractorSupportHow'
+    },
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
@@ -140,6 +144,10 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     formType: TranslationFormType.TEXTAREA,
     order: 1.08,
     parentRelation: () => opsEvalAndLearning.contractorSupport,
+    adjacentPositioning: {
+      position: 'right',
+      adjacentField: 'contractorSupport'
+    },
     filterGroups: [
       ModelViewFilter.CBOSC,
       ModelViewFilter.IDDOC,
@@ -198,7 +206,11 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
         () => opsEvalAndLearning.fileNamingConventions
       ]
     },
-    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.IPC]
+    filterGroups: [
+      ModelViewFilter.IDDOC,
+      ModelViewFilter.IPC,
+      ModelViewFilter.PBG
+    ]
   },
   iddocSupportNote: {
     gqlField: 'iddocSupportNote',
@@ -505,7 +517,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
       false: 'No'
     },
     parentRelation: () => opsEvalAndLearning.iddocSupport,
-    filterGroups: [ModelViewFilter.IDDOC]
+    filterGroups: [ModelViewFilter.IDDOC, ModelViewFilter.PBG]
   },
   fileNamingConventions: {
     gqlField: 'fileNamingConventions',
