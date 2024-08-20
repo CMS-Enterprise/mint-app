@@ -35,7 +35,7 @@ const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
   const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
   const {
     modifiedDts,
-    modifiedBy
+    modifiedByUserAccount
     // basics: { status },
     // beneficiaries: { status },
     // generalCharacteristics: { status },
@@ -67,12 +67,15 @@ const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
         <p>{modelPlanCardT('body')}</p>
       </CardBody>
 
-      {modifiedDts && (
-        <p className="text-base margin-left-3">
-          {modelPlanCardT('mostRecentEdit', {
-            date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
-          })}
-        </p>
+      {modifiedDts && modifiedByUserAccount && (
+        <>
+          <p className="text-base margin-left-3">
+            {modelPlanCardT('mostRecentEdit', {
+              date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+            })}
+          </p>
+          <span>{modifiedByUserAccount.commonName}</span>
+        </>
       )}
       <CardFooter>
         <UswdsReactLink

@@ -6,6 +6,9 @@ export default gql(/* GraphQL */ `
       id
       modelName
       modifiedDts
+      modifiedByUserAccount {
+        commonName
+      }
       archived
       status
       isFavorite
