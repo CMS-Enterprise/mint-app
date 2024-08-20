@@ -33,7 +33,7 @@ const FavoritesCards = ({
   return (
     <div id="favorite-table">
       {currentItems.map(favorite => (
-        <CardGroup>
+        <CardGroup key={favorite.id}>
           <FavoriteCard
             key={favorite.id}
             modelPlan={favorite}
