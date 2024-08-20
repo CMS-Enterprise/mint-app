@@ -182,7 +182,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       position: 'left',
       adjacentField: 'estimateConfidence'
     },
-    filterGroups: [ModelViewFilter.MDM]
+    filterGroups: [ModelViewFilter.MDM, ModelViewFilter.PBG]
   },
   estimateConfidence: {
     gqlField: 'estimateConfidence',
@@ -202,7 +202,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       position: 'right',
       adjacentField: 'numberPeopleImpacted'
     },
-    filterGroups: [ModelViewFilter.MDM]
+    filterGroups: [ModelViewFilter.MDM, ModelViewFilter.PBG]
   },
   confidenceNote: {
     gqlField: 'confidenceNote',
@@ -392,7 +392,7 @@ export const beneficiaries: TranslationBeneficiaries = {
       YES_NO_ISSUES: 'Yes, and the overlaps would not be an issue',
       NO: 'No'
     },
-    filterGroups: [ModelViewFilter.MDM]
+    filterGroups: [ModelViewFilter.MDM, ModelViewFilter.PBG]
   },
   beneficiaryOverlapNote: {
     gqlField: 'beneficiaryOverlapNote',
@@ -426,7 +426,11 @@ export const beneficiaries: TranslationBeneficiaries = {
       YES: 'precedenceRulesYes',
       NO: 'precedenceRulesNo'
     },
-    filterGroups: [ModelViewFilter.MDM, ModelViewFilter.OACT]
+    filterGroups: [
+      ModelViewFilter.MDM,
+      ModelViewFilter.OACT,
+      ModelViewFilter.PBG
+    ]
   },
   precedenceRulesYes: {
     gqlField: 'precedenceRulesYes',

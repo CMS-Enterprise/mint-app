@@ -20,7 +20,8 @@ import classNames from 'classnames';
 import {
   GetOperationalNeedsQuery,
   OperationalSolutionKey,
-  useGetOperationalNeedsQuery
+  useGetOperationalNeedsQuery,
+  useGetPossibleOperationalSolutionsQuery
 } from 'gql/gen/graphql';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -42,7 +43,6 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
-import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { PrintPDFContext } from 'views/PrintPDFWrapper';
 
 import OperationalNeedsStatusTag, {
@@ -576,19 +576,20 @@ export const FilterViewSolutionsAlert = ({
     solution => !operationalNeeds.find((need: any) => need.key === solution)
   );
 
+  const { data } = useGetPossibleOperationalSolutionsQuery();
+
+  const possibleOperationalSolutions = data?.possibleOperationalSolutions || [];
+
   if (unusedSolutions.length === 0) return null;
 
   return (
     <Alert noIcon type="info" validation>
       {opSolutionsMiscT('itSolutionsTable.unusedSolutionsAlert')}
       <ul className="margin-top-1 margin-bottom-0">
-        {helpSolutions
-          .filter(solution => unusedSolutions.includes(solution.enum))
+        {possibleOperationalSolutions
+          .filter(solution => unusedSolutions.includes(solution.key))
           .map(solution => (
-            <li key={solution.key}>
-              {solution.name}
-              {solution.acronym ? ` (${solution.acronym})` : ''}
-            </li>
+            <li key={solution.key}>{solution.name}</li>
           ))}
       </ul>
     </Alert>

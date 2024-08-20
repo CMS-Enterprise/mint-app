@@ -23,7 +23,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     childRelation: {
       false: [() => generalCharacteristics.existingModel]
     },
-    filterGroups: [ModelViewFilter.IPC]
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.PBG]
   },
   existingModelID: {
     gqlField: 'existingModelID',
@@ -58,7 +58,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     formType: TranslationFormType.SELECT,
     order: 1.04,
     parentRelation: () => generalCharacteristics.isNewModel,
-    filterGroups: [ModelViewFilter.IPC]
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.PBG]
   },
   resemblesExistingModel: {
     gqlField: 'resemblesExistingModel',
@@ -115,7 +115,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     optionsRelatedInfo: {
       Other: 'resemblesExistingModelOtherOption'
     },
-    filterGroups: [ModelViewFilter.IPC]
+    filterGroups: [ModelViewFilter.IPC, ModelViewFilter.PBG]
   },
   resemblesExistingModelHow: {
     gqlField: 'resemblesExistingModelHow',
@@ -184,7 +184,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
         () => generalCharacteristics.participationInModelPreconditionWhich,
         () => generalCharacteristics.participationInModelPreconditionWhyHow
       ]
-    }
+    },
+    filterGroups: [ModelViewFilter.PBG]
   },
   participationInModelPreconditionOtherSpecify: {
     gqlField: 'participationInModelPreconditionOtherSpecify',
@@ -217,7 +218,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     },
     optionsRelatedInfo: {
       Other: 'participationInModelPreconditionOtherOption'
-    }
+    },
+    filterGroups: [ModelViewFilter.PBG]
   },
   participationInModelPreconditionOtherOption: {
     gqlField: 'participationInModelPreconditionOtherOption',
@@ -240,7 +242,8 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     formType: TranslationFormType.TEXTAREA,
     order: 1.16,
     parentRelation: () =>
-      generalCharacteristics.participationInModelPrecondition
+      generalCharacteristics.participationInModelPrecondition,
+    filterGroups: [ModelViewFilter.PBG]
   },
   participationInModelPreconditionNote: {
     gqlField: 'participationInModelPreconditionNote',
