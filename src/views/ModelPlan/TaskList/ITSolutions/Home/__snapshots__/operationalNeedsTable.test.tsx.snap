@@ -273,11 +273,7 @@ exports[`Operational Solutions Home > renders filter view solutions alert 1`] = 
         This model has not specified they will use the following solution(s):
         <ul
           class="margin-top-1 margin-bottom-0"
-        >
-          <li>
-            Chronic Conditions Warehouse (CCW)
-          </li>
-        </ul>
+        />
       </span>
     </div>
   </div>

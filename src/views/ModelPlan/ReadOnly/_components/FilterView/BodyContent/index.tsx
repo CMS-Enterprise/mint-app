@@ -10,6 +10,7 @@ import {
   TranslationPlan
 } from 'types/translation';
 import ReadOnlyBeneficiaries from 'views/ModelPlan/ReadOnly/Beneficiaries';
+import ReadOnlyCRTDLs from 'views/ModelPlan/ReadOnly/CRTDLs';
 import ReadOnlyGeneralCharacteristics from 'views/ModelPlan/ReadOnly/GeneralCharacteristics';
 import ReadOnlyModelBasics from 'views/ModelPlan/ReadOnly/ModelBasics';
 import ReadOnlyOpsEvalAndLearning from 'views/ModelPlan/ReadOnly/OpsEvalAndLearning';
@@ -118,6 +119,14 @@ const BodyContent = ({
             hiddenColumns={[opSolutionsMiscT('itSolutionsTable.actions')]}
             filterSolutions={filteredGroupSolutions[filteredView]}
           />
+        </div>
+      )}
+
+      {/* CR and TDLs table for filtered views */}
+      {filteredGroupSolutions[filteredView] && (
+        <div>
+          <Divider className="margin-y-8" />
+          <ReadOnlyCRTDLs modelID={modelID} />
         </div>
       )}
 

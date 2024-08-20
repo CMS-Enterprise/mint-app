@@ -14,11 +14,15 @@ var planBasicsGetByIDSQL string
 //go:embed SQL/plan_basics/get_by_model_plan_id_LOADER.sql
 var planBasicsGetByModelPlanIDLoaderSQL string
 
+//go:embed SQL/plan_basics/get_by_model_plan_id.sql
+var planBasicsGetByModelPlanIDSQL string
+
 type planBasicsScripts struct {
 	Create                 string
 	Update                 string
 	GetByID                string
 	GetByModelPlanIDLoader string
+	GetByModelPlanID       string
 }
 
 // PlanBasics houses all the sql for getting data for plan basics from the database
@@ -27,4 +31,5 @@ var PlanBasics = planBasicsScripts{
 	Update:                 planBasicsUpdateSQL,
 	GetByID:                planBasicsGetByIDSQL,
 	GetByModelPlanIDLoader: planBasicsGetByModelPlanIDLoaderSQL,
+	GetByModelPlanID:       planBasicsGetByModelPlanIDSQL,
 }

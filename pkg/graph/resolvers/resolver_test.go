@@ -160,7 +160,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 		Return(emailServiceConfig).
 		AnyTimes()
 
-	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(mp.ModelName, mp)
+	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(mp.ModelName, mp)
 	mockEmailTemplateService.
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).

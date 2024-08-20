@@ -8,5 +8,6 @@ import (
 )
 
 func TestModelPlanTranslation(t *testing.T) {
-	assertAllTranslationDataGeneric(t, ModelPlanTranslation, models.ModelPlan{}, taskListStructExcludeFields)
+	excludedFields := append(taskListStructExcludeFields, "PreviousSuggestedPhase")
+	assertAllTranslationDataGeneric(t, ModelPlanTranslation, models.ModelPlan{}, excludedFields)
 }

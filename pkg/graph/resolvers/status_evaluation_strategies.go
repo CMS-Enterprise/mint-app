@@ -47,7 +47,7 @@ func (s *ICIPCompleteStrategy) Evaluate(
 		!utilitytime.IsTimeNilOrZero(planBasics.CompleteICIP) &&
 		planBasics.CompleteICIP.Before(time.Now()) {
 		return &model.PhaseSuggestion{
-			Phase:             model.ModelPhaseIcipComplete,
+			Phase:             models.ModelPhaseIcipComplete,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
 		}
 	}
@@ -69,7 +69,7 @@ func (s *ClearanceStartStrategy) Evaluate(
 		!utilitytime.IsTimeNilOrZero(planBasics.ClearanceStarts) &&
 		planBasics.ClearanceStarts.Before(time.Now()) {
 		return &model.PhaseSuggestion{
-			Phase: model.ModelPhaseInClearance,
+			Phase: models.ModelPhaseInClearance,
 			SuggestedStatuses: []models.ModelStatus{
 				models.ModelStatusInternalCmmiClearance,
 				models.ModelStatusCmsClearance,
@@ -95,7 +95,7 @@ func (s *ClearanceEndStrategy) Evaluate(
 		!utilitytime.IsTimeNilOrZero(planBasics.ClearanceEnds) &&
 		planBasics.ClearanceEnds.Before(time.Now()) {
 		return &model.PhaseSuggestion{
-			Phase:             model.ModelPhaseCleared,
+			Phase:             models.ModelPhaseCleared,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusCleared},
 		}
 	}
@@ -116,7 +116,7 @@ func (s *AnnounceStrategy) Evaluate(
 		!utilitytime.IsTimeNilOrZero(planBasics.Announced) &&
 		planBasics.Announced.Before(time.Now()) {
 		return &model.PhaseSuggestion{
-			Phase:             model.ModelPhaseAnnounced,
+			Phase:             models.ModelPhaseAnnounced,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusAnnounced},
 		}
 	}
@@ -137,7 +137,7 @@ func (s *ActiveStrategy) Evaluate(
 		!utilitytime.IsTimeNilOrZero(planBasics.PerformancePeriodStarts) &&
 		planBasics.PerformancePeriodStarts.Before(time.Now()) {
 		return &model.PhaseSuggestion{
-			Phase:             model.ModelPhaseActive,
+			Phase:             models.ModelPhaseActive,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusActive},
 		}
 	}
@@ -158,7 +158,7 @@ func (s *EndedStrategy) Evaluate(
 		!utilitytime.IsTimeNilOrZero(planBasics.PerformancePeriodEnds) &&
 		planBasics.PerformancePeriodEnds.Before(time.Now()) {
 		return &model.PhaseSuggestion{
-			Phase:             model.ModelPhaseEnded,
+			Phase:             models.ModelPhaseEnded,
 			SuggestedStatuses: []models.ModelStatus{models.ModelStatusEnded},
 		}
 	}
