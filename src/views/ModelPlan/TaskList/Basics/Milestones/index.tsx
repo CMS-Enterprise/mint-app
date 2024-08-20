@@ -328,15 +328,19 @@ const Milestones = () => {
                           </div>
 
                           {(isDateInPast(values.clearanceEnds) ||
-                            isDateInPast(values.clearanceStarts)) && (
-                            <Alert
-                              type="warning"
-                              className="margin-top-4"
-                              headingLevel="h4"
-                            >
-                              {miscellaneousT('dateWarning')}
-                            </Alert>
-                          )}
+                            isDateInPast(values.clearanceStarts)) &&
+                            (initialValues.clearanceStarts !==
+                              values.clearanceStarts ||
+                              initialValues.clearanceEnds !==
+                                values.clearanceEnds) && (
+                              <Alert
+                                type="warning"
+                                className="margin-top-4"
+                                headingLevel="h4"
+                              >
+                                {miscellaneousT('dateWarning')}
+                              </Alert>
+                            )}
                         </ProcessListHeading>
                       </ProcessListItem>
 
@@ -412,15 +416,19 @@ const Milestones = () => {
                         </div>
 
                         {(isDateInPast(values.applicationsStart) ||
-                          isDateInPast(values.applicationsEnd)) && (
-                          <Alert
-                            type="warning"
-                            className="margin-top-4"
-                            headingLevel="h4"
-                          >
-                            {miscellaneousT('dateWarning')}
-                          </Alert>
-                        )}
+                          isDateInPast(values.applicationsEnd)) &&
+                          (initialValues.applicationsStart !==
+                            values.applicationsStart ||
+                            initialValues.applicationsEnd !==
+                              values.applicationsEnd) && (
+                            <Alert
+                              type="warning"
+                              className="margin-top-4"
+                              headingLevel="h4"
+                            >
+                              {miscellaneousT('dateWarning')}
+                            </Alert>
+                          )}
                       </ProcessListItem>
 
                       <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
@@ -479,15 +487,19 @@ const Milestones = () => {
                         </div>
 
                         {(isDateInPast(values.performancePeriodStarts) ||
-                          isDateInPast(values.performancePeriodEnds)) && (
-                          <Alert
-                            type="warning"
-                            className="margin-top-4"
-                            headingLevel="h4"
-                          >
-                            {miscellaneousT('dateWarning')}
-                          </Alert>
-                        )}
+                          isDateInPast(values.performancePeriodEnds)) &&
+                          (initialValues.performancePeriodStarts !==
+                            values.performancePeriodStarts ||
+                            initialValues.performancePeriodEnds !==
+                              values.performancePeriodEnds) && (
+                            <Alert
+                              type="warning"
+                              className="margin-top-4"
+                              headingLevel="h4"
+                            >
+                              {miscellaneousT('dateWarning')}
+                            </Alert>
+                          )}
                       </ProcessListItem>
 
                       <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
