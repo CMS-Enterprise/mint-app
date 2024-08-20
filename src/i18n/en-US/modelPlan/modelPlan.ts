@@ -110,7 +110,7 @@ export const modelPlanMisc: Record<string, string> = {
   copy:
     'After you’ve iterated on your Model Plan, update the status so others know what stage it’s at in the design and clearance process.',
   updateButton: 'Update status',
-  return: 'Don’t update status and return to task list'
+  return: 'Don’t update status and return to model collaboration area'
 };
 
 export default modelPlan;

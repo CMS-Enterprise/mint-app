@@ -167,6 +167,13 @@ const AppRoutes = () => {
           />
 
           {/* Task List Routes */}
+
+          <Redirect
+            exact
+            from="/models/:modelID/task-list"
+            to="/models/:modelID/collaboration-area/task-list"
+          />
+
           <ProtectedRoute
             path="/models/:modelID/collaboration-area/task-list"
             exact

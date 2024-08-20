@@ -35,7 +35,6 @@ export const getActiveTab = (route: string, pathname: string) => {
   const homeRoutes: string[] = [
     'collaboration-area',
     'task-list',
-    'notifications',
     'homepage-settings'
   ];
 

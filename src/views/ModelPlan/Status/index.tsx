@@ -171,9 +171,7 @@ const Status = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
-                        history.push(
-                          `/models/${modelID}/collaboration-area/task-list/`
-                        )
+                        history.push(`/models/${modelID}/collaboration-area`)
                       }
                     >
                       <Icon.ArrowBack className="margin-right-1" aria-hidden />
