@@ -60,11 +60,11 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
         acceptedNDA: data?.ndaInfo
       };
 
-      if (authState?.idToken?.claims.preferred_username) {
+      if (authState) {
         ReactGA.gtag('set', 'user_properties', {
           user_group:
             // @ts-ignore
-            (authState?.idToken?.claims['mint-groups'] || []).join(', '),
+            (authState?.accessToken?.claims['mint-groups'] || []).join(', '),
           domain: authState?.idToken?.claims.email?.replace(/.*@/, '')
         });
       }
