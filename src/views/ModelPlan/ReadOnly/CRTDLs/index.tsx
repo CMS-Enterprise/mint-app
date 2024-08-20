@@ -36,6 +36,7 @@ const ReadOnlyCRTDLs = ({
         target="_blank"
         rel="noopener noreferrer"
         variant="external"
+        className="display-block margin-y-3"
       >
         {t('visitECHIMPReadonly')}
       </Link>

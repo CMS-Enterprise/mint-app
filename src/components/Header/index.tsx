@@ -53,6 +53,7 @@ const Header = () => {
 
   const signout = () => {
     localStorage.removeItem(localAuthStorageKey);
+    sessionStorage.clear();
     oktaAuth.signOut();
   };
 

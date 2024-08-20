@@ -134,6 +134,7 @@ export const modelBasicsMocks = [
           __typename: 'ModelPlan',
           id: modelID,
           nameHistory: ['First Name', 'Second Name'],
+          isCollaborator: true,
           basics: modelBasicsData
         }
       }
@@ -569,11 +570,13 @@ export const opsEvalAndLearningMocks = [
 const paymentsData: PaymentTypes = {
   __typename: 'PlanPayments',
   fundingSource: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
+  fundingSourcePatientProtectionInfo: 'Patient protection',
   fundingSourceMedicareAInfo: 'PartA',
   fundingSourceMedicareBInfo: 'PartB',
   fundingSourceOther: 'Other funding source',
   fundingSourceNote: 'Funding source note',
   fundingSourceR: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
+  fundingSourceRPatientProtectionInfo: 'Patient protection r',
   fundingSourceRMedicareAInfo: 'PartRA',
   fundingSourceRMedicareBInfo: 'PartRB',
   fundingSourceROther: 'Other funding r',
@@ -684,7 +687,6 @@ const summaryData: GetModelSummaryTypes = {
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
   isCollaborator: true,
-
   collaborators: [
     {
       userAccount: {

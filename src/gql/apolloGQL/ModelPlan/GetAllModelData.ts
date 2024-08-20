@@ -375,11 +375,13 @@ export default gql(/* GraphQL */ `
         anticipatedPaymentFrequencyOther
         anticipatedPaymentFrequencyNote
         fundingSource
+        fundingSourcePatientProtectionInfo
         fundingSourceMedicareAInfo
         fundingSourceMedicareBInfo
         fundingSourceOther
         fundingSourceNote
         fundingSourceR
+        fundingSourceRPatientProtectionInfo
         fundingSourceRMedicareAInfo
         fundingSourceRMedicareBInfo
         fundingSourceROther

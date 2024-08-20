@@ -35,6 +35,12 @@ type DiscussionReplyTranslation struct {
 	IsAssessment        models.TranslationFieldWithOptions `json:"isAssessment" db:"is_assessment"`
 }
 
+// Represents a translation of enum values.  generalName is the human readable name of the enum value, groupedName is an optional field if usually referenced by a difference table/name
+type EnumTranslation struct {
+	GeneralName string  `json:"generalName"`
+	GroupedName *string `json:"groupedName,omitempty"`
+}
+
 // Represents existing model link translation data
 type ExistingModelLinkTranslation struct {
 	ExistingModelID    models.TranslationField            `json:"existingModelID" db:"existing_model_id"`
@@ -521,11 +527,13 @@ type PlanParticipantsAndProvidersTranslation struct {
 // Represents payments translation data
 type PlanPaymentsTranslation struct {
 	FundingSource                                     models.TranslationFieldWithOptions            `json:"fundingSource" db:"funding_source"`
+	FundingSourcePatientProtectionInfo                models.TranslationField                       `json:"fundingSourcePatientProtectionInfo" db:"funding_source_patient_protection_info"`
 	FundingSourceMedicareAInfo                        models.TranslationField                       `json:"fundingSourceMedicareAInfo" db:"funding_source_medicare_a_info"`
 	FundingSourceMedicareBInfo                        models.TranslationField                       `json:"fundingSourceMedicareBInfo" db:"funding_source_medicare_b_info"`
 	FundingSourceOther                                models.TranslationField                       `json:"fundingSourceOther" db:"funding_source_other"`
 	FundingSourceNote                                 models.TranslationField                       `json:"fundingSourceNote" db:"funding_source_note"`
 	FundingSourceR                                    models.TranslationFieldWithOptions            `json:"fundingSourceR" db:"funding_source_r"`
+	FundingSourceRPatientProtectionInfo               models.TranslationField                       `json:"fundingSourceRPatientProtectionInfo" db:"funding_source_r_patient_protection_info"`
 	FundingSourceRMedicareAInfo                       models.TranslationField                       `json:"fundingSourceRMedicareAInfo" db:"funding_source_r_medicare_a_info"`
 	FundingSourceRMedicareBInfo                       models.TranslationField                       `json:"fundingSourceRMedicareBInfo" db:"funding_source_r_medicare_b_info"`
 	FundingSourceROther                               models.TranslationField                       `json:"fundingSourceROther" db:"funding_source_r_other"`

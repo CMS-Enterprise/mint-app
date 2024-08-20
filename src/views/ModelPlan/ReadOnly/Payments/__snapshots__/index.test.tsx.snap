@@ -52,11 +52,20 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Patient Protection Affordable Care Act (Sec 3021)
             </li>
-            <ul />
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Patient protection
+              </li>
+            </ul>
           </ul>
         </div>
       </div>
     </div>
+    <div
+      class=""
+    />
     <div
       class=""
     >
@@ -111,11 +120,20 @@ exports[`Read Only Model Plan Summary -- Payment > matches snapshot 1`] = `
             >
               Patient Protection Affordable Care Act (Sec 3021)
             </li>
-            <ul />
+            <ul>
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                Patient protection r
+              </li>
+            </ul>
           </ul>
         </div>
       </div>
     </div>
+    <div
+      class=""
+    />
     <div
       class=""
     >

@@ -6,9 +6,9 @@ import (
 
 	"github.com/graph-gophers/dataloader"
 	"github.com/samber/lo"
-	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/logfields"
 	"github.com/cmsgov/mint-app/pkg/models"
 
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -21,7 +21,7 @@ const (
 
 func (loaders *DataLoaders) possibleOperationalSolutionByKeyBatch(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
 	output := make([]*dataloader.Result, len(keys))
-	sugaredLogger := appcontext.ZLogger(ctx).With(zap.Any(appSectionKey, dataLoaderSection))
+	logger := appcontext.ZLogger(ctx).With(logfields.DataLoaderAppSection)
 
 	// 1. Convert to array first
 	solKeyArray, err := ConvertKeysToArray[models.OperationalSolutionKey](keys, DLOperationalSolutionKey)
@@ -32,7 +32,7 @@ func (loaders *DataLoaders) possibleOperationalSolutionByKeyBatch(ctx context.Co
 		return output
 	}
 
-	sols, err := storage.PossibleOperationalSolutionGetByKeys(loaders.DataReader.Store, sugaredLogger, solKeyArray)
+	sols, err := storage.PossibleOperationalSolutionGetByKeys(loaders.DataReader.Store, logger, solKeyArray)
 	if err != nil {
 		for _, result := range output {
 			result.Error = err

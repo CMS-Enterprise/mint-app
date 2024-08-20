@@ -40,6 +40,7 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import UpdateStatusModal from 'components/UpdateStatusModal';
 import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
@@ -156,7 +157,7 @@ const TaskList = () => {
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
-  const { data, loading, error } = useGetModelPlanQuery({
+  const { data, loading, error, refetch } = useGetModelPlanQuery({
     variables: {
       id: modelID
     }
@@ -179,7 +180,8 @@ const TaskList = () => {
     payments,
     operationalNeeds = [],
     prepareForClearance,
-    collaborators
+    collaborators,
+    suggestedPhase
   } = modelPlan;
 
   const planCRs = crs || [];
@@ -210,6 +212,30 @@ const TaskList = () => {
     prepareForClearance
   };
 
+  // Gets the sessions storage variable for statusChecked of modelPlan
+  const statusCheckedStorage =
+    sessionStorage.getItem(`statusChecked-${modelID}`) === 'true';
+
+  // Aligns session with default value of state
+  const [statusChecked, setStatusChecked] = useState<boolean>(
+    statusCheckedStorage
+  );
+
+  // Status phase modal state
+  const [isStatusPhaseModalOpen, setStatusPhaseModalOpen] = useState<boolean>(
+    !!suggestedPhase || false
+  );
+
+  // Updates state if session value changes
+  useEffect(() => {
+    setStatusChecked(statusCheckedStorage);
+  }, [statusCheckedStorage]);
+
+  // Sets the modal open state based on session state and suggested phase
+  useEffect(() => {
+    if (suggestedPhase && !statusChecked) setStatusPhaseModalOpen(true);
+  }, [suggestedPhase, statusChecked]);
+
   useEffect(() => {
     if (discussionID) setIsDiscussionOpen(true);
   }, [discussionID]);
@@ -238,6 +264,21 @@ const TaskList = () => {
             <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
           </BreadcrumbBar>
         </Grid>
+
+        {!!modelPlan.suggestedPhase && !statusChecked && (
+          <UpdateStatusModal
+            modelID={modelID}
+            isOpen={isStatusPhaseModalOpen}
+            closeModal={() => {
+              sessionStorage.setItem(`statusChecked-${modelID}`, 'true');
+              setStatusPhaseModalOpen(false);
+            }}
+            currentStatus={status}
+            suggestedPhase={modelPlan.suggestedPhase}
+            setStatusMessage={setStatusMessage}
+            refetch={refetch}
+          />
+        )}
 
         {error && (
           <ErrorAlert

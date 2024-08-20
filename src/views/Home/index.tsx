@@ -17,7 +17,7 @@ import {
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
-import FavoritesTable from 'components/FavoriteCard/table';
+import FavoritesCards from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
@@ -132,7 +132,7 @@ const Home = () => {
         <>
           {favoritesLoading && <PageLoading testId="favorites-page-loading" />}
           {!favoritesLoading && favorites && favorites?.length > 0 && (
-            <FavoritesTable
+            <FavoritesCards
               favorites={favorites || []}
               removeFavorite={handleUpdateFavorite}
               toTaskList

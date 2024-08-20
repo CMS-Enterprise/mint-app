@@ -22,6 +22,7 @@ import participantsAndProviders from '../../src/i18n/en-US/modelPlan/participant
 import payments from '../../src/i18n/en-US/modelPlan/payments';
 import replies from '../../src/i18n/en-US/modelPlan/replies';
 import operationalSolutions from '../../src/i18n/en-US/modelPlan/solutions';
+import tables from '../../src/i18n/en-US/modelPlan/tables';
 import tdls from '../../src/i18n/en-US/modelPlan/tdls';
 import { getKeys } from '../../src/types/translation';
 
@@ -59,10 +60,15 @@ export const parseTypscriptToJSON = (translations: any, outputFile: string) => {
     translationSections
   );
 
+  const allTranslationExports = {
+    table_name: tables,
+    ...transformedTranslationSections
+  };
+
   // Create JSON file for each translation task list section
-  getKeys(transformedTranslationSections).forEach(section =>
+  getKeys(allTranslationExports).forEach(section =>
     parseTypscriptToJSON(
-      transformedTranslationSections[section],
+      allTranslationExports[section],
       `./mappings/translation/${String(section)}.json`
     )
   );
