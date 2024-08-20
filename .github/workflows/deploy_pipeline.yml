@@ -16,7 +16,7 @@ jobs:
   build_frontend_assets:
     strategy:
       matrix:
-        env: [dev, test, impl, prod]
+        env: [test, impl, prod]
     uses: ./.github/workflows/build_frontend_assets.yml
     with:
       env: ${{ matrix.env }}
@@ -27,13 +27,6 @@ jobs:
     needs: run_tests
     secrets: inherit
 
-  deploy_dev:
-    needs: [build_application_images, build_frontend_assets]
-    uses: ./.github/workflows/deploy_to_environment.yml
-    with:
-      env: dev
-    secrets: inherit
-
   deploy_test:
     needs: [build_application_images, build_frontend_assets]
     uses: ./.github/workflows/deploy_to_environment.yml
@@ -42,7 +35,7 @@ jobs:
     secrets: inherit
 
   deploy_impl:
-    needs: [deploy_dev, deploy_test]
+    needs: deploy_test
     uses: ./.github/workflows/deploy_to_environment.yml
     with:
       env: impl
