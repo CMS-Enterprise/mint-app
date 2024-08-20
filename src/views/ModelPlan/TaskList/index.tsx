@@ -42,7 +42,7 @@ import UpdateStatusModal from 'components/UpdateStatusModal';
 import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
-import ModelPlanCard from 'views/ModelCollabArea/Cards/ModelPlan';
+import ModelPlanCard from 'views/ModelPlan/CollaborationArea/Cards/ModelPlan';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
 import Discussions from '../Discussions';

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { GridContainer } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
-import ModelPlanCard from 'views/ModelCollabArea/Cards/ModelPlan';
+import ModelPlanCard from 'views/ModelPlan/CollaborationArea/Cards/ModelPlan';
 
 const Sandbox = () => {
   useEffect(() => {
