@@ -32,6 +32,11 @@ var planCollaboratorGetByIDLoaderSQL string
 //go:embed SQL/plan_collaborator/get_by_model_plan_id_LOADER.sql
 var planCollaboratorGetByModelPlanIDLoaderSQL string
 
+// planCollaboratorGetByModelPlanIDSQL returns a Collection of Plan Collaborator entries from the database. It expects a model_plan_id, the result can be processed to return all collaborators for a model plan
+//
+//go:embed SQL/plan_collaborator/get_by_model_plan_id.sql
+var planCollaboratorGetByModelPlanIDSQL string
+
 // planCollaboratorGetCountByUserID returns the number of Plan Collaborator entries in the database for a given user_id
 //
 //go:embed SQL/plan_collaborator/get_count_by_user_id.sql
@@ -50,11 +55,13 @@ type planCollaboratorScripts struct {
 	CollectionGetByIDLoader string
 	// Holds the SQL query to return all PlanCollaborator for a given ModelPlanID.
 	CollectionGetByModelPlanIDLoader string
+	// Holds the SQL query to return all PlanCollaborator for a given ModelPlanID.
+	CollectionGetByModelPlanID string
 	// Holds the SQL query to return the number of PlanCollaborators for a given user_id
 	GetCountByUserID string
 }
 
-// PlanCollaborator holds all the SQL scrips related to the Plan Collaborator Entity
+// PlanCollaborator holds all the SQL scripts related to the Plan Collaborator Entity
 var PlanCollaborator = planCollaboratorScripts{
 	Create:                           planCollaboratorCreateSQL,
 	Update:                           planCollaboratorUpdateSQL,
@@ -62,5 +69,6 @@ var PlanCollaborator = planCollaboratorScripts{
 	GetByID:                          planCollaboratorGetByIDSQL,
 	CollectionGetByIDLoader:          planCollaboratorGetByIDLoaderSQL,
 	CollectionGetByModelPlanIDLoader: planCollaboratorGetByModelPlanIDLoaderSQL,
+	CollectionGetByModelPlanID:       planCollaboratorGetByModelPlanIDSQL,
 	GetCountByUserID:                 planCollaboratorGetCountByUserID,
 }

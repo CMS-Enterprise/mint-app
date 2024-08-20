@@ -21,10 +21,12 @@ func main() {
 
 	// Running all test functions
 	sendModelPlanCreatedEmailTest(emailService, templateService)
+
 	// Discussion emails
 	sendPlanDiscussionCreatedTestEmail(emailService, templateService, addressBook)
 	sendPlanDiscussionTaggedUserTestEmail(emailService, templateService, addressBook)
 	sendPlanDiscussionTaggedSolutionTestEmail(emailService, templateService, addressBook)
+
 	//DiscussionReply email
 	sendDiscussionReplyOriginatorTestEmail(emailService, templateService, addressBook)
 
@@ -37,6 +39,9 @@ func main() {
 	// Solution emails
 	sendSolutionSelectedTestEmail(emailService, templateService, addressBook)
 
+	// Model Plan Suggested Phase Emails
+	sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(emailService, templateService, addressBook)
+	sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(emailService, templateService, addressBook)
 }
 
 func noErr(err error) {
@@ -446,5 +451,98 @@ func reportAProblemEmail(
 
 	_, err := resolvers.ReportAProblem(emailService, templateService, addressBook, &princ, input)
 	noErr(err)
+}
 
+func sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+) {
+	modelPlan := models.NewModelPlan(
+		uuid.Nil,
+		"Test Model Plan",
+	)
+
+	emailTemplate, err := templateService.GetEmailTemplate(email.ModelPlanSuggestedPhaseTemplateName)
+	noErr(err)
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanSuggestedPhaseSubjectContent{
+		ModelName: modelPlan.ModelName,
+	})
+	noErr(err)
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanSuggestedPhaseBodyContent{
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		Phase:         string(models.ModelPhaseInClearance),
+		SuggestedStatusesRaw: []string{
+			string(models.ModelStatusInternalCmmiClearance),
+			string(models.ModelStatusCmsClearance),
+			string(models.ModelStatusHhsClearance),
+			string(models.ModelStatusOmbAsrfClearance),
+		},
+		SuggestedStatusesHumanized: []string{
+			models.ModelStatusInternalCmmiClearance.Humanize(),
+			models.ModelStatusCmsClearance.Humanize(),
+			models.ModelStatusHhsClearance.Humanize(),
+			models.ModelStatusOmbAsrfClearance.Humanize(),
+		},
+		CurrentStatusHumanized: modelPlan.Status.Humanize(),
+		ModelPlanID:            modelPlan.GetModelPlanID().String(),
+		ModelPlanName:          modelPlan.ModelName,
+	})
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		addressBook.ModelPlanDateChangedRecipients,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}
+
+func sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(
+	emailService oddmail.EmailService,
+	templateService email.TemplateService,
+	addressBook email.AddressBook,
+) {
+	modelPlan := models.NewModelPlan(
+		uuid.Nil,
+		"Test Model Plan",
+	)
+
+	emailTemplate, err := templateService.GetEmailTemplate(email.ModelPlanSuggestedPhaseTemplateName)
+	noErr(err)
+
+	emailSubject, err := emailTemplate.GetExecutedSubject(email.ModelPlanSuggestedPhaseSubjectContent{
+		ModelName: modelPlan.ModelName,
+	})
+	noErr(err)
+
+	emailBody, err := emailTemplate.GetExecutedBody(email.ModelPlanSuggestedPhaseBodyContent{
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		Phase:         string(models.ModelPhaseIcipComplete),
+		SuggestedStatusesRaw: []string{
+			string(models.ModelStatusIcipComplete),
+		},
+		SuggestedStatusesHumanized: []string{
+			models.ModelStatusIcipComplete.Humanize(),
+		},
+		CurrentStatusHumanized: modelPlan.Status.Humanize(),
+		ModelPlanID:            modelPlan.GetModelPlanID().String(),
+		ModelPlanName:          modelPlan.ModelName,
+	})
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		addressBook.ModelPlanDateChangedRecipients,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
 }

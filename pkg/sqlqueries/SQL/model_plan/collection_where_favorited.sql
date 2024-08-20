@@ -3,6 +3,7 @@ SELECT DISTINCT
     model_plan.model_name,
     model_plan.abbreviation,
     model_plan.status,
+    model_plan.previous_suggested_phase,
     model_plan.archived,
     model_plan.created_by,
     model_plan.created_dts,

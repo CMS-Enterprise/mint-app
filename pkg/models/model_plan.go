@@ -7,10 +7,11 @@ import (
 // ModelPlan is the top-level object for an entire draft model plan
 type ModelPlan struct {
 	baseStruct
-	ModelName    string      `json:"modelName" db:"model_name"`
-	Abbreviation *string     `json:"abbreviation" db:"abbreviation"`
-	Archived     bool        `json:"archived" db:"archived"`
-	Status       ModelStatus `json:"status" db:"status"`
+	ModelName              string      `json:"modelName" db:"model_name"`
+	Abbreviation           *string     `json:"abbreviation" db:"abbreviation"`
+	Archived               bool        `json:"archived" db:"archived"`
+	Status                 ModelStatus `json:"status" db:"status"`
+	PreviousSuggestedPhase *ModelPhase `json:"previousSuggestedPhase" db:"previous_suggested_phase"`
 }
 
 // NewModelPlan returns a new unarchived model plan with a default status of ModelStatusPlanDraft
@@ -164,3 +165,14 @@ var ModelViewFilterHumanized = map[ModelViewFilter]string{
 	ModelViewFilterOfficeOfTheActuary:                               "Office of the Actuary",
 	ModelViewFilterProviderBillingGroup:                             "Provider Billing Group",
 }
+
+type ModelPhase string
+
+const (
+	ModelPhaseIcipComplete ModelPhase = "ICIP_COMPLETE"
+	ModelPhaseInClearance  ModelPhase = "IN_CLEARANCE"
+	ModelPhaseCleared      ModelPhase = "CLEARED"
+	ModelPhaseAnnounced    ModelPhase = "ANNOUNCED"
+	ModelPhaseActive       ModelPhase = "ACTIVE"
+	ModelPhaseEnded        ModelPhase = "ENDED"
+)
