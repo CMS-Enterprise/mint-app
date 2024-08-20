@@ -114,7 +114,7 @@ const CheckboxCard = ({
           className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2 margin-bottom-0"
           onClick={() =>
             history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${
+              `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${
                 solution.id !== '00000000-0000-0000-0000-000000000000'
                   ? solution.id
                   : ''
@@ -140,7 +140,7 @@ const CheckboxCard = ({
           className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2 margin-bottom-0"
           onClick={() =>
             history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}${solutionParam}`
+              `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}${solutionParam}`
             )
           }
         >
@@ -167,7 +167,7 @@ const CheckboxCard = ({
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}
-          closeRoute={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`}
+          closeRoute={`/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/select-solutions`}
         />
       )}
 

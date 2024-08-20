@@ -36,10 +36,10 @@ describe('Operational Solutions SolutionCard', () => {
     const { getByText, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+        <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
           <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <SolutionCard solution={solution} />
           </VerboseMockedProvider>
@@ -62,10 +62,10 @@ describe('Operational Solutions SolutionCard', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+        <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
           <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <SolutionCard solution={solution} addingCustom />
           </VerboseMockedProvider>
@@ -84,10 +84,10 @@ describe('Operational Solutions SolutionCard', () => {
     const { asFragment, getByText, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+        <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
           <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <SolutionCard solution={solution} />
           </VerboseMockedProvider>

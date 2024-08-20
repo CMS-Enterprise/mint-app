@@ -50,11 +50,11 @@ describe('Prepare for clearance checklist', () => {
       const { user } = setup(
         <MemoryRouter
           initialEntries={[
-            `/models/${modelID}/task-list/prepare-for-clearance`
+            `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
           ]}
         >
           <MockedProvider mocks={clearanceMock} addTypename={false}>
-            <Route path="/models/:modelID/task-list/prepare-for-clearance">
+            <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance">
               <PrepareForClearanceCheckList modelID={modelID} />
             </Route>
           </MockedProvider>
@@ -95,10 +95,12 @@ describe('Prepare for clearance checklist', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/task-list/prepare-for-clearance`]}
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+        ]}
       >
         <MockedProvider mocks={clearanceMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/prepare-for-clearance">
+          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance">
             <PrepareForClearanceCheckList modelID={modelID} />
           </Route>
         </MockedProvider>

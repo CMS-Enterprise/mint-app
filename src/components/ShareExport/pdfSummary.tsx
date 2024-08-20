@@ -69,10 +69,11 @@ const PDFSummary = ({
           </PageHeading>
 
           <TaskListStatus
-            readOnly
+            isReadView
             modelID={modelID}
             status={status}
             statusLabel
+            changeHistoryLink={false}
             modifiedOrCreateLabel={!!modifiedDts}
             modifiedDts={modifiedDts ?? createdDts}
           />

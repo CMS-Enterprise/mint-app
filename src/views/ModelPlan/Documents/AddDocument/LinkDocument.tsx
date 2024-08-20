@@ -125,7 +125,7 @@ const LinkDocument = ({
             if (solutionDetailsLink) {
               history.push(solutionDetailsLink);
             } else {
-              history.push(`/models/${modelID}/documents`);
+              history.push(`/models/${modelID}/collaboration-area/documents`);
             }
           }
         }

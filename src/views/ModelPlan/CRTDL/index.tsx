@@ -11,12 +11,12 @@ const CRTDL = () => {
     <Switch>
       {/* Model Plan CRTDL Pages */}
       <Route
-        path="/models/:modelID/cr-and-tdl"
+        path="/models/:modelID/collaboration-area/cr-and-tdl"
         exact
         render={() => <CRTDLs />}
       />
       <Route
-        path="/models/:modelID/cr-and-tdl/add-cr-and-tdl"
+        path="/models/:modelID/collaboration-area/cr-and-tdl/add-cr-and-tdl"
         exact
         render={() => <AddCRTDL />}
       />

@@ -1,10 +1,7 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -25,6 +22,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
@@ -161,19 +159,14 @@ const Recover = () => {
         url={mutationError.destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{paymentsMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.PAYMENTS
+        ]}
+      />
 
       <PageHeading className="margin-top-4 margin-bottom-2">
         {paymentsMiscT('heading')}
@@ -197,7 +190,9 @@ const Recover = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          history.push(`/models/${modelID}/task-list/it-solutions`);
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/it-solutions`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -279,7 +274,7 @@ const Recover = () => {
                               id="payment-recover-payment-warning"
                               onClick={() =>
                                 history.push(
-                                  `/models/${modelID}/task-list/it-solutions`
+                                  `/models/${modelID}/collaboration-area/task-list/it-solutions`
                                 )
                               }
                             />
@@ -409,7 +404,7 @@ const Recover = () => {
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
                               history.push(
-                                `/models/${modelID}/task-list/payment/complexity`
+                                `/models/${modelID}/collaboration-area/task-list/payment/complexity`
                               );
                             }}
                           >
@@ -427,7 +422,9 @@ const Recover = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list`
+                            )
                           }
                         >
                           <Icon.ArrowBack

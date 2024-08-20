@@ -12,7 +12,7 @@ type FavoritesModelType = GetFavoritesQuery['modelPlanCollection'][0];
 type ModelPlansTableProps = {
   favorites: FavoritesModelType[];
   removeFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
-  toTaskList?: boolean;
+  toCollaborationArea?: boolean;
 };
 
 /**
@@ -23,7 +23,7 @@ type ModelPlansTableProps = {
 const FavoritesCards = ({
   favorites,
   removeFavorite,
-  toTaskList = false
+  toCollaborationArea = false
 }: ModelPlansTableProps) => {
   const { currentItems, Pagination } = usePagination({
     items: favorites,
@@ -33,12 +33,12 @@ const FavoritesCards = ({
   return (
     <div id="favorite-table">
       {currentItems.map(favorite => (
-        <CardGroup>
+        <CardGroup key={favorite.id}>
           <FavoriteCard
             key={favorite.id}
             modelPlan={favorite}
             removeFavorite={removeFavorite}
-            toTaskList={toTaskList}
+            toCollaborationArea={toCollaborationArea}
           />
         </CardGroup>
       ))}

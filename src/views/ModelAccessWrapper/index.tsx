@@ -33,9 +33,9 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   // Checking if user's location is task-list or collaborators
   // Everything with a modelID and under the parent 'task-list' or 'collaborators' route is considered editable
   const editable: boolean =
-    pathname.split('/')[3] === 'task-list' ||
-    pathname.split('/')[3] === 'documents' ||
-    pathname.split('/')[3] === 'collaborators';
+    pathname.split('/')[3] === 'collaboration-area' ||
+    pathname.split('/')[4] === 'documents' ||
+    pathname.split('/')[4] === 'collaborators';
 
   const helpArticle: boolean = pathname.split('/')[1] === 'help-and-knowledge';
 

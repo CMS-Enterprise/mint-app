@@ -60,11 +60,11 @@ describe('Model Basics Milestones page', () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/milestones'
+          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/milestones'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/task-list/milestones">
+          <Route path="/models/:modelID/collaboration-area/task-list/milestones">
             <Milestones />
           </Route>
         </MockedProvider>

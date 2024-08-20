@@ -20,7 +20,9 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/collaboration-area\/collaborators/
+      );
     });
 
     cy.get('[data-testid="page-loading"]').should('not.exist');
@@ -29,7 +31,9 @@ describe('The Model Plan Form', () => {
 
     // renames a model plan
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/collaboration-area\/task-list/
+      );
     });
 
     cy.contains('h1', 'Model Plan task list');
@@ -39,7 +43,9 @@ describe('The Model Plan Form', () => {
     cy.contains('button', /Start$/).click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/collaboration-area\/task-list\/basics/
+      );
     });
 
     cy.get('[data-testid="fieldset"]').should('not.be.disabled');
@@ -52,7 +58,9 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Save and return to task list').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/collaboration-area\/task-list/
+      );
     });
 
     cy.get('[data-testid="model-plan-name"]').contains(
@@ -92,7 +100,7 @@ describe('The Model Plan Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/basics\/overview/
+        /\/models\/.{36}\/collaboration-area\/task-list\/basics\/overview/
       );
     });
 
@@ -119,7 +127,7 @@ describe('The Model Plan Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/basics\/milestones/
+        /\/models\/.{36}\/collaboration-area\/task-list\/basics\/milestones/
       );
     });
 
@@ -171,12 +179,16 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Save and return to task list').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/collaboration-area\/task-list/
+      );
     });
 
     cy.get('.model-plan-task-list__last-updated-status').should('be.visible');
 
     cy.get('[data-testid="tasklist-tag"]').first().contains('In progress');
+
+    cy.get('[data-testid="return-to-collaboration"]').click();
 
     // updates model plan status
 
@@ -185,7 +197,9 @@ describe('The Model Plan Form', () => {
     cy.contains('a', 'Update').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/status/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/collaboration-area\/status/
+      );
     });
 
     cy.contains('h1', 'Update status');
@@ -204,7 +218,7 @@ describe('The Model Plan Form', () => {
       .click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/collaboration-area/);
     });
 
     cy.get('.mint-tag').contains('Cleared');

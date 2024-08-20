@@ -6,13 +6,7 @@ Links to views for updating solutions, adding subtasks, and documents
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  Button,
-  Grid
-} from '@trussworks/react-uswds';
+import { Button, Grid } from '@trussworks/react-uswds';
 import {
   GetOperationalSolutionQuery,
   useDeleteDocumentSolutionLinkMutation,
@@ -20,7 +14,7 @@ import {
 } from 'gql/gen/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
-import UswdsReactLink from 'components/LinkWrapper';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
@@ -113,30 +107,16 @@ const SolutionDetails = () => {
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-            <span>{h('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/`}
-          >
-            <span>{h('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/it-solutions`}
-          >
-            <span>{t('breadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{t('solutionDetails')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.IT_TRACKER,
+          BreadcrumbItemOptions.SOLUTION_DETAILS
+        ]}
+        customItem={t('breadcrumb')}
+      />
 
       {message}
 
@@ -205,7 +185,7 @@ const SolutionDetails = () => {
                   className="usa-button usa-button--outline"
                   onClick={() => {
                     history.push(
-                      `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
+                      `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
                     );
                   }}
                 >
@@ -219,10 +199,10 @@ const SolutionDetails = () => {
                   className="usa-button usa-button--outline"
                   onClick={() => {
                     history.push({
-                      pathname: `/models/${modelID}/documents/add-document`,
+                      pathname: `/models/${modelID}/collaboration-area/documents/add-document`,
                       state: {
                         solutionID: operationalSolutionID,
-                        solutionDetailsLink: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+                        solutionDetailsLink: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
                       }
                     });
                   }}

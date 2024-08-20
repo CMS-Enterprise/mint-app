@@ -56,12 +56,12 @@ describe('Model Plan Add CR and TDL page', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/cr-and-tdl/add-cr-and-tdl?type=cr&id=${crtdlID}`
+          `/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl?type=cr&id=${crtdlID}`
         ]}
       >
         <MessageProvider>
           <MockedProvider mocks={mocks} addTypename={false}>
-            <Route path="/models/:modelID/cr-and-tdl/add-cr-and-tdl">
+            <Route path="/models/:modelID/collaboration-area/cr-and-tdl/add-cr-and-tdl">
               <AddCRTDL />
             </Route>
           </MockedProvider>
@@ -83,12 +83,12 @@ describe('Model Plan Add CR and TDL page', () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/cr-and-tdl/add-cr-and-tdl?type=cr&id=${crtdlID}`
+          `/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl?type=cr&id=${crtdlID}`
         ]}
       >
         <MessageProvider>
           <MockedProvider mocks={mocks} addTypename={false}>
-            <Route path="/models/:modelID/cr-and-tdl/add-cr-and-tdl">
+            <Route path="/models/:modelID/collaboration-area/cr-and-tdl/add-cr-and-tdl">
               <AddCRTDL />
             </Route>
           </MockedProvider>

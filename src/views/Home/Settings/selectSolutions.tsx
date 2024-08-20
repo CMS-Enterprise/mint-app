@@ -1,10 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -22,6 +19,7 @@ import {
   ViewCustomizationType
 } from 'gql/gen/graphql';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
@@ -42,7 +40,6 @@ type SettingsFormType = {
 
 const SelectSolutionSettings = () => {
   const { t: homepageSettingsT } = useTranslation('homepageSettings');
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const formikRef = useRef<FormikProps<SettingsFormType>>(null);
 
@@ -154,21 +151,13 @@ const SelectSolutionSettings = () => {
     <MainContent>
       <GridContainer>
         <Grid desktop={{ col: 12 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{miscellaneousT('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/homepage-settings">
-                <span>{homepageSettingsT('heading')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>
-              {homepageSettingsT('solutionsHeading')}
-            </Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.HOME_SETTINGS
+            ]}
+            customItem={homepageSettingsT('solutionsHeading')}
+          />
 
           {mutationError && (
             <Alert type="error" slim>

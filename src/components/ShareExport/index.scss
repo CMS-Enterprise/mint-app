@@ -1,4 +1,5 @@
 @use 'uswds-core' as *;
+@use 'colors' as *;
 
 .share-export-modal {
 
@@ -34,5 +35,24 @@
         max-height: 95vh;
         max-width: 95%;
         overflow: auto;
+    }
+
+    &__menu {
+        border: 2px solid color('base-lighter');    
+        box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.1);
+        text-decoration: none !important;
+        margin-top: 2.45rem !important;
+        width: 17rem !important;
+        z-index: 1000;
+
+        .usa-nav__submenu-item {
+            border: 0 !important
+        }
+    }
+
+    &__menu-item {
+        &:hover {
+            background-color: color('primary-lighter') !important;
+        }
     }
 }

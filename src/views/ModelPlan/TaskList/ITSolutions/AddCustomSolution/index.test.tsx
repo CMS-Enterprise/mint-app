@@ -65,11 +65,11 @@ describe('AddCustomSolution', () => {
         <MemoryRouter
           initialEntries={[
             {
-              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
+              pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
             }
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
             <MessageProvider>
               <MockedProvider
                 mocks={returnMockedData(false)}
@@ -109,11 +109,11 @@ describe('AddCustomSolution', () => {
         <MemoryRouter
           initialEntries={[
             {
-              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
+              pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
             }
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
             <MessageProvider>
               <MockedProvider
                 mocks={returnMockedData(true)}
@@ -147,11 +147,11 @@ describe('AddCustomSolution', () => {
         <MemoryRouter
           initialEntries={[
             {
-              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
+              pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
             }
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
             <MessageProvider>
               <MockedProvider
                 mocks={returnMockedData(false)}
@@ -185,11 +185,11 @@ describe('AddCustomSolution', () => {
         <MemoryRouter
           initialEntries={[
             {
-              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
+              pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${operationalSolutionID}`
             }
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID">
             <MessageProvider>
               <MockedProvider
                 mocks={returnMockedData(false)}

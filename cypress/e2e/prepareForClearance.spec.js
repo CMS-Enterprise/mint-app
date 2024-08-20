@@ -38,7 +38,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/prepare-for-clearance/
+        /\/models\/.{36}\/collaboration-area\/task-list\/prepare-for-clearance/
       );
     });
 

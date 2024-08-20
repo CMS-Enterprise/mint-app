@@ -227,34 +227,24 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       data-testid="task-list-status"
                     >
                       <div
-                        class="grid-row"
-                        data-testid="grid"
-                        style="gap: 16px;"
+                        class="display-flex flex-align-center"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                          data-testid="grid"
-                          style="gap: 10px;"
+                        <span
+                          class="mint-tag bg-base text-white margin-right-1"
+                          data-testid="tag"
                         >
-                          <span
-                            class="mint-tag bg-base text-white margin-right-0"
-                            data-testid="tag"
-                          >
-                            Draft Model Plan
-                          </span>
-                        </div>
+                          Draft Model Plan
+                        </span>
                         <div
-                          class="display-flex flex-align-center flex-wrap"
-                          data-testid="grid"
+                          class="display-flex flex-align-center flex-wrap margin-right-1"
+                        />
+                        <div
+                          class="mint-no-print task-list-status__border border-base-light margin-right-2"
                         >
-                          <div
-                            class="mint-no-print"
-                          >
-                            <a
-                              class="usa-link display-flex flex-align-center"
-                              href="/models/c9cf987d-8543-46bb-a668-2c560ce5b149/status"
-                            />
-                          </div>
+                          <a
+                            class="usa-link display-flex flex-align-center margin-right-2"
+                            href="/models/c9cf987d-8543-46bb-a668-2c560ce5b149/collaboration-area/status"
+                          />
                         </div>
                       </div>
                     </div>
@@ -364,34 +354,24 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       data-testid="task-list-status"
                     >
                       <div
-                        class="grid-row"
-                        data-testid="grid"
-                        style="gap: 16px;"
+                        class="display-flex flex-align-center"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                          data-testid="grid"
-                          style="gap: 10px;"
+                        <span
+                          class="mint-tag bg-base text-white margin-right-1"
+                          data-testid="tag"
                         >
-                          <span
-                            class="mint-tag bg-base text-white margin-right-0"
-                            data-testid="tag"
-                          >
-                            Draft Model Plan
-                          </span>
-                        </div>
+                          Draft Model Plan
+                        </span>
                         <div
-                          class="display-flex flex-align-center flex-wrap"
-                          data-testid="grid"
+                          class="display-flex flex-align-center flex-wrap margin-right-1"
+                        />
+                        <div
+                          class="mint-no-print task-list-status__border border-base-light margin-right-2"
                         >
-                          <div
-                            class="mint-no-print"
-                          >
-                            <a
-                              class="usa-link display-flex flex-align-center"
-                              href="/models/598db9f0-54c0-4346-bb6b-da46a36eff1a/status"
-                            />
-                          </div>
+                          <a
+                            class="usa-link display-flex flex-align-center margin-right-2"
+                            href="/models/598db9f0-54c0-4346-bb6b-da46a36eff1a/collaboration-area/status"
+                          />
                         </div>
                       </div>
                     </div>
@@ -513,34 +493,24 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                       data-testid="task-list-status"
                     >
                       <div
-                        class="grid-row"
-                        data-testid="grid"
-                        style="gap: 16px;"
+                        class="display-flex flex-align-center"
                       >
-                        <div
-                          class="display-flex flex-align-center"
-                          data-testid="grid"
-                          style="gap: 10px;"
+                        <span
+                          class="mint-tag bg-base text-white margin-right-1"
+                          data-testid="tag"
                         >
-                          <span
-                            class="mint-tag bg-base text-white margin-right-0"
-                            data-testid="tag"
-                          >
-                            Ended
-                          </span>
-                        </div>
+                          Ended
+                        </span>
                         <div
-                          class="display-flex flex-align-center flex-wrap"
-                          data-testid="grid"
+                          class="display-flex flex-align-center flex-wrap margin-right-1"
+                        />
+                        <div
+                          class="mint-no-print task-list-status__border border-base-light margin-right-2"
                         >
-                          <div
-                            class="mint-no-print"
-                          >
-                            <a
-                              class="usa-link display-flex flex-align-center"
-                              href="/models/4fc87324-dbb0-4867-8e4d-5a20a76c8ae2/status"
-                            />
-                          </div>
+                          <a
+                            class="usa-link display-flex flex-align-center margin-right-2"
+                            href="/models/4fc87324-dbb0-4867-8e4d-5a20a76c8ae2/collaboration-area/status"
+                          />
                         </div>
                       </div>
                     </div>

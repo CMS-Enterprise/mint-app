@@ -19,7 +19,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
       >
         <nav
           aria-label="Breadcrumbs"
-          class="usa-breadcrumb usa-breadcrumb--wrap margin-bottom-4"
+          class="usa-breadcrumb usa-breadcrumb--wrap"
         >
           <ol
             class="usa-breadcrumb__list"
@@ -41,7 +41,19 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
+              >
+                <span>
+                  Model collaboration area
+                </span>
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-link usa-breadcrumb__link"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
               >
                 <span>
                   Model Plan task list
@@ -53,7 +65,7 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/prepare-for-clearance"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/prepare-for-clearance"
               >
                 <span>
                   Prepare for clearance
@@ -64,7 +76,9 @@ exports[`ClearanceReview component > matches snapshot 1`] = `
               aria-current="page"
               class="usa-breadcrumb__list-item usa-current"
             >
-              Review beneficiaries
+              <span>
+                Review beneficiaries
+              </span>
             </li>
           </ol>
         </nav>

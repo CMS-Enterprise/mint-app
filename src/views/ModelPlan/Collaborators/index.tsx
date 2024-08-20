@@ -17,7 +17,7 @@ import {
   useGetModelCollaboratorsQuery
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
@@ -187,20 +187,6 @@ export const CollaboratorsContent = () => {
     return <div>{JSON.stringify(error)}</div>;
   }
 
-  const breadcrumbs = [
-    { text: miscellaneousT('home'), url: '/' },
-    { text: collaboratorsMiscT('teamBreadcrumb') }
-  ];
-
-  const breadcrumbsFromTaskList = [
-    { text: miscellaneousT('home'), url: '/' },
-    {
-      text: miscellaneousT('tasklistBreadcrumb'),
-      url: `/models/${modelID}/task-list/`
-    },
-    { text: collaboratorsMiscT('manageModelTeam') }
-  ];
-
   return (
     <MainContent>
       {RemoveCollaborator()}
@@ -212,7 +198,17 @@ export const CollaboratorsContent = () => {
 
             <Breadcrumbs
               items={
-                manageOrAdd === 'manage' ? breadcrumbsFromTaskList : breadcrumbs
+                manageOrAdd === 'manage'
+                  ? [
+                      BreadcrumbItemOptions.HOME,
+                      BreadcrumbItemOptions.COLLABORATION_AREA,
+                      BreadcrumbItemOptions.TASK_LIST,
+                      BreadcrumbItemOptions.COLLABORATORS
+                    ]
+                  : [
+                      BreadcrumbItemOptions.HOME,
+                      BreadcrumbItemOptions.COLLABORATORS
+                    ]
               }
             />
 
@@ -232,7 +228,9 @@ export const CollaboratorsContent = () => {
                   {collaboratorsMiscT('manageModelTeamInfo')}
                 </div>
 
-                <UswdsReactLink to={`/models/${modelID}/task-list/`}>
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area/task-list/`}
+                >
                   <span>&larr; </span> {miscellaneousT('returnToTaskList')}
                 </UswdsReactLink>
               </>
@@ -255,7 +253,7 @@ export const CollaboratorsContent = () => {
             <UswdsReactLink
               className="usa-button margin-bottom-2"
               variant="unstyled"
-              to={`/models/${modelID}/collaborators/add-collaborator?view=${manageOrAdd}`}
+              to={`/models/${modelID}/collaboration-area/collaborators/add-collaborator?view=${manageOrAdd}`}
             >
               {collaboratorsMiscT('addTeamMemberButton')}
             </UswdsReactLink>
@@ -293,7 +291,7 @@ export const CollaboratorsContent = () => {
                   data-testid="continue-to-tasklist"
                   className="usa-button usa-button--outline"
                   variant="unstyled"
-                  to={`/models/${modelID}/task-list`}
+                  to={`/models/${modelID}/collaboration-area/task-list`}
                 >
                   {collaborators.length > 0
                     ? miscellaneousT('continueToTaskList')
@@ -312,12 +310,12 @@ const Collaborators = () => {
   return (
     <Switch>
       <ProtectedRoute
-        path="/models/:modelID/collaborators"
+        path="/models/:modelID/collaboration-area/collaborators"
         exact
         render={() => <CollaboratorsContent />}
       />
       <ProtectedRoute
-        path="/models/:modelID/collaborators/add-collaborator/:collaboratorId?"
+        path="/models/:modelID/collaboration-area/collaborators/add-collaborator/:collaboratorId?"
         exact
         render={() => <AddCollaborator />}
       />
