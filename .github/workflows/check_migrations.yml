@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout all
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Need to check out all branches
 
       - name: Check migrations versions for conflicts
         run: ./scripts/check_migration_versions.sh
