@@ -2,7 +2,7 @@
 
 set -eu -o pipefail
 
-diff=$(git diff --name-status "origin/${BASE_REF}..${HEAD_REF}" -- ./migrations)
+diff=$(git diff --name-status "origin/${BASE_REF}..origin/${HEAD_REF}" -- ./migrations)
 printf "Migration diff:\n%s", "${diff}"
 
 diffNonAdds=$(echo "${diff}" | grep -E '^A\s')
