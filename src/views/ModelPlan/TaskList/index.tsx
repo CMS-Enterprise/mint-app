@@ -302,7 +302,7 @@ const TaskList = () => {
           </Alert>
         )}
 
-        <ModelPlanCard modelID={modelID} />
+        <ModelPlanCard modelID={modelID} setStatusMessage={setStatusMessage} />
 
         {/* Wait for model status query param to be removed */}
         {loading && (

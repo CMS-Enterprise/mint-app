@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
@@ -13,8 +14,11 @@ import {
 } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import Modal from 'components/Modal';
 import { Avatar } from 'components/shared/Avatar';
+import ShareExportModal from 'components/ShareExport';
 import { formatDateLocal } from 'utils/date';
+import { StatusMessageType } from 'views/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
 import './index.scss';
@@ -23,10 +27,12 @@ type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 
 type ModelPlanCardType = {
   modelID: string;
+  setStatusMessage: (message: StatusMessageType) => void;
 };
 
-const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
+const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
   const { t: modelPlanCardT } = useTranslation('modelPlanCard');
+  const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
   const { data, loading } = useGetModelPlanQuery({
     variables: {
       id: modelID
@@ -62,58 +68,73 @@ const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
   };
 
   return (
-    <Card gridLayout={{ tablet: { col: 6 } }} className="card--model-plan">
-      <CardHeader>
-        <h3 className="usa-card__heading">{modelPlanCardT('heading')}</h3>
-      </CardHeader>
-      <div className="card__section-status">
-        <TaskListStatusTag
-          status={TaskStatus.READY}
-          classname="width-fit-content"
+    <>
+      <Modal
+        isOpen={isExportModalOpen}
+        closeModal={() => setIsExportModalOpen(false)}
+        className="padding-0 radius-md share-export-modal__container"
+        navigation
+        shouldCloseOnOverlayClick
+      >
+        <ShareExportModal
+          closeModal={() => setIsExportModalOpen(false)}
+          modelID={modelID}
+          setStatusMessage={setStatusMessage}
         />
-        <span className="text-base">
-          {modelPlanCardT('sectionsStarted', {
-            sectionsStarted: sectionStartedCounter()
-          })}
-        </span>
-      </div>
-
-      <CardBody>
-        <p>{modelPlanCardT('body')}</p>
-      </CardBody>
-
-      {modifiedDts && modifiedByUserAccount && (
-        <div className="display-flex margin-top-2 margin-bottom-3 flex-align-center">
-          <span className="text-base margin-left-3 margin-right-1">
-            {modelPlanCardT('mostRecentEdit', {
-              date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+      </Modal>
+      <Card gridLayout={{ tablet: { col: 6 } }} className="card--model-plan">
+        <CardHeader>
+          <h3 className="usa-card__heading">{modelPlanCardT('heading')}</h3>
+        </CardHeader>
+        <div className="card__section-status">
+          <TaskListStatusTag
+            status={TaskStatus.READY}
+            classname="width-fit-content"
+          />
+          <span className="text-base">
+            {modelPlanCardT('sectionsStarted', {
+              sectionsStarted: sectionStartedCounter()
             })}
           </span>
-          <Avatar
-            className="text-base-darkest"
-            user={modifiedByUserAccount.commonName}
-          />
         </div>
-      )}
-      <CardFooter>
-        <UswdsReactLink
-          to={`/models/${modelID}/task-list`}
-          className="usa-button"
-          variant="unstyled"
-        >
-          {modelPlanCardT('button.goToModelPlan')}
-        </UswdsReactLink>
-        {sectionStartedCounter() !== 0 && (
+
+        <CardBody>
+          <p>{modelPlanCardT('body')}</p>
+        </CardBody>
+
+        {modifiedDts && modifiedByUserAccount && (
+          <div className="display-flex margin-top-2 margin-bottom-3 flex-align-center">
+            <span className="text-base margin-left-3 margin-right-1">
+              {modelPlanCardT('mostRecentEdit', {
+                date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+              })}
+            </span>
+            <Avatar
+              className="text-base-darkest"
+              user={modifiedByUserAccount.commonName}
+            />
+          </div>
+        )}
+        <CardFooter>
           <UswdsReactLink
             to={`/models/${modelID}/task-list`}
-            className="usa-button usa-button--outline"
+            className="usa-button"
             variant="unstyled"
           >
-            {modelPlanCardT('button.share')}
+            {modelPlanCardT('button.goToModelPlan')}
           </UswdsReactLink>
-        )}
-      </CardFooter>
-    </Card>
+          {sectionStartedCounter() !== 0 && (
+            <Button
+              type="button"
+              className="usa-button usa-button--outline margin-left-1"
+              onClick={() => setIsExportModalOpen(true)}
+            >
+              {modelPlanCardT('button.share')}
+            </Button>
+          )}
+        </CardFooter>
+      </Card>
+    </>
   );
 };
 
