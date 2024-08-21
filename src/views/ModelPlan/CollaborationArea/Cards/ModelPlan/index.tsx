@@ -27,7 +27,7 @@ type ModelPlanCardType = {
 
 const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
   const { t: modelPlanCardT } = useTranslation('modelPlanCard');
-  const { data } = useGetModelPlanQuery({
+  const { data, loading } = useGetModelPlanQuery({
     variables: {
       id: modelID
     }
@@ -36,15 +36,41 @@ const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
   const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
   const {
     modifiedDts,
-    modifiedByUserAccount
-    // basics: { status },
-    // beneficiaries: { status },
-    // generalCharacteristics: { status },
-    // opsEvalAndLearning: { status },
-    // participantsAndProviders: { status },
-    // payments: { status },
-    // prepareForClearance: { status }
+    modifiedByUserAccount,
+    basics,
+    beneficiaries,
+    generalCharacteristics,
+    opsEvalAndLearning,
+    participantsAndProviders,
+    payments
   } = modelPlan;
+
+  const sectionStartedCounter = () => {
+    if (loading) {
+      return 0;
+    }
+    let countSectionsStarted = 0;
+    if (basics.status !== TaskStatus.READY) {
+      countSectionsStarted += 1;
+    }
+    if (beneficiaries.status !== TaskStatus.READY) {
+      countSectionsStarted += 1;
+    }
+    if (generalCharacteristics.status !== TaskStatus.READY) {
+      countSectionsStarted += 1;
+    }
+    if (opsEvalAndLearning.status !== TaskStatus.READY) {
+      countSectionsStarted += 1;
+    }
+    if (participantsAndProviders.status !== TaskStatus.READY) {
+      countSectionsStarted += 1;
+    }
+    if (payments.status !== TaskStatus.READY) {
+      countSectionsStarted += 1;
+    }
+
+    return countSectionsStarted;
+  };
 
   return (
     <Card gridLayout={{ tablet: { col: 6 } }} className="card--model-plan">
@@ -58,8 +84,7 @@ const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
         />
         <span className="text-base">
           {modelPlanCardT('sectionsStarted', {
-            sectionsStarted: 1,
-            totalSections: 7
+            sectionsStarted: sectionStartedCounter()
           })}
         </span>
       </div>
@@ -79,7 +104,6 @@ const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
             className="text-base-darkest"
             user={modifiedByUserAccount.commonName}
           />
-          {/* <span>{modifiedByUserAccount.commonName}</span> */}
         </div>
       )}
       <CardFooter>
