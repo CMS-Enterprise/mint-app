@@ -18,12 +18,17 @@ import Modal from 'components/Modal';
 import { Avatar } from 'components/shared/Avatar';
 import ShareExportModal from 'components/ShareExport';
 import { formatDateLocal } from 'utils/date';
-import { StatusMessageType } from 'views/ModelPlan/TaskList';
+import {
+  getLatestModifiedDate,
+  ITSolutionsType,
+  StatusMessageType
+} from 'views/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
 import './index.scss';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
+type OperationalNeedsType = GetModelPlanQuery['modelPlan']['operationalNeeds'][0];
 
 type ModelPlanCardType = {
   modelID: string;
@@ -49,8 +54,21 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     beneficiaries,
     opsEvalAndLearning,
     payments,
+    operationalNeeds = [],
     taskListStatus
   } = modelPlan;
+
+  const getITSolutionsStatus = (
+    operationalNeedsArray: OperationalNeedsType[]
+  ) => {
+    const inProgress = operationalNeedsArray.find(need => need.modifiedDts);
+    return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
+  };
+
+  const itSolutions: ITSolutionsType = {
+    modifiedDts: getLatestModifiedDate(operationalNeeds),
+    status: getITSolutionsStatus(operationalNeeds)
+  };
 
   // Returns the number of sections that have been started (i.e. not in 'READY' status)
   const sectionStartedCounter = () => {
@@ -62,7 +80,8 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
       participantsAndProviders.status,
       beneficiaries.status,
       opsEvalAndLearning.status,
-      payments.status
+      payments.status,
+      itSolutions.status
     ];
 
     return sections.filter(status => status !== TaskStatus.READY).length;

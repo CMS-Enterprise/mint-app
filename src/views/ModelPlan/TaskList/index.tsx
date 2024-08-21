@@ -72,7 +72,7 @@ type CRTDLType =
   | GetCrtdLsQuery['modelPlan']['crs'][0]
   | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
-type ITSolutionsType = {
+export type ITSolutionsType = {
   modifiedDts: string | null | undefined;
   status: TaskStatus;
 };
