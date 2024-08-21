@@ -17,13 +17,13 @@ const GatheringInfoAlert = ({ solution }: { solution: HelpSolutionType }) => {
     }
   );
 
-  const contactName = solution.alertPrimaryContact
-    ? solution.pointsOfContact?.find(contact => contact.isPrimary)?.name
-    : 'the MINT Team';
+  const primaryContact = solution.alertPrimaryContact
+    ? solution.pointsOfContact?.find(contact => contact.isPrimary)
+    : undefined;
 
-  const contactEmail = solution.alertPrimaryContact
-    ? solution.pointsOfContact?.find(contact => contact.isPrimary)?.email
-    : 'MINTTeam@cms.hhs.gov';
+  const contactName = primaryContact?.name || 'the MINT Team';
+
+  const contactEmail = primaryContact?.email || 'MINTTeam@cms.hhs.gov';
 
   return (
     <Alert
@@ -34,7 +34,9 @@ const GatheringInfoAlert = ({ solution }: { solution: HelpSolutionType }) => {
       className="line-height-body-5"
     >
       <Trans
-        i18nKey="helpAndKnowledge:gatheringInfoAlert.description"
+        i18nKey={`helpAndKnowledge:gatheringInfoAlert.${
+          primaryContact?.isTeam ? 'descriptionTeam' : 'description'
+        }`}
         values={{
           user: contactName,
           email: contactEmail

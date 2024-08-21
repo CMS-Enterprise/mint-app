@@ -308,6 +308,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
     ],
     name: 'CPI Vetting',
+    alertPrimaryContact: true,
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
