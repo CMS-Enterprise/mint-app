@@ -17,6 +17,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import { Avatar } from 'components/shared/Avatar';
 import ShareExportModal from 'components/ShareExport';
+import Spinner from 'components/Spinner';
 import { formatDateLocal } from 'utils/date';
 import {
   getLatestModifiedDate,
@@ -37,6 +38,7 @@ type ModelPlanCardType = {
 
 const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
   const { t: modelPlanCardT } = useTranslation('modelPlanCard');
+  const { t: generalT } = useTranslation('general');
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
   const { data, loading } = useGetModelPlanQuery({
     variables: {
@@ -86,6 +88,12 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
 
     return sections.filter(status => status !== TaskStatus.READY).length;
   };
+
+  if (loading) {
+    return (
+      <Spinner size="xl" aria-valuetext={generalT('pageLoading')} aria-busy />
+    );
+  }
 
   return (
     <>

@@ -34,7 +34,7 @@ import { UpdateFavoriteProps } from '../ModelPlanOverview';
 // import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
-import ModelPlanCard from './Cards/ModelPlan';
+import ModelPlanCard from './Cards/ModelPlanCard';
 
 import './index.scss';
 
