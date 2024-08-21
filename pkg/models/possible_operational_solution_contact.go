@@ -14,7 +14,7 @@ type PossibleOperationalSolutionContact struct {
 
 	Name      string  `db:"name" json:"name"`
 	Email     string  `db:"email" json:"email"`
-	IsTeam    bool    `db:"isTeam" json:"is_team"`
+	IsTeam    bool    `db:"is_team" json:"isTeam"`
 	Role      *string `db:"role" json:"role"`
 	IsPrimary bool    `db:"is_primary" json:"isPrimary"`
 }
