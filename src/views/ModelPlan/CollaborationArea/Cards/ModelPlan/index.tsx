@@ -83,7 +83,7 @@ const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
       </CardBody>
 
       {modifiedDts && modifiedByUserAccount && (
-        <div className="display-flex margin-top-2 margin-bottom-3">
+        <div className="display-flex margin-top-2 margin-bottom-3 flex-align-center">
           <span className="text-base margin-left-3 margin-right-1">
             {modelPlanCardT('mostRecentEdit', {
               date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
@@ -103,6 +103,15 @@ const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
         >
           {modelPlanCardT('button.goToModelPlan')}
         </UswdsReactLink>
+        {sectionStartedCounter() !== 0 && (
+          <UswdsReactLink
+            to={`/models/${modelID}/task-list`}
+            className="usa-button usa-button--outline"
+            variant="unstyled"
+          >
+            {modelPlanCardT('button.share')}
+          </UswdsReactLink>
+        )}
       </CardFooter>
     </Card>
   );
