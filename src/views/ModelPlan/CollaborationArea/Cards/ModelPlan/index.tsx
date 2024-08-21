@@ -44,10 +44,10 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     modifiedDts,
     modifiedByUserAccount,
     basics,
-    beneficiaries,
     generalCharacteristics,
-    opsEvalAndLearning,
     participantsAndProviders,
+    beneficiaries,
+    opsEvalAndLearning,
     payments,
     taskListStatus
   } = modelPlan;
@@ -58,10 +58,10 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
 
     const sections = [
       basics.status,
-      beneficiaries.status,
       generalCharacteristics.status,
-      opsEvalAndLearning.status,
       participantsAndProviders.status,
+      beneficiaries.status,
+      opsEvalAndLearning.status,
       payments.status
     ];
 
