@@ -11,6 +11,7 @@ export default gql(/* GraphQL */ `
       }
       archived
       status
+      taskListStatus
       isFavorite
       suggestedPhase {
         phase

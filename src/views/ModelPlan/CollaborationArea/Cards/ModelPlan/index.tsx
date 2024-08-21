@@ -48,7 +48,8 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     generalCharacteristics,
     opsEvalAndLearning,
     participantsAndProviders,
-    payments
+    payments,
+    taskListStatus
   } = modelPlan;
 
   // Returns the number of sections that have been started (i.e. not in 'READY' status)
@@ -88,7 +89,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
         </CardHeader>
         <div className="card__section-status">
           <TaskListStatusTag
-            status={TaskStatus.READY}
+            status={taskListStatus}
             classname="width-fit-content"
           />
           <span className="text-base">
