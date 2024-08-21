@@ -241,7 +241,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -1154,7 +1154,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -2892,7 +2892,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -4515,7 +4515,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -5205,7 +5205,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -7779,7 +7779,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -9698,7 +9698,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 Operational solutions
               </h2>
               <div
-                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                 data-testid="tasklist-tag"
               >
                 <span>
