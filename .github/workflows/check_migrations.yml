@@ -1,5 +1,10 @@
 # This GitHub action checks for duplicate migration prefixes in the ./migrations folder,
 # comparing the head branch with the base branch.
+#
+# This job also checks to ensure that migrations are only ever added to the ./migrations folder, and not removed or modified.
+#
+# By default, on: pull request targets the merge commit, which is the commit that would be merged into the base branch,
+# meaning it will include commits from the head branch and the base branch (allowing us to check for version conflicts)
 
 name: Check Migrations
 
@@ -14,5 +19,11 @@ jobs:
       - name: Checkout all
         uses: actions/checkout@v4
 
-      - name: Check migrations
+      - name: Check migrations versions for conflicts
         run: ./scripts/check_migration_versions.sh
+
+      - name: Allow only added migrations
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: ./scripts/check_migration_diff.sh
