@@ -679,6 +679,7 @@ export type ModelPlan = {
   prepareForClearance: PrepareForClearance;
   status: ModelStatus;
   suggestedPhase?: Maybe<PhaseSuggestion>;
+  taskListStatus: TaskStatus;
   tdls: Array<PlanTdl>;
 };
 
