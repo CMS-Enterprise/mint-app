@@ -45,31 +45,20 @@ const ModelPlanCard = ({ modelID }: ModelPlanCardType) => {
     payments
   } = modelPlan;
 
+  // Returns the number of sections that have been started (i.e. not in 'READY' status)
   const sectionStartedCounter = () => {
-    if (loading) {
-      return 0;
-    }
-    let countSectionsStarted = 0;
-    if (basics.status !== TaskStatus.READY) {
-      countSectionsStarted += 1;
-    }
-    if (beneficiaries.status !== TaskStatus.READY) {
-      countSectionsStarted += 1;
-    }
-    if (generalCharacteristics.status !== TaskStatus.READY) {
-      countSectionsStarted += 1;
-    }
-    if (opsEvalAndLearning.status !== TaskStatus.READY) {
-      countSectionsStarted += 1;
-    }
-    if (participantsAndProviders.status !== TaskStatus.READY) {
-      countSectionsStarted += 1;
-    }
-    if (payments.status !== TaskStatus.READY) {
-      countSectionsStarted += 1;
-    }
+    if (loading) return 0;
 
-    return countSectionsStarted;
+    const sections = [
+      basics.status,
+      beneficiaries.status,
+      generalCharacteristics.status,
+      opsEvalAndLearning.status,
+      participantsAndProviders.status,
+      payments.status
+    ];
+
+    return sections.filter(status => status !== TaskStatus.READY).length;
   };
 
   return (
