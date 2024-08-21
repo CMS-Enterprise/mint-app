@@ -156,6 +156,19 @@ const RenderReadonlyValue = <
 
   const id = formatID(config.readonlyLabel || config.label);
 
+  // Renders a single select value
+  if (
+    isTranslationFieldPropertiesWithOptions(config) &&
+    config.formType === TranslationFormType.SELECT
+  ) {
+    return (
+      <SingleValue
+        value={config.options[value as T]}
+        isDate={config.dataType === TranslationDataType.DATE}
+      />
+    );
+  }
+
   // Renders a single value
   if (
     isTranslationFieldProperties(config) &&
@@ -183,20 +196,11 @@ const RenderReadonlyValue = <
 
   // If no values for checkbox/multiselect type questions
   if (listValues.length === 0) {
-    // if Parent field has a value that triggers a child field, and that child field is a list with no values, render a bullet with no additional information
-    if (config.otherParentField) {
-      const parentConfig = translations[config.otherParentField];
-      if (parentConfig) {
-        return (
-          <ul className="margin-y-0">
-            <li>
-              <NoAddtionalInfo other />
-            </li>
-          </ul>
-        );
-      }
-    }
-    return <NoAddtionalInfo />;
+    return (
+      <>
+        {config.otherParentField ? ' - ' : ''} <NoAddtionalInfo other />
+      </>
+    );
   }
 
   // Renders a list of selected values - multiselect, checkboxes
@@ -214,7 +218,7 @@ export const NoAddtionalInfo = ({ other }: { other?: boolean }) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   return (
-    <em className="text-base">
+    <em className="text-base font-body-md">
       {other ? miscellaneousT('noAdditionalInformation') : miscellaneousT('na')}
     </em>
   );

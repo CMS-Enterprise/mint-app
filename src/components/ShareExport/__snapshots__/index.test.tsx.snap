@@ -1358,7 +1358,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                     class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                   >
                     <em
-                      class="text-base"
+                      class="text-base font-body-md"
                     >
                       No answer entered
                     </em>
@@ -7359,11 +7359,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       Data sharing starts
                     </span>
                   </div>
-                  <em
-                    class="text-base"
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                   >
-                    No answer entered
-                  </em>
+                    During application period
+                  </div>
                 </div>
               </div>
             </div>
@@ -7454,11 +7454,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       Data collection starts
                     </span>
                   </div>
-                  <em
-                    class="text-base"
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                   >
-                    No answer entered
-                  </em>
+                    Early in the first performance year
+                  </div>
                 </div>
               </div>
             </div>
@@ -7549,11 +7549,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       Quality reporting starts
                     </span>
                   </div>
-                  <em
-                    class="text-base"
+                  <div
+                    class="margin-y-0 font-body-md line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
                   >
-                    No answer entered
-                  </em>
+                    Later in the first performance year
+                  </div>
                 </div>
               </div>
             </div>
@@ -9207,10 +9207,11 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       Are there any business requirement(s) that address claims processing precedence order with the other model(s)? If so, please specify.
                     </span>
                   </div>
+                   
                   <em
-                    class="text-base"
+                    class="text-base font-body-md"
                   >
-                    No answer entered
+                    No additional information specified
                   </em>
                 </div>
               </div>
