@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ModelPlanCard > matches the snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card tablet:grid-col-6 card--model-plan"
+    data-testid="Card"
+  >
+    <div
+      class="usa-card__container"
+    >
+      <header
+        class="usa-card__header"
+        data-testid="CardHeader"
+      >
+        <h3
+          class="usa-card__heading"
+        >
+          Model Plan
+        </h3>
+      </header>
+      <div
+        class="card__section-status"
+      >
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-accent-cool width-fit-content"
+          data-testid="tasklist-tag"
+        >
+          <span />
+        </div>
+        <span
+          class="text-base"
+        >
+          0/7 sections started
+        </span>
+      </div>
+      <div
+        class="usa-card__body"
+        data-testid="CardBody"
+      >
+        <p>
+          The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies.
+        </p>
+      </div>
+      <div
+        class="usa-card__footer"
+        data-testid="CardFooter"
+      >
+        <a
+          class="usa-button"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+        >
+          Go to Model Plan
+        </a>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
