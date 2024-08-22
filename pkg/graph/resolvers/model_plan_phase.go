@@ -3,7 +3,9 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"time"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -80,6 +82,8 @@ func ShouldSendEmailForPhaseSuggestion(
 // TrySendEmailForPhaseSuggestion sends an email to the model plan leads if the suggested phase has changed
 func TrySendEmailForPhaseSuggestion(
 	logger *zap.Logger,
+	store *storage.Store,
+	principal authentication.Principal,
 	emailRecipients []string,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
@@ -115,7 +119,24 @@ func TrySendEmailForPhaseSuggestion(
 		logger.Error(err.Error(), zap.Error(err))
 	}
 
-	return err
+	if currentPhaseSuggestion == nil {
+		modelPlan.PreviousSuggestedPhase = nil
+	} else {
+		modelPlan.PreviousSuggestedPhase = &currentPhaseSuggestion.Phase
+	}
+
+	updateTime := time.Now().UTC()
+	modelPlan.ModifiedDts = &updateTime
+	modelPlan.ModifiedBy = &principal.Account().ID
+
+	_, err = store.ModelPlanUpdate(logger, modelPlan)
+	if err != nil {
+		err = fmt.Errorf("unable to update model plan for model plan id %s. Err %w", modelPlan.ID, err)
+		logger.Error(err.Error(), zap.Error(err))
+		return err
+	}
+
+	return nil
 }
 
 // GetEmailsForModelPlanLeads returns the email addresses of the model leads for a given model plan
@@ -205,6 +226,7 @@ func ConstructPhaseSuggestionEmailTemplates(
 func TrySendEmailForPhaseSuggestionByModelPlanID(
 	ctx context.Context,
 	store *storage.Store,
+	principal authentication.Principal,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
@@ -238,6 +260,8 @@ func TrySendEmailForPhaseSuggestionByModelPlanID(
 
 	return TrySendEmailForPhaseSuggestion(
 		logger,
+		store,
+		principal,
 		emailRecipients,
 		emailService,
 		emailTemplateService,

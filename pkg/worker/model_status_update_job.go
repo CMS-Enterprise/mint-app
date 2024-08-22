@@ -45,6 +45,7 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 	return resolvers.TrySendEmailForPhaseSuggestionByModelPlanID(
 		ctx,
 		w.Store,
+		appcontext.Principal(ctx),
 		logger,
 		w.EmailService,
 		&w.EmailTemplateService,

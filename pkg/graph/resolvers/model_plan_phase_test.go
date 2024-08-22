@@ -67,6 +67,8 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 
 	err := TrySendEmailForPhaseSuggestion(
 		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
 		emailRecipients,
 		mockEmailService,
 		mockEmailTemplateService,
@@ -75,6 +77,11 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 		plan,
 	)
 	suite.NoError(err)
+
+	plan, err = suite.testConfigs.Store.ModelPlanGetByID(suite.testConfigs.Store, suite.testConfigs.Logger, plan.ID)
+	suite.NoError(err)
+	suite.NotNil(plan.PreviousSuggestedPhase)
+	suite.EqualValues(models.ModelPhaseIcipComplete, *plan.PreviousSuggestedPhase)
 }
 
 func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
