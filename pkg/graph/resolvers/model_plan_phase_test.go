@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"time"
+
 	"github.com/golang/mock/gomock"
 
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
@@ -19,6 +21,11 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 	planName := "Plan For Milestones"
 	plan := suite.createModelPlan(planName)
 	plan.PreviousSuggestedPhase = nil
+	timeNow := time.Now().UTC()
+	plan.ModifiedDts = &timeNow
+	plan.ModifiedBy = &suite.testConfigs.Principal.Account().ID
+	plan, err := suite.testConfigs.Store.ModelPlanUpdate(suite.testConfigs.Logger, plan)
+	suite.NoError(err)
 
 	emailRecipients := []string{"TEST1@local.mock", "TEST2@local.mock"}
 	phaseSuggestion := model.PhaseSuggestion{
@@ -65,8 +72,9 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 		Return(emailServiceConfig).
 		Times(1)
 
-	err := TrySendEmailForPhaseSuggestion(
+	err = TrySendEmailForPhaseSuggestion(
 		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
 		emailRecipients,
 		mockEmailService,
 		mockEmailTemplateService,
@@ -75,6 +83,11 @@ func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {
 		plan,
 	)
 	suite.NoError(err)
+
+	plan, err = suite.testConfigs.Store.ModelPlanGetByID(suite.testConfigs.Store, suite.testConfigs.Logger, plan.ID)
+	suite.NoError(err)
+	suite.NotNil(plan.PreviousSuggestedPhase)
+	suite.EqualValues(models.ModelPhaseIcipComplete, *plan.PreviousSuggestedPhase)
 }
 
 func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
