@@ -40,7 +40,6 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     }
   });
 
-  const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
   const {
     modifiedDts,
     modifiedByUserAccount,
@@ -52,7 +51,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     payments,
     operationalNeeds = [],
     taskListStatus
-  } = modelPlan;
+  } = data?.modelPlan as GetModelPlanTypes;
 
   const getITSolutionsStatus = (
     operationalNeedsArray: OperationalNeedsType[]
