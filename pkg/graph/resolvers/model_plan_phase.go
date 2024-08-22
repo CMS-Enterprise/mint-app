@@ -120,7 +120,7 @@ func TrySendEmailForPhaseSuggestion(
 	}
 
 	if currentPhaseSuggestion == nil {
-		modelPlan.PreviousSuggestedPhase = nil
+		return nil
 	} else {
 		modelPlan.PreviousSuggestedPhase = &currentPhaseSuggestion.Phase
 	}
