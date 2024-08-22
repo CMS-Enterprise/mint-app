@@ -137,7 +137,6 @@ const enUS = {
   tableAndPagination,
   termsAndConditions,
   externalLinkModal
-  // Model Collaboration Area
 };
 
 export default enUS;
