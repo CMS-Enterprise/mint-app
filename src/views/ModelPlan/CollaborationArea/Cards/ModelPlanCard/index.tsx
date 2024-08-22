@@ -18,11 +18,7 @@ import Modal from 'components/Modal';
 import { Avatar } from 'components/shared/Avatar';
 import ShareExportModal from 'components/ShareExport';
 import { formatDateLocal } from 'utils/date';
-import {
-  getLatestModifiedDate,
-  ITSolutionsType,
-  StatusMessageType
-} from 'views/ModelPlan/TaskList';
+import { StatusMessageType } from 'views/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
 import './index.scss';
@@ -65,11 +61,6 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
   };
 
-  const itSolutions: ITSolutionsType = {
-    modifiedDts: getLatestModifiedDate(operationalNeeds),
-    status: getITSolutionsStatus(operationalNeeds)
-  };
-
   // Returns the number of sections that have been started (i.e. not in 'READY' status)
   const sectionStartedCounter = useMemo(() => {
     if (loading) return 0;
@@ -81,7 +72,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
       beneficiaries.status,
       opsEvalAndLearning.status,
       payments.status,
-      itSolutions.status
+      getITSolutionsStatus(operationalNeeds)
     ];
 
     return sections.filter(status => status !== TaskStatus.READY).length;
@@ -93,7 +84,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     beneficiaries?.status,
     opsEvalAndLearning?.status,
     payments?.status,
-    itSolutions?.status
+    operationalNeeds
   ]);
 
   return (
