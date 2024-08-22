@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
@@ -71,7 +71,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
   };
 
   // Returns the number of sections that have been started (i.e. not in 'READY' status)
-  const sectionStartedCounter = () => {
+  const sectionStartedCounter = useMemo(() => {
     if (loading) return 0;
 
     const sections = [
@@ -85,7 +85,16 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     ];
 
     return sections.filter(status => status !== TaskStatus.READY).length;
-  };
+  }, [
+    loading,
+    basics.status,
+    generalCharacteristics.status,
+    participantsAndProviders.status,
+    beneficiaries.status,
+    opsEvalAndLearning.status,
+    payments.status,
+    itSolutions.status
+  ]);
 
   return (
     <>
@@ -102,7 +111,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
           setStatusMessage={setStatusMessage}
         />
       </Modal>
-      <Card gridLayout={{ tablet: { col: 6 } }} className="card--model-plan">
+      <Card gridLayout={{ desktop: { col: 6 } }} className="card--model-plan">
         <CardHeader>
           <h3 className="usa-card__heading">
             {collaborationAreaT('modelPlanCard.heading')}
@@ -115,7 +124,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
           />
           <span className="text-base">
             {collaborationAreaT('modelPlanCard.sectionsStarted', {
-              sectionsStarted: sectionStartedCounter()
+              sectionsStarted: sectionStartedCounter
             })}
           </span>
         </div>
@@ -145,7 +154,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
           >
             {collaborationAreaT('goToModelPlan')}
           </UswdsReactLink>
-          {sectionStartedCounter() !== 0 && (
+          {sectionStartedCounter !== 0 && (
             <Button
               type="button"
               className="usa-button usa-button--outline margin-left-1"

@@ -2,11 +2,6 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { GetModelPlanDocument, TaskStatus } from 'gql/gen/graphql';
 
-// import allMocks, {
-//   modelID,
-//   operationalNeedsMock,
-//   summaryMock
-// } from 'data/mock/readonly';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 import setup from 'utils/testing/setup';
 

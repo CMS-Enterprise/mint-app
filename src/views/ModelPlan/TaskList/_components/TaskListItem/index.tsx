@@ -37,7 +37,7 @@ export const TaskListStatusTag = ({
       break;
     case 'READY':
       tagCopy = t('taskListItem.ready');
-      tagStyle = 'bg-accent-cool';
+      tagStyle = 'bg-info-light';
       break;
     case 'READY_FOR_CLEARANCE':
       tagCopy = t('taskListItem.readyForClearance');
@@ -49,7 +49,7 @@ export const TaskListStatusTag = ({
       break;
     default:
       tagCopy = '';
-      tagStyle = 'bg-accent-cool';
+      tagStyle = 'bg-info-light';
   }
 
   return (
