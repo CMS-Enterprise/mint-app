@@ -1644,14 +1644,16 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Inte
           class="usa-alert__text"
         >
           <span>
-            In the meantime, contact  at 
+            In the meantime, contact the MINT Team at 
             <a
               aria-label="Open in a new tab"
               class="usa-link usa-link--external"
-              href="mailto:undefined"
+              href="mailto:MINTTeam@cms.hhs.gov"
               rel="noopener noreferrer"
               target="_blank"
-            />
+            >
+              MINTTeam@cms.hhs.gov
+            </a>
             .
           </span>
         </p>
