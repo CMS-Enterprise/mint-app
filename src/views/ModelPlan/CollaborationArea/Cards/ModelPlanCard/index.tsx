@@ -36,7 +36,7 @@ type ModelPlanCardType = {
 };
 
 const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
-  const { t: modelPlanCardT } = useTranslation('modelPlanCard');
+  const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
   const { data, loading } = useGetModelPlanQuery({
     variables: {
@@ -104,7 +104,9 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
       </Modal>
       <Card gridLayout={{ tablet: { col: 6 } }} className="card--model-plan">
         <CardHeader>
-          <h3 className="usa-card__heading">{modelPlanCardT('heading')}</h3>
+          <h3 className="usa-card__heading">
+            {collaborationAreaT('modelPlanCard.heading')}
+          </h3>
         </CardHeader>
         <div className="card__section-status">
           <TaskListStatusTag
@@ -112,20 +114,20 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
             classname="width-fit-content"
           />
           <span className="text-base">
-            {modelPlanCardT('sectionsStarted', {
+            {collaborationAreaT('modelPlanCard.sectionsStarted', {
               sectionsStarted: sectionStartedCounter()
             })}
           </span>
         </div>
 
         <CardBody>
-          <p>{modelPlanCardT('body')}</p>
+          <p>{collaborationAreaT('modelPlanCard.body')}</p>
         </CardBody>
 
         {modifiedDts && modifiedByUserAccount && (
           <div className="display-flex margin-top-2 margin-bottom-3 flex-align-center">
             <span className="text-base margin-left-3 margin-right-1">
-              {modelPlanCardT('mostRecentEdit', {
+              {collaborationAreaT('modelPlanCard.mostRecentEdit', {
                 date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
               })}
             </span>
@@ -141,7 +143,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
             className="usa-button"
             variant="unstyled"
           >
-            {modelPlanCardT('button.goToModelPlan')}
+            {collaborationAreaT('goToModelPlan')}
           </UswdsReactLink>
           {sectionStartedCounter() !== 0 && (
             <Button
@@ -149,7 +151,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
               className="usa-button usa-button--outline margin-left-1"
               onClick={() => setIsExportModalOpen(true)}
             >
-              {modelPlanCardT('button.share')}
+              {collaborationAreaT('modelPlanCard.shareButton')}
             </Button>
           )}
         </CardFooter>
