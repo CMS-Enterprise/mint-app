@@ -3,9 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
-	"time"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -83,7 +81,6 @@ func ShouldSendEmailForPhaseSuggestion(
 func TrySendEmailForPhaseSuggestion(
 	logger *zap.Logger,
 	store *storage.Store,
-	principal authentication.Principal,
 	emailRecipients []string,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
@@ -125,10 +122,11 @@ func TrySendEmailForPhaseSuggestion(
 		modelPlan.PreviousSuggestedPhase = &currentPhaseSuggestion.Phase
 	}
 
-	updateTime := time.Now().UTC()
-	modelPlan.ModifiedDts = &updateTime
-	modelPlan.ModifiedBy = &principal.Account().ID
-
+	// NOTE: It is assumed that at the point of this function call, the model plan has already been updated
+	// at some point. If not, this method will fail as there is no assignment to ModifiedBy and ModifiedDts, which
+	// will break on the SQL trigger.
+	// TODO: As tech debt, refactor the previous suggested phase column to another field OR loosen the trigger
+	// constraints to allow unrestricted modification for previous suggested phase as a more specific query
 	_, err = store.ModelPlanUpdate(logger, modelPlan)
 	if err != nil {
 		err = fmt.Errorf("unable to update model plan for model plan id %s. Err %w", modelPlan.ID, err)
@@ -226,7 +224,6 @@ func ConstructPhaseSuggestionEmailTemplates(
 func TrySendEmailForPhaseSuggestionByModelPlanID(
 	ctx context.Context,
 	store *storage.Store,
-	principal authentication.Principal,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
@@ -261,7 +258,6 @@ func TrySendEmailForPhaseSuggestionByModelPlanID(
 	return TrySendEmailForPhaseSuggestion(
 		logger,
 		store,
-		principal,
 		emailRecipients,
 		emailService,
 		emailTemplateService,
