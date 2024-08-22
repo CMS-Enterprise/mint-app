@@ -9,6 +9,8 @@ import {
 } from '@trussworks/react-uswds';
 import {
   GetModelPlanQuery,
+  ModelStatus,
+  PrepareForClearanceStatus,
   TaskStatus,
   useGetModelPlanQuery
 } from 'gql/gen/graphql';
@@ -41,7 +43,88 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     }
   });
 
-  const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
+  const modelPlan =
+    data?.modelPlan ||
+    ({
+      __typename: 'ModelPlan',
+      id: modelID,
+      modelName: 'Test',
+      archived: false,
+      status: ModelStatus.PLAN_DRAFT,
+      modifiedDts: '',
+      modifiedByUserAccount: {
+        __typename: 'UserAccount',
+        commonName: ''
+      },
+      basics: {
+        __typename: 'PlanBasics',
+        id: '123',
+        status: TaskStatus.READY
+      },
+      generalCharacteristics: {
+        __typename: 'PlanGeneralCharacteristics',
+        id: '54234',
+        createdBy: 'John Doe',
+        createdDts: '',
+        modifiedBy: '',
+        modifiedDts: '',
+        readyForClearanceDts: '',
+        status: TaskStatus.IN_PROGRESS
+      },
+      participantsAndProviders: {
+        __typename: 'PlanParticipantsAndProviders',
+        id: '46246356',
+        createdBy: 'John Doe',
+        createdDts: '',
+        modifiedBy: '',
+        modifiedDts: '',
+        readyForClearanceDts: '',
+        status: TaskStatus.IN_PROGRESS
+      },
+      beneficiaries: {
+        __typename: 'PlanBeneficiaries',
+        id: '09865643',
+        createdBy: 'John Doe',
+        createdDts: '',
+        modifiedBy: '',
+        modifiedDts: '',
+        readyForClearanceDts: '',
+        status: TaskStatus.IN_PROGRESS
+      },
+      opsEvalAndLearning: {
+        __typename: 'PlanOpsEvalAndLearning',
+        id: '7865676',
+        createdBy: 'John Doe',
+        createdDts: '',
+        modifiedBy: '',
+        modifiedDts: '',
+        readyForClearanceDts: '',
+        status: TaskStatus.IN_PROGRESS
+      },
+      payments: {
+        __typename: 'PlanPayments',
+        id: '8756435235',
+        createdBy: 'John Doe',
+        createdDts: '',
+        modifiedBy: '',
+        modifiedDts: '',
+        readyForClearanceDts: '',
+        status: TaskStatus.IN_PROGRESS
+      },
+      operationalNeeds: [],
+      taskListStatus: TaskStatus.READY,
+      isFavorite: true,
+      collaborators: [],
+      documents: [],
+      crs: [],
+      tdls: [],
+      discussions: [],
+      prepareForClearance: {
+        __typename: 'PrepareForClearance',
+        status: PrepareForClearanceStatus.IN_PROGRESS,
+        modifiedDts: ''
+      }
+    } as GetModelPlanTypes);
 
   const {
     modifiedDts,
