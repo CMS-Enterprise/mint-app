@@ -229,6 +229,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
             to={`/models/${modelID}/task-list`}
             className="usa-button"
             variant="unstyled"
+            data-testid="to-task-list"
           >
             {collaborationAreaT('goToModelPlan')}
           </UswdsReactLink>
