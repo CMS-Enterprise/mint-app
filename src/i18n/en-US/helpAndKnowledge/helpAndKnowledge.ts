@@ -2001,6 +2001,8 @@ const helpAndKnowledge = {
     header: 'We’re still gathering information about ',
     description:
       'In the meantime, contact {{-user}} at <emailLink>{{-email}}</emailLink>.',
+    descriptionTeam:
+      'In the meantime, contact the {{-user}} at <emailLink>{{-email}}</emailLink>.',
     description2: 'if you have any questions.'
   },
 

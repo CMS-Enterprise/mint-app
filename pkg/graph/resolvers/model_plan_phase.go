@@ -80,6 +80,7 @@ func ShouldSendEmailForPhaseSuggestion(
 // TrySendEmailForPhaseSuggestion sends an email to the model plan leads if the suggested phase has changed
 func TrySendEmailForPhaseSuggestion(
 	logger *zap.Logger,
+	store *storage.Store,
 	emailRecipients []string,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
@@ -115,7 +116,25 @@ func TrySendEmailForPhaseSuggestion(
 		logger.Error(err.Error(), zap.Error(err))
 	}
 
-	return err
+	if currentPhaseSuggestion == nil {
+		return nil
+	} else {
+		modelPlan.PreviousSuggestedPhase = &currentPhaseSuggestion.Phase
+	}
+
+	// NOTE: It is assumed that at the point of this function call, the model plan has already been updated
+	// at some point. If not, this method will fail as there is no assignment to ModifiedBy and ModifiedDts, which
+	// will break on the SQL trigger.
+	// TODO: As tech debt, refactor the previous suggested phase column to another field OR loosen the trigger
+	// constraints to allow unrestricted modification for previous suggested phase as a more specific query
+	_, err = store.ModelPlanUpdate(logger, modelPlan)
+	if err != nil {
+		err = fmt.Errorf("unable to update model plan for model plan id %s. Err %w", modelPlan.ID, err)
+		logger.Error(err.Error(), zap.Error(err))
+		return err
+	}
+
+	return nil
 }
 
 // GetEmailsForModelPlanLeads returns the email addresses of the model leads for a given model plan
@@ -238,6 +257,7 @@ func TrySendEmailForPhaseSuggestionByModelPlanID(
 
 	return TrySendEmailForPhaseSuggestion(
 		logger,
+		store,
 		emailRecipients,
 		emailService,
 		emailTemplateService,

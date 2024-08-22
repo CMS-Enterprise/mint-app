@@ -3,6 +3,7 @@ SELECT
     possible_operational_solution_id,
     name,
     email,
+    is_team,
     role,
     is_primary,
     created_by,

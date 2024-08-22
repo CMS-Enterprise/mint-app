@@ -4,8 +4,11 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/logfields"
+	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/google/uuid"
@@ -32,6 +35,12 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) 
 	logger = logger.With(logfields.ModelPlanID(modelPlanID))
 
 	logger.Info("checking if model status should be updated, and creating notification")
+
+	// Ensure there's a context with the user account service
+	// TODO THis is a bit hacky -- we should probably be doing this on every job, not just this one, but we needed to get this working in MINT-3068
+	dataLoaders := loaders.NewDataLoaders(w.Store)
+	ctx = loaders.CTXWithLoaders(ctx, dataLoaders)
+	ctx = appcontext.WithUserAccountService(ctx, userhelpers.UserAccountGetByIDLOADER)
 
 	return resolvers.TrySendEmailForPhaseSuggestionByModelPlanID(
 		ctx,
