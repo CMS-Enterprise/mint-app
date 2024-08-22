@@ -17,6 +17,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import { Avatar } from 'components/shared/Avatar';
 import ShareExportModal from 'components/ShareExport';
+import Spinner from 'components/Spinner';
 import { formatDateLocal } from 'utils/date';
 import { StatusMessageType } from 'views/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
@@ -40,6 +41,8 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     }
   });
 
+  const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
+
   const {
     modifiedDts,
     modifiedByUserAccount,
@@ -51,7 +54,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     payments,
     operationalNeeds = [],
     taskListStatus
-  } = data?.modelPlan as GetModelPlanTypes;
+  } = modelPlan;
 
   const getITSolutionsStatus = (
     operationalNeedsArray: OperationalNeedsType[]
@@ -85,6 +88,8 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     payments?.status,
     operationalNeeds
   ]);
+
+  if (loading) return <Spinner />;
 
   return (
     <>

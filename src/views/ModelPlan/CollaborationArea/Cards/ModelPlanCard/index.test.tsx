@@ -1,5 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { waitFor } from '@testing-library/react';
 import {
   GetModelPlanDocument,
   GetModelPlanQuery,
@@ -171,14 +172,16 @@ describe('ModelPlanCard', () => {
       </MemoryRouter>
     );
 
-    expect(getByText('Model Plan')).toBeInTheDocument();
-    expect(
-      queryByText('Most recent edit on 08/21/2024 by')
-    ).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(getByText('Model Plan')).toBeInTheDocument();
+      expect(
+        queryByText('Most recent edit on 05/12/2022 by')
+      ).toBeInTheDocument();
+    });
   });
 
   it('matches the snapshot', async () => {
-    const { asFragment } = setup(
+    const { getByText, queryByText, asFragment } = setup(
       <MemoryRouter initialEntries={[`/models/${modelID}/collaboration-area`]}>
         <VerboseMockedProvider mocks={modelPlanMocks} addTypename={false}>
           <ModelPlanCard modelID={modelID} setStatusMessage={() => null} />
@@ -186,6 +189,12 @@ describe('ModelPlanCard', () => {
       </MemoryRouter>
     );
 
-    expect(asFragment()).toMatchSnapshot();
+    await waitFor(() => {
+      expect(getByText('Model Plan')).toBeInTheDocument();
+      expect(
+        queryByText('Most recent edit on 05/12/2022 by')
+      ).toBeInTheDocument();
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 });

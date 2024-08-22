@@ -23,15 +23,17 @@ exports[`ModelPlanCard > matches the snapshot 1`] = `
         class="card__section-status"
       >
         <div
-          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-info-light width-fit-content"
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content"
           data-testid="tasklist-tag"
         >
-          <span />
+          <span>
+            In progress
+          </span>
         </div>
         <span
           class="text-base"
         >
-          0/7 sections started
+          5/7 sections started
         </span>
       </div>
       <div
@@ -43,6 +45,34 @@ exports[`ModelPlanCard > matches the snapshot 1`] = `
         </p>
       </div>
       <div
+        class="display-flex margin-top-2 margin-bottom-3 flex-align-center"
+      >
+        <span
+          class="text-base margin-left-3 margin-right-1"
+        >
+          Most recent edit on 05/12/2022 by 
+        </span>
+        <div
+          class="display-flex text-base-darkest flex-align-center"
+        >
+          <div
+            class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
+            data-testid="avatar--basic"
+          >
+            JD
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            <span
+              class=""
+            >
+              John Doe
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
         class="usa-card__footer"
         data-testid="CardFooter"
       >
@@ -52,6 +82,13 @@ exports[`ModelPlanCard > matches the snapshot 1`] = `
         >
           Go to Model Plan
         </a>
+        <button
+          class="usa-button usa-button usa-button--outline margin-left-1"
+          data-testid="button"
+          type="button"
+        >
+          Share or export Model Plan
+        </button>
       </div>
     </div>
   </li>
