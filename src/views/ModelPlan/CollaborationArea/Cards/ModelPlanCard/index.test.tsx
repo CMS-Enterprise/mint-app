@@ -1,6 +1,13 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { GetModelPlanDocument, TaskStatus } from 'gql/gen/graphql';
+import {
+  GetModelPlanDocument,
+  GetModelPlanQuery,
+  ModelPhase,
+  ModelStatus,
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'gql/gen/graphql';
 
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 import setup from 'utils/testing/setup';
@@ -8,6 +15,137 @@ import setup from 'utils/testing/setup';
 import ModelPlanCard from './index';
 
 const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
+type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
+
+const modelPlan = {
+  __typename: 'ModelPlan',
+  isFavorite: true,
+  id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+  status: ModelStatus.PLAN_DRAFT,
+  taskListStatus: TaskStatus.IN_PROGRESS,
+  modelName: 'Test',
+  modifiedDts: '2022-05-12T15:01:39.190679Z',
+  modifiedByUserAccount: {
+    __typename: 'UserAccount',
+    commonName: 'John Doe'
+  },
+  archived: false,
+  suggestedPhase: {
+    __typename: 'PhaseSuggestion',
+    phase: ModelPhase.ICIP_COMPLETE,
+    suggestedStatuses: [ModelStatus.ICIP_COMPLETE]
+  },
+  basics: {
+    __typename: 'PlanBasics',
+    id: '123',
+    modifiedDts: null,
+    clearanceStarts: '2022-05-12T15:01:39.190679Z',
+    readyForClearanceDts: '2022-05-12T15:01:39.190679Z',
+    status: TaskStatus.READY
+  },
+  opsEvalAndLearning: {
+    __typename: 'PlanOpsEvalAndLearning',
+    id: '7865676',
+    createdBy: 'John Doe',
+    createdDts: '',
+    modifiedBy: '',
+    modifiedDts: '',
+    readyForClearanceDts: '',
+    status: TaskStatus.IN_PROGRESS
+  },
+  generalCharacteristics: {
+    __typename: 'PlanGeneralCharacteristics',
+    id: '54234',
+    createdBy: 'John Doe',
+    createdDts: '',
+    modifiedBy: '',
+    modifiedDts: '',
+    readyForClearanceDts: '',
+    status: TaskStatus.IN_PROGRESS
+  },
+  participantsAndProviders: {
+    __typename: 'PlanParticipantsAndProviders',
+    id: '46246356',
+    createdBy: 'John Doe',
+    createdDts: '',
+    modifiedBy: '',
+    modifiedDts: '',
+    readyForClearanceDts: '',
+    status: TaskStatus.IN_PROGRESS
+  },
+  beneficiaries: {
+    __typename: 'PlanBeneficiaries',
+    id: '09865643',
+    createdBy: 'John Doe',
+    createdDts: '',
+    modifiedBy: '',
+    modifiedDts: '',
+    readyForClearanceDts: '',
+    status: TaskStatus.IN_PROGRESS
+  },
+  prepareForClearance: {
+    __typename: 'PrepareForClearance',
+    status: PrepareForClearanceStatus.IN_PROGRESS,
+    modifiedDts: ''
+  },
+  payments: {
+    __typename: 'PlanPayments',
+    id: '8756435235',
+    createdBy: 'John Doe',
+    createdDts: '',
+    modifiedBy: '',
+    modifiedDts: '',
+    readyForClearanceDts: '',
+    status: TaskStatus.IN_PROGRESS
+  },
+  crs: [],
+  tdls: [],
+  operationalNeeds: [] as any,
+  documents: [
+    {
+      __typename: 'PlanDocument',
+      id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+      fileName: 'test.pdf'
+    }
+  ],
+  collaborators: [],
+  discussions: [
+    {
+      __typename: 'PlanDiscussion',
+      id: '123',
+      content: {
+        __typename: 'TaggedContent',
+        rawContent: 'This is a question.'
+      },
+      createdBy: 'John Doe',
+      createdDts: '2022-05-12T15:01:39.190679Z',
+      replies: []
+    },
+    {
+      __typename: 'PlanDiscussion',
+      id: '456',
+      content: {
+        __typename: 'TaggedHTML',
+        rawContent: 'This is a second question.'
+      },
+      createdBy: 'Jane Doe',
+      createdDts: '2022-05-12T15:01:39.190679Z',
+      replies: [
+        {
+          __typename: 'DiscussionReply',
+          discussionID: '456',
+          id: 'abc',
+          content: {
+            __typename: 'TaggedHTML',
+            rawContent: 'This is an answer.'
+          },
+          createdBy: 'Jack Doe',
+          createdDts: '2022-05-12T15:01:39.190679Z'
+        }
+      ]
+    }
+  ]
+} as GetModelPlanTypes;
 
 const modelPlanMocks = [
   {
@@ -17,46 +155,7 @@ const modelPlanMocks = [
     },
     result: {
       data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          taskListStatus: TaskStatus.READY,
-          modifiedDts: '2021-08-10T14:00:00Z',
-          modifiedByUserAccount: {
-            __typename: 'UserAccount',
-            commonName: 'John Doe'
-          },
-          basics: {
-            __typename: 'PlanBasics',
-            status: TaskStatus.READY
-          },
-          generalCharacteristics: {
-            __typename: 'PlanGeneralCharacteristics',
-            status: TaskStatus.READY
-          },
-          participantsAndProviders: {
-            __typename: 'PlanParticipantsAndProviders',
-            status: TaskStatus.READY
-          },
-          beneficiaries: {
-            __typename: 'PlanBeneficiaries',
-            status: TaskStatus.READY
-          },
-          opsEvalAndLearning: {
-            __typename: 'PlanOpsEvalAndLearning',
-            status: TaskStatus.READY
-          },
-          payments: {
-            __typename: 'PlanBasics',
-            status: TaskStatus.READY
-          },
-          operationalNeeds: [
-            {
-              __typename: 'OperationalNeed',
-              modifiedDts: ''
-            }
-          ]
-        }
+        modelPlan
       }
     }
   }

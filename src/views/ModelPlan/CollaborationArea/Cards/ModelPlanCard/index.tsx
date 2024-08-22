@@ -87,13 +87,13 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     return sections.filter(status => status !== TaskStatus.READY).length;
   }, [
     loading,
-    basics.status,
-    generalCharacteristics.status,
-    participantsAndProviders.status,
-    beneficiaries.status,
-    opsEvalAndLearning.status,
-    payments.status,
-    itSolutions.status
+    basics?.status,
+    generalCharacteristics?.status,
+    participantsAndProviders?.status,
+    beneficiaries?.status,
+    opsEvalAndLearning?.status,
+    payments?.status,
+    itSolutions?.status
   ]);
 
   return (

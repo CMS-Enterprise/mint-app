@@ -3,7 +3,7 @@
 exports[`ModelPlanCard > matches the snapshot 1`] = `
 <DocumentFragment>
   <li
-    class="usa-card tablet:grid-col-6 card--model-plan"
+    class="usa-card desktop:grid-col-6 card--model-plan"
     data-testid="Card"
   >
     <div
@@ -23,7 +23,7 @@ exports[`ModelPlanCard > matches the snapshot 1`] = `
         class="card__section-status"
       >
         <div
-          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-accent-cool width-fit-content"
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-info-light width-fit-content"
           data-testid="tasklist-tag"
         >
           <span />
