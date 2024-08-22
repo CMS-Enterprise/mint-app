@@ -379,7 +379,7 @@ describe('The Model Plan Task List', () => {
 
       await waitFor(() => {
         expect(screen.getAllByTestId('tasklist-tag')[0]).toHaveClass(
-          'bg-accent-cool'
+          'bg-info-light'
         );
       });
     });
