@@ -439,7 +439,8 @@ export enum DiscussionUserRole {
   MODEL_LEAD = 'MODEL_LEAD',
   MODEL_TEAM = 'MODEL_TEAM',
   NONE_OF_THE_ABOVE = 'NONE_OF_THE_ABOVE',
-  SHARED_SYSTEM_MAINTAINER = 'SHARED_SYSTEM_MAINTAINER'
+  SHARED_SYSTEM_MAINTAINER = 'SHARED_SYSTEM_MAINTAINER',
+  SOLUTION_ARCHITECT = 'SOLUTION_ARCHITECT'
 }
 
 export enum DocumentType {
@@ -677,6 +678,7 @@ export type ModelPlan = {
   participantsAndProviders: PlanParticipantsAndProviders;
   payments: PlanPayments;
   prepareForClearance: PrepareForClearance;
+  previousSuggestedPhase?: Maybe<ModelPhase>;
   status: ModelStatus;
   suggestedPhase?: Maybe<PhaseSuggestion>;
   tdls: Array<PlanTdl>;
@@ -3581,7 +3583,8 @@ export enum TeamRole {
   MODEL_TEAM = 'MODEL_TEAM',
   OACT = 'OACT',
   PAYMENT = 'PAYMENT',
-  QUALITY = 'QUALITY'
+  QUALITY = 'QUALITY',
+  SOLUTION_ARCHITECT = 'SOLUTION_ARCHITECT'
 }
 
 /** TranslatedAudit represent a point in time change made to part of application. */

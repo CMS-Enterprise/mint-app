@@ -82,6 +82,7 @@ const (
 	DiscussionRoleModelLead                        DiscussionUserRole = "MODEL_LEAD"
 	DiscussionRoleModelTeam                        DiscussionUserRole = "MODEL_TEAM"
 	DiscussionRoleSharedSystemMaintainer           DiscussionUserRole = "SHARED_SYSTEM_MAINTAINER"
+	DiscussionRoleSolutionArchitect                DiscussionUserRole = "SOLUTION_ARCHITECT"
 	DiscussionRoleNoneOfTheAbove                   DiscussionUserRole = "NONE_OF_THE_ABOVE"
 )
 
@@ -113,6 +114,8 @@ func (r DiscussionUserRole) Humanize(userRoleDescription string) string {
 		return "Model Team"
 	case DiscussionRoleSharedSystemMaintainer:
 		return "Shared System Maintainer"
+	case DiscussionRoleSolutionArchitect:
+		return "Solution Architect"
 	case DiscussionRoleNoneOfTheAbove:
 		return userRoleDescription
 	default:
