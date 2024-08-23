@@ -1116,6 +1116,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     formType: TranslationFormType.CHECKBOX,
     order: 5.08,
     isOtherType: true,
+    otherParentField: 'waiversRequired',
     options: {
       FRAUD_ABUSE: 'Fraud and Abuse',
       MEDICAID: 'Medicaid',
