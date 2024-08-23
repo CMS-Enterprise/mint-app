@@ -5,7 +5,8 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader
+  CardHeader,
+  Grid
 } from '@trussworks/react-uswds';
 import { TaskStatus, useGetModelPlanQuery } from 'gql/gen/graphql';
 
@@ -55,11 +56,14 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     return sections.filter(status => status !== TaskStatus.READY).length;
   }, [loading, modelPlan]);
 
-  if (loading)
+  if (loading && !modelPlan)
     return (
-      <li className="desktop:grid-col-6 padding-x-1">
-        <Spinner className="" />
-      </li>
+      <Grid
+        desktop={{ col: 6 }}
+        className="padding-1 display-flex flex-column flex-align-center flex-justify-center height-mobile"
+      >
+        <Spinner />
+      </Grid>
     );
 
   if (!modelPlan) return null;
