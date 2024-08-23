@@ -25,14 +25,6 @@ type ModelPlanCardType = {
   setStatusMessage: (message: StatusMessageType) => void;
 };
 
-const getITSolutionsTaskStatus = (
-  opSolutionLastModifiedDate: string | undefined
-) => {
-  return opSolutionLastModifiedDate === ''
-    ? TaskStatus.READY
-    : TaskStatus.IN_PROGRESS;
-};
-
 const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
@@ -46,36 +38,28 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
 
   // Returns the number of sections that have been started (i.e. not in 'READY' status)
   const sectionStartedCounter = useMemo(() => {
-    if (loading) return 0;
+    if (loading || !modelPlan) return 0;
 
     const sections = [
-      modelPlan?.basics.status,
-      modelPlan?.generalCharacteristics.status,
-      modelPlan?.participantsAndProviders.status,
-      modelPlan?.beneficiaries.status,
-      modelPlan?.opsEvalAndLearning.status,
-      modelPlan?.payments.status,
-      getITSolutionsTaskStatus(modelPlan?.opSolutionLastModifiedDts)
+      modelPlan.basics.status,
+      modelPlan.generalCharacteristics.status,
+      modelPlan.participantsAndProviders.status,
+      modelPlan.beneficiaries.status,
+      modelPlan.opsEvalAndLearning.status,
+      modelPlan.payments.status,
+      modelPlan.opSolutionLastModifiedDts === ''
+        ? TaskStatus.READY
+        : TaskStatus.IN_PROGRESS
     ];
 
     return sections.filter(status => status !== TaskStatus.READY).length;
-  }, [
-    loading,
-    modelPlan?.basics.status,
-    modelPlan?.generalCharacteristics.status,
-    modelPlan?.participantsAndProviders.status,
-    modelPlan?.beneficiaries.status,
-    modelPlan?.opsEvalAndLearning.status,
-    modelPlan?.payments.status,
-    modelPlan?.opSolutionLastModifiedDts
-  ]);
+  }, [loading, modelPlan]);
 
   if (loading) return <Spinner />;
 
   if (!modelPlan) return null;
 
-  const { modifiedDts, modifiedByUserAccount, taskListStatus } =
-    modelPlan || {};
+  const { modifiedDts, modifiedByUserAccount, taskListStatus } = modelPlan;
 
   return (
     <>
@@ -115,8 +99,8 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
         </CardBody>
 
         {modifiedDts && modifiedByUserAccount && (
-          <div className="display-flex margin-top-2 margin-bottom-3 flex-align-center">
-            <span className="text-base margin-left-3 margin-right-1">
+          <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3">
+            <span className="text-base margin-right-1">
               {collaborationAreaT('modelPlanCard.mostRecentEdit', {
                 date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
               })}
