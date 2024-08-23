@@ -64,8 +64,10 @@ describe('The Model Plan Task List', () => {
     isFavorite: true,
     id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
     status: ModelStatus.PLAN_DRAFT,
+    taskListStatus: TaskStatus.IN_PROGRESS,
     modelName: 'Test',
     modifiedDts: '2022-05-12T15:01:39.190679Z',
+    opSolutionLastModifiedDts: '2022-05-12T15:01:39.190679Z',
     archived: false,
     suggestedPhase: {
       __typename: 'PhaseSuggestion',
@@ -378,7 +380,7 @@ describe('The Model Plan Task List', () => {
 
       await waitFor(() => {
         expect(screen.getAllByTestId('tasklist-tag')[0]).toHaveClass(
-          'bg-accent-cool'
+          'bg-info-light'
         );
       });
     });

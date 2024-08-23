@@ -1,0 +1,45 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
+.card--model-plan {
+  min-height: 420px;
+
+  .usa-card__container {
+    border-radius: 4px;
+    border-color: #e6e6e6;
+    @include u-shadow(2)
+  }
+
+  .card__section-status {
+    display: flex;
+    gap: 24px;
+    padding: 0 24px;
+    margin-block: 16px;
+  }
+
+
+  .usa-card__footer {
+    border-top: 1px solid color('base-light');
+    padding-inline: 0;
+    margin-inline: 24px;
+    padding-top: 24px;
+
+    .usa-button {
+      width: 100%;
+      @media screen and (min-width: 520px) {
+        width: auto;
+      }
+
+    }
+
+    .usa-button.usa-button--outline {
+      margin-top: 1rem;
+
+      @media screen and (min-width: 520px) {
+        margin-top: 0;
+        margin-left: 1rem;
+    }
+
+    }
+  }
+}

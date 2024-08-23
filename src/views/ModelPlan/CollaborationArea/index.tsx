@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { Grid, GridContainer } from '@trussworks/react-uswds';
+import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
 // import classNames from 'classnames';
 import {
   //   GetCrtdLsQuery,
@@ -11,7 +11,7 @@ import {
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import { FavoriteIcon } from 'components/FavoriteCard';
-import UswdsReactLink from 'components/LinkWrapper';
+// import UswdsReactLink from 'components/LinkWrapper';
 // import { useFlags } from 'launchdarkly-react-client-sdk';
 // import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -33,6 +33,8 @@ import { UpdateFavoriteProps } from '../ModelPlanOverview';
 // import Discussions from '../Discussions';
 // import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
+
+import ModelPlanCard from './Cards/ModelPlanCard';
 
 import './index.scss';
 
@@ -245,15 +247,12 @@ const CollaborationArea = () => {
             <Grid row gap>
               <Grid col={12}>
                 <h2 className="margin-top-0">{collaborationAreaT('areas')}</h2>
-
-                <UswdsReactLink
-                  className="usa-button"
-                  variant="unstyled"
-                  data-testid="to-task-list"
-                  to={`/models/${modelID}/collaboration-area/task-list`}
-                >
-                  {collaborationAreaT('goToModelPlan')}
-                </UswdsReactLink>
+                <CardGroup>
+                  <ModelPlanCard
+                    modelID={modelID}
+                    setStatusMessage={setStatusMessage}
+                  />
+                </CardGroup>
               </Grid>
             </Grid>
           </Grid>
