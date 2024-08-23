@@ -67,6 +67,7 @@ describe('The Model Plan Task List', () => {
     taskListStatus: TaskStatus.IN_PROGRESS,
     modelName: 'Test',
     modifiedDts: '2022-05-12T15:01:39.190679Z',
+    opSolutionLastModifiedDts: '2022-05-12T15:01:39.190679Z',
     archived: false,
     suggestedPhase: {
       __typename: 'PhaseSuggestion',

@@ -7,13 +7,7 @@ import {
   CardFooter,
   CardHeader
 } from '@trussworks/react-uswds';
-import {
-  GetModelPlanQuery,
-  ModelStatus,
-  PrepareForClearanceStatus,
-  TaskStatus,
-  useGetModelPlanQuery
-} from 'gql/gen/graphql';
+import { TaskStatus, useGetModelPlanQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
@@ -26,12 +20,17 @@ import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskList
 
 import './index.scss';
 
-type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
-type OperationalNeedsType = GetModelPlanQuery['modelPlan']['operationalNeeds'][0];
-
 type ModelPlanCardType = {
   modelID: string;
   setStatusMessage: (message: StatusMessageType) => void;
+};
+
+const getITSolutionsTaskStatus = (
+  opSolutionLastModifiedDate: string | undefined
+) => {
+  return opSolutionLastModifiedDate === ''
+    ? TaskStatus.READY
+    : TaskStatus.IN_PROGRESS;
 };
 
 const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
@@ -43,136 +42,40 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     }
   });
 
-  const modelPlan =
-    data?.modelPlan ||
-    ({
-      __typename: 'ModelPlan',
-      id: modelID,
-      modelName: 'Test',
-      archived: false,
-      status: ModelStatus.PLAN_DRAFT,
-      modifiedDts: '',
-      modifiedByUserAccount: {
-        __typename: 'UserAccount',
-        commonName: ''
-      },
-      basics: {
-        __typename: 'PlanBasics',
-        id: '123',
-        status: TaskStatus.READY
-      },
-      generalCharacteristics: {
-        __typename: 'PlanGeneralCharacteristics',
-        id: '54234',
-        createdBy: 'John Doe',
-        createdDts: '',
-        modifiedBy: '',
-        modifiedDts: '',
-        readyForClearanceDts: '',
-        status: TaskStatus.IN_PROGRESS
-      },
-      participantsAndProviders: {
-        __typename: 'PlanParticipantsAndProviders',
-        id: '46246356',
-        createdBy: 'John Doe',
-        createdDts: '',
-        modifiedBy: '',
-        modifiedDts: '',
-        readyForClearanceDts: '',
-        status: TaskStatus.IN_PROGRESS
-      },
-      beneficiaries: {
-        __typename: 'PlanBeneficiaries',
-        id: '09865643',
-        createdBy: 'John Doe',
-        createdDts: '',
-        modifiedBy: '',
-        modifiedDts: '',
-        readyForClearanceDts: '',
-        status: TaskStatus.IN_PROGRESS
-      },
-      opsEvalAndLearning: {
-        __typename: 'PlanOpsEvalAndLearning',
-        id: '7865676',
-        createdBy: 'John Doe',
-        createdDts: '',
-        modifiedBy: '',
-        modifiedDts: '',
-        readyForClearanceDts: '',
-        status: TaskStatus.IN_PROGRESS
-      },
-      payments: {
-        __typename: 'PlanPayments',
-        id: '8756435235',
-        createdBy: 'John Doe',
-        createdDts: '',
-        modifiedBy: '',
-        modifiedDts: '',
-        readyForClearanceDts: '',
-        status: TaskStatus.IN_PROGRESS
-      },
-      operationalNeeds: [],
-      taskListStatus: TaskStatus.READY,
-      isFavorite: true,
-      collaborators: [],
-      documents: [],
-      crs: [],
-      tdls: [],
-      discussions: [],
-      prepareForClearance: {
-        __typename: 'PrepareForClearance',
-        status: PrepareForClearanceStatus.IN_PROGRESS,
-        modifiedDts: ''
-      }
-    } as GetModelPlanTypes);
-
-  const {
-    modifiedDts,
-    modifiedByUserAccount,
-    basics,
-    generalCharacteristics,
-    participantsAndProviders,
-    beneficiaries,
-    opsEvalAndLearning,
-    payments,
-    operationalNeeds = [],
-    taskListStatus
-  } = modelPlan;
-
-  const getITSolutionsStatus = (
-    operationalNeedsArray: OperationalNeedsType[]
-  ) => {
-    const inProgress = operationalNeedsArray.find(need => need.modifiedDts);
-    return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
-  };
+  const modelPlan = data?.modelPlan;
 
   // Returns the number of sections that have been started (i.e. not in 'READY' status)
   const sectionStartedCounter = useMemo(() => {
     if (loading) return 0;
 
     const sections = [
-      basics.status,
-      generalCharacteristics.status,
-      participantsAndProviders.status,
-      beneficiaries.status,
-      opsEvalAndLearning.status,
-      payments.status,
-      getITSolutionsStatus(operationalNeeds)
+      modelPlan?.basics.status,
+      modelPlan?.generalCharacteristics.status,
+      modelPlan?.participantsAndProviders.status,
+      modelPlan?.beneficiaries.status,
+      modelPlan?.opsEvalAndLearning.status,
+      modelPlan?.payments.status,
+      getITSolutionsTaskStatus(modelPlan?.opSolutionLastModifiedDts)
     ];
 
     return sections.filter(status => status !== TaskStatus.READY).length;
   }, [
     loading,
-    basics?.status,
-    generalCharacteristics?.status,
-    participantsAndProviders?.status,
-    beneficiaries?.status,
-    opsEvalAndLearning?.status,
-    payments?.status,
-    operationalNeeds
+    modelPlan?.basics.status,
+    modelPlan?.generalCharacteristics.status,
+    modelPlan?.participantsAndProviders.status,
+    modelPlan?.beneficiaries.status,
+    modelPlan?.opsEvalAndLearning.status,
+    modelPlan?.payments.status,
+    modelPlan?.opSolutionLastModifiedDts
   ]);
 
   if (loading) return <Spinner />;
+
+  if (!modelPlan) return null;
+
+  const { modifiedDts, modifiedByUserAccount, taskListStatus } =
+    modelPlan || {};
 
   return (
     <>

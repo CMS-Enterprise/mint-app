@@ -9,6 +9,7 @@ export default gql(/* GraphQL */ `
       modifiedByUserAccount {
         commonName
       }
+      opSolutionLastModifiedDts
       archived
       status
       taskListStatus
