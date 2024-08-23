@@ -55,7 +55,12 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     return sections.filter(status => status !== TaskStatus.READY).length;
   }, [loading, modelPlan]);
 
-  if (loading) return <Spinner />;
+  if (loading)
+    return (
+      <li className="grid-col-6 padding-x-1">
+        <Spinner className="" />
+      </li>
+    );
 
   if (!modelPlan) return null;
 
