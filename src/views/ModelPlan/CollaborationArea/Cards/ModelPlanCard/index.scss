@@ -1,4 +1,5 @@
 @use 'uswds-core' as *;
+@use 'viewports' as *;
 
 .card--model-plan {
   min-height: 420px;
@@ -22,5 +23,23 @@
     padding-inline: 0;
     margin-inline: 24px;
     padding-top: 24px;
+
+    .usa-button {
+      width: 100%;
+      @media screen and (min-width: 520px) {
+        width: auto;
+      }
+
+    }
+
+    .usa-button.usa-button--outline {
+      margin-top: 1rem;
+
+      @media screen and (min-width: 520px) {
+        margin-top: 0;
+        margin-left: 1rem;
+    }
+
+    }
   }
 }

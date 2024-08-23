@@ -123,7 +123,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
           {sectionStartedCounter !== 0 && (
             <Button
               type="button"
-              className="usa-button usa-button--outline margin-left-1"
+              className="usa-button usa-button--outline"
               onClick={() => setIsExportModalOpen(true)}
             >
               {collaborationAreaT('modelPlanCard.shareButton')}
