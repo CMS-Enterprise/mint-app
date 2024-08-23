@@ -263,6 +263,10 @@ const Milestones = () => {
                               formikValue={values.completeICIP}
                               value={completeICIP}
                               error={flatErrors.completeICIP}
+                              shouldShowWarning={
+                                initialValues.completeICIP !==
+                                values.completeICIP
+                              }
                               half
                             />
                           </div>
@@ -298,6 +302,10 @@ const Milestones = () => {
                               error={flatErrors.clearanceStarts}
                               warning={false}
                               className="margin-top-1"
+                              shouldShowWarning={
+                                initialValues.clearanceStarts !==
+                                values.clearanceStarts
+                              }
                             />
 
                             <MINTDatePicker
@@ -312,19 +320,27 @@ const Milestones = () => {
                               error={flatErrors.clearanceEnds}
                               warning={false}
                               className="margin-top-1"
+                              shouldShowWarning={
+                                initialValues.clearanceEnds !==
+                                values.clearanceEnds
+                              }
                             />
                           </div>
 
                           {(isDateInPast(values.clearanceEnds) ||
-                            isDateInPast(values.clearanceStarts)) && (
-                            <Alert
-                              type="warning"
-                              className="margin-top-4"
-                              headingLevel="h4"
-                            >
-                              {miscellaneousT('dateWarning')}
-                            </Alert>
-                          )}
+                            isDateInPast(values.clearanceStarts)) &&
+                            (initialValues.clearanceStarts !==
+                              values.clearanceStarts ||
+                              initialValues.clearanceEnds !==
+                                values.clearanceEnds) && (
+                              <Alert
+                                type="warning"
+                                className="margin-top-4"
+                                headingLevel="h4"
+                              >
+                                {miscellaneousT('dateWarning')}
+                              </Alert>
+                            )}
                         </ProcessListHeading>
                       </ProcessListItem>
 
@@ -345,6 +361,9 @@ const Milestones = () => {
                             formikValue={values.announced}
                             value={announced}
                             error={flatErrors.announced}
+                            shouldShowWarning={
+                              initialValues.announced !== values.announced
+                            }
                             half
                           />
                         </div>
@@ -371,6 +390,10 @@ const Milestones = () => {
                             formikValue={values.applicationsStart}
                             value={applicationsStart}
                             error={flatErrors.applicationsStart}
+                            shouldShowWarning={
+                              initialValues.applicationsStart !==
+                              values.applicationsStart
+                            }
                             warning={false}
                           />
 
@@ -384,20 +407,28 @@ const Milestones = () => {
                             formikValue={values.applicationsEnd}
                             value={applicationsEnd}
                             error={flatErrors.applicationsEnd}
+                            shouldShowWarning={
+                              initialValues.applicationsEnd !==
+                              values.applicationsEnd
+                            }
                             warning={false}
                           />
                         </div>
 
                         {(isDateInPast(values.applicationsStart) ||
-                          isDateInPast(values.applicationsEnd)) && (
-                          <Alert
-                            type="warning"
-                            className="margin-top-4"
-                            headingLevel="h4"
-                          >
-                            {miscellaneousT('dateWarning')}
-                          </Alert>
-                        )}
+                          isDateInPast(values.applicationsEnd)) &&
+                          (initialValues.applicationsStart !==
+                            values.applicationsStart ||
+                            initialValues.applicationsEnd !==
+                              values.applicationsEnd) && (
+                            <Alert
+                              type="warning"
+                              className="margin-top-4"
+                              headingLevel="h4"
+                            >
+                              {miscellaneousT('dateWarning')}
+                            </Alert>
+                          )}
                       </ProcessListItem>
 
                       <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
@@ -430,6 +461,10 @@ const Milestones = () => {
                             error={flatErrors.performancePeriodStarts}
                             warning={false}
                             className="margin-top-0"
+                            shouldShowWarning={
+                              initialValues.performancePeriodStarts !==
+                              values.performancePeriodStarts
+                            }
                           />
 
                           <MINTDatePicker
@@ -444,19 +479,27 @@ const Milestones = () => {
                             error={flatErrors.performancePeriodEnds}
                             warning={false}
                             className="margin-top-0"
+                            shouldShowWarning={
+                              initialValues.performancePeriodEnds !==
+                              values.performancePeriodEnds
+                            }
                           />
                         </div>
 
                         {(isDateInPast(values.performancePeriodStarts) ||
-                          isDateInPast(values.performancePeriodEnds)) && (
-                          <Alert
-                            type="warning"
-                            className="margin-top-4"
-                            headingLevel="h4"
-                          >
-                            {miscellaneousT('dateWarning')}
-                          </Alert>
-                        )}
+                          isDateInPast(values.performancePeriodEnds)) &&
+                          (initialValues.performancePeriodStarts !==
+                            values.performancePeriodStarts ||
+                            initialValues.performancePeriodEnds !==
+                              values.performancePeriodEnds) && (
+                            <Alert
+                              type="warning"
+                              className="margin-top-4"
+                              headingLevel="h4"
+                            >
+                              {miscellaneousT('dateWarning')}
+                            </Alert>
+                          )}
                       </ProcessListItem>
 
                       <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
@@ -476,6 +519,9 @@ const Milestones = () => {
                             formikValue={values.wrapUpEnds}
                             value={wrapUpEnds}
                             error={flatErrors.wrapUpEnds}
+                            shouldShowWarning={
+                              initialValues.wrapUpEnds !== values.wrapUpEnds
+                            }
                             half
                           />
                         </div>

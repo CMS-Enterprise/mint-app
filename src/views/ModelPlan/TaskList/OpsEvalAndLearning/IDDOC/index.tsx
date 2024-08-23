@@ -345,6 +345,10 @@ const IDDOC = () => {
                         formikValue={values.draftIcdDueDate}
                         value={draftIcdDueDate}
                         error={flatErrors.draftIcdDueDate}
+                        shouldShowWarning={
+                          initialValues.draftIcdDueDate !==
+                          values.draftIcdDueDate
+                        }
                       />
 
                       <AddNote
