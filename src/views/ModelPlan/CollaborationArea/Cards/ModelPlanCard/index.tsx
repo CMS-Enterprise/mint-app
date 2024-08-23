@@ -55,7 +55,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
     return sections.filter(status => status !== TaskStatus.READY).length;
   }, [loading, modelPlan]);
 
-  if (!loading)
+  if (loading)
     return (
       <li className="desktop:grid-col-6 padding-x-1">
         <Spinner className="" />
