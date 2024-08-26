@@ -288,7 +288,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
             </a>
             <a
               class="usa-button usa-button--outline"
-              data-testid="continue-to-tasklist"
+              data-testid="continue-to-collaboration-area"
               href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
             >
               Continue to model collaboration area
