@@ -89,6 +89,7 @@ const AppRoutes = () => {
       const currentRouteParams = pathname.replace(/\/+$/, '').split('/');
 
       const currentRoute = currentRouteParams[currentRouteParams.length - 1];
+      const secondaryRoute = currentRouteParams[currentRouteParams.length - 2];
 
       console.log('pathname', pathname);
       console.log('currentRoute', currentRoute);
