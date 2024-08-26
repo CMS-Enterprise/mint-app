@@ -62,16 +62,21 @@ function Solutions({
             <React.Fragment key={subCategory}>
               <h2>{t(`subCategories.${subCategory}`)}</h2>
               <Grid row gap>
-                {subCategorySolutions.map(solution => (
-                  <Grid
-                    tablet={{ col: 6 }}
-                    desktop={{ col: 4 }}
-                    key={solution.key}
-                    className="display-flex flex-align-stretch"
-                  >
-                    <SolutionHelpCard solution={solution} category={category} />
-                  </Grid>
-                ))}
+                {subCategorySolutions
+                  .filter(solution => !!solution)
+                  .map(solution => (
+                    <Grid
+                      tablet={{ col: 6 }}
+                      desktop={{ col: 4 }}
+                      key={solution?.key}
+                      className="display-flex flex-align-stretch"
+                    >
+                      <SolutionHelpCard
+                        solution={solution}
+                        category={category}
+                      />
+                    </Grid>
+                  ))}
               </Grid>
             </React.Fragment>
           );
