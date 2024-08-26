@@ -16,7 +16,10 @@ import { Avatar } from 'components/shared/Avatar';
 import ShareExportModal from 'components/ShareExport';
 import Spinner from 'components/Spinner';
 import { formatDateLocal } from 'utils/date';
-import { StatusMessageType } from 'views/ModelPlan/TaskList';
+import {
+  getITSolutionsStatus,
+  StatusMessageType
+} from 'views/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
 import './index.scss';
@@ -48,9 +51,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
       modelPlan.beneficiaries.status,
       modelPlan.opsEvalAndLearning.status,
       modelPlan.payments.status,
-      modelPlan.opSolutionLastModifiedDts === ''
-        ? TaskStatus.READY
-        : TaskStatus.IN_PROGRESS
+      getITSolutionsStatus(modelPlan.operationalNeeds)
     ];
 
     return sections.filter(status => status !== TaskStatus.READY).length;
