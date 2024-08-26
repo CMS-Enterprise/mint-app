@@ -97,6 +97,7 @@ func TrySendEmailForPhaseSuggestion(
 		emailService,
 		emailTemplateService,
 		modelPlan,
+		currentPhaseSuggestion,
 	)
 	if err != nil {
 		return err
@@ -180,7 +181,13 @@ func ConstructPhaseSuggestionEmailTemplates(
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	modelPlan *models.ModelPlan,
+	phaseSuggestion *model.PhaseSuggestion,
 ) (emailSubject string, emailBody string, err error) {
+
+	if phaseSuggestion == nil {
+		return "", "", fmt.Errorf("phase suggestion is nil")
+	}
+
 	// Get the email template for the model plan suggested phase
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.ModelPlanSuggestedPhaseTemplateName)
 	if err != nil {
@@ -199,18 +206,21 @@ func ConstructPhaseSuggestionEmailTemplates(
 		return "", "", err
 	}
 
+	suggestedStatusStringsRaw := make([]string, len(phaseSuggestion.SuggestedStatuses))
+	suggestedStatusStringsHumanized := make([]string, len(phaseSuggestion.SuggestedStatuses))
+	for i, status := range phaseSuggestion.SuggestedStatuses {
+		suggestedStatusStringsRaw[i] = string(status)
+		suggestedStatusStringsHumanized[i] = status.Humanize()
+	}
+
 	emailBody, err = emailTemplate.GetExecutedBody(email.ModelPlanSuggestedPhaseBodyContent{
-		ClientAddress: emailService.GetConfig().GetClientAddress(),
-		Phase:         string(models.ModelPhaseIcipComplete),
-		SuggestedStatusesRaw: []string{
-			string(models.ModelStatusIcipComplete),
-		},
-		SuggestedStatusesHumanized: []string{
-			models.ModelStatusIcipComplete.Humanize(),
-		},
-		CurrentStatusHumanized: modelPlan.Status.Humanize(),
-		ModelPlanID:            modelPlan.GetModelPlanID().String(),
-		ModelPlanName:          modelPlan.ModelName,
+		ClientAddress:              emailService.GetConfig().GetClientAddress(),
+		Phase:                      string(phaseSuggestion.Phase),
+		SuggestedStatusesRaw:       suggestedStatusStringsRaw,
+		SuggestedStatusesHumanized: suggestedStatusStringsHumanized,
+		CurrentStatusHumanized:     modelPlan.Status.Humanize(),
+		ModelPlanID:                modelPlan.GetModelPlanID().String(),
+		ModelPlanName:              modelPlan.ModelName,
 	})
 	if err != nil {
 		err = fmt.Errorf("unable to get email body for model plan id %s. Err %w", modelPlan.ID, err)
