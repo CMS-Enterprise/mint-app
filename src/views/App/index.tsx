@@ -84,9 +84,18 @@ const AppRoutes = () => {
   // Track GA Pages
   useEffect(() => {
     if (location.pathname) {
+      const { pathname } = location;
+
+      const currentRouteParams = pathname.replace(/\/+$/, '').split('/');
+
+      const currentRoute = currentRouteParams[currentRouteParams.length - 1];
+
+      console.log('pathname', pathname);
+      console.log('currentRoute', currentRoute);
+
       ReactGA.send({ hitType: 'pageview', page: location.pathname });
     }
-  }, [location.pathname]);
+  }, [location]);
 
   // Scroll to top
   useLayoutEffect(() => {
@@ -156,6 +165,7 @@ const AppRoutes = () => {
           <ProtectedRoute
             path="/models/:modelID/status"
             exact
+            title="Model Status"
             component={Status}
           />
 
