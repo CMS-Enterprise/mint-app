@@ -1,5 +1,6 @@
 import React, { useEffect, useLayoutEffect } from 'react';
 import ReactGA from 'react-ga4';
+import { useTranslation } from 'react-i18next';
 import {
   BrowserRouter,
   Redirect,
@@ -81,22 +82,53 @@ const AppRoutes = () => {
   const prevLocation = usePrevLocation(location);
   const flags = useFlags();
 
+  const { t } = useTranslation('routes');
+
+  const routeTitles = t('titles', { returnObjects: true });
+
   // Track GA Pages
   useEffect(() => {
     if (location.pathname) {
-      const { pathname } = location;
+      const { pathname, search } = location;
+
+      const params = new URLSearchParams(search);
+
+      const category = params.get('category');
+      const solution = params.get('solution');
 
       const currentRouteParams = pathname.replace(/\/+$/, '').split('/');
 
       const currentRoute = currentRouteParams[currentRouteParams.length - 1];
       const secondaryRoute = currentRouteParams[currentRouteParams.length - 2];
 
-      console.log('pathname', pathname);
-      console.log('currentRoute', currentRoute);
+      // Redirect, don't need to track
+      if (secondaryRoute === 'read-only') {
+        return;
+      }
 
-      ReactGA.send({ hitType: 'pageview', page: location.pathname });
+      let title = pathname;
+
+      // If help and knolwedge center solution article
+      if (solution && routeTitles[solution]) {
+        title = routeTitles[solution];
+        // If help and knowledge center category
+      } else if (category && routeTitles[category]) {
+        title = routeTitles[category];
+        // If normal route
+      } else if (
+        secondaryRoute !== 'read-view' &&
+        routeTitles[`/${currentRoute}`]
+      ) {
+        title = routeTitles[`/${currentRoute}`];
+      } else if (routeTitles[`/${secondaryRoute}/${currentRoute}`]) {
+        title = routeTitles[`/${secondaryRoute}/${currentRoute}`];
+      }
+
+      console.log(title);
+
+      ReactGA.send({ hitType: 'pageview', page: location.pathname, title });
     }
-  }, [location]);
+  }, [location, routeTitles]);
 
   // Scroll to top
   useLayoutEffect(() => {
