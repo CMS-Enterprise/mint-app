@@ -91,7 +91,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
             {collaborationAreaT('modelPlanCard.heading')}
           </h3>
         </CardHeader>
-        <div className="card__section-status">
+        <div className="card__section-status flex-align-center">
           <TaskListStatusTag
             status={taskListStatus}
             classname="width-fit-content"

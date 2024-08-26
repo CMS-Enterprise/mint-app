@@ -53,6 +53,7 @@ const TaskListStatus = ({
       className={classNames('padding-0', className, {
         'task-list-status': isCollaborationArea || isReadView
       })}
+      style={{ lineHeight: 'initial' }}
       data-testid="task-list-status"
     >
       <div
@@ -78,10 +79,10 @@ const TaskListStatus = ({
         </div>
 
         {!isReadView && (
-          <div className="mint-no-print task-list-status__border border-base-light margin-right-2">
+          <div className="mint-no-print margin-right-2">
             <UswdsReactLink
               to={`/models/${modelID}/collaboration-area/status`}
-              className="display-flex flex-align-center margin-right-2"
+              className="display-flex flex-align-center padding-right-2 task-list-status__border border-base-light"
             >
               {icon && <Icon.Edit className="margin-right-1" />}
               {updateLabel && t('update')}
@@ -91,7 +92,7 @@ const TaskListStatus = ({
       </div>
 
       {changeHistoryLink && (
-        <div className="display-flex flex-align-center task-list-status__border border-base-light margin-right-2">
+        <div className="display-flex flex-align-center margin-right-2">
           <UswdsReactLink
             to={{
               pathname: `/models/${modelID}/change-history`,
@@ -100,7 +101,7 @@ const TaskListStatus = ({
               }
             }}
             className={classNames(
-              'display-flex flex-align-center margin-right-2',
+              'display-flex flex-align-center padding-right-2 task-list-status__border border-base-light ',
               {
                 'padding-y-2': isTablet
               }

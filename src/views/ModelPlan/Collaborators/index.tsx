@@ -291,10 +291,10 @@ export const CollaboratorsContent = () => {
                   data-testid="continue-to-tasklist"
                   className="usa-button usa-button--outline"
                   variant="unstyled"
-                  to={`/models/${modelID}/collaboration-area/task-list`}
+                  to={`/models/${modelID}/collaboration-area`}
                 >
                   {collaborators.length > 0
-                    ? miscellaneousT('continueToTaskList')
+                    ? miscellaneousT('continueToCollaborationArea')
                     : collaboratorsMiscT('continueWithoutAdding')}
                 </UswdsReactLink>
               </div>
