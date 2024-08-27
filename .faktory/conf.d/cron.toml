@@ -9,7 +9,7 @@
     type = "TranslateAuditCronJob"
     queue = "critical"
 [[cron]]
-  schedule = "*/5 * * * *"
+  schedule = "* * * * *"
   [cron.job]
     type = "ModelStatusUpdateCronJob"
-    queue = "critical"    
+    queue = "critical"
