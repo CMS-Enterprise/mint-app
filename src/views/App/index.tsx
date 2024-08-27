@@ -1,6 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import ReactGA from 'react-ga4';
-import { useTranslation } from 'react-i18next';
+import React, { useLayoutEffect } from 'react';
 import {
   BrowserRouter,
   Redirect,
@@ -16,6 +14,7 @@ import Header from 'components/Header';
 import PageWrapper from 'components/PageWrapper';
 import { MessageProvider } from 'hooks/useMessage';
 import usePrevLocation from 'hooks/usePrevious';
+import useRouteTitle from 'hooks/useRouteTitle';
 import AccessibilityStatement from 'views/AccessibilityStatement';
 import AuthenticationWrapper from 'views/AuthenticationWrapper';
 import BeaconWrapper from 'views/BeaconWrapper';
@@ -82,53 +81,8 @@ const AppRoutes = () => {
   const prevLocation = usePrevLocation(location);
   const flags = useFlags();
 
-  const { t } = useTranslation('routes');
-
-  const routeTitles = t('titles', { returnObjects: true });
-
-  // Track GA Pages
-  useEffect(() => {
-    if (location.pathname) {
-      const { pathname, search } = location;
-
-      const params = new URLSearchParams(search);
-
-      const category = params.get('category');
-      const solution = params.get('solution');
-
-      const currentRouteParams = pathname.replace(/\/+$/, '').split('/');
-
-      const currentRoute = currentRouteParams[currentRouteParams.length - 1];
-      const secondaryRoute = currentRouteParams[currentRouteParams.length - 2];
-
-      // Redirect, don't need to track
-      if (secondaryRoute === 'read-only') {
-        return;
-      }
-
-      let title = pathname;
-
-      // If help and knolwedge center solution article
-      if (solution && routeTitles[solution]) {
-        title = routeTitles[solution];
-        // If help and knowledge center category
-      } else if (category && routeTitles[category]) {
-        title = routeTitles[category];
-        // If normal route
-      } else if (
-        secondaryRoute !== 'read-view' &&
-        secondaryRoute !== 'sample-model-plan' &&
-        routeTitles[`/${currentRoute}`]
-      ) {
-        title = routeTitles[`/${currentRoute}`];
-        // Secondary route - read-view or sample-model-plan
-      } else if (routeTitles[`/${secondaryRoute}/${currentRoute}`]) {
-        title = routeTitles[`/${secondaryRoute}/${currentRoute}`];
-      }
-
-      ReactGA.send({ hitType: 'pageview', page: location.pathname, title });
-    }
-  }, [location, routeTitles]);
+  // Fetches translated title for route and sends to GA
+  useRouteTitle({ sendGA: true });
 
   // Scroll to top
   useLayoutEffect(() => {
