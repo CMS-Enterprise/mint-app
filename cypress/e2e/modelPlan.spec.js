@@ -27,14 +27,17 @@ describe('The Model Plan Form', () => {
 
     cy.get('[data-testid="page-loading"]').should('not.exist');
 
-    cy.get('[data-testid="continue-to-tasklist"]').click();
+    cy.get('[data-testid="continue-to-collaboration-area"]').click();
 
     // renames a model plan
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/task-list/
-      );
+      expect(loc.pathname).to.match(/\/models\/.{36}\/collaboration-area/);
     });
+
+    cy.get('[data-testid="page-loading"]').should('not.exist');
+
+    cy.get(`[data-testid="to-task-list"]`).click();
+    cy.url().should('include', '/collaboration-area/task-list');
 
     cy.contains('h1', 'Model Plan task list');
 

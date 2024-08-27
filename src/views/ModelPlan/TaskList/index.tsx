@@ -122,6 +122,13 @@ export type StatusMessageType = {
   status: 'success' | 'error';
 };
 
+export const getITSolutionsStatus = (
+  operationalNeedsArray: OperationalNeedsType[]
+) => {
+  const inProgress = operationalNeedsArray.find(need => need.modifiedDts);
+  return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
+};
+
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
@@ -185,13 +192,6 @@ const TaskList = () => {
   const planTDLs = tdls || [];
 
   const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
-
-  const getITSolutionsStatus = (
-    operationalNeedsArray: OperationalNeedsType[]
-  ) => {
-    const inProgress = operationalNeedsArray.find(need => need.modifiedDts);
-    return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
-  };
 
   const itSolutions: ITSolutionsType = {
     modifiedDts: getLatestModifiedDate(operationalNeeds),

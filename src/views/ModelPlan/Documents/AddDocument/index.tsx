@@ -58,9 +58,7 @@ const AddDocument = () => {
             items={
               solutionDetailsLink ? solutionDocumentBreadcrumb : breadcrumbs
             }
-            customItem={
-              solutionDetailsLink ? t('addDocument') : t('solutionDetails')
-            }
+            customItem={solutionDetailsLink ? t('solutionDetails') : null}
           />
         </Grid>
       </GridContainer>

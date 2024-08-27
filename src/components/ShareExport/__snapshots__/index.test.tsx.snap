@@ -107,6 +107,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               <div
                 class="padding-0 task-list-status"
                 data-testid="task-list-status"
+                style="line-height: initial;"
               >
                 <div
                   class="display-flex flex-align-center"

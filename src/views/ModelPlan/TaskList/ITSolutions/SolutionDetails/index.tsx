@@ -115,7 +115,6 @@ const SolutionDetails = () => {
           BreadcrumbItemOptions.IT_TRACKER,
           BreadcrumbItemOptions.SOLUTION_DETAILS
         ]}
-        customItem={t('breadcrumb')}
       />
 
       {message}
