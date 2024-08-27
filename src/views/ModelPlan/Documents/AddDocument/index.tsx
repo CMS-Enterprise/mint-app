@@ -47,7 +47,8 @@ const AddDocument = () => {
     BreadcrumbItemOptions.HOME,
     BreadcrumbItemOptions.COLLABORATION_AREA,
     BreadcrumbItemOptions.TASK_LIST,
-    BreadcrumbItemOptions.IT_TRACKER
+    BreadcrumbItemOptions.IT_TRACKER,
+    BreadcrumbItemOptions.SOLUTION_DETAILS
   ];
 
   return (
@@ -58,7 +59,7 @@ const AddDocument = () => {
             items={
               solutionDetailsLink ? solutionDocumentBreadcrumb : breadcrumbs
             }
-            customItem={solutionDetailsLink ? t('solutionDetails') : null}
+            customItem={t('addDocument')}
           />
         </Grid>
       </GridContainer>
