@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
 
@@ -50,7 +51,17 @@ const AskAQuestion = ({ modelID, renderTextFor }: AskAQuestionType) => {
             type="button"
             data-testid="ask-a-question-button"
             unstyled
-            onClick={() => setIsDiscussionOpen(true)}
+            onClick={() => {
+              // Send a discussion open event to GA
+              ReactGA.send({
+                hitType: 'event',
+                eventCategory: 'discussion_center_opened',
+                eventAction: 'click',
+                eventLabel: 'Discussion Center opened'
+              });
+
+              setIsDiscussionOpen(true);
+            }}
           >
             {discussionsMiscT('askAQuestionLink')}
           </Button>

@@ -392,7 +392,7 @@ const ShareExportModal = ({
                 ? filteredGroup
                 : undefined;
 
-            // Send a share event to GA
+            // Send a export csv event to GA
             ReactGA.send({
               hitType: 'event',
               eventCategory: `export_model_plan_csv_${filteredGroup}`,
