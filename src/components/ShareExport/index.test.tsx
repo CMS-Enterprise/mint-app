@@ -6,8 +6,10 @@ import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
 
 import allMocks, {
+  crtdlMocks,
   modelID,
   operationalNeedsMock,
+  possibleOperationalSolutionDataMocks,
   summaryMock
 } from 'data/mock/readonly';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
@@ -31,7 +33,13 @@ describe('ShareExportModal', () => {
           ]}
         >
           <VerboseMockedProvider
-            mocks={[...allMocks, ...summaryMock, ...operationalNeedsMock]}
+            mocks={[
+              ...allMocks,
+              ...summaryMock,
+              ...operationalNeedsMock,
+              ...crtdlMocks,
+              ...possibleOperationalSolutionDataMocks
+            ]}
             addTypename={false}
           >
             <Route path="/models/:modelID/read-only/model-basics">
@@ -82,7 +90,13 @@ describe('ShareExportModal', () => {
           initialEntries={[`/models/${modelID}/read-only/model-basics`]}
         >
           <VerboseMockedProvider
-            mocks={[...allMocks, ...summaryMock, ...operationalNeedsMock]}
+            mocks={[
+              ...allMocks,
+              ...summaryMock,
+              ...operationalNeedsMock,
+              ...crtdlMocks,
+              ...possibleOperationalSolutionDataMocks
+            ]}
             addTypename={false}
           >
             <Route path="/models/:modelID/read-only/model-basics">

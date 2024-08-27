@@ -23,6 +23,7 @@ interface ITSolutionsFormComponentType {
   formikValue: string | null | undefined;
   error: string;
   warning?: boolean;
+  shouldShowWarning?: boolean;
   half?: boolean;
 }
 
@@ -38,7 +39,8 @@ export const MINTDatePicker = ({
   value,
   formikValue,
   error,
-  warning = true,
+  warning = true, // Used to show warning message below the date picker if inline with 2 dates (one will have warning the other wont), otherwise will default to true
+  shouldShowWarning = true, // Used to determine if the date is touched/changed on the current form, otherwise don't display warning
   half
 }: ITSolutionsFormComponentType) => {
   const { t: h } = useTranslation('draftModelPlan');
@@ -85,13 +87,13 @@ export const MINTDatePicker = ({
               handleOnBlur(e, fieldName);
             }}
           />
-          {isDateInPast(formikValue) && (
+          {shouldShowWarning && isDateInPast(formikValue) && (
             <DatePickerWarning label={h('dateWarning')} />
           )}
         </div>
       </FieldGroup>
 
-      {warning && isDateInPast(formikValue) && (
+      {shouldShowWarning && warning && isDateInPast(formikValue) && (
         <Alert type="warning" className="margin-top-4" headingLevel="h4">
           {h('dateWarning')}
         </Alert>

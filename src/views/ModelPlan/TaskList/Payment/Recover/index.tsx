@@ -375,6 +375,10 @@ const Recover = () => {
                               formikValue={values.paymentStartDate}
                               value={paymentStartDate}
                               error={flatErrors.paymentStartDate}
+                              shouldShowWarning={
+                                initialValues.paymentStartDate !==
+                                values.paymentStartDate
+                              }
                             />
 
                             <AddNote
