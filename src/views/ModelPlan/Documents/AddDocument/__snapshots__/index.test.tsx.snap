@@ -61,11 +61,23 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
               </a>
             </li>
             <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-link usa-breadcrumb__link"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/documents"
+              >
+                <span>
+                  Documents
+                </span>
+              </a>
+            </li>
+            <li
               aria-current="page"
               class="usa-breadcrumb__list-item usa-current"
             >
               <span>
-                Documents
+                Add a document
               </span>
             </li>
           </ol>
