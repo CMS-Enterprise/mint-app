@@ -20,7 +20,7 @@ const routes = {
     '/notifications/settings': 'Notification settings',
 
     // Collaborators
-    '/collaborators': 'Add model team members',
+    '/collaborators': 'Manage model team',
     '/add-collaborator': 'Add a team member',
 
     // Documents
