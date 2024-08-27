@@ -16,15 +16,14 @@
 {{- else if eq .Phase "ENDED"}} model has not yet ended
 {{end}}, please adjust your model’s anticipated timeline.</p>
 <br/>
-<br/>
-<b>Current status: </b>{{.CurrentStatusHumanized}}
+<p><b>Current status: </b>{{.CurrentStatusHumanized}}
 <br/>
 <b>New status:</b>
 {{- if gt (len .SuggestedStatusesHumanized) 1}} You will be asked to select from one of the available clearance stage statuses
 {{- else}} {{index .SuggestedStatusesHumanized 0}}
 {{end}}
-<br />
-<br />
+</p>
+<br/>
 <a href="{{.ClientAddress}}/models/{{.ModelPlanID}}/status?model-status={{index .SuggestedStatusesRaw 0}}">Yes, update my model’s status</a>
 <br/>
 <br/>
