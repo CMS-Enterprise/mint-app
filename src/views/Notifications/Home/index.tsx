@@ -41,7 +41,7 @@ const NotificationsHome = () => {
     GetNotificationsQuery['currentUser']['notifications']['notifications']
   >({
     items: allNotifications,
-    itemsPerPage: 3,
+    itemsPerPage: 10,
     loading
   });
 
