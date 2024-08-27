@@ -171,7 +171,10 @@ export const FavoriteIcon = ({
       )}
       tabIndex={0}
       onKeyDown={e => {
-        if (e.code !== 'Space') return;
+        if (e.code !== 'Space') {
+          return;
+        }
+        e.preventDefault();
         if (isFavorite) {
           updateFavorite(modelPlanID, 'removeFavorite');
         } else {
