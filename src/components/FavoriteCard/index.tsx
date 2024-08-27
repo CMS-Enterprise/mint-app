@@ -169,11 +169,25 @@ export const FavoriteIcon = ({
           'bg-primary-lighter': isCollaborationArea
         }
       )}
-      onClick={() =>
-        isFavorite
-          ? updateFavorite(modelPlanID, 'removeFavorite')
-          : updateFavorite(modelPlanID, 'addFavorite')
-      }
+      tabIndex={0}
+      onKeyDown={e => {
+        if (e.code !== 'Space') {
+          return;
+        }
+        e.preventDefault();
+        if (isFavorite) {
+          updateFavorite(modelPlanID, 'removeFavorite');
+        } else {
+          updateFavorite(modelPlanID, 'addFavorite');
+        }
+      }}
+      onClick={() => {
+        if (isFavorite) {
+          updateFavorite(modelPlanID, 'removeFavorite');
+        } else {
+          updateFavorite(modelPlanID, 'addFavorite');
+        }
+      }}
     >
       {isFavorite ? (
         <Icon.Star className="margin-right-1 bookmark__tag__icon" />

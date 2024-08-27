@@ -225,6 +225,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                     <div
                       class="padding-0"
                       data-testid="task-list-status"
+                      style="line-height: initial;"
                     >
                       <div
                         class="display-flex flex-align-center"
@@ -239,10 +240,10 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                           class="display-flex flex-align-center flex-wrap margin-right-1"
                         />
                         <div
-                          class="mint-no-print task-list-status__border border-base-light margin-right-2"
+                          class="mint-no-print margin-right-2"
                         >
                           <a
-                            class="usa-link display-flex flex-align-center margin-right-2"
+                            class="usa-link display-flex flex-align-center padding-right-2 task-list-status__border border-base-light"
                             href="/models/c9cf987d-8543-46bb-a668-2c560ce5b149/collaboration-area/status"
                           />
                         </div>
@@ -352,6 +353,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                     <div
                       class="padding-0"
                       data-testid="task-list-status"
+                      style="line-height: initial;"
                     >
                       <div
                         class="display-flex flex-align-center"
@@ -366,10 +368,10 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                           class="display-flex flex-align-center flex-wrap margin-right-1"
                         />
                         <div
-                          class="mint-no-print task-list-status__border border-base-light margin-right-2"
+                          class="mint-no-print margin-right-2"
                         >
                           <a
-                            class="usa-link display-flex flex-align-center margin-right-2"
+                            class="usa-link display-flex flex-align-center padding-right-2 task-list-status__border border-base-light"
                             href="/models/598db9f0-54c0-4346-bb6b-da46a36eff1a/collaboration-area/status"
                           />
                         </div>
@@ -491,6 +493,7 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                     <div
                       class="padding-0"
                       data-testid="task-list-status"
+                      style="line-height: initial;"
                     >
                       <div
                         class="display-flex flex-align-center"
@@ -505,10 +508,10 @@ exports[`ModelsBySolution Table and Card > renders solution models banner and ca
                           class="display-flex flex-align-center flex-wrap margin-right-1"
                         />
                         <div
-                          class="mint-no-print task-list-status__border border-base-light margin-right-2"
+                          class="mint-no-print margin-right-2"
                         >
                           <a
-                            class="usa-link display-flex flex-align-center margin-right-2"
+                            class="usa-link display-flex flex-align-center padding-right-2 task-list-status__border border-base-light"
                             href="/models/4fc87324-dbb0-4867-8e4d-5a20a76c8ae2/collaboration-area/status"
                           />
                         </div>

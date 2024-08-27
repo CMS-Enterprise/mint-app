@@ -58,6 +58,7 @@ exports[`FavoriteCard > matches the snapshot 1`] = `
             <div
               class="padding-0 bookmark__status"
               data-testid="task-list-status"
+              style="line-height: initial;"
             >
               <div
                 class="display-flex flex-align-center"
@@ -72,10 +73,10 @@ exports[`FavoriteCard > matches the snapshot 1`] = `
                   class="display-flex flex-align-center flex-wrap margin-right-1"
                 />
                 <div
-                  class="mint-no-print task-list-status__border border-base-light margin-right-2"
+                  class="mint-no-print margin-right-2"
                 >
                   <a
-                    class="usa-link display-flex flex-align-center margin-right-2"
+                    class="usa-link display-flex flex-align-center padding-right-2 task-list-status__border border-base-light"
                     href="/models/0186774a-80b0-454c-b69e-c4e949343483/collaboration-area/status"
                   />
                 </div>
