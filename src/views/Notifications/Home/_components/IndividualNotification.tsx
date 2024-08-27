@@ -88,7 +88,7 @@ const IndividualNotification = ({
     }
     if (isAddingCollaborator(metaData)) {
       handleMarkAsRead(() => {
-        history.push(`/models/${metaData.modelPlanID}/task-list`);
+        history.push(`/models/${metaData.modelPlanID}/collaboration-area`);
       });
     }
     if (isSharedActivity(metaData) || isNewModelPlan(metaData)) {

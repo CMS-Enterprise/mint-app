@@ -73,10 +73,12 @@ describe('Model Plan Payment', () => {
   it('renders without errors', async () => {
     const { getByTestId } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelPlanID}/task-list/payment`]}
+        initialEntries={[
+          `/models/${modelPlanID}/collaboration-area/task-list/payment`
+        ]}
       >
         <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/payment">
+          <Route path="/models/:modelID/collaboration-area/task-list/payment">
             <FundingSource />
           </Route>
         </VerboseMockedProvider>
@@ -100,10 +102,12 @@ describe('Model Plan Payment', () => {
   it('matches snapshot', async () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelPlanID}/task-list/payment`]}
+        initialEntries={[
+          `/models/${modelPlanID}/collaboration-area/task-list/payment`
+        ]}
       >
         <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/payment">
+          <Route path="/models/:modelID/collaboration-area/task-list/payment">
             <FundingSource />
           </Route>
         </VerboseMockedProvider>

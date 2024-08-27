@@ -50,11 +50,11 @@ describe('Model Plan Beneficiaries', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/beneficiaries/people-impact'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries/people-impact'
         ]}
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/beneficiaries/people-impact">
+          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries/people-impact">
             <PeopleImpact />
           </Route>
         </MockedProvider>
@@ -82,11 +82,11 @@ describe('Model Plan Beneficiaries', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/beneficiaries/people-impact'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries/people-impact'
         ]}
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/beneficiaries/people-impact">
+          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries/people-impact">
             <PeopleImpact />
           </Route>
         </MockedProvider>

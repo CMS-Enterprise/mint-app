@@ -1,13 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, Icon } from '@trussworks/react-uswds';
+import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { ModelStatus } from 'gql/gen/graphql';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateLocal } from 'utils/date';
+
+import './index.scss';
 
 type TaskListStatusProps = {
   icon?: boolean;
@@ -16,8 +18,10 @@ type TaskListStatusProps = {
   hasEditAccess?: boolean;
   statusLabel?: boolean;
   updateLabel?: boolean;
+  changeHistoryLink?: boolean;
   modifiedDts?: string;
-  readOnly?: boolean;
+  isReadView?: boolean;
+  isCollaborationArea?: boolean;
   modifiedOrCreateLabel?: boolean;
   className?: string;
 };
@@ -29,8 +33,10 @@ const TaskListStatus = ({
   hasEditAccess = false,
   statusLabel = false,
   updateLabel = false,
+  changeHistoryLink = true,
   modifiedDts,
-  readOnly,
+  isReadView,
+  isCollaborationArea,
   modifiedOrCreateLabel,
   className
 }: TaskListStatusProps) => {
@@ -38,84 +44,101 @@ const TaskListStatus = ({
   const { t: h } = useTranslation('generalReadOnly');
   const { t: changeHistoryT } = useTranslation('changeHistory');
   const { t: modelPlanT } = useTranslation('modelPlan');
+  const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  const flags = useFlags();
+  const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
   return (
     <div
-      className={classNames('padding-0', className)}
+      className={classNames('padding-0', className, {
+        'task-list-status': isCollaborationArea || isReadView
+      })}
+      style={{ lineHeight: 'initial' }}
       data-testid="task-list-status"
     >
-      <Grid row style={{ gap: '16px' }}>
-        <Grid
-          className="display-flex flex-align-center"
-          style={{ gap: '10px' }}
-        >
-          {statusLabel && <p className="margin-y-0">{t('status')}</p>}
-          <Tag className="bg-base text-white margin-right-0">
-            {modelPlanT(`status.options.${status}`)}
-          </Tag>
-        </Grid>
-        <Grid className="display-flex flex-align-center flex-wrap">
+      <div
+        className={classNames('display-flex flex-align-center', {
+          'padding-y-05': isTablet
+        })}
+      >
+        {statusLabel && (
+          <p className="margin-y-0 text-bold margin-right-1">{t('status')}</p>
+        )}
+
+        <Tag className="bg-base text-white margin-right-1">
+          {modelPlanT(`status.options.${status}`)}
+        </Tag>
+
+        <div className="display-flex flex-align-center flex-wrap margin-right-1">
           {!!modifiedDts && (
-            <p className="margin-y-0 text-normal">
+            <p className="margin-y-0 text-normal margin-right-1">
               {modifiedOrCreateLabel ? h('lastUpdate') : h('createdOn')}
               {formatDateLocal(modifiedDts, 'MM/dd/yyyy')}
             </p>
           )}
+        </div>
 
-          {!readOnly && (
-            <div className="mint-no-print">
-              <UswdsReactLink
-                to={`/models/${modelID}/status`}
-                className="display-flex flex-align-center"
-              >
-                {icon && <Icon.Edit className="margin-right-1" />}
-                {updateLabel && t('update')}
-              </UswdsReactLink>
-            </div>
-          )}
-        </Grid>
-        {readOnly && (
-          <div className="mint-no-print">
-            <div className="display-flex flex-align-center">
-              <div className="height-2 border-left-2px border-base-light margin-right-2 " />
-
-              {flags.changeHistoryEnabled && (
-                <>
-                  <UswdsReactLink
-                    to={{
-                      pathname: `/models/${modelID}/change-history`,
-                      state: {
-                        from: 'readview'
-                      }
-                    }}
-                    className="display-flex flex-align-center margin-right-2"
-                  >
-                    <Icon.History className="margin-right-1" />
-
-                    {changeHistoryT('viewChangeHistory')}
-                  </UswdsReactLink>
-
-                  {hasEditAccess && (
-                    <div className="height-2 border-left-2px border-base-light margin-right-2 " />
-                  )}
-                </>
-              )}
-
-              {hasEditAccess && (
-                <UswdsReactLink
-                  to={`/models/${modelID}/task-list`}
-                  className="display-flex flex-align-center"
-                >
-                  <Icon.Edit className="margin-right-1" />
-                  {t('edit')}
-                </UswdsReactLink>
-              )}
-            </div>
+        {!isReadView && (
+          <div className="mint-no-print margin-right-2">
+            <UswdsReactLink
+              to={`/models/${modelID}/collaboration-area/status`}
+              className="display-flex flex-align-center padding-right-2 task-list-status__border border-base-light"
+            >
+              {icon && <Icon.Edit className="margin-right-1" />}
+              {updateLabel && t('update')}
+            </UswdsReactLink>
           </div>
         )}
-      </Grid>
+      </div>
+
+      {changeHistoryLink && (
+        <div className="display-flex flex-align-center margin-right-2">
+          <UswdsReactLink
+            to={{
+              pathname: `/models/${modelID}/change-history`,
+              state: {
+                from: isCollaborationArea ? null : 'readview'
+              }
+            }}
+            className={classNames(
+              'display-flex flex-align-center padding-right-2 task-list-status__border border-base-light ',
+              {
+                'padding-y-2': isTablet
+              }
+            )}
+          >
+            <Icon.History className="margin-right-1" />
+
+            {changeHistoryT('viewChangeHistory')}
+          </UswdsReactLink>
+        </div>
+      )}
+
+      {hasEditAccess && !isCollaborationArea && (
+        <div className="display-flex flex-align-center">
+          <UswdsReactLink
+            to={`/models/${modelID}/collaboration-area`}
+            className={classNames('display-flex flex-align-center', {
+              'padding-y-2': isTablet
+            })}
+          >
+            <Icon.Edit className="margin-right-1" />
+            {t('edit')}
+          </UswdsReactLink>
+        </div>
+      )}
+
+      {isCollaborationArea && (
+        <div className="display-flex flex-align-center">
+          <UswdsReactLink
+            to={`/models/${modelID}/read-view`}
+            className="display-flex flex-align-center"
+          >
+            <Icon.Visibility className="margin-right-1" />
+            {collaborationAreaT('switchToReadView')}
+          </UswdsReactLink>
+        </div>
+      )}
     </div>
   );
 };

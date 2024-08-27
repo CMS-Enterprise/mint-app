@@ -74,7 +74,7 @@ export const findLockedSection = (
 
 // Parses task list route to map to taskListSectionMap
 const taskListRouteParser = (route: string): string => {
-  return route.split('/')[4];
+  return route.split('/')[5];
 };
 
 const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
@@ -88,7 +88,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   const modelID = to.split('/')[2];
 
-  const isTaskList = to.split('/')[3] === 'task-list';
+  const isTaskList = to.split('/')[4] === 'task-list';
 
   const taskListRoute = taskListRouteParser(to);
 

@@ -167,7 +167,9 @@ const UpdateStatusModal = ({
             unstyled
             onClick={() => {
               closeModal();
-              history.push(`/models/${modelID}/task-list/basics/milestones`);
+              history.push(
+                `/models/${modelID}/collaboration-area/task-list/basics/milestones`
+              );
             }}
           >
             {modelPlanTaskListT('statusModal.goToTimeline')}

@@ -16,9 +16,11 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
 };
 
 export const TaskListStatusTag = ({
-  status
+  status,
+  classname
 }: {
   status: TaskStatus | PrepareForClearanceStatus | undefined;
+  classname?: string;
 }) => {
   const { t } = useTranslation('modelPlanTaskList');
 
@@ -35,7 +37,7 @@ export const TaskListStatusTag = ({
       break;
     case 'READY':
       tagCopy = t('taskListItem.ready');
-      tagStyle = 'bg-accent-cool';
+      tagStyle = 'bg-info-light';
       break;
     case 'READY_FOR_CLEARANCE':
       tagCopy = t('taskListItem.readyForClearance');
@@ -47,13 +49,15 @@ export const TaskListStatusTag = ({
       break;
     default:
       tagCopy = '';
-      tagStyle = 'bg-accent-cool';
+      tagStyle = 'bg-info-light';
   }
 
   return (
     <div
       data-testid="tasklist-tag"
-      className={`model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print ${tagStyle}`}
+      className={`model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print ${tagStyle} ${
+        classname ?? ''
+      }`}
     >
       <span>{tagCopy}</span>
     </div>

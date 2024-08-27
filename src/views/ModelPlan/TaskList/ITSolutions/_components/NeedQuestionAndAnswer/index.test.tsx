@@ -20,11 +20,11 @@ describe('Operational Solutions NeedQuestionAndAnswer', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+            pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/select-solutions`
           }
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
+        <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/select-solutions">
           <VerboseMockedProvider
             mocks={needQuestionAndAnswerMock}
             addTypename={false}
@@ -54,11 +54,11 @@ describe('Operational Solutions NeedQuestionAndAnswer', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+            pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/select-solutions`
           }
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions">
+        <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/select-solutions">
           <VerboseMockedProvider
             mocks={needQuestionAndAnswerMock}
             addTypename={false}

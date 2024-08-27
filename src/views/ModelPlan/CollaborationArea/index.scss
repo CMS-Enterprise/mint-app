@@ -1,0 +1,10 @@
+@use 'viewports' as *;
+
+.collaboration-area {
+    &__header {
+        @media screen and (max-width: $desktop) {
+            flex-direction: column-reverse;
+            margin-top: -5rem;
+        }
+    }
+}

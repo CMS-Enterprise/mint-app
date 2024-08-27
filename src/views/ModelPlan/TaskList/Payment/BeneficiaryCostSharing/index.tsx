@@ -1,10 +1,7 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -24,6 +21,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -90,10 +88,12 @@ const BeneficiaryCostSharing = () => {
       )
     ) {
       history.push(
-        `/models/${modelID}/task-list/payment/non-claims-based-payment`
+        `/models/${modelID}/collaboration-area/task-list/payment/non-claims-based-payment`
       );
     } else {
-      history.push(`/models/${modelID}/task-list/payment/complexity`);
+      history.push(
+        `/models/${modelID}/collaboration-area/task-list/payment/complexity`
+      );
     }
   };
 
@@ -124,20 +124,14 @@ const BeneficiaryCostSharing = () => {
         url={mutationError.destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{paymentsMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
-
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.PAYMENTS
+        ]}
+      />
       <PageHeading className="margin-top-4 margin-bottom-2">
         {paymentsMiscT('heading')}
       </PageHeading>
@@ -369,7 +363,7 @@ const BeneficiaryCostSharing = () => {
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
                               history.push(
-                                `/models/${modelID}/task-list/payment/anticipating-dependencies`
+                                `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
                               );
                             }}
                           >
@@ -385,7 +379,9 @@ const BeneficiaryCostSharing = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list`
+                            )
                           }
                         >
                           <Icon.ArrowBack

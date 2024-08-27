@@ -103,13 +103,13 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
           data-testid="gridContainer"
         >
           <div
-            class="mint-no-print"
+            class="mint-no-print margin-bottom-3"
           >
             <div
               class="display-flex flex-justify"
             >
               <a
-                class="usa-link display-flex flex-align-center margin-bottom-3"
+                class="usa-link display-flex flex-align-center"
                 href="/models"
               >
                 <svg
@@ -127,29 +127,30 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                 </svg>
                 View all models
               </a>
-              <div
-                class="pointer"
+              <span
+                class="usa-tag text-primary text-bold bookmark__tag padding-y-1 padding-x-2 bg-white pointer"
+                data-testid="tag"
+                tabindex="0"
               >
-                <span
-                  class="usa-tag text-primary bg-white bookmark__tag padding-1 padding-x-105"
-                  data-testid="tag"
+                <svg
+                  class="usa-icon margin-right-1 bookmark__tag__icon"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    class="usa-icon margin-right-05 bookmark__tag__icon"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
-                    />
-                  </svg>
+                  <path
+                    d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+                  />
+                </svg>
+                <span
+                  class="bookmark__text"
+                >
                   Follow
                 </span>
-              </div>
+              </span>
             </div>
           </div>
           <h1
@@ -165,71 +166,79 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
             </span>
           </h1>
           <div
-            class="padding-0"
+            class="padding-0 task-list-status"
             data-testid="task-list-status"
+            style="line-height: initial;"
           >
             <div
-              class="grid-row"
-              data-testid="grid"
-              style="gap: 16px;"
+              class="display-flex flex-align-center"
             >
+              <p
+                class="margin-y-0 text-bold margin-right-1"
+              >
+                Status:
+              </p>
+              <span
+                class="mint-tag bg-base text-white margin-right-1"
+                data-testid="tag"
+              >
+                Draft Model Plan
+              </span>
               <div
-                class="display-flex flex-align-center"
-                data-testid="grid"
-                style="gap: 10px;"
+                class="display-flex flex-align-center flex-wrap margin-right-1"
               >
                 <p
-                  class="margin-y-0"
-                >
-                  Status:
-                </p>
-                <span
-                  class="mint-tag bg-base text-white margin-right-0"
-                  data-testid="tag"
-                >
-                  Draft Model Plan
-                </span>
-              </div>
-              <div
-                class="display-flex flex-align-center flex-wrap"
-                data-testid="grid"
-              >
-                <p
-                  class="margin-y-0 text-normal"
+                  class="margin-y-0 text-normal margin-right-1"
                 >
                   Last updated on 08/27/2022
                 </p>
               </div>
-              <div
-                class="mint-no-print"
+            </div>
+            <div
+              class="display-flex flex-align-center margin-right-2"
+            >
+              <a
+                class="usa-link display-flex flex-align-center padding-right-2 task-list-status__border border-base-light "
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/change-history"
               >
-                <div
-                  class="display-flex flex-align-center"
+                <svg
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <div
-                    class="height-2 border-left-2px border-base-light margin-right-2 "
+                  <path
+                    d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
                   />
-                  <a
-                    class="usa-link display-flex flex-align-center"
-                    href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
-                  >
-                    <svg
-                      class="usa-icon margin-right-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                      />
-                    </svg>
-                    Edit Model Plan
-                  </a>
-                </div>
-              </div>
+                </svg>
+                View change history
+              </a>
+            </div>
+            <div
+              class="display-flex flex-align-center"
+            >
+              <a
+                class="usa-link display-flex flex-align-center"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
+              >
+                <svg
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                  />
+                </svg>
+                Edit Model Plan
+              </a>
             </div>
           </div>
           <div
@@ -590,7 +599,7 @@ exports[`Read Only Model Plan Summary > matches snapshot 1`] = `
                         </h2>
                         <div>
                           <div
-                            class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                            class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                             data-testid="tasklist-tag"
                           >
                             <span>

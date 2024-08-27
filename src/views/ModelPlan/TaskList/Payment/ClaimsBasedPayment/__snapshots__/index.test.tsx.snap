@@ -13,7 +13,7 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          class="usa-link usa-breadcrumb__link"
           href="/"
         >
           <span>
@@ -25,8 +25,20 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <span>
             Model Plan task list
@@ -37,7 +49,9 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        Payment
+        <span>
+          Payment
+        </span>
       </li>
     </ol>
   </nav>

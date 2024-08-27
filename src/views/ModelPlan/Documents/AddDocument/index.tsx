@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
@@ -9,7 +9,7 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RequiredAsterisk from 'components/shared/RequiredAsterisk';
@@ -18,9 +18,7 @@ import DocumentUpload from './documentUpload';
 import LinkDocument from './LinkDocument';
 
 const AddDocument = () => {
-  const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('documentsMisc');
-  const { modelID } = useParams<{ modelID: string }>();
 
   const [formState, setFormState] = useState<'upload' | 'link'>('upload');
 
@@ -39,19 +37,18 @@ const AddDocument = () => {
   const solutionID = state?.solutionID;
 
   const breadcrumbs = [
-    { text: h('home'), url: '/' },
-    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/` },
-    {
-      text: solutionDetailsLink ? t('itTracker') : t('heading'),
-      url: solutionDetailsLink
-        ? `/models/${modelID}/task-list/it-solutions`
-        : `/models/${modelID}/documents`
-    },
-    {
-      text: t('solutionDetails'),
-      url: solutionDetailsLink
-    },
-    { text: t('breadcrumb2') }
+    BreadcrumbItemOptions.HOME,
+    BreadcrumbItemOptions.COLLABORATION_AREA,
+    BreadcrumbItemOptions.TASK_LIST,
+    BreadcrumbItemOptions.DOCUMENTS
+  ];
+
+  const solutionDocumentBreadcrumb = [
+    BreadcrumbItemOptions.HOME,
+    BreadcrumbItemOptions.COLLABORATION_AREA,
+    BreadcrumbItemOptions.TASK_LIST,
+    BreadcrumbItemOptions.IT_TRACKER,
+    BreadcrumbItemOptions.SOLUTION_DETAILS
   ];
 
   return (
@@ -60,10 +57,9 @@ const AddDocument = () => {
         <Grid desktop={{ col: 12 }}>
           <Breadcrumbs
             items={
-              solutionDetailsLink
-                ? breadcrumbs
-                : breadcrumbs.filter(item => item.text !== t('solutionDetails'))
+              solutionDetailsLink ? solutionDocumentBreadcrumb : breadcrumbs
             }
+            customItem={t('addDocument')}
           />
         </Grid>
       </GridContainer>

@@ -16,7 +16,7 @@ import {
 } from 'gql/gen/graphql';
 import { isEqual } from 'lodash';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -61,7 +61,7 @@ const LinkDocuments = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const solutionDetailsURL = `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`;
+  const solutionDetailsURL = `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`;
 
   // State management for linking/unlinking docs
   const [linkedDocs, setLinkedDocs] = useState<string[]>([]);
@@ -154,20 +154,18 @@ const LinkDocuments = () => {
     return <NotFound />;
   }
 
-  const breadcrumbs = [
-    { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    { text: t('itTracker'), url: `/models/${modelID}/task-list/it-solutions` },
-    {
-      text: t('solutionDetails'),
-      url: solutionDetailsURL
-    },
-    { text: t('connectDocumentsHeader') }
-  ];
-
   return (
     <>
-      <Breadcrumbs items={breadcrumbs} />
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.IT_TRACKER,
+          BreadcrumbItemOptions.SOLUTION_DETAILS
+        ]}
+        customItem={t('connectDocumentsHeader')}
+      />
 
       {mutationError && (
         <Alert type="error" slim>

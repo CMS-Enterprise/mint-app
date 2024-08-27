@@ -8,7 +8,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
@@ -377,12 +376,17 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	}
 	defer stmt.Close()
 
-	sqlResult, err := stmt.Exec(utilitysql.CreateIDQueryMap(id))
+	arg := map[string]interface{}{
+		"model_plan_id": id,
+	}
+
+	sqlResult, err := stmt.Exec(arg)
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
 	}
 
 	return sqlResult, nil
+
 }
 
 func (s *Store) ModelPlanGetByOperationalSolutionKey(
@@ -414,4 +418,23 @@ func (s *Store) ModelPlanGetByOperationalSolutionKey(
 		}
 	}
 	return modelPlanAndOpSols, nil
+}
+
+func (s *Store) ModelPlanGetTaskListStatus(logger *zap.Logger, modelPlanID uuid.UUID) (models.TaskStatus, error) {
+	arg := map[string]interface{}{
+		"model_plan_id": modelPlanID,
+	}
+
+	println("modelPlanID: ", modelPlanID.String())
+
+	taskStatus, err := sqlutils.GetProcedure[models.TaskStatus](s.db, sqlqueries.ModelPlan.GetTaskListStatus, arg)
+	if err != nil {
+		logger.Error(
+			"Failed to fetch task list status",
+			zap.Error(err),
+		)
+		return "", err
+	}
+
+	return *taskStatus, nil
 }

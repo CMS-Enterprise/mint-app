@@ -80,7 +80,7 @@ const CollaboratorsTable = ({
             <>
               <UswdsReactLink
                 className="margin-right-2"
-                to={`/models/${modelID}/collaborators/add-collaborator/${row.original.id}?view=${manageOrAdd}`}
+                to={`/models/${modelID}/collaboration-area/collaborators/add-collaborator/${row.original.id}?view=${manageOrAdd}`}
                 aria-label={`${collaboratorsMiscT('table.edit')} ${
                   row.original.userAccount.commonName
                 }`}

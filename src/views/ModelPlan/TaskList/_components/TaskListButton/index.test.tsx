@@ -10,7 +10,7 @@ describe('The Header component', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/0747d91f-2f9e-43df-b008-afc9fe3df61a/task-list'
+          '/models/0747d91f-2f9e-43df-b008-afc9fe3df61a/collaboration-area/task-list'
         ]}
       >
         <TaskListButton path="/" status={status} />

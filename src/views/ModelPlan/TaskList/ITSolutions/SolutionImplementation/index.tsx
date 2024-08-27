@@ -16,7 +16,7 @@ import {
   useUpdateOperationalSolutionMutation
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
@@ -166,7 +166,9 @@ const SolutionImplementation = () => {
             if (fromSolutionDetails) {
               history.goBack();
             } else {
-              history.push(`/models/${modelID}/task-list/it-solutions`);
+              history.push(
+                `/models/${modelID}/collaboration-area/task-list/it-solutions`
+              );
             }
 
             // Go back but still save solution details
@@ -174,7 +176,9 @@ const SolutionImplementation = () => {
             history.goBack();
             // Dont save solution details, solutions no needed, and return to tracker
           } else {
-            history.push(`/models/${modelID}/task-list/it-solutions`);
+            history.push(
+              `/models/${modelID}/collaboration-area/task-list/it-solutions`
+            );
           }
         } else if (errors) {
           setMutationError(true);
@@ -204,7 +208,9 @@ const SolutionImplementation = () => {
       return history.goBack();
     }
     if (solutionId) {
-      return history.push(`/models/${modelID}/task-list/it-solutions`);
+      return history.push(
+        `/models/${modelID}/collaboration-area/task-list/it-solutions`
+      );
     }
     return handleFormSubmit(values, null, true);
   };
@@ -221,17 +227,6 @@ const SolutionImplementation = () => {
     return t('selectSolution');
   };
 
-  const breadcrumbs = [
-    { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
-    {
-      text: t('solutionDetails'),
-      url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
-    },
-    { text: statusBreadcrumb() }
-  ];
-
   const formikNeed = { ...operationalNeed };
   formikNeed.solutions =
     solutionId === undefined
@@ -240,14 +235,25 @@ const SolutionImplementation = () => {
           solution => solution.id === solutionId
         );
 
+  const breadcrumbs = [
+    BreadcrumbItemOptions.HOME,
+    BreadcrumbItemOptions.COLLABORATION_AREA,
+    BreadcrumbItemOptions.TASK_LIST,
+    BreadcrumbItemOptions.IT_TRACKER,
+    BreadcrumbItemOptions.SOLUTION_DETAILS
+  ];
+
   return (
     <>
       <Breadcrumbs
         items={
           fromSolutionDetails || updateDetails
             ? breadcrumbs
-            : breadcrumbs.filter(item => item.text !== t('solutionDetails'))
+            : breadcrumbs.filter(
+                item => item !== BreadcrumbItemOptions.SOLUTION_DETAILS
+              )
         }
+        customItem={statusBreadcrumb()}
       />
 
       {mutationError && (

@@ -1,11 +1,8 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Alert,
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Icon,
@@ -24,6 +21,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -126,19 +124,15 @@ const Milestones = () => {
         url={mutationError.destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{basicsMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.BASICS
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-1">
         {basicsMiscT('heading')}
       </PageHeading>
@@ -164,7 +158,9 @@ const Milestones = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={() => {
-            history.push(`/models/${modelID}/task-list/characteristics`);
+            history.push(
+              `/models/${modelID}/collaboration-area/task-list/characteristics`
+            );
           }}
           enableReinitialize
           validateOnBlur={false}
@@ -586,7 +582,7 @@ const Milestones = () => {
                                 window.scrollTo(0, 0);
                               } else {
                                 history.push(
-                                  `/models/${modelID}/task-list/basics/overview`
+                                  `/models/${modelID}/collaboration-area/task-list/basics/overview`
                                 );
                               }
                             });
@@ -609,7 +605,9 @@ const Milestones = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
-                        history.push(`/models/${modelID}/task-list`)
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list`
+                        )
                       }
                     >
                       <Icon.ArrowBack className="margin-right-1" aria-hidden />

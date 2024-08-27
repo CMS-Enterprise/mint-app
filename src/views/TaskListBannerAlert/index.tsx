@@ -25,9 +25,9 @@ const TaskListBannerAlert = () => {
 
   const [banner, setBanner] = useState<JSX.Element>(<></>);
 
-  const isTaskList = location.pathname.split('/')[3] === 'task-list';
+  const isTaskList = location.pathname.split('/')[4] === 'task-list';
 
-  const taskListRoute = isTaskListRoute(location.pathname.split('/')[4]);
+  const taskListRoute = isTaskListRoute(location.pathname.split('/')[5]);
 
   useEffect(() => {
     if (isTaskList && taskListRoute) {

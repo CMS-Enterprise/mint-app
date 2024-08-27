@@ -57,11 +57,11 @@ describe('Model Plan -- Complexity', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment/complexity'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/complexity'
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/payment/complexity">
+          <Route path="/models/:modelID/collaboration-area/task-list/payment/complexity">
             <ClaimsBasedPayment />
           </Route>
         </MockedProvider>
@@ -83,11 +83,11 @@ describe('Model Plan -- Complexity', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment/complexity'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/complexity'
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/payment/complexity">
+          <Route path="/models/:modelID/collaboration-area/task-list/payment/complexity">
             <ClaimsBasedPayment />
           </Route>
         </MockedProvider>

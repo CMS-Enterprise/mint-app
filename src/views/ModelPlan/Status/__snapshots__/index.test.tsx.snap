@@ -27,7 +27,7 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
+                class="usa-link usa-breadcrumb__link"
                 href="/"
               >
                 <span>
@@ -39,11 +39,11 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
-                href="/models/undefined/task-list/"
+                class="usa-link usa-breadcrumb__link"
+                href="/models/undefined/collaboration-area"
               >
                 <span>
-                  Model Plan task list
+                  Model collaboration area
                 </span>
               </a>
             </li>
@@ -51,7 +51,9 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
               aria-current="page"
               class="usa-breadcrumb__list-item usa-current"
             >
-              Update status
+              <span>
+                Update status
+              </span>
             </li>
           </ol>
         </nav>
@@ -65,7 +67,7 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
         <p
           class="margin-bottom-6 line-height-body-5"
         >
-          After you’ve iterated on your Model Plan, update the status so others know what stage it’s at in the design and clearance process.
+          As you iterate on your Model Plan, update the status of your model so others known what stage it’s at in the design and clearance process.
         </p>
         <form
           action="#"
@@ -185,7 +187,7 @@ exports[`Model Plan Status Update page > matches snapshot 1`] = `
                 d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
               />
             </svg>
-            Don’t update status and return to task list
+            Don’t update status and return to model collaboration area
           </button>
         </form>
       </div>

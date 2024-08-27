@@ -300,7 +300,7 @@ const Table = ({
           return (
             <>
               <UswdsReactLink
-                to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl?type=${type}&id=${
+                to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl?type=${type}&id=${
                   row.original.id
                 }${readOnly ? '#read-only' : ''}`}
                 className="margin-right-2"

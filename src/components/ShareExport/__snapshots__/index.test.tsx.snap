@@ -105,51 +105,32 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 </span>
               </h1>
               <div
-                class="padding-0"
+                class="padding-0 task-list-status"
                 data-testid="task-list-status"
+                style="line-height: initial;"
               >
                 <div
-                  class="grid-row"
-                  data-testid="grid"
-                  style="gap: 16px;"
+                  class="display-flex flex-align-center"
                 >
+                  <p
+                    class="margin-y-0 text-bold margin-right-1"
+                  >
+                    Status:
+                  </p>
+                  <span
+                    class="mint-tag bg-base text-white margin-right-1"
+                    data-testid="tag"
+                  >
+                    Draft Model Plan
+                  </span>
                   <div
-                    class="display-flex flex-align-center"
-                    data-testid="grid"
-                    style="gap: 10px;"
+                    class="display-flex flex-align-center flex-wrap margin-right-1"
                   >
                     <p
-                      class="margin-y-0"
-                    >
-                      Status:
-                    </p>
-                    <span
-                      class="mint-tag bg-base text-white margin-right-0"
-                      data-testid="tag"
-                    >
-                      Draft Model Plan
-                    </span>
-                  </div>
-                  <div
-                    class="display-flex flex-align-center flex-wrap"
-                    data-testid="grid"
-                  >
-                    <p
-                      class="margin-y-0 text-normal"
+                      class="margin-y-0 text-normal margin-right-1"
                     >
                       Last updated on 08/27/2022
                     </p>
-                  </div>
-                  <div
-                    class="mint-no-print"
-                  >
-                    <div
-                      class="display-flex flex-align-center"
-                    >
-                      <div
-                        class="height-2 border-left-2px border-base-light margin-right-2 "
-                      />
-                    </div>
                   </div>
                 </div>
               </div>
@@ -261,7 +242,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -1174,7 +1155,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -2912,7 +2893,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -4535,7 +4516,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -5225,7 +5206,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -7799,7 +7780,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
               </h2>
               <div>
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                   data-testid="tasklist-tag"
                 >
                   <span>
@@ -9719,7 +9700,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 Operational solutions
               </h2>
               <div
-                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning"
+                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
                 data-testid="tasklist-tag"
               >
                 <span>
@@ -10042,13 +10023,13 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                       >
                         <a
                           class="usa-link margin-right-2 display-block"
-                          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/it-solutions/123/solution-implementation-details/123"
+                          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/it-solutions/123/solution-implementation-details/123"
                         >
                           Update status
                         </a>
                         <a
                           class="usa-link"
-                          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/it-solutions/123/123/solution-details"
+                          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/it-solutions/123/123/solution-details"
                         >
                           View details
                         </a>
@@ -10070,7 +10051,7 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
     </div>
     <nav
       aria-label="label"
-      class="border-base-lighter display-flex width-full padding-x-4 border-bottom-2px"
+      class="border-base-lighter display-flex width-full padding-x-4 border-bottom-2px padding-top-05"
       data-testid="share-export-navigation-bar"
       style="gap: 2rem;"
     >

@@ -23,67 +23,67 @@ const ITSolutions = () => {
         <Grid desktop={{ col: 12 }}>
           <Switch>
             <ProtectedRoute
-              path="/models/:modelID/task-list/it-solutions"
+              path="/models/:modelID/collaboration-area/task-list/it-solutions"
               component={ITSolutionsHome}
               exact
             />
 
             <ProtectedRoute
-              path="/models/:modelID/task-list/it-solutions/add-an-operational-need"
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/add-an-operational-need"
               component={AddOrUpdateOperationalNeed}
               exact
             />
 
             <ProtectedRoute
-              path="/models/:modelID/task-list/it-solutions/update-need/:operationalNeedID?"
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/update-need/:operationalNeedID?"
               component={AddOrUpdateOperationalNeed}
               exact
             />
 
             <ProtectedRoute
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions"
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/select-solutions"
               component={SelectSolutions}
               exact
             />
 
             <ProtectedRoute
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution/:operationalSolutionID?"
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/add-solution/:operationalSolutionID?"
               component={AddSolution}
               exact
             />
 
             <ProtectedRoute
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID?"
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID?"
               component={AddCustomSolution}
               exact
             />
 
             <ProtectedRoute
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details/:solutionId?"
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details/:solutionId?"
               component={SolutionImplementation}
               exact
             />
 
             <ProtectedRoute
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/solution-details"
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/solution-details"
               component={SolutionDetails}
               exact
             />
 
             <ProtectedRoute
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks"
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks"
               component={Subtasks}
               exact
             />
 
             <ProtectedRoute
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/manage-subtasks"
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/manage-subtasks"
               render={props => <Subtasks {...props} managingSubtasks />}
               exact
             />
 
             <ProtectedRoute
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents"
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents"
               component={LinkDocuments}
               exact
             />

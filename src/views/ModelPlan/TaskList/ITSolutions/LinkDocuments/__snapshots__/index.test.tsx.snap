@@ -28,7 +28,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
+                class="usa-link usa-breadcrumb__link"
                 href="/"
               >
                 <span>
@@ -40,8 +40,20 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
-                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list"
+                class="usa-link usa-breadcrumb__link"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+              >
+                <span>
+                  Model collaboration area
+                </span>
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-link usa-breadcrumb__link"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
               >
                 <span>
                   Model Plan task list
@@ -52,7 +64,9 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
               aria-current="page"
               class="usa-breadcrumb__list-item usa-current"
             >
-              Documents
+              <span>
+                Documents
+              </span>
             </li>
           </ol>
         </nav>
@@ -76,7 +90,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
         </p>
         <a
           class="usa-link display-inline-flex flex-align-center margin-y-3"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <svg
             aria-hidden="true"
@@ -101,7 +115,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
         </h4>
         <a
           class="usa-button"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/documents/add-document"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/documents/add-document"
         >
           Add a document
         </a>
@@ -502,7 +516,19 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
       >
         <a
           class="usa-link usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <span>
             Model Plan task list
@@ -514,10 +540,10 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
       >
         <a
           class="usa-link usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/it-solutions"
         >
           <span>
-            Operational solutions tracker
+            Operational solutions and implementation status tracker
           </span>
         </a>
       </li>
@@ -526,7 +552,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
       >
         <a
           class="usa-link usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/081cb879-bd6f-4ead-b9cb-3a299de76390/solution-details"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/it-solutions/undefined/undefined/solution-details"
         >
           <span>
             Solution details
@@ -696,7 +722,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
                           >
                             <a
                               class="usa-link margin-right-2 display-flex flex-align-center"
-                              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/add-custom-solution/081cb879-bd6f-4ead-b9cb-3a299de76390"
+                              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/add-custom-solution/081cb879-bd6f-4ead-b9cb-3a299de76390"
                             >
                               Update these details
                               <svg
@@ -1131,7 +1157,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
     </button>
     <a
       class="usa-link display-flex"
-      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/081cb879-bd6f-4ead-b9cb-3a299de76390/solution-details"
+      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/it-solutions/081cb879-bd6f-4ead-b9cb-3a299de76390/081cb879-bd6f-4ead-b9cb-3a299de76390/solution-details"
     >
       <svg
         aria-hidden="true"
