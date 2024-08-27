@@ -3,12 +3,12 @@ const routes = {
     '/': 'Home',
 
     '/signin': 'Sign in',
-    '/pre-decisional-notice': 'Pre-Decisional Notice',
+    '/pre-decisional-notice': 'Pre-decisional notice',
 
     '/models': 'Models',
-    '/steps-overview': 'Steps Overview',
-    '/new-plan': 'New Plan',
-    '/status': 'Status',
+    '/steps-overview': 'Start a new model plan',
+    '/new-plan': 'Model name',
+    '/status': 'Update status',
 
     // Homepage settings
     '/homepage-settings': 'Homepage settings',
@@ -20,24 +20,24 @@ const routes = {
     '/notifications/settings': 'Notification settings',
 
     // Collaborators
-    '/collaborators': 'Collaborators',
-    '/add-collaborator': 'Add Collaborator',
+    '/collaborators': 'Add model team members',
+    '/add-collaborator': 'Add a team member',
 
     // Documents
     '/documents': 'Documents',
-    '/add-document': 'Add Document',
+    '/add-document': 'Add a document',
 
     // CR and TDL
     '/cr-and-tdl': 'FFS CRs and TDLs',
-    '/add-cr-and-tdl': 'Add FFS CR or TDL',
+    '/add-cr-and-tdl': 'Add a FFS CR or TDL',
 
     // Task-list
-    '/task-list': 'Task List',
+    '/task-list': 'Model plan task list',
 
     // Model basics
     '/basics': 'Model basics',
-    '/overview': 'Overview',
-    '/milestones': 'Milestones',
+    '/overview': 'Model basics - Overview',
+    '/milestones': 'Model basics - Milestones',
 
     // General characteristics
     '/characteristics': 'General characteristics',
@@ -125,7 +125,7 @@ const routes = {
 
     // Help and knowledge center
     '/help-and-knowledge': 'Help and knowledge center',
-    '/articles': 'Articles',
+    '/articles': 'All help articles',
     '/model-plan-overview': 'Help and knowledge center - Model plan overview',
     '/operational-solutions':
       'Help and knowledge center - Operational solutions',
@@ -135,13 +135,37 @@ const routes = {
       'Help and knowledge center - How to have a successful 2 pager meeting',
     '/how-to-have-a-successful-6-pager-meeting':
       'Help and knowledge center - How to have a successful 6 pager meeting',
-    '/sample-model-plan': 'Help and knowledge center - Sample model plan',
     '/utilizing-solutions': 'Help and knowledge center - Utilizing solutions',
     '/model-and-solution-implementation':
       'Help and knowledge center - Model and solution implementation',
     '/model-and-solution-design':
       'Help and knowledge center - Model and solution design',
     '/phases-involved': 'Help and knowledge center - Phases involved',
+
+    // Sample Model Plan
+    '/sample-model-plan': 'Help and knowledge center - Sample model plan',
+    '/sample-model-plan/model-basics':
+      'Help and knowleedge center - Sample model plan - Model basics',
+    '/sample-model-plan/general-characteristics':
+      'Help and knowleedge center - Sample model plan - General characteristics',
+    '/sample-model-plan/participants-and-providers':
+      'Help and knowleedge center - Sample model plan - Participants and providers',
+    '/sample-model-plan/beneficiaries':
+      'Help and knowleedge center - Sample model plan - Beneficiaries',
+    '/sample-model-plan/operations-evaluation-and-learning':
+      'Help and knowleedge center - Sample model plan - Operations, evaluation, and learning',
+    '/sample-model-plan/payment':
+      'Help and knowleedge center - Sample model plan - Payment',
+    '/sample-model-plan/it-solutions':
+      'Help and knowleedge center - Sample model plan - Operational solutions and implementation status',
+    '/sample-model-plan/team':
+      'Help and knowleedge center - Sample model plan - Team',
+    '/sample-model-plan/discussions':
+      'Help and knowleedge center - Sample model plan - Discussions',
+    '/sample-model-plan/documents':
+      'Help and knowleedge center - Sample model plan - Documents',
+    '/sample-model-plan/crs-and-tdl':
+      'Help and knowleedge center - Sample model plan - FFS CRs and TDLs',
 
     // Help and knowledge center - Operational solution categories (urlParam = category)
     'applications-and-participation-interaction-aco-and-kidney':
@@ -231,7 +255,7 @@ const routes = {
     '/report-a-problem': 'Report a problem',
     '/send-feedback': 'Send feedback',
     '/feedback-received': 'Feedback received',
-    '/private-policy': 'Privacy policy',
+    '/privacy-policy': 'Privacy policy',
     '/cookies': 'Cookies',
     '/accessibility-statement': 'Accessibility statement',
     '/terms-and-conditions': 'Terms and conditions',

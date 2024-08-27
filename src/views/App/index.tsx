@@ -117,14 +117,14 @@ const AppRoutes = () => {
         // If normal route
       } else if (
         secondaryRoute !== 'read-view' &&
+        secondaryRoute !== 'sample-model-plan' &&
         routeTitles[`/${currentRoute}`]
       ) {
         title = routeTitles[`/${currentRoute}`];
+        // Secondary route - read-view or sample-model-plan
       } else if (routeTitles[`/${secondaryRoute}/${currentRoute}`]) {
         title = routeTitles[`/${secondaryRoute}/${currentRoute}`];
       }
-
-      console.log(title);
 
       ReactGA.send({ hitType: 'pageview', page: location.pathname, title });
     }
