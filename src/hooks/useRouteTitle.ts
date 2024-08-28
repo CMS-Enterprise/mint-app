@@ -25,15 +25,11 @@ const useRouteTitle = ({ sendGA = false }: { sendGA: boolean }): string => {
       const category = params.get('category');
       const solution = params.get('solution');
 
+      // Array of all route params
       const currentRouteParams = pathname.replace(/\/+$/, '').split('/');
 
       const currentRoute = currentRouteParams[currentRouteParams.length - 1];
       const secondaryRoute = currentRouteParams[currentRouteParams.length - 2];
-
-      // Redirect, don't need to track
-      if (secondaryRoute === 'read-only') {
-        return;
-      }
 
       title.current = pathname;
 

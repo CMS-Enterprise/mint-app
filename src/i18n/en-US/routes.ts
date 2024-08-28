@@ -111,6 +111,7 @@ const routes = {
     '/prepare-for-clearance': 'Prepare for clearance',
 
     // Read view
+    '/read-only': 'Read view',
     '/read-view': 'Read view',
     '/read-view/model-basics': 'Read view - Model basics',
     '/read-view/general-characteristics': 'Read view - General characteristics',
