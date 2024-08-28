@@ -2,6 +2,7 @@ const routes = {
   titles: {
     '/': 'Home',
 
+    '/login': 'Sign in',
     '/signin': 'Sign in',
     '/pre-decisional-notice': 'Pre-decisional notice',
 
@@ -48,13 +49,13 @@ const routes = {
 
     // Participants and providers
     '/participants-and-providers': 'Participants and providers',
-    '/participant-options': 'Participants and providers - Participant options',
+    '/participants-options': 'Participants and providers - Participant options',
     '/communication': 'Participants and providers - Communication',
     '/coordination': 'Participants and providers - Coordination',
     '/provider-options': 'Participants and providers - Provider options',
 
     // Beneficiaries
-    '/beneficiaries:': 'Beneficiaries',
+    '/beneficiaries': 'Beneficiaries',
     '/people-impact': 'Beneficiaries - People impact',
     '/beneficiary-frequency': 'Beneficiaries - Beneficiary frequency',
 
@@ -66,7 +67,7 @@ const routes = {
       'Operations, evaluation, and learning - IDDOC Monitoring',
     '/performance': 'Operations, evaluation, and learning - Performance',
     '/evaluation': 'Operations, evaluation, and learning - Evaluation',
-    '/ccw-and-quality-assurance':
+    '/ccw-and-quality':
       'Operations, evaluation, and learning - CCW and quality',
     '/data-sharing': 'Operations, evaluation, and learning - Data sharing',
     '/learning': 'Operations, evaluation, and learning - Learning',

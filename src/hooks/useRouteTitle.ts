@@ -4,6 +4,9 @@ import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
+// List of routes where the last part of the route is a UUID
+const currentUUIDRoutes: string[] = ['solution-implementation-details'];
+
 const useRouteTitle = ({ sendGA = false }: { sendGA: boolean }): string => {
   const location = useLocation();
 
@@ -40,6 +43,9 @@ const useRouteTitle = ({ sendGA = false }: { sendGA: boolean }): string => {
         // If help and knowledge center category
       } else if (category && routeTitles[category]) {
         title.current = routeTitles[category];
+        // If current route is UUID
+      } else if (currentUUIDRoutes.includes(secondaryRoute)) {
+        title.current = routeTitles[`/${secondaryRoute}`];
         // If normal route
       } else if (
         secondaryRoute !== 'read-view' &&
