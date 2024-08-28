@@ -74,7 +74,6 @@ type DiscussionUserRole string
 // These constants represent the possible values of a DiscussionUserRole
 const (
 	DiscussionRoleCmsSystemServiceTeam             DiscussionUserRole = "CMS_SYSTEM_SERVICE_TEAM"
-	DiscussionRoleItArchitect                      DiscussionUserRole = "IT_ARCHITECT"
 	DiscussionRoleLeadership                       DiscussionUserRole = "LEADERSHIP"
 	DiscussionRoleMedicareAdministrativeContractor DiscussionUserRole = "MEDICARE_ADMINISTRATIVE_CONTRACTOR"
 	DiscussionRoleMintTeam                         DiscussionUserRole = "MINT_TEAM"
@@ -98,8 +97,6 @@ func (r DiscussionUserRole) Humanize(userRoleDescription string) string {
 	switch r {
 	case DiscussionRoleCmsSystemServiceTeam:
 		return "CMS System/Service Team"
-	case DiscussionRoleItArchitect:
-		return "IT Architect"
 	case DiscussionRoleLeadership:
 		return "Leadership"
 	case DiscussionRoleMedicareAdministrativeContractor:

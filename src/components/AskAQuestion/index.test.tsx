@@ -31,7 +31,7 @@ const discussionResult: GetModelPlanDiscussionsType = {
       },
       createdBy: 'John Doe',
       createdDts: '2022-05-12T15:01:39.190679Z',
-      userRole: DiscussionUserRole.IT_ARCHITECT,
+      userRole: DiscussionUserRole.SOLUTION_ARCHITECT,
       userRoleDescription: '',
       isAssessment: false,
       createdByUserAccount: {
@@ -49,7 +49,7 @@ const discussionResult: GetModelPlanDiscussionsType = {
       },
       createdBy: 'Jane Doe',
       createdDts: '2022-05-12T15:01:39.190679Z',
-      userRole: DiscussionUserRole.IT_ARCHITECT,
+      userRole: DiscussionUserRole.SOLUTION_ARCHITECT,
       userRoleDescription: '',
       isAssessment: false,
       createdByUserAccount: {
@@ -67,7 +67,7 @@ const discussionResult: GetModelPlanDiscussionsType = {
           },
           createdBy: 'Jack Doe',
           createdDts: '2022-05-12T15:01:39.190679Z',
-          userRole: DiscussionUserRole.IT_ARCHITECT,
+          userRole: DiscussionUserRole.SOLUTION_ARCHITECT,
           userRoleDescription: '',
           isAssessment: false,
           createdByUserAccount: {
@@ -100,7 +100,7 @@ const mocks = [
       data: {
         mostRecentDiscussionRoleSelection: {
           __typename: 'DiscussionRoleSelection',
-          userRole: DiscussionUserRole.IT_ARCHITECT,
+          userRole: DiscussionUserRole.SOLUTION_ARCHITECT,
           userRoleDescription: ''
         }
       }
