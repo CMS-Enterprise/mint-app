@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FilterValue } from 'react-table';
 import { Button, Form, Icon, Label, TextInput } from '@trussworks/react-uswds';
@@ -10,22 +10,24 @@ import './index.scss';
 // Currently this component is used for client side filtering using onChange
 
 type GlobalClientFilterProps = {
+  className?: string;
   globalFilter: FilterValue;
+  initialFilter?: string;
   setGlobalFilter: (filterValue: FilterValue) => void;
+  skipPageResetRef?: MutableRefObject<boolean>;
   tableID: string;
   tableName: string;
-  className?: string;
-  initialFilter?: string;
 };
 
 // Component for Global Filter for Client Side filtering
 const GlobalClientFilter = ({
-  globalFilter,
-  setGlobalFilter,
-  tableID,
-  tableName,
   className,
-  initialFilter
+  globalFilter,
+  initialFilter,
+  setGlobalFilter,
+  skipPageResetRef,
+  tableID,
+  tableName
 }: GlobalClientFilterProps) => {
   const { t } = useTranslation('tableAndPagination');
 
@@ -47,6 +49,10 @@ const GlobalClientFilter = ({
         role="searchbox"
         type="search"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          if (skipPageResetRef) {
+            // eslint-disable-next-line no-param-reassign
+            skipPageResetRef.current = false;
+          }
           // Currently only client-side filtering - updates search filter onChange
           setGlobalFilter(e.target.value);
         }}
