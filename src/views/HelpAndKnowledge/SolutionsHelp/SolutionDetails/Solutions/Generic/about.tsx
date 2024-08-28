@@ -38,6 +38,13 @@ export interface AboutConfigType {
   noList?: boolean;
   ordered?: boolean;
   components?: AboutComponentType[];
+  ipcPortal?: {
+    header?: string;
+    externalLink: {
+      copy: string;
+      link: string;
+    };
+  };
 }
 
 const returnListType = (
@@ -233,6 +240,25 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
         })}
 
       {aboutConfig.subDescription && <span>{aboutConfig.subDescription}</span>}
+
+      {aboutConfig.ipcPortal && (
+        <div className="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest">
+          <h4 className="margin-top-0 margin-bottom-1">
+            <Trans
+              t={t}
+              i18nKey={`solutions.${solution.key}.about.ipcPortal.header`}
+              components={{
+                link1: (
+                  <UswdsReactLink to="/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about" />
+                )
+              }}
+            />
+          </h4>
+          <ExternalLink href={aboutConfig.ipcPortal.externalLink.link}>
+            {aboutConfig.ipcPortal.externalLink.copy}
+          </ExternalLink>
+        </div>
+      )}
     </div>
   );
 };
