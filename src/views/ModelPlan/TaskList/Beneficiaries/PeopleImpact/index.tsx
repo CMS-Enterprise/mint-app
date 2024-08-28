@@ -1,10 +1,7 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -25,6 +22,7 @@ import {
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -109,19 +107,15 @@ const PeopleImpact = () => {
         url={mutationError.destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{beneficiariesMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.BENEFICIARIES
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {beneficiariesMiscT('heading')}
       </PageHeading>
@@ -145,7 +139,7 @@ const PeopleImpact = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/beneficiaries/beneficiary-frequency`
+            `/models/${modelID}/collaboration-area/task-list/beneficiaries/beneficiary-frequency`
           );
         }}
         enableReinitialize
@@ -373,7 +367,7 @@ const PeopleImpact = () => {
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
                               history.push(
-                                `/models/${modelID}/task-list/beneficiaries`
+                                `/models/${modelID}/collaboration-area/task-list/beneficiaries`
                               );
                             }}
                           >
@@ -389,7 +383,9 @@ const PeopleImpact = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list`
+                            )
                           }
                         >
                           <Icon.ArrowBack

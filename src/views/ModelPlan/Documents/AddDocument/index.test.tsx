@@ -13,11 +13,11 @@ describe('Model Plan Add Documents page', () => {
       <MockedProvider>
         <MemoryRouter
           initialEntries={[
-            '/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents/add-document'
+            '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/documents/add-document'
           ]}
         >
           <MessageProvider>
-            <Route path="/models/:modelID/documents/add-document">
+            <Route path="/models/:modelID/collaboration-area/documents/add-document">
               <AddDocument />
             </Route>
           </MessageProvider>

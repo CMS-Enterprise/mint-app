@@ -10,7 +10,7 @@ export const SubmitRequest = () => {
     <MainContent className="grid-container" data-testid="model-submit-request">
       <Switch>
         <ProtectedRoute
-          path="/models/:modelID/task-list/submit-request/page-1" // page-* may change pending UX clarifcation
+          path="/models/:modelID/collaboration-area/task-list/submit-request/page-1" // page-* may change pending UX clarifcation
           render={() => <NotFound />}
         />
         <Route path="*" render={() => <NotFoundPartial />} />

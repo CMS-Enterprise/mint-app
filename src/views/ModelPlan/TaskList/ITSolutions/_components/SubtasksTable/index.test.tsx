@@ -32,10 +32,10 @@ describe('Subtasks Table Component', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-details`
+          `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-details`
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-details">
+        <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-details">
           <SubtasksTable subtasks={subtasks} />
         </Route>
       </MemoryRouter>
@@ -56,10 +56,10 @@ describe('Subtasks Table Component', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-details`
+          `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-details`
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-details">
+        <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-details">
           <SubtasksTable subtasks={[]} />
         </Route>
       </MemoryRouter>

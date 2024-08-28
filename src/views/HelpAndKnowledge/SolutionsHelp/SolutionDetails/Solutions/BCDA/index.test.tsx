@@ -14,7 +14,7 @@ describe('The ITSolutionsWarning component', () => {
           '/help-and-knowledge/operational-solutions?solution=beneficiary-claims-data-api&section=timeline'
         ]}
       >
-        <Route path="/models/:modelID/task-list/ops-eval-and-learning">
+        <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning">
           <BCDATimeLine solution={helpSolutions[3]} />
         </Route>
       </MemoryRouter>

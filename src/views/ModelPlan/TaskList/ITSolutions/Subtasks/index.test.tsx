@@ -81,10 +81,10 @@ describe('Operational Solutions Add Subtasks', () => {
       const { getByTestId, getByRole } = render(
         <MemoryRouter
           initialEntries={[
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
+            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
             <MessageProvider>
               <VerboseMockedProvider mocks={mockData} addTypename={false}>
                 <Subtasks />
@@ -107,10 +107,10 @@ describe('Operational Solutions Add Subtasks', () => {
       const { getByTestId, getByRole, queryAllByRole } = render(
         <MemoryRouter
           initialEntries={[
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
+            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
             <MessageProvider>
               <VerboseMockedProvider mocks={mockData} addTypename={false}>
                 <Subtasks />
@@ -137,10 +137,10 @@ describe('Operational Solutions Add Subtasks', () => {
       const { getByTestId, getByRole, asFragment } = render(
         <MemoryRouter
           initialEntries={[
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
+            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
             <MessageProvider>
               <VerboseMockedProvider mocks={mockData} addTypename={false}>
                 <Subtasks />
@@ -168,10 +168,10 @@ describe('Operational Solutions Manage Subtasks', () => {
       const { getByTestId } = render(
         <MemoryRouter
           initialEntries={[
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
+            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
             <MessageProvider>
               <VerboseMockedProvider mocks={mockData} addTypename={false}>
                 <Subtasks managingSubtasks />
@@ -206,10 +206,10 @@ describe('Operational Solutions Manage Subtasks', () => {
       const { getByTestId, asFragment } = render(
         <MemoryRouter
           initialEntries={[
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
+            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks`
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks">
             <MessageProvider>
               <VerboseMockedProvider mocks={mockData} addTypename={false}>
                 <Subtasks managingSubtasks />

@@ -119,7 +119,7 @@ export const SubtaskLinks = ({
             className="usa-button usa-button--outline"
             onClick={() => {
               history.push(
-                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/${subtaskLinks[link]}`
+                `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/${subtaskLinks[link]}`
               );
             }}
           >

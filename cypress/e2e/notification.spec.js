@@ -173,7 +173,7 @@ describe('Notification Center', () => {
     cy.clickPlanTableByName('Empty Plan');
 
     // Add SF13 as a collaborator
-    cy.get('a[href*="/collaborators?view=manage"]').click();
+    cy.get('a[href*="/collaboration-area/collaborators?view=manage"]').click();
 
     cy.contains('a', 'Add team member').click();
 
@@ -211,7 +211,7 @@ describe('Notification Center', () => {
 
     cy.contains('button', 'Start collaborating').click();
 
-    cy.url().should('include', '/task-list');
+    cy.url().should('include', '/collaboration-area/task-list');
   });
 
   it('testing New Model Plan Notification', () => {
@@ -248,7 +248,7 @@ describe('Notification Center', () => {
       .should('have.value', 'Cypress Model Plan');
 
     cy.contains('button', 'Next').click();
-    cy.url().should('include', '/collaborators');
+    cy.url().should('include', '/collaboration-area/collaborators');
 
     // Navigate back to Notification Center
     cy.get('[data-testid="navmenu__notification"]').first().click();

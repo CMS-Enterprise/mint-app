@@ -20,7 +20,7 @@ type FavoriteCardProps = {
   type?: 'plan'; // Built in for future iterations/varations of favorited datasets that ingest i18n translations for headers.
   modelPlan: FavoritesModelType;
   removeFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
-  toTaskList?: boolean;
+  toCollaborationArea?: boolean;
 };
 
 const FavoriteCard = ({
@@ -28,7 +28,7 @@ const FavoriteCard = ({
   type = 'plan',
   modelPlan,
   removeFavorite,
-  toTaskList = false
+  toCollaborationArea = false
 }: FavoriteCardProps) => {
   const { t } = useTranslation('plan');
   const { t: h } = useTranslation('customHome');
@@ -72,7 +72,9 @@ const FavoriteCard = ({
               </Button>
               <h3 className="bookmark__title margin-0">
                 <UswdsReactLink
-                  to={`/models/${id}/${toTaskList ? 'task-list' : 'read-view'}`}
+                  to={`/models/${id}/${
+                    toCollaborationArea ? 'collaboration-area' : 'read-view'
+                  }`}
                 >
                   {modelName}
                 </UswdsReactLink>
@@ -83,6 +85,7 @@ const FavoriteCard = ({
             <TaskListStatus
               modelID={id}
               status={status}
+              changeHistoryLink={false}
               className={classNames({
                 bookmark__status: !isMobile
               })}
@@ -145,6 +148,7 @@ type FavoriteIconProps = {
   isFavorite: boolean;
   modelPlanID: string;
   updateFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
+  isCollaborationArea?: boolean;
 };
 
 // Icon favorite tag/toggle for readonly summary box
@@ -152,29 +156,49 @@ export const FavoriteIcon = ({
   className,
   modelPlanID,
   isFavorite,
-  updateFavorite
+  updateFavorite,
+  isCollaborationArea
 }: FavoriteIconProps) => {
   const { t } = useTranslation('plan');
 
   return (
-    <div className={classNames('pointer', className)}>
-      <Tag
-        className="text-primary bg-white bookmark__tag padding-1 padding-x-105"
-        onClick={() =>
-          isFavorite
-            ? updateFavorite(modelPlanID, 'removeFavorite')
-            : updateFavorite(modelPlanID, 'addFavorite')
+    <Tag
+      className={classNames(
+        'text-primary text-bold bookmark__tag padding-y-1 padding-x-2 bg-white pointer',
+        {
+          'bg-primary-lighter': isCollaborationArea
         }
-      >
-        {isFavorite ? (
-          <Icon.Star className="margin-right-05 bookmark__tag__icon" />
-        ) : (
-          <Icon.StarOutline className="margin-right-05 bookmark__tag__icon" />
-        )}
+      )}
+      tabIndex={0}
+      onKeyDown={e => {
+        if (e.code !== 'Space') {
+          return;
+        }
+        e.preventDefault();
+        if (isFavorite) {
+          updateFavorite(modelPlanID, 'removeFavorite');
+        } else {
+          updateFavorite(modelPlanID, 'addFavorite');
+        }
+      }}
+      onClick={() => {
+        if (isFavorite) {
+          updateFavorite(modelPlanID, 'removeFavorite');
+        } else {
+          updateFavorite(modelPlanID, 'addFavorite');
+        }
+      }}
+    >
+      {isFavorite ? (
+        <Icon.Star className="margin-right-1 bookmark__tag__icon" />
+      ) : (
+        <Icon.StarOutline className="margin-right-1 bookmark__tag__icon" />
+      )}
 
+      <span className="bookmark__text">
         {isFavorite ? t('favorite.following') : t('favorite.follow')}
-      </Tag>
-    </div>
+      </span>
+    </Tag>
   );
 };
 

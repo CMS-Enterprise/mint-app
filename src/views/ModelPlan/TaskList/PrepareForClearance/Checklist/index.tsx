@@ -5,16 +5,8 @@ Each checkbox modifies the 'status' on its respective task list sections
 
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  Button,
-  Fieldset,
-  Grid,
-  Icon
-} from '@trussworks/react-uswds';
+import { useHistory } from 'react-router-dom';
+import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
@@ -37,6 +29,7 @@ import {
   useUpdateClearancePaymentsMutation
 } from 'gql/gen/graphql';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import CheckboxField from 'components/shared/CheckboxField';
@@ -189,7 +182,7 @@ const PrepareForClearanceCheckList = ({
         const errors = responses?.find(result => result?.errors);
 
         if (!errors) {
-          history.push(`/models/${modelID}/task-list`);
+          history.push(`/models/${modelID}/collaboration-area/task-list`);
         }
       })
       .catch(errors => {
@@ -207,203 +200,210 @@ const PrepareForClearanceCheckList = ({
   }
 
   return (
-    <Grid desktop={{ col: 6 }}>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{h('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{h('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
-      <PageHeading className="margin-top-4 margin-bottom-2">
-        {t('heading')}
-      </PageHeading>
-
-      <p
-        className="margin-top-0 margin-bottom-1 font-body-lg"
-        data-testid="model-plan-name"
+    <div>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.PREPARE_FOR_CLEARANCE
+        ]}
       />
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {t('description')}
-      </p>
 
-      <Formik
-        initialValues={modelPlan}
-        onSubmit={() => {
-          handleFormSubmit();
-        }}
-        enableReinitialize
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<ClearanceStatusesModelPlanFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            values,
-            setFieldValue
-          } = formikProps;
-          const flatErrors = flattenErrors(errors);
+      <Grid desktop={{ col: 6 }}>
+        <PageHeading className="margin-top-4 margin-bottom-2">
+          {t('heading')}
+        </PageHeading>
 
-          return (
-            <>
-              {Object.keys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={h('checkAndFix')}
-                >
-                  {Object.keys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={key}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
+        <p
+          className="margin-top-0 margin-bottom-1 font-body-lg"
+          data-testid="model-plan-name"
+        />
+        <p className="margin-bottom-2 font-body-md line-height-sans-4">
+          {t('description')}
+        </p>
 
-              <Form
-                className="margin-y-6"
-                data-testid="prepare-for-clearance-form"
-                onSubmit={e => {
-                  handleSubmit(e);
-                }}
-              >
-                <h3 className="margin-bottom-0">{t('subheading')}</h3>
+        <Formik
+          initialValues={modelPlan}
+          onSubmit={() => {
+            handleFormSubmit();
+          }}
+          enableReinitialize
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<ClearanceStatusesModelPlanFormType>) => {
+            const {
+              errors,
+              handleSubmit,
+              setErrors,
+              values,
+              setFieldValue
+            } = formikProps;
+            const flatErrors = flattenErrors(errors);
 
-                <Fieldset disabled={!!error || loading}>
-                  <div className="margin-top-3 margin-bottom-3">
-                    <FieldGroup
-                      scrollElement="basics"
-                      error={!!flatErrors.basics}
-                      className="margin-top-4"
-                    >
-                      <FieldErrorMsg>{flatErrors.basics}</FieldErrorMsg>
-                      {/* Mapping over task list sections and dynamically rendering each checkbox with labels */}
-                      {Object.keys(taskListSections).map((section: string) => {
-                        const sectionID =
-                          values[
-                            section as keyof ClearanceStatusesModelPlanFormType
-                          ]?.id;
-
-                        const sectionStatus =
-                          values[
-                            section as keyof ClearanceStatusesModelPlanFormType
-                          ]?.status;
-
-                        const readyForClearanceByUserAccount =
-                          values[
-                            section as keyof ClearanceStatusesModelPlanFormType
-                          ]?.readyForClearanceByUserAccount;
-
-                        const readyForClearanceDts =
-                          values[
-                            section as keyof ClearanceStatusesModelPlanFormType
-                          ]?.readyForClearanceDts;
-
-                        // Bypass/don't render itSolutions or prepareForClearance task list sections
-                        if (
-                          section === 'itSolutions' ||
-                          section === 'prepareForClearance'
-                        )
-                          return null;
-                        return (
-                          <Fragment key={section}>
-                            <Field
-                              as={CheckboxField}
-                              id={`prepare-for-clearance-${section}`}
-                              testid={`prepare-for-clearance-${section}`}
-                              name={`${section}.status`}
-                              label={taskListSections[section].heading}
-                              checked={
-                                sectionStatus === TaskStatus.READY_FOR_CLEARANCE
-                              }
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                if (e.target.checked) {
-                                  setFieldValue(
-                                    `${section}.status`,
-                                    TaskStatus.READY_FOR_CLEARANCE
-                                  );
-                                } else {
-                                  setFieldValue(
-                                    `${section}.status`,
-                                    TaskStatus.IN_PROGRESS
-                                  );
-                                }
-                              }}
-                            />
-
-                            {/* Label to render who marked readyForClearance and when */}
-                            {readyForClearanceByUserAccount &&
-                              readyForClearanceDts && (
-                                <SectionClearanceLabel
-                                  commonName={
-                                    readyForClearanceByUserAccount.commonName
-                                  }
-                                  readyForClearanceDts={readyForClearanceDts}
-                                />
-                              )}
-
-                            <Grid tablet={{ col: 8 }}>
-                              {/* Need to pass in section ID to update readyForClearance state on next route */}
-                              <UswdsReactLink
-                                data-testid={`clearance-${section}`}
-                                to={`/models/${modelID}/task-list/prepare-for-clearance/${taskListSections[section].path}/${sectionID}`}
-                                className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
-                              >
-                                {t('review', {
-                                  section: taskListSections[
-                                    section
-                                  ].heading.toLowerCase()
-                                })}
-
-                                <Icon.ArrowForward
-                                  className="margin-left-1"
-                                  aria-hidden
-                                />
-                              </UswdsReactLink>
-                            </Grid>
-                          </Fragment>
-                        );
-                      })}
-                    </FieldGroup>
-
-                    <Button
-                      className="margin-top-4"
-                      type="submit"
-                      data-testid="update-clearance"
-                      onClick={() => setErrors({})}
-                    >
-                      {t('update')}
-                    </Button>
-                  </div>
-                  <Button
-                    type="button"
-                    data-testid="dont-update-clearance"
-                    className="usa-button usa-button--unstyled display-flex"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+            return (
+              <>
+                {Object.keys(errors).length > 0 && (
+                  <ErrorAlert
+                    testId="formik-validation-errors"
+                    classNames="margin-top-3"
+                    heading={h('checkAndFix')}
                   >
-                    <Icon.ArrowBack className="margin-right-1" aria-hidden />
-                    {t('dontUpdate')}
-                  </Button>
-                </Fieldset>
-              </Form>
-            </>
-          );
-        }}
-      </Formik>
-    </Grid>
+                    {Object.keys(flatErrors).map(key => {
+                      return (
+                        <ErrorAlertMessage
+                          key={`Error.${key}`}
+                          errorKey={key}
+                          message={flatErrors[key]}
+                        />
+                      );
+                    })}
+                  </ErrorAlert>
+                )}
+
+                <Form
+                  className="margin-y-6"
+                  data-testid="prepare-for-clearance-form"
+                  onSubmit={e => {
+                    handleSubmit(e);
+                  }}
+                >
+                  <h3 className="margin-bottom-0">{t('subheading')}</h3>
+
+                  <Fieldset disabled={!!error || loading}>
+                    <div className="margin-top-3 margin-bottom-3">
+                      <FieldGroup
+                        scrollElement="basics"
+                        error={!!flatErrors.basics}
+                        className="margin-top-4"
+                      >
+                        <FieldErrorMsg>{flatErrors.basics}</FieldErrorMsg>
+                        {/* Mapping over task list sections and dynamically rendering each checkbox with labels */}
+                        {Object.keys(taskListSections).map(
+                          (section: string) => {
+                            const sectionID =
+                              values[
+                                section as keyof ClearanceStatusesModelPlanFormType
+                              ]?.id;
+
+                            const sectionStatus =
+                              values[
+                                section as keyof ClearanceStatusesModelPlanFormType
+                              ]?.status;
+
+                            const readyForClearanceByUserAccount =
+                              values[
+                                section as keyof ClearanceStatusesModelPlanFormType
+                              ]?.readyForClearanceByUserAccount;
+
+                            const readyForClearanceDts =
+                              values[
+                                section as keyof ClearanceStatusesModelPlanFormType
+                              ]?.readyForClearanceDts;
+
+                            // Bypass/don't render itSolutions or prepareForClearance task list sections
+                            if (
+                              section === 'itSolutions' ||
+                              section === 'prepareForClearance'
+                            )
+                              return null;
+                            return (
+                              <Fragment key={section}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`prepare-for-clearance-${section}`}
+                                  testid={`prepare-for-clearance-${section}`}
+                                  name={`${section}.status`}
+                                  label={taskListSections[section].heading}
+                                  checked={
+                                    sectionStatus ===
+                                    TaskStatus.READY_FOR_CLEARANCE
+                                  }
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      setFieldValue(
+                                        `${section}.status`,
+                                        TaskStatus.READY_FOR_CLEARANCE
+                                      );
+                                    } else {
+                                      setFieldValue(
+                                        `${section}.status`,
+                                        TaskStatus.IN_PROGRESS
+                                      );
+                                    }
+                                  }}
+                                />
+
+                                {/* Label to render who marked readyForClearance and when */}
+                                {readyForClearanceByUserAccount &&
+                                  readyForClearanceDts && (
+                                    <SectionClearanceLabel
+                                      commonName={
+                                        readyForClearanceByUserAccount.commonName
+                                      }
+                                      readyForClearanceDts={
+                                        readyForClearanceDts
+                                      }
+                                    />
+                                  )}
+
+                                <Grid tablet={{ col: 8 }}>
+                                  {/* Need to pass in section ID to update readyForClearance state on next route */}
+                                  <UswdsReactLink
+                                    data-testid={`clearance-${section}`}
+                                    to={`/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/${taskListSections[section].path}/${sectionID}`}
+                                    className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                                  >
+                                    {t('review', {
+                                      section: taskListSections[
+                                        section
+                                      ].heading.toLowerCase()
+                                    })}
+
+                                    <Icon.ArrowForward
+                                      className="margin-left-1"
+                                      aria-hidden
+                                    />
+                                  </UswdsReactLink>
+                                </Grid>
+                              </Fragment>
+                            );
+                          }
+                        )}
+                      </FieldGroup>
+
+                      <Button
+                        className="margin-top-4"
+                        type="submit"
+                        data-testid="update-clearance"
+                        onClick={() => setErrors({})}
+                      >
+                        {t('update')}
+                      </Button>
+                    </div>
+                    <Button
+                      type="button"
+                      data-testid="dont-update-clearance"
+                      className="usa-button usa-button--unstyled display-flex"
+                      onClick={() =>
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list`
+                        )
+                      }
+                    >
+                      <Icon.ArrowBack className="margin-right-1" aria-hidden />
+                      {t('dontUpdate')}
+                    </Button>
+                  </Fieldset>
+                </Form>
+              </>
+            );
+          }}
+        </Formik>
+      </Grid>
+    </div>
   );
 };
 

@@ -19,13 +19,13 @@ export const PrepareForClearance = () => {
           <Switch>
             {/* Model Plan Prepare for clearance Pages */}
             <ProtectedRoute
-              path="/models/:modelID/task-list/prepare-for-clearance"
+              path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance"
               exact
               render={() => <PrepareForClearanceCheckList modelID={modelID} />}
             />
 
             <ProtectedRoute
-              path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID"
+              path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID"
               exact
               render={() => <ClearanceReview modelID={modelID} />}
             />

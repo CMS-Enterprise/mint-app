@@ -142,7 +142,10 @@ describe('The Collaborator/Team Member Form', () => {
     });
 
     cy.get('@modelPlanURL').then(modelPlanURL => {
-      const taskList = modelPlanURL.replace('read-view', 'task-list');
+      const taskList = modelPlanURL.replace(
+        'read-view',
+        'collaboration-area/task-list'
+      );
       cy.visit(taskList);
       cy.location().should(loc => {
         expect(loc.pathname).to.match(

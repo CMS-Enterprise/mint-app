@@ -19,6 +19,7 @@ export const miscellaneous: Record<string, string> = {
   pleaseSpecify: 'Please specify',
   saveAndStartNext: 'Save and start next Model Plan section',
   continueToTaskList: 'Continue to Model Plan task list',
+  continueToCollaborationArea: 'Continue to model collaboration area',
   returnToTaskList: 'Return to Model Plan task list',
   noResults: 'No results found',
   checkAndFix: 'Please check and fix the following',

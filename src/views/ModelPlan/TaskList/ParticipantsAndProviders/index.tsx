@@ -1,10 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
+import { Route, Switch, useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -26,6 +23,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -136,21 +134,14 @@ export const ParticipantsAndProvidersContent = () => {
         closeModal={() => setIsModalOpen(false)}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>
-          {participantsAndProvidersMiscT('breadcrumb')}
-        </Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.PARTICIPANTS_AND_PROVIDERS
+        ]}
+      />
 
       <PageHeading className="margin-top-4 margin-bottom-2">
         {participantsAndProvidersMiscT('heading')}
@@ -173,7 +164,7 @@ export const ParticipantsAndProvidersContent = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/participants-and-providers/participants-options`
+            `/models/${modelID}/collaboration-area/task-list/participants-and-providers/participants-options`
           );
         }}
         enableReinitialize
@@ -479,7 +470,9 @@ export const ParticipantsAndProvidersContent = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list`
+                            )
                           }
                         >
                           <Icon.ArrowBack
@@ -531,27 +524,27 @@ export const ParticipantsAndProviders = () => {
         <Grid desktop={{ col: 12 }}>
           <Switch>
             <ProtectedRoute
-              path="/models/:modelID/task-list/participants-and-providers"
+              path="/models/:modelID/collaboration-area/task-list/participants-and-providers"
               exact
               render={() => <ParticipantsAndProvidersContent />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/participants-and-providers/participants-options"
+              path="/models/:modelID/collaboration-area/task-list/participants-and-providers/participants-options"
               exact
               render={() => <ParticipantOptions />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/participants-and-providers/communication"
+              path="/models/:modelID/collaboration-area/task-list/participants-and-providers/communication"
               exact
               render={() => <Communication />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/participants-and-providers/coordination"
+              path="/models/:modelID/collaboration-area/task-list/participants-and-providers/coordination"
               exact
               render={() => <Coordination />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/participants-and-providers/provider-options"
+              path="/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options"
               exact
               render={() => <ProviderOptions />}
             />

@@ -1,15 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useParams } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  Grid,
-  GridContainer,
-  Icon
-} from '@trussworks/react-uswds';
+import { Route, Switch, useParams } from 'react-router-dom';
+import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -41,22 +35,14 @@ export const DocumentsContent = () => {
     <MainContent data-testid="model-documents">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{h('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink
-                asCustom={Link}
-                to={`/models/${modelID}/task-list`}
-              >
-                <span>{t('breadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{t('heading')}</Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.COLLABORATION_AREA,
+              BreadcrumbItemOptions.TASK_LIST,
+              BreadcrumbItemOptions.DOCUMENTS
+            ]}
+          />
 
           {message && <Expire delay={45000}>{message}</Expire>}
 
@@ -91,7 +77,7 @@ export const DocumentsContent = () => {
           </p>
 
           <UswdsReactLink
-            to={`/models/${modelID}/task-list`}
+            to={`/models/${modelID}/collaboration-area/task-list`}
             className="display-inline-flex flex-align-center margin-y-3"
           >
             <Icon.ArrowBack className="margin-right-1" aria-hidden />
@@ -103,7 +89,7 @@ export const DocumentsContent = () => {
           <UswdsReactLink
             className="usa-button"
             variant="unstyled"
-            to={`/models/${modelID}/documents/add-document`}
+            to={`/models/${modelID}/collaboration-area/documents/add-document`}
           >
             {t('addADocument')}
           </UswdsReactLink>
@@ -124,12 +110,12 @@ const Documents = () => {
     <Switch>
       {/* Model Plan Documents Pages */}
       <ProtectedRoute
-        path="/models/:modelID/documents"
+        path="/models/:modelID/collaboration-area/documents"
         exact
         render={() => <DocumentsContent />}
       />
       <ProtectedRoute
-        path="/models/:modelID/documents/add-document"
+        path="/models/:modelID/collaboration-area/documents/add-document"
         exact
         render={() => <AddDocument />}
       />

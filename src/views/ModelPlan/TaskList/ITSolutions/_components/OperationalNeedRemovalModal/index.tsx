@@ -49,7 +49,9 @@ const OperationalNeedRemovalModal = ({
               </span>
             </Alert>
           );
-          history.push(`/models/${modelID}/task-list/it-solutions`);
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/it-solutions`
+          );
           setIsModalOpen(false);
         }
       })

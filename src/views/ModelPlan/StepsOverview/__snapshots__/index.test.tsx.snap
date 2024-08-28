@@ -24,7 +24,7 @@ exports[`The Model Plan Steps Overview static page > matches the snapshot 1`] = 
             className="usa-breadcrumb__list-item"
           >
             <a
-              className="usa-breadcrumb__link"
+              className="usa-link usa-breadcrumb__link"
               href="/"
               onClick={[Function]}
             >
@@ -37,7 +37,9 @@ exports[`The Model Plan Steps Overview static page > matches the snapshot 1`] = 
             aria-current="page"
             className="usa-breadcrumb__list-item usa-current"
           >
-            Start a new model plan
+            <span>
+              Start a new model plan
+            </span>
           </li>
         </ol>
       </nav>

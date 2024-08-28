@@ -8,9 +8,6 @@ import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   ComboBox,
   Fieldset,
@@ -29,7 +26,7 @@ import {
   useUpdateOperationalSolutionMutation
 } from 'gql/gen/graphql';
 
-import UswdsReactLink from 'components/LinkWrapper';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
@@ -173,7 +170,7 @@ const AddSolution = () => {
 
     if (updateMutation && !updateMutation.errors) {
       history.push(
-        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions?isCustomNeed=${isCustomNeed}`
+        `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/select-solutions?isCustomNeed=${isCustomNeed}`
       );
     } else if (!updateMutation || updateMutation.errors) {
       setMutationError(true);
@@ -190,30 +187,15 @@ const AddSolution = () => {
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-            <span>{h('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/`}
-          >
-            <span>{h('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink
-            asCustom={UswdsReactLink}
-            to={`/models/${modelID}/task-list/it-solutions`}
-          >
-            <span>{t('breadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{t('addSolution')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.IT_TRACKER
+        ]}
+        customItem={t('addSolution')}
+      />
 
       {mutationError && (
         <Alert type="error" slim>
@@ -347,11 +329,11 @@ const AddSolution = () => {
                                       OperationalSolutionKey.OTHER_NEW_PROCESS
                                     ) {
                                       history.push(
-                                        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
+                                        `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution`
                                       );
                                     } else {
                                       history.push(
-                                        `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution?selectedSolution=${values.key}`
+                                        `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution?selectedSolution=${values.key}`
                                       );
                                     }
                                   }}
@@ -407,8 +389,8 @@ const AddSolution = () => {
                               history.push(
                                 isCustomNeed
                                   ? // To update this to go to new update operational need page
-                                    `/models/${modelID}/task-list/it-solutions`
-                                  : `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`
+                                    `/models/${modelID}/collaboration-area/task-list/it-solutions`
+                                  : `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/select-solutions`
                               );
                             }}
                           >

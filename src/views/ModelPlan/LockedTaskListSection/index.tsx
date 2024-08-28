@@ -1,12 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink
-} from '@trussworks/react-uswds';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -28,22 +24,14 @@ const LockedTaskListSection = () => {
   return (
     <MainContent className="mint-not-found grid-container">
       {route && (
-        <BreadcrumbBar variant="wrap">
-          <Breadcrumb>
-            <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-              <span>{t('navigation.home')}</span>
-            </BreadcrumbLink>
-          </Breadcrumb>
-          <Breadcrumb>
-            <BreadcrumbLink
-              asCustom={UswdsReactLink}
-              to={`/models/${modelID}/task-list/`}
-            >
-              <span>{t('navigation.modelPlanTaskList')}</span>
-            </BreadcrumbLink>
-          </Breadcrumb>
-          <Breadcrumb current>{t(`breadCrumbState.${route}`)}</Breadcrumb>
-        </BreadcrumbBar>
+        <Breadcrumbs
+          items={[
+            BreadcrumbItemOptions.HOME,
+            BreadcrumbItemOptions.COLLABORATION_AREA,
+            BreadcrumbItemOptions.TASK_LIST
+          ]}
+          customItem={t(`breadCrumbState.${route}`)}
+        />
       )}
 
       {!error ? (
@@ -56,7 +44,7 @@ const LockedTaskListSection = () => {
           <UswdsReactLink
             className="usa-button margin-top-6"
             variant="unstyled"
-            to={`/models/${modelID}/task-list`}
+            to={`/models/${modelID}/collaboration-area/task-list`}
           >
             {t('returnToTaskList')}
           </UswdsReactLink>
@@ -71,7 +59,7 @@ const LockedTaskListSection = () => {
           <UswdsReactLink
             className="usa-button margin-top-6"
             variant="unstyled"
-            to={`/models/${modelID}/task-list`}
+            to={`/models/${modelID}/collaboration-area/task-list`}
           >
             {t('returnToTaskList')}
           </UswdsReactLink>

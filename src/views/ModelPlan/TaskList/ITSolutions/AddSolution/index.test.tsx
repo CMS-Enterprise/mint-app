@@ -97,11 +97,11 @@ describe('Operational Solutions AddSolution', async () => {
         <MemoryRouter
           initialEntries={[
             {
-              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+              pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-solution`
             }
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/add-solution">
             <MockedProvider mocks={mocks} addTypename={false}>
               <AddSolution />
             </MockedProvider>
@@ -125,11 +125,11 @@ describe('Operational Solutions AddSolution', async () => {
         <MemoryRouter
           initialEntries={[
             {
-              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+              pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-solution`
             }
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/add-solution">
             <MockedProvider mocks={mocks} addTypename={false}>
               <AddSolution />
             </MockedProvider>
@@ -155,11 +155,11 @@ describe('Operational Solutions AddSolution', async () => {
         <MemoryRouter
           initialEntries={[
             {
-              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution`
+              pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-solution`
             }
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/add-solution">
             <MockedProvider mocks={mocks} addTypename={false}>
               <AddSolution />
             </MockedProvider>

@@ -154,15 +154,6 @@ const TaskListSideNav = ({
           </Button>
         </div>
 
-        <Button
-          className="line-height-body-5 test-withdraw-request text-red"
-          type="button"
-          unstyled
-          onClick={() => setModalOpen(true)}
-        >
-          {t('sideNav.remove')}
-        </Button>
-
         <div className="margin-top-4 margin-bottom-6">
           <h4 className="margin-bottom-1">{t('sideNav.relatedContent')}</h4>
           <Button
@@ -198,7 +189,9 @@ const TaskListSideNav = ({
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>
 
           <div className="margin-bottom-2">
-            <UswdsReactLink to={`/models/${modelID}/collaborators?view=manage`}>
+            <UswdsReactLink
+              to={`/models/${modelID}/collaboration-area/collaborators?view=manage`}
+            >
               {t('sideNav.editTeam')}
             </UswdsReactLink>
           </div>

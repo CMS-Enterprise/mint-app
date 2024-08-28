@@ -94,7 +94,7 @@ const InfoToggle = ({
               {t('changeAnswer')}
               <UswdsReactLink
                 to={{
-                  pathname: `/models/${modelID}/task-list/${needConfig?.route}`,
+                  pathname: `/models/${modelID}/collaboration-area/task-list/${needConfig?.route}`,
                   state: { scrollElement: needConfig.fieldName.toString() }
                 }}
               >

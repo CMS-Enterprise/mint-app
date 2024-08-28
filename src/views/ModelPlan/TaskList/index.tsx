@@ -10,11 +10,8 @@ import React, {
 import ReactGA from 'react-ga4';
 import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Grid,
   GridContainer,
@@ -34,6 +31,7 @@ import {
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -54,7 +52,6 @@ import TaskListButton from './_components/TaskListButton';
 import TaskListItem, { TaskListDescription } from './_components/TaskListItem';
 import TaskListLock from './_components/TaskListLock';
 import TaskListSideNav from './_components/TaskListSideNav';
-import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
 
@@ -126,6 +123,13 @@ export type StatusMessageType = {
   status: 'success' | 'error';
 };
 
+export const getITSolutionsStatus = (
+  operationalNeedsArray: OperationalNeedsType[]
+) => {
+  const inProgress = operationalNeedsArray.find(need => need.modifiedDts);
+  return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
+};
+
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
@@ -190,13 +194,6 @@ const TaskList = () => {
 
   const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
-  const getITSolutionsStatus = (
-    operationalNeedsArray: OperationalNeedsType[]
-  ) => {
-    const inProgress = operationalNeedsArray.find(need => need.modifiedDts);
-    return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
-  };
-
   const itSolutions: ITSolutionsType = {
     modifiedDts: getLatestModifiedDate(operationalNeeds),
     status: getITSolutionsStatus(operationalNeeds)
@@ -256,14 +253,13 @@ const TaskList = () => {
     >
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{t('navigation.home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.COLLABORATION_AREA,
+              BreadcrumbItemOptions.TASK_LIST
+            ]}
+          />
         </Grid>
 
         {!!modelPlan.suggestedPhase && !statusChecked && (
@@ -317,7 +313,7 @@ const TaskList = () => {
           <Grid row gap>
             <Grid desktop={{ col: 9 }}>
               <PageHeading className="margin-top-4 margin-bottom-0">
-                {t('navigation.modelPlanTaskList')}
+                {t('heading')}
               </PageHeading>
               <p
                 className="margin-top-0 margin-bottom-2 font-body-lg"
@@ -336,12 +332,17 @@ const TaskList = () => {
                 </DiscussionModalWrapper>
               )}
 
-              <TaskListStatus
-                modelID={modelID}
-                status={status}
-                updateLabel
-                statusLabel
-              />
+              <div className="padding-y-1">
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area`}
+                  data-testid="return-to-collaboration"
+                >
+                  <span>
+                    <Icon.ArrowBack className="top-3px margin-right-1" />
+                    {t('returnToCollaboration')}
+                  </span>
+                </UswdsReactLink>
+              </div>
 
               <DicussionBanner
                 discussions={discussions}
@@ -562,14 +563,14 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
             <UswdsReactLink
               variant="unstyled"
               className="margin-right-4 display-block margin-bottom-1"
-              to={`/models/${modelID}/documents`}
+              to={`/models/${modelID}/collaboration-area/documents`}
             >
               {t('documentSummaryBox.viewAll')}
             </UswdsReactLink>
 
             <UswdsReactLink
               variant="unstyled"
-              to={`/models/${modelID}/documents/add-document`}
+              to={`/models/${modelID}/collaboration-area/documents/add-document`}
             >
               {t('documentSummaryBox.addAnother')}
             </UswdsReactLink>
@@ -583,7 +584,7 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
             <UswdsReactLink
               className="usa-button usa-button--outline"
               variant="unstyled"
-              to={`/models/${modelID}/documents/add-document`}
+              to={`/models/${modelID}/collaboration-area/documents/add-document`}
             >
               {t('documentSummaryBox.cta')}
             </UswdsReactLink>
@@ -633,14 +634,14 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
             <UswdsReactLink
               variant="unstyled"
               className="margin-right-4 display-block margin-bottom-1"
-              to={`/models/${modelID}/cr-and-tdl`}
+              to={`/models/${modelID}/collaboration-area/cr-and-tdl`}
             >
               {t('crTDLsSummaryBox.viewAll')}
             </UswdsReactLink>
 
             <UswdsReactLink
               variant="unstyled"
-              to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
+              to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
             >
               {t('crTDLsSummaryBox.uploadAnother')}
             </UswdsReactLink>
@@ -656,7 +657,7 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
             <UswdsReactLink
               className="usa-button usa-button--outline"
               variant="unstyled"
-              to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
+              to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
             >
               {t('crTDLsSummaryBox.add')}
             </UswdsReactLink>

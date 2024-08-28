@@ -251,7 +251,7 @@ const ChangeHistory = () => {
           <div className="display-flex flex-justify">
             <UswdsReactLink
               to={`/models/${modelID}/${
-                fromReadView ? 'read-only' : 'task-list'
+                fromReadView ? 'read-only' : 'collaboration-area'
               }`}
               className="display-flex flex-align-center margin-bottom-4"
             >

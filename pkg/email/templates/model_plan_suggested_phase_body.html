@@ -16,19 +16,18 @@
 {{- else if eq .Phase "ENDED"}} model has not yet ended
 {{end}}, please adjust your model’s anticipated timeline.</p>
 <br/>
-<br/>
-<b>Current status: </b>{{.CurrentStatusHumanized}}
+<p><b>Current status: </b>{{.CurrentStatusHumanized}}
 <br/>
 <b>New status:</b>
 {{- if gt (len .SuggestedStatusesHumanized) 1}} You will be asked to select from one of the available clearance stage statuses
 {{- else}} {{index .SuggestedStatusesHumanized 0}}
 {{end}}
-<br />
-<br />
+</p>
+<br/>
 <a href="{{.ClientAddress}}/models/{{.ModelPlanID}}/status?model-status={{index .SuggestedStatusesRaw 0}}">Yes, update my model’s status</a>
 <br/>
 <br/>
-<p>If you’re not ready to update your model’s status, please <a href="{{.ClientAddress}}/models/{{.ModelPlanID}}/task-list/basics/milestones">adjust your model’s anticipated timeline</a>. If you adjust your timeline, you may receive this notification again.</p>
+<p>If you’re not ready to update your model’s status, please <a href="{{.ClientAddress}}/models/{{.ModelPlanID}}/collaboration-area/task-list/basics/milestones">adjust your model’s anticipated timeline</a>. If you adjust your timeline, you may receive this notification again.</p>
 <hr />
 <br />
-<p>You’re receiving this notification because you are listed as the model lead for {{.ModelPlanName}}. If this is incorrect, <a href="{{.ClientAddress}}/models/{{.ModelPlanID}}/collaborators">please update the model team</a>.</p>
+<p>You’re receiving this notification because you are listed as the model lead for {{.ModelPlanName}}. If this is incorrect, <a href="{{.ClientAddress}}/models/{{.ModelPlanID}}/collaboration-area/collaborators">please update the model team</a>.</p>

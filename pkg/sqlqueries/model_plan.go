@@ -41,6 +41,9 @@ var modelPlanGetByOperationalSolutionKeySQL string
 //go:embed SQL/model_plan/collection_where_favorited_by_user_id.sql
 var modelPlanCollectionWhereFavoritedByUserID string
 
+//go:embed SQL/model_plan/get_task_list_status.sql
+var modelPlanGetTaskListStatus string
+
 type modelPlanScripts struct {
 	Create                                 string
 	Update                                 string
@@ -55,6 +58,7 @@ type modelPlanScripts struct {
 	GetOpSolutionLastModifiedDtsByIDLoader string
 	GetByOperationalSolutionKey            string
 	CollectionWhereFavoritedByUserID       string
+	GetTaskListStatus                      string
 }
 
 // ModelPlan houses all the sql for getting data for model plan from the database
@@ -72,4 +76,5 @@ var ModelPlan = modelPlanScripts{
 	GetOpSolutionLastModifiedDtsByIDLoader: modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL,
 	GetByOperationalSolutionKey:            modelPlanGetByOperationalSolutionKeySQL,
 	CollectionWhereFavoritedByUserID:       modelPlanCollectionWhereFavoritedByUserID,
+	GetTaskListStatus:                      modelPlanGetTaskListStatus,
 }

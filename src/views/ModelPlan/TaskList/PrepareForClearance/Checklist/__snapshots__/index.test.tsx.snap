@@ -2,10 +2,7 @@
 
 exports[`Prepare for clearance checklist > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="desktop:grid-col-6"
-    data-testid="grid"
-  >
+  <div>
     <nav
       aria-label="Breadcrumbs"
       class="usa-breadcrumb usa-breadcrumb--wrap"
@@ -17,7 +14,7 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
           class="usa-breadcrumb__list-item"
         >
           <a
-            class="usa-breadcrumb__link"
+            class="usa-link usa-breadcrumb__link"
             href="/"
           >
             <span>
@@ -29,8 +26,20 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
           class="usa-breadcrumb__list-item"
         >
           <a
-            class="usa-breadcrumb__link"
-            href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/"
+            class="usa-link usa-breadcrumb__link"
+            href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area"
+          >
+            <span>
+              Model collaboration area
+            </span>
+          </a>
+        </li>
+        <li
+          class="usa-breadcrumb__list-item"
+        >
+          <a
+            class="usa-link usa-breadcrumb__link"
+            href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list"
           >
             <span>
               Model Plan task list
@@ -41,362 +50,369 @@ exports[`Prepare for clearance checklist > matches snapshot 1`] = `
           aria-current="page"
           class="usa-breadcrumb__list-item usa-current"
         >
-          Prepare for clearance
+          <span>
+            Prepare for clearance
+          </span>
         </li>
       </ol>
     </nav>
-    <h1
-      aria-live="polite"
-      class="mint-h1 margin-top-4 margin-bottom-2"
-      tabindex="-1"
+    <div
+      class="desktop:grid-col-6"
+      data-testid="grid"
     >
-      Prepare for clearance
-    </h1>
-    <p
-      class="margin-top-0 margin-bottom-1 font-body-lg"
-      data-testid="model-plan-name"
-    />
-    <p
-      class="margin-bottom-2 font-body-md line-height-sans-4"
-    >
-      After you’ve iterated on your Model Plan, make sure the information that’s included in your Model Plan matches any documentation that you’re using for clearance.
-    </p>
-    <form
-      action="#"
-      class="margin-y-6"
-      data-testid="prepare-for-clearance-form"
-    >
-      <h3
-        class="margin-bottom-0"
+      <h1
+        aria-live="polite"
+        class="mint-h1 margin-top-4 margin-bottom-2"
+        tabindex="-1"
       >
-        Select which sections are ready for clearance.
-      </h3>
-      <fieldset
-        class="usa-fieldset"
-        data-testid="fieldset"
+        Prepare for clearance
+      </h1>
+      <p
+        class="margin-top-0 margin-bottom-1 font-body-lg"
+        data-testid="model-plan-name"
+      />
+      <p
+        class="margin-bottom-2 font-body-md line-height-sans-4"
       >
-        <div
-          class="margin-top-3 margin-bottom-3"
+        After you’ve iterated on your Model Plan, make sure the information that’s included in your Model Plan matches any documentation that you’re using for clearance.
+      </p>
+      <form
+        action="#"
+        class="margin-y-6"
+        data-testid="prepare-for-clearance-form"
+      >
+        <h3
+          class="margin-bottom-0"
+        >
+          Select which sections are ready for clearance.
+        </h3>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
         >
           <div
-            class="usa-form-group margin-top-4"
-            data-scroll="basics"
+            class="margin-top-3 margin-bottom-3"
           >
             <div
-              class="mint-checkbox usa-checkbox"
+              class="usa-form-group margin-top-4"
+              data-scroll="basics"
             >
-              <input
-                checked=""
-                class="usa-checkbox__input"
-                data-testid="prepare-for-clearance-basics"
-                id="prepare-for-clearance-basics"
-                name="basics.status"
-                type="checkbox"
-                value="READY_FOR_CLEARANCE"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="prepare-for-clearance-basics"
+              <div
+                class="mint-checkbox usa-checkbox"
               >
-                Model basics
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-              />
-            </div>
-            <div
-              class="tablet:grid-col-8"
-              data-testid="grid"
-            >
-              <a
-                class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
-                data-testid="clearance-basics"
-                href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/basics/"
-              >
-                Review model basics
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-left-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <input
+                  checked=""
+                  class="usa-checkbox__input"
+                  data-testid="prepare-for-clearance-basics"
+                  id="prepare-for-clearance-basics"
+                  name="basics.status"
+                  type="checkbox"
+                  value="READY_FOR_CLEARANCE"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="prepare-for-clearance-basics"
                 >
-                  <path
-                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                  />
-                </svg>
-              </a>
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                data-testid="prepare-for-clearance-generalCharacteristics"
-                id="prepare-for-clearance-generalCharacteristics"
-                name="generalCharacteristics.status"
-                type="checkbox"
-                value="READY"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="prepare-for-clearance-generalCharacteristics"
+                  Model basics
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                />
+              </div>
+              <div
+                class="tablet:grid-col-8"
+                data-testid="grid"
               >
-                General characteristics
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-              />
-            </div>
-            <div
-              class="tablet:grid-col-8"
-              data-testid="grid"
-            >
-              <a
-                class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
-                data-testid="clearance-generalCharacteristics"
-                href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/characteristics/"
-              >
-                Review general characteristics
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-left-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <a
+                  class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-testid="clearance-basics"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/basics/"
                 >
-                  <path
-                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                  />
-                </svg>
-              </a>
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                data-testid="prepare-for-clearance-participantsAndProviders"
-                id="prepare-for-clearance-participantsAndProviders"
-                name="participantsAndProviders.status"
-                type="checkbox"
-                value="READY"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="prepare-for-clearance-participantsAndProviders"
+                  Review model basics
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
               >
-                Participants and providers
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-              />
-            </div>
-            <div
-              class="tablet:grid-col-8"
-              data-testid="grid"
-            >
-              <a
-                class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
-                data-testid="clearance-participantsAndProviders"
-                href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/participants-and-providers/"
-              >
-                Review participants and providers
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-left-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <input
+                  class="usa-checkbox__input"
+                  data-testid="prepare-for-clearance-generalCharacteristics"
+                  id="prepare-for-clearance-generalCharacteristics"
+                  name="generalCharacteristics.status"
+                  type="checkbox"
+                  value="READY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="prepare-for-clearance-generalCharacteristics"
                 >
-                  <path
-                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                  />
-                </svg>
-              </a>
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                data-testid="prepare-for-clearance-beneficiaries"
-                id="prepare-for-clearance-beneficiaries"
-                name="beneficiaries.status"
-                type="checkbox"
-                value="READY"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="prepare-for-clearance-beneficiaries"
+                  General characteristics
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                />
+              </div>
+              <div
+                class="tablet:grid-col-8"
+                data-testid="grid"
               >
-                Beneficiaries
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-              />
-            </div>
-            <div
-              class="tablet:grid-col-8"
-              data-testid="grid"
-            >
-              <a
-                class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
-                data-testid="clearance-beneficiaries"
-                href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/beneficiaries/"
-              >
-                Review beneficiaries
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-left-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <a
+                  class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-testid="clearance-generalCharacteristics"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/characteristics/"
                 >
-                  <path
-                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                  />
-                </svg>
-              </a>
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                data-testid="prepare-for-clearance-opsEvalAndLearning"
-                id="prepare-for-clearance-opsEvalAndLearning"
-                name="opsEvalAndLearning.status"
-                type="checkbox"
-                value="READY"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="prepare-for-clearance-opsEvalAndLearning"
+                  Review general characteristics
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
               >
-                Operations, evaluation, and learning
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-              />
-            </div>
-            <div
-              class="tablet:grid-col-8"
-              data-testid="grid"
-            >
-              <a
-                class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
-                data-testid="clearance-opsEvalAndLearning"
-                href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/ops-eval-and-learning/"
-              >
-                Review operations, evaluation, and learning
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-left-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <input
+                  class="usa-checkbox__input"
+                  data-testid="prepare-for-clearance-participantsAndProviders"
+                  id="prepare-for-clearance-participantsAndProviders"
+                  name="participantsAndProviders.status"
+                  type="checkbox"
+                  value="READY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="prepare-for-clearance-participantsAndProviders"
                 >
-                  <path
-                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                  />
-                </svg>
-              </a>
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                data-testid="prepare-for-clearance-payments"
-                id="prepare-for-clearance-payments"
-                name="payments.status"
-                type="checkbox"
-                value="READY"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="prepare-for-clearance-payments"
+                  Participants and providers
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                />
+              </div>
+              <div
+                class="tablet:grid-col-8"
+                data-testid="grid"
               >
-                Payment
-              </label>
-              <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-              />
-            </div>
-            <div
-              class="tablet:grid-col-8"
-              data-testid="grid"
-            >
-              <a
-                class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
-                data-testid="clearance-payments"
-                href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/task-list/prepare-for-clearance/payment/"
-              >
-                Review payment
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-left-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <a
+                  class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-testid="clearance-participantsAndProviders"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/participants-and-providers/"
                 >
-                  <path
-                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                  />
-                </svg>
-              </a>
+                  Review participants and providers
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  data-testid="prepare-for-clearance-beneficiaries"
+                  id="prepare-for-clearance-beneficiaries"
+                  name="beneficiaries.status"
+                  type="checkbox"
+                  value="READY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="prepare-for-clearance-beneficiaries"
+                >
+                  Beneficiaries
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                />
+              </div>
+              <div
+                class="tablet:grid-col-8"
+                data-testid="grid"
+              >
+                <a
+                  class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-testid="clearance-beneficiaries"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/beneficiaries/"
+                >
+                  Review beneficiaries
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  data-testid="prepare-for-clearance-opsEvalAndLearning"
+                  id="prepare-for-clearance-opsEvalAndLearning"
+                  name="opsEvalAndLearning.status"
+                  type="checkbox"
+                  value="READY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="prepare-for-clearance-opsEvalAndLearning"
+                >
+                  Operations, evaluation, and learning
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                />
+              </div>
+              <div
+                class="tablet:grid-col-8"
+                data-testid="grid"
+              >
+                <a
+                  class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-testid="clearance-opsEvalAndLearning"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/ops-eval-and-learning/"
+                >
+                  Review operations, evaluation, and learning
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
+              <div
+                class="mint-checkbox usa-checkbox"
+              >
+                <input
+                  class="usa-checkbox__input"
+                  data-testid="prepare-for-clearance-payments"
+                  id="prepare-for-clearance-payments"
+                  name="payments.status"
+                  type="checkbox"
+                  value="READY"
+                />
+                <label
+                  class="usa-checkbox__label"
+                  for="prepare-for-clearance-payments"
+                >
+                  Payment
+                </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                />
+              </div>
+              <div
+                class="tablet:grid-col-8"
+                data-testid="grid"
+              >
+                <a
+                  class="usa-link margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                  data-testid="clearance-payments"
+                  href="/models/d94958a4-2259-4fe9-b94c-f62492c43287/collaboration-area/task-list/prepare-for-clearance/payment/"
+                >
+                  Review payment
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-left-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                    />
+                  </svg>
+                </a>
+              </div>
             </div>
+            <button
+              class="usa-button margin-top-4"
+              data-testid="update-clearance"
+              type="submit"
+            >
+              Update section statuses
+            </button>
           </div>
           <button
-            class="usa-button margin-top-4"
-            data-testid="update-clearance"
-            type="submit"
+            class="usa-button usa-button usa-button--unstyled display-flex"
+            data-testid="dont-update-clearance"
+            type="button"
           >
-            Update section statuses
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Don’t update statuses and return to task list
           </button>
-        </div>
-        <button
-          class="usa-button usa-button usa-button--unstyled display-flex"
-          data-testid="dont-update-clearance"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            class="usa-icon margin-right-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-            />
-          </svg>
-          Don’t update statuses and return to task list
-        </button>
-      </fieldset>
-    </form>
+        </fieldset>
+      </form>
+    </div>
   </div>
 </DocumentFragment>
 `;

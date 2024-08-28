@@ -1,0 +1,289 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ModelPlanCard > matches the snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card desktop:grid-col-6 card--model-plan"
+    data-testid="Card"
+  >
+    <div
+      class="usa-card__container"
+    >
+      <header
+        class="usa-card__header"
+        data-testid="CardHeader"
+      >
+        <h3
+          class="usa-card__heading"
+        >
+          Model Plan
+        </h3>
+      </header>
+      <div
+        class="card__section-status"
+      >
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+        <span
+          class="text-base"
+        >
+          6/7 sections started
+        </span>
+      </div>
+      <div
+        class="usa-card__body"
+        data-testid="CardBody"
+      >
+        <p>
+          The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies.
+        </p>
+      </div>
+      <div
+        class="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3"
+      >
+        <span
+          class="text-base margin-right-1"
+        >
+          Most recent edit on 05/12/2022 by 
+        </span>
+        <div
+          class="display-flex text-base-darkest flex-align-center"
+        >
+          <div
+            class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
+            data-testid="avatar--basic"
+          >
+            JD
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            <span
+              class=""
+            >
+              John Doe
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="usa-card__footer"
+        data-testid="CardFooter"
+      >
+        <a
+          class="usa-button"
+          data-testid="to-task-list"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+        >
+          Go to Model Plan
+        </a>
+        <button
+          class="usa-button usa-button usa-button--outline"
+          data-testid="button"
+          type="button"
+        >
+          Share or export Model Plan
+        </button>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`ModelPlanCard > matches the snapshot 2`] = `
+<DocumentFragment>
+  <li
+    class="usa-card desktop:grid-col-6 card--model-plan"
+    data-testid="Card"
+  >
+    <div
+      class="usa-card__container"
+    >
+      <header
+        class="usa-card__header"
+        data-testid="CardHeader"
+      >
+        <h3
+          class="usa-card__heading"
+        >
+          Model Plan
+        </h3>
+      </header>
+      <div
+        class="card__section-status flex-align-center"
+      >
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+        <span
+          class="text-base"
+        >
+          6/7 sections started
+        </span>
+      </div>
+      <div
+        class="usa-card__body"
+        data-testid="CardBody"
+      >
+        <p>
+          The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies.
+        </p>
+      </div>
+      <div
+        class="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3"
+      >
+        <span
+          class="text-base margin-right-1"
+        >
+          Most recent edit on 05/12/2022 by 
+        </span>
+        <div
+          class="display-flex text-base-darkest flex-align-center"
+        >
+          <div
+            class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
+            data-testid="avatar--basic"
+          >
+            JD
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            <span
+              class=""
+            >
+              John Doe
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="usa-card__footer"
+        data-testid="CardFooter"
+      >
+        <a
+          class="usa-button"
+          data-testid="to-task-list"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+        >
+          Go to Model Plan
+        </a>
+        <button
+          class="usa-button usa-button usa-button--outline"
+          data-testid="button"
+          type="button"
+        >
+          Share or export Model Plan
+        </button>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`ModelPlanCard > matches the snapshot 3`] = `
+<DocumentFragment>
+  <li
+    class="usa-card desktop:grid-col-6 card--model-plan"
+    data-testid="Card"
+  >
+    <div
+      class="usa-card__container"
+    >
+      <header
+        class="usa-card__header"
+        data-testid="CardHeader"
+      >
+        <h3
+          class="usa-card__heading"
+        >
+          Model Plan
+        </h3>
+      </header>
+      <div
+        class="card__section-status flex-align-center"
+      >
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+        <span
+          class="text-base"
+        >
+          5/7 sections started
+        </span>
+      </div>
+      <div
+        class="usa-card__body"
+        data-testid="CardBody"
+      >
+        <p>
+          The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies.
+        </p>
+      </div>
+      <div
+        class="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3"
+      >
+        <span
+          class="text-base margin-right-1"
+        >
+          Most recent edit on 05/12/2022 by 
+        </span>
+        <div
+          class="display-flex text-base-darkest flex-align-center"
+        >
+          <div
+            class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
+            data-testid="avatar--basic"
+          >
+            JD
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            <span
+              class=""
+            >
+              John Doe
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="usa-card__footer"
+        data-testid="CardFooter"
+      >
+        <a
+          class="usa-button"
+          data-testid="to-task-list"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+        >
+          Go to Model Plan
+        </a>
+        <button
+          class="usa-button usa-button usa-button--outline"
+          data-testid="button"
+          type="button"
+        >
+          Share or export Model Plan
+        </button>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
