@@ -2,7 +2,6 @@ const routes = {
   titles: {
     '/': 'Home',
 
-    '/login': 'Sign in',
     '/signin': 'Sign in',
     '/pre-decisional-notice': 'Pre-decisional notice',
 
