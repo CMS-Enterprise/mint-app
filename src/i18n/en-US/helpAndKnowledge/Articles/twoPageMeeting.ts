@@ -23,8 +23,7 @@ const twoPageMeeting = {
     },
     stepTwo: {
       heading: '2. High-level description of model elements',
-      item:
-        'Provide a high-level overview of key model design elements including target population, payment approach, and quality/performance measurement'
+      item: 'Provide a high-level overview of key model design elements including target population, payment approach, and quality/performance measurement'
     },
     stepThree: {
       heading:
@@ -33,8 +32,7 @@ const twoPageMeeting = {
         'Not all of these may be answerable early in model development/consideration',
       alignment: {
         bold: 'Alignment: ',
-        text:
-          'Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level:',
+        text: 'Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level:',
         numberedList: [
           'Drive accountable care',
           'Advance health equity',
@@ -53,24 +51,20 @@ const twoPageMeeting = {
       },
       feasibility: {
         bold: 'Feasibility: ',
-        text:
-          'Consider the likelihood of successful execution of the model including initial operational or feasibility limitations, and potential for scaling'
+        text: 'Consider the likelihood of successful execution of the model including initial operational or feasibility limitations, and potential for scaling'
       },
       innovation: {
         bold: 'Innovation: ',
-        text:
-          'The model provides innovation in a particular dimension – payment approach, provider type, patient population, mechanisms of transformation'
+        text: 'The model provides innovation in a particular dimension – payment approach, provider type, patient population, mechanisms of transformation'
       },
       stakeholders: {
         bold: 'Stakeholders: ',
-        text:
-          'Include a brief description of any stakeholder engagement in the model concept'
+        text: 'Include a brief description of any stakeholder engagement in the model concept'
       }
     },
     exampleSummaryBox: {
       heading: 'Example 2-pagers',
-      text:
-        'While all models are different, and therefore the content within a 2-pager will vary drastically, it might be helpful to see examples of what other teams have put together for their models in the past.',
+      text: 'While all models are different, and therefore the content within a 2-pager will vary drastically, it might be helpful to see examples of what other teams have put together for their models in the past.',
       list: {
         one: 'AHEAD 2-pager',
         two: 'Enhancing Oncology Model 2-pager',

@@ -31,7 +31,8 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 
-type FormTypes = UpdateCustomOperationalNeedMutation['addOrUpdateCustomOperationalNeed'];
+type FormTypes =
+  UpdateCustomOperationalNeedMutation['addOrUpdateCustomOperationalNeed'];
 
 type CustomOperationalNeedFormType = Omit<
   FormTypes,

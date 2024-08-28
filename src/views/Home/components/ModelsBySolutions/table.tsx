@@ -24,7 +24,8 @@ import ModelsBySolutionsBanner, {
 
 import ModelSolutionCard from './card';
 
-export type ModelsBySolutionType = GetModelsBySolutionQuery['modelPlansByOperationalSolutionKey'];
+export type ModelsBySolutionType =
+  GetModelsBySolutionQuery['modelPlansByOperationalSolutionKey'];
 
 type ModelPlansTableProps = {
   operationalSolutionKey: OperationalSolutionKey;
@@ -35,9 +36,8 @@ const ModelsBySolutionTable = ({
 }: ModelPlansTableProps) => {
   const { t: customHomeT } = useTranslation('customHome');
 
-  const [selectedStatus, setSelectedStatus] = useState<StatusCategories>(
-    'total'
-  );
+  const [selectedStatus, setSelectedStatus] =
+    useState<StatusCategories>('total');
 
   const basicsConfig = usePlanTranslation('basics');
 
@@ -62,16 +62,13 @@ const ModelsBySolutionTable = ({
 
   const [query, setQuery] = useState<string>('');
 
-  const {
-    currentItems,
-    Pagination,
-    Results
-  } = usePagination<ModelsBySolutionType>({
-    items: filteredModels,
-    itemsPerPage: 3,
-    loading,
-    query
-  });
+  const { currentItems, Pagination, Results } =
+    usePagination<ModelsBySolutionType>({
+      items: filteredModels,
+      itemsPerPage: 3,
+      loading,
+      query
+    });
 
   useEffect(() => {
     if (selectedStatus === 'total' && query.trim() === '') {

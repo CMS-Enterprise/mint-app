@@ -38,7 +38,8 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
-type AnticipateDependenciesFormType = GetAnticipateDependenciesQuery['modelPlan']['payments'];
+type AnticipateDependenciesFormType =
+  GetAnticipateDependenciesQuery['modelPlan']['payments'];
 
 const AnticipateDependencies = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -48,10 +49,12 @@ const AnticipateDependencies = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
-    creatingDependenciesBetweenServices: creatingDependenciesBetweenServicesConfig,
+    creatingDependenciesBetweenServices:
+      creatingDependenciesBetweenServicesConfig,
     needsClaimsDataCollection: needsClaimsDataCollectionConfig,
     providingThirdPartyFile: providingThirdPartyFileConfig,
-    isContractorAwareTestDataRequirements: isContractorAwareTestDataRequirementsConfig
+    isContractorAwareTestDataRequirements:
+      isContractorAwareTestDataRequirementsConfig
   } = usePlanTranslation('payments');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -87,9 +90,10 @@ const AnticipateDependencies = () => {
   });
 
   const nextPage = () => {
-    const hasReductionToCostSharing = formikRef?.current?.values.payClaims.includes(
-      ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-    );
+    const hasReductionToCostSharing =
+      formikRef?.current?.values.payClaims.includes(
+        ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+      );
     const hasNonClaimBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.NON_CLAIMS_BASED_PAYMENTS
     );
@@ -176,13 +180,8 @@ const AnticipateDependencies = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<AnticipateDependenciesFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setFieldValue,
-            setErrors,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setFieldValue, setErrors, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

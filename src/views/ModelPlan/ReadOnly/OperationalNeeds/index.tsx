@@ -10,7 +10,8 @@ import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskList
 import OperationalNeedsTable from 'views/ModelPlan/TaskList/ITSolutions/Home/operationalNeedsTable';
 import { NotFoundPartial } from 'views/NotFound';
 
-type OperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
+type OperationalNeedsType =
+  GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
 
 const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('opSolutionsMisc');

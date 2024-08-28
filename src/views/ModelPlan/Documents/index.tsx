@@ -25,9 +25,8 @@ export const DocumentsContent = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const { message } = useMessage();
   const [documentMessage, setDocumentMessage] = useState('');
-  const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(
-    'error'
-  );
+  const [documentStatus, setDocumentStatus] =
+    useState<DocumentStatusType>('error');
 
   const { modelName } = useContext(ModelInfoContext);
 

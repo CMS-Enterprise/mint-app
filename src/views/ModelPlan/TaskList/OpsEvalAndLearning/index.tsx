@@ -55,7 +55,8 @@ import IDDOCTesting from './IDDOCTesting';
 import Learning from './Learning';
 import Performance from './Performance';
 
-type OpsEvalAndLearningFormType = GetOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
+type OpsEvalAndLearningFormType =
+  GetOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
 
 // Used to render the total pages based on certain answers populated within this task list item
 export const renderTotalPages = (
@@ -242,13 +243,8 @@ export const OpsEvalAndLearningContent = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<OpsEvalAndLearningFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

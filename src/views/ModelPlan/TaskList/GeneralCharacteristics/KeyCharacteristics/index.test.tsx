@@ -10,7 +10,8 @@ import {
 
 import KeyCharacteristics from './index';
 
-type GetKeyCharacteristicsType = GetKeyCharacteristicsQuery['modelPlan']['generalCharacteristics'];
+type GetKeyCharacteristicsType =
+  GetKeyCharacteristicsQuery['modelPlan']['generalCharacteristics'];
 
 const keyCharacteristicsMockData: GetKeyCharacteristicsType = {
   __typename: 'PlanGeneralCharacteristics',

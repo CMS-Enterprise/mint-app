@@ -80,7 +80,8 @@ export const operationalSolutionSubCategoryMap: Record<
   quality: null
 };
 
-export type SolutionContactType = GetPossibleSolutionsQuery['possibleOperationalSolutions'][0]['pointsOfContact'][0];
+export type SolutionContactType =
+  GetPossibleSolutionsQuery['possibleOperationalSolutions'][0]['pointsOfContact'][0];
 
 export interface HelpSolutionType extends HelpSolutionBaseType {
   pointsOfContact?: SolutionContactType[];
@@ -129,8 +130,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: '4i',
     name: '4innovation',
     systemOwner: {
-      name:
-        'Enterprise Systems Solutions Group, Division of Applications Development and Support',
+      name: 'Enterprise Systems Solutions Group, Division of Applications Development and Support',
       system: 'Office of Information Technology'
     },
     contractors: [
@@ -155,8 +155,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'ACO-OS',
     name: 'Accountable Care Organization - Operational System',
     systemOwner: {
-      name:
-        'Enterprise Systems Solutions Group, Division of Applications Development and Support',
+      name: 'Enterprise Systems Solutions Group, Division of Applications Development and Support',
       system: 'Office of Information Technology'
     },
     contractors: [
@@ -283,8 +282,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'CBOSC',
     name: 'Consolidated Business Operations Support Center',
     systemOwner: {
-      name:
-        'Business Services Group, Division of System Support, Operations, and Security',
+      name: 'Business Services Group, Division of System Support, Operations, and Security',
       system: 'Center for Medicare and Medicaid Innovation'
     },
     contractors: [
@@ -442,8 +440,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'IPC',
     name: 'Innovation Payment Contractor',
     systemOwner: {
-      name:
-        'Business Services Group, Division of Budget Operations & Management',
+      name: 'Business Services Group, Division of Budget Operations & Management',
       system: 'Center for Medicare and Medicaid Innovation'
     },
     contractors: [
@@ -496,8 +493,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'IDR',
     name: 'Integrated Data Repository',
     systemOwner: {
-      name:
-        'Enterprise Architecture and Data Group, Division of Enterprise Information Management Services',
+      name: 'Enterprise Architecture and Data Group, Division of Enterprise Information Management Services',
       system: 'Office of Information Technology'
     },
     alertPrimaryContact: true,
@@ -783,8 +779,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.MEDICARE_FFS],
     name: 'Shared Systems',
     systemOwner: {
-      name:
-        'Applications Management Group, Division of Shared Systems Management',
+      name: 'Applications Management Group, Division of Shared Systems Management',
       system: 'Office of Information Technology'
     },
     components: {
