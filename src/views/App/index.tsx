@@ -67,6 +67,7 @@ import TermsAndConditions from 'views/TermsAndConditions';
 import TimeOutWrapper from 'views/TimeOutWrapper';
 import Unfollow from 'views/Unfollow';
 import UserInfo from 'views/User';
+import UserAnalytics from 'views/UserAnalytics';
 import UserInfoWrapper from 'views/UserInfoWrapper';
 
 import { NavContextProvider } from '../../components/Header/navContext';
@@ -303,6 +304,13 @@ const AppRoutes = () => {
       <ProtectedRoute path="/feedback-received" component={FeedbackReceived} />
 
       <ProtectedRoute path="/unfollow" exact component={Unfollow} />
+
+      <ProtectedRoute
+        path="/user-analytics"
+        exact
+        component={UserAnalytics}
+        enabled={flags.userAnalytics}
+      />
 
       {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
 

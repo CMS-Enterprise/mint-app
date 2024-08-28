@@ -45,7 +45,8 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             notificationsEnabled: false,
             changeHistoryEnabled: false,
             changeHistoryReleaseDate: '',
-            modelsApproachingClearanceEnabled: false
+            modelsApproachingClearanceEnabled: false,
+            userAnalytics: false
           }
         });
 

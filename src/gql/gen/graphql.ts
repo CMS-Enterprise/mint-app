@@ -4117,6 +4117,13 @@ export enum YesNoType {
   YES = 'YES'
 }
 
+export type GetFavoriteAnalyticsQueryVariables = Exact<{
+  filter: ModelPlanFilter;
+}>;
+
+
+export type GetFavoriteAnalyticsQuery = { __typename: 'Query', modelPlanCollection: Array<{ __typename: 'ModelPlan', id: UUID, modelName: string }> };
+
 export type GetAllBasicsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -5092,6 +5099,47 @@ export const ReadyForReviewUserFragmentFragmentDoc = gql`
   commonName
 }
     `;
+export const GetFavoriteAnalyticsDocument = gql`
+    query GetFavoriteAnalytics($filter: ModelPlanFilter!) {
+  modelPlanCollection(filter: $filter) {
+    id
+    modelName
+  }
+}
+    `;
+
+/**
+ * __useGetFavoriteAnalyticsQuery__
+ *
+ * To run a query within a React component, call `useGetFavoriteAnalyticsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFavoriteAnalyticsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFavoriteAnalyticsQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useGetFavoriteAnalyticsQuery(baseOptions: Apollo.QueryHookOptions<GetFavoriteAnalyticsQuery, GetFavoriteAnalyticsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFavoriteAnalyticsQuery, GetFavoriteAnalyticsQueryVariables>(GetFavoriteAnalyticsDocument, options);
+      }
+export function useGetFavoriteAnalyticsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFavoriteAnalyticsQuery, GetFavoriteAnalyticsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFavoriteAnalyticsQuery, GetFavoriteAnalyticsQueryVariables>(GetFavoriteAnalyticsDocument, options);
+        }
+export function useGetFavoriteAnalyticsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetFavoriteAnalyticsQuery, GetFavoriteAnalyticsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetFavoriteAnalyticsQuery, GetFavoriteAnalyticsQueryVariables>(GetFavoriteAnalyticsDocument, options);
+        }
+export type GetFavoriteAnalyticsQueryHookResult = ReturnType<typeof useGetFavoriteAnalyticsQuery>;
+export type GetFavoriteAnalyticsLazyQueryHookResult = ReturnType<typeof useGetFavoriteAnalyticsLazyQuery>;
+export type GetFavoriteAnalyticsSuspenseQueryHookResult = ReturnType<typeof useGetFavoriteAnalyticsSuspenseQuery>;
+export type GetFavoriteAnalyticsQueryResult = Apollo.QueryResult<GetFavoriteAnalyticsQuery, GetFavoriteAnalyticsQueryVariables>;
 export const GetAllBasicsDocument = gql`
     query GetAllBasics($id: UUID!) {
   modelPlan(id: $id) {
@@ -12971,6 +13019,7 @@ export type UnlockTaskListSectionMutationHookResult = ReturnType<typeof useUnloc
 export type UnlockTaskListSectionMutationResult = Apollo.MutationResult<UnlockTaskListSectionMutation>;
 export type UnlockTaskListSectionMutationOptions = Apollo.BaseMutationOptions<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>;
 export const TypedReadyForReviewUserFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReadyForReviewUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]} as unknown as DocumentNode<ReadyForReviewUserFragmentFragment, unknown>;
+export const TypedGetFavoriteAnalyticsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFavoriteAnalytics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}}]} as unknown as DocumentNode<GetFavoriteAnalyticsQuery, GetFavoriteAnalyticsQueryVariables>;
 export const TypedGetAllBasicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllBasics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"completeICIP"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceEnds"}},{"kind":"Field","name":{"kind":"Name","value":"announced"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsEnd"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}},{"kind":"Field","name":{"kind":"Name","value":"wrapUpEnds"}},{"kind":"Field","name":{"kind":"Name","value":"highLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"phasedIn"}},{"kind":"Field","name":{"kind":"Name","value":"phasedInNote"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllBasicsQuery, GetAllBasicsQueryVariables>;
 export const TypedGetBasicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetBasics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}}]}}]}}]}}]} as unknown as DocumentNode<GetBasicsQuery, GetBasicsQueryVariables>;
 export const TypedGetMilestonesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMilestones"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"completeICIP"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceEnds"}},{"kind":"Field","name":{"kind":"Name","value":"announced"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsEnd"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}},{"kind":"Field","name":{"kind":"Name","value":"highLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"wrapUpEnds"}},{"kind":"Field","name":{"kind":"Name","value":"phasedIn"}},{"kind":"Field","name":{"kind":"Name","value":"phasedInNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReadyForReviewUserFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReadyForReviewUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]} as unknown as DocumentNode<GetMilestonesQuery, GetMilestonesQueryVariables>;
