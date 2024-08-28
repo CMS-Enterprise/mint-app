@@ -39,7 +39,8 @@ import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
-type CoordinationFormType = GetCoordinationQuery['modelPlan']['participantsAndProviders'];
+type CoordinationFormType =
+  GetCoordinationQuery['modelPlan']['participantsAndProviders'];
 
 export const Coordination = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -51,8 +52,10 @@ export const Coordination = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
-    participantRequireFinancialGuarantee: participantRequireFinancialGuaranteeConfig,
-    participantRequireFinancialGuaranteeType: participantRequireFinancialGuaranteeTypeConfig,
+    participantRequireFinancialGuarantee:
+      participantRequireFinancialGuaranteeConfig,
+    participantRequireFinancialGuaranteeType:
+      participantRequireFinancialGuaranteeTypeConfig,
     coordinateWork: coordinateWorkConfig,
     gainsharePayments: gainsharePaymentsConfig,
     gainsharePaymentsTrack: gainsharePaymentsTrackConfig,
@@ -178,13 +181,8 @@ export const Coordination = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<CoordinationFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

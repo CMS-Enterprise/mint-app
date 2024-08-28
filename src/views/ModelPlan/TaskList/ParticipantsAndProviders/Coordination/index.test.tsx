@@ -13,7 +13,8 @@ import Sinon from 'sinon';
 
 import Coordination from './index';
 
-type GetCoordinationType = GetCoordinationQuery['modelPlan']['participantsAndProviders'];
+type GetCoordinationType =
+  GetCoordinationQuery['modelPlan']['participantsAndProviders'];
 
 const coordinationMockData: GetCoordinationType = {
   __typename: 'PlanParticipantsAndProviders',

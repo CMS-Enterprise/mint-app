@@ -15,7 +15,8 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 
-type CollaboratorType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type CollaboratorType =
+  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 type TableProps = {
   collaborators: CollaboratorType[];
@@ -122,33 +123,28 @@ const CollaboratorsTable = ({
     manageOrAdd
   ]);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow
-  } = useTable(
-    {
-      columns,
-      data: collaborators,
-      sortTypes: {
-        alphanumeric: (rowOne, rowTwo, columnName) => {
-          return sortColumnValues(
-            rowOne.values[columnName],
-            rowTwo.values[columnName],
-            TeamRole.MODEL_LEAD
-          );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data: collaborators,
+        sortTypes: {
+          alphanumeric: (rowOne, rowTwo, columnName) => {
+            return sortColumnValues(
+              rowOne.values[columnName],
+              rowTwo.values[columnName],
+              TeamRole.MODEL_LEAD
+            );
+          }
+        },
+        autoResetSortBy: false,
+        autoResetPage: false,
+        initialState: {
+          pageIndex: 0
         }
       },
-      autoResetSortBy: false,
-      autoResetPage: false,
-      initialState: {
-        pageIndex: 0
-      }
-    },
-    useSortBy
-  );
+      useSortBy
+    );
 
   return (
     <div className="collaborator-table">

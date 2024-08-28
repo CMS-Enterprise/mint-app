@@ -11,7 +11,8 @@ import {
 
 import ClaimsBasedPayment from './index';
 
-type GetClaimsBasedPaymentType = GetClaimsBasedPaymentQuery['modelPlan']['payments'];
+type GetClaimsBasedPaymentType =
+  GetClaimsBasedPaymentQuery['modelPlan']['payments'];
 
 const mockData: GetClaimsBasedPaymentType = {
   __typename: 'PlanPayments',

@@ -10,7 +10,8 @@ import {
 
 import TargetsAndOptions from './index';
 
-type GetTargetsAndOptionsType = GetTargetsAndOptionsQuery['modelPlan']['generalCharacteristics'];
+type GetTargetsAndOptionsType =
+  GetTargetsAndOptionsQuery['modelPlan']['generalCharacteristics'];
 
 const targetsAndOptionsMockData: GetTargetsAndOptionsType = {
   __typename: 'PlanGeneralCharacteristics',

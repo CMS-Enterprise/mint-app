@@ -35,12 +35,8 @@ const SixPagerMeeting = () => {
 
   const [initLocation] = useState<string>(location.pathname);
 
-  const {
-    prevPathname,
-    selectedSolution,
-    renderModal,
-    loading
-  } = useModalSolutionState(OperationalSolutionKey.LDG);
+  const { prevPathname, selectedSolution, renderModal, loading } =
+    useModalSolutionState(OperationalSolutionKey.LDG);
 
   const ldgRoute = `${initLocation}${location.search}${
     location.search ? '&' : '?'

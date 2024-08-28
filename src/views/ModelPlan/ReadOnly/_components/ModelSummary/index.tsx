@@ -13,7 +13,8 @@ import {
 import { formatDateLocal } from 'utils/date';
 
 type CollaboratorsType = GetModelSummaryQuery['modelPlan']['collaborators'][0];
-type CharacteristicsType = GetModelSummaryQuery['modelPlan']['generalCharacteristics'];
+type CharacteristicsType =
+  GetModelSummaryQuery['modelPlan']['generalCharacteristics'];
 
 type CRTDLsTypes =
   | GetCrtdLsQuery['modelPlan']['crs'][0]
@@ -75,10 +76,8 @@ const ModelSummary = ({
 
   const descriptionRef = React.createRef<HTMLElement>();
 
-  const [
-    isDescriptionExpandable,
-    setIsDescriptionExpandable
-  ] = useState<boolean>(false);
+  const [isDescriptionExpandable, setIsDescriptionExpandable] =
+    useState<boolean>(false);
 
   const [descriptionOpen, isDescriptionOpen] = useState<boolean>(false);
 

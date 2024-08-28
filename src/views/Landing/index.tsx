@@ -15,7 +15,8 @@ import FormatDiscussion from 'views/ModelPlan/Discussions/FormatDiscussion';
 
 import './index.scss';
 
-type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
+type DiscussionType =
+  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
 
 export type FooterItemType = {
   heading: string;

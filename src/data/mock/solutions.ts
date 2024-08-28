@@ -115,8 +115,7 @@ export const needQuestionAndAnswerMock = [
             {
               __typename: 'OperationalSolution',
               id: '00000000-0000-0000-0000-000000000000',
-              name:
-                'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+              name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
               key: OperationalSolutionKey.RMADA,
               isOther: false,
               isCommonSolution: true,
@@ -215,8 +214,7 @@ export const operationalNeedMock = (includeNotNeeded: boolean = false) => [
             {
               __typename: 'OperationalSolution',
               id: '00000000-0000-0000-0000-000000000000',
-              name:
-                'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+              name: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
               key: OperationalSolutionKey.RMADA,
               pocName: 'John Doe',
               pocEmail: '',

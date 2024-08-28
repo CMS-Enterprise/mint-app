@@ -23,8 +23,10 @@ import QuestionAndReply from './QuestionAndReply';
 
 import './index.scss';
 
-type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
-type ReplyType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
+type DiscussionType =
+  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
+type ReplyType =
+  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 export type DiscussionsProps = {
   modelID: string;

@@ -38,7 +38,8 @@ import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
-type CommunicationFormType = GetCommunicationQuery['modelPlan']['participantsAndProviders'];
+type CommunicationFormType =
+  GetCommunicationQuery['modelPlan']['participantsAndProviders'];
 
 export const Communication = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -178,13 +179,8 @@ export const Communication = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<CommunicationFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

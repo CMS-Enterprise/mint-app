@@ -12,7 +12,8 @@ import {
 
 import CCWAndQuality from '.';
 
-type GetCCWAndQualityType = GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
+type GetCCWAndQualityType =
+  GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
 
 const ccwAndQualityMockData: GetCCWAndQualityType = {
   __typename: 'PlanOpsEvalAndLearning',
