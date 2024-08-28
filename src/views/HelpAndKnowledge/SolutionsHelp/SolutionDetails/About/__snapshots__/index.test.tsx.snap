@@ -157,6 +157,33 @@ exports[`Operational Solutions About Components > matches the snapshot > 4innova
           </li>
         </ul>
       </div>
+      <div
+        class="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest"
+      >
+        <h4
+          class="margin-top-0 margin-bottom-1"
+        >
+          Is your model also making payments through the 
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about"
+          >
+            Innovation Payment Contractor (IPC)
+          </a>
+          ?
+        </h4>
+        <span>
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            View on SharePoint what is needed to onboard Models to the IPC Portal
+          </a>
+        </span>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -318,6 +345,33 @@ exports[`Operational Solutions About Components > matches the snapshot > Account
              - Show users Tasks and Notifications, the ability for users to manage and control the notifications
           </li>
         </ul>
+      </div>
+      <div
+        class="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest"
+      >
+        <h4
+          class="margin-top-0 margin-bottom-1"
+        >
+          Is your model also making payments through the 
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about"
+          >
+            Innovation Payment Contractor (IPC)
+          </a>
+          ?
+        </h4>
+        <span>
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            View on SharePoint what is needed to onboard Models to the IPC Portal
+          </a>
+        </span>
       </div>
     </div>
   </div>
@@ -1582,6 +1636,17 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           </li>
         </ul>
       </div>
+      <span>
+        <a
+          aria-label="Open in a new tab"
+          class="usa-link usa-link--external"
+          href="https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          View on SharePoint what is needed to onboard Models to the IPC Portal
+        </a>
+      </span>
     </div>
   </div>
 </DocumentFragment>
@@ -2290,7 +2355,7 @@ exports[`Operational Solutions About Components > matches the snapshot > Master 
       <p
         class="margin-top-0 text-pre-wrap margin-bottom-0"
       >
-        Master Data Management (MDM) for non-claims-based payments (NCBP) is a medium-term solution that satisfies the CMS requirement for payment models participating in shared savings initiatives to store non-claims payment data in a central location. Based on discussions with representatives of the Office of Information Technology (OIT), the Office of Enterprise Management (OEM), and the technical advisors of CMMI, MDM stores non-claims payment files in a central repository as CMS considers long-term solutions for non-claims payment data. 
+        Master Data Management (MDM) for non-claims-based payments (NCBP) is a medium-term solution that satisfies the CMS requirement for payment models participating in shared savings initiatives to store non-claims payment data in a central location. Based on discussions with representatives of the Office of Information Technology (OIT), the Office of Enterprise Management (OEM), and the technical advisors of CMMI, MDM stores non-claims payment files in a central repository as CMS considers long-term solutions for non-claims payment data.
 
 MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
 
@@ -3276,6 +3341,33 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
             </a>
           </li>
         </ul>
+      </div>
+      <div
+        class="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest"
+      >
+        <h4
+          class="margin-top-0 margin-bottom-1"
+        >
+          Is your model also making payments through the 
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about"
+          >
+            Innovation Payment Contractor (IPC)
+          </a>
+          ?
+        </h4>
+        <span>
+          <a
+            aria-label="Open in a new tab"
+            class="usa-link usa-link--external"
+            href="https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            View on SharePoint what is needed to onboard Models to the IPC Portal
+          </a>
+        </span>
       </div>
     </div>
   </div>
