@@ -34,10 +34,6 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
   // Everything with a modelID and under the parent 'task-list' or 'collaborators' route is considered editable
   const editable: boolean = pathname.split('/')[3] === 'collaboration-area';
 
-  const isReadView =
-    pathname.split('/')[3] === 'read-only' ||
-    pathname.split('/')[3] === 'read-view';
-
   const helpArticle: boolean = pathname.split('/')[1] === 'help-and-knowledge';
 
   const { data, loading } = useGetIsCollaboratorQuery({
@@ -57,7 +53,6 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
       modelID &&
       validModelID &&
       editable &&
-      !isReadView &&
       !isAssessment(groups, flags)
     ) {
       history.replace(`/models/${modelID}/read-only/model-basics`);
@@ -70,7 +65,6 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
     modelID,
     validModelID,
     editable,
-    isReadView,
     groups,
     flags
   ]);
