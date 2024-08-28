@@ -11,6 +11,47 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
     <div
       class="grid-container"
     >
+      <nav
+        aria-label="Breadcrumbs"
+        class="usa-breadcrumb usa-breadcrumb--wrap"
+      >
+        <ol
+          class="usa-breadcrumb__list"
+        >
+          <li
+            class="usa-breadcrumb__list-item"
+          >
+            <a
+              class="usa-link usa-breadcrumb__link"
+              href="/"
+            >
+              <span>
+                Home
+              </span>
+            </a>
+          </li>
+          <li
+            class="usa-breadcrumb__list-item"
+          >
+            <a
+              class="usa-link usa-breadcrumb__link"
+              href="/models/f11eb129-2c80-4080-9440-439cbe1a286f}/collaboration-area/collaborators"
+            >
+              <span>
+                Manage model team
+              </span>
+            </a>
+          </li>
+          <li
+            aria-current="page"
+            class="usa-breadcrumb__list-item usa-current"
+          >
+            <span>
+              Add a team member
+            </span>
+          </li>
+        </ol>
+      </nav>
       <div
         class="desktop:grid-col-6"
       >
@@ -273,7 +314,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
         </form>
         <a
           class="usa-link"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators?view=add"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators?view=add"
         >
           <span>
             ← 

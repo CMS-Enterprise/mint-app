@@ -1,10 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Icon,
@@ -22,6 +19,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -127,21 +125,15 @@ const Authority = () => {
         url={mutationError.destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>
-          {generalCharacteristicsMiscT('breadcrumb')}
-        </Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.GENERAL_CHARACTERISTICS
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {generalCharacteristicsMiscT('heading')}
       </PageHeading>
@@ -162,7 +154,7 @@ const Authority = () => {
         initialValues={initialValues}
         onSubmit={values => {
           history.push(
-            `/models/${modelID}/task-list/participants-and-providers`
+            `/models/${modelID}/collaboration-area/task-list/participants-and-providers`
           );
         }}
         enableReinitialize
@@ -401,7 +393,7 @@ const Authority = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/characteristics/targets-and-options`
+                          `/models/${modelID}/collaboration-area/task-list/characteristics/targets-and-options`
                         );
                       }}
                     >
@@ -414,7 +406,11 @@ const Authority = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
                     {miscellaneousT('saveAndReturn')}

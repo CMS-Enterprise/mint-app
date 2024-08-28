@@ -23,7 +23,7 @@ import {
 } from 'gql/gen/graphql';
 import { partition } from 'lodash';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
@@ -156,7 +156,7 @@ const SelectSolutions = () => {
         if (responses && !errors) {
           showMessageOnNextPage(removedSolutions);
           history.push(
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${
+            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${
               update
                 ? `solution-implementation-details?isCustomNeed=${!!isCustomNeed}&update-details=true`
                 : `solution-implementation-details?isCustomNeed=${!!isCustomNeed}`
@@ -172,14 +172,11 @@ const SelectSolutions = () => {
   };
 
   const breadcrumbs = [
-    { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    { text: t('breadcrumb'), url: `/models/${modelID}/task-list/it-solutions` },
-    {
-      text: t('solutionDetails'),
-      url: `/models/${modelID}/task-list/it-solutions/${operationalNeed.id}/${operationalNeed.solutions[0]?.id}/solution-details`
-    },
-    { text: update ? t('updateSolutions') : t('selectSolution') }
+    BreadcrumbItemOptions.HOME,
+    BreadcrumbItemOptions.COLLABORATION_AREA,
+    BreadcrumbItemOptions.TASK_LIST,
+    BreadcrumbItemOptions.IT_TRACKER,
+    BreadcrumbItemOptions.SOLUTION_DETAILS
   ];
 
   if (!data && loading) {
@@ -196,8 +193,11 @@ const SelectSolutions = () => {
         items={
           update
             ? breadcrumbs
-            : breadcrumbs.filter(item => item.text !== t('solutionDetails'))
+            : breadcrumbs.filter(
+                item => item !== BreadcrumbItemOptions.SOLUTION_DETAILS
+              )
         }
+        customItem={update ? t('updateSolutions') : t('selectSolution')}
       />
 
       {mutationError && (
@@ -361,7 +361,7 @@ const SelectSolutions = () => {
                         className="usa-button usa-button--outline margin-top-2 margin-bottom-3"
                         onClick={() => {
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${!!isCustomNeed}`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-solution?isCustomNeed=${!!isCustomNeed}`
                           );
                         }}
                       >
@@ -394,7 +394,7 @@ const SelectSolutions = () => {
                         className="usa-button usa-button--unstyled display-flex flex-align-center"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       >

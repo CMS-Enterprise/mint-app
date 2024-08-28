@@ -1,10 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
+import { Route, Switch, useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -27,6 +24,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MainContent from 'components/MainContent';
@@ -169,10 +167,12 @@ export const OpsEvalAndLearningContent = () => {
 
   const nextPage = () => {
     if (formikRef?.current?.values.iddocSupport) {
-      history.push(`/models/${modelID}/task-list/ops-eval-and-learning/iddoc`);
+      history.push(
+        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc`
+      );
     } else {
       history.push(
-        `/models/${modelID}/task-list/ops-eval-and-learning/performance`
+        `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/performance`
       );
     }
   };
@@ -207,19 +207,15 @@ export const OpsEvalAndLearningContent = () => {
         url={mutationError.destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {opsEvalAndLearningMiscT('heading')}
       </PageHeading>
@@ -361,7 +357,7 @@ export const OpsEvalAndLearningContent = () => {
                         id="ops-eval-and-learning-help-desk-use-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -482,7 +478,7 @@ export const OpsEvalAndLearningContent = () => {
                         id="ops-eval-and-learning-iddoc-support-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -521,7 +517,11 @@ export const OpsEvalAndLearningContent = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
                     {miscellaneousT('saveAndReturn')}
@@ -560,47 +560,47 @@ export const OpsEvalAndLearning = () => {
         <Grid desktop={{ col: 12 }}>
           <Switch>
             <ProtectedRoute
-              path="/models/:modelID/task-list/ops-eval-and-learning"
+              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning"
               exact
               render={() => <OpsEvalAndLearningContent />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/ops-eval-and-learning/iddoc"
+              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc"
               exact
               render={() => <IDDOC />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/ops-eval-and-learning/iddoc-testing"
+              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing"
               exact
               render={() => <IDDOCTesting />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/ops-eval-and-learning/iddoc-monitoring"
+              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-monitoring"
               exact
               render={() => <IDDOCMonitoring />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/ops-eval-and-learning/performance"
+              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/performance"
               exact
               render={() => <Performance />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/ops-eval-and-learning/evaluation"
+              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/evaluation"
               exact
               render={() => <Evaluation />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/ops-eval-and-learning/ccw-and-quality"
+              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality"
               exact
               render={() => <CCWAndQuality />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/ops-eval-and-learning/data-sharing"
+              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/data-sharing"
               exact
               render={() => <DataSharing />}
             />
             <ProtectedRoute
-              path="/models/:modelID/task-list/ops-eval-and-learning/learning"
+              path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/learning"
               exact
               render={() => <Learning />}
             />

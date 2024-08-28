@@ -185,7 +185,7 @@ const ModelPlansTable = ({
             <>
               <UswdsReactLink
                 to={`/models/${row.original.id}/${
-                  !isHome ? 'read-only/model-basics' : 'task-list'
+                  !isHome ? 'read-only/model-basics' : 'collaboration-area'
                 }`}
               >
                 {value}

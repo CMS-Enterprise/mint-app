@@ -108,9 +108,9 @@ export const modelPlanMisc: Record<string, string> = {
     'This is not a permanent name. If needed, you may update it later.',
   headingStatus: 'Update status',
   copy:
-    'After you’ve iterated on your Model Plan, update the status so others know what stage it’s at in the design and clearance process.',
+    'As you iterate on your Model Plan, update the status of your model so others known what stage it’s at in the design and clearance process.',
   updateButton: 'Update status',
-  return: 'Don’t update status and return to task list'
+  return: 'Don’t update status and return to model collaboration area'
 };
 
 export default modelPlan;

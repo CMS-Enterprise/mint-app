@@ -1,10 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Card,
   CardGroup,
@@ -21,6 +18,7 @@ import {
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Alert from 'components/shared/Alert';
@@ -109,14 +107,12 @@ const SettingsForm = () => {
     <MainContent>
       <GridContainer>
         <Grid desktop={{ col: 12 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{miscellaneousT('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{homepageSettingsT('heading')}</Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.HOME_SETTINGS
+            ]}
+          />
 
           <h1 className="margin-bottom-2">
             {homepageSettingsT('heading')}

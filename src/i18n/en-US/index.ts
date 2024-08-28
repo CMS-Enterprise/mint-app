@@ -48,6 +48,7 @@ import readOnlyModelPlan from './readOnly/readOnlyModelPlan';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
 import changeHistory from './changeHistory';
+import collaborationArea from './collaborationArea';
 import cookies from './cookies';
 import error from './error';
 import externalLinkModal from './externalLinkModal';
@@ -67,6 +68,7 @@ import termsAndConditions from './termsAndConditions';
 const enUS = {
   accessibilityStatement,
   auth,
+  collaborationArea,
   cookies,
   changeHistory,
   customHome,

@@ -1,10 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Icon,
@@ -23,6 +20,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
@@ -143,21 +141,15 @@ export const Communication = () => {
         url={mutationError.destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>
-          {participantsAndProvidersMiscT('breadcrumb')}
-        </Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.PARTICIPANTS_AND_PROVIDERS
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {participantsAndProvidersMiscT('heading')}
       </PageHeading>
@@ -179,7 +171,7 @@ export const Communication = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/participants-and-providers/coordination`
+            `/models/${modelID}/collaboration-area/task-list/participants-and-providers/coordination`
           );
         }}
         enableReinitialize
@@ -262,7 +254,7 @@ export const Communication = () => {
                         id="participants-and-providers-communication-method-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -400,7 +392,7 @@ export const Communication = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/participants-and-providers/participants-options`
+                          `/models/${modelID}/collaboration-area/task-list/participants-and-providers/participants-options`
                         );
                       }}
                     >
@@ -415,7 +407,11 @@ export const Communication = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

@@ -16,10 +16,7 @@ const statusText: Record<ModelPhase, string> = {
 };
 
 const modelPlanTaskList = {
-  navigation: {
-    home: 'Home',
-    modelPlanTaskList: 'Model Plan task list'
-  },
+  heading: 'Model Plan task list',
   subheading: 'for <1>{{modelName}}</1>',
   status: 'Status:',
   update: 'Update',
@@ -185,7 +182,8 @@ const modelPlanTaskList = {
     goToTimeline: 'No, go to timeline',
     hint: 'Select the specific clearance phase.',
     statusText
-  }
+  },
+  returnToCollaboration: 'Return to model collaboration area'
 };
 
 export default modelPlanTaskList;

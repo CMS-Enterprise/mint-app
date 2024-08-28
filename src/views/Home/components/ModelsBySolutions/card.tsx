@@ -48,7 +48,11 @@ const ModelSolutionCard = ({
               <p className="text-bold margin-top-0 margin-right-1">
                 {customHomeT('solutionCard.status')}
               </p>
-              <TaskListStatus modelID={id} status={status} />
+              <TaskListStatus
+                modelID={id}
+                status={status}
+                changeHistoryLink={false}
+              />
             </div>
           </Grid>
 

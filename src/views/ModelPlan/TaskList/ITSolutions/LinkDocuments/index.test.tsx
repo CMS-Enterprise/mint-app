@@ -108,13 +108,13 @@ describe('Operational Solutions Link Documents', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
+            pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
           }
         ]}
       >
         <VerboseMockedProvider mocks={mocks} addTypename={false}>
           <Provider store={store}>
-            <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents">
+            <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents">
               <MessageProvider>
                 <LinkDocuments />
               </MessageProvider>
@@ -154,13 +154,13 @@ describe('Operational Solutions Link Documents', () => {
         <MemoryRouter
           initialEntries={[
             {
-              pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
+              pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
             }
           ]}
         >
           <VerboseMockedProvider mocks={mocks} addTypename={false}>
             <Provider store={store}>
-              <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents">
+              <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents">
                 <MessageProvider>
                   <LinkDocuments />
                 </MessageProvider>

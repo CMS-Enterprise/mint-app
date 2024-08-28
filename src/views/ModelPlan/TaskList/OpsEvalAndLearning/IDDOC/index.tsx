@@ -1,10 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Icon,
@@ -21,6 +18,7 @@ import {
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
@@ -122,19 +120,15 @@ const IDDOC = () => {
         url={mutationError.destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {opsEvalAndLearningMiscT('heading')}
       </PageHeading>
@@ -156,7 +150,7 @@ const IDDOC = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/ops-eval-and-learning/iddoc-testing`
+            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing`
           );
         }}
         enableReinitialize
@@ -364,7 +358,7 @@ const IDDOC = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/ops-eval-and-learning`
+                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
                         );
                       }}
                     >
@@ -379,7 +373,11 @@ const IDDOC = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

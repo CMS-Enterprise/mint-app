@@ -28,6 +28,9 @@ const generalReadOnly = {
   modal: {
     share: 'Share',
     sharePlan: 'Share this Model Plan with others',
+    shareModel: 'Share this model',
+    exportModel: 'Export this Model Plan',
+    removeModel: 'Remove this model from MINT',
     shareDescription:
       'This will email a link to view this Model Plan within MINT.',
     shareInfo:

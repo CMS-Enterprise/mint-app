@@ -1,10 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Icon,
@@ -24,6 +21,7 @@ import {
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -127,21 +125,15 @@ export const ParticipantOptions = () => {
         url={mutationError.destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>
-          {participantsAndProvidersMiscT('breadcrumb')}
-        </Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.PARTICIPANTS_AND_PROVIDERS
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {participantsAndProvidersMiscT('heading')}
       </PageHeading>
@@ -162,7 +154,7 @@ export const ParticipantOptions = () => {
         initialValues={initialValues}
         onSubmit={() => {
           history.push(
-            `/models/${modelID}/task-list/participants-and-providers/communication`
+            `/models/${modelID}/collaboration-area/task-list/participants-and-providers/communication`
           );
         }}
         enableReinitialize
@@ -324,7 +316,7 @@ export const ParticipantOptions = () => {
                         id="participants-and-providers-recruitment-method-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -402,7 +394,7 @@ export const ParticipantOptions = () => {
                         id="participants-and-providers-selection-method-warning"
                         onClick={() =>
                           history.push(
-                            `/models/${modelID}/task-list/it-solutions`
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -467,7 +459,7 @@ export const ParticipantOptions = () => {
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         history.push(
-                          `/models/${modelID}/task-list/participants-and-providers`
+                          `/models/${modelID}/collaboration-area/task-list/participants-and-providers`
                         );
                       }}
                     >
@@ -482,7 +474,11 @@ export const ParticipantOptions = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => history.push(`/models/${modelID}/task-list`)}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
                     {miscellaneousT('saveAndReturn')}

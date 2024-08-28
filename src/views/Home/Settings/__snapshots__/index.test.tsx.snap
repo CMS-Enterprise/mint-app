@@ -28,7 +28,7 @@ exports[`settings snapshots > matches order snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
+                class="usa-link usa-breadcrumb__link"
                 href="/"
               >
                 <span>
@@ -40,7 +40,9 @@ exports[`settings snapshots > matches order snapshot 1`] = `
               aria-current="page"
               class="usa-breadcrumb__list-item usa-current"
             >
-              Homepage settings
+              <span>
+                Homepage settings
+              </span>
             </li>
           </ol>
         </nav>
@@ -164,7 +166,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
+                class="usa-link usa-breadcrumb__link"
                 href="/"
               >
                 <span>
@@ -176,7 +178,9 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
               aria-current="page"
               class="usa-breadcrumb__list-item usa-current"
             >
-              Homepage settings
+              <span>
+                Homepage settings
+              </span>
             </li>
           </ol>
         </nav>
@@ -506,7 +510,7 @@ exports[`settings snapshots > matches solutions snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
+                class="usa-link usa-breadcrumb__link"
                 href="/"
               >
                 <span>
@@ -518,7 +522,7 @@ exports[`settings snapshots > matches solutions snapshot 1`] = `
               class="usa-breadcrumb__list-item"
             >
               <a
-                class="usa-breadcrumb__link"
+                class="usa-link usa-breadcrumb__link"
                 href="/homepage-settings"
               >
                 <span>
@@ -530,7 +534,9 @@ exports[`settings snapshots > matches solutions snapshot 1`] = `
               aria-current="page"
               class="usa-breadcrumb__list-item usa-current"
             >
-              Select operational solutions
+              <span>
+                Select operational solutions
+              </span>
             </li>
           </ol>
         </nav>

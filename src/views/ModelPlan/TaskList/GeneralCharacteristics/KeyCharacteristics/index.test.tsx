@@ -61,11 +61,11 @@ describe('Model Plan Characteristics', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/key-characteristics'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/characteristics/key-characteristics'
         ]}
       >
         <MockedProvider mocks={keyCharacteristicsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/characteristics/key-characteristics">
+          <Route path="/models/:modelID/collaboration-area/task-list/characteristics/key-characteristics">
             <KeyCharacteristics />
           </Route>
         </MockedProvider>
@@ -93,11 +93,11 @@ describe('Model Plan Characteristics', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/key-characteristics'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/characteristics/key-characteristics'
         ]}
       >
         <MockedProvider mocks={keyCharacteristicsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/characteristics/key-characteristics">
+          <Route path="/models/:modelID/collaboration-area/task-list/characteristics/key-characteristics">
             <KeyCharacteristics />
           </Route>
         </MockedProvider>

@@ -44,10 +44,10 @@ export default {
     Story => (
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-details`
+          `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-details`
         ]}
       >
-        <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-details">
+        <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-details">
           <MessageProvider>
             <Story />
           </MessageProvider>

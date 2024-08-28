@@ -5,7 +5,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { GetPollNotificationsDocument } from 'gql/gen/graphql';
 
-import NavigationBar, { navLinks } from './index';
+import NavigationBar, { getActiveTab, navLinks } from './index';
 
 const notificationsMock = [
   {
@@ -89,5 +89,43 @@ describe('The NavigationBar component', () => {
     await waitFor(() => {
       expect(getByTestId('has-notifications')).toBeInTheDocument();
     });
+  });
+});
+
+describe('getActiveTab', () => {
+  it('should return true for the home route when pathname is the home route', () => {
+    const route = '/';
+    const pathname = '/';
+    expect(getActiveTab(route, pathname)).toBe(true);
+  });
+
+  it('should return true for the home route when pathname includes a home route', () => {
+    const route = '/';
+    const pathname = '/collaboration-area/123';
+    expect(getActiveTab(route, pathname)).toBe(true);
+  });
+
+  it('should return false for the home route when pathname does not match or include a home route', () => {
+    const route = '/';
+    const pathname = '/other-route';
+    expect(getActiveTab(route, pathname)).toBe(false);
+  });
+
+  it('should return true when currentBaseRoute matches baseRoute and pathname does not include any home routes', () => {
+    const route = '/some-route';
+    const pathname = '/some-route/123';
+    expect(getActiveTab(route, pathname)).toBe(true);
+  });
+
+  it('should return false when currentBaseRoute does not match baseRoute', () => {
+    const route = '/some-route';
+    const pathname = '/different-route/123';
+    expect(getActiveTab(route, pathname)).toBe(false);
+  });
+
+  it('should return false when pathname includes a home route', () => {
+    const route = '/some-route';
+    const pathname = '/collaboration-area/123';
+    expect(getActiveTab(route, pathname)).toBe(false);
   });
 });

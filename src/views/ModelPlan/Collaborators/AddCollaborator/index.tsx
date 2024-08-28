@@ -12,6 +12,7 @@ import {
   useUpdateModelPlanCollaboratorMutation
 } from 'gql/gen/graphql';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import OktaUserSelect from 'components/OktaUserSelect';
@@ -123,7 +124,7 @@ const Collaborators = () => {
               </>
             );
             history.push(
-              `/models/${modelID}/collaborators?view=${manageOrAdd}`
+              `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
             );
           }
         })
@@ -162,7 +163,7 @@ const Collaborators = () => {
               </>
             );
             history.push(
-              `/models/${modelID}/collaborators?view=${manageOrAdd}`
+              `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
             );
           }
         })
@@ -183,9 +184,29 @@ const Collaborators = () => {
     }
   };
 
+  const breadcrumbs = [BreadcrumbItemOptions.HOME];
+
+  if (manageOrAdd === 'manage') {
+    breadcrumbs.push(
+      BreadcrumbItemOptions.COLLABORATION_AREA,
+      BreadcrumbItemOptions.TASK_LIST,
+      BreadcrumbItemOptions.COLLABORATORS
+    );
+  } else {
+    breadcrumbs.push(BreadcrumbItemOptions.COLLABORATORS);
+  }
+
   return (
     <MainContent>
       <div className="grid-container">
+        <Breadcrumbs
+          items={breadcrumbs}
+          customItem={
+            collaboratorId
+              ? collaboratorsMiscT('collaboratorsMisc:updateATeamMember')
+              : collaboratorsMiscT('collaboratorsMisc:addATeamMember')
+          }
+        />
         <div className="desktop:grid-col-6">
           <PageHeading className="margin-top-6 margin-bottom-2">
             {collaboratorId
@@ -375,7 +396,7 @@ const Collaborators = () => {
           </Formik>
 
           <UswdsReactLink
-            to={`/models/${modelID}/collaborators?view=${manageOrAdd}`}
+            to={`/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`}
           >
             <span>&larr; </span>{' '}
             {!collaboratorId

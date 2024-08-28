@@ -10,7 +10,7 @@ export const CostEstimate = () => {
     <MainContent className="grid-container" data-testid="model-cost-estimate">
       <Switch>
         <ProtectedRoute
-          path="/models/:modelID/task-list/cost-estimate/page-1" // page-* may change pending UX clarifcation
+          path="/models/:modelID/collaboration-area/task-list/cost-estimate/page-1" // page-* may change pending UX clarifcation
           render={() => <NotFound />}
         />
         <Route path="*" render={() => <NotFoundPartial />} />

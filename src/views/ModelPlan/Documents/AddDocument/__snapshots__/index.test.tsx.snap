@@ -41,7 +41,19 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
+              >
+                <span>
+                  Model collaboration area
+                </span>
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-link usa-breadcrumb__link"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
               >
                 <span>
                   Model Plan task list
@@ -53,7 +65,7 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/documents"
               >
                 <span>
                   Documents
@@ -65,7 +77,7 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
               class="usa-breadcrumb__list-item usa-current"
             >
               <span>
-                Upload Document
+                Add a document
               </span>
             </li>
           </ol>

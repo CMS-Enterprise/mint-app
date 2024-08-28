@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Link,
   Route,
   Switch,
   useHistory,
@@ -9,9 +8,6 @@ import {
   useParams
 } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -34,6 +30,7 @@ import {
 } from 'gql/gen/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -224,19 +221,14 @@ const BasicsContent = () => {
         url={destinationURL}
       />
 
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{basicsMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.BASICS
+        ]}
+      />
 
       <PageHeading className="margin-top-4">
         {basicsMiscT('heading')}
@@ -256,7 +248,9 @@ const BasicsContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          history.push(`/models/${modelID}/task-list/basics/overview`);
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/basics/overview`
+          );
         }}
         enableReinitialize
         validationSchema={planBasicsSchema.pageOneSchema}
@@ -654,7 +648,9 @@ const BasicsContent = () => {
                           type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
-                            history.push(`/models/${modelID}/task-list`)
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list`
+                            )
                           }
                         >
                           <Icon.ArrowBack
@@ -708,17 +704,17 @@ export const Basics = () => {
         <Grid desktop={{ col: 12 }}>
           <Switch>
             <Route
-              path="/models/:modelID/task-list/basics"
+              path="/models/:modelID/collaboration-area/task-list/basics"
               exact
               component={() => <BasicsContent />}
             />
             <Route
-              path="/models/:modelID/task-list/basics/overview"
+              path="/models/:modelID/collaboration-area/task-list/basics/overview"
               exact
               render={() => <Overview />}
             />
             <Route
-              path="/models/:modelID/task-list/basics/milestones"
+              path="/models/:modelID/collaboration-area/task-list/basics/milestones"
               exact
               render={() => <Milestones />}
             />

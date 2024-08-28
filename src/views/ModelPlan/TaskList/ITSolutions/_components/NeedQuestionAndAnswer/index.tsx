@@ -180,7 +180,7 @@ const NeedQuestionAndAnswer = ({
             nameOther={operationalNeed.nameOther ?? ''}
           />
           <UswdsReactLink
-            to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+            to={`/models/${modelID}/collaboration-area/task-list/it-solutions/update-need/${operationalNeed.id}`}
           >
             {t('updateThisOpertationalNeed')}
           </UswdsReactLink>
@@ -200,7 +200,7 @@ const NeedQuestionAndAnswer = ({
     }
     return (
       <UswdsReactLink
-        to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+        to={`/models/${modelID}/collaboration-area/task-list/it-solutions/update-need/${operationalNeed.id}`}
       >
         {t('editNeed')}
       </UswdsReactLink>

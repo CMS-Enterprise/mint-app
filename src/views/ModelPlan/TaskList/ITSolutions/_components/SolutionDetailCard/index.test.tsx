@@ -54,10 +54,10 @@ describe('SolutionDetailsCard', () => {
       const { asFragment, getByText, getByTestId } = render(
         <MemoryRouter
           initialEntries={[
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
             <VerboseMockedProvider mocks={mocks} addTypename={false}>
               <MessageProvider>
                 <SolutionDetailCard
@@ -90,10 +90,10 @@ describe('SolutionDetailsCard', () => {
       const { asFragment, getByText, getByTestId } = render(
         <MemoryRouter
           initialEntries={[
-            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
           ]}
         >
-          <Route path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
             <VerboseMockedProvider mocks={mocks} addTypename={false}>
               <MessageProvider>
                 <SolutionDetailCard
