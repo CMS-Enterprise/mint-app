@@ -162,7 +162,7 @@
     "eslint-plugin-cypress": "^3.5.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "glob": "^10.3.10",
     "graphql-schema-linter": "^3.0.1",
     "jest-launchdarkly-mock": "^2.1.0",
