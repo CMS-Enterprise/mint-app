@@ -20,6 +20,9 @@ const routes = {
     '/notifications': 'Notifications',
     '/notifications/settings': 'Notification settings',
 
+    // Collaboration area
+    '/collaboration-area': 'Collaboration area',
+
     // Collaborators
     '/collaborators': 'Manage model team',
     '/add-collaborator': 'Add a team member',
