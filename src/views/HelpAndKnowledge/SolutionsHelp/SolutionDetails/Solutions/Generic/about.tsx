@@ -39,11 +39,8 @@ export interface AboutConfigType {
   ordered?: boolean;
   components?: AboutComponentType[];
   ipcPortal?: {
-    header?: string;
-    externalLink: {
-      copy: string;
-      link: string;
-    };
+    header: string;
+    externalLink: string;
   };
 }
 
@@ -239,7 +236,17 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
           );
         })}
 
-      {aboutConfig.subDescription && <span>{aboutConfig.subDescription}</span>}
+      {aboutConfig.subDescription && (
+        <span>
+          <Trans
+            i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.subDescription`}
+            components={{
+              ...getTransLinkComponents(aboutConfig.links),
+              bold: <strong />
+            }}
+          />
+        </span>
+      )}
 
       {aboutConfig.ipcPortal && (
         <div className="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest">
@@ -248,15 +255,21 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
               t={t}
               i18nKey={`solutions.${solution.key}.about.ipcPortal.header`}
               components={{
-                link1: (
-                  <UswdsReactLink to="/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about" />
-                )
+                ...getTransLinkComponents(aboutConfig.links),
+                bold: <strong />
               }}
             />
           </h4>
-          <ExternalLink href={aboutConfig.ipcPortal.externalLink.link}>
-            {aboutConfig.ipcPortal.externalLink.copy}
-          </ExternalLink>
+
+          <span>
+            <Trans
+              i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.ipcPortal.externalLink`}
+              components={{
+                ...getTransLinkComponents(aboutConfig.links),
+                bold: <strong />
+              }}
+            />
+          </span>
         </div>
       )}
     </div>

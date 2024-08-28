@@ -127,11 +127,19 @@ const solutions: SolutionTType = {
       ipcPortal: {
         header:
           'Is your model also making payments through the <link1>Innovation Payment Contractor (IPC)</link1>?',
-        externalLink: {
-          copy: 'View on SharePoint what is needed to onboard Models to the IPC Portal',
-          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx'
+        externalLink:
+          '<link2>View on SharePoint what is needed to onboard Models to the IPC Portal</link2>'
+      },
+      links: [
+        {
+          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          external: false
+        },
+        {
+          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          external: true
         }
-      }
+      ]
     },
     timeline: {
       description:
@@ -220,6 +228,22 @@ const solutions: SolutionTType = {
             '<bold>4i Command Line Interface (CLI) Tool</bold> - Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
             '<bold>Tasks and Notifications</bold> - Show users Tasks and Notifications, the ability for users to manage and control the notifications'
           ]
+        }
+      ],
+      ipcPortal: {
+        header:
+          'Is your model also making payments through the <link1>Innovation Payment Contractor (IPC)</link1>?',
+        externalLink:
+          '<link2>View on SharePoint what is needed to onboard Models to the IPC Portal</link2>'
+      },
+      links: [
+        {
+          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          external: false
+        },
+        {
+          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          external: true
         }
       ]
     }
@@ -898,6 +922,14 @@ Health Plan Management System, all health insurance companies participating in t
             'Send IRS Forms 1099-C annually to Model participants for the cancellation of CMMI model overpayments that were deemed uncollectible and approved for write-off and termination of collection by CMS management.',
             'Provide proper funds control, oversight, and compliance with all applicable laws, regulations, Federal Accounting Standards, Generally Accepted Accounting Principles, CMS Office of Financial Management (OFM) guidelines and reporting requirements, and CMS Internet Only Manual (IOM)/Medicare Financial Management Manual, Chapters 3-7.'
           ]
+        }
+      ],
+      subDescription:
+        '<link1>View on SharePoint what is needed to onboard Models to the IPC Portal</link1>',
+      links: [
+        {
+          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          external: true
         }
       ]
     },
@@ -1800,6 +1832,22 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
               external: true
             }
           ]
+        }
+      ],
+      ipcPortal: {
+        header:
+          'Is your model also making payments through the <link1>Innovation Payment Contractor (IPC)</link1>?',
+        externalLink:
+          '<link2>View on SharePoint what is needed to onboard Models to the IPC Portal</link2>'
+      },
+      links: [
+        {
+          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          external: false
+        },
+        {
+          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          external: true
         }
       ]
     }
