@@ -805,53 +805,57 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 <li
                   class="usa-process-list__item read-only-model-plan__timeline__list-item"
                 >
-                  <p
-                    class="usa-process-list__heading font-body-sm line-height-sans-4"
-                    data-testid="processListHeading"
+                  <div
+                    class="display-flex flex-align-top"
                   >
-                    Clearance
+                    <p
+                      class="usa-process-list__heading font-body-sm line-height-sans-4"
+                      data-testid="processListHeading"
+                    >
+                      Clearance
+                    </p>
                     <span
-                      class="top-2px position-relative text-normal"
+                      class="margin-top-0 position-relative text-normal"
                     >
                       <span
                         class="usa-tooltip"
                         data-testid="tooltipWrapper"
-                      />
+                      >
+                        <div
+                          aria-describedby="tooltip-550000"
+                          class="usa-tooltip__trigger mint-no-print margin-left-05"
+                          data-testid="triggerElement"
+                          position="right"
+                          tabindex="0"
+                          title=""
+                        >
+                          <svg
+                            class="usa-icon text-base-light"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                            />
+                          </svg>
+                        </div>
+                        <span
+                          aria-hidden="true"
+                          class="usa-tooltip__body"
+                          data-testid="tooltipBody"
+                          id="tooltip-550000"
+                          role="tooltip"
+                          title="When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance"
+                        >
+                          When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance
+                        </span>
+                      </span>
                     </span>
-                  </p>
-                  <div
-                    aria-describedby="tooltip-550000"
-                    class="usa-tooltip__trigger mint-no-print margin-left-05"
-                    data-testid="triggerElement"
-                    position="right"
-                    tabindex="0"
-                    title=""
-                  >
-                    <svg
-                      class="usa-icon text-base-light"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                      />
-                    </svg>
                   </div>
-                  <span
-                    aria-hidden="true"
-                    class="usa-tooltip__body"
-                    data-testid="tooltipBody"
-                    id="tooltip-550000"
-                    role="tooltip"
-                    title="When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance"
-                  >
-                    When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance
-                  </span>
-                  <p />
                   <div
                     class="mobile-lg:display-flex"
                   >
@@ -949,53 +953,57 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
                 <li
                   class="usa-process-list__item read-only-model-plan__timeline__list-item"
                 >
-                  <p
-                    class="usa-process-list__heading font-body-sm line-height-sans-4"
-                    data-testid="processListHeading"
+                  <div
+                    class="display-flex flex-align-top"
                   >
-                    Performance period
+                    <p
+                      class="usa-process-list__heading font-body-sm line-height-sans-4"
+                      data-testid="processListHeading"
+                    >
+                      Performance period
+                    </p>
                     <span
-                      class="top-2px position-relative text-normal"
+                      class="margin-top-0 position-relative text-normal"
                     >
                       <span
                         class="usa-tooltip"
                         data-testid="tooltipWrapper"
-                      />
+                      >
+                        <div
+                          aria-describedby="tooltip-550000"
+                          class="usa-tooltip__trigger mint-no-print margin-left-05"
+                          data-testid="triggerElement"
+                          position="right"
+                          tabindex="0"
+                          title=""
+                        >
+                          <svg
+                            class="usa-icon text-base-light"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                            />
+                          </svg>
+                        </div>
+                        <span
+                          aria-hidden="true"
+                          class="usa-tooltip__body"
+                          data-testid="tooltipBody"
+                          id="tooltip-550000"
+                          role="tooltip"
+                          title="When the model will be active beginning with the go-live date"
+                        >
+                          When the model will be active beginning with the go-live date
+                        </span>
+                      </span>
                     </span>
-                  </p>
-                  <div
-                    aria-describedby="tooltip-550000"
-                    class="usa-tooltip__trigger mint-no-print margin-left-05"
-                    data-testid="triggerElement"
-                    position="right"
-                    tabindex="0"
-                    title=""
-                  >
-                    <svg
-                      class="usa-icon text-base-light"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                      />
-                    </svg>
                   </div>
-                  <span
-                    aria-hidden="true"
-                    class="usa-tooltip__body"
-                    data-testid="tooltipBody"
-                    id="tooltip-550000"
-                    role="tooltip"
-                    title="When the model will be active beginning with the go-live date"
-                  >
-                    When the model will be active beginning with the go-live date
-                  </span>
-                  <p />
                   <div
                     class="mobile-lg:display-flex"
                   >
