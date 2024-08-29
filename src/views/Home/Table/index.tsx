@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Column,
@@ -76,6 +76,7 @@ const ModelPlansTable = ({
   isAssessment
 }: ModelPlansTableProps) => {
   const { t: homeT } = useTranslation('customHome');
+  const skipPageResetRef = useRef<boolean>(false);
 
   let queryType = ModelPlanFilter.COLLAB_ONLY;
 
@@ -147,9 +148,10 @@ const ModelPlansTable = ({
         Cell: ({ row }: { row: Row<AllModelPlansType> }) => {
           return row.original.isFavorite ? (
             <button
-              onClick={() =>
-                updateFavorite?.(row.original.id, 'removeFavorite')
-              }
+              onClick={() => {
+                skipPageResetRef.current = true;
+                updateFavorite?.(row.original.id, 'removeFavorite');
+              }}
               type="button"
               role="checkbox"
               data-testid={`${row.original.modelName}-favorite`}
@@ -161,7 +163,10 @@ const ModelPlansTable = ({
             </button>
           ) : (
             <button
-              onClick={() => updateFavorite?.(row.original.id, 'addFavorite')}
+              onClick={() => {
+                skipPageResetRef.current = true;
+                updateFavorite?.(row.original.id, 'addFavorite');
+              }}
               type="button"
               role="checkbox"
               data-testid={`${row.original.modelName}-unfavorite`}
@@ -431,8 +436,12 @@ const ModelPlansTable = ({
       },
       globalFilter: useMemo(() => globalFilterCellText, []),
       autoResetSortBy: false,
-      // Resets to page 1 upon client global filtering.  False value if changing/filtering your data externally
-      autoResetPage: true,
+      // https://react-table-v7-docs.netlify.app/docs/faq#how-do-i-stop-my-table-state-from-automatically-resetting-when-my-data-changes
+      // Resets to page 1 if set to true
+      // skipPageResetRef's default state is false
+      // When user favorites/unfavorites a model plan, the skipPageResetRef is set to true and therefore the page does not reset
+      // when user search the table, skipPageResetRef is set to false and therefore the page resets
+      autoResetPage: !skipPageResetRef.current,
       initialState: {
         sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
         pageIndex: 0
@@ -493,6 +502,7 @@ const ModelPlansTable = ({
         <div>
           {canSearch && (
             <GlobalClientFilter
+              skipPageResetRef={skipPageResetRef}
               globalFilter={state.globalFilter}
               setGlobalFilter={setGlobalFilter}
               tableID={homeT('requestsTable.id')}
