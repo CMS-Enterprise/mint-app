@@ -17,7 +17,6 @@ import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
-import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import SectionWrapper from 'components/shared/SectionWrapper';
@@ -342,15 +341,29 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           </div>
         )}
 
-        <PageHeading
-          className="margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-          headingLevel={isHelpArticle ? 'h2' : 'h1'}
-        >
-          {modelName}{' '}
-          {abbreviation && (
-            <span className="font-sans-sm text-normal">({abbreviation})</span>
-          )}
-        </PageHeading>
+        {isHelpArticle ? (
+          <h2
+            className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+            tabIndex={-1}
+            aria-live="polite"
+          >
+            {modelName}{' '}
+            {abbreviation && (
+              <span className="font-sans-sm text-normal">({abbreviation})</span>
+            )}
+          </h2>
+        ) : (
+          <h1
+            className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+            tabIndex={-1}
+            aria-live="polite"
+          >
+            {modelName}{' '}
+            {abbreviation && (
+              <span className="font-sans-sm text-normal">({abbreviation})</span>
+            )}
+          </h1>
+        )}
 
         <TaskListStatus
           isReadView
