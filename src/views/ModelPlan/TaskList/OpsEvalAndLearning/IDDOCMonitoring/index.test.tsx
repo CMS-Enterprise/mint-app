@@ -10,7 +10,8 @@ import {
 
 import IDDOCMonitoring from './index';
 
-type GetIDDOCMonitoringType = GetIddocMonitoringQuery['modelPlan']['opsEvalAndLearning'];
+type GetIDDOCMonitoringType =
+  GetIddocMonitoringQuery['modelPlan']['opsEvalAndLearning'];
 
 const iddocMonitoringMockData: GetIDDOCMonitoringType = {
   __typename: 'PlanOpsEvalAndLearning',

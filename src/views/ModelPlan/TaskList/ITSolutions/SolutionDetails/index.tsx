@@ -29,7 +29,8 @@ import NotFound from 'views/NotFound';
 import SolutionDetailCard from '../_components/SolutionDetailCard';
 import SubtasksTable from '../_components/SubtasksTable';
 
-type GetOperationalSolutionOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
+type GetOperationalSolutionOperationalSolutionType =
+  GetOperationalSolutionQuery['operationalSolution'];
 
 const SolutionDetails = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -49,9 +50,8 @@ const SolutionDetails = () => {
   const { message } = useMessage();
 
   const [documentMessage, setDocumentMessage] = useState('');
-  const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(
-    'error'
-  );
+  const [documentStatus, setDocumentStatus] =
+    useState<DocumentStatusType>('error');
 
   const { modelName } = useContext(ModelInfoContext);
 

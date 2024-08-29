@@ -53,9 +53,8 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
-  const { currentHash, setCurrenHash, isScrolling } = useHashScroll(
-    'div.nav-anchor'
-  );
+  const { currentHash, setCurrenHash, isScrolling } =
+    useHashScroll('div.nav-anchor');
 
   const rowTwo: string[] = t('jobcodes.table.rowTwo.roles', {
     returnObjects: true

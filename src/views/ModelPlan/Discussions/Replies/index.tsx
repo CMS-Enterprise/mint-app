@@ -8,7 +8,8 @@ import TruncatedText from 'components/shared/TruncatedText';
 
 import DiscussionUserInfo from '../_components/DiscussionUserInfo';
 
-type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
+type DiscussionType =
+  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
 
 const Replies = ({
   originalDiscussion: { replies },
@@ -22,9 +23,8 @@ const Replies = ({
   const [areRepliesShowing, setAreRepliesShowing] = useState<boolean>(true);
 
   // If opening from email, auto-expand all replies
-  const [isAccordionExpanded, setIsAccordionExpanded] = useState<boolean>(
-    !!discussionReplyID
-  );
+  const [isAccordionExpanded, setIsAccordionExpanded] =
+    useState<boolean>(!!discussionReplyID);
 
   const hasReplies = replies.length > 0;
   const repliesList = isAccordionExpanded ? replies : replies.slice(0, 4);

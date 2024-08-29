@@ -32,9 +32,8 @@ const HighLevelProjectPlan = () => {
 
   const { helpSolutions, loading } = useHelpSolution();
 
-  const { prevPathname, selectedSolution: solution } = useModalSolutionState(
-    null
-  );
+  const { prevPathname, selectedSolution: solution } =
+    useModalSolutionState(null);
 
   // Solution to render in modal
   const selectedSolution = findSolutionByRouteParam(

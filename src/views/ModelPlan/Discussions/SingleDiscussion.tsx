@@ -10,8 +10,10 @@ import { getDaysElapsed } from 'utils/date';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
 
-type discussionsMiscType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
-type ReplyType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
+type discussionsMiscType =
+  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
+type ReplyType =
+  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 type SingleDiscussionProps = {
   discussion: discussionsMiscType | ReplyType;

@@ -37,15 +37,15 @@ const ReportAProblem = () => {
 
   const [update, { loading }] = useMutation(CreateReportAProblem);
 
-  const sectionOptions: Record<
-    ReportAProblemSection,
-    string
-  > = t('section.options', { returnObjects: true });
+  const sectionOptions: Record<ReportAProblemSection, string> = t(
+    'section.options',
+    { returnObjects: true }
+  );
 
-  const severityOptions: Record<
-    ReportAProblemSeverity,
-    string
-  > = t('severity.options', { returnObjects: true });
+  const severityOptions: Record<ReportAProblemSeverity, string> = t(
+    'severity.options',
+    { returnObjects: true }
+  );
 
   const handleFormSubmit = (formikValues: ReportAProblemInput) => {
     update({

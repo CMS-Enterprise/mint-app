@@ -81,12 +81,17 @@ import {
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
 type GetAllBasicsTypes = GetAllBasicsQuery['modelPlan']['basics'];
-type GetAllGeneralCharacteristicsTypes = GetAllGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
-type GetAllParticipantsTypes = GetAllParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
-type AllBeneficiariesTypes = GetAllBeneficiariesQuery['modelPlan']['beneficiaries'];
-type AllOpsEvalAndLearningTypes = GetAllOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
+type GetAllGeneralCharacteristicsTypes =
+  GetAllGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
+type GetAllParticipantsTypes =
+  GetAllParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
+type AllBeneficiariesTypes =
+  GetAllBeneficiariesQuery['modelPlan']['beneficiaries'];
+type AllOpsEvalAndLearningTypes =
+  GetAllOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
 type PaymentTypes = GetAllPaymentsQuery['modelPlan']['payments'];
-type GetModelCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type GetModelCollaboratorsType =
+  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
 type GetOperationalNeedsType = GetOperationalNeedsQuery;
 

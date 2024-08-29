@@ -45,8 +45,7 @@ const crtdlsMisc = {
   },
   submitError: {
     heading: 'There is a problem',
-    body:
-      'Something went wrong with MINT. Please try refreshing the page or try again later.'
+    body: 'Something went wrong with MINT. Please try refreshing the page or try again later.'
   },
   removeCRTDLModal: {
     header: 'Confirm you want to remove {{-crtdl}}.',

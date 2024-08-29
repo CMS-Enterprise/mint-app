@@ -24,8 +24,9 @@ const Login = () => {
   const history = useHistory();
 
   if (isLocalAuthEnabled() && window.localStorage[localAuthStorageKey]) {
-    defaultAuth = JSON.parse(window.localStorage[localAuthStorageKey])
-      .favorLocalAuth;
+    defaultAuth = JSON.parse(
+      window.localStorage[localAuthStorageKey]
+    ).favorLocalAuth;
   }
   const [isLocalAuth, setIsLocalAuth] = useState(defaultAuth);
 

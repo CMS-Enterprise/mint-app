@@ -43,7 +43,8 @@ import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-type ProviderOptionsFormType = GetProviderOptionsQuery['modelPlan']['participantsAndProviders'];
+type ProviderOptionsFormType =
+  GetProviderOptionsQuery['modelPlan']['participantsAndProviders'];
 
 export const ProviderOptions = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -194,13 +195,8 @@ export const ProviderOptions = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InitialValueType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

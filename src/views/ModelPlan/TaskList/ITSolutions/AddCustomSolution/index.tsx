@@ -36,7 +36,8 @@ import NotFound from 'views/NotFound';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
-type OperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
+type OperationalSolutionType =
+  GetOperationalSolutionQuery['operationalSolution'];
 
 type CustomOperationalSolutionFormType = Omit<
   OperationalSolutionType,
@@ -86,9 +87,8 @@ const AddCustomSolution = () => {
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const formikRef = useRef<FormikProps<CustomOperationalSolutionFormType>>(
-    null
-  );
+  const formikRef =
+    useRef<FormikProps<CustomOperationalSolutionFormType>>(null);
 
   const { modelName } = useContext(ModelInfoContext);
 
