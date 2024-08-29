@@ -55,13 +55,15 @@ const SideNav = ({
 
       // Calculate all the things
       const distanceFromTopOfPage =
-        top +
+        Math.round(top) +
         window.scrollY -
         filterBannerHeight -
         navBarHeight -
         marginOfScrollElement;
 
-      window.scroll(0, distanceFromTopOfPage);
+      if (window.scrollY >= distanceFromTopOfPage) {
+        window.scroll(0, distanceFromTopOfPage);
+      }
     }, 0);
   };
 
