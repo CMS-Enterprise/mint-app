@@ -123,6 +123,22 @@ const solutions: SolutionTType = {
             '<bold>Tasks and Notifications</bold> - Show users Tasks and Notifications, the ability for users to manage and control the notifications'
           ]
         }
+      ],
+      ipcPortal: {
+        header:
+          'Is your model also making payments through the <link1>Innovation Payment Contractor (IPC)</link1>?',
+        externalLink:
+          '<link2>View on SharePoint what is needed to onboard Models to the IPC Portal</link2>'
+      },
+      links: [
+        {
+          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          external: false
+        },
+        {
+          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          external: true
+        }
       ]
     },
     timeline: {
@@ -212,6 +228,22 @@ const solutions: SolutionTType = {
             '<bold>4i Command Line Interface (CLI) Tool</bold> - Allows authorized entities to automate the downloading of their sensitive data through a lightweight client CLI Tool using public and private API keys without having to login to the 4i/DataHub UI to retrieve files and reports.',
             '<bold>Tasks and Notifications</bold> - Show users Tasks and Notifications, the ability for users to manage and control the notifications'
           ]
+        }
+      ],
+      ipcPortal: {
+        header:
+          'Is your model also making payments through the <link1>Innovation Payment Contractor (IPC)</link1>?',
+        externalLink:
+          '<link2>View on SharePoint what is needed to onboard Models to the IPC Portal</link2>'
+      },
+      links: [
+        {
+          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          external: false
+        },
+        {
+          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          external: true
         }
       ]
     }
@@ -891,6 +923,14 @@ Health Plan Management System, all health insurance companies participating in t
             'Provide proper funds control, oversight, and compliance with all applicable laws, regulations, Federal Accounting Standards, Generally Accepted Accounting Principles, CMS Office of Financial Management (OFM) guidelines and reporting requirements, and CMS Internet Only Manual (IOM)/Medicare Financial Management Manual, Chapters 3-7.'
           ]
         }
+      ],
+      subDescription:
+        '<link1>View on SharePoint what is needed to onboard Models to the IPC Portal</link1>',
+      links: [
+        {
+          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          external: true
+        }
       ]
     },
     timeline: {
@@ -1266,7 +1306,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'Complete onboarding questionnaire',
           description: `CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.
-            
+
 <link1>Go to Onboarding Request Form for MDM-POR</link1>`,
           links: [
             {
@@ -1283,7 +1323,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'Share ICD',
           description: `CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.
-            
+
 <link1>Go to ICD and Onboarding Mapping for MDM-POR</link1>`,
           links: [
             {
@@ -1297,7 +1337,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
   },
   masterDataManagementForNCBP: {
     about: {
-      description: `Master Data Management (MDM) for non-claims-based payments (NCBP) is a medium-term solution that satisfies the CMS requirement for payment models participating in shared savings initiatives to store non-claims payment data in a central location. Based on discussions with representatives of the Office of Information Technology (OIT), the Office of Enterprise Management (OEM), and the technical advisors of CMMI, MDM stores non-claims payment files in a central repository as CMS considers long-term solutions for non-claims payment data. 
+      description: `Master Data Management (MDM) for non-claims-based payments (NCBP) is a medium-term solution that satisfies the CMS requirement for payment models participating in shared savings initiatives to store non-claims payment data in a central location. Based on discussions with representatives of the Office of Information Technology (OIT), the Office of Enterprise Management (OEM), and the technical advisors of CMMI, MDM stores non-claims payment files in a central repository as CMS considers long-term solutions for non-claims payment data.
 
 MDM is an authoritative System of Reference that integrates and stores data from CMS operational Systems of Record. MDM data is considered as authoritative as the data in the source System of Record from which it is obtained.
 
@@ -1331,7 +1371,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'Complete onboarding questionnaire',
           description: `CMMI/BSG will send the model team an onboarding questionnaire specific to MDM-NCBP. The model team should fill out the program ID and other business requirements.
-            
+
 <link1>Go to Onboarding Request Form for MDM-NCBP</link1>`,
 
           links: [
@@ -1349,7 +1389,7 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
         {
           header: 'Share ICD',
           description: `CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. Celia Shaunessey and her team can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
-  
+
 <link1>Go to ICD and Onboarding Mapping for MDM-NCBP</link1>`,
           links: [
             {
@@ -1792,6 +1832,22 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
               external: true
             }
           ]
+        }
+      ],
+      ipcPortal: {
+        header:
+          'Is your model also making payments through the <link1>Innovation Payment Contractor (IPC)</link1>?',
+        externalLink:
+          '<link2>View on SharePoint what is needed to onboard Models to the IPC Portal</link2>'
+      },
+      links: [
+        {
+          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          external: false
+        },
+        {
+          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          external: true
         }
       ]
     }

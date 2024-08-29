@@ -1821,7 +1821,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             Complete onboarding questionnaire
           </h3>
           CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.
-            
+
 
           <a
             aria-label="Open in a new tab"
@@ -1854,7 +1854,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             Share ICD
           </h3>
           CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.
-            
+
 
           <a
             aria-label="Open in a new tab"
@@ -1921,7 +1921,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             Complete onboarding questionnaire
           </h3>
           CMMI/BSG will send the model team an onboarding questionnaire specific to MDM-NCBP. The model team should fill out the program ID and other business requirements.
-            
+
 
           <a
             aria-label="Open in a new tab"
@@ -1954,7 +1954,7 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             Share ICD
           </h3>
           CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. Celia Shaunessey and her team can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
-  
+
 
           <a
             aria-label="Open in a new tab"

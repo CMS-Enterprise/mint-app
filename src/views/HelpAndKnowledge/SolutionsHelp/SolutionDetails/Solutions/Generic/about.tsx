@@ -38,6 +38,10 @@ export interface AboutConfigType {
   noList?: boolean;
   ordered?: boolean;
   components?: AboutComponentType[];
+  ipcPortal?: {
+    header: string;
+    externalLink: string;
+  };
 }
 
 const returnListType = (
@@ -232,7 +236,42 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
           );
         })}
 
-      {aboutConfig.subDescription && <span>{aboutConfig.subDescription}</span>}
+      {aboutConfig.subDescription && (
+        <span>
+          <Trans
+            i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.subDescription`}
+            components={{
+              ...getTransLinkComponents(aboutConfig.links),
+              bold: <strong />
+            }}
+          />
+        </span>
+      )}
+
+      {aboutConfig.ipcPortal && (
+        <div className="margin-top-4 padding-y-2 padding-x-2 bg-base-lightest">
+          <h4 className="margin-top-0 margin-bottom-1">
+            <Trans
+              t={t}
+              i18nKey={`solutions.${solution.key}.about.ipcPortal.header`}
+              components={{
+                ...getTransLinkComponents(aboutConfig.links),
+                bold: <strong />
+              }}
+            />
+          </h4>
+
+          <span>
+            <Trans
+              i18nKey={`helpAndKnowledge:solutions.${solution.key}.about.ipcPortal.externalLink`}
+              components={{
+                ...getTransLinkComponents(aboutConfig.links),
+                bold: <strong />
+              }}
+            />
+          </span>
+        </div>
+      )}
     </div>
   );
 };
