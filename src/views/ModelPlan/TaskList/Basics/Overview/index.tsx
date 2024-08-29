@@ -134,8 +134,14 @@ const Overview = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<BasicsFormType>) => {
-          const { dirty, errors, handleSubmit, isValid, setErrors, values } =
-            formikProps;
+          const {
+            dirty,
+            errors,
+            handleSubmit,
+            isValid,
+            setErrors,
+            values
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

@@ -40,8 +40,7 @@ import {
   renderTotalPages
 } from '..';
 
-type IDDOCMonitoringFormType =
-  GetIddocMonitoringQuery['modelPlan']['opsEvalAndLearning'];
+type IDDOCMonitoringFormType = GetIddocMonitoringQuery['modelPlan']['opsEvalAndLearning'];
 
 const IDDOCMonitoring = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -158,8 +157,13 @@ const IDDOCMonitoring = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<IDDOCMonitoringFormType>) => {
-          const { errors, handleSubmit, setErrors, values, setFieldValue } =
-            formikProps;
+          const {
+            errors,
+            handleSubmit,
+            setErrors,
+            values,
+            setFieldValue
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

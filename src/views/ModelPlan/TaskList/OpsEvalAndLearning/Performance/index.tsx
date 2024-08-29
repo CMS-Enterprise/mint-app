@@ -36,8 +36,7 @@ import {
   renderTotalPages
 } from '..';
 
-type PerformanceFormType =
-  GetPerformanceQuery['modelPlan']['opsEvalAndLearning'];
+type PerformanceFormType = GetPerformanceQuery['modelPlan']['opsEvalAndLearning'];
 
 const Performance = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -193,8 +192,13 @@ const Performance = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<PerformanceFormType>) => {
-          const { errors, handleSubmit, setErrors, values, setFieldValue } =
-            formikProps;
+          const {
+            errors,
+            handleSubmit,
+            setErrors,
+            values,
+            setFieldValue
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

@@ -22,8 +22,7 @@ import RecentChanges from 'views/ModelPlan/ChangeHistory/components/RecentChange
 import { StatusMessageType } from '../..';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
-type GetCollaboratorsType =
-  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 const TaskListSideNav = ({
   modelPlan,

@@ -17,8 +17,9 @@ const ReadOnlyDocuments = ({
   const { t } = useTranslation('documentsMisc');
 
   const [documentMessage, setDocumentMessage] = useState('');
-  const [documentStatus, setDocumentStatus] =
-    useState<DocumentStatusType>('error');
+  const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(
+    'error'
+  );
 
   return (
     <div

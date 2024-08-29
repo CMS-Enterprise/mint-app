@@ -54,8 +54,9 @@ const Learning = () => {
   );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const { modelLearningSystems: modelLearningSystemsConfig } =
-    usePlanTranslation('opsEvalAndLearning');
+  const {
+    modelLearningSystems: modelLearningSystemsConfig
+  } = usePlanTranslation('opsEvalAndLearning');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -167,8 +168,13 @@ const Learning = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InitialValueType>) => {
-          const { errors, handleSubmit, setFieldValue, setErrors, values } =
-            formikProps;
+          const {
+            errors,
+            handleSubmit,
+            setFieldValue,
+            setErrors,
+            values
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

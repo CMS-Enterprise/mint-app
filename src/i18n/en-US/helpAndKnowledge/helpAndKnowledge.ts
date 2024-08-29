@@ -82,19 +82,20 @@ export const solutionCategories: Record<
   }
 };
 
-const solutionSubCategories: Record<OperationalSolutionSubCategories, string> =
-  {
-    [OperationalSolutionSubCategories.APPLICATIONS]: 'Applications',
-    [OperationalSolutionSubCategories.COMMUNICATION_TOOLS]:
-      'Communication tools',
-    [OperationalSolutionSubCategories.COOPERATIVE_AGREEMENT_APPS]:
-      'Cooperative agreement applications',
-    [OperationalSolutionSubCategories.HELP_DESK]: 'Help desk',
-    [OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS]:
-      'Participant agreement applications',
-    [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION]:
-      'Participant interaction'
-  };
+const solutionSubCategories: Record<
+  OperationalSolutionSubCategories,
+  string
+> = {
+  [OperationalSolutionSubCategories.APPLICATIONS]: 'Applications',
+  [OperationalSolutionSubCategories.COMMUNICATION_TOOLS]: 'Communication tools',
+  [OperationalSolutionSubCategories.COOPERATIVE_AGREEMENT_APPS]:
+    'Cooperative agreement applications',
+  [OperationalSolutionSubCategories.HELP_DESK]: 'Help desk',
+  [OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS]:
+    'Participant agreement applications',
+  [OperationalSolutionSubCategories.PARTICIPANT_INTERACTION]:
+    'Participant interaction'
+};
 
 const solutions: SolutionTType = {
   innovation: {
@@ -132,11 +133,13 @@ const solutions: SolutionTType = {
       },
       links: [
         {
-          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          link:
+            '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
           external: false
         },
         {
-          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          link:
+            'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
           external: true
         }
       ]
@@ -238,11 +241,13 @@ const solutions: SolutionTType = {
       },
       links: [
         {
-          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          link:
+            '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
           external: false
         },
         {
-          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          link:
+            'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
           external: true
         }
       ]
@@ -928,7 +933,8 @@ Health Plan Management System, all health insurance companies participating in t
         '<link1>View on SharePoint what is needed to onboard Models to the IPC Portal</link1>',
       links: [
         {
-          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          link:
+            'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
           external: true
         }
       ]
@@ -986,15 +992,18 @@ The Model team will receive an implementation milestone schedule that identifies
           items: [],
           links: [
             {
-              link: '/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about',
+              link:
+                '/help-and-knowledge/operational-solutions?solution=centralized-data-exchange&section=about',
               external: false
             },
             {
-              link: '/help-and-knowledge/operational-solutions?solution=health-data-reporting&section=about',
+              link:
+                '/help-and-knowledge/operational-solutions?solution=health-data-reporting&section=about',
               external: false
             },
             {
-              link: '/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about',
+              link:
+                '/help-and-knowledge/operational-solutions?solution=expanded-data-feedback-reporting&section=about',
               external: false
             }
           ],
@@ -1056,7 +1065,8 @@ The Model team will receive an implementation milestone schedule that identifies
           level: 'h4',
           links: [
             {
-              link: 'https://www.loom.com/share/ba9eec7f6a0b401a8a5ea102d9c433f1',
+              link:
+                'https://www.loom.com/share/ba9eec7f6a0b401a8a5ea102d9c433f1',
               external: true
             }
           ],
@@ -1066,7 +1076,8 @@ The Model team will receive an implementation milestone schedule that identifies
           header: 'Produce reports and files for participants. ',
           links: [
             {
-              link: 'https://cmsbox.app.box.com/s/rc1koqoevslmern6r0hfoabj0zkcawoq',
+              link:
+                'https://cmsbox.app.box.com/s/rc1koqoevslmern6r0hfoabj0zkcawoq',
               external: true
             }
           ],
@@ -1377,7 +1388,8 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
           links: [
             {
               external: true,
-              link: 'https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire%20%20NCBP/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2520%2520NCBP%2FAll%2520NCBP%2520Responses%2Easpx'
+              link:
+                'https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire%20%20NCBP/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2520%2520NCBP%2FAll%2520NCBP%2520Responses%2Easpx'
             }
           ]
         },
@@ -1394,7 +1406,8 @@ MDM is one of CMS’s Enterprise Shared Services (ESS) that provides authoritati
           links: [
             {
               external: true,
-              link: 'https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/NCBPResources.aspx'
+              link:
+                'https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/NCBPResources.aspx'
             }
           ]
         }
@@ -1546,7 +1559,8 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           header: 'Additional resources',
           links: [
             {
-              link: 'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx',
+              link:
+                'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx',
               external: true
             },
             {
@@ -1842,11 +1856,13 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
       },
       links: [
         {
-          link: '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
+          link:
+            '/help-and-knowledge/operational-solutions?page=1&solution=innovation-payment-contract&section=about',
           external: false
         },
         {
-          link: 'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
+          link:
+            'https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx',
           external: true
         }
       ]

@@ -32,8 +32,7 @@ import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 import Solution from './_components/Solution';
 
 type OperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
-type GetOperationalSolutionType =
-  GetOperationalSolutionQuery['operationalSolution'];
+type GetOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 // Passing in operationalNeed to Formik instead of array of solutions
 // Fomik does not take an array structure

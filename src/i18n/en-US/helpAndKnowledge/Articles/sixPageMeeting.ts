@@ -26,7 +26,8 @@ const sixPageMeeting = {
       two: 'CMMI Front Office (FO) – for health equity',
       ldg: 'Learning and Diffusion Group (LDG)',
       learning: ' – for learning',
-      four: 'Policy and Programs Group (PPG) – for quality and stakeholder engagement type things',
+      four:
+        'Policy and Programs Group (PPG) – for quality and stakeholder engagement type things',
       five: 'Research and Rapid Cycle Evaluation Group (RREG) – for evaluation'
     }
   },
@@ -68,7 +69,8 @@ const sixPageMeeting = {
         '3. Analysis of the proposed model relative to selection criteria',
       alignment: {
         bold: 'Alignment: ',
-        text: 'Describe how the proposed model would support or advance one (or more) of the ',
+        text:
+          'Describe how the proposed model would support or advance one (or more) of the ',
         link: 'strategy refresh pillars',
         numberedList: [
           'Drive accountable care',
@@ -88,11 +90,13 @@ const sixPageMeeting = {
       },
       feasibility: {
         bold: 'Feasibility: ',
-        text: 'Likelihood of successful execution of the model including any operations or feasibility limitations and potential for adoption and scaling by non-participants (i.e., spillover effects).'
+        text:
+          'Likelihood of successful execution of the model including any operations or feasibility limitations and potential for adoption and scaling by non-participants (i.e., spillover effects).'
       },
       innovation: {
         bold: 'Innovation: ',
-        text: 'The model provides innovation in a particular dimension – payment approach, provider type, patient population, mechanisms of transformation'
+        text:
+          'The model provides innovation in a particular dimension – payment approach, provider type, patient population, mechanisms of transformation'
       }
     },
     stepFour: {

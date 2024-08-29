@@ -82,12 +82,11 @@ const discussionResult: GetModelPlanDiscussionsType['modelPlan'] = {
   ]
 };
 
-const mostRecentRoleResult: GetMostRecentRoleSelectionQuery['mostRecentDiscussionRoleSelection'] =
-  {
-    __typename: 'DiscussionRoleSelection',
-    userRole: DiscussionUserRole.LEADERSHIP,
-    userRoleDescription: ''
-  };
+const mostRecentRoleResult: GetMostRecentRoleSelectionQuery['mostRecentDiscussionRoleSelection'] = {
+  __typename: 'DiscussionRoleSelection',
+  userRole: DiscussionUserRole.LEADERSHIP,
+  userRoleDescription: ''
+};
 
 const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 

@@ -30,10 +30,8 @@ import NotFound from 'views/NotFound';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
-type GetOperationalNeedOperationalNeedType =
-  GetOperationalNeedQuery['operationalNeed'];
-type GetOperationalSolutionOperationalSolutionType =
-  GetOperationalSolutionQuery['operationalSolution'];
+type GetOperationalNeedOperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalSolutionOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 export const initialValues: GetOperationalNeedOperationalNeedType = {
   __typename: 'OperationalNeed',

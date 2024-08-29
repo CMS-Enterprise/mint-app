@@ -168,12 +168,14 @@ type OptionsWithChildRelation<
 > = TranslationOptions<T> & ChildRelation<T, C>;
 
 //  Apply/combine ParentRelation and TranslationFieldProperties to TranslationFieldPropertiesWithParent
-export type TranslationFieldPropertiesWithParent<T extends keyof T | string> =
-  TranslationFieldProperties & ParentRelation<T>;
+export type TranslationFieldPropertiesWithParent<
+  T extends keyof T | string
+> = TranslationFieldProperties & ParentRelation<T>;
 
 // Apply/combine OptionsWithChildRelation and TranslationFieldProperties to TranslationFieldPropertiesWithOptions
-export type TranslationFieldPropertiesWithOptions<T extends keyof T | string> =
-  TranslationFieldProperties & TranslationOptions<T>;
+export type TranslationFieldPropertiesWithOptions<
+  T extends keyof T | string
+> = TranslationFieldProperties & TranslationOptions<T>;
 
 /*
   Extended type for questions that have options - boolean, radio, checkbox, etc. as well as conditional children
