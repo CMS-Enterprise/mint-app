@@ -290,7 +290,10 @@ const ModelPlansTable = ({
       recentActivity: {
         id: 'recentActivity',
         Header: homeT('requestsTable.headers.recentActivity'),
-        accessor: 'modifiedDts',
+        // @ts-ignore
+        accessor: (value: AllModelPlansType) => {
+          return value.modifiedDts || value.createdDts;
+        },
         Cell: ({ row, value }: any) => {
           const { discussions } = row.original;
           const formattedUpdatedDate = `${homeT(
