@@ -188,7 +188,7 @@ The Postgres command-line client is needed for running database-related scriptin
 
 ## Installing frontend dependencies
 
-To install the frontend's dependencies, run `yarn install --frozen-lockfile`. The `--frozen-lockfile` flag will install the exact versions of all dependencies that are specified in `yarn.lock`;
+To install the frontend's dependencies, run `yarn install --immutable`. The `--immutable` flag will install the exact versions of all dependencies that are specified in `yarn.lock`;
 
 ## jq
 

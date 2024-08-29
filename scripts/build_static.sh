@@ -39,6 +39,6 @@ export VITE_GRAPHQL_ADDRESS="${MINT_URL}/api/graph/query"
 export VITE_LOCAL_AUTH_ENABLED="false" # Disable deploying local auth
 
 ( set -x -u ;
-  yarn install --frozen-lockfile
+  yarn install --immutable
   yarn run build || exit
 )

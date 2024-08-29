@@ -222,5 +222,6 @@
       }
     },
     "globalSetup": "./src/global-setup.js"
-  }
+  },
+  "packageManager": "yarn@4.4.1"
 }

@@ -38,6 +38,15 @@ yarn-error.log*
 node_modules
 package-lock.json
 
+# From https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # Various temp files
 tmp
 *.swp
