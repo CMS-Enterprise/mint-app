@@ -18,7 +18,10 @@ const collaborationArea = {
     heading: 'Model team',
     body: 'Team members can edit all sections of a model collaboration area, including uploading documents and adding team members.',
     addMember: 'Add a team member',
-    manageTeam: 'Manage model team'
+    manageTeam: 'Manage model team',
+    viewMoreTeamMembers: 'View {{count}} more team member',
+    viewMoreTeamMembers_other: 'View {{count}} more team members',
+    viewFewerTeamMembers: 'View fewer team members'
   }
 };
 

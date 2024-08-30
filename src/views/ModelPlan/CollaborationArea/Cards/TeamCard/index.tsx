@@ -17,6 +17,7 @@ import {
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import { Avatar } from 'components/shared/Avatar';
+import CollapsableLink from 'components/shared/CollapsableLink';
 import ShareExportModal from 'components/ShareExport';
 import Spinner from 'components/Spinner';
 import { getITSolutionsStatus } from 'views/ModelPlan/TaskList';
@@ -30,6 +31,8 @@ type ModelPlanCardType = {
 
 const TeamCard = ({ modelID }: ModelPlanCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
+
+  const [isViewMoreTeamMembers, setIsViewMoreTeamMembers] = useState(false);
 
   const { data, loading } = useGetModelCollaboratorsQuery({
     variables: {
@@ -53,6 +56,10 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
 
   const { collaborators } = modelPlan;
 
+  const firstEightCollaborators = collaborators.slice(0, 8);
+
+  const remainingCollaborators = collaborators.slice(8);
+
   return (
     <>
       <Card gridLayout={{ desktop: { col: 12 } }} className="card--model-plan">
@@ -66,8 +73,12 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
 
         <CardBody>
           <Grid row>
-            {collaborators.map(collaborator => (
-              <Grid col={3}>
+            {firstEightCollaborators.map(collaborator => (
+              <Grid
+                desktop={{ col: 3 }}
+                tablet={{ col: 6 }}
+                mobile={{ col: 12 }}
+              >
                 <Avatar
                   user={collaborator.userAccount.commonName}
                   teamRoles={collaborator.teamRoles}
@@ -76,6 +87,39 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
                 />
               </Grid>
             ))}
+
+            {remainingCollaborators.length > 0 && (
+              <CollapsableLink
+                id="collaoration-team-card"
+                className="width-full margin-bottom-2"
+                label={collaborationAreaT('teamCard.viewMoreTeamMembers', {
+                  count: remainingCollaborators.length
+                })}
+                closeLabel={collaborationAreaT('teamCard.viewFewerTeamMembers')}
+                labelPosition="bottom"
+                setParentOpen={setIsViewMoreTeamMembers}
+                styleLeftBar={false}
+              >
+                <div className="margin-bottom-1">
+                  <Grid row>
+                    {remainingCollaborators.map(collaborator => (
+                      <Grid
+                        desktop={{ col: 3 }}
+                        tablet={{ col: 6 }}
+                        mobile={{ col: 12 }}
+                      >
+                        <Avatar
+                          user={collaborator.userAccount.commonName}
+                          teamRoles={collaborator.teamRoles}
+                          conciseRoles
+                          className="margin-y-05"
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </div>
+              </CollapsableLink>
+            )}
           </Grid>
         </CardBody>
 
