@@ -22,7 +22,7 @@ import {
 } from 'views/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
-import './index.scss';
+import '../index.scss';
 
 type ModelPlanCardType = {
   modelID: string;

@@ -120,7 +120,9 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
     heading: 'Success! You have removed yourself from {{-modelName}}.',
     message:
       'If you need to edit the Model Plan in the future, please contact a member of the model team or the MINT Team.'
-  }
+  },
+  teamRoles: '+ {{count}} role',
+  teamRoles_other: '+ {{count}} roles'
 };
 
 export default collaborators;

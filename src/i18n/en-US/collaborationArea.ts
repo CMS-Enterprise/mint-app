@@ -13,6 +13,12 @@ const collaborationArea = {
     mostRecentEdit: 'Most recent edit on {{-date}} by ',
     sectionsStarted: '{{-sectionsStarted}}/7 sections started',
     shareButton: 'Share or export Model Plan'
+  },
+  teamCard: {
+    heading: 'Model team',
+    body: 'Team members can edit all sections of a model collaboration area, including uploading documents and adding team members.',
+    addMember: 'Add a team member',
+    manageTeam: 'Manage model team'
   }
 };
 
