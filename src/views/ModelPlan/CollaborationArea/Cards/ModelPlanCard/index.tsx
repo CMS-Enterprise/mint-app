@@ -22,6 +22,8 @@ import {
 } from 'views/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
+// importing global card styles from collaborationArea/index.scss
+import '../../index.scss';
 import './index.scss';
 
 type ModelPlanCardType = {

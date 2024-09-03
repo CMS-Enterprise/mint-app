@@ -11,6 +11,8 @@ import { GetModelPlanQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 
+// importing global card styles from collaborationArea/index.scss
+import '../../index.scss';
 import './index.scss';
 
 type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
