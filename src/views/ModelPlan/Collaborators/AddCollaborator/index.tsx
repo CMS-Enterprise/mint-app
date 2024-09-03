@@ -382,7 +382,7 @@ const Collaborators = () => {
                         type="info"
                         slim
                         data-testid="mandatory-fields-alert"
-                        className="margin-y-4"
+                        className="margin-y-3"
                       >
                         <span className="mandatory-fields-alert__text">
                           {isModelLead && isLastModelLead(allCollaborators)
@@ -391,7 +391,7 @@ const Collaborators = () => {
                         </span>
                       </Alert>
 
-                      <div className="margin-y-4 display-block">
+                      <div className="margin-y-3 display-block">
                         <Button
                           type="submit"
                           disabled={
@@ -415,7 +415,11 @@ const Collaborators = () => {
           </Formik>
 
           <UswdsReactLink
-            to={`/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`}
+            to={
+              isFromCollaborationArea
+                ? `/models/${modelID}/collaboration-area`
+                : `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
+            }
           >
             <span>&larr; </span>{' '}
             {!collaboratorId

@@ -40,7 +40,7 @@ export const miscellaneous: Record<string, string> = {
   markedReady: 'Marked ready for review by {{-reviewer}} on ',
   validDate: 'Please use a valid date format.',
   apolloFailField: 'Failed to save field value/s',
-  allFieldsRequired: 'All fields marked with ( <s>*</s> ) are required.'
+  allFieldsRequired: 'Fields marked with an asterisk ( <s>*</s> ) are required.'
 };
 
 // Reusable translated option for all frequency type questions
