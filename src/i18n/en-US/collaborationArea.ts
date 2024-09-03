@@ -21,7 +21,8 @@ const collaborationArea = {
     viewAll: 'View all',
     noDocuments: 'No documents added',
     linkAdded: '{{count}} link added',
-    linkAdded_other: '{{count}} links added'
+    linkAdded_other: '{{count}} links added',
+    uploaded: '{{count}} uploaded'
   }
 };
 

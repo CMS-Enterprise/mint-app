@@ -4,7 +4,8 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader
+  CardHeader,
+  Icon
 } from '@trussworks/react-uswds';
 import { GetModelPlanQuery } from 'gql/gen/graphql';
 
@@ -22,7 +23,10 @@ type DocumentsCardType = {
 const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  // console.log(documents);
+  const linksArray = documents?.filter(doc => doc.fileType === 'externalLink');
+  const uploadedDocArray = documents?.filter(
+    doc => doc.fileType !== 'externalLink'
+  );
 
   return (
     <Card gridLayout={{ desktop: { col: 4 } }} className="card--documents">
@@ -35,7 +39,24 @@ const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
         {documents?.length === 0 ? (
           <p>{collaborationAreaT('documentsCard.noDocuments')}</p>
         ) : (
-          <p>{collaborationAreaT('documentsCard.viewAll')}</p>
+          <>
+            {uploadedDocArray?.length !== 0 && (
+              <div className="display-flex flex-align-center">
+                <Icon.UploadFile size={3} className="margin-right-1" />
+                {collaborationAreaT('documentsCard.uploaded', {
+                  count: uploadedDocArray?.length
+                })}
+              </div>
+            )}
+            {linksArray?.length !== 0 && (
+              <div className="display-flex flex-align-center">
+                <Icon.Link size={3} className="margin-right-1" />
+                {collaborationAreaT('documentsCard.linkAdded', {
+                  count: linksArray?.length
+                })}
+              </div>
+            )}
+          </>
         )}
       </CardBody>
       <CardFooter>
