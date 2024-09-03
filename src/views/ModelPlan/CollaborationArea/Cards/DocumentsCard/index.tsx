@@ -29,7 +29,10 @@ const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
   );
 
   return (
-    <Card gridLayout={{ desktop: { col: 4 } }} className="card--documents">
+    <Card
+      gridLayout={{ mobile: { col: 12 }, desktop: { col: 4 } }}
+      className="card--documents"
+    >
       <CardHeader>
         <h3 className="usa-card__heading">
           {collaborationAreaT('documentsCard.heading')}
