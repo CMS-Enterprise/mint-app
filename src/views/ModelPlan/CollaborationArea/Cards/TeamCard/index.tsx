@@ -88,6 +88,7 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
                 closeLabel={collaborationAreaT('teamCard.viewFewerTeamMembers')}
                 labelPosition="bottom"
                 styleLeftBar={false}
+                childClassName="padding-top-0"
               >
                 <div className="margin-bottom-1">
                   <Grid row>

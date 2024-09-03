@@ -196,8 +196,6 @@ export const CollaboratorsContent = () => {
       <GridContainer>
         <Grid row gap>
           <Grid desktop={{ col: 12 }}>
-            {message && <Expire delay={45000}>{message}</Expire>}
-
             <Breadcrumbs
               items={
                 manageOrAdd === 'manage'
@@ -212,6 +210,8 @@ export const CollaboratorsContent = () => {
                     ]
               }
             />
+
+            {message && <Expire delay={45000}>{message}</Expire>}
 
             {manageOrAdd === 'manage' ? (
               <>
