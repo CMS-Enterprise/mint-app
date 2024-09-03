@@ -265,12 +265,14 @@ const ReadOnlyModelBasics = ({
                 </ProcessListItem>
 
                 <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                  <ProcessListHeading
-                    type="p"
-                    className="font-body-sm line-height-sans-4"
-                  >
-                    {basicsMiscT('clearance')}
-                    <span className="top-2px position-relative text-normal">
+                  <div className="display-flex flex-align-top">
+                    <ProcessListHeading
+                      type="p"
+                      className="font-body-sm line-height-sans-4"
+                    >
+                      {basicsMiscT('clearance')}
+                    </ProcessListHeading>
+                    <span className="margin-top-0 position-relative text-normal">
                       <Tooltip
                         label={basicsMiscT('clearanceInfo')}
                         position="right"
@@ -279,7 +281,7 @@ const ReadOnlyModelBasics = ({
                         <Icon.Info className="text-base-light" />
                       </Tooltip>
                     </span>
-                  </ProcessListHeading>
+                  </div>
 
                   <div className="mobile-lg:display-flex">
                     <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
@@ -331,12 +333,14 @@ const ReadOnlyModelBasics = ({
                 </ProcessListItem>
 
                 <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                  <ProcessListHeading
-                    type="p"
-                    className="font-body-sm line-height-sans-4"
-                  >
-                    {basicsMiscT('demonstrationPerformance')}
-                    <span className="top-2px position-relative text-normal">
+                  <div className="display-flex flex-align-top">
+                    <ProcessListHeading
+                      type="p"
+                      className="font-body-sm line-height-sans-4"
+                    >
+                      {basicsMiscT('demonstrationPerformance')}
+                    </ProcessListHeading>
+                    <span className="margin-top-0 position-relative text-normal">
                       <Tooltip
                         label={basicsMiscT('demonstrationPerformanceInfo')}
                         position="right"
@@ -345,7 +349,7 @@ const ReadOnlyModelBasics = ({
                         <Icon.Info className="text-base-light" />
                       </Tooltip>
                     </span>
-                  </ProcessListHeading>
+                  </div>
 
                   <div className="mobile-lg:display-flex">
                     <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
