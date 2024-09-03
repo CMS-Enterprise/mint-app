@@ -5,7 +5,7 @@ describe('Model Plan Documents', () => {
   });
 
   it('uploads and removes a document', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.contains('a', 'Add a document').click();
 

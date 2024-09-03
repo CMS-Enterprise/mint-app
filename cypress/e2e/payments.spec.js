@@ -5,7 +5,7 @@ describe('The Model Plan Payment Form', () => {
   });
 
   it('completes a Model Plan Payment form', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     // Clicks the Payment tasklist item
     cy.get('[data-testid="payment"]').click();

@@ -122,7 +122,7 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
             }}
             className="usa-button"
             variant="unstyled"
-            data-testid="to-add-collaborator"
+            data-testid="add-collaborator"
           >
             {collaborationAreaT('teamCard.addMember')}
           </UswdsReactLink>
@@ -130,7 +130,7 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
             to={`/models/${modelID}/collaboration-area/collaborators`}
             className="usa-button usa-button--outline margin-left-0"
             variant="unstyled"
-            data-testid="to-add-collaborator"
+            data-testid="manage-collaborators"
           >
             {collaborationAreaT('teamCard.manageTeam')}
           </UswdsReactLink>

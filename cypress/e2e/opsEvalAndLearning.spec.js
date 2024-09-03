@@ -11,7 +11,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
   });
 
   it('completes a Model Plan Ops Eval and Learning form', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
