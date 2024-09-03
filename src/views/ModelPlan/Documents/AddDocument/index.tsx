@@ -28,9 +28,11 @@ const AddDocument = () => {
     state: {
       solutionDetailsLink?: string;
       solutionID?: string;
+      fromCollaborationArea?: boolean;
     };
     solutionDetailsLink?: string;
     solutionID?: string;
+    fromCollaborationArea?: boolean;
   }>();
 
   const solutionDetailsLink = state?.solutionDetailsLink;
@@ -41,6 +43,10 @@ const AddDocument = () => {
     BreadcrumbItemOptions.COLLABORATION_AREA,
     BreadcrumbItemOptions.DOCUMENTS
   ];
+
+  const updatedBreadcrumbs = state?.fromCollaborationArea
+    ? breadcrumbs.filter(item => item !== BreadcrumbItemOptions.DOCUMENTS)
+    : breadcrumbs;
 
   const solutionDocumentBreadcrumb = [
     BreadcrumbItemOptions.HOME,
@@ -55,7 +61,9 @@ const AddDocument = () => {
         <Grid desktop={{ col: 12 }}>
           <Breadcrumbs
             items={
-              solutionDetailsLink ? solutionDocumentBreadcrumb : breadcrumbs
+              solutionDetailsLink
+                ? solutionDocumentBreadcrumb
+                : updatedBreadcrumbs
             }
             customItem={t('addDocument')}
           />
