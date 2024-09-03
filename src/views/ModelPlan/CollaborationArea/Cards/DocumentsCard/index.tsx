@@ -22,6 +22,8 @@ type DocumentsCardType = {
 const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
+  // console.log(documents);
+
   return (
     <Card gridLayout={{ desktop: { col: 4 } }} className="card--documents">
       <CardHeader>
@@ -30,7 +32,7 @@ const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
         </h3>
       </CardHeader>
       <CardBody>
-        {documents.length === 0 ? (
+        {documents?.length === 0 ? (
           <p>{collaborationAreaT('documentsCard.noDocuments')}</p>
         ) : (
           <p>{collaborationAreaT('documentsCard.viewAll')}</p>
