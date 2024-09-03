@@ -86,7 +86,10 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
           setStatusMessage={setStatusMessage}
         />
       </Modal>
-      <Card gridLayout={{ desktop: { col: 6 } }} className="card--model-plan">
+      <Card
+        gridLayout={{ desktop: { col: 6 } }}
+        className="collaboration-area__card card--model-plan"
+      >
         <CardHeader>
           <h3 className="usa-card__heading">
             {collaborationAreaT('modelPlanCard.heading')}

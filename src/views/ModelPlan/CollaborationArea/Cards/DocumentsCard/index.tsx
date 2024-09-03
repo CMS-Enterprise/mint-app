@@ -31,7 +31,7 @@ const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
   return (
     <Card
       gridLayout={{ mobile: { col: 12 }, desktop: { col: 4 } }}
-      className="card--documents"
+      className="collaboration-area__card card--documents"
     >
       <CardHeader>
         <h3 className="usa-card__heading">
