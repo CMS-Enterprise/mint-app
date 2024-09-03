@@ -139,12 +139,13 @@ export const documentsMisc = {
       body: 'Failed to fetch Model Plan documents'
     }
   },
-  requiredHint: 'All fields marked with ',
-  requiredHint2: ' are required',
+  requiredHint: 'Fields marked with an asterisk (',
+  requiredHint2: ') are required.',
   fileTypes: 'Select a PDF, DOC, DOCX, XLS, or XLSX',
   uploadError: {
     heading: 'There is a problem',
-    body: 'Something went wrong with MINT. Please try refreshing the page or try again later.'
+    body:
+      'Something went wrong with MINT. Please try refreshing the page or try again later.'
   },
   removeDocumentModal: {
     header: 'Confirm you want to remove {{-documentName}}.',

@@ -39,7 +39,6 @@ const AddDocument = () => {
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
     BreadcrumbItemOptions.COLLABORATION_AREA,
-    BreadcrumbItemOptions.TASK_LIST,
     BreadcrumbItemOptions.DOCUMENTS
   ];
 
@@ -74,7 +73,9 @@ const AddDocument = () => {
           </p>
 
           <p className="margin-bottom-2 font-body-md line-height-body-4">
-            {t('requiredHint')} <RequiredAsterisk /> {t('requiredHint2')}
+            {t('requiredHint')}
+            <RequiredAsterisk />
+            {t('requiredHint2')}
           </p>
 
           <ButtonGroup type="segmented">

@@ -20,13 +20,14 @@ import PlanDocumentsTable from './table';
 type DocumentStatusType = 'success' | 'error';
 
 export const DocumentsContent = () => {
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
   const { t } = useTranslation('documentsMisc');
   const { modelID } = useParams<{ modelID: string }>();
   const { message } = useMessage();
   const [documentMessage, setDocumentMessage] = useState('');
-  const [documentStatus, setDocumentStatus] =
-    useState<DocumentStatusType>('error');
+  const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(
+    'error'
+  );
 
   const { modelName } = useContext(ModelInfoContext);
 
@@ -38,7 +39,6 @@ export const DocumentsContent = () => {
             items={[
               BreadcrumbItemOptions.HOME,
               BreadcrumbItemOptions.COLLABORATION_AREA,
-              BreadcrumbItemOptions.TASK_LIST,
               BreadcrumbItemOptions.DOCUMENTS
             ]}
           />
@@ -68,7 +68,7 @@ export const DocumentsContent = () => {
             className="margin-top-0 margin-bottom-2 font-body-lg"
             data-testid="model-plan-name"
           >
-            {h('for')} {modelName}
+            {modelPlanTaskListT('subheading', { modelName })}
           </p>
 
           <p className="margin-bottom-2 font-body-md line-height-body-4">
@@ -76,11 +76,11 @@ export const DocumentsContent = () => {
           </p>
 
           <UswdsReactLink
-            to={`/models/${modelID}/collaboration-area/task-list`}
+            to={`/models/${modelID}/collaboration-area/`}
             className="display-inline-flex flex-align-center margin-y-3"
           >
             <Icon.ArrowBack className="margin-right-1" aria-hidden />
-            {h('returnToTaskList')}
+            {modelPlanTaskListT('returnToCollaboration')}
           </UswdsReactLink>
 
           <h4 className="margin-top-2 margin-bottom-1">{t('heading')}</h4>
