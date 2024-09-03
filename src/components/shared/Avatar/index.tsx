@@ -141,7 +141,7 @@ export const Avatar = ({
           <p className="font-body-2xs margin-y-0">
             {modelLeadFirst
               .map(role => {
-                return discussionsMiscT(`teamRoles.options.${role}`);
+                return teamRolesOptions.options[role];
               })
               .join(', ')}
           </p>

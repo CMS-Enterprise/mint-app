@@ -57,17 +57,17 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
             Add model team members
           </h1>
           <div
-            class="font-body-lg margin-bottom-6"
+            class="font-body-md margin-bottom-4"
           >
             Add any team members who will be collaborating on your Model Plan. You can edit this list at any time.
           </div>
           <h4
-            class="margin-bottom-1"
+            class="margin-bottom-1 margin-top-4"
           >
             Team members
           </h4>
           <a
-            class="usa-button margin-bottom-2"
+            class="usa-button margin-bottom-0"
             href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators/add-collaborator?view=add"
           >
             Add team member
@@ -94,7 +94,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="padding-bottom: .5rem;"
+                    style="padding-bottom: .5rem; width: 25%;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -125,7 +125,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="padding-bottom: .5rem;"
+                    style="padding-bottom: .5rem; width: 45%;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -133,7 +133,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                       title="Toggle SortBy"
                       type="button"
                     >
-                      Role
+                      Role(s)
                       <svg
                         class="usa-icon margin-left-05 position-absolute"
                         data-testid="caret--sort"
@@ -156,7 +156,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="padding-bottom: .5rem;"
+                    style="padding-bottom: .5rem; width: auto;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -187,7 +187,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="padding-bottom: .5rem;"
+                    style="padding-bottom: .5rem; width: auto;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -269,6 +269,46 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                 </tr>
               </tbody>
             </table>
+            <div
+              class="grid-row grid-gap grid-gap-lg display-flex row-reverse"
+            >
+              <div
+                class="desktop:margin-top-2 desktop:grid-col-auto"
+              >
+                <select
+                  class="usa-select margin-top-0 width-auto"
+                  data-testid="table-page-size"
+                  id="table-page-size"
+                  name="tablePageSize"
+                >
+                  <option
+                    value="5"
+                  >
+                    Show 5
+                  </option>
+                  <option
+                    value="10"
+                  >
+                    Show 10
+                  </option>
+                  <option
+                    value="25"
+                  >
+                    Show 25
+                  </option>
+                  <option
+                    value="50"
+                  >
+                    Show 50
+                  </option>
+                  <option
+                    value="100"
+                  >
+                    Show 100
+                  </option>
+                </select>
+              </div>
+            </div>
             <div
               aria-live="polite"
               class="usa-sr-only usa-table__announcement-region"
