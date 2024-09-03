@@ -248,11 +248,13 @@ const CollaboratorsTable = ({
           />
         )}
 
-        <TablePageSize
-          className="desktop:grid-col-auto"
-          pageSize={state.pageSize}
-          setPageSize={setPageSize}
-        />
+        {collaborators.length > 5 && (
+          <TablePageSize
+            className="desktop:grid-col-auto"
+            pageSize={state.pageSize}
+            setPageSize={setPageSize}
+          />
+        )}
       </div>
 
       <div

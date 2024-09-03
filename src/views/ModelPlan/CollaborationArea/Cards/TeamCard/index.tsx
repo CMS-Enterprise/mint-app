@@ -81,6 +81,7 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
             {remainingCollaborators.length > 0 && (
               <CollapsableLink
                 id="collaboration-team-card"
+                data-testid="collaboration-team-card"
                 className="width-full margin-bottom-2"
                 label={collaborationAreaT('teamCard.viewMoreTeamMembers', {
                   count: remainingCollaborators.length
