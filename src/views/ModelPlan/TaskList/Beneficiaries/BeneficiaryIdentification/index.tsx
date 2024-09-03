@@ -40,7 +40,8 @@ import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-type BeneficiaryIdentificationFormType = GetBeneficiaryIdentificationQuery['modelPlan']['beneficiaries'];
+type BeneficiaryIdentificationFormType =
+  GetBeneficiaryIdentificationQuery['modelPlan']['beneficiaries'];
 
 const BeneficiaryIdentification = () => {
   const { t: beneficiariesT } = useTranslation('beneficiaries');
@@ -57,9 +58,8 @@ const BeneficiaryIdentification = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<BeneficiaryIdentificationFormType>>(
-    null
-  );
+  const formikRef =
+    useRef<FormikProps<BeneficiaryIdentificationFormType>>(null);
 
   const history = useHistory();
 
@@ -161,13 +161,8 @@ const BeneficiaryIdentification = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<BeneficiaryIdentificationFormType>) => {
-          const {
-            errors,
-            setErrors,
-            setFieldValue,
-            values,
-            handleSubmit
-          } = formikProps;
+          const { errors, setErrors, setFieldValue, values, handleSubmit } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

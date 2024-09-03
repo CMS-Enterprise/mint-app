@@ -44,7 +44,8 @@ import {
   renderTotalPages
 } from '..';
 
-type GetCCWAndQualityFormType = GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
+type GetCCWAndQualityFormType =
+  GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
 
 const CCWAndQuality = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -57,7 +58,8 @@ const CCWAndQuality = () => {
   const {
     sendFilesBetweenCcw: sendFilesBetweenCcwConfig,
     appToSendFilesToKnown: appToSendFilesToKnownConfig,
-    useCcwForFileDistribiutionToParticipants: useCcwForFileDistribiutionToParticipantsConfig,
+    useCcwForFileDistribiutionToParticipants:
+      useCcwForFileDistribiutionToParticipantsConfig,
     developNewQualityMeasures: developNewQualityMeasuresConfig,
     qualityPerformanceImpactsPayment: qualityPerformanceImpactsPaymentConfig
   } = usePlanTranslation('opsEvalAndLearning');
@@ -182,13 +184,8 @@ const CCWAndQuality = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<GetCCWAndQualityFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            values,
-            setFieldValue
-          } = formikProps;
+          const { errors, handleSubmit, setErrors, values, setFieldValue } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

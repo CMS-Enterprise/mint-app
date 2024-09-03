@@ -45,7 +45,8 @@ import { ModelInfoContext } from 'views/ModelInfoWrapper';
 
 import './index.scss';
 
-type SolutionDocumentType = GetOperationalSolutionQuery['operationalSolution']['documents'][0];
+type SolutionDocumentType =
+  GetOperationalSolutionQuery['operationalSolution']['documents'][0];
 
 type PlanDocumentsTableProps = {
   hiddenColumns?: string[];
@@ -452,36 +453,31 @@ export const Table = ({
     documentTypeConfig.options
   ]);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow
-  } = useTable(
-    {
-      columns,
-      data,
-      sortTypes: {
-        alphanumeric: (rowOne, rowTwo, columnName) => {
-          return sortColumnValues(
-            rowOne.values[columnName],
-            rowTwo.values[columnName]
-          );
+  const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow } =
+    useTable(
+      {
+        columns,
+        data,
+        sortTypes: {
+          alphanumeric: (rowOne, rowTwo, columnName) => {
+            return sortColumnValues(
+              rowOne.values[columnName],
+              rowTwo.values[columnName]
+            );
+          }
+        },
+        globalFilter: useMemo(() => globalFilterCellText, []),
+        autoResetSortBy: false,
+        autoResetPage: false,
+        initialState: {
+          sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
+          pageIndex: 0
         }
       },
-      globalFilter: useMemo(() => globalFilterCellText, []),
-      autoResetSortBy: false,
-      autoResetPage: false,
-      initialState: {
-        sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
-        pageIndex: 0
-      }
-    },
-    useFilters,
-    useSortBy,
-    usePagination
-  );
+      useFilters,
+      useSortBy,
+      usePagination
+    );
 
   return (
     <div className="model-plan-table" data-testid="model-plan-documents-table">

@@ -55,18 +55,24 @@ import TaskListSideNav from './_components/TaskListSideNav';
 
 import './index.scss';
 
-type TaskListSectionLockStatus = GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
+type TaskListSectionLockStatus =
+  GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 type BasicsType = GetModelPlanQuery['modelPlan']['basics'];
-type OperationalNeedsType = GetModelPlanQuery['modelPlan']['operationalNeeds'][0];
+type OperationalNeedsType =
+  GetModelPlanQuery['modelPlan']['operationalNeeds'][0];
 type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
 type BeneficiariesType = GetModelPlanQuery['modelPlan']['beneficiaries'];
-type GeneralCharacteristicsType = GetModelPlanQuery['modelPlan']['generalCharacteristics'];
-type OpsEvalAndLearningType = GetModelPlanQuery['modelPlan']['opsEvalAndLearning'];
-type ParticipantsAndProvidersType = GetModelPlanQuery['modelPlan']['participantsAndProviders'];
+type GeneralCharacteristicsType =
+  GetModelPlanQuery['modelPlan']['generalCharacteristics'];
+type OpsEvalAndLearningType =
+  GetModelPlanQuery['modelPlan']['opsEvalAndLearning'];
+type ParticipantsAndProvidersType =
+  GetModelPlanQuery['modelPlan']['participantsAndProviders'];
 type PaymentsType = GetModelPlanQuery['modelPlan']['payments'];
-type PrepareForClearanceType = GetModelPlanQuery['modelPlan']['prepareForClearance'];
+type PrepareForClearanceType =
+  GetModelPlanQuery['modelPlan']['prepareForClearance'];
 type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
 
 type CRTDLType =
@@ -215,9 +221,8 @@ const TaskList = () => {
     sessionStorage.getItem(`statusChecked-${modelID}`) === 'true';
 
   // Aligns session with default value of state
-  const [statusChecked, setStatusChecked] = useState<boolean>(
-    statusCheckedStorage
-  );
+  const [statusChecked, setStatusChecked] =
+    useState<boolean>(statusCheckedStorage);
 
   // Status phase modal state
   const [isStatusPhaseModalOpen, setStatusPhaseModalOpen] = useState<boolean>(

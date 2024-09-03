@@ -6,7 +6,8 @@ import { GetInvolvementsDocument, GetInvolvementsQuery } from 'gql/gen/graphql';
 
 import Involvements from './index';
 
-type GetInvolvementsType = GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
+type GetInvolvementsType =
+  GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
 
 const involvementsMockData: GetInvolvementsType = {
   __typename: 'PlanGeneralCharacteristics',

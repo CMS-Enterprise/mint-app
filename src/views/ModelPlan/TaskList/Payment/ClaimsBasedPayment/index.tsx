@@ -43,7 +43,8 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
-type ClaimsBasedPaymentFormType = GetClaimsBasedPaymentQuery['modelPlan']['payments'];
+type ClaimsBasedPaymentFormType =
+  GetClaimsBasedPaymentQuery['modelPlan']['payments'];
 
 const ClaimsBasedPayment = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -54,9 +55,12 @@ const ClaimsBasedPayment = () => {
 
   const {
     payClaims: payClaimsConfig,
-    shouldAnyProvidersExcludedFFSSystems: shouldAnyProvidersExcludedFFSSystemsConfig,
-    changesMedicarePhysicianFeeSchedule: changesMedicarePhysicianFeeScheduleConfig,
-    affectsMedicareSecondaryPayerClaims: affectsMedicareSecondaryPayerClaimsConfig
+    shouldAnyProvidersExcludedFFSSystems:
+      shouldAnyProvidersExcludedFFSSystemsConfig,
+    changesMedicarePhysicianFeeSchedule:
+      changesMedicarePhysicianFeeScheduleConfig,
+    affectsMedicareSecondaryPayerClaims:
+      affectsMedicareSecondaryPayerClaimsConfig
   } = usePlanTranslation('payments');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -175,13 +179,8 @@ const ClaimsBasedPayment = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ClaimsBasedPaymentFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setFieldValue,
-            setErrors,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setFieldValue, setErrors, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

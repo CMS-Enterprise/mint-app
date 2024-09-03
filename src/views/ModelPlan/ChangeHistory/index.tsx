@@ -232,9 +232,10 @@ const ChangeHistory = () => {
   };
 
   // Group changes by day
-  const changesByDay = useMemo(() => sortChangesByDay(currentItems), [
-    currentItems
-  ]);
+  const changesByDay = useMemo(
+    () => sortChangesByDay(currentItems),
+    [currentItems]
+  );
 
   if (error) {
     return <NotFound />;

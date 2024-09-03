@@ -10,7 +10,8 @@ import {
 
 import IDDOCTesting from './index';
 
-type GetIDDOCTestingType = GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
+type GetIDDOCTestingType =
+  GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
 
 const iddocTestingMockData: GetIDDOCTestingType = {
   __typename: 'PlanOpsEvalAndLearning',
