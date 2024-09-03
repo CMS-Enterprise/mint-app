@@ -278,8 +278,6 @@ const CollaborationArea = () => {
         <GridContainer>
           <CardGroup>
             <DocumentsCard documents={documents} modelID={modelID} />
-            <DocumentsCard documents={documents} modelID={modelID} />
-            <DocumentsCard documents={documents} modelID={modelID} />
           </CardGroup>
         </GridContainer>
       </div>
