@@ -1,0 +1,239 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TeamCard component > displays role count correctly 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card desktop:grid-col-12 card--model-plan"
+    data-testid="Card"
+  >
+    <div
+      class="usa-card__container"
+    >
+      <header
+        class="usa-card__header"
+        data-testid="CardHeader"
+      >
+        <h3
+          class="usa-card__heading"
+        >
+          Model team
+        </h3>
+        <p>
+          Team members can edit all sections of a model collaboration area, including uploading documents and adding team members.
+        </p>
+      </header>
+      <div
+        class="usa-card__body"
+        data-testid="CardBody"
+      >
+        <div
+          class="grid-row"
+          data-testid="grid"
+        >
+          <div
+            class="mobile:grid-col-12 tablet:grid-col-6 desktop:grid-col-3"
+            data-testid="grid"
+          >
+            <div
+              class="display-flex margin-y-05 flex-align-start"
+            >
+              <div
+                class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-yellow-5 margin-right-1"
+                data-testid="avatar--basic"
+              >
+                LS
+              </div>
+              <div
+                class="margin-y-0"
+              >
+                <span
+                  class=""
+                >
+                  Luke Skywalker
+                </span>
+                <p
+                  class="font-body-2xs margin-y-0"
+                >
+                  Model Lead
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mobile:grid-col-12 tablet:grid-col-6 desktop:grid-col-3"
+            data-testid="grid"
+          >
+            <div
+              class="display-flex margin-y-05 flex-align-start"
+            >
+              <div
+                class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
+                data-testid="avatar--basic"
+              >
+                BF
+              </div>
+              <div
+                class="margin-y-0"
+              >
+                <span
+                  class=""
+                >
+                  Boba Fett
+                </span>
+                <p
+                  class="font-body-2xs margin-y-0"
+                >
+                  Leadership
+                </p>
+                <p
+                  class="font-body-2xs margin-y-0"
+                >
+                  +2 roles
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="usa-card__footer"
+        data-testid="CardFooter"
+      >
+        <a
+          class="usa-button"
+          data-testid="add-collaborator"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators/add-collaborator"
+        >
+          Add a team member
+        </a>
+        <a
+          class="usa-button usa-button--outline margin-left-0"
+          data-testid="manage-collaborators"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators"
+        >
+          Manage model team
+        </a>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;
+
+exports[`TeamCard component > matches snapshot 1`] = `
+<DocumentFragment>
+  <li
+    class="usa-card desktop:grid-col-12 card--model-plan"
+    data-testid="Card"
+  >
+    <div
+      class="usa-card__container"
+    >
+      <header
+        class="usa-card__header"
+        data-testid="CardHeader"
+      >
+        <h3
+          class="usa-card__heading"
+        >
+          Model team
+        </h3>
+        <p>
+          Team members can edit all sections of a model collaboration area, including uploading documents and adding team members.
+        </p>
+      </header>
+      <div
+        class="usa-card__body"
+        data-testid="CardBody"
+      >
+        <div
+          class="grid-row"
+          data-testid="grid"
+        >
+          <div
+            class="mobile:grid-col-12 tablet:grid-col-6 desktop:grid-col-3"
+            data-testid="grid"
+          >
+            <div
+              class="display-flex margin-y-05 flex-align-start"
+            >
+              <div
+                class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-yellow-5 margin-right-1"
+                data-testid="avatar--basic"
+              >
+                LS
+              </div>
+              <div
+                class="margin-y-0"
+              >
+                <span
+                  class=""
+                >
+                  Luke Skywalker
+                </span>
+                <p
+                  class="font-body-2xs margin-y-0"
+                >
+                  Model Lead
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mobile:grid-col-12 tablet:grid-col-6 desktop:grid-col-3"
+            data-testid="grid"
+          >
+            <div
+              class="display-flex margin-y-05 flex-align-start"
+            >
+              <div
+                class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-blue-10 margin-right-1"
+                data-testid="avatar--basic"
+              >
+                BF
+              </div>
+              <div
+                class="margin-y-0"
+              >
+                <span
+                  class=""
+                >
+                  Boba Fett
+                </span>
+                <p
+                  class="font-body-2xs margin-y-0"
+                >
+                  Leadership
+                </p>
+                <p
+                  class="font-body-2xs margin-y-0"
+                >
+                  +2 roles
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="usa-card__footer"
+        data-testid="CardFooter"
+      >
+        <a
+          class="usa-button"
+          data-testid="add-collaborator"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators/add-collaborator"
+        >
+          Add a team member
+        </a>
+        <a
+          class="usa-button usa-button--outline margin-left-0"
+          data-testid="manage-collaborators"
+          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators"
+        >
+          Manage model team
+        </a>
+      </div>
+    </div>
+  </li>
+</DocumentFragment>
+`;

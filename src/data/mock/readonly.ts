@@ -768,7 +768,7 @@ const collaboratorsData: GetModelCollaboratorsType[] = [
       commonName: 'Boba Fett'
     },
     modelPlanID: modelID,
-    teamRoles: [TeamRole.LEADERSHIP],
+    teamRoles: [TeamRole.LEADERSHIP, TeamRole.EVALUATION, TeamRole.LEARNING],
     createdDts: '2022-06-03T19:32:24.412662Z',
     __typename: 'PlanCollaborator'
   }

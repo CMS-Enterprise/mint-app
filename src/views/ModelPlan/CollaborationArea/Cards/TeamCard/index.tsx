@@ -37,7 +37,7 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
         desktop={{ col: 6 }}
         className="padding-1 display-flex flex-column flex-align-center flex-justify-center height-mobile"
       >
-        <Spinner />
+        <Spinner data-testid="team-loading" />
       </Grid>
     );
 
