@@ -185,36 +185,6 @@ const TaskListSideNav = ({
         </div>
 
         {flags.changeHistoryEnabled && <RecentChanges modelID={modelID} />}
-
-        <div>
-          <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>
-
-          <div className="margin-bottom-2">
-            <UswdsReactLink
-              to={`/models/${modelID}/collaboration-area/collaborators?view=manage`}
-            >
-              {t('sideNav.editTeam')}
-            </UswdsReactLink>
-          </div>
-
-          <div className="sidenav-actions__teamList">
-            <ul className="usa-list usa-list--unstyled">
-              {collaboratorsOrderedByModelLeads(collaborators).map(
-                collaborator => {
-                  return (
-                    <li key={collaborator.userAccount.username}>
-                      <Avatar
-                        className="margin-bottom-1"
-                        user={collaborator.userAccount.commonName}
-                        teamRoles={collaborator.teamRoles}
-                      />
-                    </li>
-                  );
-                }
-              )}
-            </ul>
-          </div>
-        </div>
       </div>
     </>
   );

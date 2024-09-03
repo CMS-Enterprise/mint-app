@@ -202,7 +202,6 @@ export const CollaboratorsContent = () => {
                   ? [
                       BreadcrumbItemOptions.HOME,
                       BreadcrumbItemOptions.COLLABORATION_AREA,
-                      BreadcrumbItemOptions.TASK_LIST,
                       BreadcrumbItemOptions.COLLABORATORS
                     ]
                   : [
@@ -228,10 +227,9 @@ export const CollaboratorsContent = () => {
                   {collaboratorsMiscT('manageModelTeamInfo')}
                 </div>
 
-                <UswdsReactLink
-                  to={`/models/${modelID}/collaboration-area/task-list/`}
-                >
-                  <span>&larr; </span> {miscellaneousT('returnToTaskList')}
+                <UswdsReactLink to={`/models/${modelID}/collaboration-area`}>
+                  <span>&larr; </span>{' '}
+                  {miscellaneousT('returnToCollaborationArea')}
                 </UswdsReactLink>
               </>
             ) : (
