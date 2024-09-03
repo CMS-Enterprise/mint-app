@@ -51,7 +51,10 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
 
   return (
     <>
-      <Card gridLayout={{ desktop: { col: 12 } }} className="card--model-plan">
+      <Card
+        gridLayout={{ desktop: { col: 12 } }}
+        className="card--model-plan card--team minh-0"
+      >
         <CardHeader>
           <h3 className="usa-card__heading">
             {collaborationAreaT('teamCard.heading')}

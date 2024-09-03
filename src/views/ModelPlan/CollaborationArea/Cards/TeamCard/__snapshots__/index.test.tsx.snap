@@ -3,7 +3,7 @@
 exports[`TeamCard component > displays role count correctly 1`] = `
 <DocumentFragment>
   <li
-    class="usa-card desktop:grid-col-12 card--model-plan"
+    class="usa-card desktop:grid-col-12 card--model-plan card--team minh-0"
     data-testid="Card"
   >
     <div
@@ -122,7 +122,7 @@ exports[`TeamCard component > displays role count correctly 1`] = `
 exports[`TeamCard component > matches snapshot 1`] = `
 <DocumentFragment>
   <li
-    class="usa-card desktop:grid-col-12 card--model-plan"
+    class="usa-card desktop:grid-col-12 card--model-plan card--team minh-0"
     data-testid="Card"
   >
     <div
