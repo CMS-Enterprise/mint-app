@@ -36,35 +36,26 @@ const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
           <p>{collaborationAreaT('documentsCard.noDocuments')}</p>
         ) : (
           <p>{collaborationAreaT('documentsCard.viewAll')}</p>
-          // documents.map((doc, i) => (
-          //   <UswdsReactLink
-          //     key={i}
-          //     to={`/models/${modelID}/documents/${doc.id}`}
-          //     className="usa-link"
-          //   >
-          //     {doc.name}
-          //   </UswdsReactLink>
-          // ))
         )}
       </CardBody>
       <CardFooter>
         <UswdsReactLink
-          to={`/models/${modelID}/task-list`}
+          to={`/models/${modelID}/collaboration-area/documents/add-document`}
           className="usa-button"
           variant="unstyled"
           data-testid="to-task-list"
         >
           {collaborationAreaT('documentsCard.addDocument')}
         </UswdsReactLink>
-        {/* {sectionStartedCounter !== 0 && (
-          <Button
-            type="button"
+        {documents?.length !== 0 && (
+          <UswdsReactLink
             className="usa-button usa-button--outline"
-            onClick={() => setIsExportModalOpen(true)}
+            variant="unstyled"
+            to={`/models/${modelID}/collaboration-area/documents`}
           >
-            {collaborationAreaT('modelPlanCard.shareButton')}
-          </Button>
-        )} */}
+            {collaborationAreaT('documentsCard.viewAll')}
+          </UswdsReactLink>
+        )}
       </CardFooter>
     </Card>
   );
