@@ -169,6 +169,8 @@ export const CollaboratorsContent = () => {
         <Button
           type="button"
           className="margin-right-4"
+          secondary
+          accentStyle="warm"
           onClick={() =>
             removeCollaborator && handleRemoveCollaborator(removeCollaborator)
           }

@@ -39,7 +39,8 @@ export const miscellaneous: Record<string, string> = {
     'This section of the Model Plan ({{-sectionName}}) is ready for review.',
   markedReady: 'Marked ready for review by {{-reviewer}} on ',
   validDate: 'Please use a valid date format.',
-  apolloFailField: 'Failed to save field value/s'
+  apolloFailField: 'Failed to save field value/s',
+  allFieldsRequired: 'All fields marked with ( <s>*</s> ) are required.'
 };
 
 // Reusable translated option for all frequency type questions

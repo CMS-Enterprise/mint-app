@@ -1,27 +1,18 @@
-import React, { useMemo, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
   Grid
 } from '@trussworks/react-uswds';
-import {
-  TaskStatus,
-  useGetModelCollaboratorsQuery,
-  useGetModelPlanQuery
-} from 'gql/gen/graphql';
+import { useGetModelCollaboratorsQuery } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import Modal from 'components/Modal';
 import { Avatar } from 'components/shared/Avatar';
 import CollapsableLink from 'components/shared/CollapsableLink';
-import ShareExportModal from 'components/ShareExport';
 import Spinner from 'components/Spinner';
-import { getITSolutionsStatus } from 'views/ModelPlan/TaskList';
-import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
 import '../index.scss';
 
@@ -31,8 +22,6 @@ type ModelPlanCardType = {
 
 const TeamCard = ({ modelID }: ModelPlanCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
-
-  const [isViewMoreTeamMembers, setIsViewMoreTeamMembers] = useState(false);
 
   const { data, loading } = useGetModelCollaboratorsQuery({
     variables: {
@@ -78,6 +67,7 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
                 desktop={{ col: 3 }}
                 tablet={{ col: 6 }}
                 mobile={{ col: 12 }}
+                key={collaborator.userAccount.id}
               >
                 <Avatar
                   user={collaborator.userAccount.commonName}
@@ -90,14 +80,13 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
 
             {remainingCollaborators.length > 0 && (
               <CollapsableLink
-                id="collaoration-team-card"
+                id="collaboration-team-card"
                 className="width-full margin-bottom-2"
                 label={collaborationAreaT('teamCard.viewMoreTeamMembers', {
                   count: remainingCollaborators.length
                 })}
                 closeLabel={collaborationAreaT('teamCard.viewFewerTeamMembers')}
                 labelPosition="bottom"
-                setParentOpen={setIsViewMoreTeamMembers}
                 styleLeftBar={false}
               >
                 <div className="margin-bottom-1">
@@ -107,6 +96,7 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
                         desktop={{ col: 3 }}
                         tablet={{ col: 6 }}
                         mobile={{ col: 12 }}
+                        key={collaborator.userAccount.id}
                       >
                         <Avatar
                           user={collaborator.userAccount.commonName}
@@ -125,7 +115,10 @@ const TeamCard = ({ modelID }: ModelPlanCardType) => {
 
         <CardFooter>
           <UswdsReactLink
-            to={`/models/${modelID}/collaboration-area/collaborators/add-collaborator`}
+            to={{
+              pathname: `/models/${modelID}/collaboration-area/collaborators/add-collaborator`,
+              state: { fromCollaborationArea: true }
+            }}
             className="usa-button"
             variant="unstyled"
             data-testid="to-add-collaborator"

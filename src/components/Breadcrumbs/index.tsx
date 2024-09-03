@@ -120,7 +120,7 @@ export const commonBreadCrumbs = (
   },
   COLLABORATORS: {
     text: 'collaboratorsMisc:manageModelTeam',
-    url: `/models/${modelID}}/collaboration-area/collaborators`
+    url: `/models/${modelID}/collaboration-area/collaborators`
   },
   DOCUMENTS: {
     text: 'documentsMisc:heading',

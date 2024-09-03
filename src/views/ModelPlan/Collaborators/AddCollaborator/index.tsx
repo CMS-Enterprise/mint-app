@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -18,10 +18,12 @@ import MainContent from 'components/MainContent';
 import OktaUserSelect from 'components/OktaUserSelect';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import CollapsableLink from 'components/shared/CollapsableLink';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import Spinner from 'components/Spinner';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -30,12 +32,21 @@ import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
+import RoleInfo from '../_components/RoleInfo';
 import { isLastModelLead } from '..';
 
 type GetCollaboratorsType =
   GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 type CollaboratorFormType =
   GetIndividualModelPlanCollaboratorQuery['planCollaboratorByID'];
+
+type LocationProps = {
+  fromCollaborationArea: boolean;
+  pathname: string;
+  state: {
+    fromCollaborationArea: boolean;
+  };
+};
 
 const Collaborators = () => {
   const { t: collaboratorsT } = useTranslation('collaborators');
@@ -45,7 +56,9 @@ const Collaborators = () => {
 
   const history = useHistory();
 
-  const location = useLocation();
+  const location = useLocation<LocationProps>();
+
+  const isFromCollaborationArea = location.state?.fromCollaborationArea;
 
   const params = new URLSearchParams(location.search);
 
@@ -186,12 +199,10 @@ const Collaborators = () => {
   const breadcrumbs = [BreadcrumbItemOptions.HOME];
 
   if (manageOrAdd === 'manage') {
-    breadcrumbs.push(
-      BreadcrumbItemOptions.COLLABORATION_AREA,
-      BreadcrumbItemOptions.TASK_LIST,
-      BreadcrumbItemOptions.COLLABORATORS
-    );
-  } else {
+    breadcrumbs.push(BreadcrumbItemOptions.COLLABORATION_AREA);
+  }
+
+  if (!isFromCollaborationArea || manageOrAdd === 'add') {
     breadcrumbs.push(BreadcrumbItemOptions.COLLABORATORS);
   }
 
@@ -213,10 +224,19 @@ const Collaborators = () => {
               : collaboratorsMiscT('addATeamMember')}
           </PageHeading>
 
-          <div className="margin-bottom-4 line-height-body-6">
+          <div className="margin-bottom-2 font-body-md line-height-body-5">
             {!collaboratorId && collaboratorsMiscT('searchTeamInfo')}{' '}
             {collaboratorsMiscT('teamInfo')}
           </div>
+
+          <p className="margin-bottom-5">
+            <Trans
+              i18nKey={miscellaneousT('allFieldsRequired')}
+              components={{
+                s: <span className="text-secondary-dark" />
+              }}
+            />
+          </p>
 
           <Formik
             initialValues={initialValues}
@@ -270,6 +290,7 @@ const Collaborators = () => {
                           id="label-model-team-cedar-contact"
                         >
                           {collaboratorsT('username.label')}
+                          <RequiredAsterisk />
                         </Label>
 
                         <FieldErrorMsg>
@@ -290,7 +311,7 @@ const Collaborators = () => {
                             <Label
                               id="hint-model-team-cedar-contact"
                               htmlFor="model-team-cedar-contact"
-                              className="text-normal margin-top-1 margin-bottom-105 text-base"
+                              className="text-normal margin-top-1 margin-bottom-105 text-base maxw-none"
                               hint
                             >
                               {collaboratorsMiscT('startTyping')}
@@ -322,6 +343,7 @@ const Collaborators = () => {
                       >
                         <Label htmlFor="collaborator-role">
                           {collaboratorsT('teamRoles.label')}
+                          <RequiredAsterisk />
                         </Label>
 
                         <FieldErrorMsg>{flatErrors.teamRoles}</FieldErrorMsg>
@@ -353,6 +375,8 @@ const Collaborators = () => {
                           }
                         />
                       </FieldGroup>
+
+                      <RoleInfo />
 
                       <Alert
                         type="info"
