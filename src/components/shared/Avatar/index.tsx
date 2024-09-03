@@ -155,7 +155,7 @@ export const Avatar = ({
             {teamRoles.length > 1 && (
               <p className="font-body-2xs margin-y-0">
                 {collaboratorsMisc('teamRoles', {
-                  count: teamRoles.length - 2
+                  count: teamRoles.length - 1
                 })}
               </p>
             )}
