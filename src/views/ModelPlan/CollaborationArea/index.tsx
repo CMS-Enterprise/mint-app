@@ -34,6 +34,7 @@ import { UpdateFavoriteProps } from '../ModelPlanOverview';
 // import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
+import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
 
 import './index.scss';
@@ -86,7 +87,7 @@ const CollaborationArea = () => {
   const {
     modelName,
     // discussions,
-    // documents,
+    documents,
     // crs,
     // tdls,
     status,
@@ -105,8 +106,9 @@ const CollaborationArea = () => {
     sessionStorage.getItem(`statusChecked-${modelID}`) === 'true';
 
   // Aligns session with default value of state
-  const [statusChecked, setStatusChecked] =
-    useState<boolean>(statusCheckedStorage);
+  const [statusChecked, setStatusChecked] = useState<boolean>(
+    statusCheckedStorage
+  );
 
   // Status phase modal state
   const [isStatusPhaseModalOpen, setStatusPhaseModalOpen] = useState<boolean>(
@@ -272,6 +274,11 @@ const CollaborationArea = () => {
           />
         )}
       </GridContainer>
+      <div className="bg-primary-lighter padding-6">
+        <GridContainer>
+          <DocumentsCard documents={documents} modelID={modelID} />
+        </GridContainer>
+      </div>
     </MainContent>
   );
 };
