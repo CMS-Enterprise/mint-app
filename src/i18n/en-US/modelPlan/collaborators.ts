@@ -89,7 +89,7 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
   teamMembers: 'Team members',
   table: {
     name: 'Name',
-    role: 'Role',
+    role: 'Role(s)',
     dateAdded: 'Date added',
     actions: 'Actions',
     edit: 'Edit',

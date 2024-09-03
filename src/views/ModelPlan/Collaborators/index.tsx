@@ -223,7 +223,7 @@ export const CollaboratorsContent = () => {
                   <Trans i18nKey="draftModelPlan:for" /> {modelName}
                 </p>
 
-                <div className="font-body-lg margin-bottom-6">
+                <div className="font-body-md margin-bottom-4">
                   {collaboratorsMiscT('manageModelTeamInfo')}
                 </div>
 
@@ -238,18 +238,18 @@ export const CollaboratorsContent = () => {
                   {collaboratorsMiscT('headingTeamMembers')}
                 </PageHeading>
 
-                <div className="font-body-lg margin-bottom-6">
+                <div className="font-body-md margin-bottom-4">
                   {collaboratorsMiscT('teamMemberInfo')}
                 </div>
               </>
             )}
 
-            <h4 className="margin-bottom-1">
+            <h4 className="margin-bottom-1 margin-top-4">
               {collaboratorsMiscT('teamMembers')}
             </h4>
 
             <UswdsReactLink
-              className="usa-button margin-bottom-2"
+              className="usa-button margin-bottom-0"
               variant="unstyled"
               to={`/models/${modelID}/collaboration-area/collaborators/add-collaborator?view=${manageOrAdd}`}
             >
