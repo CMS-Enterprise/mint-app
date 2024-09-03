@@ -29,6 +29,9 @@
       @media screen and (min-width: 520px) {
         width: auto;
       }
+      @media screen and (min-width: 1024px) and (max-width: 1120px) {
+        width: 100%;
+      }
 
     }
 
@@ -38,7 +41,11 @@
       @media screen and (min-width: 520px) {
         margin-top: 0;
         margin-left: 1rem;
-    }
+      }
+      @media screen and (min-width: 1024px) and (max-width: 1120px) {
+        margin-top: 1rem;
+        margin-left: 0;
+      }
 
     }
   }
