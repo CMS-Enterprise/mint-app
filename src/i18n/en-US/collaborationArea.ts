@@ -17,6 +17,8 @@ const collaborationArea = {
   },
   documentsCard: {
     heading: 'Documents',
+    addDocument: 'Add document',
+    viewAll: 'View all',
     noDocuments: 'No documents added',
     linkAdded: '{{count}} link added',
     linkAdded_other: '{{count}} links added'
