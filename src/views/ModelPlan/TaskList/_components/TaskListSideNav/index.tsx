@@ -13,10 +13,8 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-import { Avatar } from 'components/shared/Avatar';
 import ShareExportModal from 'components/ShareExport';
 import useMessage from 'hooks/useMessage';
-import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 import RecentChanges from 'views/ModelPlan/ChangeHistory/components/RecentChanges';
 
 import { StatusMessageType } from '../..';
