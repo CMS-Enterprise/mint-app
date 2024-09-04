@@ -228,7 +228,7 @@ const CollaboratorsTable = ({
 
       <div
         className={classNames('grid-row grid-gap grid-gap-lg', {
-          'display-flex row-reverse': collaborators.length < state.pageSize
+          'display-flex row-reverse': collaborators.length <= state.pageSize
         })}
       >
         {collaborators.length > state.pageSize && (
