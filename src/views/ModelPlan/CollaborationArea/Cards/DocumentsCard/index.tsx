@@ -72,7 +72,7 @@ const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
           }}
           className="usa-button"
           variant="unstyled"
-          data-testid="to-task-list"
+          data-testid="to-add-document"
         >
           {collaborationAreaT('documentsCard.addDocument')}
         </UswdsReactLink>

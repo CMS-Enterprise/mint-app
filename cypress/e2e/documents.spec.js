@@ -4,10 +4,17 @@ describe('Model Plan Documents', () => {
     cy.visit('/');
   });
 
-  it('uploads and removes a document', () => {
-    cy.clickPlanTableByName('Empty Plan');
+  it('uploads document through the Documents Card', () => {
+    cy.visit('/');
 
-    cy.contains('a', 'Add a document').click();
+    cy.get(`[data-testid="${'table'}"] a`).contains('Empty Plan').click();
+    cy.url().should('include', '/collaboration-area');
+
+    cy.get('[data-testid="page-loading"]').should('not.exist');
+
+    cy.get('.card--documents').contains('No documents added');
+
+    cy.contains('a', 'Add document').click();
 
     cy.contains('h1', 'Add a document');
 
@@ -51,10 +58,8 @@ describe('Model Plan Documents', () => {
     //   'No documents uploaded'
     // );
 
-    cy.contains('a', 'Return to Model Plan task list').click();
+    cy.contains('a', 'Return to model collaboration area').click();
 
-    cy.get('[data-testid="document-items"]').contains('strong', '1');
-
-    cy.get('[data-testid="document-items"]').contains('document');
+    cy.get('.card--documents').contains('1 uploaded');
   });
 });
