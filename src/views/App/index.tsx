@@ -1,5 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import ReactGA from 'react-ga4';
+import React, { useLayoutEffect } from 'react';
 import {
   BrowserRouter,
   Redirect,
@@ -15,6 +14,7 @@ import Header from 'components/Header';
 import PageWrapper from 'components/PageWrapper';
 import { MessageProvider } from 'hooks/useMessage';
 import usePrevLocation from 'hooks/usePrevious';
+import useRouteTitle from 'hooks/useRouteTitle';
 import AccessibilityStatement from 'views/AccessibilityStatement';
 import AuthenticationWrapper from 'views/AuthenticationWrapper';
 import BeaconWrapper from 'views/BeaconWrapper';
@@ -82,12 +82,8 @@ const AppRoutes = () => {
   const prevLocation = usePrevLocation(location);
   const flags = useFlags();
 
-  // Track GA Pages
-  useEffect(() => {
-    if (location.pathname) {
-      ReactGA.send({ hitType: 'pageview', page: location.pathname });
-    }
-  }, [location.pathname]);
+  // Fetches translated title for route and sends to GA
+  useRouteTitle({ sendGA: true });
 
   // Scroll to top
   useLayoutEffect(() => {
@@ -163,6 +159,7 @@ const AppRoutes = () => {
           <ProtectedRoute
             path="/models/:modelID/collaboration-area/status"
             exact
+            title="Model Status"
             component={Status}
           />
 

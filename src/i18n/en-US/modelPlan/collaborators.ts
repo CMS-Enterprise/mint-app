@@ -45,6 +45,7 @@ export const collaborators: TranslationCollaborators = {
       MODEL_TEAM: 'Model Team',
       OACT: 'Office of the Actuary (OACT)',
       PAYMENT: 'Payment',
+      SOLUTION_ARCHITECT: 'Solution Architect',
       QUALITY: 'Quality'
     }
   }
