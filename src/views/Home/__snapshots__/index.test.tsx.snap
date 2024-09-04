@@ -605,7 +605,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       role="cell"
                       style="padding-left: 0px; white-space: normal;"
                     >
-                      Updated Invalid DateTime
+                      Updated 
                     </td>
                   </tr>
                 </tbody>
@@ -1003,7 +1003,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       role="cell"
                       style="padding-left: 0px; white-space: normal;"
                     >
-                      Updated Invalid DateTime
+                      Updated 
                     </td>
                   </tr>
                 </tbody>

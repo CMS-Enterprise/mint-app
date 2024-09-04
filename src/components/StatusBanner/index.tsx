@@ -59,7 +59,7 @@ const StatusBanner = ({
         'task-list-status': isCollaborationArea || isReadView
       })}
       style={{ lineHeight: 'initial' }}
-      data-testid="task-list-status"
+      data-testid={`task-list-status${condensed ? '-condensed' : ''}`}
     >
       <div
         className={classNames('display-flex flex-align-center', {

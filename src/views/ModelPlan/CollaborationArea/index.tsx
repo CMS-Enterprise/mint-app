@@ -240,7 +240,6 @@ const CollaborationArea = () => {
                 isCollaborationArea
                 modifiedDts={modelPlan.modifiedDts}
                 modifiedOrCreateLabel
-                condensed
               />
             </Grid>
 
