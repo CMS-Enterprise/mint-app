@@ -25,7 +25,10 @@ type DocumentsCardType = {
 const DocumentsCard = ({ documents, modelID }: DocumentsCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
+  // Links have a fileType of 'externalLink'
   const linksArray = documents?.filter(doc => doc.fileType === 'externalLink');
+
+  // Everything else is an uploaded document
   const uploadedDocArray = documents?.filter(
     doc => doc.fileType !== 'externalLink'
   );
