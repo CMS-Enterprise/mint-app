@@ -26,7 +26,7 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
     >
       <ul className="margin-y-0 padding-left-4">
         {roleInfoConfig.baseRoles.map((role: string, index: number) => (
-          <li>
+          <li className="margin-bottom-1">
             <Trans
               i18nKey={`collaboratorsMisc:rolesInfo.baseRoles.${index}`}
               components={{
@@ -47,7 +47,7 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
 
       <ul className="margin-bottom-2 margin-top-1 padding-left-4">
         {roleInfoConfig.workstreamRoles.map((role: string, index: number) => (
-          <li>
+          <li className="margin-bottom-1">
             <Trans
               i18nKey={`collaboratorsMisc:rolesInfo.workstreamRoles.${index}`}
               components={{
@@ -68,7 +68,7 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
 
       <ul className="margin-bottom-2 margin-top-1 padding-left-4">
         {roleInfoConfig.otherRoles.map((role: string, index: number) => (
-          <li>
+          <li className="margin-bottom-1">
             <Trans
               i18nKey={`collaboratorsMisc:rolesInfo.otherRoles.${index}`}
               components={{

@@ -5,6 +5,7 @@ import { usePagination, useSortBy, useTable } from 'react-table';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { GetModelCollaboratorsQuery, TeamRole } from 'gql/gen/graphql';
+import { orderBy } from 'lodash';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { Avatar } from 'components/shared/Avatar';
@@ -45,6 +46,24 @@ const CollaboratorsTable = ({
 
   const manageOrAdd = params.get('view') || 'manage';
 
+  // Initial sort to get the model leads first.  When toggling sort, react-table should disregard this sort when asc/desc is toggled.
+  const sortedCollaborators: CollaboratorType[] = useMemo(() => {
+    const initAlphabeticalSort = orderBy(
+      collaborators,
+      ['userAccount.commonName'],
+      ['asc']
+    );
+
+    return [
+      ...initAlphabeticalSort.filter(
+        collaborator => !!collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
+      ),
+      ...initAlphabeticalSort.filter(
+        collaborator => !collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
+      )
+    ];
+  }, [collaborators]);
+
   const columns: any = useMemo(() => {
     return [
       {
@@ -58,10 +77,14 @@ const CollaboratorsTable = ({
         Header: collaboratorsMiscT('table.role'),
         accessor: 'teamRoles',
 
-        Cell: ({ value }: any) => {
+        Cell: ({ teamRoles }: CollaboratorType) => {
           const modelLeadFirst = [
-            ...value.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
-            ...value.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
+            ...teamRoles.filter(
+              (role: TeamRole) => role === TeamRole.MODEL_LEAD
+            ),
+            ...teamRoles.filter(
+              (role: TeamRole) => role !== TeamRole.MODEL_LEAD
+            )
           ];
           return modelLeadFirst
             .map((role: TeamRole) => {
@@ -145,13 +168,12 @@ const CollaboratorsTable = ({
   } = useTable(
     {
       columns,
-      data: collaborators,
+      data: sortedCollaborators,
       sortTypes: {
         alphanumeric: (rowOne, rowTwo, columnName) => {
           return sortColumnValues(
-            rowOne.values[columnName],
-            rowTwo.values[columnName],
-            TeamRole.MODEL_LEAD
+            rowOne.values[columnName].join(', '),
+            rowTwo.values[columnName].join(', ')
           );
         }
       },
