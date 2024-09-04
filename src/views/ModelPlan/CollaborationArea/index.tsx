@@ -274,7 +274,7 @@ const CollaborationArea = () => {
           />
         )}
       </GridContainer>
-      <div className="bg-primary-lighter padding-y-6">
+      <div className="bg-primary-lighter padding-top-6 padding-bottom-10">
         <GridContainer>
           <CardGroup>
             <DocumentsCard documents={documents} modelID={modelID} />
