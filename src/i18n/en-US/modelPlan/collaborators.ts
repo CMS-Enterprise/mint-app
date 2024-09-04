@@ -56,6 +56,7 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
   csvTitle: 'Collaborator',
   EUAID: 'EUA ID',
   roles: 'Role(s)',
+  selectedRoles: 'Selected role(s)',
   teamBreadcrumb: 'Add model team members',
   addATeamMember: 'Add a team member',
   updateATeamMember: 'Edit team member roles',
@@ -114,7 +115,7 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
     subheading:
       'You will not be able to edit this Model Plan after you have been removed.',
     confirm: 'Remove yourself',
-    no: 'Keep yourself'
+    no: 'Go back'
   },
   success: {
     heading: 'Success! You have removed yourself from {{-modelName}}.',

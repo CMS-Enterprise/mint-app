@@ -302,7 +302,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="width-full margin-y-4 mint-collapsable-link"
+              class="width-full margin-y-2 line-height-body-4 margin-bottom-5 mint-collapsable-link"
             >
               <button
                 aria-controls="available-role-info"

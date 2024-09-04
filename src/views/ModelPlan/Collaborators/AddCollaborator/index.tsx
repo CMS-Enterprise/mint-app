@@ -352,7 +352,7 @@ const Collaborators = () => {
                           as={MultiSelect}
                           id="collaborator-role"
                           name="role"
-                          selectedLabel={collaboratorsMiscT('roles')}
+                          selectedLabel={collaboratorsMiscT('selectedRoles')}
                           options={composeMultiSelectOptions(
                             teamRolesConfig.options,
                             undefined,

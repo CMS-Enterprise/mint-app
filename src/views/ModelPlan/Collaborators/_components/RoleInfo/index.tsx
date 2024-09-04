@@ -18,12 +18,15 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
   return (
     <CollapsableLink
       id="available-role-info"
-      className={classNames('width-full margin-y-2', className)}
+      className={classNames(
+        'width-full margin-y-2 line-height-body-4',
+        className
+      )}
       label={collaboratorsMiscT('rolesInfo.label')}
     >
       <ul className="margin-y-0 padding-left-4">
         {roleInfoConfig.baseRoles.map((role: string, index: number) => (
-          <li className="line-height-body-6">
+          <li>
             <Trans
               i18nKey={`collaboratorsMisc:rolesInfo.baseRoles.${index}`}
               components={{
@@ -34,7 +37,7 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
         ))}
       </ul>
 
-      <h5 className="margin-top-2 margin-bottom-1 padding-left-05">
+      <h5 className="margin-top-2 margin-bottom-05 padding-left-05">
         {collaboratorsMiscT('rolesInfo.workstreamLeads')}
       </h5>
 
@@ -42,9 +45,9 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
         {collaboratorsMiscT('rolesInfo.workstreamLeadsInfo')}
       </p>
 
-      <ul className="margin-y-2 padding-left-4">
+      <ul className="margin-bottom-2 margin-top-1 padding-left-4">
         {roleInfoConfig.workstreamRoles.map((role: string, index: number) => (
-          <li className="line-height-body-6">
+          <li>
             <Trans
               i18nKey={`collaboratorsMisc:rolesInfo.workstreamRoles.${index}`}
               components={{
@@ -55,7 +58,7 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
         ))}
       </ul>
 
-      <h5 className="margin-top-2 margin-bottom-1 padding-left-05">
+      <h5 className="margin-top-2 margin-bottom-05 padding-left-05">
         {collaboratorsMiscT('rolesInfo.otherRolesLabel')}
       </h5>
 
@@ -63,9 +66,9 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
         {collaboratorsMiscT('rolesInfo.otherRolesInfo')}
       </p>
 
-      <ul className="margin-y-2 padding-left-4">
+      <ul className="margin-bottom-2 margin-top-1 padding-left-4">
         {roleInfoConfig.otherRoles.map((role: string, index: number) => (
-          <li className="line-height-body-6">
+          <li>
             <Trans
               i18nKey={`collaboratorsMisc:rolesInfo.otherRoles.${index}`}
               components={{
