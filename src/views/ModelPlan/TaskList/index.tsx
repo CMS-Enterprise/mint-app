@@ -7,6 +7,7 @@ import React, {
   useMemo,
   useState
 } from 'react';
+import ReactGA from 'react-ga4';
 import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
@@ -475,7 +476,17 @@ const DicussionBanner = ({
             <Button
               type="button"
               unstyled
-              onClick={() => setIsDiscussionOpen(true)}
+              onClick={() => {
+                // Send a discussion open event to GA
+                ReactGA.send({
+                  hitType: 'event',
+                  eventCategory: 'discussion_center_opened',
+                  eventAction: 'click',
+                  eventLabel: 'Discussion Center opened'
+                });
+
+                setIsDiscussionOpen(true);
+              }}
             >
               {d('viewDiscussions')}
             </Button>
@@ -487,7 +498,17 @@ const DicussionBanner = ({
               className="line-height-body-5 test-withdraw-request"
               type="button"
               unstyled
-              onClick={() => setIsDiscussionOpen(true)}
+              onClick={() => {
+                // Send a discussion open event to GA
+                ReactGA.send({
+                  hitType: 'event',
+                  eventCategory: 'discussion_center_opened',
+                  eventAction: 'click',
+                  eventLabel: 'Discussion Center opened'
+                });
+
+                setIsDiscussionOpen(true);
+              }}
             >
               {d('askAQuestionLink')}
             </Button>
