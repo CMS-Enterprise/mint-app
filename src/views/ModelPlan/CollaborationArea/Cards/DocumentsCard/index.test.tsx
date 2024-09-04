@@ -121,4 +121,32 @@ describe('Model Collaboration Area -- Documents Card', () => {
     expect(screen.getByText('1 uploaded')).toBeInTheDocument();
     expect(screen.queryByText('View all')).toBeInTheDocument();
   });
+
+  it('matches snapshot', () => {
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={[`/models/${modelID}/collaboration-area/documents`]}
+      >
+        <DocumentsCard
+          modelID={modelID}
+          documents={[
+            {
+              __typename: 'PlanDocument',
+              id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+              fileName: 'My MINT document',
+              fileType: 'externalLink'
+            },
+            {
+              __typename: 'PlanDocument',
+              id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+              fileName: 'My MINT document',
+              fileType: 'pdf'
+            }
+          ]}
+        />
+      </MemoryRouter>
+    );
+
+    expect(asFragment()).toMatchSnapshot();
+  });
 });
