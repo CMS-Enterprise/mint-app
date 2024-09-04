@@ -7,8 +7,13 @@ type DateFormat = 'MM/dd/yyyy' | 'MMMM d, yyyy' | 'MMMM yyyy';
  * Typically used for dates generated with time, or server generated dates
  * Dates may differ depending on local time zone
  */
-export const formatDateLocal = (date: string, format: DateFormat) =>
-  DateTime.fromISO(date).toFormat(format);
+export const formatDateLocal = (date: string, format: DateFormat) => {
+  if (date) {
+    const parsedDate = DateTime.fromISO(date).toFormat(format);
+    if (parsedDate !== 'Invalid DateTime') return parsedDate;
+  }
+  return '';
+};
 
 /**
  * Output UTC timezoned dates from iso string.

@@ -37,6 +37,8 @@ export default gql(/* GraphQL */ `
         precedenceRulesYes
         precedenceRulesNo
         precedenceRulesNote
+        createdDts
+        modifiedDts
         status
       }
     }

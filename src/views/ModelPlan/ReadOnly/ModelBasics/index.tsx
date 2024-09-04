@@ -139,6 +139,10 @@ const ReadOnlyModelBasics = ({
         heading={basicsMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={status}
+        modelID={modelID}
+        modifiedOrCreatedDts={
+          allBasicsData.modifiedDts || allBasicsData.createdDts
+        }
       />
 
       {clearance && (

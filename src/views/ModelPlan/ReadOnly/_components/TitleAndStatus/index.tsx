@@ -1,33 +1,45 @@
 import React from 'react';
-import { TaskStatus } from 'gql/gen/graphql';
+import { ModelStatus, TaskStatus } from 'gql/gen/graphql';
 
-import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
+import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus';
 
 type TitleAndStatusProps = {
+  modelID: string;
   clearance: boolean | undefined;
   clearanceTitle: string;
   heading: string;
   isViewingFilteredView?: boolean;
-  status: TaskStatus | undefined;
+  status: ModelStatus | TaskStatus;
+  modifiedOrCreatedDts?: string | null;
 };
 
 const TitleAndStatus = ({
+  modelID,
   clearance,
   clearanceTitle,
   heading,
   isViewingFilteredView,
-  status
+  status,
+  modifiedOrCreatedDts
 }: TitleAndStatusProps) => {
   return (
-    <div className="display-flex flex-justify flex-align-start">
-      <h2 className="margin-top-0 margin-bottom-4">
+    <div>
+      <h2 className="margin-top-0 margin-bottom-2">
         {clearance ? clearanceTitle : heading}
       </h2>
-      <div>
-        {!isViewingFilteredView && status && (
-          <TaskListStatusTag status={status} />
-        )}
-      </div>
+
+      {!isViewingFilteredView && status && (
+        <TaskListStatus
+          modelID={modelID}
+          status={status}
+          updateLabel
+          statusLabel
+          modifiedDts={modifiedOrCreatedDts}
+          modifiedOrCreateLabel
+          condensed
+          className="margin-bottom-4"
+        />
+      )}
     </div>
   );
 };

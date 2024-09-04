@@ -238,6 +238,9 @@ const CollaborationArea = () => {
                 updateLabel
                 statusLabel
                 isCollaborationArea
+                modifiedDts={modelPlan.modifiedDts}
+                modifiedOrCreateLabel
+                condensed
               />
             </Grid>
 

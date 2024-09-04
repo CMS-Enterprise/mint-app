@@ -4,6 +4,7 @@ import {
   GetAllBeneficiariesQuery,
   useGetAllBeneficiariesQuery
 } from 'gql/gen/graphql';
+import { all } from 'redux-saga/effects';
 
 import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -51,6 +52,10 @@ const ReadOnlyBeneficiaries = ({
         heading={beneficiariesMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={allbeneficiariesData.status}
+        modelID={modelID}
+        modifiedOrCreatedDts={
+          allbeneficiariesData.modifiedDts || allbeneficiariesData.createdDts
+        }
       />
 
       {clearance && (
