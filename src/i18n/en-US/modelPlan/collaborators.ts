@@ -58,9 +58,8 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
   roles: 'Role(s)',
   teamBreadcrumb: 'Add model team members',
   addATeamMember: 'Add a team member',
-  updateATeamMember: 'Edit a team member',
+  updateATeamMember: 'Edit team member roles',
   addTeamMemberButton: 'Add team member',
-  updateTeamMember: 'Update team member',
   manageModelTeam: 'Manage model team',
   manageModelTeamInfo:
     'Add and remove model team members and manage their roles.',
@@ -74,7 +73,8 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
   lastModelLeadMemberInfo:
     'If this team member is no longer the Model Lead, you must add a new Model Lead before removing that role for this team member.',
   dontAddTeamMember: 'Don’t add a team member and return to previous page',
-  dontUpdateTeamMember: 'Don’t edit a team member and return to previous page',
+  saveChanges: 'Save changes',
+  dontUpdateTeamMember: 'Don’t edit roles and return to previous page',
   successMessage: 'Success! {{-collaborator}} has been added as {{-role}}.',
   successUpdateMessage:
     'Success! {{-collaborator}} has been updated as {{-role}}.',

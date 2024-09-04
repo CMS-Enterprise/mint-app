@@ -18,7 +18,7 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
   return (
     <CollapsableLink
       id="available-role-info"
-      className={classNames('width-full margin-y-4', className)}
+      className={classNames('width-full margin-y-2', className)}
       label={collaboratorsMiscT('rolesInfo.label')}
     >
       <ul className="margin-y-0 padding-left-4">

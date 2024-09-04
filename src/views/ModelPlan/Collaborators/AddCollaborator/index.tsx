@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetIndividualModelPlanCollaboratorQuery,
@@ -18,7 +19,6 @@ import MainContent from 'components/MainContent';
 import OktaUserSelect from 'components/OktaUserSelect';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-import CollapsableLink from 'components/shared/CollapsableLink';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -224,10 +224,12 @@ const Collaborators = () => {
               : collaboratorsMiscT('addATeamMember')}
           </PageHeading>
 
-          <div className="margin-bottom-2 font-body-md line-height-body-5">
-            {!collaboratorId && collaboratorsMiscT('searchTeamInfo')}{' '}
-            {collaboratorsMiscT('teamInfo')}
-          </div>
+          {!collaboratorId && (
+            <div className="margin-bottom-2 font-body-md line-height-body-5">
+              {!collaboratorId && collaboratorsMiscT('searchTeamInfo')}{' '}
+              {collaboratorsMiscT('teamInfo')}
+            </div>
+          )}
 
           <p className="margin-bottom-5">
             <Trans
@@ -297,6 +299,15 @@ const Collaborators = () => {
                           {flatErrors['userAccount.commonName']}
                         </FieldErrorMsg>
 
+                        <Label
+                          id="hint-model-team-cedar-contact"
+                          htmlFor="model-team-cedar-contact"
+                          className="text-normal margin-top-1 margin-bottom-105 text-base maxw-none"
+                          hint
+                        >
+                          {collaboratorsMiscT('startTyping')}
+                        </Label>
+
                         {collaboratorId ? (
                           <Field
                             as={TextInput}
@@ -307,33 +318,22 @@ const Collaborators = () => {
                             name="userAccount.commonName"
                           />
                         ) : (
-                          <>
-                            <Label
-                              id="hint-model-team-cedar-contact"
-                              htmlFor="model-team-cedar-contact"
-                              className="text-normal margin-top-1 margin-bottom-105 text-base maxw-none"
-                              hint
-                            >
-                              {collaboratorsMiscT('startTyping')}
-                            </Label>
-
-                            <OktaUserSelect
-                              id="model-team-cedar-contact"
-                              name="model-team-cedar-contact"
-                              ariaLabelledBy="label-model-team-cedar-contact"
-                              ariaDescribedBy="hint-model-team-cedar-contact"
-                              onChange={oktaUser => {
-                                setFieldValue(
-                                  'userAccount.commonName',
-                                  oktaUser?.displayName
-                                );
-                                setFieldValue(
-                                  'userAccount.username',
-                                  oktaUser?.username
-                                );
-                              }}
-                            />
-                          </>
+                          <OktaUserSelect
+                            id="model-team-cedar-contact"
+                            name="model-team-cedar-contact"
+                            ariaLabelledBy="label-model-team-cedar-contact"
+                            ariaDescribedBy="hint-model-team-cedar-contact"
+                            onChange={oktaUser => {
+                              setFieldValue(
+                                'userAccount.commonName',
+                                oktaUser?.displayName
+                              );
+                              setFieldValue(
+                                'userAccount.username',
+                                oktaUser?.username
+                              );
+                            }}
+                          />
                         )}
                       </FieldGroup>
 
@@ -376,20 +376,26 @@ const Collaborators = () => {
                         />
                       </FieldGroup>
 
-                      <RoleInfo />
+                      <RoleInfo
+                        className={classNames('margin-bottom-5', {
+                          'margin-bottom-6': collaboratorId
+                        })}
+                      />
 
-                      <Alert
-                        type="info"
-                        slim
-                        data-testid="mandatory-fields-alert"
-                        className="margin-y-3"
-                      >
-                        <span className="mandatory-fields-alert__text">
-                          {isModelLead && isLastModelLead(allCollaborators)
-                            ? collaboratorsMiscT('lastModelLeadMemberInfo')
-                            : collaboratorsMiscT('searchMemberInfo')}
-                        </span>
-                      </Alert>
+                      {!collaboratorId && (
+                        <Alert
+                          type="info"
+                          slim
+                          data-testid="mandatory-fields-alert"
+                          className="margin-y-3"
+                        >
+                          <span className="mandatory-fields-alert__text">
+                            {isModelLead && isLastModelLead(allCollaborators)
+                              ? collaboratorsMiscT('lastModelLeadMemberInfo')
+                              : collaboratorsMiscT('searchMemberInfo')}
+                          </span>
+                        </Alert>
+                      )}
 
                       <div className="margin-y-3 display-block">
                         <Button
@@ -400,7 +406,7 @@ const Collaborators = () => {
                         >
                           {!collaboratorId
                             ? collaboratorsMiscT('addTeamMemberButton')
-                            : collaboratorsMiscT('updateTeamMember')}
+                            : collaboratorsMiscT('saveChanges')}
                         </Button>
 
                         {(loading || updateLoading) && (

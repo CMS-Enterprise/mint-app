@@ -91,7 +91,7 @@ describe('The Collaborator/Team Member Form', () => {
       .first()
       .contains('Model Team');
 
-    cy.contains('button', 'Update team member').click();
+    cy.contains('button', 'Save changes').click();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
