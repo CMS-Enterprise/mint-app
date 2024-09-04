@@ -47,8 +47,7 @@ type OperationalSolutionFormType = {
   key?: OperationalSolutionKey;
 };
 
-type GetOperationalSolutionOperationalSolutionType =
-  GetOperationalSolutionQuery['operationalSolution'];
+type GetOperationalSolutionOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 const AddSolution = () => {
   const { modelID, operationalNeedID, operationalSolutionID } = useParams<{
@@ -237,8 +236,12 @@ const AddSolution = () => {
                 innerRef={formikRef}
               >
                 {(formikProps: FormikProps<OperationalSolutionFormType>) => {
-                  const { errors, handleSubmit, values, setFieldValue } =
-                    formikProps;
+                  const {
+                    errors,
+                    handleSubmit,
+                    values,
+                    setFieldValue
+                  } = formikProps;
 
                   const flatErrors = flattenErrors(errors);
 
@@ -341,18 +344,17 @@ const AddSolution = () => {
                           </FieldGroup>
 
                           {/* If directed from custom solution creation, diplay SolutionCard */}
-                          {operationalSolutionID &&
-                            customOperationalSolution && (
-                              <div data-testid="custom-added-solution">
-                                <p className="text-bold margin-top-4">
-                                  {t('solution')}
-                                </p>
-                                <SolutionCard
-                                  solution={customOperationalSolution}
-                                  addingCustom
-                                />
-                              </div>
-                            )}
+                          {operationalSolutionID && customOperationalSolution && (
+                            <div data-testid="custom-added-solution">
+                              <p className="text-bold margin-top-4">
+                                {t('solution')}
+                              </p>
+                              <SolutionCard
+                                solution={customOperationalSolution}
+                                addingCustom
+                              />
+                            </div>
+                          )}
 
                           {/* Render alert banner if a non-other solution is selected.  Alert notifies use that email will be sent */}
                           {values.key &&

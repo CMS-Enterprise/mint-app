@@ -44,8 +44,7 @@ type CreateType = NonNullable<
   CreateOperationalSolutionSubtasksMutation['createOperationalSolutionSubtasks']
 >[0];
 
-type UpdateType =
-  GetOperationalSolutionQuery['operationalSolution']['operationalSolutionSubtasks'][0];
+type UpdateType = GetOperationalSolutionQuery['operationalSolution']['operationalSolutionSubtasks'][0];
 
 type SubTaskType = UpdateType[] | CreateType[];
 

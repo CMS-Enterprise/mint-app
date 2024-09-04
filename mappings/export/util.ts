@@ -137,8 +137,9 @@ export const processDataMapping = (
 
     const planSection = translations[section] as TranslationPlanSection;
 
-    const formattedOtherParentFields =
-      mapOtherParentFieldToDBField(planSection);
+    const formattedOtherParentFields = mapOtherParentFieldToDBField(
+      planSection
+    );
 
     formattedTranslation[section] = formattedOtherParentFields;
   });

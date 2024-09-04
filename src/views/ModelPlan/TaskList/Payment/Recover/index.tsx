@@ -54,8 +54,7 @@ const Recover = () => {
 
   const {
     willRecoverPayments: willRecoverPaymentsConfig,
-    anticipateReconcilingPaymentsRetrospectively:
-      anticipateReconcilingPaymentsRetrospectivelyConfig,
+    anticipateReconcilingPaymentsRetrospectively: anticipateReconcilingPaymentsRetrospectivelyConfig,
     paymentReconciliationFrequency: paymentReconciliationFrequencyConfig,
     paymentDemandRecoupmentFrequency: paymentDemandRecoupmentFrequencyConfig
   } = usePlanTranslation('payments');

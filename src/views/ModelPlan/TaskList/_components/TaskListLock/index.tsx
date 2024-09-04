@@ -4,8 +4,7 @@ import { TaskListSubscriptionSubscription } from 'gql/gen/graphql';
 
 import { AvatarCircle } from 'components/shared/Avatar';
 
-type LockedByUserAccount =
-  TaskListSubscriptionSubscription['onLockTaskListSectionContext']['lockStatus']['lockedByUserAccount'];
+type LockedByUserAccount = TaskListSubscriptionSubscription['onLockTaskListSectionContext']['lockStatus']['lockedByUserAccount'];
 
 type TaskListLockProps = {
   lockedByUserAccount: LockedByUserAccount | undefined;

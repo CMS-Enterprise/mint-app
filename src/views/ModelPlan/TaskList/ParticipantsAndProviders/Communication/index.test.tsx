@@ -11,8 +11,7 @@ import {
 
 import Communication from './index';
 
-type GetCommunicationType =
-  GetCommunicationQuery['modelPlan']['participantsAndProviders'];
+type GetCommunicationType = GetCommunicationQuery['modelPlan']['participantsAndProviders'];
 
 const communicationMockData: GetCommunicationType = {
   __typename: 'PlanParticipantsAndProviders',

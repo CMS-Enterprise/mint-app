@@ -25,8 +25,7 @@ import { findSolutionByKey } from '../CheckboxCard';
 
 import './index.scss';
 
-type OperationalNeedSolutionsType =
-  GetOperationalSolutionQuery['operationalSolution'];
+type OperationalNeedSolutionsType = GetOperationalSolutionQuery['operationalSolution'];
 
 export type SolutionCardType = Omit<
   OperationalNeedSolutionsType,

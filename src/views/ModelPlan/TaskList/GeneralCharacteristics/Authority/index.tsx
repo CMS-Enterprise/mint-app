@@ -36,8 +36,7 @@ import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
-type AuthorityFormType =
-  GetAuthorityQuery['modelPlan']['generalCharacteristics'];
+type AuthorityFormType = GetAuthorityQuery['modelPlan']['generalCharacteristics'];
 
 // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
 type InitialValueType = Omit<
@@ -162,8 +161,13 @@ const Authority = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InitialValueType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+          const {
+            errors,
+            handleSubmit,
+            setErrors,
+            setFieldValue,
+            values
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

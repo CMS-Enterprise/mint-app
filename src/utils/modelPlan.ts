@@ -7,8 +7,7 @@ import { orderBy } from 'lodash';
 
 import { getKeys } from 'types/translation';
 
-type GetCollaboratorsType =
-  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
 
 // Sorts discussions by the most recent reply

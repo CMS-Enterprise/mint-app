@@ -61,7 +61,7 @@ const BodyContent = ({
   filteredView
 }: {
   modelID: string;
-  filteredView: (typeof filterGroups)[number];
+  filteredView: typeof filterGroups[number];
 }) => {
   const { t } = useTranslation('filterView');
   const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
@@ -151,16 +151,16 @@ const BodyContent = ({
 */
 export const getAllFilterViewQuestions = (
   filterMappings: TranslationPlan,
-  filteredView: (typeof filterGroups)[number]
+  filteredView: typeof filterGroups[number]
 ) => {
   let mappedQuestions: Record<string, string[]> = {};
 
   // Diving into each model plan section, as well as each question to identify if it contains the appropriate filter view mapping
   getKeys(filterMappings).forEach(section => {
     getKeys(filterMappings[section]).forEach(question => {
-      const filterGroupConfig = (
-        filterMappings[section][question] as TranslationFieldProperties
-      )?.filterGroups;
+      const filterGroupConfig = (filterMappings[section][
+        question
+      ] as TranslationFieldProperties)?.filterGroups;
 
       if (
         Array.isArray(filterGroupConfig) &&

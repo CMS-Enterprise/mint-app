@@ -39,8 +39,7 @@ import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-type PeopleImpactedFormType =
-  GetPeopleImpactedQuery['modelPlan']['beneficiaries'];
+type PeopleImpactedFormType = GetPeopleImpactedQuery['modelPlan']['beneficiaries'];
 
 const PeopleImpact = () => {
   const { t: beneficiariesT } = useTranslation('beneficiaries');
@@ -147,8 +146,13 @@ const PeopleImpact = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<PeopleImpactedFormType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+          const {
+            errors,
+            handleSubmit,
+            setErrors,
+            setFieldValue,
+            values
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

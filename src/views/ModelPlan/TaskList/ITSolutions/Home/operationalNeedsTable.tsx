@@ -55,8 +55,7 @@ import {
   returnActionText
 } from '../util';
 
-type GetOperationalNeedsOperationalNeedsType =
-  GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
+type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
 
 export interface GetOperationalNeedsTableType
   extends GetOperationalNeedsOperationalNeedsType {
@@ -299,10 +298,9 @@ const OperationalNeedsTable = ({
   }, [opSolutionsMiscT, operationalNeedsT, modelID]);
 
   const sortColumn = type === 'needs' && !filterSolutions ? 'needName' : 'name';
-  const initialSort = useMemo(
-    () => [{ id: sortColumn, asc: true }],
-    [sortColumn]
-  );
+  const initialSort = useMemo(() => [{ id: sortColumn, asc: true }], [
+    sortColumn
+  ]);
 
   const {
     getTableProps,

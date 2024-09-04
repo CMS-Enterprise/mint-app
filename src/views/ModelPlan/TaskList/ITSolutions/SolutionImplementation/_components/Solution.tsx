@@ -17,16 +17,14 @@ import ImplementationStatuses from '../../_components/ImplementationStatus';
 import SolutionCard from '../../_components/SolutionCard';
 import SolutionDetailCard from '../../_components/SolutionDetailCard';
 
-type OpertionalNeedSolutionTypes =
-  GetOperationalNeedQuery['operationalNeed']['solutions'][0];
+type OpertionalNeedSolutionTypes = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
 
 type flatErrorsType = {
   [key: string]: string;
 };
 
 type OperationNeedType = GetOperationalNeedQuery['operationalNeed'];
-type GetOperationalSolutionType =
-  GetOperationalSolutionQuery['operationalSolution'];
+type GetOperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
 
 type SolutionTypes = {
   solution: OpertionalNeedSolutionTypes;

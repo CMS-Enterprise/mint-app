@@ -60,12 +60,7 @@ const CRTDLTable = ({
   isHelpArticle
 }: CRTDLTableProps) => {
   const { t } = useTranslation('crtdlsMisc');
-  const {
-    error,
-    loading,
-    data,
-    refetch: refetchCRTDLs
-  } = useGetCrtdLsQuery({
+  const { error, loading, data, refetch: refetchCRTDLs } = useGetCrtdLsQuery({
     variables: {
       id: modelID
     }

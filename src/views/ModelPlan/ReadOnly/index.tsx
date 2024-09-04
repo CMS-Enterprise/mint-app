@@ -159,7 +159,7 @@ export const ReadOnlyComponents = (
   };
 };
 
-export type SubpageKey = (typeof listOfSubpageKey)[number];
+export type SubpageKey = typeof listOfSubpageKey[number];
 
 const isSubpage = (
   x: SubpageKey,
@@ -201,11 +201,13 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const { t: filterViewT } = useTranslation('filterView');
 
-  const { modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '', subinfo } =
-    useParams<{
-      modelID: string;
-      subinfo: SubpageKey;
-    }>();
+  const {
+    modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
+    subinfo
+  } = useParams<{
+    modelID: string;
+    subinfo: SubpageKey;
+  }>();
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
@@ -227,8 +229,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     null
   );
 
-  const [isFilterViewModalOpen, setIsFilterViewModalOpen] =
-    useState<boolean>(false);
+  const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState<boolean>(
+    false
+  );
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
@@ -448,9 +451,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           <FilterViewBanner
             filteredView={
               filteredView &&
-              (filteredViewOutput(
-                filteredView
-              ) as (typeof filterGroups)[number])
+              (filteredViewOutput(filteredView) as typeof filterGroups[number])
             }
             openFilterModal={() => setIsFilterViewModalOpen(true)}
             openExportModal={() => setIsExportModalOpen(true)}
