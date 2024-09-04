@@ -5,8 +5,7 @@ const opSolutionsMisc = {
   summaryBox: {
     useTracker: 'Use this tracker to',
     listItem: {
-      one:
-        'select the solutions you plan to use to satisfy your model’s operational needs',
+      one: 'select the solutions you plan to use to satisfy your model’s operational needs',
       two: 'update and manage the implementation status of those solutions',
       three:
         'add additional operational services and solutions for your model as needs arise'
@@ -97,8 +96,7 @@ const opSolutionsMisc = {
   goToITSolutions: 'Go to operational solutions tracker.',
   helpBox: {
     heading: 'Don’t see what you’re looking for?',
-    info:
-      'Sometimes models have operational needs that are not uncovered in the Model Plan. If you want to track the status of additional workstreams, you may add them here.',
+    info: 'Sometimes models have operational needs that are not uncovered in the Model Plan. If you want to track the status of additional workstreams, you may add them here.',
     button: 'Add an operational need or solution'
   },
   selectSolution: 'Select this solution',

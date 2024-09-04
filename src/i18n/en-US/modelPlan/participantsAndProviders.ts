@@ -276,8 +276,7 @@ export const participantsAndProviders: TranslationParticipantsAndProviders = {
     options: {
       APPLICATION_COLLECTION_TOOL: 'Use an application collection tool',
       LOI: 'LOI (Letter of intent)',
-      NOFO:
-        'NOFO (Notice of funding opportunity for grants/cooperative agreements)',
+      NOFO: 'NOFO (Notice of funding opportunity for grants/cooperative agreements)',
       OTHER: 'Other',
       NA: 'Not applicable'
     },

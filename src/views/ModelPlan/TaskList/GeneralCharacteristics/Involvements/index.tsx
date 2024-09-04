@@ -27,7 +27,8 @@ import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
-type InvolvementsFormType = GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
+type InvolvementsFormType =
+  GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
 
 const Involvements = () => {
   const { t: generalCharacteristicsT } = useTranslation(
@@ -143,13 +144,8 @@ const Involvements = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InvolvementsFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

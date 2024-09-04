@@ -148,15 +148,13 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   const [updateCharacteristics] = useUpdateClearanceCharacteristicsMutation();
 
-  const [
-    updateParticipantsAndProviders
-  ] = useUpdateClearanceParticipantsAndProvidersMutation();
+  const [updateParticipantsAndProviders] =
+    useUpdateClearanceParticipantsAndProvidersMutation();
 
   const [updateBeneficiaries] = useUpdateClearanceBeneficiariesMutation();
 
-  const [
-    updateOpsEvalAndLearning
-  ] = useUpdateClearanceOpsEvalAndLearningMutation();
+  const [updateOpsEvalAndLearning] =
+    useUpdateClearanceOpsEvalAndLearningMutation();
 
   const [updatePayments] = useUpdateClearancePaymentsMutation();
 
@@ -300,9 +298,8 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
               }}
             >
               {p('changes', {
-                section: taskListSections[
-                  routeMap[section]
-                ]?.heading?.toLowerCase()
+                section:
+                  taskListSections[routeMap[section]]?.heading?.toLowerCase()
               })}
               <Icon.ArrowForward className="margin-left-1" aria-hidden />
             </Button>

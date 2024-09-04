@@ -42,7 +42,8 @@ import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-type KeyCharacteristicsFormType = GetKeyCharacteristicsQuery['modelPlan']['generalCharacteristics'];
+type KeyCharacteristicsFormType =
+  GetKeyCharacteristicsQuery['modelPlan']['generalCharacteristics'];
 
 const KeyCharacteristics = () => {
   const { t: generalCharacteristicsT } = useTranslation(
@@ -177,13 +178,8 @@ const KeyCharacteristics = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<KeyCharacteristicsFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (

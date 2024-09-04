@@ -30,8 +30,10 @@ import DiscussionUserInfo from './_components/DiscussionUserInfo';
 import Replies from './Replies';
 import { DiscussionFormPropTypes } from '.';
 
-type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
-type ReplyType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
+type DiscussionType =
+  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
+type ReplyType =
+  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 type QuestionAndReplyProps = {
   closeModal?: () => void;

@@ -64,56 +64,49 @@ const modelPlanTaskList = {
   numberedList: {
     basics: {
       heading: 'Model basics',
-      team:
-        'Start filling out as much of the basic model information as you know and reach out to the MINT Team if you need help. Model basics includes the model name, problem, goal, and high level timelines.',
+      team: 'Start filling out as much of the basic model information as you know and reach out to the MINT Team if you need help. Model basics includes the model name, problem, goal, and high level timelines.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'basics'
     },
     generalCharacteristics: {
       heading: 'General characteristics',
-      team:
-        'Start filling out as much of the general model characteristics as you know and reach out to the MINT Team if you need help. This section includes the key characteristics of the model, agreement type, waivers, and rulemaking.',
+      team: 'Start filling out as much of the general model characteristics as you know and reach out to the MINT Team if you need help. This section includes the key characteristics of the model, agreement type, waivers, and rulemaking.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'characteristics'
     },
     participantsAndProviders: {
       heading: 'Participants and providers',
-      team:
-        'Start filling out as much of the model participant information as you know and reach out to the MINT Team if you need help.',
+      team: 'Start filling out as much of the model participant information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'participants-and-providers'
     },
     beneficiaries: {
       heading: 'Beneficiaries',
-      team:
-        'Start filling out as much of the beneficiary information as you know and reach out to the MINT Team if you need help.',
+      team: 'Start filling out as much of the beneficiary information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'beneficiaries'
     },
     opsEvalAndLearning: {
       heading: 'Operations, evaluation, and learning',
-      team:
-        'Start filling out as much of the model operation information as you know and reach out to the MINT Team if you need help.',
+      team: 'Start filling out as much of the model operation information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'ops-eval-and-learning'
     },
     payments: {
       heading: 'Payment',
-      team:
-        'Start filling out as much of the payment information as you know and reach out to the MINT Team if you need help.',
+      team: 'Start filling out as much of the payment information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'payment'
     },
     itSolutions: {
       heading: 'Operational solutions and implementation status',
-      team:
-        'Choose the solutions your model will utilize. Many items in this section are populated based on responses to questions answered in previous sections.',
+      team: 'Choose the solutions your model will utilize. Many items in this section are populated based on responses to questions answered in previous sections.',
       team2:
         'Track your progress towards implementation, see points of contact for operational services, and monitor deadlines. Keeping this information up-to-date will also help the MINT Team understand how best to help you.',
       assessment:
@@ -122,8 +115,7 @@ const modelPlanTaskList = {
     },
     prepareForClearance: {
       heading: 'Prepare for clearance',
-      team:
-        'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
+      team: 'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
       assessment:
         'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
       path: 'prepare-for-clearance'

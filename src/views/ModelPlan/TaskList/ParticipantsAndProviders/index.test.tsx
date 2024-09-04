@@ -10,7 +10,8 @@ import {
 
 import { ParticipantsAndProvidersContent } from './index';
 
-type GetParticipantsAndProvidersType = GetParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
+type GetParticipantsAndProvidersType =
+  GetParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
 
 const participantsAndProvidersMockData: GetParticipantsAndProvidersType = {
   __typename: 'PlanParticipantsAndProviders',

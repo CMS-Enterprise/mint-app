@@ -20,7 +20,8 @@ import NeedQuestionAndAnswer from '../NeedQuestionAndAnswer';
 import OperationalNeedsStatusTag from '../NeedsStatus';
 import SolutionCard from '../SolutionCard';
 
-type OperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
+type OperationalSolutionType =
+  GetOperationalSolutionQuery['operationalSolution'];
 
 type SolutionDetailCardProps = {
   solution: OperationalSolutionType;

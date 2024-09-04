@@ -83,8 +83,8 @@ const NavigationBar = ({
     pollInterval: 5000
   });
 
-  const hasNotifications = !!data?.currentUser.notifications
-    .numUnreadNotifications;
+  const hasNotifications =
+    !!data?.currentUser.notifications.numUnreadNotifications;
 
   const primaryLinks = navLinks.map(route => (
     <div className="mint-nav" key={route.label}>
