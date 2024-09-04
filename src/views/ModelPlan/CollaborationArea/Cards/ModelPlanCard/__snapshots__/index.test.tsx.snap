@@ -3,7 +3,7 @@
 exports[`ModelPlanCard > matches the snapshot 1`] = `
 <DocumentFragment>
   <li
-    class="usa-card desktop:grid-col-6 card--model-plan"
+    class="usa-card desktop:grid-col-6 collaboration-area__card card--model-plan"
     data-testid="Card"
   >
     <div
