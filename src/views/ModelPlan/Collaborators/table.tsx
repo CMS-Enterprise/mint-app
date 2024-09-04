@@ -77,14 +77,11 @@ const CollaboratorsTable = ({
         Header: collaboratorsMiscT('table.role'),
         accessor: 'teamRoles',
 
-        Cell: ({ teamRoles }: CollaboratorType) => {
+        Cell: (row: any) => {
+          const roles = row.value as CollaboratorType['teamRoles'];
           const modelLeadFirst = [
-            ...teamRoles.filter(
-              (role: TeamRole) => role === TeamRole.MODEL_LEAD
-            ),
-            ...teamRoles.filter(
-              (role: TeamRole) => role !== TeamRole.MODEL_LEAD
-            )
+            ...roles.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
+            ...roles.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
           ];
           return modelLeadFirst
             .map((role: TeamRole) => {

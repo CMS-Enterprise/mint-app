@@ -23,6 +23,7 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
         className
       )}
       label={collaboratorsMiscT('rolesInfo.label')}
+      horizontalCaret
     >
       <ul className="margin-y-0 padding-left-4">
         {roleInfoConfig.baseRoles.map((role: string, index: number) => (
