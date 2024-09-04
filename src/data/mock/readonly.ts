@@ -128,6 +128,8 @@ const modelBasicsData: GetAllBasicsTypes = {
   highLevelNote: 'Theses are my best guess notes',
   phasedIn: false,
   phasedInNote: "This can't be phased in",
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -247,6 +249,8 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   waiversRequired: true,
   waiversRequiredTypes: [WaiverType.FRAUD_ABUSE, WaiverType.MEDICAID],
   waiversRequiredNote: 'My waiver note',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -351,6 +355,8 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   providerOverlap: OverlapType.NO,
   providerOverlapHierarchy: 'This is the hierarchy',
   providerOverlapNote: 'Overlap note',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -409,6 +415,8 @@ const beneficiaryData: AllBeneficiariesTypes = {
   precedenceRulesYes: 'Yes precedence rules',
   precedenceRulesNo: 'No precedence',
   precedenceRulesNote: 'Precedence note',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -555,7 +563,9 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   ],
   modelLearningSystemsOther: 'Other learning system',
   modelLearningSystemsNote: 'Note for learning system',
-  anticipatedChallenges: 'Some challenges'
+  anticipatedChallenges: 'Some challenges',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z'
 };
 
 export const opsEvalAndLearningMocks = [
@@ -656,6 +666,8 @@ const paymentsData: PaymentTypes = {
   paymentDemandRecoupmentFrequencyNote: 'Demand and Recoupment note',
   paymentStartDate: '2022-06-03T19:32:24.412662Z',
   paymentStartDateNote: 'Note for payment start date',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -799,6 +811,7 @@ const opNeedsData: GetOperationalNeedsType = {
     __typename: 'ModelPlan',
     id: modelID,
     isCollaborator: true,
+    opSolutionLastModifiedDts: '2022-05-12T15:01:39.190679Z',
     modelName: 'My excellent plan that I just initiated',
     operationalNeeds: [
       {

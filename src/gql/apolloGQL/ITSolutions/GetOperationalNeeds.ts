@@ -6,6 +6,7 @@ export default gql(/* GraphQL */ `
       id
       modelName
       isCollaborator
+      opSolutionLastModifiedDts
       operationalNeeds {
         id
         modelPlanID

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ModelStatus, TaskStatus } from 'gql/gen/graphql';
 
-import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus';
+import StatusBanner from 'components/StatusBanner';
 
 type TitleAndStatusProps = {
   modelID: string;
@@ -29,7 +29,7 @@ const TitleAndStatus = ({
       </h2>
 
       {!isViewingFilteredView && status && (
-        <TaskListStatus
+        <StatusBanner
           modelID={modelID}
           status={status}
           updateLabel
@@ -38,6 +38,7 @@ const TitleAndStatus = ({
           modifiedOrCreateLabel
           condensed
           className="margin-bottom-4"
+          type="task"
         />
       )}
     </div>

@@ -22,18 +22,18 @@ import Divider from 'components/shared/Divider';
 // import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
+import StatusBanner from 'components/StatusBanner';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
+
 // import { formatDateLocal } from 'utils/date';
 // import { isAssessment } from 'utils/user';
 // import { SubscriptionContext } from 'views/SubscriptionWrapper';
 // import Discussions from '../Discussions';
 // import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
-import TaskListStatus from '../TaskList/_components/TaskListStatus';
-
 import ModelPlanCard from './Cards/ModelPlanCard';
 
 import './index.scss';
@@ -232,7 +232,7 @@ const CollaborationArea = () => {
               )} */}
 
             <Grid desktop={{ col: 12 }}>
-              <TaskListStatus
+              <StatusBanner
                 modelID={modelID}
                 status={status}
                 updateLabel

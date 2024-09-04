@@ -8,12 +8,14 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateLocal } from 'utils/date';
+import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
 import './index.scss';
 
-type TaskListStatusProps = {
+type StatusBannerProps = {
   icon?: boolean;
   modelID: string;
+  type?: 'model' | 'task';
   status: ModelStatus | TaskStatus;
   hasEditAccess?: boolean;
   statusLabel?: boolean;
@@ -27,9 +29,10 @@ type TaskListStatusProps = {
   className?: string;
 };
 
-const TaskListStatus = ({
+const StatusBanner = ({
   icon,
   modelID,
+  type = 'model',
   status,
   hasEditAccess = false,
   statusLabel = false,
@@ -41,8 +44,9 @@ const TaskListStatus = ({
   modifiedOrCreateLabel,
   condensed,
   className
-}: TaskListStatusProps) => {
+}: StatusBannerProps) => {
   const { t } = useTranslation('modelPlanTaskList');
+  const { t: modelPlanT } = useTranslation('modelPlan');
   const { t: h } = useTranslation('generalReadOnly');
   const { t: changeHistoryT } = useTranslation('changeHistory');
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
@@ -66,9 +70,16 @@ const TaskListStatus = ({
           <p className="margin-y-0 text-bold margin-right-1">{t('status')}</p>
         )}
 
-        <Tag className="bg-base text-white margin-right-1">
-          {t(`taskListStatus.${status}`)}
-        </Tag>
+        {type === 'model' ? (
+          <Tag className="bg-base text-white margin-right-1">
+            {modelPlanT(`status.options.${status}`)}
+          </Tag>
+        ) : (
+          <TaskListStatusTag
+            status={status}
+            classname="width-fit-content margin-right-1"
+          />
+        )}
 
         <div className="display-flex flex-align-center flex-wrap margin-right-1">
           {!!modifiedDts && (
@@ -152,4 +163,4 @@ const TaskListStatus = ({
   );
 };
 
-export default TaskListStatus;
+export default StatusBanner;
