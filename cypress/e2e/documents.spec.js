@@ -4,8 +4,10 @@ describe('Model Plan Documents', () => {
     cy.visit('/');
   });
 
-  it('uploads and removes a document', () => {
-    cy.enterModelPlanTaskList('Empty Plan');
+  it('uploads document through the Documents Card', () => {
+    cy.enterModelPlanCollaborationArea('Empty Plan');
+
+    cy.get('.card--documents').contains('No documents added');
 
     cy.contains('a', 'Add document').click();
 
