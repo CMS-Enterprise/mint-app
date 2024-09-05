@@ -79,7 +79,7 @@ const AddDocument = () => {
             {t('uploadDescription')}
           </p>
 
-          <p className="margin-bottom-2 font-body-md line-height-body-4">
+          <p className="margin-bottom-3 font-body-md line-height-body-4">
             {t('requiredHint')}
             <RequiredAsterisk />
             {t('requiredHint2')}
