@@ -15,6 +15,7 @@ import {
 import UswdsReactLink from 'components/LinkWrapper';
 import { Avatar } from 'components/shared/Avatar';
 import CollapsableLink from 'components/shared/CollapsableLink';
+import Spinner from 'components/Spinner';
 
 import '../index.scss';
 
@@ -27,7 +28,7 @@ type ModelPlanCardType = {
 const TeamCard = ({ modelID, collaborators }: ModelPlanCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  const { data } = useGetModelCollaboratorsQuery({
+  const { data, loading } = useGetModelCollaboratorsQuery({
     variables: {
       id: modelID
     },
@@ -35,6 +36,16 @@ const TeamCard = ({ modelID, collaborators }: ModelPlanCardType) => {
   });
 
   const teamCollaborators = data?.modelPlan?.collaborators || collaborators;
+
+  if (loading && !teamCollaborators)
+    return (
+      <Grid
+        desktop={{ col: 6 }}
+        className="padding-1 display-flex flex-column flex-align-center flex-justify-center height-mobile"
+      >
+        <Spinner data-testid="team-loading" />
+      </Grid>
+    );
 
   if (!teamCollaborators) return null;
 
