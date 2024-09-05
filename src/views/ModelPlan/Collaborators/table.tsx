@@ -1,12 +1,16 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
-import { useSortBy, useTable } from 'react-table';
+import { usePagination, useSortBy, useTable } from 'react-table';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { GetModelCollaboratorsQuery, TeamRole } from 'gql/gen/graphql';
+import { orderBy } from 'lodash';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { Avatar } from 'components/shared/Avatar';
+import TablePageSize from 'components/TablePageSize';
+import TablePagination from 'components/TablePagination';
 import { formatDateLocal } from 'utils/date';
 import {
   currentTableSortDescription,
@@ -42,6 +46,24 @@ const CollaboratorsTable = ({
 
   const manageOrAdd = params.get('view') || 'manage';
 
+  // Initial sort to get the model leads first.  When toggling sort, react-table should disregard this sort when asc/desc is toggled.
+  const sortedCollaborators: CollaboratorType[] = useMemo(() => {
+    const initAlphabeticalSort = orderBy(
+      collaborators,
+      ['userAccount.commonName'],
+      ['asc']
+    );
+
+    return [
+      ...initAlphabeticalSort.filter(
+        collaborator => !!collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
+      ),
+      ...initAlphabeticalSort.filter(
+        collaborator => !collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
+      )
+    ];
+  }, [collaborators]);
+
   const columns: any = useMemo(() => {
     return [
       {
@@ -55,10 +77,11 @@ const CollaboratorsTable = ({
         Header: collaboratorsMiscT('table.role'),
         accessor: 'teamRoles',
 
-        Cell: ({ value }: any) => {
+        Cell: (row: any) => {
+          const roles = row.value as CollaboratorType['teamRoles'];
           const modelLeadFirst = [
-            ...value.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
-            ...value.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
+            ...roles.filter((role: TeamRole) => role === TeamRole.MODEL_LEAD),
+            ...roles.filter((role: TeamRole) => role !== TeamRole.MODEL_LEAD)
           ];
           return modelLeadFirst
             .map((role: TeamRole) => {
@@ -123,28 +146,46 @@ const CollaboratorsTable = ({
     manageOrAdd
   ]);
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns,
-        data: collaborators,
-        sortTypes: {
-          alphanumeric: (rowOne, rowTwo, columnName) => {
-            return sortColumnValues(
-              rowOne.values[columnName],
-              rowTwo.values[columnName],
-              TeamRole.MODEL_LEAD
-            );
-          }
-        },
-        autoResetSortBy: false,
-        autoResetPage: false,
-        initialState: {
-          pageIndex: 0
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state,
+    rows,
+    page,
+    prepareRow
+  } = useTable(
+    {
+      columns,
+      data: sortedCollaborators,
+      sortTypes: {
+        alphanumeric: (rowOne, rowTwo, columnName) => {
+          return sortColumnValues(
+            rowOne.values[columnName].join(', '),
+            rowTwo.values[columnName].join(', ')
+          );
         }
       },
-      useSortBy
-    );
+      autoResetSortBy: false,
+      autoResetPage: false,
+      initialState: {
+        pageIndex: 0,
+        pageSize: 10
+      }
+    },
+    useSortBy,
+    usePagination
+  );
+
+  rows.map(row => prepareRow(row));
 
   return (
     <div className="collaborator-table">
@@ -162,7 +203,11 @@ const CollaboratorsTable = ({
                   className="table-header"
                   scope="col"
                   style={{
-                    paddingBottom: '.5rem'
+                    paddingBottom: '.5rem',
+                    width:
+                      (column.id === 'teamRoles' && '45%') ||
+                      (column.id === 'userAccount.commonName' && '25%') ||
+                      'auto'
                   }}
                 >
                   <button
@@ -179,8 +224,7 @@ const CollaboratorsTable = ({
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
-            prepareRow(row);
+          {page.map(row => {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map(cell => {
@@ -200,6 +244,37 @@ const CollaboratorsTable = ({
           })}
         </tbody>
       </UswdsTable>
+
+      <div
+        className={classNames('grid-row grid-gap grid-gap-lg', {
+          'display-flex row-reverse': collaborators.length <= state.pageSize
+        })}
+      >
+        {collaborators.length > state.pageSize && (
+          <TablePagination
+            gotoPage={gotoPage}
+            previousPage={previousPage}
+            nextPage={nextPage}
+            canNextPage={canNextPage}
+            pageIndex={state.pageIndex}
+            pageOptions={pageOptions}
+            canPreviousPage={canPreviousPage}
+            pageCount={pageCount}
+            pageSize={state.pageSize}
+            setPageSize={setPageSize}
+            page={[]}
+            className="desktop:grid-col-fill"
+          />
+        )}
+
+        {collaborators.length > 5 && (
+          <TablePageSize
+            className="desktop:grid-col-auto"
+            pageSize={state.pageSize}
+            setPageSize={setPageSize}
+          />
+        )}
+      </div>
 
       <div
         className="usa-sr-only usa-table__announcement-region"

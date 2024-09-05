@@ -5,7 +5,7 @@ describe('The Model Plan General Characteristics Form', () => {
   });
 
   it('completes a Model Plan Characteristics', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     // Clicks the General Charactstics tasklist item
     cy.get('[data-testid="characteristics"]').click();

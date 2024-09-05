@@ -7,7 +7,7 @@
   .usa-card__container {
     border-radius: 4px;
     border-color: #e6e6e6;
-    @include u-shadow(2)
+    @include u-shadow(2);
   }
 
   .card__section-status {
@@ -41,5 +41,12 @@
     }
 
     }
+  }
+}
+
+.card--team {
+  
+  .usa-card__container {
+    margin: 0 !important;
   }
 }

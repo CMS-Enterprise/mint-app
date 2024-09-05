@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button, Fieldset, Label, TextInput } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetIndividualModelPlanCollaboratorQuery,
@@ -22,6 +23,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import RequiredAsterisk from 'components/shared/RequiredAsterisk';
 import Spinner from 'components/Spinner';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -30,12 +32,21 @@ import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
+import RoleInfo from '../_components/RoleInfo';
 import { isLastModelLead } from '..';
 
 type GetCollaboratorsType =
   GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 type CollaboratorFormType =
   GetIndividualModelPlanCollaboratorQuery['planCollaboratorByID'];
+
+type LocationProps = {
+  fromCollaborationArea: boolean;
+  pathname: string;
+  state: {
+    fromCollaborationArea: boolean;
+  };
+};
 
 const Collaborators = () => {
   const { t: collaboratorsT } = useTranslation('collaborators');
@@ -45,7 +56,9 @@ const Collaborators = () => {
 
   const history = useHistory();
 
-  const location = useLocation();
+  const location = useLocation<LocationProps>();
+
+  const isFromCollaborationArea = location.state?.fromCollaborationArea;
 
   const params = new URLSearchParams(location.search);
 
@@ -186,12 +199,10 @@ const Collaborators = () => {
   const breadcrumbs = [BreadcrumbItemOptions.HOME];
 
   if (manageOrAdd === 'manage') {
-    breadcrumbs.push(
-      BreadcrumbItemOptions.COLLABORATION_AREA,
-      BreadcrumbItemOptions.TASK_LIST,
-      BreadcrumbItemOptions.COLLABORATORS
-    );
-  } else {
+    breadcrumbs.push(BreadcrumbItemOptions.COLLABORATION_AREA);
+  }
+
+  if (!isFromCollaborationArea || manageOrAdd === 'add') {
     breadcrumbs.push(BreadcrumbItemOptions.COLLABORATORS);
   }
 
@@ -213,10 +224,21 @@ const Collaborators = () => {
               : collaboratorsMiscT('addATeamMember')}
           </PageHeading>
 
-          <div className="margin-bottom-4 line-height-body-6">
-            {!collaboratorId && collaboratorsMiscT('searchTeamInfo')}{' '}
-            {collaboratorsMiscT('teamInfo')}
-          </div>
+          {!collaboratorId && (
+            <div className="margin-bottom-2 font-body-md line-height-body-5">
+              {!collaboratorId && collaboratorsMiscT('searchTeamInfo')}{' '}
+              {collaboratorsMiscT('teamInfo')}
+            </div>
+          )}
+
+          <p className="margin-bottom-5">
+            <Trans
+              i18nKey={miscellaneousT('allFieldsRequired')}
+              components={{
+                s: <span className="text-secondary-dark" />
+              }}
+            />
+          </p>
 
           <Formik
             initialValues={initialValues}
@@ -270,11 +292,21 @@ const Collaborators = () => {
                           id="label-model-team-cedar-contact"
                         >
                           {collaboratorsT('username.label')}
+                          <RequiredAsterisk />
                         </Label>
 
                         <FieldErrorMsg>
                           {flatErrors['userAccount.commonName']}
                         </FieldErrorMsg>
+
+                        <Label
+                          id="hint-model-team-cedar-contact"
+                          htmlFor="model-team-cedar-contact"
+                          className="text-normal margin-top-1 margin-bottom-105 text-base maxw-none"
+                          hint
+                        >
+                          {collaboratorsMiscT('startTyping')}
+                        </Label>
 
                         {collaboratorId ? (
                           <Field
@@ -286,33 +318,22 @@ const Collaborators = () => {
                             name="userAccount.commonName"
                           />
                         ) : (
-                          <>
-                            <Label
-                              id="hint-model-team-cedar-contact"
-                              htmlFor="model-team-cedar-contact"
-                              className="text-normal margin-top-1 margin-bottom-105 text-base"
-                              hint
-                            >
-                              {collaboratorsMiscT('startTyping')}
-                            </Label>
-
-                            <OktaUserSelect
-                              id="model-team-cedar-contact"
-                              name="model-team-cedar-contact"
-                              ariaLabelledBy="label-model-team-cedar-contact"
-                              ariaDescribedBy="hint-model-team-cedar-contact"
-                              onChange={oktaUser => {
-                                setFieldValue(
-                                  'userAccount.commonName',
-                                  oktaUser?.displayName
-                                );
-                                setFieldValue(
-                                  'userAccount.username',
-                                  oktaUser?.username
-                                );
-                              }}
-                            />
-                          </>
+                          <OktaUserSelect
+                            id="model-team-cedar-contact"
+                            name="model-team-cedar-contact"
+                            ariaLabelledBy="label-model-team-cedar-contact"
+                            ariaDescribedBy="hint-model-team-cedar-contact"
+                            onChange={oktaUser => {
+                              setFieldValue(
+                                'userAccount.commonName',
+                                oktaUser?.displayName
+                              );
+                              setFieldValue(
+                                'userAccount.username',
+                                oktaUser?.username
+                              );
+                            }}
+                          />
                         )}
                       </FieldGroup>
 
@@ -322,6 +343,7 @@ const Collaborators = () => {
                       >
                         <Label htmlFor="collaborator-role">
                           {collaboratorsT('teamRoles.label')}
+                          <RequiredAsterisk />
                         </Label>
 
                         <FieldErrorMsg>{flatErrors.teamRoles}</FieldErrorMsg>
@@ -330,7 +352,7 @@ const Collaborators = () => {
                           as={MultiSelect}
                           id="collaborator-role"
                           name="role"
-                          selectedLabel={collaboratorsMiscT('roles')}
+                          selectedLabel={collaboratorsMiscT('selectedRoles')}
                           options={composeMultiSelectOptions(
                             teamRolesConfig.options,
                             undefined,
@@ -354,20 +376,28 @@ const Collaborators = () => {
                         />
                       </FieldGroup>
 
-                      <Alert
-                        type="info"
-                        slim
-                        data-testid="mandatory-fields-alert"
-                        className="margin-y-4"
-                      >
-                        <span className="mandatory-fields-alert__text">
-                          {isModelLead && isLastModelLead(allCollaborators)
-                            ? collaboratorsMiscT('lastModelLeadMemberInfo')
-                            : collaboratorsMiscT('searchMemberInfo')}
-                        </span>
-                      </Alert>
+                      <RoleInfo
+                        className={classNames('margin-bottom-5', {
+                          'margin-bottom-6': collaboratorId
+                        })}
+                      />
 
-                      <div className="margin-y-4 display-block">
+                      {!collaboratorId && (
+                        <Alert
+                          type="info"
+                          slim
+                          data-testid="mandatory-fields-alert"
+                          className="margin-y-3"
+                        >
+                          <span className="mandatory-fields-alert__text">
+                            {isModelLead && isLastModelLead(allCollaborators)
+                              ? collaboratorsMiscT('lastModelLeadMemberInfo')
+                              : collaboratorsMiscT('searchMemberInfo')}
+                          </span>
+                        </Alert>
+                      )}
+
+                      <div className="margin-y-3 display-block">
                         <Button
                           type="submit"
                           disabled={
@@ -376,7 +406,7 @@ const Collaborators = () => {
                         >
                           {!collaboratorId
                             ? collaboratorsMiscT('addTeamMemberButton')
-                            : collaboratorsMiscT('updateTeamMember')}
+                            : collaboratorsMiscT('saveChanges')}
                         </Button>
 
                         {(loading || updateLoading) && (
@@ -391,7 +421,11 @@ const Collaborators = () => {
           </Formik>
 
           <UswdsReactLink
-            to={`/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`}
+            to={
+              isFromCollaborationArea
+                ? `/models/${modelID}/collaboration-area`
+                : `/models/${modelID}/collaboration-area/collaborators?view=${manageOrAdd}`
+            }
           >
             <span>&larr; </span>{' '}
             {!collaboratorId

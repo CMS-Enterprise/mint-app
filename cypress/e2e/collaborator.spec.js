@@ -5,16 +5,16 @@ describe('The Collaborator/Team Member Form', () => {
   });
 
   it('adds a collaborator to model plan', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanCollaborationArea('Empty Plan');
 
-    cy.contains('a', 'Edit team').click();
+    cy.get('[data-testid="manage-collaborators"]').click();
 
     cy.contains('h1', 'Manage model team');
 
     cy.get('table').within(() => {
       cy.get('thead').within(() => {
         cy.contains('th', 'Name');
-        cy.contains('th', 'Role');
+        cy.contains('th', 'Role(s)');
         cy.contains('th', 'Date added');
         cy.contains('th', 'Actions');
       });
@@ -57,9 +57,9 @@ describe('The Collaborator/Team Member Form', () => {
     });
 
     // Edits a collaborator
-    cy.clickPlanTableByName('Plan With Collaborators');
+    cy.enterModelPlanCollaborationArea('Plan With Collaborators');
 
-    cy.contains('a', 'Edit team').click();
+    cy.get('[data-testid="manage-collaborators"]').click();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
@@ -91,7 +91,7 @@ describe('The Collaborator/Team Member Form', () => {
       .first()
       .contains('Model Team');
 
-    cy.contains('button', 'Update team member').click();
+    cy.contains('button', 'Save changes').click();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
@@ -100,9 +100,9 @@ describe('The Collaborator/Team Member Form', () => {
     });
 
     // Removes a collaborator
-    cy.clickPlanTableByName('Plan With Collaborators');
+    cy.enterModelPlanCollaborationArea('Plan With Collaborators');
 
-    cy.contains('a', 'Edit team').click();
+    cy.get('[data-testid="manage-collaborators"]').click();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {

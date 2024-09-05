@@ -5,7 +5,7 @@ describe('Change History', () => {
   });
 
   it('Displays changes correctly', () => {
-    cy.clickPlanTableByName(
+    cy.enterModelPlanTaskList(
       'Plan with Documents',
       'all-model-plans-table-wrapper'
     );
