@@ -22,6 +22,7 @@ type CollapsableLinkProps = {
   labelPosition?: 'top' | 'bottom';
   expandOnExport?: boolean;
   setParentOpen?: (isOpen: boolean) => void;
+  horizontalCaret?: boolean;
 };
 
 const CollapsableLink = ({
@@ -39,7 +40,8 @@ const CollapsableLink = ({
   showDescription,
   labelPosition = 'top',
   expandOnExport = false,
-  setParentOpen
+  setParentOpen,
+  horizontalCaret = false
 }: CollapsableLinkProps) => {
   // TODO: should this state instead be held in the parent and passed in as prop?
   // Followup: if the state should remain here, how do we test the component when it's open?
@@ -69,12 +71,20 @@ const CollapsableLink = ({
     );
   };
 
+  const OpenCaret = horizontalCaret ? (
+    <Icon.NavigateNext className="top-05 margin-right-05" />
+  ) : (
+    <Icon.ExpandMore className="top-05 margin-right-05" />
+  );
+
+  const DownCaret = horizontalCaret ? (
+    <Icon.ExpandMore className="top-05 margin-right-05" />
+  ) : (
+    <Icon.ExpandLess className="top-05 margin-right-05" />
+  );
+
   const renderCaret = () => {
-    return isOpen ? (
-      <Icon.ExpandLess className="top-05 margin-right-05" />
-    ) : (
-      <Icon.ExpandMore className="top-05 margin-right-05" />
-    );
+    return isOpen ? DownCaret : OpenCaret;
   };
 
   const expandIcon = eyeIcon ? renderEyeIcon() : renderCaret();

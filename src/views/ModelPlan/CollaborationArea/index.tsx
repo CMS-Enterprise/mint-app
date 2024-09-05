@@ -36,6 +36,7 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
+import TeamCard from './Cards/TeamCard';
 
 import './index.scss';
 
@@ -146,7 +147,7 @@ const CollaborationArea = () => {
       className="collaboration-area"
       data-testid="collaboration-area"
     >
-      <GridContainer>
+      <GridContainer className="margin-bottom-4">
         <Grid desktop={{ col: 12 }}>
           <Breadcrumbs
             items={[
@@ -273,8 +274,10 @@ const CollaborationArea = () => {
           />
         )}
       </GridContainer>
-      <div className="bg-primary-lighter padding-top-6 padding-bottom-10">
+
+      <div className="bg-primary-lighter padding-top-6 padding-bottom-10 margin-bottom-neg-7">
         <GridContainer>
+          <TeamCard modelID={modelID} collaborators={modelPlan.collaborators} />
           <CardGroup>
             <DocumentsCard documents={documents} modelID={modelID} />
           </CardGroup>

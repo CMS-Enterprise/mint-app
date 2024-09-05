@@ -5,7 +5,7 @@ describe('Model Plan CRsand TDLs', () => {
   });
 
   it('adds a cr or tdl', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.contains('a', 'Add a CR or TDL').click();
 

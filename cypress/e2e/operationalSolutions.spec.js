@@ -18,7 +18,7 @@ describe('The Model Plan Operational solutions tracker', () => {
   });
 
   it('completes a Model Plan Operational solutions tracker', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     // Enter into op eval and learning and answer helpdesk op needs question
     cy.get('[data-testid="ops-eval-and-learning"]').click();

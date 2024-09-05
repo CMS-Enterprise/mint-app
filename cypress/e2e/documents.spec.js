@@ -4,15 +4,8 @@ describe('Model Plan Documents', () => {
     cy.visit('/');
   });
 
-  it('uploads document through the Documents Card', () => {
-    cy.visit('/');
-
-    cy.get(`[data-testid="${'table'}"] a`).contains('Empty Plan').click();
-    cy.url().should('include', '/collaboration-area');
-
-    cy.get('[data-testid="page-loading"]').should('not.exist');
-
-    cy.get('.card--documents').contains('No documents added');
+  it('uploads and removes a document', () => {
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.contains('a', 'Add document').click();
 

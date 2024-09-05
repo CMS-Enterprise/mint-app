@@ -1,4 +1,15 @@
-Cypress.Commands.add('clickPlanTableByName', (planName, table) => {
+Cypress.Commands.add('enterModelPlanCollaborationArea', (planName, table) => {
+  cy.visit('/');
+
+  cy.get(`[data-testid="${table || 'table'}"] a`)
+    .contains(planName)
+    .click();
+  cy.url().should('include', '/collaboration-area');
+
+  cy.get('[data-testid="page-loading"]').should('not.exist');
+});
+
+Cypress.Commands.add('enterModelPlanTaskList', (planName, table) => {
   cy.visit('/');
 
   cy.get(`[data-testid="${table || 'table'}"] a`)
