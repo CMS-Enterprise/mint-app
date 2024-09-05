@@ -1,0 +1,44 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
+.collaboration-area {
+  &__card {
+    .usa-card__container {
+      border-radius: 4px;
+      border-color: #e6e6e6;
+      @include u-shadow(2);
+    }
+
+    .usa-card__footer {
+      border-top: 1px solid color("base-light");
+      padding-inline: 0;
+      margin-inline: 24px;
+      padding-top: 24px;
+
+      .usa-button {
+        width: 100%;
+        @media screen and (min-width: 520px) {
+          width: auto;
+        }
+
+        @media screen and (min-width: 1024px) and (max-width: 1120px) {
+          width: 100%;
+        }
+      }
+
+      .usa-button.usa-button--outline {
+        margin-top: 1rem;
+
+        @media screen and (min-width: 520px) {
+          margin-top: 0;
+          margin-left: 1rem;
+        }
+
+        @media screen and (min-width: 1024px) and (max-width: 1120px) {
+          margin-left: 0;
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+}
