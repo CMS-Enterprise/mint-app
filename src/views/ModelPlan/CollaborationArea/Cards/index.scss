@@ -1,3 +1,5 @@
+@use 'uswds-core' as *;
+
 .card--model-plan {
   min-height: 420px;
 
@@ -12,12 +14,5 @@
     gap: 24px;
     padding: 0 24px;
     margin-block: 16px;
-  }
-}
-
-.card--team {
-
-  .usa-card__container {
-    margin: 0 !important;
   }
 }
