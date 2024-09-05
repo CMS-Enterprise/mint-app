@@ -276,7 +276,7 @@ const CollaborationArea = () => {
 
       <div className="bg-primary-lighter padding-top-6 padding-bottom-10 margin-bottom-neg-7">
         <GridContainer>
-          <TeamCard modelID={modelID} />
+          <TeamCard modelID={modelID} collaborators={modelPlan.collaborators} />
         </GridContainer>
       </div>
     </MainContent>
