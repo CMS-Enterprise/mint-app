@@ -51,6 +51,7 @@ const AddDocument = () => {
   const solutionDocumentBreadcrumb = [
     BreadcrumbItemOptions.HOME,
     BreadcrumbItemOptions.COLLABORATION_AREA,
+    BreadcrumbItemOptions.TASK_LIST,
     BreadcrumbItemOptions.IT_TRACKER,
     BreadcrumbItemOptions.SOLUTION_DETAILS
   ];
