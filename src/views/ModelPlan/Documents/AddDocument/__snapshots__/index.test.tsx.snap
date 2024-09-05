@@ -93,7 +93,7 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
           Choose to upload or link to a document, such as a recent concept document, policy paper, or any additional model background information.
         </p>
         <p
-          class="margin-bottom-2 font-body-md line-height-body-4"
+          class="margin-bottom-3 font-body-md line-height-body-4"
         >
           Fields marked with an asterisk (
           <span
