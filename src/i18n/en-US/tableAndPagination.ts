@@ -11,6 +11,9 @@ const tableAndPagination = {
     alertHeading: `We couldn't find any matches for "{{query}}".`,
     alertDescription:
       'Double check your search for typos or try a different search.'
+  },
+  pageSize: {
+    show: 'Show {{value}}'
   }
 };
 

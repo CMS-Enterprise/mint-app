@@ -7,7 +7,7 @@ describe('Web Socket Connections', () => {
   });
 
   it('inits a ws connection and locks basics', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.get('[data-testid="basics"]').should('not.be.disabled');
 

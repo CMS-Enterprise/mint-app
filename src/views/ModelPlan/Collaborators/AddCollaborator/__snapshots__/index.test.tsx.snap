@@ -35,7 +35,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
           >
             <a
               class="usa-link usa-breadcrumb__link"
-              href="/models/f11eb129-2c80-4080-9440-439cbe1a286f}/collaboration-area/collaborators"
+              href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators"
             >
               <span>
                 Manage model team
@@ -63,10 +63,21 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
           Add a team member
         </h1>
         <div
-          class="margin-bottom-4 line-height-body-6"
+          class="margin-bottom-2 font-body-md line-height-body-5"
         >
           Search for a team member to add to your model team. Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.
         </div>
+        <p
+          class="margin-bottom-5"
+        >
+          Fields marked with an asterisk ( 
+          <span
+            class="text-secondary-dark"
+          >
+            *
+          </span>
+           ) are required.
+        </p>
         <form
           action="#"
         >
@@ -85,14 +96,20 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                 id="label-model-team-cedar-contact"
               >
                 Team member name
+                <span
+                  aria-label="(Field required)"
+                  class="text-red margin-x-05"
+                >
+                  *
+                </span>
               </label>
               <label
-                class="usa-label text-normal margin-top-1 margin-bottom-105 text-base"
+                class="usa-label text-normal margin-top-1 margin-bottom-105 text-base maxw-none"
                 data-testid="label"
                 for="model-team-cedar-contact"
                 id="hint-model-team-cedar-contact"
               >
-                Start typing the person’s name you want to add
+                Search by name. This field searches CMS’ EUA database. Looking up your team member will provide their name and email address.
                 <span
                   class="usa-hint"
                 />
@@ -190,6 +207,12 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                 for="collaborator-role"
               >
                 Team member role(s)
+                <span
+                  aria-label="(Field required)"
+                  class="text-red margin-x-05"
+                >
+                  *
+                </span>
               </label>
               <div>
                 <div
@@ -279,7 +302,33 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-y-4"
+              class="width-full margin-y-2 line-height-body-4 margin-bottom-5 mint-collapsable-link"
+            >
+              <button
+                aria-controls="available-role-info"
+                aria-expanded="false"
+                class="usa-button usa-button--unstyled mint-no-print"
+                data-testid="available-role-info"
+                type="button"
+              >
+                <svg
+                  class="usa-icon top-05 margin-right-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                  />
+                </svg>
+                What roles are available?
+              </button>
+            </div>
+            <div
+              class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-y-3"
               data-testid="mandatory-fields-alert"
             >
               <div
@@ -292,14 +341,14 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
                     <span
                       class="mandatory-fields-alert__text"
                     >
-                      This new team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.
+                      This new team member will be able to view and edit anything about a Model Plan. Please make sure this individual should be able to do this before you proceed.
                     </span>
                   </span>
                 </p>
               </div>
             </div>
             <div
-              class="margin-y-4 display-block"
+              class="margin-y-3 display-block"
             >
               <button
                 class="usa-button"
@@ -319,7 +368,7 @@ exports[`Adding a collaborator page > matches snapshot 1`] = `
           <span>
             ← 
           </span>
-           Don’t add a team member and return to the previous page
+           Don’t add a team member and return to previous page
         </a>
       </div>
     </div>

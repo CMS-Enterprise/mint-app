@@ -2,7 +2,7 @@ describe('Notification Center', () => {
   it('navigates through the Notification page', () => {
     cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
     cy.visit('/');
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.contains('button', 'Start a discussion').click();
 
@@ -129,7 +129,7 @@ describe('Notification Center', () => {
   it('testing New Discussion Reply Notification', () => {
     cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
     cy.visit('/');
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     // New Discussion Reply test
     cy.contains('button', 'View discussions').click();
@@ -170,7 +170,7 @@ describe('Notification Center', () => {
   it('testing Adding Collaborator Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/');
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     // Add SF13 as a collaborator
     cy.get('a[href*="/collaboration-area/collaborators?view=manage"]').click();
@@ -301,7 +301,7 @@ describe('Notification Center', () => {
     cy.get('[aria-label="Home"]').click();
     cy.url().should('include', '/');
 
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
     cy.get('[data-testid="basics"]').click();
     cy.url().should('include', '/basics');
 
@@ -370,7 +370,7 @@ describe('Notification Center', () => {
   it('tests model plan status update from email', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/');
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.url().then(url => {
       cy.visit(`${url}?model-status=ACTIVE`);

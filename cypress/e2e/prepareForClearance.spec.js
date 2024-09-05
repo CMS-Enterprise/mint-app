@@ -16,7 +16,7 @@ describe('The Model Plan Prepare for Clearance Form', () => {
   });
 
   it('completes a Model Plan Prepare for clearance form', () => {
-    cy.clickPlanTableByName('Plan with Basics');
+    cy.enterModelPlanTaskList('Plan with Basics');
 
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
