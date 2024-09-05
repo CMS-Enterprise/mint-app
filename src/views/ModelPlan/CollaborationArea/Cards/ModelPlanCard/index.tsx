@@ -24,7 +24,6 @@ import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskList
 
 // importing global card styles from Cards/cards.scss
 import '../cards.scss';
-// import './index.scss';
 import './index.scss';
 
 type ModelPlanCardType = {
