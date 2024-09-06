@@ -153,6 +153,9 @@ services:
       /usr/bin/mc rb --force s3local/mint-app-file-uploads/;
       /usr/bin/mc mb --quiet s3local/mint-app-file-uploads/;
       /usr/bin/mc policy set public s3local/mint-app-file-uploads;
+      /usr/bin/mc rb --force s3local/mint-app-echimp-uploads/;
+      /usr/bin/mc mb --quiet s3local/mint-app-echimp-uploads/;
+      /usr/bin/mc policy set public s3local/mint-app-echimp-uploads;
       "
 
   email:

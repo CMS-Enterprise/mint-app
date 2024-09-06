@@ -132,7 +132,7 @@ func getResolverDependencies(config *viper.Viper) (
 
 	// Create ECHIMP S3 client
 	s3ECHIMPFileCfg := upload.Config{
-		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
+		Bucket:  config.GetString(appconfig.AWSS3ECHIMPBucket),
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
 	}
@@ -149,6 +149,7 @@ func seed(config *viper.Viper) {
 	seeder.SeedData()
 	seeder.CreateAnalyzedAuditData()
 	seeder.SetDefaultUserViews()
+	seeder.SeedEChimpBucket()
 }
 
 // SeedData gets resolver dependencies and calls wrapped resolver functions to seed data.
