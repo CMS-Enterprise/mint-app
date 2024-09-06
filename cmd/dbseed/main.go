@@ -93,7 +93,8 @@ func execute() {
 func getResolverDependencies(config *viper.Viper) (
 	*storage.Store,
 	*zap.Logger,
-	*upload.S3Client,
+	*upload.S3Client, //the files for MINT
+	*upload.S3Client, //the files for ECHIMP
 	oddmail.EmailService,
 	email.TemplateService,
 ) {
@@ -122,16 +123,24 @@ func getResolverDependencies(config *viper.Viper) (
 		panic(err)
 	}
 
-	// Create S3 client
-	s3Cfg := upload.Config{
+	// Create MINT S3 client
+	s3MintFileCfg := upload.Config{
 		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
 	}
 
-	s3Client := upload.NewS3Client(s3Cfg)
+	// Create ECHIMP S3 client
+	s3ECHIMPFileCfg := upload.Config{
+		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
+		Region:  config.GetString(appconfig.AWSRegion),
+		IsLocal: true,
+	}
 
-	return store, logger, &s3Client, nil, nil
+	s3MINTFileClient := upload.NewS3Client(s3MintFileCfg)
+	s3ECHIMPFileClient := upload.NewS3Client(s3ECHIMPFileCfg)
+
+	return store, logger, &s3MINTFileClient, &s3ECHIMPFileClient, nil, nil
 }
 
 // SeedData uses seeder to seed data in the database

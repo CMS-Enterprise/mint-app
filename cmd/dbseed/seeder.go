@@ -31,7 +31,7 @@ func newSeeder(config SeederConfig) *Seeder {
 }
 
 func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
-	store, logger, s3Client, _, _ := getResolverDependencies(viperConfig)
+	store, logger, s3Client, echimpS3Client, _, _ := getResolverDependencies(viperConfig)
 
 	dataLoaders := loaders.NewDataLoaders(store)
 	ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
@@ -57,6 +57,7 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 		Store:                store,
 		Logger:               logger,
 		S3Client:             s3Client,
+		EChimpClient:         echimpS3Client,
 		Context:              ctx,
 		EmailService:         emailService,
 		EmailTemplateService: emailTemplateService,
@@ -72,6 +73,7 @@ type SeederConfig struct {
 	Store                *storage.Store
 	Logger               *zap.Logger
 	S3Client             *upload.S3Client
+	EChimpClient         *upload.S3Client
 	Context              context.Context
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateService
