@@ -615,18 +615,6 @@ const ModelPlansTable = ({
         </tbody>
       </UswdsTable>
 
-      {state.globalFilter && page.length === 0 && (
-        <Alert
-          type="warning"
-          aria-live="polite"
-          heading={homeT('allModels.noResults.heading', {
-            searchTerm: state.globalFilter
-          })}
-        >
-          {homeT('allModels.noResults.subheading')}
-        </Alert>
-      )}
-
       {canSearch && data.length > 10 && (
         <TablePagination
           gotoPage={gotoPage}

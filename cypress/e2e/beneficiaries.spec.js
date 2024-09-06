@@ -5,7 +5,7 @@ describe('The Model Plan Beneficiaries Form', () => {
   });
 
   it('completes a Model Plan Beneficiaries form', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.get('[data-testid="beneficiaries"]').click();
 

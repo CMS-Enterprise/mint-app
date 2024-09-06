@@ -169,6 +169,8 @@ export const CollaboratorsContent = () => {
         <Button
           type="button"
           className="margin-right-4"
+          secondary
+          accentStyle="warm"
           onClick={() =>
             removeCollaborator && handleRemoveCollaborator(removeCollaborator)
           }
@@ -194,15 +196,12 @@ export const CollaboratorsContent = () => {
       <GridContainer>
         <Grid row gap>
           <Grid desktop={{ col: 12 }}>
-            {message && <Expire delay={45000}>{message}</Expire>}
-
             <Breadcrumbs
               items={
                 manageOrAdd === 'manage'
                   ? [
                       BreadcrumbItemOptions.HOME,
                       BreadcrumbItemOptions.COLLABORATION_AREA,
-                      BreadcrumbItemOptions.TASK_LIST,
                       BreadcrumbItemOptions.COLLABORATORS
                     ]
                   : [
@@ -211,6 +210,8 @@ export const CollaboratorsContent = () => {
                     ]
               }
             />
+
+            {message && <Expire delay={45000}>{message}</Expire>}
 
             {manageOrAdd === 'manage' ? (
               <>
@@ -224,14 +225,13 @@ export const CollaboratorsContent = () => {
                   <Trans i18nKey="draftModelPlan:for" /> {modelName}
                 </p>
 
-                <div className="font-body-lg margin-bottom-6">
+                <div className="font-body-md margin-bottom-4">
                   {collaboratorsMiscT('manageModelTeamInfo')}
                 </div>
 
-                <UswdsReactLink
-                  to={`/models/${modelID}/collaboration-area/task-list/`}
-                >
-                  <span>&larr; </span> {miscellaneousT('returnToTaskList')}
+                <UswdsReactLink to={`/models/${modelID}/collaboration-area`}>
+                  <span>&larr; </span>{' '}
+                  {miscellaneousT('returnToCollaborationArea')}
                 </UswdsReactLink>
               </>
             ) : (
@@ -240,18 +240,18 @@ export const CollaboratorsContent = () => {
                   {collaboratorsMiscT('headingTeamMembers')}
                 </PageHeading>
 
-                <div className="font-body-lg margin-bottom-6">
+                <div className="font-body-md margin-bottom-4">
                   {collaboratorsMiscT('teamMemberInfo')}
                 </div>
               </>
             )}
 
-            <h4 className="margin-bottom-1">
+            <h4 className="margin-bottom-1 margin-top-4">
               {collaboratorsMiscT('teamMembers')}
             </h4>
 
             <UswdsReactLink
-              className="usa-button margin-bottom-2"
+              className="usa-button margin-bottom-0"
               variant="unstyled"
               to={`/models/${modelID}/collaboration-area/collaborators/add-collaborator?view=${manageOrAdd}`}
             >

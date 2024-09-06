@@ -5,7 +5,7 @@ describe('Discussion Center', () => {
   });
 
   it('asks a question and answers a question', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.contains('button', 'Start a discussion').click();
 

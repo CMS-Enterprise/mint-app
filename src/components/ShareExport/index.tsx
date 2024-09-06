@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import { useReactToPrint } from 'react-to-print';
 import { useMutation } from '@apollo/client';
@@ -211,10 +212,19 @@ const ShareExportModal = ({
         className={`${modalElementId}__form`}
         onSubmit={e => {
           e.preventDefault();
+
           const viewFilter =
             filteredGroup && filteredGroup !== 'all'
               ? (filteredGroup.toUpperCase() as ModelViewFilter)
               : undefined;
+
+          // Send a share event to GA
+          ReactGA.send({
+            hitType: 'event',
+            eventCategory: `share_model_plan_${filteredGroup}`,
+            eventAction: 'click',
+            eventLabel: `Share model plan ${viewFilter || ''}`
+          });
 
           shareModelPlan({
             variables: {
@@ -364,6 +374,14 @@ const ShareExportModal = ({
         onSubmit={e => {
           e.preventDefault();
           if (exportPDF) {
+            // Send a export pdf event to GA
+            ReactGA.send({
+              hitType: 'event',
+              eventCategory: 'export_model_plan_pdf',
+              eventAction: 'click',
+              eventLabel: 'Export model plan to PDF'
+            });
+
             setPrintPDF(true);
             // PDF/Print doesn't pick up the useContext state change without setTimeout
             setTimeout(() => {
@@ -375,6 +393,15 @@ const ShareExportModal = ({
               filteredGroup && filteredGroup !== 'all'
                 ? filteredGroup
                 : undefined;
+
+            // Send a export csv event to GA
+            ReactGA.send({
+              hitType: 'event',
+              eventCategory: `export_model_plan_csv_${filteredGroup}`,
+              eventAction: 'click',
+              eventLabel: `Export model plan to CSV ${groupToExport?.toUpperCase()}`
+            });
+
             setFilteredGroupForExport(groupToExport);
             fetchSingleData(modelID);
           }

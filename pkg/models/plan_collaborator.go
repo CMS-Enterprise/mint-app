@@ -30,15 +30,16 @@ type TeamRole string
 
 // These constants represent the different values of TeamRole
 const (
-	TeamRoleModelLead        TeamRole = "MODEL_LEAD"
-	TeamRoleModelTeam        TeamRole = "MODEL_TEAM"
-	TeamRoleLeadership       TeamRole = "LEADERSHIP"
-	TeamRoleLearning         TeamRole = "LEARNING"
-	TeamRoleEvaluation       TeamRole = "EVALUATION"
-	TeamRoleITLead           TeamRole = "IT_LEAD"
-	TeamRoleQuality          TeamRole = "QUALITY"
-	TeamRoleOACT             TeamRole = "OACT"
-	TeamRolePayment          TeamRole = "PAYMENT"
-	TeamRoleCMFFSCounterpart TeamRole = "CM_FFS_COUNTERPART"
-	TeamRoleCOR              TeamRole = "COR"
+	TeamRoleModelLead         TeamRole = "MODEL_LEAD"
+	TeamRoleModelTeam         TeamRole = "MODEL_TEAM"
+	TeamRoleLeadership        TeamRole = "LEADERSHIP"
+	TeamRoleLearning          TeamRole = "LEARNING"
+	TeamRoleEvaluation        TeamRole = "EVALUATION"
+	TeamRoleITLead            TeamRole = "IT_LEAD"
+	TeamRoleQuality           TeamRole = "QUALITY"
+	TeamRoleOACT              TeamRole = "OACT"
+	TeamRolePayment           TeamRole = "PAYMENT"
+	TeamRoleCMFFSCounterpart  TeamRole = "CM_FFS_COUNTERPART"
+	TeamRoleCOR               TeamRole = "COR"
+	TeamRoleSolutionArchitect TeamRole = "SOLUTION_ARCHITECT"
 )

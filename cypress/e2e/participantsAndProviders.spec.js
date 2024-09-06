@@ -5,7 +5,7 @@ describe('The Model Plan Participants and providers Form', () => {
   });
 
   it('completes a Model Plan Participants and providers', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     // Clicks the Participants and providers tasklist item
     cy.get('[data-testid="participants-and-providers"]').click();
