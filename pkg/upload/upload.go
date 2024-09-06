@@ -1,6 +1,7 @@
 package upload
 
 import (
+	"fmt"
 	"io"
 	"mime"
 	"net/url"
@@ -182,4 +183,24 @@ func (c S3Client) UploadFile(file io.Reader, key string) error {
 	}
 
 	return nil
+}
+
+// DownloadToMemory downloads an object from the S3 bucket to a buffer in memory
+func (c S3Client) DownloadToMemory(key string) ([]byte, error) {
+	//  Note, this might live in another package
+	downloader := s3manager.NewDownloaderWithClient(c.client)
+
+	// Create an in-memory buffer to store the file data
+	buffer := &aws.WriteAtBuffer{}
+
+	// Download the file to the buffer
+	_, err := downloader.Download(buffer, &s3.GetObjectInput{
+		Bucket: aws.String(c.config.Bucket),
+		Key:    aws.String(key),
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to download file to memory, %v", err)
+	}
+
+	return buffer.Bytes(), nil
 }
