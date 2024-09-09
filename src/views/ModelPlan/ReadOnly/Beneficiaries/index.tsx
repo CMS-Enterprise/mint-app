@@ -4,7 +4,6 @@ import {
   GetAllBeneficiariesQuery,
   useGetAllBeneficiariesQuery
 } from 'gql/gen/graphql';
-import { all } from 'redux-saga/effects';
 
 import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
