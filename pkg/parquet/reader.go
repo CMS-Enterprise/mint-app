@@ -6,13 +6,13 @@ import (
 	"github.com/cmsgov/mint-app/pkg/s3"
 )
 
-func ReadFromS3[T any](client s3.S3Client, key string) ([]T, error) {
+func ReadFromS3[T any](client *s3.S3Client, key string) ([]*T, error) {
 
 	readerAt, size, err := client.GetS3ObjectReaderAt(key)
 	if err != nil {
 		return nil, err
 	}
-	return parquet.Read[T](readerAt, size)
+	return parquet.Read[*T](readerAt, size)
 
 	// // Create a Parquet reader
 	// fr, err := parquet.OpenFile(readerAt, size)
