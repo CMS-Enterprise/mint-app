@@ -129,7 +129,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
         <CardFooter>
           <UswdsReactLink
             to={`/models/${modelID}/task-list`}
-            className="usa-button"
+            className="usa-button margin-right-1"
             variant="unstyled"
             data-testid="to-task-list"
           >
