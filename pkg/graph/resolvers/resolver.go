@@ -11,8 +11,8 @@ import (
 	ldclient "github.com/launchdarkly/go-server-sdk/v6"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/s3"
 	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/upload"
 )
 
 //go:generate go run github.com/99designs/gqlgen
@@ -25,7 +25,7 @@ import (
 type Resolver struct {
 	store                *storage.Store
 	service              ResolverService
-	s3Client             *upload.S3Client
+	s3Client             *s3.S3Client
 	emailService         oddmail.EmailService
 	emailTemplateService email.TemplateService
 	addressBook          email.AddressBook
@@ -43,7 +43,7 @@ type ResolverService struct {
 func NewResolver(
 	store *storage.Store,
 	service ResolverService,
-	s3Client *upload.S3Client,
+	s3Client *s3.S3Client,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,

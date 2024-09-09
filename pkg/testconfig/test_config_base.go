@@ -10,8 +10,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/testconfig/s3testconfigs"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/s3"
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
-	"github.com/cmsgov/mint-app/pkg/upload"
 
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"go.uber.org/zap"
@@ -27,7 +27,7 @@ type Base struct {
 	Logger                   *zap.Logger
 	UserInfo                 *models.UserInfo
 	Store                    *storage.Store
-	S3Client                 *upload.S3Client
+	S3Client                 *s3.S3Client
 	PubSub                   *pubsub.ServicePubSub
 	Principal                *authentication.ApplicationPrincipal
 	Context                  context.Context

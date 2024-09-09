@@ -15,8 +15,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/s3"
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
-	"github.com/cmsgov/mint-app/pkg/upload"
 
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"go.uber.org/zap"
@@ -32,7 +32,7 @@ type TestConfigs struct {
 	Logger     *zap.Logger
 	UserInfo   *models.UserInfo
 	Store      *storage.Store
-	S3Client   *upload.S3Client
+	S3Client   *s3.S3Client
 	PubSub     *pubsub.ServicePubSub
 	Principal  *authentication.ApplicationPrincipal
 	Context    context.Context
@@ -47,10 +47,10 @@ func GetDefaultTestConfigs() *TestConfigs {
 	return &tc
 }
 
-func createS3Client() upload.S3Client {
+func createS3Client() s3.S3Client {
 	config := testhelpers.NewConfig()
 
-	s3Cfg := upload.Config{
+	s3Cfg := s3.Config{
 		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
@@ -60,7 +60,7 @@ func createS3Client() upload.S3Client {
 	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, config.GetString(appconfig.LocalMinioS3AccessKey))
 	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, config.GetString(appconfig.LocalMinioS3SecretKey))
 
-	return upload.NewS3Client(s3Cfg)
+	return s3.NewS3Client(s3Cfg)
 }
 
 // GetDefaults sets the dependencies for the TestConfigs struct

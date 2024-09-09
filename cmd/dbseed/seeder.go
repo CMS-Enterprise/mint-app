@@ -11,11 +11,11 @@ import (
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/local"
 	"github.com/cmsgov/mint-app/pkg/oktaapi"
+	"github.com/cmsgov/mint-app/pkg/s3"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
 	"github.com/cmsgov/mint-app/pkg/testconfig/emailtestconfigs"
-	"github.com/cmsgov/mint-app/pkg/upload"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
@@ -72,8 +72,8 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 type SeederConfig struct {
 	Store                *storage.Store
 	Logger               *zap.Logger
-	S3Client             *upload.S3Client
-	EChimpClient         *upload.S3Client
+	S3Client             *s3.S3Client
+	EChimpClient         *s3.S3Client
 	Context              context.Context
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateService

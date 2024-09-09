@@ -12,13 +12,13 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/s3"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
-	"github.com/cmsgov/mint-app/pkg/upload"
 )
 
 // PlanDocumentCreate implements resolver logic to upload the specified file to S3 and create a matching plan document entity in the database.
-func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
+func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *s3.S3Client) (*models.PlanDocument, error) {
 	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), false, zero.String{})
 
 	err := BaseStructPreCreate(logger, document, principal, store, true)
@@ -72,7 +72,7 @@ func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkIn
 }
 
 // PlanDocumentRead implements resolver logic to fetch a plan document object by ID
-func PlanDocumentRead(logger *zap.Logger, store *storage.Store, s3Client *upload.S3Client, id uuid.UUID) (*models.PlanDocument, error) {
+func PlanDocumentRead(logger *zap.Logger, store *storage.Store, s3Client *s3.S3Client, id uuid.UUID) (*models.PlanDocument, error) {
 	document, err := store.PlanDocumentRead(logger, s3Client, id)
 	if err != nil {
 		return nil, err
@@ -82,7 +82,7 @@ func PlanDocumentRead(logger *zap.Logger, store *storage.Store, s3Client *upload
 }
 
 // PlanDocumentsReadByModelPlanID implements resolver logic to fetch a plan document object by model plan ID
-func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store, s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
 
 	isCollaborator, err := accesscontrol.IsCollaboratorModelPlanID(logger, principal, store, id)
 	if err != nil {
@@ -116,7 +116,7 @@ func PlanDocumentsReadBySolutionID(
 	id uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
-	s3Client *upload.S3Client,
+	s3Client *s3.S3Client,
 ) ([]*models.PlanDocument, error) {
 
 	isCollaborator, err := accesscontrol.IsCollaboratorSolutionID(logger, principal, store, id)
@@ -144,7 +144,7 @@ func PlanDocumentsReadBySolutionID(
 }
 
 // PlanDocumentDelete implements resolver logic to update a plan document object
-func PlanDocumentDelete(logger *zap.Logger, s3Client *upload.S3Client, id uuid.UUID, principal authentication.Principal, store *storage.Store) (int, error) {
+func PlanDocumentDelete(logger *zap.Logger, s3Client *s3.S3Client, id uuid.UUID, principal authentication.Principal, store *storage.Store) (int, error) {
 	existingdoc, err := store.PlanDocumentRead(logger, s3Client, id)
 	if err != nil {
 		return 0, err

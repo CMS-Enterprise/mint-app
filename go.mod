@@ -38,9 +38,15 @@ require (
 )
 
 require (
+	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/charmbracelet/x/ansi v0.2.3 // indirect
 	github.com/charmbracelet/x/term v0.2.0 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
+	github.com/klauspost/compress v1.17.9 // indirect
+	github.com/olekukonko/tablewriter v0.0.5 // indirect
+	github.com/parquet-go/parquet-go v0.23.0 // indirect
+	github.com/pierrec/lz4/v4 v4.1.21 // indirect
+	github.com/segmentio/encoding v0.4.0 // indirect
 )
 
 require (

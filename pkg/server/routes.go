@@ -43,9 +43,9 @@ import (
 	"github.com/cmsgov/mint-app/pkg/handlers"
 	"github.com/cmsgov/mint-app/pkg/local"
 	"github.com/cmsgov/mint-app/pkg/okta"
+	"github.com/cmsgov/mint-app/pkg/s3"
 	"github.com/cmsgov/mint-app/pkg/services"
 	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/upload"
 )
 
 // HandleLocalOrOktaWebSocketAuth is a function that effectively acts as a wrapper around 2 functions that can serve as a transport.WebSocket "InitFunc"
@@ -201,7 +201,7 @@ func (s *Server) routes(
 		s3Config.IsLocal = true
 	}
 
-	s3Client := upload.NewS3Client(s3Config)
+	s3Client := s3.NewS3Client(s3Config)
 
 	var lambdaClient *lambda.Lambda
 	var princeLambdaName string

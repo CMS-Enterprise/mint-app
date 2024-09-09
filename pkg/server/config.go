@@ -6,8 +6,8 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/flags"
+	"github.com/cmsgov/mint-app/pkg/s3"
 	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/upload"
 )
 
 const configMissingMessage = "Must set config: %v"
@@ -44,11 +44,11 @@ func (s Server) NewDBConfig() storage.DBConfig {
 }
 
 // NewS3Config returns a new s3.Config and checks required fields
-func (s Server) NewS3Config() upload.Config {
+func (s Server) NewS3Config() s3.Config {
 	s.checkRequiredConfig(appconfig.AWSS3FileUploadBucket)
 	s.checkRequiredConfig(appconfig.AWSRegion)
 
-	return upload.Config{
+	return s3.Config{
 		Bucket:  s.Config.GetString(appconfig.AWSS3FileUploadBucket),
 		Region:  s.Config.GetString(appconfig.AWSRegion),
 		IsLocal: false,

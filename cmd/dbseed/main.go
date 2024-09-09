@@ -20,8 +20,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/s3"
 	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/upload"
 
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 )
@@ -93,8 +93,8 @@ func execute() {
 func getResolverDependencies(config *viper.Viper) (
 	*storage.Store,
 	*zap.Logger,
-	*upload.S3Client, //the files for MINT
-	*upload.S3Client, //the files for ECHIMP
+	*s3.S3Client, //the files for MINT
+	*s3.S3Client, //the files for ECHIMP
 	oddmail.EmailService,
 	email.TemplateService,
 ) {
@@ -124,21 +124,21 @@ func getResolverDependencies(config *viper.Viper) (
 	}
 
 	// Create MINT S3 client
-	s3MintFileCfg := upload.Config{
+	s3MintFileCfg := s3.Config{
 		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
 	}
 
 	// Create ECHIMP S3 client
-	s3ECHIMPFileCfg := upload.Config{
+	s3ECHIMPFileCfg := s3.Config{
 		Bucket:  config.GetString(appconfig.AWSS3ECHIMPBucket),
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
 	}
 
-	s3MINTFileClient := upload.NewS3Client(s3MintFileCfg)
-	s3ECHIMPFileClient := upload.NewS3Client(s3ECHIMPFileCfg)
+	s3MINTFileClient := s3.NewS3Client(s3MintFileCfg)
+	s3ECHIMPFileClient := s3.NewS3Client(s3ECHIMPFileCfg)
 
 	return store, logger, &s3MINTFileClient, &s3ECHIMPFileClient, nil, nil
 }
