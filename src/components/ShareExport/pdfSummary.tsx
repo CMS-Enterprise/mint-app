@@ -12,10 +12,10 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import StatusBanner from 'components/StatusBanner';
 import { filteredViewOutput } from 'views/ModelPlan/ReadOnly';
 import FilterViewBanner from 'views/ModelPlan/ReadOnly/_components/FilterView/Banner';
 import { filterGroups } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus';
 import NotFound from 'views/NotFound';
 
 import NDABanner from '../NDABanner';
@@ -68,7 +68,7 @@ const PDFSummary = ({
             )}
           </PageHeading>
 
-          <TaskListStatus
+          <StatusBanner
             isReadView
             modelID={modelID}
             status={status}

@@ -97,6 +97,11 @@ const ReadOnlyGeneralCharacteristics = ({
         heading={generalCharacteristicsMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={status}
+        modelID={modelID}
+        modifiedOrCreatedDts={
+          allgeneralCharacteristicsData.modifiedDts ||
+          allgeneralCharacteristicsData.createdDts
+        }
       />
 
       {clearance && (

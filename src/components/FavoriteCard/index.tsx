@@ -6,10 +6,10 @@ import { GetFavoritesQuery, TeamRole } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/shared/Divider';
+import StatusBanner from 'components/StatusBanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc } from 'utils/date';
 import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
-import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus';
 
 import './index.scss';
 
@@ -82,7 +82,7 @@ const FavoriteCard = ({
             </div>
           </Grid>
           <Grid tablet={{ col: 3 }} mobile={{ col: 12 }}>
-            <TaskListStatus
+            <StatusBanner
               modelID={id}
               status={status}
               changeHistoryLink={false}

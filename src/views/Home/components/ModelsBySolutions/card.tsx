@@ -4,9 +4,9 @@ import { Card, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import StatusBanner from 'components/StatusBanner';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
-import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus';
 
 import { ModelsBySolutionType } from './table';
 
@@ -48,7 +48,7 @@ const ModelSolutionCard = ({
               <p className="text-bold margin-top-0 margin-right-1">
                 {customHomeT('solutionCard.status')}
               </p>
-              <TaskListStatus
+              <StatusBanner
                 modelID={id}
                 status={status}
                 changeHistoryLink={false}

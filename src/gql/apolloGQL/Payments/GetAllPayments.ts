@@ -82,6 +82,8 @@ export default gql(/* GraphQL */ `
         paymentDemandRecoupmentFrequencyNote
         paymentStartDate
         paymentStartDateNote
+        createdDts
+        modifiedDts
         status
       }
     }
