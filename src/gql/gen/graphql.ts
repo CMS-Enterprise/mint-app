@@ -458,6 +458,12 @@ export enum EaseOfUse {
   UNSURE = 'UNSURE'
 }
 
+export type EchimpCr = {
+  __typename: 'EchimpCR';
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+};
+
 /** Represents a translation of enum values.  generalName is the human readable name of the enum value, groupedName is an optional field if usually referenced by a difference table/name */
 export type EnumTranslation = {
   __typename: 'EnumTranslation';
@@ -3127,6 +3133,7 @@ export type Query = {
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
+  echimpCR: EchimpCr;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;
@@ -3169,6 +3176,12 @@ export type QueryAnalyzedAuditsArgs = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: TableName;
+};
+
+
+/** Query definition for the schema */
+export type QueryEchimpCrArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 

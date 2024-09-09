@@ -1,0 +1,8 @@
+type EchimpCR {
+  id: UUID!
+  modelPlanID: UUID!
+}
+
+extend type Query {
+  echimpCR(id: UUID!): EchimpCR!
+}

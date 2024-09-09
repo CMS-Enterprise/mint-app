@@ -34,6 +34,7 @@ require (
 	github.com/contribsys/faktory v1.9.0
 	github.com/launchdarkly/go-sdk-common/v3 v3.1.0
 	github.com/launchdarkly/go-server-sdk/v6 v6.2.1
+	github.com/parquet-go/parquet-go v0.23.0
 	golang.org/x/net v0.28.0
 )
 
@@ -44,7 +45,6 @@ require (
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
 	github.com/klauspost/compress v1.17.9 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
-	github.com/parquet-go/parquet-go v0.23.0 // indirect
 	github.com/pierrec/lz4/v4 v4.1.21 // indirect
 	github.com/segmentio/encoding v0.4.0 // indirect
 )
