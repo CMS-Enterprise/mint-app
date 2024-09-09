@@ -17,8 +17,6 @@ import { Avatar } from 'components/shared/Avatar';
 import CollapsableLink from 'components/shared/CollapsableLink';
 import Spinner from 'components/Spinner';
 
-import '../index.scss';
-
 type ModelPlanCardType = {
   modelID: string;
   // Can optionally pass in collaborators, or have collaboratos query in the component iteself
@@ -57,7 +55,7 @@ const TeamCard = ({ modelID, collaborators }: ModelPlanCardType) => {
     <>
       <Card
         gridLayout={{ desktop: { col: 12 } }}
-        className="card--model-plan card--team minh-0"
+        className="collaboration-area__card card--team minh-0"
       >
         <CardHeader>
           <h3 className="usa-card__heading">

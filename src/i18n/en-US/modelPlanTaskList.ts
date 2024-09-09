@@ -29,7 +29,7 @@ const taskListStatus: Record<TaskStatus | PrepareForClearanceStatus, string> = {
 
 const modelPlanTaskList = {
   heading: 'Model Plan task list',
-  subheading: 'for <1>{{modelName}}</1>',
+  subheading: 'for {{modelName}}',
   status: 'Status:',
   update: 'Update',
   edit: 'Edit Model Plan',

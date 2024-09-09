@@ -34,6 +34,7 @@ import { UpdateFavoriteProps } from '../ModelPlanOverview';
 // import { SubscriptionContext } from 'views/SubscriptionWrapper';
 // import Discussions from '../Discussions';
 // import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
+import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
 import TeamCard from './Cards/TeamCard';
 
@@ -87,7 +88,7 @@ const CollaborationArea = () => {
   const {
     modelName,
     // discussions,
-    // documents,
+    documents,
     // crs,
     // tdls,
     status,
@@ -278,7 +279,13 @@ const CollaborationArea = () => {
 
       <div className="bg-primary-lighter padding-top-6 padding-bottom-10 margin-bottom-neg-7">
         <GridContainer>
-          <TeamCard modelID={modelID} collaborators={modelPlan.collaborators} />
+          <CardGroup>
+            <TeamCard
+              modelID={modelID}
+              collaborators={modelPlan.collaborators}
+            />
+            <DocumentsCard documents={documents} modelID={modelID} />
+          </CardGroup>
         </GridContainer>
       </div>
     </MainContent>
