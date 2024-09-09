@@ -76,6 +76,8 @@ export default gql(/* GraphQL */ `
         waiversRequired
         waiversRequiredTypes
         waiversRequiredNote
+        createdDts
+        modifiedDts
         status
       }
     }

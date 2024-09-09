@@ -21,6 +21,7 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import ShareExportModal from 'components/ShareExport';
+import StatusBanner from 'components/StatusBanner';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
@@ -31,7 +32,6 @@ import PrintPDFWrapper from 'views/PrintPDFWrapper';
 import NDABanner from '../../../components/NDABanner';
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import { StatusMessageType } from '../TaskList';
-import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
@@ -365,7 +365,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           </h1>
         )}
 
-        <TaskListStatus
+        <StatusBanner
           isReadView
           modelID={modelID}
           status={status}

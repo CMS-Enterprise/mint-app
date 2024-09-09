@@ -71,6 +71,8 @@ export default gql(/* GraphQL */ `
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote
+        createdDts
+        modifiedDts
         status
       }
     }

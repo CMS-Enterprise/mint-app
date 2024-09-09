@@ -290,6 +290,11 @@ const ReadOnlyOpsEvalAndLearning = ({
         heading={opsEvalAndLearningMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={allOpsEvalAndLearningData.status}
+        modelID={modelID}
+        modifiedOrCreatedDts={
+          allOpsEvalAndLearningData.modifiedDts ||
+          allOpsEvalAndLearningData.createdDts
+        }
       />
 
       {clearance && (

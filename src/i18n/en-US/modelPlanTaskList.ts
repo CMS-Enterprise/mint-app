@@ -1,4 +1,8 @@
-import { ModelPhase } from 'gql/gen/graphql';
+import {
+  ModelPhase,
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'gql/gen/graphql';
 
 const statusText: Record<ModelPhase, string> = {
   [ModelPhase.ICIP_COMPLETE]:
@@ -15,12 +19,21 @@ const statusText: Record<ModelPhase, string> = {
     'Your model’s anticipated timeline suggests that it is now ended. Would you like to update the status of your model to reflect that? If your model has not yet ended, please adjust your model’s anticipated timeline.'
 };
 
+const taskListStatus: Record<TaskStatus | PrepareForClearanceStatus, string> = {
+  [TaskStatus.READY]: 'Ready to start',
+  [TaskStatus.IN_PROGRESS]: 'In progress',
+  [TaskStatus.READY_FOR_REVIEW]: 'Ready for review',
+  [TaskStatus.READY_FOR_CLEARANCE]: 'Ready for clearance',
+  [PrepareForClearanceStatus.CANNOT_START]: 'Cannot start yet'
+};
+
 const modelPlanTaskList = {
   heading: 'Model Plan task list',
   subheading: 'for {{modelName}}',
   status: 'Status:',
   update: 'Update',
   edit: 'Edit Model Plan',
+  taskListStatus,
   documentSummaryBox: {
     heading: 'Documents',
     copy: 'There are no documents added.',
@@ -129,16 +142,7 @@ const modelPlanTaskList = {
     update: 'Update',
     updateStatuses: 'Update statuses'
   },
-  taskListItem: {
-    ready: 'Ready to start',
-    readyForReview: 'Ready for review',
-    inProgress: 'In progress',
-    completed: 'Completed',
-    notNeeded: 'Not needed',
-    lastUpdated: 'Last updated:',
-    readyForClearance: 'Ready for clearance',
-    cannotStart: 'Cannot start yet'
-  },
+  lastUpdated: 'Last updated:',
   errorHeading: 'Failed to fetch model plan',
   errorMessage: 'Please try again',
   locked:
