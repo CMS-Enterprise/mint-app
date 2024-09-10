@@ -22,18 +22,19 @@ import Divider from 'components/shared/Divider';
 // import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
+import StatusBanner from 'components/StatusBanner';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
+
 // import { formatDateLocal } from 'utils/date';
 // import { isAssessment } from 'utils/user';
 // import { SubscriptionContext } from 'views/SubscriptionWrapper';
 // import Discussions from '../Discussions';
 // import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
-import TaskListStatus from '../TaskList/_components/TaskListStatus';
-
+import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
 import TeamCard from './Cards/TeamCard';
 
@@ -87,7 +88,7 @@ const CollaborationArea = () => {
   const {
     modelName,
     // discussions,
-    // documents,
+    documents,
     // crs,
     // tdls,
     status,
@@ -233,12 +234,14 @@ const CollaborationArea = () => {
               )} */}
 
             <Grid desktop={{ col: 12 }}>
-              <TaskListStatus
+              <StatusBanner
                 modelID={modelID}
                 status={status}
                 updateLabel
                 statusLabel
                 isCollaborationArea
+                modifiedDts={modelPlan.modifiedDts}
+                modifiedOrCreateLabel
               />
             </Grid>
 
@@ -276,7 +279,13 @@ const CollaborationArea = () => {
 
       <div className="bg-primary-lighter padding-top-6 padding-bottom-10 margin-bottom-neg-7">
         <GridContainer>
-          <TeamCard modelID={modelID} collaborators={modelPlan.collaborators} />
+          <CardGroup>
+            <TeamCard
+              modelID={modelID}
+              collaborators={modelPlan.collaborators}
+            />
+            <DocumentsCard documents={documents} modelID={modelID} />
+          </CardGroup>
         </GridContainer>
       </div>
     </MainContent>

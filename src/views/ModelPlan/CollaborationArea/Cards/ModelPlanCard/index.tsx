@@ -22,7 +22,9 @@ import {
 } from 'views/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
-import '../index.scss';
+// importing global card styles from Cards/cards.scss
+import '../cards.scss';
+import './index.scss';
 
 type ModelPlanCardType = {
   modelID: string;
@@ -86,7 +88,10 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
           setStatusMessage={setStatusMessage}
         />
       </Modal>
-      <Card gridLayout={{ desktop: { col: 6 } }} className="card--model-plan">
+      <Card
+        gridLayout={{ desktop: { col: 6 } }}
+        className="collaboration-area__card card--model-plan"
+      >
         <CardHeader>
           <h3 className="usa-card__heading">
             {collaborationAreaT('modelPlanCard.heading')}
@@ -124,7 +129,7 @@ const ModelPlanCard = ({ modelID, setStatusMessage }: ModelPlanCardType) => {
         <CardFooter>
           <UswdsReactLink
             to={`/models/${modelID}/task-list`}
-            className="usa-button"
+            className="usa-button margin-right-1"
             variant="unstyled"
             data-testid="to-task-list"
           >

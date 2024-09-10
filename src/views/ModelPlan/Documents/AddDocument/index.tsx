@@ -28,9 +28,11 @@ const AddDocument = () => {
     state: {
       solutionDetailsLink?: string;
       solutionID?: string;
+      fromCollaborationArea?: boolean;
     };
     solutionDetailsLink?: string;
     solutionID?: string;
+    fromCollaborationArea?: boolean;
   }>();
 
   const solutionDetailsLink = state?.solutionDetailsLink;
@@ -39,9 +41,12 @@ const AddDocument = () => {
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
     BreadcrumbItemOptions.COLLABORATION_AREA,
-    BreadcrumbItemOptions.TASK_LIST,
     BreadcrumbItemOptions.DOCUMENTS
   ];
+
+  const updatedBreadcrumbs = state?.fromCollaborationArea
+    ? breadcrumbs.filter(item => item !== BreadcrumbItemOptions.DOCUMENTS)
+    : breadcrumbs;
 
   const solutionDocumentBreadcrumb = [
     BreadcrumbItemOptions.HOME,
@@ -57,7 +62,9 @@ const AddDocument = () => {
         <Grid desktop={{ col: 12 }}>
           <Breadcrumbs
             items={
-              solutionDetailsLink ? solutionDocumentBreadcrumb : breadcrumbs
+              solutionDetailsLink
+                ? solutionDocumentBreadcrumb
+                : updatedBreadcrumbs
             }
             customItem={t('addDocument')}
           />
@@ -73,8 +80,10 @@ const AddDocument = () => {
             {t('uploadDescription')}
           </p>
 
-          <p className="margin-bottom-2 font-body-md line-height-body-4">
-            {t('requiredHint')} <RequiredAsterisk /> {t('requiredHint2')}
+          <p className="margin-bottom-3 font-body-md line-height-body-4">
+            {t('requiredHint')}
+            <RequiredAsterisk />
+            {t('requiredHint2')}
           </p>
 
           <ButtonGroup type="segmented">

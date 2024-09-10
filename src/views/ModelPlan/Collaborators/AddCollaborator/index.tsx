@@ -218,7 +218,7 @@ const Collaborators = () => {
           }
         />
         <div className="desktop:grid-col-6">
-          <PageHeading className="margin-top-6 margin-bottom-2">
+          <PageHeading className="margin-top-4 margin-bottom-2">
             {collaboratorId
               ? collaboratorsMiscT('updateATeamMember')
               : collaboratorsMiscT('addATeamMember')}

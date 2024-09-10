@@ -144,7 +144,8 @@ describe('The Model Plan Task List', () => {
       {
         __typename: 'PlanDocument',
         id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
-        fileName: 'test.pdf'
+        fileName: 'test.pdf',
+        fileType: 'application/pdf'
       }
     ],
     collaborators: [],

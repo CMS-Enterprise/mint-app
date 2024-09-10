@@ -22,6 +22,15 @@ const collaborationArea = {
     viewMoreTeamMembers: 'View {{count}} more team member',
     viewMoreTeamMembers_other: 'View {{count}} more team members',
     viewFewerTeamMembers: 'View fewer team members'
+  },
+  documentsCard: {
+    heading: 'Documents',
+    addDocument: 'Add document',
+    viewAll: 'View all',
+    noDocuments: 'No documents added',
+    linkAdded: '{{count}} link added',
+    linkAdded_other: '{{count}} links added',
+    uploaded: '{{count}} uploaded'
   }
 };
 

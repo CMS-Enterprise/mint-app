@@ -53,18 +53,6 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
             >
               <a
                 class="usa-link usa-breadcrumb__link"
-                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
-              >
-                <span>
-                  Model Plan task list
-                </span>
-              </a>
-            </li>
-            <li
-              class="usa-breadcrumb__list-item"
-            >
-              <a
-                class="usa-link usa-breadcrumb__link"
                 href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/documents"
               >
                 <span>
@@ -105,16 +93,16 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
           Choose to upload or link to a document, such as a recent concept document, policy paper, or any additional model background information.
         </p>
         <p
-          class="margin-bottom-2 font-body-md line-height-body-4"
+          class="margin-bottom-3 font-body-md line-height-body-4"
         >
-          All fields marked with  
+          Fields marked with an asterisk (
           <span
             aria-label="(Field required)"
             class="text-red margin-x-05"
           >
             *
           </span>
-            are required
+          ) are required.
         </p>
         <ul
           class="usa-button-group usa-button-group--segmented"

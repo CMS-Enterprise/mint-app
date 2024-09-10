@@ -103,6 +103,8 @@ export default gql(/* GraphQL */ `
         modelLearningSystemsOther
         modelLearningSystemsNote
         anticipatedChallenges
+        createdDts
+        modifiedDts
         status
       }
     }

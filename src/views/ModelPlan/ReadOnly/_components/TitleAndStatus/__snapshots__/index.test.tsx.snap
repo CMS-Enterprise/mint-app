@@ -2,22 +2,42 @@
 
 exports[`Title and Status component for Read Only Pages > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
-    class="display-flex flex-justify flex-align-start"
-  >
+  <div>
     <h2
-      class="margin-top-0 margin-bottom-4"
+      class="margin-top-0 margin-bottom-2"
     >
       Regular Heading
     </h2>
-    <div>
+    <div
+      class="padding-0 margin-bottom-4"
+      data-testid="task-list-status-condensed"
+      style="line-height: initial;"
+    >
       <div
-        class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
-        data-testid="tasklist-tag"
+        class="display-flex flex-align-center"
       >
-        <span>
-          In progress
-        </span>
+        <p
+          class="margin-y-0 text-bold margin-right-1"
+        >
+          Status:
+        </p>
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+        <div
+          class="display-flex flex-align-center flex-wrap margin-right-1"
+        >
+          <p
+            class="margin-y-0 text-normal margin-right-1 text-base"
+          >
+            Last updated on 09/01/2021
+          </p>
+        </div>
       </div>
     </div>
   </div>

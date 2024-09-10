@@ -32,6 +32,8 @@ export default gql(/* GraphQL */ `
         highLevelNote
         phasedIn
         phasedInNote
+        createdDts
+        modifiedDts
         status
       }
     }

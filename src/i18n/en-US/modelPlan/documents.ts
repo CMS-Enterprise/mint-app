@@ -139,8 +139,8 @@ export const documentsMisc = {
       body: 'Failed to fetch Model Plan documents'
     }
   },
-  requiredHint: 'All fields marked with ',
-  requiredHint2: ' are required',
+  requiredHint: 'Fields marked with an asterisk (',
+  requiredHint2: ') are required.',
   fileTypes: 'Select a PDF, DOC, DOCX, XLS, or XLSX',
   uploadError: {
     heading: 'There is a problem',
