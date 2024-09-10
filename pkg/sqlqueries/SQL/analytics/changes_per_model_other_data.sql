@@ -47,6 +47,7 @@ WHERE
             'discussion_reply'
 
         ))
+        AND model_plan.archived != TRUE
     )
 GROUP BY model_plan.model_name, 	model_plan.id, table_name
 ORDER BY number_of_changes DESC, model_plan.model_name ASC

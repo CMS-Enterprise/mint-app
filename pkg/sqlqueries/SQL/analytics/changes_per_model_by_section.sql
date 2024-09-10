@@ -41,7 +41,9 @@ WHERE
             'operational_need', 
             'operational_solution_subtask'
         ))
+        AND model_plan.archived != TRUE
     )
+
 GROUP BY model_plan.model_name, 	model_plan.id, table_name
-ORDER BY number_of_changes DESC, model_plan.model_name ASC
+ORDER BY  model_plan.model_name ASC, number_of_changes DESC
 --		ORDER BY model_name, number_of_changes DESC				

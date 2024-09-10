@@ -2,4 +2,6 @@
 SELECT
     status,
     COUNT(*) AS number_of_models
-FROM model_plan GROUP BY status;
+FROM model_plan 
+WHERE archived != TRUE
+GROUP BY status;

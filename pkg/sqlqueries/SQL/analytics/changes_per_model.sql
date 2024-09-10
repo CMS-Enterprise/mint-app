@@ -19,6 +19,7 @@ WHERE
         AND ( field.field_name != 'status' AND tconfig.name != 'model_plan')
         /* Exclude setting an operational need as needed or not, as this is often performed by trigger*/ 
         AND ( field.field_name != 'needed' AND tconfig.name != 'operational_need')
+        AND model_plan.archived != TRUE
     )
 GROUP BY model_plan.model_name, model_plan.id
 ORDER BY number_of_changes DESC
