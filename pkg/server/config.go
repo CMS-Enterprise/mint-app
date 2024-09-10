@@ -61,7 +61,7 @@ func (s Server) NewEChimpS3Config() s3.Config {
 	s.checkRequiredConfig(appconfig.AWSRegion)
 
 	return s3.Config{
-		Bucket:  s.Config.GetString(appconfig.AWSS3FileUploadBucket),
+		Bucket:  s.Config.GetString(appconfig.AWSS3ECHIMPBucket),
 		Region:  s.Config.GetString(appconfig.AWSRegion),
 		IsLocal: false,
 	}

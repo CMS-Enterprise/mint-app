@@ -12,7 +12,16 @@ func ReadFromS3[T any](client *s3.S3Client, key string) ([]*T, error) {
 	if err != nil {
 		return nil, err
 	}
-	return parquet.Read[*T](readerAt, size)
+	data, err := parquet.Read[T](readerAt, size)
+	if err != nil {
+		return nil, err
+	}
+	result := []*T{}
+	for _, row := range data {
+		result = append(result, &row)
+
+	}
+	return result, nil
 
 	// // Create a Parquet reader
 	// fr, err := parquet.OpenFile(readerAt, size)
