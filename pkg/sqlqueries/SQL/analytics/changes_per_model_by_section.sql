@@ -10,10 +10,7 @@ SELECT
     tconfig.name AS table_name,
     COUNT(field.*) AS number_of_changes,
     COUNT(DISTINCT taudit.id) AS number_of_record_changes,
-    CASE
-        WHEN tconfig.name IN ('operational_solution', 'operational_need', 'operational_solution_subtask') THEN 'Operational Solution Implementation'
-        ELSE tconfig.name::TEXT
-    END AS section,
+
     model_plan.id
 FROM model_plan
 LEFT JOIN translated_audit AS taudit ON model_plan.id = taudit.model_plan_id
@@ -36,10 +33,8 @@ WHERE
             'plan_general_characteristics',
             'plan_participants_and_providers',
             'plan_beneficiaries',
-            'plan_ops_eval_and_learning',
-            'operational_solution', 
-            'operational_need', 
-            'operational_solution_subtask'
+            'plan_ops_eval_and_learning'
+
         ))
         AND model_plan.archived != TRUE
     )
