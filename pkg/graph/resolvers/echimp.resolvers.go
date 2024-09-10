@@ -14,8 +14,10 @@ import (
 )
 
 // EchimpCr is the resolver for the echimpCR field.
-func (r *queryResolver) EchimpCr(ctx context.Context, id uuid.UUID) (*model.EchimpCr, error) {
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(r.s3Client)
+func (r *queryResolver) EchimpCr(ctx context.Context) (*model.EchimpCr, error) {
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(r.echimpS3Client)
 	_ = data
-	return nil, err
+	return &model.EchimpCr{
+		ID: uuid.New(),
+	}, err
 }

@@ -197,11 +197,14 @@ func (s *Server) routes(
 
 	// set up S3 client
 	s3Config := s.NewS3Config()
+	echimpS3config := s.NewEChimpS3Config()
 	if s.environment.Local() || s.environment.Testing() {
 		s3Config.IsLocal = true
+		echimpS3config.IsLocal = true
 	}
 
 	s3Client := s3.NewS3Client(s3Config)
+	echimpS3Client := s3.NewS3Client(echimpS3config)
 
 	var lambdaClient *lambda.Lambda
 	var princeLambdaName string
@@ -230,6 +233,7 @@ func (s *Server) routes(
 			SearchByName:  oktaClient.SearchByName,
 		},
 		&s3Client,
+		&echimpS3Client,
 		emailService,
 		emailTemplateService,
 		addressBook,

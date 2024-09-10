@@ -3180,12 +3180,6 @@ export type QueryAuditChangesArgs = {
 
 
 /** Query definition for the schema */
-export type QueryEchimpCrArgs = {
-  id: Scalars['UUID']['input'];
-};
-
-
-/** Query definition for the schema */
 export type QueryExistingModelLinkArgs = {
   id: Scalars['UUID']['input'];
 };

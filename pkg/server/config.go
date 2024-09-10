@@ -55,6 +55,18 @@ func (s Server) NewS3Config() s3.Config {
 	}
 }
 
+// NewEChimpS3Config returns a new s3.Config and checks required fields
+func (s Server) NewEChimpS3Config() s3.Config {
+	s.checkRequiredConfig(appconfig.AWSS3ECHIMPBucket)
+	s.checkRequiredConfig(appconfig.AWSRegion)
+
+	return s3.Config{
+		Bucket:  s.Config.GetString(appconfig.AWSS3FileUploadBucket),
+		Region:  s.Config.GetString(appconfig.AWSRegion),
+		IsLocal: false,
+	}
+}
+
 // OktaClientConfig is the okta client configuration
 type OktaClientConfig struct {
 	OktaClientID string

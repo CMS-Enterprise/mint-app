@@ -26,6 +26,7 @@ type Resolver struct {
 	store                *storage.Store
 	service              ResolverService
 	s3Client             *s3.S3Client
+	echimpS3Client       *s3.S3Client
 	emailService         oddmail.EmailService
 	emailTemplateService email.TemplateService
 	addressBook          email.AddressBook
@@ -44,6 +45,7 @@ func NewResolver(
 	store *storage.Store,
 	service ResolverService,
 	s3Client *s3.S3Client,
+	echimpS3Client *s3.S3Client,
 	emailService oddmail.EmailService,
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
@@ -54,6 +56,7 @@ func NewResolver(
 		store:                store,
 		service:              service,
 		s3Client:             s3Client,
+		echimpS3Client:       echimpS3Client,
 		emailService:         emailService,
 		emailTemplateService: emailTemplateService,
 		addressBook:          addressBook,

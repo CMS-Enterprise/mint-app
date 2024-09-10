@@ -4,5 +4,6 @@ type EchimpCR {
 }
 
 extend type Query {
-  echimpCR(id: UUID!): EchimpCR!
+  # echimpCR(id: UUID!): EchimpCR!
+  echimpCR: EchimpCR!
 }
