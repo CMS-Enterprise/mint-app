@@ -75,7 +75,10 @@ const DiscussionsCard = ({ discussions, modelID }: DiscussionsCardType) => {
           {discussions?.length === 0 ? (
             <p>{collaborationAreaT('discussionsCard.noDiscussions')}</p>
           ) : (
-            <div className="display-flex flex-align-center">
+            <div
+              className="display-flex flex-align-center"
+              data-testid="discussion-card-count"
+            >
               <Icon.Forum size={3} className="margin-right-1" />
 
               {collaborationAreaT('discussionsCard.discussion', {
