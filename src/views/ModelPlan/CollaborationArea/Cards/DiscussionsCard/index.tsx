@@ -12,7 +12,6 @@ import {
 } from '@trussworks/react-uswds';
 import { GetModelPlanQuery } from 'gql/gen/graphql';
 
-import UswdsReactLink from 'components/LinkWrapper';
 import Discussions from 'views/ModelPlan/Discussions';
 import DiscussionModalWrapper from 'views/ModelPlan/Discussions/DiscussionModalWrapper';
 
@@ -77,7 +76,7 @@ const DiscussionsCard = ({ discussions, modelID }: DiscussionsCardType) => {
             <p>{collaborationAreaT('discussionsCard.noDiscussions')}</p>
           ) : (
             <div className="display-flex flex-align-center">
-              <Icon.Chat size={3} className="margin-right-1" />
+              <Icon.Forum size={3} className="margin-right-1" />
 
               {collaborationAreaT('discussionsCard.discussion', {
                 count: discussions?.length
