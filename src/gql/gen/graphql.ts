@@ -452,17 +452,42 @@ export enum DocumentType {
   POLICY_PAPER = 'POLICY_PAPER'
 }
 
+export type EChimpCr = {
+  __typename: 'EChimpCR';
+  associatedModelUids: Scalars['String']['output'];
+  crNumber: Scalars['String']['output'];
+  crStatus: Scalars['String']['output'];
+  crSummary: Scalars['String']['output'];
+  emergencyCrFlag: Scalars['String']['output'];
+  firstName: Scalars['String']['output'];
+  implementationDate: Scalars['String']['output'];
+  initiator: Scalars['String']['output'];
+  lastName: Scalars['String']['output'];
+  relatedCrNumbers: Scalars['String']['output'];
+  relatedCrTdlNumbers: Scalars['String']['output'];
+  sensitiveFlag: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  versionNum: Scalars['String']['output'];
+};
+
+export type EChimpTdl = {
+  __typename: 'EChimpTDL';
+  associatedModelUids: Scalars['String']['output'];
+  firstName: Scalars['String']['output'];
+  initiator: Scalars['String']['output'];
+  issuedDate: Scalars['String']['output'];
+  lastName: Scalars['String']['output'];
+  status: Scalars['String']['output'];
+  tdlNumber: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  versionNum: Scalars['String']['output'];
+};
+
 export enum EaseOfUse {
   AGREE = 'AGREE',
   DISAGREE = 'DISAGREE',
   UNSURE = 'UNSURE'
 }
-
-export type EchimpCr = {
-  __typename: 'EchimpCR';
-  id: Scalars['UUID']['output'];
-  modelPlanID: Scalars['UUID']['output'];
-};
 
 /** Represents a translation of enum values.  generalName is the human readable name of the enum value, groupedName is an optional field if usually referenced by a difference table/name */
 export type EnumTranslation = {
@@ -3133,7 +3158,8 @@ export type Query = {
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
-  echimpCR: EchimpCr;
+  echimpCR: Array<EChimpCr>;
+  echimpTDL: Array<EChimpTdl>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;

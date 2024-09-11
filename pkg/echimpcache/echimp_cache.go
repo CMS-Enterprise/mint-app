@@ -32,11 +32,11 @@ func GetECHIMPCrAndTDLCache(client *s3.S3Client) (*crAndTDLCache, error) {
 
 type crAndTDLCache struct {
 	lastChecked      time.Time
-	crs              []*models.EChimpCR
+	CRs              []*models.EChimpCR
 	CRsByModelPlanID map[uuid.UUID][]*models.EChimpCR
 	CRByCRNumber     map[string]*models.EChimpCR
 
-	tdls              []*models.EChimpTDL
+	TDls              []*models.EChimpTDL
 	TDLsByModelPlanID map[uuid.UUID][]*models.EChimpTDL
 	TDLsByCRNumber    map[string]*models.EChimpTDL
 }
@@ -55,13 +55,13 @@ func (c *crAndTDLCache) refreshCache(client *s3.S3Client) error {
 	if err != nil {
 		return err
 	}
-	c.crs = crs
+	c.CRs = crs
 
 	tdls, err := parquet.ReadFromS3[*models.EChimpTDL](client, tdlKey)
 	if err != nil {
 		return err
 	}
-	c.tdls = tdls
+	c.TDls = tdls
 	c.lastChecked = time.Now()
 	return nil
 

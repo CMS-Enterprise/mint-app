@@ -1,9 +1,34 @@
-type EchimpCR {
-  id: UUID!
-  modelPlanID: UUID!
+type EChimpCR {
+  crNumber: String!
+  versionNum: String!
+  initiator: String!
+  firstName: String!
+  lastName: String!
+  title: String!
+  sensitiveFlag: String!
+  implementationDate: String!
+  crSummary: String!
+  crStatus: String!
+  emergencyCrFlag: String!
+  relatedCrNumbers: String!
+  relatedCrTdlNumbers: String!
+  associatedModelUids: String!
+}
+
+type EChimpTDL {
+  tdlNumber: String!
+  versionNum: String!
+  initiator: String!
+  firstName: String!
+  lastName: String!
+  title: String!
+  issuedDate: String!
+  status: String!
+  associatedModelUids: String!
 }
 
 extend type Query {
   # echimpCR(id: UUID!): EchimpCR!
-  echimpCR: EchimpCR!
+  echimpCR: [EChimpCR!]!
+  echimpTDL: [EChimpTDL!]!
 }

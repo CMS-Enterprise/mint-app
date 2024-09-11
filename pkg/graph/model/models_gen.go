@@ -35,11 +35,6 @@ type DiscussionReplyTranslation struct {
 	IsAssessment        models.TranslationFieldWithOptions `json:"isAssessment" db:"is_assessment"`
 }
 
-type EchimpCr struct {
-	ID          uuid.UUID `json:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID"`
-}
-
 // Represents existing model link translation data
 type ExistingModelLinkTranslation struct {
 	ExistingModelID    models.TranslationField            `json:"existingModelID" db:"existing_model_id"`

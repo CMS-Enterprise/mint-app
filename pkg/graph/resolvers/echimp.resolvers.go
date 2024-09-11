@@ -7,17 +7,24 @@ package resolvers
 import (
 	"context"
 
-	"github.com/google/uuid"
-
 	"github.com/cmsgov/mint-app/pkg/echimpcache"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // EchimpCr is the resolver for the echimpCR field.
-func (r *queryResolver) EchimpCr(ctx context.Context) (*model.EchimpCr, error) {
+func (r *queryResolver) EchimpCr(ctx context.Context) ([]*models.EChimpCR, error) {
 	data, err := echimpcache.GetECHIMPCrAndTDLCache(r.echimpS3Client)
-	_ = data
-	return &model.EchimpCr{
-		ID: uuid.New(),
-	}, err
+	if err != nil {
+		return nil, err
+	}
+	return data.CRs, nil
+}
+
+// EchimpTdl is the resolver for the echimpTDL field.
+func (r *queryResolver) EchimpTdl(ctx context.Context) ([]*models.EChimpTDL, error) {
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(r.echimpS3Client)
+	if err != nil {
+		return nil, err
+	}
+	return data.TDls, nil
 }
