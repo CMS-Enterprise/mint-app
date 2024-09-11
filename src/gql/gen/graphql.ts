@@ -454,7 +454,7 @@ export enum DocumentType {
 
 export type EChimpCr = {
   __typename: 'EChimpCR';
-  associatedModelUids: Scalars['String']['output'];
+  associatedModelUids?: Maybe<Scalars['UUID']['output']>;
   crNumber: Scalars['String']['output'];
   crStatus: Scalars['String']['output'];
   crSummary: Scalars['String']['output'];
@@ -472,7 +472,7 @@ export type EChimpCr = {
 
 export type EChimpTdl = {
   __typename: 'EChimpTDL';
-  associatedModelUids: Scalars['String']['output'];
+  associatedModelUids?: Maybe<Scalars['UUID']['output']>;
   firstName: Scalars['String']['output'];
   initiator: Scalars['String']['output'];
   issuedDate: Scalars['String']['output'];

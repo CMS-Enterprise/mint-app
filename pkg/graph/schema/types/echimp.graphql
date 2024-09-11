@@ -12,7 +12,7 @@ type EChimpCR {
   emergencyCrFlag: String!
   relatedCrNumbers: String!
   relatedCrTdlNumbers: String!
-  associatedModelUids: String!
+  associatedModelUids: UUID
 }
 
 type EChimpTDL {
@@ -24,7 +24,7 @@ type EChimpTDL {
   title: String!
   issuedDate: String!
   status: String!
-  associatedModelUids: String!
+  associatedModelUids: UUID
 }
 
 extend type Query {

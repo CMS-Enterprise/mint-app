@@ -1,6 +1,10 @@
 package models
 
-import "github.com/cmsgov/mint-app/pkg/sanitization"
+import (
+	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/sanitization"
+)
 
 // EChimpTDLRaw represents a TDL that came from E-Chimp parquet file before being sanitized
 type EChimpTDLRaw struct {
@@ -18,6 +22,10 @@ type EChimpTDLRaw struct {
 func (raw *EChimpTDLRaw) Sanitize() (*EChimpTDL, error) {
 	//TODO, do better sanitization, remove line breaks \n
 	sanitizedTitle := sanitization.InnerHTML(raw.Title)
+	associatedUUID, parseError := uuid.Parse(raw.AssociatedModelUids)
+	if parseError != nil {
+		return nil, parseError
+	}
 
 	//todo, sanitize it
 	sanitizedCR := &EChimpTDL{
@@ -29,7 +37,7 @@ func (raw *EChimpTDLRaw) Sanitize() (*EChimpTDL, error) {
 		Title:               sanitizedTitle,
 		IssuedDate:          raw.IssuedDate,
 		Status:              raw.Status,
-		AssociatedModelUids: raw.AssociatedModelUids,
+		AssociatedModelUids: &associatedUUID,
 	}
 	return sanitizedCR, nil
 
@@ -51,13 +59,13 @@ func ConvertRawTDLSToParsed(rawRecords []*EChimpTDLRaw) ([]*EChimpTDL, error) {
 
 // EChimpTDL represents a TDL that came from E-Chimp
 type EChimpTDL struct {
-	TdlNumber           string `parquet:"tdlNumber" json:"tdlNumber"`
-	VersionNum          string `parquet:"versionNum" json:"versionNum"`
-	Initiator           string `parquet:"initiator" json:"initiator"`
-	FirstName           string `parquet:"firstName" json:"firstName"`
-	LastName            string `parquet:"lastName" json:"lastName"`
-	Title               string `parquet:"title" json:"title"`
-	IssuedDate          string `parquet:"issuedDate" json:"issuedDate"`
-	Status              string `parquet:"status" json:"status"`
-	AssociatedModelUids string `parquet:"associatedModelUids" json:"associatedModelUids"`
+	TdlNumber           string     `parquet:"tdlNumber" json:"tdlNumber"`
+	VersionNum          string     `parquet:"versionNum" json:"versionNum"`
+	Initiator           string     `parquet:"initiator" json:"initiator"`
+	FirstName           string     `parquet:"firstName" json:"firstName"`
+	LastName            string     `parquet:"lastName" json:"lastName"`
+	Title               string     `parquet:"title" json:"title"`
+	IssuedDate          string     `parquet:"issuedDate" json:"issuedDate"`
+	Status              string     `parquet:"status" json:"status"`
+	AssociatedModelUids *uuid.UUID `parquet:"associatedModelUids" json:"associatedModelUids"`
 }
