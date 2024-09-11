@@ -29,11 +29,10 @@ import useMessage from 'hooks/useMessage';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 
+import DiscussionsCard from './Cards/DiscussionsCard';
 // import { formatDateLocal } from 'utils/date';
 // import { isAssessment } from 'utils/user';
 // import { SubscriptionContext } from 'views/SubscriptionWrapper';
-// import Discussions from '../Discussions';
-// import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
 import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
 import TeamCard from './Cards/TeamCard';
@@ -41,7 +40,6 @@ import TeamCard from './Cards/TeamCard';
 import './index.scss';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
-// type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
 // type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
 
 // type CRTDLType =
@@ -60,18 +58,7 @@ const CollaborationArea = () => {
 
   const { message } = useMessage();
 
-  //   const location = useLocation();
-
-  //   const params = useMemo(() => {
-  //     return new URLSearchParams(location.search);
-  //   }, [location.search]);
-
-  //   // Get discussionID from generated email link
-  //   const discussionID = params.gecollaborationAreaT('discussionID');
-
   //   const flags = useFlags();
-
-  //   const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
@@ -87,7 +74,7 @@ const CollaborationArea = () => {
 
   const {
     modelName,
-    // discussions,
+    discussions,
     documents,
     // crs,
     // tdls,
@@ -124,10 +111,6 @@ const CollaborationArea = () => {
   useEffect(() => {
     if (suggestedPhase && !statusChecked) setStatusPhaseModalOpen(true);
   }, [suggestedPhase, statusChecked]);
-
-  //   useEffect(() => {
-  //     if (discussionID) setIsDiscussionOpen(true);
-  //   }, [discussionID]);
 
   const favoriteMutations = useFavoritePlan();
 
@@ -223,16 +206,6 @@ const CollaborationArea = () => {
               </Grid>
             </Grid>
 
-            {/* Discussion modal */}
-            {/* {isDiscussionOpen && (
-                <DiscussionModalWrapper
-                  isOpen={isDiscussionOpen}
-                  closeModal={() => setIsDiscussionOpen(false)}
-                >
-                  <Discussions modelID={modelID} discussionID={discussionID} />
-                </DiscussionModalWrapper>
-              )} */}
-
             <Grid desktop={{ col: 12 }}>
               <StatusBanner
                 modelID={modelID}
@@ -284,6 +257,9 @@ const CollaborationArea = () => {
               modelID={modelID}
               collaborators={modelPlan.collaborators}
             />
+
+            <DiscussionsCard discussions={discussions} modelID={modelID} />
+
             <DocumentsCard documents={documents} modelID={modelID} />
           </CardGroup>
         </GridContainer>
