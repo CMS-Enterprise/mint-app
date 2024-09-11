@@ -320,11 +320,7 @@ const BasicsContent = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="plan-basics-abbreviation"
-                          error={!!flatErrors.abbreviation}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label htmlFor="plan-basics-abbreviation">
                             {modelPlanT('abbreviation.label')}
                           </Label>
@@ -332,10 +328,6 @@ const BasicsContent = () => {
                           <span className="usa-hint display-block text-normal margin-top-1">
                             {modelPlanT('abbreviation.sublabel')}
                           </span>
-
-                          <FieldErrorMsg>
-                            {flatErrors.abbreviation}
-                          </FieldErrorMsg>
 
                           <Field
                             as={TextInput}
@@ -377,18 +369,10 @@ const BasicsContent = () => {
                           </p>
                           <Grid row gap>
                             <Grid desktop={{ col: 6 }}>
-                              <FieldGroup
-                                scrollElement="plan-basics-ams-model-id"
-                                error={!!flatErrors['basics.amsModelID']}
-                                className="margin-top-0"
-                              >
+                              <FieldGroup className="margin-top-0">
                                 <Label htmlFor="plan-basics-ams-model-id">
                                   {basicsT('amsModelID.label')}
                                 </Label>
-
-                                <FieldErrorMsg>
-                                  {flatErrors['basics.amsModelID']}
-                                </FieldErrorMsg>
 
                                 <Field
                                   as={TextInput}
@@ -399,18 +383,10 @@ const BasicsContent = () => {
                               </FieldGroup>
                             </Grid>
                             <Grid desktop={{ col: 6 }}>
-                              <FieldGroup
-                                scrollElement="plan-basics-demo-code"
-                                error={!!flatErrors['basics.demoCode']}
-                                className="margin-top-0"
-                              >
+                              <FieldGroup className="margin-top-0">
                                 <Label htmlFor="plan-basics-demo-code">
                                   {basicsT('demoCode.label')}
                                 </Label>
-
-                                <FieldErrorMsg>
-                                  {flatErrors['basics.demoCode']}
-                                </FieldErrorMsg>
 
                                 <Field
                                   as={TextInput}
@@ -491,13 +467,7 @@ const BasicsContent = () => {
                           </Fieldset>
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="plan-basics-model-additional-category"
-                          error={
-                            !!flatErrors['basics.additionalModelCategories']
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="plan-basics-model-additional-category"
                             className="text-normal"
@@ -508,10 +478,6 @@ const BasicsContent = () => {
                           <span className="usa-hint display-block text-normal margin-top-1">
                             {basicsT('additionalModelCategories.sublabel')}
                           </span>
-
-                          <FieldErrorMsg>
-                            {flatErrors['basics.additionalModelCategories']}
-                          </FieldErrorMsg>
 
                           {getKeys(additionalModelCategoriesConfig.options)
                             .filter(
