@@ -31,6 +31,14 @@ const collaborationArea = {
     linkAdded: '{{count}} link added',
     linkAdded_other: '{{count}} links added',
     uploaded: '{{count}} uploaded'
+  },
+  discussionsCard: {
+    heading: 'Discussions',
+    startDiscussion: 'Start a discussion',
+    viewAll: 'View all',
+    discussion: '{{count}} discussion',
+    discussion_other: '{{count}} discussions',
+    noDiscussions: 'No discussions started'
   }
 };
 
