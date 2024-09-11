@@ -2012,6 +2012,7 @@ const helpAndKnowledge = {
   relatedHelp: 'Related help articles',
   relatedDescription:
     'Below are some additional help articles that you may find useful.',
+  addtionalResources: 'Additional resources',
   viewAllRelated: 'View all help articles',
   operationalSolutions: 'Operational solutions',
   operationalSolutionsInfo:

@@ -77,7 +77,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>
@@ -128,7 +128,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>
@@ -179,7 +179,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>
@@ -230,7 +230,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>
@@ -281,7 +281,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>
@@ -332,7 +332,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>
@@ -383,7 +383,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>
@@ -434,7 +434,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>
@@ -485,7 +485,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>

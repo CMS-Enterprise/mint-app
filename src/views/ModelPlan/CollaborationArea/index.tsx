@@ -26,6 +26,13 @@ import StatusBanner from 'components/StatusBanner';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
+import { HelpArticle } from 'views/HelpAndKnowledge/Articles';
+// type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
+// type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
+// type CRTDLType =
+//   | GetCrtdLsQuery['modelPlan']['crs'][0]
+//   | GetCrtdLsQuery['modelPlan']['tdls'][0];
+import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 
@@ -41,13 +48,6 @@ import TeamCard from './Cards/TeamCard';
 import './index.scss';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
-// type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
-// type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
-
-// type CRTDLType =
-//   | GetCrtdLsQuery['modelPlan']['crs'][0]
-//   | GetCrtdLsQuery['modelPlan']['tdls'][0];
-
 export type StatusMessageType = {
   message: string;
   status: 'success' | 'error';
@@ -277,7 +277,7 @@ const CollaborationArea = () => {
         )}
       </GridContainer>
 
-      <div className="bg-primary-lighter padding-top-6 padding-bottom-10 margin-bottom-neg-7">
+      <div className="bg-primary-lighter padding-y-6">
         <GridContainer>
           <CardGroup>
             <TeamCard
@@ -288,6 +288,17 @@ const CollaborationArea = () => {
           </CardGroup>
         </GridContainer>
       </div>
+
+      <RelatedArticles
+        className="margin-bottom-neg-7 padding-bottom-4 padding-top-2"
+        implementationType="Additional Resources"
+        specificArticles={[
+          HelpArticle.HIGH_LEVEL_PROJECT_PLAN,
+          HelpArticle.TWO_PAGER_MEETING,
+          HelpArticle.SIX_PAGER_MEETING
+        ]}
+        viewAllLink
+      />
     </MainContent>
   );
 };
