@@ -251,7 +251,7 @@ const BasicsContent = () => {
           );
         }}
         enableReinitialize
-        validationSchema={planBasicsSchema.pageOneSchema}
+        validationSchema={planBasicsSchema}
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
