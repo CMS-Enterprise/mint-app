@@ -21,7 +21,7 @@ interface ITSolutionsFormComponentType {
   handleOnBlur: (e: React.ChangeEvent<HTMLInputElement>, field: string) => void;
   value: string | null | undefined;
   formikValue: string | null | undefined;
-  error: string;
+  error?: string;
   warning?: boolean;
   shouldShowWarning?: boolean;
   half?: boolean;
