@@ -51,17 +51,18 @@ func (c *crAndTDLCache) IsOld() bool {
 
 func (c *crAndTDLCache) refreshCache(client *s3.S3Client) error {
 
-	crs, err := parquet.ReadFromS3[models.EChimpCR](client, crKey)
+	crs, err := parquet.ReadFromS3[*models.EChimpCR](client, crKey)
 	if err != nil {
 		return err
 	}
 	c.crs = crs
 
-	tdls, err := parquet.ReadFromS3[models.EChimpTDL](client, tdlKey)
+	tdls, err := parquet.ReadFromS3[*models.EChimpTDL](client, tdlKey)
 	if err != nil {
 		return err
 	}
 	c.tdls = tdls
+	c.lastChecked = time.Now()
 	return nil
 
 }
