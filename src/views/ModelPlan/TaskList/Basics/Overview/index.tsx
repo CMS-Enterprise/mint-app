@@ -24,14 +24,11 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 type BasicsFormType = GetOverviewQuery['modelPlan']['basics'];
@@ -134,31 +131,12 @@ const Overview = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<BasicsFormType>) => {
-          const { dirty, errors, handleSubmit, isValid, setErrors, values } =
+          const { dirty, handleSubmit, isValid, setErrors, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
               <ConfirmLeave />
-
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
 
               <Form
                 className="tablet:grid-col-6 margin-top-6"
@@ -168,16 +146,10 @@ const Overview = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup
-                    scrollElement="modelType"
-                    error={!!flatErrors.modelType}
-                    className="margin-top-4"
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Label htmlFor="modelType">
                       {basicsT('modelType.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
 
                     <Fieldset>
                       {getKeys(modelTypeConfig.options).map(key => (
@@ -207,14 +179,9 @@ const Overview = () => {
                     </Fieldset>
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="problem"
-                    error={!!flatErrors.problem}
-                    className="margin-top-4"
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Field
                       as={TextAreaField}
-                      error={flatErrors.problem}
                       id="ModelType-Problem"
                       data-testid="ModelType-Problem"
                       name="problem"
@@ -222,14 +189,9 @@ const Overview = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="goal"
-                    error={!!flatErrors.goal}
-                    className="margin-top-4"
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Field
                       as={TextAreaField}
-                      error={flatErrors.goal}
                       id="ModelType-Goal"
                       name="goal"
                       hint={basicsT('goal.sublabel')}
@@ -237,14 +199,9 @@ const Overview = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="testInterventions"
-                    error={!!flatErrors.testInterventions}
-                    className="margin-top-4"
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Field
                       as={TextAreaField}
-                      error={flatErrors.testInterventions}
                       id="ModelType-testInterventions"
                       name="testInterventions"
                       label={basicsT('testInterventions.label')}
