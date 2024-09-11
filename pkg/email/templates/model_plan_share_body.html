@@ -10,7 +10,7 @@
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-      <td align="center">      
+      <td align="center">
         <div class="container-border">
           <h2 style="display: inline-block;">{{.ModelName}}</h2>
             {{if .ModelShortName}}<h2 style="display: inline-block;"> ({{.ModelShortName}})</h2>{{end}}
@@ -42,7 +42,7 @@
           <p>
               {{if .ModelLeads}}
                   {{- range $index, $element := .ModelLeads -}}
-                      {{- if $index -}},&nbsp{{- end -}}
+                      {{- if $index -}},&nbsp;{{- end -}}
                       {{$element}}
                   {{- end -}}
               {{else}}

@@ -2,24 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
-// import classNames from 'classnames';
-import {
-  //   GetCrtdLsQuery,
-  GetModelPlanQuery,
-  useGetModelPlanQuery
-} from 'gql/gen/graphql';
+import { GetModelPlanQuery, useGetModelPlanQuery } from 'gql/gen/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import { FavoriteIcon } from 'components/FavoriteCard';
-// import UswdsReactLink from 'components/LinkWrapper';
-// import { useFlags } from 'launchdarkly-react-client-sdk';
-// import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
-// import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
 import StatusBanner from 'components/StatusBanner';
@@ -27,20 +18,11 @@ import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 import { HelpArticle } from 'views/HelpAndKnowledge/Articles';
-// type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
-// type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
-// type CRTDLType =
-//   | GetCrtdLsQuery['modelPlan']['crs'][0]
-//   | GetCrtdLsQuery['modelPlan']['tdls'][0];
 import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 
-// import { formatDateLocal } from 'utils/date';
-// import { isAssessment } from 'utils/user';
-// import { SubscriptionContext } from 'views/SubscriptionWrapper';
-// import Discussions from '../Discussions';
-// import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
+import DiscussionsCard from './Cards/DiscussionsCard';
 import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
 import TeamCard from './Cards/TeamCard';
@@ -48,6 +30,7 @@ import TeamCard from './Cards/TeamCard';
 import './index.scss';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
+
 export type StatusMessageType = {
   message: string;
   status: 'success' | 'error';
@@ -59,19 +42,6 @@ const CollaborationArea = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   const { message } = useMessage();
-
-  //   const location = useLocation();
-
-  //   const params = useMemo(() => {
-  //     return new URLSearchParams(location.search);
-  //   }, [location.search]);
-
-  //   // Get discussionID from generated email link
-  //   const discussionID = params.gecollaborationAreaT('discussionID');
-
-  //   const flags = useFlags();
-
-  //   const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
@@ -87,20 +57,13 @@ const CollaborationArea = () => {
 
   const {
     modelName,
-    // discussions,
+    discussions,
     documents,
-    // crs,
-    // tdls,
     status,
-    // collaborators,
+    collaborators,
     isFavorite,
     suggestedPhase
   } = modelPlan;
-
-  //   const planCRs = crs || [];
-  //   const planTDLs = tdls || [];
-
-  //   const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
   // Gets the sessions storage variable for statusChecked of modelPlan
   const statusCheckedStorage =
@@ -124,10 +87,6 @@ const CollaborationArea = () => {
   useEffect(() => {
     if (suggestedPhase && !statusChecked) setStatusPhaseModalOpen(true);
   }, [suggestedPhase, statusChecked]);
-
-  //   useEffect(() => {
-  //     if (discussionID) setIsDiscussionOpen(true);
-  //   }, [discussionID]);
 
   const favoriteMutations = useFavoritePlan();
 
@@ -223,16 +182,6 @@ const CollaborationArea = () => {
               </Grid>
             </Grid>
 
-            {/* Discussion modal */}
-            {/* {isDiscussionOpen && (
-                <DiscussionModalWrapper
-                  isOpen={isDiscussionOpen}
-                  closeModal={() => setIsDiscussionOpen(false)}
-                >
-                  <Discussions modelID={modelID} discussionID={discussionID} />
-                </DiscussionModalWrapper>
-              )} */}
-
             <Grid desktop={{ col: 12 }}>
               <StatusBanner
                 modelID={modelID}
@@ -280,10 +229,10 @@ const CollaborationArea = () => {
       <div className="bg-primary-lighter padding-y-6">
         <GridContainer>
           <CardGroup>
-            <TeamCard
-              modelID={modelID}
-              collaborators={modelPlan.collaborators}
-            />
+            <TeamCard modelID={modelID} collaborators={collaborators} />
+
+            <DiscussionsCard discussions={discussions} modelID={modelID} />
+
             <DocumentsCard documents={documents} modelID={modelID} />
           </CardGroup>
         </GridContainer>
