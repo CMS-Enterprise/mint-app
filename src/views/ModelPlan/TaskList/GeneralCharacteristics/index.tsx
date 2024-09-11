@@ -51,14 +51,11 @@ import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { dirtyInput } from 'utils/formDiff';
 import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
@@ -467,30 +464,11 @@ export const CharacteristicsContent = () => {
         {(
           formikProps: FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>
         ) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -505,16 +483,10 @@ export const CharacteristicsContent = () => {
                     !!error || loading || modelLoading || existingModelLoading
                   }
                 >
-                  <FieldGroup
-                    scrollElement="isNewModel"
-                    error={!!flatErrors.isNewModel}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="plan-characteristics-is-new-model">
                       {generalCharacteristicsT('isNewModel.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
 
                     <BooleanRadio
                       field="isNewModel"
@@ -526,10 +498,7 @@ export const CharacteristicsContent = () => {
                     />
 
                     {values.isNewModel === false && (
-                      <FieldGroup
-                        scrollElement="existingModel"
-                        error={!!flatErrors.existingModel}
-                      >
+                      <FieldGroup>
                         <Label
                           htmlFor="plan-characteristics-existing-model"
                           className="margin-bottom-1 text-normal"
@@ -540,10 +509,6 @@ export const CharacteristicsContent = () => {
                         <p className="text-base margin-0">
                           {generalCharacteristicsT('existingModel.sublabel')}
                         </p>
-
-                        <FieldErrorMsg>
-                          {flatErrors.existingModel}
-                        </FieldErrorMsg>
 
                         {!loading && (
                           <Field
@@ -583,21 +548,13 @@ export const CharacteristicsContent = () => {
                     )}
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="resemblesExistingModel"
-                    error={!!flatErrors.resemblesExistingModel}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label
                       htmlFor="plan-characteristics-resembles-existing-model"
                       className="maxw-none"
                     >
                       {generalCharacteristicsT('resemblesExistingModel.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.resemblesExistingModel}
-                    </FieldErrorMsg>
 
                     {getKeys(resemblesExistingModelConfig.options).map(key => (
                       <Fragment key={key}>
@@ -666,11 +623,7 @@ export const CharacteristicsContent = () => {
                     {/* Conditional question if Yes is selected */}
                     {values.resemblesExistingModel === YesNoOtherType.YES && (
                       <>
-                        <FieldGroup
-                          scrollElement="plan-characteristics-resembles-which-model"
-                          error={!!flatErrors.resemblesExistingModelWhich}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="plan-characteristics-resembles-which-model"
                             className="text-normal maxw-none"
@@ -686,10 +639,6 @@ export const CharacteristicsContent = () => {
                               'resemblesExistingModelWhich.sublabel'
                             )}
                           </p>
-
-                          <FieldErrorMsg>
-                            {flatErrors.resemblesExistingModelWhich}
-                          </FieldErrorMsg>
 
                           <Field
                             as={MultiSelect}
@@ -738,11 +687,7 @@ export const CharacteristicsContent = () => {
                           )}
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="resemblesExistingModelHow"
-                          error={!!flatErrors.resemblesExistingModelHow}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="plan-characteristics-resembles-how-model"
                             className="text-normal"
@@ -752,14 +697,9 @@ export const CharacteristicsContent = () => {
                             )}
                           </Label>
 
-                          <FieldErrorMsg>
-                            {flatErrors.resemblesExistingModelHow}
-                          </FieldErrorMsg>
-
                           <Field
                             as={TextAreaField}
                             className="height-15"
-                            error={flatErrors.resemblesExistingModelHow}
                             id="plan-characteristics-resembles-how-model"
                             name="resemblesExistingModelHow"
                           />
@@ -773,11 +713,7 @@ export const CharacteristicsContent = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="participationInModelPrecondition"
-                    error={!!flatErrors.participationInModelPrecondition}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label
                       htmlFor="plan-characteristics-participation-model-precondition"
                       className="maxw-none"
@@ -786,10 +722,6 @@ export const CharacteristicsContent = () => {
                         'participationInModelPrecondition.label'
                       )}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.participationInModelPrecondition}
-                    </FieldErrorMsg>
 
                     {getKeys(
                       participationInModelPreconditionConfig.options
@@ -842,13 +774,7 @@ export const CharacteristicsContent = () => {
                     {values.participationInModelPrecondition ===
                       YesNoOtherType.YES && (
                       <>
-                        <FieldGroup
-                          scrollElement="plan-characteristics-participation-model-precondition-which"
-                          error={
-                            !!flatErrors.participationInModelPreconditionWhich
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="plan-characteristics-participation-model-precondition-which"
                             className="text-normal maxw-none"
@@ -864,10 +790,6 @@ export const CharacteristicsContent = () => {
                               'participationInModelPreconditionWhich.sublabel'
                             )}
                           </p>
-
-                          <FieldErrorMsg>
-                            {flatErrors.participationInModelPreconditionWhich}
-                          </FieldErrorMsg>
 
                           <Field
                             as={MultiSelect}
@@ -916,13 +838,7 @@ export const CharacteristicsContent = () => {
                           )}
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="participationInModelPreconditionWhyHow"
-                          error={
-                            !!flatErrors.participationInModelPreconditionWhyHow
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="plan-characteristics-participation-model-precondition-why-how"
                             className="text-normal"
@@ -932,16 +848,9 @@ export const CharacteristicsContent = () => {
                             )}
                           </Label>
 
-                          <FieldErrorMsg>
-                            {flatErrors.participationInModelPreconditionWhyHow}
-                          </FieldErrorMsg>
-
                           <Field
                             as={TextAreaField}
                             className="height-15"
-                            error={
-                              flatErrors.participationInModelPreconditionWhyHow
-                            }
                             id="plan-characteristics-participation-model-precondition-why-how"
                             name="participationInModelPreconditionWhyHow"
                           />
@@ -955,18 +864,10 @@ export const CharacteristicsContent = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="hasComponentsOrTracks"
-                    error={!!flatErrors.hasComponentsOrTracks}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="plan-characteristics-has-component-or-tracks">
                       {generalCharacteristicsT('hasComponentsOrTracks.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.hasComponentsOrTracks}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="hasComponentsOrTracks"
@@ -981,7 +882,6 @@ export const CharacteristicsContent = () => {
                           <FieldGroup
                             className="flex-1"
                             scrollElement="hasComponentsOrTracksDiffer"
-                            error={!!flatErrors.hasComponentsOrTracksDiffer}
                           >
                             <Label
                               htmlFor="plan-characteristics-tracks-differ-how"
@@ -992,13 +892,8 @@ export const CharacteristicsContent = () => {
                               )}
                             </Label>
 
-                            <FieldErrorMsg>
-                              {flatErrors.hasComponentsOrTracksDiffer}
-                            </FieldErrorMsg>
-
                             <Field
                               as={TextAreaField}
-                              error={!!flatErrors.hasComponentsOrTracksDiffer}
                               className="margin-top-0 height-15"
                               data-testid="plan-characteristics-tracks-differ-how"
                               id="plan-characteristics-tracks-differ-how"
