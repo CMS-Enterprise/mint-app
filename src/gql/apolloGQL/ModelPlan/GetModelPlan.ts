@@ -41,6 +41,7 @@ export default gql(/* GraphQL */ `
       documents {
         id
         fileName
+        fileType
       }
       crs {
         id

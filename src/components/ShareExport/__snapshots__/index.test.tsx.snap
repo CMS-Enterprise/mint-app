@@ -232,22 +232,42 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             class="read-only-model-plan--model-basics"
             data-testid="read-only-model-plan--model-basics"
           >
-            <div
-              class="display-flex flex-justify flex-align-start"
-            >
+            <div>
               <h2
-                class="margin-top-0 margin-bottom-4"
+                class="margin-top-0 margin-bottom-2"
               >
                 Model basics
               </h2>
-              <div>
+              <div
+                class="padding-0 margin-bottom-4"
+                data-testid="task-list-status-condensed"
+                style="line-height: initial;"
+              >
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
-                  data-testid="tasklist-tag"
+                  class="display-flex flex-align-center"
                 >
-                  <span>
-                    In progress
-                  </span>
+                  <p
+                    class="margin-y-0 text-bold margin-right-1"
+                  >
+                    Status:
+                  </p>
+                  <div
+                    class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
+                    data-testid="tasklist-tag"
+                  >
+                    <span>
+                      In progress
+                    </span>
+                  </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap margin-right-1"
+                  >
+                    <p
+                      class="margin-y-0 text-normal margin-right-1 text-base"
+                    >
+                      Last updated on 06/03/2022
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1153,22 +1173,42 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             class="read-only-model-plan--general-characteristics"
             data-testid="read-only-model-plan--general-characteristics"
           >
-            <div
-              class="display-flex flex-justify flex-align-start"
-            >
+            <div>
               <h2
-                class="margin-top-0 margin-bottom-4"
+                class="margin-top-0 margin-bottom-2"
               >
                 General characteristics
               </h2>
-              <div>
+              <div
+                class="padding-0 margin-bottom-4"
+                data-testid="task-list-status-condensed"
+                style="line-height: initial;"
+              >
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
-                  data-testid="tasklist-tag"
+                  class="display-flex flex-align-center"
                 >
-                  <span>
-                    In progress
-                  </span>
+                  <p
+                    class="margin-y-0 text-bold margin-right-1"
+                  >
+                    Status:
+                  </p>
+                  <div
+                    class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
+                    data-testid="tasklist-tag"
+                  >
+                    <span>
+                      In progress
+                    </span>
+                  </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap margin-right-1"
+                  >
+                    <p
+                      class="margin-y-0 text-normal margin-right-1 text-base"
+                    >
+                      Last updated on 06/03/2022
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2891,22 +2931,42 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             class="read-only-model-plan--participants-and-providers"
             data-testid="read-only-model-plan--participants-and-providers"
           >
-            <div
-              class="display-flex flex-justify flex-align-start"
-            >
+            <div>
               <h2
-                class="margin-top-0 margin-bottom-4"
+                class="margin-top-0 margin-bottom-2"
               >
                 Participants and providers
               </h2>
-              <div>
+              <div
+                class="padding-0 margin-bottom-4"
+                data-testid="task-list-status-condensed"
+                style="line-height: initial;"
+              >
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
-                  data-testid="tasklist-tag"
+                  class="display-flex flex-align-center"
                 >
-                  <span>
-                    In progress
-                  </span>
+                  <p
+                    class="margin-y-0 text-bold margin-right-1"
+                  >
+                    Status:
+                  </p>
+                  <div
+                    class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
+                    data-testid="tasklist-tag"
+                  >
+                    <span>
+                      In progress
+                    </span>
+                  </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap margin-right-1"
+                  >
+                    <p
+                      class="margin-y-0 text-normal margin-right-1 text-base"
+                    >
+                      Last updated on 06/03/2022
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -4514,22 +4574,42 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             class="read-only-model-plan--beneficiaries"
             data-testid="read-only-model-plan--beneficiaries"
           >
-            <div
-              class="display-flex flex-justify flex-align-start"
-            >
+            <div>
               <h2
-                class="margin-top-0 margin-bottom-4"
+                class="margin-top-0 margin-bottom-2"
               >
                 Beneficiaries
               </h2>
-              <div>
+              <div
+                class="padding-0 margin-bottom-4"
+                data-testid="task-list-status-condensed"
+                style="line-height: initial;"
+              >
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
-                  data-testid="tasklist-tag"
+                  class="display-flex flex-align-center"
                 >
-                  <span>
-                    In progress
-                  </span>
+                  <p
+                    class="margin-y-0 text-bold margin-right-1"
+                  >
+                    Status:
+                  </p>
+                  <div
+                    class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
+                    data-testid="tasklist-tag"
+                  >
+                    <span>
+                      In progress
+                    </span>
+                  </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap margin-right-1"
+                  >
+                    <p
+                      class="margin-y-0 text-normal margin-right-1 text-base"
+                    >
+                      Last updated on 06/03/2022
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -5204,22 +5284,42 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             class="read-only-model-plan--ops-eval-and-learning"
             data-testid="read-only-model-plan--ops-eval-and-learning"
           >
-            <div
-              class="display-flex flex-justify flex-align-start"
-            >
+            <div>
               <h2
-                class="margin-top-0 margin-bottom-4"
+                class="margin-top-0 margin-bottom-2"
               >
                 Operations, evaluation, and learning
               </h2>
-              <div>
+              <div
+                class="padding-0 margin-bottom-4"
+                data-testid="task-list-status-condensed"
+                style="line-height: initial;"
+              >
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
-                  data-testid="tasklist-tag"
+                  class="display-flex flex-align-center"
                 >
-                  <span>
-                    In progress
-                  </span>
+                  <p
+                    class="margin-y-0 text-bold margin-right-1"
+                  >
+                    Status:
+                  </p>
+                  <div
+                    class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
+                    data-testid="tasklist-tag"
+                  >
+                    <span>
+                      In progress
+                    </span>
+                  </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap margin-right-1"
+                  >
+                    <p
+                      class="margin-y-0 text-normal margin-right-1 text-base"
+                    >
+                      Last updated on 06/03/2022
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -7778,22 +7878,42 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             class="read-only-model-plan--payments"
             data-testid="read-only-model-plan--payments"
           >
-            <div
-              class="display-flex flex-justify flex-align-start"
-            >
+            <div>
               <h2
-                class="margin-top-0 margin-bottom-4"
+                class="margin-top-0 margin-bottom-2"
               >
                 Payment
               </h2>
-              <div>
+              <div
+                class="padding-0 margin-bottom-4"
+                data-testid="task-list-status-condensed"
+                style="line-height: initial;"
+              >
                 <div
-                  class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
-                  data-testid="tasklist-tag"
+                  class="display-flex flex-align-center"
                 >
-                  <span>
-                    In progress
-                  </span>
+                  <p
+                    class="margin-y-0 text-bold margin-right-1"
+                  >
+                    Status:
+                  </p>
+                  <div
+                    class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
+                    data-testid="tasklist-tag"
+                  >
+                    <span>
+                      In progress
+                    </span>
+                  </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap margin-right-1"
+                  >
+                    <p
+                      class="margin-y-0 text-normal margin-right-1 text-base"
+                    >
+                      Last updated on 06/03/2022
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -9699,21 +9819,43 @@ exports[`ShareExportModal > matches the snapshot 1`] = `
             class="read-only-model-plan--operational-needs"
             data-testid="read-only-model-plan--operational-needs"
           >
-            <div
-              class="display-flex flex-justify flex-align-start"
-            >
+            <div>
               <h2
-                class="margin-top-0 margin-bottom-4"
+                class="margin-top-0 margin-bottom-2"
               >
                 Operational solutions
               </h2>
               <div
-                class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning "
-                data-testid="tasklist-tag"
+                class="padding-0 margin-bottom-4"
+                data-testid="task-list-status-condensed"
+                style="line-height: initial;"
               >
-                <span>
-                  In progress
-                </span>
+                <div
+                  class="display-flex flex-align-center"
+                >
+                  <p
+                    class="margin-y-0 text-bold margin-right-1"
+                  >
+                    Status:
+                  </p>
+                  <div
+                    class="model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print bg-warning width-fit-content margin-right-1"
+                    data-testid="tasklist-tag"
+                  >
+                    <span>
+                      In progress
+                    </span>
+                  </div>
+                  <div
+                    class="display-flex flex-align-center flex-wrap margin-right-1"
+                  >
+                    <p
+                      class="margin-y-0 text-normal margin-right-1 text-base"
+                    >
+                      Last updated on 05/12/2022
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
             <div

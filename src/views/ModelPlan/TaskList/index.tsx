@@ -73,7 +73,6 @@ type ParticipantsAndProvidersType =
 type PaymentsType = GetModelPlanQuery['modelPlan']['payments'];
 type PrepareForClearanceType =
   GetModelPlanQuery['modelPlan']['prepareForClearance'];
-type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
 
 type CRTDLType =
   | GetCrtdLsQuery['modelPlan']['crs'][0]
@@ -356,15 +355,7 @@ const TaskList = () => {
 
               {/* Document and CR TDL Banners */}
               <Grid row gap={2}>
-                <Grid desktop={{ col: 6 }} className="margin-top-2">
-                  <DocumentBanner
-                    documents={documents}
-                    modelID={modelID}
-                    expand={!!documents.length || !!crTdls.length}
-                  />
-                </Grid>
-
-                <Grid desktop={{ col: 6 }} className="margin-top-2">
+                <Grid desktop={{ col: 12 }} className="margin-top-2">
                   <CRTDLBanner
                     crTdls={crTdls}
                     modelID={modelID}
@@ -470,14 +461,36 @@ const DicussionBanner = ({
 
   return (
     <SummaryBox className="bg-primary-lighter border-0 radius-0 padding-2">
-      <SummaryBoxHeading headingLevel="h3">{d('heading')}</SummaryBoxHeading>
       <SummaryBoxContent
-        className={classNames('margin-top-1', {
+        className={classNames('padding-0 display-flex flex-justify', {
           'mint-header__basic': discussions?.length > 0
         })}
       >
-        {discussions?.length > 0 ? (
-          <>
+        <div className="display-block margin-right-2">
+          <h3 className="margin-0">{d('heading')}</h3>
+          {discussions?.length === 0 ? (
+            <>
+              {d('noDiscussions')}
+              <Button
+                className="line-height-body-5 test-withdraw-request"
+                type="button"
+                unstyled
+                onClick={() => {
+                  // Send a discussion open event to GA
+                  ReactGA.send({
+                    hitType: 'event',
+                    eventCategory: 'discussion_center_opened',
+                    eventAction: 'click',
+                    eventLabel: 'Discussion Center opened'
+                  });
+
+                  setIsDiscussionOpen(true);
+                }}
+              >
+                {d('askAQuestionLink')}.
+              </Button>
+            </>
+          ) : (
             <div className="display-flex flex-align-center">
               <Icon.Announcement className="margin-right-1" />
               <div>
@@ -487,6 +500,11 @@ const DicussionBanner = ({
                 })}
               </div>
             </div>
+          )}
+        </div>
+
+        {discussions?.length > 0 && (
+          <>
             <Button
               type="button"
               unstyled
@@ -504,95 +522,6 @@ const DicussionBanner = ({
             >
               {d('viewDiscussions')}
             </Button>
-          </>
-        ) : (
-          <>
-            {d('noDiscussions')}
-            <Button
-              className="line-height-body-5 test-withdraw-request"
-              type="button"
-              unstyled
-              onClick={() => {
-                // Send a discussion open event to GA
-                ReactGA.send({
-                  hitType: 'event',
-                  eventCategory: 'discussion_center_opened',
-                  eventAction: 'click',
-                  eventLabel: 'Discussion Center opened'
-                });
-
-                setIsDiscussionOpen(true);
-              }}
-            >
-              {d('askAQuestionLink')}
-            </Button>
-            .
-          </>
-        )}
-      </SummaryBoxContent>
-    </SummaryBox>
-  );
-};
-
-type DocumentBannerType = {
-  documents: DocumentType[];
-  modelID: string;
-  expand: boolean;
-};
-
-// Document component for rendering document summary
-const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
-  const { t } = useTranslation('modelPlanTaskList');
-
-  return (
-    <SummaryBox
-      className={classNames('bg-base-lightest border-0 radius-0 padding-2', {
-        'model-plan-task-list__min-card': expand
-      })}
-    >
-      <SummaryBoxHeading headingLevel="h3" className="margin-0">
-        {t('modelPlanTaskList:documentSummaryBox.heading')}
-      </SummaryBoxHeading>
-
-      <SummaryBoxContent>
-        {documents?.length > 0 ? (
-          <>
-            <p
-              className="margin-0 padding-bottom-1 padding-top-05"
-              data-testid="document-items"
-            >
-              <strong>{documents.length} </strong>
-              {t('documentSummaryBox.document', { count: documents.length })}
-            </p>
-
-            <UswdsReactLink
-              variant="unstyled"
-              className="margin-right-4 display-block margin-bottom-1"
-              to={`/models/${modelID}/collaboration-area/documents`}
-            >
-              {t('documentSummaryBox.viewAll')}
-            </UswdsReactLink>
-
-            <UswdsReactLink
-              variant="unstyled"
-              to={`/models/${modelID}/collaboration-area/documents/add-document`}
-            >
-              {t('documentSummaryBox.addAnother')}
-            </UswdsReactLink>
-          </>
-        ) : (
-          <>
-            <p className="margin-0 margin-bottom-1">
-              {t('documentSummaryBox.copy')}
-            </p>
-
-            <UswdsReactLink
-              className="usa-button usa-button--outline"
-              variant="unstyled"
-              to={`/models/${modelID}/collaboration-area/documents/add-document`}
-            >
-              {t('documentSummaryBox.cta')}
-            </UswdsReactLink>
           </>
         )}
       </SummaryBoxContent>

@@ -22,25 +22,24 @@ import Divider from 'components/shared/Divider';
 // import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
+import StatusBanner from 'components/StatusBanner';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
+
+import DiscussionsCard from './Cards/DiscussionsCard';
 // import { formatDateLocal } from 'utils/date';
 // import { isAssessment } from 'utils/user';
 // import { SubscriptionContext } from 'views/SubscriptionWrapper';
-// import Discussions from '../Discussions';
-// import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
-import TaskListStatus from '../TaskList/_components/TaskListStatus';
-
+import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
 import TeamCard from './Cards/TeamCard';
 
 import './index.scss';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
-// type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
 // type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
 
 // type CRTDLType =
@@ -59,18 +58,7 @@ const CollaborationArea = () => {
 
   const { message } = useMessage();
 
-  //   const location = useLocation();
-
-  //   const params = useMemo(() => {
-  //     return new URLSearchParams(location.search);
-  //   }, [location.search]);
-
-  //   // Get discussionID from generated email link
-  //   const discussionID = params.gecollaborationAreaT('discussionID');
-
   //   const flags = useFlags();
-
-  //   const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
@@ -86,8 +74,8 @@ const CollaborationArea = () => {
 
   const {
     modelName,
-    // discussions,
-    // documents,
+    discussions,
+    documents,
     // crs,
     // tdls,
     status,
@@ -123,10 +111,6 @@ const CollaborationArea = () => {
   useEffect(() => {
     if (suggestedPhase && !statusChecked) setStatusPhaseModalOpen(true);
   }, [suggestedPhase, statusChecked]);
-
-  //   useEffect(() => {
-  //     if (discussionID) setIsDiscussionOpen(true);
-  //   }, [discussionID]);
 
   const favoriteMutations = useFavoritePlan();
 
@@ -222,23 +206,15 @@ const CollaborationArea = () => {
               </Grid>
             </Grid>
 
-            {/* Discussion modal */}
-            {/* {isDiscussionOpen && (
-                <DiscussionModalWrapper
-                  isOpen={isDiscussionOpen}
-                  closeModal={() => setIsDiscussionOpen(false)}
-                >
-                  <Discussions modelID={modelID} discussionID={discussionID} />
-                </DiscussionModalWrapper>
-              )} */}
-
             <Grid desktop={{ col: 12 }}>
-              <TaskListStatus
+              <StatusBanner
                 modelID={modelID}
                 status={status}
                 updateLabel
                 statusLabel
                 isCollaborationArea
+                modifiedDts={modelPlan.modifiedDts}
+                modifiedOrCreateLabel
               />
             </Grid>
 
@@ -276,7 +252,16 @@ const CollaborationArea = () => {
 
       <div className="bg-primary-lighter padding-top-6 padding-bottom-10 margin-bottom-neg-7">
         <GridContainer>
-          <TeamCard modelID={modelID} collaborators={modelPlan.collaborators} />
+          <CardGroup>
+            <TeamCard
+              modelID={modelID}
+              collaborators={modelPlan.collaborators}
+            />
+
+            <DiscussionsCard discussions={discussions} modelID={modelID} />
+
+            <DocumentsCard documents={documents} modelID={modelID} />
+          </CardGroup>
         </GridContainer>
       </div>
     </MainContent>

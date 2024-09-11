@@ -87,5 +87,19 @@ describe('Discussion Center', () => {
     cy.get('[data-testid="close-discussions"]').click();
 
     cy.get('[data-testid="discussion-modal"]').should('not.exist');
+
+    cy.get('[data-testid="return-to-collaboration"]').click();
+
+    cy.get('[data-testid="discussion-card-count"]').contains('2 discussions');
+
+    cy.contains('button', 'Start a discussion').click();
+
+    cy.contains('button', 'Cancel').click();
+
+    cy.get('[data-testid="close-discussions"]').click();
+
+    cy.contains('button', 'View all').click();
+
+    cy.get('[data-testid="close-discussions"]').click();
   });
 });

@@ -186,6 +186,10 @@ const ReadOnlyPayments = ({
         heading={paymentsMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={allPaymentData.status}
+        modelID={modelID}
+        modifiedOrCreatedDts={
+          allPaymentData.modifiedDts || allPaymentData.createdDts
+        }
       />
 
       {clearance && (

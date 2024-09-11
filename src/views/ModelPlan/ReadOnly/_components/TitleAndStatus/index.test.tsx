@@ -13,6 +13,8 @@ describe('Title and Status component for Read Only Pages', () => {
         heading="Regular Heading"
         isViewingFilteredView={false}
         status={TaskStatus.IN_PROGRESS}
+        modelID="123"
+        modifiedOrCreatedDts="2021-09-01T00:00:00Z"
       />
     );
 
@@ -30,6 +32,8 @@ describe('Title and Status component for Read Only Pages', () => {
         heading="Regular Heading"
         isViewingFilteredView={false}
         status={TaskStatus.IN_PROGRESS}
+        modelID="123"
+        modifiedOrCreatedDts="2021-09-01T00:00:00Z"
       />
     );
 
@@ -47,6 +51,8 @@ describe('Title and Status component for Read Only Pages', () => {
         heading="Regular Heading"
         isViewingFilteredView={false}
         status={TaskStatus.READY_FOR_CLEARANCE}
+        modelID="123"
+        modifiedOrCreatedDts="2021-09-01T00:00:00Z"
       />
     );
 
@@ -64,6 +70,8 @@ describe('Title and Status component for Read Only Pages', () => {
         heading="Regular Heading"
         isViewingFilteredView
         status={TaskStatus.READY_FOR_CLEARANCE}
+        modelID="123"
+        modifiedOrCreatedDts="2021-09-01T00:00:00Z"
       />
     );
 
@@ -79,6 +87,8 @@ describe('Title and Status component for Read Only Pages', () => {
         heading="Regular Heading"
         isViewingFilteredView={false}
         status={TaskStatus.IN_PROGRESS}
+        modelID="123"
+        modifiedOrCreatedDts="2021-09-01T00:00:00Z"
       />
     );
 
