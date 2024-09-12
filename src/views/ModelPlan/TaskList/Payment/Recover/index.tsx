@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -177,9 +177,7 @@ const Recover = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName || ' '} indexTwo
-        </Trans>
+        {miscellaneousT('for')} {modelName}
       </p>
 
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
