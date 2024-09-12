@@ -600,7 +600,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>
@@ -651,7 +651,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>
@@ -702,7 +702,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 </span>
               </a>
               <div
-                class="usa-card__body padding-x-0 article__body"
+                class="usa-card__body padding-x-0 article__body padding-top-2"
                 data-testid="CardBody"
               >
                 <p>
@@ -724,11 +724,16 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             </div>
           </li>
         </ul>
-        <a
-          href="/help-and-knowledge/articles"
+        <div
+          class="margin-top-3"
         >
-          View all help articles
-        </a>
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/articles"
+          >
+            View all help articles
+          </a>
+        </div>
       </div>
     </div>
   </div>
