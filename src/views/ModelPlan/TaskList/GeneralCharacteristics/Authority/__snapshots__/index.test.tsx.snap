@@ -113,7 +113,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group margin-y-4"
-        data-scroll="plan-characteristics-rulemaking-required"
       >
         <label
           class="usa-label"
@@ -150,7 +149,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           >
             <div
               class="usa-form-group flex-1"
-              data-scroll="plan-characteristics-rulemaking-required-description"
             >
               <label
                 class="usa-label margin-bottom-1 text-normal"
@@ -218,7 +216,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
-        data-scroll="plan-characteristics-authority-allowance"
       >
         <label
           class="usa-label"
@@ -335,7 +332,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4"
-        data-scroll="plan-characteristics-waivers-required"
       >
         <label
           class="usa-label"

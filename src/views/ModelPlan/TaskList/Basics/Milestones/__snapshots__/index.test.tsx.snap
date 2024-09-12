@@ -973,7 +973,6 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
           </div>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="phasedIn"
           >
             <label
               class="usa-label"

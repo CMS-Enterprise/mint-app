@@ -113,7 +113,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="isNewModel"
       >
         <label
           class="usa-label"
@@ -167,7 +166,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         </fieldset>
         <div
           class="usa-form-group"
-          data-scroll="existingModel"
         >
           <label
             class="usa-label margin-bottom-1 text-normal"
@@ -275,7 +273,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="resemblesExistingModel"
       >
         <label
           class="usa-label maxw-none"
@@ -389,7 +386,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="participationInModelPrecondition"
       >
         <label
           class="usa-label maxw-none"
@@ -457,7 +453,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         </div>
         <div
           class="usa-form-group margin-top-4"
-          data-scroll="plan-characteristics-participation-model-precondition-which"
         >
           <label
             class="usa-label text-normal maxw-none"
@@ -562,7 +557,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         </div>
         <div
           class="usa-form-group margin-top-4"
-          data-scroll="participationInModelPreconditionWhyHow"
         >
           <label
             class="usa-label text-normal"
@@ -607,7 +601,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="hasComponentsOrTracks"
       >
         <label
           class="usa-label"
