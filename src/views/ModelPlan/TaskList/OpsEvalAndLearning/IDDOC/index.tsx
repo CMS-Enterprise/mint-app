@@ -24,14 +24,10 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import MINTDatePicker from 'components/shared/DatePicker';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -158,14 +154,12 @@ const IDDOC = () => {
       >
         {(formikProps: FormikProps<IDDOCFormType>) => {
           const {
-            errors,
             handleSubmit,
             setErrors,
             setFieldValue,
             values,
             setFieldError
           } = formikProps;
-          const flatErrors = flattenErrors(errors);
 
           const handleOnBlur = (
             e: React.ChangeEvent<HTMLInputElement>,
@@ -177,7 +171,6 @@ const IDDOC = () => {
             }
             try {
               setFieldValue(field, new Date(e.target.value).toISOString());
-              delete errors[field as keyof IDDOCFormType];
             } catch (err) {
               setFieldError(field, opsEvalAndLearningT('validDate'));
             }
@@ -185,24 +178,6 @@ const IDDOC = () => {
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -215,18 +190,10 @@ const IDDOC = () => {
                 <Fieldset disabled={!!error || loading}>
                   <h3>{opsEvalAndLearningMiscT('iddocHeading')}</h3>
 
-                  <FieldGroup
-                    scrollElement="technicalContactsIdentified"
-                    error={!!flatErrors.technicalContactsIdentified}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="ops-eval-and-learning-technical-contacts-identified-use">
                       {opsEvalAndLearningT('technicalContactsIdentified.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.technicalContactsIdentified}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="technicalContactsIdentified"
@@ -247,10 +214,6 @@ const IDDOC = () => {
                             )}
                           </Label>
 
-                          <FieldErrorMsg>
-                            {flatErrors.technicalContactsIdentifiedDetail}
-                          </FieldErrorMsg>
-
                           <Field
                             as={TextAreaField}
                             id="ops-eval-and-learning-technical-contacts-identified-detail"
@@ -270,11 +233,7 @@ const IDDOC = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="captureParticipantInfo"
-                    error={!!flatErrors.captureParticipantInfo}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="ops-eval-and-learning-capture-participant-info">
                       {opsEvalAndLearningT('captureParticipantInfo.label')}
                     </Label>
@@ -282,10 +241,6 @@ const IDDOC = () => {
                     <p className="text-base margin-bottom-1 margin-top-1">
                       {opsEvalAndLearningT('captureParticipantInfo.sublabel')}
                     </p>
-
-                    <FieldErrorMsg>
-                      {flatErrors.captureParticipantInfo}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="captureParticipantInfo"
@@ -307,16 +262,10 @@ const IDDOC = () => {
                     {opsEvalAndLearningMiscT('icdSubheading')}
                   </p>
 
-                  <FieldGroup
-                    scrollElement="icdOwner"
-                    className="margin-top-4"
-                    error={!!flatErrors.icdOwner}
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Label htmlFor="ops-eval-and-learning-capture-icd-owner">
                       {opsEvalAndLearningT('icdOwner.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.icdOwner}</FieldErrorMsg>
 
                     <Field
                       as={TextInput}
@@ -338,7 +287,6 @@ const IDDOC = () => {
                         handleOnBlur={handleOnBlur}
                         formikValue={values.draftIcdDueDate}
                         value={draftIcdDueDate}
-                        error={flatErrors.draftIcdDueDate}
                         shouldShowWarning={
                           initialValues.draftIcdDueDate !==
                           values.draftIcdDueDate
