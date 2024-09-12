@@ -456,30 +456,30 @@ export type EChimpCr = {
   __typename: 'EChimpCR';
   associatedModelUids?: Maybe<Scalars['UUID']['output']>;
   crNumber: Scalars['String']['output'];
-  crStatus: Scalars['String']['output'];
-  crSummary: Scalars['String']['output'];
+  crStatus?: Maybe<Scalars['String']['output']>;
+  crSummary?: Maybe<Scalars['String']['output']>;
   emergencyCrFlag?: Maybe<Scalars['Boolean']['output']>;
-  firstName: Scalars['String']['output'];
-  implementationDate: Scalars['String']['output'];
-  initiator: Scalars['String']['output'];
-  lastName: Scalars['String']['output'];
-  relatedCrNumbers: Scalars['String']['output'];
-  relatedCrTdlNumbers: Scalars['String']['output'];
+  firstName?: Maybe<Scalars['String']['output']>;
+  implementationDate?: Maybe<Scalars['String']['output']>;
+  initiator?: Maybe<Scalars['String']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+  relatedCrNumbers?: Maybe<Scalars['String']['output']>;
+  relatedCrTdlNumbers?: Maybe<Scalars['String']['output']>;
   sensitiveFlag?: Maybe<Scalars['Boolean']['output']>;
-  title: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
   versionNum: Scalars['String']['output'];
 };
 
 export type EChimpTdl = {
   __typename: 'EChimpTDL';
   associatedModelUids?: Maybe<Scalars['UUID']['output']>;
-  firstName: Scalars['String']['output'];
-  initiator: Scalars['String']['output'];
-  issuedDate: Scalars['String']['output'];
-  lastName: Scalars['String']['output'];
-  status: Scalars['String']['output'];
+  firstName?: Maybe<Scalars['String']['output']>;
+  initiator?: Maybe<Scalars['String']['output']>;
+  issuedDate?: Maybe<Scalars['String']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
   tdlNumber: Scalars['String']['output'];
-  title: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
   versionNum: Scalars['String']['output'];
 };
 

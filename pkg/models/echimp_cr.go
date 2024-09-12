@@ -26,6 +26,10 @@ type EChimpCRRaw struct {
 
 func (raw *EChimpCRRaw) Sanitize() (*EChimpCR, error) {
 	sanitizedSummary := sanitization.InnerHTML(sanitization.SanitizeString(raw.CrSummary))
+	sanitizedPointer := &sanitizedSummary
+	if sanitizedSummary == "" {
+		sanitizedPointer = nil
+	}
 	associatedUUID, parseError := uuid.Parse(raw.AssociatedModelUids)
 	if parseError != nil {
 		return nil, parseError
@@ -37,17 +41,17 @@ func (raw *EChimpCRRaw) Sanitize() (*EChimpCR, error) {
 	sanitizedCR := &EChimpCR{
 		CrNumber:            sanitization.SanitizeString(raw.CrNumber),
 		VersionNum:          sanitization.SanitizeString(raw.VersionNum),
-		Initiator:           sanitization.SanitizeString(raw.Initiator),
-		FirstName:           sanitization.SanitizeString(raw.FirstName),
-		LastName:            sanitization.SanitizeString(raw.LastName),
-		Title:               sanitization.SanitizeString(raw.Title),
+		Initiator:           sanitization.SanitizeStringPointerIfEmpty(raw.Initiator),
+		FirstName:           sanitization.SanitizeStringPointerIfEmpty(raw.FirstName),
+		LastName:            sanitization.SanitizeStringPointerIfEmpty(raw.LastName),
+		Title:               sanitization.SanitizeStringPointerIfEmpty(raw.Title),
 		SensitiveFlag:       sensitiveFlag,
-		ImplementationDate:  sanitization.SanitizeString(raw.ImplementationDate),
-		CrSummary:           sanitizedSummary,
-		CrStatus:            sanitization.SanitizeString(raw.CrStatus),
+		ImplementationDate:  sanitization.SanitizeStringPointerIfEmpty(raw.ImplementationDate),
+		CrSummary:           sanitizedPointer,
+		CrStatus:            sanitization.SanitizeStringPointerIfEmpty(raw.CrStatus),
 		EmergencyCrFlag:     emergencyFlag,
-		RelatedCrNumbers:    sanitization.SanitizeString(raw.RelatedCrNumbers),
-		RelatedCrTdlNumbers: sanitization.SanitizeString(raw.RelatedCrTdlNumbers),
+		RelatedCrNumbers:    sanitization.SanitizeStringPointerIfEmpty(raw.RelatedCrNumbers),
+		RelatedCrTdlNumbers: sanitization.SanitizeStringPointerIfEmpty(raw.RelatedCrTdlNumbers),
 		AssociatedModelUids: &associatedUUID,
 	}
 	return sanitizedCR, nil
@@ -72,16 +76,16 @@ func ConvertRawCRSToParsed(rawRecords []*EChimpCRRaw) ([]*EChimpCR, error) {
 type EChimpCR struct {
 	CrNumber            string     `parquet:"crNumber" json:"crNumber"`
 	VersionNum          string     `parquet:"versionNum" json:"versionNum"`
-	Initiator           string     `parquet:"initiator" json:"initiator"`
-	FirstName           string     `parquet:"firstName" json:"firstName"`
-	LastName            string     `parquet:"lastName" json:"lastName"`
-	Title               string     `parquet:"title" json:"title"`
+	Initiator           *string    `parquet:"initiator" json:"initiator"`
+	FirstName           *string    `parquet:"firstName" json:"firstName"`
+	LastName            *string    `parquet:"lastName" json:"lastName"`
+	Title               *string    `parquet:"title" json:"title"`
 	SensitiveFlag       *bool      `parquet:"sensitiveFlag" json:"sensitiveFlag"`
-	ImplementationDate  string     `parquet:"implementationDate" json:"implementationDate"`
-	CrSummary           string     `parquet:"crSummary" json:"crSummary"`
-	CrStatus            string     `parquet:"crStatus" json:"crStatus"`
+	ImplementationDate  *string    `parquet:"implementationDate" json:"implementationDate"`
+	CrSummary           *string    `parquet:"crSummary" json:"crSummary"`
+	CrStatus            *string    `parquet:"crStatus" json:"crStatus"`
 	EmergencyCrFlag     *bool      `parquet:"emergencyCrFlag" json:"emergencyCrFlag"`
-	RelatedCrNumbers    string     `parquet:"relatedCrNumbers" json:"relatedCrNumbers"`
-	RelatedCrTdlNumbers string     `parquet:"relatedCrTdlNumbers" json:"relatedCrTdlNumbers"`
+	RelatedCrNumbers    *string    `parquet:"relatedCrNumbers" json:"relatedCrNumbers"`
+	RelatedCrTdlNumbers *string    `parquet:"relatedCrTdlNumbers" json:"relatedCrTdlNumbers"`
 	AssociatedModelUids *uuid.UUID `parquet:"associatedModelUids" json:"associatedModelUids"`
 }

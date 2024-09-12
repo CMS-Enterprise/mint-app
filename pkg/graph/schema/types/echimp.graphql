@@ -1,29 +1,29 @@
 type EChimpCR {
   crNumber: String!
   versionNum: String!
-  initiator: String!
-  firstName: String!
-  lastName: String!
-  title: String!
+  initiator: String
+  firstName: String
+  lastName: String
+  title: String
   sensitiveFlag: Boolean
-  implementationDate: String!
-  crSummary: String!
-  crStatus: String!
+  implementationDate: String
+  crSummary: String
+  crStatus: String
   emergencyCrFlag: Boolean
-  relatedCrNumbers: String!
-  relatedCrTdlNumbers: String!
+  relatedCrNumbers: String
+  relatedCrTdlNumbers: String
   associatedModelUids: UUID
 }
 
 type EChimpTDL {
   tdlNumber: String!
   versionNum: String!
-  initiator: String!
-  firstName: String!
-  lastName: String!
-  title: String!
-  issuedDate: String!
-  status: String!
+  initiator: String
+  firstName: String
+  lastName: String
+  title: String
+  issuedDate: String
+  status: String
   associatedModelUids: UUID
 }
 
