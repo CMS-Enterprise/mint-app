@@ -458,14 +458,14 @@ export type EChimpCr = {
   crNumber: Scalars['String']['output'];
   crStatus: Scalars['String']['output'];
   crSummary: Scalars['String']['output'];
-  emergencyCrFlag: Scalars['String']['output'];
+  emergencyCrFlag?: Maybe<Scalars['Boolean']['output']>;
   firstName: Scalars['String']['output'];
   implementationDate: Scalars['String']['output'];
   initiator: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
   relatedCrNumbers: Scalars['String']['output'];
   relatedCrTdlNumbers: Scalars['String']['output'];
-  sensitiveFlag: Scalars['String']['output'];
+  sensitiveFlag?: Maybe<Scalars['Boolean']['output']>;
   title: Scalars['String']['output'];
   versionNum: Scalars['String']['output'];
 };

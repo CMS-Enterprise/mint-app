@@ -5,11 +5,11 @@ type EChimpCR {
   firstName: String!
   lastName: String!
   title: String!
-  sensitiveFlag: String!
+  sensitiveFlag: Boolean
   implementationDate: String!
   crSummary: String!
   crStatus: String!
-  emergencyCrFlag: String!
+  emergencyCrFlag: Boolean
   relatedCrNumbers: String!
   relatedCrTdlNumbers: String!
   associatedModelUids: UUID

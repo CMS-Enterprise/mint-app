@@ -10,3 +10,18 @@ func SanitizeString(input string) string {
 	sanitized := strings.ReplaceAll(trimmed, "\n", "")
 	return sanitized
 }
+
+// YNStringToBool will return true if the value is Y, and false if it is N.
+// Anything else returns nil
+func YNStringToBool(input string) *bool {
+	t := true
+	f := false
+	if input == "Y" {
+		return &t
+	}
+	if input == "N" {
+		return &f
+	}
+	return nil
+
+}

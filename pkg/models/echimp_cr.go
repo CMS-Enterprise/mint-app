@@ -30,6 +30,8 @@ func (raw *EChimpCRRaw) Sanitize() (*EChimpCR, error) {
 	if parseError != nil {
 		return nil, parseError
 	}
+	sensitiveFlag := sanitization.YNStringToBool(raw.SensitiveFlag)
+	emergencyFlag := sanitization.YNStringToBool(raw.EmergencyCrFlag)
 
 	//todo, sanitize it
 	sanitizedCR := &EChimpCR{
@@ -39,11 +41,11 @@ func (raw *EChimpCRRaw) Sanitize() (*EChimpCR, error) {
 		FirstName:           sanitization.SanitizeString(raw.FirstName),
 		LastName:            sanitization.SanitizeString(raw.LastName),
 		Title:               sanitization.SanitizeString(raw.Title),
-		SensitiveFlag:       sanitization.SanitizeString(raw.SensitiveFlag),
+		SensitiveFlag:       sensitiveFlag,
 		ImplementationDate:  sanitization.SanitizeString(raw.ImplementationDate),
 		CrSummary:           sanitizedSummary,
 		CrStatus:            sanitization.SanitizeString(raw.CrStatus),
-		EmergencyCrFlag:     sanitization.SanitizeString(raw.EmergencyCrFlag),
+		EmergencyCrFlag:     emergencyFlag,
 		RelatedCrNumbers:    sanitization.SanitizeString(raw.RelatedCrNumbers),
 		RelatedCrTdlNumbers: sanitization.SanitizeString(raw.RelatedCrTdlNumbers),
 		AssociatedModelUids: &associatedUUID,
@@ -74,11 +76,11 @@ type EChimpCR struct {
 	FirstName           string     `parquet:"firstName" json:"firstName"`
 	LastName            string     `parquet:"lastName" json:"lastName"`
 	Title               string     `parquet:"title" json:"title"`
-	SensitiveFlag       string     `parquet:"sensitiveFlag" json:"sensitiveFlag"`
+	SensitiveFlag       *bool      `parquet:"sensitiveFlag" json:"sensitiveFlag"`
 	ImplementationDate  string     `parquet:"implementationDate" json:"implementationDate"`
 	CrSummary           string     `parquet:"crSummary" json:"crSummary"`
 	CrStatus            string     `parquet:"crStatus" json:"crStatus"`
-	EmergencyCrFlag     string     `parquet:"emergencyCrFlag" json:"emergencyCrFlag"`
+	EmergencyCrFlag     *bool      `parquet:"emergencyCrFlag" json:"emergencyCrFlag"`
 	RelatedCrNumbers    string     `parquet:"relatedCrNumbers" json:"relatedCrNumbers"`
 	RelatedCrTdlNumbers string     `parquet:"relatedCrTdlNumbers" json:"relatedCrTdlNumbers"`
 	AssociatedModelUids *uuid.UUID `parquet:"associatedModelUids" json:"associatedModelUids"`
