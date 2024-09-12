@@ -21,7 +21,7 @@ type EChimpTDLRaw struct {
 
 func (raw *EChimpTDLRaw) Sanitize() (*EChimpTDL, error) {
 	//TODO, do better sanitization, remove line breaks \n
-	sanitizedTitle := sanitization.InnerHTML(raw.Title)
+	sanitizedTitle := sanitization.InnerHTML(sanitization.SanitizeString(raw.Title))
 	associatedUUID, parseError := uuid.Parse(raw.AssociatedModelUids)
 	if parseError != nil {
 		return nil, parseError
@@ -29,14 +29,14 @@ func (raw *EChimpTDLRaw) Sanitize() (*EChimpTDL, error) {
 
 	//todo, sanitize it
 	sanitizedCR := &EChimpTDL{
-		TdlNumber:           raw.TdlNumber,
-		VersionNum:          raw.VersionNum,
-		Initiator:           raw.Initiator,
-		FirstName:           raw.FirstName,
-		LastName:            raw.LastName,
+		TdlNumber:           sanitization.SanitizeString(raw.TdlNumber),
+		VersionNum:          sanitization.SanitizeString(raw.VersionNum),
+		Initiator:           sanitization.SanitizeString(raw.Initiator),
+		FirstName:           sanitization.SanitizeString(raw.FirstName),
+		LastName:            sanitization.SanitizeString(raw.LastName),
 		Title:               sanitizedTitle,
-		IssuedDate:          raw.IssuedDate,
-		Status:              raw.Status,
+		IssuedDate:          sanitization.SanitizeString(raw.IssuedDate),
+		Status:              sanitization.SanitizeString(raw.Status),
 		AssociatedModelUids: &associatedUUID,
 	}
 	return sanitizedCR, nil

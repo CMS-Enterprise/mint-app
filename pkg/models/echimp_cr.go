@@ -25,7 +25,7 @@ type EChimpCRRaw struct {
 }
 
 func (raw *EChimpCRRaw) Sanitize() (*EChimpCR, error) {
-	sanitizedSummary := sanitization.InnerHTML(raw.CrSummary)
+	sanitizedSummary := sanitization.InnerHTML(sanitization.SanitizeString(raw.CrSummary))
 	associatedUUID, parseError := uuid.Parse(raw.AssociatedModelUids)
 	if parseError != nil {
 		return nil, parseError
@@ -33,19 +33,19 @@ func (raw *EChimpCRRaw) Sanitize() (*EChimpCR, error) {
 
 	//todo, sanitize it
 	sanitizedCR := &EChimpCR{
-		CrNumber:            raw.CrNumber,
-		VersionNum:          raw.VersionNum,
-		Initiator:           raw.Initiator,
-		FirstName:           raw.FirstName,
-		LastName:            raw.LastName,
-		Title:               raw.Title,
-		SensitiveFlag:       raw.SensitiveFlag,
-		ImplementationDate:  raw.ImplementationDate,
+		CrNumber:            sanitization.SanitizeString(raw.CrNumber),
+		VersionNum:          sanitization.SanitizeString(raw.VersionNum),
+		Initiator:           sanitization.SanitizeString(raw.Initiator),
+		FirstName:           sanitization.SanitizeString(raw.FirstName),
+		LastName:            sanitization.SanitizeString(raw.LastName),
+		Title:               sanitization.SanitizeString(raw.Title),
+		SensitiveFlag:       sanitization.SanitizeString(raw.SensitiveFlag),
+		ImplementationDate:  sanitization.SanitizeString(raw.ImplementationDate),
 		CrSummary:           sanitizedSummary,
-		CrStatus:            raw.CrStatus,
-		EmergencyCrFlag:     raw.EmergencyCrFlag,
-		RelatedCrNumbers:    raw.RelatedCrNumbers,
-		RelatedCrTdlNumbers: raw.RelatedCrTdlNumbers,
+		CrStatus:            sanitization.SanitizeString(raw.CrStatus),
+		EmergencyCrFlag:     sanitization.SanitizeString(raw.EmergencyCrFlag),
+		RelatedCrNumbers:    sanitization.SanitizeString(raw.RelatedCrNumbers),
+		RelatedCrTdlNumbers: sanitization.SanitizeString(raw.RelatedCrTdlNumbers),
 		AssociatedModelUids: &associatedUUID,
 	}
 	return sanitizedCR, nil
