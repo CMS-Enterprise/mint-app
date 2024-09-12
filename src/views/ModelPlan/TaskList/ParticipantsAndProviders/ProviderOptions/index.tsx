@@ -30,8 +30,6 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
@@ -39,7 +37,6 @@ import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -195,30 +192,11 @@ export const ProviderOptions = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InitialValueType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -241,11 +219,7 @@ export const ProviderOptions = () => {
                     disabled={loading}
                   />
 
-                  <FieldGroup
-                    scrollElement="participants-and-providers-provider-add-method"
-                    error={!!flatErrors.providerAddMethod}
-                    className="margin-top-4"
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Label
                       htmlFor="participants-and-providers-provider-add-method"
                       id="label-participants-and-providers-provider-add-method"
@@ -256,10 +230,6 @@ export const ProviderOptions = () => {
                     <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
                       {participantsAndProvidersT('providerAddMethod.sublabel')}
                     </p>
-
-                    <FieldErrorMsg>
-                      {flatErrors.providerAddMethod}
-                    </FieldErrorMsg>
 
                     <Field
                       as={MultiSelect}
@@ -281,10 +251,7 @@ export const ProviderOptions = () => {
                     {(values?.providerAddMethod || []).includes(
                       ProviderAddType.OTHER
                     ) && (
-                      <FieldGroup
-                        scrollElement="participants-and-providers-provider-add-method-other"
-                        error={!!flatErrors.providerAddMethodOther}
-                      >
+                      <FieldGroup>
                         <Label
                           htmlFor="participants-and-providers-provider-add-method-other"
                           className="text-normal"
@@ -294,14 +261,9 @@ export const ProviderOptions = () => {
                           )}
                         </Label>
 
-                        <FieldErrorMsg>
-                          {flatErrors.providerAddMethodOther}
-                        </FieldErrorMsg>
-
                         <Field
                           as={TextAreaField}
                           className="height-15"
-                          error={flatErrors.providerAddMethodOther}
                           id="participants-and-providers-provider-add-method-other"
                           data-testid="participants-and-providers-provider-add-method-other"
                           name="providerAddMethodOther"
@@ -315,11 +277,7 @@ export const ProviderOptions = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="participants-and-providers-leave-method"
-                    error={!!flatErrors.providerLeaveMethod}
-                    className="margin-top-4"
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Label htmlFor="participants-and-providers-leave-method">
                       {participantsAndProvidersT('providerLeaveMethod.label')}
                     </Label>
@@ -329,10 +287,6 @@ export const ProviderOptions = () => {
                         'providerLeaveMethod.sublabel'
                       )}
                     </p>
-
-                    <FieldErrorMsg>
-                      {flatErrors.providerLeaveMethod}
-                    </FieldErrorMsg>
 
                     {getKeys(providerLeaveMethodConfig.options).map(type => {
                       return (
@@ -359,10 +313,6 @@ export const ProviderOptions = () => {
                                     'providerLeaveMethodOther.label'
                                   )}
                                 </Label>
-
-                                <FieldErrorMsg>
-                                  {flatErrors.providerLeaveMethodOther}
-                                </FieldErrorMsg>
 
                                 <Field
                                   as={TextInput}
@@ -392,11 +342,7 @@ export const ProviderOptions = () => {
                     disabled={loading}
                   />
 
-                  <FieldGroup
-                    scrollElement="participants-and-providers-provider-overlap"
-                    error={!!flatErrors.providerOverlap}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="participants-and-providers-provider-overlap">
                       {participantsAndProvidersT('providerOverlap.label')}
                     </Label>
@@ -411,8 +357,6 @@ export const ProviderOptions = () => {
                         }
                       />
                     )}
-
-                    <FieldErrorMsg>{flatErrors.providerOverlap}</FieldErrorMsg>
 
                     <Fieldset>
                       {getKeys(providerOverlapConfig.options).map(key => (
@@ -432,10 +376,7 @@ export const ProviderOptions = () => {
                     {(values.providerOverlap ===
                       OverlapType.YES_NEED_POLICIES ||
                       values.providerOverlap === OverlapType.YES_NO_ISSUES) && (
-                      <FieldGroup
-                        scrollElement="participants-and-providers-provider-overlap-hierarchy"
-                        error={!!flatErrors.providerOverlapHierarchy}
-                      >
+                      <FieldGroup>
                         <Label
                           htmlFor="participants-and-providers-provider-overlap-hierarchy"
                           className="text-normal margin-top-4"
@@ -445,14 +386,9 @@ export const ProviderOptions = () => {
                           )}
                         </Label>
 
-                        <FieldErrorMsg>
-                          {flatErrors.providerOverlapHierarchy}
-                        </FieldErrorMsg>
-
                         <Field
                           as={TextAreaField}
                           className="height-15"
-                          error={flatErrors.providerOverlapHierarchy}
                           id="participants-and-providers-provider-overlap-hierarchy"
                           name="providerOverlapHierarchy"
                         />
