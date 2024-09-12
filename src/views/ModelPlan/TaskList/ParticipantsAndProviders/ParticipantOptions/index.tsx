@@ -27,8 +27,6 @@ import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
@@ -36,7 +34,6 @@ import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -162,30 +159,11 @@ export const ParticipantOptions = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ParticipantOptionsFormType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -196,10 +174,7 @@ export const ParticipantOptions = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup
-                    scrollElement="participants-and-providers-expected-participants"
-                    error={!!flatErrors.expectedNumberOfParticipants}
-                  >
+                  <FieldGroup>
                     <Label htmlFor="participants-and-providers-expected-participants">
                       {participantsAndProvidersT(
                         'expectedNumberOfParticipants.label'
@@ -212,14 +187,9 @@ export const ParticipantOptions = () => {
                       )}
                     </p>
 
-                    <FieldErrorMsg>
-                      {flatErrors.expectedNumberOfParticipants}
-                    </FieldErrorMsg>
-
                     <Field
                       as={RangeInput}
                       className="maxw-none width-full"
-                      error={flatErrors.expectedNumberOfParticipants}
                       id="participants-and-providers-expected-participants"
                       data-testid="participants-and-providers-expected-participants"
                       name="expectedNumberOfParticipants"
@@ -248,15 +218,10 @@ export const ParticipantOptions = () => {
                       {participantsAndProvidersMiscT('numberOfParticipants')}
                     </Label>
 
-                    <FieldErrorMsg>
-                      {flatErrors.expectedNumberOfParticipants}
-                    </FieldErrorMsg>
-
                     <Field
                       as={TextInput}
                       type="number"
                       className="width-card"
-                      error={flatErrors.expectedNumberOfParticipants}
                       id="participants-and-providers-participants-other-input"
                       name="expectedNumberOfParticipants"
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -274,10 +239,6 @@ export const ParticipantOptions = () => {
                     >
                       {participantsAndProvidersT('estimateConfidence.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.participantsCurrentlyInModels}
-                    </FieldErrorMsg>
 
                     <Fieldset>
                       {getKeys(estimateConfidenceConfig.options).map(key => (
@@ -299,10 +260,7 @@ export const ParticipantOptions = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="participants-and-providers-recruitment-method"
-                    error={!!flatErrors.recruitmentMethod}
-                  >
+                  <FieldGroup>
                     <Label htmlFor="participants-and-providers-recruitment-method">
                       {participantsAndProvidersT('recruitmentMethod.label')}
                     </Label>
@@ -317,10 +275,6 @@ export const ParticipantOptions = () => {
                         }
                       />
                     )}
-
-                    <FieldErrorMsg>
-                      {flatErrors.recruitmentMethod}
-                    </FieldErrorMsg>
 
                     <Fieldset>
                       {getKeys(recruitmentMethodConfig.options).map(key => (
@@ -351,9 +305,6 @@ export const ParticipantOptions = () => {
                                     'recruitmentOther.label'
                                   )}
                                 </Label>
-                                <FieldErrorMsg>
-                                  {flatErrors.recruitmentOther}
-                                </FieldErrorMsg>
                                 <Field
                                   as={TextAreaField}
                                   className="maxw-none mint-textarea"
@@ -373,11 +324,7 @@ export const ParticipantOptions = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="participants-and-providers-selection-method"
-                    error={!!flatErrors.selectionMethod}
-                    className="margin-top-4"
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Label
                       htmlFor="participants-and-providers-selection-method"
                       id="label-participants-and-providers-selection-method"
@@ -395,8 +342,6 @@ export const ParticipantOptions = () => {
                         }
                       />
                     )}
-
-                    <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
 
                     <Field
                       as={MultiSelect}
@@ -418,10 +363,7 @@ export const ParticipantOptions = () => {
                     {(values?.selectionMethod || []).includes(
                       ParticipantSelectionType.OTHER
                     ) && (
-                      <FieldGroup
-                        scrollElement="selectionOther"
-                        error={!!flatErrors.selectionOther}
-                      >
+                      <FieldGroup>
                         <Label
                           htmlFor="participants-and-providers-selection-other"
                           className="text-normal"
@@ -429,14 +371,9 @@ export const ParticipantOptions = () => {
                           {participantsAndProvidersT('selectionOther.label')}
                         </Label>
 
-                        <FieldErrorMsg>
-                          {flatErrors.selectionOther}
-                        </FieldErrorMsg>
-
                         <Field
                           as={TextAreaField}
                           className="height-15"
-                          error={flatErrors.selectionOther}
                           id="participants-and-providers-selection-other"
                           name="selectionOther"
                         />
