@@ -18,14 +18,11 @@ import FrequencyForm from 'components/FrequencyForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -193,30 +190,11 @@ const DataSharing = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<GetDataSharingFormType>) => {
-          const { errors, handleSubmit, setErrors, values, setFieldValue } =
+          const { handleSubmit, setErrors, values, setFieldValue } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -227,10 +205,7 @@ const DataSharing = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup
-                    scrollElement="dataSharingStarts"
-                    error={!!flatErrors.dataSharingStarts}
-                  >
+                  <FieldGroup>
                     <strong>
                       {opsEvalAndLearningMiscT('reportingTiming')}
                     </strong>
@@ -245,10 +220,6 @@ const DataSharing = () => {
                     <p className="text-base margin-y-1 line-height-body-4">
                       {opsEvalAndLearningT('dataSharingStarts.sublabel')}
                     </p>
-
-                    <FieldErrorMsg>
-                      {flatErrors.dataSharingStarts}
-                    </FieldErrorMsg>
 
                     <Field
                       as={Select}
@@ -281,10 +252,6 @@ const DataSharing = () => {
                           {opsEvalAndLearningT('dataSharingStartsOther.label')}
                         </Label>
 
-                        <FieldErrorMsg>
-                          {flatErrors.dataSharingStartsOther}
-                        </FieldErrorMsg>
-
                         <Field
                           as={TextAreaField}
                           className="maxw-none mint-textarea"
@@ -313,10 +280,7 @@ const DataSharing = () => {
                     field="dataSharingStartsNote"
                   />
 
-                  <FieldGroup
-                    scrollElement="dataCollectionStarts"
-                    error={!!flatErrors.dataCollectionStarts}
-                  >
+                  <FieldGroup>
                     <strong>
                       {opsEvalAndLearningMiscT('dataCollectionTiming')}
                     </strong>
@@ -327,10 +291,6 @@ const DataSharing = () => {
                     >
                       {opsEvalAndLearningT('dataCollectionStarts.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.dataCollectionStarts}
-                    </FieldErrorMsg>
 
                     <Field
                       as={Select}
@@ -365,10 +325,6 @@ const DataSharing = () => {
                           )}
                         </Label>
 
-                        <FieldErrorMsg>
-                          {flatErrors.dataCollectionStartsOther}
-                        </FieldErrorMsg>
-
                         <Field
                           as={TextAreaField}
                           className="maxw-none mint-textarea"
@@ -391,10 +347,7 @@ const DataSharing = () => {
                     boldLabel={false}
                   />
 
-                  <FieldGroup
-                    scrollElement="qualityReportingStarts"
-                    error={!!flatErrors.qualityReportingStarts}
-                  >
+                  <FieldGroup>
                     <strong>
                       {opsEvalAndLearningMiscT('qualityReportTiming')}
                     </strong>
@@ -404,10 +357,6 @@ const DataSharing = () => {
                     >
                       {opsEvalAndLearningT('qualityReportingStarts.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.qualityReportingStarts}
-                    </FieldErrorMsg>
 
                     <Field
                       as={Select}
@@ -443,10 +392,6 @@ const DataSharing = () => {
                             'qualityReportingStartsOther.label'
                           )}
                         </Label>
-
-                        <FieldErrorMsg>
-                          {flatErrors.qualityReportingStartsOther}
-                        </FieldErrorMsg>
 
                         <Field
                           as={TextAreaField}

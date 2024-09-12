@@ -26,15 +26,12 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -167,30 +164,11 @@ const Learning = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InitialValueType>) => {
-          const { errors, handleSubmit, setFieldValue, setErrors, values } =
+          const { handleSubmit, setFieldValue, setErrors, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -201,10 +179,7 @@ const Learning = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-learning-systems"
-                    error={!!flatErrors.modelLearningSystems}
-                  >
+                  <FieldGroup>
                     <Label htmlFor="ops-eval-and-learning-learning-systems">
                       {opsEvalAndLearningT('modelLearningSystems.label')}
                     </Label>
@@ -219,10 +194,6 @@ const Learning = () => {
                         }
                       />
                     )}
-
-                    <FieldErrorMsg>
-                      {flatErrors.modelLearningSystems}
-                    </FieldErrorMsg>
 
                     {getKeys(modelLearningSystemsConfig.options).map(type => {
                       return (
@@ -252,10 +223,6 @@ const Learning = () => {
                                   )}
                                 </Label>
 
-                                <FieldErrorMsg>
-                                  {flatErrors.modelLearningSystemsOther}
-                                </FieldErrorMsg>
-
                                 <Field
                                   as={TextInput}
                                   id="ops-eval-and-learning-learning-systems-other"
@@ -273,10 +240,7 @@ const Learning = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-learning-anticipated-challenges"
-                    error={!!flatErrors.anticipatedChallenges}
-                  >
+                  <FieldGroup>
                     <Label htmlFor="ops-eval-and-learning-learning-anticipated-challenges">
                       {opsEvalAndLearningT('anticipatedChallenges.label')}
                     </Label>
@@ -285,14 +249,9 @@ const Learning = () => {
                       {opsEvalAndLearningT('anticipatedChallenges.sublabel')}
                     </p>
 
-                    <FieldErrorMsg>
-                      {flatErrors.anticipatedChallenges}
-                    </FieldErrorMsg>
-
                     <Field
                       as={TextAreaField}
                       className="height-card"
-                      error={flatErrors.anticipatedChallenges}
                       id="ops-eval-and-learning-learning-anticipated-challenges"
                       data-testid="ops-eval-and-learning-learning-anticipated-challenges"
                       name="anticipatedChallenges"
