@@ -63,7 +63,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
         <a
           aria-label="Open in a new tab"
           class="usa-link display-flex flex-align-center width-fit-content margin-bottom-3"
-          href="/src/assets/files/highLevelProjectPlan.xlsx"
+          href="/src/assets/files/high-level-project-plan.xlsx"
           rel="noopener noreferrer"
           target="_blank"
         >
@@ -163,7 +163,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                       Contractor support prior to clearance
                     </p>
                     <i>
-                       We recommend discussing pre- clearance contractor support needs during your 2-pager or 6-pager review with the CMMI Front Office(FO), as CMMI FO will need to approve this request.
+                       We recommend discussing pre- clearance contractor support needs during your 2-pager or 6-pager review with the CMMI Front Office (FO), as CMMI FO will need to approve this request.
                     </i>
                   </th>
                   <td
@@ -195,7 +195,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   <td
                     class="text-baseline"
                   >
-                    Mint Team
+                    MINT Team
                   </td>
                 </tr>
                 <tr>
@@ -221,7 +221,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   <td
                     class="text-baseline"
                   >
-                    Model Team, MINT Team
+                    IT Lead, Model Team, MINT Team
                   </td>
                 </tr>
                 <tr>
@@ -1209,9 +1209,9 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management&section=about"
+                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-program-organization-relationship&section=about"
                     >
-                      MDM
+                      MDM-POR
                     </a>
                   </td>
                 </tr>
@@ -1227,9 +1227,9 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                   >
                     <a
                       class="usa-link usa-button usa-button--unstyled"
-                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management&section=about"
+                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-program-organization-relationship&section=about"
                     >
-                      MDM
+                      MDM-POR
                     </a>
                   </td>
                 </tr>
@@ -1708,7 +1708,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
-                    Make non-claims based payment
+                    Make non-claims based payments
                   </th>
                   <td
                     class="text-baseline"
@@ -1733,6 +1733,13 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       IPC
                     </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-for-ncbp&section=about"
+                    >
+                      MDM-NCBP
+                    </a>
                   </td>
                 </tr>
                 <tr>
@@ -1740,7 +1747,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     class="padding-y-1"
                     scope="row"
                   >
-                    Compute shared savings payment
+                    Compute shared savings payments
                   </th>
                   <td
                     class="text-baseline"
