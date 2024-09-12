@@ -31,14 +31,10 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import MINTDatePicker from 'components/shared/DatePicker';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -198,14 +194,12 @@ const Recover = () => {
       >
         {(formikProps: FormikProps<InitialValueType>) => {
           const {
-            errors,
             handleSubmit,
             setFieldValue,
             setFieldError,
             setErrors,
             values
           } = formikProps;
-          const flatErrors = flattenErrors(errors);
 
           const handleOnBlur = (
             e: React.ChangeEvent<HTMLInputElement>,
@@ -217,7 +211,6 @@ const Recover = () => {
             }
             try {
               setFieldValue(field, new Date(e.target.value).toISOString());
-              delete errors[field as keyof InitialValueType];
             } catch (err) {
               setFieldError(field, paymentsT('validDate'));
             }
@@ -225,24 +218,6 @@ const Recover = () => {
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <GridContainer className="padding-left-0 padding-right-0">
@@ -256,11 +231,7 @@ const Recover = () => {
                       }}
                     >
                       <Fieldset disabled={!!error || loading}>
-                        <FieldGroup
-                          scrollElement="willRecoverPayments"
-                          error={!!flatErrors.willRecoverPayments}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="payment-recover-payment"
                             className="maxw-none"
@@ -279,10 +250,6 @@ const Recover = () => {
                             />
                           )}
 
-                          <FieldErrorMsg>
-                            {flatErrors.willRecoverPayments}
-                          </FieldErrorMsg>
-
                           <BooleanRadio
                             field="willRecoverPayments"
                             id="payment-recover-payment"
@@ -297,13 +264,7 @@ const Recover = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="payment-anticipate-reconciling-payment-retro"
-                          error={
-                            !!flatErrors.anticipateReconcilingPaymentsRetrospectively
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="payment-anticipate-reconciling-payment-retro"
                             className="maxw-none"
@@ -312,12 +273,6 @@ const Recover = () => {
                               'anticipateReconcilingPaymentsRetrospectively.label'
                             )}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {
-                              flatErrors.anticipateReconcilingPaymentsRetrospectively
-                            }
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="anticipateReconcilingPaymentsRetrospectively"
@@ -373,7 +328,6 @@ const Recover = () => {
                               handleOnBlur={handleOnBlur}
                               formikValue={values.paymentStartDate}
                               value={paymentStartDate}
-                              error={flatErrors.paymentStartDate}
                               shouldShowWarning={
                                 initialValues.paymentStartDate !==
                                 values.paymentStartDate
