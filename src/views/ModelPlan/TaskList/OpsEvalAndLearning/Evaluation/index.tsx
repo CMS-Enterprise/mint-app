@@ -29,15 +29,12 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -195,30 +192,11 @@ const Evaluation = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<EvaluationFormType>) => {
-          const { errors, handleSubmit, setErrors, values, setFieldValue } =
+          const { handleSubmit, setErrors, values, setFieldValue } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -229,10 +207,7 @@ const Evaluation = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-evaluation-approach"
-                    error={!!flatErrors.evaluationApproaches}
-                  >
+                  <FieldGroup>
                     <Label
                       htmlFor="ops-eval-and-learning-evaluation-approach"
                       id="ops-eval-and-learning-evaluation-approach"
@@ -251,10 +226,6 @@ const Evaluation = () => {
                         }
                       />
                     )}
-
-                    <FieldErrorMsg>
-                      {flatErrors.evaluationApproaches}
-                    </FieldErrorMsg>
 
                     {getKeys(evaluationApproachesConfig.options).map(type => {
                       return (
@@ -285,10 +256,6 @@ const Evaluation = () => {
                                   )}
                                 </Label>
 
-                                <FieldErrorMsg>
-                                  {flatErrors.evaluationApproachOther}
-                                </FieldErrorMsg>
-
                                 <Field
                                   as={TextInput}
                                   id="ops-eval-and-learning-evaluation-approach-other"
@@ -305,7 +272,7 @@ const Evaluation = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup scrollElement="ops-eval-and-learning-cmmi-involvement">
+                  <FieldGroup>
                     <Label
                       htmlFor="ops-eval-and-learning-cmmi-involvement"
                       id="ops-eval-and-learning-cmmi-involvement"
@@ -317,8 +284,6 @@ const Evaluation = () => {
                     <p className="text-base margin-y-1">
                       {opsEvalAndLearningT('ccmInvolvment.sublabel')}
                     </p>
-
-                    <FieldErrorMsg>{flatErrors.ccmInvolvment}</FieldErrorMsg>
 
                     {getKeys(ccmInvolvmentConfig.options).map(type => {
                       return (
@@ -345,10 +310,6 @@ const Evaluation = () => {
                                   )}
                                 </Label>
 
-                                <FieldErrorMsg>
-                                  {flatErrors.ccmInvolvmentOther}
-                                </FieldErrorMsg>
-
                                 <Field
                                   as={TextInput}
                                   id="ops-eval-and-learning-cmmi-involvement-other"
@@ -366,11 +327,7 @@ const Evaluation = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-data-needed"
-                    error={!!flatErrors.dataNeededForMonitoring}
-                    className="margin-top-4"
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Label
                       htmlFor="ops-eval-and-learning-data-needed"
                       id="label-ops-eval-and-learning-data-needed"
@@ -393,10 +350,6 @@ const Evaluation = () => {
                     <p className="text-base margin-y-1">
                       {opsEvalAndLearningT('dataNeededForMonitoring.sublabel')}
                     </p>
-
-                    <FieldErrorMsg>
-                      {flatErrors.dataNeededForMonitoring}
-                    </FieldErrorMsg>
 
                     <Field
                       as={MultiSelect}
@@ -428,14 +381,9 @@ const Evaluation = () => {
                           )}
                         </Label>
 
-                        <FieldErrorMsg>
-                          {flatErrors.dataNeededForMonitoringOther}
-                        </FieldErrorMsg>
-
                         <Field
                           as={TextInput}
                           maxLength={50}
-                          error={flatErrors.dataNeededForMonitoringOther}
                           id="ops-eval-and-learning-data-needed-other"
                           name="dataNeededForMonitoringOther"
                         />
@@ -448,11 +396,7 @@ const Evaluation = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="label-ops-eval-and-learning-data-to-send"
-                    error={!!flatErrors.dataToSendParticicipants}
-                    className="margin-top-4"
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Label
                       htmlFor="ops-eval-and-learning-data-to-send"
                       id="label-ops-eval-and-learning-data-to-send"
@@ -471,10 +415,6 @@ const Evaluation = () => {
                         }
                       />
                     )}
-
-                    <FieldErrorMsg>
-                      {flatErrors.dataToSendParticicipants}
-                    </FieldErrorMsg>
 
                     <Field
                       as={MultiSelect}
@@ -506,14 +446,9 @@ const Evaluation = () => {
                           )}
                         </Label>
 
-                        <FieldErrorMsg>
-                          {flatErrors.dataToSendParticicipantsOther}
-                        </FieldErrorMsg>
-
                         <Field
                           as={TextInput}
                           maxLength={50}
-                          error={flatErrors.dataToSendParticicipantsOther}
                           id="ops-eval-and-learning-data-to-send-other"
                           name="dataToSendParticicipantsOther"
                         />
@@ -526,19 +461,13 @@ const Evaluation = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-share-cclf-data"
-                    error={!!flatErrors.shareCclfData}
-                    className="margin-top-6"
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label
                       htmlFor="ops-eval-and-learning-share-cclf-data"
                       className="maxw-none"
                     >
                       {opsEvalAndLearningT('shareCclfData.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.shareCclfData}</FieldErrorMsg>
 
                     <BooleanRadio
                       field="shareCclfData"
