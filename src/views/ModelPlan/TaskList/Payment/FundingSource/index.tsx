@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -30,15 +30,12 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import Tooltip from 'components/shared/Tooltip';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -164,13 +161,11 @@ const FundingSource = () => {
   const FundSelection = ({
     values,
     fieldName,
-    config,
-    flatErrors
+    config
   }: {
     values: FundingFormType;
     fieldName: 'fundingSource' | 'fundingSourceR';
     config: typeof fundingSourceConfig | typeof fundingSourceRConfig;
-    flatErrors: any;
   }) => (
     <Fieldset className="funding-source">
       <Label
@@ -209,20 +204,13 @@ const FundingSource = () => {
             {trustType ===
               FundingSourceEnum.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT &&
               values[fieldName]?.includes(trustType) && (
-                <FieldGroup
-                  className="margin-left-4 margin-top-1 margin-bottom-2"
-                  error={!!flatErrors[`${fieldName}PatientProtectionInfo`]}
-                >
+                <FieldGroup className="margin-left-4 margin-top-1 margin-bottom-2">
                   <Label
                     htmlFor={`${fieldName}PatientProtectionInfo`}
                     className="text-normal"
                   >
                     {paymentsT(`${fieldName}PatientProtectionInfo.label`)}
                   </Label>
-
-                  <FieldErrorMsg>
-                    {flatErrors[`${fieldName}PatientProtectionInfo`]}
-                  </FieldErrorMsg>
 
                   <Field
                     as={TextInput}
@@ -235,20 +223,13 @@ const FundingSource = () => {
 
             {trustType === FundingSourceEnum.MEDICARE_PART_A_HI_TRUST_FUND &&
               values[fieldName]?.includes(trustType) && (
-                <FieldGroup
-                  className="margin-left-4 margin-top-1 margin-bottom-2"
-                  error={!!flatErrors[`${fieldName}MedicareAInfo`]}
-                >
+                <FieldGroup className="margin-left-4 margin-top-1 margin-bottom-2">
                   <Label
                     htmlFor={`${fieldName}MedicareAInfo`}
                     className="text-normal"
                   >
                     {paymentsT(`${fieldName}MedicareAInfo.label`)}
                   </Label>
-
-                  <FieldErrorMsg>
-                    {flatErrors[`${fieldName}MedicareAInfo`]}
-                  </FieldErrorMsg>
 
                   <Field
                     as={TextInput}
@@ -261,20 +242,13 @@ const FundingSource = () => {
 
             {trustType === FundingSourceEnum.MEDICARE_PART_B_SMI_TRUST_FUND &&
               values[fieldName]?.includes(trustType) && (
-                <FieldGroup
-                  className="margin-left-4 margin-top-1 margin-bottom-2"
-                  error={!!flatErrors[`${fieldName}MedicareBInfo`]}
-                >
+                <FieldGroup className="margin-left-4 margin-top-1 margin-bottom-2">
                   <Label
                     htmlFor={`${fieldName}MedicareBInfo`}
                     className="text-normal"
                   >
                     {paymentsT(`${fieldName}MedicareBInfo.label`)}
                   </Label>
-
-                  <FieldErrorMsg>
-                    {flatErrors[`${fieldName}MedicareBInfo`]}
-                  </FieldErrorMsg>
 
                   <Field
                     as={TextInput}
@@ -287,17 +261,10 @@ const FundingSource = () => {
 
             {trustType === FundingSourceEnum.OTHER &&
               values[fieldName]?.includes(trustType) && (
-                <FieldGroup
-                  className="margin-left-4 margin-top-1 margin-bottom-2"
-                  error={!!flatErrors[`${fieldName}Other`]}
-                >
+                <FieldGroup className="margin-left-4 margin-top-1 margin-bottom-2">
                   <Label htmlFor={`${fieldName}Other`} className="text-normal">
                     {paymentsT(`${fieldName}Other.label`)}
                   </Label>
-
-                  <FieldErrorMsg>
-                    {flatErrors[`${fieldName}Other`]}
-                  </FieldErrorMsg>
 
                   <Field
                     as={TextInput}
@@ -338,9 +305,7 @@ const FundingSource = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName || ' '} indexTwo
-        </Trans>
+        {miscellaneousT('for')} {modelName}
       </p>
 
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
@@ -358,30 +323,10 @@ const FundingSource = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<FundingFormType>) => {
-          const { errors, handleSubmit, setErrors, values } = formikProps;
-
-          const flatErrors = flattenErrors(errors);
+          const { handleSubmit, setErrors, values } = formikProps;
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <GridContainer className="padding-left-0 padding-right-0">
@@ -395,20 +340,11 @@ const FundingSource = () => {
                       }}
                     >
                       <Fieldset disabled={!!error || loading}>
-                        <FieldGroup
-                          scrollElement="fundingSource"
-                          error={!!flatErrors.fundingSource}
-                          className="margin-top-4"
-                        >
-                          <FieldErrorMsg>
-                            {flatErrors.fundingSource}
-                          </FieldErrorMsg>
-
+                        <FieldGroup className="margin-top-4">
                           <FundSelection
                             values={values}
                             fieldName="fundingSource"
                             config={fundingSourceConfig}
-                            flatErrors={flatErrors}
                           />
 
                           <AddNote
@@ -419,18 +355,12 @@ const FundingSource = () => {
 
                         <FieldGroup
                           scrollElement="fundingSourceR"
-                          error={!!flatErrors.fundingSourceR}
                           className="margin-top-4"
                         >
-                          <FieldErrorMsg>
-                            {flatErrors.fundingSourceR}
-                          </FieldErrorMsg>
-
                           <FundSelection
                             values={values}
                             fieldName="fundingSourceR"
                             config={fundingSourceRConfig}
-                            flatErrors={flatErrors}
                           />
 
                           <AddNote
@@ -439,18 +369,10 @@ const FundingSource = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="payRecipients"
-                          error={!!flatErrors.payRecipients}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label htmlFor="payRecipients" className="maxw-none">
                             {paymentsT('payRecipients.label')}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.payRecipients}
-                          </FieldErrorMsg>
 
                           <Fieldset>
                             {getKeys(payRecipientsConfig.options).map(type => {
@@ -469,12 +391,7 @@ const FundingSource = () => {
 
                                   {type === PayRecipient.OTHER &&
                                     values.payRecipients.includes(type) && (
-                                      <FieldGroup
-                                        className="margin-left-4 margin-top-2 margin-bottom-4"
-                                        error={
-                                          !!flatErrors.payRecipientsOtherSpecification
-                                        }
-                                      >
+                                      <FieldGroup className="margin-left-4 margin-top-2 margin-bottom-4">
                                         <Label
                                           htmlFor="payRecipientsOtherSpecification"
                                           className="text-normal"
@@ -483,12 +400,6 @@ const FundingSource = () => {
                                             'payRecipientsOtherSpecification.label'
                                           )}
                                         </Label>
-
-                                        <FieldErrorMsg>
-                                          {
-                                            flatErrors.payRecipientsOtherSpecification
-                                          }
-                                        </FieldErrorMsg>
 
                                         <Field
                                           as={TextInput}
@@ -509,11 +420,7 @@ const FundingSource = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="payType"
-                          error={!!flatErrors.payType}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label htmlFor="payType" className="maxw-none">
                             {paymentsT('payType.label')}
                           </Label>
@@ -532,8 +439,6 @@ const FundingSource = () => {
                           <p className="text-base margin-y-1 margin-top-2">
                             {paymentsT('payType.sublabel')}
                           </p>
-
-                          <FieldErrorMsg>{flatErrors.payType}</FieldErrorMsg>
 
                           <Fieldset>
                             {getKeys(payTypeConfig.options).map(type => {
