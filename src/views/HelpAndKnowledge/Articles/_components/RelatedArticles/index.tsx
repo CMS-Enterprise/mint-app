@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { CardGroup, GridContainer } from '@trussworks/react-uswds';
-import classnames from 'classnames';
+import classNames from 'classnames';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import helpAndKnowledgeArticles, {
   ArticleCategories,
   ArticleProps,
@@ -13,10 +13,11 @@ import ArticleCard from 'views/HelpAndKnowledge/Articles/_components/ArticleCard
 
 type RelatedArticlesProps = {
   className?: string;
-  currentArticle: HelpArticle;
+  currentArticle?: HelpArticle;
   specificArticles?: [HelpArticle, HelpArticle, HelpArticle];
   type?: ArticleCategories;
   viewAllLink?: boolean;
+  implementationType?: 'Help Center' | 'Additional Resources';
 };
 
 const RelatedArticles = ({
@@ -24,7 +25,8 @@ const RelatedArticles = ({
   currentArticle,
   specificArticles,
   type,
-  viewAllLink
+  viewAllLink,
+  implementationType = 'Help Center'
 }: RelatedArticlesProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
@@ -39,9 +41,11 @@ const RelatedArticles = ({
   }
 
   // Slice to first 3 of the relevant articles
-  filteredArticles = filteredArticles
-    .filter(article => article.key !== currentArticle)
-    .slice(0, 3);
+  filteredArticles = currentArticle
+    ? filteredArticles
+        .filter(article => article.key !== currentArticle)
+        .slice(0, 3)
+    : filteredArticles.slice(0, 3);
 
   // It first checks if `specificArticles` is defined, and if so, it maps over each article name to find the corresponding article object in `helpAndKnowledgeArticles`.
   // It then filters out any undefined values and assigns the result to `articlesToShow`.
@@ -54,18 +58,34 @@ const RelatedArticles = ({
       .filter((article): article is ArticleProps => !!article) ?? // Filter out undefined values // Filter out undefined values
     filteredArticles;
 
+  const bgClass: string =
+    implementationType === 'Additional Resources'
+      ? 'bg-base-lightest'
+      : 'bg-primary-lighter';
+
   return (
-    <div className="bg-primary-lighter">
+    <div className={classNames(bgClass, className)}>
       <GridContainer className="padding-top-4 padding-bottom-10">
-        <h2 className="margin-top-0 margin-bottom-1">{t('relatedHelp')}</h2>
+        <h2 className="margin-top-0 margin-bottom-1">
+          {implementationType === 'Additional Resources'
+            ? t('addtionalResources')
+            : t('relatedHelp')}
+        </h2>
+
         <dt className="margin-bottom-4">{t('relatedDescription')}</dt>
-        <CardGroup className={classnames(className)}>
+
+        <CardGroup>
           {articlesToShow.map(article => (
             <ArticleCard {...article} isLink />
           ))}
         </CardGroup>
+
         {viewAllLink && (
-          <Link to="/help-and-knowledge/articles">{t('viewAllRelated')}</Link>
+          <div className="margin-top-3">
+            <UswdsReactLink to="/help-and-knowledge/articles">
+              {t('viewAllRelated')}
+            </UswdsReactLink>
+          </div>
         )}
       </GridContainer>
     </div>

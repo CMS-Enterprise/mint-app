@@ -2,37 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
-// import classNames from 'classnames';
-import {
-  //   GetCrtdLsQuery,
-  GetModelPlanQuery,
-  useGetModelPlanQuery
-} from 'gql/gen/graphql';
+import { GetModelPlanQuery, useGetModelPlanQuery } from 'gql/gen/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import { FavoriteIcon } from 'components/FavoriteCard';
-// import UswdsReactLink from 'components/LinkWrapper';
-// import { useFlags } from 'launchdarkly-react-client-sdk';
-// import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
-// import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
 import StatusBanner from 'components/StatusBanner';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
+import { HelpArticle } from 'views/HelpAndKnowledge/Articles';
+import RelatedArticles from 'views/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 
 import DiscussionsCard from './Cards/DiscussionsCard';
-// import { formatDateLocal } from 'utils/date';
-// import { isAssessment } from 'utils/user';
-// import { SubscriptionContext } from 'views/SubscriptionWrapper';
 import DocumentsCard from './Cards/DocumentsCard';
 import ModelPlanCard from './Cards/ModelPlanCard';
 import TeamCard from './Cards/TeamCard';
@@ -40,11 +30,6 @@ import TeamCard from './Cards/TeamCard';
 import './index.scss';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
-// type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
-
-// type CRTDLType =
-//   | GetCrtdLsQuery['modelPlan']['crs'][0]
-//   | GetCrtdLsQuery['modelPlan']['tdls'][0];
 
 export type StatusMessageType = {
   message: string;
@@ -57,8 +42,6 @@ const CollaborationArea = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   const { message } = useMessage();
-
-  //   const flags = useFlags();
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
@@ -76,18 +59,11 @@ const CollaborationArea = () => {
     modelName,
     discussions,
     documents,
-    // crs,
-    // tdls,
     status,
-    // collaborators,
+    collaborators,
     isFavorite,
     suggestedPhase
   } = modelPlan;
-
-  //   const planCRs = crs || [];
-  //   const planTDLs = tdls || [];
-
-  //   const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
 
   // Gets the sessions storage variable for statusChecked of modelPlan
   const statusCheckedStorage =
@@ -250,13 +226,10 @@ const CollaborationArea = () => {
         )}
       </GridContainer>
 
-      <div className="bg-primary-lighter padding-top-6 padding-bottom-10 margin-bottom-neg-7">
+      <div className="bg-primary-lighter padding-y-6">
         <GridContainer>
           <CardGroup>
-            <TeamCard
-              modelID={modelID}
-              collaborators={modelPlan.collaborators}
-            />
+            <TeamCard modelID={modelID} collaborators={collaborators} />
 
             <DiscussionsCard discussions={discussions} modelID={modelID} />
 
@@ -264,6 +237,17 @@ const CollaborationArea = () => {
           </CardGroup>
         </GridContainer>
       </div>
+
+      <RelatedArticles
+        className="margin-bottom-neg-7 padding-bottom-4 padding-top-2"
+        implementationType="Additional Resources"
+        specificArticles={[
+          HelpArticle.HIGH_LEVEL_PROJECT_PLAN,
+          HelpArticle.TWO_PAGER_MEETING,
+          HelpArticle.SIX_PAGER_MEETING
+        ]}
+        viewAllLink
+      />
     </MainContent>
   );
 };

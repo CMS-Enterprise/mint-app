@@ -9,7 +9,7 @@ import {
 } from '@trussworks/react-uswds';
 import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accordion/Accordion';
 
-import ExcelFile from 'assets/files/highLevelProjectPlan.xlsx';
+import ExcelFile from 'assets/files/high-level-project-plan.xlsx';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
