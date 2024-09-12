@@ -183,7 +183,7 @@ const PeopleImpact = () => {
                             }}
                           />
 
-                          <div className="display-flex mint-header__basic">
+                          <div className="display-flex mint-header__basic flex-justify">
                             <span>{beneficiariesMiscT('zero')}</span>
 
                             <span>{beneficiariesMiscT('tenThousand')}</span>

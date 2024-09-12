@@ -204,7 +204,7 @@ export const ParticipantOptions = () => {
                       }}
                     />
 
-                    <div className="display-flex mint-header__basic">
+                    <div className="display-flex mint-header__basic flex-justify">
                       <span>{participantsAndProvidersMiscT('zero')}</span>
                       <span>
                         {participantsAndProvidersMiscT('tenThousand')}
