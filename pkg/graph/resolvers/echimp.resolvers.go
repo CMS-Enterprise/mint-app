@@ -8,7 +8,6 @@ import (
 	"context"
 
 	"github.com/cmsgov/mint-app/pkg/echimpcache"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -31,13 +30,11 @@ func (r *queryResolver) EchimpTdl(ctx context.Context) ([]*models.EChimpTDL, err
 }
 
 // EchimpCRAndTdls is the resolver for the echimpCRAndTDLS field.
-func (r *queryResolver) EchimpCRAndTdls(ctx context.Context) ([]model.EChimpCRAndTdls, error) {
+func (r *queryResolver) EchimpCRAndTdls(ctx context.Context) ([]models.EChimpCRAndTDLS, error) {
 	data, err := echimpcache.GetECHIMPCrAndTDLCache(r.echimpS3Client)
 	if err != nil {
 		return nil, err
 	}
-	// TODO get model gen binding working for the interface typw
-	_ = data
-	return nil, nil
-	// return data.AllCrsAndTDLS, nil
+
+	return data.AllCrsAndTDLS, nil
 }

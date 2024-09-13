@@ -40,7 +40,7 @@ type crAndTDLCache struct {
 	TDLsByModelPlanID map[uuid.UUID][]*models.EChimpTDL
 	TDLsByCRNumber    map[string]*models.EChimpTDL
 
-	AllCrsAndTDLS []models.EChimpCRAndTdls
+	AllCrsAndTDLS []models.EChimpCRAndTDLS
 }
 
 func (c *crAndTDLCache) IsOld() bool {
@@ -79,8 +79,8 @@ func (c *crAndTDLCache) refreshCache(client *s3.S3Client) error {
 	return nil
 
 }
-func (c *crAndTDLCache) aggregateAllCrsAndTDLS() []models.EChimpCRAndTdls {
-	allData := []models.EChimpCRAndTdls{}
+func (c *crAndTDLCache) aggregateAllCrsAndTDLS() []models.EChimpCRAndTDLS {
+	allData := []models.EChimpCRAndTDLS{}
 	for _, cr := range c.CRs {
 		allData = append(allData, cr)
 

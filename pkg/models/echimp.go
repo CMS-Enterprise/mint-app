@@ -1,5 +1,5 @@
 package models
 
-type EChimpCRAndTdls interface {
+type EChimpCRAndTDLS interface {
 	IsEChimpCRAndTdls()
 }
