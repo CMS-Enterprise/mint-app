@@ -39,6 +39,8 @@ type crAndTDLCache struct {
 	TDls              []*models.EChimpTDL
 	TDLsByModelPlanID map[uuid.UUID][]*models.EChimpTDL
 	TDLsByCRNumber    map[string]*models.EChimpTDL
+
+	AllCrsAndTDLS []models.EChimpCRAndTdls
 }
 
 func (c *crAndTDLCache) IsOld() bool {
@@ -71,7 +73,22 @@ func (c *crAndTDLCache) refreshCache(client *s3.S3Client) error {
 	}
 	c.CRs = sanitizedCRS
 	c.TDls = sanitizedTDLS
+	c.AllCrsAndTDLS = c.aggregateAllCrsAndTDLS()
+
 	c.lastChecked = time.Now()
 	return nil
+
+}
+func (c *crAndTDLCache) aggregateAllCrsAndTDLS() []models.EChimpCRAndTdls {
+	allData := []models.EChimpCRAndTdls{}
+	for _, cr := range c.CRs {
+		allData = append(allData, cr)
+
+	}
+	for _, tdl := range c.TDls {
+		allData = append(allData, tdl)
+
+	}
+	return allData
 
 }
