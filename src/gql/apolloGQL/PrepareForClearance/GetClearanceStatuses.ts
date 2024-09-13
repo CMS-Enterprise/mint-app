@@ -1,7 +1,10 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query GetClearanceStatuses($id: UUID!) {
+  query GetClearanceStatuses(
+    $id: UUID!
+    $includePrepareForClearance: Boolean!
+  ) {
     modelPlan(id: $id) {
       id
       basics {
@@ -58,7 +61,7 @@ export default gql(/* GraphQL */ `
         readyForClearanceDts
         status
       }
-      prepareForClearance {
+      prepareForClearance @include(if: $includePrepareForClearance) {
         status
       }
     }
