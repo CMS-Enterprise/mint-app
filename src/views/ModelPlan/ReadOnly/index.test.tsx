@@ -64,7 +64,7 @@ describe('Read Only Model Plan Summary', () => {
       const { getByText } = within(screen.getByTestId('task-list-status'));
       expect(
         getByText(
-          i18next.t<string>(
+          i18next.t<string, {}, string>(
             `modelPlan:status.options.${ModelStatus.PLAN_DRAFT}`
           )
         )
@@ -110,7 +110,7 @@ describe('Read Only Model Plan Summary', () => {
       const { getByText } = within(screen.getByTestId('task-list-status'));
       expect(
         getByText(
-          i18next.t<string>(
+          i18next.t<string, {}, string>(
             `modelPlan:status.options.${ModelStatus.PLAN_DRAFT}`
           )
         )

@@ -1,11 +1,16 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import { AnythingWrongSurvey, ImproveMINTSurvey } from './index';
 
 describe('The Survey component', () => {
-  it('renders without crashing', () => {
-    shallow(<AnythingWrongSurvey />);
-    shallow(<ImproveMINTSurvey />);
+  it('renders AnythingWrongSurvey without crashing', () => {
+    render(<AnythingWrongSurvey />);
+    expect(screen.getByTestId('anything-wrong-survey')).toBeInTheDocument();
+  });
+
+  it('renders ImproveMINTSurvey without crashing', () => {
+    render(<ImproveMINTSurvey />);
+    expect(screen.getByTestId('improve-mint-survey')).toBeInTheDocument();
   });
 });

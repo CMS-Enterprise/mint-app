@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import { RadioField } from './index';
 
 describe('The Radio Field', () => {
   it('renders without crashing', () => {
-    shallow(
+    render(
       <RadioField
         id="TestRadio"
         label="A"
@@ -15,11 +15,12 @@ describe('The Radio Field', () => {
         value="A"
       />
     );
+    expect(screen.getByLabelText('A')).toBeInTheDocument();
   });
 
   it('has the correct value', () => {
     const fixture = 'A';
-    const component = shallow(
+    render(
       <RadioField
         id="TestRadio"
         label="A"
@@ -30,6 +31,7 @@ describe('The Radio Field', () => {
       />
     );
 
-    expect(component.find('input').props().value).toEqual(fixture);
+    const input = screen.getByLabelText('A') as HTMLInputElement;
+    expect(input.value).toEqual(fixture);
   });
 });

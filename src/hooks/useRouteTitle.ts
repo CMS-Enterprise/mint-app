@@ -12,7 +12,9 @@ const useRouteTitle = ({ sendGA = false }: { sendGA: boolean }): string => {
 
   const { t } = useTranslation('routes');
 
-  const routeTitles = t('titles', { returnObjects: true });
+  const routeTitles: Record<string, string> = t('titles', {
+    returnObjects: true
+  });
 
   const title = useRef<string>('');
 

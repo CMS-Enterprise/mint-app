@@ -11,9 +11,12 @@ type RoleInfoProps = {
 const RoleInfo = ({ className }: RoleInfoProps) => {
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
 
-  const roleInfoConfig = collaboratorsMiscT('rolesInfo', {
-    returnObjects: true
-  });
+  const roleInfoConfig: Record<string, string[]> = collaboratorsMiscT(
+    'rolesInfo',
+    {
+      returnObjects: true
+    }
+  );
 
   return (
     <CollapsableLink

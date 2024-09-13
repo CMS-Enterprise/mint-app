@@ -1,14 +1,15 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import { NavLink, SecondaryNav } from './index';
 
 describe('The Secondary Nav component', () => {
   it('renders without crashing', () => {
-    shallow(
+    render(
       <SecondaryNav>
         <NavLink to="/">Test</NavLink>
       </SecondaryNav>
     );
+    expect(screen.getByText('Test')).toBeInTheDocument();
   });
 });

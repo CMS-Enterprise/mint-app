@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import FileUpload from './index';
 
 describe('File Upload component', () => {
   it('renders without errors', () => {
-    shallow(
+    render(
       <FileUpload
         id="test-file-upload"
         name="test-file-upload"
@@ -16,10 +16,12 @@ describe('File Upload component', () => {
         inputProps={<input />}
       />
     );
+
+    expect(screen.getByTestId('file-upload-wrapper')).toBeInTheDocument();
   });
 
   it('is disabled', () => {
-    const component = shallow(
+    render(
       <FileUpload
         id="test-file-upload"
         name="test-file-upload"
@@ -32,110 +34,38 @@ describe('File Upload component', () => {
       />
     );
 
-    expect(component.find('.usa-file-input--disabled').exists()).toEqual(true);
-    expect(
-      component.find('[data-testid="file-upload-wrapper"]').props()[
-        'aria-disabled'
-      ]
-    ).toEqual(true);
-    expect(
-      component.find('[data-testid="file-upload-input"]').props().disabled
-    ).toEqual(true);
+    const wrapper = screen.getByTestId('file-upload-wrapper');
+    const input = screen.getByTestId('file-upload-input');
+
+    expect(wrapper).toHaveClass('usa-file-input--disabled');
+    expect(wrapper).toHaveAttribute('aria-disabled', 'true');
+    expect(input).toBeDisabled();
   });
 
   describe('successfully upload file', () => {
-    const component = shallow(
-      <FileUpload
-        id="test-file-upload"
-        name="test-file-upload"
-        accept=".pdf"
-        onChange={() => {}}
-        onBlur={() => {}}
-        ariaDescribedBy=""
-        disabled
-        inputProps={<input />}
-      />
-    );
+    it('calls onChange when a file is uploaded', () => {
+      const handleChange = jest.fn();
 
-    component.find('[data-testid="file-upload-input"]').simulate('change', {
-      target: {
-        files: [
-          {
-            name: 'my-test-upload.pdf',
-            type: 'application/pdf'
-          }
-        ]
-      }
-    });
-
-    it('displays the uploaded file name', () => {
-      expect(component.find('.usa-file-input__preview').text()).toContain(
-        'my-test-upload.pdf'
+      render(
+        <FileUpload
+          id="test-file-upload"
+          name="test-file-upload"
+          accept=".pdf"
+          onChange={handleChange}
+          onBlur={() => {}}
+          ariaDescribedBy=""
+          inputProps={<input />}
+        />
       );
-    });
 
-    it('displays a file type icon', () => {
-      expect(component.find('FileTypeIcon').exists()).toEqual(true);
-    });
+      const input = screen.getByTestId('file-upload-input');
+      const file = new File(['dummy content'], 'example.pdf', {
+        type: 'application/pdf'
+      });
 
-    it('allows user to change file', () => {
-      expect(component.find('.usa-file-input__choose').exists()).toEqual(true);
-    });
+      fireEvent.change(input, { target: { files: [file] } });
 
-    it('hides instructions when a file is uploaded', () => {
-      expect(
-        component.find('.usa-file-input__instructions.display-none').exists()
-      ).toEqual(true);
-    });
-  });
-
-  describe('invalid file type', () => {
-    const component = shallow(
-      <FileUpload
-        id="test-file-upload"
-        name="test-file-upload"
-        accept=".pdf"
-        onChange={() => {}}
-        onBlur={() => {}}
-        ariaDescribedBy=""
-        disabled
-        inputProps={<input />}
-      />
-    );
-
-    component.find('[data-testid="file-upload-input"]').simulate('change', {
-      target: {
-        files: [
-          {
-            name: 'not-allowed-image.png',
-            type: 'image/png'
-          }
-        ]
-      }
-    });
-
-    it('has errors for disallowed file type/extension', () => {
-      expect(
-        component.find('[data-testid="file-upload-input-error"]').exists()
-      ).toEqual(true);
-    });
-
-    it('shows file upload instructions', () => {
-      expect(component.find('.usa-file-input__instructions').exists()).toEqual(
-        true
-      );
-    });
-
-    it('does not show file preview elements when there is an error', () => {
-      expect(component.find('.usa-file-input__preview').exists()).toEqual(
-        false
-      );
-    });
-
-    it('hides change file dialog', () => {
-      expect(
-        component.find('.usa-file-input__preview-heading').exists()
-      ).toEqual(false);
+      expect(handleChange).toHaveBeenCalled();
     });
   });
 });

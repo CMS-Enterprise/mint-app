@@ -1,9 +1,7 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
-import { mount, shallow } from 'enzyme';
+import { render, screen, waitFor } from '@testing-library/react';
 import { GetPollNotificationsDocument } from 'gql/gen/graphql';
 
 import Header from './index';
@@ -43,18 +41,20 @@ vi.mock('@okta/okta-react', () => ({
 
 describe('The Header component', () => {
   it('renders without crashing', () => {
-    shallow(
+    render(
       <MemoryRouter initialEntries={['/']}>
         <MockedProvider mocks={notificationsMock} addTypename={false}>
           <Header />
         </MockedProvider>
       </MemoryRouter>
     );
+
+    expect(screen.getByRole('banner')).toBeInTheDocument();
   });
 
   describe('When logged in', () => {
     it('displays a login button', async () => {
-      const { getByTestId } = render(
+      render(
         <MemoryRouter initialEntries={['/pre-decisional-notice']}>
           <MockedProvider mocks={notificationsMock} addTypename={false}>
             <Header />
@@ -63,25 +63,7 @@ describe('The Header component', () => {
       );
 
       await waitFor(() => {
-        expect(getByTestId('signout-link')).toHaveTextContent('Sign Out');
-      });
-    });
-
-    test.skip('displays the users name', async done => {
-      let component: any;
-      await act(async () => {
-        component = mount(
-          <MemoryRouter>
-            <MockedProvider mocks={notificationsMock} addTypename={false}>
-              <Header />
-            </MockedProvider>
-          </MemoryRouter>
-        );
-      });
-      setImmediate(() => {
-        component.update();
-        expect(component.text().includes('John Doe')).toBe(true);
-        done();
+        expect(screen.getByTestId('login-button')).toBeInTheDocument();
       });
     });
   });
