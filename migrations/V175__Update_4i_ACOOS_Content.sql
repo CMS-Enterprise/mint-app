@@ -1,3 +1,11 @@
+-- Note: possible operational solutions are mapped by ID to keep things simple.
+--       ______________________________________
+--       | ID | Possible Operational Solution |
+--       |----|-------------------------------|
+--       | 1  | 4i                            |
+--       | 2  | ACO-OS                        |
+--       --------------------------------------
+
 UPDATE possible_operational_solution_contact
 SET
   role = 'CMMI/BSG Subject Matter Expert',
