@@ -54,7 +54,7 @@ describe('File Upload component', () => {
           onChange={handleChange}
           onBlur={() => {}}
           ariaDescribedBy=""
-          inputProps={<input />}
+          inputProps={{}}
         />
       );
 
