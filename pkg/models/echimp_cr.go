@@ -89,3 +89,5 @@ type EChimpCR struct {
 	RelatedCrTdlNumbers *string    `parquet:"relatedCrTdlNumbers" json:"relatedCrTdlNumbers"`
 	AssociatedModelUids *uuid.UUID `parquet:"associatedModelUids" json:"associatedModelUids"`
 }
+
+func (echimp *EChimpCR) IsEchimpCRAndTDLS() {}

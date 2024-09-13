@@ -74,3 +74,5 @@ type EChimpTDL struct {
 	Status              *string    `parquet:"status" json:"status"`
 	AssociatedModelUids *uuid.UUID `parquet:"associatedModelUids" json:"associatedModelUids"`
 }
+
+func (echimp *EChimpTDL) IsEchimpCRAndTDLS() {}
