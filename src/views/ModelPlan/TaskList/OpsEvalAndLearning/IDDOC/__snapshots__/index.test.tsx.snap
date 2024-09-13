@@ -116,7 +116,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </h3>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="technicalContactsIdentified"
       >
         <label
           class="usa-label"
@@ -196,7 +195,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="captureParticipantInfo"
       >
         <label
           class="usa-label"
@@ -289,7 +287,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </p>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="icdOwner"
       >
         <label
           class="usa-label"

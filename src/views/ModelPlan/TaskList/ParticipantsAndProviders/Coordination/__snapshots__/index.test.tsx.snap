@@ -332,7 +332,6 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-bottom-8"
-        data-scroll="coordinateWork"
       >
         <label
           class="usa-label"
@@ -417,7 +416,6 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="gainsharePayments"
       >
         <label
           class="usa-label"
@@ -497,7 +495,6 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
-        data-scroll="participantsIds"
       >
         <label
           class="usa-label maxw-none"

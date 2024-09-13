@@ -19,14 +19,11 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -193,30 +190,11 @@ const Performance = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<PerformanceFormType>) => {
-          const { errors, handleSubmit, setErrors, values, setFieldValue } =
+          const { handleSubmit, setErrors, values, setFieldValue } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -227,10 +205,7 @@ const Performance = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup
-                    scrollElement="benchmarkForPerformance"
-                    error={!!flatErrors.benchmarkForPerformance}
-                  >
+                  <FieldGroup>
                     <Label htmlFor="ops-eval-and-learning-benchmark-performance">
                       {opsEvalAndLearningT('benchmarkForPerformance.label')}
                     </Label>
@@ -245,10 +220,6 @@ const Performance = () => {
                         }
                       />
                     )}
-
-                    <FieldErrorMsg>
-                      {flatErrors.benchmarkForPerformance}
-                    </FieldErrorMsg>
 
                     <Fieldset>
                       {getKeys(benchmarkForPerformanceConfig.options).map(
@@ -275,18 +246,10 @@ const Performance = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="computePerformanceScores"
-                    error={!!flatErrors.computePerformanceScores}
-                    className="margin-top-6"
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-compute-performance">
                       {opsEvalAndLearningT('computePerformanceScores.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.computePerformanceScores}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="computePerformanceScores"
@@ -302,11 +265,7 @@ const Performance = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="riskAdjustPerformance"
-                    error={!!flatErrors.riskAdjustPerformance}
-                    className="margin-top-6"
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-risk-adjustments">
                       {opsEvalAndLearningMiscT('riskAdjustments')}
                     </Label>
@@ -317,10 +276,6 @@ const Performance = () => {
                     >
                       {opsEvalAndLearningT('riskAdjustPerformance.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.riskAdjustPerformance}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="riskAdjustPerformance"
@@ -337,10 +292,6 @@ const Performance = () => {
                       {opsEvalAndLearningT('riskAdjustFeedback.label')}
                     </Label>
 
-                    <FieldErrorMsg>
-                      {flatErrors.riskAdjustFeedback}
-                    </FieldErrorMsg>
-
                     <BooleanRadio
                       field="riskAdjustFeedback"
                       id="ops-eval-and-learning-risk-adjustment-feedback"
@@ -355,10 +306,6 @@ const Performance = () => {
                     >
                       {opsEvalAndLearningT('riskAdjustPayments.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.riskAdjustPayments}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="riskAdjustPayments"
@@ -375,8 +322,6 @@ const Performance = () => {
                       {opsEvalAndLearningT('riskAdjustOther.label')}
                     </Label>
 
-                    <FieldErrorMsg>{flatErrors.riskAdjustOther}</FieldErrorMsg>
-
                     <BooleanRadio
                       field="riskAdjustOther"
                       id="ops-eval-and-learning-risk-adjustment-other"
@@ -391,11 +336,7 @@ const Performance = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="appealPerformance"
-                    error={!!flatErrors.appealPerformance}
-                    className="margin-top-6"
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-appeals">
                       {opsEvalAndLearningMiscT('participantAppeal')}
                     </Label>
@@ -423,10 +364,6 @@ const Performance = () => {
                       {opsEvalAndLearningT('appealPerformance.label')}
                     </Label>
 
-                    <FieldErrorMsg>
-                      {flatErrors.appealPerformance}
-                    </FieldErrorMsg>
-
                     <BooleanRadio
                       field="appealPerformance"
                       id="ops-eval-and-learning-appeal-performance"
@@ -441,8 +378,6 @@ const Performance = () => {
                     >
                       {opsEvalAndLearningT('appealFeedback.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.appealFeedback}</FieldErrorMsg>
 
                     <BooleanRadio
                       field="appealFeedback"
@@ -459,8 +394,6 @@ const Performance = () => {
                       {opsEvalAndLearningT('appealPayments.label')}
                     </Label>
 
-                    <FieldErrorMsg>{flatErrors.appealPayments}</FieldErrorMsg>
-
                     <BooleanRadio
                       field="appealPayments"
                       id="ops-eval-and-learning-appeal-payment"
@@ -475,8 +408,6 @@ const Performance = () => {
                     >
                       {opsEvalAndLearningT('appealOther.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.appealOther}</FieldErrorMsg>
 
                     <BooleanRadio
                       field="appealOther"

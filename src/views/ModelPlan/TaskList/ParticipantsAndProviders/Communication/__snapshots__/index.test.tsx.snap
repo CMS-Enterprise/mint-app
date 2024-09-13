@@ -461,7 +461,6 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
-        data-scroll="participants-and-providers-communication-method"
       >
         <label
           class="usa-label"
@@ -578,7 +577,6 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="participants-and-providers-risk-type"
       >
         <label
           class="usa-label"
@@ -738,7 +736,6 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="participants-and-providers-risk-change"
       >
         <label
           class="usa-label"

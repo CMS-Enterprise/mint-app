@@ -25,14 +25,11 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -157,30 +154,10 @@ const IDDOCTesting = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<IDDOCTestingFormType>) => {
-          const { errors, handleSubmit, setErrors, values } = formikProps;
-
-          const flatErrors = flattenErrors(errors);
+          const { handleSubmit, setErrors, values } = formikProps;
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -204,16 +181,10 @@ const IDDOCTesting = () => {
                     </span>
                   </Alert>
 
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-uat-needs"
-                    className="margin-top-6"
-                    error={!!flatErrors.uatNeeds}
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-uat-needs">
                       {opsEvalAndLearningT('uatNeeds.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.uatNeeds}</FieldErrorMsg>
 
                     <Field
                       as={TextAreaField}
@@ -223,16 +194,10 @@ const IDDOCTesting = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-stc-needs"
-                    className="margin-top-6"
-                    error={!!flatErrors.stcNeeds}
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-stc-needs">
                       {opsEvalAndLearningT('stcNeeds.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.stcNeeds}</FieldErrorMsg>
 
                     <Field
                       as={TextAreaField}
@@ -243,16 +208,10 @@ const IDDOCTesting = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-testing-timelines"
-                    className="margin-top-6"
-                    error={!!flatErrors.testingTimelines}
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-testing-timelines">
                       {opsEvalAndLearningT('testingTimelines.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.testingTimelines}</FieldErrorMsg>
 
                     <Field
                       as={TextAreaField}
@@ -269,14 +228,10 @@ const IDDOCTesting = () => {
 
                   <h3>{opsEvalAndLearningMiscT('dataMonitoring')}</h3>
 
-                  <FieldGroup scrollElement="ops-eval-and-learning-data-monitoring-file">
+                  <FieldGroup>
                     <Label htmlFor="ops-eval-and-learning-data-monitoring-file">
                       {opsEvalAndLearningT('dataMonitoringFileTypes.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.dataMonitoringFileTypes}
-                    </FieldErrorMsg>
 
                     {getKeys(dataMonitoringFileTypesConfig.options).map(
                       type => {
@@ -309,10 +264,6 @@ const IDDOCTesting = () => {
                                     )}
                                   </Label>
 
-                                  <FieldErrorMsg>
-                                    {flatErrors.dataMonitoringFileOther}
-                                  </FieldErrorMsg>
-
                                   <Field
                                     as={TextInput}
                                     id="ops-eval-and-learning-data-monitoring-file-other"
@@ -326,16 +277,10 @@ const IDDOCTesting = () => {
                     )}
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-data-response-type"
-                    className="margin-top-6"
-                    error={!!flatErrors.dataResponseType}
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-data-response-type">
                       {opsEvalAndLearningT('dataResponseType.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.dataResponseType}</FieldErrorMsg>
 
                     <Field
                       as={TextInput}
@@ -345,18 +290,10 @@ const IDDOCTesting = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-data-file-frequency"
-                    className="margin-top-6"
-                    error={!!flatErrors.dataResponseFileFrequency}
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-data-file-frequency">
                       {opsEvalAndLearningT('dataResponseFileFrequency.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.dataResponseFileFrequency}
-                    </FieldErrorMsg>
 
                     <Field
                       as={TextInput}

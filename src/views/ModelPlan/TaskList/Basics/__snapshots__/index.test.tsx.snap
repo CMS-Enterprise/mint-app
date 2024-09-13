@@ -170,7 +170,6 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="plan-basics-abbreviation"
                   >
                     <label
                       class="usa-label"
@@ -228,7 +227,6 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="plan-basics-ams-model-id"
                         >
                           <label
                             class="usa-label"
@@ -253,7 +251,6 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="plan-basics-demo-code"
                         >
                           <label
                             class="usa-label"
@@ -689,7 +686,6 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="plan-basics-model-additional-category"
                   >
                     <label
                       class="usa-label text-normal"
@@ -1598,7 +1594,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="plan-basics-abbreviation"
                   >
                     <label
                       class="usa-label"
@@ -1656,7 +1651,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="plan-basics-ams-model-id"
                         >
                           <label
                             class="usa-label"
@@ -1681,7 +1675,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                       >
                         <div
                           class="usa-form-group margin-top-0"
-                          data-scroll="plan-basics-demo-code"
                         >
                           <label
                             class="usa-label"
@@ -2117,7 +2110,6 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                   </div>
                   <div
                     class="usa-form-group margin-top-4"
-                    data-scroll="plan-basics-model-additional-category"
                   >
                     <label
                       class="usa-label text-normal"

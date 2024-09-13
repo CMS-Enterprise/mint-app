@@ -249,7 +249,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="alternativePaymentModelTypes"
       >
         <legend
           class="usa-label maxw-none"
@@ -389,7 +388,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="keyCharacteristics"
       >
         <label
           class="usa-label"
@@ -578,7 +576,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-neg-4"
-        data-scroll="keyCharacteristicsOther"
       >
         <label
           class="usa-label"

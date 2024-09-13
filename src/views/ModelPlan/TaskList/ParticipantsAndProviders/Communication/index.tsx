@@ -28,14 +28,11 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 type CommunicationFormType =
@@ -179,30 +176,11 @@ export const Communication = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<CommunicationFormType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -237,10 +215,7 @@ export const Communication = () => {
                     disabled={loading}
                   />
 
-                  <FieldGroup
-                    scrollElement="participants-and-providers-communication-method"
-                    error={!!flatErrors.communicationMethod}
-                  >
+                  <FieldGroup>
                     <Label htmlFor="participants-and-providers-communication-method">
                       {participantsAndProvidersT('communicationMethod.label')}
                     </Label>
@@ -255,10 +230,6 @@ export const Communication = () => {
                         }
                       />
                     )}
-
-                    <FieldErrorMsg>
-                      {flatErrors.communicationMethod}
-                    </FieldErrorMsg>
 
                     {getKeys(communicationMethodConfig.options).map(type => {
                       return (
@@ -286,10 +257,6 @@ export const Communication = () => {
                                   )}
                                 </Label>
 
-                                <FieldErrorMsg>
-                                  {flatErrors.communicationMethodOther}
-                                </FieldErrorMsg>
-
                                 <Field
                                   as={TextInput}
                                   id="participants-and-providers-communication-method-other"
@@ -306,16 +273,10 @@ export const Communication = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="participants-and-providers-risk-type"
-                    error={!!flatErrors.riskType}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="participants-and-providers-risk-type">
                       {participantsAndProvidersT('riskType.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.riskType}</FieldErrorMsg>
 
                     <Fieldset>
                       {getKeys(riskTypeConfig.options).map(key => (
@@ -339,8 +300,6 @@ export const Communication = () => {
                             {participantsAndProvidersT('riskOther.label')}
                           </Label>
 
-                          <FieldErrorMsg>{flatErrors.riskOther}</FieldErrorMsg>
-
                           <Field
                             as={TextInput}
                             className="maxw-none mint-textarea"
@@ -357,16 +316,10 @@ export const Communication = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="participants-and-providers-risk-change"
-                    error={!!flatErrors.willRiskChange}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="participants-and-providers-risk-change">
                       {participantsAndProvidersT('willRiskChange.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.willRiskChange}</FieldErrorMsg>
 
                     <BooleanRadio
                       field="willRiskChange"

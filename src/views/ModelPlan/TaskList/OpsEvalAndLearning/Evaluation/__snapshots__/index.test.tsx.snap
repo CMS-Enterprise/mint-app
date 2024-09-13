@@ -113,7 +113,6 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group"
-        data-scroll="ops-eval-and-learning-evaluation-approach"
       >
         <label
           class="usa-label maxw-none"
@@ -251,7 +250,6 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
-        data-scroll="ops-eval-and-learning-cmmi-involvement"
       >
         <label
           class="usa-label maxw-none"
@@ -374,7 +372,6 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="ops-eval-and-learning-data-needed"
       >
         <label
           class="usa-label maxw-none"
@@ -504,7 +501,6 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="label-ops-eval-and-learning-data-to-send"
       >
         <label
           class="usa-label maxw-none"
@@ -629,7 +625,6 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="ops-eval-and-learning-share-cclf-data"
       >
         <label
           class="usa-label maxw-none"

@@ -115,7 +115,6 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
       >
         <div
           class="usa-form-group margin-top-4"
-          data-scroll="modelType"
         >
           <label
             class="usa-label"
@@ -212,7 +211,6 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
         </div>
         <div
           class="usa-form-group margin-top-4"
-          data-scroll="problem"
         >
           <label
             class="usa-label"
@@ -233,7 +231,6 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
         </div>
         <div
           class="usa-form-group margin-top-4"
-          data-scroll="goal"
         >
           <label
             class="usa-label"
@@ -259,7 +256,6 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
         </div>
         <div
           class="usa-form-group margin-top-4"
-          data-scroll="testInterventions"
         >
           <label
             class="usa-label"

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -27,8 +27,6 @@ import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
@@ -36,8 +34,6 @@ import TextField from 'components/shared/TextField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -157,9 +153,7 @@ const ClaimsBasedPayment = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName || ' '} indexTwo
-        </Trans>
+        {miscellaneousT('for')} {modelName}
       </p>
 
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
@@ -179,30 +173,11 @@ const ClaimsBasedPayment = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ClaimsBasedPaymentFormType>) => {
-          const { errors, handleSubmit, setFieldValue, setErrors, values } =
+          const { handleSubmit, setFieldValue, setErrors, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <GridContainer className="padding-left-0 padding-right-0">
@@ -223,11 +198,7 @@ const ClaimsBasedPayment = () => {
                           {paymentsMiscT('claimSpecificQuestions')}
                         </PageHeading>
 
-                        <FieldGroup
-                          scrollElement="payClaims"
-                          error={!!flatErrors.payClaims}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="payment-pay-claims"
                             id="label-payment-pay-claims"
@@ -238,8 +209,6 @@ const ClaimsBasedPayment = () => {
                           <p className="text-base margin-bottom-1 margin-top-05">
                             {paymentsT('payClaims.sublabel')}
                           </p>
-
-                          <FieldErrorMsg>{flatErrors.payClaims}</FieldErrorMsg>
 
                           <Field
                             as={MultiSelect}
@@ -261,10 +230,7 @@ const ClaimsBasedPayment = () => {
                           {(values?.payClaims || []).includes(
                             ClaimsBasedPayType.OTHER
                           ) && (
-                            <FieldGroup
-                              scrollElement="payClaimsOther"
-                              error={!!flatErrors.payClaimsOther}
-                            >
+                            <FieldGroup>
                               <Label
                                 htmlFor="payClaimsOther"
                                 className="text-normal"
@@ -272,13 +238,8 @@ const ClaimsBasedPayment = () => {
                                 {paymentsT('payClaimsOther.label')}
                               </Label>
 
-                              <FieldErrorMsg>
-                                {flatErrors.payClaimsOther}
-                              </FieldErrorMsg>
-
                               <Field
                                 as={TextField}
-                                error={flatErrors.payClaimsOther}
                                 id="payment-pay-claims-other"
                                 data-testid="payment-pay-claims-other"
                                 name="payClaimsOther"
@@ -289,13 +250,7 @@ const ClaimsBasedPayment = () => {
                           <AddNote id="pay-claims-note" field="payClaimsNote" />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="shouldAnyProvidersExcludedFFSSystems"
-                          error={
-                            !!flatErrors.shouldAnyProvidersExcludedFFSSystems
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="shouldAnyProvidersExcludedFFSSystems"
                             className="maxw-none"
@@ -317,10 +272,6 @@ const ClaimsBasedPayment = () => {
                             />
                           )}
 
-                          <FieldErrorMsg>
-                            {flatErrors.shouldAnyProvidersExcludedFFSSystems}
-                          </FieldErrorMsg>
-
                           <BooleanRadio
                             field="shouldAnyProvidersExcludedFFSSystems"
                             id="payment-provider-exclusion-ffs-system"
@@ -337,13 +288,7 @@ const ClaimsBasedPayment = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="changesMedicarePhysicianFeeSchedule"
-                          error={
-                            !!flatErrors.changesMedicarePhysicianFeeSchedule
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="changesMedicarePhysicianFeeSchedule"
                             className="maxw-none"
@@ -358,10 +303,6 @@ const ClaimsBasedPayment = () => {
                               'changesMedicarePhysicianFeeSchedule.sublabel'
                             )}
                           </p>
-
-                          <FieldErrorMsg>
-                            {flatErrors.changesMedicarePhysicianFeeSchedule}
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="changesMedicarePhysicianFeeSchedule"
@@ -379,13 +320,7 @@ const ClaimsBasedPayment = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="affectsMedicareSecondaryPayerClaims"
-                          error={
-                            !!flatErrors.affectsMedicareSecondaryPayerClaims
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="affectsMedicareSecondaryPayerClaims"
                             className="maxw-none"
@@ -394,10 +329,6 @@ const ClaimsBasedPayment = () => {
                               'affectsMedicareSecondaryPayerClaims.label'
                             )}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.affectsMedicareSecondaryPayerClaims}
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="affectsMedicareSecondaryPayerClaims"
@@ -410,13 +341,7 @@ const ClaimsBasedPayment = () => {
                             childName="affectsMedicareSecondaryPayerClaimsHow"
                           >
                             {values.affectsMedicareSecondaryPayerClaims ? (
-                              <FieldGroup
-                                className="margin-left-4 margin-y-1"
-                                scrollElement="affectsMedicareSecondaryPayerClaimsHow"
-                                error={
-                                  !!flatErrors.affectsMedicareSecondaryPayerClaimsHow
-                                }
-                              >
+                              <FieldGroup className="margin-left-4 margin-y-1">
                                 <Label
                                   htmlFor="payment-affects-medicare-secondary-payer-claims-how"
                                   className="text-normal"
@@ -426,18 +351,9 @@ const ClaimsBasedPayment = () => {
                                   )}
                                 </Label>
 
-                                <FieldErrorMsg>
-                                  {
-                                    flatErrors.affectsMedicareSecondaryPayerClaimsHow
-                                  }
-                                </FieldErrorMsg>
-
                                 <Field
                                   as={TextAreaField}
                                   className="height-15"
-                                  error={
-                                    flatErrors.affectsMedicareSecondaryPayerClaimsHow
-                                  }
                                   id="payment-affects-medicare-secondary-payer-claims-how"
                                   data-testid="payment-affects-medicare-secondary-payer-claims-how"
                                   name="affectsMedicareSecondaryPayerClaimsHow"
@@ -454,11 +370,7 @@ const ClaimsBasedPayment = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="payModelDifferentiation"
-                          error={!!flatErrors.payModelDifferentiation}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="payModelDifferentiation"
                             className="maxw-none"
@@ -466,14 +378,9 @@ const ClaimsBasedPayment = () => {
                             {paymentsT('payModelDifferentiation.label')}
                           </Label>
 
-                          <FieldErrorMsg>
-                            {flatErrors.payModelDifferentiation}
-                          </FieldErrorMsg>
-
                           <Field
                             as={TextAreaField}
                             className="height-15"
-                            error={flatErrors.payModelDifferentiation}
                             id="payment-affect-current-policy"
                             data-testid="payment-affect-current-policy"
                             name="payModelDifferentiation"

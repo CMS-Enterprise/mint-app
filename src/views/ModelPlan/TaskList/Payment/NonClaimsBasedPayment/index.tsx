@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -28,16 +28,12 @@ import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextField from 'components/shared/TextField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
-import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -176,9 +172,7 @@ const NonClaimsBasedPayment = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName || ' '} indexTwo
-        </Trans>
+        {miscellaneousT('for')} {modelName}
       </p>
 
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
@@ -198,30 +192,11 @@ const NonClaimsBasedPayment = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<NonClaimsBasedPaymentFormType>) => {
-          const { errors, handleSubmit, setFieldValue, setErrors, values } =
+          const { handleSubmit, setFieldValue, setErrors, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <GridContainer className="padding-left-0 padding-right-0">
@@ -242,11 +217,7 @@ const NonClaimsBasedPayment = () => {
                           {paymentsMiscT('nonClaimsBasedPaymentQuestion')}
                         </PageHeading>
 
-                        <FieldGroup
-                          scrollElement="nonClaimsPayments"
-                          error={!!flatErrors.nonClaimsPayments}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="payment-nonclaims-payments"
                             id="label-payment-nonclaims-payments"
@@ -264,10 +235,6 @@ const NonClaimsBasedPayment = () => {
                               }
                             />
                           )}
-
-                          <FieldErrorMsg>
-                            {flatErrors.nonClaimsPayments}
-                          </FieldErrorMsg>
 
                           <Field
                             as={MultiSelect}
@@ -289,10 +256,7 @@ const NonClaimsBasedPayment = () => {
                           {(values?.nonClaimsPayments || []).includes(
                             NonClaimsBasedPayType.OTHER
                           ) && (
-                            <FieldGroup
-                              scrollElement="payment-nonclaims-payments-other"
-                              error={!!flatErrors.nonClaimsPaymentOther}
-                            >
+                            <FieldGroup>
                               <Label
                                 htmlFor="nonClaimsPaymentOther"
                                 className="text-normal"
@@ -300,13 +264,8 @@ const NonClaimsBasedPayment = () => {
                                 {paymentsT('nonClaimsPaymentOther.label')}
                               </Label>
 
-                              <FieldErrorMsg>
-                                {flatErrors.nonClaimsPaymentOther}
-                              </FieldErrorMsg>
-
                               <Field
                                 as={TextField}
-                                error={flatErrors.nonClaimsPaymentOther}
                                 id="payment-nonclaims-payments-other"
                                 data-testid="payment-nonclaims-payments-other"
                                 name="nonClaimsPaymentOther"
@@ -320,31 +279,20 @@ const NonClaimsBasedPayment = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="payment-nonclaims-payments-owner"
-                          error={!!flatErrors.paymentCalculationOwner}
-                        >
+                        <FieldGroup>
                           <Label htmlFor="paymentCalculationOwner">
                             {paymentsT('paymentCalculationOwner.label')}
                           </Label>
 
-                          <FieldErrorMsg>
-                            {flatErrors.paymentCalculationOwner}
-                          </FieldErrorMsg>
-
                           <Field
                             as={TextField}
-                            error={flatErrors.paymentCalculationOwner}
                             id="payment-nonclaims-payments-owner"
                             data-testid="payment-nonclaims-payments-owner"
                             name="paymentCalculationOwner"
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="payment-nonclaims-payments-paycycle"
-                          error={!!flatErrors.numberPaymentsPerPayCycle}
-                        >
+                        <FieldGroup>
                           <Label htmlFor="numberPaymentsPerPayCycle">
                             {paymentsT('numberPaymentsPerPayCycle.label')}
                           </Label>
@@ -353,13 +301,8 @@ const NonClaimsBasedPayment = () => {
                             {paymentsT('numberPaymentsPerPayCycle.sublabel')}
                           </p>
 
-                          <FieldErrorMsg>
-                            {flatErrors.numberPaymentsPerPayCycle}
-                          </FieldErrorMsg>
-
                           <Field
                             as={TextField}
-                            error={flatErrors.numberPaymentsPerPayCycle}
                             id="payment-nonclaims-payments-paycycle"
                             data-testid="payment-nonclaims-payments-paycycle"
                             name="numberPaymentsPerPayCycle"
@@ -371,13 +314,7 @@ const NonClaimsBasedPayment = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="payment-nonclaims-shared-involvement"
-                          error={
-                            !!flatErrors.sharedSystemsInvolvedAdditionalClaimPayment
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="payment-nonclaims-shared-involvement"
                             className="maxw-none"
@@ -386,12 +323,6 @@ const NonClaimsBasedPayment = () => {
                               'sharedSystemsInvolvedAdditionalClaimPayment.label'
                             )}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {
-                              flatErrors.sharedSystemsInvolvedAdditionalClaimPayment
-                            }
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="sharedSystemsInvolvedAdditionalClaimPayment"
@@ -411,13 +342,7 @@ const NonClaimsBasedPayment = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="payment-use-innovation-payment-contractor"
-                          error={
-                            !!flatErrors.planningToUseInnovationPaymentContractor
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="payment-use-innovation-payment-contractor"
                             className="maxw-none"
@@ -432,12 +357,6 @@ const NonClaimsBasedPayment = () => {
                               'planningToUseInnovationPaymentContractor.sublabel'
                             )}
                           </p>
-
-                          <FieldErrorMsg>
-                            {
-                              flatErrors.planningToUseInnovationPaymentContractor
-                            }
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="planningToUseInnovationPaymentContractor"

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -26,14 +26,10 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -142,9 +138,7 @@ const BeneficiaryCostSharing = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName || ' '} indexTwo
-        </Trans>
+        {miscellaneousT('for')} {modelName}
       </p>
 
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
@@ -162,30 +156,11 @@ const BeneficiaryCostSharing = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<BeneficiaryCostSharingFormType>) => {
-          const { errors, handleSubmit, setFieldValue, setErrors, values } =
+          const { handleSubmit, setFieldValue, setErrors, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <GridContainer className="padding-left-0 padding-right-0">
@@ -206,12 +181,7 @@ const BeneficiaryCostSharing = () => {
                           {paymentsMiscT('beneficaryCostSharingQuestions')}
                         </PageHeading>
 
-                        <FieldGroup
-                          scrollElement="beneficiaryCostSharingLevelAndHandling"
-                          error={
-                            !!flatErrors.beneficiaryCostSharingLevelAndHandling
-                          }
-                        >
+                        <FieldGroup>
                           <Label
                             htmlFor="beneficiaryCostSharingLevelAndHandling"
                             className="maxw-none"
@@ -221,29 +191,16 @@ const BeneficiaryCostSharing = () => {
                             )}
                           </Label>
 
-                          <FieldErrorMsg>
-                            {flatErrors.beneficiaryCostSharingLevelAndHandling}
-                          </FieldErrorMsg>
-
                           <Field
                             as={TextAreaField}
                             className="height-15"
-                            error={
-                              flatErrors.beneficiaryCostSharingLevelAndHandling
-                            }
                             id="payment-beneficiary-cost-sharing"
                             data-testid="payment-beneficiary-cost-sharing"
                             name="beneficiaryCostSharingLevelAndHandling"
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="waiveBeneficiaryCostSharingForAnyServices"
-                          error={
-                            !!flatErrors.waiveBeneficiaryCostSharingForAnyServices
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="waiveBeneficiaryCostSharingForAnyServices"
                             className="maxw-none"
@@ -252,12 +209,6 @@ const BeneficiaryCostSharing = () => {
                               'waiveBeneficiaryCostSharingForAnyServices.label'
                             )}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {
-                              flatErrors.waiveBeneficiaryCostSharingForAnyServices
-                            }
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="waiveBeneficiaryCostSharingForAnyServices"
@@ -272,13 +223,7 @@ const BeneficiaryCostSharing = () => {
                             childName="waiveBeneficiaryCostSharingServiceSpecification"
                           >
                             {values.waiveBeneficiaryCostSharingForAnyServices ? (
-                              <FieldGroup
-                                className="margin-left-4 margin-y-1"
-                                scrollElement="waiveBeneficiaryCostSharingServiceSpecification"
-                                error={
-                                  !!flatErrors.waiveBeneficiaryCostSharingServiceSpecification
-                                }
-                              >
+                              <FieldGroup className="margin-left-4 margin-y-1">
                                 <Label
                                   htmlFor="waiveBeneficiaryCostSharingServiceSpecification"
                                   className="text-normal"
@@ -288,18 +233,9 @@ const BeneficiaryCostSharing = () => {
                                   )}
                                 </Label>
 
-                                <FieldErrorMsg>
-                                  {
-                                    flatErrors.waiveBeneficiaryCostSharingServiceSpecification
-                                  }
-                                </FieldErrorMsg>
-
                                 <Field
                                   as={TextAreaField}
                                   className="height-15"
-                                  error={
-                                    flatErrors.waiveBeneficiaryCostSharingServiceSpecification
-                                  }
                                   id="payment-waive-any-service-specification"
                                   data-testid="payment-waive-any-service-specification"
                                   name="waiveBeneficiaryCostSharingServiceSpecification"
@@ -311,13 +247,7 @@ const BeneficiaryCostSharing = () => {
                           </BooleanRadio>
 
                           {values.waiveBeneficiaryCostSharingForAnyServices && (
-                            <FieldGroup
-                              scrollElement="waiverOnlyAppliesPartOfPayment"
-                              error={
-                                !!flatErrors.waiverOnlyAppliesPartOfPayment
-                              }
-                              className="margin-top-4"
-                            >
+                            <FieldGroup className="margin-top-4">
                               <Label
                                 htmlFor="waiverOnlyAppliesPartOfPayment"
                                 className="maxw-none text-normal"
@@ -332,10 +262,6 @@ const BeneficiaryCostSharing = () => {
                                   'waiverOnlyAppliesPartOfPayment.sublabel'
                                 )}
                               </p>
-
-                              <FieldErrorMsg>
-                                {flatErrors.waiverOnlyAppliesPartOfPayment}
-                              </FieldErrorMsg>
 
                               <BooleanRadio
                                 field="waiverOnlyAppliesPartOfPayment"

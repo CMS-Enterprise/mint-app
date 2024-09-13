@@ -125,7 +125,6 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
           >
             <div
               class="usa-form-group"
-              data-scroll="participants"
             >
               <label
                 class="usa-label"
@@ -355,7 +354,6 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
               </p>
               <div
                 class="usa-form-group"
-                data-scroll="medicareProviderType"
               >
                 <label
                   class="usa-label text-normal"
@@ -388,7 +386,6 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
               </div>
               <div
                 class="usa-form-group"
-                data-scroll="isNewTypeOfProvidersOrSuppliers"
               >
                 <label
                   class="usa-label"
@@ -443,7 +440,6 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
               </div>
               <div
                 class="usa-form-group"
-                data-scroll="statesEngagement"
               >
                 <label
                   class="usa-label text-normal"
@@ -464,7 +460,6 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
               </div>
               <div
                 class="usa-form-group"
-                data-scroll="participantsOther"
               >
                 <label
                   class="usa-label text-normal"
@@ -511,7 +506,6 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
             </div>
             <div
               class="usa-form-group margin-y-4 margin-bottom-8"
-              data-scroll="participantsCurrentlyInModels"
             >
               <label
                 class="usa-label"
@@ -596,7 +590,6 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
             </div>
             <div
               class="usa-form-group"
-              data-scroll="modelApplicationLevel"
             >
               <label
                 class="usa-label"

@@ -17,14 +17,10 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 type InvolvementsFormType =
@@ -144,30 +140,11 @@ const Involvements = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InvolvementsFormType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -178,11 +155,7 @@ const Involvements = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup
-                    scrollElement="careCoordinationInvolved"
-                    error={!!flatErrors.careCoordinationInvolved}
-                    className="margin-y-4"
-                  >
+                  <FieldGroup className="margin-y-4">
                     <Label htmlFor="plan-characteristics-care-coordination-involved">
                       {generalCharacteristicsT(
                         'careCoordinationInvolved.label'
@@ -195,10 +168,6 @@ const Involvements = () => {
                       )}
                     </p>
 
-                    <FieldErrorMsg>
-                      {flatErrors.careCoordinationInvolved}
-                    </FieldErrorMsg>
-
                     <BooleanRadio
                       field="careCoordinationInvolved"
                       id="plan-characteristics-care-coordination-involved"
@@ -209,13 +178,7 @@ const Involvements = () => {
                     >
                       {values.careCoordinationInvolved === true ? (
                         <div className="display-flex margin-left-4 margin-bottom-1">
-                          <FieldGroup
-                            className="flex-1"
-                            scrollElement="careCoordinationInvolvedDescription"
-                            error={
-                              !!flatErrors.careCoordinationInvolvedDescription
-                            }
-                          >
+                          <FieldGroup className="flex-1">
                             <Label
                               htmlFor="plan-characteristics-care-coordination-description"
                               className="margin-bottom-1 text-normal"
@@ -225,15 +188,8 @@ const Involvements = () => {
                               )}
                             </Label>
 
-                            <FieldErrorMsg>
-                              {flatErrors.careCoordinationInvolvedDescription}
-                            </FieldErrorMsg>
-
                             <Field
                               as={TextAreaField}
-                              error={
-                                !!flatErrors.careCoordinationInvolvedDescription
-                              }
                               className="margin-top-0 height-15"
                               id="plan-characteristics-care-coordination-description"
                               name="careCoordinationInvolvedDescription"
@@ -251,20 +207,12 @@ const Involvements = () => {
                     field="careCoordinationInvolvedNote"
                   />
 
-                  <FieldGroup
-                    scrollElement="additionalServicesInvolved"
-                    error={!!flatErrors.additionalServicesInvolved}
-                    className="margin-y-4"
-                  >
+                  <FieldGroup className="margin-y-4">
                     <Label htmlFor="plan-characteristics-additional-services">
                       {generalCharacteristicsT(
                         'additionalServicesInvolved.label'
                       )}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.additionalServicesInvolved}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="additionalServicesInvolved"
@@ -276,13 +224,7 @@ const Involvements = () => {
                     >
                       {values.additionalServicesInvolved === true ? (
                         <div className="display-flex margin-left-4 margin-bottom-1">
-                          <FieldGroup
-                            className="flex-1"
-                            scrollElement="additionalServicesInvolvedDescription"
-                            error={
-                              !!flatErrors.additionalServicesInvolvedDescription
-                            }
-                          >
+                          <FieldGroup className="flex-1">
                             <Label
                               htmlFor="plan-characteristics-additional-services-description"
                               className="margin-bottom-1 text-normal"
@@ -292,15 +234,8 @@ const Involvements = () => {
                               )}
                             </Label>
 
-                            <FieldErrorMsg>
-                              {flatErrors.additionalServicesInvolvedDescription}
-                            </FieldErrorMsg>
-
                             <Field
                               as={TextAreaField}
-                              error={
-                                !!flatErrors.additionalServicesInvolvedDescription
-                              }
                               className="margin-top-0 height-15"
                               data-testid="plan-characteristics-additional-services-description"
                               id="plan-characteristics-additional-services-description"
@@ -319,20 +254,12 @@ const Involvements = () => {
                     field="additionalServicesInvolvedNote"
                   />
 
-                  <FieldGroup
-                    scrollElement="communityPartnersInvolved"
-                    error={!!flatErrors.communityPartnersInvolved}
-                    className="margin-y-4"
-                  >
+                  <FieldGroup className="margin-y-4">
                     <Label htmlFor="plan-characteristics-community-partners-involved">
                       {generalCharacteristicsT(
                         'communityPartnersInvolved.label'
                       )}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.communityPartnersInvolved}
-                    </FieldErrorMsg>
 
                     <p className="text-base margin-y-1">
                       {generalCharacteristicsT(
@@ -350,13 +277,7 @@ const Involvements = () => {
                     >
                       {values.communityPartnersInvolved === true ? (
                         <div className="display-flex margin-left-4 margin-bottom-1">
-                          <FieldGroup
-                            className="flex-1"
-                            scrollElement="communityPartnersInvolvedDescription"
-                            error={
-                              !!flatErrors.communityPartnersInvolvedDescription
-                            }
-                          >
+                          <FieldGroup className="flex-1">
                             <Label
                               htmlFor="plan-characteristics-community-partners-description"
                               className="margin-bottom-1 text-normal"
@@ -366,15 +287,8 @@ const Involvements = () => {
                               )}
                             </Label>
 
-                            <FieldErrorMsg>
-                              {flatErrors.communityPartnersInvolvedDescription}
-                            </FieldErrorMsg>
-
                             <Field
                               as={TextAreaField}
-                              error={
-                                !!flatErrors.communityPartnersInvolvedDescription
-                              }
                               className="margin-top-0 height-15"
                               id="plan-characteristics-community-partners-description"
                               name="communityPartnersInvolvedDescription"
