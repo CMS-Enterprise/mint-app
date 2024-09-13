@@ -6,8 +6,10 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/echimpcache"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -27,4 +29,9 @@ func (r *queryResolver) EchimpTdl(ctx context.Context) ([]*models.EChimpTDL, err
 		return nil, err
 	}
 	return data.TDls, nil
+}
+
+// EchimpCRAndTdls is the resolver for the echimpCRAndTDLS field.
+func (r *queryResolver) EchimpCRAndTdls(ctx context.Context) ([]model.EChimpCRAndTdls, error) {
+	panic(fmt.Errorf("not implemented: EchimpCRAndTdls - echimpCRAndTDLS"))
 }

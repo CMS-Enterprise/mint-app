@@ -14,6 +14,10 @@ import (
 	"github.com/google/uuid"
 )
 
+type EChimpCRAndTdls interface {
+	IsEChimpCRAndTdls()
+}
+
 type CreateOperationalSolutionSubtaskInput struct {
 	Name   string                                  `json:"name"`
 	Status models.OperationalSolutionSubtaskStatus `json:"status"`

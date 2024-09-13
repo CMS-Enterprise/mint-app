@@ -470,6 +470,8 @@ export type EChimpCr = {
   versionNum: Scalars['String']['output'];
 };
 
+export type EChimpCrAndTdls = EChimpCr | EChimpTdl;
+
 export type EChimpTdl = {
   __typename: 'EChimpTDL';
   associatedModelUids?: Maybe<Scalars['UUID']['output']>;
@@ -3159,6 +3161,7 @@ export type Query = {
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
   echimpCR: Array<EChimpCr>;
+  echimpCRAndTDLS: Array<EChimpCrAndTdls>;
   echimpTDL: Array<EChimpTdl>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;

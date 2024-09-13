@@ -31,7 +31,8 @@ type EChimpTDL {
 # """
 # EChimpCRAndTDLS is a type that represents CRS and TDLS so they can be returned together in graphql
 # """
-# union EChimpCRAndTDLS = EChimpCR  | EChimpTDL
+union EChimpCRAndTDLS = EChimpCR  | EChimpTDL
+
 
 
 
@@ -39,5 +40,5 @@ extend type Query {
   # echimpCR(id: UUID!): EchimpCR!
   echimpCR: [EChimpCR!]!
   echimpTDL: [EChimpTDL!]!
-  # echimpCRAndTDLS: [EChimpCRAndTDLS!]!
+  echimpCRAndTDLS: [EChimpCRAndTDLS!]!
 }

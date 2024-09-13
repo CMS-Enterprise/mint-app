@@ -90,4 +90,4 @@ type EChimpCR struct {
 	AssociatedModelUids *uuid.UUID `parquet:"associatedModelUids" json:"associatedModelUids"`
 }
 
-func (echimp *EChimpCR) IsEchimpCRAndTDLS() {}
+func (echimp *EChimpCR) IsEChimpCRAndTdls() {}
