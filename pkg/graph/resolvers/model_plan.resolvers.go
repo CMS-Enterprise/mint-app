@@ -12,6 +12,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/constants"
+	"github.com/cmsgov/mint-app/pkg/echimpcache"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -105,6 +106,28 @@ func (r *modelPlanResolver) Crs(ctx context.Context, obj *models.ModelPlan) ([]*
 func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanTDL, error) {
 	logger := appcontext.ZLogger(ctx)
 	return PlanTDLsGetByModelPlanID(logger, obj.ID, r.store)
+}
+
+// EchimpCRs is the resolver for the echimpCRs field.
+func (r *modelPlanResolver) EchimpCRs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpCR, error) {
+	//TODO, move to resolver?
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(r.echimpS3Client)
+	if err != nil {
+		return nil, err
+	}
+	return data.CRsByModelPlanID[obj.ID], nil
+	//TODO either make a function in the cache to return the data? Or return the cache?
+
+}
+
+// EchimpTDLs is the resolver for the echimpTDLs field.
+func (r *modelPlanResolver) EchimpTDLs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpTDL, error) {
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(r.echimpS3Client)
+	if err != nil {
+		return nil, err
+	}
+	return data.TDLsByModelPlanID[obj.ID], nil
+
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.

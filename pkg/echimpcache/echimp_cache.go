@@ -75,10 +75,14 @@ func (c *crAndTDLCache) refreshCache(client *s3.S3Client) error {
 	c.TDls = sanitizedTDLS
 	c.AllCrsAndTDLS = c.aggregateAllCrsAndTDLS()
 
+	c.CRsByModelPlanID = c.mapCRsByRelatedModelUUIDS()
+	c.TDLsByModelPlanID = c.mapTDLSByRelatedModelUUIDS()
+
 	c.lastChecked = time.Now()
 	return nil
 
 }
+
 func (c *crAndTDLCache) aggregateAllCrsAndTDLS() []models.EChimpCRAndTDLS {
 	allData := []models.EChimpCRAndTDLS{}
 	for _, cr := range c.CRs {
@@ -91,4 +95,44 @@ func (c *crAndTDLCache) aggregateAllCrsAndTDLS() []models.EChimpCRAndTDLS {
 	}
 	return allData
 
+}
+
+func (c *crAndTDLCache) mapCRsByRelatedModelUUIDS() map[uuid.UUID][]*models.EChimpCR {
+	allData := map[uuid.UUID][]*models.EChimpCR{}
+	for _, cr := range c.CRs {
+		if cr.AssociatedModelUids == nil {
+			continue
+		}
+		array, arrayExists := allData[*cr.AssociatedModelUids]
+		if arrayExists {
+			array = append(array, cr)
+			allData[*cr.AssociatedModelUids] = array
+
+		} else {
+
+			allData[*cr.AssociatedModelUids] = []*models.EChimpCR{cr}
+		}
+
+	}
+	return allData
+}
+
+func (c *crAndTDLCache) mapTDLSByRelatedModelUUIDS() map[uuid.UUID][]*models.EChimpTDL {
+	allData := map[uuid.UUID][]*models.EChimpTDL{}
+	for _, tdl := range c.TDls {
+		if tdl.AssociatedModelUids == nil {
+			continue
+		}
+		array, arrayExists := allData[*tdl.AssociatedModelUids]
+		if arrayExists {
+			array = append(array, tdl)
+			allData[*tdl.AssociatedModelUids] = array
+
+		} else {
+
+			allData[*tdl.AssociatedModelUids] = []*models.EChimpTDL{tdl}
+		}
+
+	}
+	return allData
 }
