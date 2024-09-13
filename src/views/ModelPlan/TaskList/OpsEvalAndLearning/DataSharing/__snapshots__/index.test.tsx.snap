@@ -113,7 +113,6 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
     >
       <div
         class="usa-form-group"
-        data-scroll="dataSharingStarts"
       >
         <strong>
           Data sharing timing and frequency
@@ -343,7 +342,6 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
       </div>
       <div
         class="usa-form-group"
-        data-scroll="dataCollectionStarts"
       >
         <strong>
           Data collection timing and frequency
@@ -568,7 +566,6 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
       </div>
       <div
         class="usa-form-group"
-        data-scroll="qualityReportingStarts"
       >
         <strong>
           Quality reporting timing and frequency

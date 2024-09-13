@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -27,13 +27,9 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -160,9 +156,7 @@ const AnticipateDependencies = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName || ' '} indexTwo
-        </Trans>
+        {miscellaneousT('for')} {modelName}
       </p>
 
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
@@ -180,30 +174,11 @@ const AnticipateDependencies = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<AnticipateDependenciesFormType>) => {
-          const { errors, handleSubmit, setFieldValue, setErrors, values } =
+          const { handleSubmit, setFieldValue, setErrors, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <GridContainer className="padding-left-0 padding-right-0">
@@ -224,11 +199,7 @@ const AnticipateDependencies = () => {
                           {paymentsMiscT('claimSpecificQuestionsContinued')}
                         </PageHeading>
 
-                        <FieldGroup
-                          scrollElement="willBePaymentAdjustments"
-                          error={!!flatErrors.willBePaymentAdjustments}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="willBePaymentAdjustments"
                             className="maxw-none"
@@ -239,10 +210,6 @@ const AnticipateDependencies = () => {
                           <p className="text-base margin-y-1">
                             {paymentsT('willBePaymentAdjustments.sublabel')}
                           </p>
-
-                          <FieldErrorMsg>
-                            {flatErrors.willBePaymentAdjustments}
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="willBePaymentAdjustments"
@@ -260,13 +227,7 @@ const AnticipateDependencies = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="creatingDependenciesBetweenServices"
-                          error={
-                            !!flatErrors.creatingDependenciesBetweenServices
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="creatingDependenciesBetweenServices"
                             className="maxw-none"
@@ -281,10 +242,6 @@ const AnticipateDependencies = () => {
                               'creatingDependenciesBetweenServices.sublabel'
                             )}
                           </p>
-
-                          <FieldErrorMsg>
-                            {flatErrors.creatingDependenciesBetweenServices}
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="creatingDependenciesBetweenServices"
@@ -302,11 +259,7 @@ const AnticipateDependencies = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="needsClaimsDataCollection"
-                          error={!!flatErrors.needsClaimsDataCollection}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="needsClaimsDataCollection"
                             className="maxw-none"
@@ -317,10 +270,6 @@ const AnticipateDependencies = () => {
                           <p className="text-base margin-y-1">
                             {paymentsT('needsClaimsDataCollection.sublabel')}
                           </p>
-
-                          <FieldErrorMsg>
-                            {flatErrors.needsClaimsDataCollection}
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="needsClaimsDataCollection"
@@ -336,21 +285,13 @@ const AnticipateDependencies = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="providingThirdPartyFile"
-                          error={!!flatErrors.providingThirdPartyFile}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="providingThirdPartyFile"
                             className="maxw-none"
                           >
                             {paymentsT('providingThirdPartyFile.label')}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.providingThirdPartyFile}
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="providingThirdPartyFile"
@@ -365,13 +306,7 @@ const AnticipateDependencies = () => {
                           {paymentsMiscT('alert')}
                         </Alert>
 
-                        <FieldGroup
-                          scrollElement="isContractorAwareTestDataRequirements"
-                          error={
-                            !!flatErrors.isContractorAwareTestDataRequirements
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="isContractorAwareTestDataRequirements"
                             className="maxw-none"
@@ -380,10 +315,6 @@ const AnticipateDependencies = () => {
                               'isContractorAwareTestDataRequirements.label'
                             )}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.isContractorAwareTestDataRequirements}
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="isContractorAwareTestDataRequirements"

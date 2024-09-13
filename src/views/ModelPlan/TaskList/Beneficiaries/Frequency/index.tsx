@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -28,15 +28,12 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 type FrequencyFormType = GetFrequencyQuery['modelPlan']['beneficiaries'];
@@ -160,9 +157,7 @@ const Frequency = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {miscellaneousT('for')} {modelName}
       </p>
 
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
@@ -182,31 +177,13 @@ const Frequency = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InitialValueType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
               <ConfirmLeave />
 
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
@@ -241,10 +218,7 @@ const Frequency = () => {
                         disabled={loading}
                       />
 
-                      <FieldGroup
-                        scrollElement="beneficiaryOverlap"
-                        error={!!flatErrors.beneficiaryOverlap}
-                      >
+                      <FieldGroup>
                         <Label htmlFor="beneficiaries-overlap">
                           {beneficiariesT('beneficiaryOverlap.label')}
                         </Label>
@@ -259,10 +233,6 @@ const Frequency = () => {
                             }}
                           />
                         )}
-
-                        <FieldErrorMsg>
-                          {flatErrors.beneficiaryOverlap}
-                        </FieldErrorMsg>
 
                         <Fieldset>
                           {getKeys(beneficiaryOverlapConfig.options).map(
@@ -290,10 +260,7 @@ const Frequency = () => {
                         />
                       </FieldGroup>
 
-                      <FieldGroup
-                        scrollElement="precedenceRules"
-                        error={!!flatErrors.precedenceRules}
-                      >
+                      <FieldGroup>
                         <Label htmlFor="precedenceRules">
                           {beneficiariesT('precedenceRules.label')}
                         </Label>
@@ -301,10 +268,6 @@ const Frequency = () => {
                         <p className="text-base margin-top-1 margin-bottom-0 line-height-body-3">
                           {beneficiariesT('precedenceRules.sublabel')}
                         </p>
-
-                        <FieldErrorMsg>
-                          {flatErrors.precedenceRules}
-                        </FieldErrorMsg>
 
                         {getKeys(beneficiaryPrecedenceConfig.options).map(
                           key => (

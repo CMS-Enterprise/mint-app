@@ -29,15 +29,12 @@ import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import MINTAlert from 'components/shared/Alert';
 import MINTDatePicker from 'components/shared/DatePicker';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ExternalLink from 'components/shared/ExternalLink';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
@@ -170,7 +167,6 @@ const Milestones = () => {
         >
           {(formikProps: FormikProps<InitialValueType>) => {
             const {
-              errors,
               handleSubmit,
               setErrors,
               setFieldError,
@@ -178,7 +174,6 @@ const Milestones = () => {
               validateForm,
               values
             } = formikProps;
-            const flatErrors = flattenErrors(errors);
 
             const handleOnBlur = (
               e: React.ChangeEvent<HTMLInputElement>,
@@ -190,7 +185,6 @@ const Milestones = () => {
               }
               try {
                 setFieldValue(field, new Date(e.target.value).toISOString());
-                delete errors[field as keyof InitialValueType];
               } catch (err) {
                 setFieldError(field, miscellaneousT('validDate'));
               }
@@ -198,24 +192,6 @@ const Milestones = () => {
 
             return (
               <div data-testid="model-plan-milestones">
-                {getKeys(errors).length > 0 && (
-                  <ErrorAlert
-                    testId="formik-validation-errors"
-                    classNames="margin-top-3"
-                    heading={miscellaneousT('checkAndFix')}
-                  >
-                    {getKeys(flatErrors).map(key => {
-                      return (
-                        <ErrorAlertMessage
-                          key={`Error.${key}`}
-                          errorKey={`${key}`}
-                          message={flatErrors[key]}
-                        />
-                      );
-                    })}
-                  </ErrorAlert>
-                )}
-
                 <ConfirmLeave />
 
                 <Form
@@ -258,7 +234,6 @@ const Milestones = () => {
                               handleOnBlur={handleOnBlur}
                               formikValue={values.completeICIP}
                               value={completeICIP}
-                              error={flatErrors.completeICIP}
                               shouldShowWarning={
                                 initialValues.completeICIP !==
                                 values.completeICIP
@@ -295,7 +270,6 @@ const Milestones = () => {
                               handleOnBlur={handleOnBlur}
                               formikValue={values.clearanceStarts}
                               value={clearanceStarts}
-                              error={flatErrors.clearanceStarts}
                               warning={false}
                               className="margin-top-1"
                               shouldShowWarning={
@@ -313,7 +287,6 @@ const Milestones = () => {
                               handleOnBlur={handleOnBlur}
                               formikValue={values.clearanceEnds}
                               value={clearanceEnds}
-                              error={flatErrors.clearanceEnds}
                               warning={false}
                               className="margin-top-1"
                               shouldShowWarning={
@@ -356,7 +329,6 @@ const Milestones = () => {
                             handleOnBlur={handleOnBlur}
                             formikValue={values.announced}
                             value={announced}
-                            error={flatErrors.announced}
                             shouldShowWarning={
                               initialValues.announced !== values.announced
                             }
@@ -385,7 +357,6 @@ const Milestones = () => {
                             handleOnBlur={handleOnBlur}
                             formikValue={values.applicationsStart}
                             value={applicationsStart}
-                            error={flatErrors.applicationsStart}
                             shouldShowWarning={
                               initialValues.applicationsStart !==
                               values.applicationsStart
@@ -402,7 +373,6 @@ const Milestones = () => {
                             handleOnBlur={handleOnBlur}
                             formikValue={values.applicationsEnd}
                             value={applicationsEnd}
-                            error={flatErrors.applicationsEnd}
                             shouldShowWarning={
                               initialValues.applicationsEnd !==
                               values.applicationsEnd
@@ -454,7 +424,6 @@ const Milestones = () => {
                             handleOnBlur={handleOnBlur}
                             formikValue={values.performancePeriodStarts}
                             value={performancePeriodStarts}
-                            error={flatErrors.performancePeriodStarts}
                             warning={false}
                             className="margin-top-0"
                             shouldShowWarning={
@@ -472,7 +441,6 @@ const Milestones = () => {
                             handleOnBlur={handleOnBlur}
                             formikValue={values.performancePeriodEnds}
                             value={performancePeriodEnds}
-                            error={flatErrors.performancePeriodEnds}
                             warning={false}
                             className="margin-top-0"
                             shouldShowWarning={
@@ -514,7 +482,6 @@ const Milestones = () => {
                             handleOnBlur={handleOnBlur}
                             formikValue={values.wrapUpEnds}
                             value={wrapUpEnds}
-                            error={flatErrors.wrapUpEnds}
                             shouldShowWarning={
                               initialValues.wrapUpEnds !== values.wrapUpEnds
                             }
@@ -529,11 +496,7 @@ const Milestones = () => {
                       field="highLevelNote"
                     />
 
-                    <FieldGroup
-                      scrollElement="phasedIn"
-                      error={!!flatErrors.phasedIn}
-                      className="margin-top-4"
-                    >
+                    <FieldGroup className="margin-top-4">
                       <Label htmlFor="phasedIn">
                         {basicsT('phasedIn.label')}
                       </Label>
@@ -541,8 +504,6 @@ const Milestones = () => {
                       <span className="usa-hint display-block text-normal margin-top-1">
                         {basicsT('phasedIn.sublabel')}
                       </span>
-
-                      <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>
 
                       <BooleanRadio
                         field="phasedIn"
@@ -574,29 +535,21 @@ const Milestones = () => {
                         type="button"
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={() => {
-                          if (getKeys(errors).length > 0) {
-                            window.scrollTo(0, 0);
-                          } else {
-                            validateForm().then(err => {
-                              if (getKeys(err).length > 0) {
-                                window.scrollTo(0, 0);
-                              } else {
-                                history.push(
-                                  `/models/${modelID}/collaboration-area/task-list/basics/overview`
-                                );
-                              }
-                            });
-                          }
+                          validateForm().then(err => {
+                            if (getKeys(err).length > 0) {
+                              window.scrollTo(0, 0);
+                            } else {
+                              history.push(
+                                `/models/${modelID}/collaboration-area/task-list/basics/overview`
+                              );
+                            }
+                          });
                         }}
                       >
                         {miscellaneousT('back')}
                       </Button>
 
-                      <Button
-                        type="submit"
-                        className=""
-                        onClick={() => setErrors({})}
-                      >
+                      <Button type="submit" onClick={() => setErrors({})}>
                         {miscellaneousT('saveAndStartNext')}
                       </Button>
                     </div>

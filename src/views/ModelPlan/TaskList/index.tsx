@@ -461,14 +461,36 @@ const DicussionBanner = ({
 
   return (
     <SummaryBox className="bg-primary-lighter border-0 radius-0 padding-2">
-      <SummaryBoxHeading headingLevel="h3">{d('heading')}</SummaryBoxHeading>
       <SummaryBoxContent
-        className={classNames('margin-top-1', {
+        className={classNames('padding-0 display-flex flex-justify', {
           'mint-header__basic': discussions?.length > 0
         })}
       >
-        {discussions?.length > 0 ? (
-          <>
+        <div className="display-block margin-right-2">
+          <h3 className="margin-0">{d('heading')}</h3>
+          {discussions?.length === 0 ? (
+            <>
+              {d('noDiscussions')}
+              <Button
+                className="line-height-body-5 test-withdraw-request"
+                type="button"
+                unstyled
+                onClick={() => {
+                  // Send a discussion open event to GA
+                  ReactGA.send({
+                    hitType: 'event',
+                    eventCategory: 'discussion_center_opened',
+                    eventAction: 'click',
+                    eventLabel: 'Discussion Center opened'
+                  });
+
+                  setIsDiscussionOpen(true);
+                }}
+              >
+                {d('askAQuestionLink')}.
+              </Button>
+            </>
+          ) : (
             <div className="display-flex flex-align-center">
               <Icon.Announcement className="margin-right-1" />
               <div>
@@ -478,6 +500,11 @@ const DicussionBanner = ({
                 })}
               </div>
             </div>
+          )}
+        </div>
+
+        {discussions?.length > 0 && (
+          <>
             <Button
               type="button"
               unstyled
@@ -495,29 +522,6 @@ const DicussionBanner = ({
             >
               {d('viewDiscussions')}
             </Button>
-          </>
-        ) : (
-          <>
-            {d('noDiscussions')}
-            <Button
-              className="line-height-body-5 test-withdraw-request"
-              type="button"
-              unstyled
-              onClick={() => {
-                // Send a discussion open event to GA
-                ReactGA.send({
-                  hitType: 'event',
-                  eventCategory: 'discussion_center_opened',
-                  eventAction: 'click',
-                  eventLabel: 'Discussion Center opened'
-                });
-
-                setIsDiscussionOpen(true);
-              }}
-            >
-              {d('askAQuestionLink')}
-            </Button>
-            .
           </>
         )}
       </SummaryBoxContent>

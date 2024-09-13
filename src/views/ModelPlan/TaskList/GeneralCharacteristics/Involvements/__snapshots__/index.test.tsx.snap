@@ -113,7 +113,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group margin-y-4"
-        data-scroll="careCoordinationInvolved"
       >
         <label
           class="usa-label"
@@ -198,7 +197,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4"
-        data-scroll="additionalServicesInvolved"
       >
         <label
           class="usa-label"
@@ -235,7 +233,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           >
             <div
               class="usa-form-group flex-1"
-              data-scroll="additionalServicesInvolvedDescription"
             >
               <label
                 class="usa-label margin-bottom-1 text-normal"
@@ -303,7 +300,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4"
-        data-scroll="communityPartnersInvolved"
       >
         <label
           class="usa-label"

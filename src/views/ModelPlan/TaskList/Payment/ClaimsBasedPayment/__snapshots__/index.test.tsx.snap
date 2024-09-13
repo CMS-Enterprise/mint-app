@@ -66,7 +66,7 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
     class="margin-top-0 margin-bottom-1 font-body-lg"
     data-testid="model-plan-name"
   >
-    for {{modelName}}
+    for My excellent plan that I just initiated
   </p>
   <p
     class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -132,7 +132,6 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
             </h3>
             <div
               class="usa-form-group margin-top-4"
-              data-scroll="payClaims"
             >
               <label
                 class="usa-label"
@@ -300,7 +299,6 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
               </div>
               <div
                 class="usa-form-group"
-                data-scroll="payClaimsOther"
               >
                 <label
                   class="usa-label text-normal"
@@ -346,7 +344,6 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
             </div>
             <div
               class="usa-form-group margin-top-4"
-              data-scroll="shouldAnyProvidersExcludedFFSSystems"
             >
               <label
                 class="usa-label maxw-none"
@@ -426,7 +423,6 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
             </div>
             <div
               class="usa-form-group margin-top-4"
-              data-scroll="changesMedicarePhysicianFeeSchedule"
             >
               <label
                 class="usa-label maxw-none"
@@ -511,7 +507,6 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
             </div>
             <div
               class="usa-form-group margin-top-4"
-              data-scroll="affectsMedicareSecondaryPayerClaims"
             >
               <label
                 class="usa-label maxw-none"
@@ -591,7 +586,6 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
             </div>
             <div
               class="usa-form-group margin-top-4"
-              data-scroll="payModelDifferentiation"
             >
               <label
                 class="usa-label maxw-none"

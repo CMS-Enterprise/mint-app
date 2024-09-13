@@ -26,15 +26,12 @@ import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -184,30 +181,11 @@ const CCWAndQuality = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<GetCCWAndQualityFormType>) => {
-          const { errors, handleSubmit, setErrors, values, setFieldValue } =
+          const { handleSubmit, setErrors, values, setFieldValue } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -222,20 +200,13 @@ const CCWAndQuality = () => {
                     <>
                       <h3>{opsEvalAndLearningMiscT('ccwSpecific')}</h3>
 
-                      <FieldGroup
-                        scrollElement="sendFilesBetweenCcw"
-                        error={!!flatErrors.sendFilesBetweenCcw}
-                      >
+                      <FieldGroup>
                         <Label
                           htmlFor="ops-eval-and-learning-send-files"
                           className="maxw-none"
                         >
                           {opsEvalAndLearningT('sendFilesBetweenCcw.label')}
                         </Label>
-
-                        <FieldErrorMsg>
-                          {flatErrors.sendFilesBetweenCcw}
-                        </FieldErrorMsg>
 
                         <BooleanRadio
                           field="sendFilesBetweenCcw"
@@ -251,20 +222,13 @@ const CCWAndQuality = () => {
                         />
                       </FieldGroup>
 
-                      <FieldGroup
-                        scrollElement="appToSendFilesToKnown"
-                        error={!!flatErrors.appToSendFilesToKnown}
-                      >
+                      <FieldGroup>
                         <Label
                           htmlFor="ops-eval-and-learning-app-to-send-files"
                           className="maxw-none"
                         >
                           {opsEvalAndLearningT('appToSendFilesToKnown.label')}
                         </Label>
-
-                        <FieldErrorMsg>
-                          {flatErrors.appToSendFilesToKnown}
-                        </FieldErrorMsg>
 
                         <BooleanRadio
                           field="appToSendFilesToKnown"
@@ -285,10 +249,6 @@ const CCWAndQuality = () => {
                                 )}
                               </Label>
 
-                              <FieldErrorMsg>
-                                {flatErrors.appToSendFilesToWhich}
-                              </FieldErrorMsg>
-
                               <Field
                                 as={TextAreaField}
                                 className="maxw-none mint-textarea"
@@ -308,12 +268,7 @@ const CCWAndQuality = () => {
                         />
                       </FieldGroup>
 
-                      <FieldGroup
-                        scrollElement="useCcwForFileDistribiutionToParticipants"
-                        error={
-                          !!flatErrors.useCcwForFileDistribiutionToParticipants
-                        }
-                      >
+                      <FieldGroup>
                         <Label
                           htmlFor="ops-eval-and-learning-distribute-files"
                           className="maxw-none"
@@ -322,10 +277,6 @@ const CCWAndQuality = () => {
                             'useCcwForFileDistribiutionToParticipants.label'
                           )}
                         </Label>
-
-                        <FieldErrorMsg>
-                          {flatErrors.useCcwForFileDistribiutionToParticipants}
-                        </FieldErrorMsg>
 
                         <BooleanRadio
                           field="useCcwForFileDistribiutionToParticipants"
@@ -351,10 +302,7 @@ const CCWAndQuality = () => {
                     <>
                       <h3>{opsEvalAndLearningMiscT('qualityQuestions')}</h3>
 
-                      <FieldGroup
-                        scrollElement="developNewQualityMeasures"
-                        error={!!flatErrors.developNewQualityMeasures}
-                      >
+                      <FieldGroup>
                         <Label
                           htmlFor="ops-eval-and-learning-develop-measures"
                           className="maxw-none"
@@ -375,10 +323,6 @@ const CCWAndQuality = () => {
                           />
                         )}
 
-                        <FieldErrorMsg>
-                          {flatErrors.developNewQualityMeasures}
-                        </FieldErrorMsg>
-
                         <BooleanRadio
                           field="developNewQualityMeasures"
                           id="ops-eval-and-learning-develop-measures"
@@ -393,10 +337,7 @@ const CCWAndQuality = () => {
                         />
                       </FieldGroup>
 
-                      <FieldGroup
-                        scrollElement="qualityPerformanceImpactsPayment"
-                        error={!!flatErrors.qualityPerformanceImpactsPayment}
-                      >
+                      <FieldGroup>
                         <Label
                           htmlFor="ops-eval-and-learning-performance-impact"
                           className="maxw-none"
@@ -405,10 +346,6 @@ const CCWAndQuality = () => {
                             'qualityPerformanceImpactsPayment.label'
                           )}
                         </Label>
-
-                        <FieldErrorMsg>
-                          {flatErrors.qualityPerformanceImpactsPayment}
-                        </FieldErrorMsg>
 
                         <Fieldset>
                           {getKeys(
