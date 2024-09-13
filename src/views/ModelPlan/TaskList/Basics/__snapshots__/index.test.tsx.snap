@@ -1414,6 +1414,7 @@ exports[`Model Plan Basics page > disables and clears checkbox when user selects
         </div>
         <div
           class="mint-page-number margin-bottom-10"
+          data-testid="page-num"
         >
           <span
             class="mint-page-number__page-num"
@@ -2841,6 +2842,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
         </div>
         <div
           class="mint-page-number margin-bottom-10"
+          data-testid="page-num"
         >
           <span
             class="mint-page-number__page-num"
