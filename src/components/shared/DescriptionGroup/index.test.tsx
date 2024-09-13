@@ -26,7 +26,7 @@ describe('The Description List component', () => {
         <dd>MINT</dd>
       </DescriptionList>
     );
-    expect(screen.getByRole('list').getAttribute('title')).toEqual(
+    expect(screen.getByTitle('Test Title').getAttribute('title')).toEqual(
       'Test Title'
     );
   });

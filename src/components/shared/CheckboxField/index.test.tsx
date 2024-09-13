@@ -28,8 +28,9 @@ describe('The Checkbox Field component', () => {
         onChange={() => {}}
         onBlur={() => {}}
         value={fixture}
+        checked
       />
     );
-    expect(screen.getByLabelText('Test Textbox')).toHaveValue(fixture);
+    expect(screen.getByLabelText('Test Textbox')).toBeChecked();
   });
 });

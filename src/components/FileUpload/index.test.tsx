@@ -43,8 +43,8 @@ describe('File Upload component', () => {
   });
 
   describe('successfully upload file', () => {
-    it('calls onChange when a file is uploaded', () => {
-      const handleChange = jest.fn();
+    it('calls onChange when a file is uploaded', async () => {
+      const handleChange = vi.fn();
 
       render(
         <FileUpload
@@ -59,6 +59,7 @@ describe('File Upload component', () => {
       );
 
       const input = screen.getByTestId('file-upload-input');
+
       const file = new File(['dummy content'], 'example.pdf', {
         type: 'application/pdf'
       });

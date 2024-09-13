@@ -4,6 +4,22 @@ import { render, screen } from '@testing-library/react';
 
 import Footer from './index';
 
+vi.mock('@okta/okta-react', () => ({
+  useOktaAuth: () => {
+    return {
+      authState: {
+        isAuthenticated: false
+      },
+      oktaAuth: {
+        getUser: async () => ({
+          name: 'John Doe'
+        }),
+        logout: async () => {}
+      }
+    };
+  }
+}));
+
 describe('The Footer component', () => {
   it('renders without crashing', () => {
     render(

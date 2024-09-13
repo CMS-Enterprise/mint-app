@@ -17,7 +17,7 @@ describe('The FieldErrorMsg component', () => {
   it('renders a message', () => {
     render(
       <FieldErrorMsg>
-        <span id="testtest" />
+        <span data-testid="testtest" />
       </FieldErrorMsg>
     );
     expect(screen.getByTestId('testtest')).toBeInTheDocument();

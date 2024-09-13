@@ -23,24 +23,24 @@ const notificationsMock = [
   }
 ];
 
-vi.mock('@okta/okta-react', () => ({
-  useOktaAuth: () => {
-    return {
-      authState: {
-        isAuthenticated: true
-      },
-      oktaAuth: {
-        getUser: async () => ({
-          name: 'John Doe'
-        }),
-        logout: async () => {}
-      }
-    };
-  }
-}));
+describe('The Header component when logged in', () => {
+  vi.mock('@okta/okta-react', () => ({
+    useOktaAuth: () => {
+      return {
+        authState: {
+          isAuthenticated: true
+        },
+        oktaAuth: {
+          getUser: async () => ({
+            name: 'John Doe'
+          }),
+          logout: async () => {}
+        }
+      };
+    }
+  }));
 
-describe('The Header component', () => {
-  it('renders without crashing', () => {
+  it('renders without crashing', async () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <MockedProvider mocks={notificationsMock} addTypename={false}>
@@ -49,22 +49,40 @@ describe('The Header component', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByRole('banner')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getAllByRole('banner')).toHaveLength(2);
+    });
   });
+});
 
-  describe('When logged in', () => {
-    it('displays a login button', async () => {
-      render(
-        <MemoryRouter initialEntries={['/pre-decisional-notice']}>
-          <MockedProvider mocks={notificationsMock} addTypename={false}>
-            <Header />
-          </MockedProvider>
-        </MemoryRouter>
-      );
+describe('When logged in', () => {
+  vi.mock('@okta/okta-react', () => ({
+    useOktaAuth: () => {
+      return {
+        authState: {
+          isAuthenticated: false
+        },
+        oktaAuth: {
+          getUser: async () => ({
+            name: 'John Doe'
+          }),
+          logout: async () => {}
+        }
+      };
+    }
+  }));
 
-      await waitFor(() => {
-        expect(screen.getByTestId('login-button')).toBeInTheDocument();
-      });
+  it('displays a login button', async () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <MockedProvider mocks={notificationsMock} addTypename={false}>
+          <Header />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Sign In')).toBeInTheDocument();
     });
   });
 });

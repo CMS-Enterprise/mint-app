@@ -25,7 +25,7 @@ describe('The Terms & Conditions page', () => {
         <TermsAndConditions />
       </MemoryRouter>
     );
-    expect(screen.getByText('Terms and Conditions')).toBeInTheDocument();
+    expect(screen.getByText('Terms & Conditions')).toBeInTheDocument();
   });
 
   it('matches the snapshot', () => {

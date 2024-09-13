@@ -27,7 +27,7 @@ describe('The Not Found Page', () => {
         <NotFound />
       </MemoryRouter>
     );
-    expect(screen.getByText('Page Not Found')).toBeInTheDocument();
+    expect(screen.getByText('This page cannot be found.')).toBeInTheDocument();
   });
 
   it('matches the snapshot', () => {
