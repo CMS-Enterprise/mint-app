@@ -2656,6 +2656,95 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "ECHIMP",
+			"item": [
+				{
+					"name": "CR Echimp data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query echimpCR {\n    echimpCR {\n        crNumber\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        sensitiveFlag\n        implementationDate\n        crSummary\n        crStatus\n        emergencyCrFlag\n        relatedCrNumbers\n        relatedCrTdlNumbers\n        associatedModelUids\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Echimp CRS And TDLS",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query echimpCRAndTDLS {\n    echimpCRAndTDLS{\n        __typename\n    ... on EChimpCR {\n        crNumber\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        sensitiveFlag\n        implementationDate\n        crSummary\n        crStatus\n        emergencyCrFlag\n        relatedCrNumbers\n        relatedCrTdlNumbers\n        associatedModelUids\n    }\n    ... on     EChimpTDL {\n        tdlNumber\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        issuedDate\n        status\n        associatedModelUids\n    }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TDL data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query echimpTDL {\n    echimpTDL {\n        tdlNumber\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        issuedDate\n        status\n        associatedModelUids\n    }\n\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Model Plan with ECHIMP data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        echimpCRs{\n            title\n        }\n        echimpTDLs{\n            title\n        }\n\n    }\n}",
+						"variables": "{\n  \"id\": \"{{modelPlanID}}\"\n}"
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
