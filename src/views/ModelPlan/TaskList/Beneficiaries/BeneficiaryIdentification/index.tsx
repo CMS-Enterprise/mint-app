@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -27,16 +27,12 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -139,9 +135,7 @@ const BeneficiaryIdentification = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {miscellaneousT('for')} {modelName}
       </p>
 
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
@@ -161,31 +155,12 @@ const BeneficiaryIdentification = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<BeneficiaryIdentificationFormType>) => {
-          const { errors, setErrors, setFieldValue, values, handleSubmit } =
+          const { setErrors, setFieldValue, values, handleSubmit } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
               <ConfirmLeave />
-
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
 
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap className="beneficiaries__info">
@@ -198,21 +173,13 @@ const BeneficiaryIdentification = () => {
                       }}
                     >
                       <Fieldset disabled={!!error || loading}>
-                        <FieldGroup
-                          scrollElement="beneficiaries"
-                          error={!!flatErrors.beneficiaries}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="beneficiaries-beneficiaries"
                             id="label-beneficiaries-beneficiaries"
                           >
                             {beneficiariesT('beneficiaries.label')}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.beneficiaries}
-                          </FieldErrorMsg>
 
                           <Field
                             as={MultiSelect}
@@ -235,10 +202,7 @@ const BeneficiaryIdentification = () => {
                           {(values?.beneficiaries || []).includes(
                             BeneficiariesType.DISEASE_SPECIFIC
                           ) && (
-                            <FieldGroup
-                              scrollElement="diseaseSpecificGroup"
-                              error={!!flatErrors.diseaseSpecificGroup}
-                            >
+                            <FieldGroup>
                               <Label
                                 htmlFor="beneficiaries-disease-specific-group"
                                 className="text-normal"
@@ -246,13 +210,8 @@ const BeneficiaryIdentification = () => {
                                 {beneficiariesT('diseaseSpecificGroup.label')}
                               </Label>
 
-                              <FieldErrorMsg>
-                                {flatErrors.diseaseSpecificGroup}
-                              </FieldErrorMsg>
-
                               <Field
                                 as={TextField}
-                                error={flatErrors.diseaseSpecificGroup}
                                 id="beneficiaries-disease-specific-group"
                                 data-testid="beneficiaries-disease-specific-group"
                                 name="diseaseSpecificGroup"
@@ -263,10 +222,7 @@ const BeneficiaryIdentification = () => {
                           {(values?.beneficiaries || []).includes(
                             BeneficiariesType.OTHER
                           ) && (
-                            <FieldGroup
-                              scrollElement="beneficiariesOther"
-                              error={!!flatErrors.beneficiariesOther}
-                            >
+                            <FieldGroup>
                               <Label
                                 htmlFor="beneficiaries-other"
                                 className="text-normal"
@@ -274,13 +230,8 @@ const BeneficiaryIdentification = () => {
                                 {beneficiariesT('beneficiariesOther.label')}
                               </Label>
 
-                              <FieldErrorMsg>
-                                {flatErrors.beneficiariesOther}
-                              </FieldErrorMsg>
-
                               <Field
                                 as={TextField}
-                                error={flatErrors.beneficiariesOther}
                                 id="beneficiaries-other"
                                 data-testid="beneficiaries-other"
                                 name="beneficiariesOther"
@@ -302,20 +253,12 @@ const BeneficiaryIdentification = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="treatDualElligibleDifferent"
-                          error={!!flatErrors.treatDualElligibleDifferent}
-                          className="margin-y-4 margin-bottom-8"
-                        >
+                        <FieldGroup className="margin-y-4 margin-bottom-8">
                           <Label htmlFor="beneficiaries-dual-eligibility">
                             {beneficiariesT(
                               'treatDualElligibleDifferent.label'
                             )}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.treatDualElligibleDifferent}
-                          </FieldErrorMsg>
 
                           <Fieldset>
                             <Field
@@ -343,9 +286,6 @@ const BeneficiaryIdentification = () => {
                               <FieldGroup
                                 className="margin-left-4 margin-y-1"
                                 scrollElement="treatDualElligibleDifferentHow"
-                                error={
-                                  !!flatErrors.treatDualElligibleDifferentHow
-                                }
                               >
                                 <Label
                                   htmlFor="beneficiaries-dual-eligibility-how"
@@ -356,16 +296,9 @@ const BeneficiaryIdentification = () => {
                                   )}
                                 </Label>
 
-                                <FieldErrorMsg>
-                                  {flatErrors.treatDualElligibleDifferentHow}
-                                </FieldErrorMsg>
-
                                 <Field
                                   as={TextAreaField}
                                   className="height-15"
-                                  error={
-                                    flatErrors.treatDualElligibleDifferentHow
-                                  }
                                   id="beneficiaries-dual-eligibility-how"
                                   data-testid="beneficiaries-dual-eligibility-how"
                                   name="treatDualElligibleDifferentHow"
@@ -420,20 +353,12 @@ const BeneficiaryIdentification = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="excludeCertainCharacteristics"
-                          error={!!flatErrors.excludeCertainCharacteristics}
-                          className="margin-y-4 margin-bottom-8"
-                        >
+                        <FieldGroup className="margin-y-4 margin-bottom-8">
                           <Label htmlFor="beneficiaries-exclude">
                             {beneficiariesT(
                               'excludeCertainCharacteristics.label'
                             )}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.excludeCertainCharacteristics}
-                          </FieldErrorMsg>
 
                           <Fieldset>
                             <Field
@@ -458,13 +383,7 @@ const BeneficiaryIdentification = () => {
 
                             {values?.excludeCertainCharacteristics ===
                               TriStateAnswer.YES && (
-                              <FieldGroup
-                                className="margin-left-4 margin-y-1"
-                                scrollElement="excludeCertainCharacteristicsCriteria"
-                                error={
-                                  !!flatErrors.excludeCertainCharacteristicsCriteria
-                                }
-                              >
+                              <FieldGroup className="margin-left-4 margin-y-1">
                                 <Label
                                   htmlFor="beneficiaries-exclude-criteria"
                                   className="text-normal"
@@ -474,18 +393,9 @@ const BeneficiaryIdentification = () => {
                                   )}
                                 </Label>
 
-                                <FieldErrorMsg>
-                                  {
-                                    flatErrors.excludeCertainCharacteristicsCriteria
-                                  }
-                                </FieldErrorMsg>
-
                                 <Field
                                   as={TextAreaField}
                                   className="height-15"
-                                  error={
-                                    flatErrors.excludeCertainCharacteristicsCriteria
-                                  }
                                   id="beneficiaries-exclude-criteria"
                                   data-testid="beneficiaries-exclude-criteria"
                                   name="excludeCertainCharacteristicsCriteria"

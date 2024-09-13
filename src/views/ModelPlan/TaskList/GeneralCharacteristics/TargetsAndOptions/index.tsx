@@ -28,15 +28,12 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -179,30 +176,11 @@ const TargetsAndOptions = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<TargetsAndOptionsFormType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -213,18 +191,10 @@ const TargetsAndOptions = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup
-                    scrollElement="plan-characteristics-geographies-targeted"
-                    error={!!flatErrors.geographiesTargeted}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="plan-characteristics-geographies-targeted">
                       {generalCharacteristicsT('geographiesTargeted.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.geographiesTargeted}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="geographiesTargeted"
@@ -236,11 +206,7 @@ const TargetsAndOptions = () => {
 
                     {values.geographiesTargeted && (
                       <>
-                        <FieldGroup
-                          scrollElement="plan-characteristics-geographies-type"
-                          error={!!flatErrors.geographiesTargetedTypes}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="plan-characteristics-geographies-type"
                             className="text-normal"
@@ -249,10 +215,6 @@ const TargetsAndOptions = () => {
                               'geographiesTargetedTypes.label'
                             )}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.geographiesTargetedTypes}
-                          </FieldErrorMsg>
 
                           {getKeys(geographiesTargetedTypesConfig.options).map(
                             type => (
@@ -338,12 +300,7 @@ const TargetsAndOptions = () => {
                                   values.geographiesTargetedTypes.includes(
                                     type
                                   ) && (
-                                    <FieldGroup
-                                      className="margin-left-4 margin-y-2"
-                                      error={
-                                        !!flatErrors.geographiesTargetedTypesOther
-                                      }
-                                    >
+                                    <FieldGroup className="margin-left-4 margin-y-2">
                                       <Label
                                         htmlFor="plan-characteristics-geographies-targeted-other"
                                         className="text-normal"
@@ -352,11 +309,6 @@ const TargetsAndOptions = () => {
                                           'geographiesTargetedTypesOther.label'
                                         )}
                                       </Label>
-                                      <FieldErrorMsg>
-                                        {
-                                          flatErrors.geographiesTargetedTypesOther
-                                        }
-                                      </FieldErrorMsg>
                                       <Field
                                         as={TextInput}
                                         data-testid="plan-characteristics-geographies-targeted-other"
@@ -370,11 +322,7 @@ const TargetsAndOptions = () => {
                           )}
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="plan-characteristics-geographies-applied-to"
-                          error={!!flatErrors.geographiesTargetedAppliedTo}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="plan-characteristics-geographies-applied-to"
                             className="text-normal"
@@ -383,9 +331,6 @@ const TargetsAndOptions = () => {
                               'geographiesTargetedAppliedTo.label'
                             )}
                           </Label>
-                          <FieldErrorMsg>
-                            {flatErrors.geographiesTargetedAppliedTo}
-                          </FieldErrorMsg>
 
                           {getKeys(
                             geographiesTargetedAppliedToConfig.options
@@ -411,12 +356,7 @@ const TargetsAndOptions = () => {
                                   values.geographiesTargetedAppliedTo.includes(
                                     type
                                   ) && (
-                                    <FieldGroup
-                                      className="margin-left-4 margin-top-2 margin-bottom-0"
-                                      error={
-                                        !!flatErrors.geographiesTargetedAppliedToOther
-                                      }
-                                    >
+                                    <FieldGroup className="margin-left-4 margin-top-2 margin-bottom-0">
                                       <Label
                                         htmlFor="plan-characteristics-geographies-applied-to-other"
                                         className="text-normal"
@@ -425,11 +365,6 @@ const TargetsAndOptions = () => {
                                           'geographiesTargetedAppliedToOther.label'
                                         )}
                                       </Label>
-                                      <FieldErrorMsg>
-                                        {
-                                          flatErrors.geographiesTargetedAppliedToOther
-                                        }
-                                      </FieldErrorMsg>
                                       <Field
                                         as={TextInput}
                                         id="plan-characteristics-geographies-applied-to-other"
@@ -449,18 +384,10 @@ const TargetsAndOptions = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="plan-characteristics-participation"
-                    error={!!flatErrors.participationOptions}
-                    className="margin-y-4"
-                  >
+                  <FieldGroup className="margin-y-4">
                     <Label htmlFor="plan-characteristics-participation">
                       {generalCharacteristicsT('participationOptions.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.participationOptions}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="participationOptions"
@@ -476,10 +403,7 @@ const TargetsAndOptions = () => {
                     field="participationOptionsNote"
                   />
 
-                  <FieldGroup
-                    scrollElement="plan-characteristics-agreement-type"
-                    error={!!flatErrors.agreementTypes}
-                  >
+                  <FieldGroup>
                     <Label htmlFor="plan-characteristics-agreement-type">
                       {generalCharacteristicsT('agreementTypes.label')}
                     </Label>
@@ -499,8 +423,6 @@ const TargetsAndOptions = () => {
                       {generalCharacteristicsT('agreementTypes.sublabel')}
                     </p>
 
-                    <FieldErrorMsg>{flatErrors.agreementTypes}</FieldErrorMsg>
-
                     {getKeys(agreementTypesConfig.options).map(type => (
                       <Fragment key={type}>
                         <Field
@@ -513,10 +435,7 @@ const TargetsAndOptions = () => {
                         />
                         {type === AgreementType.OTHER &&
                           values.agreementTypes.includes(type) && (
-                            <FieldGroup
-                              className="margin-left-4 margin-top-2 margin-bottom-0"
-                              error={!!flatErrors.agreementTypesOther}
-                            >
+                            <FieldGroup className="margin-left-4 margin-top-2 margin-bottom-0">
                               <Label
                                 htmlFor="plan-characteristics-agreement-type-other"
                                 className="text-normal"
@@ -525,10 +444,6 @@ const TargetsAndOptions = () => {
                                   'agreementTypesOther.label'
                                 )}
                               </Label>
-
-                              <FieldErrorMsg>
-                                {flatErrors.agreementTypesOther}
-                              </FieldErrorMsg>
 
                               <Field
                                 as={TextInput}
@@ -545,13 +460,7 @@ const TargetsAndOptions = () => {
                     AgreementType.PARTICIPATION
                   ) && (
                     <>
-                      <FieldGroup
-                        scrollElement="plan-characteristics-multiple-participation-needed"
-                        error={
-                          !!flatErrors.multiplePatricipationAgreementsNeeded
-                        }
-                        className="margin-y-4"
-                      >
+                      <FieldGroup className="margin-y-4">
                         <Label
                           htmlFor="plan-characteristics-multiple-participation-needed"
                           className="text-normal"
@@ -566,10 +475,6 @@ const TargetsAndOptions = () => {
                             'multiplePatricipationAgreementsNeeded.sublabel'
                           )}
                         </p>
-
-                        <FieldErrorMsg>
-                          {flatErrors.multiplePatricipationAgreementsNeeded}
-                        </FieldErrorMsg>
 
                         <BooleanRadio
                           field="multiplePatricipationAgreementsNeeded"

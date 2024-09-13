@@ -28,15 +28,12 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import Tooltip from 'components/shared/Tooltip';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 type CoordinationFormType =
@@ -181,30 +178,11 @@ export const Coordination = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<CoordinationFormType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -317,11 +295,7 @@ export const Coordination = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="coordinateWork"
-                    error={!!flatErrors.coordinateWork}
-                    className="margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-bottom-8">
                     <Label htmlFor="participants-and-providers-coordniate-work">
                       {participantsAndProvidersT('coordinateWork.label')}
                     </Label>
@@ -329,8 +303,6 @@ export const Coordination = () => {
                     <p className="text-base margin-0 line-height-body-3">
                       {participantsAndProvidersT('coordinateWork.sublabel')}
                     </p>
-
-                    <FieldErrorMsg>{flatErrors.coordinateWork}</FieldErrorMsg>
 
                     <BooleanRadio
                       field="coordinateWork"
@@ -346,18 +318,10 @@ export const Coordination = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="gainsharePayments"
-                    error={!!flatErrors.gainsharePayments}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="participants-and-providers-gainshare-payment">
                       {participantsAndProvidersT('gainsharePayments.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.gainsharePayments}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="gainsharePayments"
@@ -368,11 +332,7 @@ export const Coordination = () => {
                     />
 
                     {values.gainsharePayments && (
-                      <FieldGroup
-                        scrollElement="gainsharePaymentsTrack"
-                        error={!!flatErrors.gainsharePaymentsTrack}
-                        className="margin-top-4"
-                      >
+                      <FieldGroup className="margin-top-4">
                         <Label
                           htmlFor="participants-and-providers-gainshare-track"
                           className="text-normal"
@@ -381,10 +341,6 @@ export const Coordination = () => {
                             'gainsharePaymentsTrack.label'
                           )}
                         </Label>
-
-                        <FieldErrorMsg>
-                          {flatErrors.gainsharePaymentsTrack}
-                        </FieldErrorMsg>
 
                         <BooleanRadio
                           field="gainsharePaymentsTrack"
@@ -397,11 +353,7 @@ export const Coordination = () => {
                     )}
 
                     {values.gainsharePayments && (
-                      <FieldGroup
-                        scrollElement="gainsharePaymentsEligibility"
-                        error={!!flatErrors.gainsharePaymentsEligibility}
-                        className="margin-top-4"
-                      >
+                      <FieldGroup scrollElement="gainsharePaymentsEligibility">
                         <Label
                           htmlFor="participants-and-providers-gainshare-eligibility"
                           className="text-normal maxw-none"
@@ -410,10 +362,6 @@ export const Coordination = () => {
                             'gainsharePaymentsEligibility.label'
                           )}
                         </Label>
-
-                        <FieldErrorMsg>
-                          {flatErrors.gainsharePaymentsEligibility}
-                        </FieldErrorMsg>
 
                         {getKeys(
                           gainsharePaymentsEligibilityConfig.options
@@ -449,12 +397,6 @@ export const Coordination = () => {
                                       )}
                                     </Label>
 
-                                    <FieldErrorMsg>
-                                      {
-                                        flatErrors.gainsharePaymentsEligibilityOther
-                                      }
-                                    </FieldErrorMsg>
-
                                     <Field
                                       as={TextInput}
                                       className="maxw-none mint-textarea"
@@ -476,10 +418,7 @@ export const Coordination = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="participantsIds"
-                    error={!!flatErrors.participantsIds}
-                  >
+                  <FieldGroup>
                     <Label
                       htmlFor="participants-and-providers-id"
                       className="maxw-none"
@@ -501,8 +440,6 @@ export const Coordination = () => {
                     <p className="text-base margin-0 line-height-body-3">
                       {participantsAndProvidersT('participantsIds.sublabel')}
                     </p>
-
-                    <FieldErrorMsg>{flatErrors.participantsIds}</FieldErrorMsg>
 
                     {getKeys(participantsIdsConfig.options).map(type => {
                       return (
@@ -527,10 +464,6 @@ export const Coordination = () => {
                                     'participantsIdsOther.label'
                                   )}
                                 </Label>
-
-                                <FieldErrorMsg>
-                                  {flatErrors.participantsIdsOther}
-                                </FieldErrorMsg>
 
                                 <Field
                                   as={TextInput}

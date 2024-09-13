@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -29,13 +29,10 @@ import FrequencyForm from 'components/FrequencyForm';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -179,9 +176,7 @@ const Complexity = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName || ' '} indexTwo
-        </Trans>
+        {miscellaneousT('for')} {modelName}
       </p>
 
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
@@ -201,30 +196,11 @@ const Complexity = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ComplexityFormType>) => {
-          const { errors, handleSubmit, setFieldValue, setErrors, values } =
+          const { handleSubmit, setFieldValue, setErrors, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <GridContainer className="padding-left-0 padding-right-0">
@@ -238,13 +214,7 @@ const Complexity = () => {
                       }}
                     >
                       <Fieldset disabled={!!error || loading}>
-                        <FieldGroup
-                          scrollElement="payment-complexity"
-                          error={
-                            !!flatErrors.expectedCalculationComplexityLevel
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="payment-complexity"
                             className="maxw-none"
@@ -253,10 +223,6 @@ const Complexity = () => {
                               'expectedCalculationComplexityLevel.label'
                             )}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.expectedCalculationComplexityLevel}
-                          </FieldErrorMsg>
 
                           <Fieldset>
                             {getKeys(
@@ -287,10 +253,7 @@ const Complexity = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="payment-claims-processing-precendece"
-                          className="margin-y-4 margin-bottom-8"
-                        >
+                        <FieldGroup className="margin-y-4 margin-bottom-8">
                           <Label htmlFor="payment-claims-processing-precendece">
                             {paymentsT('claimsProcessingPrecedence.label')}
                           </Label>
@@ -337,13 +300,7 @@ const Complexity = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="payment-multiple-payments"
-                          error={
-                            !!flatErrors.canParticipantsSelectBetweenPaymentMechanisms
-                          }
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="payment-multiple-payments"
                             className="maxw-none"
@@ -352,12 +309,6 @@ const Complexity = () => {
                               'canParticipantsSelectBetweenPaymentMechanisms.label'
                             )}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {
-                              flatErrors.canParticipantsSelectBetweenPaymentMechanisms
-                            }
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="canParticipantsSelectBetweenPaymentMechanisms"
@@ -372,13 +323,7 @@ const Complexity = () => {
                             childName="canParticipantsSelectBetweenPaymentMechanismsHow"
                           >
                             {values.canParticipantsSelectBetweenPaymentMechanisms ? (
-                              <FieldGroup
-                                className="margin-left-4 margin-y-1"
-                                scrollElement="canParticipantsSelectBetweenPaymentMechanismsHow"
-                                error={
-                                  !!flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
-                                }
-                              >
+                              <FieldGroup className="margin-left-4 margin-y-1">
                                 <Label
                                   htmlFor="payment-multiple-payments-how"
                                   className="text-normal"
@@ -388,17 +333,8 @@ const Complexity = () => {
                                   )}
                                 </Label>
 
-                                <FieldErrorMsg>
-                                  {
-                                    flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
-                                  }
-                                </FieldErrorMsg>
-
                                 <Field
                                   as={TextInput}
-                                  error={
-                                    flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
-                                  }
                                   id="payment-multiple-payments-how"
                                   data-testid="payment-multiple-payments-how"
                                   name="canParticipantsSelectBetweenPaymentMechanismsHow"

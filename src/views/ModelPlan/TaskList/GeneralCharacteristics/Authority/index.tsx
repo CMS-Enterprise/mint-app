@@ -26,14 +26,11 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 type AuthorityFormType =
@@ -162,30 +159,11 @@ const Authority = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InitialValueType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -196,18 +174,10 @@ const Authority = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup
-                    scrollElement="plan-characteristics-rulemaking-required"
-                    error={!!flatErrors.rulemakingRequired}
-                    className="margin-y-4"
-                  >
+                  <FieldGroup className="margin-y-4">
                     <Label htmlFor="plan-characteristics-rulemaking-required">
                       {generalCharacteristicsT('rulemakingRequired.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.rulemakingRequired}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="rulemakingRequired"
@@ -219,11 +189,7 @@ const Authority = () => {
                     >
                       {values.rulemakingRequired === true ? (
                         <div className="display-flex margin-left-4 margin-bottom-1">
-                          <FieldGroup
-                            className="flex-1"
-                            scrollElement="plan-characteristics-rulemaking-required-description"
-                            error={!!flatErrors.rulemakingRequiredDescription}
-                          >
+                          <FieldGroup className="flex-1">
                             <Label
                               htmlFor="plan-characteristics-rulemaking-required-description"
                               className="margin-bottom-1 text-normal"
@@ -233,13 +199,8 @@ const Authority = () => {
                               )}
                             </Label>
 
-                            <FieldErrorMsg>
-                              {flatErrors.rulemakingRequiredDescription}
-                            </FieldErrorMsg>
-
                             <Field
                               as={TextAreaField}
-                              error={!!flatErrors.rulemakingRequiredDescription}
                               className="margin-top-0 height-15"
                               data-testid="plan-characteristics-rulemaking-required-description"
                               id="plan-characteristics-rulemaking-required-description"
@@ -258,13 +219,10 @@ const Authority = () => {
                     field="rulemakingRequiredNote"
                   />
 
-                  <FieldGroup scrollElement="plan-characteristics-authority-allowance">
+                  <FieldGroup>
                     <Label htmlFor="plan-characteristics-authority-allowance">
                       {generalCharacteristicsT('authorityAllowances.label')}
                     </Label>
-                    <FieldErrorMsg>
-                      {flatErrors.authorityAllowances}
-                    </FieldErrorMsg>
 
                     {getKeys(authorityAllowancesConfig.options).map(type => {
                       return (
@@ -279,11 +237,7 @@ const Authority = () => {
                           />
                           {type === AuthorityAllowance.OTHER &&
                             values.authorityAllowances.includes(type) && (
-                              <FieldGroup
-                                scrollElement="plan-characteristics-authority-allowance-other"
-                                className="margin-left-4 margin-top-2 margin-bottom-4"
-                                error={!!flatErrors.authorityAllowancesOther}
-                              >
+                              <FieldGroup className="margin-left-4 margin-top-2 margin-bottom-4">
                                 <Label
                                   htmlFor="plan-characteristics-authority-allowance-other"
                                   className="text-normal"
@@ -292,10 +246,6 @@ const Authority = () => {
                                     'authorityAllowancesOther.label'
                                   )}
                                 </Label>
-
-                                <FieldErrorMsg>
-                                  {flatErrors.authorityAllowancesOther}
-                                </FieldErrorMsg>
 
                                 <Field
                                   as={TextInput}
@@ -314,16 +264,10 @@ const Authority = () => {
                     field="authorityAllowancesNote"
                   />
 
-                  <FieldGroup
-                    scrollElement="plan-characteristics-waivers-required"
-                    error={!!flatErrors.waiversRequired}
-                    className="margin-y-4"
-                  >
+                  <FieldGroup className="margin-y-4">
                     <Label htmlFor="plan-characteristics-waivers-required">
                       {generalCharacteristicsT('waiversRequired.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.waiversRequired}</FieldErrorMsg>
 
                     <BooleanRadio
                       field="waiversRequired"
@@ -335,14 +279,10 @@ const Authority = () => {
                   </FieldGroup>
 
                   {values.waiversRequired && (
-                    <FieldGroup scrollElement="plan-characteristics-waiver-types">
+                    <FieldGroup>
                       <Label htmlFor="plan-characteristics-waiver-types">
                         {generalCharacteristicsT('waiversRequiredTypes.label')}
                       </Label>
-
-                      <FieldErrorMsg>
-                        {flatErrors.waiversRequiredTypes}
-                      </FieldErrorMsg>
 
                       {getKeys(waiversRequiredTypesConfig.options).map(type => {
                         return (

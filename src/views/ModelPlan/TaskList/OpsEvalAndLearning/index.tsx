@@ -32,8 +32,6 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
@@ -41,7 +39,6 @@ import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
@@ -243,30 +240,11 @@ export const OpsEvalAndLearningContent = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<OpsEvalAndLearningFormType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -277,19 +255,13 @@ export const OpsEvalAndLearningContent = () => {
                 }}
               >
                 <Fieldset disabled={!!error || loading}>
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-stakeholders"
-                    error={!!flatErrors.stakeholders}
-                    className="margin-top-4"
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Label
                       htmlFor="ops-eval-and-learning-stakeholders"
                       id="label-ops-eval-and-learning-stakeholders"
                     >
                       {opsEvalAndLearningT('stakeholders.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.stakeholders}</FieldErrorMsg>
 
                     <Field
                       as={MultiSelect}
@@ -318,14 +290,9 @@ export const OpsEvalAndLearningContent = () => {
                           {opsEvalAndLearningT('stakeholdersOther.label')}
                         </Label>
 
-                        <FieldErrorMsg>
-                          {flatErrors.stakeholdersOther}
-                        </FieldErrorMsg>
-
                         <Field
                           as={TextInput}
                           data-testid="ops-eval-and-learning-stakeholders-other"
-                          error={!!flatErrors.stakeholdersOther}
                           id="ops-eval-and-learning-key-other"
                           maxLength={50}
                           name="stakeholdersOther"
@@ -341,7 +308,6 @@ export const OpsEvalAndLearningContent = () => {
 
                   <FieldGroup
                     scrollElement="ops-eval-and-learning-help-desk-use"
-                    error={!!flatErrors.helpdeskUse}
                     className="margin-y-4 margin-bottom-8"
                   >
                     <Label htmlFor="ops-eval-and-learning-help-desk-use">
@@ -358,8 +324,6 @@ export const OpsEvalAndLearningContent = () => {
                         }
                       />
                     )}
-
-                    <FieldErrorMsg>{flatErrors.helpdeskUse}</FieldErrorMsg>
 
                     <BooleanRadio
                       field="helpdeskUse"
@@ -379,10 +343,6 @@ export const OpsEvalAndLearningContent = () => {
                     <Label htmlFor="ops-eval-and-learning-contractor-support">
                       {opsEvalAndLearningT('contractorSupport.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.contractorSupport}
-                    </FieldErrorMsg>
 
                     {getKeys(contractorSupportConfig.options).map(type => {
                       return (
@@ -410,10 +370,6 @@ export const OpsEvalAndLearningContent = () => {
                                   )}
                                 </Label>
 
-                                <FieldErrorMsg>
-                                  {flatErrors.contractorSupportOther}
-                                </FieldErrorMsg>
-
                                 <Field
                                   as={TextInput}
                                   id="ops-eval-and-learning-contractor-support-other"
@@ -425,10 +381,7 @@ export const OpsEvalAndLearningContent = () => {
                       );
                     })}
 
-                    <FieldGroup
-                      scrollElement="ops-eval-and-learning-contractor-support-how"
-                      error={!!flatErrors.contractorSupportHow}
-                    >
+                    <FieldGroup>
                       <Label
                         htmlFor="ops-eval-and-learning-contractor-support-how"
                         className="text-normal margin-top-4"
@@ -440,14 +393,9 @@ export const OpsEvalAndLearningContent = () => {
                         {opsEvalAndLearningT('contractorSupportHow.sublabel')}
                       </p>
 
-                      <FieldErrorMsg>
-                        {flatErrors.contractorSupportHow}
-                      </FieldErrorMsg>
-
                       <Field
                         as={TextAreaField}
                         className="height-card"
-                        error={flatErrors.contractorSupportHow}
                         id="ops-eval-and-learning-contractor-support-how"
                         data-testid="ops-eval-and-learning-contractor-support-how"
                         name="contractorSupportHow"
@@ -460,11 +408,7 @@ export const OpsEvalAndLearningContent = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="ops-eval-and-learning-iddoc-support"
-                    error={!!flatErrors.iddocSupport}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <Label htmlFor="ops-eval-and-learning-iddoc-support">
                       {opsEvalAndLearningT('iddocSupport.label')}
                     </Label>
@@ -487,8 +431,6 @@ export const OpsEvalAndLearningContent = () => {
                     <p className="text-base margin-y-1 margin-top-2">
                       {opsEvalAndLearningMiscT('additionalQuestionsInfo')}
                     </p>
-
-                    <FieldErrorMsg>{flatErrors.iddocSupport}</FieldErrorMsg>
 
                     <BooleanRadio
                       field="iddocSupport"

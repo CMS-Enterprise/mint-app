@@ -113,7 +113,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group margin-y-4 margin-bottom-8"
-        data-scroll="plan-characteristics-geographies-targeted"
       >
         <label
           class="usa-label"
@@ -167,7 +166,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         </fieldset>
         <div
           class="usa-form-group margin-top-4"
-          data-scroll="plan-characteristics-geographies-type"
         >
           <label
             class="usa-label text-normal"
@@ -258,7 +256,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         </div>
         <div
           class="usa-form-group margin-top-4"
-          data-scroll="plan-characteristics-geographies-applied-to"
         >
           <label
             class="usa-label text-normal"
@@ -376,7 +373,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-y-4"
-        data-scroll="plan-characteristics-participation"
       >
         <label
           class="usa-label"
@@ -456,7 +452,6 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
-        data-scroll="plan-characteristics-agreement-type"
       >
         <label
           class="usa-label"

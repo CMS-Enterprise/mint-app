@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import {
   Button,
@@ -27,15 +27,12 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextField from 'components/shared/TextField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -125,9 +122,7 @@ const PeopleImpact = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {miscellaneousT('for')} {modelName}
       </p>
 
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
@@ -147,31 +142,13 @@ const PeopleImpact = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<PeopleImpactedFormType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
               <ConfirmLeave />
 
-              {Object.keys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {Object.keys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={key}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap className="beneficiaries__info">
                   <Grid desktop={{ col: 6 }}>
@@ -183,22 +160,14 @@ const PeopleImpact = () => {
                       }}
                     >
                       <Fieldset disabled={!!error || loading}>
-                        <FieldGroup
-                          scrollElement="expected-people-impacted"
-                          error={!!flatErrors.numberPeopleImpacted}
-                        >
+                        <FieldGroup>
                           <Label htmlFor="expected-people-impacted">
                             {beneficiariesT('numberPeopleImpacted.label')}
                           </Label>
 
-                          <FieldErrorMsg>
-                            {flatErrors.numberPeopleImpacted}
-                          </FieldErrorMsg>
-
                           <Field
                             as={RangeInput}
                             className="maxw-none width-full"
-                            error={flatErrors.numberPeopleImpacted}
                             id="expected-people-impacted"
                             name="numberPeopleImpacted"
                             min={0}
@@ -214,7 +183,7 @@ const PeopleImpact = () => {
                             }}
                           />
 
-                          <div className="display-flex mint-header__basic">
+                          <div className="display-flex mint-header__basic flex-justify">
                             <span>{beneficiariesMiscT('zero')}</span>
 
                             <span>{beneficiariesMiscT('tenThousand')}</span>
@@ -227,15 +196,10 @@ const PeopleImpact = () => {
                             {beneficiariesMiscT('numberOfPeopleImpacted')}
                           </Label>
 
-                          <FieldErrorMsg>
-                            {flatErrors.numberPeopleImpacted}
-                          </FieldErrorMsg>
-
                           <Field
                             as={TextInput}
                             type="number"
                             className="width-card"
-                            error={flatErrors.numberPeopleImpacted}
                             id="expected-people-impacted"
                             data-testid="expected-people-impacted"
                             name="numberPeopleImpacted"
@@ -256,10 +220,6 @@ const PeopleImpact = () => {
                           >
                             {beneficiariesT('estimateConfidence.label')}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.estimateConfidence}
-                          </FieldErrorMsg>
 
                           <Fieldset>
                             {getKeys(estimateConfidenceConfig.options).map(
@@ -283,21 +243,13 @@ const PeopleImpact = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="beneficiaries-chooseBeneficiaries"
-                          error={!!flatErrors.beneficiarySelectionMethod}
-                          className="margin-top-4"
-                        >
+                        <FieldGroup className="margin-top-4">
                           <Label
                             htmlFor="beneficiaries-chooseBeneficiaries"
                             id="label-beneficiaries-chooseBeneficiaries"
                           >
                             {beneficiariesT('beneficiarySelectionMethod.label')}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.beneficiarySelectionMethod}
-                          </FieldErrorMsg>
 
                           <Field
                             as={MultiSelect}
@@ -324,10 +276,7 @@ const PeopleImpact = () => {
                           {(values?.beneficiarySelectionMethod || []).includes(
                             SelectionMethodType.OTHER
                           ) && (
-                            <FieldGroup
-                              scrollElement="beneficiaries-chooseBeneficiarie-other"
-                              error={!!flatErrors.beneficiarySelectionOther}
-                            >
+                            <FieldGroup>
                               <Label
                                 htmlFor="beneficiaries-choose-beneficiaries-other"
                                 className="text-normal"
@@ -337,13 +286,8 @@ const PeopleImpact = () => {
                                 )}
                               </Label>
 
-                              <FieldErrorMsg>
-                                {flatErrors.beneficiarySelectionOther}
-                              </FieldErrorMsg>
-
                               <Field
                                 as={TextField}
-                                error={flatErrors.beneficiarySelectionOther}
                                 id="beneficiaries-choose-beneficiaries-other"
                                 data-testid="beneficiaries-choose-beneficiaries-other"
                                 name="beneficiarySelectionOther"

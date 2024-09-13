@@ -29,14 +29,11 @@ import MainContent from 'components/MainContent';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
@@ -172,30 +169,11 @@ export const ParticipantsAndProvidersContent = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ParticipantsAndProvidersFormType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {Object.keys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {Object.keys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={key}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <GridContainer className="padding-left-0 padding-right-0">
@@ -209,20 +187,13 @@ export const ParticipantsAndProvidersContent = () => {
                       }}
                     >
                       <Fieldset disabled={!!error || loading}>
-                        <FieldGroup
-                          scrollElement="participants"
-                          error={!!flatErrors.participants}
-                        >
+                        <FieldGroup>
                           <Label
                             htmlFor="participants-and-providers-participants"
                             id="label-participants-and-providers-participants"
                           >
                             {participantsAndProvidersT('participants.label')}
                           </Label>
-
-                          <FieldErrorMsg>
-                            {flatErrors.participants}
-                          </FieldErrorMsg>
 
                           <Field
                             as={MultiSelect}
@@ -261,10 +232,7 @@ export const ParticipantsAndProvidersContent = () => {
                             ParticipantsType.MEDICARE_PROVIDERS
                           ) && (
                             <>
-                              <FieldGroup
-                                scrollElement="medicareProviderType"
-                                error={!!flatErrors.medicareProviderType}
-                              >
+                              <FieldGroup>
                                 <Label
                                   htmlFor="participants-and-providers-medicare-type"
                                   className="text-normal"
@@ -278,9 +246,6 @@ export const ParticipantsAndProvidersContent = () => {
                                     'medicareProviderType.sublabel'
                                   )}
                                 </p>
-                                <FieldErrorMsg>
-                                  {flatErrors.medicareProviderType}
-                                </FieldErrorMsg>
                                 <Button
                                   type="button"
                                   unstyled
@@ -293,28 +258,18 @@ export const ParticipantsAndProvidersContent = () => {
                                 </Button>
                                 <Field
                                   as={TextAreaField}
-                                  error={flatErrors.medicareProviderType}
                                   id="participants-and-providers-medicare-type"
                                   data-testid="participants-and-providers-medicare-type"
                                   name="medicareProviderType"
                                 />
                               </FieldGroup>
 
-                              <FieldGroup
-                                scrollElement="isNewTypeOfProvidersOrSuppliers"
-                                error={
-                                  !!flatErrors.isNewTypeOfProvidersOrSuppliers
-                                }
-                              >
+                              <FieldGroup>
                                 <Label htmlFor="participants-and-providers-is-new-type">
                                   {participantsAndProvidersT(
                                     'isNewTypeOfProvidersOrSuppliers.label'
                                   )}
                                 </Label>
-
-                                <FieldErrorMsg>
-                                  {flatErrors.isNewTypeOfProvidersOrSuppliers}
-                                </FieldErrorMsg>
 
                                 <BooleanRadio
                                   field="isNewTypeOfProvidersOrSuppliers"
@@ -332,10 +287,7 @@ export const ParticipantsAndProvidersContent = () => {
                           {(values?.participants || []).includes(
                             ParticipantsType.STATES
                           ) && (
-                            <FieldGroup
-                              scrollElement="statesEngagement"
-                              error={!!flatErrors.statesEngagement}
-                            >
+                            <FieldGroup>
                               <Label
                                 htmlFor="participants-and-providers-states-engagement"
                                 className="text-normal"
@@ -344,12 +296,8 @@ export const ParticipantsAndProvidersContent = () => {
                                   'statesEngagement.label'
                                 )}
                               </Label>
-                              <FieldErrorMsg>
-                                {flatErrors.statesEngagement}
-                              </FieldErrorMsg>
                               <Field
                                 as={TextAreaField}
-                                error={flatErrors.statesEngagement}
                                 id="participants-and-providers-states-engagement"
                                 data-testid="participants-and-providers-states-engagement"
                                 name="statesEngagement"
@@ -360,10 +308,7 @@ export const ParticipantsAndProvidersContent = () => {
                           {(values?.participants || []).includes(
                             ParticipantsType.OTHER
                           ) && (
-                            <FieldGroup
-                              scrollElement="participantsOther"
-                              error={!!flatErrors.participantsOther}
-                            >
+                            <FieldGroup>
                               <Label
                                 htmlFor="participants-and-providers-participants-other"
                                 className="text-normal"
@@ -372,12 +317,8 @@ export const ParticipantsAndProvidersContent = () => {
                                   'participantsOther.label'
                                 )}
                               </Label>
-                              <FieldErrorMsg>
-                                {flatErrors.participantsOther}
-                              </FieldErrorMsg>
                               <Field
                                 as={TextAreaField}
-                                error={flatErrors.participantsOther}
                                 id="participants-and-providers-participants-other"
                                 data-testid="participants-and-providers-participants-other"
                                 name="participantsOther"
@@ -391,11 +332,7 @@ export const ParticipantsAndProvidersContent = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="participantsCurrentlyInModels"
-                          error={!!flatErrors.participantsCurrentlyInModels}
-                          className="margin-y-4 margin-bottom-8"
-                        >
+                        <FieldGroup className="margin-y-4 margin-bottom-8">
                           <Label htmlFor="participants-and-providers-current-participants">
                             {participantsAndProvidersT(
                               'participantsCurrentlyInModels.label'
@@ -407,10 +344,6 @@ export const ParticipantsAndProvidersContent = () => {
                               'participantsCurrentlyInModels.sublabel'
                             )}
                           </p>
-
-                          <FieldErrorMsg>
-                            {flatErrors.participantsCurrentlyInModels}
-                          </FieldErrorMsg>
 
                           <BooleanRadio
                             field="participantsCurrentlyInModels"
@@ -428,10 +361,7 @@ export const ParticipantsAndProvidersContent = () => {
                           />
                         </FieldGroup>
 
-                        <FieldGroup
-                          scrollElement="modelApplicationLevel"
-                          error={!!flatErrors.modelApplicationLevel}
-                        >
+                        <FieldGroup>
                           <Label htmlFor="participants-and-providers-application-level">
                             {participantsAndProvidersT(
                               'modelApplicationLevel.label'
@@ -444,13 +374,8 @@ export const ParticipantsAndProvidersContent = () => {
                             )}
                           </p>
 
-                          <FieldErrorMsg>
-                            {flatErrors.modelApplicationLevel}
-                          </FieldErrorMsg>
-
                           <Field
                             as={TextAreaField}
-                            error={flatErrors.modelApplicationLevel}
                             id="participants-and-providers-application-level"
                             name="modelApplicationLevel"
                           />

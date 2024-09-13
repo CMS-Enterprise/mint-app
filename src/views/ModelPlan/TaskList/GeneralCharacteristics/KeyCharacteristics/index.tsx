@@ -29,8 +29,6 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
 import CheckboxField from 'components/shared/CheckboxField';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
@@ -38,7 +36,6 @@ import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -178,30 +175,11 @@ const KeyCharacteristics = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<KeyCharacteristicsFormType>) => {
-          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+          const { handleSubmit, setErrors, setFieldValue, values } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -216,10 +194,6 @@ const KeyCharacteristics = () => {
                     <Label htmlFor="plan-characteristics-agency-or-state-help">
                       {generalCharacteristicsT('agencyOrStateHelp.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.agencyOrStateHelp}
-                    </FieldErrorMsg>
 
                     {getKeys(agencyOrStateHelpConfig.options).map(type => {
                       return (
@@ -247,10 +221,6 @@ const KeyCharacteristics = () => {
                                   )}
                                 </Label>
 
-                                <FieldErrorMsg>
-                                  {flatErrors.agencyOrStateHelpOther}
-                                </FieldErrorMsg>
-
                                 <Field
                                   as={TextAreaField}
                                   className="maxw-none mint-textarea"
@@ -270,11 +240,7 @@ const KeyCharacteristics = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="alternativePaymentModelTypes"
-                    error={!!flatErrors.alternativePaymentModelTypes}
-                    className="margin-y-4 margin-bottom-8"
-                  >
+                  <FieldGroup className="margin-y-4 margin-bottom-8">
                     <legend className="usa-label maxw-none">
                       {generalCharacteristicsT(
                         'alternativePaymentModelTypes.label'
@@ -292,10 +258,6 @@ const KeyCharacteristics = () => {
                         )}
                       </span>
                     </Alert>
-
-                    <FieldErrorMsg>
-                      {flatErrors.alternativePaymentModelTypes}
-                    </FieldErrorMsg>
 
                     <Fieldset>
                       {getKeys(alternativePaymentModelTypesConfig.options)
@@ -356,21 +318,13 @@ const KeyCharacteristics = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="keyCharacteristics"
-                    error={!!flatErrors.keyCharacteristics}
-                    className="margin-top-4"
-                  >
+                  <FieldGroup className="margin-top-4">
                     <Label
                       htmlFor="plan-characteristics-key-characteristics"
                       id="label-plan-characteristics-key-characteristics"
                     >
                       {generalCharacteristicsT('keyCharacteristics.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.keyCharacteristics}
-                    </FieldErrorMsg>
 
                     <Field
                       as={MultiSelect}
@@ -399,11 +353,7 @@ const KeyCharacteristics = () => {
                   {values.keyCharacteristics.includes(
                     KeyCharacteristic.OTHER
                   ) && (
-                    <FieldGroup
-                      scrollElement="keyCharacteristicsOther"
-                      className="margin-top-neg-4"
-                      error={!!flatErrors.keyCharacteristicsOther}
-                    >
+                    <FieldGroup className="margin-top-neg-4">
                       <Label htmlFor="plan-characteristics-key-other">
                         {generalCharacteristicsMiscT('specificQuestions')}
                       </Label>
@@ -413,10 +363,6 @@ const KeyCharacteristics = () => {
                           'keyCharacteristicsOther.label'
                         )}
                       </p>
-
-                      <FieldErrorMsg>
-                        {flatErrors.keyCharacteristicsOther}
-                      </FieldErrorMsg>
 
                       <Field
                         as={TextInput}
@@ -435,11 +381,7 @@ const KeyCharacteristics = () => {
                       KeyCharacteristic.PART_D
                     )) && (
                     <>
-                      <FieldGroup
-                        scrollElement="collectPlanBids"
-                        error={!!flatErrors.collectPlanBids}
-                        className="margin-y-4"
-                      >
+                      <FieldGroup className="margin-y-4">
                         <Label
                           htmlFor="plan-characteristics-collect-bids"
                           className="text-normal"
@@ -458,10 +400,6 @@ const KeyCharacteristics = () => {
                           />
                         )}
 
-                        <FieldErrorMsg>
-                          {flatErrors.collectPlanBids}
-                        </FieldErrorMsg>
-
                         <BooleanRadio
                           field="collectPlanBids"
                           id="plan-characteristics-collect-bids"
@@ -479,7 +417,6 @@ const KeyCharacteristics = () => {
 
                       <FieldGroup
                         scrollElement="managePartCDEnrollment"
-                        error={!!flatErrors.managePartCDEnrollment}
                         className="margin-y-4"
                       >
                         <Label
@@ -502,10 +439,6 @@ const KeyCharacteristics = () => {
                           />
                         )}
 
-                        <FieldErrorMsg>
-                          {flatErrors.managePartCDEnrollment}
-                        </FieldErrorMsg>
-
                         <BooleanRadio
                           field="managePartCDEnrollment"
                           id="plan-characteristics-manage-enrollment"
@@ -521,11 +454,7 @@ const KeyCharacteristics = () => {
                         className="margin-bottom-0"
                       />
 
-                      <FieldGroup
-                        scrollElement="planContractUpdated"
-                        error={!!flatErrors.planContractUpdated}
-                        className="margin-y-4"
-                      >
+                      <FieldGroup className="margin-y-4">
                         <Label
                           htmlFor="plan-characteristics-contact-updated"
                           className="text-normal"
@@ -543,10 +472,6 @@ const KeyCharacteristics = () => {
                             }
                           />
                         )}
-
-                        <FieldErrorMsg>
-                          {flatErrors.planContractUpdated}
-                        </FieldErrorMsg>
 
                         <BooleanRadio
                           field="planContractUpdated"

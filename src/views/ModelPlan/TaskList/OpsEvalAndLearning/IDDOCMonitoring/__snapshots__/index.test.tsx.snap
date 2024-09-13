@@ -116,7 +116,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </h3>
       <div
         class="usa-form-group"
-        data-scroll="dataFullTimeOrIncremental"
       >
         <label
           class="usa-label"
@@ -169,7 +168,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="eftSetUp"
       >
         <label
           class="usa-label"
@@ -224,7 +222,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="unsolicitedAdjustmentsIncluded"
       >
         <label
           class="usa-label"
@@ -279,7 +276,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="dataFlowDiagramsNeeded"
       >
         <label
           class="usa-label"
@@ -334,7 +330,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="produceBenefitEnhancementFiles"
       >
         <label
           class="usa-label"
@@ -394,7 +389,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-6"
-        data-scroll="fileNamingConventions"
       >
         <label
           class="usa-label"

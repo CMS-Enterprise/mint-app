@@ -113,7 +113,6 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
     >
       <div
         class="usa-form-group"
-        data-scroll="participants-and-providers-expected-participants"
       >
         <label
           class="usa-label"
@@ -142,7 +141,7 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
           value="350"
         />
         <div
-          class="display-flex mint-header__basic"
+          class="display-flex mint-header__basic flex-justify"
         >
           <span>
             0
@@ -278,7 +277,6 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group"
-        data-scroll="participants-and-providers-recruitment-method"
       >
         <label
           class="usa-label"
@@ -415,7 +413,6 @@ exports[`Model Plan ParticipantsOptions > matches snapshot 1`] = `
       </div>
       <div
         class="usa-form-group margin-top-4"
-        data-scroll="participants-and-providers-selection-method"
       >
         <label
           class="usa-label"

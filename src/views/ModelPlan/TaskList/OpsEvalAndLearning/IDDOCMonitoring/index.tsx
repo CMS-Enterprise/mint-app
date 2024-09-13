@@ -24,13 +24,10 @@ import ConfirmLeave from 'components/ConfirmLeave';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -158,30 +155,11 @@ const IDDOCMonitoring = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<IDDOCMonitoringFormType>) => {
-          const { errors, handleSubmit, setErrors, values, setFieldValue } =
+          const { handleSubmit, setErrors, values, setFieldValue } =
             formikProps;
-          const flatErrors = flattenErrors(errors);
 
           return (
             <>
-              {getKeys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={miscellaneousT('checkAndFix')}
-                >
-                  {getKeys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={`${key}`}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-
               <ConfirmLeave />
 
               <Form
@@ -194,17 +172,10 @@ const IDDOCMonitoring = () => {
                 <Fieldset disabled={!!error || loading}>
                   <h3>{opsEvalAndLearningMiscT('dataMonitoringContinued')}</h3>
 
-                  <FieldGroup
-                    scrollElement="dataFullTimeOrIncremental"
-                    error={!!flatErrors.dataFullTimeOrIncremental}
-                  >
+                  <FieldGroup>
                     <Label htmlFor="ops-eval-and-learning-fulltime-or-incremental">
                       {opsEvalAndLearningT('dataFullTimeOrIncremental.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.dataFullTimeOrIncremental}
-                    </FieldErrorMsg>
 
                     <Fieldset>
                       {getKeys(dataFullTimeOrIncrementalConfig.options).map(
@@ -226,16 +197,10 @@ const IDDOCMonitoring = () => {
                     </Fieldset>
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="eftSetUp"
-                    error={!!flatErrors.eftSetUp}
-                    className="margin-top-6"
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-eft-setup">
                       {opsEvalAndLearningT('eftSetUp.label')}
                     </Label>
-
-                    <FieldErrorMsg>{flatErrors.eftSetUp}</FieldErrorMsg>
 
                     <BooleanRadio
                       field="eftSetUp"
@@ -246,20 +211,12 @@ const IDDOCMonitoring = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="unsolicitedAdjustmentsIncluded"
-                    error={!!flatErrors.unsolicitedAdjustmentsIncluded}
-                    className="margin-top-6"
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-unsolicted-adjustment-included">
                       {opsEvalAndLearningT(
                         'unsolicitedAdjustmentsIncluded.label'
                       )}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.unsolicitedAdjustmentsIncluded}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="unsolicitedAdjustmentsIncluded"
@@ -270,18 +227,10 @@ const IDDOCMonitoring = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="dataFlowDiagramsNeeded"
-                    error={!!flatErrors.dataFlowDiagramsNeeded}
-                    className="margin-top-6"
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-diagrams-needed">
                       {opsEvalAndLearningT('dataFlowDiagramsNeeded.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.dataFlowDiagramsNeeded}
-                    </FieldErrorMsg>
 
                     <BooleanRadio
                       field="dataFlowDiagramsNeeded"
@@ -292,11 +241,7 @@ const IDDOCMonitoring = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="produceBenefitEnhancementFiles"
-                    error={!!flatErrors.produceBenefitEnhancementFiles}
-                    className="margin-top-6"
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-produce-benefit-files">
                       {opsEvalAndLearningT(
                         'produceBenefitEnhancementFiles.label'
@@ -309,10 +254,6 @@ const IDDOCMonitoring = () => {
                       )}
                     </p>
 
-                    <FieldErrorMsg>
-                      {flatErrors.produceBenefitEnhancementFiles}
-                    </FieldErrorMsg>
-
                     <BooleanRadio
                       field="produceBenefitEnhancementFiles"
                       id="ops-eval-and-learning-produce-benefit-files"
@@ -322,18 +263,10 @@ const IDDOCMonitoring = () => {
                     />
                   </FieldGroup>
 
-                  <FieldGroup
-                    scrollElement="fileNamingConventions"
-                    className="margin-top-6"
-                    error={!!flatErrors.fileNamingConventions}
-                  >
+                  <FieldGroup className="margin-top-6">
                     <Label htmlFor="ops-eval-and-learning-file-naming-convention">
                       {opsEvalAndLearningT('fileNamingConventions.label')}
                     </Label>
-
-                    <FieldErrorMsg>
-                      {flatErrors.fileNamingConventions}
-                    </FieldErrorMsg>
 
                     <Field
                       as={TextInput}

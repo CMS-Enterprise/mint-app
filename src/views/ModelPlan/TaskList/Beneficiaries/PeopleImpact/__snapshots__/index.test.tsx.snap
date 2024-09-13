@@ -66,7 +66,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
     class="margin-top-0 margin-bottom-1 font-body-lg"
     data-testid="model-plan-name"
   >
-    for {{modelName}}
+    for My excellent plan that I just initiated
   </p>
   <p
     class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -125,7 +125,6 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
           >
             <div
               class="usa-form-group"
-              data-scroll="expected-people-impacted"
             >
               <label
                 class="usa-label"
@@ -149,7 +148,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
                 value="100"
               />
               <div
-                class="display-flex mint-header__basic"
+                class="display-flex mint-header__basic flex-justify"
               >
                 <span>
                   0
@@ -284,7 +283,6 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
             </div>
             <div
               class="usa-form-group margin-top-4"
-              data-scroll="beneficiaries-chooseBeneficiaries"
             >
               <label
                 class="usa-label"
@@ -478,7 +476,6 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
               </div>
               <div
                 class="usa-form-group"
-                data-scroll="beneficiaries-chooseBeneficiarie-other"
               >
                 <label
                   class="usa-label text-normal"
