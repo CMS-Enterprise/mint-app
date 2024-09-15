@@ -4,7 +4,7 @@ import { Button } from '@trussworks/react-uswds';
 import { GetModelPlanDiscussionsQuery } from 'gql/generated/graphql';
 
 import Divider from 'components/Divider';
-import SectionWrapper from 'components/SectionWrapper';
+import SectionWrapper from 'components/SectionContainer';
 
 import SingleDiscussion from './SingleDiscussion';
 

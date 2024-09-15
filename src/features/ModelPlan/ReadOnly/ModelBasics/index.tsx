@@ -15,7 +15,7 @@ import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageLoading from 'components/PageLoading';
-import SectionWrapper from 'components/SectionWrapper';
+import SectionWrapper from 'components/SectionContainer';
 import Tooltip from 'components/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';

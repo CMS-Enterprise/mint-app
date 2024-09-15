@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
 import { GetModelPlanDiscussionsQuery } from 'gql/generated/graphql';
 
-import SectionWrapper from 'components/SectionWrapper';
+import SectionWrapper from 'components/SectionContainer';
 import TruncatedText from 'components/TruncatedText';
 
 import DiscussionUserInfo from '../_components/DiscussionUserInfo';

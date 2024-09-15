@@ -19,7 +19,7 @@ import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/Alert';
-import SectionWrapper from 'components/SectionWrapper';
+import SectionWrapper from 'components/SectionContainer';
 import ShareExportModal from 'components/ShareExport';
 import StatusBanner from 'components/StatusBanner';
 import SAMPLE_MODEL_UUID_STRING from 'data/constants/sampleModelPlan';
