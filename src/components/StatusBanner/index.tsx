@@ -2,13 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import { ModelStatus, TaskStatus } from 'gql/gen/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import Tag from 'components/shared/Tag';
+import Tag from 'components/Tag';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateLocal } from 'utils/date';
-import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 
 import './index.scss';
 

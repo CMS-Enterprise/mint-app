@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 
+import Alert from 'components/Alert';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
-import Alert from 'components/shared/Alert';
 
 type MutationErrorModalType = {
   isOpen: boolean;

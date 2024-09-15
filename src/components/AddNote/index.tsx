@@ -4,9 +4,9 @@ import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, useField } from 'formik';
 
-import { ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldGroup from 'components/shared/FieldGroup';
-import TextAreaField from 'components/shared/TextAreaField';
+import { ErrorAlertMessage } from 'components/ErrorAlert';
+import FieldGroup from 'components/FieldGroup';
+import TextAreaField from 'components/TextAreaField';
 
 type AddNoteType = {
   field: string;

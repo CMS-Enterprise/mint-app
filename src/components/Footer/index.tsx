@@ -12,8 +12,8 @@ import {
 import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
-import ExternalLink from 'components/shared/ExternalLink';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import cmsGovLogo from 'images/cmsGovLogo.png';
 import hhsLogo from 'images/hhsLogo.png';

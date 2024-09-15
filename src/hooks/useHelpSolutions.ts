@@ -1,14 +1,13 @@
 // Hook to fetch solution contacts and map to FE help solution map
 
 import { useMemo } from 'react';
-import GetPossibleSolutions from 'gql/apolloGQL/Solutions/GetPossibleSolutions';
-import { GetPossibleSolutionsQuery } from 'gql/gen/graphql';
-
 import {
   HelpSolutionBaseType,
   helpSolutions,
   HelpSolutionType
-} from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+} from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { GetPossibleSolutionsQuery } from 'gql/gen/graphql';
+import GetPossibleSolutions from 'gql/operations/Solutions/GetPossibleSolutions';
 
 import useCacheQuery from './useCacheQuery';
 

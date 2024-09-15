@@ -6,8 +6,8 @@ import { Field } from 'formik';
 import { FrequencyType } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
-import CheckboxField from 'components/shared/CheckboxField';
-import FieldGroup from 'components/shared/FieldGroup';
+import CheckboxField from 'components/CheckboxField';
+import FieldGroup from 'components/FieldGroup';
 import {
   getKeys,
   TranslationFieldPropertiesWithOptions,

@@ -2,14 +2,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Grid, Icon, Tag } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
 import { GetFavoritesQuery, TeamRole } from 'gql/gen/graphql';
 
+import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
-import Divider from 'components/shared/Divider';
 import StatusBanner from 'components/StatusBanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc } from 'utils/date';
-import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
 
 import './index.scss';
 

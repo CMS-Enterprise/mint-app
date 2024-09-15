@@ -4,7 +4,7 @@ import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
-import Alert from 'components/shared/Alert';
+import Alert from 'components/Alert';
 
 import './index.scss';
 

@@ -11,7 +11,7 @@ import {
 } from 'gql/gen/graphql';
 import configureMockStore from 'redux-mock-store';
 
-import { ASSESSMENT } from 'constants/jobCodes';
+import { ASSESSMENT } from 'data/constants/jobCodes';
 
 import AskAQuestion from './index';
 

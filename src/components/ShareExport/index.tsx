@@ -14,23 +14,23 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import CreateShareModelPlan from 'gql/apolloGQL/ShareExport/CreateShareModelPlan';
+import { PrintPDFContext } from 'contexts-wrappers/PrintPDFWrapper';
+import { ReadOnlyComponents } from 'features/ModelPlan/ReadOnly';
+import BodyContent from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
+import { FilterGroup } from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
+import { groupOptions } from 'features/ModelPlan/ReadOnly/_components/FilterView/util';
+import ReadOnlyOperationalNeeds from 'features/ModelPlan/ReadOnly/OperationalNeeds';
+import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import { ModelViewFilter } from 'gql/gen/graphql';
+import CreateShareModelPlan from 'gql/operations/ShareExport/CreateShareModelPlan';
 
+import Alert from 'components/Alert';
+import CheckboxField from 'components/CheckboxField';
+import FieldGroup from 'components/FieldGroup';
 import OktaMultiSelect from 'components/OktaUserSelect/multiSelect';
-import Alert from 'components/shared/Alert';
-import CheckboxField from 'components/shared/CheckboxField';
-import FieldGroup from 'components/shared/FieldGroup';
-import RequiredAsterisk from 'components/shared/RequiredAsterisk';
-import TextAreaField from 'components/shared/TextAreaField';
+import RequiredAsterisk from 'components/RequiredAsterisk';
+import TextAreaField from 'components/TextAreaField';
 import useFetchCSVData from 'hooks/useFetchCSVData';
-import { ReadOnlyComponents } from 'views/ModelPlan/ReadOnly';
-import BodyContent from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
-import { FilterGroup } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-import { groupOptions } from 'views/ModelPlan/ReadOnly/_components/FilterView/util';
-import ReadOnlyOperationalNeeds from 'views/ModelPlan/ReadOnly/OperationalNeeds';
-import { StatusMessageType } from 'views/ModelPlan/TaskList';
-import { PrintPDFContext } from 'views/PrintPDFWrapper';
 
 import PDFSummary from './pdfSummary';
 

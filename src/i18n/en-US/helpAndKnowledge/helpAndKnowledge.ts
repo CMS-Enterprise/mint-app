@@ -1,13 +1,14 @@
 import {
+  ArticleCategories,
+  HelpArticle
+} from 'features/HelpAndKnowledge/Articles';
+import { AboutConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
+import { TimelineConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
+
+import {
   OperationalSolutionCategoryRoute,
   OperationalSolutionSubCategories
 } from 'data/operationalSolutionCategories';
-import {
-  ArticleCategories,
-  HelpArticle
-} from 'views/HelpAndKnowledge/Articles';
-import { AboutConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
-import { TimelineConfigType } from 'views/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
 
 interface SolutionModelType {
   about: AboutConfigType;

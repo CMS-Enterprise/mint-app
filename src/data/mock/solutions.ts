@@ -1,4 +1,3 @@
-import GetPossibleSolutions from 'gql/apolloGQL/Solutions/GetPossibleSolutions';
 import {
   GetOperationalNeedAnswerDocument,
   GetOperationalNeedDocument,
@@ -6,6 +5,7 @@ import {
   OperationalSolutionKey,
   OpSolutionStatus
 } from 'gql/gen/graphql';
+import GetPossibleSolutions from 'gql/operations/Solutions/GetPossibleSolutions';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
