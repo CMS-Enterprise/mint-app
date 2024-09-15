@@ -14,7 +14,7 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { PrintPDFContext } from 'contexts-wrappers/PrintPDFWrapper';
+import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import { ReadOnlyComponents } from 'features/ModelPlan/ReadOnly';
 import BodyContent from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { FilterGroup } from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';

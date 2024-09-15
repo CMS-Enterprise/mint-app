@@ -23,7 +23,7 @@ import '../config/i18n';
 
 import * as serviceWorker from '../config/serviceWorker';
 import store from '../config/store';
-import UnsupportedBrowser from '../contexts-wrappers/UnsupportedBrowser';
+import UnsupportedBrowser from '../features/UnsupportedBrowser';
 
 import App from './Routes';
 

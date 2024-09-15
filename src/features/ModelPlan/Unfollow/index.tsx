@@ -6,8 +6,8 @@ import {
   useGetBasicsQuery
 } from 'gql/generated/graphql';
 
-import PageLoading from 'components/PageLoading';
 import Alert from 'components/Alert';
+import PageLoading from 'components/PageLoading';
 import useMessage from 'hooks/useMessage';
 
 const Unfollow = () => {

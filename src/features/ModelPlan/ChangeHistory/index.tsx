@@ -27,7 +27,7 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/Alert';
 import i18n from 'config/i18n';
 import { formatDateUtc } from 'utils/date';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import NotFound from 'features/NotFound';
 
 import BatchRecord from './components/BatchRecord';

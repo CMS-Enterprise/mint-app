@@ -27,7 +27,7 @@ import FieldGroup from 'components/FieldGroup';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
 import flattenErrors from 'utils/flattenErrors';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 

@@ -7,7 +7,7 @@ import {
 
 import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { NotFoundPartial } from 'features/NotFound';
 
 import ReadOnlyBody from '../_components/Body';

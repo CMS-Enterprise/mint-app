@@ -19,7 +19,7 @@ import FieldGroup from 'components/FieldGroup';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 type StatusFormProps = {
   status: ModelStatus | undefined;

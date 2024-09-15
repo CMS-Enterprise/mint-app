@@ -8,8 +8,6 @@
 import React, { useContext } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
-import { SubscriptionContext } from 'contexts-wrappers/PageLocking/SubscriptionWrapper';
-import { RouterContext } from 'contexts-wrappers/RouterContext';
 import {
   GetTaskListSubscriptionsQuery,
   TaskListSection,
@@ -17,6 +15,8 @@ import {
   useUnlockTaskListSectionMutation
 } from 'gql/generated/graphql';
 
+import { SubscriptionContext } from 'contexts/PageLockContext';
+import { RouterContext } from 'contexts/RouterContext';
 import { isUUID } from 'utils/modelPlan';
 
 type LockSectionType = GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];

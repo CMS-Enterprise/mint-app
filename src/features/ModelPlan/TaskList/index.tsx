@@ -43,7 +43,7 @@ import UpdateStatusModal from 'components/UpdateStatusModal';
 import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
-import { SubscriptionContext } from 'contexts-wrappers/PageLocking/SubscriptionWrapper';
+import { SubscriptionContext } from 'contexts/PageLockContext';
 
 import Discussions from '../Discussions';
 import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';

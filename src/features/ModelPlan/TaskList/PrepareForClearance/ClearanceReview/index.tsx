@@ -19,8 +19,8 @@ import {
   findLockedSection,
   LockStatus,
   taskListSectionMap
-} from 'contexts-wrappers/PageLocking/SubscriptionHandler';
-import { SubscriptionContext } from 'contexts-wrappers/PageLocking/SubscriptionWrapper';
+} from 'wrappers/PageLockWrapper';
+import { SubscriptionContext } from 'contexts/PageLockContext';
 import {
   PrepareForClearanceStatus,
   TaskStatus,

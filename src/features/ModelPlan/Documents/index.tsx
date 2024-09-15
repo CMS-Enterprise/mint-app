@@ -11,7 +11,7 @@ import Alert from 'components/Alert';
 import Expire from 'components/Expire';
 import useMessage from 'hooks/useMessage';
 import ProtectedRoute from 'components/ProtectedRoute';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import NotFound from 'features/NotFound';
 
 import AddDocument from './AddDocument';

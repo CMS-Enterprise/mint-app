@@ -21,7 +21,7 @@ import Alert from 'components/Alert';
 import Expire from 'components/Expire';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { Table } from 'features/ModelPlan/Documents/table';
 import { DocumentStatusType } from 'features/ModelPlan/ReadOnly/Documents';
 import NotFound from 'features/NotFound';

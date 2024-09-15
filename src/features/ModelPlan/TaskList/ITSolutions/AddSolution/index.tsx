@@ -36,7 +36,7 @@ import FieldGroup from 'components/FieldGroup';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import flattenErrors from 'utils/flattenErrors';
 import { sortPossibleOperationalNeeds } from 'utils/modelPlan';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import NotFound from 'features/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';

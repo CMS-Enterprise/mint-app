@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Menu } from '@trussworks/react-uswds';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import { useArchiveModelPlanMutation } from 'gql/generated/graphql';
 

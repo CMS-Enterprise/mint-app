@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { PrintPDFContext } from 'contexts-wrappers/PrintPDFWrapper';
+import { PrintPDFContext } from 'contexts/PrintPDFContext';
 
 import './index.scss';
 

@@ -41,7 +41,7 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import './index.scss';
 

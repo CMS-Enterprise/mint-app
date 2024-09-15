@@ -23,7 +23,7 @@ import Alert from 'components/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import useMessage from 'hooks/useMessage';
 import flattenErrors from 'utils/flattenErrors';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import NotFound from 'features/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';

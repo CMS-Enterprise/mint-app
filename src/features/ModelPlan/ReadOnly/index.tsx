@@ -27,7 +27,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import { isAssessment, isMAC } from 'utils/user';
 import NotFound from 'features/NotFound';
-import PrintPDFWrapper from 'contexts-wrappers/PrintPDFWrapper';
+import PrintPDFWrapper from 'contexts/PrintPDFContext';
 
 import NDABanner from '../../../components/NDABanner';
 import { UpdateFavoriteProps } from '../ModelPlanOverview';

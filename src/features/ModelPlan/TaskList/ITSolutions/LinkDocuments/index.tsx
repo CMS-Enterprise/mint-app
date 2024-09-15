@@ -23,7 +23,7 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import PlanDocumentsTable from 'features/ModelPlan/Documents/table';
 import NotFound from 'features/NotFound';
 

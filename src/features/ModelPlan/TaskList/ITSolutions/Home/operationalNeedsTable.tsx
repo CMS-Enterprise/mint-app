@@ -43,7 +43,7 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
-import { PrintPDFContext } from 'contexts-wrappers/PrintPDFWrapper';
+import { PrintPDFContext } from 'contexts/PrintPDFContext';
 
 import OperationalNeedsStatusTag, {
   OperationalNeedsSolutionsStatus

@@ -25,7 +25,7 @@ import { FileUploadForm, LinkingDocumentFormTypes } from 'types/files';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 const DocumentUpload = ({
   solutionDetailsLink,

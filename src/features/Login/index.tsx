@@ -10,7 +10,7 @@ import Alert from 'components/Alert';
 import OktaSignInWidget from 'components/OktaSignInWidget';
 import { localAuthStorageKey } from 'data/constants/localAuth';
 import { isLocalAuthEnabled } from 'utils/auth';
-import DevLogin from 'contexts-wrappers/AuthenticationWrapper/DevLogin';
+import DevLogin from 'wrappers/AuthenticationWrapper/DevLogin';
 
 import './index.scss';
 

@@ -43,7 +43,7 @@ import RequiredAsterisk from 'components/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
 import flattenErrors from 'utils/flattenErrors';
 import { CRValidationSchema, TDLValidationSchema } from 'validations/crtdl';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import './index.scss';
 

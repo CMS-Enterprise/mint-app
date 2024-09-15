@@ -9,7 +9,7 @@ import PageHeading from 'components/PageHeading';
 import Divider from 'components/Divider';
 import Expire from 'components/Expire';
 import useMessage from 'hooks/useMessage';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import HelpBox from '../_components/HelpBox';
 import ImplementationStatuses from '../_components/ImplementationStatus';

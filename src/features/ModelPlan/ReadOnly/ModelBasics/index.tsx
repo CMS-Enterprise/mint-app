@@ -21,7 +21,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
 import { isAssessment } from 'utils/user';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { NotFoundPartial } from 'features/NotFound';
 
 import ReadOnlyBody from '../_components/Body';

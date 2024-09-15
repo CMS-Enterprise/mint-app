@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Label, TextInput } from '@trussworks/react-uswds';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   DocumentType,

@@ -30,7 +30,7 @@ import RequiredAsterisk from 'components/RequiredAsterisk';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import flattenErrors from 'utils/flattenErrors';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import NotFound from 'features/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';

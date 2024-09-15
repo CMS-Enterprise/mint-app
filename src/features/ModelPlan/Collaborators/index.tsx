@@ -28,7 +28,7 @@ import Expire from 'components/Expire';
 import useMessage from 'hooks/useMessage';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 import ProtectedRoute from 'components/ProtectedRoute';
-import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import NotFound from 'features/NotFound';
 
 import AddCollaborator from './AddCollaborator';
