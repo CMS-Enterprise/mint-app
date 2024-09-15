@@ -73,8 +73,6 @@ import { NavContextProvider } from '../../components/Header/navContext';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import shouldScroll from '../../utils/scrollConfig';
 
-import './index.scss';
-
 const AppRoutes = () => {
   const { authState } = useOktaAuth();
   const location = useLocation();
