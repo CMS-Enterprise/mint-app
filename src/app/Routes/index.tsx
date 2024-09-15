@@ -71,8 +71,7 @@ import useRouteTitle from 'hooks/useRouteTitle';
 
 import { NavContextProvider } from '../../components/Header/navContext';
 import ProtectedRoute from '../../components/ProtectedRoute';
-
-import shouldScroll from './scrollConfig';
+import shouldScroll from '../../utils/scrollConfig';
 
 import './index.scss';
 

@@ -12,7 +12,7 @@ import {
   GetClearanceStatusesDocument,
   PrepareForClearanceStatus,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import Sinon from 'sinon';
 
 import { benficiaryMocks } from 'data/mock/readonly';

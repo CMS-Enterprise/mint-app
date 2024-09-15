@@ -1,4 +1,4 @@
-import { TagType } from 'gql/gen/graphql';
+import { TagType } from 'gql/generated/graphql';
 
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 // Possible Util to extract only mentions from content

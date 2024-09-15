@@ -22,7 +22,7 @@ import {
   OperationalSolutionKey,
   useGetOperationalNeedsQuery,
   useGetPossibleOperationalSolutionsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 

@@ -8,7 +8,7 @@ import {
   ModelCategory,
   OperationalSolutionKey,
   useGetModelsBySolutionQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/Alert';

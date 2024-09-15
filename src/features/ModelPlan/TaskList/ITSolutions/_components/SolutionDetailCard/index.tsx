@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetOperationalSolutionQuery } from 'gql/gen/graphql';
+import { GetOperationalSolutionQuery } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/Divider';

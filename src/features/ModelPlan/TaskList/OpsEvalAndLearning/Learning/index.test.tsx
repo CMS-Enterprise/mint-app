@@ -7,7 +7,7 @@ import {
   GetLearningDocument,
   GetLearningQuery,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Learning from '.';
 

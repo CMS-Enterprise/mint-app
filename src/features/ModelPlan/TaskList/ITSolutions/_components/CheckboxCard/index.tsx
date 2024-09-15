@@ -19,7 +19,7 @@ import { Field } from 'formik';
 import {
   GetOperationalNeedQuery,
   OperationalSolutionKey
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';

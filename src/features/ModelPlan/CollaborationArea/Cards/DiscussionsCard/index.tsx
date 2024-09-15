@@ -10,7 +10,7 @@ import {
   CardHeader,
   Icon
 } from '@trussworks/react-uswds';
-import { GetModelPlanQuery } from 'gql/gen/graphql';
+import { GetModelPlanQuery } from 'gql/generated/graphql';
 
 import Discussions from 'features/ModelPlan/Discussions';
 import DiscussionModalWrapper from 'features/ModelPlan/Discussions/DiscussionModalWrapper';

@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { GetCrDocument, GetTdlDocument } from 'gql/gen/graphql';
+import { GetCrDocument, GetTdlDocument } from 'gql/generated/graphql';
 
 import { MessageProvider } from 'hooks/useMessage';
 

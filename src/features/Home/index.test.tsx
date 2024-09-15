@@ -12,7 +12,7 @@ import {
   GetHomepageSettingsDocument,
   ModelPlanFilter,
   ViewCustomizationType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { set } from 'lodash';
 import configureMockStore from 'redux-mock-store';
 

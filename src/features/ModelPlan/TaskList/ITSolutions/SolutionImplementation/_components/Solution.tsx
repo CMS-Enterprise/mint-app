@@ -5,7 +5,7 @@ import { Field, FormikProps } from 'formik';
 import {
   GetOperationalNeedQuery,
   GetOperationalSolutionQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Divider from 'components/Divider';
 import FieldErrorMsg from 'components/FieldErrorMsg';

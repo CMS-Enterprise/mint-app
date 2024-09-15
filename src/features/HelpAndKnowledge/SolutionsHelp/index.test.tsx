@@ -1,4 +1,4 @@
-import { OperationalSolutionKey } from 'gql/gen/graphql';
+import { OperationalSolutionKey } from 'gql/generated/graphql';
 
 import { OperationalSolutionCategories } from 'data/operationalSolutionCategories';
 

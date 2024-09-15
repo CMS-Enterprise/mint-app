@@ -19,7 +19,7 @@ import {
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
   useUpdateNotificationSettingsMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';

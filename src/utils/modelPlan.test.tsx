@@ -1,4 +1,4 @@
-import { GetModelCollaboratorsQuery, TeamRole } from 'gql/gen/graphql';
+import { GetModelCollaboratorsQuery, TeamRole } from 'gql/generated/graphql';
 
 import {
   collaboratorsOrderedByModelLeads,

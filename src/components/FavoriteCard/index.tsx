@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Card, Grid, Icon, Tag } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
-import { GetFavoritesQuery, TeamRole } from 'gql/gen/graphql';
+import { GetFavoritesQuery, TeamRole } from 'gql/generated/graphql';
 
 import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';

@@ -7,7 +7,7 @@ import {
   waitForElementToBeRemoved
 } from '@testing-library/react';
 import { Formik } from 'formik';
-import { OperationalSolutionKey, OpSolutionStatus } from 'gql/gen/graphql';
+import { OperationalSolutionKey, OpSolutionStatus } from 'gql/generated/graphql';
 
 import { possibleSolutionsMock } from 'data/mock/solutions';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';

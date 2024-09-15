@@ -8,7 +8,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   DocumentType,
   useCreateDocumentSolutionLinksMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import LinkNewPlanDocument from 'gql/operations/Documents/LinkNewPlanDocument';
 
 import Alert from 'components/Alert';

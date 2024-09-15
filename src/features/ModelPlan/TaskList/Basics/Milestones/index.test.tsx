@@ -6,7 +6,7 @@ import {
   GetMilestonesDocument,
   GetMilestonesQuery,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Milestones from './index';
 

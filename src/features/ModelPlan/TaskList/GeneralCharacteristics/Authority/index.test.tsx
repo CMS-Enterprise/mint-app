@@ -6,7 +6,7 @@ import {
   GetAuthorityDocument,
   GetAuthorityQuery,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Authority from './index';
 

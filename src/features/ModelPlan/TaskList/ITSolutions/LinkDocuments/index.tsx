@@ -13,7 +13,7 @@ import {
   useCreateDocumentSolutionLinksMutation,
   useDeleteDocumentSolutionLinkMutation,
   useGetOperationalSolutionQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { isEqual } from 'lodash';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';

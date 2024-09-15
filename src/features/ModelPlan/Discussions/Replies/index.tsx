@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
-import { GetModelPlanDiscussionsQuery } from 'gql/gen/graphql';
+import { GetModelPlanDiscussionsQuery } from 'gql/generated/graphql';
 
 import SectionWrapper from 'components/SectionWrapper';
 import TruncatedText from 'components/TruncatedText';

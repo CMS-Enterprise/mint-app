@@ -11,7 +11,7 @@ import {
   GetModelSummaryQuery,
   ModelStatus,
   useGetModelSummaryQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Alert from 'components/Alert';

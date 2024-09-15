@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { PrepareForClearanceStatus, TaskStatus } from 'gql/gen/graphql';
+import { PrepareForClearanceStatus, TaskStatus } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 

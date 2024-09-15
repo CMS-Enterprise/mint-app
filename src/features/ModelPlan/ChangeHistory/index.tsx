@@ -17,7 +17,7 @@ import {
   Select,
   SummaryBox
 } from '@trussworks/react-uswds';
-import { useGetChangeHistoryQuery } from 'gql/gen/graphql';
+import { useGetChangeHistoryQuery } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';

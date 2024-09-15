@@ -2,7 +2,7 @@ import {
   ModelPhase,
   PrepareForClearanceStatus,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 const statusText: Record<ModelPhase, string> = {
   [ModelPhase.ICIP_COMPLETE]:

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModelStatus, TaskStatus } from 'gql/gen/graphql';
+import { ModelStatus, TaskStatus } from 'gql/generated/graphql';
 
 import StatusBanner from 'components/StatusBanner';
 

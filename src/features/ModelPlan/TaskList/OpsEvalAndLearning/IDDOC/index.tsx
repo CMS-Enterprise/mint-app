@@ -13,7 +13,7 @@ import {
   GetIddocQuery,
   TypedUpdatePlanOpsEvalAndLearningDocument,
   useGetIddocQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';

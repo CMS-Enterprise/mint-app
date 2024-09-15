@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
-import { GetOperationalNeedQuery } from 'gql/gen/graphql';
+import { GetOperationalNeedQuery } from 'gql/generated/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
 

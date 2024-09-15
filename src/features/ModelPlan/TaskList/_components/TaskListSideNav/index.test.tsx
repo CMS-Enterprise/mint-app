@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
-import { GetModelPlanQuery } from 'gql/gen/graphql';
+import { GetModelPlanQuery } from 'gql/generated/graphql';
 
 import { MessageProvider } from 'hooks/useMessage';
 

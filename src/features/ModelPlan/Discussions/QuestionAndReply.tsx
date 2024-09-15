@@ -13,7 +13,7 @@ import {
   DiscussionUserRole,
   GetModelPlanDiscussionsQuery,
   useGetMostRecentRoleSelectionQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';

@@ -8,7 +8,7 @@ import {
   GetCcwAndQualityDocument,
   GetCcwAndQualityQuery,
   YesNoOtherType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import CCWAndQuality from '.';
 

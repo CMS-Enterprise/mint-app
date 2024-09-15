@@ -7,7 +7,7 @@ import {
   GetPeopleImpactedDocument,
   GetPeopleImpactedQuery,
   SelectionMethodType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import PeopleImpact from './index';
 

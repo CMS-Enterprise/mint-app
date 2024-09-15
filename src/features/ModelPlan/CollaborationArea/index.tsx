@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
-import { GetModelPlanQuery, useGetModelPlanQuery } from 'gql/gen/graphql';
+import { GetModelPlanQuery, useGetModelPlanQuery } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import { FavoriteIcon } from 'components/FavoriteCard';

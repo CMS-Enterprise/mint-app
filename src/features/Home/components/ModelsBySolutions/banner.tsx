@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ButtonGroup, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { ModelBySolutionStatus, OperationalSolutionKey } from 'gql/gen/graphql';
+import { ModelBySolutionStatus, OperationalSolutionKey } from 'gql/generated/graphql';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';

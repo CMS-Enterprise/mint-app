@@ -8,7 +8,7 @@ import {
   TableName,
   TranslationDataType,
   TranslationQuestionType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { AvatarCircle } from 'components/Avatar';
 import CollapsableLink from 'components/CollapsableLink';

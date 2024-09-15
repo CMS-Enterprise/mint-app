@@ -10,7 +10,7 @@ import {
 import {
   GetOperationalSolutionDocument,
   OpSolutionStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';

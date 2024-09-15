@@ -7,7 +7,7 @@ import {
   GetCommunicationDocument,
   GetCommunicationQuery,
   ParticipantRiskType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Communication from './index';
 

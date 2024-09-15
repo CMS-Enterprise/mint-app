@@ -4,7 +4,7 @@ import {
   GetOperationalNeedsQuery,
   TaskStatus,
   useGetOperationalNeedsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import OperationalNeedsTable from 'features/ModelPlan/TaskList/ITSolutions/Home/operationalNeedsTable';
 import { NotFoundPartial } from 'features/NotFound';

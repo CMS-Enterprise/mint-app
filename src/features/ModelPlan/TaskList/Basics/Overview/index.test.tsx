@@ -6,7 +6,7 @@ import {
   GetOverviewDocument,
   GetOverviewQuery,
   ModelType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Overview from './index';
 

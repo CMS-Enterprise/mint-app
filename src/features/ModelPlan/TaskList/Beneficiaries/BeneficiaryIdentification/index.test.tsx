@@ -7,7 +7,7 @@ import {
   GetBeneficiaryIdentificationDocument,
   GetBeneficiaryIdentificationQuery,
   TriStateAnswer
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import BeneficiaryIdentification from './index';
 

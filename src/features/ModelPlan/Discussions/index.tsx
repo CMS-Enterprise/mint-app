@@ -10,7 +10,7 @@ import {
   useCreateModelPlanDiscussionMutation,
   useCreateModelPlanReplyMutation,
   useGetModelPlanDiscussionsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';

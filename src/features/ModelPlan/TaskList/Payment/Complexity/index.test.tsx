@@ -9,7 +9,7 @@ import {
   GetComplexityDocument,
   GetComplexityQuery,
   PayType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import ClaimsBasedPayment from './index';
 

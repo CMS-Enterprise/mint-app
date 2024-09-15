@@ -4,7 +4,7 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import {
   AnalyzedAudit as AnalyzedAuditsTypes,
   TableName
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import setup from 'utils/testing/setup';
 

@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import {
   useDeletePlanFavoriteMutation,
   useGetBasicsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/Alert';

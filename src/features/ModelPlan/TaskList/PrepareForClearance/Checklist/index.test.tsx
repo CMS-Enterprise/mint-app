@@ -6,7 +6,7 @@ import {
   GetClearanceStatusesDocument,
   PrepareForClearanceStatus,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import setup from 'utils/testing/setup';
 

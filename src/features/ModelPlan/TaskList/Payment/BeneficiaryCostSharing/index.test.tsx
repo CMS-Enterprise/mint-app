@@ -7,7 +7,7 @@ import {
   GetBeneficiaryCostSharingDocument,
   GetBeneficiaryCostSharingQuery,
   PayType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import BeneficiaryCostSharing from './index';
 

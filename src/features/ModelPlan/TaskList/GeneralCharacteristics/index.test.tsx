@@ -9,7 +9,7 @@ import {
   GetModelPlansBaseDocument,
   ModelPlanFilter,
   YesNoOtherType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { CharacteristicsContent, separateLinksByType } from './index';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import { TaskStatus } from 'gql/gen/graphql';
+import { TaskStatus } from 'gql/generated/graphql';
 
 import TaskListButton from './index';
 

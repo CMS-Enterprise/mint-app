@@ -7,7 +7,7 @@ import {
   EvaluationApproachType,
   GetEvaluationDocument,
   GetEvaluationQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Evaluation from '.';
 

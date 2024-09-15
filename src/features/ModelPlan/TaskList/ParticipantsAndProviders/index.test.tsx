@@ -6,7 +6,7 @@ import {
   GetParticipantsAndProvidersDocument,
   GetParticipantsAndProvidersQuery,
   ParticipantsType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { ParticipantsAndProvidersContent } from './index';
 

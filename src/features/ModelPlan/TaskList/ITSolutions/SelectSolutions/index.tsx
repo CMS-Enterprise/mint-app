@@ -20,7 +20,7 @@ import {
   useCreateOperationalSolutionMutation,
   useGetOperationalNeedQuery,
   useUpdateOperationalSolutionMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { partition } from 'lodash';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';

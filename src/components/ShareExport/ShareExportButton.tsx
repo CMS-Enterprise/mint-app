@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Menu } from '@trussworks/react-uswds';
 import { ModelInfoContext } from 'contexts-wrappers/ModelInfoWrapper';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
-import { useArchiveModelPlanMutation } from 'gql/gen/graphql';
+import { useArchiveModelPlanMutation } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import Modal from 'components/Modal';

@@ -12,7 +12,7 @@ import {
   GetOperationalSolutionDocument,
   GetPossibleOperationalSolutionsDocument,
   OpSolutionStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 

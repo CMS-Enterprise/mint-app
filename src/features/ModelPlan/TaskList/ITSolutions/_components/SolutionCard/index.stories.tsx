@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { Meta } from '@storybook/react';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
-import { OperationalSolutionKey } from 'gql/gen/graphql';
+import { OperationalSolutionKey } from 'gql/generated/graphql';
 
 import SolutionCard, { SolutionCardType } from '.';
 

@@ -4,7 +4,7 @@ import {
   GetAllPaymentsQuery,
   PayType,
   useGetAllPaymentsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';

@@ -1,4 +1,4 @@
-import { ModelViewFilter, OperationalSolutionKey } from 'gql/gen/graphql';
+import { ModelViewFilter, OperationalSolutionKey } from 'gql/generated/graphql';
 
 import { getKeys } from 'types/translation';
 

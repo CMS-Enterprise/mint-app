@@ -5,7 +5,7 @@ import {
   ModelStatus,
   PrepareForClearanceStatus,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 type TaskListDescriptionProps = {
   children?: React.ReactNode | React.ReactNodeArray;

@@ -8,7 +8,7 @@ import {
   GetNonClaimsBasedPaymentQuery,
   NonClaimsBasedPayType,
   PayType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import NonClaimsBasedPayment from './index';
 

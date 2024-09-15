@@ -9,7 +9,7 @@ import {
   GetRecoverQuery,
   PayType,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Recover from './index';
 

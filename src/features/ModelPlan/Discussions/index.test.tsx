@@ -10,7 +10,7 @@ import {
   GetModelPlanDiscussionsQuery,
   GetMostRecentRoleSelectionDocument,
   GetMostRecentRoleSelectionQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'data/constants/jobCodes';

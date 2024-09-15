@@ -9,7 +9,7 @@ import {
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import classNames from 'classnames';
-import { TagType, useSearchOktaUsersLazyQuery } from 'gql/gen/graphql';
+import { TagType, useSearchOktaUsersLazyQuery } from 'gql/generated/graphql';
 import { sortBy } from 'lodash';
 
 import Alert from 'components/Alert';

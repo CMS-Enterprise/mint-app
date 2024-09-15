@@ -1,4 +1,4 @@
-import { FrequencyType } from 'gql/gen/graphql';
+import { FrequencyType } from 'gql/generated/graphql';
 
 export const miscellaneous: Record<string, string> = {
   mandatoryFields: 'All fields are mandatory',

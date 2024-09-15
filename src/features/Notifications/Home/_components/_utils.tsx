@@ -12,7 +12,7 @@ import {
   NewModelPlanActivityMeta,
   TaggedInDiscussionReplyActivityMeta,
   TaggedInPlanDiscussionActivityMeta
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 type MetaDataType =
   | TaggedInDiscussionReplyActivityMeta

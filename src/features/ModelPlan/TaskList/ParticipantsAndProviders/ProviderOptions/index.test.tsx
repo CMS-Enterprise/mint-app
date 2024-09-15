@@ -9,7 +9,7 @@ import {
   OperationalNeedKey,
   ProviderAddType,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import ProviderOptions from './index';
 

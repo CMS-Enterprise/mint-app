@@ -7,7 +7,7 @@ import {
   DatabaseOperation,
   GetChangeHistoryDocument,
   TranslationDataType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import RecentChanges from '.';
 

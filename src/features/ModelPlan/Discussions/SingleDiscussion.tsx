@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetModelPlanDiscussionsQuery } from 'gql/gen/graphql';
+import { GetModelPlanDiscussionsQuery } from 'gql/generated/graphql';
 import { DateTime } from 'luxon';
 
 import MentionTextArea from 'components/MentionTextArea';

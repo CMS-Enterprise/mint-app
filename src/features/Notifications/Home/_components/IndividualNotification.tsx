@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Grid } from '@trussworks/react-uswds';
-import { Activity, useMarkNotificationAsReadMutation } from 'gql/gen/graphql';
+import { Activity, useMarkNotificationAsReadMutation } from 'gql/generated/graphql';
 
 import { AvatarCircle } from 'components/Avatar';
 import MentionTextArea from 'components/MentionTextArea';

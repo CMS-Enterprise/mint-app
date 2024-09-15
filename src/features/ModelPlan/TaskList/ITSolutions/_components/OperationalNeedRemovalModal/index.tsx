@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
-import { useUpdateCustomOperationalNeedByIdMutation } from 'gql/gen/graphql';
+import { useUpdateCustomOperationalNeedByIdMutation } from 'gql/generated/graphql';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';

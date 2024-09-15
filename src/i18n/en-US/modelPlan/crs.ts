@@ -3,7 +3,7 @@ import { TranslationCRs } from 'types/translation';
 import {
   TranslationDataType,
   TranslationFormType
-} from '../../../gql/gen/graphql';
+} from '../../../gql/generated/graphql';
 
 export const crs: TranslationCRs = {
   idNumber: {

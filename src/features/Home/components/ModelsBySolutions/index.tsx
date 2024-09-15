@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Header, Icon, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { OperationalSolutionKey } from 'gql/gen/graphql';
+import { OperationalSolutionKey } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/Alert';

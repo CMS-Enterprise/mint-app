@@ -8,7 +8,7 @@
 import React, { useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useGetIsCollaboratorQuery } from 'gql/gen/graphql';
+import { useGetIsCollaboratorQuery } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { isUUID } from 'utils/modelPlan';

@@ -9,7 +9,7 @@ import {
   GetModelPlanBaseQuery,
   ModelStatus,
   useGetModelPlanBaseQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { isUUID } from 'utils/modelPlan';
 

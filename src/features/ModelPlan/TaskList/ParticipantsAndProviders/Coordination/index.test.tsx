@@ -8,7 +8,7 @@ import {
   GetCoordinationQuery,
   ParticipantRequireFinancialGuaranteeType,
   ParticipantsIdType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import Sinon from 'sinon';
 
 import Coordination from './index';

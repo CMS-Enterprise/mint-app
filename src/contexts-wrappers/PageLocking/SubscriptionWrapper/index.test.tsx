@@ -1,7 +1,7 @@
 import {
   TaskListSection,
   TaskListSectionLockStatus as LockSectionType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { addLockedSection, removeLockedSection } from '.';
 

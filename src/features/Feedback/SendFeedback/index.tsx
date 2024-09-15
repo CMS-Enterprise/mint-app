@@ -19,7 +19,7 @@ import {
   MintUses,
   SatisfactionLevel,
   SendFeedbackEmailInput
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import CreateSendFeedback from 'gql/operations/Feedback/CreateSendFeedback';
 
 import Alert from 'components/Alert';

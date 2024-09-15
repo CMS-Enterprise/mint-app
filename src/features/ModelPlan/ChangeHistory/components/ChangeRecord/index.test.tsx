@@ -5,7 +5,7 @@ import {
   DatabaseOperation,
   TableName,
   TranslationDataType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import ChangeRecord, { ChangeRecordType } from './index';
 

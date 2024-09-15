@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
 import classnames from 'classnames';
-import { GetCrtdLsQuery, GetModelSummaryQuery } from 'gql/gen/graphql';
+import { GetCrtdLsQuery, GetModelSummaryQuery } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import CollapsableLink from 'components/CollapsableLink';

@@ -6,7 +6,7 @@ import {
   CcmInvolvmentType,
   GetIddocDocument,
   GetIddocQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import IDDOC from './index';
 

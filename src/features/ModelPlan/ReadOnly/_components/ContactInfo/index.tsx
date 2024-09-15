@@ -5,7 +5,7 @@ import {
   GetModelCollaboratorsQuery,
   TeamRole,
   useGetModelCollaboratorsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 

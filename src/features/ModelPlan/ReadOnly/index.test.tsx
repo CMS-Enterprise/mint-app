@@ -9,7 +9,7 @@ import {
   waitForElementToBeRemoved,
   within
 } from '@testing-library/react';
-import { ModelStatus } from 'gql/gen/graphql';
+import { ModelStatus } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';

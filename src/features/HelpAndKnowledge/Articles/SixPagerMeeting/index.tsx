@@ -8,7 +8,7 @@ import {
   SummaryBoxContent,
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
-import { OperationalSolutionKey } from 'gql/gen/graphql';
+import { OperationalSolutionKey } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';

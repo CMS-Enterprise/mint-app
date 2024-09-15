@@ -6,7 +6,7 @@ import {
   CcmInvolvmentType,
   GetOpsEvalAndLearningDocument,
   GetOpsEvalAndLearningQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import {
   isCCWInvolvement,

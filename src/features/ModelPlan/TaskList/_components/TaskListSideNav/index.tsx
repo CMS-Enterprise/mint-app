@@ -6,7 +6,7 @@ import {
   GetModelCollaboratorsQuery,
   GetModelPlanQuery,
   useArchiveModelPlanMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';

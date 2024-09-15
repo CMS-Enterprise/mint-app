@@ -1,4 +1,4 @@
-import { OverlapType } from 'gql/gen/graphql';
+import { OverlapType } from 'gql/generated/graphql';
 
 import basics from 'i18n/en-US/modelPlan/basics';
 import beneficiaries from 'i18n/en-US/modelPlan/beneficiaries';
@@ -13,7 +13,7 @@ import {
   headerFormatter,
   removedUnneededData,
   selectFilteredFields
-} from './useFetchCSVData';
+} from '../useFetchCSVData';
 
 describe('fetch csv utils', () => {
   const allPlanTranslation = {

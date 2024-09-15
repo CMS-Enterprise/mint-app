@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useOktaAuth } from '@okta/okta-react';
-import { useGetCurrentUserQuery } from 'gql/gen/graphql';
+import { useGetCurrentUserQuery } from 'gql/generated/graphql';
 import { asyncWithLDProvider } from 'launchdarkly-react-client-sdk';
 
 type WrapperProps = {

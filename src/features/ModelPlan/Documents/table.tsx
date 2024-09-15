@@ -22,7 +22,7 @@ import {
   GetOperationalSolutionQuery,
   useDeleteModelPlanDocumentMutation,
   useGetModelPlanDocumentsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Modal from 'components/Modal';

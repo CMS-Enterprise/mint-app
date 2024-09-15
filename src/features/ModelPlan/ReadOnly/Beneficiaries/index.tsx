@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   GetAllBeneficiariesQuery,
   useGetAllBeneficiariesQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';

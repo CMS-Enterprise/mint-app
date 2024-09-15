@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import {
   DiscussionUserRole,
   GetModelPlanDiscussionsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
 import { getTimeElapsed } from 'utils/date';

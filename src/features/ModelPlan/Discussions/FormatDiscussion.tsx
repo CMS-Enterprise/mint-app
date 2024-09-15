@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
-import { GetModelPlanDiscussionsQuery } from 'gql/gen/graphql';
+import { GetModelPlanDiscussionsQuery } from 'gql/generated/graphql';
 
 import Divider from 'components/Divider';
 import SectionWrapper from 'components/SectionWrapper';

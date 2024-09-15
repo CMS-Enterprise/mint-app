@@ -10,7 +10,7 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetAllBasicsQuery, useGetAllBasicsQuery } from 'gql/gen/graphql';
+import { GetAllBasicsQuery, useGetAllBasicsQuery } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 

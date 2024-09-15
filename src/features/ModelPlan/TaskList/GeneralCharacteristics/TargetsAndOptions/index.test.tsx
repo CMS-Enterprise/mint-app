@@ -6,7 +6,7 @@ import {
   GeographyType,
   GetTargetsAndOptionsDocument,
   GetTargetsAndOptionsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import TargetsAndOptions from './index';
 

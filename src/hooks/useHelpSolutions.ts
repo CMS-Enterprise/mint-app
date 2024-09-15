@@ -6,7 +6,7 @@ import {
   helpSolutions,
   HelpSolutionType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { GetPossibleSolutionsQuery } from 'gql/gen/graphql';
+import { GetPossibleSolutionsQuery } from 'gql/generated/graphql';
 import GetPossibleSolutions from 'gql/operations/Solutions/GetPossibleSolutions';
 
 import useCacheQuery from './useCacheQuery';

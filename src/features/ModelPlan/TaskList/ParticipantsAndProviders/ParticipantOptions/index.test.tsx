@@ -5,7 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import {
   GetParticipantOptionsDocument,
   GetParticipantOptionsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import ParticipantOptions from './index';
 

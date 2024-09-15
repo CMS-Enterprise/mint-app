@@ -8,7 +8,7 @@ import {
   FrequencyType,
   GetDataSharingDocument,
   GetDataSharingQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import DataSharing from '.';
 

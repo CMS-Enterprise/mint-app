@@ -7,7 +7,7 @@ import {
   GetPossibleOperationalSolutionsDocument,
   OperationalSolutionKey,
   ViewCustomizationType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { MessageProvider } from 'hooks/useMessage';
 

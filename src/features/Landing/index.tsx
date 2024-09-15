@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import {
   DiscussionUserRole,
   GetModelPlanDiscussionsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';

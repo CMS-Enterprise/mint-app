@@ -2,7 +2,7 @@ import React from 'react';
 import {
   GetPossibleSolutionsQuery,
   OperationalSolutionKey
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import {
   OperationalSolutionCategories,

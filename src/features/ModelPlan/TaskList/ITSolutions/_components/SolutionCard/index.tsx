@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import {
   GetOperationalSolutionQuery,
   OperationalSolutionKey
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/Divider';

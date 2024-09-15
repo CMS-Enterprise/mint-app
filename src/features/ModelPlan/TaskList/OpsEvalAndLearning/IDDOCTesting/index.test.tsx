@@ -6,7 +6,7 @@ import {
   CcmInvolvmentType,
   GetIddocTestingDocument,
   GetIddocTestingQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import IDDOCTesting from './index';
 

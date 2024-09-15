@@ -14,7 +14,7 @@ import {
   ModelPlanFilter,
   useGetFavoritesQuery,
   ViewCustomizationType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import FavoritesCards from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';

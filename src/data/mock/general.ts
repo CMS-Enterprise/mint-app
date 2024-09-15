@@ -6,7 +6,7 @@ import {
   ModelCategory,
   ModelPlanFilter,
   ModelStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 type GetFavoritesType = GetFavoritesQuery['modelPlanCollection'];
 type GetModelPlansType = GetModelPlansQuery['modelPlanCollection'];

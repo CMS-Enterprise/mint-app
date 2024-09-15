@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { TeamRole } from 'gql/gen/graphql';
+import { TeamRole } from 'gql/generated/graphql';
 
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getUserInitials } from 'utils/modelPlan';

@@ -1,4 +1,4 @@
-import { AnalyzedAuditChange as ChangeTypes, TableName } from 'gql/gen/graphql';
+import { AnalyzedAuditChange as ChangeTypes, TableName } from 'gql/generated/graphql';
 
 import { pushValuesToChangesArray } from './_utils';
 

@@ -8,7 +8,7 @@ import {
   ModelStatus,
   PhaseSuggestion,
   useUpdateModelPlanMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';

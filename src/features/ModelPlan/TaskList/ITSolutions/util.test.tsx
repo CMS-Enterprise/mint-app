@@ -4,7 +4,7 @@ import {
   OperationalNeedKey,
   OperationalSolutionKey,
   OpSolutionStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';

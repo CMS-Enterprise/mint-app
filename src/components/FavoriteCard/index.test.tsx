@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import { GetFavoritesQuery, ModelStatus, TeamRole } from 'gql/gen/graphql';
+import { GetFavoritesQuery, ModelStatus, TeamRole } from 'gql/generated/graphql';
 
 import FavoriteCard from './index';
 

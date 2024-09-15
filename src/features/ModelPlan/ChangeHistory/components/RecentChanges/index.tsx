@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import {
   GetChangeHistoryQuery,
   useGetChangeHistoryQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/Alert';

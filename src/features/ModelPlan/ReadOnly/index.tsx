@@ -10,7 +10,7 @@ import {
   ModelStatus,
   TeamRole,
   useGetModelSummaryQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { FavoriteIcon } from 'components/FavoriteCard';

@@ -10,7 +10,7 @@ import {
   OverlapType,
   TaskStatus,
   YesNoType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Frequency from './index';
 

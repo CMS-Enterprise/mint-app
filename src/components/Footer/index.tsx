@@ -12,11 +12,11 @@ import {
 import classNames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import cmsGovLogo from 'assets/images/cmsGovLogo.png';
+import hhsLogo from 'assets/images/hhsLogo.png';
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import cmsGovLogo from 'images/cmsGovLogo.png';
-import hhsLogo from 'images/hhsLogo.png';
 
 import './index.scss';
 

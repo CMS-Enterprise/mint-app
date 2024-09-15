@@ -10,7 +10,7 @@ import {
 import {
   GetModelCollaboratorsQuery,
   useGetModelCollaboratorsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { Avatar } from 'components/Avatar';

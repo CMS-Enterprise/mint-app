@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { act, render } from '@testing-library/react';
-import { ReportAProblemSection, ReportAProblemSeverity } from 'gql/gen/graphql';
+import { ReportAProblemSection, ReportAProblemSeverity } from 'gql/generated/graphql';
 import CreateReportAProblem from 'gql/operations/Feedback/CreateReportAProblem';
 
 import VerboseMockedProvider from 'utils/testing/MockedProvider';

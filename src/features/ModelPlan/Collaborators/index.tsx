@@ -15,7 +15,7 @@ import {
   TeamRole,
   useDeleteModelPlanCollaboratorMutation,
   useGetModelCollaboratorsQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';

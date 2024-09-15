@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import usePagination from './usePagination';
+import usePagination from '../usePagination';
 
 const TestComponent = ({ items, itemsPerPage }: any) => {
   const { currentItems, Pagination } = usePagination({

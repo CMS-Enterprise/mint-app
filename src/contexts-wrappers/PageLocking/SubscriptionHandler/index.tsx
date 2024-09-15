@@ -15,7 +15,7 @@ import {
   TaskListSection,
   useLockTaskListSectionMutation,
   useUnlockTaskListSectionMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { isUUID } from 'utils/modelPlan';
 

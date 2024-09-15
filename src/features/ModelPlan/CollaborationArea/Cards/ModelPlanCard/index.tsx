@@ -8,7 +8,7 @@ import {
   CardHeader,
   Grid
 } from '@trussworks/react-uswds';
-import { TaskStatus, useGetModelPlanQuery } from 'gql/gen/graphql';
+import { TaskStatus, useGetModelPlanQuery } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';

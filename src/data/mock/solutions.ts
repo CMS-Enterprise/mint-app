@@ -4,7 +4,7 @@ import {
   OperationalNeedKey,
   OperationalSolutionKey,
   OpSolutionStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import GetPossibleSolutions from 'gql/operations/Solutions/GetPossibleSolutions';
 
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';

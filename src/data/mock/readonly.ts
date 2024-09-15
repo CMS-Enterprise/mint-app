@@ -76,7 +76,7 @@ import {
   WaiverType,
   YesNoOtherType,
   YesNoType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 

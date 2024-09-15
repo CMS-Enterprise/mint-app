@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { OpSolutionStatus } from 'gql/gen/graphql';
+import { OpSolutionStatus } from 'gql/generated/graphql';
 
 import Tag from 'components/Tag';
 

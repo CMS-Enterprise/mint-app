@@ -1,4 +1,4 @@
-import { OperationalNeedKey } from 'gql/gen/graphql';
+import { OperationalNeedKey } from 'gql/generated/graphql';
 
 export interface NeedMap {
   route: string;

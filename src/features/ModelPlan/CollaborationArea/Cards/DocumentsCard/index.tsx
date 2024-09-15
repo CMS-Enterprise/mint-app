@@ -7,7 +7,7 @@ import {
   CardHeader,
   Icon
 } from '@trussworks/react-uswds';
-import { GetModelPlanQuery } from 'gql/gen/graphql';
+import { GetModelPlanQuery } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 

@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { GetCrtdLsDocument } from 'gql/gen/graphql';
+import { GetCrtdLsDocument } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'data/constants/jobCodes';

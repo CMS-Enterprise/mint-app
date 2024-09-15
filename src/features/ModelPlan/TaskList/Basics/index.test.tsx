@@ -8,7 +8,7 @@ import {
   GetBasicsDocument,
   GetBasicsQuery,
   ModelCategory
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import Sinon from 'sinon';
 
 import Basics from './index';

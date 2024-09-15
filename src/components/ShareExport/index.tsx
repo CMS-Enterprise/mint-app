@@ -21,7 +21,7 @@ import { FilterGroup } from 'features/ModelPlan/ReadOnly/_components/FilterView/
 import { groupOptions } from 'features/ModelPlan/ReadOnly/_components/FilterView/util';
 import ReadOnlyOperationalNeeds from 'features/ModelPlan/ReadOnly/OperationalNeeds';
 import { StatusMessageType } from 'features/ModelPlan/TaskList';
-import { ModelViewFilter } from 'gql/gen/graphql';
+import { ModelViewFilter } from 'gql/generated/graphql';
 import CreateShareModelPlan from 'gql/operations/ShareExport/CreateShareModelPlan';
 
 import Alert from 'components/Alert';

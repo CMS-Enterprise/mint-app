@@ -16,7 +16,7 @@ import {
   ModelStatus,
   PrepareForClearanceStatus,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { MessageProvider } from 'hooks/useMessage';

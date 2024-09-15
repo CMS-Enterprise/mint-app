@@ -8,7 +8,7 @@ import {
   GetOperationalSolutionQuery,
   useGetOperationalNeedAnswerQuery,
   useGetOperationalNeedQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';

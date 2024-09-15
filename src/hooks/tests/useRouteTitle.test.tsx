@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 
 import routes from 'i18n/en-US/routes';
 
-import useRouteTitle from './useRouteTitle';
+import useRouteTitle from '../useRouteTitle';
 
 // Mock useLocation hook
 vi.mock('react-router-dom', () => ({

@@ -6,7 +6,7 @@ import {
   ModelPlanFilter,
   useGetModelPlansQuery,
   ViewCustomizationType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import CalendarDate from 'components/CalendarDate';
 import Alert from 'components/Alert';

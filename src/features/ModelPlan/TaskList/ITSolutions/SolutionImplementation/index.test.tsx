@@ -8,7 +8,7 @@ import {
   OperationalNeedKey,
   OperationalSolutionKey,
   OpSolutionStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import {
   needQuestionAndAnswerMock,

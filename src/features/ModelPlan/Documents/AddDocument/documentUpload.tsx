@@ -7,7 +7,7 @@ import {
   DocumentType,
   useCreateDocumentSolutionLinksMutation,
   useUploadNewPlanDocumentMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import BooleanRadio from 'components/BooleanRadioForm';
 import FileUpload from 'components/FileUpload';

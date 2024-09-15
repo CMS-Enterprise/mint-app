@@ -5,7 +5,7 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import {
   GetNotificationSettingsDocument,
   UserNotificationPreferenceFlag
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { MessageProvider } from 'hooks/useMessage';
 import setup from 'utils/testing/setup';

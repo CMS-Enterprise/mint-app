@@ -19,7 +19,7 @@ import {
   TranslationDataType,
   useGetAllModelDataLazyQuery,
   useGetAllSingleModelDataLazyQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import usePlanTranslation from 'hooks/usePlanTranslation';

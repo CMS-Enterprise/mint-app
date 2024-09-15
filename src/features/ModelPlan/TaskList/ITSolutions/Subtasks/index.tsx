@@ -19,7 +19,7 @@ import {
   useDeleteOperationalSolutionSubtaskMutation,
   useGetOperationalSolutionQuery,
   useUpdateOperationalSolutionSubtasksMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Modal from 'components/Modal';

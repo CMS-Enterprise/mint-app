@@ -16,7 +16,7 @@ import {
   PayType,
   TypedUpdatePaymentsDocument,
   useGetRecoverQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import AddNote from 'components/AddNote';

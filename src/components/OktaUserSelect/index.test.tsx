@@ -1,6 +1,6 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
-import { SearchOktaUsersDocument } from 'gql/gen/graphql';
+import { SearchOktaUsersDocument } from 'gql/generated/graphql';
 
 import setup from 'utils/testing/setup';
 

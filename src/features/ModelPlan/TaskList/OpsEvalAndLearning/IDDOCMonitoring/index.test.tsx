@@ -6,7 +6,7 @@ import {
   CcmInvolvmentType,
   GetIddocMonitoringDocument,
   GetIddocMonitoringQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import IDDOCMonitoring from './index';
 

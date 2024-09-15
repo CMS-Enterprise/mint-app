@@ -7,7 +7,7 @@ import {
   GetAnticipateDependenciesDocument,
   GetAnticipateDependenciesQuery,
   PayType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import AnticipateDependencies from './index';
 

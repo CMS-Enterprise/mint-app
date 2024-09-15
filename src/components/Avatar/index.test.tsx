@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { TeamRole } from 'gql/gen/graphql';
+import { TeamRole } from 'gql/generated/graphql';
 
 import { Avatar, AvatarCircle } from './index';
 

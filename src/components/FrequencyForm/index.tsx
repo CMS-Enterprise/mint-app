@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Label, TextInput } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field } from 'formik';
-import { FrequencyType } from 'gql/gen/graphql';
+import { FrequencyType } from 'gql/generated/graphql';
 
 import AddNote from 'components/AddNote';
 import CheckboxField from 'components/CheckboxField';

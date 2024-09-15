@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardGroup } from '@trussworks/react-uswds';
 import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
-import { GetFavoritesQuery } from 'gql/gen/graphql';
+import { GetFavoritesQuery } from 'gql/generated/graphql';
 
 import usePagination from 'hooks/usePagination';
 

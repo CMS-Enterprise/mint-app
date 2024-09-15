@@ -17,7 +17,7 @@ import {
   useCreateOperationalSolutionMutation,
   useGetOperationalSolutionQuery,
   useUpdateOperationalSolutionMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';

@@ -18,7 +18,7 @@ import {
   ReportAProblemInput,
   ReportAProblemSection,
   ReportAProblemSeverity
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import CreateReportAProblem from 'gql/operations/Feedback/CreateReportAProblem';
 
 import Alert from 'components/Alert';

@@ -6,7 +6,7 @@ import {
   GetKeyCharacteristicsDocument,
   GetKeyCharacteristicsQuery,
   KeyCharacteristic
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import KeyCharacteristics from './index';
 

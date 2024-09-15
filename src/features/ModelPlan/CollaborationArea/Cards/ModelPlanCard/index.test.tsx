@@ -8,7 +8,7 @@ import {
   ModelStatus,
   PrepareForClearanceStatus,
   TaskStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 import setup from 'utils/testing/setup';

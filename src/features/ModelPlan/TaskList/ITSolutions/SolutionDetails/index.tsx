@@ -11,7 +11,7 @@ import {
   GetOperationalSolutionQuery,
   useDeleteDocumentSolutionLinkMutation,
   useGetOperationalSolutionQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';

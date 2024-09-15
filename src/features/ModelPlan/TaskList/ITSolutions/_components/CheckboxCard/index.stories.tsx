@@ -6,7 +6,7 @@ import {
   GetOperationalNeedQuery,
   OperationalSolutionKey,
   OpSolutionStatus
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import { initialValues } from '../../SelectSolutions';
 

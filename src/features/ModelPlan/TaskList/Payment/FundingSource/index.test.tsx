@@ -6,7 +6,7 @@ import {
   GetFundingDocument,
   GetFundingQuery,
   PayType
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import Sinon from 'sinon';
 
 import VerboseMockedProvider from 'utils/testing/MockedProvider';

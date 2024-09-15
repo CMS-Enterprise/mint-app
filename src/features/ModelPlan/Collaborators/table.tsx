@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { usePagination, useSortBy, useTable } from 'react-table';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetModelCollaboratorsQuery, TeamRole } from 'gql/gen/graphql';
+import { GetModelCollaboratorsQuery, TeamRole } from 'gql/generated/graphql';
 import { orderBy } from 'lodash';
 
 import UswdsReactLink from 'components/LinkWrapper';

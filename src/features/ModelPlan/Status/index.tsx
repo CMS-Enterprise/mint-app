@@ -10,7 +10,7 @@ import {
   Select
 } from '@trussworks/react-uswds';
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
-import { ModelStatus, useUpdateModelPlanMutation } from 'gql/gen/graphql';
+import { ModelStatus, useUpdateModelPlanMutation } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';

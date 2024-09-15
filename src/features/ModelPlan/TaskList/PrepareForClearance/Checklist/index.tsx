@@ -27,7 +27,7 @@ import {
   useUpdateClearanceOpsEvalAndLearningMutation,
   useUpdateClearanceParticipantsAndProvidersMutation,
   useUpdateClearancePaymentsMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';

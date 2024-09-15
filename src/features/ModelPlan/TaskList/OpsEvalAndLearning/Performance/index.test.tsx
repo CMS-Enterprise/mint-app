@@ -6,7 +6,7 @@ import {
   CcmInvolvmentType,
   GetPerformanceDocument,
   GetPerformanceQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Performance from '.';
 

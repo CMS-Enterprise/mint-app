@@ -11,7 +11,7 @@ import {
   useCreateModelPlanCollaboratorMutation,
   useGetModelCollaboratorsQuery,
   useUpdateModelPlanCollaboratorMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';

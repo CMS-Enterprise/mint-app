@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
-import { AnalyzedAudit as AnalyzedAuditsTypes } from 'gql/gen/graphql';
+import { AnalyzedAudit as AnalyzedAuditsTypes } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';

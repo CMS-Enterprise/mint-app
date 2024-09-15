@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import { ModelStatus, TaskStatus } from 'gql/gen/graphql';
+import { ModelStatus, TaskStatus } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/Tag';
