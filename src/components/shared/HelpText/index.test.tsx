@@ -1,24 +1,26 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import HelpText from './index';
 
-describe('The Help Text componnet', () => {
+describe('The Help Text component', () => {
   it('renders without crashing', () => {
-    shallow(<HelpText>Hello!</HelpText>);
+    render(<HelpText>Hello!</HelpText>);
+    expect(screen.getByText('Hello!')).toBeInTheDocument();
   });
 
   it('renders a text child', () => {
-    const component = shallow(<HelpText>Test</HelpText>);
-    expect(component.text()).toEqual('Test');
+    render(<HelpText>Test</HelpText>);
+    expect(screen.getByText('Test')).toBeInTheDocument();
   });
 
   it('renders a markup', () => {
-    const component = shallow(
+    const { container } = render(
       <HelpText>
         <div className="test-1-2-1-2" />
       </HelpText>
     );
-    expect(component.find('.test-1-2-1-2').exists()).toBe(true);
+
+    expect(container.getElementsByClassName('test-1-2-1-2').length).toBe(1);
   });
 });

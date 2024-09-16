@@ -1,19 +1,16 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import PageHeading from './index';
 
 describe('Page heading component', () => {
   it('renders without errors', () => {
-    shallow(<PageHeading>Test Heading</PageHeading>);
+    render(<PageHeading>Test Heading</PageHeading>);
+    expect(screen.getByText('Test Heading')).toBeInTheDocument();
   });
 
   it('matches the snapshot', () => {
-    const tree = renderer
-      .create(<PageHeading>Test Heading</PageHeading>)
-      .toJSON();
-
-    expect(tree).toMatchSnapshot();
+    const { asFragment } = render(<PageHeading>Test Heading</PageHeading>);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -2,7 +2,6 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Column,
-  Row,
   useFilters,
   useGlobalFilter,
   usePagination,
@@ -145,7 +144,7 @@ const ModelPlansTable = ({
         Header: <Icon.StarOutline size={3} />,
         accessor: 'isFavorite',
         disableGlobalFilter: true,
-        Cell: ({ row }: { row: Row<AllModelPlansType> }) => {
+        Cell: ({ row }: any) => {
           return row.original.isFavorite ? (
             <button
               onClick={() => {
@@ -242,7 +241,9 @@ const ModelPlansTable = ({
               `basics:modelCategory.options.${value}`
             )}, ${newArray.join(', ')}`;
           }
-          return i18next.t(`basics:modelCategory.options.${value}`);
+          return i18next.t(
+            `basics:modelCategory.options.${value}`
+          ) as typeof value;
         }
       },
       status: {
@@ -264,7 +265,7 @@ const ModelPlansTable = ({
           }
           return null;
         },
-        Cell: ({ value }: { value: string }) => {
+        Cell: ({ value }: any) => {
           if (!value) {
             return <div>{homeT('requestsTable.tbd')}</div>;
           }
@@ -330,7 +331,7 @@ const ModelPlansTable = ({
           }
           return null;
         },
-        Cell: ({ value }: { value: string | null }) => {
+        Cell: ({ value }: any) => {
           if (!value) {
             return <div>{homeT('requestsTable.tbd')}</div>;
           }
@@ -341,10 +342,10 @@ const ModelPlansTable = ({
         id: 'keyCharacteristics',
         Header: homeT('requestsTable.headers.keyCharacteristics'),
         accessor: 'generalCharacteristics.keyCharacteristics',
-        Cell: ({ value }: { value: KeyCharacteristic[] }) => {
+        Cell: ({ value }: any) => {
           if (value) {
             return value
-              .map(characteristics => {
+              .map((characteristics: KeyCharacteristic) => {
                 return i18next.t(
                   `generalCharacteristics:keyCharacteristics.options.${characteristics}`
                 );
@@ -396,7 +397,7 @@ const ModelPlansTable = ({
               </>
             );
           }
-          return '';
+          return <></>;
         }
       }
     };

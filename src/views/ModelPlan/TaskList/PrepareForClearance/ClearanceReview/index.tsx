@@ -129,14 +129,15 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
-      id: modelID
+      id: modelID,
+      includePrepareForClearance: true
     }
   });
 
   const modelPlanSection = routeMap[section];
 
   const cannotStart: boolean =
-    data?.modelPlan?.prepareForClearance.status ===
+    data?.modelPlan?.prepareForClearance?.status ===
     PrepareForClearanceStatus.CANNOT_START;
 
   const readyForClearance: boolean =

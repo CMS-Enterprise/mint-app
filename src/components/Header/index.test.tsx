@@ -1,9 +1,7 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
-import { mount, shallow } from 'enzyme';
+import { render, screen, waitFor } from '@testing-library/react';
 import { GetPollNotificationsDocument } from 'gql/gen/graphql';
 
 import Header from './index';
@@ -25,64 +23,66 @@ const notificationsMock = [
   }
 ];
 
-vi.mock('@okta/okta-react', () => ({
-  useOktaAuth: () => {
-    return {
-      authState: {
-        isAuthenticated: true
-      },
-      oktaAuth: {
-        getUser: async () => ({
-          name: 'John Doe'
-        }),
-        logout: async () => {}
-      }
-    };
-  }
-}));
+describe('The Header component when logged in', () => {
+  vi.mock('@okta/okta-react', () => ({
+    useOktaAuth: () => {
+      return {
+        authState: {
+          isAuthenticated: true
+        },
+        oktaAuth: {
+          getUser: async () => ({
+            name: 'John Doe'
+          }),
+          logout: async () => {}
+        }
+      };
+    }
+  }));
 
-describe('The Header component', () => {
-  it('renders without crashing', () => {
-    shallow(
+  it('renders without crashing', async () => {
+    render(
       <MemoryRouter initialEntries={['/']}>
         <MockedProvider mocks={notificationsMock} addTypename={false}>
           <Header />
         </MockedProvider>
       </MemoryRouter>
     );
-  });
 
-  describe('When logged in', () => {
-    it('displays a login button', async () => {
-      const { getByTestId } = render(
-        <MemoryRouter initialEntries={['/pre-decisional-notice']}>
-          <MockedProvider mocks={notificationsMock} addTypename={false}>
-            <Header />
-          </MockedProvider>
-        </MemoryRouter>
-      );
-
-      await waitFor(() => {
-        expect(getByTestId('signout-link')).toHaveTextContent('Sign Out');
-      });
+    await waitFor(() => {
+      expect(screen.getAllByRole('banner')).toHaveLength(2);
     });
+  });
+});
 
-    test.skip('displays the users name', async done => {
-      let component: any;
-      await act(async () => {
-        component = mount(
-          <MemoryRouter>
-            <MockedProvider mocks={notificationsMock} addTypename={false}>
-              <Header />
-            </MockedProvider>
-          </MemoryRouter>
-        );
-      });
-      setImmediate(() => {
-        component.update();
-        expect(component.text().includes('John Doe')).toBe(true);
-        done();
-      });
+describe('When logged in', () => {
+  vi.mock('@okta/okta-react', () => ({
+    useOktaAuth: () => {
+      return {
+        authState: {
+          isAuthenticated: false
+        },
+        oktaAuth: {
+          getUser: async () => ({
+            name: 'John Doe'
+          }),
+          logout: async () => {}
+        }
+      };
+    }
+  }));
+
+  it('displays a login button', async () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <MockedProvider mocks={notificationsMock} addTypename={false}>
+          <Header />
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Sign In')).toBeInTheDocument();
     });
   });
 });

@@ -1,26 +1,31 @@
 import i18next from 'i18next';
 
-const csvFields = [
+type CSVLabel = {
+  label: string;
+  value: string;
+};
+
+const csvFields: (CSVLabel | string)[] = [
   {
-    label: i18next.t<string>('modelPlanMisc:modelID'),
+    label: i18next.t<string, {}, string>('modelPlanMisc:modelID'),
     value: 'id'
   },
   'modelName',
   {
-    label: i18next.t<string>('modelPlan:previousName.label'),
+    label: i18next.t<string, {}, string>('modelPlan:previousName.label'),
     value: 'nameHistory'
   },
   'abbreviation',
   {
-    label: i18next.t<string>('modelPlan:archived.label'),
+    label: i18next.t<string, {}, string>('modelPlan:archived.label'),
     value: 'archived'
   },
   {
-    label: i18next.t<string>('modelPlanMisc:createdBy'),
+    label: i18next.t<string, {}, string>('modelPlanMisc:createdBy'),
     value: 'createdByUserAccount.commonName'
   },
   {
-    label: i18next.t<string>('modelPlanMisc:createdAt'),
+    label: i18next.t<string, {}, string>('modelPlanMisc:createdAt'),
     value: 'createdDts'
   },
   'status',
@@ -409,71 +414,85 @@ const csvFields = [
 
   // Collaborators
   {
-    label: `${i18next.t<string>(
+    label: `${i18next.t<string, {}, string>(
       'collaboratorsMisc:csvTitle'
-    )} ${i18next.t<string>('collaboratorsMisc:EUAID')}`,
+    )} ${i18next.t<string, {}, string>('collaboratorsMisc:EUAID')}`,
     value: 'collaborators.userAccount.username'
   },
   {
-    label: `${i18next.t<string>(
+    label: `${i18next.t<string, {}, string>(
       'collaboratorsMisc:csvTitle'
-    )} ${i18next.t<string>('collaborators:username.label')}`,
+    )} ${i18next.t<string, {}, string>('collaborators:username.label')}`,
     value: 'collaborators.userAccount.commonName'
   },
   {
-    label: `${i18next.t<string>(
+    label: `${i18next.t<string, {}, string>(
       'collaboratorsMisc:csvTitle'
-    )} ${i18next.t<string>('collaborators:teamRoles.label')}`,
+    )} ${i18next.t<string, {}, string>('collaborators:teamRoles.label')}`,
     value: 'collaborators.teamRoles'
   },
 
   // Discussions
   {
-    label: i18next.t<string>('discussionsMisc:discussionCSV.content'),
+    label: i18next.t<string, {}, string>(
+      'discussionsMisc:discussionCSV.content'
+    ),
     value: 'discussions.content.rawContent'
   },
   {
-    label: i18next.t<string>('discussionsMisc:discussionCSV.createdBy'),
+    label: i18next.t<string, {}, string>(
+      'discussionsMisc:discussionCSV.createdBy'
+    ),
     value: 'discussions.createdByUserAccount.commonName'
   },
   {
-    label: i18next.t<string>('discussionsMisc:discussionCSV.userRole'),
+    label: i18next.t<string, {}, string>(
+      'discussionsMisc:discussionCSV.userRole'
+    ),
     value: 'discussions.userRole'
   },
   {
-    label: i18next.t<string>(
+    label: i18next.t<string, {}, string>(
       'discussionsMisc:discussionCSV.userRoleDescription'
     ),
     value: 'discussions.userRoleDescription'
   },
   {
-    label: i18next.t<string>('discussionsMisc:discussionCSV.createdAt'),
+    label: i18next.t<string, {}, string>(
+      'discussionsMisc:discussionCSV.createdAt'
+    ),
     value: 'discussions.createdDts'
   },
 
   // Discussion Replies
   {
-    label: i18next.t<string>('discussionsMisc:replyCSV.content'),
+    label: i18next.t<string, {}, string>('discussionsMisc:replyCSV.content'),
     value: 'discussions.replies.content.rawContent'
   },
   {
-    label: i18next.t<string>('discussionsMisc:replyCSV.createdBy'),
+    label: i18next.t<string, {}, string>('discussionsMisc:replyCSV.createdBy'),
     value: 'discussions.replies.createdByUserAccount.commonName'
   },
   {
-    label: i18next.t<string>('discussionsMisc:replyCSV.userRole'),
+    label: i18next.t<string, {}, string>('discussionsMisc:replyCSV.userRole'),
     value: 'discussions.replies.userRole'
   },
   {
-    label: i18next.t<string>('discussionsMisc:replyCSV.userRoleDescription'),
+    label: i18next.t<string, {}, string>(
+      'discussionsMisc:replyCSV.userRoleDescription'
+    ),
     value: 'discussions.replies.userRoleDescription'
   },
   {
-    label: i18next.t<string>('discussionsMisc:replyCSV.createdAt'),
+    label: i18next.t<string, {}, string>('discussionsMisc:replyCSV.createdAt'),
     value: 'discussions.replies.createdDts'
   }
 ];
 
-const fieldsToUnwind = ['collaborators', 'discussions', 'discussions.replies'];
+const fieldsToUnwind: string[] = [
+  'collaborators',
+  'discussions',
+  'discussions.replies'
+];
 
 export { csvFields, fieldsToUnwind };

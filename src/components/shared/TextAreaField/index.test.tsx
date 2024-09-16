@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import TextAreaField from './index';
 
@@ -13,16 +13,14 @@ describe('The Text Area Field component', () => {
   };
 
   it('renders without crashing', () => {
-    shallow(<TextAreaField {...requiredProps} />);
+    render(<TextAreaField {...requiredProps} />);
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
   it('renders a label when provided', () => {
     const fixture = 'Demo Label';
-    const component = shallow(
-      <TextAreaField {...requiredProps} label={fixture} />
-    );
-
-    expect(component.find('label').text()).toEqual(fixture);
+    render(<TextAreaField {...requiredProps} label={fixture} />);
+    expect(screen.getByLabelText(fixture)).toBeInTheDocument();
   });
 
   it('triggers onChange', () => {
@@ -32,11 +30,8 @@ describe('The Text Area Field component', () => {
       }
     };
     const mock = vi.fn();
-    const component = mount(
-      <TextAreaField {...requiredProps} onChange={mock} />
-    );
-
-    component.simulate('change', event);
+    render(<TextAreaField {...requiredProps} onChange={mock} />);
+    fireEvent.change(screen.getByRole('textbox'), event);
     expect(mock).toHaveBeenCalled();
   });
 });

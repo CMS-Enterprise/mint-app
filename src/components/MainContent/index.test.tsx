@@ -1,34 +1,43 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import MainContent from './index';
 
-describe('The MainContent component', () => {
+describe('MainContent component', () => {
   it('renders without crashing', () => {
-    shallow(
+    render(
       <MainContent>
         <div />
       </MainContent>
     );
+    expect(screen.getByRole('main')).toBeInTheDocument();
   });
 
   it('renders custom class names', () => {
-    const component = shallow(
+    render(
       <MainContent className="test-class">
         <div />
       </MainContent>
     );
-
-    expect(component.find('main.test-class').exists()).toEqual(true);
+    const mainElement = screen.getByRole('main');
+    expect(mainElement).toHaveClass('mint-main-content test-class');
   });
 
   it('renders children', () => {
-    const component = shallow(
+    render(
       <MainContent>
         <div data-testid="test-child" />
       </MainContent>
     );
+    expect(screen.getByTestId('test-child')).toBeInTheDocument();
+  });
 
-    expect(component.find('[data-testid="test-child"]').exists()).toEqual(true);
+  it('applies data-testid attribute', () => {
+    render(
+      <MainContent data-testid="main-content">
+        <div />
+      </MainContent>
+    );
+    expect(screen.getByTestId('main-content')).toBeInTheDocument();
   });
 });
