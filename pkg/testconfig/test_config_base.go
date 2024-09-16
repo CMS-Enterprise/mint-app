@@ -28,6 +28,7 @@ type Base struct {
 	UserInfo                 *models.UserInfo
 	Store                    *storage.Store
 	S3Client                 *s3.S3Client
+	EChimpS3Client           *s3.S3Client
 	PubSub                   *pubsub.ServicePubSub
 	Principal                *authentication.ApplicationPrincipal
 	Context                  context.Context
@@ -50,12 +51,14 @@ func (config *Base) GetDefaults(ctxCallbacks ...func(context.Context) context.Co
 	store, _ := storage.NewStore(dbConfig, ldClient)
 
 	s3Client := s3testconfigs.S3TestClient()
+	eChimpS3Client := s3testconfigs.S3TestECHIMPClient()
 	config.DBConfig = dbConfig
 	config.LDClient = ldClient
 	config.Logger = logger
 	config.UserInfo = userInfo
 	config.Store = store
 	config.S3Client = &s3Client
+	config.EChimpS3Client = &eChimpS3Client
 	config.PubSub = ps
 
 	config.Context = appcontext.WithLogger(context.Background(), config.Logger)
