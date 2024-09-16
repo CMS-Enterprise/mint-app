@@ -12,9 +12,9 @@ import {
   OpSolutionStatus
 } from 'gql/generated/graphql';
 import { needQuestionAndAnswerMock } from 'tests/mock/solutions';
+import setup from 'tests/setup';
 
 import { MessageProvider } from 'hooks/useMessage';
-import setup from 'utils/testing/setup';
 
 import AddCustomSolution from '.';
 

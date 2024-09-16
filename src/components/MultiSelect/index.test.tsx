@@ -1,8 +1,7 @@
 import React from 'react';
 import selectEvent from 'react-select-event';
 import { render, screen } from '@testing-library/react';
-
-import setup from 'utils/testing/setup';
+import setup from 'tests/setup';
 
 import MultiSelect from './index';
 

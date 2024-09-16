@@ -6,9 +6,9 @@ import {
   GetNotificationSettingsDocument,
   UserNotificationPreferenceFlag
 } from 'gql/generated/graphql';
+import setup from 'tests/setup';
 
 import { MessageProvider } from 'hooks/useMessage';
-import setup from 'utils/testing/setup';
 
 import NotificationSettings from '.';
 

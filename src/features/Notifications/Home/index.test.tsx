@@ -3,9 +3,9 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { GetNotificationsDocument } from 'gql/generated/graphql';
+import setup from 'tests/setup';
 
 import { MessageProvider } from 'hooks/useMessage';
-import setup from 'utils/testing/setup';
 
 import NotificationsHome from '.';
 

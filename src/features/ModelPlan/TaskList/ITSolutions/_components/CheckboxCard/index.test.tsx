@@ -12,8 +12,7 @@ import {
   OpSolutionStatus
 } from 'gql/generated/graphql';
 import { possibleSolutionsMock } from 'tests/mock/solutions';
-
-import VerboseMockedProvider from 'utils/testing/MockedProvider';
+import VerboseMockedProvider from 'tests/MockedProvider';
 
 import { initialValues } from '../../SelectSolutions';
 

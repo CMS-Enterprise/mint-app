@@ -9,9 +9,8 @@ import {
   PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
-
-import VerboseMockedProvider from 'utils/testing/MockedProvider';
-import setup from 'utils/testing/setup';
+import VerboseMockedProvider from 'tests/MockedProvider';
+import setup from 'tests/setup';
 
 import ModelPlanCard from './index';
 

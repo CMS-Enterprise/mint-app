@@ -6,9 +6,8 @@ import {
   ReportAProblemSeverity
 } from 'gql/generated/graphql';
 import CreateReportAProblem from 'gql/operations/Feedback/CreateReportAProblem';
-
-import VerboseMockedProvider from 'utils/testing/MockedProvider';
-import setup from 'utils/testing/setup';
+import VerboseMockedProvider from 'tests/MockedProvider';
+import setup from 'tests/setup';
 
 import ReportAProblem from '.';
 

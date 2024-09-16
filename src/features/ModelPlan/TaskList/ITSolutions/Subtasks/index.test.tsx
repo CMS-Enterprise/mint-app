@@ -17,9 +17,9 @@ import {
   needQuestionAndAnswerMock,
   possibleSolutionsMock
 } from 'tests/mock/solutions';
+import VerboseMockedProvider from 'tests/MockedProvider';
 
 import { MessageProvider } from 'hooks/useMessage';
-import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import Subtasks from '.';
 

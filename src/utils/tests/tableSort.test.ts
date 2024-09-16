@@ -7,7 +7,7 @@ import {
   getHeaderSortIcon,
   sortColumnProps,
   sortColumnValues
-} from './tableSort';
+} from '../tableSort';
 
 describe('tableSortUtil', () => {
   describe('getColumnSortStatus', () => {

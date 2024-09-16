@@ -8,8 +8,7 @@ import {
   PayType
 } from 'gql/generated/graphql';
 import Sinon from 'sinon';
-
-import VerboseMockedProvider from 'utils/testing/MockedProvider';
+import VerboseMockedProvider from 'tests/MockedProvider';
 
 import FundingSource from './index';
 

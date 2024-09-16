@@ -1,8 +1,7 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
 import { SearchOktaUsersDocument } from 'gql/generated/graphql';
-
-import setup from 'utils/testing/setup';
+import setup from 'tests/setup';
 
 import OktaUserSelect from './index';
 

@@ -4,7 +4,7 @@ import {
   collaboratorsOrderedByModelLeads,
   getUserInitials,
   returnValidLetter
-} from './modelPlan';
+} from '../modelPlan';
 
 type GetCollaboratorsType =
   GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];

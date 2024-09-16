@@ -1,8 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
-
-import setup from 'utils/testing/setup';
+import setup from 'tests/setup';
 
 import { helpSolutions } from '../../solutionsMap';
 

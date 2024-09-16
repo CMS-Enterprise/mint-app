@@ -1,7 +1,7 @@
 import { ASSESSMENT, BASIC } from 'constants/jobCodes';
 import { Flags } from 'types/flags';
 
-import { isAssessment, isBasicUser } from './user';
+import { isAssessment, isBasicUser } from '../user';
 
 describe('user', () => {
   describe('isAssessment', () => {
