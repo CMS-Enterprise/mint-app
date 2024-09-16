@@ -5,7 +5,7 @@ const config: CodegenConfig = {
   documents: ['src/gql/operations/**/*.ts'],
   overwrite: true,
   generates: {
-    './src/gql/gen/graphql.ts': {
+    './src/gql/generated/graphql.ts': {
       plugins: [
         'typescript',
         'typescript-operations',
