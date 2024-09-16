@@ -15,8 +15,8 @@ import {
 } from 'gql/generated/graphql';
 import { set } from 'lodash';
 import configureMockStore from 'redux-mock-store';
+import { modelPlanCollectionMock } from 'tests/mock/general';
 
-import { modelPlanCollectionMock } from 'data/mock/general';
 import { MessageProvider } from 'hooks/useMessage';
 
 import HomeNew from '.';

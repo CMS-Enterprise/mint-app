@@ -3,14 +3,14 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { Icon, Link } from '@trussworks/react-uswds';
+import DevLogin from 'wrappers/AuthenticationWrapper/DevLogin';
 
+import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
-import Alert from 'components/Alert';
 import OktaSignInWidget from 'components/OktaSignInWidget';
-import { localAuthStorageKey } from 'data/constants/localAuth';
+import { localAuthStorageKey } from 'constants/localAuth';
 import { isLocalAuthEnabled } from 'utils/auth';
-import DevLogin from 'wrappers/AuthenticationWrapper/DevLogin';
 
 import './index.scss';
 

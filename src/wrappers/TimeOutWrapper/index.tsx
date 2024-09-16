@@ -6,7 +6,7 @@ import { Button } from '@trussworks/react-uswds';
 import { DateTime, Duration } from 'luxon';
 
 import Modal from 'components/Modal';
-import { localAuthStorageKey } from 'data/constants/localAuth';
+import { localAuthStorageKey } from 'constants/localAuth';
 import useInterval from 'hooks/useInterval';
 import { isLocalAuthEnabled } from 'utils/auth';
 

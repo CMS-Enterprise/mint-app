@@ -3,7 +3,7 @@ import { configure } from 'enzyme';
 
 import 'regenerator-runtime/runtime';
 import '@testing-library/jest-dom';
-import './i18n';
+import '../config/i18n';
 
 configure({ adapter: new Adapter() });
 

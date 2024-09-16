@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { Security } from '@okta/okta-react';
 
-import { localAuthStorageKey } from 'data/constants/localAuth';
+import { localAuthStorageKey } from 'constants/localAuth';
 import { isLocalAuthEnabled } from 'utils/auth';
 
 import DevSecurity from './DevSecurity';

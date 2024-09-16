@@ -1,4 +1,4 @@
-import { ASSESSMENT, BASIC } from 'data/constants/jobCodes';
+import { ASSESSMENT, BASIC } from 'constants/jobCodes';
 import { Flags } from 'types/flags';
 
 import { isAssessment, isBasicUser } from './user';

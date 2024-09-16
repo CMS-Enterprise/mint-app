@@ -13,14 +13,14 @@ import { ModelStatus } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
-
-import { ASSESSMENT } from 'data/constants/jobCodes';
 import {
   collaboratorsMocks,
   modelBasicsMocks,
   modelID,
   summaryMock
-} from 'data/mock/readonly';
+} from 'tests/mock/readonly';
+
+import { ASSESSMENT } from 'constants/jobCodes';
 
 import ReadOnly, { getValidFilterViewParam } from './index';
 

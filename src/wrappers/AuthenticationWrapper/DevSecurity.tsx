@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AuthTransaction, OktaAuth } from '@okta/okta-auth-js';
 import { OktaContext } from '@okta/okta-react';
 
-import { localAuthStorageKey } from 'data/constants/localAuth';
+import { localAuthStorageKey } from 'constants/localAuth';
 
 const initialAuthState = {
   isAuthenticated: false,

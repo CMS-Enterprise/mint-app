@@ -2,9 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { OperationalSolutionCategoryRoute } from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';
 import CategoryCard from '../CategoryCard';

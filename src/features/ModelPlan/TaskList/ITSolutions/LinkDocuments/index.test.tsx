@@ -6,21 +6,21 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import documentMocks from 'features/ModelPlan/Documents/index.test';
 import {
   GetOperationalSolutionDocument,
   OpSolutionStatus
 } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
-
-import { ASSESSMENT } from 'data/constants/jobCodes';
 import {
   needQuestionAndAnswerMock,
   possibleSolutionsMock
-} from 'data/mock/solutions';
+} from 'tests/mock/solutions';
+
+import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 import setup from 'utils/testing/setup';
-import documentMocks from 'features/ModelPlan/Documents/index.test';
 
 import LinkDocuments from '.';
 

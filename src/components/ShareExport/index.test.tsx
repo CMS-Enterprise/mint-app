@@ -4,14 +4,14 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
-
 import allMocks, {
   crtdlMocks,
   modelID,
   operationalNeedsMock,
   possibleOperationalSolutionDataMocks,
   summaryMock
-} from 'data/mock/readonly';
+} from 'tests/mock/readonly';
+
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 import setup from 'utils/testing/setup';
 

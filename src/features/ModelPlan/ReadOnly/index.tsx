@@ -4,6 +4,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import NotFound from 'features/NotFound';
 import {
   GetCrtdLsQuery,
   GetModelSummaryQuery,
@@ -13,21 +14,20 @@ import {
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import Alert from 'components/Alert';
 import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/Alert';
 import SectionWrapper from 'components/SectionContainer';
 import ShareExportModal from 'components/ShareExport';
 import StatusBanner from 'components/StatusBanner';
-import SAMPLE_MODEL_UUID_STRING from 'data/constants/sampleModelPlan';
+import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
+import PrintPDFWrapper from 'contexts/PrintPDFContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import { isAssessment, isMAC } from 'utils/user';
-import NotFound from 'features/NotFound';
-import PrintPDFWrapper from 'contexts/PrintPDFContext';
 
 import NDABanner from '../../../components/NDABanner';
 import { UpdateFavoriteProps } from '../ModelPlanOverview';

@@ -4,11 +4,10 @@ import {
 } from 'features/HelpAndKnowledge/Articles';
 import { AboutConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/about';
 import { TimelineConfigType } from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
-
 import {
   OperationalSolutionCategoryRoute,
   OperationalSolutionSubCategories
-} from 'data/operationalSolutionCategories';
+} from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
 
 interface SolutionModelType {
   about: AboutConfigType;

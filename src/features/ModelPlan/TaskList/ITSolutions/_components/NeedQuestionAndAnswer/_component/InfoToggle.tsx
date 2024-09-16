@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { NeedMap } from 'features/ModelPlan/TaskList/ITSolutions/operationalNeedMap';
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import { NeedMap } from 'data/operationalNeedMap';
 
 // Type definition for operational needs dependent on multiple questions/translations
 type MultiPartType = {

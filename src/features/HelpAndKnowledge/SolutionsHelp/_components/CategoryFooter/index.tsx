@@ -2,9 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { OperationalSolutionCategoryRoute } from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
 import { solutionCategories } from 'i18n/en-US/helpAndKnowledge/helpAndKnowledge';
 
 import { operationalSolutionCategoryMap } from '../../solutionsMap';

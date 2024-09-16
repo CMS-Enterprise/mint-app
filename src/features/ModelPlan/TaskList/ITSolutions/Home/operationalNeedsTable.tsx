@@ -17,6 +17,7 @@ import {
 } from 'react-table';
 import { Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import operationalNeedMap from 'features/ModelPlan/TaskList/ITSolutions/operationalNeedMap';
 import {
   GetOperationalNeedsQuery,
   OperationalSolutionKey,
@@ -26,14 +27,14 @@ import {
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
-import UswdsReactLink from 'components/LinkWrapper';
-import PageLoading from 'components/PageLoading';
 import Alert from 'components/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
+import UswdsReactLink from 'components/LinkWrapper';
+import PageLoading from 'components/PageLoading';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
-import operationalNeedMap from 'data/operationalNeedMap';
+import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';
 import {
@@ -43,7 +44,6 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
-import { PrintPDFContext } from 'contexts/PrintPDFContext';
 
 import OperationalNeedsStatusTag, {
   OperationalNeedsSolutionsStatus

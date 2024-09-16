@@ -14,11 +14,11 @@ import {
   OperationalSolutionKey,
   OpSolutionStatus
 } from 'gql/generated/graphql';
-
 import {
   needQuestionAndAnswerMock,
   possibleSolutionsMock
-} from 'data/mock/solutions';
+} from 'tests/mock/solutions';
+
 import { MessageProvider } from 'hooks/useMessage';
 import setup from 'utils/testing/setup';
 

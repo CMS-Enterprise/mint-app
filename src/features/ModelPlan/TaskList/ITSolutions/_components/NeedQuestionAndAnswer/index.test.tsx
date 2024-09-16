@@ -5,8 +5,8 @@ import {
   waitFor,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import { needQuestionAndAnswerMock } from 'tests/mock/solutions';
 
-import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import NeedQuestionAndAnswer from '.';

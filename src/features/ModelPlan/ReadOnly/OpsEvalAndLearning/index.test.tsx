@@ -5,8 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { DataToSendParticipantsType } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import Sinon from 'sinon';
-
-import { modelID, opsEvalAndLearningMocks as mocks } from 'data/mock/readonly';
+import { modelID, opsEvalAndLearningMocks as mocks } from 'tests/mock/readonly';
 
 import ReadOnlyOpsEvalAndLearning from './index';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import operationalNeedMap from 'features/ModelPlan/TaskList/ITSolutions/operationalNeedMap';
 import {
   GetOperationalNeedsQuery,
   OperationalNeedKey,
@@ -7,7 +8,6 @@ import {
 import i18next from 'i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import operationalNeedMap from 'data/operationalNeedMap';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
 

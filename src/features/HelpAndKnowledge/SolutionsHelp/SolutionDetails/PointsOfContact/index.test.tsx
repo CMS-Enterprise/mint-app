@@ -1,8 +1,8 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
+import { possibleSolutionsMock } from 'tests/mock/solutions';
 
-import { possibleSolutionsMock } from 'data/mock/solutions';
 import VerboseMockedProvider from 'utils/testing/MockedProvider';
 
 import { helpSolutions } from '../../solutionsMap';

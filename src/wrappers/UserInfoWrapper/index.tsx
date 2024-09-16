@@ -6,7 +6,7 @@ import { useOktaAuth } from '@okta/okta-react';
 import GetNDA from 'gql/operations/Miscellaneous/GetNDA';
 import { setUser } from 'stores/reducers/authReducer';
 
-import { localAuthStorageKey } from 'data/constants/localAuth';
+import { localAuthStorageKey } from 'constants/localAuth';
 import { isLocalAuthEnabled } from 'utils/auth';
 
 type UserInfoWrapperProps = {

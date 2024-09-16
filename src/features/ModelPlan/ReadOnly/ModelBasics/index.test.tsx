@@ -7,8 +7,7 @@ import { ModelCategory } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import configureMockStore from 'redux-mock-store';
 import Sinon from 'sinon';
-
-import { modelBasicsMocks as mocks, modelID } from 'data/mock/readonly';
+import { modelBasicsMocks as mocks, modelID } from 'tests/mock/readonly';
 
 import ReadOnlyModelBasics from './index';
 

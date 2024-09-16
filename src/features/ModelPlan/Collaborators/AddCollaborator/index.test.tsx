@@ -2,8 +2,8 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
+import { collaboratorsMocks } from 'tests/mock/readonly';
 
-import { collaboratorsMocks } from 'data/mock/readonly';
 import { MessageProvider } from 'hooks/useMessage';
 
 import AddCollaborator from './index';

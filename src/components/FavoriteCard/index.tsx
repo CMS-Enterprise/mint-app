@@ -17,7 +17,7 @@ type FavoritesModelType = GetFavoritesQuery['modelPlanCollection'][0];
 
 type FavoriteCardProps = {
   className?: string;
-  type?: 'plan'; // Built in for future iterations/varations of favorited datasets that ingest i18n translations for headers.
+  type?: 'miscellaneous'; // Built in for future iterations/varations of favorited datasets that ingest i18n translations for headers.
   modelPlan: FavoritesModelType;
   removeFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
   toCollaborationArea?: boolean;
@@ -25,7 +25,7 @@ type FavoriteCardProps = {
 
 const FavoriteCard = ({
   className,
-  type = 'plan',
+  type = 'miscellaneous',
   modelPlan,
   removeFavorite,
   toCollaborationArea = false

@@ -6,8 +6,8 @@ import {
   OperationalSolutionKey,
   OpSolutionStatus
 } from 'gql/generated/graphql';
+import { needQuestionAndAnswerMock } from 'tests/mock/solutions';
 
-import { needQuestionAndAnswerMock } from 'data/mock/solutions';
 import { MessageProvider } from 'hooks/useMessage';
 
 import SolutionDetailCard from '.';

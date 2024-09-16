@@ -3,8 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import Sinon from 'sinon';
-
-import { modelID, paymentsMocks as mocks } from 'data/mock/readonly';
+import { modelID, paymentsMocks as mocks } from 'tests/mock/readonly';
 
 import ReadOnlyPayments from './index';
 

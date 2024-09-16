@@ -2,6 +2,9 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import operationalNeedMap, {
+  NeedMap
+} from 'features/ModelPlan/TaskList/ITSolutions/operationalNeedMap';
 import {
   GetOperationalNeedAnswerQuery,
   GetOperationalNeedQuery,
@@ -12,7 +15,6 @@ import {
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
-import operationalNeedMap, { NeedMap } from 'data/operationalNeedMap';
 
 import OperationalNeedRemovalModal from '../OperationalNeedRemovalModal';
 import SolutionCard from '../SolutionCard';

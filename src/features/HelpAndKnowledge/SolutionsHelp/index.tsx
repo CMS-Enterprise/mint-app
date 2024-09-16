@@ -7,13 +7,13 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-
-import PageLoading from 'components/PageLoading';
-import Divider from 'components/Divider';
 import {
   OperationalSolutionCategories,
   OperationalSolutionCategoryRoute
-} from 'data/operationalSolutionCategories';
+} from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
+
+import Divider from 'components/Divider';
+import PageLoading from 'components/PageLoading';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 

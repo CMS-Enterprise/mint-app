@@ -4,9 +4,9 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
+import { collaboratorsMocks } from 'tests/mock/readonly';
 
-import { ASSESSMENT } from 'data/constants/jobCodes';
-import { collaboratorsMocks } from 'data/mock/readonly';
+import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
 
 import TeamCard from './index';

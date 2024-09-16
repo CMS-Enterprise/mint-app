@@ -17,7 +17,7 @@ import { detect } from 'detect-browser';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { TextEncoder } from 'text-encoding';
 
-import { localAuthStorageKey } from 'data/constants/localAuth';
+import { localAuthStorageKey } from 'constants/localAuth';
 
 import '../config/i18n';
 

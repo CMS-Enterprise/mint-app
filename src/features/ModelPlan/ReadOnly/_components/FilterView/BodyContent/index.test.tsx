@@ -7,6 +7,7 @@ import {
   screen,
   waitForElementToBeRemoved
 } from '@testing-library/react';
+import ReadOnly from 'features/ModelPlan/ReadOnly';
 import {
   GetModelSummaryDocument,
   GetModelSummaryQuery,
@@ -15,9 +16,9 @@ import {
   TeamRole
 } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
+import allMocks from 'tests/mock/readonly';
 
-import { ASSESSMENT } from 'data/constants/jobCodes';
-import allMocks from 'data/mock/readonly';
+import { ASSESSMENT } from 'constants/jobCodes';
 import basics from 'i18n/en-US/modelPlan/basics';
 import beneficiaries from 'i18n/en-US/modelPlan/beneficiaries';
 import collaborators from 'i18n/en-US/modelPlan/collaborators';
@@ -27,7 +28,6 @@ import opsEvalAndLearning from 'i18n/en-US/modelPlan/opsEvalAndLearning';
 import participantsAndProviders from 'i18n/en-US/modelPlan/participantsAndProviders';
 import payments from 'i18n/en-US/modelPlan/payments';
 import { TranslationPlan } from 'types/translation';
-import ReadOnly from 'features/ModelPlan/ReadOnly';
 
 import { getAllFilterViewQuestions } from '.';
 

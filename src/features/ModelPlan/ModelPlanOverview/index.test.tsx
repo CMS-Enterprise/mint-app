@@ -5,11 +5,11 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import { ModelPlanFilter } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
-
 import {
   favoritesPlanCollectionMock,
   modelPlanCollectionMock
-} from 'data/mock/general';
+} from 'tests/mock/general';
+
 import { MessageProvider } from 'hooks/useMessage';
 
 import ModelPlan from './index';

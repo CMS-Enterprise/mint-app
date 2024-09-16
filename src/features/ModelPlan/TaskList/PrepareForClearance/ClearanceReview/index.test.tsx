@@ -14,8 +14,8 @@ import {
   TaskStatus
 } from 'gql/generated/graphql';
 import Sinon from 'sinon';
+import { benficiaryMocks } from 'tests/mock/readonly';
 
-import { benficiaryMocks } from 'data/mock/readonly';
 import setup from 'utils/testing/setup';
 
 import { initialPrepareForClearanceValues } from '../Checklist';

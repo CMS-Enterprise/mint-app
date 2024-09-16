@@ -6,7 +6,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { GetCrtdLsDocument } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 
-import { ASSESSMENT } from 'data/constants/jobCodes';
+import { ASSESSMENT } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
 
 import ReadOnlyCRTDLs from './index';

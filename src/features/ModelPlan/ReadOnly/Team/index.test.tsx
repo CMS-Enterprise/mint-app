@@ -2,8 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-
-import { collaboratorsMocks as mocks, modelID } from 'data/mock/readonly';
+import { collaboratorsMocks as mocks, modelID } from 'tests/mock/readonly';
 
 import ReadOnlyTeamInfo from './index';
 

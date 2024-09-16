@@ -6,7 +6,7 @@ import {
   MAC,
   MINT_CONTRACTOR,
   MINT_CONTRACTOR_NONPROD
-} from 'data/constants/jobCodes';
+} from 'constants/jobCodes';
 import { Flags } from 'types/flags';
 
 export const isAssessment = (groups: Array<String> = [], flags: Flags) => {

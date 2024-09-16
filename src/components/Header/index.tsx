@@ -7,7 +7,7 @@ import classnames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import NavigationBar from 'components/NavigationBar';
-import { localAuthStorageKey } from 'data/constants/localAuth';
+import { localAuthStorageKey } from 'constants/localAuth';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useOutsideClick from 'hooks/useOutsideClick';
 

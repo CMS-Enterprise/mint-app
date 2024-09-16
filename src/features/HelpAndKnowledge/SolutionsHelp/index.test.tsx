@@ -1,6 +1,5 @@
+import { OperationalSolutionCategories } from 'features/ModelPlan/TaskList/ITSolutions/operationalSolutionCategories';
 import { OperationalSolutionKey } from 'gql/generated/graphql';
-
-import { OperationalSolutionCategories } from 'data/operationalSolutionCategories';
 
 import { helpSolutions, HelpSolutionType } from './solutionsMap';
 import { findCategoryMapByRouteParam, searchSolutions } from '.';

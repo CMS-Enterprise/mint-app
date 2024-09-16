@@ -5,8 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { BeneficiariesType } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import Sinon from 'sinon';
-
-import { benficiaryMocks as mocks, modelID } from 'data/mock/readonly';
+import { benficiaryMocks as mocks, modelID } from 'tests/mock/readonly';
 
 import ReadOnlyBeneficiaries from './index';
 
