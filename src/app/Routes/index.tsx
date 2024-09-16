@@ -62,15 +62,15 @@ import Footer from 'components/Footer';
 import Header from 'components/Header';
 import PageWrapper from 'components/PageWrapper';
 import TaskListBannerAlert from 'components/TaskListBannerAlert';
+import MessageProvider from 'contexts/MessageContext';
 import ModelInfoWrapper from 'contexts/ModelInfoContext';
 import SubscriptionWrapper from 'contexts/PageLockContext';
 import RouterProvider from 'contexts/RouterContext';
-import { MessageProvider } from 'hooks/useMessage';
 import usePrevLocation from 'hooks/usePrevious';
 import useRouteTitle from 'hooks/useRouteTitle';
 
-import { NavContextProvider } from '../../components/Header/navContext';
 import ProtectedRoute from '../../components/ProtectedRoute';
+import { NavContextProvider } from '../../contexts/NavContext';
 import shouldScroll from '../../utils/scrollConfig';
 
 const AppRoutes = () => {

@@ -3,7 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import Status from './index';
 

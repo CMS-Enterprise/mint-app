@@ -19,7 +19,7 @@ import {
 } from 'tests/mock/solutions';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import Subtasks from '.';
 

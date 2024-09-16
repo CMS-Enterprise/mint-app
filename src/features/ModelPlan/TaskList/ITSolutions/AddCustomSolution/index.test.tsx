@@ -14,7 +14,7 @@ import {
 import { needQuestionAndAnswerMock } from 'tests/mock/solutions';
 import setup from 'tests/setup';
 
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import AddCustomSolution from '.';
 

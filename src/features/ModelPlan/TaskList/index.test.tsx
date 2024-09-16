@@ -19,7 +19,7 @@ import {
 } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import TaskList, { getLatestModifiedDate } from './index';
 

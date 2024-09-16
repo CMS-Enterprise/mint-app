@@ -7,7 +7,7 @@ import { GetCrtdLsDocument } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import ReadOnlyCRTDLs from './index';
 

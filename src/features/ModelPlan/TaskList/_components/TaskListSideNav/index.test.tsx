@@ -4,7 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { GetModelPlanQuery } from 'gql/generated/graphql';
 
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import TaskListSideNav from './index';
 

@@ -8,7 +8,7 @@ import {
 } from 'gql/generated/graphql';
 import { needQuestionAndAnswerMock } from 'tests/mock/solutions';
 
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import SolutionDetailCard from '.';
 

@@ -20,7 +20,7 @@ import VerboseMockedProvider from 'tests/MockedProvider';
 import setup from 'tests/setup';
 
 import { ASSESSMENT } from 'constants/jobCodes';
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import LinkDocuments from '.';
 

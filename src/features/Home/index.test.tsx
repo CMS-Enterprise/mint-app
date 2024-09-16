@@ -17,7 +17,7 @@ import { set } from 'lodash';
 import configureMockStore from 'redux-mock-store';
 import { modelPlanCollectionMock } from 'tests/mock/general';
 
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import HomeNew from '.';
 

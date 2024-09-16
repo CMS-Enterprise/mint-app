@@ -9,7 +9,7 @@ import {
   ViewCustomizationType
 } from 'gql/generated/graphql';
 
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import SelectSolutionSettings from './selectSolutions';
 import HomePageSettings from './settings';

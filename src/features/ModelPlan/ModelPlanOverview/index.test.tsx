@@ -10,7 +10,7 @@ import {
   modelPlanCollectionMock
 } from 'tests/mock/general';
 
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import ModelPlan from './index';
 

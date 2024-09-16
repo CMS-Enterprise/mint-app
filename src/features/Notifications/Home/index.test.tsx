@@ -5,7 +5,7 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import { GetNotificationsDocument } from 'gql/generated/graphql';
 import setup from 'tests/setup';
 
-import { MessageProvider } from 'hooks/useMessage';
+import MessageProvider from 'contexts/MessageContext';
 
 import NotificationsHome from '.';
 
