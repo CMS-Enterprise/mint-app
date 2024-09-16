@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import {
@@ -155,31 +155,25 @@ const TaskListSideNav = ({
 
         <div className="margin-top-4 margin-bottom-6">
           <h4 className="margin-bottom-1">{t('sideNav.relatedContent')}</h4>
-          <Button
-            type="button"
-            onClick={() =>
-              window.open('/help-and-knowledge/model-plan-overview', '_blank')
-            }
-            className="usa-button usa-button--unstyled line-height-body-5 margin-bottom-1"
-          >
-            <Trans i18nKey="modelPlanTaskList:sideNav.overview">
-              indexZero
-              <span aria-hidden /> indexTwo
-            </Trans>
-          </Button>
+          <div className="margin-bottom-1">
+            <UswdsReactLink
+              to="/help-and-knowledge/model-plan-overview"
+              target="_blank"
+              className="line-height-body-5"
+            >
+              {t('sideNav.overview')}
+            </UswdsReactLink>
+          </div>
 
-          <Button
-            type="button"
-            onClick={() =>
-              window.open('/help-and-knowledge/sample-model-plan', '_blank')
-            }
-            className="usa-button usa-button--unstyled line-height-body-5"
-          >
-            <Trans i18nKey="modelPlanTaskList:sideNav.sampleModelPlan">
-              indexZero
-              <span aria-hidden /> indexTwo
-            </Trans>
-          </Button>
+          <div>
+            <UswdsReactLink
+              to="/help-and-knowledge/sample-model-plan"
+              target="_blank"
+              className="line-height-body-5"
+            >
+              {t('sideNav.sampleModelPlan')}
+            </UswdsReactLink>
+          </div>
         </div>
 
         {flags.changeHistoryEnabled && <RecentChanges modelID={modelID} />}
