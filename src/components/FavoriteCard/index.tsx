@@ -30,7 +30,7 @@ const FavoriteCard = ({
   removeFavorite,
   toCollaborationArea = false
 }: FavoriteCardProps) => {
-  const { t } = useTranslation('plan');
+  const { t } = useTranslation('miscellaneous');
   const { t: h } = useTranslation('customHome');
 
   const {
@@ -159,7 +159,7 @@ export const FavoriteIcon = ({
   updateFavorite,
   isCollaborationArea
 }: FavoriteIconProps) => {
-  const { t } = useTranslation('plan');
+  const { t } = useTranslation('miscellaneous');
 
   return (
     <Tag

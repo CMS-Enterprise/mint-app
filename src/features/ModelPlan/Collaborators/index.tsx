@@ -9,6 +9,7 @@ import {
   useParams
 } from 'react-router-dom';
 import { Button, Grid, GridContainer } from '@trussworks/react-uswds';
+import NotFound from 'features/NotFound';
 import {
   DeleteModelPlanCollaboratorMutation,
   GetModelCollaboratorsQuery,
@@ -17,19 +18,18 @@ import {
   useGetModelCollaboratorsQuery
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/Alert';
-import Expire from 'components/Expire';
-import useMessage from 'hooks/useMessage';
-import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 import ProtectedRoute from 'components/ProtectedRoute';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import NotFound from 'features/NotFound';
+import useMessage from 'hooks/useMessage';
+import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 
 import AddCollaborator from './AddCollaborator';
 import CollaboratorsTable from './table';
@@ -222,7 +222,7 @@ export const CollaboratorsContent = () => {
                   className="margin-top-0 margin-bottom-2 font-body-lg"
                   data-testid="model-plan-name"
                 >
-                  <Trans i18nKey="draftModelPlan:for" /> {modelName}
+                  <Trans i18nKey="general:for" /> {modelName}
                 </p>
 
                 <div className="font-body-md margin-bottom-4">

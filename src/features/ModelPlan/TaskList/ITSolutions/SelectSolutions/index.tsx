@@ -13,6 +13,7 @@ import {
   Grid,
   Icon
 } from '@trussworks/react-uswds';
+import NotFound from 'features/NotFound';
 import { Form, Formik, FormikProps } from 'formik';
 import {
   GetOperationalNeedQuery,
@@ -23,16 +24,15 @@ import {
 } from 'gql/generated/graphql';
 import { partition } from 'lodash';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/Alert';
-import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
 import flattenErrors from 'utils/flattenErrors';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import NotFound from 'features/NotFound';
 
 import CheckboxCard from '../_components/CheckboxCard';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
@@ -67,7 +67,7 @@ export function findChangedSolution(
 
 const SelectSolutions = () => {
   const { t } = useTranslation('opSolutionsMisc');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
   const { modelID, operationalNeedID } = useParams<{
     modelID: string;
     operationalNeedID: string;

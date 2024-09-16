@@ -7,24 +7,24 @@ import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Grid } from '@trussworks/react-uswds';
+import { Table } from 'features/ModelPlan/Documents/table';
+import { DocumentStatusType } from 'features/ModelPlan/ReadOnly/Documents';
+import NotFound from 'features/NotFound';
 import {
   GetOperationalSolutionQuery,
   useDeleteDocumentSolutionLinkMutation,
   useGetOperationalSolutionQuery
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import Expire from 'components/Expire';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/Alert';
-import Expire from 'components/Expire';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import { Table } from 'features/ModelPlan/Documents/table';
-import { DocumentStatusType } from 'features/ModelPlan/ReadOnly/Documents';
-import NotFound from 'features/NotFound';
 
 import SolutionDetailCard from '../_components/SolutionDetailCard';
 import SubtasksTable from '../_components/SubtasksTable';
@@ -40,7 +40,7 @@ const SolutionDetails = () => {
   }>();
 
   const { t } = useTranslation('opSolutionsMisc');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
   const { t: documentsT } = useTranslation('documentsMisc');
 
   const isDesktop = useCheckResponsiveScreen('tablet', 'larger');

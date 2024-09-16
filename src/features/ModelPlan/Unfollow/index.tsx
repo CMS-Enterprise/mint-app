@@ -12,7 +12,7 @@ import useMessage from 'hooks/useMessage';
 
 const Unfollow = () => {
   const history = useHistory();
-  const { t } = useTranslation('plan');
+  const { t } = useTranslation('miscellaneous');
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const { showMessageOnNextPage } = useMessage();

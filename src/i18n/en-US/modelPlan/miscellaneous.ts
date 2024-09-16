@@ -1,6 +1,6 @@
 import { FrequencyType } from 'gql/generated/graphql';
 
-export const miscellaneous: Record<string, string> = {
+export const miscellaneous: Record<string, Record<string, string> | string> = {
   mandatoryFields: 'All fields are mandatory',
   saveAndReturn: 'Save and return to task list',
   for: 'for',
@@ -40,7 +40,22 @@ export const miscellaneous: Record<string, string> = {
   markedReady: 'Marked ready for review by {{-reviewer}} on ',
   validDate: 'Please use a valid date format.',
   apolloFailField: 'Failed to save field value/s',
-  allFieldsRequired: 'Fields marked with an asterisk ( <s>*</s> ) are required.'
+  allFieldsRequired:
+    'Fields marked with an asterisk ( <s>*</s> ) are required.',
+  favorite: {
+    modelLead: 'Model lead(s)',
+    startDate: 'Start date',
+    cRTDLs: 'FFS CRs and TDLs',
+    toBeDetermined: 'To be determined',
+    noneEntered: 'None entered',
+    follow: 'Follow',
+    following: 'Following',
+    success:
+      'Success! You are no longer following {{-requestName}} and will not receive email notifications about this model.',
+    failure:
+      'There was an error unfollowing {{-requestName}}. Please try unfollowing the model again if you no longer wish to receive email notifications about it.',
+    error: 'Failed to locate and unfollow model plan.'
+  }
 };
 
 // Reusable translated option for all frequency type questions

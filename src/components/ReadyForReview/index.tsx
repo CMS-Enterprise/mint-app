@@ -27,7 +27,7 @@ const ReadyForReview = ({
   readyForReviewBy,
   readyForReviewDts
 }: ReadyForReviewType) => {
-  const { t } = useTranslation('draftModelPlan');
+  const { t } = useTranslation('general');
 
   // Status state is checked before rendering
   // This is so that when user unclicks the "Ready for review" checkbox, it will not cause the `markedReady` copy to disappear

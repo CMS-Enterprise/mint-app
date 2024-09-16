@@ -16,12 +16,6 @@ import ReadOnlyParticipantsAndProviders from 'features/ModelPlan/ReadOnly/Partic
 import ReadOnlyPayments from 'features/ModelPlan/ReadOnly/Payments';
 import { NotFoundPartial } from 'features/NotFound';
 import {
-  findLockedSection,
-  LockStatus,
-  taskListSectionMap
-} from 'wrappers/PageLockWrapper';
-import { SubscriptionContext } from 'contexts/PageLockContext';
-import {
   PrepareForClearanceStatus,
   TaskStatus,
   TaskStatusInput,
@@ -39,6 +33,11 @@ import {
   useUpdateClearanceParticipantsAndProvidersMutation,
   useUpdateClearancePaymentsMutation
 } from 'gql/generated/graphql';
+import {
+  findLockedSection,
+  LockStatus,
+  taskListSectionMap
+} from 'wrappers/PageLockWrapper';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
@@ -47,6 +46,7 @@ import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import { SubscriptionContext } from 'contexts/PageLockContext';
 
 import { ClearanceStatusesModelPlanFormType } from '../Checklist';
 
@@ -110,7 +110,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { section, sectionID } = useParams<ClearanceParamProps>();
 
-  const { t } = useTranslation('draftModelPlan');
+  const { t } = useTranslation('general');
   const { t: p } = useTranslation('prepareForClearance');
   const { t: i } = useTranslation('opSolutionsMisc');
   const history = useHistory();

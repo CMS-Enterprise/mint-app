@@ -10,6 +10,7 @@ import {
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
+import NotFound from 'features/NotFound';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 import {
   CreateOperationalSolutionSubtasksMutation,
@@ -21,21 +22,20 @@ import {
   useUpdateOperationalSolutionSubtasksMutation
 } from 'gql/generated/graphql';
 
-import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
-import Modal from 'components/Modal';
-import PageHeading from 'components/PageHeading';
-import PageLoading from 'components/PageLoading';
 import Alert from 'components/Alert';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import FieldGroup from 'components/FieldGroup';
+import Modal from 'components/Modal';
+import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import RequiredAsterisk from 'components/RequiredAsterisk';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import NotFound from 'features/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
@@ -78,7 +78,7 @@ const Subtasks = ({
 
   const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
   const { t: subtasksT } = useTranslation('operationalSolutionSubtasks');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
 
   const { status: statusConfig } = usePlanTranslation(
     'operationalSolutionSubtasks'

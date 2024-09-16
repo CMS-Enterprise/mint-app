@@ -12,12 +12,12 @@ import {
   useGetModelPlanBaseQuery
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import Alert from 'components/Alert';
-import Expire from 'components/Expire';
 import useMessage from 'hooks/useMessage';
 
 import PlanCRTDLsTable from './table';
@@ -27,7 +27,7 @@ type ModelPlanType = GetModelPlanBaseQuery['modelPlan'];
 type CRTDLStatusType = 'success' | 'error';
 
 export const CRTDLs = () => {
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
   const { t } = useTranslation('crtdlsMisc');
   const { modelID } = useParams<{ modelID: string }>();
   const { message } = useMessage();

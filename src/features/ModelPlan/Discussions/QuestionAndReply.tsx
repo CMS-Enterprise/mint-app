@@ -16,11 +16,11 @@ import {
 } from 'gql/generated/graphql';
 import * as Yup from 'yup';
 
-import PageHeading from 'components/PageHeading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import FieldGroup from 'components/FieldGroup';
 import MentionTextArea from 'components/MentionTextArea';
+import PageHeading from 'components/PageHeading';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -63,7 +63,7 @@ const QuestionAndReply = ({
   const { t: discussionsT } = useTranslation('discussions');
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
   const { t: repliesT } = useTranslation('replies');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
 
   const { userRole: userRoleConfig } = usePlanTranslation('discussions');
 

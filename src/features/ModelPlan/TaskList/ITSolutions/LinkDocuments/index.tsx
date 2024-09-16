@@ -6,6 +6,8 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Grid, Icon } from '@trussworks/react-uswds';
+import PlanDocumentsTable from 'features/ModelPlan/Documents/table';
+import NotFound from 'features/NotFound';
 import {
   GetOperationalNeedQuery,
   GetOperationalSolutionQuery,
@@ -16,16 +18,14 @@ import {
 } from 'gql/generated/graphql';
 import { isEqual } from 'lodash';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/Alert';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useMessage from 'hooks/useMessage';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import PlanDocumentsTable from 'features/ModelPlan/Documents/table';
-import NotFound from 'features/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
@@ -57,7 +57,7 @@ const LinkDocuments = () => {
   const { showMessageOnNextPage } = useMessage();
 
   const { t } = useTranslation('documentsMisc');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
 
   const isDesktop = useCheckResponsiveScreen('tablet', 'larger');
 

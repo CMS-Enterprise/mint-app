@@ -54,7 +54,7 @@ const Solution = ({
   formikProps
 }: SolutionTypes) => {
   const { t } = useTranslation('opSolutionsMisc');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
 
   const { status: statusConfig } = usePlanTranslation('solutions');
 

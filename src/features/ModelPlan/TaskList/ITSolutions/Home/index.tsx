@@ -5,11 +5,11 @@ import { SummaryBox } from '@trussworks/react-uswds';
 
 import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
-import PageHeading from 'components/PageHeading';
 import Divider from 'components/Divider';
 import Expire from 'components/Expire';
-import useMessage from 'hooks/useMessage';
+import PageHeading from 'components/PageHeading';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
+import useMessage from 'hooks/useMessage';
 
 import HelpBox from '../_components/HelpBox';
 import ImplementationStatuses from '../_components/ImplementationStatus';
@@ -19,7 +19,7 @@ import OperationalNeedsTable from './operationalNeedsTable';
 const ITSolutionsHome = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const { t } = useTranslation('opSolutionsMisc');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
 
   const { message } = useMessage();
 

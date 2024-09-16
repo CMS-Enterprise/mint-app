@@ -43,7 +43,7 @@ export const MINTDatePicker = ({
   shouldShowWarning = true, // Used to determine if the date is touched/changed on the current form, otherwise don't display warning
   half
 }: ITSolutionsFormComponentType) => {
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
 
   return (
     <>

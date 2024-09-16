@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { NotFoundPartial } from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetClearanceStatusesQuery,
@@ -30,16 +31,15 @@ import {
 } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
-import UswdsReactLink from 'components/LinkWrapper';
-import PageHeading from 'components/PageHeading';
 import CheckboxField from 'components/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import FieldGroup from 'components/FieldGroup';
+import UswdsReactLink from 'components/LinkWrapper';
+import PageHeading from 'components/PageHeading';
 import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import dirtyInput from 'utils/formDiff';
-import { NotFoundPartial } from 'features/NotFound';
 
 // Initial form values and types for each task-list clearance checkbox
 interface ClearanceFormValues {
@@ -111,7 +111,7 @@ const PrepareForClearanceCheckList = ({
   modelID
 }: PrepareForClearanceCheckListProps) => {
   const { t } = useTranslation('prepareForClearance');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
 
   const history = useHistory();
 

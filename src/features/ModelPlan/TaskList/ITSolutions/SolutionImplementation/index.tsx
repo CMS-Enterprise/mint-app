@@ -7,6 +7,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
+import NotFound from 'features/NotFound';
 import { Form, Formik, FormikProps } from 'formik';
 import {
   GetOperationalNeedQuery,
@@ -16,15 +17,14 @@ import {
   useUpdateOperationalSolutionMutation
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/Alert';
-import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
 import flattenErrors from 'utils/flattenErrors';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
-import NotFound from 'features/NotFound';
 
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
@@ -65,7 +65,7 @@ const SolutionImplementation = () => {
   const history = useHistory();
 
   const { t } = useTranslation('opSolutionsMisc');
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
 
   const { showMessageOnNextPage, message } = useMessage();
 

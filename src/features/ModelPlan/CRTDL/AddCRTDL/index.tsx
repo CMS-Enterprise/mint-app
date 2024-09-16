@@ -30,20 +30,20 @@ import {
   useUpdateTdlMutation
 } from 'gql/generated/graphql';
 
-import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
-import UswdsReactLink from 'components/LinkWrapper';
-import MainContent from 'components/MainContent';
-import PageHeading from 'components/PageHeading';
 import Alert from 'components/Alert';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Divider from 'components/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import FieldGroup from 'components/FieldGroup';
+import UswdsReactLink from 'components/LinkWrapper';
+import MainContent from 'components/MainContent';
+import PageHeading from 'components/PageHeading';
 import RequiredAsterisk from 'components/RequiredAsterisk';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
 import flattenErrors from 'utils/flattenErrors';
 import { CRValidationSchema, TDLValidationSchema } from 'validations/crtdl';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import './index.scss';
 
@@ -69,7 +69,7 @@ const initialFormValues: CRTDLFormType = {
 };
 
 const AddCRTDL = () => {
-  const { t: h } = useTranslation('draftModelPlan');
+  const { t: h } = useTranslation('general');
   const { t: crsT } = useTranslation('crs');
   const { t: tdlsT } = useTranslation('tdls');
   const { t } = useTranslation('crtdlsMisc');
