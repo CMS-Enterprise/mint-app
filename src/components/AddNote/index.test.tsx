@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { Formik } from 'formik';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import AddNote from './index';
 

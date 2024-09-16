@@ -15,7 +15,7 @@ import {
 } from 'gql/generated/graphql';
 import Sinon from 'sinon';
 import { benficiaryMocks } from 'tests/mock/readonly';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import { initialPrepareForClearanceValues } from '../Checklist';
 

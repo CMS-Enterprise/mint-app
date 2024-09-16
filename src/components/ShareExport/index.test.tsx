@@ -12,7 +12,7 @@ import allMocks, {
   summaryMock
 } from 'tests/mock/readonly';
 import VerboseMockedProvider from 'tests/MockedProvider';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import ShareExportModal from './index';
 

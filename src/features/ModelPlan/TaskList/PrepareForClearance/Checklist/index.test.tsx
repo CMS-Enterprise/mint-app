@@ -7,7 +7,7 @@ import {
   PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import PrepareForClearanceCheckList, {
   initialPrepareForClearanceValues,

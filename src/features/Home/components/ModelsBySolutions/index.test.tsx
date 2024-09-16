@@ -8,7 +8,7 @@ import {
   ModelStatus,
   OperationalSolutionKey
 } from 'gql/generated/graphql';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import ModelsBySolutionTable from './table';
 

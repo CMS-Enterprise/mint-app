@@ -5,7 +5,7 @@ import {
   AnalyzedAudit as AnalyzedAuditsTypes,
   TableName
 } from 'gql/generated/graphql';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import DailyDigest from './DailyDigest';
 

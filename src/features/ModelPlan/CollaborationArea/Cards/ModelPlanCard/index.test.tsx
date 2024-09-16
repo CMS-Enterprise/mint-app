@@ -10,7 +10,7 @@ import {
   TaskStatus
 } from 'gql/generated/graphql';
 import VerboseMockedProvider from 'tests/MockedProvider';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import ModelPlanCard from './index';
 

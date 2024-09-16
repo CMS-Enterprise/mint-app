@@ -13,7 +13,7 @@ import {
   needQuestionAndAnswerMock,
   possibleSolutionsMock
 } from 'tests/mock/solutions';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import MessageProvider from 'contexts/MessageContext';
 

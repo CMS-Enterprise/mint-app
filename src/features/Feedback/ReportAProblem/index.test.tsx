@@ -7,7 +7,7 @@ import {
 } from 'gql/generated/graphql';
 import CreateReportAProblem from 'gql/operations/Feedback/CreateReportAProblem';
 import VerboseMockedProvider from 'tests/MockedProvider';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import ReportAProblem from '.';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { act, render, waitFor } from '@testing-library/react';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import TabPanel from './TabPanel';
 import Tabs from './Tabs';

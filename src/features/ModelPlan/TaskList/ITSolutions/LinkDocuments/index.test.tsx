@@ -17,7 +17,7 @@ import {
   possibleSolutionsMock
 } from 'tests/mock/solutions';
 import VerboseMockedProvider from 'tests/MockedProvider';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import { ASSESSMENT } from 'constants/jobCodes';
 import MessageProvider from 'contexts/MessageContext';

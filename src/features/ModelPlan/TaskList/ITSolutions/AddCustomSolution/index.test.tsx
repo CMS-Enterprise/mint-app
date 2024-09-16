@@ -12,7 +12,7 @@ import {
   OpSolutionStatus
 } from 'gql/generated/graphql';
 import { needQuestionAndAnswerMock } from 'tests/mock/solutions';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import MessageProvider from 'contexts/MessageContext';
 

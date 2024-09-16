@@ -4,7 +4,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { act, render } from '@testing-library/react';
 import { EaseOfUse, MintUses, SatisfactionLevel } from 'gql/generated/graphql';
 import CreateSendFeedback from 'gql/operations/Feedback/CreateSendFeedback';
-import setup from 'tests/setup';
+import setup from 'tests/util';
 
 import SendFeedback from '.';
 
