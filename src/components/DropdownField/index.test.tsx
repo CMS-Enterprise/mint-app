@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import { DropdownField, DropdownItem } from './index';
 
 describe('The Dropdown Field component', () => {
   it('renders without crashing', () => {
-    shallow(
+    render(
       <DropdownField
         id="TestDropdown"
         value="Value Group"
@@ -17,11 +17,13 @@ describe('The Dropdown Field component', () => {
         <DropdownItem name="Value 2" value="Value2" />
       </DropdownField>
     );
+    expect(screen.getByRole('combobox')).toBeInTheDocument();
   });
 });
 
 describe('The Dropdown Item component', () => {
   it('renders without crashing', () => {
-    shallow(<DropdownItem name="Value 1" value="Value1" />);
+    render(<DropdownItem name="Value 1" value="Value1" />);
+    expect(screen.getByText('Value 1')).toBeInTheDocument();
   });
 });

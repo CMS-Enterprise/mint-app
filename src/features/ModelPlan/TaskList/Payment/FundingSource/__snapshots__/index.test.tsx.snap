@@ -875,6 +875,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
   </div>
   <div
     class="mint-page-number margin-y-6"
+    data-testid="page-num"
   >
     <span
       class="mint-page-number__page-num"

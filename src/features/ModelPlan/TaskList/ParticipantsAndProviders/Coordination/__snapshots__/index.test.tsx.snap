@@ -720,6 +720,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
   </form>
   <div
     class="mint-page-number margin-y-6"
+    data-testid="page-num"
   >
     <span
       class="mint-page-number__page-num"

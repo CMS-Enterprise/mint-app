@@ -415,7 +415,7 @@ const dateOrNoAnswer = (value: string | null | undefined) => {
 
   return (
     <em className="text-base">
-      {i18next.t<string>('miscellaneous:dateFormat')}
+      {i18next.t<string, {}, string>('miscellaneous:dateFormat')}
     </em>
   );
 };

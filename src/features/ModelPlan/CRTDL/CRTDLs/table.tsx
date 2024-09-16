@@ -264,17 +264,17 @@ const Table = ({
   const columns = useMemo(() => {
     return [
       {
-        Header: t<string>('crtdlsTable.idNumber'),
+        Header: t<string, {}, string>('crtdlsTable.idNumber'),
         accessor: 'idNumber',
         width: 150
       },
       {
-        Header: t<string>('crtdlsTable.title'),
+        Header: t<string, {}, string>('crtdlsTable.title'),
         accessor: 'title',
         width: 250
       },
       {
-        Header: t<string>('crtdlsTable.date'),
+        Header: t<string, {}, string>('crtdlsTable.date'),
         accessor: ({ dateInitiated }: any) => {
           if (dateInitiated) {
             return formatDateUtc(dateInitiated, 'MM/dd/yyyy');
@@ -284,7 +284,7 @@ const Table = ({
         width: 150
       },
       ...insertIf(type === 'cr', {
-        Header: t<string>('crtdlsTable.dateImplemented'),
+        Header: t<string, {}, string>('crtdlsTable.dateImplemented'),
         accessor: ({ dateImplemented }: any) => {
           if (dateImplemented) {
             return formatDateUtc(dateImplemented, 'MMMM yyyy');
@@ -294,12 +294,12 @@ const Table = ({
         width: 150
       }),
       {
-        Header: t<string>('crtdlsTable.notes'),
+        Header: t<string, {}, string>('crtdlsTable.notes'),
         accessor: 'note',
         width: type === 'cr' ? 285 : 435
       },
       {
-        Header: t<string>('crtdlsTable.actions'),
+        Header: t<string, {}, string>('crtdlsTable.actions'),
         accessor: 'id',
         Cell: ({ row }: any) => {
           return (

@@ -1,38 +1,34 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import Label from './index';
 
-describe('The Link component', () => {
+describe('The Label component', () => {
   it('renders without crashing', () => {
-    shallow(<Label htmlFor="test">Test</Label>);
+    render(<Label htmlFor="test">Test</Label>);
+    expect(screen.getByText('Test')).toBeInTheDocument();
   });
 
   it('displays children (text)', () => {
-    const component = shallow(<Label htmlFor="test">Test</Label>);
-
-    expect(component.find('label').text()).toEqual('Test');
+    render(<Label htmlFor="test">Test</Label>);
+    expect(screen.getByText('Test')).toBeInTheDocument();
   });
 
   it('displays children (HTML)', () => {
-    const component = shallow(
+    render(
       <Label htmlFor="test">
         <div data-testid="label-child">Hi</div>
       </Label>
     );
-
-    expect(component.find('[data-testid="label-child"]').exists()).toEqual(
-      true
-    );
+    expect(screen.getByTestId('label-child')).toBeInTheDocument();
   });
 
   it('renders an aria-label', () => {
-    const component = shallow(
+    render(
       <Label htmlFor="test" aria-label="aria test">
         Test
       </Label>
     );
-
-    expect(component.find('label').prop('aria-label')).toEqual('aria test');
+    expect(screen.getByLabelText('aria test')).toBeInTheDocument();
   });
 });

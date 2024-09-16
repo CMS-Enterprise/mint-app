@@ -32,7 +32,7 @@ describe('Read Only Model Plan Summary -- Beneficiaries', () => {
       );
       expect(
         screen.getByText(
-          i18next.t<string>(
+          i18next.t<string, {}, string>(
             `beneficiaries:beneficiaries.options.${BeneficiariesType.DISEASE_SPECIFIC}`
           )
         )
@@ -57,7 +57,7 @@ describe('Read Only Model Plan Summary -- Beneficiaries', () => {
       );
       expect(
         screen.getByText(
-          i18next.t<string>(
+          i18next.t<string, {}, string>(
             `beneficiaries:beneficiaries.options.${BeneficiariesType.DISEASE_SPECIFIC}`
           )
         )

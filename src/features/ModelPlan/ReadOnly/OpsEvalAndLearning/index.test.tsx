@@ -34,7 +34,7 @@ describe('Read Only Model Plan Summary -- Operations, Evaluation, and Learning',
       );
       expect(
         screen.getByText(
-          i18next.t<string>(
+          i18next.t<string, {}, string>(
             `opsEvalAndLearning:dataToSendParticicipants.options.${DataToSendParticipantsType.BENEFICIARY_LEVEL_DATA}`
           )
         )
@@ -61,7 +61,7 @@ describe('Read Only Model Plan Summary -- Operations, Evaluation, and Learning',
       );
       expect(
         screen.getByText(
-          i18next.t<string>(
+          i18next.t<string, {}, string>(
             `opsEvalAndLearning:dataToSendParticicipants.options.${DataToSendParticipantsType.BENEFICIARY_LEVEL_DATA}`
           )
         )

@@ -40,7 +40,7 @@ describe('The Read Only Section', () => {
 
       expect(
         screen.getByText(
-          i18next.t<string>(
+          i18next.t<string, {}, string>(
             'participantsAndProviders:modelApplicationLevel.label'
           )
         )
@@ -57,13 +57,13 @@ describe('The Read Only Section', () => {
 
       expect(
         screen.getByText(
-          i18next.t<string>(
+          i18next.t<string, {}, string>(
             'participantsAndProviders:modelApplicationLevel.label'
           )
         )
       ).toBeInTheDocument();
       expect(
-        screen.getByText(i18next.t<string>('miscellaneous:na'))
+        screen.getByText(i18next.t<string, {}, string>('miscellaneous:na'))
       ).toBeInTheDocument();
     });
   });
@@ -78,7 +78,9 @@ describe('The Read Only Section', () => {
 
       expect(
         screen.getByText(
-          i18next.t<string>('participantsAndProviders:recruitmentMethod.label')
+          i18next.t<string, {}, string>(
+            'participantsAndProviders:recruitmentMethod.label'
+          )
         )
       ).toBeInTheDocument();
       expect(screen.getByText('Other')).toBeInTheDocument();
@@ -138,10 +140,10 @@ describe('The Read Only Section', () => {
       ];
 
       const expectedOrder: string[] = [
-        i18next.t<string>(
+        i18next.t<string, {}, string>(
           'payments:fundingSource.tooltips.MEDICARE_PART_A_HI_TRUST_FUND'
         ),
-        i18next.t<string>(
+        i18next.t<string, {}, string>(
           'payments:fundingSource.tooltips.MEDICARE_PART_B_SMI_TRUST_FUND'
         ),
         ''
@@ -156,7 +158,7 @@ describe('The Read Only Section', () => {
       const value: OverlapType[] = [OverlapType.NO];
 
       const expectedQuestions: string[] = [
-        i18next.t<string>(
+        i18next.t<string, {}, string>(
           'participantsAndProviders:providerOverlapHierarchy.label'
         )
       ];

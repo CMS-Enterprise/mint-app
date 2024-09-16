@@ -1,27 +1,21 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import PageNumber from './index';
 
 describe('The Page Number component', () => {
   it('renders without crashing', () => {
-    shallow(<PageNumber currentPage={0} totalPages={0} />);
+    render(<PageNumber currentPage={0} totalPages={0} />);
   });
 
   it('renders the correct page numbers', () => {
-    const component = shallow(<PageNumber currentPage={2} totalPages={10} />);
-
-    expect(component.find('.mint-page-number__page-num').text()).toEqual(
-      'Page 2 of 10'
-    );
+    render(<PageNumber currentPage={2} totalPages={10} />);
+    expect(screen.getByText('Page 2 of 10')).toBeInTheDocument();
   });
 
   it('renders custom className', () => {
     const fixture = 'test-class-name';
-    const component = shallow(
-      <PageNumber className={fixture} currentPage={2} totalPages={10} />
-    );
-
-    expect(component.find(`.${fixture}`).exists()).toEqual(true);
+    render(<PageNumber className={fixture} currentPage={2} totalPages={10} />);
+    expect(screen.getByTestId('page-num')).toHaveClass(fixture);
   });
 });

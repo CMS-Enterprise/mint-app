@@ -126,13 +126,14 @@ const PrepareForClearanceCheckList = ({
 
   const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
-      id: modelID
+      id: modelID,
+      includePrepareForClearance: false
     }
   });
 
-  const modelPlan = data?.modelPlan || initialPrepareForClearanceValues;
+  const modelPlanData = data?.modelPlan;
 
-  // const [updatePrepareForClearance] = useUpdatePrepareForClearanceMutation();
+  const modelPlan = modelPlanData || initialPrepareForClearanceValues;
 
   const [updateBasics] = useUpdateClearanceBasicsMutation();
 

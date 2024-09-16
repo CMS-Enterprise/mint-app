@@ -339,9 +339,7 @@ export const Table = ({
   const columns = useMemo(() => {
     const documentColumns = [
       {
-        Header: () => {
-          return t('documentTable.name');
-        },
+        Header: t('documentTable.name'),
         accessor: 'fileName',
         Cell: ({ row, value }: any) => {
           if (linkedDocs) {
@@ -370,10 +368,11 @@ export const Table = ({
         Header: t('documentTable.type'),
         accessor: 'documentType',
         Cell: ({ row, value }: { row: any; value: DocumentType }) => {
+          const { original = {} } = { ...row };
           if (value !== DocumentType.OTHER) {
             return documentTypeConfig.options[value];
           }
-          return row.original.otherType;
+          return original.otherType;
         }
       },
       {
@@ -519,9 +518,10 @@ export const Table = ({
         <tbody {...getTableBodyProps()}>
           {page.map(row => {
             prepareRow(row);
+            const { getRowProps, cells } = { ...row };
             return (
-              <tr {...row.getRowProps()}>
-                {row.cells
+              <tr {...getRowProps()}>
+                {cells
                   .filter(cell => {
                     // @ts-ignore
                     return !hiddenColumns?.includes(cell.column.Header);
@@ -540,7 +540,7 @@ export const Table = ({
                         </th>
                       );
                     }
-                    if (i + 1 === row.cells.length) {
+                    if (i + 1 === cells.length) {
                       return (
                         <td
                           {...cell.getCellProps()}

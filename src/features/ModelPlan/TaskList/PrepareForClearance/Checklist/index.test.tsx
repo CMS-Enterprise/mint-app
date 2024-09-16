@@ -26,7 +26,7 @@ const clearanceMock = [
   {
     request: {
       query: GetClearanceStatusesDocument,
-      variables: { id: modelID }
+      variables: { id: modelID, includePrepareForClearance: false }
     },
     result: {
       data: {
