@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Button, Grid, GridContainer } from '@trussworks/react-uswds';
+import { NotFoundPartial } from 'features/NotFound';
 import {
   Activity,
   GetNotificationsQuery,
@@ -9,14 +10,13 @@ import {
 } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import Expire from 'components/Expire';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import Expire from 'components/Expire';
 import Spinner from 'components/Spinner';
 import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
-import { NotFoundPartial } from 'features/NotFound';
 
 import IndividualNotification from './_components/IndividualNotification';
 

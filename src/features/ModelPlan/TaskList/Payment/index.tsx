@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { NotFoundPartial } from 'features/NotFound';
 
 import MainContent from 'components/MainContent';
 import ProtectedRoute from 'components/ProtectedRoute';
-import { NotFoundPartial } from 'features/NotFound';
 
 import AnticipateDependencies from './AnticipateDependencies';
 import BeneficiaryCostSharing from './BeneficiaryCostSharing';

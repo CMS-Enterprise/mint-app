@@ -1,13 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import OperationalNeedsTable from 'features/ModelPlan/TaskList/ITSolutions/Home/operationalNeedsTable';
+import { NotFoundPartial } from 'features/NotFound';
 import {
   GetOperationalNeedsQuery,
   TaskStatus,
   useGetOperationalNeedsQuery
 } from 'gql/generated/graphql';
-
-import OperationalNeedsTable from 'features/ModelPlan/TaskList/ITSolutions/Home/operationalNeedsTable';
-import { NotFoundPartial } from 'features/NotFound';
 
 import TitleAndStatus from '../_components/TitleAndStatus';
 

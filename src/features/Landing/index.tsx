@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer, Icon, Link, Tag } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import FormatDiscussion from 'features/ModelPlan/Discussions/FormatDiscussion';
 import {
   DiscussionUserRole,
   GetModelPlanDiscussionsQuery
@@ -11,7 +12,6 @@ import { DateTime } from 'luxon';
 import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
-import FormatDiscussion from 'features/ModelPlan/Discussions/FormatDiscussion';
 
 import './index.scss';
 

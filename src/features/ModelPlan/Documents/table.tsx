@@ -25,11 +25,12 @@ import {
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
+import ExternalLinkWithModal from 'components/ExternalLinkWithModal';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
-import ExternalLinkWithModal from 'components/ExternalLinkWithModal';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
@@ -41,7 +42,6 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 import './index.scss';
 

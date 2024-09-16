@@ -2,12 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { Icon, Link } from '@trussworks/react-uswds';
-
-import UswdsReactLink from 'components/LinkWrapper';
 import {
   SolutionContactType,
   solutionHelpRoute
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+
+import UswdsReactLink from 'components/LinkWrapper';
 
 import { formatQueryParam } from '../../Modal';
 

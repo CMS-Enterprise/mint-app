@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CardGroup } from '@trussworks/react-uswds';
+import ArticleCard from 'features/HelpAndKnowledge/Articles/_components/ArticleCard';
 
 import usePagination from 'hooks/usePagination';
-import ArticleCard from 'features/HelpAndKnowledge/Articles/_components/ArticleCard';
 
 import helpAndKnowledgeArticles, { ArticleProps, HelpArticle } from '../..';
 

@@ -11,8 +11,8 @@ import { Button, Grid } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { GetOperationalSolutionQuery } from 'gql/generated/graphql';
 
-import UswdsReactLink from 'components/LinkWrapper';
 import Divider from 'components/Divider';
+import UswdsReactLink from 'components/LinkWrapper';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc } from 'utils/date';
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
-
-import MainContent from 'components/MainContent';
-import PageHeading from 'components/PageHeading';
-import SectionWrapper from 'components/SectionContainer';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import ReadOnly from 'features/ModelPlan/ReadOnly';
+
+import MainContent from 'components/MainContent';
+import PageHeading from 'components/PageHeading';
+import SectionWrapper from 'components/SectionContainer';
 
 import { ArticleCategories, HelpArticle } from '..';
 

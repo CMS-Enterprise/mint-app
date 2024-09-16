@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Table as TrussTable } from '@trussworks/react-uswds';
 
-import UswdsReactLink from 'components/LinkWrapper';
 import ExternalLink from 'components/ExternalLink';
+import UswdsReactLink from 'components/LinkWrapper';
 
 type TableItemType = {
   activity: string;

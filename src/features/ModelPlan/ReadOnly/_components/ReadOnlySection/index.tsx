@@ -1,7 +1,10 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
-import { TranslationDataType, TranslationFormType } from 'gql/generated/graphql';
+import {
+  TranslationDataType,
+  TranslationFormType
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import CollapsableLink from 'components/CollapsableLink';

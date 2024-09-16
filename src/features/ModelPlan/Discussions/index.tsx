@@ -12,10 +12,10 @@ import {
   useGetModelPlanDiscussionsQuery
 } from 'gql/generated/graphql';
 
-import PageHeading from 'components/PageHeading';
-import PageLoading from 'components/PageLoading';
 import Alert from 'components/Alert';
 import Expire from 'components/Expire';
+import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';

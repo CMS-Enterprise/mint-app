@@ -10,19 +10,19 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import {
   useGetHomepageSettingsQuery,
   useUpdateHomepageSettingsMutation,
   ViewCustomizationType
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
-import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import {
   HomepageLocationStateType,

@@ -14,7 +14,6 @@ import {
   Label
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import { ReadOnlyComponents } from 'features/ModelPlan/ReadOnly';
 import BodyContent from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent';
 import { FilterGroup } from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
@@ -30,6 +29,7 @@ import FieldGroup from 'components/FieldGroup';
 import OktaMultiSelect from 'components/OktaUserSelect/multiSelect';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import TextAreaField from 'components/TextAreaField';
+import { PrintPDFContext } from 'contexts/PrintPDFContext';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 
 import PDFSummary from './pdfSummary';

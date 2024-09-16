@@ -9,6 +9,7 @@ import {
   Icon,
   Label
 } from '@trussworks/react-uswds';
+import { treatAsOtherSolutions } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetHomepageSettingsQuery,
@@ -19,13 +20,12 @@ import {
   ViewCustomizationType
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
-import PageLoading from 'components/PageLoading';
-import Alert from 'components/Alert';
 import MultiSelect from 'components/MultiSelect';
-import { treatAsOtherSolutions } from 'features/ModelPlan/TaskList/ITSolutions/_components/CheckboxCard';
+import PageLoading from 'components/PageLoading';
 
 import {
   HomepageLocationStateType,

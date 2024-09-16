@@ -8,19 +8,19 @@ import {
   Link
 } from '@trussworks/react-uswds';
 import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accordion/Accordion';
-
-import ExcelFile from 'assets/files/high-level-project-plan.xlsx';
-import MainContent from 'components/MainContent';
-import PageHeading from 'components/PageHeading';
-import PageLoading from 'components/PageLoading';
-import ExternalLink from 'components/ExternalLink';
-import useHelpSolution from 'hooks/useHelpSolutions';
-import useModalSolutionState from 'hooks/useModalSolutionState';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+
+import ExcelFile from 'assets/files/high-level-project-plan.xlsx';
+import ExternalLink from 'components/ExternalLink';
+import MainContent from 'components/MainContent';
+import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
+import useHelpSolution from 'hooks/useHelpSolutions';
+import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import { ArticleCategories, HelpArticle } from '..';
 

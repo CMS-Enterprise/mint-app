@@ -8,18 +8,18 @@ import {
   SummaryBoxContent,
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
-import { OperationalSolutionKey } from 'gql/generated/graphql';
-
-import UswdsReactLink from 'components/LinkWrapper';
-import MainContent from 'components/MainContent';
-import PageHeading from 'components/PageHeading';
-import PageLoading from 'components/PageLoading';
-import ExternalLink from 'components/ExternalLink';
-import useModalSolutionState from 'hooks/useModalSolutionState';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+import { OperationalSolutionKey } from 'gql/generated/graphql';
+
+import ExternalLink from 'components/ExternalLink';
+import UswdsReactLink from 'components/LinkWrapper';
+import MainContent from 'components/MainContent';
+import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
+import useModalSolutionState from 'hooks/useModalSolutionState';
 
 import {
   ArticleCategories,

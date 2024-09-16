@@ -11,6 +11,7 @@ import {
   Label,
   Select
 } from '@trussworks/react-uswds';
+import { NotFoundPartial } from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   ActivityType,
@@ -21,15 +22,14 @@ import {
   useUpdateNotificationSettingsMutation
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import Expire from 'components/Expire';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import Alert from 'components/Alert';
-import Expire from 'components/Expire';
 import useMessage from 'hooks/useMessage';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formDiff';
-import { NotFoundPartial } from 'features/NotFound';
 
 type GetNotifcationSettingsType =
   GetNotificationSettingsQuery['currentUser']['notificationPreferences'];

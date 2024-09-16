@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import { useUpdateCustomOperationalNeedByIdMutation } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
-import Alert from 'components/Alert';
 import useMessage from 'hooks/useMessage';
 
 type OperationalNeedRemovalModalTypes = {

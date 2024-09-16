@@ -1,6 +1,5 @@
-import { TagType } from 'gql/generated/graphql';
-
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { TagType } from 'gql/generated/graphql';
 // Possible Util to extract only mentions from content
 export const getMentions = (data: any) => {
   const mentions: any = [];

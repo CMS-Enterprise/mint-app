@@ -8,6 +8,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
+import { NotFoundPartial } from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GainshareArrangementEligibility,
@@ -22,19 +23,18 @@ import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
+import FieldGroup from 'components/FieldGroup';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import CheckboxField from 'components/CheckboxField';
-import FieldGroup from 'components/FieldGroup';
 import Tooltip from 'components/Tooltip';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
-import { NotFoundPartial } from 'features/NotFound';
 
 type CoordinationFormType =
   GetCoordinationQuery['modelPlan']['participantsAndProviders'];

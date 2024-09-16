@@ -1,6 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { FundingSource, OverlapType, RecruitmentType } from 'gql/generated/graphql';
+import {
+  FundingSource,
+  OverlapType,
+  RecruitmentType
+} from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import { participantsAndProviders } from 'i18n/en-US/modelPlan/participantsAndProviders';

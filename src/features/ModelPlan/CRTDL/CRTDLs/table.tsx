@@ -12,11 +12,11 @@ import {
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import TablePagination from 'components/TablePagination';
 import { formatDateUtc } from 'utils/date';
 import globalFilterCellText from 'utils/globalFilterCellText';

@@ -8,19 +8,19 @@ import {
   CardHeader,
   Grid
 } from '@trussworks/react-uswds';
-import { TaskStatus, useGetModelPlanQuery } from 'gql/generated/graphql';
-
-import UswdsReactLink from 'components/LinkWrapper';
-import Modal from 'components/Modal';
-import { Avatar } from 'components/Avatar';
-import ShareExportModal from 'components/ShareExport';
-import Spinner from 'components/Spinner';
-import { formatDateLocal } from 'utils/date';
 import {
   getITSolutionsStatus,
   StatusMessageType
 } from 'features/ModelPlan/TaskList';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
+import { TaskStatus, useGetModelPlanQuery } from 'gql/generated/graphql';
+
+import { Avatar } from 'components/Avatar';
+import UswdsReactLink from 'components/LinkWrapper';
+import Modal from 'components/Modal';
+import ShareExportModal from 'components/ShareExport';
+import Spinner from 'components/Spinner';
+import { formatDateLocal } from 'utils/date';
 
 // importing global card styles from Cards/cards.scss
 import '../cards.scss';

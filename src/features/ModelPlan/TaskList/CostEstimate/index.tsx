@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import NotFound, { NotFoundPartial } from 'features/NotFound';
 
 import MainContent from 'components/MainContent';
 import ProtectedRoute from 'components/ProtectedRoute';
-import NotFound, { NotFoundPartial } from 'features/NotFound';
 
 export const CostEstimate = () => {
   return (

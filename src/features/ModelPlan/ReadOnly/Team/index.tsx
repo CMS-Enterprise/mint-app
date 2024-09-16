@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, Grid, Icon, Link } from '@trussworks/react-uswds';
+import { NotFoundPartial } from 'features/NotFound';
 import {
   GetModelCollaboratorsQuery,
   TeamRole,
@@ -8,7 +9,6 @@ import {
 } from 'gql/generated/graphql';
 
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
-import { NotFoundPartial } from 'features/NotFound';
 
 import './index.scss';
 

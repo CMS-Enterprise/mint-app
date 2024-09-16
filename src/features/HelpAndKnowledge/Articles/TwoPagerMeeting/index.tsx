@@ -8,13 +8,13 @@ import {
   SummaryBoxContent,
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
-
-import MainContent from 'components/MainContent';
-import PageHeading from 'components/PageHeading';
-import ExternalLink from 'components/ExternalLink';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
+
+import ExternalLink from 'components/ExternalLink';
+import MainContent from 'components/MainContent';
+import PageHeading from 'components/PageHeading';
 
 import { ArticleCategories, HelpArticle } from '..';
 

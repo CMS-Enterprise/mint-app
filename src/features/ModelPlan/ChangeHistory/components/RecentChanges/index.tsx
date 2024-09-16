@@ -7,9 +7,9 @@ import {
   useGetChangeHistoryQuery
 } from 'gql/generated/graphql';
 
-import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/Alert';
 import { AvatarCircle } from 'components/Avatar';
+import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc, formatTime } from 'utils/date';

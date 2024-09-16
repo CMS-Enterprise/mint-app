@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@trussworks/react-uswds';
+import CRTDLTable from 'features/ModelPlan/CRTDL/CRTDLs/table';
 
 import Alert from 'components/Alert';
 import Expire from 'components/Expire';
-import CRTDLTable from 'features/ModelPlan/CRTDL/CRTDLs/table';
 
 type CRTDLStatusType = 'success' | 'error';
 

@@ -11,6 +11,7 @@ import {
 } from 'react-table';
 import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
 import {
   GetCrtdLsQuery,
   GetModelPlansQuery,
@@ -23,9 +24,9 @@ import {
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
+import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/Alert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
@@ -38,7 +39,6 @@ import {
   getHeaderSortIcon,
   sortColumnValues
 } from 'utils/tableSort';
-import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
 
 import './index.scss';
 

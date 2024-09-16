@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Header from './index';

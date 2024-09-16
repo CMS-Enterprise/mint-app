@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
+import RecentChanges from 'features/ModelPlan/ChangeHistory/components/RecentChanges';
 import {
   GetModelCollaboratorsQuery,
   GetModelPlanQuery,
@@ -9,13 +10,12 @@ import {
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
-import Alert from 'components/Alert';
 import ShareExportModal from 'components/ShareExport';
 import useMessage from 'hooks/useMessage';
-import RecentChanges from 'features/ModelPlan/ChangeHistory/components/RecentChanges';
 
 import { StatusMessageType } from '../..';
 

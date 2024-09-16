@@ -12,9 +12,9 @@ import {
   useGetModelCollaboratorsQuery
 } from 'gql/generated/graphql';
 
-import UswdsReactLink from 'components/LinkWrapper';
 import { Avatar } from 'components/Avatar';
 import CollapsableLink from 'components/CollapsableLink';
+import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 
 type ModelPlanCardType = {

@@ -3,6 +3,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Grid, Link } from '@trussworks/react-uswds';
+import ModelsBySolutionsBanner, {
+  StatusCategories
+} from 'features/Home/components/ModelsBySolutions/banner';
 import {
   GetModelsBySolutionQuery,
   ModelCategory,
@@ -10,17 +13,14 @@ import {
   useGetModelsBySolutionQuery
 } from 'gql/generated/graphql';
 
-import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/Alert';
+import UswdsReactLink from 'components/LinkWrapper';
 import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
 import usePagination from 'hooks/usePagination';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { TranslationBasics } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
-import ModelsBySolutionsBanner, {
-  StatusCategories
-} from 'features/Home/components/ModelsBySolutions/banner';
 
 import ModelSolutionCard from './card';
 

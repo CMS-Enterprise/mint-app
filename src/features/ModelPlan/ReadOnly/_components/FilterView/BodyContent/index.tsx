@@ -1,14 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Alert, Grid, Link } from '@trussworks/react-uswds';
-
-import Divider from 'components/Divider';
-import usePlanTranslation from 'hooks/usePlanTranslation';
-import {
-  getKeys,
-  TranslationFieldProperties,
-  TranslationPlan
-} from 'types/translation';
 import ReadOnlyBeneficiaries from 'features/ModelPlan/ReadOnly/Beneficiaries';
 import ReadOnlyCRTDLs from 'features/ModelPlan/ReadOnly/CRTDLs';
 import ReadOnlyGeneralCharacteristics from 'features/ModelPlan/ReadOnly/GeneralCharacteristics';
@@ -18,6 +10,14 @@ import ReadOnlyParticipantsAndProviders from 'features/ModelPlan/ReadOnly/Partic
 import ReadOnlyPayments from 'features/ModelPlan/ReadOnly/Payments';
 import ReadOnlyTeamInfo from 'features/ModelPlan/ReadOnly/Team';
 import OperationalNeedsTable from 'features/ModelPlan/TaskList/ITSolutions/Home/operationalNeedsTable';
+
+import Divider from 'components/Divider';
+import usePlanTranslation from 'hooks/usePlanTranslation';
+import {
+  getKeys,
+  TranslationFieldProperties,
+  TranslationPlan
+} from 'types/translation';
 
 import {
   filteredGroupSolutions,

@@ -8,12 +8,12 @@ import {
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
+import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
+import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
-import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
 import { ArticleCategories, HelpArticle } from '..';

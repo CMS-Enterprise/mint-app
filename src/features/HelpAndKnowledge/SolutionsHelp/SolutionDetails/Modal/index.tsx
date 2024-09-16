@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
-
-import Alert from 'components/Alert';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { subComponentsProps } from 'features/ModelPlan/ReadOnly';
 import MobileNav from 'features/ModelPlan/ReadOnly/_components/MobileNav';
 import SideNav from 'features/ModelPlan/ReadOnly/_components/Sidenav';
 import { NotFoundPartial } from 'features/NotFound';
+
+import Alert from 'components/Alert';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import { HelpSolutionType } from '../../solutionsMap';
 import Contact from '../_components/Contact';

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-import UswdsReactLink from 'components/LinkWrapper';
-import Tag from 'components/Tag';
 import {
   ArticleCategories,
   articleCategories
 } from 'features/HelpAndKnowledge/Articles';
+
+import UswdsReactLink from 'components/LinkWrapper';
+import Tag from 'components/Tag';
 
 export default function HelpCategoryTag({
   type,

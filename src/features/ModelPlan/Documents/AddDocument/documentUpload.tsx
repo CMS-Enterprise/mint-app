@@ -9,23 +9,23 @@ import {
   useUploadNewPlanDocumentMutation
 } from 'gql/generated/graphql';
 
-import BooleanRadio from 'components/BooleanRadioForm';
-import FileUpload from 'components/FileUpload';
 import Alert from 'components/Alert';
+import BooleanRadio from 'components/BooleanRadioForm';
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import FieldGroup from 'components/FieldGroup';
+import FileUpload from 'components/FileUpload';
 import { RadioField } from 'components/RadioField';
 import RequiredAsterisk from 'components/RequiredAsterisk';
 import TextAreaField from 'components/TextAreaField';
 import TextField from 'components/TextField';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { FileUploadForm, LinkingDocumentFormTypes } from 'types/files';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
-import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 const DocumentUpload = ({
   solutionDetailsLink,

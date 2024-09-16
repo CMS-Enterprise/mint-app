@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { NotFoundPartial } from 'features/NotFound';
 
 import ProtectedRoute from 'components/ProtectedRoute';
-import { NotFoundPartial } from 'features/NotFound';
 
 import NotificationsHome from './Home';
 import NotificationSettings from './Settings';

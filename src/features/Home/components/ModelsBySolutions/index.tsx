@@ -2,16 +2,16 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Header, Icon, PrimaryNav, Select } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { OperationalSolutionKey } from 'gql/generated/graphql';
-
-import UswdsReactLink from 'components/LinkWrapper';
-import Alert from 'components/Alert';
-import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import {
   HelpSolutionBaseType,
   helpSolutions
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import ModelsBySolutionTable from 'features/Home/components/ModelsBySolutions/table';
+import { OperationalSolutionKey } from 'gql/generated/graphql';
+
+import Alert from 'components/Alert';
+import UswdsReactLink from 'components/LinkWrapper';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
 import './index.scss';
 

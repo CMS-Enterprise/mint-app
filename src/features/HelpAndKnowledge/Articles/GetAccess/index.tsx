@@ -10,15 +10,15 @@ import {
   Table
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import i18next from 'i18next';
 
+import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import Alert from 'components/Alert';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useHashScroll from 'hooks/useHashScroll';
-import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 
 type GetAccessContentProps = {
   help?: boolean;

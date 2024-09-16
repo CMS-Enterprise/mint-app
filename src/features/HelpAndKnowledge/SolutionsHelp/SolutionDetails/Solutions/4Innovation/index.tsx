@@ -5,9 +5,9 @@ import {
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
+import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import ExternalLink from 'components/ExternalLink';
-import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { TimelineConfigType } from '../Generic/timeline';
 

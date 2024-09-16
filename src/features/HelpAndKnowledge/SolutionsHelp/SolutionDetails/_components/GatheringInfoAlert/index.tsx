@@ -1,9 +1,9 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
-import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import { TimelineConfigType } from '../../Solutions/Generic/timeline';
 

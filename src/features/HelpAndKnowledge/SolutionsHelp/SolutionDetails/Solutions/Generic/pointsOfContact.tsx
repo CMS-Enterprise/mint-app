@@ -8,13 +8,13 @@ import {
   Icon,
   Link
 } from '@trussworks/react-uswds';
-
-import Divider from 'components/Divider';
 import {
   HelpSolutionType,
   SolutionContactType,
   SystemOwnerType
 } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+
+import Divider from 'components/Divider';
 
 const PointOfContactCard = ({
   pointOfContact

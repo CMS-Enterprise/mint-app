@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { ModelPlanOverviewContent } from 'features/HelpAndKnowledge/Articles/ModelPlanOverview';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import { ModelPlanOverviewContent } from 'features/HelpAndKnowledge/Articles/ModelPlanOverview';
 
 import './index.scss';
 

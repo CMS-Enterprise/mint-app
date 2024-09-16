@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import PlanDocumentsTable from 'features/ModelPlan/Documents/table';
 
 import Alert from 'components/Alert';
 import Expire from 'components/Expire';
-import PlanDocumentsTable from 'features/ModelPlan/Documents/table';
 
 export type DocumentStatusType = 'success' | 'error';
 

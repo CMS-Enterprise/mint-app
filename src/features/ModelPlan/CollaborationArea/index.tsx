@@ -2,23 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
+import { HelpArticle } from 'features/HelpAndKnowledge/Articles';
+import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import { GetModelPlanQuery, useGetModelPlanQuery } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import Divider from 'components/Divider';
+import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import { FavoriteIcon } from 'components/FavoriteCard';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/Alert';
-import Divider from 'components/Divider';
-import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
 import StatusBanner from 'components/StatusBanner';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
-import { HelpArticle } from 'features/HelpAndKnowledge/Articles';
-import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 

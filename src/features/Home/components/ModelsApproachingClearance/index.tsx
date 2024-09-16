@@ -8,8 +8,8 @@ import {
   ViewCustomizationType
 } from 'gql/generated/graphql';
 
-import CalendarDate from 'components/CalendarDate';
 import Alert from 'components/Alert';
+import CalendarDate from 'components/CalendarDate';
 import Spinner from 'components/Spinner';
 import usePagination from 'hooks/usePagination';
 

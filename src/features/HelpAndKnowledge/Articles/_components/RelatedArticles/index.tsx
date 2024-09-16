@@ -2,14 +2,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CardGroup, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-
-import UswdsReactLink from 'components/LinkWrapper';
 import helpAndKnowledgeArticles, {
   ArticleCategories,
   ArticleProps,
   HelpArticle
 } from 'features/HelpAndKnowledge/Articles';
 import ArticleCard from 'features/HelpAndKnowledge/Articles/_components/ArticleCard';
+
+import UswdsReactLink from 'components/LinkWrapper';
 
 type RelatedArticlesProps = {
   className?: string;

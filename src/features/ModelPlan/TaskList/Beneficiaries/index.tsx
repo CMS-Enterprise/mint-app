@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
+import { NotFoundPartial } from 'features/NotFound';
 
 import MainContent from 'components/MainContent';
 import ProtectedRoute from 'components/ProtectedRoute';
-import { NotFoundPartial } from 'features/NotFound';
 
 import BeneficiaryIdentification from './BeneficiaryIdentification';
 import Frequency from './Frequency';

@@ -8,7 +8,6 @@ import {
   CardHeader
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
-
 import { ArticleCategories } from 'features/HelpAndKnowledge/Articles';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 

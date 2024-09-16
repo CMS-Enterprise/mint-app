@@ -5,11 +5,11 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Checkbox, Grid, GridContainer } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { useUpdateNdaMutation } from 'gql/generated/graphql';
+import { setUser } from 'stores/reducers/authReducer';
 
+import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
-import Alert from 'components/Alert';
-import { setUser } from 'stores/reducers/authReducer';
 import { formatDateLocal } from 'utils/date';
 
 type NDAType = {

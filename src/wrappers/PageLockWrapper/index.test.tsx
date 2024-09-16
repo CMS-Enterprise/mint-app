@@ -1,4 +1,7 @@
-import { TaskListSection, TaskListSectionLockStatus } from 'gql/generated/graphql';
+import {
+  TaskListSection,
+  TaskListSectionLockStatus
+} from 'gql/generated/graphql';
 
 import { findLockedSection, LockStatus } from '.';
 

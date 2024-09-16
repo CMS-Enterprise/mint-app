@@ -9,6 +9,7 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import ModelPlansTable from 'features/Home/Table';
 import {
   ModelPlanFilter,
   useGetFavoritesQuery,
@@ -16,20 +17,19 @@ import {
   ViewCustomizationType
 } from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
 
+import Alert from 'components/Alert';
+import Divider from 'components/Divider';
 import FavoritesCards from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/Alert';
-import Divider from 'components/Divider';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
-import { AppState } from 'stores/reducers/rootReducer';
 import { isAssessment, isMAC } from 'utils/user';
-import ModelPlansTable from 'features/Home/Table';
 
 import ModelsApproachingClearance from './components/ModelsApproachingClearance';
 import ModelsBySolutions from './components/ModelsBySolutions';

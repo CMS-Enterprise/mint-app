@@ -7,8 +7,8 @@ import classNames from 'classnames';
 import { GetModelCollaboratorsQuery, TeamRole } from 'gql/generated/graphql';
 import { orderBy } from 'lodash';
 
-import UswdsReactLink from 'components/LinkWrapper';
 import { Avatar } from 'components/Avatar';
+import UswdsReactLink from 'components/LinkWrapper';
 import TablePageSize from 'components/TablePageSize';
 import TablePagination from 'components/TablePagination';
 import { formatDateLocal } from 'utils/date';

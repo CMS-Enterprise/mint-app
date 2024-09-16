@@ -12,6 +12,7 @@ import {
   SummaryBoxContent,
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
+import { NotFoundPartial } from 'features/NotFound';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetParticipantsAndProvidersQuery,
@@ -25,18 +26,17 @@ import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
+import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
+import MultiSelect from 'components/MultiSelect';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import FieldGroup from 'components/FieldGroup';
-import MultiSelect from 'components/MultiSelect';
+import ProtectedRoute from 'components/ProtectedRoute';
 import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
-import ProtectedRoute from 'components/ProtectedRoute';
-import { NotFoundPartial } from 'features/NotFound';
 
 import ProviderAndSupplierModal from './_component/ProviderAndSupplierModal';
 import Communication from './Communication';

@@ -15,6 +15,8 @@ import {
   Link
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
+import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { Field } from 'formik';
 import {
   GetOperationalNeedQuery,
@@ -26,8 +28,6 @@ import Spinner from 'components/Spinner';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
-import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import './index.scss';
 

@@ -1,7 +1,6 @@
 import React, { ComponentProps } from 'react';
 import { Route } from 'react-router-dom';
 import { SecureRoute } from '@okta/okta-react';
-
 import NotFound from 'features/NotFound';
 
 // Prop used to pass Launch Darkly flag support to the component or disabled the route completely

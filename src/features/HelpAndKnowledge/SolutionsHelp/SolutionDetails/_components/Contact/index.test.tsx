@@ -1,7 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
-
 import { SolutionContactType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Contact from './index';

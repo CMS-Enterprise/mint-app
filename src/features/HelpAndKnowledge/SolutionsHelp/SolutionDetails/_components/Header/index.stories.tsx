@@ -1,6 +1,5 @@
 import React from 'react';
 import { Meta } from '@storybook/react';
-
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import Header from '.';
