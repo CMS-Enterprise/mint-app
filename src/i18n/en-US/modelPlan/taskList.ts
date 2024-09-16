@@ -59,8 +59,8 @@ const modelPlanTaskList = {
     remove: 'Remove your Model Plan',
     relatedContent: 'Related Content',
     ariaLabelForOverview: 'Open overview for adding a system in a new tab',
-    overview: 'Overview for adding a model <1>(opens in a new tab)</1>',
-    sampleModelPlan: 'Sample Model Plan <1>(opens in a new tab)</1>',
+    overview: 'Overview for adding a model (opens in a new tab)',
+    sampleModelPlan: 'Sample Model Plan (opens in a new tab)',
     modelTeam: 'Model team',
     editTeam: 'Edit team'
   },
