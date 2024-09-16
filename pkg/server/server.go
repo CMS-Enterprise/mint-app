@@ -6,14 +6,14 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
-	"github.com/cmsgov/mint-app/pkg/worker"
+	"github.com/cms-enterprise/mint-app/pkg/shared/pubsub"
+	"github.com/cms-enterprise/mint-app/pkg/worker"
 
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 )
 
 // Server holds dependencies for running the MINT server

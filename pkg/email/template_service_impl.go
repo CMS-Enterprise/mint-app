@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/shared/emailtemplates"
+	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 )
 
 // AddedAsCollaboratorTemplateName is the template name definition for the corresponding email template

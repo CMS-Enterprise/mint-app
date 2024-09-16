@@ -1,6 +1,6 @@
 package resolvers
 
-import "github.com/cmsgov/mint-app/pkg/models"
+import "github.com/cms-enterprise/mint-app/pkg/models"
 
 func (suite *ResolverSuite) TestUserViewCustomizationGetByUserID() {
 	uvc, err := UserViewCustomizationGetByUserID(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal)

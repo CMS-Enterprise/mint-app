@@ -9,7 +9,7 @@ import (
 
 	gomock "github.com/golang/mock/gomock"
 
-	"github.com/cmsgov/mint-app/pkg/shared/emailtemplates"
+	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 )
 
 // MockTemplateService is a mock of TemplateService interface.

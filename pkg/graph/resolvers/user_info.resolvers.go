@@ -7,7 +7,7 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // SearchOktaUsers is the resolver for the searchOktaUsers field.

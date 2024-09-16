@@ -139,7 +139,7 @@ writing these tests in TypeScript, there is documentation in supporting that [he
 The project is now using [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/).
  It originally started with Enzyme, and the decision was made to switch to RTL,
  so there may still be tests that have not been converted.
- (See [ADR](https://github.com/CMSgov/mint-app/blob/main/docs/adr/0000-adr-starting-point.md)
+ (See [ADR](https://github.com/CMS-Enterprise/mint-app/blob/main/docs/adr/0000-adr-starting-point.md)
  for reasoning)
 
 ### Code coverage

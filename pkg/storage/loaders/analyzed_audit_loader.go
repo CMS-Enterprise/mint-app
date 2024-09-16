@@ -8,8 +8,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/graph-gophers/dataloader"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 const (

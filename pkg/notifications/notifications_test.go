@@ -3,12 +3,12 @@ package notifications
 import (
 	"testing"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cmsgov/mint-app/pkg/testconfig"
-	useraccounthelperstestconfigs "github.com/cmsgov/mint-app/pkg/testconfig/useraccountstoretestconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig"
+	useraccounthelperstestconfigs "github.com/cms-enterprise/mint-app/pkg/testconfig/useraccountstoretestconfigs"
 )
 
 // ResolverSuite is the testify suite for the resolver package

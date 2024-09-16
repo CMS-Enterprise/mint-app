@@ -3,7 +3,7 @@ package pubsub
 import (
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 )
 
 // Subscriber is an abstract interface defining the necessary functionality for a subscription model

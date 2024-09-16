@@ -4,20 +4,20 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"github.com/lib/pq"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
 // PlanDocumentSolutionLinksCreate creates a collection of plan document solution links

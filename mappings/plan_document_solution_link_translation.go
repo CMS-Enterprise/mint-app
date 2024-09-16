@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 )
 
 //go:embed translation/plan_document_solution_link.json

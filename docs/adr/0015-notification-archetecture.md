@@ -7,7 +7,7 @@ As we look to implement in app notifications for the MINT application, it is imp
 The main driving forces are simplicity, data integrity, and extensibility. Notifications can be thought to follow a publication subscription system, where an event (or activity) is published to the database, and depending on a users preferences (subscriptions), they receive a notification. The current use case in MINT doesn't call for a delivery system and an extremely genericized publication subscription architecture, BUT we can use that general paradigm when designing the architecture. 
 
 
-To experiment with this, a proof of concept branch was created, [EASI-3294/notifications_poc](https://github.com/CMSgov/mint-app/tree/EASI-3294/notifications_poc). Paradigm choices discovered in that branch are documented here.
+To experiment with this, a proof of concept branch was created, [EASI-3294/notifications_poc](https://github.com/CMS-Enterprise/mint-app/tree/EASI-3294/notifications_poc). Paradigm choices discovered in that branch are documented here.
 
 
 ## Decision Outcome

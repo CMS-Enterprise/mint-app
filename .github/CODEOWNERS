@@ -1,22 +1,22 @@
 # Order matters in a CODEOWNERS file. The last matching pattern is what will be used for requests.
 # Anything that doesn't hit the below patterns should be sent to the entire team for review.
-* @CMSGov/mint
+* @CMS-Enterprise/mint
 
 # Frontend Changes
-/yarn.lock @CMSGov/mint-frontend
-/package.json @CMSGov/mint-frontend
-/src/ @CMSGov/mint-frontend
-/cypress/ @CMSGov/mint-frontend
-/public/ @CMSGov/mint-frontend
-/.storybook/ @CMSGov/mint-frontend
-*.js @CMSGov/mint-frontend
-*.ts @CMSGov/mint-frontend
-*.tsx @CMSGov/mint-frontend
+/yarn.lock @CMS-Enterprise/mint-frontend
+/package.json @CMS-Enterprise/mint-frontend
+/src/ @CMS-Enterprise/mint-frontend
+/cypress/ @CMS-Enterprise/mint-frontend
+/public/ @CMS-Enterprise/mint-frontend
+/.storybook/ @CMS-Enterprise/mint-frontend
+*.js @CMS-Enterprise/mint-frontend
+*.ts @CMS-Enterprise/mint-frontend
+*.tsx @CMS-Enterprise/mint-frontend
 
 # Backend Changes
-/go.mod @CMSGov/mint-backend
-/go.sum @CMSGov/mint-backend
-/pkg/ @CMSGov/mint-backend
-/cmd/ @CMSGov/mint-backend
-/migrations/ @CMSGov/mint-backend
-*.go @CMSGov/mint-backend
+/go.mod @CMS-Enterprise/mint-backend
+/go.sum @CMS-Enterprise/mint-backend
+/pkg/ @CMS-Enterprise/mint-backend
+/cmd/ @CMS-Enterprise/mint-backend
+/migrations/ @CMS-Enterprise/mint-backend
+*.go @CMS-Enterprise/mint-backend

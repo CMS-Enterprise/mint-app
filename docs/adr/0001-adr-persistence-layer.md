@@ -51,7 +51,7 @@ As we begin to develop MINT as a new application based on EASi, we need to evalu
 
  ## 3. Is there value in stored procedures over inline SQL for a relational database?
 
-The existing EASi paradigm uses [sqlx](https://github.com/CMSgov/easi-app/blob/master/docs/adr/0017-go-orm.md) fo Go Database access. It currently uses this in combination with inline sql to access the database.
+The existing EASi paradigm uses [sqlx](https://github.com/CMS-Enterprise/easi-app/blob/master/docs/adr/0017-go-orm.md) fo Go Database access. It currently uses this in combination with inline sql to access the database.
  ### Research
  #### Stored Procedures
 

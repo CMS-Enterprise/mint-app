@@ -4,9 +4,9 @@ package dbtestconfigs
 import (
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/testhelpers"
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/testhelpers"
 )
 
 // NewDBCTestConfig returns a DBConfig struct with values from appconfig

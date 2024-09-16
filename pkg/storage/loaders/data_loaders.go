@@ -1,7 +1,7 @@
 // Package loaders is a responsible for batched data calls
 package loaders
 
-import "github.com/cmsgov/mint-app/pkg/storage"
+import "github.com/cms-enterprise/mint-app/pkg/storage"
 
 // DataLoaders wrap your data loaders to inject via middleware
 type DataLoaders struct {

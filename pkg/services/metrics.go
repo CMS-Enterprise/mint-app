@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // NewFetchMetrics returns a service for fetching a metrics digest

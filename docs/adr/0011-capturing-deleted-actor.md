@@ -19,7 +19,7 @@
  - It is a fairly simple implementation that fulfills the need
 
 - it is important to make sure that the scope of the variable does not extend past the lifecycle of the transaction as it could make for incorrect information.
-   - in the [POC test branch](https://github.com/CMSgov/mint-app/tree/EASI-2783/capturing_deleted_actors_spike), this is accomplished by setting the variable to the transaction scope.
+   - in the [POC test branch](https://github.com/CMS-Enterprise/mint-app/tree/EASI-2783/capturing_deleted_actors_spike), this is accomplished by setting the variable to the transaction scope.
 
 - We can have confidence that this approach works correctly by doing unit tests to verify the correct actor is recorded.
 

@@ -4,19 +4,19 @@ package testconfig
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/testconfig/dbtestconfigs"
-	"github.com/cmsgov/mint-app/pkg/testconfig/s3testconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/dbtestconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/s3testconfigs"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
-	"github.com/cmsgov/mint-app/pkg/upload"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/pubsub"
+	"github.com/cms-enterprise/mint-app/pkg/upload"
 
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // Base is a struct that contains all base dependencies needed to run a test. It is meant to be embedded to allow reusable testing dependencies,

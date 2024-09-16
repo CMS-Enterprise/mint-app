@@ -35,7 +35,7 @@ repos:
     hooks:
       - id: go-fmt-import
         name: Run "goimports" on go files
-        args: ['-local', 'github.com/cmsgov/mint-app']
+        args: ['-local', 'github.com/cms-enterprise/mint-app']
         files: .*\.go$
         exclude: >
           (?x)^(

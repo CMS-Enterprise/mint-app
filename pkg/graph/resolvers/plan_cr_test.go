@@ -3,7 +3,7 @@ package resolvers
 import (
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 )
 
 // TestPlanCRCreate tests creating a new plan_cr_tdl record in the database
