@@ -7,8 +7,7 @@ package resolvers
 import (
 	"context"
 
-	"github.com/launchdarkly/go-sdk-common/v3/ldcontext"
-
+	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -17,15 +16,7 @@ import (
 func (r *queryResolver) EchimpCr(ctx context.Context) ([]*models.EChimpCR, error) {
 	principal := appcontext.Principal(ctx)
 
-	ldContext := ldcontext.
-		NewBuilder(principal.ID()).
-		Anonymous(false).
-		Build()
-
-		//TODO: make this be more generalized in a helper function
-		// TODO respect the key value
-
-	enabled, err := r.ldClient.BoolVariation("echimp-enabled", ldContext, false)
+	enabled, err := GetLDBool(principal, r.ldClient, appconfig.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}
@@ -39,12 +30,30 @@ func (r *queryResolver) EchimpCr(ctx context.Context) ([]*models.EChimpCR, error
 
 // EchimpTdl is the resolver for the echimpTDL field.
 func (r *queryResolver) EchimpTdl(ctx context.Context) ([]*models.EChimpTDL, error) {
+	principal := appcontext.Principal(ctx)
+	enabled, err := GetLDBool(principal, r.ldClient, appconfig.LDEChimpEnabledKey, false)
+	if err != nil {
+		return nil, err
+	}
+	if enabled {
+		return GetEChimpTDLS(r.echimpS3Client)
+	}
 
-	return GetEChimpTDLS(r.echimpS3Client)
+	return nil, nil
+
 }
 
 // EchimpCRAndTdls is the resolver for the echimpCRAndTDLS field.
 func (r *queryResolver) EchimpCRAndTdls(ctx context.Context) ([]models.EChimpCRAndTDLS, error) {
+	principal := appcontext.Principal(ctx)
+	enabled, err := GetLDBool(principal, r.ldClient, appconfig.LDEChimpEnabledKey, false)
+	if err != nil {
+		return nil, err
+	}
+	if enabled {
+		return GetEchimpCRAndTdls(r.echimpS3Client)
+	}
 
-	return GetEchimpCRAndTdls(r.echimpS3Client)
+	return nil, nil
+
 }
