@@ -269,14 +269,14 @@ exports[`The home page > matches setting snapshot 1`] = `
                       style="min-width: 170px; padding-left: 0px;"
                     >
                       <button
-                        class="usa-button usa-button--unstyled position-relative margin-top-1"
+                        class="usa-button usa-button--unstyled position-relative"
                         style="cursor: pointer;"
                         title="Toggle SortBy"
                         type="button"
                       >
                         Model name
                         <svg
-                          class="usa-icon margin-left-05 position-absolute margin-top-05"
+                          class="usa-icon margin-left-05 margin-top-05"
                           data-testid="caret--up"
                           focusable="false"
                           height="1em"
@@ -307,7 +307,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Short name
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -338,7 +338,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         ID
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -369,7 +369,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Demo code
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -400,7 +400,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Category
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -431,7 +431,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Status
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -462,7 +462,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Anticipated clearance date
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -493,7 +493,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Model start date
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -524,7 +524,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Recent activity
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -667,14 +667,14 @@ exports[`The home page > matches setting snapshot 1`] = `
                       style="min-width: 170px; padding-left: 0px;"
                     >
                       <button
-                        class="usa-button usa-button--unstyled position-relative margin-top-1"
+                        class="usa-button usa-button--unstyled position-relative"
                         style="cursor: pointer;"
                         title="Toggle SortBy"
                         type="button"
                       >
                         Model name
                         <svg
-                          class="usa-icon margin-left-05 position-absolute margin-top-05"
+                          class="usa-icon margin-left-05 margin-top-05"
                           data-testid="caret--up"
                           focusable="false"
                           height="1em"
@@ -705,7 +705,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Short name
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -736,7 +736,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         ID
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -767,7 +767,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Demo code
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -798,7 +798,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Category
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -829,7 +829,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Status
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -860,7 +860,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Anticipated clearance date
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -891,7 +891,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Model start date
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -922,7 +922,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                       >
                         Recent activity
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"

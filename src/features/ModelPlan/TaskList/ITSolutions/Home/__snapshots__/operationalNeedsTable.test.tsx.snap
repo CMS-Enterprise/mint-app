@@ -93,7 +93,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
               >
                 Operational need
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--up"
                   focusable="false"
                   height="1em"
@@ -124,7 +124,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
               >
                 	Model Plan section
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -155,7 +155,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
               >
                 Status
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -184,7 +184,7 @@ exports[`Operational Solutions Home > matches snapshot 1`] = `
               >
                 Actions
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"

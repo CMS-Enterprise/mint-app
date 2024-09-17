@@ -148,7 +148,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         File Name
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -179,7 +179,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         Document Type
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -210,7 +210,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         Notes
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -241,7 +241,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         Upload date
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -272,7 +272,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         Visibility
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -303,7 +303,7 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                       >
                         Actions
                         <svg
-                          class="usa-icon margin-left-05 position-absolute"
+                          class="usa-icon margin-left-05"
                           data-testid="caret--sort"
                           focusable="false"
                           height="1em"
@@ -786,7 +786,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
                 >
                   File Name
                   <svg
-                    class="usa-icon margin-left-05 position-absolute"
+                    class="usa-icon margin-left-05"
                     data-testid="caret--sort"
                     focusable="false"
                     height="1em"
@@ -817,7 +817,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
                 >
                   Document Type
                   <svg
-                    class="usa-icon margin-left-05 position-absolute"
+                    class="usa-icon margin-left-05"
                     data-testid="caret--sort"
                     focusable="false"
                     height="1em"
@@ -848,7 +848,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
                 >
                   Notes
                   <svg
-                    class="usa-icon margin-left-05 position-absolute"
+                    class="usa-icon margin-left-05"
                     data-testid="caret--sort"
                     focusable="false"
                     height="1em"
@@ -879,7 +879,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
                 >
                   Upload date
                   <svg
-                    class="usa-icon margin-left-05 position-absolute"
+                    class="usa-icon margin-left-05"
                     data-testid="caret--sort"
                     focusable="false"
                     height="1em"
@@ -910,7 +910,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
                 >
                   Visibility
                   <svg
-                    class="usa-icon margin-left-05 position-absolute"
+                    class="usa-icon margin-left-05"
                     data-testid="caret--sort"
                     focusable="false"
                     height="1em"
@@ -941,7 +941,7 @@ exports[`Operational Solutions Link Documents > matches snapshot 1`] = `
                 >
                   Actions
                   <svg
-                    class="usa-icon margin-left-05 position-absolute"
+                    class="usa-icon margin-left-05"
                     data-testid="caret--sort"
                     focusable="false"
                     height="1em"

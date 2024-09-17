@@ -45,7 +45,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               >
                 ID number
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--up"
                   focusable="false"
                   height="1em"
@@ -76,7 +76,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               >
                 CR or TDL title
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -107,7 +107,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               >
                 Date initiatied
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -138,7 +138,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               >
                 Implementation date
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -169,7 +169,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               >
                 Notes
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -200,7 +200,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               >
                 Actions
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -325,7 +325,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               >
                 ID number
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--up"
                   focusable="false"
                   height="1em"
@@ -356,7 +356,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               >
                 CR or TDL title
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -387,7 +387,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               >
                 Date initiatied
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -418,7 +418,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               >
                 Notes
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
@@ -449,7 +449,7 @@ exports[`Model Plan CR and TDL table > matches snapshot 1`] = `
               >
                 Actions
                 <svg
-                  class="usa-icon margin-left-05 position-absolute"
+                  class="usa-icon margin-left-05"
                   data-testid="caret--sort"
                   focusable="false"
                   height="1em"
