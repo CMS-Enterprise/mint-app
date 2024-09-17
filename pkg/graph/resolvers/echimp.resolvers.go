@@ -26,7 +26,6 @@ func (r *queryResolver) EchimpCr(ctx context.Context) ([]*models.EChimpCR, error
 	}
 
 	return nil, nil
-
 }
 
 // EchimpTdl is the resolver for the echimpTDL field.
@@ -41,7 +40,6 @@ func (r *queryResolver) EchimpTdl(ctx context.Context) ([]*models.EChimpTDL, err
 	}
 
 	return nil, nil
-
 }
 
 // EchimpCRAndTdls is the resolver for the echimpCRAndTDLS field.
@@ -56,5 +54,4 @@ func (r *queryResolver) EchimpCRAndTdls(ctx context.Context) ([]models.EChimpCRA
 	}
 
 	return nil, nil
-
 }
