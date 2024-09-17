@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -120,7 +119,7 @@ func (r *modelPlanResolver) EchimpTDLs(ctx context.Context, obj *models.ModelPla
 
 // EchimpCRsAndTDLs is the resolver for the echimpCRsAndTDLs field.
 func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.ModelPlan) ([]models.EChimpCRAndTDLS, error) {
-	panic(fmt.Errorf("not implemented: EchimpCRsAndTDLs - echimpCRsAndTDLs"))
+	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, obj.ID)
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.

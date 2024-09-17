@@ -40,7 +40,8 @@ type crAndTDLCache struct {
 	TDLsByModelPlanID map[uuid.UUID][]*models.EChimpTDL
 	TDLsByCRNumber    map[string]*models.EChimpTDL
 
-	AllCrsAndTDLS []models.EChimpCRAndTDLS
+	AllCrsAndTDLs           []models.EChimpCRAndTDLS
+	CrsAndTDLsByModelPlanID map[uuid.UUID][]models.EChimpCRAndTDLS
 }
 
 func (c *crAndTDLCache) IsOld() bool {
@@ -73,10 +74,11 @@ func (c *crAndTDLCache) refreshCache(client *s3.S3Client) error {
 	}
 	c.CRs = sanitizedCRS
 	c.TDls = sanitizedTDLS
-	c.AllCrsAndTDLS = c.aggregateAllCrsAndTDLS()
+	c.AllCrsAndTDLs = c.aggregateAllCrsAndTDLS()
 
 	c.CRsByModelPlanID = c.mapCRsByRelatedModelUUIDS()
 	c.TDLsByModelPlanID = c.mapTDLSByRelatedModelUUIDS()
+	c.CrsAndTDLsByModelPlanID = c.mapCRAndTDLsByModelPlanID()
 
 	c.lastChecked = time.Now()
 	return nil
@@ -135,4 +137,38 @@ func (c *crAndTDLCache) mapTDLSByRelatedModelUUIDS() map[uuid.UUID][]*models.ECh
 
 	}
 	return allData
+}
+
+func (c *crAndTDLCache) mapCRAndTDLsByModelPlanID() map[uuid.UUID][]models.EChimpCRAndTDLS {
+
+	allData := map[uuid.UUID][]models.EChimpCRAndTDLS{}
+
+	for modelPlanID, crs := range c.CRsByModelPlanID {
+		converted := []models.EChimpCRAndTDLS{}
+		for _, cr := range crs {
+			converted = append(converted, cr)
+
+		}
+		//don't need to check for first pass
+		allData[modelPlanID] = converted
+	}
+
+	for modelPlanID, tdls := range c.TDLsByModelPlanID {
+		converted := []models.EChimpCRAndTDLS{}
+		for _, tdl := range tdls {
+			converted = append(converted, tdl)
+
+		}
+		existing, exists := allData[modelPlanID]
+
+		if exists {
+			existing = append(existing, converted...)
+			allData[modelPlanID] = existing
+		} else {
+			allData[modelPlanID] = converted
+		}
+
+	}
+	return allData
+
 }

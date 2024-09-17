@@ -56,5 +56,15 @@ func GetEchimpCRAndTdls(echimpS3Client *s3.S3Client) ([]models.EChimpCRAndTDLS, 
 		return nil, err
 	}
 
-	return data.AllCrsAndTDLS, nil
+	return data.AllCrsAndTDLs, nil
+}
+
+// GetEchimpCRAndTdlsByModelPlanID returns a union of EChimp CR and TDLs from the cache for a given model plan
+func GetEchimpCRAndTdlsByModelPlanID(echimpS3Client *s3.S3Client, modelPlanID uuid.UUID) ([]models.EChimpCRAndTDLS, error) {
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client)
+	if err != nil {
+		return nil, err
+	}
+
+	return data.CrsAndTDLsByModelPlanID[modelPlanID], nil
 }
