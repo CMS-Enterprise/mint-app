@@ -1,26 +1,25 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import FieldErrorMsg from './index';
 
-describe('The FieldErrorMsg componnet', () => {
+describe('The FieldErrorMsg component', () => {
   it('renders without crashing', () => {
-    shallow(<FieldErrorMsg>Error</FieldErrorMsg>);
+    render(<FieldErrorMsg>Error</FieldErrorMsg>);
+    expect(screen.getByText('Error')).toBeInTheDocument();
   });
 
   it('can render nothing', () => {
-    const component = shallow(<FieldErrorMsg />);
-
-    expect(component.type()).toEqual(null);
+    const { container } = render(<FieldErrorMsg />);
+    expect(container.firstChild).toBeNull();
   });
 
   it('renders a message', () => {
-    const component = shallow(
+    render(
       <FieldErrorMsg>
-        <span id="testtest" />
+        <span data-testid="testtest" />
       </FieldErrorMsg>
     );
-
-    expect(component.find('#testtest').exists()).toBe(true);
+    expect(screen.getByTestId('testtest')).toBeInTheDocument();
   });
 });

@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import CheckboxField from './index';
 
 describe('The Checkbox Field component', () => {
   it('renders without crashing', () => {
-    shallow(
+    render(
       <CheckboxField
         id="TestTextbox"
         label="Test Textbox"
@@ -15,11 +15,12 @@ describe('The Checkbox Field component', () => {
         value="Test"
       />
     );
+    expect(screen.getByLabelText('Test Textbox')).toBeInTheDocument();
   });
 
   it('has the correct value', () => {
     const fixture = 'Test';
-    const component = shallow(
+    render(
       <CheckboxField
         id="TestTextbox"
         label="Test Textbox"
@@ -27,8 +28,9 @@ describe('The Checkbox Field component', () => {
         onChange={() => {}}
         onBlur={() => {}}
         value={fixture}
+        checked
       />
     );
-    expect(component.find('input').props().value).toEqual(fixture);
+    expect(screen.getByLabelText('Test Textbox')).toBeChecked();
   });
 });

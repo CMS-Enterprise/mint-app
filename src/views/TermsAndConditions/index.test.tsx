@@ -1,7 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import renderer from 'react-test-renderer';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import TermsAndConditions from './index';
 
@@ -21,17 +20,20 @@ vi.mock('@okta/okta-react', () => ({
 
 describe('The Terms & Conditions page', () => {
   it('renders without crashing', () => {
-    shallow(<TermsAndConditions />);
+    render(
+      <MemoryRouter>
+        <TermsAndConditions />
+      </MemoryRouter>
+    );
+    expect(screen.getByText('Terms & Conditions')).toBeInTheDocument();
   });
 
   it('matches the snapshot', () => {
-    const tree = renderer
-      .create(
-        <MemoryRouter>
-          <TermsAndConditions />
-        </MemoryRouter>
-      )
-      .toJSON();
-    expect(tree).toMatchSnapshot();
+    const { asFragment } = render(
+      <MemoryRouter>
+        <TermsAndConditions />
+      </MemoryRouter>
+    );
+    expect(asFragment()).toMatchSnapshot();
   });
 });

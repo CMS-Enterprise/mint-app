@@ -11,9 +11,12 @@ type RoleInfoProps = {
 const RoleInfo = ({ className }: RoleInfoProps) => {
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
 
-  const roleInfoConfig = collaboratorsMiscT('rolesInfo', {
-    returnObjects: true
-  });
+  const roleInfoConfig: Record<string, string[]> = collaboratorsMiscT(
+    'rolesInfo',
+    {
+      returnObjects: true
+    }
+  );
 
   return (
     <CollapsableLink
@@ -27,7 +30,7 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
     >
       <ul className="margin-y-0 padding-left-4">
         {roleInfoConfig.baseRoles.map((role: string, index: number) => (
-          <li className="margin-bottom-1">
+          <li className="margin-bottom-1" key={role}>
             <Trans
               i18nKey={`collaboratorsMisc:rolesInfo.baseRoles.${index}`}
               components={{
@@ -48,7 +51,7 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
 
       <ul className="margin-bottom-2 margin-top-1 padding-left-4">
         {roleInfoConfig.workstreamRoles.map((role: string, index: number) => (
-          <li className="margin-bottom-1">
+          <li className="margin-bottom-1" key={role}>
             <Trans
               i18nKey={`collaboratorsMisc:rolesInfo.workstreamRoles.${index}`}
               components={{
@@ -69,7 +72,7 @@ const RoleInfo = ({ className }: RoleInfoProps) => {
 
       <ul className="margin-bottom-2 margin-top-1 padding-left-4">
         {roleInfoConfig.otherRoles.map((role: string, index: number) => (
-          <li className="margin-bottom-1">
+          <li className="margin-bottom-1" key={role}>
             <Trans
               i18nKey={`collaboratorsMisc:rolesInfo.otherRoles.${index}`}
               components={{

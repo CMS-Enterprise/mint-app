@@ -36,30 +36,26 @@ exports[`The TaskListSideNavActions > matches snapshot 1`] = `
       >
         Related Content
       </h4>
-      <button
-        class="usa-button usa-button usa-button--unstyled line-height-body-5 margin-bottom-1"
-        data-testid="button"
-        type="button"
+      <div
+        class="margin-bottom-1"
       >
-        Overview for adding a model 
-        <span
-          aria-hidden="true"
+        <a
+          class="usa-link line-height-body-5"
+          href="/help-and-knowledge/model-plan-overview"
+          target="_blank"
         >
-          (opens in a new tab)
-        </span>
-      </button>
-      <button
-        class="usa-button usa-button usa-button--unstyled line-height-body-5"
-        data-testid="button"
-        type="button"
-      >
-        Sample Model Plan 
-        <span
-          aria-hidden="true"
+          Overview for adding a model (opens in a new tab)
+        </a>
+      </div>
+      <div>
+        <a
+          class="usa-link line-height-body-5"
+          href="/help-and-knowledge/sample-model-plan"
+          target="_blank"
         >
-          (opens in a new tab)
-        </span>
-      </button>
+          Sample Model Plan (opens in a new tab)
+        </a>
+      </div>
     </div>
   </div>
 </DocumentFragment>

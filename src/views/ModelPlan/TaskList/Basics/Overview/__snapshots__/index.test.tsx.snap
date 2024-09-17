@@ -340,6 +340,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
     </form>
     <div
       class="mint-page-number margin-bottom-10"
+      data-testid="page-num"
     >
       <span
         class="mint-page-number__page-num"

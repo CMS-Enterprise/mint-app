@@ -1,14 +1,18 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
 
 import { NavLink, SecondaryNav } from './index';
 
 describe('The Secondary Nav component', () => {
   it('renders without crashing', () => {
-    shallow(
-      <SecondaryNav>
-        <NavLink to="/">Test</NavLink>
-      </SecondaryNav>
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <SecondaryNav>
+          <NavLink to="/">Test</NavLink>
+        </SecondaryNav>
+      </MemoryRouter>
     );
+    expect(screen.getByText('Test')).toBeInTheDocument();
   });
 });

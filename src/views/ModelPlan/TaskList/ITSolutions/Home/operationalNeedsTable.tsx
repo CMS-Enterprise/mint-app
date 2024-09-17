@@ -131,10 +131,10 @@ const OperationalNeedsTable = ({
     hiddenTableColumns.push('Actions');
   }
 
-  const needsColumns = useMemo<Column<any>[]>(() => {
+  const needsColumns = useMemo(() => {
     return [
       {
-        Header: solutionsT<string>('name.label'),
+        Header: solutionsT<string, {}, string>('name.label'),
         accessor: ({ name, nameOther, otherHeader }: any) => {
           if (!name && !nameOther) {
             return opSolutionsMiscT('itSolutionsTable.selectSolution');
@@ -181,11 +181,11 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: operationalNeedsT<string>('name.label'),
+        Header: operationalNeedsT<string, {}, string>('name.label'),
         accessor: 'needName'
       },
       {
-        Header: solutionsT<string>('mustFinishDts.label'),
+        Header: solutionsT<string, {}, string>('mustFinishDts.label'),
         accessor: ({ mustFinishDts }: any) => {
           if (mustFinishDts) {
             return formatDateUtc(mustFinishDts, 'MM/dd/yyyy');
@@ -194,7 +194,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: subtasksT<string>('name.exportLabel'),
+        Header: subtasksT<string, {}, string>('name.exportLabel'),
         accessor: 'operationalSolutionSubtasks',
         Cell: ({
           row,
@@ -210,7 +210,7 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: solutionsT<string>('status.exportLabel'),
+        Header: solutionsT<string, {}, string>('status.exportLabel'),
         accessor: 'status',
         Cell: ({
           row,
@@ -223,7 +223,9 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: opSolutionsMiscT<string>('itSolutionsTable.actions'),
+        Header: opSolutionsMiscT<string, {}, string>(
+          'itSolutionsTable.actions'
+        ),
         accessor: ({ status }: CellProps<GetOperationalNeedsTableType>) => {
           return returnActionText(status);
         },
@@ -249,14 +251,14 @@ const OperationalNeedsTable = ({
     hasEditAccess
   ]);
 
-  const possibleNeedsColumns = useMemo<Column<any>[]>(() => {
+  const possibleNeedsColumns = useMemo(() => {
     return [
       {
-        Header: operationalNeedsT<string>('name.label'),
+        Header: operationalNeedsT<string, {}, string>('name.label'),
         accessor: 'name'
       },
       {
-        Header: operationalNeedsT<string>('section.label'),
+        Header: operationalNeedsT<string, {}, string>('section.label'),
         accessor: 'section',
         Cell: ({
           row,
@@ -275,7 +277,7 @@ const OperationalNeedsTable = ({
       },
 
       {
-        Header: operationalNeedsT<string>('needed.label'),
+        Header: operationalNeedsT<string, {}, string>('needed.label'),
         accessor: 'status',
         Cell: ({
           row,
@@ -288,7 +290,9 @@ const OperationalNeedsTable = ({
         }
       },
       {
-        Header: opSolutionsMiscT<string>('itSolutionsTable.actions'),
+        Header: opSolutionsMiscT<string, {}, string>(
+          'itSolutionsTable.actions'
+        ),
         Cell: ({
           row
         }: CellProps<GetOperationalNeedsTableType>): JSX.Element => {
@@ -323,7 +327,10 @@ const OperationalNeedsTable = ({
     prepareRow
   } = useTable(
     {
-      columns: type === 'needs' ? needsColumns : possibleNeedsColumns,
+      columns:
+        type === 'needs'
+          ? (needsColumns as Column<GetOperationalNeedsTableType>[])
+          : (possibleNeedsColumns as Column<GetOperationalNeedsTableType>[]),
       data: operationalNeeds,
       sortTypes: {
         alphanumeric: (rowOne, rowTwo, columnName) => {

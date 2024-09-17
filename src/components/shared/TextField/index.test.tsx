@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import TextField from './index';
 
@@ -13,7 +13,8 @@ describe('The Text Field component', () => {
   };
 
   it('renders without crashing', () => {
-    shallow(<TextField {...requiredProps} />);
+    render(<TextField {...requiredProps} />);
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
   it('triggers onChange', () => {
@@ -23,9 +24,8 @@ describe('The Text Field component', () => {
       }
     };
     const mock = vi.fn();
-    const component = mount(<TextField {...requiredProps} onChange={mock} />);
-
-    component.simulate('change', event);
+    render(<TextField {...requiredProps} onChange={mock} />);
+    fireEvent.change(screen.getByRole('textbox'), event);
     expect(mock).toHaveBeenCalled();
   });
 });
