@@ -7,34 +7,44 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/echimpcache"
+	"github.com/launchdarkly/go-sdk-common/v3/ldcontext"
+
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // EchimpCr is the resolver for the echimpCR field.
 func (r *queryResolver) EchimpCr(ctx context.Context) ([]*models.EChimpCR, error) {
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(r.echimpS3Client)
+	principal := appcontext.Principal(ctx)
+
+	ldContext := ldcontext.
+		NewBuilder(principal.ID()).
+		Anonymous(false).
+		Build()
+
+		//TODO: make this be more generalized in a helper function
+		// TODO respect the key value
+
+	enabled, err := r.ldClient.BoolVariation("echimp-enabled", ldContext, false)
 	if err != nil {
 		return nil, err
 	}
-	return data.CRs, nil
+	if enabled {
+		return GetEChimpCRs(r.echimpS3Client)
+	}
+
+	return nil, nil
+
 }
 
 // EchimpTdl is the resolver for the echimpTDL field.
 func (r *queryResolver) EchimpTdl(ctx context.Context) ([]*models.EChimpTDL, error) {
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(r.echimpS3Client)
-	if err != nil {
-		return nil, err
-	}
-	return data.TDls, nil
+
+	return GetEChimpTDLS(r.echimpS3Client)
 }
 
 // EchimpCRAndTdls is the resolver for the echimpCRAndTDLS field.
 func (r *queryResolver) EchimpCRAndTdls(ctx context.Context) ([]models.EChimpCRAndTDLS, error) {
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(r.echimpS3Client)
-	if err != nil {
-		return nil, err
-	}
 
-	return data.AllCrsAndTDLS, nil
+	return GetEchimpCRAndTdls(r.echimpS3Client)
 }
