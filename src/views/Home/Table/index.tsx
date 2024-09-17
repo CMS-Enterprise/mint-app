@@ -540,7 +540,10 @@ const ModelPlansTable = ({
 
         <thead>
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <tr
+              {...headerGroup.getHeaderGroupProps()}
+              key={{ ...headerGroup.getHeaderGroupProps() }.key}
+            >
               {headerGroup.headers
                 // @ts-ignore
                 .filter((column, index) => !hiddenColumns?.includes(index))
@@ -551,6 +554,7 @@ const ModelPlansTable = ({
                     className="table-header"
                     scope="col"
                     style={!isHome ? modelsStyle(index) : homeStyle(index)}
+                    key={column.id}
                   >
                     <button
                       className={classNames(
@@ -576,7 +580,7 @@ const ModelPlansTable = ({
             // need to destructure row and getRowProps to avoid TS error for prop-types
             const { getRowProps, cells } = { ...row };
             return (
-              <tr {...getRowProps()}>
+              <tr {...getRowProps()} key={row.id}>
                 {cells
                   .filter((cell, index) => {
                     // @ts-ignore
@@ -592,6 +596,7 @@ const ModelPlansTable = ({
                             paddingLeft: '0',
                             borderBottom: 'auto'
                           }}
+                          key={cell.getCellProps().key}
                         >
                           {cell.render('Cell')}
                         </th>
@@ -605,6 +610,7 @@ const ModelPlansTable = ({
                           borderBottom: 'auto',
                           whiteSpace: 'normal'
                         }}
+                        key={cell.getCellProps().key}
                       >
                         {cell.render('Cell')}
                       </td>

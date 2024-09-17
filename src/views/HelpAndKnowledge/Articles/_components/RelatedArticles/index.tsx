@@ -76,7 +76,7 @@ const RelatedArticles = ({
 
         <CardGroup>
           {articlesToShow.map(article => (
-            <ArticleCard {...article} isLink />
+            <ArticleCard {...article} isLink key={article.key} />
           ))}
         </CardGroup>
 
