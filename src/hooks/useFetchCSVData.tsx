@@ -22,10 +22,13 @@ import {
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
+import {
+  csvFields,
+  fieldsToUnwind
+} from 'components/CSVExportLink/fieldDefinitions';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
-import { csvFields, fieldsToUnwind } from 'utils/export/CsvData';
 
 type AllModelDataType = GetAllModelDataQuery['modelPlanCollection'][0];
 type SingleModelPlanType = GetAllSingleModelDataQuery['modelPlan'];

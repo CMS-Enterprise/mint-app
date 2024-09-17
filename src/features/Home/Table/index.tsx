@@ -24,13 +24,13 @@ import {
 import i18next from 'i18next';
 
 import Alert from 'components/Alert';
+import CsvExportLink from 'components/CSVExportLink/CsvExportLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
-import CsvExportLink from 'utils/export/CsvExportLink';
 import globalFilterCellText from 'utils/globalFilterCellText';
 import {
   currentTableSortDescription,
