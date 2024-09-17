@@ -556,7 +556,7 @@ const ModelPlansTable = ({
                       className={classNames(
                         'usa-button usa-button--unstyled position-relative',
                         {
-                          'margin-top-1': index === 0
+                          'margin-top-1': index === 0 && !isHome
                         }
                       )}
                       type="button"

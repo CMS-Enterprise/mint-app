@@ -567,3 +567,571 @@ exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`Read Only CR and TDLs page > matches snapshot 2`] = `
+<DocumentFragment>
+  <div
+    class="read-only-model-plan--cr-and-tdls"
+    data-testid="read-only-model-plan--cr-and-tdls"
+  >
+    <h2
+      class="margin-top-0 margin-bottom-4"
+    >
+      FFS CRs and TDLs
+    </h2>
+    <p
+      class="font-body-md line-height-body-4"
+    >
+      More information about each Fee-for Service (FFS) Change Request (CR) or Technical Direction Letter (TDL) can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at 
+    </p>
+    <a
+      aria-label="Open EUA in a new tab"
+      class="usa-link usa-link--external display-block margin-y-3"
+      href="https://echimp.cmsnet/"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      Visit FFS CR and TDL details in ECHIMP
+    </a>
+    <div
+      class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-bottom-1"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          <span>
+            To get access to the ECHIMP system, please request the proper job code through EUA. If you need assistance, please contact the CMS IT Service Desk at 410-786-2580 or 800-562-1963.
+          </span>
+        </p>
+      </div>
+    </div>
+    <h2
+      class="margin-bottom-0 margin-top-4"
+    >
+      CRs
+    </h2>
+    <div
+      class="model-plan-table"
+      data-testid="cr-tdl-table-cr"
+    >
+      <div
+        class="usa-table-container--scrollable"
+        data-testid="scrollable-table-container"
+        tabindex="0"
+      >
+        <table
+          class="usa-table usa-table--borderless"
+          data-testid="table"
+        >
+          <caption
+            class="usa-sr-only"
+          >
+            requestsTable.caption
+          </caption>
+          <thead>
+            <tr
+              role="row"
+            >
+              <th
+                aria-sort="ascending"
+                class="table-header"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="padding-left: 0px; padding-bottom: .5rem; position: relative; min-width: 150px; max-width: 150px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  ID number
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--up"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                aria-sort="none"
+                class="table-header"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="padding-left: 0px; padding-bottom: .5rem; position: relative; min-width: 250px; max-width: 250px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  CR or TDL title
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--sort"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                aria-sort="none"
+                class="table-header"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="padding-left: 0px; padding-bottom: .5rem; position: relative; min-width: 150px; max-width: 150px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  Date initiatied
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--sort"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                aria-sort="none"
+                class="table-header"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="padding-left: 0px; padding-bottom: .5rem; position: relative; min-width: 150px; max-width: 150px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  Implementation date
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--sort"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                aria-sort="none"
+                class="table-header"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="padding-left: 0px; padding-bottom: .5rem; position: relative; min-width: 285px; max-width: 285px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  Notes
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--sort"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                aria-sort="none"
+                class="table-header"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="padding-left: 0px; padding-bottom: .5rem; position: relative; min-width: 150px; max-width: 150px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative text-no-underline text-bold text-black"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  Actions
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--sort"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                    />
+                  </svg>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            role="rowgroup"
+          >
+            <tr
+              role="row"
+            >
+              <td
+                role="cell"
+                style="padding-left: 0px; white-space: normal;"
+              >
+                321
+              </td>
+              <td
+                role="cell"
+                style="padding-left: 0px; white-space: normal;"
+              >
+                This is a CR and TDL plan
+              </td>
+              <td
+                role="cell"
+                style="padding-left: 0px; white-space: normal;"
+              >
+                05/12/2022
+              </td>
+              <td
+                role="cell"
+                style="padding-left: 0px; white-space: normal;"
+              >
+                July 2022
+              </td>
+              <td
+                role="cell"
+                style="padding-left: 0px; white-space: normal;"
+              >
+                string
+              </td>
+              <td
+                role="cell"
+                style="padding-left: 0px; white-space: normal;"
+              >
+                <a
+                  class="usa-link margin-right-2"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/cr-and-tdl/add-cr-and-tdl?type=cr&id=123#read-only"
+                >
+                  Edit
+                </a>
+                <button
+                  class="usa-button usa-button--unstyled text-red"
+                  data-testid="remove-cr-tdl"
+                  type="button"
+                >
+                  Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        aria-live="polite"
+        class="usa-sr-only usa-table__announcement-region"
+      >
+        Requests table sorted by ID number ascending
+      </div>
+    </div>
+    <h2
+      class="margin-bottom-0 margin-top-4"
+    >
+      TDLs
+    </h2>
+    <div
+      class="model-plan-table"
+      data-testid="cr-tdl-table-tdl"
+    >
+      <div
+        class="usa-table-container--scrollable"
+        data-testid="scrollable-table-container"
+        tabindex="0"
+      >
+        <table
+          class="usa-table usa-table--borderless"
+          data-testid="table"
+        >
+          <caption
+            class="usa-sr-only"
+          >
+            requestsTable.caption
+          </caption>
+          <thead>
+            <tr
+              role="row"
+            >
+              <th
+                aria-sort="ascending"
+                class="table-header"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="padding-left: 0px; padding-bottom: .5rem; position: relative; min-width: 150px; max-width: 150px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  ID number
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--up"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                aria-sort="none"
+                class="table-header"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="padding-left: 0px; padding-bottom: .5rem; position: relative; min-width: 250px; max-width: 250px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  CR or TDL title
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--sort"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                aria-sort="none"
+                class="table-header"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="padding-left: 0px; padding-bottom: .5rem; position: relative; min-width: 150px; max-width: 150px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  Date initiatied
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--sort"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                aria-sort="none"
+                class="table-header"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="padding-left: 0px; padding-bottom: .5rem; position: relative; min-width: 435px; max-width: 435px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  Notes
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--sort"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                    />
+                  </svg>
+                </button>
+              </th>
+              <th
+                aria-sort="none"
+                class="table-header"
+                colspan="1"
+                role="columnheader"
+                scope="col"
+                style="padding-left: 0px; padding-bottom: .5rem; position: relative; min-width: 150px; max-width: 150px;"
+              >
+                <button
+                  class="usa-button usa-button--unstyled position-relative text-no-underline text-bold text-black"
+                  style="cursor: pointer;"
+                  title="Toggle SortBy"
+                  type="button"
+                >
+                  Actions
+                  <svg
+                    class="usa-icon margin-left-05"
+                    data-testid="caret--sort"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                    />
+                  </svg>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            role="rowgroup"
+          >
+            <tr
+              role="row"
+            >
+              <td
+                role="cell"
+                style="padding-left: 0px; white-space: normal;"
+              >
+                TDL 456
+              </td>
+              <td
+                role="cell"
+                style="padding-left: 0px; white-space: normal;"
+              >
+                My TDL
+              </td>
+              <td
+                role="cell"
+                style="padding-left: 0px; white-space: normal;"
+              >
+                07/30/2022
+              </td>
+              <td
+                role="cell"
+                style="padding-left: 0px; white-space: normal;"
+              >
+                note
+              </td>
+              <td
+                role="cell"
+                style="padding-left: 0px; white-space: normal;"
+              >
+                <a
+                  class="usa-link margin-right-2"
+                  href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/cr-and-tdl/add-cr-and-tdl?type=tdl&id=456#read-only"
+                >
+                  Edit
+                </a>
+                <button
+                  class="usa-button usa-button--unstyled text-red"
+                  data-testid="remove-cr-tdl"
+                  type="button"
+                >
+                  Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        aria-live="polite"
+        class="usa-sr-only usa-table__announcement-region"
+      >
+        Requests table sorted by ID number ascending
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
