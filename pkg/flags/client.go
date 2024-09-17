@@ -13,6 +13,8 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/authentication"
+	// ldclient "github.com/launchdarkly/go-server-sdk/v6"
 )
 
 // DowngradeAssessmentTeamKey is the Flag Key in LaunchDarkly for downgrading assessment team users
@@ -53,18 +55,24 @@ func NewLaunchDarklyClient(config Config) (*ld.LDClient, error) {
 // currently authenticated principal.
 func Principal(ctx context.Context) ldcontext.Context {
 	p := appcontext.Principal(ctx)
-	key := ContextKeyForID(p.ID())
+	return LDContext(p)
+}
+
+// LDContext returns the context from launch darkly for a given principal
+func LDContext(principal authentication.Principal) ldcontext.Context {
+	key := ContextKeyForID(principal.ID())
 
 	// this is a bit of a loose inference, assuming a user w/o Job Codes
 	// is an Anonymous user. Over time, may want to consider adding
 	// a `func Anonymous() bool` accessor to the authorizaion.Principal interface
 	// definition instead of doing this inference
-	authed := (p.AllowUSER() || p.AllowASSESSMENT())
+	authed := (principal.AllowUSER() || principal.AllowASSESSMENT())
 
 	return ldcontext.
 		NewBuilder(key).
 		Anonymous(!authed).
 		Build()
+
 }
 
 // ContextKeyForID generates a context key from an ID
@@ -75,4 +83,11 @@ func ContextKeyForID(id string) string {
 	h := sha256.New()
 	_, _ = h.Write([]byte(id))
 	return fmt.Sprintf("%x", h.Sum(nil))
+}
+
+// GetBool fetches a bool from Launch Darkly
+func GetBool(principal authentication.Principal, ldClient *ld.LDClient, key string, defaultValue bool) (bool, error) {
+	ldContext := LDContext(principal)
+
+	return ldClient.BoolVariation(key, ldContext, defaultValue)
 }

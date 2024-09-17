@@ -9,6 +9,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -16,7 +17,7 @@ import (
 func (r *queryResolver) EchimpCr(ctx context.Context) ([]*models.EChimpCR, error) {
 	principal := appcontext.Principal(ctx)
 
-	enabled, err := GetLDBool(principal, r.ldClient, appconfig.LDEChimpEnabledKey, false)
+	enabled, err := flags.GetBool(principal, r.ldClient, appconfig.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +32,7 @@ func (r *queryResolver) EchimpCr(ctx context.Context) ([]*models.EChimpCR, error
 // EchimpTdl is the resolver for the echimpTDL field.
 func (r *queryResolver) EchimpTdl(ctx context.Context) ([]*models.EChimpTDL, error) {
 	principal := appcontext.Principal(ctx)
-	enabled, err := GetLDBool(principal, r.ldClient, appconfig.LDEChimpEnabledKey, false)
+	enabled, err := flags.GetBool(principal, r.ldClient, appconfig.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +47,7 @@ func (r *queryResolver) EchimpTdl(ctx context.Context) ([]*models.EChimpTDL, err
 // EchimpCRAndTdls is the resolver for the echimpCRAndTDLS field.
 func (r *queryResolver) EchimpCRAndTdls(ctx context.Context) ([]models.EChimpCRAndTDLS, error) {
 	principal := appcontext.Principal(ctx)
-	enabled, err := GetLDBool(principal, r.ldClient, appconfig.LDEChimpEnabledKey, false)
+	enabled, err := flags.GetBool(principal, r.ldClient, appconfig.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}
