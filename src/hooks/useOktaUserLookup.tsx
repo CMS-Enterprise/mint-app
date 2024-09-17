@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useSearchOktaUsersQuery } from 'gql/gen/graphql';
+import { useSearchOktaUsersQuery } from 'gql/generated/graphql';
 
 /** Cedar contact properties */
 export type OktaUserType = {

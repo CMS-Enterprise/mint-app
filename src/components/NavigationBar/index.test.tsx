@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { GetPollNotificationsDocument } from 'gql/gen/graphql';
+import { GetPollNotificationsDocument } from 'gql/generated/graphql';
 
 import NavigationBar, { getActiveTab, navLinks } from './index';
 

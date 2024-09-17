@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import { GetPollNotificationsDocument } from 'gql/gen/graphql';
+import { GetPollNotificationsDocument } from 'gql/generated/graphql';
 
 import Header from './index';
 

@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Menu } from '@trussworks/react-uswds';
-import { useArchiveModelPlanMutation } from 'gql/gen/graphql';
+import { StatusMessageType } from 'features/ModelPlan/TaskList';
+import { useArchiveModelPlanMutation } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
-import Alert from 'components/shared/Alert';
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
-import { ModelInfoContext } from 'views/ModelInfoWrapper';
-import { StatusMessageType } from 'views/ModelPlan/TaskList';
 
 import ShareExportModal, { NavModelElemet } from '.';
 

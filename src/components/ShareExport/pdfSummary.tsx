@@ -3,20 +3,20 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { filteredViewOutput } from 'features/ModelPlan/ReadOnly';
+import FilterViewBanner from 'features/ModelPlan/ReadOnly/_components/FilterView/Banner';
+import { filterGroups } from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
+import NotFound from 'features/NotFound';
 import {
   GetModelSummaryQuery,
   ModelStatus,
   useGetModelSummaryQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import Alert from 'components/Alert';
 import PageHeading from 'components/PageHeading';
-import Alert from 'components/shared/Alert';
 import StatusBanner from 'components/StatusBanner';
-import { filteredViewOutput } from 'views/ModelPlan/ReadOnly';
-import FilterViewBanner from 'views/ModelPlan/ReadOnly/_components/FilterView/Banner';
-import { filterGroups } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-import NotFound from 'views/NotFound';
 
 import NDABanner from '../NDABanner';
 

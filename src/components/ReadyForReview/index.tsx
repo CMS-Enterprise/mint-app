@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryBox } from '@trussworks/react-uswds';
 import { Field } from 'formik';
-import { TaskStatus, TaskStatusInput } from 'gql/gen/graphql';
+import { TaskStatus, TaskStatusInput } from 'gql/generated/graphql';
 
-import CheckboxField from 'components/shared/CheckboxField';
-import FieldGroup from 'components/shared/FieldGroup';
+import CheckboxField from 'components/CheckboxField';
+import FieldGroup from 'components/FieldGroup';
 import { formatDateLocal } from 'utils/date';
 
 type ReadyForReviewType = {
@@ -27,7 +27,7 @@ const ReadyForReview = ({
   readyForReviewBy,
   readyForReviewDts
 }: ReadyForReviewType) => {
-  const { t } = useTranslation('draftModelPlan');
+  const { t } = useTranslation('general');
 
   // Status state is checked before rendering
   // This is so that when user unclicks the "Ready for review" checkbox, it will not cause the `markedReady` copy to disappear

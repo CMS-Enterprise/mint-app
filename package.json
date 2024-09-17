@@ -5,9 +5,6 @@
   "dependencies": {
     "@apollo/client": "^3.11.8",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
-    "@cypress/code-coverage": "^3.13.0",
-    "@graphql-codegen/typed-document-node": "^5.0.9",
-    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@json2csv/formatters": "^7.0.6",
     "@json2csv/plainjs": "^7.0.6",
     "@json2csv/transforms": "^7.0.6",
@@ -100,7 +97,7 @@
     "lint:fix": "eslint --fix '**/*.{ts,tsx}'",
     "cypress:open": "cypress open",
     "cypress:run": "DEBUG=cypress:server:util:process_profiler cypress run",
-    "generate": "graphql-codegen --config codegen.ts",
+    "generate": "graphql-codegen --config ./src/config/codegen.ts",
     "storybook": "storybook dev -p 6006 -s public",
     "build-storybook": "storybook build -s public"
   },
@@ -128,11 +125,13 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
+    "@cypress/code-coverage": "^3.13.0",
     "@cypress/webpack-preprocessor": "^6.0.1",
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/client-preset": "^4.3.3",
     "@graphql-codegen/introspection": "^4.0.3",
     "@graphql-codegen/typed-document-node": "^5.0.6",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@storybook/addon-actions": "^7.6.16",
     "@storybook/addon-controls": "^7.6.16",
     "@storybook/addon-essentials": "^7.6.16",

@@ -2,14 +2,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Grid, Icon, Tag } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { GetFavoritesQuery, TeamRole } from 'gql/gen/graphql';
+import { UpdateFavoriteProps } from 'features/ModelPlan/ModelPlanOverview';
+import { GetFavoritesQuery, TeamRole } from 'gql/generated/graphql';
 
+import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
-import Divider from 'components/shared/Divider';
 import StatusBanner from 'components/StatusBanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc } from 'utils/date';
-import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
 
 import './index.scss';
 
@@ -17,7 +17,7 @@ type FavoritesModelType = GetFavoritesQuery['modelPlanCollection'][0];
 
 type FavoriteCardProps = {
   className?: string;
-  type?: 'plan'; // Built in for future iterations/varations of favorited datasets that ingest i18n translations for headers.
+  type?: 'miscellaneous'; // Built in for future iterations/varations of favorited datasets that ingest i18n translations for headers.
   modelPlan: FavoritesModelType;
   removeFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
   toCollaborationArea?: boolean;
@@ -25,12 +25,12 @@ type FavoriteCardProps = {
 
 const FavoriteCard = ({
   className,
-  type = 'plan',
+  type = 'miscellaneous',
   modelPlan,
   removeFavorite,
   toCollaborationArea = false
 }: FavoriteCardProps) => {
-  const { t } = useTranslation('plan');
+  const { t } = useTranslation('miscellaneous');
   const { t: h } = useTranslation('customHome');
 
   const {
@@ -159,7 +159,7 @@ export const FavoriteIcon = ({
   updateFavorite,
   isCollaborationArea
 }: FavoriteIconProps) => {
-  const { t } = useTranslation('plan');
+  const { t } = useTranslation('miscellaneous');
 
   return (
     <Tag

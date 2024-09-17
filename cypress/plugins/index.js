@@ -15,7 +15,9 @@ const wp = require('@cypress/webpack-preprocessor');
 const apollo = require('@apollo/client');
 const fetch = require('cross-fetch'); // needed to allow apollo-client to make queries from Node environment
 
-const { LockTaskListSectionDocument } = require('../../src/gql/gen/graphql');
+const {
+  LockTaskListSectionDocument
+} = require('../../src/gql/generated/graphql');
 
 const cache = new apollo.InMemoryCache();
 

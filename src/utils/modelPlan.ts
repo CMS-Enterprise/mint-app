@@ -2,7 +2,7 @@ import {
   GetModelCollaboratorsQuery,
   GetModelPlanQuery,
   TeamRole
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { orderBy } from 'lodash';
 
 import { getKeys } from 'types/translation';
