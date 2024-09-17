@@ -9,8 +9,8 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import CollapsableLink from 'components/CollapsableLink';
 import MainContent from 'components/MainContent';
-import CollapsableLink from 'components/shared/CollapsableLink';
 
 type NDABannerType = {
   collapsable?: boolean;

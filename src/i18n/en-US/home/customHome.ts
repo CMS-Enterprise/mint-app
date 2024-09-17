@@ -1,4 +1,4 @@
-import { ViewCustomizationType } from 'gql/gen/graphql';
+import { ViewCustomizationType } from 'gql/generated/graphql';
 
 export type HomepageSettingsType = Record<
   ViewCustomizationType,

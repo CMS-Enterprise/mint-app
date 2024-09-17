@@ -3,7 +3,7 @@ import { TranslationReplies } from 'types/translation';
 import {
   TranslationDataType,
   TranslationFormType
-} from '../../../gql/gen/graphql';
+} from '../../../gql/generated/graphql';
 
 export const replies: TranslationReplies = {
   userRole: {

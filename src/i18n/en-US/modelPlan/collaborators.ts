@@ -4,7 +4,7 @@ import {
   TableName,
   TranslationDataType,
   TranslationFormType
-} from '../../../gql/gen/graphql';
+} from '../../../gql/generated/graphql';
 
 export const collaborators: TranslationCollaborators = {
   userID: {

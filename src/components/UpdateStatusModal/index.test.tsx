@@ -6,7 +6,7 @@ import {
   ModelStatus,
   PhaseSuggestion,
   UpdateModelPlanDocument
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import { describe, it, vi } from 'vitest';
 
 import UpdateStatusModal from '.';

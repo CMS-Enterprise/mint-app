@@ -51,7 +51,7 @@ export const commonBreadCrumbs = (
   operationalSolutionID?: string
 ): Record<BreadcrumbItemOptions, BreadcrumbItems> => ({
   HOME: {
-    text: 'plan:home',
+    text: 'miscellaneous:home',
     url: '/'
   },
   HOME_SETTINGS: {

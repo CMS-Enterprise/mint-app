@@ -7,6 +7,11 @@ import { useCallback, useState } from 'react';
 import { Parser } from '@json2csv/plainjs';
 import { unwind } from '@json2csv/transforms';
 import {
+  FilterGroup,
+  filterGroupKey
+} from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
+import { isHiddenByParentCondition } from 'features/ModelPlan/ReadOnly/_components/ReadOnlySection/util';
+import {
   GetAllModelDataQuery,
   GetAllModelDataQueryHookResult,
   GetAllSingleModelDataQuery,
@@ -14,18 +19,16 @@ import {
   TranslationDataType,
   useGetAllModelDataLazyQuery,
   useGetAllSingleModelDataLazyQuery
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 import i18next from 'i18next';
 
+import {
+  csvFields,
+  fieldsToUnwind
+} from 'components/CSVExportLink/fieldDefinitions';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { formatDateLocal, formatDateUtc } from 'utils/date';
-import { csvFields, fieldsToUnwind } from 'utils/export/CsvData';
-import {
-  FilterGroup,
-  filterGroupKey
-} from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-import { isHiddenByParentCondition } from 'views/ModelPlan/ReadOnly/_components/ReadOnlySection/util';
 
 type AllModelDataType = GetAllModelDataQuery['modelPlanCollection'][0];
 type SingleModelPlanType = GetAllSingleModelDataQuery['modelPlan'];

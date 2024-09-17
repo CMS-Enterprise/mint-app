@@ -1,9 +1,9 @@
 import React from 'react';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
-import FieldGroup from 'components/shared/FieldGroup';
-import HelpText from 'components/shared/HelpText';
-import Label from 'components/shared/Label';
+import FieldGroup from 'components/FieldGroup';
+import HelpText from 'components/HelpText';
+import Label from 'components/Label';
 
 import FileUpload from './index';
 
