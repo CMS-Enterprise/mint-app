@@ -93,8 +93,8 @@ describe('Model Plan -- Anticipate Dependencies', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('payment-anticipate-dependencies-form')
-      ).toBeInTheDocument();
+        screen.getByTestId('payment-needs-claims-data-collection-true')
+      ).toBeChecked();
     });
 
     expect(asFragment()).toMatchSnapshot();
