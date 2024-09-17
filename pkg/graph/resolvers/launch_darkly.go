@@ -15,10 +15,6 @@ func GetLDBool(principal authentication.Principal, ldClient *ldclient.LDClient, 
 		Anonymous(defaultValue).
 		Build()
 
-	boolVal, err := ldClient.BoolVariation(key, ldContext, false)
-	if err != nil {
-		return defaultValue, err
-	}
-	return boolVal, nil
+	return ldClient.BoolVariation(key, ldContext, false)
 
 }
