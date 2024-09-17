@@ -433,7 +433,10 @@ const OperationalNeedsTable = ({
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <thead>
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <tr
+              {...headerGroup.getHeaderGroupProps()}
+              key={{ ...headerGroup.getHeaderGroupProps() }.key}
+            >
               {headerGroup.headers
                 .filter(
                   column =>
@@ -457,6 +460,7 @@ const OperationalNeedsTable = ({
                         (index === 3 && type !== 'possibleNeeds' && '100px') ||
                         'auto'
                     }}
+                    key={column.id}
                   >
                     <button
                       className="usa-button usa-button--unstyled position-relative"
@@ -474,7 +478,7 @@ const OperationalNeedsTable = ({
         <tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
             return (
-              <tr {...row.getRowProps()}>
+              <tr {...row.getRowProps()} key={row.id}>
                 {row.cells
                   .filter(
                     cell =>
@@ -499,6 +503,7 @@ const OperationalNeedsTable = ({
                                 : 'auto',
                             whiteSpace: 'normal'
                           }}
+                          key={cell.getCellProps().key}
                         >
                           {cell.render('Cell')}
                         </th>
@@ -519,6 +524,7 @@ const OperationalNeedsTable = ({
                               ? '1px solid black'
                               : 'auto'
                         }}
+                        key={cell.getCellProps().key}
                       >
                         {cell.render('Cell')}
                       </td>
