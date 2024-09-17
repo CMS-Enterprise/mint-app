@@ -1,4 +1,4 @@
-module github.com/cmsgov/mint-app
+module github.com/cms-enterprise/mint-app
 
 go 1.22.3
 

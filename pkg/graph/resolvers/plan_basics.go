@@ -9,18 +9,18 @@ import (
 
 	"github.com/samber/lo"
 
-	"github.com/cmsgov/mint-app/pkg/notifications"
+	"github.com/cms-enterprise/mint-app/pkg/notifications"
 
-	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // UpdatePlanBasics implements resolver logic to update a plan basics object

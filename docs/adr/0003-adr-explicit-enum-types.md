@@ -37,6 +37,6 @@ Ideally, we would not need to manually write the resolver for GQL, and we could 
 
   *  The POC branch mentioned below explored using custom GQL directives combined with a custom plugin to handle code generation. This was considered a large lift for now.
 
-A [branch](https://github.com/CMSgov/mint-app/tree/EASI-1982/explicit_enum_types) was made that fully implemented these changes. It revealed the complexity of merging in these changes. (See [`PR-134`](https://github.com/CMSgov/mint-app/pull/134))
+A [branch](https://github.com/CMS-Enterprise/mint-app/tree/EASI-1982/explicit_enum_types) was made that fully implemented these changes. It revealed the complexity of merging in these changes. (See [`PR-134`](https://github.com/CMS-Enterprise/mint-app/pull/134))
 
-There was also a [proof of concept branch](https://github.com/CMSgov/mint-app/pull/123) that explored the base work needed to do the above, along with custom GQL directives and plugins to override behavior for binding typed arrays back and forth to GO. (See [`PR-123`](https://github.com/CMSgov/mint-app/pull/123))
+There was also a [proof of concept branch](https://github.com/CMS-Enterprise/mint-app/pull/123) that explored the base work needed to do the above, along with custom GQL directives and plugins to override behavior for binding typed arrays back and forth to GO. (See [`PR-123`](https://github.com/CMS-Enterprise/mint-app/pull/123))

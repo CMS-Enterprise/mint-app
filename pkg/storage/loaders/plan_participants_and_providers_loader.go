@@ -8,8 +8,8 @@ import (
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // GetPlanParticipantsAndProvidersByModelPlanID uses a DataLoader to aggreggate a SQL call and return all Plan Participants and Providers in one query

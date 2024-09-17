@@ -8,8 +8,8 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
-	"github.com/cmsgov/mint-app/pkg/apperrors"
-	"github.com/cmsgov/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/apperrors"
+	"github.com/cms-enterprise/mint-app/pkg/logfields"
 )
 
 // JobWithPanicProtection wraps a faktory Job in a wrapper function that will return an error instead of stopping the application.

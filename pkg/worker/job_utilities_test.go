@@ -9,7 +9,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/cmsgov/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/logfields"
 )
 
 func TestJobWithPanicProtection(t *testing.T) {

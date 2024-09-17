@@ -11,11 +11,11 @@ import (
 	"github.com/lib/pq"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/mappings"
-	"github.com/cmsgov/mint-app/pkg/constants"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/sqlutils"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/mappings"
+	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // unTranslatedTables is a list of tables that should be skipped for translated audit, even if the raw data is being audited

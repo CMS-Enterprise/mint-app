@@ -17,7 +17,7 @@ On the frontend
 2. How to utilize a library to handle tagging for our purposes.
 3. How to override tag defaults to provide needed information to store tags on the backend.
 
-To research these issues, a [POC branch](https://github.com/CMSgov/mint-app/tree/EASI-3130/discussion_tagging_spike_poc) was created, and made into a [Draft PR](https://github.com/CMSgov/mint-app/pull/702)
+To research these issues, a [POC branch](https://github.com/CMS-Enterprise/mint-app/tree/EASI-3130/discussion_tagging_spike_poc) was created, and made into a [Draft PR](https://github.com/CMS-Enterprise/mint-app/pull/702)
 
 ## Backend Discoveries
 
@@ -46,7 +46,7 @@ The options for frontend capabilities of tagging/mentions are split between:
 
 ## Considered Options
 
-* [React-Mentions](https://github.com/signavio/react-mentions) [PoC Branch](https://github.com/CMSgov/mint-app/tree/EASI-3130/discussion_tagging_spike_poc)
+* [React-Mentions](https://github.com/signavio/react-mentions) [PoC Branch](https://github.com/CMS-Enterprise/mint-app/tree/EASI-3130/discussion_tagging_spike_poc)
 * [TipTap (Rich Text Editor)](https://tiptap.dev/)
 * [ToastUI (Rich Text Editor)](https://ui.toast.com/tui-editor)
 

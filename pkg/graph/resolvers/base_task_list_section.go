@@ -3,9 +3,9 @@ package resolvers
 import (
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // BaseTaskListSectionPreUpdate applies incoming changes from to a TaskList Section, and validates it's status

@@ -2,7 +2,7 @@
 
 MINT code changes are deployed automatically through GitHub Actions. After a merge or commit to `master`, the `build` workflow will trigger; see [`.github/workflows/build.yml`](../.github/workflows/build.yml). This will run a series of checks and tests; if all pass, the application will be automatically deployed to the [dev environment](https://dev.mint.cms.gov). If this succeeds, engineers are then allowed to deploy the application to the [impl](https://impl.mint.cms.gov), and then [prod](https://mint.cms.gov) environments.
 
-Once a deployment to dev is successful, GitHub will prompt reviewers to approve a deployment to production. Any member of the `CMSgov/oddball-mint` team can approve a production deployment. (The required reviewers for each environment can be viewed in the repo's [environments page](https://github.com/CMSgov/mint-app/settings/environments).) Once a reviewer approves the deployment, the workflow will run the deployment script for that environment.
+Once a deployment to dev is successful, GitHub will prompt reviewers to approve a deployment to production. Any member of the `CMS-Enterprise/mint` team can approve a production deployment. (The required reviewers for each environment can be viewed in the repo's [environments page](https://github.com/CMS-Enterprise/mint-app/settings/environments).) Once a reviewer approves the deployment, the workflow will run the deployment script for that environment.
 
 ## Approving a Deployment
 

@@ -3,7 +3,7 @@ package oktaapi
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // Client defines methods which any Okta API Client should implement

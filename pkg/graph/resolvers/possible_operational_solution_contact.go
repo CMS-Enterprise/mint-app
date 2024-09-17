@@ -3,8 +3,8 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // PossibleOperationalSolutionContactsGetByPossibleSolutionID returns all the contacts associated with a possible operational solution

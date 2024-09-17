@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 )
 
 type ContextTestSuite struct {

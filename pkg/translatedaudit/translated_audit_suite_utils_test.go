@@ -6,8 +6,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/guregu/null/zero"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // CreateModelPlan creates a model plan using the store. It doesn't do this in a transaction, and doesn't make

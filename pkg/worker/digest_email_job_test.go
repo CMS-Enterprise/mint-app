@@ -3,16 +3,16 @@ package worker
 import (
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"github.com/golang/mock/gomock"
 	"github.com/samber/lo"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // Faktory integration tests

@@ -9,8 +9,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/logfields"
-	"github.com/cmsgov/mint-app/pkg/translatedaudit"
+	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/translatedaudit"
 )
 
 // TranslateAuditJob is the job to translate an individual audit into an analyzed audit, and note that the translation is done in the processing table

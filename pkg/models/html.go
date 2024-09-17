@@ -4,7 +4,7 @@ import (
 	htmlPackage "html"
 	"html/template"
 
-	"github.com/cmsgov/mint-app/pkg/sanitization"
+	"github.com/cms-enterprise/mint-app/pkg/sanitization"
 )
 
 // html represents html code. It is sanitized when unmarshaled from graphQL or when converted to html to only allow specific tags

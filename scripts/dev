@@ -379,7 +379,7 @@ namespace :gql do
 
     task :go do
       sh "go generate ./..." do |ok|
-        sh "goimports -w -local github.com/cmsgov/mint-app pkg/graph/resolvers" if ok
+        sh "goimports -w -local github.com/cms-enterprise/mint-app pkg/graph/resolvers" if ok
       end
     end
   end

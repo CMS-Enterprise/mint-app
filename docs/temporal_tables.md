@@ -35,9 +35,9 @@ The solution natively handles data changes in a variety of ways.
 
 ### POC Branch
 
-As part of exploration of the use of temporal tables, [a POC branch was made here](https://github.com/CMSgov/mint-app/tree/EASI-2900/temporal_tables_poc).
+As part of exploration of the use of temporal tables, [a POC branch was made here](https://github.com/CMS-Enterprise/mint-app/tree/EASI-2900/temporal_tables_poc).
 
-A [utility](https://github.com/CMSgov/mint-app/tree/EASI-2900/temporal_tables_poc/cmd/temporalSimulator) was created to explore how the database would handle migrations. 
+A [utility](https://github.com/CMS-Enterprise/mint-app/tree/EASI-2900/temporal_tables_poc/cmd/temporalSimulator) was created to explore how the database would handle migrations. 
 
 To explore the functionality, you can build it like this ` go build -a -o bin/tSim ./cmd/temporalSimulator    `
 
@@ -46,7 +46,7 @@ Once built, you can bring up the application, seed the data and experiment with 
 This branch also has a couple different versions of the trigger to highlight some different possible implementations.
 
 ### Possible Implementation Changes
-1. Update the trigger to use a configuration like exists in `audit.table_config` currently to specify additional columns to ignore. ([implemented here](https://github.com/CMSgov/mint-app/blob/EASI-2900/temporal_tables_poc/migrations/V96__Temporal_Tables_Modified.sql))
+1. Update the trigger to use a configuration like exists in `audit.table_config` currently to specify additional columns to ignore. ([implemented here](https://github.com/CMS-Enterprise/mint-app/blob/EASI-2900/temporal_tables_poc/migrations/V96__Temporal_Tables_Modified.sql))
 2. Update the trigger to be run after an update instead of before. Insert the current up to date value in the table, with an indefinite time range.
     
     a. This would have the benefit of only needing to search the one table to get the entire view of an object in just one table instead of needing to query the main table and the history table. (This also introduces complexity, so it's benefit needs to be weighed)

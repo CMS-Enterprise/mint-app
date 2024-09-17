@@ -5,12 +5,12 @@ import (
 
 	"github.com/golang/mock/gomock"
 
-	"github.com/cmsgov/mint-app/pkg/userhelpers"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
-	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
 
 func (suite *ResolverSuite) TestSendEmailForPhaseSuggestion() {

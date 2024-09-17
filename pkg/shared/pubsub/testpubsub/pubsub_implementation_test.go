@@ -6,8 +6,8 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
-	"github.com/cmsgov/mint-app/pkg/shared/pubsub/mockpubsub"
+	"github.com/cms-enterprise/mint-app/pkg/shared/pubsub"
+	"github.com/cms-enterprise/mint-app/pkg/shared/pubsub/mockpubsub"
 )
 
 func TestPubSubImplementation_Publish(t *testing.T) {

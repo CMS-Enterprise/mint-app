@@ -4,7 +4,7 @@ import (
 	"github.com/lib/pq"
 	"github.com/samber/lo"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // checkChildConditionals will check if changes to a question make any questions non applicable

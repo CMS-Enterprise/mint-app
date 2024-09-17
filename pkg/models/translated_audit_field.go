@@ -52,7 +52,7 @@ type TranslatedAuditField struct {
 	FormType TranslationFormType `json:"formType" db:"form_type"`
 
 	// Note, these interface types generally get interpreted by pq to be a string. This results in returned characters that are meant to escape a string.
-	// Currently, the conversion is handled on the frontend. See TranslatedAuditField Loader note https://github.com/CMSgov/mint-app/blob/cfdbc9bc694badf2ff42b0e3772106ecddc91016/pkg/storage/loaders/translated_audit_field_loader.go#L38
+	// Currently, the conversion is handled on the frontend. See TranslatedAuditField Loader note https://github.com/CMS-Enterprise/mint-app/blob/cfdbc9bc694badf2ff42b0e3772106ecddc91016/pkg/storage/loaders/translated_audit_field_loader.go#L38
 	// This is stored correctly in the database, it is just how it is returned from the database, and to graphql in turn.
 
 	Old           interface{} `json:"old" db:"old"`

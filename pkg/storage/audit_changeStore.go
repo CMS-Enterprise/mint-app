@@ -8,9 +8,9 @@ import (
 	"github.com/google/uuid"
 	zap "go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
-	"github.com/cmsgov/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
 //go:embed SQL/audit_change/collection_by_id_and_table.sql

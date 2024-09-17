@@ -7,8 +7,8 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // MostRecentDiscussionRoleSelection is the resolver for the mostRecentDiscussionRoleSelection field.

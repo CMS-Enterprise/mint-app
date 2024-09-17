@@ -8,11 +8,11 @@ import (
 	"github.com/lib/pq"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // UserViewCustomizationGetByUserID retrieves a user view customization by user ID (using the ID from the passed in authentication.Principal object)

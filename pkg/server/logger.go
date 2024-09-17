@@ -6,9 +6,9 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/logfields"
 )
 
 func loggerMiddleware(logger *zap.Logger, environment appconfig.Environment, next http.Handler) http.Handler {

@@ -7,8 +7,8 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 )
 
 // ReportAProblem is the resolver for the reportAProblem field.
