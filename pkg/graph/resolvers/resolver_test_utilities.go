@@ -10,6 +10,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/emailtemplates"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cmsgov/mint-app/pkg/testconfig/s3testconfigs"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
@@ -27,16 +28,17 @@ import (
 
 // TestConfigs is a struct that contains all the dependencies needed to run a test
 type TestConfigs struct {
-	DBConfig   storage.DBConfig
-	LDClient   *ld.LDClient
-	Logger     *zap.Logger
-	UserInfo   *models.UserInfo
-	Store      *storage.Store
-	S3Client   *s3.S3Client
-	PubSub     *pubsub.ServicePubSub
-	Principal  *authentication.ApplicationPrincipal
-	Context    context.Context
-	OktaClient oktaapi.Client
+	DBConfig       storage.DBConfig
+	LDClient       *ld.LDClient
+	Logger         *zap.Logger
+	UserInfo       *models.UserInfo
+	Store          *storage.Store
+	S3Client       *s3.S3Client
+	EChimpS3Client *s3.S3Client
+	PubSub         *pubsub.ServicePubSub
+	Principal      *authentication.ApplicationPrincipal
+	Context        context.Context
+	OktaClient     oktaapi.Client
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -70,12 +72,14 @@ func (tc *TestConfigs) GetDefaults() {
 	store, _ := storage.NewStore(config, ldClient)
 
 	s3Client := createS3Client()
+	eChimpS3Client := s3testconfigs.S3TestECHIMPClient()
 	tc.DBConfig = config
 	tc.LDClient = ldClient
 	tc.Logger = logger
 	tc.UserInfo = userInfo
 	tc.Store = store
 	tc.S3Client = &s3Client
+	tc.EChimpS3Client = &eChimpS3Client
 	tc.PubSub = ps
 
 	oktaClient, oktaClientErr := local.NewOktaAPIClient()

@@ -17,6 +17,8 @@ const tdlKey = "echimp_tdl"
 
 var CRAndTDLCache *crAndTDLCache
 
+// GetECHIMPCrAndTDLCache returns a cached of data for CR and TDLs from an echimp s3 bucket.
+// If the time since it was last updated has elapsed, it will fetch the data again
 func GetECHIMPCrAndTDLCache(client *s3.S3Client) (*crAndTDLCache, error) {
 	if CRAndTDLCache == nil {
 		CRAndTDLCache = &crAndTDLCache{}
