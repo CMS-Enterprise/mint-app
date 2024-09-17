@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/parquet"
@@ -40,7 +41,7 @@ type crAndTDLCache struct {
 
 	TDls              []*models.EChimpTDL
 	TDLsByModelPlanID map[uuid.UUID][]*models.EChimpTDL
-	TDLsByCRNumber    map[string]*models.EChimpTDL
+	TDLsByTDLNumber   map[string]*models.EChimpTDL
 
 	AllCrsAndTDLs           []models.EChimpCRAndTDLS
 	CrsAndTDLsByModelPlanID map[uuid.UUID][]models.EChimpCRAndTDLS
@@ -82,6 +83,10 @@ func (c *crAndTDLCache) refreshCache(client *s3.S3Client) error {
 	c.TDLsByModelPlanID = c.mapTDLSByRelatedModelUUIDS()
 	c.CrsAndTDLsByModelPlanID = c.mapCRAndTDLsByModelPlanID()
 
+	c.CRByCRNumber = c.mapCRsByCRNumber()
+
+	c.TDLsByTDLNumber = c.mapTDLsByTDLNumber()
+
 	c.lastChecked = time.Now()
 	return nil
 
@@ -119,6 +124,17 @@ func (c *crAndTDLCache) mapCRsByRelatedModelUUIDS() map[uuid.UUID][]*models.EChi
 
 	}
 	return allData
+}
+
+func (c *crAndTDLCache) mapCRsByCRNumber() map[string]*models.EChimpCR {
+	return lo.Associate(c.CRs, func(cr *models.EChimpCR) (string, *models.EChimpCR) {
+		return cr.CrNumber, cr
+	})
+}
+func (c *crAndTDLCache) mapTDLsByTDLNumber() map[string]*models.EChimpTDL {
+	return lo.Associate(c.TDls, func(tdl *models.EChimpTDL) (string, *models.EChimpTDL) {
+		return tdl.TdlNumber, tdl
+	})
 }
 
 func (c *crAndTDLCache) mapTDLSByRelatedModelUUIDS() map[uuid.UUID][]*models.EChimpTDL {

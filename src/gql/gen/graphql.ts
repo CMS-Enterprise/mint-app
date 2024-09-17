@@ -3163,9 +3163,9 @@ export type Query = {
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
-  echimpCR: Array<EChimpCr>;
   echimpCRAndTDLS: Array<EChimpCrAndTdls>;
-  echimpTDL: Array<EChimpTdl>;
+  echimpCRs: Array<EChimpCr>;
+  echimpTDLs: Array<EChimpTdl>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;

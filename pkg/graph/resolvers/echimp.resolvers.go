@@ -13,8 +13,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// EchimpCr is the resolver for the echimpCR field.
-func (r *queryResolver) EchimpCr(ctx context.Context) ([]*models.EChimpCR, error) {
+// EchimpCRs is the resolver for the echimpCRs field.
+func (r *queryResolver) EchimpCRs(ctx context.Context) ([]*models.EChimpCR, error) {
 	principal := appcontext.Principal(ctx)
 
 	enabled, err := flags.GetBool(principal, r.ldClient, appconfig.LDEChimpEnabledKey, false)
@@ -28,8 +28,8 @@ func (r *queryResolver) EchimpCr(ctx context.Context) ([]*models.EChimpCR, error
 	return nil, nil
 }
 
-// EchimpTdl is the resolver for the echimpTDL field.
-func (r *queryResolver) EchimpTdl(ctx context.Context) ([]*models.EChimpTDL, error) {
+// EchimpTDLs is the resolver for the echimpTDLs field.
+func (r *queryResolver) EchimpTDLs(ctx context.Context) ([]*models.EChimpTDL, error) {
 	principal := appcontext.Principal(ctx)
 	enabled, err := flags.GetBool(principal, r.ldClient, appconfig.LDEChimpEnabledKey, false)
 	if err != nil {

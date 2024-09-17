@@ -38,7 +38,7 @@ union EChimpCRAndTDLS = EChimpCR  | EChimpTDL
 
 extend type Query {
   # echimpCR(id: UUID!): EchimpCR!
-  echimpCR: [EChimpCR!]!
-  echimpTDL: [EChimpTDL!]!
+  echimpCRs: [EChimpCR!]!
+  echimpTDLs: [EChimpTDL!]!
   echimpCRAndTDLS: [EChimpCRAndTDLS!]!
 }
