@@ -1,0 +1,89 @@
+"""
+Represents plan general characteristics translation data
+"""
+type PlanGeneralCharacteristicsTranslation {
+  # Page 1
+  isNewModel: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "is_new_model")
+  currentModelPlanID:TranslationField!  @goTag(key: "db", value: "current_model_plan_id")
+  existingModelID:TranslationField!  @goTag(key: "db", value: "existing_model_id")
+  """
+  Existing model doesn't exist in the database, it is returned based on if there is a current model plan ID or current model plan ID returned
+  """
+  existingModel: TranslationFieldWithParent! @goTag(key: "db", value: "existing_model")
+  resemblesExistingModel: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "resembles_existing_model")
+  resemblesExistingModelWhyHow: TranslationField! @goTag(key: "db", value: "resembles_existing_model_why_how")
+  resemblesExistingModelOtherSpecify: TranslationField! @goTag(key: "db", value: "resembles_existing_model_other_specify")
+  resemblesExistingModelOtherOption: TranslationField! @goTag(key: "db", value: "resembles_existing_model_other_option")
+  resemblesExistingModelHow: TranslationFieldWithParent! @goTag(key: "db", value: "resembles_existing_model_how")
+  resemblesExistingModelNote: TranslationField! @goTag(key: "db", value: "resembles_existing_model_note")
+  resemblesExistingModelWhich: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "resembles_existing_model_which")
+  participationInModelPrecondition: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "participation_in_model_precondition")
+  participationInModelPreconditionWhyHow: TranslationFieldWithParent! @goTag(key: "db", value: "participation_in_model_precondition_why_how")
+  participationInModelPreconditionOtherSpecify: TranslationField! @goTag(key: "db", value: "participation_in_model_precondition_other_specify")
+  participationInModelPreconditionOtherOption: TranslationField! @goTag(key: "db", value: "participation_in_model_precondition_other_option")
+  participationInModelPreconditionNote: TranslationField! @goTag(key: "db", value: "participation_in_model_precondition_note")
+  participationInModelPreconditionWhich: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "participation_in_model_precondition_which")
+  hasComponentsOrTracks: TranslationFieldWithOptions! @goTag(key: "db", value: "has_components_or_tracks")
+  hasComponentsOrTracksDiffer: TranslationField! @goTag(key: "db", value: "has_components_or_tracks_differ")
+  hasComponentsOrTracksNote: TranslationField! @goTag(key: "db", value: "has_components_or_tracks_note")
+
+  # Page 2
+  agencyOrStateHelp: TranslationFieldWithOptions! @goTag(key: "db", value: "agency_or_state_help")
+  agencyOrStateHelpOther: TranslationField! @goTag(key: "db", value: "agency_or_state_help_other")
+  agencyOrStateHelpNote: TranslationField! @goTag(key: "db", value: "agency_or_state_help_note")
+  alternativePaymentModelTypes: TranslationFieldWithOptions! @goTag(key: "db", value: "alternative_payment_model_types")
+  alternativePaymentModelNote: TranslationField! @goTag(key: "db", value: "alternative_payment_model_note")
+  keyCharacteristics: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "key_characteristics")
+  keyCharacteristicsOther: TranslationField! @goTag(key: "db", value: "key_characteristics_other")
+  keyCharacteristicsNote: TranslationField! @goTag(key: "db", value: "key_characteristics_note")
+  collectPlanBids: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "collect_plan_bids")
+  collectPlanBidsNote: TranslationField! @goTag(key: "db", value: "collect_plan_bids_note")
+  managePartCDEnrollment: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "manage_part_c_d_enrollment")
+  managePartCDEnrollmentNote: TranslationField! @goTag(key: "db", value: "manage_part_c_d_enrollment_note")
+  planContractUpdated: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "plan_contract_updated")
+  planContractUpdatedNote: TranslationField! @goTag(key: "db", value: "plan_contract_updated_note")
+
+  # Page 3
+  careCoordinationInvolved: TranslationFieldWithOptions! @goTag(key: "db", value: "care_coordination_involved")
+  careCoordinationInvolvedDescription: TranslationField! @goTag(key: "db", value: "care_coordination_involved_description")
+  careCoordinationInvolvedNote: TranslationField! @goTag(key: "db", value: "care_coordination_involved_note")
+  additionalServicesInvolved: TranslationFieldWithOptions! @goTag(key: "db", value: "additional_services_involved")
+  additionalServicesInvolvedDescription: TranslationField! @goTag(key: "db", value: "additional_services_involved_description")
+  additionalServicesInvolvedNote: TranslationField! @goTag(key: "db", value: "additional_services_involved_note")
+  communityPartnersInvolved: TranslationFieldWithOptions! @goTag(key: "db", value: "community_partners_involved")
+  communityPartnersInvolvedDescription: TranslationField! @goTag(key: "db", value: "community_partners_involved_description")
+  communityPartnersInvolvedNote: TranslationField! @goTag(key: "db", value: "community_partners_involved_note")
+
+  # Page 4
+  geographiesTargeted: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "geographies_targeted")
+  geographiesTargetedTypes: TranslationFieldWithParentAndChildren! @goTag(key: "db", value: "geographies_targeted_types")
+  geographiesStatesAndTerritories: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "geographies_states_and_territories")
+  geographiesRegionTypes: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "geographies_region_types")
+  geographiesTargetedTypesOther: TranslationField! @goTag(key: "db", value: "geographies_targeted_types_other")
+  geographiesTargetedAppliedTo: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "geographies_targeted_applied_to")
+  geographiesTargetedAppliedToOther: TranslationField! @goTag(key: "db", value: "geographies_targeted_applied_to_other")
+  geographiesTargetedNote: TranslationField! @goTag(key: "db", value: "geographies_targeted_note")
+  participationOptions: TranslationFieldWithOptions! @goTag(key: "db", value: "participation_options")
+  participationOptionsNote: TranslationField! @goTag(key: "db", value: "participation_options_note")
+  agreementTypes: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "agreement_types")
+  agreementTypesOther: TranslationField! @goTag(key: "db", value: "agreement_types_other")
+  multiplePatricipationAgreementsNeeded: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "multiple_patricipation_agreements_needed")
+  multiplePatricipationAgreementsNeededNote: TranslationField! @goTag(key: "db", value: "multiple_patricipation_agreements_needed_note")
+
+  # Page 5
+  rulemakingRequired: TranslationFieldWithOptions! @goTag(key: "db", value: "rulemaking_required")
+  rulemakingRequiredDescription: TranslationField! @goTag(key: "db", value: "rulemaking_required_description")
+  rulemakingRequiredNote: TranslationField! @goTag(key: "db", value: "rulemaking_required_note")
+  authorityAllowances: TranslationFieldWithOptions! @goTag(key: "db", value: "authority_allowances")
+  authorityAllowancesOther: TranslationField! @goTag(key: "db", value: "authority_allowances_other")
+  authorityAllowancesNote: TranslationField! @goTag(key: "db", value: "authority_allowances_note")
+  waiversRequired: TranslationFieldWithOptions! @goTag(key: "db", value: "waivers_required")
+  waiversRequiredTypes: TranslationFieldWithOptions! @goTag(key: "db", value: "waivers_required_types")
+  waiversRequiredNote: TranslationField! @goTag(key: "db", value: "waivers_required_note")
+
+  readyForReviewBy: TranslationField! @goTag(key: "db", value: "ready_for_review_by")
+  readyForReviewDts: TranslationField! @goTag(key: "db", value: "ready_for_review_dts")
+  readyForClearanceBy: TranslationField! @goTag(key: "db", value: "ready_for_clearance_by")
+  readyForClearanceDts: TranslationField! @goTag(key: "db", value: "ready_for_clearance_dts")
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+}

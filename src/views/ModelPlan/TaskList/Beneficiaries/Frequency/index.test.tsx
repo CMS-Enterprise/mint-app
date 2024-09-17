@@ -81,11 +81,11 @@ describe('Model Plan Beneficiaries', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/beneficiaries/beneficiary-frequency'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries/beneficiary-frequency'
         ]}
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/beneficiaries/beneficiary-frequency">
+          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency">
             <Frequency />
           </Route>
         </MockedProvider>
@@ -109,11 +109,11 @@ describe('Model Plan Beneficiaries', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/beneficiaries/beneficiary-frequency'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries/beneficiary-frequency'
         ]}
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/beneficiaries/beneficiary-frequency">
+          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries/beneficiary-frequency">
             <Frequency />
           </Route>
         </MockedProvider>

@@ -6,7 +6,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/storage"
 
 	"github.com/99designs/gqlgen/graphql"
 	faktory "github.com/contribsys/faktory/client"
@@ -42,7 +44,7 @@ func (suite *WorkerSuite) SetupTest() {
 	assert.NoError(suite.T(), err)
 
 	//GET USER ACCOUNT EACH TIME!
-	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
+	princ := suite.getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
 	suite.testConfigs.Principal = princ
 
 	// Flush faktory after each test
@@ -160,9 +162,9 @@ func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange string,
 	modelStatusChanges []string,
 	documentCount int,
 	crTdlActivity bool,
-	updatedSections []string,
-	reviewSections []string,
-	clearanceSections []string,
+	updatedSections []models.TableName,
+	reviewSections []models.TableName,
+	clearanceSections []models.TableName,
 	addedLeads []models.AnalyzedModelLeadInfo, discussionActivity bool) *models.AnalyzedAuditChange {
 
 	auditChange := models.AnalyzedAuditChange{
@@ -193,7 +195,7 @@ func (suite *WorkerSuite) createAnalyzedAuditChange(modelNameChange string,
 }
 
 func (suite *WorkerSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Time, changes models.AnalyzedAuditChange) *models.AnalyzedAudit {
-	principal := getTestPrincipal(suite.testConfigs.Store, "TEST")
+	principal := suite.getTestPrincipal(suite.testConfigs.Store, "TEST")
 	newAnalyzedAudit, err := models.NewAnalyzedAudit(principal.UserAccount.ID, mp.ID, mp.ModelName, date, changes)
 	suite.NoError(err)
 
@@ -214,4 +216,21 @@ func TestWorkerSuite(t *testing.T) {
 	rs.testConfigs = GetDefaultTestConfigs()
 	t.Setenv("FAKTORY_URL", "tcp://localhost:7419")
 	suite.Run(t, rs)
+}
+
+// getTestPrincipal gets a user principal from database
+func (suite *WorkerSuite) getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
+
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(suite.testConfigs.Context, store, store, userName, true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.testConfigs.OktaClient.FetchUserInfo))
+
+	princ := &authentication.ApplicationPrincipal{
+		Username:          userName,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: true,
+		JobCodeMAC:        false,
+		JobCodeNonCMS:     false,
+		UserAccount:       userAccount,
+	}
+	return princ
+
 }

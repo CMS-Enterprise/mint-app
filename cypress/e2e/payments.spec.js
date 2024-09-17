@@ -5,7 +5,7 @@ describe('The Model Plan Payment Form', () => {
   });
 
   it('completes a Model Plan Payment form', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     // Clicks the Payment tasklist item
     cy.get('[data-testid="payment"]').click();
@@ -13,7 +13,9 @@ describe('The Model Plan Payment Form', () => {
     // Page - /payment
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/collaboration-area\/task-list\/payment/
+      );
     });
 
     cy.get(
@@ -75,7 +77,7 @@ describe('The Model Plan Payment Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/payment\/claims-based-payment/
+        /\/models\/.{36}\/collaboration-area\/task-list\/payment\/claims-based-payment/
       );
     });
 
@@ -115,7 +117,7 @@ describe('The Model Plan Payment Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/payment\/anticipating-dependencies/
+        /\/models\/.{36}\/collaboration-area\/task-list\/payment\/anticipating-dependencies/
       );
     });
 
@@ -142,7 +144,7 @@ describe('The Model Plan Payment Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/payment\/beneficiary-cost-sharing/
+        /\/models\/.{36}\/collaboration-area\/task-list\/payment\/beneficiary-cost-sharing/
       );
     });
 
@@ -169,7 +171,7 @@ describe('The Model Plan Payment Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/payment\/non-claims-based-payment/
+        /\/models\/.{36}\/collaboration-area\/task-list\/payment\/non-claims-based-payment/
       );
     });
 
@@ -207,7 +209,7 @@ describe('The Model Plan Payment Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/payment\/complexity/
+        /\/models\/.{36}\/collaboration-area\/task-list\/payment\/complexity/
       );
     });
 
@@ -250,7 +252,7 @@ describe('The Model Plan Payment Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/payment\/recover-payment/
+        /\/models\/.{36}\/collaboration-area\/task-list\/payment\/recover-payment/
       );
     });
 
@@ -294,7 +296,7 @@ describe('The Model Plan Payment Form', () => {
     cy.contains('button', 'Continue to operational solutions tracker').click();
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/it-solutions$/
+        /\/models\/.{36}\/collaboration-area\/task-list\/it-solutions$/
       );
     });
   });

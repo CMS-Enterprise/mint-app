@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { GridContainer, Icon, PrimaryNav } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useGetPollNotificationsQuery } from 'gql/gen/graphql';
@@ -31,6 +31,41 @@ export const navLinks = [
   }
 ];
 
+export const getActiveTab = (route: string, pathname: string) => {
+  const homeRoutes: string[] = [
+    'collaboration-area',
+    'task-list',
+    'homepage-settings'
+  ];
+
+  // baseRoute is the first part of the route associated with the tab
+  const baseRoute = route.split('/')[1];
+  // currentBaseRoute is the first part of the current pathname
+  const currentBaseRoute = pathname.split('/')[1];
+
+  // If the route is the home route, check if the pathname is the home route
+  if (route === '/') {
+    if (pathname === '/') {
+      return true;
+    }
+    // If the route is the home route, check if the pathname includes the home route - ex: /collaboration-area/123, task-list/123, notifications
+    if (homeRoutes.some(homeRoute => pathname.includes(homeRoute))) {
+      return true;
+    }
+    return false;
+  }
+
+  // If the route is not the home route, check if the currentBaseRoute is the same as the baseRoute and the pathname does not include any of the home routes
+  if (
+    currentBaseRoute === baseRoute &&
+    !homeRoutes.some(homeRoute => pathname.includes(homeRoute))
+  ) {
+    return true;
+  }
+
+  return false;
+};
+
 const NavigationBar = ({
   isMobile,
   signout,
@@ -42,19 +77,22 @@ const NavigationBar = ({
 
   const flags = useFlags();
 
+  const { pathname } = useLocation();
+
   const { data } = useGetPollNotificationsQuery({
     pollInterval: 5000
   });
 
-  const hasNotifications = !!data?.currentUser.notifications
-    .numUnreadNotifications;
+  const hasNotifications =
+    !!data?.currentUser.notifications.numUnreadNotifications;
 
   const primaryLinks = navLinks.map(route => (
     <div className="mint-nav" key={route.label}>
       <NavLink
         to={route.link}
-        activeClassName="usa-current"
-        className="mint-nav__link"
+        className={classNames('mint-nav__link', {
+          'usa-current': getActiveTab(route.link, pathname)
+        })}
         onClick={() => expandMobileSideNav(false)}
         exact={route.link === '/'}
       >
@@ -148,7 +186,7 @@ const NavigationBar = ({
     <nav
       aria-label={t('header:navigation')}
       data-testid="navigation-bar"
-      className={className}
+      className={classNames(className, 'z-400')}
     >
       <GridContainer>
         <PrimaryNav

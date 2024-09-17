@@ -1,10 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -16,29 +13,30 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetFrequencyQuery,
-  useGetFrequencyQuery,
-  useUpdateModelPlanBeneficiariesMutation
+  TypedUpdateModelPlanBeneficiariesDocument,
+  useGetFrequencyQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import ConfirmLeave from 'components/ConfirmLeave';
 import FrequencyForm from 'components/FrequencyForm';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
-import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 type FrequencyFormType = GetFrequencyQuery['modelPlan']['beneficiaries'];
@@ -102,45 +100,13 @@ const Frequency = () => {
 
   useScrollElement(!loading);
 
-  const [update] = useUpdateModelPlanBeneficiariesMutation();
-
-  const handleFormSubmit = (
-    redirect?: 'back' | 'task-list' | 'next' | string
-  ) => {
-    const dirtyInputs = dirtyInput(
-      formikRef?.current?.initialValues,
-      formikRef?.current?.values
-    );
-
-    if (dirtyInputs.status) {
-      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+  const { mutationError } = useHandleMutation(
+    TypedUpdateModelPlanBeneficiariesDocument,
+    {
+      id,
+      formikRef
     }
-
-    update({
-      variables: {
-        id,
-        changes: dirtyInputs
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/beneficiaries/people-impact`
-            );
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list/`);
-          } else if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/ops-eval-and-learning`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  );
 
   const initialValues: InitialValueType = {
     __typename: 'PlanBeneficiaries',
@@ -171,19 +137,21 @@ const Frequency = () => {
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{beneficiariesMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.BENEFICIARIES
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {beneficiariesMiscT('heading')}
       </PageHeading>
@@ -206,23 +174,22 @@ const Frequency = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InitialValueType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (
             <>
+              <ConfirmLeave />
+
               {getKeys(errors).length > 0 && (
                 <ErrorAlert
                   testId="formik-validation-errors"
@@ -285,11 +252,11 @@ const Frequency = () => {
                         {itSolutionsStarted && (
                           <ITSolutionsWarning
                             id="beneficiaries-overlap-warning"
-                            onClick={() =>
-                              handleFormSubmit(
-                                `/models/${modelID}/task-list/it-solutions`
-                              )
-                            }
+                            onClick={() => {
+                              history.push(
+                                `/models/${modelID}/collaboration-area/task-list/it-solutions`
+                              );
+                            }}
                           />
                         )}
 
@@ -397,7 +364,9 @@ const Frequency = () => {
                           type="button"
                           className="usa-button usa-button--outline margin-bottom-1"
                           onClick={() => {
-                            handleFormSubmit('back');
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list/beneficiaries/people-impact`
+                            );
                           }}
                         >
                           {miscellaneousT('back')}
@@ -411,7 +380,11 @@ const Frequency = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit('task-list')}
+                        onClick={() =>
+                          history.push(
+                            `/models/${modelID}/collaboration-area/task-list/`
+                          )
+                        }
                       >
                         <Icon.ArrowBack
                           className="margin-right-1"
@@ -424,16 +397,6 @@ const Frequency = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

@@ -8,14 +8,15 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/upload"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
@@ -25,7 +26,7 @@ func (s *Store) PlanDocumentCreate(
 	principal string,
 	inputDocument *models.PlanDocument) (*models.PlanDocument, error) {
 
-	inputDocument.ID = utilityUUID.ValueOrNewUUID(inputDocument.ID)
+	inputDocument.ID = utilityuuid.ValueOrNewUUID(inputDocument.ID)
 	inputDocument.ModifiedBy = nil
 	inputDocument.ModifiedDts = nil
 
@@ -44,6 +45,28 @@ func (s *Store) PlanDocumentCreate(
 	return retDoc, nil
 }
 
+// PlanDocumentGetByIDNoS3Check gets a plan document object by id
+func PlanDocumentGetByIDNoS3Check(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	id uuid.UUID,
+) (*models.PlanDocument, error) {
+
+	stmt, err := np.PrepareNamed(sqlqueries.PlanDocument.GetByID)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	var document models.PlanDocument
+	err = stmt.Get(&document, utilitysql.CreateIDQueryMap(id))
+	if err != nil {
+		return nil, err
+	}
+
+	return &document, nil
+}
+
 // PlanDocumentRead reads a plan document object by id
 func (s *Store) PlanDocumentRead(
 	_ *zap.Logger,
@@ -58,7 +81,7 @@ func (s *Store) PlanDocumentRead(
 	defer stmt.Close()
 
 	var document models.PlanDocument
-	err = stmt.Get(&document, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&document, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +107,7 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 	defer stmt.Close()
 
 	var documents []*models.PlanDocument
-	err = stmt.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	err = stmt.Select(&documents, utilitysql.CreateModelPlanIDQueryMap(modelPlanID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
 	}
@@ -111,7 +134,7 @@ func (s *Store) PlanDocumentsReadBySolutionID(
 	defer stmt.Close()
 
 	var documents []*models.PlanDocument
-	err = stmt.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
+	err = stmt.Select(&documents, utilitysql.CreateSolutionIDQueryMap(solutionID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}
@@ -138,7 +161,7 @@ func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
 	defer stmt.Close()
 
 	var documents []*models.PlanDocument
-	err = stmt.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	err = stmt.Select(&documents, utilitysql.CreateModelPlanIDQueryMap(modelPlanID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
 	}
@@ -165,7 +188,7 @@ func (s *Store) PlanDocumentsReadBySolutionIDNotRestricted(
 	defer stmt.Close()
 
 	var documents []*models.PlanDocument
-	err = stmt.Select(&documents, utilitySQL.CreateSolutionIDQueryMap(solutionID))
+	err = stmt.Select(&documents, utilitysql.CreateSolutionIDQueryMap(solutionID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}
@@ -268,7 +291,7 @@ func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(utilitySQL.CreateDocumentIDQueryMap(id))
+	_, err = stmt.Exec(utilitysql.CreateDocumentIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -279,7 +302,7 @@ func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid
 	}
 	defer stmt.Close()
 
-	sqlResult, err := stmt.Exec(utilitySQL.CreateIDQueryMap(id))
+	sqlResult, err := stmt.Exec(utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
 	}

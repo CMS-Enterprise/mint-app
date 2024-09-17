@@ -7,20 +7,21 @@ import {
   GetModelPlanQuery,
   useArchiveModelPlanMutation
 } from 'gql/gen/graphql';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-import { Avatar } from 'components/shared/Avatar';
 import ShareExportModal from 'components/ShareExport';
 import useMessage from 'hooks/useMessage';
-import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
+import RecentChanges from 'views/ModelPlan/ChangeHistory/components/RecentChanges';
 
 import { StatusMessageType } from '../..';
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
-type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type GetCollaboratorsType =
+  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 const TaskListSideNav = ({
   modelPlan,
@@ -37,6 +38,8 @@ const TaskListSideNav = ({
 
   const { t } = useTranslation('modelPlanTaskList');
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
+
+  const flags = useFlags();
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
@@ -150,16 +153,7 @@ const TaskListSideNav = ({
           </Button>
         </div>
 
-        <Button
-          className="line-height-body-5 test-withdraw-request text-red"
-          type="button"
-          unstyled
-          onClick={() => setModalOpen(true)}
-        >
-          {t('sideNav.remove')}
-        </Button>
-
-        <div className="margin-top-4 margin-bottom-7">
+        <div className="margin-top-4 margin-bottom-6">
           <h4 className="margin-bottom-1">{t('sideNav.relatedContent')}</h4>
           <Button
             type="button"
@@ -188,33 +182,7 @@ const TaskListSideNav = ({
           </Button>
         </div>
 
-        <div>
-          <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>
-
-          <div className="margin-bottom-2">
-            <UswdsReactLink to={`/models/${modelID}/collaborators?view=manage`}>
-              {t('sideNav.editTeam')}
-            </UswdsReactLink>
-          </div>
-
-          <div className="sidenav-actions__teamList">
-            <ul className="usa-list usa-list--unstyled">
-              {collaboratorsOrderedByModelLeads(collaborators).map(
-                collaborator => {
-                  return (
-                    <li key={collaborator.userAccount.username}>
-                      <Avatar
-                        className="margin-bottom-1"
-                        user={collaborator.userAccount.commonName}
-                        teamRoles={collaborator.teamRoles}
-                      />
-                    </li>
-                  );
-                }
-              )}
-            </ul>
-          </div>
-        </div>
+        {flags.changeHistoryEnabled && <RecentChanges modelID={modelID} />}
       </div>
     </>
   );

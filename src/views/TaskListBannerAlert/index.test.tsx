@@ -9,11 +9,11 @@ describe('The Task List Alert Banner', () => {
     const { findByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/task-list/beneficiaries`
+          `/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/task-list/beneficiaries`
         ]}
       >
         <Route
-          path="/models/:modelID/task-list"
+          path="/models/:modelID/collaboration-area/task-list"
           component={TaskListBannerAlert}
         />
       </MemoryRouter>
@@ -26,11 +26,11 @@ describe('The Task List Alert Banner', () => {
     const { queryByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/task-list`
+          `/models/0272ca43-1ec1-45a6-a06f-8e2def7f6888/collaboration-area/task-list`
         ]}
       >
         <Route
-          path="/models/:modelID/task-list"
+          path="/models/:modelID/collaboration-area/task-list"
           component={TaskListBannerAlert}
         />
       </MemoryRouter>

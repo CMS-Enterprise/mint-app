@@ -1,12 +1,39 @@
+import {
+  ModelPhase,
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'gql/gen/graphql';
+
+const statusText: Record<ModelPhase, string> = {
+  [ModelPhase.ICIP_COMPLETE]:
+    'Your model’s anticipated timeline suggests that your ICIP is now complete. Would you like to update the status of your model to reflect that? If your model’s ICIP is not yet complete, please adjust your model’s anticipated timeline.',
+  [ModelPhase.IN_CLEARANCE]:
+    'Your model’s anticipated timeline suggests that it is now in clearance. Would you like to update the status of your model to reflect that? If your model is not yet in clearance, please adjust your model’s anticipated timeline.',
+  [ModelPhase.CLEARED]:
+    'Your model’s anticipated timeline suggests that it is now cleared. Would you like to update the status of your model to reflect that? If your model is not yet cleared, please adjust your model’s anticipated timeline.',
+  [ModelPhase.ANNOUNCED]:
+    'Your model’s anticipated timeline suggests that it is now announced. Would you like to update the status of your model to reflect that? If your model is not yet announced, please adjust your model’s anticipated timeline.',
+  [ModelPhase.ACTIVE]:
+    'Your model’s anticipated timeline suggests that it is now active. Would you like to update the status of your model to reflect that? If your model is not yet active, please adjust your model’s anticipated timeline.',
+  [ModelPhase.ENDED]:
+    'Your model’s anticipated timeline suggests that it is now ended. Would you like to update the status of your model to reflect that? If your model has not yet ended, please adjust your model’s anticipated timeline.'
+};
+
+const taskListStatus: Record<TaskStatus | PrepareForClearanceStatus, string> = {
+  [TaskStatus.READY]: 'Ready to start',
+  [TaskStatus.IN_PROGRESS]: 'In progress',
+  [TaskStatus.READY_FOR_REVIEW]: 'Ready for review',
+  [TaskStatus.READY_FOR_CLEARANCE]: 'Ready for clearance',
+  [PrepareForClearanceStatus.CANNOT_START]: 'Cannot start yet'
+};
+
 const modelPlanTaskList = {
-  navigation: {
-    home: 'Home',
-    modelPlanTaskList: 'Model Plan task list'
-  },
-  subheading: 'for <1>{{modelName}}</1>',
+  heading: 'Model Plan task list',
+  subheading: 'for {{modelName}}',
   status: 'Status:',
   update: 'Update',
   edit: 'Edit Model Plan',
+  taskListStatus,
   documentSummaryBox: {
     heading: 'Documents',
     copy: 'There are no documents added.',
@@ -50,56 +77,49 @@ const modelPlanTaskList = {
   numberedList: {
     basics: {
       heading: 'Model basics',
-      team:
-        'Start filling out as much of the basic model information as you know and reach out to the MINT Team if you need help. Model basics includes the model name, problem, goal, and high level timelines.',
+      team: 'Start filling out as much of the basic model information as you know and reach out to the MINT Team if you need help. Model basics includes the model name, problem, goal, and high level timelines.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'basics'
     },
     generalCharacteristics: {
       heading: 'General characteristics',
-      team:
-        'Start filling out as much of the general model characteristics as you know and reach out to the MINT Team if you need help. This section includes the key characteristics of the model, agreement type, waivers, and rulemaking.',
+      team: 'Start filling out as much of the general model characteristics as you know and reach out to the MINT Team if you need help. This section includes the key characteristics of the model, agreement type, waivers, and rulemaking.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'characteristics'
     },
     participantsAndProviders: {
       heading: 'Participants and providers',
-      team:
-        'Start filling out as much of the model participant information as you know and reach out to the MINT Team if you need help.',
+      team: 'Start filling out as much of the model participant information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'participants-and-providers'
     },
     beneficiaries: {
       heading: 'Beneficiaries',
-      team:
-        'Start filling out as much of the beneficiary information as you know and reach out to the MINT Team if you need help.',
+      team: 'Start filling out as much of the beneficiary information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'beneficiaries'
     },
     opsEvalAndLearning: {
       heading: 'Operations, evaluation, and learning',
-      team:
-        'Start filling out as much of the model operation information as you know and reach out to the MINT Team if you need help.',
+      team: 'Start filling out as much of the model operation information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'ops-eval-and-learning'
     },
     payments: {
       heading: 'Payment',
-      team:
-        'Start filling out as much of the payment information as you know and reach out to the MINT Team if you need help.',
+      team: 'Start filling out as much of the payment information as you know and reach out to the MINT Team if you need help.',
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'payment'
     },
     itSolutions: {
       heading: 'Operational solutions and implementation status',
-      team:
-        'Choose the solutions your model will utilize. Many items in this section are populated based on responses to questions answered in previous sections.',
+      team: 'Choose the solutions your model will utilize. Many items in this section are populated based on responses to questions answered in previous sections.',
       team2:
         'Track your progress towards implementation, see points of contact for operational services, and monitor deadlines. Keeping this information up-to-date will also help the MINT Team understand how best to help you.',
       assessment:
@@ -108,8 +128,7 @@ const modelPlanTaskList = {
     },
     prepareForClearance: {
       heading: 'Prepare for clearance',
-      team:
-        'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
+      team: 'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
       assessment:
         'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
       path: 'prepare-for-clearance'
@@ -123,16 +142,7 @@ const modelPlanTaskList = {
     update: 'Update',
     updateStatuses: 'Update statuses'
   },
-  taskListItem: {
-    ready: 'Ready to start',
-    readyForReview: 'Ready for review',
-    inProgress: 'In progress',
-    completed: 'Completed',
-    notNeeded: 'Not needed',
-    lastUpdated: 'Last updated:',
-    readyForClearance: 'Ready for clearance',
-    cannotStart: 'Cannot start yet'
-  },
+  lastUpdated: 'Last updated:',
   errorHeading: 'Failed to fetch model plan',
   errorMessage: 'Please try again',
   locked:
@@ -154,7 +164,22 @@ const modelPlanTaskList = {
     payment: 'payment'
   },
   lockErrorHeading: 'Sorry, an has error occured.',
-  lockErrorInfo: 'Please return to the task list and try again.'
+  lockErrorInfo: 'Please return to the task list and try again.',
+  statusUpdateSuccess:
+    'You have successfully updated the status to {{status}}.',
+  statusUpdateError:
+    'There was an error updating the status to {{status}}. Please try again.',
+  statusUpdateErrorExists: 'The status has already been updated to {{status}}.',
+  statusModal: {
+    heading: 'Update model status?',
+    currentStatus: 'Current status: ',
+    newStatus: 'New status ',
+    update: 'Yes, update status',
+    goToTimeline: 'No, go to timeline',
+    hint: 'Select the specific clearance phase.',
+    statusText
+  },
+  returnToCollaboration: 'Return to model collaboration area'
 };
 
 export default modelPlanTaskList;

@@ -9,8 +9,8 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
@@ -49,7 +49,7 @@ func (s *Store) PlanParticipantsAndProvidersCreate(
 	gc *models.PlanParticipantsAndProviders,
 ) (*models.PlanParticipantsAndProviders, error) {
 
-	gc.ID = utilityUUID.ValueOrNewUUID(gc.ID)
+	gc.ID = utilityuuid.ValueOrNewUUID(gc.ID)
 
 	stmt, err := np.PrepareNamed(sqlqueries.PlanParticipantsAndProviders.Create)
 	if err != nil {
@@ -104,7 +104,7 @@ func (s *Store) PlanParticipantsAndProvidersGetByID(
 	}
 	defer stmt.Close()
 
-	err = stmt.Get(&gc, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&gc, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}

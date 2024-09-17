@@ -35,12 +35,16 @@ import {
   GetAllParticipantsAndProvidersQuery,
   GetAllPaymentsDocument,
   GetAllPaymentsQuery,
+  GetCrtdLsDocument,
+  GetCrtdLsQuery,
   GetModelCollaboratorsDocument,
   GetModelCollaboratorsQuery,
   GetModelSummaryDocument,
   GetModelSummaryQuery,
   GetOperationalNeedsDocument,
   GetOperationalNeedsQuery,
+  GetPossibleOperationalSolutionsDocument,
+  GetPossibleOperationalSolutionsQuery,
   KeyCharacteristic,
   ModelCategory,
   ModelLearningSystemType,
@@ -77,12 +81,17 @@ import {
 export const modelID: string = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
 type GetAllBasicsTypes = GetAllBasicsQuery['modelPlan']['basics'];
-type GetAllGeneralCharacteristicsTypes = GetAllGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
-type GetAllParticipantsTypes = GetAllParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
-type AllBeneficiariesTypes = GetAllBeneficiariesQuery['modelPlan']['beneficiaries'];
-type AllOpsEvalAndLearningTypes = GetAllOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
+type GetAllGeneralCharacteristicsTypes =
+  GetAllGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
+type GetAllParticipantsTypes =
+  GetAllParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
+type AllBeneficiariesTypes =
+  GetAllBeneficiariesQuery['modelPlan']['beneficiaries'];
+type AllOpsEvalAndLearningTypes =
+  GetAllOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
 type PaymentTypes = GetAllPaymentsQuery['modelPlan']['payments'];
-type GetModelCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type GetModelCollaboratorsType =
+  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 type GetModelSummaryTypes = GetModelSummaryQuery['modelPlan'];
 type GetOperationalNeedsType = GetOperationalNeedsQuery;
 
@@ -119,6 +128,8 @@ const modelBasicsData: GetAllBasicsTypes = {
   highLevelNote: 'Theses are my best guess notes',
   phasedIn: false,
   phasedInNote: "This can't be phased in",
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -134,6 +145,7 @@ export const modelBasicsMocks = [
           __typename: 'ModelPlan',
           id: modelID,
           nameHistory: ['First Name', 'Second Name'],
+          isCollaborator: true,
           basics: modelBasicsData
         }
       }
@@ -237,6 +249,8 @@ const generalCharacteristicData: GetAllGeneralCharacteristicsTypes = {
   waiversRequired: true,
   waiversRequiredTypes: [WaiverType.FRAUD_ABUSE, WaiverType.MEDICAID],
   waiversRequiredNote: 'My waiver note',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -269,6 +283,7 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
     ParticipantsType.OTHER
   ],
   medicareProviderType: null,
+  isNewTypeOfProvidersOrSuppliers: true,
   statesEngagement: 'State',
   participantsOther: 'This is the other',
   participantsNote: 'Participant note',
@@ -340,6 +355,8 @@ const participantsAndProvidersData: GetAllParticipantsTypes = {
   providerOverlap: OverlapType.NO,
   providerOverlapHierarchy: 'This is the hierarchy',
   providerOverlapNote: 'Overlap note',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -398,6 +415,8 @@ const beneficiaryData: AllBeneficiariesTypes = {
   precedenceRulesYes: 'Yes precedence rules',
   precedenceRulesNo: 'No precedence',
   precedenceRulesNote: 'Precedence note',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -544,7 +563,9 @@ const opsEvalAndLearningData: AllOpsEvalAndLearningTypes = {
   ],
   modelLearningSystemsOther: 'Other learning system',
   modelLearningSystemsNote: 'Note for learning system',
-  anticipatedChallenges: 'Some challenges'
+  anticipatedChallenges: 'Some challenges',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z'
 };
 
 export const opsEvalAndLearningMocks = [
@@ -568,11 +589,13 @@ export const opsEvalAndLearningMocks = [
 const paymentsData: PaymentTypes = {
   __typename: 'PlanPayments',
   fundingSource: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
+  fundingSourcePatientProtectionInfo: 'Patient protection',
   fundingSourceMedicareAInfo: 'PartA',
   fundingSourceMedicareBInfo: 'PartB',
   fundingSourceOther: 'Other funding source',
   fundingSourceNote: 'Funding source note',
   fundingSourceR: [FundingSource.PATIENT_PROTECTION_AFFORDABLE_CARE_ACT],
+  fundingSourceRPatientProtectionInfo: 'Patient protection r',
   fundingSourceRMedicareAInfo: 'PartRA',
   fundingSourceRMedicareBInfo: 'PartRB',
   fundingSourceROther: 'Other funding r',
@@ -593,6 +616,8 @@ const paymentsData: PaymentTypes = {
   affectsMedicareSecondaryPayerClaimsHow: 'Affect how',
   affectsMedicareSecondaryPayerClaimsNote: 'Affect payer note',
   payModelDifferentiation: 'Differ pay model',
+  willBePaymentAdjustments: true,
+  willBePaymentAdjustmentsNote: 'Payment adjustments note',
   creatingDependenciesBetweenServices: true,
   creatingDependenciesBetweenServicesNote: 'Creating dependencies note',
   needsClaimsDataCollection: true,
@@ -641,6 +666,8 @@ const paymentsData: PaymentTypes = {
   paymentDemandRecoupmentFrequencyNote: 'Demand and Recoupment note',
   paymentStartDate: '2022-06-03T19:32:24.412662Z',
   paymentStartDateNote: 'Note for payment start date',
+  modifiedDts: '2022-06-03T19:32:24.412662Z',
+  createdDts: '2022-06-03T19:32:24.412662Z',
   status: TaskStatus.IN_PROGRESS
 };
 
@@ -681,7 +708,6 @@ const summaryData: GetModelSummaryTypes = {
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
   isCollaborator: true,
-
   collaborators: [
     {
       userAccount: {
@@ -754,7 +780,7 @@ const collaboratorsData: GetModelCollaboratorsType[] = [
       commonName: 'Boba Fett'
     },
     modelPlanID: modelID,
-    teamRoles: [TeamRole.LEADERSHIP],
+    teamRoles: [TeamRole.LEADERSHIP, TeamRole.EVALUATION, TeamRole.LEARNING],
     createdDts: '2022-06-03T19:32:24.412662Z',
     __typename: 'PlanCollaborator'
   }
@@ -785,6 +811,7 @@ const opNeedsData: GetOperationalNeedsType = {
     __typename: 'ModelPlan',
     id: modelID,
     isCollaborator: true,
+    opSolutionLastModifiedDts: '2022-05-12T15:01:39.190679Z',
     modelName: 'My excellent plan that I just initiated',
     operationalNeeds: [
       {
@@ -828,6 +855,92 @@ export const operationalNeedsMock = [
     },
     result: {
       data: opNeedsData
+    }
+  }
+];
+
+const possibleOperationalSolutionData: GetPossibleOperationalSolutionsQuery = {
+  __typename: 'Query',
+  possibleOperationalSolutions: [
+    {
+      id: 1,
+      name: '4innovation (4i)',
+      key: OperationalSolutionKey.INNOVATION,
+      __typename: 'PossibleOperationalSolution'
+    },
+    {
+      id: 2,
+      name: 'Accountable Care Organization - Operational System (ACO-OS)',
+      key: OperationalSolutionKey.ACO_OS,
+      __typename: 'PossibleOperationalSolution'
+    },
+    {
+      id: 3,
+      name: 'Automated Plan Payment System (APPS)',
+      key: OperationalSolutionKey.APPS,
+      __typename: 'PossibleOperationalSolution'
+    },
+    {
+      id: 4,
+      name: 'Centralized Data Exchange (CDX)',
+      key: OperationalSolutionKey.CDX,
+      __typename: 'PossibleOperationalSolution'
+    }
+  ]
+};
+
+export const possibleOperationalSolutionDataMocks = [
+  {
+    request: {
+      query: GetPossibleOperationalSolutionsDocument
+    },
+    result: {
+      data: possibleOperationalSolutionData
+    }
+  }
+];
+
+const crtdlData: GetCrtdLsQuery = {
+  __typename: 'Query',
+  modelPlan: {
+    __typename: 'ModelPlan',
+    id: modelID,
+    modelName: 'My excellent plan that I just initiated',
+    isCollaborator: true,
+    crs: [
+      {
+        __typename: 'PlanCR',
+        id: '123',
+        modelPlanID: modelID,
+        title: 'My CR',
+        idNumber: 'CR123',
+        dateInitiated: '2022-07-30T05:00:00Z',
+        dateImplemented: '2022-07-30T05:00:00Z',
+        note: 'note'
+      }
+    ],
+    tdls: [
+      {
+        __typename: 'PlanTDL',
+        id: '1234',
+        modelPlanID: modelID,
+        title: 'My TDL',
+        idNumber: 'TDL123',
+        dateInitiated: '2022-07-30T05:00:00Z',
+        note: 'note'
+      }
+    ]
+  }
+};
+
+export const crtdlMocks = [
+  {
+    request: {
+      query: GetCrtdLsDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: crtdlData
     }
   }
 ];

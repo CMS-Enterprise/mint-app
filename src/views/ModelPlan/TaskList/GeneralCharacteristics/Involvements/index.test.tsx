@@ -6,7 +6,8 @@ import { GetInvolvementsDocument, GetInvolvementsQuery } from 'gql/gen/graphql';
 
 import Involvements from './index';
 
-type GetInvolvementsType = GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
+type GetInvolvementsType =
+  GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
 
 const involvementsMockData: GetInvolvementsType = {
   __typename: 'PlanGeneralCharacteristics',
@@ -45,11 +46,11 @@ describe('Model Plan Characteristics', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/involvements'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/characteristics/involvements'
         ]}
       >
         <MockedProvider mocks={involvementsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/characteristics/involvements">
+          <Route path="/models/:modelID/collaboration-area/task-list/characteristics/involvements">
             <Involvements />
           </Route>
         </MockedProvider>
@@ -75,11 +76,11 @@ describe('Model Plan Characteristics', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/involvements'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/characteristics/involvements'
         ]}
       >
         <MockedProvider mocks={involvementsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/characteristics/involvements">
+          <Route path="/models/:modelID/collaboration-area/task-list/characteristics/involvements">
             <Involvements />
           </Route>
         </MockedProvider>

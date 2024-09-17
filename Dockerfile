@@ -24,6 +24,7 @@ FROM base AS build
 
 COPY cmd/ ./cmd/
 COPY pkg/ ./pkg/
+COPY mappings/ ./mappings/
 RUN CGO_ENABLED=0 GOOS=linux go build -a -o bin/mint ./cmd/mint
 
 FROM scratch

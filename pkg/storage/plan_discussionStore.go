@@ -5,15 +5,15 @@ import (
 	_ "embed"
 	"errors"
 	"fmt"
-
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"time"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
+	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
@@ -35,6 +35,8 @@ var getUserRoleSQL string
 
 //go:embed SQL/plan_discussion/get_by_model_plan_id_LOADER.sql
 var planDiscussionGetByModelPlanIDLoaderSQL string
+
+//TODO: Migrate all these queries to the sql_queries package
 
 // DiscussionReplyGetByDiscussionIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
 func (s *Store) DiscussionReplyGetByDiscussionIDLOADER(
@@ -97,7 +99,7 @@ func (s *Store) PlanDiscussionCreate(
 	np sqlutils.NamedPreparer,
 ) (*models.PlanDiscussion, error) {
 
-	discussion.ID = utilityUUID.ValueOrNewUUID(discussion.ID)
+	discussion.ID = utilityuuid.ValueOrNewUUID(discussion.ID)
 
 	stmt, err := np.PrepareNamed(planDiscussionCreateSQL)
 	if err != nil {
@@ -126,7 +128,7 @@ func DiscussionReplyCreate(
 	np sqlutils.NamedPreparer,
 ) (*models.DiscussionReply, error) {
 
-	reply.ID = utilityUUID.ValueOrNewUUID(reply.ID)
+	reply.ID = utilityuuid.ValueOrNewUUID(reply.ID)
 
 	stmt, err := np.PrepareNamed(sqlqueries.DiscussionReply.Create)
 	if err != nil {
@@ -205,7 +207,7 @@ func (s *Store) PlanDiscussionDelete(
 	defer stmt.Close()
 
 	discussion := &models.PlanDiscussion{}
-	err = stmt.Get(discussion, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(discussion, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -228,12 +230,27 @@ func (s *Store) PlanDiscussionByID(_ *zap.Logger, id uuid.UUID) (*models.PlanDis
 	defer stmt.Close()
 
 	discussion := &models.PlanDiscussion{}
-	err = stmt.Get(discussion, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(discussion, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
 
 	return discussion, nil
+}
+
+// PlanDiscussionByIDWithNumberOfReplies retrieves the plan discussion for a given id, and also returns the number of replies the discussion has
+func PlanDiscussionByIDWithNumberOfReplies(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID, timeToCheck time.Time) (*models.PlanDiscussionWithNumberOfReplies, error) {
+	args := map[string]interface{}{
+		"id":            id,
+		"time_to_check": timeToCheck,
+	}
+
+	discussionWithNumberOfReplies, procError := sqlutils.GetProcedure[models.PlanDiscussionWithNumberOfReplies](np, sqlqueries.PlanDiscussion.GetWithNumberOfRepliesAtTimeByID, args)
+	if procError != nil {
+		return nil, fmt.Errorf("issue returning PlanDiscussion With Number of Replies object: %w", procError)
+	}
+	return discussionWithNumberOfReplies, nil
+
 }
 
 // DiscussionReplyDelete deletes the discussion reply for a given id
@@ -278,7 +295,7 @@ func (s *Store) DiscussionReplyByID(_ *zap.Logger, id uuid.UUID) (*models.Discus
 	defer stmt.Close()
 
 	discussionReply := &models.DiscussionReply{}
-	err = stmt.Get(discussionReply, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(discussionReply, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}

@@ -81,17 +81,6 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
-      - name: Deploy Faktory ECS service
-        env:
-          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: mint-faktory
-          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
-          TASK_FAMILY: "mint-faktory-${{ inputs.env }}"
-          ECS_CLUSTER: "${{ inputs.env }}-mint-faktory"
-          SERVICE_NAME: mint-faktory
-        run: |
-          export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
-          ./scripts/deploy_ecs_service.sh
       - name: Deploy MINT ECS service
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}

@@ -11,6 +11,8 @@ import sixPageMeeting from './helpAndKnowledge/Articles/sixPageMeeting';
 import twoPageMeeting from './helpAndKnowledge/Articles/twoPageMeeting';
 import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
+import customHome from './home/customHome';
+import homepageSettings from './home/settings';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
 import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
@@ -36,6 +38,7 @@ import {
   participantsAndProvidersMisc
 } from './modelPlan/participantsAndProviders';
 import { payments, paymentsMisc } from './modelPlan/payments';
+import replies from './modelPlan/replies';
 import solutions from './modelPlan/solutions';
 import tdls from './modelPlan/tdls';
 import filterView from './readOnly/filterView';
@@ -44,6 +47,8 @@ import modelSummary from './readOnly/modelSummary';
 import readOnlyModelPlan from './readOnly/readOnlyModelPlan';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
+import changeHistory from './changeHistory';
+import collaborationArea from './collaborationArea';
 import cookies from './cookies';
 import error from './error';
 import externalLinkModal from './externalLinkModal';
@@ -51,20 +56,23 @@ import feedback from './feedback';
 import footer from './footer';
 import general from './general';
 import header from './header';
-import home from './home';
 import landing from './landing';
 import plan from './modelPlan';
 import modelPlanTaskList from './modelPlanTaskList';
 import nda from './nda';
 import notifications from './notifications';
 import privacyPolicy from './privacyPolicy';
+import routes from './routes';
 import tableAndPagination from './tableAndPagination';
 import termsAndConditions from './termsAndConditions';
 
 const enUS = {
   accessibilityStatement,
   auth,
+  collaborationArea,
   cookies,
+  changeHistory,
+  customHome,
   draftModelPlan,
   error,
   filterView,
@@ -74,7 +82,7 @@ const enUS = {
   getAccess,
   header,
   helpAndKnowledge,
-  home,
+  homepageSettings,
   landing,
   plan,
   modelPlanOverview,
@@ -82,6 +90,7 @@ const enUS = {
   modelSummary,
   nda,
   notifications,
+  routes,
   // New Translation
   modelPlan,
   modelPlanMisc,
@@ -107,6 +116,7 @@ const enUS = {
   collaboratorsMisc,
   discussions,
   discussionsMisc,
+  replies,
   crs,
   tdls,
   crtdlsMisc,

@@ -1,5 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import ReactGA from 'react-ga4';
+import React, { useLayoutEffect } from 'react';
 import {
   BrowserRouter,
   Redirect,
@@ -7,7 +6,7 @@ import {
   Switch,
   useLocation
 } from 'react-router-dom';
-import { LoginCallback, SecureRoute } from '@okta/okta-react';
+import { LoginCallback, useOktaAuth } from '@okta/okta-react';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Footer from 'components/Footer';
@@ -15,6 +14,7 @@ import Header from 'components/Header';
 import PageWrapper from 'components/PageWrapper';
 import { MessageProvider } from 'hooks/useMessage';
 import usePrevLocation from 'hooks/usePrevious';
+import useRouteTitle from 'hooks/useRouteTitle';
 import AccessibilityStatement from 'views/AccessibilityStatement';
 import AuthenticationWrapper from 'views/AuthenticationWrapper';
 import BeaconWrapper from 'views/BeaconWrapper';
@@ -26,9 +26,13 @@ import FlagsWrapper from 'views/FlagsWrapper';
 import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import GetAccess from 'views/HelpAndKnowledge/Articles/GetAccess';
 import Home from 'views/Home';
+import HomePageSettings from 'views/Home/Settings';
+import Landing from 'views/Landing';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import ModelInfoWrapper from 'views/ModelInfoWrapper';
+import ChangeHistory from 'views/ModelPlan/ChangeHistory';
+import CollaborationArea from 'views/ModelPlan/CollaborationArea';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import CRTDL from 'views/ModelPlan/CRTDL';
 import Documents from 'views/ModelPlan/Documents';
@@ -67,21 +71,19 @@ import UserInfoWrapper from 'views/UserInfoWrapper';
 
 import { NavContextProvider } from '../../components/Header/navContext';
 
+import ProtectedRoute from './ProtectedRoute';
 import shouldScroll from './scrollConfig';
 
 import './index.scss';
 
 const AppRoutes = () => {
+  const { authState } = useOktaAuth();
   const location = useLocation();
   const prevLocation = usePrevLocation(location);
   const flags = useFlags();
 
-  // Track GA Pages
-  useEffect(() => {
-    if (location.pathname) {
-      ReactGA.send({ hitType: 'pageview', page: location.pathname });
-    }
-  }, [location.pathname]);
+  // Fetches translated title for route and sends to GA
+  useRouteTitle({ sendGA: true });
 
   // Scroll to top
   useLayoutEffect(() => {
@@ -97,133 +99,221 @@ const AppRoutes = () => {
 
   return (
     <Switch>
-      {/* General Routes */}
-      <Route path="/" exact component={Home} />
-
+      {/* Auth Routes */}
       <Redirect exact from="/login" to="/signin" />
+
       <Route path="/signin" exact component={Login} />
-      <SecureRoute path="/user-diagnostics" component={UserInfo} />
 
-      <SecureRoute path="/unfollow" exact component={Unfollow} />
+      <ProtectedRoute path="/pre-decisional-notice" component={NDA} />
 
-      {/* Model Routes */}
-      <SecureRoute path="/models" exact component={ModelPlan} />
-
-      <Redirect
-        exact
-        from="/models/:modelID/read-only"
-        to="/models/:modelID/read-view"
-      />
-
-      <Redirect
-        exact
-        from="/models/:modelID/read-view"
-        to="/models/:modelID/read-view/model-basics"
-      />
-
-      {/* Wrap redirect as child of route to pass on query parameters */}
+      {/* Home Routes */}
       <Route
-        path="/models/:modelID/read-only/:subinfo?"
-        render={match => (
-          <Redirect
-            to={{
-              // /models/:modelID/read-view/:subinfo? syntax does not work with pathname prop, so we replace 'only' with 'view'
-              pathname: match.location.pathname.replace('only', 'view'),
-              search: match.location.search
-            }}
+        path="/"
+        exact
+        render={() => {
+          if (!authState?.isAuthenticated) {
+            return <Landing />;
+          }
+          return <Home />;
+        }}
+      />
+
+      <ProtectedRoute path="/homepage-settings" component={HomePageSettings} />
+
+      <ProtectedRoute path="/notifications" component={Notifications} />
+
+      {/* Model Plan Routes */}
+      <ProtectedRoute path="/models">
+        <Switch>
+          {/* New Plan Routes */}
+          <ProtectedRoute
+            path="/models/steps-overview"
+            exact
+            component={StepsOverview}
           />
-        )}
-      />
 
-      <SecureRoute
-        path="/models/:modelID/read-view/:subinfo?"
-        exact
-        component={ReadOnly}
-      />
+          <ProtectedRoute path="/models/new-plan" component={NewPlan} />
 
-      <SecureRoute
-        path="/models/steps-overview"
-        exact
-        component={StepsOverview}
-      />
+          {/* Collaboration Area Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area"
+            exact
+            component={CollaborationArea}
+          />
 
-      <SecureRoute path="/models/new-plan" component={NewPlan} />
-      <SecureRoute
-        path="/models/:modelID/collaborators"
-        component={Collaborators}
-      />
-      <SecureRoute path="/models/:modelID/documents" component={Documents} />
-      <SecureRoute path="/models/:modelID/cr-and-tdl" component={CRTDL} />
-      <SecureRoute path="/models/:modelID/status" exact component={Status} />
-      <SecureRoute
-        path="/models/:modelID/task-list"
-        exact
-        component={TaskList}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/basics"
-        component={Basics}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/beneficiaries"
-        component={Beneficiaries}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/characteristics"
-        component={Characteristics}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/cost-estimate"
-        component={CostEstimate}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/ops-eval-and-learning"
-        component={OpsEvalAndLearning}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/participants-and-providers"
-        component={Participants}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/payment"
-        component={Payment}
-      />
-      {!flags.hideITLeadExperience && (
-        <SecureRoute
-          path="/models/:modelID/task-list/it-solutions"
-          component={ITSolutions}
-        />
-      )}
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/collaborators"
+            component={Collaborators}
+          />
 
-      <SecureRoute
-        path="/models/:modelID/task-list/prepare-for-clearance"
-        component={PrepareForClearance}
-      />
-      <SecureRoute
-        path="/models/:modelID/task-list/submit-request"
-        component={SubmitRequest}
-      />
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/documents"
+            component={Documents}
+          />
 
-      <SecureRoute path="/notifications" component={Notifications} />
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/cr-and-tdl"
+            component={CRTDL}
+          />
 
-      <SecureRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/status"
+            exact
+            title="Model Status"
+            component={Status}
+          />
 
-      <SecureRoute path="/pre-decisional-notice" component={NDA} />
+          {/* Task List Routes */}
 
-      <SecureRoute path="/report-a-problem" component={ReportAProblem} />
+          <Redirect
+            exact
+            from="/models/:modelID/task-list"
+            to="/models/:modelID/collaboration-area/task-list"
+          />
 
-      <SecureRoute path="/send-feedback" component={SendFeedback} />
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list"
+            exact
+            component={TaskList}
+          />
 
-      <SecureRoute path="/feedback-received" component={FeedbackReceived} />
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/basics"
+            component={Basics}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/beneficiaries"
+            component={Beneficiaries}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/characteristics"
+            component={Characteristics}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/cost-estimate"
+            component={CostEstimate}
+            enabled={false} // This route is not yet implemented
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning"
+            component={OpsEvalAndLearning}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/participants-and-providers"
+            component={Participants}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/payment"
+            component={Payment}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/it-solutions"
+            component={ITSolutions}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance"
+            component={PrepareForClearance}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/task-list/submit-request"
+            component={SubmitRequest}
+            enabled={false} // This route is not yet implemented
+          />
+
+          {/* Model/Read View Routes */}
+          <ProtectedRoute path="/models" exact component={ModelPlan} />
+
+          <Redirect
+            exact
+            from="/models/:modelID/read-only"
+            to="/models/:modelID/read-view"
+          />
+
+          <Redirect
+            exact
+            from="/models/:modelID/read-view"
+            to="/models/:modelID/read-view/model-basics"
+          />
+
+          <ProtectedRoute // Wrap redirect as child of route to pass on query parameters
+            path="/models/:modelID/read-only/:subinfo?"
+            render={match => (
+              <Redirect
+                to={{
+                  // /models/:modelID/read-view/:subinfo? syntax does not work with pathname prop, so we replace 'only' with 'view'
+                  pathname: match.location.pathname.replace('only', 'view'),
+                  search: match.location.search
+                }}
+              />
+            )}
+          />
+
+          <ProtectedRoute
+            path="/models/:modelID/read-view/:subinfo?"
+            exact
+            component={ReadOnly}
+          />
+
+          <Redirect
+            exact
+            from="/models/:modelID"
+            to="/models/:modelID/read-view"
+          />
+
+          {/* Change History Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/change-history"
+            component={ChangeHistory}
+            enabled={flags.changeHistoryEnabled}
+          />
+
+          {/* Locked Task List Section */}
+          <ProtectedRoute
+            path="/models/:modelID/locked-task-list-section"
+            component={LockedTaskListSection}
+          />
+
+          {/* 404 */}
+          <Route path="*" component={NotFound} />
+        </Switch>
+      </ProtectedRoute>
+
+      {/* Help and Knowledge Center Routes */}
+      <ProtectedRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
+
+      {/* Misc Routes */}
+      <ProtectedRoute path="/user-diagnostics" component={UserInfo} />
+
+      <ProtectedRoute path="/report-a-problem" component={ReportAProblem} />
+
+      <ProtectedRoute path="/send-feedback" component={SendFeedback} />
+
+      <ProtectedRoute path="/feedback-received" component={FeedbackReceived} />
+
+      <ProtectedRoute path="/unfollow" exact component={Unfollow} />
+
+      {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
 
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />
+
       <Route path="/cookies" exact component={Cookies} />
+
       <Route
         path="/accessibility-statement"
         exact
         component={AccessibilityStatement}
       />
+
       <Route
         exact
         path="/terms-and-conditions"
@@ -232,18 +322,7 @@ const AppRoutes = () => {
 
       <Route exact path="/how-to-get-access" component={GetAccess} />
 
-      {/* Misc Routes */}
-      {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
-
       <Route path="/implicit/callback" component={LoginCallback} />
-
-      {/* Locked Task List Section */}
-      <SecureRoute
-        path="/models/:modelID/locked-task-list-section"
-        component={LockedTaskListSection}
-      />
-
-      <Redirect exact from="/models/:modelID" to="/models/:modelID/read-view" />
 
       {/* 404 */}
       <Route path="*" component={NotFound} />

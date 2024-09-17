@@ -1,10 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Icon,
@@ -14,25 +11,27 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetIddocQuery,
-  useGetIddocQuery,
-  useUpdatePlanOpsEvalAndLearningMutation
+  TypedUpdatePlanOpsEvalAndLearningDocument,
+  useGetIddocQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import ConfirmLeave from 'components/ConfirmLeave';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -85,35 +84,13 @@ const IDDOC = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useUpdatePlanOpsEvalAndLearningMutation();
-
-  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/ops-eval-and-learning/iddoc-testing`
-            );
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/ops-eval-and-learning`);
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanOpsEvalAndLearningDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: IDDOCFormType = {
     __typename: 'PlanOpsEvalAndLearning',
@@ -137,19 +114,21 @@ const IDDOC = () => {
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {opsEvalAndLearningMiscT('heading')}
       </PageHeading>
@@ -170,7 +149,9 @@ const IDDOC = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -221,6 +202,8 @@ const IDDOC = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
 
               <Form
                 className="desktop:grid-col-6 margin-top-6"
@@ -356,6 +339,10 @@ const IDDOC = () => {
                         formikValue={values.draftIcdDueDate}
                         value={draftIcdDueDate}
                         error={flatErrors.draftIcdDueDate}
+                        shouldShowWarning={
+                          initialValues.draftIcdDueDate !==
+                          values.draftIcdDueDate
+                        }
                       />
 
                       <AddNote
@@ -370,7 +357,9 @@ const IDDOC = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        handleFormSubmit('back');
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning`
+                        );
                       }}
                     >
                       {miscellaneousT('back')}
@@ -384,7 +373,11 @@ const IDDOC = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
@@ -392,16 +385,6 @@ const IDDOC = () => {
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

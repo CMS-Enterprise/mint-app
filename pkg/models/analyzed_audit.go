@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/constants"
-
 	"github.com/google/uuid"
 	"github.com/samber/lo"
+
+	"github.com/cmsgov/mint-app/pkg/constants"
 )
 
 // AnalyzedAudit represents a analyzed_audit to a table row in the database
@@ -108,7 +108,7 @@ func (a AnalyzedAuditChange) Humanize() []string {
 	humanizedAuditChanges = append(humanizedAuditChanges, a.CrTdls.Humanize())
 	humanizedAuditChanges = append(humanizedAuditChanges, a.PlanDiscussions.Humanize())
 
-	return lo.WithoutEmpty(humanizedAuditChanges)
+	return lo.Compact(humanizedAuditChanges)
 }
 
 // AnalyzedModelPlan represents an AnalyzedModelPlan in an AnalyzedAuditChange
@@ -254,9 +254,9 @@ func (a *AnalyzedCrTdls) Humanize() string {
 
 // AnalyzedPlanSections represents an AnalyzedPlanSections in an AnalyzedAuditChange
 type AnalyzedPlanSections struct {
-	Updated           []string `json:"updated,omitempty"`
-	ReadyForReview    []string `json:"readyForReview,omitempty"`
-	ReadyForClearance []string `json:"readyForClearance,omitempty"`
+	Updated           []TableName `json:"updated,omitempty"`
+	ReadyForReview    []TableName `json:"readyForReview,omitempty"`
+	ReadyForClearance []TableName `json:"readyForClearance,omitempty"`
 }
 
 const (
@@ -332,14 +332,17 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 	return humanizedAnalyzedPlanSections
 }
 
-func (a AnalyzedPlanSections) humanizeDatabaseTableNames(x []string) []string {
-	return lo.Map(x, func(name string, _ int) string {
+func (a AnalyzedPlanSections) humanizeDatabaseTableNames(x []TableName) []string {
+	return lo.Map(x, func(name TableName, _ int) string {
 		return a.getHumanizedTableName(name)
 	})
 }
 
-func (a AnalyzedPlanSections) getHumanizedTableName(name string) string {
-	humanizedName, _ := constants.GetHumanizedTableName(name)
+func (a AnalyzedPlanSections) getHumanizedTableName(name TableName) string {
+	//Future Enhancement: Utilize the shared mapping package instead of utilizing the constants package
+	humanizedName, _ := constants.GetHumanizedTableName(string(name))
+	//TODO: extract translation logic from the models package, so we can use mappings in the models package
+	// humanizedName, _ :=mappings.TranslateTableName(name)
 	return strings.Trim(humanizedName, " ")
 }
 

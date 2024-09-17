@@ -12,10 +12,10 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import StatusBanner from 'components/StatusBanner';
 import { filteredViewOutput } from 'views/ModelPlan/ReadOnly';
 import FilterViewBanner from 'views/ModelPlan/ReadOnly/_components/FilterView/Banner';
 import { filterGroups } from 'views/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-import TaskListStatus from 'views/ModelPlan/TaskList/_components/TaskListStatus';
 import NotFound from 'views/NotFound';
 
 import NDABanner from '../NDABanner';
@@ -26,7 +26,7 @@ const PDFSummary = ({
   filteredView,
   className
 }: {
-  filteredView?: typeof filterGroups[number] | 'all';
+  filteredView?: (typeof filterGroups)[number] | 'all';
   className?: string;
 }) => {
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
@@ -68,11 +68,12 @@ const PDFSummary = ({
             )}
           </PageHeading>
 
-          <TaskListStatus
-            readOnly
+          <StatusBanner
+            isReadView
             modelID={modelID}
             status={status}
             statusLabel
+            changeHistoryLink={false}
             modifiedOrCreateLabel={!!modifiedDts}
             modifiedDts={modifiedDts ?? createdDts}
           />
@@ -83,7 +84,7 @@ const PDFSummary = ({
         <FilterViewBanner
           filteredView={
             filteredView &&
-            (filteredViewOutput(filteredView) as typeof filterGroups[number])
+            (filteredViewOutput(filteredView) as (typeof filterGroups)[number])
           }
           openFilterModal={() => null}
           openExportModal={() => null}

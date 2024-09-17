@@ -80,7 +80,8 @@ export const operationalSolutionSubCategoryMap: Record<
   quality: null
 };
 
-export type SolutionContactType = GetPossibleSolutionsQuery['possibleOperationalSolutions'][0]['pointsOfContact'][0];
+export type SolutionContactType =
+  GetPossibleSolutionsQuery['possibleOperationalSolutions'][0]['pointsOfContact'][0];
 
 export interface HelpSolutionType extends HelpSolutionBaseType {
   pointsOfContact?: SolutionContactType[];
@@ -129,8 +130,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: '4i',
     name: '4innovation',
     systemOwner: {
-      name:
-        'Enterprise Systems Solutions Group, Division of Applications Development and Support',
+      name: 'Enterprise Systems Solutions Group, Division of Applications Development and Support',
       system: 'Office of Information Technology'
     },
     contractors: [
@@ -155,8 +155,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'ACO-OS',
     name: 'Accountable Care Organization - Operational System',
     systemOwner: {
-      name:
-        'Enterprise Systems Solutions Group, Division of Applications Development and Support',
+      name: 'Enterprise Systems Solutions Group, Division of Applications Development and Support',
       system: 'Office of Information Technology'
     },
     contractors: [
@@ -283,8 +282,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'CBOSC',
     name: 'Consolidated Business Operations Support Center',
     systemOwner: {
-      name:
-        'Business Services Group, Division of System Support, Operations, and Security',
+      name: 'Business Services Group, Division of System Support, Operations, and Security',
       system: 'Center for Medicare and Medicaid Innovation'
     },
     contractors: [
@@ -308,6 +306,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
       OperationalSolutionSubCategories.PARTICIPANT_AGREEMENT_APPS
     ],
     name: 'CPI Vetting',
+    alertPrimaryContact: true,
     components: {
       timeline: (props: SolutionDetailProps) => (
         <GatheringInfoAlert {...props} />
@@ -441,8 +440,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'IPC',
     name: 'Innovation Payment Contractor',
     systemOwner: {
-      name:
-        'Business Services Group, Division of Budget Operations & Management',
+      name: 'Business Services Group, Division of Budget Operations & Management',
       system: 'Center for Medicare and Medicaid Innovation'
     },
     contractors: [
@@ -495,8 +493,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     acronym: 'IDR',
     name: 'Integrated Data Repository',
     systemOwner: {
-      name:
-        'Enterprise Architecture and Data Group, Division of Enterprise Information Management Services',
+      name: 'Enterprise Architecture and Data Group, Division of Enterprise Information Management Services',
       system: 'Office of Information Technology'
     },
     alertPrimaryContact: true,
@@ -529,12 +526,30 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     }
   },
   {
-    enum: OperationalSolutionKey.MDM,
-    key: 'masterDataManagement',
-    route: 'master-data-management',
+    enum: OperationalSolutionKey.MDM_POR,
+    key: 'masterDataManagementProgramOrganizationRelationship',
+    route: 'master-data-management-program-organization-relationship',
     categories: [OperationalSolutionCategories.DATA],
-    acronym: 'MDM',
-    name: 'Master Data Management',
+    acronym: 'MDM-POR',
+    name: 'Master Data Management Program-Organization Relationship',
+    systemOwner: {
+      name: 'Enterprise Architecture and Data Group',
+      system: 'Office of Information Technology'
+    },
+    components: {
+      timeline: (props: SolutionDetailProps) => <GenericTimeline {...props} />
+    }
+  },
+  {
+    enum: OperationalSolutionKey.MDM_NCBP,
+    key: 'masterDataManagementForNCBP',
+    route: 'master-data-management-for-ncbp',
+    categories: [
+      OperationalSolutionCategories.DATA,
+      OperationalSolutionCategories.PAYMENT_FINANCIALS
+    ],
+    acronym: 'MDM-NCBP',
+    name: 'Master Data Management for Non-Claims Based Payments',
     systemOwner: {
       name: 'Enterprise Architecture and Data Group',
       system: 'Office of Information Technology'
@@ -764,8 +779,7 @@ export const helpSolutions: HelpSolutionBaseType[] = [
     categories: [OperationalSolutionCategories.MEDICARE_FFS],
     name: 'Shared Systems',
     systemOwner: {
-      name:
-        'Applications Management Group, Division of Shared Systems Management',
+      name: 'Applications Management Group, Division of Shared Systems Management',
       system: 'Office of Information Technology'
     },
     components: {

@@ -85,7 +85,7 @@ exports[`Operational Solutions CheckboxCard > matches snapshot 1`] = `
         >
           <a
             class="usa-link display-flex flex-align-center usa-button usa-button--unstyled margin-top-2"
-            href="/models/602287ff-d9d5-4203-86eb-e168fbd47242/task-list/it-solutions/f92a8a35-86de-4e03-a81a-bd8bec2e30e3/select-solutions?solution=research-measurement-assessment-design-and-analysis&section=about"
+            href="/models/602287ff-d9d5-4203-86eb-e168fbd47242/collaboration-area/task-list/it-solutions/f92a8a35-86de-4e03-a81a-bd8bec2e30e3/select-solutions?solution=research-measurement-assessment-design-and-analysis&section=about"
           >
             About this solution
             <svg

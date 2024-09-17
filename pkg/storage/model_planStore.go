@@ -8,7 +8,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
@@ -317,6 +316,28 @@ func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool)
 
 	return modelPlans, nil
 }
+func ModelPlanCollectionApproachingClearance(np sqlutils.NamedPreparer, logger *zap.Logger) ([]*models.ModelPlan, error) {
+	logger.Info("fetching model plans approaching clearance")
+	args := map[string]interface{}{}
+
+	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.CollectionApproachingClearance, args)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+		logger.Error(
+			"failed to fetch model plans approaching clearance",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+	return modelPlans, err
+
+}
 
 // ModelPlanCollectionFavorited returns a list of all model plans which are favorited by the user
 // Note: Externally, this is called "followed" but internally we call it "favorited"
@@ -355,18 +376,23 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	}
 	defer stmt.Close()
 
-	sqlResult, err := stmt.Exec(utilitySQL.CreateIDQueryMap(id))
+	arg := map[string]interface{}{
+		"model_plan_id": id,
+	}
+
+	sqlResult, err := stmt.Exec(arg)
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
 	}
 
 	return sqlResult, nil
+
 }
 
 func (s *Store) ModelPlanGetByOperationalSolutionKey(
 	logger *zap.Logger,
 	opSolKey models.OperationalSolutionKey,
-) ([]*models.ModelPlanAndOperationalSolution, error) {
+) ([]*models.ModelPlanAndPossibleOperationalSolution, error) {
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.GetByOperationalSolutionKey)
 	if err != nil {
@@ -378,7 +404,7 @@ func (s *Store) ModelPlanGetByOperationalSolutionKey(
 		"operational_solution_key": opSolKey,
 	}
 
-	var modelPlanAndOpSols []*models.ModelPlanAndOperationalSolution
+	var modelPlanAndOpSols []*models.ModelPlanAndPossibleOperationalSolution
 	err = stmt.Select(&modelPlanAndOpSols, arg)
 	if err != nil {
 		logger.Error(
@@ -387,9 +413,28 @@ func (s *Store) ModelPlanGetByOperationalSolutionKey(
 		)
 		return nil, &apperrors.QueryError{
 			Err:       err,
-			Model:     models.ModelPlanAndOperationalSolution{},
+			Model:     models.ModelPlanAndPossibleOperationalSolution{},
 			Operation: apperrors.QueryFetch,
 		}
 	}
 	return modelPlanAndOpSols, nil
+}
+
+func (s *Store) ModelPlanGetTaskListStatus(logger *zap.Logger, modelPlanID uuid.UUID) (models.TaskStatus, error) {
+	arg := map[string]interface{}{
+		"model_plan_id": modelPlanID,
+	}
+
+	println("modelPlanID: ", modelPlanID.String())
+
+	taskStatus, err := sqlutils.GetProcedure[models.TaskStatus](s.db, sqlqueries.ModelPlan.GetTaskListStatus, arg)
+	if err != nil {
+		logger.Error(
+			"Failed to fetch task list status",
+			zap.Error(err),
+		)
+		return "", err
+	}
+
+	return *taskStatus, nil
 }

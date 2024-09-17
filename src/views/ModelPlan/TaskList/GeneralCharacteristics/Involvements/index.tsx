@@ -1,39 +1,34 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
-import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
-  Button,
-  Fieldset,
-  Icon,
-  Label
-} from '@trussworks/react-uswds';
+import { useHistory, useParams } from 'react-router-dom';
+import { Button, Fieldset, Icon, Label } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetInvolvementsQuery,
-  useGetInvolvementsQuery,
-  useUpdatePlanGeneralCharacteristicsMutation
+  TypedUpdatePlanGeneralCharacteristicsDocument,
+  useGetInvolvementsQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import ConfirmLeave from 'components/ConfirmLeave';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
-type InvolvementsFormType = GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
+type InvolvementsFormType =
+  GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
 
 const Involvements = () => {
   const { t: generalCharacteristicsT } = useTranslation(
@@ -76,37 +71,13 @@ const Involvements = () => {
     communityPartnersInvolvedNote
   } = (data?.modelPlan?.generalCharacteristics || {}) as InvolvementsFormType;
 
-  const [update] = useUpdatePlanGeneralCharacteristicsMutation();
-
-  const handleFormSubmit = (redirect?: 'next' | 'back' | 'task-list') => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/characteristics/targets-and-options`
-            );
-          } else if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/characteristics/key-characteristics`
-            );
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanGeneralCharacteristicsDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: InvolvementsFormType = {
     __typename: 'PlanGeneralCharacteristics',
@@ -131,21 +102,21 @@ const Involvements = () => {
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>
-          {generalCharacteristicsMiscT('breadcrumb')}
-        </Breadcrumb>
-      </BreadcrumbBar>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.GENERAL_CHARACTERISTICS
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {generalCharacteristicsMiscT('heading')}
       </PageHeading>
@@ -165,19 +136,16 @@ const Involvements = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/characteristics/targets-and-options`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InvolvementsFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (
@@ -200,6 +168,8 @@ const Involvements = () => {
                 </ErrorAlert>
               )}
 
+              <ConfirmLeave />
+
               <Form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="plan-characteristics-involvements-form"
@@ -218,6 +188,12 @@ const Involvements = () => {
                         'careCoordinationInvolved.label'
                       )}
                     </Label>
+
+                    <p className="text-base margin-y-1">
+                      {generalCharacteristicsT(
+                        'careCoordinationInvolved.sublabel'
+                      )}
+                    </p>
 
                     <FieldErrorMsg>
                       {flatErrors.careCoordinationInvolved}
@@ -358,6 +334,12 @@ const Involvements = () => {
                       {flatErrors.communityPartnersInvolved}
                     </FieldErrorMsg>
 
+                    <p className="text-base margin-y-1">
+                      {generalCharacteristicsT(
+                        'communityPartnersInvolved.sublabel'
+                      )}
+                    </p>
+
                     <BooleanRadio
                       field="communityPartnersInvolved"
                       id="plan-characteristics-community-partners-involved"
@@ -415,7 +397,9 @@ const Involvements = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        handleFormSubmit('back');
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list/characteristics/key-characteristics`
+                        );
                       }}
                     >
                       {miscellaneousT('back')}
@@ -429,7 +413,11 @@ const Involvements = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
@@ -437,16 +425,6 @@ const Involvements = () => {
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

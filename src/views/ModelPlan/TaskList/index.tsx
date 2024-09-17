@@ -4,15 +4,14 @@ import React, {
   SetStateAction,
   useContext,
   useEffect,
+  useMemo,
   useState
 } from 'react';
+import ReactGA from 'react-ga4';
 import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Grid,
   GridContainer,
@@ -32,6 +31,7 @@ import {
 } from 'gql/gen/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -39,6 +39,8 @@ import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import UpdateStatusModal from 'components/UpdateStatusModal';
+import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
@@ -50,23 +52,27 @@ import TaskListButton from './_components/TaskListButton';
 import TaskListItem, { TaskListDescription } from './_components/TaskListItem';
 import TaskListLock from './_components/TaskListLock';
 import TaskListSideNav from './_components/TaskListSideNav';
-import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
 
-type TaskListSectionLockStatus = GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
+type TaskListSectionLockStatus =
+  GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 type BasicsType = GetModelPlanQuery['modelPlan']['basics'];
-type OperationalNeedsType = GetModelPlanQuery['modelPlan']['operationalNeeds'][0];
+type OperationalNeedsType =
+  GetModelPlanQuery['modelPlan']['operationalNeeds'][0];
 type DiscussionType = GetModelPlanQuery['modelPlan']['discussions'][0];
 type BeneficiariesType = GetModelPlanQuery['modelPlan']['beneficiaries'];
-type GeneralCharacteristicsType = GetModelPlanQuery['modelPlan']['generalCharacteristics'];
-type OpsEvalAndLearningType = GetModelPlanQuery['modelPlan']['opsEvalAndLearning'];
-type ParticipantsAndProvidersType = GetModelPlanQuery['modelPlan']['participantsAndProviders'];
+type GeneralCharacteristicsType =
+  GetModelPlanQuery['modelPlan']['generalCharacteristics'];
+type OpsEvalAndLearningType =
+  GetModelPlanQuery['modelPlan']['opsEvalAndLearning'];
+type ParticipantsAndProvidersType =
+  GetModelPlanQuery['modelPlan']['participantsAndProviders'];
 type PaymentsType = GetModelPlanQuery['modelPlan']['payments'];
-type PrepareForClearanceType = GetModelPlanQuery['modelPlan']['prepareForClearance'];
-type DocumentType = GetModelPlanQuery['modelPlan']['documents'][0];
+type PrepareForClearanceType =
+  GetModelPlanQuery['modelPlan']['prepareForClearance'];
 
 type CRTDLType =
   | GetCrtdLsQuery['modelPlan']['crs'][0]
@@ -122,20 +128,34 @@ export type StatusMessageType = {
   status: 'success' | 'error';
 };
 
+export const getITSolutionsStatus = (
+  operationalNeedsArray: OperationalNeedsType[]
+) => {
+  const inProgress = operationalNeedsArray.find(need => need.modifiedDts);
+  return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
+};
+
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  // Get discussionID from generated email link
+  const { message } = useMessage();
+
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
+
+  const params = useMemo(() => {
+    return new URLSearchParams(location.search);
+  }, [location.search]);
+
+  // Get discussionID from generated email link
   const discussionID = params.get('discussionID');
 
   const flags = useFlags();
 
   const [isDiscussionOpen, setIsDiscussionOpen] = useState<boolean>(false);
+
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
   );
@@ -147,7 +167,7 @@ const TaskList = () => {
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
-  const { data, loading, error } = useGetModelPlanQuery({
+  const { data, loading, error, refetch } = useGetModelPlanQuery({
     variables: {
       id: modelID
     }
@@ -170,20 +190,14 @@ const TaskList = () => {
     payments,
     operationalNeeds = [],
     prepareForClearance,
-    collaborators
+    collaborators,
+    suggestedPhase
   } = modelPlan;
 
   const planCRs = crs || [];
   const planTDLs = tdls || [];
 
   const crTdls = [...planCRs, ...planTDLs] as CRTDLType[];
-
-  const getITSolutionsStatus = (
-    operationalNeedsArray: OperationalNeedsType[]
-  ) => {
-    const inProgress = operationalNeedsArray.find(need => need.modifiedDts);
-    return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
-  };
 
   const itSolutions: ITSolutionsType = {
     modifiedDts: getLatestModifiedDate(operationalNeeds),
@@ -200,6 +214,29 @@ const TaskList = () => {
     itSolutions,
     prepareForClearance
   };
+
+  // Gets the sessions storage variable for statusChecked of modelPlan
+  const statusCheckedStorage =
+    sessionStorage.getItem(`statusChecked-${modelID}`) === 'true';
+
+  // Aligns session with default value of state
+  const [statusChecked, setStatusChecked] =
+    useState<boolean>(statusCheckedStorage);
+
+  // Status phase modal state
+  const [isStatusPhaseModalOpen, setStatusPhaseModalOpen] = useState<boolean>(
+    !!suggestedPhase || false
+  );
+
+  // Updates state if session value changes
+  useEffect(() => {
+    setStatusChecked(statusCheckedStorage);
+  }, [statusCheckedStorage]);
+
+  // Sets the modal open state based on session state and suggested phase
+  useEffect(() => {
+    if (suggestedPhase && !statusChecked) setStatusPhaseModalOpen(true);
+  }, [suggestedPhase, statusChecked]);
 
   useEffect(() => {
     if (discussionID) setIsDiscussionOpen(true);
@@ -220,15 +257,29 @@ const TaskList = () => {
     >
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{t('navigation.home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.COLLABORATION_AREA,
+              BreadcrumbItemOptions.TASK_LIST
+            ]}
+          />
         </Grid>
+
+        {!!modelPlan.suggestedPhase && !statusChecked && (
+          <UpdateStatusModal
+            modelID={modelID}
+            isOpen={isStatusPhaseModalOpen}
+            closeModal={() => {
+              sessionStorage.setItem(`statusChecked-${modelID}`, 'true');
+              setStatusPhaseModalOpen(false);
+            }}
+            currentStatus={status}
+            suggestedPhase={modelPlan.suggestedPhase}
+            setStatusMessage={setStatusMessage}
+            refetch={refetch}
+          />
+        )}
 
         {error && (
           <ErrorAlert
@@ -243,12 +294,19 @@ const TaskList = () => {
           </ErrorAlert>
         )}
 
-        {statusMessage && (
+        {message && (
+          <Alert slim type="success">
+            {message}
+          </Alert>
+        )}
+
+        {!loading && statusMessage && (
           <Alert slim type={statusMessage.status} closeAlert={setStatusMessage}>
             {statusMessage.message}
           </Alert>
         )}
 
+        {/* Wait for model status query param to be removed */}
         {loading && (
           <div className="height-viewport">
             <PageLoading />
@@ -259,7 +317,7 @@ const TaskList = () => {
           <Grid row gap>
             <Grid desktop={{ col: 9 }}>
               <PageHeading className="margin-top-4 margin-bottom-0">
-                {t('navigation.modelPlanTaskList')}
+                {t('heading')}
               </PageHeading>
               <p
                 className="margin-top-0 margin-bottom-2 font-body-lg"
@@ -278,12 +336,17 @@ const TaskList = () => {
                 </DiscussionModalWrapper>
               )}
 
-              <TaskListStatus
-                modelID={modelID}
-                status={status}
-                updateLabel
-                statusLabel
-              />
+              <div className="padding-y-1">
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area`}
+                  data-testid="return-to-collaboration"
+                >
+                  <span>
+                    <Icon.ArrowBack className="top-3px margin-right-1" />
+                    {t('returnToCollaboration')}
+                  </span>
+                </UswdsReactLink>
+              </div>
 
               <DicussionBanner
                 discussions={discussions}
@@ -292,15 +355,7 @@ const TaskList = () => {
 
               {/* Document and CR TDL Banners */}
               <Grid row gap={2}>
-                <Grid desktop={{ col: 6 }} className="margin-top-2">
-                  <DocumentBanner
-                    documents={documents}
-                    modelID={modelID}
-                    expand={!!documents.length || !!crTdls.length}
-                  />
-                </Grid>
-
-                <Grid desktop={{ col: 6 }} className="margin-top-2">
+                <Grid desktop={{ col: 12 }} className="margin-top-2">
                   <CRTDLBanner
                     crTdls={crTdls}
                     modelID={modelID}
@@ -426,7 +481,17 @@ const DicussionBanner = ({
             <Button
               type="button"
               unstyled
-              onClick={() => setIsDiscussionOpen(true)}
+              onClick={() => {
+                // Send a discussion open event to GA
+                ReactGA.send({
+                  hitType: 'event',
+                  eventCategory: 'discussion_center_opened',
+                  eventAction: 'click',
+                  eventLabel: 'Discussion Center opened'
+                });
+
+                setIsDiscussionOpen(true);
+              }}
             >
               {d('viewDiscussions')}
             </Button>
@@ -438,77 +503,21 @@ const DicussionBanner = ({
               className="line-height-body-5 test-withdraw-request"
               type="button"
               unstyled
-              onClick={() => setIsDiscussionOpen(true)}
+              onClick={() => {
+                // Send a discussion open event to GA
+                ReactGA.send({
+                  hitType: 'event',
+                  eventCategory: 'discussion_center_opened',
+                  eventAction: 'click',
+                  eventLabel: 'Discussion Center opened'
+                });
+
+                setIsDiscussionOpen(true);
+              }}
             >
               {d('askAQuestionLink')}
             </Button>
             .
-          </>
-        )}
-      </SummaryBoxContent>
-    </SummaryBox>
-  );
-};
-
-type DocumentBannerType = {
-  documents: DocumentType[];
-  modelID: string;
-  expand: boolean;
-};
-
-// Document component for rendering document summary
-const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
-  const { t } = useTranslation('modelPlanTaskList');
-
-  return (
-    <SummaryBox
-      className={classNames('bg-base-lightest border-0 radius-0 padding-2', {
-        'model-plan-task-list__min-card': expand
-      })}
-    >
-      <SummaryBoxHeading headingLevel="h3" className="margin-0">
-        {t('modelPlanTaskList:documentSummaryBox.heading')}
-      </SummaryBoxHeading>
-
-      <SummaryBoxContent>
-        {documents?.length > 0 ? (
-          <>
-            <p
-              className="margin-0 padding-bottom-1 padding-top-05"
-              data-testid="document-items"
-            >
-              <strong>{documents.length} </strong>
-              {t('documentSummaryBox.document', { count: documents.length })}
-            </p>
-
-            <UswdsReactLink
-              variant="unstyled"
-              className="margin-right-4 display-block margin-bottom-1"
-              to={`/models/${modelID}/documents`}
-            >
-              {t('documentSummaryBox.viewAll')}
-            </UswdsReactLink>
-
-            <UswdsReactLink
-              variant="unstyled"
-              to={`/models/${modelID}/documents/add-document`}
-            >
-              {t('documentSummaryBox.addAnother')}
-            </UswdsReactLink>
-          </>
-        ) : (
-          <>
-            <p className="margin-0 margin-bottom-1">
-              {t('documentSummaryBox.copy')}
-            </p>
-
-            <UswdsReactLink
-              className="usa-button usa-button--outline"
-              variant="unstyled"
-              to={`/models/${modelID}/documents/add-document`}
-            >
-              {t('documentSummaryBox.cta')}
-            </UswdsReactLink>
           </>
         )}
       </SummaryBoxContent>
@@ -555,14 +564,14 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
             <UswdsReactLink
               variant="unstyled"
               className="margin-right-4 display-block margin-bottom-1"
-              to={`/models/${modelID}/cr-and-tdl`}
+              to={`/models/${modelID}/collaboration-area/cr-and-tdl`}
             >
               {t('crTDLsSummaryBox.viewAll')}
             </UswdsReactLink>
 
             <UswdsReactLink
               variant="unstyled"
-              to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
+              to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
             >
               {t('crTDLsSummaryBox.uploadAnother')}
             </UswdsReactLink>
@@ -578,7 +587,7 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
             <UswdsReactLink
               className="usa-button usa-button--outline"
               variant="unstyled"
-              to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
+              to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
             >
               {t('crTDLsSummaryBox.add')}
             </UswdsReactLink>

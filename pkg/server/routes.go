@@ -9,6 +9,8 @@ import (
 	"strings"
 	"time"
 
+	mail "github.com/xhit/go-simple-mail/v2"
+
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
@@ -166,6 +168,17 @@ func (s *Server) routes(
 	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
 	emailServiceConfig.TaggedPOCEmailEnabled = s.Config.GetBool(appconfig.TaggedSolutionPointOfContactEmailEnabled)
+
+	// dynamically set emails encryption based on environment
+	// No encryption is needed when using mailcatcher (local or testing)
+	// STARTTLS is needed when deployed (and using CMS email server), otherwise you'll get errors with "Must issue a STARTTLS command first"
+	//
+	// Documentation on CMS Email Servers can be found here
+	// https://cloud.cms.gov/introduction-email-as-service
+	emailServiceConfig.Encryption = mail.EncryptionNone
+	if s.environment.Deployed() {
+		emailServiceConfig.Encryption = mail.EncryptionSTARTTLS
+	}
 
 	dateChangedRecipientEmails := strings.Split(s.Config.GetString(appconfig.DateChangedRecipientEmailsKey), ",")
 

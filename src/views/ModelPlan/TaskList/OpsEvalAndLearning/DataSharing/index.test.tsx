@@ -12,7 +12,8 @@ import {
 
 import DataSharing from '.';
 
-type GetDataSharingType = GetDataSharingQuery['modelPlan']['opsEvalAndLearning'];
+type GetDataSharingType =
+  GetDataSharingQuery['modelPlan']['opsEvalAndLearning'];
 
 const dataSharingMockData: GetDataSharingType = {
   __typename: 'PlanOpsEvalAndLearning',
@@ -63,11 +64,11 @@ describe('Model Plan Ops Eval and Learning Data Sharing', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/data-sharing'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/data-sharing'
         ]}
       >
         <MockedProvider mocks={dataSharingMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/ops-eval-and-learning/data-sharing">
+          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/data-sharing">
             <DataSharing />
           </Route>
         </MockedProvider>
@@ -91,11 +92,11 @@ describe('Model Plan Ops Eval and Learning Data Sharing', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/data-sharing'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/data-sharing'
         ]}
       >
         <MockedProvider mocks={dataSharingMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/ops-eval-and-learning/data-sharing">
+          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/data-sharing">
             <DataSharing />
           </Route>
         </MockedProvider>

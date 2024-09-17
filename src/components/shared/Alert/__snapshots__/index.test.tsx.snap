@@ -3,7 +3,7 @@
 exports[`The Alert component > matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="usa-alert usa-alert--info mint-alert-text flex"
+    class="usa-alert usa-alert--info icon-padding mint-alert-text flex"
     data-testid="alert"
   >
     <div

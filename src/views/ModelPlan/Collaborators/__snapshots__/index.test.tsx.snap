@@ -44,7 +44,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                 class="usa-breadcrumb__list-item usa-current"
               >
                 <span>
-                  Add model team members
+                  Manage model team
                 </span>
               </li>
             </ol>
@@ -57,18 +57,18 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
             Add model team members
           </h1>
           <div
-            class="font-body-lg margin-bottom-6"
+            class="font-body-md margin-bottom-4"
           >
             Add any team members who will be collaborating on your Model Plan. You can edit this list at any time.
           </div>
           <h4
-            class="margin-bottom-1"
+            class="margin-bottom-1 margin-top-4"
           >
             Team members
           </h4>
           <a
-            class="usa-button margin-bottom-2"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator?view=add"
+            class="usa-button margin-bottom-0"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators/add-collaborator?view=add"
           >
             Add team member
           </a>
@@ -94,7 +94,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="padding-bottom: .5rem;"
+                    style="padding-bottom: .5rem; width: 25%;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -125,7 +125,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="padding-bottom: .5rem;"
+                    style="padding-bottom: .5rem; width: 45%;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -133,7 +133,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                       title="Toggle SortBy"
                       type="button"
                     >
-                      Role
+                      Role(s)
                       <svg
                         class="usa-icon margin-left-05 position-absolute"
                         data-testid="caret--sort"
@@ -156,7 +156,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="padding-bottom: .5rem;"
+                    style="padding-bottom: .5rem; width: auto;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -187,7 +187,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     colspan="1"
                     role="columnheader"
                     scope="col"
-                    style="padding-bottom: .5rem;"
+                    style="padding-bottom: .5rem; width: auto;"
                   >
                     <button
                       class="usa-button usa-button--unstyled position-relative"
@@ -234,7 +234,9 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                       <div
                         class="margin-y-0"
                       >
-                        <span>
+                        <span
+                          class=""
+                        >
                           John Doe
                         </span>
                       </div>
@@ -259,7 +261,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                     <a
                       aria-label="Edit John Doe"
                       class="usa-link margin-right-2"
-                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator/61c7b30c-969d-4dd4-b13b-a5065f43be43?view=add"
+                      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/collaborators/add-collaborator/61c7b30c-969d-4dd4-b13b-a5065f43be43?view=add"
                     >
                       Edit
                     </a>
@@ -267,6 +269,9 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
                 </tr>
               </tbody>
             </table>
+            <div
+              class="grid-row grid-gap grid-gap-lg display-flex row-reverse"
+            />
             <div
               aria-live="polite"
               class="usa-sr-only usa-table__announcement-region"
@@ -286,10 +291,10 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
             </a>
             <a
               class="usa-button usa-button--outline"
-              data-testid="continue-to-tasklist"
-              href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+              data-testid="continue-to-collaboration-area"
+              href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
             >
-              Continue to Model Plan task list
+              Continue to model collaboration area
             </a>
           </div>
         </div>

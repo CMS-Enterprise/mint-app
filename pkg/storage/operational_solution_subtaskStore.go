@@ -3,7 +3,6 @@ package storage
 import (
 	"database/sql"
 	_ "embed"
-	"errors"
 	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
@@ -12,10 +11,10 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
 )
 
 // OperationalSolutionSubtaskGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
@@ -61,7 +60,7 @@ func (s *Store) OperationalSolutionSubtasksCreate(
 
 	var results []*models.OperationalSolutionSubtask
 	for _, subtask := range subtasks {
-		subtask.ID = utilityUUID.ValueOrNewUUID(subtask.ID)
+		subtask.ID = utilityuuid.ValueOrNewUUID(subtask.ID)
 		subtask.ModifiedBy = nil
 		subtask.ModifiedDts = nil
 
@@ -97,10 +96,10 @@ func (s *Store) OperationalSolutionSubtaskGetByID(
 	var subtask models.OperationalSolutionSubtask
 	err = stmt.Get(
 		&subtask,
-		utilitySQL.CreateIDQueryMap(subtaskID),
+		utilitysql.CreateIDQueryMap(subtaskID),
 	)
 	if err != nil {
-		return nil, errors.New("could not fetch operational solution subtask by id")
+		return nil, fmt.Errorf("could not fetch operational solution subtask by id, err : %w", err)
 	}
 
 	return &subtask, err
@@ -127,7 +126,7 @@ func (s *Store) OperationalSolutionSubtaskDelete(
 	}
 	defer stmt.Close()
 
-	sqlResult, err := stmt.Exec(utilitySQL.CreateIDQueryMap(id))
+	sqlResult, err := stmt.Exec(utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
 	}

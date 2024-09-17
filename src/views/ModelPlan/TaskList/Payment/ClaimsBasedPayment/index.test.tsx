@@ -11,7 +11,8 @@ import {
 
 import ClaimsBasedPayment from './index';
 
-type GetClaimsBasedPaymentType = GetClaimsBasedPaymentQuery['modelPlan']['payments'];
+type GetClaimsBasedPaymentType =
+  GetClaimsBasedPaymentQuery['modelPlan']['payments'];
 
 const mockData: GetClaimsBasedPaymentType = {
   __typename: 'PlanPayments',
@@ -60,11 +61,11 @@ describe('Model Plan -- Claims Based Payment', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment/claims-based-payment'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/claims-based-payment'
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/payment/claims-based-payment">
+          <Route path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment">
             <ClaimsBasedPayment />
           </Route>
         </MockedProvider>
@@ -88,11 +89,11 @@ describe('Model Plan -- Claims Based Payment', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment/claims-based-payment'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/payment/claims-based-payment'
         ]}
       >
         <MockedProvider mocks={paymentsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/payment/claims-based-payment">
+          <Route path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment">
             <ClaimsBasedPayment />
           </Route>
         </MockedProvider>

@@ -90,13 +90,13 @@ describe('Model Plan Documents page', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/documents'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/documents'
         ]}
       >
         <MockedProvider mocks={documentMocks} addTypename={false}>
           <Provider store={store}>
             <MessageProvider>
-              <Route path="/models/:modelID/documents">
+              <Route path="/models/:modelID/collaboration-area/documents">
                 <DocumentsContent />
               </Route>
             </MessageProvider>

@@ -19,7 +19,9 @@ export const miscellaneous: Record<string, string> = {
   pleaseSpecify: 'Please specify',
   saveAndStartNext: 'Save and start next Model Plan section',
   continueToTaskList: 'Continue to Model Plan task list',
+  continueToCollaborationArea: 'Continue to model collaboration area',
   returnToTaskList: 'Return to Model Plan task list',
+  returnToCollaborationArea: 'Return to model collaboration area',
   noResults: 'No results found',
   checkAndFix: 'Please check and fix the following',
   notes: 'Notes',
@@ -37,7 +39,8 @@ export const miscellaneous: Record<string, string> = {
     'This section of the Model Plan ({{-sectionName}}) is ready for review.',
   markedReady: 'Marked ready for review by {{-reviewer}} on ',
   validDate: 'Please use a valid date format.',
-  apolloFailField: 'Failed to save field value/s'
+  apolloFailField: 'Failed to save field value/s',
+  allFieldsRequired: 'Fields marked with an asterisk ( <s>*</s> ) are required.'
 };
 
 // Reusable translated option for all frequency type questions

@@ -11,7 +11,8 @@ import {
 
 import Communication from './index';
 
-type GetCommunicationType = GetCommunicationQuery['modelPlan']['participantsAndProviders'];
+type GetCommunicationType =
+  GetCommunicationQuery['modelPlan']['participantsAndProviders'];
 
 const communicationMockData: GetCommunicationType = {
   __typename: 'PlanParticipantsAndProviders',
@@ -64,11 +65,11 @@ describe('Model Plan Communication', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/communication'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers/communication'
         ]}
       >
         <MockedProvider mocks={communicationMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/participants-and-providers/communication">
+          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers/communication">
             <Communication />
           </Route>
         </MockedProvider>
@@ -92,11 +93,11 @@ describe('Model Plan Communication', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/communication'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers/communication'
         ]}
       >
         <MockedProvider mocks={communicationMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/participants-and-providers/communication">
+          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers/communication">
             <Communication />
           </Route>
         </MockedProvider>

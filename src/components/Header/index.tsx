@@ -22,9 +22,8 @@ const Header = () => {
   const [userName, setUserName] = useState('');
 
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
-  const { isMobileSideNavExpanded, setIsMobileSideNavExpanded } = useContext(
-    NavContext
-  );
+  const { isMobileSideNavExpanded, setIsMobileSideNavExpanded } =
+    useContext(NavContext);
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -53,6 +52,7 @@ const Header = () => {
 
   const signout = () => {
     localStorage.removeItem(localAuthStorageKey);
+    sessionStorage.clear();
     oktaAuth.signOut();
   };
 

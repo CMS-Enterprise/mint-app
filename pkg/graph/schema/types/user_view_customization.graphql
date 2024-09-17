@@ -4,6 +4,7 @@ enum ViewCustomizationType {
   FOLLOWED_MODELS
   MODELS_WITH_CR_TDL
   MODELS_BY_OPERATIONAL_SOLUTION
+  MODELS_APPROACHING_CLEARANCE
 }
 
 type UserViewCustomization {
@@ -21,8 +22,8 @@ type UserViewCustomization {
 }
 
 input UserViewCustomizationChanges @goModel(model: "map[string]interface{}") {
-  viewCustomization: [ViewCustomizationType!]!
-  possibleOperationalSolutions: [OperationalSolutionKey!]!
+  viewCustomization: [ViewCustomizationType!]
+  possibleOperationalSolutions: [OperationalSolutionKey!]
 }
 
 extend type Query {
@@ -32,5 +33,5 @@ extend type Query {
 
 extend type Mutation {
   updateUserViewCustomization(changes: UserViewCustomizationChanges!): UserViewCustomization!
-  @hasRole(role: MINT_USER)
+  @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

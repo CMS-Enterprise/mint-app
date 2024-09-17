@@ -1,5 +1,10 @@
 import { TranslationOperationalSolutionSubtasks } from 'types/translation';
 
+import {
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/gen/graphql';
+
 const operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks = {
   name: {
     gqlField: 'name',
@@ -7,8 +12,9 @@ const operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks = {
     dbField: 'name',
     label: 'Subtask name',
     exportLabel: 'Subtasks',
-    dataType: 'string',
-    formType: 'text'
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.01
   },
   status: {
     gqlField: 'status',
@@ -16,8 +22,9 @@ const operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks = {
     dbField: 'status',
     label: 'What is the status of this subtask?',
     exportLabel: 'Status',
-    dataType: 'enum',
-    formType: 'checkbox',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 1.02,
     options: {
       DONE: 'Done',
       IN_PROGRESS: 'In progress',

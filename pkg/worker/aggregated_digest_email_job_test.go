@@ -1,9 +1,11 @@
 package worker
 
 import (
-	"context"
 	"strings"
 	"time"
+
+	faktory "github.com/contribsys/faktory/client"
+	faktory_worker "github.com/contribsys/faktory_worker_go"
 
 	"github.com/golang/mock/gomock"
 	"github.com/samber/lo"
@@ -55,9 +57,9 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
 	documentCount := 2
 	crTdlAvtivity := true
-	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
+	updatedSections := []models.TableName{"plan_payments", "plan_ops_eval_and_learning"}
+	reviewSections := []models.TableName{"plan_payments", "plan_ops_eval_and_learning"}
+	clearanceSections := []models.TableName{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
 	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
 	dicussionActivity := true
 
@@ -103,8 +105,12 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 			gomock.Eq(emailBody),
 		).MinTimes(1).MaxTimes(1)
 
-	err = worker.AggregatedDigestEmailJob(context.Background(), time.Now().UTC().Format("2006-01-02"), collaborator.UserID.String()) // pass user id as string because that is how it is returned from Faktory
+	pool, err2 := faktory.NewPool(1)
+	suite.NoError(err2)
+	perf := faktory_worker.NewTestExecutor(pool)
+	job := faktory.NewJob(aggregatedDigestEmailJobName, time.Now().UTC().Format("2006-01-02"), collaborator.UserID.String()) // pass user id as string because that is how it is returned from Faktory
+	jobErr := perf.Execute(job, worker.AggregatedDigestEmailJob)
+	suite.NoError(jobErr)
 
-	suite.NoError(err)
 	mockController.Finish()
 }

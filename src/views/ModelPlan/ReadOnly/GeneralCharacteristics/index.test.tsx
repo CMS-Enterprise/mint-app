@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import Sinon from 'sinon';
 
 import {
   generalCharacteristicMocks as mocks,
@@ -11,6 +12,9 @@ import {
 import ReadOnlyGeneralCharacteristics from './index';
 
 describe('Read Only Model Plan Summary -- General Characteristics', () => {
+  // Stubing Math.random that occurs in Truss Tooltip component for deterministic output
+  Sinon.stub(Math, 'random').returns(0.5);
+
   it('renders without errors', async () => {
     render(
       <MemoryRouter

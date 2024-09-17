@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
 import AddCustomSolution from './AddCustomSolution';
@@ -21,79 +22,71 @@ const ITSolutions = () => {
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Switch>
-            <Route path="/models/:modelID/task-list/it-solutions" exact>
-              <ITSolutionsHome />
-            </Route>
-
-            <Route
-              path="/models/:modelID/task-list/it-solutions/add-an-operational-need"
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/it-solutions"
+              component={ITSolutionsHome}
               exact
-            >
-              <AddOrUpdateOperationalNeed />
-            </Route>
+            />
 
-            <Route
-              path="/models/:modelID/task-list/it-solutions/update-need/:operationalNeedID?"
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/add-an-operational-need"
+              component={AddOrUpdateOperationalNeed}
               exact
-            >
-              <AddOrUpdateOperationalNeed />
-            </Route>
+            />
 
-            <Route
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/select-solutions"
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/update-need/:operationalNeedID?"
+              component={AddOrUpdateOperationalNeed}
               exact
-            >
-              <SelectSolutions />
-            </Route>
+            />
 
-            <Route
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-solution/:operationalSolutionID?"
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/select-solutions"
+              component={SelectSolutions}
               exact
-            >
-              <AddSolution />
-            </Route>
+            />
 
-            <Route
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID?"
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/add-solution/:operationalSolutionID?"
+              component={AddSolution}
               exact
-            >
-              <AddCustomSolution />
-            </Route>
+            />
 
-            <Route
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/solution-implementation-details/:solutionId?"
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/add-custom-solution/:operationalSolutionID?"
+              component={AddCustomSolution}
               exact
-            >
-              <SolutionImplementation />
-            </Route>
+            />
 
-            <Route
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/solution-details"
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details/:solutionId?"
+              component={SolutionImplementation}
               exact
-            >
-              <SolutionDetails />
-            </Route>
+            />
 
-            <Route
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks"
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/solution-details"
+              component={SolutionDetails}
               exact
-            >
-              <Subtasks />
-            </Route>
+            />
 
-            <Route
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/manage-subtasks"
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/add-subtasks"
+              component={Subtasks}
               exact
-            >
-              <Subtasks managingSubtasks />
-            </Route>
+            />
 
-            <Route
-              path="/models/:modelID/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents"
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/manage-subtasks"
+              render={props => <Subtasks {...props} managingSubtasks />}
               exact
-            >
-              <LinkDocuments />
-            </Route>
+            />
+
+            <ProtectedRoute
+              path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents"
+              component={LinkDocuments}
+              exact
+            />
 
             <Route path="*" render={() => <NotFoundPartial />} />
           </Switch>

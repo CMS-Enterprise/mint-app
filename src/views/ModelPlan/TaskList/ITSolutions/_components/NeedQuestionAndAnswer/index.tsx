@@ -21,8 +21,10 @@ import InfoToggle from './_component/InfoToggle';
 
 import './index.scss';
 
-type GetOperationalNeedOperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
-type GetOperationalNeedAnswerModelPlanType = GetOperationalNeedAnswerQuery['modelPlan'];
+type GetOperationalNeedOperationalNeedType =
+  GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalNeedAnswerModelPlanType =
+  GetOperationalNeedAnswerQuery['modelPlan'];
 
 // Function to format operational need answers for both single and multipart answers
 const formatOperationalNeedAnswers = (needConfig: NeedMap, data: any) => {
@@ -74,7 +76,8 @@ export const initialValues: GetOperationalNeedOperationalNeedType = {
   solutions: []
 };
 
-type OperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
+type OperationalSolutionType =
+  GetOperationalSolutionQuery['operationalSolution'];
 
 type NeedQuestionAndAnswerProps = {
   className?: string;
@@ -156,9 +159,8 @@ const NeedQuestionAndAnswer = ({
 
   // Because of the dynamic nature of the input and return schema, having a standard TS type isn't applicable
   // Maybe reasearch into this further for better type safety
-  const { data, loading: answerLoading } = useGetOperationalNeedAnswerQuery(
-    queryVariables
-  );
+  const { data, loading: answerLoading } =
+    useGetOperationalNeedAnswerQuery(queryVariables);
 
   const answers = useMemo(() => {
     return formatOperationalNeedAnswers(needConfig, data);
@@ -180,7 +182,7 @@ const NeedQuestionAndAnswer = ({
             nameOther={operationalNeed.nameOther ?? ''}
           />
           <UswdsReactLink
-            to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+            to={`/models/${modelID}/collaboration-area/task-list/it-solutions/update-need/${operationalNeed.id}`}
           >
             {t('updateThisOpertationalNeed')}
           </UswdsReactLink>
@@ -200,7 +202,7 @@ const NeedQuestionAndAnswer = ({
     }
     return (
       <UswdsReactLink
-        to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+        to={`/models/${modelID}/collaboration-area/task-list/it-solutions/update-need/${operationalNeed.id}`}
       >
         {t('editNeed')}
       </UswdsReactLink>

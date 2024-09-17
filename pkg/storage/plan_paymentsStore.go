@@ -5,8 +5,8 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
@@ -48,7 +48,7 @@ func (s *Store) PlanPaymentsCreate(
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
 
-	payments.ID = utilityUUID.ValueOrNewUUID(payments.ID)
+	payments.ID = utilityuuid.ValueOrNewUUID(payments.ID)
 
 	stmt, err := np.PrepareNamed(sqlqueries.PlanPayments.Create)
 	if err != nil {
@@ -79,7 +79,7 @@ func (s *Store) PlanPaymentsRead(
 	}
 	defer stmt.Close()
 
-	err = stmt.Get(&modelInstance, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&modelInstance, utilitysql.CreateIDQueryMap(id))
 
 	if err != nil {
 		return nil, err

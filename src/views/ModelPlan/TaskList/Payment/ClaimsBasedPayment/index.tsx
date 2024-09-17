@@ -1,10 +1,7 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -17,34 +14,37 @@ import {
   ClaimsBasedPayType,
   GetClaimsBasedPaymentQuery,
   PayType,
-  useGetClaimsBasedPaymentQuery,
-  useUpdatePaymentsMutation
+  TypedUpdatePaymentsDocument,
+  useGetClaimsBasedPaymentQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import ConfirmLeave from 'components/ConfirmLeave';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
-type ClaimsBasedPaymentFormType = GetClaimsBasedPaymentQuery['modelPlan']['payments'];
+type ClaimsBasedPaymentFormType =
+  GetClaimsBasedPaymentQuery['modelPlan']['payments'];
 
 const ClaimsBasedPayment = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -55,9 +55,12 @@ const ClaimsBasedPayment = () => {
 
   const {
     payClaims: payClaimsConfig,
-    shouldAnyProvidersExcludedFFSSystems: shouldAnyProvidersExcludedFFSSystemsConfig,
-    changesMedicarePhysicianFeeSchedule: changesMedicarePhysicianFeeScheduleConfig,
-    affectsMedicareSecondaryPayerClaims: affectsMedicareSecondaryPayerClaimsConfig
+    shouldAnyProvidersExcludedFFSSystems:
+      shouldAnyProvidersExcludedFFSSystemsConfig,
+    changesMedicarePhysicianFeeSchedule:
+      changesMedicarePhysicianFeeScheduleConfig,
+    affectsMedicareSecondaryPayerClaims:
+      affectsMedicareSecondaryPayerClaimsConfig
   } = usePlanTranslation('payments');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -96,39 +99,10 @@ const ClaimsBasedPayment = () => {
     need => need.modifiedDts
   );
 
-  const [update] = useUpdatePaymentsMutation();
-
-  const handleFormSubmit = (
-    redirect?: 'next' | 'back' | 'task-list' | string
-  ) => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/payment/anticipating-dependencies`
-            );
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/payment`);
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list/`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
+    id,
+    formikRef
+  });
 
   const initialValues: ClaimsBasedPaymentFormType = {
     __typename: 'PlanPayments',
@@ -160,19 +134,21 @@ const ClaimsBasedPayment = () => {
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{paymentsMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.PAYMENTS
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {paymentsMiscT('heading')}
       </PageHeading>
@@ -195,19 +171,16 @@ const ClaimsBasedPayment = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ClaimsBasedPaymentFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setFieldValue,
-            setErrors,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setFieldValue, setErrors, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (
@@ -229,6 +202,8 @@ const ClaimsBasedPayment = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
 
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
@@ -335,8 +310,8 @@ const ClaimsBasedPayment = () => {
                               id="payment-provider-exclusion-ffs-system-warning"
                               className="margin-top-neg-5"
                               onClick={() =>
-                                handleFormSubmit(
-                                  `/models/${modelID}/task-list/it-solutions`
+                                history.push(
+                                  `/models/${modelID}/collaboration-area/task-list/it-solutions`
                                 )
                               }
                             />
@@ -510,7 +485,9 @@ const ClaimsBasedPayment = () => {
                             type="button"
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
-                              handleFormSubmit('back');
+                              history.push(
+                                `/models/${modelID}/collaboration-area/task-list/payment`
+                              );
                             }}
                           >
                             {miscellaneousT('back')}
@@ -524,7 +501,11 @@ const ClaimsBasedPayment = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() => handleFormSubmit('task-list')}
+                          onClick={() =>
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list`
+                            )
+                          }
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -538,16 +519,6 @@ const ClaimsBasedPayment = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

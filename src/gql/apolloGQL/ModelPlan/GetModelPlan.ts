@@ -6,8 +6,18 @@ export default gql(/* GraphQL */ `
       id
       modelName
       modifiedDts
+      modifiedByUserAccount {
+        commonName
+      }
+      opSolutionLastModifiedDts
       archived
       status
+      taskListStatus
+      isFavorite
+      suggestedPhase {
+        phase
+        suggestedStatuses
+      }
       basics {
         id
         clearanceStarts
@@ -31,6 +41,7 @@ export default gql(/* GraphQL */ `
       documents {
         id
         fileName
+        fileType
       }
       crs {
         id

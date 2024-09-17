@@ -12,7 +12,8 @@ import {
 
 import CCWAndQuality from '.';
 
-type GetCCWAndQualityType = GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
+type GetCCWAndQualityType =
+  GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
 
 const ccwAndQualityMockData: GetCCWAndQualityType = {
   __typename: 'PlanOpsEvalAndLearning',
@@ -66,11 +67,11 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/ccw-and-quality'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality'
         ]}
       >
         <MockedProvider mocks={ccwAndQualityMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/ops-eval-and-learning/ccw-and-quality">
+          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality">
             <CCWAndQuality />
           </Route>
         </MockedProvider>
@@ -94,11 +95,11 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/ccw-and-quality'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality'
         ]}
       >
         <MockedProvider mocks={ccwAndQualityMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/ops-eval-and-learning/ccw-and-quality">
+          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/ccw-and-quality">
             <CCWAndQuality />
           </Route>
         </MockedProvider>

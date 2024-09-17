@@ -1,10 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Icon,
@@ -15,27 +12,29 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetCcwAndQualityQuery,
+  TypedUpdatePlanOpsEvalAndLearningDocument,
   useGetCcwAndQualityQuery,
-  useUpdatePlanOpsEvalAndLearningMutation,
   YesNoOtherType
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import ConfirmLeave from 'components/ConfirmLeave';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -45,7 +44,8 @@ import {
   renderTotalPages
 } from '..';
 
-type GetCCWAndQualityFormType = GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
+type GetCCWAndQualityFormType =
+  GetCcwAndQualityQuery['modelPlan']['opsEvalAndLearning'];
 
 const CCWAndQuality = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -58,7 +58,8 @@ const CCWAndQuality = () => {
   const {
     sendFilesBetweenCcw: sendFilesBetweenCcwConfig,
     appToSendFilesToKnown: appToSendFilesToKnownConfig,
-    useCcwForFileDistribiutionToParticipants: useCcwForFileDistribiutionToParticipantsConfig,
+    useCcwForFileDistribiutionToParticipants:
+      useCcwForFileDistribiutionToParticipantsConfig,
     developNewQualityMeasures: developNewQualityMeasuresConfig,
     qualityPerformanceImpactsPayment: qualityPerformanceImpactsPaymentConfig
   } = usePlanTranslation('opsEvalAndLearning');
@@ -102,39 +103,13 @@ const CCWAndQuality = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useUpdatePlanOpsEvalAndLearningMutation();
-
-  const handleFormSubmit = (redirect?: string) => {
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/ops-eval-and-learning/data-sharing`
-            );
-          } else if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/ops-eval-and-learning/evaluation`
-            );
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanOpsEvalAndLearningDocument,
+    {
+      id,
+      formikRef
+    }
+  );
 
   const initialValues: GetCCWAndQualityFormType = {
     __typename: 'PlanOpsEvalAndLearning',
@@ -166,19 +141,21 @@ const CCWAndQuality = () => {
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-2">
         {opsEvalAndLearningMiscT('heading')}
       </PageHeading>
@@ -199,19 +176,16 @@ const CCWAndQuality = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/data-sharing`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<GetCCWAndQualityFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            values,
-            setFieldValue
-          } = formikProps;
+          const { errors, handleSubmit, setErrors, values, setFieldValue } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (
@@ -233,6 +207,8 @@ const CCWAndQuality = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
 
               <Form
                 className="desktop:grid-col-6 margin-top-6"
@@ -392,8 +368,8 @@ const CCWAndQuality = () => {
                           <ITSolutionsWarning
                             id="ops-eval-and-learning-data-needed-warning"
                             onClick={() =>
-                              handleFormSubmit(
-                                `/models/${modelID}/task-list/it-solutions`
+                              history.push(
+                                `/models/${modelID}/collaboration-area/task-list/it-solutions`
                               )
                             }
                           />
@@ -494,7 +470,9 @@ const CCWAndQuality = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        handleFormSubmit('back');
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`
+                        );
                       }}
                     >
                       {miscellaneousT('back')}
@@ -508,7 +486,11 @@ const CCWAndQuality = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
@@ -516,16 +498,6 @@ const CCWAndQuality = () => {
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

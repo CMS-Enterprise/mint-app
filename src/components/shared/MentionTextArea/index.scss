@@ -68,6 +68,12 @@
   }
 }
 
+.text-base-darkest {
+  .mention {
+    color: color($theme-color-base-darkest);
+  }
+}
+
 .items {
   position: relative;
   background: #FFF;

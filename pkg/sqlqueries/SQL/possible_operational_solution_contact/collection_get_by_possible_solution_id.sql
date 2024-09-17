@@ -11,6 +11,7 @@ SELECT
     posc.possible_operational_solution_id,
     posc.name,
     posc.email,
+    posc.is_team,
     posc.role,
     posc.is_primary,
     posc.created_by,

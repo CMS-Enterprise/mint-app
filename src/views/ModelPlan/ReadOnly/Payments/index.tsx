@@ -44,8 +44,12 @@ const ReadOnlyPayments = ({
 
   const paymentsConfigOne = {
     fundingSource: paymentsConfig.fundingSource,
+    fundingSourcePatientProtectionInfo:
+      paymentsConfig.fundingSourcePatientProtectionInfo,
     fundingSourceNote: paymentsConfig.fundingSourceNote,
     fundingSourceR: paymentsConfig.fundingSourceR,
+    fundingSourceRPatientProtectionInfo:
+      paymentsConfig.fundingSourceRPatientProtectionInfo,
     fundingSourceRNote: paymentsConfig.fundingSourceRNote,
     payRecipients: paymentsConfig.payRecipients,
     payRecipientsOtherSpecification:
@@ -74,6 +78,8 @@ const ReadOnlyPayments = ({
     affectsMedicareSecondaryPayerClaimsNote:
       paymentsConfig.affectsMedicareSecondaryPayerClaimsNote,
     payModelDifferentiation: paymentsConfig.payModelDifferentiation,
+    willBePaymentAdjustments: paymentsConfig.willBePaymentAdjustments,
+    willBePaymentAdjustmentsNote: paymentsConfig.willBePaymentAdjustmentsNote,
     creatingDependenciesBetweenServices:
       paymentsConfig.creatingDependenciesBetweenServices,
     creatingDependenciesBetweenServicesNote:
@@ -180,6 +186,10 @@ const ReadOnlyPayments = ({
         heading={paymentsMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={allPaymentData.status}
+        modelID={modelID}
+        modifiedOrCreatedDts={
+          allPaymentData.modifiedDts || allPaymentData.createdDts
+        }
       />
 
       {clearance && (

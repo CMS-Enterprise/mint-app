@@ -2,25 +2,25 @@ package resolvers
 
 import "github.com/cmsgov/mint-app/pkg/models"
 
-func (s *ResolverSuite) TestUserNotificationPreferencesGetByUserID() {
-	pref, err := UserNotificationPreferencesGetByUserID(s.testConfigs.Context, s.testConfigs.Principal.Account().ID)
-	s.NoError(err)
-	s.NotNil(pref)
+func (suite *ResolverSuite) TestUserNotificationPreferencesGetByUserID() {
+	pref, err := UserNotificationPreferencesGetByUserID(suite.testConfigs.Context, suite.testConfigs.Principal.Account().ID)
+	suite.NoError(err)
+	suite.NotNil(pref)
 
-	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.DailyDigestComplete)
-	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.AddedAsCollaborator)
-	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.TaggedInDiscussion)
-	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.TaggedInDiscussionReply)
-	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.NewDiscussionReply)
-	s.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.ModelPlanShared)
+	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.DailyDigestComplete)
+	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.AddedAsCollaborator)
+	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.TaggedInDiscussion)
+	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.TaggedInDiscussionReply)
+	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.NewDiscussionReply)
+	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.ModelPlanShared)
 
 }
 
-func (s *ResolverSuite) TestUserNotificationPreferencesUpdate() {
+func (suite *ResolverSuite) TestUserNotificationPreferencesUpdate() {
 
-	pref, err := UserNotificationPreferencesGetByUserID(s.testConfigs.Context, s.testConfigs.Principal.Account().ID)
-	s.NoError(err)
-	s.NotNil(pref)
+	pref, err := UserNotificationPreferencesGetByUserID(suite.testConfigs.Context, suite.testConfigs.Principal.Account().ID)
+	suite.NoError(err)
+	suite.NotNil(pref)
 	inAppOnly := models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp}
 	changes := map[string]interface{}{
 		"dailyDigestComplete":     inAppOnly,
@@ -30,19 +30,19 @@ func (s *ResolverSuite) TestUserNotificationPreferencesUpdate() {
 		"newDiscussionReply":      inAppOnly,
 		"modelPlanShared":         nil,
 	}
-	updatedPref, err := UserNotificationPreferencesUpdate(s.testConfigs.Context, s.testConfigs.Logger, s.testConfigs.Principal, s.testConfigs.Store, changes)
-	s.NoError(err)
-	s.NotNil(updatedPref)
+	updatedPref, err := UserNotificationPreferencesUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, changes)
+	suite.NoError(err)
+	suite.NotNil(updatedPref)
 
-	s.EqualValues(inAppOnly, updatedPref.DailyDigestComplete)
-	s.EqualValues(inAppOnly, updatedPref.AddedAsCollaborator)
-	s.EqualValues(inAppOnly, updatedPref.TaggedInDiscussion)
-	s.EqualValues(inAppOnly, updatedPref.TaggedInDiscussionReply)
-	s.EqualValues(inAppOnly, updatedPref.NewDiscussionReply)
-	s.EqualValues(models.UserNotificationPreferenceFlags(nil), updatedPref.ModelPlanShared)
+	suite.EqualValues(inAppOnly, updatedPref.DailyDigestComplete)
+	suite.EqualValues(inAppOnly, updatedPref.AddedAsCollaborator)
+	suite.EqualValues(inAppOnly, updatedPref.TaggedInDiscussion)
+	suite.EqualValues(inAppOnly, updatedPref.TaggedInDiscussionReply)
+	suite.EqualValues(inAppOnly, updatedPref.NewDiscussionReply)
+	suite.EqualValues(models.UserNotificationPreferenceFlags(nil), updatedPref.ModelPlanShared)
 
 	// Ensure a nil reference evaluates correctly
-	s.False(updatedPref.ModelPlanShared.InApp())
-	s.False(updatedPref.ModelPlanShared.SendEmail())
+	suite.False(updatedPref.ModelPlanShared.InApp())
+	suite.False(updatedPref.ModelPlanShared.SendEmail())
 
 }

@@ -21,6 +21,7 @@ describe('Operational Solutions Timeline Components', () => {
           </Route>
         </MemoryRouter>
       );
+
       expect(asFragment()).toMatchSnapshot(solutionTimelineComponent.name);
     }
   );

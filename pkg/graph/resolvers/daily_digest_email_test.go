@@ -33,7 +33,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 		Return(&emailtestconfigs.TestEmailServiceConfig).
 		AnyTimes()
 
-	// 	testTemplate  := *emailTemplates.EmailTemplate{}
+	// 	testTemplate  := *emailtemplates.EmailTemplate{}
 	// mockTemplateService.EXPECT().GetEmailTemplate(gomock.Eq(email.DailyDigestTemplateName)).Return(testTemplate,nil).MinTimes(1).MaxTimes(1)
 
 	mp := suite.createModelPlan("Test Plan")
@@ -111,7 +111,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 
 	mp := suite.createModelPlan("Test Plan")
 
-	userAccount := getTestPrincipal(suite.testConfigs.Store, userName)
+	userAccount := suite.getTestPrincipal(suite.testConfigs.Store, userName)
 
 	// Create a favorite, as favorites determine what models users get a digest in regards to.
 	_, err = PlanFavoriteCreate(suite.testConfigs.Store, suite.testConfigs.Logger, userAccount, userAccount.Account().ID, suite.testConfigs.Store, mp.ID)

@@ -6,11 +6,13 @@ import {
   useGetOperationalNeedsQuery
 } from 'gql/gen/graphql';
 
-import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import OperationalNeedsTable from 'views/ModelPlan/TaskList/ITSolutions/Home/operationalNeedsTable';
 import { NotFoundPartial } from 'views/NotFound';
 
-type OperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
+import TitleAndStatus from '../_components/TitleAndStatus';
+
+type OperationalNeedsType =
+  GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
 
 const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('opSolutionsMisc');
@@ -27,7 +29,7 @@ const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
 
   const getITSolutionsStatus = (
     operationalNeedsArray: OperationalNeedsType[]
-  ) => {
+  ): TaskStatus => {
     const inProgress = operationalNeedsArray.find(need => need.modifiedDts);
     return inProgress ? TaskStatus.IN_PROGRESS : TaskStatus.READY;
   };
@@ -39,13 +41,15 @@ const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
       className="read-only-model-plan--operational-needs"
       data-testid="read-only-model-plan--operational-needs"
     >
-      <div className="display-flex flex-justify flex-align-start">
-        <h2 className="margin-top-0 margin-bottom-4">{t('headingReadOnly')}</h2>
-
-        {operationalNeeds && (
-          <TaskListStatusTag status={getITSolutionsStatus(operationalNeeds)} />
-        )}
-      </div>
+      <TitleAndStatus
+        clearance={false}
+        clearanceTitle=""
+        heading={t('headingReadOnly')}
+        isViewingFilteredView={false}
+        status={getITSolutionsStatus(operationalNeeds || [])}
+        modelID={modelID}
+        modifiedOrCreatedDts={data?.modelPlan.opSolutionLastModifiedDts}
+      />
 
       <OperationalNeedsTable modelID={modelID} type="needs" readOnly />
     </div>

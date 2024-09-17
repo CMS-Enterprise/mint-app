@@ -5,9 +5,14 @@ describe('The Model Plan Form', () => {
   });
 
   it('archives a model plan', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.visit('/');
 
-    cy.contains('button', 'Remove your Model Plan').click();
+    cy.get(`[data-testid="table"] a`).contains('Empty Plan').click();
+    cy.url().should('include', '/collaboration-area');
+
+    cy.contains('button', '...').click();
+
+    cy.contains('button', 'Remove this model from MINT').click();
 
     cy.contains('button', 'Remove Model Plan').click();
 
@@ -15,10 +20,12 @@ describe('The Model Plan Form', () => {
       expect(loc.pathname).to.eq('/');
     });
 
-    cy.get('table').within(() => {
-      cy.get('tbody').within(() => {
-        cy.contains('th', 'Empty Plan').should('not.exist');
+    cy.get('table')
+      .first()
+      .within(() => {
+        cy.get('tbody').within(() => {
+          cy.contains('th', 'Empty Plan').should('not.exist');
+        });
       });
-    });
   });
 });

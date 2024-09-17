@@ -10,7 +10,8 @@ import {
 
 import { ParticipantsAndProvidersContent } from './index';
 
-type GetParticipantsAndProvidersType = GetParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
+type GetParticipantsAndProvidersType =
+  GetParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
 
 const participantsAndProvidersMockData: GetParticipantsAndProvidersType = {
   __typename: 'PlanParticipantsAndProviders',
@@ -27,7 +28,8 @@ const participantsAndProvidersMockData: GetParticipantsAndProvidersType = {
   participantsNote: '',
   participantsCurrentlyInModels: null,
   participantsCurrentlyInModelsNote: '',
-  modelApplicationLevel: 'c92.00 and c92.01'
+  modelApplicationLevel: 'c92.00 and c92.01',
+  isNewTypeOfProvidersOrSuppliers: null
 };
 
 const participantsAndProvidersMock = [
@@ -53,14 +55,14 @@ describe('Model Plan Participants and Providers', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers'
         ]}
       >
         <MockedProvider
           mocks={participantsAndProvidersMock}
           addTypename={false}
         >
-          <Route path="/models/:modelID/task-list/participants-and-providers">
+          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers">
             <ParticipantsAndProvidersContent />
           </Route>
         </MockedProvider>
@@ -94,14 +96,14 @@ describe('Model Plan Participants and Providers', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers'
         ]}
       >
         <MockedProvider
           mocks={participantsAndProvidersMock}
           addTypename={false}
         >
-          <Route path="/models/:modelID/task-list/participants-and-providers">
+          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers">
             <ParticipantsAndProvidersContent />
           </Route>
         </MockedProvider>

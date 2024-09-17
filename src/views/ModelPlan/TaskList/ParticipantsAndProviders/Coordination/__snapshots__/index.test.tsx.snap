@@ -13,7 +13,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          class="usa-link usa-breadcrumb__link"
           href="/"
         >
           <span>
@@ -25,8 +25,20 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <span>
             Model Plan task list
@@ -37,7 +49,9 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        Participants and providers
+        <span>
+          Participants and providers
+        </span>
       </li>
     </ol>
   </nav>
@@ -225,7 +239,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
               Surety Bond
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -245,7 +259,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
               Letter of Credit
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -266,7 +280,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
               Escrow
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -286,7 +300,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
               Other
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
         </div>
@@ -493,7 +507,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
           Will you collect participant IDs? If so, select which types.
         </label>
         <div
-          class="usa-alert usa-alert--warning flex it-solutions-warning"
+          class="usa-alert usa-alert--warning icon-padding flex it-solutions-warning"
           data-testid="alert"
         >
           <div
@@ -538,7 +552,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
             CCNs
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -558,7 +572,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
             NPIs
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -578,7 +592,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
             TINs
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -598,7 +612,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -637,7 +651,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
             No, we will not collect provider identifiers
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div

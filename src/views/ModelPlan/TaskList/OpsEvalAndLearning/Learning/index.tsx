@@ -1,10 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Icon,
@@ -15,28 +12,29 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import {
   GetLearningQuery,
   ModelLearningSystemType,
-  useGetLearningQuery,
-  useUpdatePlanOpsEvalAndLearningMutation
+  TypedUpdatePlanOpsEvalAndLearningDocument,
+  useGetLearningQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import ConfirmLeave from 'components/ConfirmLeave';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
-import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
-import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 import {
@@ -56,9 +54,8 @@ const Learning = () => {
   );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const {
-    modelLearningSystems: modelLearningSystemsConfig
-  } = usePlanTranslation('opsEvalAndLearning');
+  const { modelLearningSystems: modelLearningSystemsConfig } =
+    usePlanTranslation('opsEvalAndLearning');
 
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -100,45 +97,13 @@ const Learning = () => {
   // If redirected from Operational Solutions, scrolls to the relevant question
   useScrollElement(!loading);
 
-  const [update] = useUpdatePlanOpsEvalAndLearningMutation();
-
-  const handleFormSubmit = (
-    redirect?: 'back' | 'task-list' | 'next' | string
-  ) => {
-    const dirtyInputs = dirtyInput(
-      formikRef?.current?.initialValues,
-      formikRef?.current?.values
-    );
-
-    if (dirtyInputs.status) {
-      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
+  const { mutationError } = useHandleMutation(
+    TypedUpdatePlanOpsEvalAndLearningDocument,
+    {
+      id,
+      formikRef
     }
-
-    update({
-      variables: {
-        id,
-        changes: dirtyInputs
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/ops-eval-and-learning/data-sharing`
-            );
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          } else if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/payment`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  );
 
   const initialValues: InitialValueType = {
     __typename: 'PlanOpsEvalAndLearning',
@@ -159,19 +124,20 @@ const Learning = () => {
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{opsEvalAndLearningMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.OPS_EVAL_AND_LEARNING
+        ]}
+      />
 
       <PageHeading className="margin-top-4 margin-bottom-2">
         {opsEvalAndLearningMiscT('heading')}
@@ -193,19 +159,16 @@ const Learning = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/payment`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InitialValueType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setFieldValue,
-            setErrors,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setFieldValue, setErrors, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (
@@ -228,6 +191,8 @@ const Learning = () => {
                 </ErrorAlert>
               )}
 
+              <ConfirmLeave />
+
               <Form
                 className="desktop:grid-col-6 margin-top-6"
                 data-testid="ops-eval-and-learning-learning-form"
@@ -248,8 +213,8 @@ const Learning = () => {
                       <ITSolutionsWarning
                         id="ops-eval-and-learning-learning-systems-warning"
                         onClick={() =>
-                          handleFormSubmit(
-                            `/models/${modelID}/task-list/it-solutions`
+                          history.push(
+                            `/models/${modelID}/collaboration-area/task-list/it-solutions`
                           )
                         }
                       />
@@ -351,7 +316,9 @@ const Learning = () => {
                       type="button"
                       className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
-                        handleFormSubmit('back');
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/data-sharing`
+                        );
                       }}
                     >
                       {miscellaneousT('back')}
@@ -365,7 +332,11 @@ const Learning = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => handleFormSubmit('task-list')}
+                    onClick={() =>
+                      history.push(
+                        `/models/${modelID}/collaboration-area/task-list`
+                      )
+                    }
                   >
                     <Icon.ArrowBack className="margin-right-1" aria-hidden />
 
@@ -373,16 +344,6 @@ const Learning = () => {
                   </Button>
                 </Fieldset>
               </Form>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

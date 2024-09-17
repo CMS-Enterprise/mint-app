@@ -9,7 +9,7 @@ import (
 
 	gomock "github.com/golang/mock/gomock"
 
-	emailTemplates "github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
+	"github.com/cmsgov/mint-app/pkg/shared/emailtemplates"
 )
 
 // MockTemplateService is a mock of TemplateService interface.
@@ -36,10 +36,10 @@ func (m *MockTemplateService) EXPECT() *MockTemplateServiceMockRecorder {
 }
 
 // GetEmailTemplate mocks base method.
-func (m *MockTemplateService) GetEmailTemplate(emailTemplateName string) (*emailTemplates.EmailTemplate, error) {
+func (m *MockTemplateService) GetEmailTemplate(emailTemplateName string) (*emailtemplates.EmailTemplate, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetEmailTemplate", emailTemplateName)
-	ret0, _ := ret[0].(*emailTemplates.EmailTemplate)
+	ret0, _ := ret[0].(*emailtemplates.EmailTemplate)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

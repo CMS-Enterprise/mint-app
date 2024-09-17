@@ -12,10 +12,11 @@ import {
 import {
   GetFavoritesQuery,
   ModelPlanFilter,
-  useGetFavoritesQuery
+  useGetFavoritesQuery,
+  ViewCustomizationType
 } from 'gql/gen/graphql';
 
-import FavoritesTable from 'components/FavoriteCard/table';
+import FavoritesCards from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
@@ -27,15 +28,16 @@ import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import { isMAC } from 'utils/user';
 
-import ModelPlansTable from '../Table';
+import ModelPlansTable from '../../Home/Table';
 
-type GetFavoritesModelPlanCollection = GetFavoritesQuery['modelPlanCollection'][0];
+type GetFavoritesModelPlanCollection =
+  GetFavoritesQuery['modelPlanCollection'][0];
 
 export type UpdateFavoriteProps = 'addFavorite' | 'removeFavorite';
 
 const ModelPlan = () => {
   const { t } = useTranslation('readOnlyModelPlan');
-  const { t: h } = useTranslation('home');
+  const { t: h } = useTranslation('customHome');
 
   const userGroups = useSelector((state: AppState) => state.auth.groups);
   const macUser = isMAC(userGroups);
@@ -68,7 +70,7 @@ const ModelPlan = () => {
   const { message } = useMessage();
 
   const Favorites = favorites.length ? (
-    <FavoritesTable
+    <FavoritesCards
       favorites={favorites}
       removeFavorite={handleUpdateFavorite}
     />
@@ -156,7 +158,9 @@ const ModelPlan = () => {
           </p>
 
           <ModelPlansTable
-            type="models"
+            id="favorite-model-plans-table"
+            type={ViewCustomizationType.ALL_MODEL_PLANS}
+            isHome={false}
             updateFavorite={handleUpdateFavorite}
           />
         </Grid>

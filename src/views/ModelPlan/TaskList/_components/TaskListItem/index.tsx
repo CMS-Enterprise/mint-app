@@ -1,7 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
-import { PrepareForClearanceStatus, TaskStatus } from 'gql/gen/graphql';
+import {
+  ModelStatus,
+  PrepareForClearanceStatus,
+  TaskStatus
+} from 'gql/gen/graphql';
 
 type TaskListDescriptionProps = {
   children?: React.ReactNode | React.ReactNodeArray;
@@ -16,9 +20,11 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
 };
 
 export const TaskListStatusTag = ({
-  status
+  status,
+  classname
 }: {
-  status: TaskStatus | PrepareForClearanceStatus | undefined;
+  status: TaskStatus | PrepareForClearanceStatus | ModelStatus | undefined;
+  classname?: string;
 }) => {
   const { t } = useTranslation('modelPlanTaskList');
 
@@ -26,34 +32,36 @@ export const TaskListStatusTag = ({
   let tagCopy;
   switch (status) {
     case 'IN_PROGRESS':
-      tagCopy = t('taskListItem.inProgress');
+      tagCopy = t('taskListStatus.IN_PROGRESS');
       tagStyle = 'bg-warning';
       break;
     case 'READY_FOR_REVIEW':
-      tagCopy = t('taskListItem.readyForReview');
+      tagCopy = t('taskListStatus.READY_FOR_REVIEW');
       tagStyle = 'bg-success-dark text-white';
       break;
     case 'READY':
-      tagCopy = t('taskListItem.ready');
-      tagStyle = 'bg-accent-cool';
+      tagCopy = t('taskListStatus.READY');
+      tagStyle = 'bg-info-light';
       break;
     case 'READY_FOR_CLEARANCE':
-      tagCopy = t('taskListItem.readyForClearance');
+      tagCopy = t('taskListStatus.READY_FOR_CLEARANCE');
       tagStyle = 'bg-base-lighter text-base-darker';
       break;
     case 'CANNOT_START':
-      tagCopy = t('taskListItem.cannotStart');
+      tagCopy = t('taskListStatus.CANNOT_START');
       tagStyle = 'bg-white border-2px text-base';
       break;
     default:
       tagCopy = '';
-      tagStyle = 'bg-accent-cool';
+      tagStyle = 'bg-info-light';
   }
 
   return (
     <div
       data-testid="tasklist-tag"
-      className={`model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print ${tagStyle}`}
+      className={`model-plan-task-list__task-tag line-height-body-1 text-bold mint-no-print ${tagStyle} ${
+        classname ?? ''
+      }`}
     >
       <span>{tagCopy}</span>
     </div>
@@ -91,9 +99,7 @@ const TaskListItem = ({
           <span className="display-flex flex-column flex-align-end">
             <TaskListStatusTag status={status} />
             <div className="model-plan-task-list__last-updated-status line-height-body-4 text-base">
-              {lastUpdated && (
-                <p className="margin-y-0">{t('taskListItem.lastUpdated')}</p>
-              )}
+              {lastUpdated && <p className="margin-y-0">{t('lastUpdated')}</p>}
               <p className="margin-y-0">{lastUpdated}</p>
             </div>
           </span>

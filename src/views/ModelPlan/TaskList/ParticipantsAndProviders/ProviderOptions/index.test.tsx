@@ -16,7 +16,8 @@ import ProviderOptions from './index';
 const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 const operationalNeedID = '081cb879-bd6f-4ead-b9cb-3a299de76390';
 
-type GetProviderOptionsType = GetProviderOptionsQuery['modelPlan']['participantsAndProviders'];
+type GetProviderOptionsType =
+  GetProviderOptionsQuery['modelPlan']['participantsAndProviders'];
 
 const providerOptionsMockData: GetProviderOptionsType = {
   __typename: 'PlanParticipantsAndProviders',
@@ -83,11 +84,11 @@ describe('Model Plan ProviderOptions', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/provider-options'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers/provider-options'
         ]}
       >
         <MockedProvider mocks={providerOptionsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/participants-and-providers/provider-options">
+          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options">
             <ProviderOptions />
           </Route>
         </MockedProvider>
@@ -113,11 +114,11 @@ describe('Model Plan ProviderOptions', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/provider-options'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers/provider-options'
         ]}
       >
         <MockedProvider mocks={providerOptionsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/participants-and-providers/provider-options">
+          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers/provider-options">
             <ProviderOptions />
           </Route>
         </MockedProvider>

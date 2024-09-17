@@ -13,7 +13,7 @@ exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          class="usa-link usa-breadcrumb__link"
           href="/"
         >
           <span>
@@ -25,8 +25,20 @@ exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <span>
             Model Plan task list
@@ -37,7 +49,9 @@ exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        Payment
+        <span>
+          Payment
+        </span>
       </li>
     </ol>
   </nav>
@@ -52,7 +66,7 @@ exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
     class="margin-top-0 margin-bottom-1 font-body-lg"
     data-testid="model-plan-name"
   >
-    for My excellent plan that I just initiated
+    for {{modelName}}
   </p>
   <p
     class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -116,6 +130,90 @@ exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
             >
               Claims-based payment questions continued
             </h3>
+            <div
+              class="usa-form-group margin-top-4"
+              data-scroll="willBePaymentAdjustments"
+            >
+              <label
+                class="usa-label maxw-none"
+                data-testid="label"
+                for="willBePaymentAdjustments"
+              >
+                Will there be payment adjustments (positive or negative) applied?
+              </label>
+              <p
+                class="text-base margin-y-1"
+              >
+                Examples: The ESRD Treatment Choices (ETC) model included a payment adjustment known as HDPA for home dialysis payments. Later, CMMI introduced another adjustment, called PPA, which could result in a bonus or penalty for dialysis service payments.
+              </p>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-will-be-payment-adjustments-true"
+                    id="payment-will-be-payment-adjustments-true"
+                    name="willBePaymentAdjustments"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-will-be-payment-adjustments-true"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    data-testid="payment-will-be-payment-adjustments-false"
+                    id="payment-will-be-payment-adjustments-false"
+                    name="willBePaymentAdjustments"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-will-be-payment-adjustments-false"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-3 margin-bottom-6"
+              >
+                <div
+                  class="usa-form-group"
+                >
+                  <label
+                    class="usa-label"
+                    for="payment-will-be-payment-adjustments-note"
+                    id="label-payment-will-be-payment-adjustments-note"
+                  >
+                    Notes
+                  </label>
+                  <textarea
+                    aria-labelledby="label-payment-will-be-payment-adjustments-note hint-payment-will-be-payment-adjustments-note"
+                    class="usa-textarea"
+                    data-testid="payment-will-be-payment-adjustments-note"
+                    id="payment-will-be-payment-adjustments-note"
+                    name="willBePaymentAdjustmentsNote"
+                  >
+                    Payment adjustments note
+                  </textarea>
+                </div>
+              </div>
+            </div>
             <div
               class="usa-form-group margin-top-4"
               data-scroll="creatingDependenciesBetweenServices"
@@ -342,7 +440,7 @@ exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
               </fieldset>
             </div>
             <div
-              class="usa-alert usa-alert--info usa-alert--slim flex margin-y-6"
+              class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-y-6"
               data-testid="alert"
             >
               <div

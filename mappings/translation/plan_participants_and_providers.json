@@ -1,0 +1,1066 @@
+{
+  "participants": {
+    "gqlField": "participants",
+    "goField": "Participants",
+    "dbField": "participants",
+    "label": "Who are the participants? Select all that apply.",
+    "readonlyLabel": "Who are the participants?",
+    "exportLabel": "Who are the participants?",
+    "multiSelectLabel": "Selected participants",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
+    "order": 1.01,
+    "options": {
+      "ACCOUNTABLE_CARE_ORGANIZATION": "Accountable Care Organization (ACO)",
+      "COMMERCIAL_PAYERS": "Commercial payers",
+      "COMMUNITY_BASED_ORGANIZATIONS": "Community-based organizations (CBO)",
+      "CONVENER": "Convener",
+      "ENTITIES": "Legal Entities",
+      "MEDICAID_MANAGED_CARE_ORGANIZATIONS": "Medicaid Managed Care organizations",
+      "MEDICAID_PROVIDERS": "Medicaid providers",
+      "MEDICARE_ADVANTAGE_PLANS": "Medicare Advantage plans",
+      "MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS": "Medicare Advantage Prescription Drug (MAPD) plans",
+      "MEDICARE_PROVIDERS": "Medicare providers/suppliers",
+      "NON_PROFIT_ORGANIZATIONS": "Non-profit organizations",
+      "STANDALONE_PART_D_PLANS": "Standalone Part D plans",
+      "STATES": "States",
+      "STATE_MEDICAID_AGENCIES": "State Medicaid agencies",
+      "OTHER": "Other"
+    },
+    "optionsLabels": {
+      "MEDICARE_PROVIDERS": "Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc."
+    },
+    "childRelation": {
+      "MEDICARE_PROVIDERS": [
+        {
+          "gqlField": "isNewTypeOfProvidersOrSuppliers",
+          "goField": "IsNewTypeOfProvidersOrSuppliers",
+          "dbField": "is_new_type_of_providers_or_suppliers",
+          "label": "Are any of these a new type of provider/supplier?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          },
+          "order": 1.021
+        }
+      ]
+    }
+  },
+  "medicareProviderType": {
+    "gqlField": "medicareProviderType",
+    "goField": "MedicareProviderType",
+    "dbField": "medicare_provider_type",
+    "label": "Which type of Medicare providers/suppliers?",
+    "sublabel": "Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.02,
+    "isOtherType": true,
+    "otherParentField": "participants"
+  },
+  "isNewTypeOfProvidersOrSuppliers": {
+    "gqlField": "isNewTypeOfProvidersOrSuppliers",
+    "goField": "IsNewTypeOfProvidersOrSuppliers",
+    "dbField": "is_new_type_of_providers_or_suppliers",
+    "label": "Are any of these a new type of provider/supplier?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "order": 1.021,
+    "parentRelation": {
+      "gqlField": "participants",
+      "goField": "Participants",
+      "dbField": "participants",
+      "label": "Who are the participants? Select all that apply.",
+      "readonlyLabel": "Who are the participants?",
+      "exportLabel": "Who are the participants?",
+      "multiSelectLabel": "Selected participants",
+      "dataType": "ENUM",
+      "formType": "MULTISELECT",
+      "order": 1.01,
+      "options": {
+        "ACCOUNTABLE_CARE_ORGANIZATION": "Accountable Care Organization (ACO)",
+        "COMMERCIAL_PAYERS": "Commercial payers",
+        "COMMUNITY_BASED_ORGANIZATIONS": "Community-based organizations (CBO)",
+        "CONVENER": "Convener",
+        "ENTITIES": "Legal Entities",
+        "MEDICAID_MANAGED_CARE_ORGANIZATIONS": "Medicaid Managed Care organizations",
+        "MEDICAID_PROVIDERS": "Medicaid providers",
+        "MEDICARE_ADVANTAGE_PLANS": "Medicare Advantage plans",
+        "MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS": "Medicare Advantage Prescription Drug (MAPD) plans",
+        "MEDICARE_PROVIDERS": "Medicare providers/suppliers",
+        "NON_PROFIT_ORGANIZATIONS": "Non-profit organizations",
+        "STANDALONE_PART_D_PLANS": "Standalone Part D plans",
+        "STATES": "States",
+        "STATE_MEDICAID_AGENCIES": "State Medicaid agencies",
+        "OTHER": "Other"
+      },
+      "optionsLabels": {
+        "MEDICARE_PROVIDERS": "Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc."
+      }
+    }
+  },
+  "statesEngagement": {
+    "gqlField": "statesEngagement",
+    "goField": "StatesEngagement",
+    "dbField": "states_engagement",
+    "label": "Please describe how states will engage with your model.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.03,
+    "isOtherType": true,
+    "otherParentField": "participants"
+  },
+  "participantsOther": {
+    "gqlField": "participantsOther",
+    "goField": "ParticipantsOther",
+    "dbField": "participants_other",
+    "label": "Please describe the other participants engaging with this model",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.04,
+    "isOtherType": true,
+    "otherParentField": "participants"
+  },
+  "participantsNote": {
+    "gqlField": "participantsNote",
+    "goField": "ParticipantsNote",
+    "dbField": "participants_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participants",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.05
+  },
+  "participantsCurrentlyInModels": {
+    "gqlField": "participantsCurrentlyInModels",
+    "goField": "ParticipantsCurrentlyInModels",
+    "dbField": "participants_currently_in_models",
+    "label": "Are the participants in CMMI models now?",
+    "sublabel": "If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.",
+    "questionTooltip": "If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.06,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "participantsCurrentlyInModelsNote": {
+    "gqlField": "participantsCurrentlyInModelsNote",
+    "goField": "ParticipantsCurrentlyInModelsNote",
+    "dbField": "participants_currently_in_models_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participants_currently_in_models",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.07
+  },
+  "modelApplicationLevel": {
+    "gqlField": "modelApplicationLevel",
+    "goField": "ModelApplicationLevel",
+    "dbField": "model_application_level",
+    "label": "At what level will the model apply?",
+    "sublabel": "(e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)",
+    "questionTooltip": "(e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.08
+  },
+  "expectedNumberOfParticipants": {
+    "gqlField": "expectedNumberOfParticipants",
+    "goField": "ExpectedNumberOfParticipants",
+    "dbField": "expected_number_of_participants",
+    "label": "How many participants do you expect?",
+    "sublabel": "Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating.",
+    "dataType": "NUMBER",
+    "formType": "RANGEINPUT",
+    "order": 2.01
+  },
+  "estimateConfidence": {
+    "gqlField": "estimateConfidence",
+    "goField": "EstimateConfidence",
+    "dbField": "estimate_confidence",
+    "label": "What is your level of confidence on this estimate?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
+    "order": 2.02,
+    "options": {
+      "NOT_AT_ALL": "Not at all confident",
+      "SLIGHTLY": "Slightly confident",
+      "FAIRLY": "Fairly confident",
+      "COMPLETELY": "Completely confident"
+    }
+  },
+  "confidenceNote": {
+    "gqlField": "confidenceNote",
+    "goField": "ConfidenceNote",
+    "dbField": "confidence_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "expected_number_of_participants",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.03
+  },
+  "recruitmentMethod": {
+    "gqlField": "recruitmentMethod",
+    "goField": "RecruitmentMethod",
+    "dbField": "recruitment_method",
+    "label": "How will you recruit the participants?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
+    "order": 2.04,
+    "options": {
+      "APPLICATION_COLLECTION_TOOL": "Use an application collection tool",
+      "LOI": "LOI (Letter of intent)",
+      "NOFO": "NOFO (Notice of funding opportunity for grants/cooperative agreements)",
+      "OTHER": "Other",
+      "NA": "Not applicable"
+    },
+    "optionsLabels": {
+      "NOFO": "CMMI writes, Office of General Council (OGC) reviews and approves"
+    }
+  },
+  "recruitmentOther": {
+    "gqlField": "recruitmentOther",
+    "goField": "RecruitmentOther",
+    "dbField": "recruitment_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.05,
+    "isOtherType": true,
+    "otherParentField": "recruitment_method"
+  },
+  "recruitmentNote": {
+    "gqlField": "recruitmentNote",
+    "goField": "RecruitmentNote",
+    "dbField": "recruitment_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "recruitment_method",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.06
+  },
+  "selectionMethod": {
+    "gqlField": "selectionMethod",
+    "goField": "SelectionMethod",
+    "dbField": "selection_method",
+    "label": "How will you select participants? Select all that apply.",
+    "readonlyLabel": "How will you select participants?",
+    "exportLabel": "How will you select participants?",
+    "multiSelectLabel": "Selected participants",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
+    "order": 2.07,
+    "options": {
+      "APPLICATION_REVIEW_AND_SCORING_TOOL": "Use an application review and scoring tool",
+      "APPLICATION_SUPPORT_CONTRACTOR": "Get an application support contractor",
+      "BASIC_CRITERIA": "We have a basic set of criteria and plan to accept any participant that meets them",
+      "CMS_COMPONENT_OR_PROCESS": "Another CMS component or process will provide support",
+      "MODEL_TEAM_REVIEW_APPLICATIONS": "Model team will review applications",
+      "SUPPORT_FROM_CMMI": "Solicit support for CMII staff",
+      "OTHER": "Other",
+      "NO_SELECTING_PARTICIPANTS": "We won’t be selecting participants"
+    }
+  },
+  "selectionOther": {
+    "gqlField": "selectionOther",
+    "goField": "SelectionOther",
+    "dbField": "selection_other",
+    "label": "Please describe the other participants engaging with this model",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.08,
+    "isOtherType": true
+  },
+  "selectionNote": {
+    "gqlField": "selectionNote",
+    "goField": "SelectionNote",
+    "dbField": "selection_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "selection_method",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.09
+  },
+  "participantAddedFrequency": {
+    "gqlField": "participantAddedFrequency",
+    "goField": "ParticipantAddedFrequency",
+    "dbField": "participant_added_frequency",
+    "label": "How frequently are participants added?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 3.01,
+    "options": {
+      "ANNUALLY": "Annually",
+      "SEMIANNUALLY": "Semi-annually",
+      "QUARTERLY": "Quarterly",
+      "MONTHLY": "Monthly",
+      "CONTINUALLY": "Continually",
+      "OTHER": "Other"
+    }
+  },
+  "participantAddedFrequencyContinually": {
+    "gqlField": "participantAddedFrequencyContinually",
+    "goField": "ParticipantAddedFrequencyContinually",
+    "dbField": "participant_added_frequency_continually",
+    "label": "Please specify",
+    "exportLabel": "Please specify continually",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.02,
+    "isOtherType": true,
+    "otherParentField": "participant_added_frequency"
+  },
+  "participantAddedFrequencyOther": {
+    "gqlField": "participantAddedFrequencyOther",
+    "goField": "ParticipantAddedFrequencyOther",
+    "dbField": "participant_added_frequency_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.03,
+    "isOtherType": true,
+    "otherParentField": "participant_added_frequency"
+  },
+  "participantAddedFrequencyNote": {
+    "gqlField": "participantAddedFrequencyNote",
+    "goField": "ParticipantAddedFrequencyNote",
+    "dbField": "participant_added_frequency_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participant_added_frequency",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.04
+  },
+  "participantRemovedFrequency": {
+    "gqlField": "participantRemovedFrequency",
+    "goField": "ParticipantRemovedFrequency",
+    "dbField": "participant_removed_frequency",
+    "label": "How frequently are participants removed?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 3.05,
+    "options": {
+      "ANNUALLY": "Annually",
+      "SEMIANNUALLY": "Semi-annually",
+      "QUARTERLY": "Quarterly",
+      "MONTHLY": "Monthly",
+      "CONTINUALLY": "Continually",
+      "OTHER": "Other"
+    }
+  },
+  "participantRemovedFrequencyContinually": {
+    "gqlField": "participantRemovedFrequencyContinually",
+    "goField": "ParticipantRemovedFrequencyContinually",
+    "dbField": "participant_removed_frequency_continually",
+    "label": "Please specify",
+    "exportLabel": "Please specify continually",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.06,
+    "isOtherType": true,
+    "otherParentField": "participant_removed_frequency"
+  },
+  "participantRemovedFrequencyOther": {
+    "gqlField": "participantRemovedFrequencyOther",
+    "goField": "ParticipantRemovedFrequencyOther",
+    "dbField": "participant_removed_frequency_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.07,
+    "isOtherType": true,
+    "otherParentField": "participant_removed_frequency"
+  },
+  "participantRemovedFrequencyNote": {
+    "gqlField": "participantRemovedFrequencyNote",
+    "goField": "ParticipantRemovedFrequencyNote",
+    "dbField": "participant_removed_frequency_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participant_removed_frequency",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 3.08
+  },
+  "communicationMethod": {
+    "gqlField": "communicationMethod",
+    "goField": "CommunicationMethod",
+    "dbField": "communication_method",
+    "label": "How will you communicate with participants?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 3.09,
+    "options": {
+      "IT_TOOL": "Manage ongoing communications with participants using an IT tool",
+      "MASS_EMAIL": "Send mass emails to new participants",
+      "OTHER": "Other",
+      "NO_COMMUNICATION": "We are not planning to communicate"
+    }
+  },
+  "communicationMethodOther": {
+    "gqlField": "communicationMethodOther",
+    "goField": "CommunicationMethodOther",
+    "dbField": "communication_method_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.1,
+    "isOtherType": true,
+    "otherParentField": "communication_method"
+  },
+  "communicationNote": {
+    "gqlField": "communicationNote",
+    "goField": "CommunicationNote",
+    "dbField": "communication_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "communication_method",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.11
+  },
+  "riskType": {
+    "gqlField": "riskType",
+    "goField": "RiskType",
+    "dbField": "risk_type",
+    "label": "What type of risk will the participant assume?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 3.12,
+    "options": {
+      "TWO_SIDED": "Two-sided",
+      "ONE_SIDED": "One-sided",
+      "CAPITATION": "Capitation",
+      "NOT_RISK_BASED": "Not risk-based",
+      "OTHER": "Other"
+    }
+  },
+  "riskOther": {
+    "gqlField": "riskOther",
+    "goField": "RiskOther",
+    "dbField": "risk_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.13,
+    "isOtherType": true,
+    "otherParentField": "risk_type"
+  },
+  "riskNote": {
+    "gqlField": "riskNote",
+    "goField": "RiskNote",
+    "dbField": "risk_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "risk_type",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.14
+  },
+  "willRiskChange": {
+    "gqlField": "willRiskChange",
+    "goField": "WillRiskChange",
+    "dbField": "will_risk_change",
+    "label": "Will the risk arrangement change as the model progresses?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.15,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "willRiskChangeNote": {
+    "gqlField": "willRiskChangeNote",
+    "goField": "WillRiskChangeNote",
+    "dbField": "will_risk_change_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "will_risk_change",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.16
+  },
+  "participantRequireFinancialGuarantee": {
+    "gqlField": "participantRequireFinancialGuarantee",
+    "goField": "ParticipantRequireFinancialGuarantee",
+    "dbField": "participant_require_financial_guarantee",
+    "label": "Are participants required to retain a financial guarantee?",
+    "sublabel": "Note: Remember to include financial guarantee requirements when drafting your Participation Agreement.",
+    "questionTooltip": "Financial guarantees are commitments made by one party, typically a financial institution or a company, to assume responsibility for the payment of a debt or the performance of an obligation if the debtor or obligor fails to fulfill their obligations.",
+    "readonlyLabel": "Are participants required to retain a financial guarantee? If so, are there any limitations on the type?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.01,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "participantRequireFinancialGuaranteeType": {
+    "gqlField": "participantRequireFinancialGuaranteeType",
+    "goField": "ParticipantRequireFinancialGuaranteeType",
+    "dbField": "participant_require_financial_guarantee_type",
+    "label": "If so, are there any limitations on the type?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 4.02,
+    "options": {
+      "SURETY_BOND": "Surety Bond",
+      "LETTER_OF_CREDIT": "Letter of Credit",
+      "ESCROW": "Escrow",
+      "OTHER": "Other"
+    },
+    "isOtherType": true,
+    "otherParentField": "participant_require_financial_guarantee"
+  },
+  "participantRequireFinancialGuaranteeOther": {
+    "gqlField": "participantRequireFinancialGuaranteeOther",
+    "goField": "ParticipantRequireFinancialGuaranteeOther",
+    "dbField": "participant_require_financial_guarantee_other",
+    "label": "Please specify",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 4.03,
+    "isOtherType": true
+  },
+  "participantRequireFinancialGuaranteeNote": {
+    "gqlField": "participantRequireFinancialGuaranteeNote",
+    "goField": "ParticipantRequireFinancialGuaranteeNote",
+    "dbField": "participant_require_financial_guarantee_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participant_require_financial_guarantee_type",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 4.04
+  },
+  "coordinateWork": {
+    "gqlField": "coordinateWork",
+    "goField": "CoordinateWork",
+    "dbField": "coordinate_work",
+    "label": "Will the participants coordinate the work of others?",
+    "sublabel": "(e.g. conveners)",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.05,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "coordinateWorkNote": {
+    "gqlField": "coordinateWorkNote",
+    "goField": "CoordinateWorkNote",
+    "dbField": "coordinate_work_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "coordinate_work",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 4.06
+  },
+  "gainsharePayments": {
+    "gqlField": "gainsharePayments",
+    "goField": "GainsharePayments",
+    "dbField": "gainshare_payments",
+    "label": "Will there be gainsharing payments?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.07,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "gainsharePaymentsTrack",
+          "goField": "GainsharePaymentsTrack",
+          "dbField": "gainshare_payments_track",
+          "label": "Will you track gainsharing payments?",
+          "dataType": "BOOLEAN",
+          "formType": "RADIO",
+          "order": 4.08,
+          "options": {
+            "true": "Yes",
+            "false": "No"
+          }
+        },
+        {
+          "gqlField": "gainsharePaymentsEligibility",
+          "goField": "GainsharePaymentsEligibility",
+          "dbField": "gainshare_payments_eligibility",
+          "label": "Are providers eligible to participate in gainsharing arrangements?",
+          "dataType": "ENUM",
+          "formType": "CHECKBOX",
+          "order": 4.09,
+          "options": {
+            "ALL_PROVIDERS": "All providers",
+            "SOME_PROVIDERS": "Some providers",
+            "OTHER": "Other",
+            "NO": "No"
+          }
+        }
+      ]
+    }
+  },
+  "gainsharePaymentsTrack": {
+    "gqlField": "gainsharePaymentsTrack",
+    "goField": "GainsharePaymentsTrack",
+    "dbField": "gainshare_payments_track",
+    "label": "Will you track gainsharing payments?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 4.08,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "parentRelation": {
+      "gqlField": "gainsharePayments",
+      "goField": "GainsharePayments",
+      "dbField": "gainshare_payments",
+      "label": "Will there be gainsharing payments?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 4.07,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "gainsharePaymentsEligibility": {
+    "gqlField": "gainsharePaymentsEligibility",
+    "goField": "GainsharePaymentsEligibility",
+    "dbField": "gainshare_payments_eligibility",
+    "label": "Are providers eligible to participate in gainsharing arrangements?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 4.09,
+    "options": {
+      "ALL_PROVIDERS": "All providers",
+      "SOME_PROVIDERS": "Some providers",
+      "OTHER": "Other",
+      "NO": "No"
+    },
+    "parentRelation": {
+      "gqlField": "gainsharePayments",
+      "goField": "GainsharePayments",
+      "dbField": "gainshare_payments",
+      "label": "Will there be gainsharing payments?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 4.07,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "gainsharePaymentsEligibilityOther": {
+    "gqlField": "gainsharePaymentsEligibilityOther",
+    "goField": "GainsharePaymentsEligibilityOther",
+    "dbField": "gainshare_payments_eligibility_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 4.1,
+    "isOtherType": true,
+    "otherParentField": "gainshare_payments_eligibility"
+  },
+  "gainsharePaymentsNote": {
+    "gqlField": "gainsharePaymentsNote",
+    "goField": "GainsharePaymentsNote",
+    "dbField": "gainshare_payments_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "gainshare_payments",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 4.11
+  },
+  "participantsIds": {
+    "gqlField": "participantsIds",
+    "goField": "ParticipantsIds",
+    "dbField": "participants_ids",
+    "label": "Will you collect participant IDs? If so, select which types.",
+    "sublabel": "Note: If this will be a MIPS or Advanced APM, you need to collect provider TIN-NPIs for participants to benefit from QPP. In addition, CPI vetting needs to be preformed.",
+    "readonlyLabel": "Will you collect participant IDs?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 4.12,
+    "options": {
+      "CCNS": "CCNs",
+      "NPIS": "NPIs",
+      "TINS": "TINs",
+      "OTHER": "Other",
+      "NO_IDENTIFIERS": "No, we will not collect provider identifiers"
+    }
+  },
+  "participantsIdsOther": {
+    "gqlField": "participantsIdsOther",
+    "goField": "ParticipantsIdsOther",
+    "dbField": "participants_ids_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 4.13,
+    "isOtherType": true,
+    "otherParentField": "participants_ids"
+  },
+  "participantsIDSNote": {
+    "gqlField": "participantsIDSNote",
+    "goField": "ParticipantsIDSNote",
+    "dbField": "participants_ids_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "participants_ids",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 4.14
+  },
+  "providerAdditionFrequency": {
+    "gqlField": "providerAdditionFrequency",
+    "goField": "ProviderAdditionFrequency",
+    "dbField": "provider_addition_frequency",
+    "label": "How frequently are providers added?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 5.01,
+    "options": {
+      "ANNUALLY": "Annually",
+      "SEMIANNUALLY": "Semi-annually",
+      "QUARTERLY": "Quarterly",
+      "MONTHLY": "Monthly",
+      "CONTINUALLY": "Continually",
+      "OTHER": "Other"
+    }
+  },
+  "providerAdditionFrequencyContinually": {
+    "gqlField": "providerAdditionFrequencyContinually",
+    "goField": "ProviderAdditionFrequencyContinually",
+    "dbField": "provide_addition_frequency_continually",
+    "label": "Please specify",
+    "exportLabel": "Please specify continually",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.02,
+    "isOtherType": true,
+    "otherParentField": "provider_addition_frequency"
+  },
+  "providerAdditionFrequencyOther": {
+    "gqlField": "providerAdditionFrequencyOther",
+    "goField": "ProviderAdditionFrequencyOther",
+    "dbField": "provider_addition_frequency_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.03,
+    "isOtherType": true,
+    "otherParentField": "provider_addition_frequency"
+  },
+  "providerAdditionFrequencyNote": {
+    "gqlField": "providerAdditionFrequencyNote",
+    "goField": "ProviderAdditionFrequencyNote",
+    "dbField": "provider_addition_frequency_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "provider_addition_frequency",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.04
+  },
+  "providerAddMethod": {
+    "gqlField": "providerAddMethod",
+    "goField": "ProviderAddMethod",
+    "dbField": "provider_add_method",
+    "label": "How will you decide to add providers? Select all that apply.",
+    "sublabel": "Please include details on decision points, timing, and implications of adding them to the model in an additional note.",
+    "readonlyLabel": "How will you decide to add providers?",
+    "exportLabel": "How will you decide to add providers?",
+    "dataType": "ENUM",
+    "formType": "MULTISELECT",
+    "order": 5.05,
+    "multiSelectLabel": "How will you add providers?",
+    "options": {
+      "PROSPECTIVELY": "Add prospectively (based on previous year’s interactions)",
+      "RETROSPECTIVELY": "Add retrospectively (once an interaction happens this year)",
+      "VOLUNTARILY": "Add voluntarily",
+      "MANDATORILY": "Add mandatorily",
+      "ONLINE_TOOLS": "Use online tools to view what types of participant files and data have been uploaded and downloaded",
+      "OTHER": "Other",
+      "NA": "Not applicable"
+    }
+  },
+  "providerAddMethodOther": {
+    "gqlField": "providerAddMethodOther",
+    "goField": "ProviderAddMethodOther",
+    "dbField": "provider_add_method_other",
+    "label": "Please describe the other method for deciding which providers to add.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.06,
+    "isOtherType": true
+  },
+  "providerAddMethodNote": {
+    "gqlField": "providerAddMethodNote",
+    "goField": "ProviderAddMethodNote",
+    "dbField": "provider_add_method_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "provider_add_method",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.07
+  },
+  "providerLeaveMethod": {
+    "gqlField": "providerLeaveMethod",
+    "goField": "ProviderLeaveMethod",
+    "dbField": "provider_leave_method",
+    "label": "Can providers leave the model? Select all that apply.",
+    "readonlyLabel": "Can providers leave the model?",
+    "exportLabel": "Can providers leave the model?",
+    "sublabel": "Please include details on decision points, timing, and implications of leaving the model in an additional note.",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 5.08,
+    "options": {
+      "VARIES_BY_TYPE_OF_PROVIDER": "It varies by type of provider",
+      "NOT_ALLOWED_TO_LEAVE": "They are not allowed to leave",
+      "AFTER_A_CERTAIN_WITH_IMPLICATIONS": "They can leave after a certain date but there are implications",
+      "VOLUNTARILY_WITHOUT_IMPLICATIONS": "They can leave voluntarily at any time without implications",
+      "OTHER": "Other",
+      "NOT_APPLICABLE": "Not applicable"
+    }
+  },
+  "providerLeaveMethodOther": {
+    "gqlField": "providerLeaveMethodOther",
+    "goField": "ProviderLeaveMethodOther",
+    "dbField": "provider_leave_method_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.09,
+    "isOtherType": true,
+    "otherParentField": "provider_leave_method"
+  },
+  "providerLeaveMethodNote": {
+    "gqlField": "providerLeaveMethodNote",
+    "goField": "ProviderLeaveMethodNote",
+    "dbField": "provider_leave_method_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "provider_leave_method",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.1
+  },
+  "providerRemovalFrequency": {
+    "gqlField": "providerRemovalFrequency",
+    "goField": "ProviderRemovalFrequency",
+    "dbField": "provider_removal_frequency",
+    "label": "How frequently are providers removed?",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 5.11,
+    "options": {
+      "ANNUALLY": "Annually",
+      "SEMIANNUALLY": "Semi-annually",
+      "QUARTERLY": "Quarterly",
+      "MONTHLY": "Monthly",
+      "CONTINUALLY": "Continually",
+      "OTHER": "Other"
+    }
+  },
+  "providerRemovalFrequencyContinually": {
+    "gqlField": "providerRemovalFrequencyContinually",
+    "goField": "ProviderRemovalFrequencyContinually",
+    "dbField": "provide_removal_frequency_continually",
+    "label": "Please specify",
+    "exportLabel": "Please specify continually",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 5.12,
+    "isOtherType": true,
+    "otherParentField": "provider_removal_frequency"
+  },
+  "providerRemovalFrequencyOther": {
+    "gqlField": "providerRemovalFrequencyOther",
+    "goField": "ProviderRemovalFrequencyOther",
+    "dbField": "provider_removal_frequency_other",
+    "label": "Please specify",
+    "exportLabel": "Please specify other",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 5.13,
+    "isOtherType": true,
+    "otherParentField": "provider_removal_frequency"
+  },
+  "providerRemovalFrequencyNote": {
+    "gqlField": "providerRemovalFrequencyNote",
+    "goField": "ProviderRemovalFrequencyNote",
+    "dbField": "provider_removal_frequency_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "provider_removal_frequency",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.14
+  },
+  "providerOverlap": {
+    "gqlField": "providerOverlap",
+    "goField": "ProviderOverlap",
+    "dbField": "provider_overlap",
+    "label": "Will the providers overlap with other models?",
+    "dataType": "ENUM",
+    "formType": "RADIO",
+    "order": 5.15,
+    "options": {
+      "YES_NEED_POLICIES": "Yes, we expect to develop policies to manage the overlaps",
+      "YES_NO_ISSUES": "Yes, and the overlaps would not be an issue",
+      "NO": "No"
+    },
+    "childRelation": {
+      "YES_NEED_POLICIES": [
+        {
+          "gqlField": "providerOverlapHierarchy",
+          "goField": "ProviderOverlapHierarchy",
+          "dbField": "provider_overlap_hierarchy",
+          "label": "If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 5.16
+        }
+      ],
+      "YES_NO_ISSUES": [
+        {
+          "gqlField": "providerOverlapHierarchy",
+          "goField": "ProviderOverlapHierarchy",
+          "dbField": "provider_overlap_hierarchy",
+          "label": "If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 5.16
+        }
+      ]
+    }
+  },
+  "providerOverlapHierarchy": {
+    "gqlField": "providerOverlapHierarchy",
+    "goField": "ProviderOverlapHierarchy",
+    "dbField": "provider_overlap_hierarchy",
+    "label": "If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.16,
+    "parentRelation": {
+      "gqlField": "providerOverlap",
+      "goField": "ProviderOverlap",
+      "dbField": "provider_overlap",
+      "label": "Will the providers overlap with other models?",
+      "dataType": "ENUM",
+      "formType": "RADIO",
+      "order": 5.15,
+      "options": {
+        "YES_NEED_POLICIES": "Yes, we expect to develop policies to manage the overlaps",
+        "YES_NO_ISSUES": "Yes, and the overlaps would not be an issue",
+        "NO": "No"
+      }
+    }
+  },
+  "providerOverlapNote": {
+    "gqlField": "providerOverlapNote",
+    "goField": "ProviderOverlapNote",
+    "dbField": "provider_overlap_note",
+    "label": "Notes",
+    "isNote": true,
+    "otherParentField": "provider_overlap",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.17
+  },
+  "readyForReviewBy": {
+    "gqlField": "readyForReviewBy",
+    "goField": "ReadyForReviewBy",
+    "dbField": "ready_for_review_by",
+    "label": "This section of the Model Plan (Participants and providers) is ready for review.",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 5.18,
+    "tableReference": "user_account",
+    "hideFromReadonly": true
+  },
+  "readyForReviewDts": {
+    "gqlField": "readyForReviewDts",
+    "goField": "ReadyForReviewDts",
+    "dbField": "ready_for_review_dts",
+    "label": "Ready for review date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 5.19,
+    "hideFromReadonly": true
+  },
+  "readyForClearanceBy": {
+    "gqlField": "readyForClearanceBy",
+    "goField": "ReadyForClearanceBy",
+    "dbField": "ready_for_clearance_by",
+    "label": "This section of the Model Plan (Participants and providers) is ready for clearance.",
+    "dataType": "UUID",
+    "formType": "TEXT",
+    "order": 5.2,
+    "tableReference": "user_account",
+    "hideFromReadonly": true
+  },
+  "readyForClearanceDts": {
+    "gqlField": "readyForClearanceDts",
+    "goField": "ReadyForClearanceDts",
+    "dbField": "ready_for_clearance_dts",
+    "label": "Ready for clearance date",
+    "dataType": "DATE",
+    "formType": "DATEPICKER",
+    "order": 5.21,
+    "hideFromReadonly": true
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "Model Plan status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 5.22,
+    "options": {
+      "READY": "Ready",
+      "IN_PROGRESS": "In progress",
+      "READY_FOR_REVIEW": "Ready for review",
+      "READY_FOR_CLEARANCE": "Ready for clearance"
+    },
+    "hideFromReadonly": true
+  }
+}

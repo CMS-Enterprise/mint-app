@@ -164,7 +164,10 @@ export const getRelatedUneededQuestions = <
     if (childrenToCheck) {
       childRelations = childRelations?.filter(child =>
         childrenToCheck.includes(child().gqlField)
-      );
+      ) as (
+        | Partial<Record<T, (() => TranslationConfigType<T, C>)[]>>
+        | Partial<Record<T, (() => TranslationConfigType<T, void>)[]>>
+      )[T];
     }
 
     // If the evaluation of the parent value triggers a child question, sort into appropriate arrays
@@ -237,10 +240,11 @@ export const isHiddenByParentCondition = <
     return false;
 
   // Typescript is not inferring the parent config type, but we know it has options with children
-  const parentConfig = config.parentRelation() as TranslationFieldPropertiesWithOptionsAndChildren<
-    T,
-    C
-  >;
+  const parentConfig =
+    config.parentRelation() as TranslationFieldPropertiesWithOptionsAndChildren<
+      T,
+      C
+    >;
 
   const parentValue: T = values[parentConfig.gqlField];
 

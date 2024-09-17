@@ -37,10 +37,8 @@ const LinkDocument = ({
   const { t: documentsT } = useTranslation('documents');
   const { t: documentsMiscT } = useTranslation('documentsMisc');
 
-  const {
-    documentType: documentTypeConfig,
-    restricted: restrictedConfig
-  } = usePlanTranslation('documents');
+  const { documentType: documentTypeConfig, restricted: restrictedConfig } =
+    usePlanTranslation('documents');
 
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
@@ -125,7 +123,7 @@ const LinkDocument = ({
             if (solutionDetailsLink) {
               history.push(solutionDetailsLink);
             } else {
-              history.push(`/models/${modelID}/documents`);
+              history.push(`/models/${modelID}/collaboration-area/documents`);
             }
           }
         }
@@ -215,7 +213,7 @@ const LinkDocument = ({
 
                   <FieldGroup scrollElement="name" error={!!flatErrors.name}>
                     <Label htmlFor="FileUpload-LinkFileName">
-                      {documentsT('name.label')}
+                      {documentsT('fileName.label')}
                       <RequiredAsterisk />
                     </Label>
 
@@ -224,7 +222,7 @@ const LinkDocument = ({
                       hint
                       className="text-normal text-base margin-y-1"
                     >
-                      {documentsT('name.sublabel')}
+                      {documentsT('fileName.sublabel')}
                     </Label>
 
                     <FieldErrorMsg>{flatErrors.name}</FieldErrorMsg>
@@ -275,7 +273,7 @@ const LinkDocument = ({
                               htmlFor="FileUpload-OtherType"
                               className="margin-bottom-1"
                             >
-                              {documentsT('otherTypeDescription.label')}
+                              {documentsT('otherType.label')}
                               <RequiredAsterisk />
                             </Label>
 

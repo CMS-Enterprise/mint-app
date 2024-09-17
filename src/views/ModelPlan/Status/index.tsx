@@ -1,10 +1,7 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Grid,
   GridContainer,
@@ -14,11 +11,12 @@ import {
 } from '@trussworks/react-uswds';
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
 import { ModelStatus, useUpdateModelPlanMutation } from 'gql/gen/graphql';
-import * as Yup from 'yup';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
+import useMessage from 'hooks/useMessage';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
@@ -29,66 +27,71 @@ type StatusFormProps = {
 
 const Status = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
+  const { t: modelPlanTaskListT } = useTranslation('modelPlanTaskList');
   const { t: modelPlanMiscT } = useTranslation('modelPlanMisc');
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const { status: statusConfig } = usePlanTranslation('modelPlan');
+
+  const { showMessageOnNextPage } = useMessage();
 
   const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
+
+  const params = useMemo(() => {
+    return new URLSearchParams(history.location.search);
+  }, [history.location.search]);
+
+  // Get model status from generated email link
+  const modelStatus = params.get('model-status') as ModelStatus;
+
   const formikRef = useRef<FormikProps<StatusFormProps>>(null);
-  const validationSchema = Yup.object().shape({
-    status: Yup.string().required('Enter a role for this team member')
-  });
 
   const { status } = useContext(ModelInfoContext);
 
   const [update] = useUpdateModelPlanMutation();
 
   const handleFormSubmit = (formikValues: StatusFormProps) => {
-    update({
-      variables: {
-        id: modelID,
-        changes: {
-          status: formikValues.status
-        }
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          history.push(`/models/${modelID}/task-list/`);
+    if (formikValues.status) {
+      update({
+        variables: {
+          id: modelID,
+          changes: {
+            status: formikValues.status
+          }
         }
       })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+        .then(response => {
+          if (!response?.errors) {
+            showMessageOnNextPage(
+              modelPlanTaskListT('statusUpdateSuccess', {
+                status: statusConfig.options[formikValues.status as ModelStatus]
+              })
+            );
+            history.push(`/models/${modelID}/collaboration-area/`);
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
+    }
   };
 
   const initialValues: StatusFormProps = {
-    status: status ?? undefined
+    status: modelStatus ?? status ?? undefined
   };
 
   return (
     <MainContent>
       <GridContainer>
         <Grid desktop={{ col: 6 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{miscellaneousT('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink
-                asCustom={Link}
-                to={`/models/${modelID}/task-list/`}
-              >
-                <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{modelPlanMiscT('headingStatus')}</Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.COLLABORATION_AREA,
+              BreadcrumbItemOptions.STATUS
+            ]}
+          />
 
           <PageHeading className="margin-bottom-1">
             {modelPlanMiscT('headingStatus')}
@@ -102,10 +105,6 @@ const Status = () => {
             initialValues={initialValues}
             enableReinitialize
             onSubmit={handleFormSubmit}
-            validationSchema={validationSchema}
-            validateOnBlur={false}
-            validateOnChange={false}
-            validateOnMount={false}
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<StatusFormProps>) => {
@@ -157,7 +156,10 @@ const Status = () => {
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="submit"
-                        disabled={!dirty}
+                        disabled={
+                          (!dirty && !modelStatus) ||
+                          (!dirty && modelStatus === status)
+                        }
                         className=""
                         onClick={() => setErrors({})}
                       >
@@ -169,7 +171,7 @@ const Status = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
-                        history.push(`/models/${modelID}/task-list/`)
+                        history.push(`/models/${modelID}/collaboration-area`)
                       }
                     >
                       <Icon.ArrowBack className="margin-right-1" aria-hidden />

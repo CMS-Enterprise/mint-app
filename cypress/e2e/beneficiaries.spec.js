@@ -5,7 +5,7 @@ describe('The Model Plan Beneficiaries Form', () => {
   });
 
   it('completes a Model Plan Beneficiaries form', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.get('[data-testid="beneficiaries"]').click();
 
@@ -74,6 +74,6 @@ describe('The Model Plan Beneficiaries Form', () => {
 
     cy.contains('button', 'Save and return to task list').click();
 
-    cy.url().should('include', '/task-list');
+    cy.url().should('include', '/collaboration-area/task-list');
   });
 });

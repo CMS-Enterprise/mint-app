@@ -17,11 +17,11 @@ import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
-import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import ShareExportModal from 'components/ShareExport';
+import StatusBanner from 'components/StatusBanner';
 import SAMPLE_MODEL_UUID_STRING from 'constants/sampleModelPlan';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
@@ -32,7 +32,6 @@ import PrintPDFWrapper from 'views/PrintPDFWrapper';
 import NDABanner from '../../../components/NDABanner';
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import { StatusMessageType } from '../TaskList';
-import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
 import FilterViewBanner from './_components/FilterView/Banner';
@@ -160,7 +159,7 @@ export const ReadOnlyComponents = (
   };
 };
 
-export type SubpageKey = typeof listOfSubpageKey[number];
+export type SubpageKey = (typeof listOfSubpageKey)[number];
 
 const isSubpage = (
   x: SubpageKey,
@@ -202,13 +201,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
   const { t: h } = useTranslation('generalReadOnly');
   const { t: filterViewT } = useTranslation('filterView');
 
-  const {
-    modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '',
-    subinfo
-  } = useParams<{
-    modelID: string;
-    subinfo: SubpageKey;
-  }>();
+  const { modelID = isHelpArticle ? SAMPLE_MODEL_UUID_STRING : '', subinfo } =
+    useParams<{
+      modelID: string;
+      subinfo: SubpageKey;
+    }>();
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
@@ -230,9 +227,8 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
     null
   );
 
-  const [isFilterViewModalOpen, setIsFilterViewModalOpen] = useState<boolean>(
-    false
-  );
+  const [isFilterViewModalOpen, setIsFilterViewModalOpen] =
+    useState<boolean>(false);
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
@@ -326,11 +322,11 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
         )}
 
         {!isHelpArticle && (
-          <div className="mint-no-print">
+          <div className="mint-no-print margin-bottom-3">
             <div className="display-flex flex-justify">
               <UswdsReactLink
                 to="/models"
-                className="display-flex flex-align-center margin-bottom-3"
+                className="display-flex flex-align-center"
               >
                 <Icon.ArrowBack className="text-primary margin-right-1" />
                 {h('back')}
@@ -345,18 +341,32 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           </div>
         )}
 
-        <PageHeading
-          className="margin-0 line-height-sans-2 minh-6 margin-bottom-2"
-          headingLevel={isHelpArticle ? 'h2' : 'h1'}
-        >
-          {modelName}{' '}
-          {abbreviation && (
-            <span className="font-sans-sm text-normal">({abbreviation})</span>
-          )}
-        </PageHeading>
+        {isHelpArticle ? (
+          <h2
+            className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+            tabIndex={-1}
+            aria-live="polite"
+          >
+            {modelName}{' '}
+            {abbreviation && (
+              <span className="font-sans-sm text-normal">({abbreviation})</span>
+            )}
+          </h2>
+        ) : (
+          <h1
+            className="mint-h1 margin-0 line-height-sans-2 minh-6 margin-bottom-2"
+            tabIndex={-1}
+            aria-live="polite"
+          >
+            {modelName}{' '}
+            {abbreviation && (
+              <span className="font-sans-sm text-normal">({abbreviation})</span>
+            )}
+          </h1>
+        )}
 
-        <TaskListStatus
-          readOnly
+        <StatusBanner
+          isReadView
           modelID={modelID}
           status={status}
           statusLabel
@@ -438,7 +448,9 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           <FilterViewBanner
             filteredView={
               filteredView &&
-              (filteredViewOutput(filteredView) as typeof filterGroups[number])
+              (filteredViewOutput(
+                filteredView
+              ) as (typeof filterGroups)[number])
             }
             openFilterModal={() => setIsFilterViewModalOpen(true)}
             openExportModal={() => setIsExportModalOpen(true)}

@@ -14,69 +14,70 @@ exports[`FavoriteCard > matches the snapshot 1`] = `
           class="bookmark__header easi-header__basic"
         >
           <div
-            class="display-flex bookmark__title"
-          >
-            <button
-              class="usa-button usa-button--unstyled margin-right-2 width-auto"
-              data-testid="button"
-              type="button"
-            >
-              <svg
-                class="usa-icon usa-icon--size-5"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                />
-              </svg>
-            </button>
-            <h3
-              class="bookmark__title margin-0"
-            >
-              <a
-                class="usa-link"
-                href="/models/0186774a-80b0-454c-b69e-c4e949343483/read-only"
-              >
-                Plan For General Characteristics
-              </a>
-            </h3>
-          </div>
-          <div
-            class="padding-0"
-            data-testid="task-list-status"
+            class="mobile:grid-col-12 tablet:grid-col-9"
+            data-testid="grid"
           >
             <div
-              class="grid-row"
-              data-testid="grid"
-              style="gap: 16px;"
+              class="display-flex bookmark__title"
+            >
+              <button
+                class="usa-button usa-button--unstyled margin-right-2 width-auto"
+                data-testid="button"
+                type="button"
+              >
+                <svg
+                  class="usa-icon usa-icon--size-5"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </button>
+              <h3
+                class="bookmark__title margin-0"
+              >
+                <a
+                  class="usa-link"
+                  href="/models/0186774a-80b0-454c-b69e-c4e949343483/read-view"
+                >
+                  Plan For General Characteristics
+                </a>
+              </h3>
+            </div>
+          </div>
+          <div
+            class="mobile:grid-col-12 tablet:grid-col-3"
+            data-testid="grid"
+          >
+            <div
+              class="padding-0 bookmark__status"
+              data-testid="task-list-status"
+              style="line-height: initial;"
             >
               <div
                 class="display-flex flex-align-center"
-                data-testid="grid"
-                style="gap: 10px;"
               >
                 <span
-                  class="mint-tag bg-base text-white margin-right-0"
+                  class="mint-tag bg-base text-white margin-right-1"
                   data-testid="tag"
                 >
                   Draft Model Plan
                 </span>
-              </div>
-              <div
-                class="display-flex flex-align-center flex-wrap"
-                data-testid="grid"
-              >
                 <div
-                  class="mint-no-print"
+                  class="display-flex flex-align-center flex-wrap margin-right-1"
+                />
+                <div
+                  class="mint-no-print margin-right-2"
                 >
                   <a
-                    class="usa-link display-flex flex-align-center"
-                    href="/models/0186774a-80b0-454c-b69e-c4e949343483/status"
+                    class="usa-link display-flex flex-align-center padding-right-2 task-list-status__border border-base-light"
+                    href="/models/0186774a-80b0-454c-b69e-c4e949343483/collaboration-area/status"
                   />
                 </div>
               </div>
@@ -101,7 +102,7 @@ exports[`FavoriteCard > matches the snapshot 1`] = `
           data-testid="grid"
         >
           <div
-            class="desktop:grid-col-4"
+            class="mobile:grid-col-12 tablet:grid-col-4"
             data-testid="grid"
           >
             <p
@@ -116,7 +117,7 @@ exports[`FavoriteCard > matches the snapshot 1`] = `
             </p>
           </div>
           <div
-            class="desktop:grid-col-4"
+            class="mobile:grid-col-12 tablet:grid-col-4"
             data-testid="grid"
           >
             <p
@@ -131,13 +132,13 @@ exports[`FavoriteCard > matches the snapshot 1`] = `
             </p>
           </div>
           <div
-            class="desktop:grid-col-4"
+            class="mobile:grid-col-12 tablet:grid-col-4"
             data-testid="grid"
           >
             <p
               class="margin-bottom-0"
             >
-              CRs and TDLs
+              FFS CRs and TDLs
             </p>
             <p
               class="text-bold margin-top-0 margin-bottom-0"

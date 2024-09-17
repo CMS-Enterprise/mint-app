@@ -17,7 +17,7 @@ import {
   useGetModelCollaboratorsQuery
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
@@ -27,14 +27,17 @@ import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
 import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { ModelInfoContext } from 'views/ModelInfoWrapper';
 import NotFound from 'views/NotFound';
 
 import AddCollaborator from './AddCollaborator';
 import CollaboratorsTable from './table';
 
-type ModelPlanCollaboratorType = DeleteModelPlanCollaboratorMutation['deletePlanCollaborator'];
-type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type ModelPlanCollaboratorType =
+  DeleteModelPlanCollaboratorMutation['deletePlanCollaborator'];
+type GetCollaboratorsType =
+  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 // Checking if there is only one collaborator with role of MODEL_LEAD - can't edit or remove if so
 export const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {
@@ -85,10 +88,8 @@ export const CollaboratorsContent = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLastLead, setIsLastLead] = useState(false);
 
-  const [
-    removeCollaborator,
-    setRemoveCollaborator
-  ] = useState<ModelPlanCollaboratorType>();
+  const [removeCollaborator, setRemoveCollaborator] =
+    useState<ModelPlanCollaboratorType>();
 
   // Current user's EUA id - to warn about removing yourself from model plan
   const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
@@ -168,6 +169,8 @@ export const CollaboratorsContent = () => {
         <Button
           type="button"
           className="margin-right-4"
+          secondary
+          accentStyle="warm"
           onClick={() =>
             removeCollaborator && handleRemoveCollaborator(removeCollaborator)
           }
@@ -186,20 +189,6 @@ export const CollaboratorsContent = () => {
     return <div>{JSON.stringify(error)}</div>;
   }
 
-  const breadcrumbs = [
-    { text: miscellaneousT('home'), url: '/' },
-    { text: collaboratorsMiscT('teamBreadcrumb') }
-  ];
-
-  const breadcrumbsFromTaskList = [
-    { text: miscellaneousT('home'), url: '/' },
-    {
-      text: miscellaneousT('tasklistBreadcrumb'),
-      url: `/models/${modelID}/task-list/`
-    },
-    { text: collaboratorsMiscT('manageModelTeam') }
-  ];
-
   return (
     <MainContent>
       {RemoveCollaborator()}
@@ -207,13 +196,22 @@ export const CollaboratorsContent = () => {
       <GridContainer>
         <Grid row gap>
           <Grid desktop={{ col: 12 }}>
-            {message && <Expire delay={45000}>{message}</Expire>}
-
             <Breadcrumbs
               items={
-                manageOrAdd === 'manage' ? breadcrumbsFromTaskList : breadcrumbs
+                manageOrAdd === 'manage'
+                  ? [
+                      BreadcrumbItemOptions.HOME,
+                      BreadcrumbItemOptions.COLLABORATION_AREA,
+                      BreadcrumbItemOptions.COLLABORATORS
+                    ]
+                  : [
+                      BreadcrumbItemOptions.HOME,
+                      BreadcrumbItemOptions.COLLABORATORS
+                    ]
               }
             />
+
+            {message && <Expire delay={45000}>{message}</Expire>}
 
             {manageOrAdd === 'manage' ? (
               <>
@@ -227,12 +225,13 @@ export const CollaboratorsContent = () => {
                   <Trans i18nKey="draftModelPlan:for" /> {modelName}
                 </p>
 
-                <div className="font-body-lg margin-bottom-6">
+                <div className="font-body-md margin-bottom-4">
                   {collaboratorsMiscT('manageModelTeamInfo')}
                 </div>
 
-                <UswdsReactLink to={`/models/${modelID}/task-list/`}>
-                  <span>&larr; </span> {miscellaneousT('returnToTaskList')}
+                <UswdsReactLink to={`/models/${modelID}/collaboration-area`}>
+                  <span>&larr; </span>{' '}
+                  {miscellaneousT('returnToCollaborationArea')}
                 </UswdsReactLink>
               </>
             ) : (
@@ -241,20 +240,20 @@ export const CollaboratorsContent = () => {
                   {collaboratorsMiscT('headingTeamMembers')}
                 </PageHeading>
 
-                <div className="font-body-lg margin-bottom-6">
+                <div className="font-body-md margin-bottom-4">
                   {collaboratorsMiscT('teamMemberInfo')}
                 </div>
               </>
             )}
 
-            <h4 className="margin-bottom-1">
+            <h4 className="margin-bottom-1 margin-top-4">
               {collaboratorsMiscT('teamMembers')}
             </h4>
 
             <UswdsReactLink
-              className="usa-button margin-bottom-2"
+              className="usa-button margin-bottom-0"
               variant="unstyled"
-              to={`/models/${modelID}/collaborators/add-collaborator?view=${manageOrAdd}`}
+              to={`/models/${modelID}/collaboration-area/collaborators/add-collaborator?view=${manageOrAdd}`}
             >
               {collaboratorsMiscT('addTeamMemberButton')}
             </UswdsReactLink>
@@ -289,13 +288,13 @@ export const CollaboratorsContent = () => {
                   {miscellaneousT('back')}
                 </UswdsReactLink>
                 <UswdsReactLink
-                  data-testid="continue-to-tasklist"
+                  data-testid="continue-to-collaboration-area"
                   className="usa-button usa-button--outline"
                   variant="unstyled"
-                  to={`/models/${modelID}/task-list`}
+                  to={`/models/${modelID}/collaboration-area`}
                 >
                   {collaborators.length > 0
-                    ? miscellaneousT('continueToTaskList')
+                    ? miscellaneousT('continueToCollaborationArea')
                     : collaboratorsMiscT('continueWithoutAdding')}
                 </UswdsReactLink>
               </div>
@@ -310,13 +309,13 @@ export const CollaboratorsContent = () => {
 const Collaborators = () => {
   return (
     <Switch>
-      <Route
-        path="/models/:modelID/collaborators"
+      <ProtectedRoute
+        path="/models/:modelID/collaboration-area/collaborators"
         exact
         render={() => <CollaboratorsContent />}
       />
-      <Route
-        path="/models/:modelID/collaborators/add-collaborator/:collaboratorId?"
+      <ProtectedRoute
+        path="/models/:modelID/collaboration-area/collaborators/add-collaborator/:collaboratorId?"
         exact
         render={() => <AddCollaborator />}
       />

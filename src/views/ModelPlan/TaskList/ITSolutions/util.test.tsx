@@ -17,7 +17,8 @@ import {
   returnActionLinks
 } from './util';
 
-type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'];
+type GetOperationalNeedsOperationalNeedsType =
+  GetOperationalNeedsQuery['modelPlan']['operationalNeeds'];
 
 const modelID = 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06';
 
@@ -121,7 +122,7 @@ describe('Operational Solutions Util', () => {
     ).toEqual(
       <UswdsReactLink
         to={{
-          pathname: `/models/${modelID}/task-list/ops-eval-and-learning/evaluation`,
+          pathname: `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`,
           state: {
             scrollElement: 'evaluationApproaches'
           }
@@ -140,13 +141,13 @@ describe('Operational Solutions Util', () => {
     ).toEqual(
       <>
         <UswdsReactLink
-          to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`}
+          to={`/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`}
           className="margin-right-2"
         >
           {i18next.t('opSolutionsMisc:itSolutionsTable.updateStatus')}
         </UswdsReactLink>
         <UswdsReactLink
-          to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
+          to={`/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
         >
           {i18next.t('opSolutionsMisc:itSolutionsTable.viewDetails')}
         </UswdsReactLink>
@@ -162,7 +163,7 @@ describe('Operational Solutions Util', () => {
     ).toEqual(
       <UswdsReactLink
         to={{
-          pathname: `/models/${modelID}/task-list/ops-eval-and-learning/evaluation`,
+          pathname: `/models/${modelID}/collaboration-area/task-list/ops-eval-and-learning/evaluation`,
           state: {
             scrollElement: 'evaluationApproaches'
           }

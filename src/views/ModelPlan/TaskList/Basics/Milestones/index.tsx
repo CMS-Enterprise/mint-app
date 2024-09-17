@@ -1,11 +1,8 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
   Alert,
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Icon,
@@ -17,13 +14,16 @@ import {
 import { Form, Formik, FormikProps } from 'formik';
 import {
   GetMilestonesQuery,
-  useGetMilestonesQuery,
-  useUpdateBasicsMutation
+  TypedUpdateBasicsDocument,
+  useGetMilestonesQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import ConfirmLeave from 'components/ConfirmLeave';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -33,12 +33,11 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import ExternalLink from 'components/shared/ExternalLink';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { isDateInPast } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
-import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
@@ -90,39 +89,10 @@ const Milestones = () => {
     status
   } = (data?.modelPlan?.basics || {}) as MilestonesFormType;
 
-  const [update] = useUpdateBasicsMutation();
-
-  const handleFormSubmit = (redirect?: 'back' | 'task-list') => {
-    const dirtyInputs = dirtyInput(
-      formikRef?.current?.initialValues,
-      formikRef?.current?.values
-    );
-
-    if (dirtyInputs.status) {
-      dirtyInputs.status = sanitizeStatus(dirtyInputs.status);
-    }
-
-    update({
-      variables: {
-        id,
-        changes: dirtyInputs
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list`);
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/basics/overview`);
-          } else {
-            history.push(`/models/${modelID}/task-list/characteristics`);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
+  const { mutationError } = useHandleMutation(TypedUpdateBasicsDocument, {
+    id,
+    formikRef
+  });
 
   const initialValues: InitialValueType = {
     __typename: 'PlanBasics',
@@ -148,19 +118,21 @@ const Milestones = () => {
 
   return (
     <div>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{basicsMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.BASICS
+        ]}
+      />
+
       <PageHeading className="margin-top-4 margin-bottom-1">
         {basicsMiscT('heading')}
       </PageHeading>
@@ -186,7 +158,9 @@ const Milestones = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={() => {
-            handleFormSubmit();
+            history.push(
+              `/models/${modelID}/collaboration-area/task-list/characteristics`
+            );
           }}
           enableReinitialize
           validateOnBlur={false}
@@ -242,6 +216,8 @@ const Milestones = () => {
                   </ErrorAlert>
                 )}
 
+                <ConfirmLeave />
+
                 <Form
                   className="desktop:grid-col-7 milestone-form margin-top-6"
                   onSubmit={e => {
@@ -283,6 +259,10 @@ const Milestones = () => {
                               formikValue={values.completeICIP}
                               value={completeICIP}
                               error={flatErrors.completeICIP}
+                              shouldShowWarning={
+                                initialValues.completeICIP !==
+                                values.completeICIP
+                              }
                               half
                             />
                           </div>
@@ -318,6 +298,10 @@ const Milestones = () => {
                               error={flatErrors.clearanceStarts}
                               warning={false}
                               className="margin-top-1"
+                              shouldShowWarning={
+                                initialValues.clearanceStarts !==
+                                values.clearanceStarts
+                              }
                             />
 
                             <MINTDatePicker
@@ -332,19 +316,27 @@ const Milestones = () => {
                               error={flatErrors.clearanceEnds}
                               warning={false}
                               className="margin-top-1"
+                              shouldShowWarning={
+                                initialValues.clearanceEnds !==
+                                values.clearanceEnds
+                              }
                             />
                           </div>
 
                           {(isDateInPast(values.clearanceEnds) ||
-                            isDateInPast(values.clearanceStarts)) && (
-                            <Alert
-                              type="warning"
-                              className="margin-top-4"
-                              headingLevel="h4"
-                            >
-                              {miscellaneousT('dateWarning')}
-                            </Alert>
-                          )}
+                            isDateInPast(values.clearanceStarts)) &&
+                            (initialValues.clearanceStarts !==
+                              values.clearanceStarts ||
+                              initialValues.clearanceEnds !==
+                                values.clearanceEnds) && (
+                              <Alert
+                                type="warning"
+                                className="margin-top-4"
+                                headingLevel="h4"
+                              >
+                                {miscellaneousT('dateWarning')}
+                              </Alert>
+                            )}
                         </ProcessListHeading>
                       </ProcessListItem>
 
@@ -365,6 +357,9 @@ const Milestones = () => {
                             formikValue={values.announced}
                             value={announced}
                             error={flatErrors.announced}
+                            shouldShowWarning={
+                              initialValues.announced !== values.announced
+                            }
                             half
                           />
                         </div>
@@ -391,6 +386,10 @@ const Milestones = () => {
                             formikValue={values.applicationsStart}
                             value={applicationsStart}
                             error={flatErrors.applicationsStart}
+                            shouldShowWarning={
+                              initialValues.applicationsStart !==
+                              values.applicationsStart
+                            }
                             warning={false}
                           />
 
@@ -404,20 +403,28 @@ const Milestones = () => {
                             formikValue={values.applicationsEnd}
                             value={applicationsEnd}
                             error={flatErrors.applicationsEnd}
+                            shouldShowWarning={
+                              initialValues.applicationsEnd !==
+                              values.applicationsEnd
+                            }
                             warning={false}
                           />
                         </div>
 
                         {(isDateInPast(values.applicationsStart) ||
-                          isDateInPast(values.applicationsEnd)) && (
-                          <Alert
-                            type="warning"
-                            className="margin-top-4"
-                            headingLevel="h4"
-                          >
-                            {miscellaneousT('dateWarning')}
-                          </Alert>
-                        )}
+                          isDateInPast(values.applicationsEnd)) &&
+                          (initialValues.applicationsStart !==
+                            values.applicationsStart ||
+                            initialValues.applicationsEnd !==
+                              values.applicationsEnd) && (
+                            <Alert
+                              type="warning"
+                              className="margin-top-4"
+                              headingLevel="h4"
+                            >
+                              {miscellaneousT('dateWarning')}
+                            </Alert>
+                          )}
                       </ProcessListItem>
 
                       <ProcessListItem className="read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full">
@@ -450,6 +457,10 @@ const Milestones = () => {
                             error={flatErrors.performancePeriodStarts}
                             warning={false}
                             className="margin-top-0"
+                            shouldShowWarning={
+                              initialValues.performancePeriodStarts !==
+                              values.performancePeriodStarts
+                            }
                           />
 
                           <MINTDatePicker
@@ -464,19 +475,27 @@ const Milestones = () => {
                             error={flatErrors.performancePeriodEnds}
                             warning={false}
                             className="margin-top-0"
+                            shouldShowWarning={
+                              initialValues.performancePeriodEnds !==
+                              values.performancePeriodEnds
+                            }
                           />
                         </div>
 
                         {(isDateInPast(values.performancePeriodStarts) ||
-                          isDateInPast(values.performancePeriodEnds)) && (
-                          <Alert
-                            type="warning"
-                            className="margin-top-4"
-                            headingLevel="h4"
-                          >
-                            {miscellaneousT('dateWarning')}
-                          </Alert>
-                        )}
+                          isDateInPast(values.performancePeriodEnds)) &&
+                          (initialValues.performancePeriodStarts !==
+                            values.performancePeriodStarts ||
+                            initialValues.performancePeriodEnds !==
+                              values.performancePeriodEnds) && (
+                            <Alert
+                              type="warning"
+                              className="margin-top-4"
+                              headingLevel="h4"
+                            >
+                              {miscellaneousT('dateWarning')}
+                            </Alert>
+                          )}
                       </ProcessListItem>
 
                       <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
@@ -496,6 +515,9 @@ const Milestones = () => {
                             formikValue={values.wrapUpEnds}
                             value={wrapUpEnds}
                             error={flatErrors.wrapUpEnds}
+                            shouldShowWarning={
+                              initialValues.wrapUpEnds !== values.wrapUpEnds
+                            }
                             half
                           />
                         </div>
@@ -559,7 +581,9 @@ const Milestones = () => {
                               if (getKeys(err).length > 0) {
                                 window.scrollTo(0, 0);
                               } else {
-                                handleFormSubmit('back');
+                                history.push(
+                                  `/models/${modelID}/collaboration-area/task-list/basics/overview`
+                                );
                               }
                             });
                           }
@@ -580,7 +604,11 @@ const Milestones = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit('task-list')}
+                      onClick={() =>
+                        history.push(
+                          `/models/${modelID}/collaboration-area/task-list`
+                        )
+                      }
                     >
                       <Icon.ArrowBack className="margin-right-1" aria-hidden />
 

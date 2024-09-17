@@ -2,7 +2,6 @@ package resolvers
 
 import (
 	"context"
-	"time"
 
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
@@ -14,8 +13,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
-
-	"github.com/google/uuid"
 )
 
 //go:generate go run github.com/99designs/gqlgen
@@ -38,11 +35,8 @@ type Resolver struct {
 
 // ResolverService holds service methods for use in resolvers
 type ResolverService struct {
-	CreateActionUpdateStatus      func(context.Context, uuid.UUID, bool) error
-	CreateActionExtendLifecycleID func(context.Context, uuid.UUID, *time.Time, *string, string, *string) error
-	IssueLifecycleID              func(context.Context) error
-	FetchUserInfo                 func(context.Context, string) (*models.UserInfo, error)
-	SearchByName                  func(context.Context, string) ([]*models.UserInfo, error)
+	FetchUserInfo func(context.Context, string) (*models.UserInfo, error)
+	SearchByName  func(context.Context, string) ([]*models.UserInfo, error)
 }
 
 // NewResolver constructs a resolver

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
+import { TranslationDataType, TranslationFormType } from 'gql/gen/graphql';
 
 import Alert from 'components/shared/Alert';
 import CollapsableLink from 'components/shared/CollapsableLink';
@@ -48,8 +49,6 @@ const ReadOnlySection = <
   values,
   filteredView
 }: ReadOnlySectionProps<T, C>): React.ReactElement | null => {
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
-
   const config = translations[field];
 
   const value = values[config.gqlField];
@@ -82,7 +81,7 @@ const ReadOnlySection = <
   const sectionName = formatID(heading);
 
   // If no notes are written, do not render
-  if (heading === miscellaneousT('notes') && !value) {
+  if (config.isNote && !value) {
     return null;
   }
 
@@ -91,19 +90,21 @@ const ReadOnlySection = <
       <div
         className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
       >
-        <div className="display-flex flex-align-center">
-          <p className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line">
+        <div className="read-only-section--question">
+          <span className="text-bold margin-y-0 font-body-sm line-height-sans-4 text-pre-line">
             {heading}
-          </p>
-          {config.questionTooltip && (
-            <Tooltip
-              className="margin-left-1"
-              label={config.questionTooltip}
-              position="right"
-            >
-              <Icon.Info className="text-base-light" />
-            </Tooltip>
-          )}
+            {config.questionTooltip && (
+              <span className="text-normal line-height-sans-2 margin-left-1 position-relative">
+                <Tooltip
+                  wrapperclasses="top-2px"
+                  label={config.questionTooltip}
+                  position="right"
+                >
+                  <Icon.Info className="text-base-light" />
+                </Tooltip>
+              </span>
+            )}
+          </span>
         </div>
 
         <RenderReadonlyValue
@@ -155,20 +156,38 @@ const RenderReadonlyValue = <
 
   const id = formatID(config.readonlyLabel || config.label);
 
+  // Renders a single select value
+  if (
+    isTranslationFieldPropertiesWithOptions(config) &&
+    config.formType === TranslationFormType.SELECT
+  ) {
+    return (
+      <SingleValue
+        value={config.options[value as T]}
+        isDate={config.dataType === TranslationDataType.DATE}
+      />
+    );
+  }
+
   // Renders a single value
   if (
     isTranslationFieldProperties(config) &&
     !isTranslationFieldPropertiesWithOptions(config) &&
     !config.isArray
   ) {
-    return <SingleValue value={value} isDate={config.dataType === 'date'} />;
+    return (
+      <SingleValue
+        value={value}
+        isDate={config.dataType === TranslationDataType.DATE}
+      />
+    );
   }
 
   // Renders a single value with options (radio)
   // May also renders a conditinal followup value/s to the selection
   if (
     isTranslationFieldPropertiesWithOptions(config) &&
-    config.formType === 'radio'
+    config.formType === TranslationFormType.RADIO
   ) {
     return (
       <RadioValue field={field} values={values} translations={translations} />
@@ -177,7 +196,11 @@ const RenderReadonlyValue = <
 
   // If no values for checkbox/multiselect type questions
   if (listValues.length === 0) {
-    return <NoAddtionalInfo />;
+    return (
+      <>
+        {config.otherParentField ? ' - ' : ''} <NoAddtionalInfo other />
+      </>
+    );
   }
 
   // Renders a list of selected values - multiselect, checkboxes
@@ -195,7 +218,7 @@ export const NoAddtionalInfo = ({ other }: { other?: boolean }) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   return (
-    <em className="text-base">
+    <em className="text-base font-body-md">
       {other ? miscellaneousT('noAdditionalInformation') : miscellaneousT('na')}
     </em>
   );
@@ -248,10 +271,8 @@ export const RadioValue = <
   // Checks if configuration exists to optionally render a child's value with the radio value
   const childField = config.optionsRelatedInfo?.[value as T];
 
-  const childFieldValue:
-    | Partial<Record<T, string>>[T]
-    | undefined
-    | null = childField ? values[childField] : null;
+  const childFieldValue: Partial<Record<T, string>>[T] | undefined | null =
+    childField ? values[childField] : null;
 
   // Checks if the child field is an array to render as a bulleted list beneath the radio selection
   const isChildMultiple: boolean = Array.isArray(childFieldValue);
@@ -354,9 +375,7 @@ const ListItems = <T extends string | keyof T, C extends string | keyof C>({
   );
 };
 
-/*
-  Renders a nested list item.  If no value exists, render <NoAddtionalInfo />
-*/
+// Renders a nested list item.  If no value exists, render <NoAddtionalInfo />
 const ListOtherItem = ({
   index,
   listOtherItems
@@ -463,10 +482,7 @@ export const RelatedUnneededQuestions = <
       >
         <ul className="margin-y-0">
           {relatedConditions.map(question => (
-            <li
-              key={question}
-              className="text-bold margin-bottom-1 line-height-sans-4"
-            >
+            <li key={question} className="text-bold line-height-sans-4">
               {question}
             </li>
           ))}

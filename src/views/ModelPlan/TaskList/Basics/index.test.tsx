@@ -61,11 +61,11 @@ describe('Model Plan Basics page', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/basics'
+          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/basics'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/task-list/basics">
+          <Route path="/models/:modelID/collaboration-area/task-list/basics">
             <Basics />
           </Route>
         </MockedProvider>
@@ -84,11 +84,11 @@ describe('Model Plan Basics page', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/basics'
+          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/basics'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/task-list/basics">
+          <Route path="/models/:modelID/collaboration-area/task-list/basics">
             <Basics />
           </Route>
         </MockedProvider>
@@ -145,11 +145,11 @@ describe('Model Plan Basics page', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/basics'
+          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/basics'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/task-list/basics">
+          <Route path="/models/:modelID/collaboration-area/task-list/basics">
             <Basics />
           </Route>
         </MockedProvider>

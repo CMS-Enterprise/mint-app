@@ -13,7 +13,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          class="usa-link usa-breadcrumb__link"
           href="/"
         >
           <span>
@@ -25,8 +25,20 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <span>
             Model Plan task list
@@ -37,7 +49,9 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        Operations, evaluation, and learning
+        <span>
+          Operations, evaluation, and learning
+        </span>
       </li>
     </ol>
   </nav>
@@ -101,7 +115,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
         Testing questions
       </h3>
       <div
-        class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-4"
+        class="usa-alert usa-alert--info usa-alert--slim icon-padding flex margin-bottom-4"
         data-testid="mandatory-fields-alert"
       >
         <div
@@ -233,7 +247,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             Beneficiary
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -253,7 +267,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             Provider
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -273,7 +287,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             Part A
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -293,7 +307,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             Part B
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -313,7 +327,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
       </div>

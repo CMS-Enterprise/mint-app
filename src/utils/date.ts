@@ -7,8 +7,13 @@ type DateFormat = 'MM/dd/yyyy' | 'MMMM d, yyyy' | 'MMMM yyyy';
  * Typically used for dates generated with time, or server generated dates
  * Dates may differ depending on local time zone
  */
-export const formatDateLocal = (date: string, format: DateFormat) =>
-  DateTime.fromISO(date).toFormat(format);
+export const formatDateLocal = (date: string, format: DateFormat) => {
+  if (date) {
+    const parsedDate = DateTime.fromISO(date).toFormat(format);
+    if (parsedDate !== 'Invalid DateTime') return parsedDate;
+  }
+  return '';
+};
 
 /**
  * Output UTC timezoned dates from iso string.
@@ -16,7 +21,7 @@ export const formatDateLocal = (date: string, format: DateFormat) =>
  * explicitly in order to match timezoneless dates within a iso string correctly.
  */
 export const formatDateUtc = (
-  date: string | null,
+  date: string | null | undefined,
   format: DateFormat
 ): string => {
   if (date) {
@@ -53,6 +58,10 @@ export const getTimeElapsed = (discussionCreated: string) => {
 
   return dateString;
 };
+
+// Returns only the time from an ISO string -> 1:57 pm
+export const formatTime = (date: string) =>
+  DateTime.fromISO(date).toLocaleString(DateTime.TIME_SIMPLE);
 
 export const getDaysElapsed = (discussionCreated: string) => {
   const now = DateTime.local();

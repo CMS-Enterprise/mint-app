@@ -12,6 +12,7 @@ const systemAccountUUIDString = "00000001-0001-0001-0001-000000000001"
 // SampleModelName is the name of the sample model
 const SampleModelName = "Enhancing Oncology Model"
 
+// Future Enhancement: Utilize the shared translation package instead of trying to translate these constants
 // Constants for database table names
 const (
 	PlanCollaborator             = "plan_collaborator"
@@ -37,16 +38,16 @@ var humanizedTableNames = map[string]string{
 	PlanCollaborator:             "Collaborator",
 	PlanBeneficiaries:            "Beneficiaries",
 	PlanDiscussion:               "Discussion",
-	DiscussionReply:              "Discussion Reply",
+	DiscussionReply:              "Discussion reply",
 	PlanDocument:                 "Document",
-	PlanGeneralCharacteristics:   "General Characteristics",
-	PlanOpsEvalAndLearning:       "Operations, Evaluation, and Learning",
-	PlanParticipantsAndProviders: "Participants and Providers",
+	PlanGeneralCharacteristics:   "General characteristics",
+	PlanOpsEvalAndLearning:       "Operations, evaluation, and learning",
+	PlanParticipantsAndProviders: "Participants and providers",
 	PlanPayments:                 "Payments",
-	OperationalNeed:              "Operational Need",
-	OperationalSolution:          "Operational Solution",
-	PlanBasics:                   "Model Basics",
-	OperationalSolutionSubtask:   "Operational Solution Subtask",
+	OperationalNeed:              "Operational need",
+	OperationalSolution:          "Operational solution",
+	PlanBasics:                   "Model basics",
+	OperationalSolutionSubtask:   "Operational solution subtask",
 	ModelPlan:                    "Model",
 	PlanCr:                       "CR",
 	PlanTdl:                      "TDL",

@@ -3,6 +3,7 @@ enum ModelPlanFilter {
   COLLAB_ONLY,
   WITH_CR_TDLS,
   FAVORITED,
+  APPROACHING_CLEARANCE,
 }
 
 enum ModelStatus {
@@ -38,6 +39,23 @@ enum ModelViewFilter {
   PBG, # PROVIDER_BILLING_GROUP
 }
 
+enum ModelPhase {
+  ICIP_COMPLETE,
+  IN_CLEARANCE,
+  CLEARED,
+  ANNOUNCED,
+  ACTIVE,
+  ENDED,
+}
+
+"""
+PhaseSuggestion is a suggestion response for a potential next phase and corresponding statuses for a model plan
+"""
+type PhaseSuggestion {
+  phase: ModelPhase!
+  suggestedStatuses: [ModelStatus!]!
+}
+
 """
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
@@ -62,6 +80,8 @@ type ModelPlan {
   discussions: [PlanDiscussion!]!
   payments: PlanPayments!
   status: ModelStatus!
+  taskListStatus: TaskStatus!
+  suggestedPhase: PhaseSuggestion
   isFavorite: Boolean!
   isCollaborator: Boolean!
   crs: [PlanCR!]!
@@ -70,6 +90,7 @@ type ModelPlan {
   nameHistory(sort: SortDirection! = DESC): [String!]!
   operationalNeeds: [OperationalNeed!]!
   opSolutionLastModifiedDts: Time!
+  previousSuggestedPhase: ModelPhase
 }
 
 """

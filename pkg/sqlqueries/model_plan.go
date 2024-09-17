@@ -23,6 +23,9 @@ var modelPlanCollectionByCollaboratorSQL string
 //go:embed SQL/model_plan/collection_with_crtdl.sql
 var modelPlanCollectionWithCRTDlSQL string
 
+//go:embed SQL/model_plan/collection_approaching_clearance.sql
+var modelPlanCollectionApproachingClearanceSQL string
+
 //go:embed SQL/model_plan/delete_by_id.sql
 var modelPlanDeleteByID string
 
@@ -38,6 +41,9 @@ var modelPlanGetByOperationalSolutionKeySQL string
 //go:embed SQL/model_plan/collection_where_favorited_by_user_id.sql
 var modelPlanCollectionWhereFavoritedByUserID string
 
+//go:embed SQL/model_plan/get_task_list_status.sql
+var modelPlanGetTaskListStatus string
+
 type modelPlanScripts struct {
 	Create                                 string
 	Update                                 string
@@ -46,11 +52,13 @@ type modelPlanScripts struct {
 	CollectionWhereArchived                string
 	CollectionByCollaborator               string
 	CollectionWithCRTDL                    string
+	CollectionApproachingClearance         string
 	DeleteByID                             string
 	GetByIDLoader                          string
 	GetOpSolutionLastModifiedDtsByIDLoader string
 	GetByOperationalSolutionKey            string
 	CollectionWhereFavoritedByUserID       string
+	GetTaskListStatus                      string
 }
 
 // ModelPlan houses all the sql for getting data for model plan from the database
@@ -62,9 +70,11 @@ var ModelPlan = modelPlanScripts{
 	CollectionWhereArchived:                modelPlanCollectionWhereArchivedSQL,
 	CollectionByCollaborator:               modelPlanCollectionByCollaboratorSQL,
 	CollectionWithCRTDL:                    modelPlanCollectionWithCRTDlSQL,
+	CollectionApproachingClearance:         modelPlanCollectionApproachingClearanceSQL,
 	DeleteByID:                             modelPlanDeleteByID,
 	GetByIDLoader:                          modelPlanGetByIDLoaderSQL,
 	GetOpSolutionLastModifiedDtsByIDLoader: modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL,
 	GetByOperationalSolutionKey:            modelPlanGetByOperationalSolutionKeySQL,
 	CollectionWhereFavoritedByUserID:       modelPlanCollectionWhereFavoritedByUserID,
+	GetTaskListStatus:                      modelPlanGetTaskListStatus,
 }

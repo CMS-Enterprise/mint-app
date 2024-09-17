@@ -13,7 +13,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          class="usa-link usa-breadcrumb__link"
           href="/"
         >
           <span>
@@ -25,8 +25,20 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <span>
             Model Plan task list
@@ -37,7 +49,9 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        General characteristics
+        <span>
+          General characteristics
+        </span>
       </li>
     </ol>
   </nav>
@@ -230,7 +244,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             3021 Affordable Care Act (ACA)
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -250,7 +264,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Congressionally Mandated Demonstration
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -270,7 +284,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Section 1833(e) (Part B services) of the Social Security Act
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -290,7 +304,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
       </div>
@@ -432,7 +446,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
                 This section of the Model Plan (General characteristics) is ready for review.
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
               />
             </div>
           </div>

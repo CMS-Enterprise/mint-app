@@ -1,5 +1,3 @@
-/* eslint react/prop-types: 0 */
-
 /*
 Table component for rendering both Other Operational Needs and Operational Need Solutions
 Queries operationalNeeds which contains possible needs and needs
@@ -22,7 +20,8 @@ import classNames from 'classnames';
 import {
   GetOperationalNeedsQuery,
   OperationalSolutionKey,
-  useGetOperationalNeedsQuery
+  useGetOperationalNeedsQuery,
+  useGetPossibleOperationalSolutionsQuery
 } from 'gql/gen/graphql';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
@@ -44,7 +43,6 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 import { isAssessment } from 'utils/user';
-import { helpSolutions } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { PrintPDFContext } from 'views/PrintPDFWrapper';
 
 import OperationalNeedsStatusTag, {
@@ -57,7 +55,8 @@ import {
   returnActionText
 } from '../util';
 
-type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
+type GetOperationalNeedsOperationalNeedsType =
+  GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
 
 export interface GetOperationalNeedsTableType
   extends GetOperationalNeedsOperationalNeedsType {
@@ -166,8 +165,8 @@ const OperationalNeedsTable = ({
             }
             const selectSolutionHref =
               row.original.key !== null
-                ? `/models/${modelID}/task-list/it-solutions/${row.original.id}/select-solutions`
-                : `/models/${modelID}/task-list/it-solutions/${row.original.id}/add-solution?isCustomNeed=true`;
+                ? `/models/${modelID}/collaboration-area/task-list/it-solutions/${row.original.id}/select-solutions`
+                : `/models/${modelID}/collaboration-area/task-list/it-solutions/${row.original.id}/add-solution?isCustomNeed=true`;
             return (
               <UswdsReactLink
                 to={selectSolutionHref}
@@ -300,9 +299,10 @@ const OperationalNeedsTable = ({
   }, [opSolutionsMiscT, operationalNeedsT, modelID]);
 
   const sortColumn = type === 'needs' && !filterSolutions ? 'needName' : 'name';
-  const initialSort = useMemo(() => [{ id: sortColumn, asc: true }], [
-    sortColumn
-  ]);
+  const initialSort = useMemo(
+    () => [{ id: sortColumn, asc: true }],
+    [sortColumn]
+  );
 
   const {
     getTableProps,
@@ -404,6 +404,7 @@ const OperationalNeedsTable = ({
         <>
           <div className="mint-header__basic">
             <GlobalClientFilter
+              globalFilter={state.globalFilter}
               setGlobalFilter={setGlobalFilter}
               tableID={opSolutionsMiscT('itSolutionsTable.id')}
               tableName={opSolutionsMiscT('itSolutionsTable.title')}
@@ -577,19 +578,20 @@ export const FilterViewSolutionsAlert = ({
     solution => !operationalNeeds.find((need: any) => need.key === solution)
   );
 
+  const { data } = useGetPossibleOperationalSolutionsQuery();
+
+  const possibleOperationalSolutions = data?.possibleOperationalSolutions || [];
+
   if (unusedSolutions.length === 0) return null;
 
   return (
     <Alert noIcon type="info" validation>
       {opSolutionsMiscT('itSolutionsTable.unusedSolutionsAlert')}
       <ul className="margin-top-1 margin-bottom-0">
-        {helpSolutions
-          .filter(solution => unusedSolutions.includes(solution.enum))
+        {possibleOperationalSolutions
+          .filter(solution => unusedSolutions.includes(solution.key))
           .map(solution => (
-            <li key={solution.key}>
-              {solution.name}
-              {solution.acronym ? ` (${solution.acronym})` : ''}
-            </li>
+            <li key={solution.key}>{solution.name}</li>
           ))}
       </ul>
     </Alert>

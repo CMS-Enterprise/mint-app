@@ -1,0 +1,101 @@
+"""
+Represents payments translation data
+"""
+type PlanPaymentsTranslation {
+  # Page 1
+  fundingSource: TranslationFieldWithOptions! @goTag(key: "db", value: "funding_source")
+  fundingSourcePatientProtectionInfo: TranslationField! @goTag(key: "db", value: "funding_source_patient_protection_info")
+  fundingSourceMedicareAInfo: TranslationField! @goTag(key: "db", value: "funding_source_medicare_a_info")
+  fundingSourceMedicareBInfo: TranslationField! @goTag(key: "db", value: "funding_source_medicare_b_info")
+  fundingSourceOther: TranslationField! @goTag(key: "db", value: "funding_source_other")
+  fundingSourceNote: TranslationField! @goTag(key: "db", value: "funding_source_note")
+  fundingSourceR: TranslationFieldWithOptions! @goTag(key: "db", value: "funding_source_r")
+  fundingSourceRPatientProtectionInfo: TranslationField! @goTag(key: "db", value: "funding_source_r_patient_protection_info")
+  fundingSourceRMedicareAInfo: TranslationField! @goTag(key: "db", value: "funding_source_r_medicare_a_info")
+  fundingSourceRMedicareBInfo: TranslationField! @goTag(key: "db", value: "funding_source_r_medicare_b_info")
+  fundingSourceROther: TranslationField! @goTag(key: "db", value: "funding_source_r_other")
+  fundingSourceRNote: TranslationField! @goTag(key: "db", value: "funding_source_r_note")
+  payRecipients: TranslationFieldWithOptions! @goTag(key: "db", value: "pay_recipients")
+  payRecipientsOtherSpecification: TranslationField! @goTag(key: "db", value: "pay_recipients_other_specification")
+  payRecipientsNote: TranslationField! @goTag(key: "db", value: "pay_recipients_note")
+  payType: TranslationFieldWithOptionsAndChildren! @goTag(key: "db", value: "pay_type")
+  payTypeNote: TranslationField! @goTag(key: "db", value: "pay_type_note")
+
+  # Page 2
+  payClaims: TranslationFieldWithOptions! @goTag(key: "db", value: "pay_claims")
+  payClaimsOther: TranslationField! @goTag(key: "db", value: "pay_claims_other")
+  payClaimsNote: TranslationField! @goTag(key: "db", value: "pay_claims_note")
+  shouldAnyProvidersExcludedFFSSystems: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "should_any_providers_excluded_ffs_systems")
+  shouldAnyProviderExcludedFFSSystemsNote: TranslationField! @goTag(key: "db", value: "should_any_providers_excluded_ffs_systems_note")
+  changesMedicarePhysicianFeeSchedule: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "changes_medicare_physician_fee_schedule")
+  changesMedicarePhysicianFeeScheduleNote: TranslationField! @goTag(key: "db", value: "changes_medicare_physician_fee_schedule_note")
+  affectsMedicareSecondaryPayerClaims: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "affects_medicare_secondary_payer_claims")
+  affectsMedicareSecondaryPayerClaimsHow: TranslationField! @goTag(key: "db", value: "affects_medicare_secondary_payer_claims_how")
+  affectsMedicareSecondaryPayerClaimsNote: TranslationField! @goTag(key: "db", value: "affects_medicare_secondary_payer_claims_note")
+  payModelDifferentiation: TranslationFieldWithParent! @goTag(key: "db", value: "pay_model_differentiation")
+
+  # Page 3
+  willBePaymentAdjustments:TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "will_be_payment_adjustments")
+  willBePaymentAdjustmentsNote: TranslationField! @goTag(key: "db", value: "will_be_payment_adjustments_note")
+  creatingDependenciesBetweenServices: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "creating_dependencies_between_services")
+  creatingDependenciesBetweenServicesNote: TranslationField! @goTag(key: "db", value: "creating_dependencies_between_services_note")
+  needsClaimsDataCollection: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "needs_claims_data_collection")
+  needsClaimsDataCollectionNote: TranslationField! @goTag(key: "db", value: "needs_claims_data_collection_note")
+  providingThirdPartyFile: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "providing_third_party_file")
+  isContractorAwareTestDataRequirements: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "is_contractor_aware_test_data_requirements")
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling: TranslationFieldWithParent! @goTag(key: "db", value: "beneficiary_cost_sharing_level_and_handling")
+  waiveBeneficiaryCostSharingForAnyServices: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "waive_beneficiary_cost_sharing_for_any_services")
+  waiveBeneficiaryCostSharingServiceSpecification: TranslationField! @goTag(key: "db", value: "waive_beneficiary_cost_sharing_service_specification")
+  waiverOnlyAppliesPartOfPayment: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "waiver_only_applies_part_of_payment")
+  waiveBeneficiaryCostSharingNote: TranslationField! @goTag(key: "db", value: "waive_beneficiary_cost_sharing_note")
+
+  # Page 5
+  nonClaimsPayments: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "non_claims_payments")
+  nonClaimsPaymentOther: TranslationField! @goTag(key: "db", value: "non_claims_payments_other")
+  nonClaimsPaymentsNote: TranslationField! @goTag(key: "db", value: "non_claims_payments_note")
+  paymentCalculationOwner: TranslationFieldWithParent! @goTag(key: "db", value: "payment_calculation_owner")
+  numberPaymentsPerPayCycle: TranslationFieldWithParent! @goTag(key: "db", value: "number_payments_per_pay_cycle")
+  numberPaymentsPerPayCycleNote: TranslationField! @goTag(key: "db", value: "number_payments_per_pay_cycle_note")
+  sharedSystemsInvolvedAdditionalClaimPayment: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "shared_systems_involved_additional_claim_payment")
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: TranslationField! @goTag(key: "db", value: "shared_systems_involved_additional_claim_payment_note")
+  planningToUseInnovationPaymentContractor: TranslationFieldWithOptionsAndParent! @goTag(key: "db", value: "planning_to_use_innovation_payment_contractor")
+  planningToUseInnovationPaymentContractorNote: TranslationField! @goTag(key: "db", value: "planning_to_use_innovation_payment_contractor_note")
+
+  # Page 6
+  expectedCalculationComplexityLevel: TranslationFieldWithOptions! @goTag(key: "db", value: "expected_calculation_complexity_level")
+  expectedCalculationComplexityLevelNote: TranslationField! @goTag(key: "db", value: "expected_calculation_complexity_level_note")
+  claimsProcessingPrecedence: TranslationFieldWithOptions! @goTag(key: "db", value: "claims_processing_precedence")
+  claimsProcessingPrecedenceOther: TranslationField! @goTag(key: "db", value: "claims_processing_precedence_other")
+  claimsProcessingPrecedenceNote: TranslationField! @goTag(key: "db", value: "claims_processing_precedence_note")
+  canParticipantsSelectBetweenPaymentMechanisms: TranslationFieldWithOptions! @goTag(key: "db", value: "can_participants_select_between_payment_mechanisms")
+  canParticipantsSelectBetweenPaymentMechanismsHow: TranslationField! @goTag(key: "db", value: "can_participants_select_between_payment_mechanisms_how")
+  canParticipantsSelectBetweenPaymentMechanismsNote: TranslationField! @goTag(key: "db", value: "can_participants_select_between_payment_mechanisms_note")
+  anticipatedPaymentFrequency: TranslationFieldWithOptions! @goTag(key: "db", value: "anticipated_payment_frequency")
+  anticipatedPaymentFrequencyContinually: TranslationField! @goTag(key: "db", value: "anticipated_payment_frequency_continually")
+  anticipatedPaymentFrequencyOther: TranslationField! @goTag(key: "db", value: "anticipated_payment_frequency_other")
+  anticipatedPaymentFrequencyNote: TranslationField! @goTag(key: "db", value: "anticipated_payment_frequency_note")
+
+  # Page 7
+  willRecoverPayments: TranslationFieldWithOptions! @goTag(key: "db", value: "will_recover_payments")
+  willRecoverPaymentsNote: TranslationField! @goTag(key: "db", value: "will_recover_payments_note")
+  anticipateReconcilingPaymentsRetrospectively: TranslationFieldWithOptions! @goTag(key: "db", value: "anticipate_reconciling_payments_retrospectively")
+  anticipateReconcilingPaymentsRetrospectivelyNote: TranslationField! @goTag(key: "db", value: "anticipate_reconciling_payments_retrospectively_note")
+  paymentReconciliationFrequency: TranslationFieldWithOptions! @goTag(key: "db", value: "payment_reconciliation_frequency")
+  paymentReconciliationFrequencyContinually: TranslationField! @goTag(key: "db", value: "payment_reconciliation_frequency_continually")
+  paymentReconciliationFrequencyOther: TranslationField! @goTag(key: "db", value: "payment_reconciliation_frequency_other")
+  paymentReconciliationFrequencyNote: TranslationField! @goTag(key: "db", value: "payment_reconciliation_frequency_note")
+  paymentDemandRecoupmentFrequency: TranslationFieldWithOptions! @goTag(key: "db", value: "payment_demand_recoupment_frequency")
+  paymentDemandRecoupmentFrequencyContinually: TranslationField! @goTag(key: "db", value: "payment_demand_recoupment_frequency_continually")
+  paymentDemandRecoupmentFrequencyOther: TranslationField! @goTag(key: "db", value: "payment_demand_recoupment_frequency_other")
+  paymentDemandRecoupmentFrequencyNote: TranslationField! @goTag(key: "db", value: "payment_demand_recoupment_frequency_note")
+  paymentStartDate: TranslationField! @goTag(key: "db", value: "payment_start_date")
+  paymentStartDateNote: TranslationField! @goTag(key: "db", value: "payment_start_date_note")
+
+  readyForReviewBy: TranslationField! @goTag(key: "db", value: "ready_for_review_by")
+  readyForReviewDts: TranslationField! @goTag(key: "db", value: "ready_for_review_dts")
+  readyForClearanceBy: TranslationField! @goTag(key: "db", value: "ready_for_clearance_by")
+  readyForClearanceDts: TranslationField! @goTag(key: "db", value: "ready_for_clearance_dts")
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+}

@@ -61,7 +61,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  High-level project plans
+                  High-level project plan
                 </h3>
               </header>
               <a
@@ -89,7 +89,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read High-level project plans article"
+                  aria-label="Read High-level project plan article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
@@ -507,6 +507,9 @@ exports[`The AllArticles component > matches snapshot 1`] = `
             </div>
           </li>
         </ul>
+        <div
+          class=""
+        />
       </div>
     </div>
   </main>

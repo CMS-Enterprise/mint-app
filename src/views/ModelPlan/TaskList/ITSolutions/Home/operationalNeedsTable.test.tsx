@@ -77,11 +77,13 @@ describe('Operational Solutions Home', () => {
 
     const { getByText } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/task-list/it-solutions`]}
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/it-solutions`
+        ]}
       >
         <Provider store={store}>
           <MockedProvider mocks={returnNeeds(needed)} addTypename={false}>
-            <Route path="/models/:modelID/task-list/it-solutions">
+            <Route path="/models/:modelID/collaboration-area/task-list/it-solutions">
               <OperationalNeedsTable modelID={modelID} type="possibleNeeds" />
             </Route>
           </MockedProvider>
@@ -99,11 +101,13 @@ describe('Operational Solutions Home', () => {
 
     const { getByText } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/task-list/it-solutions`]}
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/it-solutions`
+        ]}
       >
         <Provider store={store}>
           <MockedProvider mocks={returnNeeds(needed)} addTypename={false}>
-            <Route path="/models/:modelID/task-list/it-solutions">
+            <Route path="/models/:modelID/collaboration-area/task-list/it-solutions">
               <OperationalNeedsTable modelID={modelID} type="needs" />
             </Route>
           </MockedProvider>
@@ -122,11 +126,13 @@ describe('Operational Solutions Home', () => {
 
     const { asFragment, getByText } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelID}/task-list/it-solutions`]}
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/it-solutions`
+        ]}
       >
         <Provider store={store}>
           <MockedProvider mocks={returnNeeds(needed)} addTypename={false}>
-            <Route path="/models/:modelID/task-list/it-solutions">
+            <Route path="/models/:modelID/collaboration-area/task-list/it-solutions">
               <OperationalNeedsTable modelID={modelID} type="possibleNeeds" />
             </Route>
           </MockedProvider>
@@ -143,12 +149,14 @@ describe('Operational Solutions Home', () => {
 
   it('renders filter view solutions alert', async () => {
     const { asFragment } = render(
-      <FilterViewSolutionsAlert
-        filterSolutions={[OperationalSolutionKey.CCW]}
-        operationalNeeds={
-          returnNeeds(true)[0].result.data.modelPlan.operationalNeeds
-        }
-      />
+      <MockedProvider mocks={returnNeeds(true)} addTypename={false}>
+        <FilterViewSolutionsAlert
+          filterSolutions={[OperationalSolutionKey.CCW]}
+          operationalNeeds={
+            returnNeeds(true)[0].result.data.modelPlan.operationalNeeds
+          }
+        />
+      </MockedProvider>
     );
 
     expect(asFragment()).toMatchSnapshot();

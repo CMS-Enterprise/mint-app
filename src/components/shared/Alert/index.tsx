@@ -47,6 +47,7 @@ export const Alert = ({
 }: AlertProps & React.HTMLAttributes<HTMLDivElement>): React.ReactElement => {
   const classes = classnames(
     {
+      'icon-padding': !noIcon,
       'mint-inline-alert': inline,
       'mint-alert-text': isClosable,
       'mint-alert-slim': lessPadding,

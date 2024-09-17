@@ -13,7 +13,7 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          class="usa-link usa-breadcrumb__link"
           href="/"
         >
           <span>
@@ -25,8 +25,20 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <span>
             Model Plan task list
@@ -37,7 +49,9 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        Participants and providers
+        <span>
+          Participants and providers
+        </span>
       </li>
     </ol>
   </nav>
@@ -355,6 +369,13 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
                 >
                   Examples: End-Stage Renal Disease (ESRD) facilities, ambulance suppliers, hospital outpatient departments, etc.
                 </p>
+                <button
+                  class="usa-button usa-button--unstyled margin-top-2"
+                  data-testid="button"
+                  type="button"
+                >
+                  View existing provider/supplier types
+                </button>
                 <textarea
                   aria-labelledby="label-participants-and-providers-medicare-type hint-participants-and-providers-medicare-type"
                   class="usa-textarea"
@@ -364,6 +385,61 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
                 >
                   Oncology Providers
                 </textarea>
+              </div>
+              <div
+                class="usa-form-group"
+                data-scroll="isNewTypeOfProvidersOrSuppliers"
+              >
+                <label
+                  class="usa-label"
+                  data-testid="label"
+                  for="participants-and-providers-is-new-type"
+                >
+                  Are any of these a new type of provider/supplier?
+                </label>
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="participants-and-providers-is-new-type-true"
+                      id="participants-and-providers-is-new-type-true"
+                      name="isNewTypeOfProvidersOrSuppliers"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="participants-and-providers-is-new-type-true"
+                    >
+                      Yes
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="participants-and-providers-is-new-type-false"
+                      id="participants-and-providers-is-new-type-false"
+                      name="isNewTypeOfProvidersOrSuppliers"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="participants-and-providers-is-new-type-false"
+                    >
+                      No
+                    </label>
+                  </div>
+                </fieldset>
               </div>
               <div
                 class="usa-form-group"
@@ -532,7 +608,7 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
               <p
                 class="text-base margin-0 line-height-body-3"
               >
-                (e.g., all services identified at the CPT or ICD-10 code level, epsiode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
+                (e.g., all services identified at the CPT or ICD-10 code level, episode of care for a specific span of time, all hospitals unpaid under the Inpatient Prospective Payment System in a certain state)
               </p>
               <textarea
                 aria-labelledby="label-participants-and-providers-application-level hint-participants-and-providers-application-level"

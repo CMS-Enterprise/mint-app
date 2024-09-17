@@ -181,9 +181,9 @@ func (dp *DateProcessor) ExtractChangedDates() (map[string]email.DateChange, err
 }
 
 // Returns:
-//  1) Boolean: true if the field has changed
-//  2) *time.Time: Old value of the field converted to a pointer to a time.Time
-//  3) *time.Time: New value of the field converted to a pointer to a time.Time
+//  1. Boolean: true if the field has changed
+//  2. *time.Time: Old value of the field converted to a pointer to a time.Time
+//  3. *time.Time: New value of the field converted to a pointer to a time.Time
 func (dp *DateProcessor) checkDateFieldChanged(field string) (
 	bool,
 	*time.Time,

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import {
   Grid,
+  Icon,
   Link as TrussLink,
   ProcessList,
   ProcessListHeading,
@@ -15,6 +16,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import PageLoading from 'components/PageLoading';
 import SectionWrapper from 'components/shared/SectionWrapper';
+import Tooltip from 'components/shared/Tooltip';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateUtc } from 'utils/date';
@@ -137,6 +139,10 @@ const ReadOnlyModelBasics = ({
         heading={basicsMiscT('heading')}
         isViewingFilteredView={!!filteredView}
         status={status}
+        modelID={modelID}
+        modifiedOrCreatedDts={
+          allBasicsData.modifiedDts || allBasicsData.createdDts
+        }
       />
 
       {clearance && (
@@ -247,7 +253,8 @@ const ReadOnlyModelBasics = ({
               className={classNames(
                 'read-only-model-plan__timeline--wrapper border-base-light padding-top-4 ',
                 {
-                  'border-y-1px padding-bottom-2 margin-bottom-4 margin-top-6': !filteredView
+                  'border-y-1px padding-bottom-2 margin-bottom-4 margin-top-6':
+                    !filteredView
                 }
               )}
             >
@@ -262,12 +269,23 @@ const ReadOnlyModelBasics = ({
                 </ProcessListItem>
 
                 <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                  <ProcessListHeading
-                    type="p"
-                    className="font-body-sm line-height-sans-4"
-                  >
-                    {basicsMiscT('clearance')}
-                  </ProcessListHeading>
+                  <div className="display-flex flex-align-top">
+                    <ProcessListHeading
+                      type="p"
+                      className="font-body-sm line-height-sans-4"
+                    >
+                      {basicsMiscT('clearance')}
+                    </ProcessListHeading>
+                    <span className="margin-top-0 position-relative text-normal">
+                      <Tooltip
+                        label={basicsMiscT('clearanceInfo')}
+                        position="right"
+                        className="margin-left-05"
+                      >
+                        <Icon.Info className="text-base-light" />
+                      </Tooltip>
+                    </span>
+                  </div>
 
                   <div className="mobile-lg:display-flex">
                     <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
@@ -319,12 +337,23 @@ const ReadOnlyModelBasics = ({
                 </ProcessListItem>
 
                 <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                  <ProcessListHeading
-                    type="p"
-                    className="font-body-sm line-height-sans-4"
-                  >
-                    {basicsMiscT('demonstrationPerformance')}
-                  </ProcessListHeading>
+                  <div className="display-flex flex-align-top">
+                    <ProcessListHeading
+                      type="p"
+                      className="font-body-sm line-height-sans-4"
+                    >
+                      {basicsMiscT('demonstrationPerformance')}
+                    </ProcessListHeading>
+                    <span className="margin-top-0 position-relative text-normal">
+                      <Tooltip
+                        label={basicsMiscT('demonstrationPerformanceInfo')}
+                        position="right"
+                        className="margin-left-05"
+                      >
+                        <Icon.Info className="text-base-light" />
+                      </Tooltip>
+                    </span>
+                  </div>
 
                   <div className="mobile-lg:display-flex">
                     <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import { useReactToPrint } from 'react-to-print';
 import { useMutation } from '@apollo/client';
@@ -37,6 +38,8 @@ import './index.scss';
 
 const navElement = ['share', 'export'] as const;
 
+export type NavModelElemet = (typeof navElement)[number];
+
 export type FitlerGroup = FilterGroup | 'all';
 
 const FileTypes = ['csv', 'pdf'] as const;
@@ -44,6 +47,7 @@ const FileTypes = ['csv', 'pdf'] as const;
 type ShareExportModalProps = {
   modelID: string;
   closeModal: () => void;
+  defaultTab?: NavModelElemet;
   filteredView?: FilterGroup | 'all' | null;
   setStatusMessage: (message: StatusMessageType) => void;
 } & JSX.IntrinsicElements['button'];
@@ -54,6 +58,7 @@ type ShareExportModalProps = {
 const ShareExportModal = ({
   modelID,
   closeModal,
+  defaultTab = 'share',
   filteredView,
   setStatusMessage
 }: ShareExportModalProps) => {
@@ -72,12 +77,10 @@ const ShareExportModal = ({
   const [optionalMessage, setOptionalMessage] = useState<string>('');
 
   // State for modal navigation elements
-  const [isActive, setIsActive] = useState<typeof navElement[number]>('share');
+  const [isActive, setIsActive] = useState<NavModelElemet>(defaultTab);
 
-  const {
-    fetchSingleData,
-    setFilteredGroup: setFilteredGroupForExport
-  } = useFetchCSVData();
+  const { fetchSingleData, setFilteredGroup: setFilteredGroupForExport } =
+    useFetchCSVData();
 
   const modalElementId: string = 'share-export-modal';
 
@@ -209,10 +212,19 @@ const ShareExportModal = ({
         className={`${modalElementId}__form`}
         onSubmit={e => {
           e.preventDefault();
+
           const viewFilter =
             filteredGroup && filteredGroup !== 'all'
               ? (filteredGroup.toUpperCase() as ModelViewFilter)
               : undefined;
+
+          // Send a share event to GA
+          ReactGA.send({
+            hitType: 'event',
+            eventCategory: `share_model_plan_${filteredGroup}`,
+            eventAction: 'click',
+            eventLabel: `Share model plan ${viewFilter || ''}`
+          });
 
           shareModelPlan({
             variables: {
@@ -362,6 +374,14 @@ const ShareExportModal = ({
         onSubmit={e => {
           e.preventDefault();
           if (exportPDF) {
+            // Send a export pdf event to GA
+            ReactGA.send({
+              hitType: 'event',
+              eventCategory: 'export_model_plan_pdf',
+              eventAction: 'click',
+              eventLabel: 'Export model plan to PDF'
+            });
+
             setPrintPDF(true);
             // PDF/Print doesn't pick up the useContext state change without setTimeout
             setTimeout(() => {
@@ -373,6 +393,15 @@ const ShareExportModal = ({
               filteredGroup && filteredGroup !== 'all'
                 ? filteredGroup
                 : undefined;
+
+            // Send a export csv event to GA
+            ReactGA.send({
+              hitType: 'event',
+              eventCategory: `export_model_plan_csv_${filteredGroup}`,
+              eventAction: 'click',
+              eventLabel: `Export model plan to CSV ${groupToExport?.toUpperCase()}`
+            });
+
             setFilteredGroupForExport(groupToExport);
             fetchSingleData(modelID);
           }
@@ -405,7 +434,7 @@ const ShareExportModal = ({
             {generalReadOnlyT('modal.exportSelectFormat')}
           </Label>
 
-          {FileTypes.map((file: typeof FileTypes[number]) => (
+          {FileTypes.map((file: (typeof FileTypes)[number]) => (
             <CheckboxField
               key={file}
               id={`${modalElementId}-file-type-${file}`}
@@ -462,7 +491,7 @@ const ShareExportModal = ({
       <nav
         aria-label={generalReadOnlyT('label')}
         data-testid="share-export-navigation-bar"
-        className="border-base-lighter display-flex width-full padding-x-4 border-bottom-2px"
+        className="border-base-lighter display-flex width-full padding-x-4 border-bottom-2px padding-top-05"
         style={{ gap: '2rem' }}
       >
         {primaryLinks}

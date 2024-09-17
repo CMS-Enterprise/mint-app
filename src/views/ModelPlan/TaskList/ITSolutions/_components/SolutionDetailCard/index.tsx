@@ -20,7 +20,8 @@ import NeedQuestionAndAnswer from '../NeedQuestionAndAnswer';
 import OperationalNeedsStatusTag from '../NeedsStatus';
 import SolutionCard from '../SolutionCard';
 
-type OperationalSolutionType = GetOperationalSolutionQuery['operationalSolution'];
+type OperationalSolutionType =
+  GetOperationalSolutionQuery['operationalSolution'];
 
 type SolutionDetailCardProps = {
   solution: OperationalSolutionType;
@@ -72,7 +73,7 @@ const SolutionDetailCard = ({
             })}
           >
             <UswdsReactLink
-              to={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions?update=true`}
+              to={`/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/select-solutions?update=true`}
               data-testid="update-solutions-link"
             >
               {t('updateSolutionsLink')}
@@ -117,7 +118,7 @@ const SolutionDetailCard = ({
                 className="usa-button usa-button--outline"
                 onClick={() => {
                   history.push({
-                    pathname: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/solution-implementation-details/${operationalSolutionID}`
+                    pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details/${operationalSolutionID}`
                   });
                 }}
               >

@@ -5,7 +5,7 @@ describe('The Model Plan Participants and providers Form', () => {
   });
 
   it('completes a Model Plan Participants and providers', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     // Clicks the Participants and providers tasklist item
     cy.get('[data-testid="participants-and-providers"]').click();
@@ -14,7 +14,7 @@ describe('The Model Plan Participants and providers Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/participants-and-providers/
+        /\/models\/.{36}\/collaboration-area\/task-list\/participants-and-providers/
       );
     });
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
@@ -267,7 +267,9 @@ describe('The Model Plan Participants and providers Form', () => {
     cy.contains('button', 'Save and return to task list').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/collaboration-area\/task-list/
+      );
     });
   });
 });

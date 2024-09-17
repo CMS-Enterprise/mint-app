@@ -7,7 +7,7 @@ describe('Web Socket Connections', () => {
   });
 
   it('inits a ws connection and locks basics', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.get('[data-testid="basics"]').should('not.be.disabled');
 
@@ -32,7 +32,7 @@ describe('Web Socket Connections', () => {
         modelPlanID,
         section: TaskListSection.PAYMENT
       });
-      cy.visit(`/models/${modelPlanID}/task-list/payment`);
+      cy.visit(`/models/${modelPlanID}/collaboration-area/task-list/payment`);
     });
 
     cy.get('[data-testid="page-locked"]').contains(

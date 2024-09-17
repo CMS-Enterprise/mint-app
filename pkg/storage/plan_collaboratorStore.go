@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 
@@ -12,7 +12,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 )
 
 // PlanCollaboratorGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
@@ -65,7 +65,7 @@ func (s *Store) PlanCollaboratorCreate(
 	collaborator *models.PlanCollaborator,
 ) (*models.PlanCollaborator, error) {
 
-	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
+	collaborator.ID = utilityuuid.ValueOrNewUUID(collaborator.ID)
 
 	stmt, err := np.PrepareNamed(sqlqueries.PlanCollaborator.Create)
 	if err != nil {
@@ -126,7 +126,7 @@ func (s *Store) PlanCollaboratorDelete(
 	defer stmt.Close()
 
 	collaborator := &models.PlanCollaborator{}
-	err = stmt.Get(collaborator, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(collaborator, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -150,7 +150,7 @@ func (s *Store) PlanCollaboratorGetByID(id uuid.UUID) (*models.PlanCollaborator,
 	defer stmt.Close()
 
 	var collaborator models.PlanCollaborator
-	err = stmt.Get(&collaborator, utilitySQL.CreateIDQueryMap(id))
+	err = stmt.Get(&collaborator, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +167,7 @@ func (s *Store) PlanCollaboratorGetCountByUserID(userID uuid.UUID) (int, error) 
 	}
 	defer stmt.Close()
 
-	arg := utilitySQL.CreateUserIDQueryMap(userID)
+	arg := utilitysql.CreateUserIDQueryMap(userID)
 
 	var count int
 	err = stmt.Get(&count, arg)
@@ -176,4 +176,19 @@ func (s *Store) PlanCollaboratorGetCountByUserID(userID uuid.UUID) (int, error) 
 	}
 
 	return count, nil
+}
+
+// PlanCollaboratorGetByModelPlanID returns a slice of plan collaborators corresponding with a model plan id
+func (s *Store) PlanCollaboratorGetByModelPlanID(
+	_ *zap.Logger,
+	modelPlanID uuid.UUID,
+) ([]*models.PlanCollaborator, error) {
+	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
+
+	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](s, sqlqueries.PlanCollaborator.CollectionGetByModelPlanID, arg)
+	if err != nil {
+		return nil, fmt.Errorf("issue selecting plan collaborators by model plan id, %w", err)
+	}
+
+	return retCollaborators, nil
 }

@@ -60,7 +60,12 @@ const CRTDLTable = ({
   isHelpArticle
 }: CRTDLTableProps) => {
   const { t } = useTranslation('crtdlsMisc');
-  const { error, loading, data, refetch: refetchCRTDLs } = useGetCrtdLsQuery({
+  const {
+    error,
+    loading,
+    data,
+    refetch: refetchCRTDLs
+  } = useGetCrtdLsQuery({
     variables: {
       id: modelID
     }
@@ -300,7 +305,7 @@ const Table = ({
           return (
             <>
               <UswdsReactLink
-                to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl?type=${type}&id=${
+                to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl?type=${type}&id=${
                   row.original.id
                 }${readOnly ? '#read-only' : ''}`}
                 className="margin-right-2"

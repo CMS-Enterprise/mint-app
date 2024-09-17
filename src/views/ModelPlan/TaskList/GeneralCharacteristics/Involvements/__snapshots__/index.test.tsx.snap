@@ -13,7 +13,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          class="usa-link usa-breadcrumb__link"
           href="/"
         >
           <span>
@@ -25,8 +25,20 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <span>
             Model Plan task list
@@ -37,7 +49,9 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        General characteristics
+        <span>
+          General characteristics
+        </span>
       </li>
     </ol>
   </nav>
@@ -108,6 +122,11 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         >
           Is care coordination involved?
         </label>
+        <p
+          class="text-base margin-y-1"
+        >
+          Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; if a certain service or diagnosis exists in history, then Service A cannot be paid.
+        </p>
         <fieldset
           class="usa-fieldset"
           data-testid="fieldset"
@@ -293,6 +312,11 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         >
           Are community partners involved?
         </label>
+        <p
+          class="text-base margin-y-1"
+        >
+          Community partners are typically not Medicare enrolled and are organizations in the participant's community. They may be involved with providing care, care coordination, or social services to beneficiaries or provide leadership, design, or implementation at the participant level. Example: Community-based organizations (CBO) like YMCA or United Way
+        </p>
         <fieldset
           class="usa-fieldset"
           data-testid="fieldset"

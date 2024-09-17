@@ -78,7 +78,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   const validModelID: boolean = isUUID(modelID);
 
   // Needed to only subscribe on task-list views of current model
-  const taskList: boolean = pathname.split('/')[3] === 'task-list';
+  const taskList: boolean = pathname.split('/')[4] === 'task-list';
 
   // Holds reference to subscribeToMore used for closing ws connection on leaving model plan
   const subscribed = useRef<ReturnType<typeof subscribeToMore> | null>(null);
@@ -93,10 +93,8 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   });
 
   // useLazyQuery hook to init query and create subscription in the presence of a new model plan id
-  const [
-    getTaskListLocks,
-    { data: subData, subscribeToMore }
-  ] = useGetTaskListSubscriptionsLazyQuery();
+  const [getTaskListLocks, { data: subData, subscribeToMore }] =
+    useGetTaskListSubscriptionsLazyQuery();
 
   useEffect(() => {
     if (validModelID && subscribeToMore && taskList) {

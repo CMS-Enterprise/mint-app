@@ -229,7 +229,7 @@ func (s *Seeder) addOperationalSolution(
 	changes map[string]interface{},
 ) *models.OperationalSolution {
 	principal := s.getTestPrincipalByUUID(mp.CreatedBy)
-	solType := models.OpSKMarx
+	solType := models.OpSKInnovation
 
 	operationalSolution, err := resolvers.OperationalSolutionCreate(
 		s.Config.Context,
@@ -277,7 +277,7 @@ func (s *Seeder) addPlanDocumentSolutionLinks(
 
 func (s *Seeder) getTestPrincipalByUsername(userName string) *authentication.ApplicationPrincipal {
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(s.Config.Context, s.Config.Store, s.Config.Store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(s.Config.Context, s.Config.Store, s.Config.Store, userName, true, false, userhelpers.GetUserInfoAccountInfoWrapperFunc(s.Config.OktaClient.FetchUserInfo))
 
 	princ := &authentication.ApplicationPrincipal{
 		Username:          userName,
@@ -352,4 +352,21 @@ func (s *Seeder) existingModelLinkCreate(
 		panic(err)
 	}
 	return links
+}
+
+// updateUserView is a wrapper that allows to set default user views for a user
+func (s *Seeder) updateUserView(principal authentication.Principal, changes map[string]interface{}) *models.UserViewCustomization {
+
+	view, err := resolvers.UserViewCustomizationUpdate(
+		s.Config.Logger,
+		s.Config.Store,
+		principal,
+		changes,
+	)
+
+	if err != nil {
+		panic(err)
+	}
+	return view
+
 }

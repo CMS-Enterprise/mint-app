@@ -13,7 +13,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          class="usa-link usa-breadcrumb__link"
           href="/"
         >
           <span>
@@ -25,8 +25,20 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <span>
             Model Plan task list
@@ -37,7 +49,9 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        Payment
+        <span>
+          Payment
+        </span>
       </li>
     </ol>
   </nav>
@@ -52,7 +66,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
     class="margin-top-0 margin-bottom-1 font-body-lg"
     data-testid="model-plan-name"
   >
-    for My excellent plan that I just initiated
+    for {{modelName}}
   </p>
   <p
     class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -146,7 +160,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         Patient Protection Affordable Care Act (Sec 3021)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                   </div>
@@ -173,7 +187,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         Medicare Part A (HI) Trust Fund
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <span
@@ -237,7 +251,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         Medicare Part B (SMI) Trust Fund
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <span
@@ -320,7 +334,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         Other
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                   </div>
@@ -389,7 +403,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         Patient Protection Affordable Care Act (Sec 3021)
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                   </div>
@@ -416,7 +430,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         Medicare Part A (HI) Trust Fund
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <span
@@ -480,7 +494,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         Medicare Part B (SMI) Trust Fund
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <span
@@ -544,7 +558,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                         Other
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                   </div>
@@ -608,7 +622,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     Providers
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -628,7 +642,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     Beneficiaries
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -648,7 +662,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     Participants
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -668,7 +682,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     States
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -688,7 +702,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     Other
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
               </fieldset>
@@ -755,7 +769,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     Claims-Based Payments
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -775,7 +789,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     Non-Claims-Based Payments
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
                 <div
@@ -795,7 +809,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
                     Grants
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
               </fieldset>

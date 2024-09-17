@@ -5,7 +5,7 @@ describe('The Model Plan General Characteristics Form', () => {
   });
 
   it('completes a Model Plan Characteristics', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     // Clicks the General Charactstics tasklist item
     cy.get('[data-testid="characteristics"]').click();
@@ -14,7 +14,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/characteristics/
+        /\/models\/.{36}\/collaboration-area\/task-list\/characteristics/
       );
     });
 
@@ -269,7 +269,7 @@ describe('The Model Plan General Characteristics Form', () => {
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
-        /\/models\/.{36}\/task-list\/participants-and-providers$/
+        /\/models\/.{36}\/collaboration-area\/task-list\/participants-and-providers$/
       );
     });
 

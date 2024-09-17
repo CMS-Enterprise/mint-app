@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -193,7 +193,7 @@ func GetOktaAccountInfo(ctx context.Context, _ string) (*OktaAccountInfo, error)
 		return nil, err
 	}
 
-	jsonDataFromHTTP, err := ioutil.ReadAll(resp.Body)
+	jsonDataFromHTTP, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -201,22 +201,6 @@ func GetOktaAccountInfo(ctx context.Context, _ string) (*OktaAccountInfo, error)
 	ret := OktaAccountInfo{}
 	err = json.Unmarshal([]byte(jsonDataFromHTTP), &ret)
 	return &ret, err
-}
-
-// GetUserInfoFromOktaLocal is used to simulate okta user information when testing locally
-func GetUserInfoFromOktaLocal(ctx context.Context, username string) (*OktaAccountInfo, error) {
-
-	accountInfo := &OktaAccountInfo{
-		Name:              username + " Doe",
-		Locale:            "en_US",
-		Email:             username + "@local.cms.gov",
-		PreferredUsername: username,
-		GivenName:         username,
-		FamilyName:        "Doe",
-		ZoneInfo:          "America/Los_Angeles",
-	}
-	return accountInfo, nil
-
 }
 
 // UserAccountGetByIDLOADER uses a data loader to return a user account from the database

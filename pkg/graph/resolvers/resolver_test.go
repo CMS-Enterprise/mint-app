@@ -5,7 +5,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/golang/mock/gomock"
@@ -28,11 +30,33 @@ func (suite *ResolverSuite) SetupTest() {
 	err := suite.testConfigs.Store.TruncateAllTablesDANGEROUS(suite.testConfigs.Logger)
 
 	//GET USER ACCOUNT EACH TIME!
-	princ := getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
+	princ := suite.getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username)
 	suite.testConfigs.Principal = princ
 	assert.NoError(suite.T(), err)
 }
 
+// getTestPrincipal gets a user principal from database
+func (suite *ResolverSuite) getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
+
+	userAccount, _ := userhelpers.GetOrCreateUserAccount(suite.testConfigs.Context,
+		store,
+		store,
+		userName,
+		true,
+		false,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.testConfigs.OktaClient.FetchUserInfo))
+
+	princ := &authentication.ApplicationPrincipal{
+		Username:          userName,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: true,
+		JobCodeMAC:        false,
+		JobCodeNonCMS:     false,
+		UserAccount:       userAccount,
+	}
+	return princ
+
+}
 func (suite *ResolverSuite) stubFetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
 	return &models.UserInfo{
 		Username:    username,
@@ -136,7 +160,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 		Return(emailServiceConfig).
 		AnyTimes()
 
-	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(mp.ModelName, mp)
+	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(mp.ModelName, mp)
 	mockEmailTemplateService.
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).
@@ -200,7 +224,7 @@ func (suite *ResolverSuite) createPlanTDL(mp *models.ModelPlan, idNumber string,
 	return tdl
 }
 
-func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolution {
+func (suite *ResolverSuite) createOperationalSolution() (*models.OperationalSolution, *models.OperationalNeed, *models.ModelPlan) {
 	planName := "Plan For Milestones"
 	plan := suite.createModelPlan(planName)
 	needType := models.OpNKManageCd
@@ -210,12 +234,13 @@ func (suite *ResolverSuite) createOperationalSolution() *models.OperationalSolut
 	changes := map[string]interface{}{
 		"nameOther": "AnotherSolution",
 	}
-	operationalSolution, _ := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
-	return operationalSolution
+	operationalSolution, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, nil, changes, suite.testConfigs.Principal)
+	suite.NoError(err)
+	return operationalSolution, need, plan
 }
 
 func (suite *ResolverSuite) createOperationalSolutionSubtask() *models.OperationalSolutionSubtask {
-	operationalSolution := suite.createOperationalSolution()
+	operationalSolution, _, _ := suite.createOperationalSolution()
 
 	return suite.createOperationalSolutionSubtaskWithSolution(operationalSolution)
 }
@@ -231,7 +256,7 @@ func (suite *ResolverSuite) createOperationalSolutionSubtaskWithSolution(
 }
 
 func (suite *ResolverSuite) createMultipleOperationSolutionSubtasks() []*models.OperationalSolutionSubtask {
-	operationalSolution := suite.createOperationalSolution()
+	operationalSolution, _, _ := suite.createOperationalSolution()
 
 	createOperationalSolutionInput := []*model.CreateOperationalSolutionSubtaskInput{
 		{
@@ -288,9 +313,9 @@ func (suite *ResolverSuite) createAnalyzedAuditChange(modelNameChange string,
 	modelStatusChanges []string,
 	documentCount int,
 	crTdlActivity bool,
-	updatedSections []string,
-	reviewSections []string,
-	clearanceSections []string,
+	updatedSections []models.TableName,
+	reviewSections []models.TableName,
+	clearanceSections []models.TableName,
 	addedLeads []models.AnalyzedModelLeadInfo, discussionActivity bool) *models.AnalyzedAuditChange {
 
 	auditChange := models.AnalyzedAuditChange{
@@ -322,7 +347,7 @@ func (suite *ResolverSuite) createAnalyzedAuditChange(modelNameChange string,
 
 // createAnalyzedAudit is a helper function to just store an analyzed audit to the DB, without using a resolver
 func (suite *ResolverSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Time, changes models.AnalyzedAuditChange) *models.AnalyzedAudit {
-	principal := getTestPrincipal(suite.testConfigs.Store, "TEST")
+	principal := suite.getTestPrincipal(suite.testConfigs.Store, "TEST")
 	newAnalyzedAudit, err := models.NewAnalyzedAudit(principal.UserAccount.ID, mp.ID, mp.ModelName, date, changes)
 	suite.NoError(err)
 
@@ -337,9 +362,9 @@ func (suite *ResolverSuite) createDefaultTestAnalyzedAudit(mp *models.ModelPlan,
 	modelStatusChange := []string{"OMB_ASRF_CLEARANCE"}
 	documentCount := 2
 	crTdlActivity := true
-	updatedSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	reviewSections := []string{"plan_payments", "plan_ops_eval_and_learning"}
-	clearanceSections := []string{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
+	updatedSections := []models.TableName{"plan_payments", "plan_ops_eval_and_learning"}
+	reviewSections := []models.TableName{"plan_payments", "plan_ops_eval_and_learning"}
+	clearanceSections := []models.TableName{"plan_participants_and_providers", "plan_general_characteristics", "plan_basics"}
 	addedLead := []models.AnalyzedModelLeadInfo{{CommonName: "New Lead"}}
 	discussionActivity := true
 

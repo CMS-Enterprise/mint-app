@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { MutableRefObject } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FilterValue, useAsyncDebounce } from 'react-table';
+import { FilterValue } from 'react-table';
 import { Button, Form, Icon, Label, TextInput } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
@@ -10,28 +10,26 @@ import './index.scss';
 // Currently this component is used for client side filtering using onChange
 
 type GlobalClientFilterProps = {
+  className?: string;
+  globalFilter: FilterValue;
+  initialFilter?: string;
   setGlobalFilter: (filterValue: FilterValue) => void;
+  skipPageResetRef?: MutableRefObject<boolean>;
   tableID: string;
   tableName: string;
-  className?: string;
 };
 
 // Component for Global Filter for Client Side filtering
 const GlobalClientFilter = ({
+  className,
+  globalFilter,
+  initialFilter,
   setGlobalFilter,
+  skipPageResetRef,
   tableID,
-  tableName,
-  className
+  tableName
 }: GlobalClientFilterProps) => {
   const { t } = useTranslation('tableAndPagination');
-
-  const [query, setQuery] = useState<string>('');
-
-  // Set a debounce to capture set input before re-rendering on each character.  Preparation for BE fetching/filtering.
-  // May not be necessary until then
-  const onChange = useAsyncDebounce(value => {
-    setGlobalFilter(value);
-  }, 200);
 
   return (
     <Form
@@ -51,11 +49,14 @@ const GlobalClientFilter = ({
         role="searchbox"
         type="search"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          if (skipPageResetRef) {
+            // eslint-disable-next-line no-param-reassign
+            skipPageResetRef.current = false;
+          }
           // Currently only client-side filtering - updates search filter onChange
-          onChange(e.target.value);
-          setQuery(e.target.value);
+          setGlobalFilter(e.target.value);
         }}
-        value={query}
+        value={globalFilter ?? ''}
         name={`${tableName} Search`}
       />
       {/* Right not search button doesn't need to do anything, it searches onChange -

@@ -35,7 +35,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithoutNotification() {
 	}
 	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
 
-	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(planName, plan)
 
 	mockEmailTemplateService.
 		EXPECT().
@@ -97,7 +97,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithoutNotification() {
 	suite.Nil(collaborator.ModifiedBy)
 
 	// Assert that a notification was not generated for the collaborator
-	collabPrinc := getTestPrincipal(suite.testConfigs.Store, collaboratorInput.UserName)
+	collabPrinc := suite.getTestPrincipal(suite.testConfigs.Store, collaboratorInput.UserName)
 	collabNots, err := notifications.UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, collabPrinc)
 	suite.NoError(err)
 	suite.EqualValues(0, collabNots.NumUnreadNotifications())
@@ -120,7 +120,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithNotification() {
 	}
 	expectedEmail := "CLAB.doe@local.fake" //comes from stubFetchUserInfo
 
-	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(planName, plan)
 
 	mockEmailTemplateService.
 		EXPECT().
@@ -182,7 +182,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithNotification() {
 	suite.Nil(collaborator.ModifiedBy)
 
 	// Assert that a notification was generated for the collaborator
-	collabPrinc := getTestPrincipal(suite.testConfigs.Store, collaboratorInput.UserName)
+	collabPrinc := suite.getTestPrincipal(suite.testConfigs.Store, collaboratorInput.UserName)
 	collabNots, err := notifications.UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, collabPrinc)
 	suite.NoError(err)
 	suite.EqualValues(1, collabNots.NumUnreadNotifications())
@@ -330,7 +330,7 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 	suite.NoError(err)
 	suite.EqualValues(true, isCollab)
 
-	assessment := getTestPrincipal(suite.testConfigs.Store, "FAIL")
+	assessment := suite.getTestPrincipal(suite.testConfigs.Store, "FAIL")
 	assessment.JobCodeASSESSMENT = true
 	assessment.JobCodeUSER = true
 

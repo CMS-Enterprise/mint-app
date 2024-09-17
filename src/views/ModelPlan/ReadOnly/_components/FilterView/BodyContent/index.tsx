@@ -10,6 +10,7 @@ import {
   TranslationPlan
 } from 'types/translation';
 import ReadOnlyBeneficiaries from 'views/ModelPlan/ReadOnly/Beneficiaries';
+import ReadOnlyCRTDLs from 'views/ModelPlan/ReadOnly/CRTDLs';
 import ReadOnlyGeneralCharacteristics from 'views/ModelPlan/ReadOnly/GeneralCharacteristics';
 import ReadOnlyModelBasics from 'views/ModelPlan/ReadOnly/ModelBasics';
 import ReadOnlyOpsEvalAndLearning from 'views/ModelPlan/ReadOnly/OpsEvalAndLearning';
@@ -60,7 +61,7 @@ const BodyContent = ({
   filteredView
 }: {
   modelID: string;
-  filteredView: typeof filterGroups[number];
+  filteredView: (typeof filterGroups)[number];
 }) => {
   const { t } = useTranslation('filterView');
   const { t: opSolutionsMiscT } = useTranslation('opSolutionsMisc');
@@ -121,6 +122,14 @@ const BodyContent = ({
         </div>
       )}
 
+      {/* CR and TDLs table for filtered views */}
+      {filteredGroupSolutions[filteredView] && (
+        <div>
+          <Divider className="margin-y-8" />
+          <ReadOnlyCRTDLs modelID={modelID} />
+        </div>
+      )}
+
       <div className="margin-top-4 padding-top-5 border-top-1px border-base-light">
         <Alert type="info" noIcon headingLevel="h4">
           <span className="margin-y-0 font-body-sm text-bold display-block">
@@ -142,16 +151,16 @@ const BodyContent = ({
 */
 export const getAllFilterViewQuestions = (
   filterMappings: TranslationPlan,
-  filteredView: typeof filterGroups[number]
+  filteredView: (typeof filterGroups)[number]
 ) => {
   let mappedQuestions: Record<string, string[]> = {};
 
   // Diving into each model plan section, as well as each question to identify if it contains the appropriate filter view mapping
   getKeys(filterMappings).forEach(section => {
     getKeys(filterMappings[section]).forEach(question => {
-      const filterGroupConfig = (filterMappings[section][
-        question
-      ] as TranslationFieldProperties)?.filterGroups;
+      const filterGroupConfig = (
+        filterMappings[section][question] as TranslationFieldProperties
+      )?.filterGroups;
 
       if (
         Array.isArray(filterGroupConfig) &&

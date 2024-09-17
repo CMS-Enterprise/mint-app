@@ -29,10 +29,10 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 	}
 
 	/* Create 4 discussion replies, with different principals*/
-	testPR1 := getTestPrincipal(suite.testConfigs.Store, "TestDR1")
-	testPR2 := getTestPrincipal(suite.testConfigs.Store, "TestDR2")
-	testPR3 := getTestPrincipal(suite.testConfigs.Store, "TestDR3")
-	testPR4 := getTestPrincipal(suite.testConfigs.Store, "TestDR4")
+	testPR1 := suite.getTestPrincipal(suite.testConfigs.Store, "TestDR1")
+	testPR2 := suite.getTestPrincipal(suite.testConfigs.Store, "TestDR2")
+	testPR3 := suite.getTestPrincipal(suite.testConfigs.Store, "TestDR3")
+	testPR4 := suite.getTestPrincipal(suite.testConfigs.Store, "TestDR4")
 
 	dr1, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, input, testPR1, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
@@ -101,8 +101,8 @@ func verifyDeleteAuditChange(suite *ResolverSuite, discussionReply *models.Discu
 	if !entryFound {
 		return fmt.Errorf("no audit entry found for deletion of discussion reply %s", discussionReply.ID)
 	}
-	if *deleteEntry.ModifiedBy != discussionReply.CreatedBy {
-		return fmt.Errorf("disucssion reply audit of delete action credited to the incorrect user")
+	if deleteEntry.ModifiedBy != discussionReply.CreatedBy {
+		return fmt.Errorf("discussion reply audit of delete action credited to the incorrect user")
 	}
 
 	return nil

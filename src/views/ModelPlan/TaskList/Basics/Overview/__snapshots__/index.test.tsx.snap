@@ -16,7 +16,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
           class="usa-breadcrumb__list-item"
         >
           <a
-            class="usa-breadcrumb__link"
+            class="usa-link usa-breadcrumb__link"
             href="/"
           >
             <span>
@@ -28,8 +28,20 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
           class="usa-breadcrumb__list-item"
         >
           <a
-            class="usa-breadcrumb__link"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/"
+            class="usa-link usa-breadcrumb__link"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
+          >
+            <span>
+              Model collaboration area
+            </span>
+          </a>
+        </li>
+        <li
+          class="usa-breadcrumb__list-item"
+        >
+          <a
+            class="usa-link usa-breadcrumb__link"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
           >
             <span>
               Model Plan task list
@@ -40,7 +52,9 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
           aria-current="page"
           class="usa-breadcrumb__list-item usa-current"
         >
-          Model basics
+          <span>
+            Model basics
+          </span>
         </li>
       </ol>
     </nav>
@@ -131,7 +145,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 Voluntary
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
               />
             </div>
             <div
@@ -151,7 +165,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 Mandatory national
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
               />
             </div>
             <div
@@ -171,7 +185,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 Mandatory regional or state
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
               />
             </div>
             <div
@@ -191,7 +205,7 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
                 Other
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
               />
             </div>
           </fieldset>

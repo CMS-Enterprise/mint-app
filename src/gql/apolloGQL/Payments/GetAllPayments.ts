@@ -6,11 +6,13 @@ export default gql(/* GraphQL */ `
       id
       payments {
         fundingSource
+        fundingSourcePatientProtectionInfo
         fundingSourceMedicareAInfo
         fundingSourceMedicareBInfo
         fundingSourceOther
         fundingSourceNote
         fundingSourceR
+        fundingSourceRPatientProtectionInfo
         fundingSourceRMedicareAInfo
         fundingSourceRMedicareBInfo
         fundingSourceROther
@@ -31,6 +33,8 @@ export default gql(/* GraphQL */ `
         affectsMedicareSecondaryPayerClaimsHow
         affectsMedicareSecondaryPayerClaimsNote
         payModelDifferentiation
+        willBePaymentAdjustments
+        willBePaymentAdjustmentsNote
         creatingDependenciesBetweenServices
         creatingDependenciesBetweenServicesNote
         needsClaimsDataCollection
@@ -78,6 +82,8 @@ export default gql(/* GraphQL */ `
         paymentDemandRecoupmentFrequencyNote
         paymentStartDate
         paymentStartDateNote
+        createdDts
+        modifiedDts
         status
       }
     }

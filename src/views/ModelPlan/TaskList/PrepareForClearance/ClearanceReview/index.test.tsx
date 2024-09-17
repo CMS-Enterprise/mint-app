@@ -66,11 +66,11 @@ describe('ClearanceReview component', () => {
     const { getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
+          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
         ]}
       >
         <MockedProvider mocks={clearanceMocks} addTypename={false}>
-          <Route path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID">
+          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID">
             <ClearanceReview modelID={modelID} />
           </Route>
         </MockedProvider>
@@ -93,11 +93,11 @@ describe('ClearanceReview component', () => {
       const { getByTestId, user } = setup(
         <MemoryRouter
           initialEntries={[
-            `/models/${modelID}/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
+            `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
           ]}
         >
           <MockedProvider mocks={clearanceMocks} addTypename={false}>
-            <Route path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID">
+            <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID">
               <ClearanceReview modelID={modelID} />
             </Route>
           </MockedProvider>
@@ -126,11 +126,11 @@ describe('ClearanceReview component', () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
         initialEntries={[
-          `/models/${modelID}/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
+          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
         ]}
       >
         <MockedProvider mocks={clearanceMocks} addTypename={false}>
-          <Route path="/models/:modelID/task-list/prepare-for-clearance/:section/:sectionID">
+          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID">
             <ClearanceReview modelID={modelID} />
           </Route>
         </MockedProvider>

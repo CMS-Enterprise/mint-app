@@ -1,10 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Checkbox,
   Fieldset,
@@ -24,6 +21,7 @@ import {
   useUpdateNotificationSettingsMutation
 } from 'gql/gen/graphql';
 
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
@@ -33,7 +31,8 @@ import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formDiff';
 import { NotFoundPartial } from 'views/NotFound';
 
-type GetNotifcationSettingsType = GetNotificationSettingsQuery['currentUser']['notificationPreferences'];
+type GetNotifcationSettingsType =
+  GetNotificationSettingsQuery['currentUser']['notificationPreferences'];
 
 type NotificationSettingsFormType = Omit<
   GetNotifcationSettingsType,
@@ -41,7 +40,6 @@ type NotificationSettingsFormType = Omit<
 >;
 
 const NotificationSettings = () => {
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: notificationsT } = useTranslation('notifications');
 
   const notificationSettings: Record<
@@ -65,9 +63,10 @@ const NotificationSettings = () => {
   const { message } = useMessage();
   const location = useLocation();
 
-  const params = useMemo(() => new URLSearchParams(location.search), [
-    location.search
-  ]);
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
   const unsubscribeEmailParams = params.get('unsubscribe_email');
 
   const { data, loading, error } = useGetNotificationSettingsQuery();
@@ -316,21 +315,14 @@ const NotificationSettings = () => {
     <MainContent data-testid="new-plan">
       <GridContainer>
         <Grid desktop={{ col: 12 }} tablet={{ col: 12 }} mobile={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{miscellaneousT('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/notifications">
-                <span>{notificationsT('breadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>
-              {notificationsT('settings.heading')}
-            </Breadcrumb>
-          </BreadcrumbBar>
+          <Breadcrumbs
+            className="margin-bottom-4"
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.NOTIFICATIONS
+            ]}
+            customItem={notificationsT('settings.heading')}
+          />
 
           {message && <Expire delay={45000}>{message}</Expire>}
 
@@ -351,12 +343,8 @@ const NotificationSettings = () => {
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<NotificationSettingsFormType>) => {
-              const {
-                dirty,
-                handleSubmit,
-                setFieldValue,
-                values
-              } = formikProps;
+              const { dirty, handleSubmit, setFieldValue, values } =
+                formikProps;
 
               return (
                 <>

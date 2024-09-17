@@ -9,7 +9,8 @@ import {
 
 import ParticipantOptions from './index';
 
-type GetParticipantOptionsType = GetParticipantOptionsQuery['modelPlan']['participantsAndProviders'];
+type GetParticipantOptionsType =
+  GetParticipantOptionsQuery['modelPlan']['participantsAndProviders'];
 
 const participantOptionsMockData: GetParticipantOptionsType = {
   __typename: 'PlanParticipantsAndProviders',
@@ -55,11 +56,11 @@ describe('Model Plan ParticipantsOptions', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/participants-options'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers/participants-options'
         ]}
       >
         <MockedProvider mocks={participantOptionsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/participants-and-providers/participants-options">
+          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers/participants-options">
             <ParticipantOptions />
           </Route>
         </MockedProvider>
@@ -83,11 +84,11 @@ describe('Model Plan ParticipantsOptions', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/participants-options'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/participants-and-providers/participants-options'
         ]}
       >
         <MockedProvider mocks={participantOptionsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/participants-and-providers/participants-options">
+          <Route path="/models/:modelID/collaboration-area/task-list/participants-and-providers/participants-options">
             <ParticipantOptions />
           </Route>
         </MockedProvider>

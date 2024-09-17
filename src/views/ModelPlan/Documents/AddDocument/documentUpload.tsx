@@ -39,10 +39,8 @@ const DocumentUpload = ({
   const { t: documentsT } = useTranslation('documents');
   const { t: documentsMiscT } = useTranslation('documentsMisc');
 
-  const {
-    documentType: documentTypeConfig,
-    restricted: restrictedConfig
-  } = usePlanTranslation('documents');
+  const { documentType: documentTypeConfig, restricted: restrictedConfig } =
+    usePlanTranslation('documents');
 
   const { showMessageOnNextPage } = useMessage();
   const formikRef = useRef<FormikProps<FileUploadForm>>(null);
@@ -119,7 +117,7 @@ const DocumentUpload = ({
               if (solutionDetailsLink) {
                 history.push(solutionDetailsLink);
               } else {
-                history.push(`/models/${modelID}/documents`);
+                history.push(`/models/${modelID}/collaboration-area/documents`);
               }
             }
           }
@@ -273,7 +271,7 @@ const DocumentUpload = ({
                               htmlFor="FileUpload-OtherType"
                               className="margin-bottom-1"
                             >
-                              {documentsT('otherTypeDescription.label')}
+                              {documentsT('otherType.label')}
                               <RequiredAsterisk />
                             </Label>
 

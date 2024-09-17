@@ -1,5 +1,5 @@
 const highLevelProjectPlans = {
-  title: 'High-level project plans',
+  title: 'High-level project plan',
   description:
     'Use this high-level project plan to understand and track the key pieces of work involved in developing a model. The MINT Team can assist model teams in completing this for upcoming models once collaboration begins.',
   downloadExcel: 'Download project plan as an Excel file',
@@ -9,16 +9,13 @@ const highLevelProjectPlans = {
     copy: {
       legal: 'These activities may not apply to all models.',
       cmmi: {
-        href:
-          'https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx',
+        href: 'https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx',
         copy: 'Learn more about CMMI Internal Clearance on SharePoint'
       },
       documents: {
-        copy:
-          'Documents listed may not apply to all models. However, all documents in this section will go through CMMI Internal Clearance, CMS Clearance, Health and Human Services (HHS) Clearance, and Office of Management and Budget (OMB) Clearance. ',
+        copy: 'Documents listed may not apply to all models. However, all documents in this section will go through CMMI Internal Clearance, CMS Clearance, Health and Human Services (HHS) Clearance, and Office of Management and Budget (OMB) Clearance. ',
         link: {
-          href:
-            'https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx',
+          href: 'https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx',
           copy: 'Learn more about Clearance on SharePoint'
         }
       }
@@ -171,8 +168,7 @@ const highLevelProjectPlans = {
         {
           activity: '<paragraph>Announcement materials</paragraph>',
           link: 'Learn more about announcement materials on SharePoint',
-          href:
-            'https://share.cms.gov/center/cmmi/PP/DSEP/Lists/AnnouncementsAndRollouts/Tiles.aspx',
+          href: 'https://share.cms.gov/center/cmmi/PP/DSEP/Lists/AnnouncementsAndRollouts/Tiles.aspx',
           party:
             'Model Team, Front Office, PPG Division of Stakeholder Engagement and Policy (DSEP), Office of Communications (OC)'
         }
@@ -181,8 +177,7 @@ const highLevelProjectPlans = {
         {
           activity: 'Fraud, Waste, Abuse Waivers',
           link: 'Learn more about Fraud, Waste, Abuse Waivers on SharePoint',
-          href:
-            'https://share.cms.gov/center/cmmi/PP/Model%20Design%20Resources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FPP%2FModel%20Design%20Resources%2FModel%20Agreement%20and%20Rule%20Resources%2FTemplate%20Participation%20Agreement%2FWaiver%20Resources&FolderCTID=0x012000A975146B83F0F045969E1B4CCF269310&View=%7B05D9040E%2DF2A4%2D4351%2D8D9E%2D2F0DBF3CD595%7D',
+          href: 'https://share.cms.gov/center/cmmi/PP/Model%20Design%20Resources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FPP%2FModel%20Design%20Resources%2FModel%20Agreement%20and%20Rule%20Resources%2FTemplate%20Participation%20Agreement%2FWaiver%20Resources&FolderCTID=0x012000A975146B83F0F045969E1B4CCF269310&View=%7B05D9040E%2DF2A4%2D4351%2D8D9E%2D2F0DBF3CD595%7D',
           party:
             'Federal Waiver Team writes, Office of Inspector General (OIG) and CM approve'
         },
@@ -384,8 +379,7 @@ const highLevelProjectPlans = {
           activity: 'Collect quality measures data',
           modalLinks: [
             {
-              copy:
-                'CCSQ contracts and systems, <ml>HDR</ml>, Patient Activation Measure (PAM)',
+              copy: 'CCSQ contracts and systems, <ml>HDR</ml>, Patient Activation Measure (PAM)',
               route: 'health-data-reporting'
             }
           ]
@@ -421,8 +415,7 @@ const highLevelProjectPlans = {
           activity: 'Quality performance scores',
           modalLinks: [
             {
-              copy:
-                'Existing CMS data and process, <ml>HDR</ml>, other new process',
+              copy: 'Existing CMS data and process, <ml>HDR</ml>, other new process',
               route: 'health-data-reporting'
             }
           ]

@@ -11,7 +11,8 @@ import {
 
 import BeneficiaryIdentification from './index';
 
-type GetBeneficiaryIdentificationType = GetBeneficiaryIdentificationQuery['modelPlan']['beneficiaries'];
+type GetBeneficiaryIdentificationType =
+  GetBeneficiaryIdentificationQuery['modelPlan']['beneficiaries'];
 
 const mockData: GetBeneficiaryIdentificationType = {
   __typename: 'PlanBeneficiaries',
@@ -51,11 +52,11 @@ describe('Model Plan Beneficiaries', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/beneficiaries'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries'
         ]}
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/beneficiaries">
+          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries">
             <BeneficiaryIdentification />
           </Route>
         </MockedProvider>
@@ -77,11 +78,11 @@ describe('Model Plan Beneficiaries', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/beneficiaries'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/beneficiaries'
         ]}
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/beneficiaries">
+          <Route path="/models/:modelID/collaboration-area/task-list/beneficiaries">
             <BeneficiaryIdentification />
           </Route>
         </MockedProvider>

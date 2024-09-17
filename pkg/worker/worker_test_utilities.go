@@ -1,13 +1,15 @@
 package worker
 
 import (
+	"bytes"
 	"context"
 	"os"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/local"
+	"github.com/cmsgov/mint-app/pkg/oktaapi"
 	"github.com/cmsgov/mint-app/pkg/storage/loaders"
-	"github.com/cmsgov/mint-app/pkg/userhelpers"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -17,6 +19,7 @@ import (
 
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
@@ -34,6 +37,7 @@ type TestConfigs struct {
 	Principal            *authentication.ApplicationPrincipal
 	EmailTemplateService email.TemplateServiceImpl
 	Context              context.Context
+	OktaClient           oktaapi.Client
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -65,6 +69,10 @@ func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(config, ldClient)
 	emailTemplateService, _ := email.NewTemplateServiceImpl()
+	oktaClient, oktaClientErr := local.NewOktaAPIClient()
+	if oktaClientErr != nil {
+		logger.Fatal("failed to create okta api client", zap.Error(oktaClientErr))
+	}
 
 	s3Client := createS3Client()
 	tc.DBConfig = config
@@ -75,6 +83,7 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.S3Client = &s3Client
 	tc.PubSub = ps
 	tc.EmailTemplateService = *emailTemplateService
+	tc.OktaClient = oktaClient
 
 	dataLoaders := loaders.NewDataLoaders(tc.Store)
 	tc.Context = loaders.CTXWithLoaders(context.Background(), dataLoaders)
@@ -112,18 +121,34 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	return config, ldClient, logger, userInfo, ps
 }
 
-func getTestPrincipal(store *storage.Store, userName string) *authentication.ApplicationPrincipal {
+// Custom WriteSyncer to capture logs
+type testWriteSyncer struct {
+	buffer bytes.Buffer
+}
 
-	userAccount, _ := userhelpers.GetOrCreateUserAccount(context.Background(), store, store, userName, true, false, userhelpers.GetOktaAccountInfoWrapperFunction(userhelpers.GetUserInfoFromOktaLocal))
+func (ws *testWriteSyncer) Write(p []byte) (n int, err error) {
+	return ws.buffer.Write(p)
+}
 
-	princ := &authentication.ApplicationPrincipal{
-		Username:          userName,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: true,
-		JobCodeMAC:        false,
-		JobCodeNonCMS:     false,
-		UserAccount:       userAccount,
-	}
-	return princ
+func (ws *testWriteSyncer) Sync() error {
+	return nil
+}
+
+// GetBufferString returns the string output of the logger buffer
+func (ws *testWriteSyncer) GetBufferString() string {
+	return ws.buffer.String()
+}
+
+// createTestLogger returns a test write Syncer, and a logger to intercept and validate log messages
+func createTestLogger() (*testWriteSyncer, *zap.Logger) {
+	// Create a custom WriteSyncer
+	writeSyncer := &testWriteSyncer{}
+
+	// Create a zap core with the custom WriteSyncer
+	encoderConfig := zap.NewProductionEncoderConfig()
+	encoderConfig.TimeKey = "" // Disable the timestamp for easier testing
+	core := zapcore.NewCore(zapcore.NewJSONEncoder(encoderConfig), writeSyncer, zapcore.InfoLevel)
+	logger := zap.New(core)
+	return writeSyncer, logger
 
 }

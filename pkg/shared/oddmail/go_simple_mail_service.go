@@ -98,12 +98,20 @@ func (g GoSimpleMailService) Send(
 		return err
 	}
 
-	return g.SendEmail(email)
+	return g.sendEmail(email)
 }
 
-// SendEmail is a GoSimpleMail specific method allowing for dispatching an email using a mail.Email object
-func (g GoSimpleMailService) SendEmail(email *mail.Email) error {
+// sendEmail is a GoSimpleMail specific method allowing for dispatching an email using a mail.Email object
+func (g GoSimpleMailService) sendEmail(email *mail.Email) error {
 	if !g.config.GetEnabled() {
+		return nil
+	}
+
+	// Before we send the email, we need to check to see if it actually has any recipients and return early if not
+	// This is because the go-simple-mail actually returns an error if there are no recipients, but we don't want to treat that as an error
+	// and would rather just return early when this happens
+	// TODO: It would be nice to have access to a logger/context here so we could logger.Warn() in this case
+	if len(email.GetRecipients()) == 0 {
 		return nil
 	}
 

@@ -20,11 +20,11 @@ describe('The TaskListSideNavActions', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          'models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list'
+          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list'
         ]}
       >
         <MockedProvider>
-          <Route path="models/:modelID/task-list">
+          <Route path="models/:modelID/collaboration-area/task-list">
             <MessageProvider>
               <TaskListSideNav
                 modelPlan={modelPlan}

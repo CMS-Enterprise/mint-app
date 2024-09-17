@@ -21,7 +21,7 @@ import {
   useUpdateOperationalSolutionSubtasksMutation
 } from 'gql/gen/graphql';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -44,7 +44,8 @@ type CreateType = NonNullable<
   CreateOperationalSolutionSubtasksMutation['createOperationalSolutionSubtasks']
 >[0];
 
-type UpdateType = GetOperationalSolutionQuery['operationalSolution']['operationalSolutionSubtasks'][0];
+type UpdateType =
+  GetOperationalSolutionQuery['operationalSolution']['operationalSolutionSubtasks'][0];
 
 type SubTaskType = UpdateType[] | CreateType[];
 
@@ -160,7 +161,7 @@ const Subtasks = ({
               </Alert>
             );
             history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+              `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
             );
           }
         }
@@ -206,7 +207,7 @@ const Subtasks = ({
                 </Alert>
               );
               history.push(
-                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+                `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
               );
             }
           })
@@ -242,7 +243,7 @@ const Subtasks = ({
                 </Alert>
               );
               history.push(
-                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+                `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
               );
             }
           })
@@ -298,28 +299,23 @@ const Subtasks = ({
     );
   };
 
-  const breadcrumbs = [
-    { text: h('home'), url: '/' },
-    { text: h('tasklistBreadcrumb'), url: `/models/${modelID}/task-list/` },
-    {
-      text: opSolutionsMiscT('subtasks.itSolutionsTrackerBreadcrumb'),
-      url: `/models/${modelID}/task-list/it-solutions`
-    },
-    {
-      text: opSolutionsMiscT('subtasks.solutionDetails'),
-      url: `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
-    },
-    {
-      text: managingSubtasks
-        ? opSolutionsMiscT('subtasks.manageSubtasks')
-        : opSolutionsMiscT('subtasks.addSubtask')
-    }
-  ];
-
   return (
     <>
       {renderModal()}
-      <Breadcrumbs items={breadcrumbs} />
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.IT_TRACKER,
+          BreadcrumbItemOptions.SOLUTION_DETAILS
+        ]}
+        customItem={
+          managingSubtasks
+            ? opSolutionsMiscT('subtasks.manageSubtasks')
+            : opSolutionsMiscT('subtasks.addSubtask')
+        }
+      />
 
       {message}
 
@@ -535,7 +531,7 @@ const Subtasks = ({
                                     onClick={() =>
                                       managingSubtasks
                                         ? history.push(
-                                            `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks?from=manage-subtasks`
+                                            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/add-subtasks?from=manage-subtasks`
                                           )
                                         : push({
                                             __typename:
@@ -585,10 +581,10 @@ const Subtasks = ({
                         onClick={() =>
                           fromManageSubtasks
                             ? history.push(
-                                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/manage-subtasks`
+                                `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/manage-subtasks`
                               )
                             : history.push(
-                                `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
+                                `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/solution-details`
                               )
                         }
                       >

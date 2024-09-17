@@ -13,41 +13,42 @@ import {
 
 import { CharacteristicsContent, separateLinksByType } from './index';
 
-const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'] = {
-  __typename: 'PlanGeneralCharacteristics',
-  id: '123',
-  isNewModel: false,
-  existingModelID: null,
-  currentModelPlanID: '7467634',
-  resemblesExistingModel: YesNoOtherType.NO,
-  resemblesExistingModelWhich: {
-    __typename: 'ExistingModelLinks',
-    links: [
-      {
-        __typename: 'ExistingModelLink',
-        id: '1224534',
-        existingModelID: 3465254,
-        currentModelPlanID: '876578754'
-      }
-    ]
-  },
-  resemblesExistingModelWhyHow: 'We think it is right',
-  resemblesExistingModelHow: '',
-  resemblesExistingModelOtherSpecify: '',
-  resemblesExistingModelOtherOption: 'Other model',
-  resemblesExistingModelOtherSelected: true,
-  resemblesExistingModelNote: '',
-  participationInModelPrecondition: YesNoOtherType.YES,
-  participationInModelPreconditionWhyHow: 'It is a condition',
-  participationInModelPreconditionOtherSpecify: '',
-  participationInModelPreconditionOtherOption: 'Other model',
-  participationInModelPreconditionOtherSelected: true,
-  participationInModelPreconditionNote: 'Precondition note',
-  hasComponentsOrTracks: true,
-  hasComponentsOrTracksDiffer: 'Differ text',
-  hasComponentsOrTracksNote: 'Component note',
-  participationInModelPreconditionWhich: null
-};
+const generalCharacteristicsMockData: GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'] =
+  {
+    __typename: 'PlanGeneralCharacteristics',
+    id: '123',
+    isNewModel: false,
+    existingModelID: null,
+    currentModelPlanID: '7467634',
+    resemblesExistingModel: YesNoOtherType.NO,
+    resemblesExistingModelWhich: {
+      __typename: 'ExistingModelLinks',
+      links: [
+        {
+          __typename: 'ExistingModelLink',
+          id: '1224534',
+          existingModelID: 3465254,
+          currentModelPlanID: '876578754'
+        }
+      ]
+    },
+    resemblesExistingModelWhyHow: 'We think it is right',
+    resemblesExistingModelHow: '',
+    resemblesExistingModelOtherSpecify: '',
+    resemblesExistingModelOtherOption: 'Other model',
+    resemblesExistingModelOtherSelected: true,
+    resemblesExistingModelNote: '',
+    participationInModelPrecondition: YesNoOtherType.YES,
+    participationInModelPreconditionWhyHow: 'It is a condition',
+    participationInModelPreconditionOtherSpecify: '',
+    participationInModelPreconditionOtherOption: 'Other model',
+    participationInModelPreconditionOtherSelected: true,
+    participationInModelPreconditionNote: 'Precondition note',
+    hasComponentsOrTracks: true,
+    hasComponentsOrTracksDiffer: 'Differ text',
+    hasComponentsOrTracksNote: 'Component note',
+    participationInModelPreconditionWhich: null
+  };
 
 const generalCharacteristicsMock = [
   {
@@ -100,11 +101,11 @@ describe('Model Plan Characteristics', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/characteristics'
         ]}
       >
         <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/characteristics">
+          <Route path="/models/:modelID/collaboration-area/task-list/characteristics">
             <CharacteristicsContent />
           </Route>
         </MockedProvider>
@@ -144,11 +145,11 @@ describe('Model Plan Characteristics', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/characteristics'
         ]}
       >
         <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/characteristics">
+          <Route path="/models/:modelID/collaboration-area/task-list/characteristics">
             <CharacteristicsContent />
           </Route>
         </MockedProvider>

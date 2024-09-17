@@ -55,13 +55,16 @@ const SideNav = ({
 
       // Calculate all the things
       const distanceFromTopOfPage =
-        top +
+        Math.round(top) +
         window.scrollY -
         filterBannerHeight -
         navBarHeight -
         marginOfScrollElement;
 
-      window.scroll(0, distanceFromTopOfPage);
+      // Only scroll to the top of the body content if user scrolled past the header section
+      if (window.scrollY >= distanceFromTopOfPage) {
+        window.scroll(0, distanceFromTopOfPage);
+      }
     }, 0);
   };
 

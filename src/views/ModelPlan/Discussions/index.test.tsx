@@ -82,11 +82,12 @@ const discussionResult: GetModelPlanDiscussionsType['modelPlan'] = {
   ]
 };
 
-const mostRecentRoleResult: GetMostRecentRoleSelectionQuery['mostRecentDiscussionRoleSelection'] = {
-  __typename: 'DiscussionRoleSelection',
-  userRole: DiscussionUserRole.LEADERSHIP,
-  userRoleDescription: ''
-};
+const mostRecentRoleResult: GetMostRecentRoleSelectionQuery['mostRecentDiscussionRoleSelection'] =
+  {
+    __typename: 'DiscussionRoleSelection',
+    userRole: DiscussionUserRole.LEADERSHIP,
+    userRoleDescription: ''
+  };
 
 const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
@@ -130,10 +131,10 @@ describe('Discussion Component', () => {
     const { getByText } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
         ]}
       >
-        <Route path="/models/:modelID/task-list">
+        <Route path="/models/:modelID/collaboration-area/task-list">
           <MockedProvider mocks={mocks} addTypename={false}>
             <Provider store={store}>
               <Discussions modelID={modelID} />
@@ -158,10 +159,10 @@ describe('Discussion Component', () => {
     const { getByText } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
         ]}
       >
-        <Route path="/models/:modelID/task-list">
+        <Route path="/models/:modelID/collaboration-area/task-list">
           <MockedProvider mocks={mocks} addTypename={false}>
             <Provider store={store}>
               <Discussions modelID={modelID} />
@@ -198,10 +199,10 @@ describe('Discussion Component', () => {
     const { getByText } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list?discussionID=123'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list?discussionID=123'
         ]}
       >
-        <Route path="/models/:modelID/task-list">
+        <Route path="/models/:modelID/collaboration-area/task-list">
           <MockedProvider mocks={mocks} addTypename={false}>
             <Provider store={store}>
               <Discussions modelID={modelID} discussionID="123" />

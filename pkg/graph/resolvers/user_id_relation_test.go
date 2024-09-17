@@ -6,12 +6,13 @@ import (
 
 func (suite *ResolverSuite) UserAccount() {
 
-	updaterPrincipal := getTestPrincipal(suite.testConfigs.Store, "BTMN")
+	updaterPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "BTMN")
 
 	plan := suite.createModelPlan("My Test plan")
-	colab := suite.createPlanCollaborator(plan, "BTMN", []models.TeamRole{models.TeamRoleEvaluation})
+	collab := suite.createPlanCollaborator(plan, "BTMN", []models.TeamRole{models.TeamRoleEvaluation})
 
-	userAccount := colab.UserAccount(suite.testConfigs.Context)
+	userAccount, err := collab.UserAccount(suite.testConfigs.Context)
+	suite.NoError(err)
 
 	suite.Equal(updaterPrincipal.UserAccount, userAccount)
 }

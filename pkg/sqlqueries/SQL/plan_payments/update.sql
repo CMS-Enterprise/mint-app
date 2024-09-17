@@ -22,6 +22,8 @@ SET
     affects_medicare_secondary_payer_claims_how = :affects_medicare_secondary_payer_claims_how,
     affects_medicare_secondary_payer_claims_note = :affects_medicare_secondary_payer_claims_note,
     pay_model_differentiation = :pay_model_differentiation,
+    will_be_payment_adjustments = :will_be_payment_adjustments,
+    will_be_payment_adjustments_note = :will_be_payment_adjustments_note,
     creating_dependencies_between_services = :creating_dependencies_between_services,
     creating_dependencies_between_services_note = :creating_dependencies_between_services_note,
     needs_claims_data_collection = :needs_claims_data_collection,
@@ -81,7 +83,9 @@ SET
     funding_source_medicare_a_info = :funding_source_medicare_a_info,
     funding_source_medicare_b_info = :funding_source_medicare_b_info,
     funding_source_r_medicare_a_info = :funding_source_r_medicare_a_info,
-    funding_source_r_medicare_b_info = :funding_source_r_medicare_b_info
+    funding_source_r_medicare_b_info = :funding_source_r_medicare_b_info,
+    funding_source_patient_protection_info = :funding_source_patient_protection_info,
+    funding_source_r_patient_protection_info = :funding_source_r_patient_protection_info
 WHERE plan_payments.id = :id
 RETURNING id,
 model_plan_id,
@@ -107,6 +111,8 @@ affects_medicare_secondary_payer_claims,
 affects_medicare_secondary_payer_claims_how,
 affects_medicare_secondary_payer_claims_note,
 pay_model_differentiation,
+will_be_payment_adjustments,
+will_be_payment_adjustments_note,
 creating_dependencies_between_services,
 creating_dependencies_between_services_note,
 needs_claims_data_collection,
@@ -166,4 +172,6 @@ status,
 funding_source_medicare_a_info,
 funding_source_medicare_b_info,
 funding_source_r_medicare_a_info,
-funding_source_r_medicare_b_info;
+funding_source_r_medicare_b_info,
+funding_source_patient_protection_info,
+funding_source_r_patient_protection_info;

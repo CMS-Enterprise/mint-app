@@ -10,13 +10,13 @@ import (
 	"github.com/cmsgov/mint-app/pkg/userhelpers"
 )
 
-func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
-	mockController := gomock.NewController(s.T())
+func (suite *ResolverSuite) TestAddedAsCollaboratorEmail() {
+	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
 	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
 	planName := "Plan For Milestones"
-	plan := s.createModelPlan(planName)
+	plan := suite.createModelPlan(planName)
 
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: plan.ID,
@@ -25,7 +25,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 	}
 	expectedEmail := "CLAB.doe@local.fake" // This comes from the stub fetch user info function
 
-	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(planName, plan)
 	mockEmailTemplateService.
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).
@@ -59,19 +59,19 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		AnyTimes()
 
 	_, _, err := PlanCollaboratorCreate(
-		s.testConfigs.Context,
-		s.testConfigs.Store,
-		s.testConfigs.Store,
-		s.testConfigs.Logger,
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
 		mockEmailService,
 		mockEmailTemplateService,
 		addressBook,
 		collaboratorInput,
-		s.testConfigs.Principal,
+		suite.testConfigs.Principal,
 		false,
-		userhelpers.GetUserInfoAccountInfoWrapperFunc(s.stubFetchUserInfo),
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 		true,
 	)
-	s.NoError(err)
+	suite.NoError(err)
 	mockController.Finish()
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/sqlutils"
 
 	_ "embed"
 )
@@ -55,4 +56,22 @@ func (s *Store) ExistingModelCollectionGet(_ *zap.Logger) ([]*models.ExistingMod
 	}
 
 	return existingModels, nil
+}
+
+// ExistingModelGetByID returns the existing model for a single model plan id
+func ExistingModelGetByID(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	id int,
+) (*models.ExistingModel, error) {
+
+	arg := map[string]interface{}{
+		"id": id,
+	}
+	existingModel, err := sqlutils.GetProcedure[models.ExistingModel](np, sqlqueries.ExistingModel.GetByID, arg)
+	if err != nil {
+		return nil, err
+	}
+
+	return existingModel, nil
 }

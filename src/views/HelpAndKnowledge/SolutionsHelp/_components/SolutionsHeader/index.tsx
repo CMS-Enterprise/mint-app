@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-import Breadcrumbs from 'components/Breadcrumbs';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import PageHeading from 'components/PageHeading';
 import GlobalClientFilter from 'components/TableFilter';
 import { OperationalSolutionCategoryRoute } from 'data/operationalSolutionCategories';
@@ -37,15 +37,13 @@ const SolutionsHeader = ({
     : '';
 
   const breadcrumbs = [
-    { text: t('heading'), url: '/help-and-knowledge' },
-    {
-      text: t('operationalSolutions'),
-      url: `/help-and-knowledge/operational-solutions?page=1`
-    }
+    BreadcrumbItemOptions.HELP_CENTER,
+    BreadcrumbItemOptions.HELP_SOLUTIONS
   ];
 
+  let crumbText = '';
   if (categoryKey) {
-    let crumbText = t(`categories.${categoryKey}.header`);
+    crumbText = t(`categories.${categoryKey}.header`);
 
     if (
       solutionCategories[categoryKey as OperationalSolutionCategoryRoute]
@@ -53,8 +51,6 @@ const SolutionsHeader = ({
     ) {
       crumbText += ` ${t(`categories.${categoryKey}.subHeader`)}`;
     }
-
-    breadcrumbs.push({ text: crumbText, url: '' });
   }
 
   return (
@@ -67,6 +63,7 @@ const SolutionsHeader = ({
       <GridContainer>
         <Breadcrumbs
           items={breadcrumbs}
+          customItem={crumbText}
           className="help-header__breadcrumbs bg-primary-darker text-white padding-top-0 margin-top-neg-2 margin-bottom-4"
         />
 
@@ -93,6 +90,7 @@ const SolutionsHeader = ({
           <div>
             <Grid tablet={{ col: 6 }}>
               <GlobalClientFilter
+                globalFilter={query}
                 setGlobalFilter={setQuery}
                 tableID="table-id"
                 tableName="table-name"

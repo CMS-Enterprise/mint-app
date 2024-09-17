@@ -1,0 +1,9 @@
+"""
+Represents existing model link translation data
+"""
+
+type ExistingModelLinkTranslation {
+    existingModelID: TranslationField! @goTag(key: "db", value: "existing_model_id")
+    currentModelPlanID: TranslationField! @goTag(key: "db", value: "current_model_plan_id")
+    fieldName: TranslationFieldWithOptions! @goTag(key: "db", value: "field_name")
+}

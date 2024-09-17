@@ -67,6 +67,17 @@ func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan)
 	return PlanPaymentsGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
+// TaskListStatus is the resolver for the taskListStatus field.
+func (r *modelPlanResolver) TaskListStatus(ctx context.Context, obj *models.ModelPlan) (models.TaskStatus, error) {
+	logger := appcontext.ZLogger(ctx)
+	return ModelPlanGetTaskListStatus(logger, obj.ID, r.store)
+}
+
+// SuggestedPhase is the resolver for the suggestedPhase field.
+func (r *modelPlanResolver) SuggestedPhase(ctx context.Context, obj *models.ModelPlan) (*model.PhaseSuggestion, error) {
+	return ModelPlanAnticipatedPhase(ctx, obj.Status, obj.ID)
+}
+
 // IsFavorite is the resolver for the isFavorite field.
 func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
 	// TODO: should this be a data loader?

@@ -14,7 +14,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
           class="usa-breadcrumb__list-item"
         >
           <a
-            class="usa-breadcrumb__link"
+            class="usa-link usa-breadcrumb__link"
             href="/"
           >
             <span>
@@ -26,8 +26,20 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
           class="usa-breadcrumb__list-item"
         >
           <a
-            class="usa-breadcrumb__link"
-            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/"
+            class="usa-link usa-breadcrumb__link"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
+          >
+            <span>
+              Model collaboration area
+            </span>
+          </a>
+        </li>
+        <li
+          class="usa-breadcrumb__list-item"
+        >
+          <a
+            class="usa-link usa-breadcrumb__link"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
           >
             <span>
               Model Plan task list
@@ -38,7 +50,9 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
           aria-current="page"
           class="usa-breadcrumb__list-item usa-current"
         >
-          Model basics
+          <span>
+            Model basics
+          </span>
         </li>
       </ol>
     </nav>
@@ -108,7 +122,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
             Anticipated high level timeline
           </h3>
           <div
-            class="usa-alert usa-alert--info usa-alert--slim flex"
+            class="usa-alert usa-alert--info usa-alert--slim icon-padding flex"
             data-testid="alert"
           >
             <div
@@ -242,7 +256,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                   class="text-base"
                   for="Milestone-clearanceStarts"
                 >
-                  When you think you’ll begin internal (CMMI) clearance through when you’ll complete OMB/ASRF clearance
+                  When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance
                 </label>
                 <div
                   class="datepicker__wrapper text-normal"
@@ -1075,7 +1089,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                     This section of the Model Plan (Model basics) is ready for review.
                   </label>
                   <p
-                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                   />
                 </div>
               </div>

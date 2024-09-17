@@ -28,7 +28,7 @@ describe('Read Only Model Plan Overivew', () => {
       <MemoryRouter initialEntries={['/models']}>
         <MockedProvider
           mocks={[
-            ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL, true),
+            ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL, false),
             ...favoritesPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL, true)
           ]}
         >

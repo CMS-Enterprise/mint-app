@@ -10,7 +10,8 @@ import {
 
 import IDDOCTesting from './index';
 
-type GetIDDOCTestingType = GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
+type GetIDDOCTestingType =
+  GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
 
 const iddocTestingMockData: GetIDDOCTestingType = {
   __typename: 'PlanOpsEvalAndLearning',
@@ -51,11 +52,11 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/iddoc-testing'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing'
         ]}
       >
         <MockedProvider mocks={iddocTestingMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/ops-eval-and-learning/iddoc-testing">
+          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing">
             <IDDOCTesting />
           </Route>
         </MockedProvider>
@@ -79,11 +80,11 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/iddoc-testing'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing'
         ]}
       >
         <MockedProvider mocks={iddocTestingMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/ops-eval-and-learning/iddoc-testing">
+          <Route path="/models/:modelID/collaboration-area/task-list/ops-eval-and-learning/iddoc-testing">
             <IDDOCTesting />
           </Route>
         </MockedProvider>

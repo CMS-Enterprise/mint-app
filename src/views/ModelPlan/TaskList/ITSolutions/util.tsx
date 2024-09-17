@@ -11,8 +11,10 @@ import operationalNeedMap from 'data/operationalNeedMap';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
 
-type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
-type GetOperationalNeedsSolutionsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0]['solutions'][0];
+type GetOperationalNeedsOperationalNeedsType =
+  GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
+type GetOperationalNeedsSolutionsType =
+  GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0]['solutions'][0];
 
 // Utility function for getting a list of operational needs that are not answered/needed
 export const filterPossibleNeeds = (
@@ -114,13 +116,13 @@ export const returnActionLinks = (
   const solutionActionLinks = (
     <>
       <UswdsReactLink
-        to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`}
+        to={`/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeed.needID}/solution-implementation-details/${operationalNeed.id}`}
         className={`margin-right-2${readOnly ? ' display-block' : ''}`}
       >
         {i18next.t('opSolutionsMisc:itSolutionsTable.updateStatus')}
       </UswdsReactLink>
       <UswdsReactLink
-        to={`/models/${modelID}/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
+        to={`/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeed.needID}/${operationalNeed.id}/solution-details`}
       >
         {i18next.t('opSolutionsMisc:itSolutionsTable.viewDetails')}
       </UswdsReactLink>
@@ -135,7 +137,7 @@ export const returnActionLinks = (
   ) {
     return (
       <UswdsReactLink
-        to={`/models/${modelID}/task-list/it-solutions/update-need/${operationalNeed.id}`}
+        to={`/models/${modelID}/collaboration-area/task-list/it-solutions/update-need/${operationalNeed.id}`}
       >
         {i18next.t('opSolutionsMisc:itSolutionsTable.updateNeed')}
       </UswdsReactLink>
@@ -162,7 +164,7 @@ export const returnActionLinks = (
       return (
         <UswdsReactLink
           to={{
-            pathname: `/models/${modelID}/task-list/${operationalNeedObj.route}`,
+            pathname: `/models/${modelID}/collaboration-area/task-list/${operationalNeedObj.route}`,
             state: { scrollElement: operationalNeedObj.fieldName.toString() }
           }}
         >
@@ -173,7 +175,7 @@ export const returnActionLinks = (
       return operationalNeedObj ? (
         <UswdsReactLink
           to={{
-            pathname: `/models/${modelID}/task-list/${operationalNeedObj.route}`,
+            pathname: `/models/${modelID}/collaboration-area/task-list/${operationalNeedObj.route}`,
             state: { scrollElement: operationalNeedObj.fieldName.toString() }
           }}
         >
@@ -186,7 +188,7 @@ export const returnActionLinks = (
       return operationalNeedObj ? (
         <UswdsReactLink
           to={{
-            pathname: `/models/${modelID}/task-list/${operationalNeedObj.route}`,
+            pathname: `/models/${modelID}/collaboration-area/task-list/${operationalNeedObj.route}`,
             state: {
               scrollElement:
                 typeof operationalNeedObj.fieldName !== 'string'

@@ -13,7 +13,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          class="usa-link usa-breadcrumb__link"
           href="/"
         >
           <span>
@@ -25,8 +25,20 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <span>
             Model Plan task list
@@ -37,7 +49,9 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        General characteristics
+        <span>
+          General characteristics
+        </span>
       </li>
     </ol>
   </nav>
@@ -179,7 +193,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               States and territories
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -199,7 +213,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               Region
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -220,7 +234,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               Other
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -270,7 +284,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               Beneficiaries
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -290,7 +304,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               Participants
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -310,7 +324,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               Providers
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
           <div
@@ -330,7 +344,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
               Other
             </label>
             <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
             />
           </div>
         </div>
@@ -452,7 +466,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
           What is the agreement type?
         </label>
         <div
-          class="usa-alert usa-alert--warning flex it-solutions-warning"
+          class="usa-alert usa-alert--warning icon-padding flex it-solutions-warning"
           data-testid="alert"
         >
           <div
@@ -497,7 +511,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Co-Operative Agreement/Grant
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -517,7 +531,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Participation Agreement
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
         <div
@@ -537,9 +551,34 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
             Other
           </label>
           <p
-            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
           />
         </div>
+      </div>
+      <div
+        class="margin-top-3 margin-bottom-6"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
       </div>
       <div
         class="margin-top-6 margin-bottom-3"

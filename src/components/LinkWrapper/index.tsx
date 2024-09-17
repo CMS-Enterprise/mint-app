@@ -21,7 +21,7 @@ type UswdsReactLinkProps = {
   rel?: 'noopener noreferrer';
   'data-testid'?: string;
   'aria-label'?: string;
-  children: React.ReactNode | string;
+  children?: React.ReactNode | string;
 };
 
 const UswdsReactLink = ({

@@ -11,7 +11,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
   });
 
   it('completes a Model Plan Ops Eval and Learning form', () => {
-    cy.clickPlanTableByName('Empty Plan');
+    cy.enterModelPlanTaskList('Empty Plan');
 
     cy.wait('@GetModelPlan')
       .its('response.statusCode')
@@ -375,7 +375,9 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .wait(500);
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/collaboration-area\/task-list/
+      );
     });
   });
 });

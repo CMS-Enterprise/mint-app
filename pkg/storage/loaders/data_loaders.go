@@ -30,12 +30,15 @@ type DataLoaders struct {
 	ModelPlanLoader                                *WrappedDataLoader
 	ModelPlanOpSolutionLastModifiedDtsLoader       *WrappedDataLoader
 
+	PossibleOperationSolutionByKeyLoader   *WrappedDataLoader
 	PossibleOperationSolutionContactLoader *WrappedDataLoader
 
 	ActivityLoader                    *WrappedDataLoader
 	UserNotificationPreferencesLoader *WrappedDataLoader
 
 	AnalyzedAuditLoader *WrappedDataLoader
+
+	TranslatedAuditFieldCollectionLoader *WrappedDataLoader
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -70,12 +73,15 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.ModelPlanLoader = newWrappedDataLoader(loaders.GetModelPlanByModelPlanID)
 	loaders.ModelPlanOpSolutionLastModifiedDtsLoader = newWrappedDataLoader(loaders.GetModelPlanOpSolutionLastModifiedDtsByModelPlanID)
 
+	loaders.PossibleOperationSolutionByKeyLoader = newWrappedDataLoader(loaders.possibleOperationalSolutionByKeyBatch)
 	loaders.PossibleOperationSolutionContactLoader = newWrappedDataLoader(loaders.PossibleOperationalSolutionContactsGetByPossibleSolutionID)
 
 	loaders.ActivityLoader = newWrappedDataLoader(loaders.activityGetByIDLoaderBatch)
 	loaders.UserNotificationPreferencesLoader = newWrappedDataLoader(loaders.userNotificationPreferencesGetByUserIDBatch)
 
 	loaders.AnalyzedAuditLoader = newWrappedDataLoader(loaders.analyzedAuditGetByModelPlanIDAndDateBatch)
+
+	loaders.TranslatedAuditFieldCollectionLoader = newWrappedDataLoader(loaders.translatedAuditFieldCollectionGetByTranslatedAuditIDBatch)
 
 	return loaders
 }

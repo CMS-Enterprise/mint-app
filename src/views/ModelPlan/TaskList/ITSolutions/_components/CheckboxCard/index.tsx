@@ -31,7 +31,8 @@ import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutions
 
 import './index.scss';
 
-type GetOperationalNeedSolutionsType = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
+type GetOperationalNeedSolutionsType =
+  GetOperationalNeedQuery['operationalNeed']['solutions'][0];
 
 type CheckboxCardProps = {
   className?: string;
@@ -39,6 +40,14 @@ type CheckboxCardProps = {
   solution: GetOperationalNeedSolutionsType;
   index: number;
 };
+
+export const treatAsOtherSolutions = [
+  OperationalSolutionKey.CONTRACTOR,
+  OperationalSolutionKey.CROSS_MODEL_CONTRACT,
+  OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
+  OperationalSolutionKey.INTERNAL_STAFF,
+  OperationalSolutionKey.OTHER_NEW_PROCESS
+];
 
 const CheckboxCard = ({
   className,
@@ -88,14 +97,6 @@ const CheckboxCard = ({
       }solution=${solutionMap?.route || ''}&section=about`
     : `${initLocation}${location.search}`;
 
-  const treatAsOtherSolutions = [
-    OperationalSolutionKey.CONTRACTOR,
-    OperationalSolutionKey.CROSS_MODEL_CONTRACT,
-    OperationalSolutionKey.EXISTING_CMS_DATA_AND_PROCESS,
-    OperationalSolutionKey.INTERNAL_STAFF,
-    OperationalSolutionKey.OTHER_NEW_PROCESS
-  ];
-
   const isDefaultSolutionOptions =
     (solution.name !== null && solution.pocEmail === null) ||
     (solution.name !== null && solution.isOther);
@@ -114,7 +115,7 @@ const CheckboxCard = ({
           className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2 margin-bottom-0"
           onClick={() =>
             history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${
+              `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${
                 solution.id !== '00000000-0000-0000-0000-000000000000'
                   ? solution.id
                   : ''
@@ -140,7 +141,7 @@ const CheckboxCard = ({
           className="display-flex flex-align-center usa-button usa-button--unstyled margin-top-2 margin-bottom-0"
           onClick={() =>
             history.push(
-              `/models/${modelID}/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}${solutionParam}`
+              `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/add-custom-solution/${solution.id}${solutionParam}`
             )
           }
         >
@@ -167,7 +168,7 @@ const CheckboxCard = ({
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}
-          closeRoute={`/models/${modelID}/task-list/it-solutions/${operationalNeedID}/select-solutions`}
+          closeRoute={`/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/select-solutions`}
         />
       )}
 

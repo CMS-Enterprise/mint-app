@@ -8,6 +8,7 @@ export default gql(/* GraphQL */ `
         id
         participants
         medicareProviderType
+        isNewTypeOfProvidersOrSuppliers
         statesEngagement
         participantsOther
         participantsNote
@@ -70,6 +71,8 @@ export default gql(/* GraphQL */ `
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote
+        createdDts
+        modifiedDts
         status
       }
     }

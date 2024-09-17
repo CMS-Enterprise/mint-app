@@ -88,6 +88,7 @@ func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal 
 	if err != nil {
 		return nil, err
 	}
+	//Future Enhancement refactor this to use HasPrivilegedDocumentAccessByModelPlanID
 
 	// Non-collaborators OR anyone with the Non-CMS User job code cannot see restricted documents
 	if !isCollaborator || principal.AllowNonCMSUser() {

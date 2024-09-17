@@ -17,11 +17,20 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	pp, err := PlanPaymentsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
+	willBePaymentAdjustmentsExpected := true
+	willBePaymentAdjustmentsNoteExpected := "note note note"
+
+	patientProtectionString := "hello PATIENT_PROTECTION_AFFORDABLE_CARE_ACT A"
+	patientProtectionRString := "hello PATIENT_PROTECTION_AFFORDABLE_CARE_ACT A"
 	changes := map[string]interface{}{
 		"fundingSource":                          []string{"OTHER"},
+		"fundingSourcePatientProtectionInfo":     patientProtectionString,
+		"fundingSourceRPatientProtectionInfo":    patientProtectionRString,
 		"fundingSourceNote":                      "Ello gov'na",
 		"payType":                                []string{"CLAIMS_BASED_PAYMENTS"},
 		"anticipatedPaymentFrequencyContinually": "some test value for anticipated payment frequency continually",
+		"willBePaymentAdjustments":               willBePaymentAdjustmentsExpected,
+		"willBePaymentAdjustmentsNote":           willBePaymentAdjustmentsNoteExpected,
 	}
 
 	updatedPP, err := PlanPaymentsUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, pp.ID, changes, suite.testConfigs.Principal)
@@ -31,6 +40,21 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.EqualValues(models.TaskReady, pp.Status)
 	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, pp.CreatedBy)
 	suite.EqualValues("some test value for anticipated payment frequency continually", *updatedPP.AnticipatedPaymentFrequencyContinually)
+
+	if suite.NotNil(updatedPP.WillBePaymentAdjustments) {
+		suite.EqualValues(willBePaymentAdjustmentsExpected, *updatedPP.WillBePaymentAdjustments)
+	}
+	if suite.NotNil(updatedPP.WillBePaymentAdjustmentsNote) {
+		suite.EqualValues(willBePaymentAdjustmentsNoteExpected, *updatedPP.WillBePaymentAdjustmentsNote)
+	}
+
+	if suite.NotNil(updatedPP.FundingSourcePatientProtectionInfo) {
+		suite.EqualValues(patientProtectionString, *updatedPP.FundingSourcePatientProtectionInfo)
+	}
+	if suite.NotNil(updatedPP.FundingSourceRPatientProtectionInfo) {
+		suite.EqualValues(patientProtectionRString, *updatedPP.FundingSourceRPatientProtectionInfo)
+	}
+
 	suite.Nil(pp.ModifiedBy)
 
 	//suite.Nil(updatedPP.FundingSource)

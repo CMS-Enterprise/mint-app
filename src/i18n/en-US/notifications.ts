@@ -50,7 +50,7 @@ const notifications = {
     },
     dailyDigest: {
       heading: 'Your daily updates',
-      cta: 'View this Model Plan',
+      cta: 'View all recent changes',
       unsubscribe:
         'To stop receiving notifications for a specific model, unfollow the model at the top of the Model Plan page.',
       nameChange: 'This model has been renamed (previously {{-oldName}})',
@@ -67,7 +67,7 @@ const notifications = {
         plan_participants_and_providers: 'Participants and providers',
         plan_beneficiaries: 'Beneficiaries',
         plan_general_characteristics: 'General characteristics',
-        plan_basics: 'Basics'
+        plan_basics: 'Model Basics'
       },
       statusChange: {
         PLAN_DRAFT: 'This model has been announced',

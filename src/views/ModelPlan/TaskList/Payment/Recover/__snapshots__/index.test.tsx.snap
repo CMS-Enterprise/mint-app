@@ -13,7 +13,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
+          class="usa-link usa-breadcrumb__link"
           href="/"
         >
           <span>
@@ -25,8 +25,20 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
         class="usa-breadcrumb__list-item"
       >
         <a
-          class="usa-breadcrumb__link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
         >
           <span>
             Model Plan task list
@@ -37,7 +49,9 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        Payment
+        <span>
+          Payment
+        </span>
       </li>
     </ol>
   </nav>
@@ -52,7 +66,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
     class="margin-top-0 margin-bottom-1 font-body-lg"
     data-testid="model-plan-name"
   >
-    for My excellent plan that I just initiated
+    for {{modelName}}
   </p>
   <p
     class="margin-bottom-2 font-body-md line-height-sans-4"
@@ -295,7 +309,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Annually
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -315,7 +329,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Semi-annually
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -335,7 +349,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Quarterly
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -355,7 +369,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Monthly
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -375,7 +389,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Continually
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -413,7 +427,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Other
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -469,7 +483,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Annually
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -489,7 +503,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Semi-annually
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -509,7 +523,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Quarterly
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -529,7 +543,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Monthly
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -549,7 +563,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Continually
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -587,7 +601,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                   Other
                 </label>
                 <p
-                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                 />
               </div>
               <div
@@ -754,7 +768,7 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                       This section of the Model Plan (Payment) is ready for review.
                     </label>
                     <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                     />
                   </div>
                 </div>

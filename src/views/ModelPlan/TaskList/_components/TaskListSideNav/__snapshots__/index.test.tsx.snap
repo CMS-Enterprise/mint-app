@@ -28,15 +28,8 @@ exports[`The TaskListSideNavActions > matches snapshot 1`] = `
         Share or export this model plan
       </button>
     </div>
-    <button
-      class="usa-button usa-button--unstyled line-height-body-5 test-withdraw-request text-red"
-      data-testid="button"
-      type="button"
-    >
-      Remove your Model Plan
-    </button>
     <div
-      class="margin-top-4 margin-bottom-7"
+      class="margin-top-4 margin-bottom-6"
     >
       <h4
         class="margin-bottom-1"
@@ -67,30 +60,6 @@ exports[`The TaskListSideNavActions > matches snapshot 1`] = `
           (opens in a new tab)
         </span>
       </button>
-    </div>
-    <div>
-      <h3
-        class="margin-bottom-05"
-      >
-        Model team
-      </h3>
-      <div
-        class="margin-bottom-2"
-      >
-        <a
-          class="usa-link"
-          href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators?view=manage"
-        >
-          Edit team
-        </a>
-      </div>
-      <div
-        class="sidenav-actions__teamList"
-      >
-        <ul
-          class="usa-list usa-list--unstyled"
-        />
-      </div>
     </div>
   </div>
 </DocumentFragment>

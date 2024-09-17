@@ -11,7 +11,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
@@ -21,7 +21,7 @@ func (s *Store) TagCreate(
 	logger *zap.Logger,
 	tag *models.Tag,
 ) (*models.Tag, error) {
-	tag.ID = utilityUUID.ValueOrNewUUID(tag.ID)
+	tag.ID = utilityuuid.ValueOrNewUUID(tag.ID)
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.Tag.Create)
 	if err != nil {
@@ -51,7 +51,7 @@ func TagCollectionCreate(np sqlutils.NamedPreparer, _ *zap.Logger, tags []*model
 
 	mapSlice := []map[string]interface{}{}
 	for _, tag := range tags {
-		tag.ID = utilityUUID.ValueOrNewUUID(tag.ID) //Note, there are helper functions to do most of this, but converting manually let's us set ID and created by here as well.
+		tag.ID = utilityuuid.ValueOrNewUUID(tag.ID) //Note, there are helper functions to do most of this, but converting manually let's us set ID and created by here as well.
 		tag.CreatedBy = createdBy
 		tMap, err := models.StructToMap(*tag)
 		if err != nil {

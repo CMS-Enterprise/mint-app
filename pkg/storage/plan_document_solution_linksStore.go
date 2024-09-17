@@ -12,7 +12,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
 
 	"go.uber.org/zap"
 
@@ -104,7 +104,7 @@ func (s *Store) PlanDocumentSolutionLinksGetBySolutionID(
 	defer stmt.Close()
 
 	var solutionLinks []*models.PlanDocumentSolutionLink
-	err = stmt.Select(&solutionLinks, utilitySQL.CreateSolutionIDQueryMap(solutionID))
+	err = stmt.Select(&solutionLinks, utilitysql.CreateSolutionIDQueryMap(solutionID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, solutionID)
 	}

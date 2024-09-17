@@ -21,11 +21,13 @@ const mockData: FundingType = {
   __typename: 'PlanPayments',
   id: '123',
   fundingSource: [FundingSourceType.MEDICARE_PART_B_SMI_TRUST_FUND],
+  fundingSourcePatientProtectionInfo: '',
   fundingSourceMedicareAInfo: '',
   fundingSourceMedicareBInfo: 'PartB',
   fundingSourceOther: null,
   fundingSourceNote: null,
   fundingSourceR: [],
+  fundingSourceRPatientProtectionInfo: '',
   fundingSourceRMedicareAInfo: '',
   fundingSourceRMedicareBInfo: '',
   fundingSourceROther: null,
@@ -71,10 +73,12 @@ describe('Model Plan Payment', () => {
   it('renders without errors', async () => {
     const { getByTestId } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelPlanID}/task-list/payment`]}
+        initialEntries={[
+          `/models/${modelPlanID}/collaboration-area/task-list/payment`
+        ]}
       >
         <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/payment">
+          <Route path="/models/:modelID/collaboration-area/task-list/payment">
             <FundingSource />
           </Route>
         </VerboseMockedProvider>
@@ -98,10 +102,12 @@ describe('Model Plan Payment', () => {
   it('matches snapshot', async () => {
     const { asFragment, getByTestId } = render(
       <MemoryRouter
-        initialEntries={[`/models/${modelPlanID}/task-list/payment`]}
+        initialEntries={[
+          `/models/${modelPlanID}/collaboration-area/task-list/payment`
+        ]}
       >
         <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/payment">
+          <Route path="/models/:modelID/collaboration-area/task-list/payment">
             <FundingSource />
           </Route>
         </VerboseMockedProvider>

@@ -31,6 +31,8 @@ SELECT
     pay.affects_medicare_secondary_payer_claims_how,
     pay.affects_medicare_secondary_payer_claims_note,
     pay.pay_model_differentiation,
+    pay.will_be_payment_adjustments,
+    pay.will_be_payment_adjustments_note,
     pay.creating_dependencies_between_services,
     pay.creating_dependencies_between_services_note,
     pay.needs_claims_data_collection,
@@ -90,6 +92,8 @@ SELECT
     pay.funding_source_medicare_a_info,
     pay.funding_source_medicare_b_info,
     pay.funding_source_r_medicare_a_info,
-    pay.funding_source_r_medicare_b_info
+    pay.funding_source_r_medicare_b_info,
+    pay.funding_source_patient_protection_info,
+    pay.funding_source_r_patient_protection_info
 FROM QUERIED_IDS AS qIDs
 INNER JOIN plan_payments AS pay ON pay.model_plan_id = qIDs.model_plan_id;

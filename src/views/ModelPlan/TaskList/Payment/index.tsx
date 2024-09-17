@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import MainContent from 'components/MainContent';
+import ProtectedRoute from 'views/App/ProtectedRoute';
 import { NotFoundPartial } from 'views/NotFound';
 
 import AnticipateDependencies from './AnticipateDependencies';
@@ -43,39 +44,41 @@ export const Payment = () => {
   return (
     <MainContent className="grid-container" data-testid="model-payment">
       <Switch>
-        <Route path="/models/:modelID/task-list/payment" exact>
-          <FundingSource />
-        </Route>
-        <Route
-          path="/models/:modelID/task-list/payment/claims-based-payment"
+        <ProtectedRoute
+          path="/models/:modelID/collaboration-area/task-list/payment"
+          component={FundingSource}
           exact
-        >
-          <ClaimsBasedPayment />
-        </Route>
-        <Route
-          path="/models/:modelID/task-list/payment/non-claims-based-payment"
+        />
+        <ProtectedRoute
+          path="/models/:modelID/collaboration-area/task-list/payment/claims-based-payment"
+          component={ClaimsBasedPayment}
           exact
-        >
-          <NonClaimsBasedPayment />
-        </Route>
-        <Route
-          path="/models/:modelID/task-list/payment/anticipating-dependencies"
+        />
+        <ProtectedRoute
+          path="/models/:modelID/collaboration-area/task-list/payment/non-claims-based-payment"
+          component={NonClaimsBasedPayment}
           exact
-        >
-          <AnticipateDependencies />
-        </Route>
-        <Route
-          path="/models/:modelID/task-list/payment/beneficiary-cost-sharing"
+        />
+        <ProtectedRoute
+          path="/models/:modelID/collaboration-area/task-list/payment/anticipating-dependencies"
+          component={AnticipateDependencies}
           exact
-        >
-          <BeneficiaryCostSharing />
-        </Route>
-        <Route path="/models/:modelID/task-list/payment/complexity" exact>
-          <Complexity />
-        </Route>
-        <Route path="/models/:modelID/task-list/payment/recover-payment" exact>
-          <Recover />
-        </Route>
+        />
+        <ProtectedRoute
+          path="/models/:modelID/collaboration-area/task-list/payment/beneficiary-cost-sharing"
+          component={BeneficiaryCostSharing}
+          exact
+        />
+        <ProtectedRoute
+          path="/models/:modelID/collaboration-area/task-list/payment/complexity"
+          component={Complexity}
+          exact
+        />
+        <ProtectedRoute
+          path="/models/:modelID/collaboration-area/task-list/payment/recover-payment"
+          component={Recover}
+          exact
+        />
         <Route path="*" render={() => <NotFoundPartial />} />
       </Switch>
     </MainContent>

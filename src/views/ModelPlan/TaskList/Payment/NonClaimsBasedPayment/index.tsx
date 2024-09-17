@@ -1,10 +1,7 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Button,
   Fieldset,
   Grid,
@@ -18,33 +15,36 @@ import {
   GetNonClaimsBasedPaymentQuery,
   NonClaimsBasedPayType,
   PayType,
-  useGetNonClaimsBasedPaymentQuery,
-  useUpdatePaymentsMutation
+  TypedUpdatePaymentsDocument,
+  useGetNonClaimsBasedPaymentQuery
 } from 'gql/gen/graphql';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import BooleanRadio from 'components/BooleanRadioForm';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import ConfirmLeave from 'components/ConfirmLeave';
 import ITSolutionsWarning from 'components/ITSolutionsWarning';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextField from 'components/shared/TextField';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
-import { dirtyInput } from 'utils/formDiff';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
-type NonClaimsBasedPaymentFormType = GetNonClaimsBasedPaymentQuery['modelPlan']['payments'];
+type NonClaimsBasedPaymentFormType =
+  GetNonClaimsBasedPaymentQuery['modelPlan']['payments'];
 
 const NonClaimsBasedPayment = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -55,8 +55,10 @@ const NonClaimsBasedPayment = () => {
 
   const {
     nonClaimsPayments: nonClaimsPaymentsConfig,
-    sharedSystemsInvolvedAdditionalClaimPayment: sharedSystemsInvolvedAdditionalClaimPaymentConfig,
-    planningToUseInnovationPaymentContractor: planningToUseInnovationPaymentContractorConfig
+    sharedSystemsInvolvedAdditionalClaimPayment:
+      sharedSystemsInvolvedAdditionalClaimPaymentConfig,
+    planningToUseInnovationPaymentContractor:
+      planningToUseInnovationPaymentContractorConfig
   } = usePlanTranslation('payments');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -95,54 +97,33 @@ const NonClaimsBasedPayment = () => {
     need => need.modifiedDts
   );
 
-  const [update] = useUpdatePaymentsMutation();
+  const { mutationError } = useHandleMutation(TypedUpdatePaymentsDocument, {
+    id,
+    formikRef
+  });
 
-  const handleFormSubmit = (
-    redirect?: 'next' | 'back' | 'task-list' | string
-  ) => {
+  const backPage = () => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.CLAIMS_BASED_PAYMENTS
     );
-    const hasReductionToCostSharing = formikRef?.current?.values.payClaims.includes(
-      ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-    );
-    update({
-      variables: {
-        id,
-        changes: dirtyInput(
-          formikRef?.current?.initialValues,
-          formikRef?.current?.values
-        )
+    const hasReductionToCostSharing =
+      formikRef?.current?.values.payClaims.includes(
+        ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+      );
+
+    if (hasClaimsBasedPayment) {
+      if (hasReductionToCostSharing) {
+        history.push(
+          `/models/${modelID}/collaboration-area/task-list/payment/beneficiary-cost-sharing`
+        );
+      } else {
+        history.push(
+          `/models/${modelID}/collaboration-area/task-list/payment/anticipating-dependencies`
+        );
       }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/payment/complexity`);
-          } else if (redirect === 'back') {
-            if (hasClaimsBasedPayment) {
-              if (hasReductionToCostSharing) {
-                history.push(
-                  `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
-                );
-              } else {
-                history.push(
-                  `/models/${modelID}/task-list/payment/anticipating-dependencies`
-                );
-              }
-            } else {
-              history.push(`/models/${modelID}/task-list/payment`);
-            }
-          } else if (redirect === 'task-list') {
-            history.push(`/models/${modelID}/task-list/`);
-          } else if (redirect) {
-            history.push(redirect);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+    } else {
+      history.push(`/models/${modelID}/collaboration-area/task-list/payment`);
+    }
   };
 
   const initialValues: NonClaimsBasedPaymentFormType = {
@@ -172,19 +153,20 @@ const NonClaimsBasedPayment = () => {
 
   return (
     <>
-      <BreadcrumbBar variant="wrap">
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to="/">
-            <span>{miscellaneousT('home')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb>
-          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
-            <span>{miscellaneousT('tasklistBreadcrumb')}</span>
-          </BreadcrumbLink>
-        </Breadcrumb>
-        <Breadcrumb current>{paymentsMiscT('breadcrumb')}</Breadcrumb>
-      </BreadcrumbBar>
+      <MutationErrorModal
+        isOpen={mutationError.isModalOpen}
+        closeModal={() => mutationError.setIsModalOpen(false)}
+        url={mutationError.destinationURL}
+      />
+
+      <Breadcrumbs
+        items={[
+          BreadcrumbItemOptions.HOME,
+          BreadcrumbItemOptions.COLLABORATION_AREA,
+          BreadcrumbItemOptions.TASK_LIST,
+          BreadcrumbItemOptions.PAYMENTS
+        ]}
+      />
 
       <PageHeading className="margin-top-4 margin-bottom-2">
         {paymentsMiscT('heading')}
@@ -208,19 +190,16 @@ const NonClaimsBasedPayment = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={() => {
-          handleFormSubmit('next');
+          history.push(
+            `/models/${modelID}/collaboration-area/task-list/payment/complexity`
+          );
         }}
         enableReinitialize
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<NonClaimsBasedPaymentFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setFieldValue,
-            setErrors,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setFieldValue, setErrors, values } =
+            formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (
@@ -242,6 +221,8 @@ const NonClaimsBasedPayment = () => {
                   })}
                 </ErrorAlert>
               )}
+
+              <ConfirmLeave />
 
               <GridContainer className="padding-left-0 padding-right-0">
                 <Grid row gap>
@@ -277,8 +258,8 @@ const NonClaimsBasedPayment = () => {
                             <ITSolutionsWarning
                               id="payment-nonclaims-payments-warning"
                               onClick={() =>
-                                handleFormSubmit(
-                                  `/models/${modelID}/task-list/it-solutions`
+                                history.push(
+                                  `/models/${modelID}/collaboration-area/task-list/it-solutions`
                                 )
                               }
                             />
@@ -481,7 +462,7 @@ const NonClaimsBasedPayment = () => {
                             type="button"
                             className="usa-button usa-button--outline margin-bottom-1"
                             onClick={() => {
-                              handleFormSubmit('back');
+                              backPage();
                             }}
                           >
                             {miscellaneousT('back')}
@@ -495,7 +476,11 @@ const NonClaimsBasedPayment = () => {
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() => handleFormSubmit('task-list')}
+                          onClick={() =>
+                            history.push(
+                              `/models/${modelID}/collaboration-area/task-list`
+                            )
+                          }
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -509,16 +494,6 @@ const NonClaimsBasedPayment = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-
-              {id && (
-                <AutoSave
-                  values={values}
-                  onSave={() => {
-                    handleFormSubmit();
-                  }}
-                  debounceDelay={3000}
-                />
-              )}
             </>
           );
         }}

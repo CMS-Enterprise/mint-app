@@ -1,8 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { TeamRole } from 'gql/gen/graphql';
 
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getUserInitials } from 'utils/modelPlan';
 
 type AvatarCircleProps = {
@@ -94,16 +96,22 @@ type AvatarProps = {
   className?: string;
   teamRoles?: TeamRole[];
   isAssessment?: boolean;
+  bold?: boolean;
+  conciseRoles?: boolean;
 };
 
 export const Avatar = ({
   user,
   className,
   teamRoles,
-  isAssessment
+  isAssessment,
+  bold,
+  conciseRoles
 }: AvatarProps) => {
-  const { t: collaboratorsT } = useTranslation('collaborators');
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
+  const { t: collaboratorsMisc } = useTranslation('collaboratorsMisc');
+
+  const { teamRoles: teamRolesOptions } = usePlanTranslation('collaborators');
 
   const modelLeadFirst = teamRoles
     ? [
@@ -124,18 +132,34 @@ export const Avatar = ({
         isAssessment={isAssessment}
       />
       <div className="margin-y-0">
-        <span>
+        <span className={classNames({ 'text-bold': bold })}>
           {isAssessment && `${discussionsMiscT('assessment')} | `}
           {user}
         </span>
-        {teamRoles && (
+
+        {teamRoles && !conciseRoles && (
           <p className="font-body-2xs margin-y-0">
             {modelLeadFirst
               .map(role => {
-                return collaboratorsT(`teamRoles.options.${role}`);
+                return teamRolesOptions.options[role];
               })
               .join(', ')}
           </p>
+        )}
+
+        {teamRoles && conciseRoles && (
+          <>
+            <p className="font-body-2xs margin-y-0">
+              {teamRolesOptions.options[modelLeadFirst[0]]}
+            </p>
+            {teamRoles.length > 1 && (
+              <p className="font-body-2xs margin-y-0">
+                {collaboratorsMisc('teamRoles', {
+                  count: teamRoles.length - 1
+                })}
+              </p>
+            )}
+          </>
         )}
       </div>
     </div>
