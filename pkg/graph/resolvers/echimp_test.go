@@ -90,3 +90,39 @@ func (suite *ResolverSuite) TestGetEchimpCRAndTdlsByModelPlanID() {
 	suite.Len(result, 2)
 
 }
+
+func (suite *ResolverSuite) TestGetEChimpCRByID() {
+
+	result, err := GetEChimpCRByID(suite.testConfigs.EChimpS3Client, eChimpCR1Id)
+	suite.NoError(err)
+
+	if suite.NotNil(result) {
+		suite.EqualValues(eChimpCR1Id, result.CrNumber)
+	}
+
+	result, err = GetEChimpCRByID(suite.testConfigs.EChimpS3Client, eChimpCR2Id)
+	suite.NoError(err)
+
+	if suite.NotNil(result) {
+		suite.EqualValues(eChimpCR2Id, result.CrNumber)
+	}
+
+}
+
+func (suite *ResolverSuite) TestGetEChimpTDLByID() {
+
+	result, err := GetEChimpTDLByID(suite.testConfigs.EChimpS3Client, eChimpTDL1Id)
+	suite.NoError(err)
+
+	if suite.NotNil(result) {
+		suite.EqualValues(eChimpTDL1Id, result.TdlNumber)
+	}
+
+	result, err = GetEChimpTDLByID(suite.testConfigs.EChimpS3Client, eChimpTDL2Id)
+	suite.NoError(err)
+
+	if suite.NotNil(result) {
+		suite.EqualValues(eChimpTDL2Id, result.TdlNumber)
+	}
+
+}

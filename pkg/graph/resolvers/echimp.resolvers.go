@@ -13,6 +13,11 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+// EchimpCr is the resolver for the echimpCR field.
+func (r *queryResolver) EchimpCr(ctx context.Context, id string) (*models.EChimpCR, error) {
+	return GetEChimpCRByID(r.echimpS3Client, id)
+}
+
 // EchimpCRs is the resolver for the echimpCRs field.
 func (r *queryResolver) EchimpCRs(ctx context.Context) ([]*models.EChimpCR, error) {
 	principal := appcontext.Principal(ctx)
@@ -40,6 +45,11 @@ func (r *queryResolver) EchimpTDLs(ctx context.Context) ([]*models.EChimpTDL, er
 	}
 
 	return nil, nil
+}
+
+// EchimpTdl is the resolver for the echimpTDL field.
+func (r *queryResolver) EchimpTdl(ctx context.Context, id string) (*models.EChimpTDL, error) {
+	return GetEChimpTDLByID(r.echimpS3Client, id)
 }
 
 // EchimpCRAndTdls is the resolver for the echimpCRAndTDLS field.

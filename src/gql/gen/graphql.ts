@@ -3163,8 +3163,10 @@ export type Query = {
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
+  echimpCR: EChimpCr;
   echimpCRAndTDLS: Array<EChimpCrAndTdls>;
   echimpCRs: Array<EChimpCr>;
+  echimpTDL: EChimpTdl;
   echimpTDLs: Array<EChimpTdl>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
@@ -3208,6 +3210,18 @@ export type QueryAnalyzedAuditsArgs = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: TableName;
+};
+
+
+/** Query definition for the schema */
+export type QueryEchimpCrArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryEchimpTdlArgs = {
+  id: Scalars['String']['input'];
 };
 
 
