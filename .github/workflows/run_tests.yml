@@ -170,7 +170,15 @@ jobs:
         run: >-
           aws --endpoint-url ${{ env.MINIO_ADDRESS }}
           s3 mb s3://${{ env.S3_BUCKET }}
-          s3 mb s3://${{ env.S3_ECHIMP_BUCKET }}
+          
+      - name: Make MINIO  EChimp Bucket
+        env:
+            AWS_ACCESS_KEY_ID: ${{ env.MINIO_KEY }}
+            AWS_SECRET_ACCESS_KEY: ${{ env.MINIO_KEY }}
+            AWS_DEFAULT_REGION: us-west-2
+        run: >-
+            aws --endpoint-url ${{ env.MINIO_ADDRESS }}
+            s3 mb s3://${{ env.S3_ECHIMP_BUCKET }}
 
       - name: Set up go
         uses: actions/setup-go@v5
