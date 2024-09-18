@@ -24,6 +24,7 @@ env:
   MINIO_ADDRESS: http://localhost:9005
   MINIO_KEY: minioadmin
   S3_BUCKET: mint-app-file-uploads
+  S3_ECHIMP_BUCKET: mint-app-echimp-uploads
 
 jobs:
   skip_tests:
@@ -169,6 +170,7 @@ jobs:
         run: >-
           aws --endpoint-url ${{ env.MINIO_ADDRESS }}
           s3 mb s3://${{ env.S3_BUCKET }}
+          s3 mb s3://${{ env.S3_ECHIMP_BUCKET }}
 
       - name: Set up go
         uses: actions/setup-go@v5
