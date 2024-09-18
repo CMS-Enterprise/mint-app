@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   ProcessList,
   ProcessListHeading,
@@ -17,8 +16,6 @@ const SalesforceApplicationReviewTimeline = ({
 }: {
   solution: HelpSolutionType;
 }) => {
-  const { t } = useTranslation('helpAndKnowledge');
-
   const timelineConfig = timelineTranslationUtil(solution.key);
 
   return (

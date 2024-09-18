@@ -19,7 +19,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useHashScroll from 'hooks/useHashScroll';
-import { tObject } from 'utils/translation';
+import { tArray } from 'utils/translation';
 
 type GetAccessContentProps = {
   help?: boolean;
@@ -57,9 +57,9 @@ export const GetAccessContent = ({ help }: GetAccessContentProps) => {
   const { currentHash, setCurrenHash, isScrolling } =
     useHashScroll('div.nav-anchor');
 
-  const rowTwo = tObject<string>('getAccess:jobcodes.table.rowTwo.roles');
+  const rowTwo = tArray<string>('getAccess:jobcodes.table.rowTwo.roles');
 
-  const rowThree = tObject<string>('getAccess:jobcodes.table.rowThree.roles');
+  const rowThree = tArray<string>('getAccess:jobcodes.table.rowThree.roles');
 
   return (
     <div className="usa-in-page-nav-container">

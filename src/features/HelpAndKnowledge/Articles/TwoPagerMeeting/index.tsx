@@ -11,7 +11,6 @@ import {
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
-import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
 import ExternalLink from 'components/ExternalLink';
 import MainContent from 'components/MainContent';

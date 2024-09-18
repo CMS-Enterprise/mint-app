@@ -5,8 +5,8 @@ import {
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
-import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 
 import ExternalLink from 'components/ExternalLink';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import {
   ProcessList,
   ProcessListHeading,
@@ -20,8 +20,6 @@ export interface ProcessListItemProps {
 // https://mint.cms.gov/help-and-knowledge/operational-solutions?solution=4-innovation&section=timeline
 
 const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
-  const { t } = useTranslation('helpAndKnowledge');
-
   const timelineConfig = timelineTranslationUtil(solution.key);
 
   return (
@@ -29,7 +27,7 @@ const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
       {timelineConfig.description && <p>{timelineConfig.description}</p>}
 
       <ProcessList className="padding-top-1">
-        {timelineConfig.items?.map(item => (
+        {timelineConfig.items?.map((item: any) => (
           <ProcessListItem
             key={item.header}
             className="operational-solution-details__timeline-item"
@@ -41,7 +39,7 @@ const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
             <p className="margin-bottom-0">{item.description}</p>
 
             <ul className="padding-left-4 margin-top-0">
-              {item?.items?.map(subItem => (
+              {item?.items?.map((subItem: string) => (
                 <li key={subItem} className="list-item">
                   {subItem}
                 </li>
