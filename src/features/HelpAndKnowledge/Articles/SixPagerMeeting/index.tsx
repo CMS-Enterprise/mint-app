@@ -104,8 +104,6 @@ const SixPagerMeeting = () => {
               {sixPageMeetingT('title')}
             </PageHeading>
 
-            <ExternalLink href="https://google.com">Open google</ExternalLink>
-
             <HelpCategoryTag
               type={ArticleCategories.GETTING_STARTED}
               className="margin-bottom-1"
