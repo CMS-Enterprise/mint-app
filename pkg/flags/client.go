@@ -16,6 +16,9 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 )
 
+// LDEChimpEnabledKey is the key for retrieving the bool if echimp is enabled to grab from S3
+const LDEChimpEnabledKey = "echimpEnabled"
+
 // DowngradeAssessmentTeamKey is the Flag Key in LaunchDarkly for downgrading assessment team users
 const DowngradeAssessmentTeamKey = "downgradeAssessmentTeam"
 

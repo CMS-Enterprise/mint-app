@@ -176,9 +176,6 @@ const AWSS3FileUploadBucket = "AWS_S3_FILE_UPLOAD_BUCKET"
 // AWSS3ECHIMPBucket is the key for the bucket we EChimp data files are located
 const AWSS3ECHIMPBucket = "AWS_S3_ECHIMP_BUCKET"
 
-// LDEChimpEnabledKey is the key for retrieving the bool if echimp is enabled to grab from S3
-const LDEChimpEnabledKey = "echimp-enabled"
-
 // LocalMinioAddressKey is the host used for local minio
 const LocalMinioAddressKey = "MINIO_ADDRESS"
 
