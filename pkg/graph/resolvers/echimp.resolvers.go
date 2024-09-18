@@ -21,7 +21,7 @@ func (r *queryResolver) EchimpCr(ctx context.Context, id string) (*models.EChimp
 func (r *queryResolver) EchimpCRs(ctx context.Context) ([]*models.EChimpCR, error) {
 	principal := appcontext.Principal(ctx)
 
-	enabled, err := flags.GetBool(principal, r.ldClient, flags.LDEChimpEnabledKey, false)
+	enabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func (r *queryResolver) EchimpCRs(ctx context.Context) ([]*models.EChimpCR, erro
 // EchimpTDLs is the resolver for the echimpTDLs field.
 func (r *queryResolver) EchimpTDLs(ctx context.Context) ([]*models.EChimpTDL, error) {
 	principal := appcontext.Principal(ctx)
-	enabled, err := flags.GetBool(principal, r.ldClient, flags.LDEChimpEnabledKey, false)
+	enabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func (r *queryResolver) EchimpTdl(ctx context.Context, id string) (*models.EChim
 // EchimpCRAndTdls is the resolver for the echimpCRAndTDLS field.
 func (r *queryResolver) EchimpCRAndTdls(ctx context.Context) ([]models.EChimpCRAndTDLS, error) {
 	principal := appcontext.Principal(ctx)
-	enabled, err := flags.GetBool(principal, r.ldClient, flags.LDEChimpEnabledKey, false)
+	enabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}

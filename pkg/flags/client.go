@@ -88,7 +88,7 @@ func ContextKeyForID(id string) string {
 }
 
 // GetBool fetches a bool from Launch Darkly
-func GetBool(principal authentication.Principal, ldClient *ld.LDClient, key string, defaultValue bool) (bool, error) {
+func GetBool(ldClient *ld.LDClient, principal authentication.Principal, key string, defaultValue bool) (bool, error) {
 	ldContext := LDContext(principal)
 
 	return ldClient.BoolVariation(key, ldContext, defaultValue)
