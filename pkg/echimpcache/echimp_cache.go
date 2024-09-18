@@ -11,10 +11,16 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
+//TODO: consider making these constants configurable from environment variable
+
 // echimpCacheTimeHours is the length of time before a echimpCache needs to be refreshed
 const echimpCacheTimeHours = 3
-const crKey = "echimp_cr"
-const tdlKey = "echimp_tdl"
+
+// CRKey is the name of the file that is stored in the ECHIMP bucket representing all the echimp CR data
+const CRKey = "echimp_cr"
+
+// TDLKey is the name of the file that is stored in the ECHIMP bucket representing all the echimp TDL data
+const TDLKey = "echimp_tdl"
 
 var CRAndTDLCache *crAndTDLCache
 
@@ -57,7 +63,7 @@ func (c *crAndTDLCache) IsOld() bool {
 
 func (c *crAndTDLCache) refreshCache(client *s3.S3Client) error {
 
-	crsRaw, err := parquet.ReadFromS3[*models.EChimpCRRaw](client, crKey)
+	crsRaw, err := parquet.ReadFromS3[*models.EChimpCRRaw](client, CRKey)
 	if err != nil {
 		return err
 	}
@@ -67,7 +73,7 @@ func (c *crAndTDLCache) refreshCache(client *s3.S3Client) error {
 	}
 	c.CRs = sanitizedCRS
 
-	tdlsRaw, err := parquet.ReadFromS3[*models.EChimpTDLRaw](client, tdlKey)
+	tdlsRaw, err := parquet.ReadFromS3[*models.EChimpTDLRaw](client, TDLKey)
 	if err != nil {
 		return err
 	}

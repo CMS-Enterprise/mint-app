@@ -7,6 +7,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
+// TODO consider fetching the key from a shared environment variable
+
 const CRKey = "echimp_cr"
 const TDLKey = "echimp_tdl"
 
