@@ -26,7 +26,7 @@ import {
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
-import ExternalLinkWithModal from 'components/ExternalLinkWithModal';
+import ExternalDocumentLink from 'components/ExternalDocumentLink';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -413,7 +413,7 @@ export const Table = ({
                     </span>
                   </Button>
                 ) : (
-                  <ExternalLinkWithModal
+                  <ExternalDocumentLink
                     url={row.original.url}
                     buttonText={t('documentTable.visit')}
                   />

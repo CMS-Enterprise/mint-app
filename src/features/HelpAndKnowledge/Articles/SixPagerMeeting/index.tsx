@@ -13,8 +13,10 @@ import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/Help
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 import { OperationalSolutionKey } from 'gql/generated/graphql';
+import { $SpecialObject } from 'i18next/typescript/helpers';
 
 import ExternalLink from 'components/ExternalLink';
+import ExternalLink2 from 'components/ExternalLink2';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -42,53 +44,65 @@ const SixPagerMeeting = () => {
     location.search ? '&' : '?'
   }solution=learning-and-diffusion-group&section=about`;
 
-  const modelOverviewAndGoals: string[] = sixPageMeetingT(
+  const modelOverviewAndGoals: $SpecialObject = sixPageMeetingT(
     'conceptPaper.stepOne.items',
     { returnObjects: true }
   );
 
-  const overviewOfKeyModelDesignElements: string[] = sixPageMeetingT(
+  const overviewOfKeyModelDesignElements: $SpecialObject = sixPageMeetingT(
     'conceptPaper.stepTwo.subitems',
     { returnObjects: true }
   );
 
-  const alignmentListItems: string[] = sixPageMeetingT(
+  const alignmentListItems: $SpecialObject = sixPageMeetingT(
     'conceptPaper.stepThree.alignment.numberedList',
     { returnObjects: true }
   );
 
-  const impactListItems: string[] = sixPageMeetingT(
+  const impactListItems: $SpecialObject = sixPageMeetingT(
     'conceptPaper.stepThree.impact.list',
     { returnObjects: true }
   );
 
-  const stepFour: string[] = sixPageMeetingT('conceptPaper.stepFour.items', {
-    returnObjects: true
-  });
+  const stepFour: $SpecialObject = sixPageMeetingT(
+    'conceptPaper.stepFour.items',
+    {
+      returnObjects: true
+    }
+  );
 
-  const stepFive: string[] = sixPageMeetingT('conceptPaper.stepFive.items', {
-    returnObjects: true
-  });
-  const stepSix: string[] = sixPageMeetingT('conceptPaper.stepSix.items', {
-    returnObjects: true
-  });
-  const stepSeven: string[] = sixPageMeetingT('conceptPaper.stepSeven.items', {
-    returnObjects: true
-  });
+  const stepFive: $SpecialObject = sixPageMeetingT(
+    'conceptPaper.stepFive.items',
+    {
+      returnObjects: true
+    }
+  );
+  const stepSix: $SpecialObject = sixPageMeetingT(
+    'conceptPaper.stepSix.items',
+    {
+      returnObjects: true
+    }
+  );
+  const stepSeven: $SpecialObject = sixPageMeetingT(
+    'conceptPaper.stepSeven.items',
+    {
+      returnObjects: true
+    }
+  );
 
-  const additionalResourcesListItems: string[] = sixPageMeetingT(
+  const additionalResourcesListItems: $SpecialObject = sixPageMeetingT(
     'additionalResources.list',
     { returnObjects: true }
   );
-  const additionalResourcesParagraphs: string[] = sixPageMeetingT(
+  const additionalResourcesParagraphs: $SpecialObject = sixPageMeetingT(
     'additionalResources.paragraph',
     { returnObjects: true }
   );
-  const tipsList: string[] = sixPageMeetingT(
+  const tipsList: $SpecialObject = sixPageMeetingT(
     'reviewMeeting.subheading.tip.list',
     { returnObjects: true }
   );
-  const outcomesParagraphs: string[] = sixPageMeetingT(
+  const outcomesParagraphs: $SpecialObject = sixPageMeetingT(
     'reviewMeeting.subheading.outcomes.paragraph',
     { returnObjects: true }
   );
@@ -111,13 +125,18 @@ const SixPagerMeeting = () => {
         <GridContainer>
           <Grid>
             <HelpBreadcrumb text={sixPageMeetingT('title')} />
+
             <PageHeading className="margin-bottom-1">
               {sixPageMeetingT('title')}
             </PageHeading>
+
+            <ExternalLink2 href="https://google.com">Open google</ExternalLink2>
+
             <HelpCategoryTag
               type={ArticleCategories.GETTING_STARTED}
               className="margin-bottom-1"
             />
+
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
               {sixPageMeetingT('description')}
             </p>
