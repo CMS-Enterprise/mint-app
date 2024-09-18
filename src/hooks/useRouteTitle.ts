@@ -11,7 +11,7 @@ const currentUUIDRoutes: string[] = ['solution-implementation-details'];
 const useRouteTitle = ({ sendGA = false }: { sendGA: boolean }): string => {
   const location = useLocation();
 
-  const routeTitles = tObject<string, string>('titles');
+  const routeTitles = tObject<string, string>('routes:titles');
 
   const title = useRef<string>('');
 

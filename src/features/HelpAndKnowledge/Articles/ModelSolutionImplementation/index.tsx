@@ -35,17 +35,19 @@ export const ModelSolutionImplementation = () => {
   );
 
   const determinePriorityConfig = tArray<string>(
-    'initiateWork.activities.items.1.items'
+    'modelSolutionImplementation:initiateWork.activities.items.1.items'
   );
 
   const stayInformedConfig = tArray<string>(
-    'trackWork.activities.items.0.items'
+    'modelSolutionImplementation:trackWork.activities.items.0.items'
   );
 
   const trackProgressConfig = tArray<Record<string, any>>(
-    'trackWork.activities.items.1.items'
+    'modelSolutionImplementation:trackWork.activities.items.1.items'
   );
-  const outcomesConfig = tArray<string>('trackWork.outcomes.items');
+  const outcomesConfig = tArray<string>(
+    'modelSolutionImplementation:trackWork.outcomes.items'
+  );
 
   return (
     <>
