@@ -53,7 +53,7 @@ func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	documents, err := PlanDocumentsReadByModelPlanID(logger, obj.ID, principal, r.store, r.s3Client)
+	documents, err := PlanDocumentsReadByModelPlanID(logger, obj.ID, principal, r.store, r.fileUploadS3Client)
 	return documents, err
 }
 
