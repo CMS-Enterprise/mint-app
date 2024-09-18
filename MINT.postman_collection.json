@@ -2661,14 +2661,35 @@
 			"name": "ECHIMP",
 			"item": [
 				{
-					"name": "CR Echimp data",
+					"name": "CR Echimp by id",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query echimpCR {\n    echimpCR {\n        crNumber\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        sensitiveFlag\n        implementationDate\n        crSummary\n        crStatus\n        emergencyCrFlag\n        relatedCrNumbers\n        relatedCrTdlNumbers\n        associatedModelUids\n    }\n}",
+								"query": "query echimpCR {\n    echimpCR(id: \"FFS3550\") {\n        crNumber\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        sensitiveFlag\n        implementationDate\n        crSummary\n        crStatus\n        emergencyCrFlag\n        relatedCrNumbers\n        relatedCrTdlNumbers\n        associatedModelUids\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All CR Echimp data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query echimpCR {\n    echimpCRs {\n        crNumber\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        sensitiveFlag\n        implementationDate\n        crSummary\n        crStatus\n        emergencyCrFlag\n        relatedCrNumbers\n        relatedCrTdlNumbers\n        associatedModelUids\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -2703,14 +2724,35 @@
 					"response": []
 				},
 				{
-					"name": "TDL data",
+					"name": "TDL Echimp by id",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query echimpTDL {\n    echimpTDL {\n        tdlNumber\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        issuedDate\n        status\n        associatedModelUids\n    }\n\n}",
+								"query": "query echimpTDL {\n    echimpTDL(id: \"TDL240535\") {\n        tdlNumber\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        issuedDate\n        status\n        associatedModelUids\n    }\n\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL TDL Echimp data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query echimpTDL {\n    echimpTDLs {\n        tdlNumber\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        issuedDate\n        status\n        associatedModelUids\n    }\n\n}",
 								"variables": ""
 							}
 						},
