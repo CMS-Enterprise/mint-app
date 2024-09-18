@@ -3,16 +3,16 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
-	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
+	"github.com/cms-enterprise/mint-app/pkg/shared/pubsub"
 
 	ldclient "github.com/launchdarkly/go-server-sdk/v6"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/s3"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 //go:generate go run github.com/99designs/gqlgen

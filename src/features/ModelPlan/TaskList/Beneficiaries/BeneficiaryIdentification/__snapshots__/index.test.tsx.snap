@@ -1,0 +1,640 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb usa-breadcrumb--wrap"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/"
+        >
+          <span>
+            Home
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+        >
+          <span>
+            Model Plan task list
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current"
+      >
+        <span>
+          Beneficiaries
+        </span>
+      </li>
+    </ol>
+  </nav>
+  <h1
+    aria-live="polite"
+    class="mint-h1 margin-top-4 margin-bottom-2"
+    tabindex="-1"
+  >
+    Beneficiaries
+  </h1>
+  <p
+    class="margin-top-0 margin-bottom-1 font-body-lg"
+    data-testid="model-plan-name"
+  >
+    for My excellent plan that I just initiated
+  </p>
+  <p
+    class="margin-bottom-2 font-body-md line-height-sans-4"
+  >
+    If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
+  </p>
+  <div
+    class="padding-2 bg-primary-lighter"
+  >
+    <div
+      class="display-flex"
+      data-testid="ask-a-question"
+    >
+      <svg
+        class="usa-icon text-primary margin-right-1"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+        />
+      </svg>
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="ask-a-question-button"
+        type="button"
+      >
+        Start a discussion
+      </button>
+    </div>
+  </div>
+  <div
+    class="grid-container padding-left-0 padding-right-0"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row grid-gap beneficiaries__info"
+      data-testid="grid"
+    >
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <form
+          action="#"
+          class="margin-top-6"
+          data-testid="beneficiaries-identification-form"
+        >
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
+          >
+            <div
+              class="usa-form-group margin-top-4"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="beneficiaries-beneficiaries"
+                id="label-beneficiaries-beneficiaries"
+              >
+                Who are the beneficiaries of this model? Select all that apply.
+              </label>
+              <div>
+                <div
+                  class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
+                  id="beneficiaries-beneficiaries"
+                >
+                  <span
+                    class="css-1f43avz-a11yText-A11yText"
+                    id="react-select-3-live-region"
+                  />
+                  <span
+                    aria-atomic="false"
+                    aria-live="polite"
+                    aria-relevant="additions text"
+                    class="css-1f43avz-a11yText-A11yText"
+                    role="log"
+                  />
+                  <div
+                    class=" css-1vl89cy-control"
+                  >
+                    <div
+                      class=" css-1fdsijx-ValueContainer"
+                    >
+                      <div
+                        class=" css-1jqq78o-placeholder"
+                        id="react-select-3-placeholder"
+                      >
+                        2 selected
+                      </div>
+                      <div
+                        class=" css-qbdosj-Input"
+                        data-value=""
+                      >
+                        <input
+                          aria-activedescendant=""
+                          aria-autocomplete="list"
+                          aria-expanded="false"
+                          aria-haspopup="true"
+                          aria-labelledby="label-beneficiaries-beneficiaries"
+                          autocapitalize="none"
+                          autocomplete="off"
+                          autocorrect="off"
+                          class=""
+                          id="react-select-3-input"
+                          role="combobox"
+                          spellcheck="false"
+                          style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                          tabindex="0"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class=" css-1hb7zxy-IndicatorsContainer"
+                    >
+                      <button
+                        aria-label="Clear selection"
+                        class="usa-button--unstyled"
+                        id="clear-selection"
+                        tabindex="0"
+                        type="button"
+                      >
+                        <div
+                          aria-hidden="true"
+                          class=" css-1h8bgg-indicatorContainer"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="css-tj5bde-Svg"
+                            focusable="false"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            width="20"
+                          >
+                            <path
+                              d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                      <span
+                        class=" css-16b81-indicatorSeparator"
+                      />
+                      <div
+                        aria-hidden="true"
+                        class=" css-gjng1h-indicatorContainer"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="css-tj5bde-Svg"
+                          focusable="false"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          width="20"
+                        >
+                          <path
+                            d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <input
+                      name="beneficiaries"
+                      type="hidden"
+                      value="MEDICAID"
+                    />
+                    <input
+                      name="beneficiaries"
+                      type="hidden"
+                      value="OTHER"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="easi-multiselect--selected"
+                >
+                  <h4
+                    class="text-normal margin-bottom-1"
+                  >
+                    Selected groups
+                  </h4>
+                  <ul
+                    class="usa-list--unstyled"
+                    id="beneficiaries-beneficiaries-tags"
+                  >
+                    <li
+                      class="margin-bottom-05 margin-right-05 display-inline-block"
+                    >
+                      <span
+                        class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                        data-testid="multiselect-tag--Medicaid/Children's Health Insurance Program (CHIP)"
+                        id="selected-MEDICAID"
+                      >
+                        Medicaid/Children's Health Insurance Program (CHIP) 
+                        <svg
+                          aria-label="Remove Medicaid/Children's Health Insurance Program (CHIP)"
+                          class="usa-icon margin-left-05"
+                          focusable="false"
+                          height="1em"
+                          role="button"
+                          tabindex="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </span>
+                    </li>
+                    <li
+                      class="margin-bottom-05 margin-right-05 display-inline-block"
+                    >
+                      <span
+                        class="usa-tag easi-multiselect--tag padding-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                        data-testid="multiselect-tag--Other"
+                        id="selected-OTHER"
+                      >
+                        Other 
+                        <svg
+                          aria-label="Remove Other"
+                          class="usa-icon margin-left-05"
+                          focusable="false"
+                          height="1em"
+                          role="button"
+                          tabindex="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div
+                class="usa-form-group"
+              >
+                <label
+                  class="usa-label text-normal"
+                  data-testid="label"
+                  for="beneficiaries-other"
+                >
+                  Please describe the other groups this model will impact.
+                </label>
+                <input
+                  class="usa-input"
+                  data-testid="beneficiaries-other"
+                  id="beneficiaries-other"
+                  name="beneficiariesOther"
+                  type="text"
+                  value="other"
+                />
+              </div>
+              <div
+                class="margin-top-3 margin-bottom-6"
+              >
+                <div
+                  class="usa-form-group"
+                >
+                  <label
+                    class="usa-label"
+                    for="beneficiaries-note"
+                    id="label-beneficiaries-note"
+                  >
+                    Notes
+                  </label>
+                  <textarea
+                    aria-labelledby="label-beneficiaries-note hint-beneficiaries-note"
+                    class="usa-textarea"
+                    data-testid="beneficiaries-note"
+                    id="beneficiaries-note"
+                    name="beneficiariesNote"
+                  >
+                    note
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-y-4 margin-bottom-8"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="beneficiaries-dual-eligibility"
+              >
+                Should dually-eligible beneficiaries be treated differently than non-dually eligibles?
+              </label>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="beneficiaries-dual-eligibility"
+                    name="treatDualElligibleDifferent"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="beneficiaries-dual-eligibility"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-form-group margin-left-4 margin-y-1"
+                  data-scroll="treatDualElligibleDifferentHow"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="beneficiaries-dual-eligibility-how"
+                  >
+                    How so?
+                  </label>
+                  <textarea
+                    aria-labelledby="label-beneficiaries-dual-eligibility-how hint-beneficiaries-dual-eligibility-how"
+                    class="height-15 usa-textarea"
+                    data-testid="beneficiaries-dual-eligibility-how"
+                    id="beneficiaries-dual-eligibility-how"
+                    name="treatDualElligibleDifferentHow"
+                  >
+                    This is how
+                  </textarea>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="beneficiaries-dual-eligibility-no"
+                    name="treatDualElligibleDifferent"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="beneficiaries-dual-eligibility-no"
+                  >
+                    No
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="beneficiaries-dual-eligibility-tbd"
+                    name="treatDualElligibleDifferent"
+                    type="radio"
+                    value="TBD"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="beneficiaries-dual-eligibility-tbd"
+                  >
+                    Not applicable
+                  </label>
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-3 margin-bottom-6"
+              >
+                <div
+                  class="usa-form-group"
+                >
+                  <label
+                    class="usa-label"
+                    for="beneficiaries-dual-eligibility-note"
+                    id="label-beneficiaries-dual-eligibility-note"
+                  >
+                    Notes
+                  </label>
+                  <textarea
+                    aria-labelledby="label-beneficiaries-dual-eligibility-note hint-beneficiaries-dual-eligibility-note"
+                    class="usa-textarea"
+                    data-testid="beneficiaries-dual-eligibility-note"
+                    id="beneficiaries-dual-eligibility-note"
+                    name="treatDualElligibleDifferentNote"
+                  >
+                    This is note
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-y-4 margin-bottom-8"
+            >
+              <label
+                class="usa-label"
+                data-testid="label"
+                for="beneficiaries-exclude"
+              >
+                Should beneficiaries with certain characteristics or enrollments be excluded?
+              </label>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="beneficiaries-exclude"
+                    name="excludeCertainCharacteristics"
+                    type="radio"
+                    value="TRUE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="beneficiaries-exclude"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-form-group margin-left-4 margin-y-1"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="beneficiaries-exclude-criteria"
+                  >
+                    What are the exclusionary criteria?
+                  </label>
+                  <textarea
+                    aria-labelledby="label-beneficiaries-exclude-criteria hint-beneficiaries-exclude-criteria"
+                    class="height-15 usa-textarea"
+                    data-testid="beneficiaries-exclude-criteria"
+                    id="beneficiaries-exclude-criteria"
+                    name="excludeCertainCharacteristicsCriteria"
+                  >
+                    Exclude
+                  </textarea>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="beneficiaries-exclude-no"
+                    name="excludeCertainCharacteristics"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="beneficiaries-exclude-no"
+                  >
+                    No
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="beneficiaries-exclude-tbd"
+                    name="excludeCertainCharacteristics"
+                    type="radio"
+                    value="TBD"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="beneficiaries-exclude-tbd"
+                  >
+                    Not applicable
+                  </label>
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-3 margin-bottom-6"
+              >
+                <div
+                  class="usa-form-group"
+                >
+                  <label
+                    class="usa-label"
+                    for="beneficiaries-exclude-note"
+                    id="label-beneficiaries-exclude-note"
+                  >
+                    Notes
+                  </label>
+                  <textarea
+                    aria-labelledby="label-beneficiaries-exclude-note hint-beneficiaries-exclude-note"
+                    class="usa-textarea"
+                    data-testid="beneficiaries-exclude-note"
+                    id="beneficiaries-exclude-note"
+                    name="excludeCertainCharacteristicsNote"
+                  >
+                    Note
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-top-6 margin-bottom-3"
+            >
+              <button
+                class="usa-button"
+                data-testid="button"
+                type="submit"
+              >
+                Next
+              </button>
+            </div>
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="usa-icon margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                />
+              </svg>
+              Save and return to task list
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 1 of 3
+    </span>
+  </div>
+</DocumentFragment>
+`;

@@ -7,8 +7,8 @@ import (
 	"github.com/graph-gophers/dataloader"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // GetOperationalSolutionSubtaskByModelPlanID uses a DataLoader to aggreggate a SQL call and return all Operational Solution Subtask in one query

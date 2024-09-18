@@ -3,8 +3,8 @@ package resolvers
 import (
 	"reflect"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 func (suite *ResolverSuite) TestGeneralCharacteristicsNeeds() {

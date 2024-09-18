@@ -3,7 +3,7 @@ package notifications
 import (
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 func (suite *NotificationsSuite) TestActivityNewModelPlanCreate() {

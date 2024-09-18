@@ -3,11 +3,11 @@ package resolvers
 import (
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilitytime"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilitytime"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // GetAllStatusEvaluationStrategies returns all status evaluation strategies.

@@ -1,0 +1,741 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TwoPagerMeeting > matches the snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class=""
+        data-testid="grid"
+      >
+        <button
+          class="usa-button usa-button--unstyled margin-top-6"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            class="usa-icon margin-right-05 text-tbottom"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+          Close tab
+        </button>
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-bottom-1"
+          tabindex="-1"
+        >
+          How to have a successful 2-pager meeting
+        </h1>
+        <a
+          class="usa-link width-fit-content display-block margin-bottom-1"
+          href="/help-and-knowledge/articles?category=getting-started"
+        >
+          <span
+            aria-label="Articles under the Getting started category"
+            class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+            data-testid="tag"
+          >
+            Getting started
+          </span>
+        </a>
+        <p
+          class="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4"
+        >
+          Use this article to ensure you’re fully prepared for your 2-page concept review meeting with CMMI Front Office (FO).
+        </p>
+        <div
+          class="usa-summary-box bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
+          data-testid="summary-box"
+        >
+          <div
+            class="usa-summary-box__body"
+          >
+            <h3
+              class="usa-summary-box__heading"
+            >
+              Recommendations
+            </h3>
+            <div
+              class="usa-summary-box__text"
+            >
+              <ul
+                class="margin-y-0"
+              >
+                <li
+                  class="margin-top-05 margin-bottom-1"
+                >
+                  <a
+                    class="display-flex flex-align-center"
+                    href="#draft-your-2-page-concept-paper"
+                  >
+                    Draft your 2-page concept paper
+                    <svg
+                      class="usa-icon"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </li>
+                <li
+                  class="margin-bottom-1"
+                >
+                  <a
+                    class="display-flex flex-align-center"
+                    href="#start-thinking-about-additional-resources"
+                  >
+                    Start thinking about additional resources
+                    <svg
+                      class="usa-icon"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="display-flex flex-align-center"
+                    href="#the-review-meeting"
+                  >
+                    The review meeting
+                    <svg
+                      class="usa-icon"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                      />
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="margin-bottom-6"
+          id="draft-your-2-page-concept-paper"
+        >
+          <h2
+            class="margin-bottom-3"
+          >
+            Draft your 2-page concept paper
+          </h2>
+          <p
+            class="margin-top-0 margin-bottom-3 line-height-sans-4"
+          >
+            A 2-page overview of a model concept may or may not include all of the elements listed below. The following is intended as a guide. Teams can focus on the most relevant and impactful information to decide if a model concept should move to the next development phase.
+          </p>
+          <h3
+            class="margin-top-0 margin-bottom-1"
+          >
+            1. Proposed model overview and goals
+          </h3>
+          <ul
+            class="margin-top-0 margin-bottom-3 padding-left-6"
+          >
+            <li
+              class="line-height-sans-4"
+            >
+              Briefly describe the need for the model, including the challenges the target population faces
+            </li>
+            <li
+              class="line-height-sans-4"
+            >
+              Describe the preliminary theory of change for the model
+            </li>
+            <li
+              class="line-height-sans-4"
+            >
+              Provide background or context on if the proposed model has been tested before or is a follow-on model, incorporates learnings from external stakeholders, and/or where the concept originated (e.g., private sector, academia, state or regional efforts)
+            </li>
+          </ul>
+          <h3
+            class="margin-top-0 margin-bottom-1"
+          >
+            2. High-level description of model elements
+          </h3>
+          <ul
+            class="margin-top-0 margin-bottom-3 padding-left-6"
+          >
+            <li
+              class="line-height-sans-4"
+            >
+              Provide a high-level overview of key model design elements including target population, payment approach, and quality/performance measurement
+            </li>
+          </ul>
+          <h3
+            class="margin-top-0 margin-bottom-1"
+          >
+            3. Preliminary analysis of the proposed model relative to selection criteria
+          </h3>
+          <i
+            class="display-block margin-top-0 margin-bottom-1 padding-left-3"
+          >
+            Not all of these may be answerable early in model development/consideration
+          </i>
+          <ul
+            class="margin-top-0 margin-bottom-5 padding-left-6"
+          >
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              <strong>
+                Alignment: 
+              </strong>
+              Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level:
+              <ol
+                class="padding-left-3 margin-top-05"
+              >
+                <li
+                  class="line-height-sans-4"
+                >
+                  Drive accountable care
+                </li>
+                <li
+                  class="line-height-sans-4"
+                >
+                  Advance health equity
+                </li>
+                <li
+                  class="line-height-sans-4"
+                >
+                  Support Innovation 
+                </li>
+                <li
+                  class="line-height-sans-4"
+                >
+                  Address affordability 
+                </li>
+                <li
+                  class="line-height-sans-4"
+                >
+                  Partner to achieve system transformation
+                </li>
+              </ol>
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              <strong>
+                Impact: 
+              </strong>
+              Potential for the model to impact the following dimensions:
+              <ul
+                class="padding-left-3 margin-top-05"
+              >
+                <li
+                  class="line-height-sans-4"
+                >
+                  Participation – number of providers, beneficiaries, Medicare and Medicaid spending
+                </li>
+                <li
+                  class="line-height-sans-4"
+                >
+                  Transformation – cost reduction, quality and outcomes improvements, advancements in equity and reduction in disparities, and delivery system change
+                </li>
+              </ul>
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              <strong>
+                Feasibility: 
+              </strong>
+              Consider the likelihood of successful execution of the model including initial operational or feasibility limitations, and potential for scaling
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              <strong>
+                Innovation: 
+              </strong>
+              The model provides innovation in a particular dimension – payment approach, provider type, patient population, mechanisms of transformation
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              <strong>
+                Stakeholders: 
+              </strong>
+              Include a brief description of any stakeholder engagement in the model concept
+            </li>
+          </ul>
+        </div>
+        <div
+          class="usa-summary-box bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0"
+          data-testid="summary-box"
+        >
+          <div
+            class="usa-summary-box__body"
+          >
+            <h3
+              class="usa-summary-box__heading"
+            >
+              Example 2-pagers
+            </h3>
+            <div
+              class="usa-summary-box__text"
+            >
+              <p
+                class="margin-y-1"
+              >
+                While all models are different, and therefore the content within a 2-pager will vary drastically, it might be helpful to see examples of what other teams have put together for their models in the past.
+              </p>
+              <ul
+                class="margin-top-0"
+              >
+                <li>
+                  <a
+                    aria-label="Open in a new tab"
+                    class="usa-link usa-link--external"
+                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    AHEAD 2-pager
+                  </a>
+                </li>
+                <li>
+                  <a
+                    aria-label="Open in a new tab"
+                    class="usa-link usa-link--external"
+                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20AOC)%202-pager_October%202021_v2%20clean.docx?d=w4bd1ac8e332c42659f7e4330b519794a"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Enhancing Oncology Model 2-pager
+                  </a>
+                </li>
+                <li>
+                  <a
+                    aria-label="Open in a new tab"
+                    class="usa-link usa-link--external"
+                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Innovation%20in%20Behavioral%20Health%20(formerly%20BHI)%20Model%202-pager_FINAL.docx?d=wf5dc9e25276945278f98c2c8efc31e16"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Innovation in Behavioral Health 2-pager
+                  </a>
+                </li>
+                <li>
+                  <a
+                    aria-label="Open in a new tab"
+                    class="usa-link usa-link--external"
+                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/New%20Primary%20Care%20Model%20Concept%202-pager%20Final%20for%20FO.docx?d=webcc03b8baa74b11bc9cd28c264a6178"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Making Care Primary 2-pager
+                  </a>
+                </li>
+              </ul>
+              <span
+                class="margin-y-0"
+              >
+                To view the links above, you will need access to the 
+                <a
+                  aria-label="Open in a new tab"
+                  class="usa-link usa-link--external"
+                  href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Model Resources area of SharePoint.
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="margin-bottom-6"
+          id="start-thinking-about-additional-resources"
+        >
+          <h2
+            class="margin-bottom-3"
+          >
+            Start thinking about additional resources
+          </h2>
+          <p
+            class="margin-top-0 margin-bottom-3 line-height-sans-4"
+          >
+            This early in the process, it can be hard for model teams to know exactly what they’ll need regarding contractor support during the model concept and design phase. Not sure where to start? Below are some things to consider.
+          </p>
+          <h3
+            class="margin-top-0 margin-bottom-1"
+          >
+            Things to consider
+          </h3>
+          <ul
+            class="margin-top-0 margin-bottom-3 padding-left-6"
+          >
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              Do you need an in-house expert on data? 
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              Do you need help crunching numbers? 
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              Do you need analytics support?
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              Do you need help drafting the Innovation Center Investment Proposal (ICIP) or other documents? 
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              Do you need literature review support? 
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              Do you need rule-writing support?
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              Do you need a clinical specialist? 
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              Do you need help on a specific aspect of your model? 
+            </li>
+          </ul>
+          <p
+            class="line-height-sans-4 margin-top-0 margin-bottom-3"
+          >
+            If the answer is yes to one or more of these questions, your model would likely benefit from utilizing a pipeline contractor. CMMI generally has 2 pipeline contractors available (currently MITRE and ARDS have pipeline contracts with CMMI) that can assist model teams with various needs leading up to clearance. It’s important to note, model teams need to get approval from CMMI FO to utilize one of these contractors.
+          </p>
+          <p
+            class="line-height-sans-4 margin-top-0 margin-bottom-3"
+          >
+            While it is fine to use pipeline support for 2-pager and 6-pager work and for developing ICIP content, after the ICIP clears, model teams can no longer use pipeline funding. It can take a few months to get implementation contractor support, so plan accordingly. Model teams should work with the Division of Central Contracts Services (DCCS), the Division of Systems Support, Operation & Security (DSSOS), and the Office of Acquisition and Grants Management (OAGM) for assistance with contracting needs.
+          </p>
+        </div>
+        <div
+          class="margin-bottom-6"
+          id="the-review-meeting"
+        >
+          <h2
+            class="margin-bottom-3"
+          >
+            The review meeting
+          </h2>
+          <p
+            class="margin-top-0 margin-bottom-3 line-height-sans-4"
+          >
+            After division and group leadership have reviewed and approved the 2-pager and the review meeting with CMMI FO is on the books, you may wonder, 
+            <i>
+              now what?
+            </i>
+          </p>
+          <h3
+            class="margin-top-0 margin-bottom-1"
+          >
+            Tips for the meeting
+          </h3>
+          <ul
+            class="margin-top-0 margin-bottom-3 padding-left-6"
+          >
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              Before the meeting, attach your 2-page concept paper to the calendar invite for your meeting with CMMI FO. We also recommend uploading your concept paper to your Model Plan within MINT.
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              Come prepared to discuss your model concept.
+            </li>
+            <li
+              class="line-height-sans-4 margin-bottom-05"
+            >
+              If you think you’ll need a pipeline contractor, flag this during the meeting. CMMI FO may have a preference for which contractor to use and will ultimately need to approve the request.
+            </li>
+          </ul>
+          <h3
+            class="margin-top-0 margin-bottom-1"
+          >
+            Possible outcomes
+          </h3>
+          <p
+            class="line-height-sans-4 margin-top-0 margin-bottom-3"
+          >
+            Since the 2-pager meeting is still pretty high level in terms of model design, CMMI FO may have suggestions for the team to iterate on. In this case, model teams may be asked to come back for another 2-pager review after they’ve had time to ideate and address their considerations. Some concepts require multiple rounds of iteration, so don’t be discouraged if your concept isn’t approved the first time around.
+          </p>
+          <p
+            class="line-height-sans-4 margin-top-0 margin-bottom-3"
+          >
+            If during the meeting CMMI FO decides the model concept is feasible, they will approve the 2-pager. Model teams will then work on ironing out additional details of their model design that will go into their 6-page concept paper. If you haven’t already started filling out a Model Plan within MINT, this would be a great time to do that. Many of the details that will go into the 6-pager concept paper are a part of the Model Plan.
+          </p>
+        </div>
+        <div
+          class="usa-summary-box"
+          data-testid="summary-box"
+        >
+          <div
+            class="usa-summary-box__body"
+          >
+            <h3
+              class="usa-summary-box__heading"
+            >
+              Need help?
+            </h3>
+            <div
+              class="usa-summary-box__text"
+            >
+              Contact the MINT team at 
+              <a
+                aria-label="Open in a new tab"
+                class="usa-link usa-link--external"
+                href="mailto:MINTTeam@cms.hhs.gov"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                MINTTeam@cms.hhs.gov
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div
+    class="margin-top-6 margin-bottom-neg-7"
+  >
+    <div
+      class="bg-primary-lighter"
+    >
+      <div
+        class="grid-container padding-top-4 padding-bottom-10"
+        data-testid="gridContainer"
+      >
+        <h2
+          class="margin-top-0 margin-bottom-1"
+        >
+          Related help articles
+        </h2>
+        <dt
+          class="margin-bottom-4"
+        >
+          Below are some additional help articles that you may find useful.
+        </dt>
+        <ul
+          class="usa-card-group"
+          data-testid="CardGroup"
+        >
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  How to have a successful 6-pager meeting
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=getting-started"
+              >
+                <span
+                  aria-label="Articles under the Getting started category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Getting started
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-pager. Use this article to ensure you’re fully prepared for your 6-page concept review meeting with CMMI FO.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read How to have a successful 6-pager meeting article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  High-level project plan
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=getting-started"
+              >
+                <span
+                  aria-label="Articles under the Getting started category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Getting started
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  Use this high-level project plan to understand and track the key pieces of work involved in developing a model. The MINT Team can assist model teams in completing this for upcoming models once collaboration begins.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read High-level project plan article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-card desktop:grid-col-4 article article-card--isLink"
+            data-testid="article-card"
+          >
+            <div
+              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+            >
+              <header
+                class="usa-card__header padding-0"
+                data-testid="CardHeader"
+              >
+                <h3
+                  class="line-height-body-4 margin-bottom-1"
+                >
+                  Sample Model Plan
+                </h3>
+              </header>
+              <a
+                class="usa-link width-fit-content display-block "
+                href="/help-and-knowledge/articles?category=getting-started"
+              >
+                <span
+                  aria-label="Articles under the Getting started category"
+                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                  data-testid="tag"
+                >
+                  Getting started
+                </span>
+              </a>
+              <div
+                class="usa-card__body padding-x-0 article__body padding-top-2"
+                data-testid="CardBody"
+              >
+                <p>
+                  This is example data and may not reflect exact model decisions. Use this as a reference to better understand the type of information needed for a Model Plan.
+                </p>
+              </div>
+              <div
+                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                data-testid="CardFooter"
+              >
+                <button
+                  aria-label="Read Sample Model Plan article"
+                  class="usa-button usa-button--outline"
+                  type="button"
+                >
+                  Read
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div
+          class="margin-top-3"
+        >
+          <a
+            class="usa-link"
+            href="/help-and-knowledge/articles"
+          >
+            View all help articles
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

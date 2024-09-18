@@ -4,7 +4,7 @@ import {
   ModelViewFilter,
   TranslationDataType,
   TranslationFormType
-} from '../../../gql/gen/graphql';
+} from '../../../gql/generated/graphql';
 
 export const modelPlan: TranslationModelPlan = {
   modelName: {

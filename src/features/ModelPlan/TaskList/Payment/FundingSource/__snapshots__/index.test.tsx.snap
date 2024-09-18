@@ -1,0 +1,887 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Model Plan Payment > matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb usa-breadcrumb--wrap"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/"
+        >
+          <span>
+            Home
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+        >
+          <span>
+            Model Plan task list
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current"
+      >
+        <span>
+          Payment
+        </span>
+      </li>
+    </ol>
+  </nav>
+  <h1
+    aria-live="polite"
+    class="mint-h1 margin-top-4 margin-bottom-2"
+    tabindex="-1"
+  >
+    Payment
+  </h1>
+  <p
+    class="margin-top-0 margin-bottom-1 font-body-lg"
+    data-testid="model-plan-name"
+  >
+    for My excellent plan that I just initiated
+  </p>
+  <p
+    class="margin-bottom-2 font-body-md line-height-sans-4"
+  >
+    If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
+  </p>
+  <div
+    class="padding-2 bg-primary-lighter"
+  >
+    <div
+      class="display-flex"
+      data-testid="ask-a-question"
+    >
+      <svg
+        class="usa-icon text-primary margin-right-1"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+        />
+      </svg>
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="ask-a-question-button"
+        type="button"
+      >
+        Start a discussion
+      </button>
+    </div>
+  </div>
+  <div
+    class="grid-container padding-left-0 padding-right-0"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row grid-gap"
+      data-testid="grid"
+    >
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <form
+          action="#"
+          class="margin-top-6"
+          data-testid="payment-funding-source-form"
+        >
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
+          >
+            <div
+              class="usa-form-group margin-top-4"
+            >
+              <fieldset
+                class="usa-fieldset funding-source"
+                data-testid="fieldset"
+              >
+                <label
+                  class="usa-label maxw-none margin-bottom-105"
+                  data-testid="label"
+                  for="fundingSourceType"
+                >
+                  What will be the funding source for payments? Select all that apply.
+                </label>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
+                  >
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSource-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                        id="payment-funding-source-fundingSource-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                        name="fundingSource"
+                        type="checkbox"
+                        value="PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSource-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                      >
+                        Patient Protection Affordable Care Act (Sec 3021)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
+                  >
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSource-MEDICARE_PART_A_HI_TRUST_FUND"
+                        id="payment-funding-source-fundingSource-MEDICARE_PART_A_HI_TRUST_FUND"
+                        name="fundingSource"
+                        type="checkbox"
+                        value="MEDICARE_PART_A_HI_TRUST_FUND"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSource-MEDICARE_PART_A_HI_TRUST_FUND"
+                      >
+                        Medicare Part A (HI) Trust Fund
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                      />
+                    </div>
+                    <span
+                      class="usa-tooltip"
+                      data-testid="tooltipWrapper"
+                    >
+                      <div
+                        aria-describedby="tooltip-550000"
+                        class="usa-tooltip__trigger mint-no-print margin-left-05"
+                        data-testid="triggerElement"
+                        position="right"
+                        tabindex="0"
+                        title=""
+                      >
+                        <svg
+                          class="usa-icon text-base-light"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="usa-tooltip__body"
+                        data-testid="tooltipBody"
+                        id="tooltip-550000"
+                        role="tooltip"
+                        title="Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care."
+                      >
+                        Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
+                  >
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND"
+                        id="payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND"
+                        name="fundingSource"
+                        type="checkbox"
+                        value="MEDICARE_PART_B_SMI_TRUST_FUND"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSource-MEDICARE_PART_B_SMI_TRUST_FUND"
+                      >
+                        Medicare Part B (SMI) Trust Fund
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                      />
+                    </div>
+                    <span
+                      class="usa-tooltip"
+                      data-testid="tooltipWrapper"
+                    >
+                      <div
+                        aria-describedby="tooltip-550000"
+                        class="usa-tooltip__trigger mint-no-print margin-left-05"
+                        data-testid="triggerElement"
+                        position="right"
+                        tabindex="0"
+                        title=""
+                      >
+                        <svg
+                          class="usa-icon text-base-light"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="usa-tooltip__body"
+                        data-testid="tooltipBody"
+                        id="tooltip-550000"
+                        role="tooltip"
+                        title="Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A."
+                      >
+                        Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.
+                      </span>
+                    </span>
+                  </div>
+                  <div
+                    class="usa-form-group margin-left-4 margin-top-1 margin-bottom-2"
+                  >
+                    <label
+                      class="usa-label text-normal"
+                      data-testid="label"
+                      for="fundingSourceMedicareBInfo"
+                    >
+                      Additional details
+                    </label>
+                    <input
+                      class="usa-input"
+                      data-testid="textInput"
+                      id="payment-fundingSource-medicare-b-info"
+                      maxlength="50"
+                      name="fundingSourceMedicareBInfo"
+                      value="PartB"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
+                  >
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSource-OTHER"
+                        id="payment-funding-source-fundingSource-OTHER"
+                        name="fundingSource"
+                        type="checkbox"
+                        value="OTHER"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSource-OTHER"
+                      >
+                        Other
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-3 margin-bottom-6"
+              >
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-4"
+              data-scroll="fundingSourceR"
+            >
+              <fieldset
+                class="usa-fieldset funding-source"
+                data-testid="fieldset"
+              >
+                <label
+                  class="usa-label maxw-none margin-bottom-105"
+                  data-testid="label"
+                  for="fundingSourceType"
+                >
+                  What is the funding source for reconciliation or other expenditures? Select all that apply.
+                </label>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
+                  >
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSourceR-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                        id="payment-funding-source-fundingSourceR-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                        name="fundingSourceR"
+                        type="checkbox"
+                        value="PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSourceR-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+                      >
+                        Patient Protection Affordable Care Act (Sec 3021)
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
+                  >
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSourceR-MEDICARE_PART_A_HI_TRUST_FUND"
+                        id="payment-funding-source-fundingSourceR-MEDICARE_PART_A_HI_TRUST_FUND"
+                        name="fundingSourceR"
+                        type="checkbox"
+                        value="MEDICARE_PART_A_HI_TRUST_FUND"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSourceR-MEDICARE_PART_A_HI_TRUST_FUND"
+                      >
+                        Medicare Part A (HI) Trust Fund
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                      />
+                    </div>
+                    <span
+                      class="usa-tooltip"
+                      data-testid="tooltipWrapper"
+                    >
+                      <div
+                        aria-describedby="tooltip-550000"
+                        class="usa-tooltip__trigger mint-no-print margin-left-05"
+                        data-testid="triggerElement"
+                        position="right"
+                        tabindex="0"
+                        title=""
+                      >
+                        <svg
+                          class="usa-icon text-base-light"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="usa-tooltip__body"
+                        data-testid="tooltipBody"
+                        id="tooltip-550000"
+                        role="tooltip"
+                        title="Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care."
+                      >
+                        Also known as the Hospital Insurance (HI) Trust Fund, this covers inpatient hospital care, skilled nursing facility care, home healthcare, and hospice care.
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
+                  >
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSourceR-MEDICARE_PART_B_SMI_TRUST_FUND"
+                        id="payment-funding-source-fundingSourceR-MEDICARE_PART_B_SMI_TRUST_FUND"
+                        name="fundingSourceR"
+                        type="checkbox"
+                        value="MEDICARE_PART_B_SMI_TRUST_FUND"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSourceR-MEDICARE_PART_B_SMI_TRUST_FUND"
+                      >
+                        Medicare Part B (SMI) Trust Fund
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                      />
+                    </div>
+                    <span
+                      class="usa-tooltip"
+                      data-testid="tooltipWrapper"
+                    >
+                      <div
+                        aria-describedby="tooltip-550000"
+                        class="usa-tooltip__trigger mint-no-print margin-left-05"
+                        data-testid="triggerElement"
+                        position="right"
+                        tabindex="0"
+                        title=""
+                      >
+                        <svg
+                          class="usa-icon text-base-light"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        aria-hidden="true"
+                        class="usa-tooltip__body"
+                        data-testid="tooltipBody"
+                        id="tooltip-550000"
+                        role="tooltip"
+                        title="Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A."
+                      >
+                        Also known as the Supplementary Medical Insurance (SMI) Trust Fund, this covers physician services, outpatient care, medical supplies, preventive services, and other healthcare services not covered by Part A.
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="display-flex flex-align-center"
+                  >
+                    <div
+                      class="mint-checkbox usa-checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="payment-funding-source-fundingSourceR-OTHER"
+                        id="payment-funding-source-fundingSourceR-OTHER"
+                        name="fundingSourceR"
+                        type="checkbox"
+                        value="OTHER"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="payment-funding-source-fundingSourceR-OTHER"
+                      >
+                        Other
+                      </label>
+                      <p
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-3 margin-bottom-6"
+              >
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-4"
+            >
+              <label
+                class="usa-label maxw-none"
+                data-testid="label"
+                for="payRecipients"
+              >
+                Who will you pay? Select all that apply.
+              </label>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="payment-pay-recipients-PROVIDERS"
+                    name="payRecipients"
+                    type="checkbox"
+                    value="PROVIDERS"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="payment-pay-recipients-PROVIDERS"
+                  >
+                    Providers
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="payment-pay-recipients-BENEFICIARIES"
+                    name="payRecipients"
+                    type="checkbox"
+                    value="BENEFICIARIES"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="payment-pay-recipients-BENEFICIARIES"
+                  >
+                    Beneficiaries
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="payment-pay-recipients-PARTICIPANTS"
+                    name="payRecipients"
+                    type="checkbox"
+                    value="PARTICIPANTS"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="payment-pay-recipients-PARTICIPANTS"
+                  >
+                    Participants
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="payment-pay-recipients-STATES"
+                    name="payRecipients"
+                    type="checkbox"
+                    value="STATES"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="payment-pay-recipients-STATES"
+                  >
+                    States
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="payment-pay-recipients-OTHER"
+                    name="payRecipients"
+                    type="checkbox"
+                    value="OTHER"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="payment-pay-recipients-OTHER"
+                  >
+                    Other
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-3 margin-bottom-6"
+              >
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-4"
+            >
+              <label
+                class="usa-label maxw-none"
+                data-testid="label"
+                for="payType"
+              >
+                What will you pay?
+              </label>
+              <p
+                class="text-base margin-y-1 margin-top-2"
+              >
+                If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.
+              </p>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="payment-pay-recipients-CLAIMS_BASED_PAYMENTS"
+                    name="payType"
+                    type="checkbox"
+                    value="CLAIMS_BASED_PAYMENTS"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="payment-pay-recipients-CLAIMS_BASED_PAYMENTS"
+                  >
+                    Claims-Based Payments
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="payment-pay-recipients-NON_CLAIMS_BASED_PAYMENTS"
+                    name="payType"
+                    type="checkbox"
+                    value="NON_CLAIMS_BASED_PAYMENTS"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="payment-pay-recipients-NON_CLAIMS_BASED_PAYMENTS"
+                  >
+                    Non-Claims-Based Payments
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="payment-pay-recipients-GRANTS"
+                    name="payType"
+                    type="checkbox"
+                    value="GRANTS"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="payment-pay-recipients-GRANTS"
+                  >
+                    Grants
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+              </fieldset>
+              <div
+                class="margin-top-3 margin-bottom-6"
+              >
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
+              </div>
+            </div>
+            <div
+              class="margin-top-6 margin-bottom-3"
+            >
+              <button
+                class="usa-button"
+                data-testid="button"
+                type="submit"
+              >
+                Next
+              </button>
+            </div>
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="usa-icon margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                />
+              </svg>
+              Save and return to task list
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 1 of 5
+    </span>
+  </div>
+</DocumentFragment>
+`;

@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/cmsgov/mint-app/cmd/mint/test"
+	"github.com/cms-enterprise/mint-app/cmd/mint/test"
 )
 
 var testCmd = &cobra.Command{

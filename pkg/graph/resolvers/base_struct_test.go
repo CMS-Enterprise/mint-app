@@ -1,6 +1,6 @@
 package resolvers
 
-import "github.com/cmsgov/mint-app/pkg/models"
+import "github.com/cms-enterprise/mint-app/pkg/models"
 
 func (suite *ResolverSuite) TestCreatedByUserAccount() {
 	plan := suite.createModelPlan("My Test plan")

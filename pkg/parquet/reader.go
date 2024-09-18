@@ -3,7 +3,7 @@ package parquet
 import (
 	"github.com/parquet-go/parquet-go"
 
-	"github.com/cmsgov/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
 func ReadFromS3[T any](client *s3.S3Client, key string) ([]T, error) {

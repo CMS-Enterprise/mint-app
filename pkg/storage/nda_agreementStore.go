@@ -3,14 +3,14 @@ package storage
 import (
 	_ "embed"
 
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
 )
 
 // NDAAgreementGetByUserID returns an NDA based on a UserID

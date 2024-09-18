@@ -7,10 +7,10 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/flags"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/flags"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // EchimpCr is the resolver for the echimpCR field.

@@ -4,8 +4,8 @@ package dataloadertestconfigs
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // DecorateTestContextWithDataLoader Wraps a context with data loaders as needed for some unit testing

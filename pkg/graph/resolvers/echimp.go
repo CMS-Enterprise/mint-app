@@ -3,9 +3,9 @@ package resolvers
 import (
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/echimpcache"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
 // GetEChimpCRs returns echimp CRS from the cache

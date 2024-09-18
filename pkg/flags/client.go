@@ -11,10 +11,9 @@ import (
 	"github.com/launchdarkly/go-server-sdk/v6/ldfiledata"
 	"github.com/launchdarkly/go-server-sdk/v6/ldfilewatch"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	// ldclient "github.com/launchdarkly/go-server-sdk/v6"
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 )
 
 // DowngradeAssessmentTeamKey is the Flag Key in LaunchDarkly for downgrading assessment team users

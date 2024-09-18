@@ -8,8 +8,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 )
 
 // modifiedByRelation is a struct meant to be embedded to show that the object has created_by and created_dts fields, as well as

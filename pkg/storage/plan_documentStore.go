@@ -4,20 +4,20 @@ import (
 	"database/sql"
 	_ "embed"
 
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"golang.org/x/sync/errgroup"
 
-	"github.com/cmsgov/mint-app/pkg/s3"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
-	"github.com/cmsgov/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
-	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
+	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
 // PlanDocumentCreate creates a plan document

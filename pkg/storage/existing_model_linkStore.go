@@ -3,13 +3,13 @@ package storage
 import (
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
-	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
+	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 
 	_ "embed"
 )

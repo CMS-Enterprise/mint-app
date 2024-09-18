@@ -3,7 +3,7 @@ package models
 import (
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/sanitization"
+	"github.com/cms-enterprise/mint-app/pkg/sanitization"
 )
 
 // EChimpTDLRaw represents a TDL that came from E-Chimp parquet file before being sanitized

@@ -1,7 +1,7 @@
 package email
 
 import (
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // DailyDigestBodyContent defines the parameters necessary for the corresponding email body

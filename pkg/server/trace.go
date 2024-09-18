@@ -3,7 +3,7 @@ package server
 import (
 	"net/http"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 )
 
 const traceHeader = "X-TRACE-ID"

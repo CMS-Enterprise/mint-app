@@ -39,7 +39,7 @@ struct_fields_always_pointers: false
 # gqlgen will search for any type names in the schema in these go packages
 # if they match it will use them, otherwise it will generate them.
 autobind:
-  - 'github.com/cmsgov/mint-app/pkg/models'
+  - 'github.com/cms-enterprise/mint-app/pkg/models'
 
 # This section declares type mapping between the GraphQL and go type systems
 #
@@ -64,10 +64,10 @@ models:
       - github.com/99designs/gqlgen/graphql.Int32
   UUID:
     model:
-      - github.com/cmsgov/mint-app/pkg/models.UUID
+      - github.com/cms-enterprise/mint-app/pkg/models.UUID
   UserAccount:
     model:
-      - github.com/cmsgov/mint-app/pkg/authentication.UserAccount
+      - github.com/cms-enterprise/mint-app/pkg/authentication.UserAccount
   TaggedHTML:
     model:
-      - github.com/cmsgov/mint-app/pkg/models.TaggedHTML
+      - github.com/cms-enterprise/mint-app/pkg/models.TaggedHTML

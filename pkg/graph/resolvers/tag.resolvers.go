@@ -7,8 +7,8 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/graph/generated"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // Entity is the resolver for the entity field.

@@ -1,0 +1,62 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`The TaskListSideNavActions > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
+    data-testid="sidenav-actions"
+  >
+    <h4
+      class="margin-top-0 margin-bottom-1"
+    >
+      Actions
+    </h4>
+    <a
+      class="usa-link display-block line-height-body-5"
+      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only"
+    >
+      Switch to the Read View for this Model Plan
+    </a>
+    <div
+      class="flex-align-self-center margin-y-2"
+    >
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        Share or export this model plan
+      </button>
+    </div>
+    <div
+      class="margin-top-4 margin-bottom-6"
+    >
+      <h4
+        class="margin-bottom-1"
+      >
+        Related Content
+      </h4>
+      <div
+        class="margin-bottom-1"
+      >
+        <a
+          class="usa-link line-height-body-5"
+          href="/help-and-knowledge/model-plan-overview"
+          target="_blank"
+        >
+          Overview for adding a model (opens in a new tab)
+        </a>
+      </div>
+      <div>
+        <a
+          class="usa-link line-height-body-5"
+          href="/help-and-knowledge/sample-model-plan"
+          target="_blank"
+        >
+          Sample Model Plan (opens in a new tab)
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

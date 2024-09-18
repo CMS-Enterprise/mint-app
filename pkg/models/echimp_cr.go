@@ -3,7 +3,7 @@ package models
 import (
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/sanitization"
+	"github.com/cms-enterprise/mint-app/pkg/sanitization"
 )
 
 // EChimpCRRaw represents a CR that came from E-Chimp before sanitization

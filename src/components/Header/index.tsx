@@ -11,7 +11,7 @@ import { localAuthStorageKey } from 'constants/localAuth';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useOutsideClick from 'hooks/useOutsideClick';
 
-import { NavContext } from './navContext';
+import { NavContext } from '../../contexts/NavContext';
 
 import './index.scss';
 

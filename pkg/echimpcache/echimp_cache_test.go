@@ -5,9 +5,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/cmsgov/mint-app/pkg/echimptestdata"
-	"github.com/cmsgov/mint-app/pkg/testconfig"
-	"github.com/cmsgov/mint-app/pkg/testconfig/useraccountstoretestconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/echimptestdata"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/useraccountstoretestconfigs"
 )
 
 func TestGetECHIMPCrAndTDLCache(t *testing.T) {

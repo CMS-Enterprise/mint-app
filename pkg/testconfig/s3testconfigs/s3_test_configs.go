@@ -4,9 +4,9 @@ package s3testconfigs
 import (
 	"os"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/s3"
-	"github.com/cmsgov/mint-app/pkg/testhelpers"
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/testhelpers"
 )
 
 // S3TestClient returns an S3Test client for testing

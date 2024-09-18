@@ -16,7 +16,7 @@ const PageNumber = ({
 }: PageNumberProps) => {
   const classNames = classnames('mint-page-number', className);
   return (
-    <div className={classNames}>
+    <div className={classNames} data-testid="page-num">
       <span className="mint-page-number__page-num">
         {`Page ${currentPage} of ${totalPages}`}
       </span>

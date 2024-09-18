@@ -2,18 +2,18 @@ import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { Button, Select } from '@trussworks/react-uswds';
+import { StatusMessageType } from 'features/ModelPlan/TaskList';
 import {
   ModelPhase,
   ModelStatus,
   PhaseSuggestion,
   useUpdateModelPlanMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
-import { StatusMessageType } from 'views/ModelPlan/TaskList';
 
 type MutationErrorModalType = {
   isOpen: boolean;

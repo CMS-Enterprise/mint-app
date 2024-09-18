@@ -8,13 +8,13 @@ import (
 	"github.com/guregu/null/zero"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/accesscontrol"
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/s3"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
+	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
 // PlanDocumentCreate implements resolver logic to upload the specified file to S3 and create a matching plan document entity in the database.

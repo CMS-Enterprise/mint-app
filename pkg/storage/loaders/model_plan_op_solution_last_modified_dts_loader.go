@@ -7,7 +7,7 @@ import (
 	"github.com/graph-gophers/dataloader"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 )
 
 // GetModelPlanOpSolutionLastModifiedDtsByModelPlanID uses a DataLoader to

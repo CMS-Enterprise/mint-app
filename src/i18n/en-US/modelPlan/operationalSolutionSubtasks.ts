@@ -3,7 +3,7 @@ import { TranslationOperationalSolutionSubtasks } from 'types/translation';
 import {
   TranslationDataType,
   TranslationFormType
-} from '../../../gql/gen/graphql';
+} from '../../../gql/generated/graphql';
 
 const operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks = {
   name: {

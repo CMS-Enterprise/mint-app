@@ -1,0 +1,627 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Model Plan Documents page > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="read-only-model-plan--documents"
+    data-testid="read-only-model-plan--documents"
+  >
+    <div
+      class="display-flex flex-justify flex-align-start"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-4"
+      >
+        Documents
+      </h2>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="model-plan-table"
+        data-testid="model-plan-documents-table"
+      >
+        <div
+          class="usa-table-container--scrollable"
+          data-testid="scrollable-table-container"
+          tabindex="0"
+        >
+          <table
+            class="usa-table usa-table--borderless width-full"
+            data-testid="table"
+          >
+            <caption
+              class="usa-sr-only"
+            >
+              requestsTable.caption
+            </caption>
+            <thead>
+              <tr
+                role="row"
+              >
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    File Name
+                    <svg
+                      class="usa-icon margin-left-05 position-absolute"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Document Type
+                    <svg
+                      class="usa-icon margin-left-05 position-absolute"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Notes
+                    <svg
+                      class="usa-icon margin-left-05 position-absolute"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Upload date
+                    <svg
+                      class="usa-icon margin-left-05 position-absolute"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Visibility
+                    <svg
+                      class="usa-icon margin-left-05 position-absolute"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Actions
+                    <svg
+                      class="usa-icon margin-left-05 position-absolute"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              role="rowgroup"
+            >
+              <tr
+                role="row"
+              >
+                <th
+                  role="cell"
+                  scope="row"
+                  style="padding-left: 0px;"
+                />
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  Market Research
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                />
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  05/12/2022
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  All
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; padding-right: 0px;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled margin-right-2"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span
+                      class="display-flex flex-align-center"
+                    >
+                      View
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <button
+                    class="usa-button usa-button--unstyled text-red"
+                    data-testid="remove-document"
+                    type="button"
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          aria-live="polite"
+          class="usa-sr-only usa-table__announcement-region"
+        >
+          Requests table reset to default sort order
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Model Plan Documents page > matches snapshot 2`] = `
+<DocumentFragment>
+  <div
+    class="read-only-model-plan--documents"
+    data-testid="read-only-model-plan--documents"
+  >
+    <div
+      class="display-flex flex-justify flex-align-start"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-4"
+      >
+        Documents
+      </h2>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="model-plan-table"
+        data-testid="model-plan-documents-table"
+      >
+        <div
+          class="usa-table-container--scrollable"
+          data-testid="scrollable-table-container"
+          tabindex="0"
+        >
+          <table
+            class="usa-table usa-table--borderless width-full"
+            data-testid="table"
+          >
+            <caption
+              class="usa-sr-only"
+            >
+              requestsTable.caption
+            </caption>
+            <thead>
+              <tr
+                role="row"
+              >
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    File Name
+                    <svg
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Document Type
+                    <svg
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Notes
+                    <svg
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Upload date
+                    <svg
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Visibility
+                    <svg
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                  style="min-width: 138px; padding-left: 0px; padding-bottom: .5rem; position: relative;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Actions
+                    <svg
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              role="rowgroup"
+            >
+              <tr
+                role="row"
+              >
+                <th
+                  role="cell"
+                  scope="row"
+                  style="padding-left: 0px;"
+                />
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  Market Research
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                />
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  05/12/2022
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; white-space: normal;"
+                >
+                  All
+                </td>
+                <td
+                  role="cell"
+                  style="padding-left: 0px; padding-right: 0px;"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled margin-right-2"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span
+                      class="display-flex flex-align-center"
+                    >
+                      View
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <button
+                    class="usa-button usa-button--unstyled text-red"
+                    data-testid="remove-document"
+                    type="button"
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          aria-live="polite"
+          class="usa-sr-only usa-table__announcement-region"
+        >
+          Requests table reset to default sort order
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

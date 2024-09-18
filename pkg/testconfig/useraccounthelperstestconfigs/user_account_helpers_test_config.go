@@ -4,10 +4,10 @@ package useraccounthelperstestconfigs
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/oktaapi"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/userhelpers"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 // GetTestPrincipal is a utility function to return a principal for tests

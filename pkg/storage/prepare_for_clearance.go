@@ -3,13 +3,13 @@ package storage
 import (
 	_ "embed"
 
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 )
 
 // ReadyForClearanceGetByModelPlanID reads information about a model plan's clearance

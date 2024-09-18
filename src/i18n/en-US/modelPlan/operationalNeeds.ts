@@ -3,7 +3,7 @@ import { TranslationOperationalNeeds } from 'types/translation';
 import {
   TranslationDataType,
   TranslationFormType
-} from '../../../gql/gen/graphql';
+} from '../../../gql/generated/graphql';
 
 const operationalNeeds: TranslationOperationalNeeds = {
   name: {

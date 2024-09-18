@@ -3,7 +3,7 @@ package mappings
 import (
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // Note, these could all translation live in a exported map, however, having them separate enable much more granular testing.

@@ -3,7 +3,7 @@ package translatedaudit
 import (
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 func (suite *TAuditSuite) TestDiscussionReplyMetaDataGet() {

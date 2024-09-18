@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/flags"
-	"github.com/cmsgov/mint-app/pkg/s3"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/flags"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 const configMissingMessage = "Must set config: %v"

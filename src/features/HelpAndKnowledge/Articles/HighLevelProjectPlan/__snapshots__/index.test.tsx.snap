@@ -1,0 +1,2219 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`High Level Project Plan Article > matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class=""
+        data-testid="grid"
+      >
+        <button
+          class="usa-button usa-button--unstyled margin-top-6"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            class="usa-icon margin-right-05 text-tbottom"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+          Close tab
+        </button>
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-bottom-1"
+          tabindex="-1"
+        >
+          High-level project plan
+        </h1>
+        <a
+          class="usa-link width-fit-content display-block margin-bottom-1"
+          href="/help-and-knowledge/articles?category=getting-started"
+        >
+          <span
+            aria-label="Articles under the Getting started category"
+            class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+            data-testid="tag"
+          >
+            Getting started
+          </span>
+        </a>
+        <p
+          class="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4"
+        >
+          Use this high-level project plan to understand and track the key pieces of work involved in developing a model. The MINT Team can assist model teams in completing this for upcoming models once collaboration begins.
+        </p>
+        <a
+          aria-label="Open in a new tab"
+          class="usa-link display-flex flex-align-center width-fit-content margin-bottom-3"
+          href="/src/assets/files/high-level-project-plan.xlsx"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <svg
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+            />
+          </svg>
+          <span>
+            Download project plan as an Excel file
+          </span>
+        </a>
+        <p
+          class="font-body-md margin-top-0 margin-bottom-3"
+        >
+          Click to expand each accordion to reveal more information about each phase within the project plan.
+        </p>
+        <div
+          class="usa-accordion"
+          data-allow-multiple="true"
+          data-testid="accordion"
+        >
+          <h4
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="cmmi-model-operational-planning"
+              aria-expanded="true"
+              class="usa-accordion__button"
+              data-testid="accordionButton_cmmi-model-operational-planning"
+              type="button"
+            >
+              CMMI Model Operational Planning
+            </button>
+          </h4>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_cmmi-model-operational-planning"
+            id="cmmi-model-operational-planning"
+          >
+            <table
+              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              data-testid="table"
+            >
+              <thead>
+                <tr
+                  class="border-bottom-2px"
+                >
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Activity/function
+                    </strong>
+                  </th>
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Responsible party/solution
+                    </strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Start a Model Plan in MINT
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Model Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    <p
+                      class="margin-y-0"
+                    >
+                      Contractor support prior to clearance
+                    </p>
+                    <i>
+                       We recommend discussing pre- clearance contractor support needs during your 2-pager or 6-pager review with the CMMI Front Office (FO), as CMMI FO will need to approve this request.
+                    </i>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    ARDS (available through BSG/DCCS), MITRE (available through PPG)
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    2-pager review with CMMI FO
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Model Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Conduct kick-off meeting
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    MINT Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    6-pager review with CMMI FO
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Model Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Perform iterative analysis of IT plans
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    IT Lead, Model Team, MINT Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Draft IT cost estimates
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    MINT Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Draft implementation cost estimates
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    BSG Budget Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Draft evaluation cost estimates
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Evaluation
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Draft learning cost estimates
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    LDG
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Draft high-level project plan (upon request)
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    MINT Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Draft Innovation Center Investment Proposal (ICIP)
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Model Team, MITRE 
+                    <i>
+                      (if this support is requested/approved by CMMI FO)
+                    </i>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Collect/review and distribute deliverables to model team, SMEs, and stakeholders
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    MINT Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Deliver final version of all BSG deliverables to model team, SMEs, and stakeholders
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    MINT Team
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="cmmi-internal-clearance-process"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_cmmi-internal-clearance-process"
+              type="button"
+            >
+              CMMI Internal Clearance Process
+            </button>
+          </h4>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_cmmi-internal-clearance-process"
+            hidden=""
+            id="cmmi-internal-clearance-process"
+          >
+            <a
+              aria-label="Open in a new tab"
+              class="usa-link usa-link--external"
+              href="https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Learn more about CMMI Internal Clearance on SharePoint
+            </a>
+            <table
+              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              data-testid="table"
+            >
+              <thead>
+                <tr
+                  class="border-bottom-2px"
+                >
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Activity/function
+                    </strong>
+                  </th>
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Responsible party/solution
+                    </strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Submit documents to clearance designees 
+                    <i>
+                      (CMMI Clearance form)
+                    </i>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    MINT Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Provide Model with complete CMMI clearance
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    CMMI designees and reviewers
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      <p
+                        class="margin-y-0"
+                      >
+                        ICIP Budget
+                      </p>
+                      <i>
+                        Model Teams will meet with CMMI FO to review the ICIP cost estimates
+                      </i>
+                    </div>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      CMMI Deputy Director of Operations
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      Quality
+                    </div>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      Supervisory Medical Officer
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      Financial Methodology
+                    </div>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      Division of Data Analytics Representative
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      QPP Status
+                    </div>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      QPP SME
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      Technology
+                    </div>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      Chief Technology Officer or SME
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      Strategy
+                    </div>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <div
+                      class="padding-left-2"
+                    >
+                      Chief Strategy Officer
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="clearance-of-documents"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_clearance-of-documents"
+              type="button"
+            >
+              Clearance of Documents
+            </button>
+          </h4>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_clearance-of-documents"
+            hidden=""
+            id="clearance-of-documents"
+          >
+            <p
+              class="margin-top-0 margin-bottom-1"
+            >
+              Documents listed may not apply to all models. However, all documents in this section will go through CMMI Internal Clearance, CMS Clearance, Health and Human Services (HHS) Clearance, and Office of Management and Budget (OMB) Clearance. 
+            </p>
+            <a
+              aria-label="Open in a new tab"
+              class="usa-link usa-link--external"
+              href="https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Learn more about Clearance on SharePoint
+            </a>
+            <table
+              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              data-testid="table"
+            >
+              <thead>
+                <tr
+                  class="border-bottom-2px"
+                >
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Activity/function
+                    </strong>
+                  </th>
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Responsible party/solution
+                    </strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Submit Model documents completed/signed form and model clearance package to Executive Operations Staff (EOS)
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Model Team
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    ICIP
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Model Team and MITRE write, EOS clears
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Cooperative Agreement
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Legal Vertical writes, Office of the General Council (OGC) approves, EOS clears
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Participation Agreement
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Legal Vertical writes, OGC approves, EOS clears
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Terms & Conditions
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Legal Vertical writes, OGC approves, EOS clears
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Notice of Proposed Rulemaking (NPRM) 
+                    <i>
+                      (mandatory models only)
+                    </i>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    OGC writes, EOS clears, staff publishes, and OGC processes and responds to comments
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Final Rule 
+                    <i>
+                      (mandatory models only)
+                    </i>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    EOS clears, staff publishes
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    <p
+                      class="margin-y-0"
+                    >
+                      Announcement materials
+                    </p>
+                    <div
+                      class="display-flex flex-align-center"
+                    >
+                      <a
+                        aria-label="Open in a new tab"
+                        class="usa-link usa-link--external"
+                        href="https://share.cms.gov/center/cmmi/PP/DSEP/Lists/AnnouncementsAndRollouts/Tiles.aspx"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Learn more about announcement materials on SharePoint
+                      </a>
+                    </div>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Model Team, Front Office, PPG Division of Stakeholder Engagement and Policy (DSEP), Office of Communications (OC)
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="legal"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_legal"
+              type="button"
+            >
+              Legal
+            </button>
+          </h4>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_legal"
+            hidden=""
+            id="legal"
+          >
+            <p>
+              These activities may not apply to all models.
+            </p>
+            <table
+              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              data-testid="table"
+            >
+              <thead>
+                <tr
+                  class="border-bottom-2px"
+                >
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Activity/function
+                    </strong>
+                  </th>
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Responsible party/solution
+                    </strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Fraud, Waste, Abuse Waivers
+                    <div
+                      class="display-flex flex-align-center"
+                    >
+                      <a
+                        aria-label="Open in a new tab"
+                        class="usa-link usa-link--external"
+                        href="https://share.cms.gov/center/cmmi/PP/Model%20Design%20Resources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FPP%2FModel%20Design%20Resources%2FModel%20Agreement%20and%20Rule%20Resources%2FTemplate%20Participation%20Agreement%2FWaiver%20Resources&FolderCTID=0x012000A975146B83F0F045969E1B4CCF269310&View=%7B05D9040E%2DF2A4%2D4351%2D8D9E%2D2F0DBF3CD595%7D"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Learn more about Fraud, Waste, Abuse Waivers on SharePoint
+                      </a>
+                    </div>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Federal Waiver Team writes, Office of Inspector General (OIG) and CM approve
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Program/Payment Waivers 
+                    <i>
+                      (included in ICIP)
+                    </i>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    CMMI, OGC
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Medicaid Waivers/State Plan Amendments
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Center for Medicaid and CHIP Services (CMCS), OGC
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Request for Applications (RFA) or Notice of Funding Opportunity (NOFO)
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Model Team writes, OGC approves
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="participants"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_participants"
+              type="button"
+            >
+              Participants
+            </button>
+          </h4>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_participants"
+            hidden=""
+            id="participants"
+          >
+            <table
+              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              data-testid="table"
+            >
+              <thead>
+                <tr
+                  class="border-bottom-2px"
+                >
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Activity/function
+                    </strong>
+                  </th>
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Responsible party/solution
+                    </strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Obtain an application support contractor 
+                    <i>
+                      (as necessary if there are large volumes of applications)
+                    </i>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
+                    >
+                      RMADA
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Recruit participants
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=grant-solutions&section=about"
+                    >
+                      GrantSolutions
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=cms-qualtrics&section=about"
+                    >
+                      CMS Qualtrics
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-letter-of-intent&section=about"
+                    >
+                      Salesforce LOI
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-request-for-application&section=about"
+                    >
+                      Salesforce RFA
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Review and score applications
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=grant-solutions&section=about"
+                    >
+                      GrantSolutions
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-application-review-and-scoring&section=about"
+                    >
+                      Salesforce ARS
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Establish a benchmark with participants
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
+                    >
+                      CCW
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=integrated-data-repository&section=about"
+                    >
+                      IDR
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Provide participant access to model platforms
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Innovation Center (IC) Landing Page
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Communicate with participants
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=outlook-mailbox&section=about"
+                    >
+                      Outlook Mailbox
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=gov-delivery&section=about"
+                    >
+                      GovDelivery
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
+                    >
+                      Salesforce POST
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Vet providers for program integrity
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=cpi-vetting&section=about"
+                    >
+                      CPI Vetting
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Sign participation agreements
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=4-innovation&section=about"
+                    >
+                      4i
+                    </a>
+                    , through a contractor
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Manage Part C/D enrollment 
+                    <i>
+                      (MAPD models only)
+                    </i>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=medicare-advantage-prescription-drug-system&section=about"
+                    >
+                      MARx
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Review and collect plan bids 
+                    <i>
+                      (MAPD models only)
+                    </i>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=health-plan-management-system&section=about"
+                    >
+                      HPMS
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Update the plan’s contract 
+                    <i>
+                      (MAPD models only)
+                    </i>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=health-plan-management-system&section=about"
+                    >
+                      HPMS
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Helpdesk support
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=consolidated-business-operations-support-center&section=about"
+                    >
+                      CBOSC
+                    </a>
+                    , through a contractor
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Develop methodologies for providers and beneficiaries as needed
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Implementation contractor
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Manage provider overlaps
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-program-organization-relationship&section=about"
+                    >
+                      MDM-POR
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Manage beneficiary overlaps
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-program-organization-relationship&section=about"
+                    >
+                      MDM-POR
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="model-operations"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_model-operations"
+              type="button"
+            >
+              Model Operations
+            </button>
+          </h4>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_model-operations"
+            hidden=""
+            id="model-operations"
+          >
+            <table
+              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              data-testid="table"
+            >
+              <thead>
+                <tr
+                  class="border-bottom-2px"
+                >
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Activity/function
+                    </strong>
+                  </th>
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Responsible party/solution
+                    </strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Decide on contracting strategy
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Division of Central Contracts Services (DCCS)
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Acquire implementation contractor
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    DCCS, Office of Acquisition and Grants Management (OAGM)
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Utilize quality measures development contractor 
+                    <i>
+                      (if new measure development is necessary)
+                    </i>
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=quality-vertical&section=about"
+                    >
+                      Quality Vertical
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Collect quality measures data
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    CCSQ contracts and systems, 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
+                    >
+                      HDR
+                    </a>
+                    , Patient Activation Measure (PAM)
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Innovative Design, Development, and Operations Contract (IDDOC) support
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=4-innovation&section=about"
+                    >
+                      4i
+                    </a>
+                    , ACO-OS
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Claims-based measures
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
+                    >
+                      CCW
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=integrated-data-repository&section=about"
+                    >
+                      IDR
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Quality performance scores
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    Existing CMS data and process, 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
+                    >
+                      HDR
+                    </a>
+                    , other new process
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Data to monitor the model
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
+                    >
+                      CCW
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=centralized-data-exchange&section=about"
+                    >
+                      CDX
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
+                    >
+                      HDR
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=integrated-data-repository&section=about"
+                    >
+                      IDR
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
+                    >
+                      Salesforce POST
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Data to support model evaluation
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
+                    >
+                      CCW
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=centralized-data-exchange&section=about"
+                    >
+                      CDX
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=health-data-reporting&section=about"
+                    >
+                      HDR
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
+                    >
+                      Salesforce POST
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Send reports/data to participants
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=4-innovation&section=about"
+                    >
+                      4i
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=beneficiary-claims-data-api&section=about"
+                    >
+                      BCDA
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=centralized-data-exchange&section=about"
+                    >
+                      CDX
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=cms-box&section=about"
+                    >
+                      CMS Box
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=expanded-data-feedback-reporting&section=about"
+                    >
+                      eDFR
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=electronic-file-transfer&section=about"
+                    >
+                      EFT
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
+                    >
+                      RMADA
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-project-officer-support-tool-portal&section=about"
+                    >
+                      Salesforce POST
+                    </a>
+                    , internal staff
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Participate in CMMI data sharing
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    CMMI Analysis & Management System (AMS)
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Process participant appeals
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=legal-vertical&section=about"
+                    >
+                      Legal Vertical
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="payment"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_payment"
+              type="button"
+            >
+              Payment
+            </button>
+          </h4>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_payment"
+            hidden=""
+            id="payment"
+          >
+            <table
+              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              data-testid="table"
+            >
+              <thead>
+                <tr
+                  class="border-bottom-2px"
+                >
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Activity/function
+                    </strong>
+                  </th>
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Responsible party/solution
+                    </strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Adjust how FFS claims are paid
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=shared-systems&section=about"
+                    >
+                      Shared Systems 
+                    </a>
+                     / CR, 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=healthcare-integrated-general-kedger-accounting-system&section=about"
+                    >
+                      HIGLAS
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Manage FFS excluded payments
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=shared-systems&section=about"
+                    >
+                      Shared Systems 
+                    </a>
+                     / CR
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    MAPD payments
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    MAPD Systems / CR
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Make non-claims based payments
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=automated-plan-payment-system&section=about"
+                    >
+                      APPS
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=healthcare-integrated-general-kedger-accounting-system&section=about"
+                    >
+                      HIGLAS
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=innovation-payment-contract&section=about"
+                    >
+                      IPC
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=master-data-management-for-ncbp&section=about"
+                    >
+                      MDM-NCBP
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Compute shared savings payments
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
+                    >
+                      RMADA
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Recover payments
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=automated-plan-payment-system&section=about"
+                    >
+                      APPS
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=innovation-payment-contract&section=about"
+                    >
+                      IPC
+                    </a>
+                    , 
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=shared-systems&section=about"
+                    >
+                      Shared Systems 
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="learning-&-diffusion"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_learning-&-diffusion"
+              type="button"
+            >
+              Learning & Diffusion
+            </button>
+          </h4>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_learning-&-diffusion"
+            hidden=""
+            id="learning-&-diffusion"
+          >
+            <table
+              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              data-testid="table"
+            >
+              <thead>
+                <tr
+                  class="border-bottom-2px"
+                >
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Activity/function
+                    </strong>
+                  </th>
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Responsible party/solution
+                    </strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Develop a learning strategy
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=learning-and-diffusion-group&section=about"
+                    >
+                      LDG
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Educate beneficiaries
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=learning-and-diffusion-group&section=about"
+                    >
+                      LDG
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Acquire a learning contractor
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
+                    >
+                      RMADA
+                    </a>
+                    , a cross-model contract
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    IT platform for learning
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-connect&section=about"
+                    >
+                      Salesforce CONNECT
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Participant-to-participant collaboration
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=salesforce-connect&section=about"
+                    >
+                      Salesforce CONNECT
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h4
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="evaluation"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_evaluation"
+              type="button"
+            >
+              Evaluation
+            </button>
+          </h4>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_evaluation"
+            hidden=""
+            id="evaluation"
+          >
+            <table
+              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
+              data-testid="table"
+            >
+              <thead>
+                <tr
+                  class="border-bottom-2px"
+                >
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Activity/function
+                    </strong>
+                  </th>
+                  <th
+                    class="padding-y-1"
+                    scope="col"
+                  >
+                    <strong>
+                      Responsible party/solution
+                    </strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Acquire an evaluation contractor
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=research-measurement-assessment-design-and-analysis&section=about"
+                    >
+                      RMADA
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <th
+                    class="padding-y-1"
+                    scope="row"
+                  >
+                    Obtain data access for evaluation contractor
+                  </th>
+                  <td
+                    class="text-baseline"
+                  >
+                    <a
+                      class="usa-link usa-button usa-button--unstyled"
+                      href="/help-and-knowledge/high-level-project-plan?solution=chronic-conditions-warehouse&section=about"
+                    >
+                      CCW
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-6 margin-bottom-neg-7"
+    >
+      <div
+        class="bg-primary-lighter"
+      >
+        <div
+          class="grid-container padding-top-4 padding-bottom-10"
+          data-testid="gridContainer"
+        >
+          <h2
+            class="margin-top-0 margin-bottom-1"
+          >
+            Related help articles
+          </h2>
+          <dt
+            class="margin-bottom-4"
+          >
+            Below are some additional help articles that you may find useful.
+          </dt>
+          <ul
+            class="usa-card-group"
+            data-testid="CardGroup"
+          >
+            <li
+              class="usa-card desktop:grid-col-4 article article-card--isLink"
+              data-testid="article-card"
+            >
+              <div
+                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+              >
+                <header
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
+                >
+                  <h3
+                    class="line-height-body-4 margin-bottom-1"
+                  >
+                    How to have a successful 2-pager meeting
+                  </h3>
+                </header>
+                <a
+                  class="usa-link width-fit-content display-block "
+                  href="/help-and-knowledge/articles?category=getting-started"
+                >
+                  <span
+                    aria-label="Articles under the Getting started category"
+                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                    data-testid="tag"
+                  >
+                    Getting started
+                  </span>
+                </a>
+                <div
+                  class="usa-card__body padding-x-0 article__body padding-top-2"
+                  data-testid="CardBody"
+                >
+                  <p>
+                    Use this article to ensure you’re fully prepared for your 2-page concept review meeting with CMMI Front Office (FO).
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                  data-testid="CardFooter"
+                >
+                  <button
+                    aria-label="Read How to have a successful 2-pager meeting article"
+                    class="usa-button usa-button--outline"
+                    type="button"
+                  >
+                    Read
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-card desktop:grid-col-4 article article-card--isLink"
+              data-testid="article-card"
+            >
+              <div
+                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+              >
+                <header
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
+                >
+                  <h3
+                    class="line-height-body-4 margin-bottom-1"
+                  >
+                    Overview for adding a model
+                  </h3>
+                </header>
+                <a
+                  class="usa-link width-fit-content display-block "
+                  href="/help-and-knowledge/articles?category=getting-started"
+                >
+                  <span
+                    aria-label="Articles under the Getting started category"
+                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                    data-testid="tag"
+                  >
+                    Getting started
+                  </span>
+                </a>
+                <div
+                  class="usa-card__body padding-x-0 article__body padding-top-2"
+                  data-testid="CardBody"
+                >
+                  <p>
+                    Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the operational solutions the model will use and track its status through implementation
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                  data-testid="CardFooter"
+                >
+                  <button
+                    aria-label="Read Overview for adding a model article"
+                    class="usa-button usa-button--outline"
+                    type="button"
+                  >
+                    Read
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-card desktop:grid-col-4 article article-card--isLink"
+              data-testid="article-card"
+            >
+              <div
+                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+              >
+                <header
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
+                >
+                  <h3
+                    class="line-height-body-4 margin-bottom-1"
+                  >
+                    Sample Model Plan
+                  </h3>
+                </header>
+                <a
+                  class="usa-link width-fit-content display-block "
+                  href="/help-and-knowledge/articles?category=getting-started"
+                >
+                  <span
+                    aria-label="Articles under the Getting started category"
+                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                    data-testid="tag"
+                  >
+                    Getting started
+                  </span>
+                </a>
+                <div
+                  class="usa-card__body padding-x-0 article__body padding-top-2"
+                  data-testid="CardBody"
+                >
+                  <p>
+                    This is example data and may not reflect exact model decisions. Use this as a reference to better understand the type of information needed for a Model Plan.
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                  data-testid="CardFooter"
+                >
+                  <button
+                    aria-label="Read Sample Model Plan article"
+                    class="usa-button usa-button--outline"
+                    type="button"
+                  >
+                    Read
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div
+            class="margin-top-3"
+          >
+            <a
+              class="usa-link"
+              href="/help-and-knowledge/articles"
+            >
+              View all help articles
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

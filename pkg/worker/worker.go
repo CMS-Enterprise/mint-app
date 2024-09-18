@@ -5,9 +5,9 @@ import (
 
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 
-	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // Worker is a struct that contains all the dependencies to run worker functions

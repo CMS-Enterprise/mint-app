@@ -4,10 +4,10 @@ package useraccountstoretestconfigs
 import (
 	"github.com/jmoiron/sqlx"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/sqlutils"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // GetTestPrincipal either inserts a new user account record into the database, or returns the record already in the database

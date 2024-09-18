@@ -7,8 +7,8 @@ import (
 	"github.com/graph-gophers/dataloader"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // These constants represent keys constants used for the possible operational solution loaders

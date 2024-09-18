@@ -78,7 +78,7 @@ You may need to access cloud service to develop the application. This allows
 access to AWS resources (ex. SES Email).
 
 Follow the instructions in the infra repo
-[here](https://github.com/CMSgov/mint-infra#ctkey-wrapper). You'll need to add
+[here](https://github.com/CMS-Enterprise/mint-infra#ctkey-wrapper). You'll need to add
 the infra account environment variables to your `.envrc.local`. You can then run
 the `ctkey` command to get/set AWS environment variables.
 

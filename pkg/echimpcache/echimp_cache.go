@@ -6,9 +6,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/parquet"
-	"github.com/cmsgov/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/parquet"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
 // echimpCacheTimeHours is the length of time before a echimpCache needs to be refreshed

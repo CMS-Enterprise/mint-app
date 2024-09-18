@@ -3,8 +3,8 @@ package translatedaudit
 import (
 	"fmt"
 
-	"github.com/cmsgov/mint-app/mappings"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/mappings"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // GetDatabaseOperation casts the string representation of a database action to the appropriate enum

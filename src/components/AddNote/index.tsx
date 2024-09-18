@@ -4,9 +4,9 @@ import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, useField } from 'formik';
 
-import { ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import FieldGroup from 'components/shared/FieldGroup';
-import TextAreaField from 'components/shared/TextAreaField';
+import { ErrorAlertMessage } from 'components/ErrorAlert';
+import FieldGroup from 'components/FieldGroup';
+import TextAreaField from 'components/TextAreaField';
 
 type AddNoteType = {
   field: string;
@@ -15,7 +15,7 @@ type AddNoteType = {
 };
 
 const AddNote = ({ field: fieldName, id, className }: AddNoteType) => {
-  const { t } = useTranslation('draftModelPlan');
+  const { t } = useTranslation('general');
 
   // Formik hook used to fetch the field value based on the field name
   // meta isn't technically required for the component to work but ts throws errors if not instantiated alongside 'helpers'

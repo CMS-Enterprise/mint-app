@@ -4,7 +4,7 @@ import (
 	"bytes"
 	_ "embed"
 
-	"github.com/cmsgov/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
 const CRKey = "echimp_cr"

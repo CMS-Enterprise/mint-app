@@ -1,7 +1,7 @@
 import {
   useAddPlanFavoriteMutation,
   useDeletePlanFavoriteMutation
-} from 'gql/gen/graphql';
+} from 'gql/generated/graphql';
 
 // Custom hook to house the multiple mutations needed for toggling favorites
 

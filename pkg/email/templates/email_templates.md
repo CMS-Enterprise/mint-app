@@ -13,7 +13,7 @@ How to create, setup, and use email templates.
     package email
 
     import (
-      "github.com/cmsgov/mint-app/pkg/models"
+      "github.com/cms-enterprise/mint-app/pkg/models"
     )
 
     // {EmailName}BodyContent defines the parameters necessary for the corresponding email body
@@ -103,7 +103,7 @@ For HTML email templates:
       _ "embed"
       "fmt"
 
-      "github.com/cmsgov/mint-app/pkg/shared/emailtemplates"
+      "github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
     )
 
     // {emailName}TemplateName is the template name definition for the corresponding email template
