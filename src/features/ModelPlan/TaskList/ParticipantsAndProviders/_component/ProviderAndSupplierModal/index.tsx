@@ -16,6 +16,7 @@ import {
   existingProviderSupplierTypesNames
 } from 'i18n/en-US/modelPlan/participantsAndProviders';
 import { getKeys } from 'types/translation';
+import { tObject } from 'utils/translation';
 
 import ProviderAndSupplierTable from '../ProviderAndSupplierTable';
 
@@ -37,12 +38,10 @@ const ProviderAndSupplierModal = ({
     ExistingProviderSupplierTypes.PROVIDER_TYPES_INSTITUTIONAL
   );
 
-  const providerAndSupplierTypes: Record<
+  const providerAndSupplierTypes = tObject<
     ExistingProviderSupplierTypes,
     string
-  > = modalT('modal.existingProviderSupplierTypesNames', {
-    returnObjects: true
-  });
+  >('participantsAndProvidersMisc:modal.existingProviderSupplierTypesNames');
 
   const sidenavItems = getKeys(providerAndSupplierTypes).map(
     (key: ExistingProviderSupplierTypes) => {

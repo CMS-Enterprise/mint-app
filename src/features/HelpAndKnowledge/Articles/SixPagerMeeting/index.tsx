@@ -13,15 +13,14 @@ import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/Help
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 import { OperationalSolutionKey } from 'gql/generated/graphql';
-import { $SpecialObject } from 'i18next/typescript/helpers';
 
 import ExternalLink from 'components/ExternalLink';
-import ExternalLink2 from 'components/ExternalLink2';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import { tArray } from 'utils/translation';
 
 import {
   ArticleCategories,
@@ -44,67 +43,42 @@ const SixPagerMeeting = () => {
     location.search ? '&' : '?'
   }solution=learning-and-diffusion-group&section=about`;
 
-  const modelOverviewAndGoals: $SpecialObject = sixPageMeetingT(
-    'conceptPaper.stepOne.items',
-    { returnObjects: true }
+  const modelOverviewAndGoals = tArray(
+    'sixPageMeeting:conceptPaper.stepOne.items'
   );
 
-  const overviewOfKeyModelDesignElements: $SpecialObject = sixPageMeetingT(
-    'conceptPaper.stepTwo.subitems',
-    { returnObjects: true }
+  const overviewOfKeyModelDesignElements = tArray(
+    'sixPageMeeting:conceptPaper.stepTwo.subitems'
   );
 
-  const alignmentListItems: $SpecialObject = sixPageMeetingT(
-    'conceptPaper.stepThree.alignment.numberedList',
-    { returnObjects: true }
+  const alignmentListItems = tArray(
+    'sixPageMeeting:conceptPaper.stepThree.alignment.numberedList'
   );
 
-  const impactListItems: $SpecialObject = sixPageMeetingT(
-    'conceptPaper.stepThree.impact.list',
-    { returnObjects: true }
+  const impactListItems = tArray(
+    'sixPageMeeting:conceptPaper.stepThree.impact.list'
   );
 
-  const stepFour: $SpecialObject = sixPageMeetingT(
-    'conceptPaper.stepFour.items',
-    {
-      returnObjects: true
-    }
+  const stepFour = tArray('sixPageMeeting:conceptPaper.stepFour.items');
+
+  const stepFive = tArray('sixPageMeeting:conceptPaper.stepFive.items');
+
+  const stepSix = tArray('sixPageMeeting:conceptPaper.stepSix.items');
+
+  const stepSeven = tArray('sixPageMeeting:conceptPaper.stepSeven.items');
+
+  const additionalResourcesListItems = tArray(
+    'sixPageMeeting:additionalResources.list'
   );
 
-  const stepFive: $SpecialObject = sixPageMeetingT(
-    'conceptPaper.stepFive.items',
-    {
-      returnObjects: true
-    }
-  );
-  const stepSix: $SpecialObject = sixPageMeetingT(
-    'conceptPaper.stepSix.items',
-    {
-      returnObjects: true
-    }
-  );
-  const stepSeven: $SpecialObject = sixPageMeetingT(
-    'conceptPaper.stepSeven.items',
-    {
-      returnObjects: true
-    }
+  const additionalResourcesParagraphs = tArray(
+    'sixPageMeeting:additionalResources.paragraph'
   );
 
-  const additionalResourcesListItems: $SpecialObject = sixPageMeetingT(
-    'additionalResources.list',
-    { returnObjects: true }
-  );
-  const additionalResourcesParagraphs: $SpecialObject = sixPageMeetingT(
-    'additionalResources.paragraph',
-    { returnObjects: true }
-  );
-  const tipsList: $SpecialObject = sixPageMeetingT(
-    'reviewMeeting.subheading.tip.list',
-    { returnObjects: true }
-  );
-  const outcomesParagraphs: $SpecialObject = sixPageMeetingT(
-    'reviewMeeting.subheading.outcomes.paragraph',
-    { returnObjects: true }
+  const tipsList = tArray('sixPageMeeting:reviewMeeting.subheading.tip.list');
+
+  const outcomesParagraphs = tArray(
+    'sixPageMeeting:reviewMeeting.subheading.outcomes.paragraph'
   );
 
   if (loading) {
@@ -130,7 +104,7 @@ const SixPagerMeeting = () => {
               {sixPageMeetingT('title')}
             </PageHeading>
 
-            <ExternalLink2 href="https://google.com">Open google</ExternalLink2>
+            <ExternalLink href="https://google.com">Open google</ExternalLink>
 
             <HelpCategoryTag
               type={ArticleCategories.GETTING_STARTED}

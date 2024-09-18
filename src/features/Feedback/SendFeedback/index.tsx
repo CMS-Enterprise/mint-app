@@ -29,6 +29,7 @@ import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { getKeys } from 'types/translation';
+import { tObject } from 'utils/translation';
 
 const SendFeedback = () => {
   const { t } = useTranslation(['feedback', 'miscellaneous']);
@@ -39,25 +40,14 @@ const SendFeedback = () => {
 
   const [update, { loading }] = useMutation(CreateSendFeedback);
 
-  const mintUsedForOptions: Record<MintUses, string> = t(
-    'mintUsedFor.options',
-    {
-      returnObjects: true
-    }
+  const mintUsedForOptions = tObject<MintUses>('feedback:mintUsedFor.options');
+
+  const systemEasyToUseOptions = tObject<EaseOfUse>(
+    'feedback:systemEasyToUse.options'
   );
 
-  const systemEasyToUseOptions: Record<EaseOfUse, string> = t(
-    'systemEasyToUse.options',
-    {
-      returnObjects: true
-    }
-  );
-
-  const howSatisfiedOptions: Record<SatisfactionLevel, string> = t(
-    'howSatisfied.options',
-    {
-      returnObjects: true
-    }
+  const howSatisfiedOptions = tObject<SatisfactionLevel>(
+    'feedback:howSatisfied.options'
   );
 
   const handleFormSubmit = (formikValues: SendFeedbackEmailInput) => {

@@ -7,6 +7,7 @@ import { OperationalSolutionCategoryRoute } from 'features/ModelPlan/TaskList/IT
 
 import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
+import { tObject } from 'utils/translation';
 
 import {
   AboutConfigType,
@@ -30,9 +31,9 @@ const SolutionHelpCard = ({
 }: SolutionCardProps) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const aboutConfig: AboutConfigType = t(`solutions.${solution.key}.about`, {
-    returnObjects: true
-  });
+  const aboutConfig = tObject<keyof AboutConfigType, any>(
+    `helpAndKnowledge:solutions.${solution.key}.about`
+  );
 
   const primaryContact = solution?.pointsOfContact?.find(
     contact => contact.isPrimary

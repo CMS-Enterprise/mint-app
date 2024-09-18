@@ -4,6 +4,7 @@ import { Table as TrussTable } from '@trussworks/react-uswds';
 
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
+import { tArray } from 'utils/translation';
 
 type TableItemType = {
   activity: string;
@@ -40,48 +41,40 @@ const TransOrPrint = ({ copy }: { copy: string }) => {
 const Table = ({ content }: TableType) => {
   const { t: tableT } = useTranslation('highLevelProjectPlans');
 
-  const headers: string[] = tableT('accordionItems.table.header', {
-    returnObjects: true
-  });
+  const headers = tArray('highLevelProjectPlans:accordionItems.table.header');
 
   const contentMap = (contentText: string): TableItemType[] => {
     switch (contentText) {
       case 'cmmi-model-operational-planning':
-        return tableT('accordionItems.table.cmmi-model-operational-planning', {
-          returnObjects: true
-        });
+        return tArray(
+          'highLevelProjectPlans:accordionItems.table.cmmi-model-operational-planning'
+        );
       case 'cmmi-internal-clearance-process':
-        return tableT('accordionItems.table.cmmi-internal-clearance-process', {
-          returnObjects: true
-        });
+        return tArray(
+          'highLevelProjectPlans:accordionItems.table.cmmi-internal-clearance-process'
+        );
       case 'clearance-of-documents':
-        return tableT('accordionItems.table.clearance-of-documents', {
-          returnObjects: true
-        });
+        return tArray(
+          'highLevelProjectPlans:accordionItems.table.clearance-of-documents'
+        );
       case 'legal':
-        return tableT('accordionItems.table.legal', {
-          returnObjects: true
-        });
+        return tArray('highLevelProjectPlans:accordionItems.table.legal');
       case 'participants':
-        return tableT('accordionItems.table.participants', {
-          returnObjects: true
-        });
+        return tArray(
+          'highLevelProjectPlans:accordionItems.table.participants'
+        );
       case 'model-operations':
-        return tableT('accordionItems.table.model-operations', {
-          returnObjects: true
-        });
+        return tArray(
+          'highLevelProjectPlans:accordionItems.table.model-operations'
+        );
       case 'payment':
-        return tableT('accordionItems.table.payment', {
-          returnObjects: true
-        });
+        return tArray('highLevelProjectPlans:accordionItems.table.payment');
       case 'learning-&-diffusion':
-        return tableT('accordionItems.table.learning-&-diffusion', {
-          returnObjects: true
-        });
+        return tArray(
+          'highLevelProjectPlans:accordionItems.table.learning-&-diffusion'
+        );
       case 'evaluation':
-        return tableT('accordionItems.table.evaluation', {
-          returnObjects: true
-        });
+        return tArray('highLevelProjectPlans:accordionItems.table.evaluation');
       default:
         return [];
     }

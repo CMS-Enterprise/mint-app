@@ -17,6 +17,7 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
 import {
@@ -29,28 +30,22 @@ import {
 export const ModelSolutionImplementation = () => {
   const { t } = useTranslation('modelSolutionImplementation');
 
-  const summaryBoxConfig: string[] = t('summaryBox.items', {
-    returnObjects: true
-  });
-
-  const determinePriorityConfig: string[] = t(
-    'initiateWork.activities.items.1.items',
-    {
-      returnObjects: true
-    }
+  const summaryBoxConfig = tArray<string>(
+    'modelSolutionImplementation:summaryBox.items'
   );
 
-  const stayInformedConfig: string[] = t('trackWork.activities.items.0.items', {
-    returnObjects: true
-  });
+  const determinePriorityConfig = tArray<string>(
+    'initiateWork.activities.items.1.items'
+  );
 
-  const trackProgressConfig: any[] = t('trackWork.activities.items.1.items', {
-    returnObjects: true
-  });
+  const stayInformedConfig = tArray<string>(
+    'trackWork.activities.items.0.items'
+  );
 
-  const outcomesConfig: any[] = t('trackWork.outcomes.items', {
-    returnObjects: true
-  });
+  const trackProgressConfig = tArray<Record<string, any>>(
+    'trackWork.activities.items.1.items'
+  );
+  const outcomesConfig = tArray<string>('trackWork.outcomes.items');
 
   return (
     <>

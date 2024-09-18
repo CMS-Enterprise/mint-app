@@ -27,6 +27,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import { HomepageSettingsType } from 'i18n/en-US/home/settings';
 import { getKeys } from 'types/translation';
+import { tArray, tObject } from 'utils/translation';
 
 import './index.scss';
 
@@ -88,9 +89,9 @@ const SettingsForm = () => {
   }, [history, formikRef.current?.values]);
 
   // Get the settings options from the translation file
-  const settingOptions: HomepageSettingsType = homepageSettingsT('settings', {
-    returnObjects: true
-  });
+  const settingOptions = tObject<keyof HomepageSettingsType, any>(
+    'homepageSettings:settings'
+  );
 
   const initialValues: HomepageSettingsFormType = {
     viewCustomization:

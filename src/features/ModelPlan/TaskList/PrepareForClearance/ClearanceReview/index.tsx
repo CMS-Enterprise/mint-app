@@ -47,6 +47,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { SubscriptionContext } from 'contexts/PageLockContext';
+import { tArray } from 'utils/translation';
 
 import { ClearanceStatusesModelPlanFormType } from '../Checklist';
 
@@ -123,9 +124,9 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
     findLockedSection(taskListSectionLocks, taskListSectionMap[section]) ===
     LockStatus.LOCKED;
 
-  const taskListSections: any = t('modelPlanTaskList:numberedList', {
-    returnObjects: true
-  });
+  const taskListSections = tArray<Record<string, string>>(
+    'modelPlanTaskList:numberedList'
+  );
 
   const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
@@ -300,7 +301,9 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
             >
               {p('changes', {
                 section:
-                  taskListSections[routeMap[section]]?.heading?.toLowerCase()
+                  taskListSections[
+                    routeMap[section] as any
+                  ]?.heading?.toLowerCase()
               })}
               <Icon.ArrowForward className="margin-left-1" aria-hidden />
             </Button>

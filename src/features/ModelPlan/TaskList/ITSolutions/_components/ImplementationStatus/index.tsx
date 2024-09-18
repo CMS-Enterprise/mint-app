@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import { tObject } from 'utils/translation';
+
 type ImplementationStatusType = {
   status: string;
   description: string;
@@ -28,12 +30,10 @@ const ImplementationStatuses = ({
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
 
   // Fetches statuses and translations as object to map through and render as list
-  const implentationStatuses: ImplementationStatus = t(
-    'opSolutionsMisc:solutionStatuses',
-    {
-      returnObjects: true
-    }
-  );
+  const implentationStatuses = tObject<
+    keyof ImplementationStatus,
+    Record<string, string>
+  >('opSolutionsMisc:solutionStatuses');
 
   return (
     <Grid desktop={{ col: slim ? 6 : 12 }} className={classNames(className)}>

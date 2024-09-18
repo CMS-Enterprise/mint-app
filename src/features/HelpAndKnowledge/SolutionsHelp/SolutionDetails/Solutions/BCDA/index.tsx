@@ -6,10 +6,9 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 
 import UswdsReactLink from 'components/LinkWrapper';
-
-import { TimelineConfigType } from '../Generic/timeline';
 
 import '../index.scss';
 
@@ -23,12 +22,7 @@ export interface ProcessListItemProps {
 const BCDATimeLine = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const timelineConfig: TimelineConfigType = t(
-    `solutions.${solution.key}.timeline`,
-    {
-      returnObjects: true
-    }
-  );
+  const timelineConfig = timelineTranslationUtil(solution.key);
 
   return (
     <div className="operational-solution-details line-height-body-5 font-body-md text-pre-wrap">

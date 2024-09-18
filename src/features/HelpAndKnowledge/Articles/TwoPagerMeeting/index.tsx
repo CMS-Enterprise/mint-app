@@ -11,10 +11,12 @@ import {
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
+import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
 import ExternalLink from 'components/ExternalLink';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { tArray } from 'utils/translation';
 
 import { ArticleCategories, HelpArticle } from '..';
 
@@ -36,35 +38,32 @@ const Link = ({ scrollTo }: { scrollTo: string }) => {
 const TwoPagerMeeting = () => {
   const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
 
-  const modelOverviewAndGoals: string[] = twoPageMeetingT(
-    'conceptPaper.stepOne.items',
-    { returnObjects: true }
+  const modelOverviewAndGoals = tArray<string>(
+    'twoPageMeeting:conceptPaper.stepOne.items'
   );
 
-  const alignmentListItems: string[] = twoPageMeetingT(
-    'conceptPaper.stepThree.alignment.numberedList',
-    { returnObjects: true }
+  const alignmentListItems: string[] = tArray(
+    'twoPageMeeting:conceptPaper.stepThree.alignment.numberedList'
   );
 
-  const impactListItems: string[] = twoPageMeetingT(
-    'conceptPaper.stepThree.impact.list',
-    { returnObjects: true }
+  const impactListItems: string[] = tArray(
+    'twoPageMeeting:conceptPaper.stepThree.impact.list'
   );
-  const additionalResourcesListItems: string[] = twoPageMeetingT(
-    'additionalResources.list',
-    { returnObjects: true }
+
+  const additionalResourcesListItems: string[] = tArray(
+    'twoPageMeeting:additionalResources.list'
   );
-  const additionalResourcesParagraphs: string[] = twoPageMeetingT(
-    'additionalResources.paragraph',
-    { returnObjects: true }
+
+  const additionalResourcesParagraphs: string[] = tArray(
+    'twoPageMeeting:additionalResources.paragraph'
   );
-  const tipsList: string[] = twoPageMeetingT(
-    'reviewMeeting.subheading.tip.list',
-    { returnObjects: true }
+
+  const tipsList: string[] = tArray(
+    'twoPageMeeting:reviewMeeting.subheading.tip.list'
   );
-  const outcomesParagraphs: string[] = twoPageMeetingT(
-    'reviewMeeting.subheading.outcomes.paragraph',
-    { returnObjects: true }
+
+  const outcomesParagraphs: string[] = tArray(
+    'twoPageMeeting:reviewMeeting.subheading.outcomes.paragraph'
   );
 
   return (

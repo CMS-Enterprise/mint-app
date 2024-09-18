@@ -27,6 +27,7 @@ import FieldGroup from 'components/FieldGroup';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { getKeys } from 'types/translation';
+import { tObject } from 'utils/translation';
 
 const ReportAProblem = () => {
   const { t } = useTranslation(['feedback', 'miscellaneous']);
@@ -37,14 +38,12 @@ const ReportAProblem = () => {
 
   const [update, { loading }] = useMutation(CreateReportAProblem);
 
-  const sectionOptions: Record<ReportAProblemSection, string> = t(
-    'section.options',
-    { returnObjects: true }
+  const sectionOptions = tObject<ReportAProblemSection>(
+    'feedback:section.options'
   );
 
-  const severityOptions: Record<ReportAProblemSeverity, string> = t(
-    'severity.options',
-    { returnObjects: true }
+  const severityOptions = tObject<ReportAProblemSeverity>(
+    'feedback:severity.options'
   );
 
   const handleFormSubmit = (formikValues: ReportAProblemInput) => {

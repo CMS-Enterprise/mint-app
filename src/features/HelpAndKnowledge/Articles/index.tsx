@@ -1,6 +1,10 @@
 import React from 'react';
 import { Icon } from '@trussworks/react-uswds';
 
+import { tObject } from 'utils/translation';
+
+import { TimelineConfigType } from '../SolutionsHelp/SolutionDetails/Solutions/Generic/timeline';
+
 export enum ArticleCategories {
   GETTING_STARTED = 'getting-started',
   IT_IMPLEMENTATION = 'it-implementation'

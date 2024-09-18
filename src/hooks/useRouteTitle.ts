@@ -1,8 +1,9 @@
 // Hook to map react-touter-dom routes to translation titles
 import { useEffect, useRef } from 'react';
 import ReactGA from 'react-ga4';
-import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
+
+import { tObject } from 'utils/translation';
 
 // List of routes where the last part of the route is a UUID
 const currentUUIDRoutes: string[] = ['solution-implementation-details'];
@@ -10,11 +11,7 @@ const currentUUIDRoutes: string[] = ['solution-implementation-details'];
 const useRouteTitle = ({ sendGA = false }: { sendGA: boolean }): string => {
   const location = useLocation();
 
-  const { t } = useTranslation('routes');
-
-  const routeTitles: Record<string, string> = t('titles', {
-    returnObjects: true
-  });
+  const routeTitles = tObject<string, string>('titles');
 
   const title = useRef<string>('');
 
