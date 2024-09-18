@@ -327,10 +327,9 @@ const OperationalNeedsTable = ({
     prepareRow
   } = useTable(
     {
-      columns:
-        type === 'needs'
-          ? (needsColumns as Column<GetOperationalNeedsTableType>[])
-          : (possibleNeedsColumns as Column<GetOperationalNeedsTableType>[]),
+      columns: (type === 'needs'
+        ? (needsColumns as Column<GetOperationalNeedsTableType>[])
+        : (possibleNeedsColumns as Column<GetOperationalNeedsTableType>[])) as Column<object>[],
       data: operationalNeeds,
       sortTypes: {
         alphanumeric: (rowOne, rowTwo, columnName) => {
