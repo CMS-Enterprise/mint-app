@@ -195,7 +195,10 @@ const CollaboratorsTable = ({
         </caption>
         <thead>
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <tr
+              {...headerGroup.getHeaderGroupProps()}
+              key={{ ...headerGroup.getHeaderGroupProps() }.key}
+            >
               {headerGroup.headers.map(column => (
                 <th
                   {...column.getHeaderProps()}
@@ -209,6 +212,7 @@ const CollaboratorsTable = ({
                       (column.id === 'userAccount.commonName' && '25%') ||
                       'auto'
                   }}
+                  key={column.id}
                 >
                   <button
                     className="usa-button usa-button--unstyled position-relative"
@@ -226,7 +230,7 @@ const CollaboratorsTable = ({
         <tbody {...getTableBodyProps()}>
           {page.map(row => {
             return (
-              <tr {...row.getRowProps()}>
+              <tr {...row.getRowProps()} key={row.id}>
                 {row.cells.map(cell => {
                   return (
                     <td
@@ -234,6 +238,7 @@ const CollaboratorsTable = ({
                       style={{
                         whiteSpace: 'normal'
                       }}
+                      key={cell.getCellProps().key}
                     >
                       {cell.render('Cell')}
                     </td>

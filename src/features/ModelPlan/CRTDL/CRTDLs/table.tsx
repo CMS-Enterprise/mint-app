@@ -380,7 +380,10 @@ const Table = ({
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <tr
+              {...headerGroup.getHeaderGroupProps()}
+              key={{ ...headerGroup.getHeaderGroupProps() }.key}
+            >
               {headerGroup.headers
                 // @ts-ignore
                 .filter(column => !hiddenColumns?.includes(column.Header))
@@ -398,6 +401,7 @@ const Table = ({
                       minWidth: column.width,
                       maxWidth: column.width
                     }}
+                    key={column.id}
                   >
                     <button
                       className={classNames(
@@ -422,7 +426,7 @@ const Table = ({
           {page.map((row, index) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr {...row.getRowProps()} key={row.id}>
                 {row.cells
                   .filter(cell => {
                     // @ts-ignore
@@ -438,6 +442,7 @@ const Table = ({
                             index === page.length - 1 ? 'none' : 'auto',
                           whiteSpace: 'normal'
                         }}
+                        key={cell.getCellProps().key}
                       >
                         {cell.render('Cell')}
                       </td>

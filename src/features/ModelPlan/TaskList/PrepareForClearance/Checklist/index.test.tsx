@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   GetClearanceStatusesDocument,
   PrepareForClearanceStatus,
@@ -45,34 +45,30 @@ const clearanceMock = [
 
 describe('Prepare for clearance checklist', () => {
   it('renders without errors and unchecks an item', async () => {
-    await act(async () => {
-      const { user } = setup(
-        <MemoryRouter
-          initialEntries={[
-            `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
-          ]}
-        >
-          <MockedProvider mocks={clearanceMock} addTypename={false}>
-            <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance">
-              <PrepareForClearanceCheckList modelID={modelID} />
-            </Route>
-          </MockedProvider>
-        </MemoryRouter>
-      );
+    const { user } = setup(
+      <MemoryRouter
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+        ]}
+      >
+        <MockedProvider mocks={clearanceMock} addTypename={false}>
+          <Route path="/models/:modelID/collaboration-area/task-list/prepare-for-clearance">
+            <PrepareForClearanceCheckList modelID={modelID} />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
+    );
 
-      await waitFor(() => {
-        expect(
-          screen.getByTestId('prepare-for-clearance-basics')
-        ).toBeChecked();
-      });
+    await waitFor(() => {
+      expect(screen.getByTestId('prepare-for-clearance-basics')).toBeChecked();
+    });
 
-      await user.click(screen.getByTestId('prepare-for-clearance-basics'));
+    await user.click(screen.getByTestId('prepare-for-clearance-basics'));
 
-      await waitFor(() => {
-        expect(
-          screen.getByTestId('prepare-for-clearance-basics')
-        ).not.toBeChecked();
-      });
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('prepare-for-clearance-basics')
+      ).not.toBeChecked();
     });
   });
 
