@@ -1,6 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
+  Alert,
   Grid,
   GridContainer,
   Icon,
@@ -39,6 +40,10 @@ const TwoPagerMeeting = () => {
 
   const modelOverviewAndGoals = tArray<string>(
     'twoPageMeeting:conceptPaper.stepOne.items'
+  );
+
+  const briefItems = tArray<string>(
+    'twoPageMeeting:about.stepOne.items2.brief.list'
   );
 
   const alignmentListItems: string[] = tArray(
@@ -111,9 +116,143 @@ const TwoPagerMeeting = () => {
 
             <div
               id={covertToLowercaseAndDashes(
+                twoPageMeetingT('summaryBox.listItem.keyResources')
+              )}
+              className="margin-bottom-6 bg-primary-lighter"
+            >
+              <h2 className="margin-bottom-3">
+                {twoPageMeetingT('summaryBox.listItem.keyResources')}
+              </h2>
+              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+                {twoPageMeetingT('keyResources.introParagraph')}
+              </p>
+
+              {/* Shared component goes here */}
+            </div>
+            <div
+              id={covertToLowercaseAndDashes(
+                twoPageMeetingT('summaryBox.listItem.about')
+              )}
+              className="margin-bottom-6 bg-primary-lighter"
+            >
+              <h2 className="margin-bottom-3">
+                {twoPageMeetingT('summaryBox.listItem.about')}
+              </h2>
+              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+                {twoPageMeetingT('about.introParagraph')}
+              </p>
+
+              <Alert
+                type="info"
+                slim
+                headingLevel="h4"
+                className="margin-bottom-3"
+              >
+                {/* TODO: fix this */}
+                {twoPageMeetingT('about.alert')}
+                <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
+                  {twoPageMeetingT('about.link')}
+                </ExternalLink>
+              </Alert>
+
+              <h3 className="margin-top-0 margin-bottom-1">
+                {twoPageMeetingT('about.stepOne.heading')}
+              </h3>
+              <p className="padding-left-3 margin-bottom-0 line-height-sans-4">
+                {twoPageMeetingT('about.stepOne.copy')}
+              </p>
+              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                <li className="line-height-sans-4">
+                  {twoPageMeetingT('about.stepOne.items2.brief.text')}
+                  <ul className="margin-top-0 padding-left-2">
+                    {briefItems.map(k => (
+                      <li key={k} className="line-height-sans-4">
+                        {k}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+                <li className="line-height-sans-4">
+                  {twoPageMeetingT('about.stepOne.items2.describe')}
+                </li>
+                <li className="line-height-sans-4">
+                  {twoPageMeetingT('about.stepOne.items2.include')}
+                </li>
+                <li className="line-height-sans-4">
+                  {twoPageMeetingT('about.stepOne.items2.provide')}
+                </li>
+              </ul>
+
+              <h3 className="margin-top-0 margin-bottom-1">
+                {twoPageMeetingT('conceptPaper.stepTwo.heading')}
+              </h3>
+              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                <li className="line-height-sans-4">
+                  {twoPageMeetingT('conceptPaper.stepTwo.item')}
+                </li>
+              </ul>
+
+              <h3 className="margin-top-0 margin-bottom-1">
+                {twoPageMeetingT('conceptPaper.stepThree.heading')}
+              </h3>
+              <i className="display-block margin-top-0 margin-bottom-1 padding-left-3">
+                {twoPageMeetingT('conceptPaper.stepThree.italics')}
+              </i>
+              <ul className="margin-top-0 margin-bottom-5 padding-left-6">
+                <li className="line-height-sans-4 margin-bottom-05">
+                  <strong>
+                    {twoPageMeetingT('conceptPaper.stepThree.alignment.bold')}
+                  </strong>
+                  {twoPageMeetingT('conceptPaper.stepThree.alignment.text')}
+                  <ol className="padding-left-3 margin-top-05">
+                    {alignmentListItems.map(k => (
+                      <li key={k} className="line-height-sans-4">
+                        {k}
+                      </li>
+                    ))}
+                  </ol>
+                </li>
+                <li className="line-height-sans-4 margin-bottom-05">
+                  <strong>
+                    {twoPageMeetingT('conceptPaper.stepThree.impact.bold')}
+                  </strong>
+                  {twoPageMeetingT('conceptPaper.stepThree.impact.text')}
+                  <ul className="padding-left-3 margin-top-05">
+                    {impactListItems.map(k => (
+                      <li key={k} className="line-height-sans-4">
+                        {k}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+                <li className="line-height-sans-4 margin-bottom-05">
+                  <strong>
+                    {twoPageMeetingT('conceptPaper.stepThree.feasibility.bold')}
+                  </strong>
+                  {twoPageMeetingT('conceptPaper.stepThree.feasibility.text')}
+                </li>
+                <li className="line-height-sans-4 margin-bottom-05">
+                  <strong>
+                    {twoPageMeetingT('conceptPaper.stepThree.innovation.bold')}
+                  </strong>
+                  {twoPageMeetingT('conceptPaper.stepThree.innovation.text')}
+                </li>
+                <li className="line-height-sans-4 margin-bottom-05">
+                  <strong>
+                    {twoPageMeetingT(
+                      'conceptPaper.stepThree.stakeholders.bold'
+                    )}
+                  </strong>
+                  {twoPageMeetingT('conceptPaper.stepThree.stakeholders.text')}
+                </li>
+              </ul>
+            </div>
+
+            <div
+              id={covertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.listItem.draft')
               )}
-              className="margin-bottom-6"
+              className="margin-bottom-6 display-none"
             >
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.listItem.draft')}
