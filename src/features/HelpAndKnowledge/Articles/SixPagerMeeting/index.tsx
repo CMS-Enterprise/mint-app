@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import {
+  Card,
+  CardGroup,
   Grid,
   GridContainer,
   SummaryBox,
@@ -19,15 +21,12 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
+import ScrollLink from 'components/ScrollLink';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import { covertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
-import {
-  ArticleCategories,
-  covertToLowercaseAndDashes,
-  HelpArticle,
-  ScrollLink
-} from '..';
+import { ArticleCategories, HelpArticle } from '..';
 
 const SixPagerMeeting = () => {
   const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
@@ -42,6 +41,8 @@ const SixPagerMeeting = () => {
   const ldgRoute = `${initLocation}${location.search}${
     location.search ? '&' : '?'
   }solution=learning-and-diffusion-group&section=about`;
+
+  const sections = tArray('sixPageMeeting:summaryBox.sections');
 
   const modelOverviewAndGoals = tArray(
     'sixPageMeeting:conceptPaper.stepOne.items'
@@ -119,48 +120,31 @@ const SixPagerMeeting = () => {
               </SummaryBoxHeading>
 
               <SummaryBoxContent>
-                <ul className="margin-y-0">
-                  {/* eslint-disable jsx-a11y/anchor-is-valid */}
-                  <li className="margin-top-05 margin-bottom-1">
-                    <ScrollLink
-                      scrollTo={sixPageMeetingT('summaryBox.listItem.create')}
-                    />
-                  </li>
-                  <li className="margin-bottom-1">
-                    <ScrollLink
-                      scrollTo={sixPageMeetingT('summaryBox.listItem.draft')}
-                    />
-                  </li>
-                  <li className="margin-bottom-1">
-                    <ScrollLink
-                      scrollTo={sixPageMeetingT(
-                        'summaryBox.listItem.determine'
-                      )}
-                    />
-                  </li>
-                  <li>
-                    <ScrollLink
-                      scrollTo={sixPageMeetingT('summaryBox.listItem.review')}
-                    />
-                  </li>
-                  {/* eslint-enable jsx-a11y/anchor-is-valid */}
+                <ul className="margin-y-0 padding-top-1">
+                  {sections.map(section => (
+                    <li className="margin-top-05 margin-bottom-1" key={section}>
+                      <ScrollLink scrollTo={section} />
+                    </li>
+                  ))}
                 </ul>
               </SummaryBoxContent>
             </SummaryBox>
 
-            <div
-              id={covertToLowercaseAndDashes(
-                sixPageMeetingT('summaryBox.listItem.create')
-              )}
-              className="margin-bottom-0"
-            >
-              <h2 className="margin-bottom-3">
-                {sixPageMeetingT('summaryBox.listItem.create')}
-              </h2>
-              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
-                {sixPageMeetingT('create.paragraph')}
-              </p>
-            </div>
+            <Grid row gap>
+              <CardGroup>
+                <Card className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-bottom-3">
+                  <h2 className="margin-top-0 margin-bottom-1">
+                    {sixPageMeetingT('summaryBox.listItem.draft')}
+                  </h2>
+                  <p className="margin-top-0 margin-bottom-1 line-height-sans-4">
+                    {sixPageMeetingT('conceptPaper.introParagraph')}
+                  </p>
+                  <UswdsReactLink to="/models/steps-overview">
+                    {sixPageMeetingT('startSummaryBox.body')}
+                  </UswdsReactLink>
+                </Card>
+              </CardGroup>
+            </Grid>
 
             <SummaryBox className="margin-bottom-6">
               <SummaryBoxHeading headingLevel="h3">

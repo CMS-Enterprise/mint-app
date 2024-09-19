@@ -12,9 +12,29 @@ const sixPageMeeting = {
       'How 6-page concept papers are reviewed'
     ]
   },
-  create: {
-    paragraph:
-      'If you haven’t already created a Model Plan within MINT, you should start one now. By this point, many of the details of your model concept are beginning to take shape. The operational details in your 6-page concept paper are captured within the Model Plan. Additionally, you will be working with various cross-cutting groups as you plan and refine your model, so it will be helpful to everyone involved if you update your Model Plan as you iterate.'
+  keyResources: {
+    heading: 'Key resources for model teams writing 6-page concept papers',
+    description:
+      'Visit the CMMI Strategy Refresh SharePoint site to access additional model development resources including those that will help with the creation of 6-page and 6-page concept papers.',
+    cardOne: {
+      heading: 'Strategy Refresh SharePoint site',
+      linkOne: {
+        text: 'Go to the Strategy Refresh landing page',
+        link: 'https://share.cms.gov/center/cmmi/SR/SitePages/Home.aspx'
+      },
+      linkTwo: {
+        text: 'Go to the Resources page',
+        link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+      }
+    },
+    cardTwo: {
+      heading: '6-page concept paper template',
+      hint: 'Download the template from the Strategy Refresh SharePoint site.',
+      linOne: {
+        text: 'Go to the template on SharePoint',
+        link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx'
+      }
+    }
   },
   startSummaryBox: {
     title: 'Haven’t started a Model Plan yet?',

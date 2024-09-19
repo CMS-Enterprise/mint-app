@@ -17,15 +17,12 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import ScrollLink from 'components/ScrollLink';
+import { covertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
-import {
-  ArticleCategories,
-  covertToLowercaseAndDashes,
-  HelpArticle,
-  ScrollLink
-} from '..';
+import { ArticleCategories, HelpArticle } from '..';
 
 export const ModelSolutionDesign = () => {
   const { t } = useTranslation('modelSolutionDesign');

@@ -90,19 +90,4 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
   }
 ];
 
-export const covertToLowercaseAndDashes = (string: string) =>
-  string.toLowerCase().replace(/\s+/g, '-');
-
-export const ScrollLink = ({ scrollTo }: { scrollTo: string }) => {
-  return (
-    <a
-      href={`#${covertToLowercaseAndDashes(scrollTo)}`}
-      className="display-flex flex-align-center"
-    >
-      {scrollTo}
-      <Icon.ArrowForward />
-    </a>
-  );
-};
-
 export default helpAndKnowledgeArticles;

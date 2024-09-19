@@ -153,3 +153,6 @@ export const collaboratorsOrderedByModelLeads = (
 export const insertIf = (condition: boolean, ...elements: any) => {
   return condition ? elements : [];
 };
+
+export const covertToLowercaseAndDashes = (string: string) =>
+  string.toLowerCase().replace(/\s+/g, '-');
