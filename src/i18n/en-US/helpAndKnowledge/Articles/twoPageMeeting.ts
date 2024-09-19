@@ -20,7 +20,7 @@ const twoPageMeeting = {
     introParagraph:
       'A 2-page concept paper is an overview of an early development model concept, and may or may not include all of the elements listed below. Teams can focus on the most relevant and impactful information to help CMMI decide if a model concept should move to the next development phase. As teams are considering a 2-page concept paper, they may consult with their group leadership and the CMMI FO for early guidance and to support efficient use of staff and other resources.',
     alert:
-      'Much of the content below is also accessible in the 6-page concept paper template. ',
+      'Much of the content below is also accessible in the 6-page concept paper template.',
     link: 'Download it from the Strategy Refresh SharePoint site',
     stepOne: {
       heading: '1. Proposed model overview and goals',
@@ -120,27 +120,46 @@ const twoPageMeeting = {
   },
   additionalResources: {
     intro:
-      'This early in the process, it can be hard for model teams to know exactly what they’ll need regarding contractor support during the model concept and design phase. Not sure where to start? Below are some things to consider.',
-    subheading: 'Things to consider',
-    list: [
-      'Do you need an in-house expert on data? ',
-      'Do you need help crunching numbers? ',
-      'Do you need analytics support?',
-      'Do you need help drafting the Innovation Center Investment Proposal (ICIP) or other documents? ',
-      'Do you need literature review support? ',
-      'Do you need rule-writing support?',
-      'Do you need a clinical specialist? ',
-      'Do you need help on a specific aspect of your model? '
+      'This early in the process, it can be hard for model teams to know exactly what they’ll need regarding contractor support during the model concept, design, and development phases.',
+    contractor: 'Pipeline contractors',
+    contractorParagraph: [
+      'CMMI generally has two pipeline contractors available (currently MITRE and ARDS have pipeline contracts with CMMI) that can assist model teams with various needs leading up to clearance. It’s important to note, model teams need to get approval from CMMI FO to utilize one of these contractors, so it can be important for model teams to begin considering contractor involvement even as early as the 2-page concept phase.',
+      'While it is fine to use pipeline support for 2-page and 6-page concept paper work and for developing ICIP content, after the ICIP clears, model teams can no longer use pipeline funding. It can take a few months to get implementation contractor support, so plan accordingly. Model teams should work with the Division of Central Contracts Services (DCCS), the Division of Systems Support, Operation & Security (DSSOS), and the Office of Acquisition and Grants Management (OAGM) for assistance with contracting needs.'
     ],
-    paragraph: [
-      'If the answer is yes to one or more of these questions, your model would likely benefit from utilizing a pipeline contractor. CMMI generally has 2 pipeline contractors available (currently MITRE and ARDS have pipeline contracts with CMMI) that can assist model teams with various needs leading up to clearance. It’s important to note, model teams need to get approval from CMMI FO to utilize one of these contractors.',
-      'While it is fine to use pipeline support for 2-pager and 6-pager work and for developing ICIP content, after the ICIP clears, model teams can no longer use pipeline funding. It can take a few months to get implementation contractor support, so plan accordingly. Model teams should work with the Division of Central Contracts Services (DCCS), the Division of Systems Support, Operation & Security (DSSOS), and the Office of Acquisition and Grants Management (OAGM) for assistance with contracting needs.'
-    ]
+    summarybox: {
+      tips: {
+        heading: 'Tips for model teams',
+        firstParagraph:
+          'Not sure whether you need a pipeline contractor? Discuss the following questions with your team:',
+        list: [
+          'Do you need an in-house expert on data? ',
+          'Do you need help crunching numbers? ',
+          'Do you need analytics support?',
+          'Do you need help drafting the Innovation Center Investment Proposal (ICIP) or other documents? ',
+          'Do you need literature review support? ',
+          'Do you need rule-writing support?',
+          'Do you need a clinical specialist? ',
+          'Do you need help on a specific aspect of your model? '
+        ],
+        footer:
+          'If the answer is yes to one or more of these questions, your model would likely benefit from utilizing a pipeline contractor.'
+      }
+    },
+    crossCut: {
+      heading: 'Cross-cutting groups',
+      copy: 'During the concept, design, and development phases of a model, there are a variety of other groups within CMMI and the larger CMS organization that can help model teams with a variety of aspects of their model. These areas of specialty include:',
+      list: [
+        'Business Services Group (BSG) – for feasibility criteria',
+        'CMMI Front Office (FO) – for health equity',
+        'Learning and Diffusion Group (LDG) - for learning',
+        'Policy and Programs Group (PPG) – for quality and stakeholder engagement',
+        'Research and Rapid Cycle Evaluation Group (RREG) – for evaluation'
+      ]
+    }
   },
   reviewMeeting: {
     intro:
-      'After division and group leadership have reviewed and approved the 2-pager and the review meeting with CMMI FO is on the books, you may wonder, ',
-    italicsNowWhat: 'now what?',
+      'After division and group leadership have reviewed and approved the 2-page concept paper, a review meeting with CMMI FO is scheduled. This review meeting is a key step to moving a model concept forward in the process.',
     subheading: {
       tip: {
         text: 'Tips for the meeting',
