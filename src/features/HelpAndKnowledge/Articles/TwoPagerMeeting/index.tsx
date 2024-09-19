@@ -201,6 +201,15 @@ const TwoPagerMeeting = () => {
               <i className="display-block margin-top-0 margin-bottom-1 padding-left-3">
                 {twoPageMeetingT('conceptPaper.stepThree.italics')}
               </i>
+              <p className="padding-left-3 margin-bottom-0 line-height-sans-4">
+                <Trans
+                  t={twoPageMeetingT}
+                  i18nKey="about.stepThree.copy"
+                  components={{
+                    bold: <strong />
+                  }}
+                />
+              </p>
               <ul className="margin-top-0 margin-bottom-5 padding-left-6">
                 <li className="line-height-sans-4 margin-bottom-05">
                   <strong>

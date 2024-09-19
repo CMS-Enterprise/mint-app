@@ -48,6 +48,13 @@ const twoPageMeeting = {
       heading: '2. High-level description of model elements',
       copy: '2-page concept papers will:',
       item: 'Provide a high-level overview of key model design elements including target population, payment approach, and quality/performance measurement'
+    },
+    stepThree: {
+      heading:
+        '3. Preliminary analysis of the proposed model relative to selection criteria',
+      italics:
+        'Not all of these may be answerable early in model development/consideration',
+      copy: '2-page concept papers may address <bold>Alignment, Impact, Feasibility, Innovation,</bold> and may list a brief description of <bold>Interested parties</bold> by:'
     }
   },
   conceptPaper: {
