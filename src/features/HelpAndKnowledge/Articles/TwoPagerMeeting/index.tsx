@@ -74,12 +74,8 @@ const TwoPagerMeeting = () => {
     'twoPageMeeting:reviewMeeting.tipbox.list'
   );
 
-  const tipsList: string[] = tArray(
-    'twoPageMeeting:reviewMeeting.subheading.tip.list'
-  );
-
-  const outcomesParagraphs: string[] = tArray(
-    'twoPageMeeting:reviewMeeting.subheading.outcomes.paragraph'
+  const outcomesList: string[] = tArray(
+    'twoPageMeeting:reviewMeeting.outcomes.list'
   );
 
   return (
@@ -492,27 +488,23 @@ const TwoPagerMeeting = () => {
               </SummaryBox>
 
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('reviewMeeting.subheading.tip.text')}
+                {twoPageMeetingT('reviewMeeting.outcomes.heading')}
               </h3>
-              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                {tipsList.map(k => (
-                  <li key={k} className="line-height-sans-4 margin-bottom-05">
-                    {k}
+              <p className="margin-y-0 line-height-sans-4">
+                {twoPageMeetingT('reviewMeeting.outcomes.copy')}
+              </p>
+              <ul className="margin-y-0 padding-left-3">
+                {outcomesList.map(k => (
+                  <li key={k} className="line-height-sans-4">
+                    <Trans
+                      i18nKey={k}
+                      components={{
+                        bold: <strong />
+                      }}
+                    />
                   </li>
                 ))}
               </ul>
-
-              <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('reviewMeeting.subheading.outcomes.text')}
-              </h3>
-              {outcomesParagraphs.map(k => (
-                <p
-                  key={k}
-                  className="line-height-sans-4 margin-top-0 margin-bottom-3"
-                >
-                  {k}
-                </p>
-              ))}
             </div>
 
             <SummaryBox>

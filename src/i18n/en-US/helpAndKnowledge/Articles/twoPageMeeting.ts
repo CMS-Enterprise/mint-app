@@ -169,22 +169,14 @@ const twoPageMeeting = {
       ]
     },
 
-    subheading: {
-      tip: {
-        text: 'Tips for the meeting',
-        list: [
-          'Before the meeting, attach your 2-page concept paper to the calendar invite for your meeting with CMMI FO. We also recommend uploading your concept paper to your Model Plan within MINT.',
-          'Come prepared to discuss your model concept.',
-          'If you think you’ll need a pipeline contractor, flag this during the meeting. CMMI FO may have a preference for which contractor to use and will ultimately need to approve the request.'
-        ]
-      },
-      outcomes: {
-        text: 'Possible outcomes',
-        paragraph: [
-          'Since the 2-pager meeting is still pretty high level in terms of model design, CMMI FO may have suggestions for the team to iterate on. In this case, model teams may be asked to come back for another 2-pager review after they’ve had time to ideate and address their considerations. Some concepts require multiple rounds of iteration, so don’t be discouraged if your concept isn’t approved the first time around.',
-          'If during the meeting CMMI FO decides the model concept is feasible, they will approve the 2-pager. Model teams will then work on ironing out additional details of their model design that will go into their 6-page concept paper. If you haven’t already started filling out a Model Plan within MINT, this would be a great time to do that. Many of the details that will go into the 6-pager concept paper are a part of the Model Plan.'
-        ]
-      }
+    outcomes: {
+      heading: 'Possible outcomes',
+      copy: 'After the review meeting, the CMMI FO may direct you in one of the following directions:',
+      list: [
+        '<bold>Continue iterating:</bold> Since the 2-page review meeting is still pretty high level in terms of model design, the CMMI FO may have suggestions for the team to iterate on. In this case, model teams may be asked to come back for another 2-page review after they’ve had time to ideate and address feedback from the FO. Some concepts require multiple rounds of iteration, so model teams shouldn’t be discouraged if their concept isn’t approved the first time around.',
+        '<bold>Approval:</bold> If the CMMI FO decides the model concept is feasible, they will approve the 2-page concept paper. Model teams will then work on ironing out additional details of their model design as they work to write their 6-page concept paper. They may work with cross-cutting groups to write their 6-page concept paper. If they haven’t already started filling out a Model Plan within MINT, this is often a great time to start that. Many of the details that will go into a 6-page concept paper are also asked within the Model Plan. A Model Plan in MINT is a useful way to help communicate concepts and implementation details with other groups across CMS who assist with various aspects of development and implementation of models.',
+        '<bold>Pause:</bold> Sometimes the CMMI FO will not approve a concept paper or will ask the model team to pause work. This is nothing to worry about, as sometimes priorities within the Center can shift, and certain concepts may no longer align. When this happens, concepts will often be saved for future development.'
+      ]
     }
   },
   footerSummaryBox: {
