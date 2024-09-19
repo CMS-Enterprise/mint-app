@@ -168,6 +168,10 @@ const twoPageMeeting = {
         'If you think you’ll need a pipeline contractor, flag this during the meeting. CMMI FO may have a preference for which contractor to use and will ultimately need to approve the request.'
       ]
     },
+    criteria: {
+      heading: 'Model selection criteria',
+      copy: 'These selection criteria detail how models are evaluated overall. The CMMI FO may consider these criteria in different ways and to different degrees in each review meeting and phase of the model concept and design process.'
+    },
 
     outcomes: {
       heading: 'Possible outcomes',

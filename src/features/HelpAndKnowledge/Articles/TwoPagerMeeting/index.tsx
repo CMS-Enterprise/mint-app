@@ -166,12 +166,6 @@ const TwoPagerMeeting = () => {
                 headingLevel="h4"
                 className="margin-bottom-3"
               >
-                {/* TODO: fix this */}
-                {/* <span>{twoPageMeetingT('about.alert')}</span>
-                <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
-                  {twoPageMeetingT('about.link')}
-                </ExternalLink> */}
-
                 <Trans
                   t={twoPageMeetingT}
                   i18nKey="about.alert"
@@ -509,6 +503,13 @@ const TwoPagerMeeting = () => {
                   </ul>
                 </SummaryBoxContent>
               </SummaryBox>
+
+              <h3 className="margin-top-0 margin-bottom-1">
+                {twoPageMeetingT('reviewMeeting.criteria.heading')}
+              </h3>
+              <p className="margin-y-0 line-height-sans-4">
+                {twoPageMeetingT('reviewMeeting.criteria.copy')}
+              </p>
 
               <h3 className="margin-top-0 margin-bottom-1">
                 {twoPageMeetingT('reviewMeeting.outcomes.heading')}
