@@ -104,12 +104,21 @@ const TwoPagerMeeting = () => {
                   {/* eslint-disable jsx-a11y/anchor-is-valid */}
                   <li className="margin-top-05 margin-bottom-1">
                     <Link
-                      scrollTo={twoPageMeetingT('summaryBox.listItem.draft')}
+                      scrollTo={twoPageMeetingT(
+                        'summaryBox.listItem.keyResources'
+                      )}
                     />
                   </li>
                   <li className="margin-bottom-1">
                     <Link
-                      scrollTo={twoPageMeetingT('summaryBox.listItem.start')}
+                      scrollTo={twoPageMeetingT('summaryBox.listItem.about')}
+                    />
+                  </li>
+                  <li className="margin-bottom-1">
+                    <Link
+                      scrollTo={twoPageMeetingT(
+                        'summaryBox.listItem.additionalResources'
+                      )}
                     />
                   </li>
                   <li>
@@ -158,10 +167,24 @@ const TwoPagerMeeting = () => {
                 className="margin-bottom-3"
               >
                 {/* TODO: fix this */}
-                <span>{twoPageMeetingT('about.alert')}</span>
+                {/* <span>{twoPageMeetingT('about.alert')}</span>
                 <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
                   {twoPageMeetingT('about.link')}
-                </ExternalLink>
+                </ExternalLink> */}
+
+                <Trans
+                  t={twoPageMeetingT}
+                  i18nKey="about.alert"
+                  components={{
+                    s: <span />,
+                    el: (
+                      <ExternalLink
+                        className="margin-right-0"
+                        href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739"
+                      />
+                    )
+                  }}
+                />
               </Alert>
 
               <h3 className="margin-top-0 margin-bottom-1">
@@ -302,7 +325,7 @@ const TwoPagerMeeting = () => {
                   <p className="margin-y-0">
                     {twoPageMeetingT('about.summarybox.tips.secondParagraph')}
                   </p>
-                  <ul className="margin-y-0 padding-left-6">
+                  <ul className="margin-top-0 margin-bottom-2 padding-left-6">
                     {aboutTipsList2.map(k => (
                       <li key={k} className="line-height-sans-4">
                         {k}
