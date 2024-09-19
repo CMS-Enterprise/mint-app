@@ -103,21 +103,19 @@ const twoPageMeeting = {
         ],
         footer:
           'Visit the <bold>Strategy Refresh SharePoint site</bold> for additional guidance and helpful resources such as the 2-page concept paper template.'
-      }
-    }
-  },
-  conceptPaper: {
-    exampleSummaryBox: {
-      heading: 'Example 2-pagers',
-      text: 'While all models are different, and therefore the content within a 2-pager will vary drastically, it might be helpful to see examples of what other teams have put together for their models in the past.',
-      list: {
-        one: 'AHEAD 2-pager',
-        two: 'Enhancing Oncology Model 2-pager',
-        three: 'Innovation in Behavioral Health 2-pager',
-        four: 'Making Care Primary 2-pager'
       },
-      footer: 'To view the links above, you will need access to the ',
-      footerLink: 'Model Resources area of SharePoint.'
+      exampleSummaryBox: {
+        heading: 'Example 2-pagers',
+        text: 'While all models are different, and therefore the content within a 2-page concept paper may vary drastically, it could be helpful for model teams or other interested parties to see examples of what previous model teams have put together in the past.',
+        list: {
+          one: 'AHEAD 2-page concept paper',
+          two: 'Enhancing Oncology Model 2-page concept paper',
+          three: 'Innovation in Behavioral Health 2-pager concept paper',
+          four: 'Making Care Primary 2-pager concept paper'
+        },
+        footer: 'To view the links above, you will need access to the ',
+        footerLink: 'Model Resources area of SharePoint.'
+      }
     }
   },
   additionalResources: {

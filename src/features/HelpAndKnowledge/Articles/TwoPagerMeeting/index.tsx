@@ -272,7 +272,7 @@ const TwoPagerMeeting = () => {
                 </li>
               </ul>
 
-              <SummaryBox className="padding-3">
+              <SummaryBox className="padding-3 margin-bottom-3">
                 <SummaryBoxHeading
                   headingLevel="h3"
                   className="margin-bottom-2"
@@ -314,6 +314,59 @@ const TwoPagerMeeting = () => {
                       }}
                     />
                   </p>
+                </SummaryBoxContent>
+              </SummaryBox>
+
+              <SummaryBox className="padding-3 border-gray-10 bg-white">
+                <SummaryBoxHeading headingLevel="h3">
+                  {twoPageMeetingT(
+                    'about.summarybox.exampleSummaryBox.heading'
+                  )}
+                </SummaryBoxHeading>
+                <SummaryBoxContent>
+                  <p className="margin-y-1">
+                    {twoPageMeetingT('about.summarybox.exampleSummaryBox.text')}
+                  </p>
+                  <ul className="margin-top-0">
+                    <li className="margin-bottom-1">
+                      <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
+                        {twoPageMeetingT(
+                          'about.summarybox.exampleSummaryBox.list.one'
+                        )}
+                      </ExternalLink>
+                    </li>
+                    <li className="margin-bottom-1">
+                      <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20AOC)%202-pager_October%202021_v2%20clean.docx?d=w4bd1ac8e332c42659f7e4330b519794a">
+                        {twoPageMeetingT(
+                          'about.summarybox.exampleSummaryBox.list.two'
+                        )}
+                      </ExternalLink>
+                    </li>
+                    <li className="margin-bottom-1">
+                      <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Innovation%20in%20Behavioral%20Health%20(formerly%20BHI)%20Model%202-pager_FINAL.docx?d=wf5dc9e25276945278f98c2c8efc31e16">
+                        {twoPageMeetingT(
+                          'about.summarybox.exampleSummaryBox.list.three'
+                        )}
+                      </ExternalLink>
+                    </li>
+                    <li className="margin-bottom-1">
+                      <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/New%20Primary%20Care%20Model%20Concept%202-pager%20Final%20for%20FO.docx?d=webcc03b8baa74b11bc9cd28c264a6178">
+                        {twoPageMeetingT(
+                          'about.summarybox.exampleSummaryBox.list.four'
+                        )}
+                      </ExternalLink>
+                    </li>
+                  </ul>
+                  <span className="margin-y-0">
+                    {twoPageMeetingT(
+                      'about.summarybox.exampleSummaryBox.footer'
+                    )}
+                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
+                      {twoPageMeetingT(
+                        'about.summarybox.exampleSummaryBox.footerLink'
+                      )}
+                    </ExternalLink>
+                  </span>
                 </SummaryBoxContent>
               </SummaryBox>
             </div>
@@ -406,55 +459,6 @@ const TwoPagerMeeting = () => {
                 </li>
               </ul>
             </div>
-
-            <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0">
-              <SummaryBoxHeading headingLevel="h3">
-                {twoPageMeetingT('conceptPaper.exampleSummaryBox.heading')}
-              </SummaryBoxHeading>
-              <SummaryBoxContent>
-                <p className="margin-y-1">
-                  {twoPageMeetingT('conceptPaper.exampleSummaryBox.text')}
-                </p>
-                <ul className="margin-top-0">
-                  <li>
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
-                      {twoPageMeetingT(
-                        'conceptPaper.exampleSummaryBox.list.one'
-                      )}
-                    </ExternalLink>
-                  </li>
-                  <li>
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20AOC)%202-pager_October%202021_v2%20clean.docx?d=w4bd1ac8e332c42659f7e4330b519794a">
-                      {twoPageMeetingT(
-                        'conceptPaper.exampleSummaryBox.list.two'
-                      )}
-                    </ExternalLink>
-                  </li>
-                  <li>
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Innovation%20in%20Behavioral%20Health%20(formerly%20BHI)%20Model%202-pager_FINAL.docx?d=wf5dc9e25276945278f98c2c8efc31e16">
-                      {twoPageMeetingT(
-                        'conceptPaper.exampleSummaryBox.list.three'
-                      )}
-                    </ExternalLink>
-                  </li>
-                  <li>
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/New%20Primary%20Care%20Model%20Concept%202-pager%20Final%20for%20FO.docx?d=webcc03b8baa74b11bc9cd28c264a6178">
-                      {twoPageMeetingT(
-                        'conceptPaper.exampleSummaryBox.list.four'
-                      )}
-                    </ExternalLink>
-                  </li>
-                </ul>
-                <span className="margin-y-0">
-                  {twoPageMeetingT('conceptPaper.exampleSummaryBox.footer')}
-                  <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
-                    {twoPageMeetingT(
-                      'conceptPaper.exampleSummaryBox.footerLink'
-                    )}
-                  </ExternalLink>
-                </span>
-              </SummaryBoxContent>
-            </SummaryBox>
 
             <div
               id={covertToLowercaseAndDashes(
