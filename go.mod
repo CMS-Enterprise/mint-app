@@ -31,7 +31,7 @@ require github.com/gorilla/websocket v1.5.3
 require github.com/xhit/go-simple-mail/v2 v2.16.0
 
 require (
-	github.com/contribsys/faktory v1.9.0
+	github.com/contribsys/faktory v1.9.1
 	github.com/launchdarkly/go-sdk-common/v3 v3.1.0
 	github.com/launchdarkly/go-server-sdk/v6 v6.2.1
 	golang.org/x/net v0.29.0
@@ -83,7 +83,7 @@ require (
 require (
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc // indirect
-	github.com/charmbracelet/bubbletea v1.1.0
+	github.com/charmbracelet/bubbletea v1.1.1
 	github.com/contribsys/faktory_worker_go v1.7.0
 	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
