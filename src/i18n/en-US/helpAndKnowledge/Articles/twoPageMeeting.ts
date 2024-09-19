@@ -82,15 +82,31 @@ const twoPageMeeting = {
       interestedParty: {
         text: 'Including brief descriptions of any engagement or advocacy by interested parties on the model concept. (<bold>Interested parties</bold>)'
       }
+    },
+    summarybox: {
+      tips: {
+        heading: 'Tips for model teams',
+        firstParagraph:
+          'Focus on concept, research, gaps, and goals​. Clearly articulate the problem the model is solving for and its goals​. Ask yourself the following questions while writing:',
+        list1: [
+          'What does success look like?',
+          'What will improve for patients?',
+          'How will the care experience be different?',
+          'What do we want providers/payers to change?'
+        ],
+        secondParagraph: 'Lessons learned from past successful model concepts:',
+        list2: [
+          'Think about building on existing work',
+          'Pay attention to interested party interests and ideas',
+          'Build connections with other parts of CMS and HHS',
+          'Be prepared for opportunities'
+        ],
+        footer:
+          'Visit the <bold>Strategy Refresh SharePoint site</bold> for additional guidance and helpful resources such as the 2-page concept paper template.'
+      }
     }
   },
   conceptPaper: {
-    stepThree: {
-      heading:
-        '3. Preliminary analysis of the proposed model relative to selection criteria',
-      italics:
-        'Not all of these may be answerable early in model development/consideration'
-    },
     exampleSummaryBox: {
       heading: 'Example 2-pagers',
       text: 'While all models are different, and therefore the content within a 2-pager will vary drastically, it might be helpful to see examples of what other teams have put together for their models in the past.',

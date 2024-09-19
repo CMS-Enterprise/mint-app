@@ -50,9 +50,13 @@ const TwoPagerMeeting = () => {
     'twoPageMeeting:about.stepThree.impact.list'
   );
 
-  // const additionalResourcesListItems: string[] = tArray(
-  //   'twoPageMeeting:additionalResources.list'
-  // );
+  const aboutTipsList1: string[] = tArray(
+    'twoPageMeeting:about.summarybox.tips.list1'
+  );
+
+  const aboutTipsList2: string[] = tArray(
+    'twoPageMeeting:about.summarybox.tips.list2'
+  );
 
   const additionalResourcesParagraphs: string[] = tArray(
     'twoPageMeeting:additionalResources.paragraph'
@@ -114,7 +118,7 @@ const TwoPagerMeeting = () => {
               id={covertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.listItem.keyResources')
               )}
-              className="margin-bottom-6 bg-primary-lighter"
+              className="margin-bottom-6"
             >
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.listItem.keyResources')}
@@ -129,7 +133,7 @@ const TwoPagerMeeting = () => {
               id={covertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.listItem.about')
               )}
-              className="margin-bottom-6 bg-primary-lighter"
+              className="margin-bottom-6"
             >
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.listItem.about')}
@@ -192,10 +196,10 @@ const TwoPagerMeeting = () => {
               </ul>
 
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('conceptPaper.stepThree.heading')}
+                {twoPageMeetingT('about.stepThree.heading')}
               </h3>
               <i className="display-block margin-top-0 margin-bottom-1 padding-left-3">
-                {twoPageMeetingT('conceptPaper.stepThree.italics')}
+                {twoPageMeetingT('about.stepThree.italics')}
               </i>
               <p className="padding-left-3 margin-bottom-0 line-height-sans-4">
                 <Trans
@@ -267,6 +271,51 @@ const TwoPagerMeeting = () => {
                   />
                 </li>
               </ul>
+
+              <SummaryBox className="padding-3">
+                <SummaryBoxHeading
+                  headingLevel="h3"
+                  className="margin-bottom-2"
+                >
+                  {twoPageMeetingT('about.summarybox.tips.heading')}
+                </SummaryBoxHeading>
+                <SummaryBoxContent>
+                  <p className="margin-y-0">
+                    {twoPageMeetingT('about.summarybox.tips.firstParagraph')}
+                  </p>
+                  <ul className="margin-y-0 padding-left-6">
+                    {aboutTipsList1.map(k => (
+                      <li key={k} className="line-height-sans-4">
+                        {k}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="margin-y-0">
+                    {twoPageMeetingT('about.summarybox.tips.secondParagraph')}
+                  </p>
+                  <ul className="margin-y-0 padding-left-6">
+                    {aboutTipsList2.map(k => (
+                      <li key={k} className="line-height-sans-4">
+                        {k}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="margin-y-0">
+                    <Trans
+                      t={twoPageMeetingT}
+                      i18nKey="about.summarybox.tips.footer"
+                      components={{
+                        bold: (
+                          <ExternalLink
+                            className="margin-right-0"
+                            href="https://share.cms.gov/center/cmmi/SR/SitePages/Home.aspx"
+                          />
+                        )
+                      }}
+                    />
+                  </p>
+                </SummaryBoxContent>
+              </SummaryBox>
             </div>
 
             <div
