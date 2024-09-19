@@ -42,13 +42,13 @@ const TwoPagerMeeting = () => {
     'twoPageMeeting:about.stepOne.items.brief.list'
   );
 
-  // const alignmentListItems: string[] = tArray(
-  //   'twoPageMeeting:conceptPaper.stepThree.alignment.numberedList'
-  // );
+  const alignmentListItems: string[] = tArray(
+    'twoPageMeeting:about.stepThree.alignment.numberedList'
+  );
 
-  // const impactListItems: string[] = tArray(
-  //   'twoPageMeeting:conceptPaper.stepThree.impact.list'
-  // );
+  const impactListItems: string[] = tArray(
+    'twoPageMeeting:about.stepThree.impact.list'
+  );
 
   // const additionalResourcesListItems: string[] = tArray(
   //   'twoPageMeeting:additionalResources.list'
@@ -208,7 +208,6 @@ const TwoPagerMeeting = () => {
               </p>
               <ul className="margin-top-0 margin-bottom-5 padding-left-6">
                 <li className="line-height-sans-4 margin-bottom-05">
-                  {/* {twoPageMeetingT('conceptPaper.stepThree.alignment.text')} */}
                   <Trans
                     t={twoPageMeetingT}
                     i18nKey="about.stepThree.alignment.text"
@@ -217,45 +216,55 @@ const TwoPagerMeeting = () => {
                     }}
                   />
                   <ol className="padding-left-3 margin-top-05">
-                    {/* {alignmentListItems.map(k => (
+                    {alignmentListItems.map(k => (
                       <li key={k} className="line-height-sans-4">
                         {k}
                       </li>
-                    ))} */}
+                    ))}
                   </ol>
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.impact.bold')}
-                  </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.impact.text')}
+                  <Trans
+                    t={twoPageMeetingT}
+                    i18nKey="about.stepThree.impact.text"
+                    components={{
+                      bold: <strong />
+                    }}
+                  />
                   <ul className="padding-left-3 margin-top-05">
-                    {/* {impactListItems.map(k => (
+                    {impactListItems.map(k => (
                       <li key={k} className="line-height-sans-4">
                         {k}
                       </li>
-                    ))} */}
+                    ))}
                   </ul>
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.feasibility.bold')}
-                  </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.feasibility.text')}
+                  <Trans
+                    t={twoPageMeetingT}
+                    i18nKey="about.stepThree.feasibility.text"
+                    components={{
+                      bold: <strong />
+                    }}
+                  />
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.innovation.bold')}
-                  </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.innovation.text')}
+                  <Trans
+                    t={twoPageMeetingT}
+                    i18nKey="about.stepThree.innovation.text"
+                    components={{
+                      bold: <strong />
+                    }}
+                  />
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {twoPageMeetingT(
-                      'conceptPaper.stepThree.stakeholders.bold'
-                    )}
-                  </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.stakeholders.text')}
+                  <Trans
+                    t={twoPageMeetingT}
+                    i18nKey="about.stepThree.interestedParty.text"
+                    components={{
+                      bold: <strong />
+                    }}
+                  />
                 </li>
               </ul>
             </div>

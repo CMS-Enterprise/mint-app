@@ -79,7 +79,7 @@ const twoPageMeeting = {
       innovation: {
         text: 'Considering whether the model provides or is expected to stimulate innovation in a particular dimension such as payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy. (<bold>Innovation</bold>)'
       },
-      stakeholders: {
+      interestedParty: {
         text: 'Including brief descriptions of any engagement or advocacy by interested parties on the model concept. (<bold>Interested parties</bold>)'
       }
     }
