@@ -3,13 +3,18 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import {
   Card,
+  CardBody,
+  CardFooter,
   CardGroup,
+  CardHeader,
   Grid,
   GridContainer,
+  Icon,
   SummaryBox,
   SummaryBoxContent,
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
@@ -96,13 +101,13 @@ const SixPagerMeeting = () => {
         />
       )}
 
-      <MainContent>
+      <MainContent className="line-height-sans-5">
         <GridContainer>
           <Grid>
-            <HelpBreadcrumb text={sixPageMeetingT('title')} />
+            <HelpBreadcrumb text={sixPageMeetingT('heading')} />
 
             <PageHeading className="margin-bottom-1">
-              {sixPageMeetingT('title')}
+              {sixPageMeetingT('heading')}
             </PageHeading>
 
             <HelpCategoryTag
@@ -110,13 +115,13 @@ const SixPagerMeeting = () => {
               className="margin-bottom-1"
             />
 
-            <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
+            <p className="font-body-lg margin-top-0 margin-bottom-4">
               {sixPageMeetingT('description')}
             </p>
 
             <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2">
               <SummaryBoxHeading headingLevel="h3">
-                {sixPageMeetingT('summaryBox.title')}
+                {sixPageMeetingT('summaryBox.heading')}
               </SummaryBoxHeading>
 
               <SummaryBoxContent>
@@ -130,32 +135,47 @@ const SixPagerMeeting = () => {
               </SummaryBoxContent>
             </SummaryBox>
 
-            <Grid row gap>
-              <CardGroup>
-                <Card className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-bottom-3">
-                  <h2 className="margin-top-0 margin-bottom-1">
-                    {sixPageMeetingT('summaryBox.listItem.draft')}
-                  </h2>
-                  <p className="margin-top-0 margin-bottom-1 line-height-sans-4">
-                    {sixPageMeetingT('conceptPaper.introParagraph')}
-                  </p>
-                  <UswdsReactLink to="/models/steps-overview">
-                    {sixPageMeetingT('startSummaryBox.body')}
-                  </UswdsReactLink>
-                </Card>
-              </CardGroup>
-            </Grid>
+            <div>
+              <h2 className="margin-y-2">
+                {sixPageMeetingT('keyResources.heading')}
+              </h2>
 
-            <SummaryBox className="margin-bottom-6">
-              <SummaryBoxHeading headingLevel="h3">
-                {sixPageMeetingT('startSummaryBox.title')}
-              </SummaryBoxHeading>
-              <SummaryBoxContent>
-                <UswdsReactLink to="/models/steps-overview">
-                  {sixPageMeetingT('startSummaryBox.body')}
-                </UswdsReactLink>
-              </SummaryBoxContent>
-            </SummaryBox>
+              <p>{sixPageMeetingT('keyResources.description')}</p>
+
+              <KeyResourcesPageCards />
+            </div>
+
+            <div>
+              <h2 className="margin-y-2">
+                {sixPageMeetingT('modelPlansInMINT.heading')}
+              </h2>
+
+              <p>{sixPageMeetingT('modelPlansInMINT.description')}</p>
+
+              <SummaryBox className="padding-3 margin-bottom-3">
+                <SummaryBoxHeading
+                  headingLevel="h3"
+                  className="margin-bottom-1"
+                >
+                  {sixPageMeetingT('modelPlansInMINT.summaryBox.heading')}
+                </SummaryBoxHeading>
+
+                <SummaryBoxContent>
+                  <UswdsReactLink
+                    to={sixPageMeetingT(
+                      'modelPlansInMINT.summaryBox.linkOne.link'
+                    )}
+                    className="display-flex flex-align-center"
+                  >
+                    {sixPageMeetingT(
+                      'modelPlansInMINT.summaryBox.linkOne.text'
+                    )}
+
+                    <Icon.ArrowForward className="margin-left-1" />
+                  </UswdsReactLink>
+                </SummaryBoxContent>
+              </SummaryBox>
+            </div>
 
             <div
               id={covertToLowercaseAndDashes(
@@ -166,7 +186,7 @@ const SixPagerMeeting = () => {
               <h2 className="margin-top-0 margin-bottom-3">
                 {sixPageMeetingT('summaryBox.listItem.draft')}
               </h2>
-              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+              <p className="margin-top-0 margin-bottom-3">
                 {sixPageMeetingT('conceptPaper.introParagraph')}
               </p>
 
@@ -215,7 +235,7 @@ const SixPagerMeeting = () => {
                 </h3>
                 <ul className="margin-y-0 padding-left-6">
                   {modelOverviewAndGoals.map(k => (
-                    <li key={k} className="line-height-sans-4">
+                    <li key={k} className="">
                       {k}
                     </li>
                   ))}
@@ -227,12 +247,12 @@ const SixPagerMeeting = () => {
                   {sixPageMeetingT('conceptPaper.stepTwo.heading')}
                 </h3>
                 <ul className="margin-y-0 padding-left-6">
-                  <li className="line-height-sans-4">
+                  <li className="">
                     {sixPageMeetingT('conceptPaper.stepTwo.item')}
                   </li>
                   <ul className="margin-y-0 padding-left-3">
                     {overviewOfKeyModelDesignElements.map(k => (
-                      <li key={k} className="line-height-sans-4">
+                      <li key={k} className="">
                         {k}
                       </li>
                     ))}
@@ -245,7 +265,7 @@ const SixPagerMeeting = () => {
                   {sixPageMeetingT('conceptPaper.stepThree.heading')}
                 </h3>
                 <ul className="margin-top-0 padding-left-6">
-                  <li className="line-height-sans-4 margin-bottom-05">
+                  <li className=" margin-bottom-05">
                     <strong>
                       {sixPageMeetingT('conceptPaper.stepThree.alignment.bold')}
                     </strong>
@@ -259,26 +279,26 @@ const SixPagerMeeting = () => {
                     </span>
                     <ol className="padding-left-3 margin-top-05">
                       {alignmentListItems.map(k => (
-                        <li key={k} className="line-height-sans-4">
+                        <li key={k} className="">
                           {k}
                         </li>
                       ))}
                     </ol>
                   </li>
-                  <li className="line-height-sans-4 margin-bottom-05">
+                  <li className=" margin-bottom-05">
                     <strong>
                       {sixPageMeetingT('conceptPaper.stepThree.impact.bold')}
                     </strong>
                     {sixPageMeetingT('conceptPaper.stepThree.impact.text')}
                     <ul className="padding-left-3 margin-top-05">
                       {impactListItems.map(k => (
-                        <li key={k} className="line-height-sans-4">
+                        <li key={k} className="">
                           {k}
                         </li>
                       ))}
                     </ul>
                   </li>
-                  <li className="line-height-sans-4 margin-bottom-05">
+                  <li className=" margin-bottom-05">
                     <strong>
                       {sixPageMeetingT(
                         'conceptPaper.stepThree.feasibility.bold'
@@ -286,7 +306,7 @@ const SixPagerMeeting = () => {
                     </strong>
                     {sixPageMeetingT('conceptPaper.stepThree.feasibility.text')}
                   </li>
-                  <li className="line-height-sans-4 margin-bottom-05">
+                  <li className=" margin-bottom-05">
                     <strong>
                       {sixPageMeetingT(
                         'conceptPaper.stepThree.innovation.bold'
@@ -303,7 +323,7 @@ const SixPagerMeeting = () => {
                 </h3>
                 <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                   {stepFour.map(k => (
-                    <li key={k} className="line-height-sans-4">
+                    <li key={k} className="">
                       {k}
                     </li>
                   ))}
@@ -340,7 +360,7 @@ const SixPagerMeeting = () => {
                 </h3>
                 <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                   {stepFive.map(k => (
-                    <li key={k} className="line-height-sans-4">
+                    <li key={k} className="">
                       {k}
                     </li>
                   ))}
@@ -353,7 +373,7 @@ const SixPagerMeeting = () => {
                 </h3>
                 <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                   {stepSix.map(k => (
-                    <li key={k} className="line-height-sans-4">
+                    <li key={k} className="">
                       {k}
                     </li>
                   ))}
@@ -369,7 +389,7 @@ const SixPagerMeeting = () => {
                 </p>
                 <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                   {stepSeven.map(k => (
-                    <li key={k} className="line-height-sans-4">
+                    <li key={k} className="">
                       {k}
                     </li>
                   ))}
@@ -430,7 +450,7 @@ const SixPagerMeeting = () => {
               <h2 className="margin-bottom-3">
                 {sixPageMeetingT('summaryBox.listItem.determine')}
               </h2>
-              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+              <p className="margin-top-0 margin-bottom-3 ">
                 {sixPageMeetingT('additionalResources.intro')}
               </p>
 
@@ -439,16 +459,13 @@ const SixPagerMeeting = () => {
               </h3>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                 {additionalResourcesListItems.map(k => (
-                  <li key={k} className="line-height-sans-4 margin-bottom-05">
+                  <li key={k} className=" margin-bottom-05">
                     {k}
                   </li>
                 ))}
               </ul>
               {additionalResourcesParagraphs.map(k => (
-                <p
-                  key={k}
-                  className="line-height-sans-4 margin-top-0 margin-bottom-3"
-                >
+                <p key={k} className=" margin-top-0 margin-bottom-3">
                   {k}
                 </p>
               ))}
@@ -463,7 +480,7 @@ const SixPagerMeeting = () => {
               <h2 className="margin-bottom-3">
                 {sixPageMeetingT('summaryBox.listItem.review')}
               </h2>
-              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+              <p className="margin-top-0 margin-bottom-3 ">
                 {sixPageMeetingT('reviewMeeting.intro')}
                 <i>{sixPageMeetingT('reviewMeeting.italicsNowWhat')}</i>
               </p>
@@ -473,7 +490,7 @@ const SixPagerMeeting = () => {
               </h3>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                 {tipsList.map(k => (
-                  <li key={k} className="line-height-sans-4 margin-bottom-05">
+                  <li key={k} className=" margin-bottom-05">
                     {k}
                   </li>
                 ))}
@@ -483,10 +500,7 @@ const SixPagerMeeting = () => {
                 {sixPageMeetingT('reviewMeeting.subheading.outcomes.text')}
               </h3>
               {outcomesParagraphs.map(k => (
-                <p
-                  key={k}
-                  className="line-height-sans-4 margin-top-0 margin-bottom-3"
-                >
+                <p key={k} className=" margin-top-0 margin-bottom-3">
                   {k}
                 </p>
               ))}
@@ -521,6 +535,80 @@ const SixPagerMeeting = () => {
         />
       </div>
     </>
+  );
+};
+
+export const KeyResourcesPageCards = () => {
+  const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
+
+  return (
+    <Grid row gap>
+      <CardGroup>
+        <Grid
+          tablet={{ col: 6 }}
+          desktop={{ col: 6 }}
+          className="display-flex flex-align-stretch"
+        >
+          <Card
+            containerProps={{
+              className: 'radius-md shadow-2 padding-2'
+            }}
+            data-testid="article-card"
+          >
+            <CardHeader className="padding-0">
+              <h4 className="line-height-body-4 margin-bottom-1">
+                {sixPageMeetingT('keyResources.cardOne.heading')}
+              </h4>
+            </CardHeader>
+
+            <CardBody className="padding-0 line-height-sans-6">
+              <ExternalLink
+                href={sixPageMeetingT('keyResources.cardOne.linkOne.link')}
+              >
+                {sixPageMeetingT('keyResources.cardOne.linkOne.text')}
+              </ExternalLink>
+
+              <ExternalLink
+                href={sixPageMeetingT('keyResources.cardOne.linkTwo.link')}
+              >
+                {sixPageMeetingT('keyResources.cardOne.linkTwo.text')}
+              </ExternalLink>
+            </CardBody>
+          </Card>
+        </Grid>
+
+        <Grid
+          tablet={{ col: 6 }}
+          desktop={{ col: 6 }}
+          className="display-flex flex-align-stretch"
+        >
+          <Card
+            containerProps={{
+              className: 'radius-md shadow-2 padding-2'
+            }}
+            data-testid="article-card"
+          >
+            <CardHeader className="padding-0">
+              <h4 className="line-height-body-4 margin-bottom-1">
+                {sixPageMeetingT('keyResources.cardTwo.heading')}
+              </h4>
+
+              <p className="margin-y-0 text-base">
+                {sixPageMeetingT('keyResources.cardTwo.hint')}
+              </p>
+            </CardHeader>
+
+            <CardBody className="padding-0 line-height-sans-6">
+              <ExternalLink
+                href={sixPageMeetingT('keyResources.cardTwo.linkOne.link')}
+              >
+                {sixPageMeetingT('keyResources.cardTwo.linkOne.text')}
+              </ExternalLink>
+            </CardBody>
+          </Card>
+        </Grid>
+      </CardGroup>
+    </Grid>
   );
 };
 

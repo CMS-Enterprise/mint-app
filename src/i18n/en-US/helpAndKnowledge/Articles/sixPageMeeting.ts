@@ -1,9 +1,9 @@
 const sixPageMeeting = {
-  title: 'About 6-page concept papers and review meetings',
+  heading: 'About 6-page concept papers and review meetings',
   description:
     'Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-page concept paper. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.',
   summaryBox: {
-    title: 'Sections of this article',
+    heading: 'Sections of this article',
     sections: [
       'Key resources for model teams writing 6-page concept papers',
       'Model Plans in MINT',
@@ -30,15 +30,24 @@ const sixPageMeeting = {
     cardTwo: {
       heading: '6-page concept paper template',
       hint: 'Download the template from the Strategy Refresh SharePoint site.',
-      linOne: {
+      linkOne: {
         text: 'Go to the template on SharePoint',
         link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx'
       }
     }
   },
-  startSummaryBox: {
-    title: 'Haven’t started a Model Plan yet?',
-    body: 'Create a Model Plan now →'
+  modelPlansInMINT: {
+    heading: 'Model Plans in MINT',
+    description:
+      'If a model team hasn’t already created a Model Plan within MINT, the 6-page concept is a good time to begin one. By this point, many of the details of a model concept are beginning to take shape. The operational details in a 6-page concept paper are also captured within the Model Plan in order to better offer a single source of truth for other CMS partners working with model teams to develop and operationalize models. Additionally, model teams will be working with various cross-cutting groups as they plan and refine their model, so it will be helpful to everyone involved if model teams keep their MINT Model Plans up-to-date as they iterate and refine their model.',
+    summaryBox: {
+      heading:
+        'Are you part of a model team that hasn’t started a Model Plan in MINT yet?',
+      linkOne: {
+        text: 'Create a Model Plan now',
+        link: '/models/steps-overview'
+      }
+    }
   },
   crossCuttingGroupsSummaryBox: {
     title: 'Cross-cutting groups',
