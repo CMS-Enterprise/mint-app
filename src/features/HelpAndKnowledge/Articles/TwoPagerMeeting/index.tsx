@@ -43,7 +43,7 @@ const TwoPagerMeeting = () => {
   );
 
   const briefItems = tArray<string>(
-    'twoPageMeeting:about.stepOne.items2.brief.list'
+    'twoPageMeeting:about.stepOne.items.brief.list'
   );
 
   const alignmentListItems: string[] = tArray(

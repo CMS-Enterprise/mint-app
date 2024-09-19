@@ -25,12 +25,7 @@ const twoPageMeeting = {
     stepOne: {
       heading: '1. Proposed model overview and goals',
       copy: '2-page concept papers will:',
-      items: [
-        'Briefly describe the need for the model, including the challenges the target population faces',
-        'Describe the preliminary theory of change for the model',
-        'Provide background or context on if the proposed model has been tested before or is a follow-on model, incorporates learnings from external stakeholders, and/or where the concept originated (e.g., private sector, academia, state or regional efforts)'
-      ],
-      items2: {
+      items: {
         brief: {
           text: 'Briefly discuss the problem the model intends to address, including a description of the:',
           list: [
@@ -48,7 +43,8 @@ const twoPageMeeting = {
         provide:
           'Provide background or context on whether the proposed model has previously been tested or is a follow-on model, incorporates learnings from external stakeholders, and/or where concept originated (e.g. private sector, academia, state or regional efforts)'
       }
-    }
+    },
+    stepTwo: {}
   },
   conceptPaper: {
     introParagraph:
