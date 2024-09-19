@@ -3,12 +3,14 @@ import { Icon } from '@trussworks/react-uswds';
 
 export enum ArticleCategories {
   GETTING_STARTED = 'getting-started',
-  IT_IMPLEMENTATION = 'it-implementation'
+  IT_IMPLEMENTATION = 'it-implementation',
+  MODEL_CONCEPT_AND_DESIGN = 'model-concept-and-design'
 }
 
 export const articleCategories: ArticleCategories[] = [
   ArticleCategories.GETTING_STARTED,
-  ArticleCategories.IT_IMPLEMENTATION
+  ArticleCategories.IT_IMPLEMENTATION,
+  ArticleCategories.MODEL_CONCEPT_AND_DESIGN
 ];
 
 export enum HelpArticle {
@@ -54,7 +56,7 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     key: HelpArticle.SIX_PAGER_MEETING,
     route: '/how-to-have-a-successful-6-pager-meeting',
     translation: 'sixPageMeeting',
-    type: ArticleCategories.GETTING_STARTED
+    type: ArticleCategories.MODEL_CONCEPT_AND_DESIGN
   },
   {
     key: HelpArticle.HIGH_LEVEL_PROJECT_PLAN,

@@ -1,15 +1,16 @@
 const sixPageMeeting = {
-  title: 'How to have a successful 6-pager meeting',
+  title: 'About 6-page concept papers and review meetings',
   description:
-    'Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-pager. Use this article to ensure you’re fully prepared for your 6-page concept review meeting with CMMI FO.',
+    'Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-page concept paper. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.',
   summaryBox: {
-    title: 'Recommendations',
-    listItem: {
-      create: 'Create your Model Plan within MINT',
-      draft: 'Draft your 6-page concept paper',
-      determine: 'Determine additional resources needed',
-      review: 'The review meeting'
-    }
+    title: 'Sections of this article',
+    sections: [
+      'Key resources for model teams writing 6-page concept papers',
+      'Model Plans in MINT',
+      'About 6-page concept papers',
+      'Additional resources available to model teams',
+      'How 6-page concept papers are reviewed'
+    ]
   },
   create: {
     paragraph:

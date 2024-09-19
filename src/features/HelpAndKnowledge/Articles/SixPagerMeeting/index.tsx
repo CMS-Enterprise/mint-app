@@ -111,13 +111,16 @@ const SixPagerMeeting = () => {
         <GridContainer>
           <Grid>
             <HelpBreadcrumb text={sixPageMeetingT('title')} />
+
             <PageHeading className="margin-bottom-1">
               {sixPageMeetingT('title')}
             </PageHeading>
+
             <HelpCategoryTag
-              type={ArticleCategories.GETTING_STARTED}
+              type={ArticleCategories.MODEL_CONCEPT_AND_DESIGN}
               className="margin-bottom-1"
             />
+
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
               {sixPageMeetingT('description')}
             </p>
@@ -126,6 +129,7 @@ const SixPagerMeeting = () => {
               <SummaryBoxHeading headingLevel="h3">
                 {sixPageMeetingT('summaryBox.title')}
               </SummaryBoxHeading>
+
               <SummaryBoxContent>
                 <ul className="margin-y-0">
                   {/* eslint-disable jsx-a11y/anchor-is-valid */}
