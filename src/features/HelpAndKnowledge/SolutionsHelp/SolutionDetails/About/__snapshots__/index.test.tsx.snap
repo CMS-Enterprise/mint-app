@@ -173,15 +173,30 @@ exports[`Operational Solutions About Components > matches the snapshot > 4innova
           ?
         </h4>
         <span>
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            View on SharePoint what is needed to onboard Models to the IPC Portal
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              View on SharePoint what is needed to onboard Models to the IPC Portal
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </span>
       </div>
     </div>
@@ -362,15 +377,30 @@ exports[`Operational Solutions About Components > matches the snapshot > Account
           ?
         </h4>
         <span>
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            View on SharePoint what is needed to onboard Models to the IPC Portal
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              View on SharePoint what is needed to onboard Models to the IPC Portal
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </span>
       </div>
     </div>
@@ -1637,15 +1667,30 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
         </ul>
       </div>
       <span>
-        <a
-          aria-label="Open in a new tab"
-          class="usa-link usa-link--external"
-          href="https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx"
-          rel="noopener noreferrer"
-          target="_blank"
+        <button
+          class="usa-button usa-button--unstyled margin-right-2"
+          data-testid="button"
+          type="button"
         >
-          View on SharePoint what is needed to onboard Models to the IPC Portal
-        </a>
+          <span
+            class="display-flex flex-align-center"
+          >
+            View on SharePoint what is needed to onboard Models to the IPC Portal
+            <svg
+              class="usa-icon margin-left-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
+          </span>
+        </button>
       </span>
     </div>
   </div>
@@ -1803,15 +1848,30 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
             class=""
           >
             API-based data exchange through industry or organization-specific standards. For example, CDX collected Patient Care Reports through an API with Emergency Management Services software vendors using a 
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://nemsis.org/"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              data standard for emergency services.
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                data standard for emergency services.
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
           <li
             class=""
@@ -1872,15 +1932,30 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
         <span
           class="text-pre-wrap "
         >
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://www.loom.com/share/ba9eec7f6a0b401a8a5ea102d9c433f1"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            See a video sample.
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              See a video sample.
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </span>
         <ul
           class="padding-left-4"
@@ -1902,15 +1977,30 @@ exports[`Operational Solutions About Components > matches the snapshot > Innovat
           >
             <span>
               Participant feedback dashboards that supply curated reports to participants based on CMS data (
-              <a
-                aria-label="Open in a new tab"
-                class="usa-link usa-link--external"
-                href="https://cmsbox.app.box.com/s/rc1koqoevslmern6r0hfoabj0zkcawoq"
-                rel="noopener noreferrer"
-                target="_blank"
+              <button
+                class="usa-button usa-button--unstyled margin-right-2"
+                data-testid="button"
+                type="button"
               >
-                see a video sample
-              </a>
+                <span
+                  class="display-flex flex-align-center"
+                >
+                  see a video sample
+                  <svg
+                    class="usa-icon margin-left-05"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
               ). Dashboards use the Looker commercial tool and can include information such as:
             </span>
             <ul
@@ -2609,41 +2699,86 @@ exports[`Operational Solutions About Components > matches the snapshot > Quality
           <li
             class="list-item"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              Quality Vertical Model Resources on SharePoint
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                Quality Vertical Model Resources on SharePoint
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
           <li
             class="list-item"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://mmshub.cms.gov/mms-tools"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              Measure Management System (MMS) Tools
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                Measure Management System (MMS) Tools
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
           <li
             class="list-item"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://qpp.cms.gov/"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              Quality Payment Program
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                Quality Payment Program
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
         </ul>
       </div>
@@ -2804,15 +2939,30 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
           <li
             class=""
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="http://localhost:3000/help-center/salesforce-ars.png"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              View an ARS screenshot
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                View an ARS screenshot
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
         </ul>
       </div>
@@ -2888,28 +3038,58 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
           <li
             class="list-item"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="http://localhost:3000/help-center/salesforce-connect-1.png"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              View sample 1
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                View sample 1
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
           <li
             class="list-item"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="http://localhost:3000/help-center/salesforce-connect-2.png"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              View sample 2
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                View sample 2
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
         </ul>
       </div>
@@ -3014,15 +3194,30 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
           <li
             class=""
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="http://localhost:3000/help-center/salesforce-loi.png"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              View an LOI sample
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                View an LOI sample
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
         </ul>
       </div>
@@ -3177,28 +3372,58 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
           <li
             class="list-item"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="http://localhost:3000/help-center/salesforce-post-1.png"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              View sample 1
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                View sample 1
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
           <li
             class="list-item"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="http://localhost:3000/help-center/salesforce-post-2.png"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              View sample 2
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                View sample 2
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
         </ul>
       </div>
@@ -3330,15 +3555,30 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
           <li
             class=""
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="http://localhost:3000/help-center/salesforce-rfa.png"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              View an RFA screenshot
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                View an RFA screenshot
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
         </ul>
       </div>
@@ -3358,15 +3598,30 @@ exports[`Operational Solutions About Components > matches the snapshot > Salesfo
           ?
         </h4>
         <span>
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://share.cms.gov/center/CMMI-BSG/IPC/ResourceLibrary/IPC%20Data%20Field%20List.xlsx"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            View on SharePoint what is needed to onboard Models to the IPC Portal
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              View on SharePoint what is needed to onboard Models to the IPC Portal
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </span>
       </div>
     </div>
@@ -3411,15 +3666,30 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
           <li
             class="list-style-none"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://share.cms.gov/center/cmmi-eos/CMMITraining/SitePages/FFSHome.aspx"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              Go to Fee For Service Change Request Resource Center
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                Go to Fee For Service Change Request Resource Center
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </li>
         </ul>
       </div>

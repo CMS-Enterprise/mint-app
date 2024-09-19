@@ -17,6 +17,7 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
 import {
@@ -29,52 +30,35 @@ import {
 export const ModelSolutionDesign = () => {
   const { t } = useTranslation('modelSolutionDesign');
 
-  const summaryBoxConfig: string[] = t('summaryBox.items', {
-    returnObjects: true
-  });
+  const summaryBoxConfig = tArray('modelSolutionDesign:summaryBox.items');
 
-  const startModelPlanActivitiesConfig: any[] = t(
-    'startModelPlan.activities.items',
-    {
-      returnObjects: true
-    }
+  const startModelPlanActivitiesConfig = tArray<Record<string, string>>(
+    'modelSolutionDesign:startModelPlan.activities.items'
   );
 
-  const assembleTeamActivitiesConfig: any[] = t(
-    'assembleTeam.activities.items',
-    {
-      returnObjects: true
-    }
+  const assembleTeamActivitiesConfig = tArray<Record<string, string>>(
+    'modelSolutionDesign:assembleTeam.activities.items'
   );
 
-  const identifySolutionsActivitiesConfig: any[] = t(
-    'identifySolutions.activities.items',
-    {
-      returnObjects: true
-    }
+  const identifySolutionsActivitiesConfig = tArray<Record<string, string>>(
+    'modelSolutionDesign:identifySolutions.activities.items'
   );
 
-  const startModelPlanOutcomesConfig: any[] = t(
-    'startModelPlan.outcomes.items',
-    {
-      returnObjects: true
-    }
+  const startModelPlanOutcomesConfig = tArray(
+    'modelSolutionDesign:startModelPlan.outcomes.items'
   );
 
-  const assembleTeamOutcomesConfig: any[] = t('assembleTeam.outcomes.items', {
-    returnObjects: true
-  });
-
-  const identifySolutionsOutcomesConfig: any[] = t(
-    'identifySolutions.outcomes.items',
-    {
-      returnObjects: true
-    }
+  const assembleTeamOutcomesConfig = tArray(
+    'modelSolutionDesign:assembleTeam.outcomes.items'
   );
 
-  const identifySolutionsWhenConfig: any[] = t('identifySolutions.whenItems', {
-    returnObjects: true
-  });
+  const identifySolutionsOutcomesConfig = tArray(
+    'modelSolutionDesign:identifySolutions.outcomes.items'
+  );
+
+  const identifySolutionsWhenConfig = tArray(
+    'modelSolutionDesign:identifySolutions.whenItems'
+  );
 
   return (
     <>

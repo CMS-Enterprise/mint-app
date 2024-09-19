@@ -30,6 +30,7 @@ import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formDiff';
+import { tObject } from 'utils/translation';
 
 type GetNotifcationSettingsType =
   GetNotificationSettingsQuery['currentUser']['notificationPreferences'];
@@ -42,17 +43,13 @@ type NotificationSettingsFormType = Omit<
 const NotificationSettings = () => {
   const { t: notificationsT } = useTranslation('notifications');
 
-  const notificationSettings: Record<
+  const notificationSettings = tObject<
     keyof NotificationSettingsFormType,
     string
-  > = notificationsT('settings.configurations', {
-    returnObjects: true
-  });
-  const whichModelType: Record<string, string> = notificationsT(
-    'settings.additionalConfigurations.whichModelTypes',
-    {
-      returnObjects: true
-    }
+  >('notifications:settings.configurations');
+
+  const whichModelType = tObject<string, string>(
+    'notifications:settings.additionalConfigurations.whichModelTypes'
   );
 
   const formikRef = useRef<FormikProps<NotificationSettingsFormType>>(null);

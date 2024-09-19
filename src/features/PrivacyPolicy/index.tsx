@@ -4,47 +4,41 @@ import { Link } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { tArray } from 'utils/translation';
 
 const PrivacyPolicy = () => {
   const { t } = useTranslation();
 
   // store your i18n array into a variable, and use typescript to cast it as an array of strings
-  const infoCollectedWhenYouBrowseList: string[] = t(
-    'privacyPolicy:infoWeCollect:autoCollect:whenYouBrowse.infoList',
-    { returnObjects: true }
-  );
-  const infoCollectedWhenYouBrowseUsageList: string[] = t(
-    'privacyPolicy:infoWeCollect:autoCollect:whenYouBrowse.usageList',
-    { returnObjects: true }
+  const infoCollectedWhenYouBrowseList = tArray(
+    'privacyPolicy:infoWeCollect:autoCollect:whenYouBrowse.infoList'
   );
 
-  const thirdPartyAnalyticsUsageList: string[] = t(
-    'privacyPolicy:infoUsage:thirdPartyAnalytics.usageList',
-    { returnObjects: true }
+  const infoCollectedWhenYouBrowseUsageList = tArray(
+    'privacyPolicy:infoWeCollect:autoCollect:whenYouBrowse.usageList'
+  );
+  const thirdPartyAnalyticsUsageList = tArray(
+    'privacyPolicy:infoUsage:thirdPartyAnalytics.usageList'
   );
 
-  const socialMediaUsageList: string[] = t(
-    'privacyPolicy:linksToOtherSites:socialMedia.usageList',
-    { returnObjects: true }
+  const socialMediaUsageList = tArray(
+    'privacyPolicy:linksToOtherSites:socialMedia.usageList'
   );
 
-  const personalInfoCriteriaList: string[] = t(
-    'privacyPolicy:personalInfo.criteriaList',
-    { returnObjects: true }
+  const personalInfoCriteriaList = tArray(
+    'privacyPolicy:personalInfo.criteriaList'
   );
 
-  const trackingInformationList: string[] = t(
-    'privacyPolicy:tracking.trackingDescription',
-    { returnObjects: true }
+  const trackingInformationList = tArray(
+    'privacyPolicy:tracking.trackingDescription'
   );
 
-  const webAnalyticsToolsInformationList: string[] = t(
-    'privacyPolicy:thirdParty:webAnalyticsTools.collectionList',
-    { returnObjects: true }
+  const webAnalyticsToolsInformationList = tArray(
+    'privacyPolicy:thirdParty:webAnalyticsTools.collectionList'
   );
-  const webAnalyticsToolsInformationUsageList: string[] = t(
-    'privacyPolicy:thirdParty:webAnalyticsTools.usageList',
-    { returnObjects: true }
+
+  const webAnalyticsToolsInformationUsageList = tArray(
+    'privacyPolicy:thirdParty:webAnalyticsTools.usageList'
   );
 
   return (

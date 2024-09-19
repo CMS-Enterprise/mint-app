@@ -2,6 +2,7 @@ import React, { CSSProperties, useEffect, useState } from 'react';
 import Select, {
   ClearIndicatorProps,
   components,
+  GroupBase,
   MultiValue,
   OptionProps
 } from 'react-select';
@@ -14,14 +15,21 @@ import CheckboxField from '../CheckboxField';
 
 import './index.scss';
 
-type MultiSelectOptionProps = {
+export type MultiSelectOptionProps = {
   value: string;
   label: string;
   subLabel?: string;
   isDisabled?: boolean;
+  email?: string;
 };
 
-export const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
+export const Option = (
+  props: OptionProps<
+    MultiSelectOptionProps,
+    true,
+    GroupBase<MultiSelectOptionProps>
+  >
+) => {
   const { data, isSelected, innerProps, innerRef, isFocused } = props;
 
   return (

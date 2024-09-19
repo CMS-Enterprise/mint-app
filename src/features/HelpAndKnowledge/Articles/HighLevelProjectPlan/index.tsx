@@ -21,6 +21,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import { tArray } from 'utils/translation';
 
 import { ArticleCategories, HelpArticle } from '..';
 
@@ -41,9 +42,9 @@ const HighLevelProjectPlan = () => {
     helpSolutions
   );
 
-  const accordionTitles: string[] = highLevelT('accordionItems.titles', {
-    returnObjects: true
-  });
+  const accordionTitles = tArray<string>(
+    'highLevelProjectPlans:accordionItems.titles'
+  );
 
   const accordionItemsMap: AccordionItemProps[] = accordionTitles.map(
     (item, index) => ({

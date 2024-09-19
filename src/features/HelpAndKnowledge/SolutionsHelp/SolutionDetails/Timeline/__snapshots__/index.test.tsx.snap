@@ -27,15 +27,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > 4inn
             Inquire about using 4i/ACO-OS
           </h3>
           Send an email to 
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="mailto:ACO-OIT@cms.hhs.gov"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            ACO-OIT@cms.hhs.gov
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              ACO-OIT@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
            if interested in using 4i and ACO-OS for your model. Please also include Ashley Corbin on the email.
         </li>
         <div />
@@ -202,15 +217,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Acco
             Inquire about using 4i/ACO-OS
           </h3>
           Send an email to 
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="mailto:ACO-OIT@cms.hhs.gov"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            ACO-OIT@cms.hhs.gov
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              ACO-OIT@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
            if interested in using 4i and ACO-OS for your model. Please also include Ashley Corbin on the email.
         </li>
         <div />
@@ -494,15 +524,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
       class="operational-solution-details line-height-body-5 font-body-md"
     >
       Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at 
-      <a
-        aria-label="Open in a new tab"
-        class="usa-link usa-link--external"
-        href="mailto:MINTTeam@cms.hhs.gov"
-        rel="noopener noreferrer"
-        target="_blank"
+      <button
+        class="usa-button usa-button--unstyled margin-right-2"
+        data-testid="button"
+        type="button"
       >
-        MINTTeam@cms.hhs.gov
-      </a>
+        <span
+          class="display-flex flex-align-center"
+        >
+          MINTTeam@cms.hhs.gov
+          <svg
+            class="usa-icon margin-left-05"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </span>
+      </button>
       .
       <ol
         class="usa-process-list"
@@ -518,15 +563,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
           </h3>
           G​o to CMS Box and click Continue to confirm you are a part of the Centers for Medicare & M​edicaid services. You will be automatically signed in.
           <p>
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://cmsbox.account.box.com/login"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              Go to CMS Box
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                Go to CMS Box
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </p>
         </li>
         <li
@@ -540,15 +600,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
           </h3>
           If using CMS Box to share files with participants, additional permissions will need to be set up.
           <p>
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://cmsintranet.share.cms.gov/CT/Pages/BoxInformation.aspx"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              View resources on CMS Intranet
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                View resources on CMS Intranet
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </p>
         </li>
       </ol>
@@ -569,15 +644,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
       class="operational-solution-details line-height-body-5 font-body-md"
     >
       Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at 
-      <a
-        aria-label="Open in a new tab"
-        class="usa-link usa-link--external"
-        href="mailto:MINTTeam@cms.hhs.gov"
-        rel="noopener noreferrer"
-        target="_blank"
+      <button
+        class="usa-button usa-button--unstyled margin-right-2"
+        data-testid="button"
+        type="button"
       >
-        MINTTeam@cms.hhs.gov
-      </a>
+        <span
+          class="display-flex flex-align-center"
+        >
+          MINTTeam@cms.hhs.gov
+          <svg
+            class="usa-icon margin-left-05"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </span>
+      </button>
       .
       <ol
         class="usa-process-list"
@@ -593,15 +683,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
           </h3>
           Log in to CMS Qualtrics using your CMS user name and password.
           <p>
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://surveys.cms.gov/"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              Go to CMS Qualtrics
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                Go to CMS Qualtrics
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </p>
         </li>
         <li
@@ -657,15 +762,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CPI 
         >
           <span>
             In the meantime, contact the MINT Team at 
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="mailto:MINTTeam@cms.hhs.gov"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              MINTTeam@cms.hhs.gov
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
             .
           </span>
         </p>
@@ -700,15 +820,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cent
             Inquire about CDX
           </h3>
           If you’re interested in using CDX for your model or would like to learn more about the system, please contact 
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="mailto:MINTTeam@cms.hhs.go"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            MINTTeam@cms.hhs.gov
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              MINTTeam@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
            to learn more.
         </li>
         <li
@@ -726,15 +861,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cent
           <ol>
             <li>
               Register as New User in the 
-              <a
-                aria-label="Open in a new tab"
-                class="usa-link usa-link--external"
-                href="https://portalval.cms.gov/portal/"
-                rel="noopener noreferrer"
-                target="_blank"
+              <button
+                class="usa-button usa-button--unstyled margin-right-2"
+                data-testid="button"
+                type="button"
               >
-                CMS Enterprise Portal
-              </a>
+                <span
+                  class="display-flex flex-align-center"
+                >
+                  CMS Enterprise Portal
+                  <svg
+                    class="usa-icon margin-left-05"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
             </li>
             <li>
               Submit Privileged User Role Request for IC
@@ -796,15 +946,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
           </h3>
           Anyone wanting to access CCW data will need a valid CMS DUA (Data User Agreement).
           <p>
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://www.cms.gov/research-statistics-data-and-systems/files-for-order/data-disclosures-data-agreements/overview"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              Data Disclosures and Data Use Agreements
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                Data Disclosures and Data Use Agreements
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
           </p>
         </li>
         <li
@@ -817,15 +982,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
             Complete CCW VRDC Access Request worksheet
           </h3>
           Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="mailto:CCWAccess@cms.hhs.go"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            CCWAccess@cms.hhs.gov
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              CCWAccess@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
           ) and Velda.
         </li>
         <li
@@ -873,15 +1053,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
             Complete Employee CCW Access Request form
           </h3>
           Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="mailto:CCWAccess@cms.hhs.gov"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            CCWAccess@cms.hhs.gov
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              CCWAccess@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
           ) and Velda.
         </li>
         <li
@@ -1041,15 +1236,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Elec
         >
           <span>
             In the meantime, contact the MINT Team at 
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="mailto:MINTTeam@cms.hhs.gov"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              MINTTeam@cms.hhs.gov
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
             .
           </span>
         </p>
@@ -1343,15 +1553,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
         >
           <span>
             In the meantime, contact the MINT Team at 
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="mailto:MINTTeam@cms.hhs.gov"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              MINTTeam@cms.hhs.gov
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
             .
           </span>
         </p>
@@ -1373,15 +1598,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
       class="line-height-body-5 font-body-md"
     >
       Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at 
-      <a
-        aria-label="Open in a new tab"
-        class="usa-link usa-link--external"
-        href="mailto:donna.schmidt@cms.hhs.gov"
-        rel="noopener noreferrer"
-        target="_blank"
+      <button
+        class="usa-button usa-button--unstyled margin-right-2"
+        data-testid="button"
+        type="button"
       >
-        donna.schmidt@cms.hhs.gov
-      </a>
+        <span
+          class="display-flex flex-align-center"
+        >
+          donna.schmidt@cms.hhs.gov
+          <svg
+            class="usa-icon margin-left-05"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </span>
+      </button>
        if you have questions.
     </div>
   </div>
@@ -1645,15 +1885,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Inte
         >
           <span>
             In the meantime, contact the MINT Team at 
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="mailto:MINTTeam@cms.hhs.gov"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              MINTTeam@cms.hhs.gov
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
             .
           </span>
         </p>
@@ -1823,15 +2078,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
           CMMI/BSG will send an onboarding questionnaire to the model team to fill out the program ID, number of beneficiaries, type of beneficiaries, overlap rules, and other business requirements.
 
 
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2FAll%2520Overlaps%2520Responses%2Easpx"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            Go to Onboarding Request Form for MDM-POR
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              Go to Onboarding Request Form for MDM-POR
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1856,15 +2126,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
           CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM. Her team can help answer any questions that model teams and their implementation contractors have about MDM.
 
 
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/MDMResources.aspx"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            Go to ICD and Onboarding Mapping for MDM-POR
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              Go to ICD and Onboarding Mapping for MDM-POR
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </li>
       </ol>
     </div>
@@ -1923,15 +2208,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
           CMMI/BSG will send the model team an onboarding questionnaire specific to MDM-NCBP. The model team should fill out the program ID and other business requirements.
 
 
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://share.cms.gov/center/CMMI-BSG/OOT/Lists/Onboarding%20Questionnaire%20%20NCBP/NewForm.aspx?Source=https%3A%2F%2Fshare%2Ecms%2Egov%2Fcenter%2FCMMI%2DBSG%2FOOT%2FLists%2FOnboarding%2520Questionnaire%2520%2520NCBP%2FAll%2520NCBP%2520Responses%2Easpx"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            Go to Onboarding Request Form for MDM-NCBP
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              Go to Onboarding Request Form for MDM-NCBP
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -1956,15 +2256,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
           CMMI/BSG will share an interface control document (ICD) that describes how data needs to be loaded into MDM-NCBP. Celia Shaunessey and her team can help answer any questions that model teams and their implementation contractors have about loading non-claims-based payment information into MDM-NCBP.
 
 
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://share.cms.gov/center/CMMI-BSG/OOT/Overlaps_Library/Forms/NCBPResources.aspx"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            Go to ICD and Onboarding Mapping for MDM-NCBP
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              Go to ICD and Onboarding Mapping for MDM-NCBP
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </li>
       </ol>
     </div>
@@ -2086,15 +2401,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Medi
         >
           <span>
             In the meantime, contact the MINT Team at 
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="mailto:MINTTeam@cms.hhs.gov"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              MINTTeam@cms.hhs.gov
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                MINTTeam@cms.hhs.gov
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
             .
           </span>
         </p>
@@ -2210,15 +2540,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Outl
             </li>
           </ul>
           If you’d rather submit a request by email, please send the above information to 
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="mailto:cms_it_service_desk@cms.hhs.gov"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            cms_it_service_desk@cms.hhs.gov
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              cms_it_service_desk@cms.hhs.gov
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -2307,15 +2652,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Rese
       class="line-height-body-5 font-body-md"
     >
       Model teams should follow the 
-      <a
-        aria-label="Open in a new tab"
-        class="usa-link usa-link--external"
-        href="https://agx.cms.gov/FirstVisitPage/GovernmentAgreement.aspx?ReturnUrl=http%3a%2f%2fagx.cms.gov%2fLibraries%2fLibrary.aspx%3fSearchTerm%3dPALT"
-        rel="noopener noreferrer"
-        target="_blank"
+      <button
+        class="usa-button usa-button--unstyled margin-right-2"
+        data-testid="button"
+        type="button"
       >
-        Procurement Administrative Lead Time (PALT)
-      </a>
+        <span
+          class="display-flex flex-align-center"
+        >
+          Procurement Administrative Lead Time (PALT)
+          <svg
+            class="usa-icon margin-left-05"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+            />
+          </svg>
+        </span>
+      </button>
        standards to determine when to being working with RMADA.
     </div>
   </div>
@@ -2388,15 +2748,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
               Desired implementation/go-live date and impact if that date deadline is missed
             </li>
           </ul>
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://cmmi.my.salesforce-sites.com/ccb/SF_CCB_OR_CR_Submission_vf"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            Go to Salesforce CMT
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              Go to Salesforce CMT
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -2520,15 +2895,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
               Desired implementation/go-live date and impact if that date deadline is missed
             </li>
           </ul>
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://cmmi.my.salesforce-sites.com/ccb/SF_CCB_OR_CR_Submission_vf"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            Go to Salesforce CMT
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              Go to Salesforce CMT
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -2652,15 +3042,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
               Desired implementation/go-live date and impact if that date deadline is missed
             </li>
           </ul>
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://cmmi.my.salesforce-sites.com/ccb/SF_CCB_OR_CR_Submission_vf"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            Go to Salesforce CMT
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              Go to Salesforce CMT
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -2784,15 +3189,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
               Desired implementation/go-live date and impact if that date deadline is missed
             </li>
           </ul>
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://cmmi.my.salesforce-sites.com/ccb/SF_CCB_OR_CR_Submission_vf"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            Go to Salesforce CMT
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              Go to Salesforce CMT
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -2916,15 +3336,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
               Desired implementation/go-live date and impact if that date deadline is missed
             </li>
           </ul>
-          <a
-            aria-label="Open in a new tab"
-            class="usa-link usa-link--external"
-            href="https://cmmi.my.salesforce-sites.com/ccb/SF_CCB_OR_CR_Submission_vf"
-            rel="noopener noreferrer"
-            target="_blank"
+          <button
+            class="usa-button usa-button--unstyled margin-right-2"
+            data-testid="button"
+            type="button"
           >
-            Go to Salesforce CMT
-          </a>
+            <span
+              class="display-flex flex-align-center"
+            >
+              Go to Salesforce CMT
+              <svg
+                class="usa-icon margin-left-05"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                />
+              </svg>
+            </span>
+          </button>
         </li>
         <li
           class="usa-process-list__item operational-solution-details__timeline-item"
@@ -3023,15 +3458,30 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Shar
             Donna will help you write a CR and submit it through Enterprise Electronic Change Information Management Portal (ECHIMP). CRs can occur up to 2-3 years before the changes get implemented. You may use the Fee For Service Change Request Resource Center for additional resources about drafting your CR.
 
 
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external display-block margin-top-105 margin-bottom-3"
-              href="https://share.cms.gov/center/cmmi-eos/CMMITraining/SitePages/FFSHome.aspx"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled display-block margin-top-105 margin-bottom-3 margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              Go to Fee For Service Change Request Resource Center
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                Go to Fee For Service Change Request Resource Center
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
             
 
 There are two types of CRs:

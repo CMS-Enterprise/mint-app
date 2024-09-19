@@ -1,11 +1,12 @@
 import React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import {
   ProcessList,
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 
 import { getTransLinkComponents, LinkType } from './about';
 
@@ -34,21 +35,14 @@ export const GenericTimeline = ({
 }: {
   solution: HelpSolutionType;
 }) => {
-  const { t } = useTranslation('helpAndKnowledge');
-
-  const timelineConfig: TimelineConfigType = t(
-    `solutions.${solution.key}.timeline`,
-    {
-      returnObjects: true
-    }
-  );
+  const timelineConfig = timelineTranslationUtil(solution.key);
 
   return (
     <div className="operational-solution-details line-height-body-5 font-body-md text-pre-wrap">
       {timelineConfig.description && <p>{timelineConfig.description}</p>}
 
       <ProcessList className="padding-top-1">
-        {timelineConfig.items?.map((item, index) => (
+        {timelineConfig.items?.map((item: any, index: number) => (
           <ProcessListItem
             key={item.header}
             className="operational-solution-details__timeline-item"
@@ -72,7 +66,7 @@ export const GenericTimeline = ({
 
             {item.items && (
               <ul className="padding-left-4 margin-top-0">
-                {item.items.map(subItem => (
+                {item.items.map((subItem: string) => (
                   <li key={subItem} className="list-item">
                     {subItem}
                   </li>

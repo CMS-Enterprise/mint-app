@@ -20,6 +20,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import useModalSolutionState from 'hooks/useModalSolutionState';
+import { tArray } from 'utils/translation';
 
 import {
   ArticleCategories,
@@ -42,55 +43,42 @@ const SixPagerMeeting = () => {
     location.search ? '&' : '?'
   }solution=learning-and-diffusion-group&section=about`;
 
-  const modelOverviewAndGoals: string[] = sixPageMeetingT(
-    'conceptPaper.stepOne.items',
-    { returnObjects: true }
+  const modelOverviewAndGoals = tArray(
+    'sixPageMeeting:conceptPaper.stepOne.items'
   );
 
-  const overviewOfKeyModelDesignElements: string[] = sixPageMeetingT(
-    'conceptPaper.stepTwo.subitems',
-    { returnObjects: true }
+  const overviewOfKeyModelDesignElements = tArray(
+    'sixPageMeeting:conceptPaper.stepTwo.subitems'
   );
 
-  const alignmentListItems: string[] = sixPageMeetingT(
-    'conceptPaper.stepThree.alignment.numberedList',
-    { returnObjects: true }
+  const alignmentListItems = tArray(
+    'sixPageMeeting:conceptPaper.stepThree.alignment.numberedList'
   );
 
-  const impactListItems: string[] = sixPageMeetingT(
-    'conceptPaper.stepThree.impact.list',
-    { returnObjects: true }
+  const impactListItems = tArray(
+    'sixPageMeeting:conceptPaper.stepThree.impact.list'
   );
 
-  const stepFour: string[] = sixPageMeetingT('conceptPaper.stepFour.items', {
-    returnObjects: true
-  });
+  const stepFour = tArray('sixPageMeeting:conceptPaper.stepFour.items');
 
-  const stepFive: string[] = sixPageMeetingT('conceptPaper.stepFive.items', {
-    returnObjects: true
-  });
-  const stepSix: string[] = sixPageMeetingT('conceptPaper.stepSix.items', {
-    returnObjects: true
-  });
-  const stepSeven: string[] = sixPageMeetingT('conceptPaper.stepSeven.items', {
-    returnObjects: true
-  });
+  const stepFive = tArray('sixPageMeeting:conceptPaper.stepFive.items');
 
-  const additionalResourcesListItems: string[] = sixPageMeetingT(
-    'additionalResources.list',
-    { returnObjects: true }
+  const stepSix = tArray('sixPageMeeting:conceptPaper.stepSix.items');
+
+  const stepSeven = tArray('sixPageMeeting:conceptPaper.stepSeven.items');
+
+  const additionalResourcesListItems = tArray(
+    'sixPageMeeting:additionalResources.list'
   );
-  const additionalResourcesParagraphs: string[] = sixPageMeetingT(
-    'additionalResources.paragraph',
-    { returnObjects: true }
+
+  const additionalResourcesParagraphs = tArray(
+    'sixPageMeeting:additionalResources.paragraph'
   );
-  const tipsList: string[] = sixPageMeetingT(
-    'reviewMeeting.subheading.tip.list',
-    { returnObjects: true }
-  );
-  const outcomesParagraphs: string[] = sixPageMeetingT(
-    'reviewMeeting.subheading.outcomes.paragraph',
-    { returnObjects: true }
+
+  const tipsList = tArray('sixPageMeeting:reviewMeeting.subheading.tip.list');
+
+  const outcomesParagraphs = tArray(
+    'sixPageMeeting:reviewMeeting.subheading.outcomes.paragraph'
   );
 
   if (loading) {

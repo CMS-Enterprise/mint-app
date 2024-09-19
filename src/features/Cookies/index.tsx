@@ -4,17 +4,16 @@ import { Link } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { tArray } from 'utils/translation';
 
 const Cookies = () => {
   const { t } = useTranslation();
 
-  const informationStorage: string[] = t(
-    'cookies:informationProtection.informationStorage',
-    { returnObjects: true }
+  const informationStorage = tArray(
+    'cookies:informationProtection.informationStorage'
   );
-  const informationNoticeCriteriaList: string[] = t(
-    'cookies:informationProtection.informationNoticeCriteriaList',
-    { returnObjects: true }
+  const informationNoticeCriteriaList = tArray(
+    'cookies:informationProtection.informationNoticeCriteriaList'
   );
 
   return (
