@@ -160,6 +160,15 @@ const twoPageMeeting = {
   reviewMeeting: {
     intro:
       'After division and group leadership have reviewed and approved the 2-page concept paper, a review meeting with CMMI FO is scheduled. This review meeting is a key step to moving a model concept forward in the process.',
+    tipbox: {
+      copy: 'Suggestions for having a successful 2-page review meeting:',
+      list: [
+        'Before the meeting, attach your 2-page concept paper to the calendar invite for your meeting with CMMI FO. We also recommend uploading your concept paper to your model collaboration area within MINT. This will allow other CMS staff involved in the model development process to begin preparing as early as possible for their work with your model team.',
+        'Come prepared to discuss your model concept with the CMMI FO and receive feedback.',
+        'If you think you’ll need a pipeline contractor, flag this during the meeting. CMMI FO may have a preference for which contractor to use and will ultimately need to approve the request.'
+      ]
+    },
+
     subheading: {
       tip: {
         text: 'Tips for the meeting',

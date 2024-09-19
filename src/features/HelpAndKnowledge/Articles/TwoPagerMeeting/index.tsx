@@ -70,6 +70,10 @@ const TwoPagerMeeting = () => {
     'twoPageMeeting:additionalResources.crossCut.list'
   );
 
+  const reviewTipsList: string[] = tArray(
+    'twoPageMeeting:reviewMeeting.tipbox.list'
+  );
+
   const tipsList: string[] = tArray(
     'twoPageMeeting:reviewMeeting.subheading.tip.list'
   );
@@ -463,6 +467,29 @@ const TwoPagerMeeting = () => {
               <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
                 {twoPageMeetingT('reviewMeeting.intro')}
               </p>
+
+              <SummaryBox className="padding-3 margin-bottom-3">
+                <SummaryBoxHeading
+                  headingLevel="h3"
+                  className="margin-bottom-2"
+                >
+                  {twoPageMeetingT(
+                    'additionalResources.summarybox.tips.heading'
+                  )}
+                </SummaryBoxHeading>
+                <SummaryBoxContent>
+                  <p className="margin-y-0">
+                    {twoPageMeetingT('reviewMeeting.tipbox.copy')}
+                  </p>
+                  <ul className="margin-y-0 padding-left-3">
+                    {reviewTipsList.map(k => (
+                      <li key={k} className="line-height-sans-4">
+                        {k}
+                      </li>
+                    ))}
+                  </ul>
+                </SummaryBoxContent>
+              </SummaryBox>
 
               <h3 className="margin-top-0 margin-bottom-1">
                 {twoPageMeetingT('reviewMeeting.subheading.tip.text')}
