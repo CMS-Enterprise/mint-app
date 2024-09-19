@@ -170,7 +170,47 @@ const twoPageMeeting = {
     },
     criteria: {
       heading: 'Model selection criteria',
-      copy: 'These selection criteria detail how models are evaluated overall. The CMMI FO may consider these criteria in different ways and to different degrees in each review meeting and phase of the model concept and design process.'
+      copy: 'These selection criteria detail how models are evaluated overall. The CMMI FO may consider these criteria in different ways and to different degrees in each review meeting and phase of the model concept and design process.',
+      table: {
+        header: ['Criteria', 'Description', 'Scoring parameter'],
+        content: [
+          {
+            criteria: 'Alignment',
+            description:
+              'Model supports or advances one (or more) of the five strategy pillars: Drive accountable care, advance health equity, support innovation, address affordability, partner to achieve system transformation',
+            score:
+              '<bold>Yes/No</bold>Model does not move forward if it does not align with any pillar of the strategy'
+          },
+          {
+            criteria: 'Impact',
+            description:
+              'The potential for the model to impact participation, outcomes, and cost',
+            score:
+              '<bold>High/Medium/Low</bold>Model must score high or medium to move forward'
+          },
+          {
+            criteria: 'Feasibility',
+            description:
+              'Likelihood of successful execution of the model, including any operational or legal feasibility limitations. Potential for adoption and scaling by non-participants',
+            score:
+              '<bold>High/Medium/Low</bold>Model must score high or medium to move forward'
+          },
+          {
+            criteria: 'Diversity',
+            description:
+              'Innovation in a dimension (e.g., payment model), provider type, patient population, mechanisms of transformation',
+            score:
+              '<bold>High/Medium/Low</bold>Model must score high or medium to move forward'
+          },
+          {
+            criteria: 'OA/HHS support',
+            description:
+              'The extent to which the model is supported by OA/HHS and will achieve CMS/HHS clearance​',
+            score:
+              '<bold>Yes/No</bold>Model does not move forward if it is unlikely to clear OA/HHS'
+          }
+        ]
+      }
     },
 
     outcomes: {

@@ -20,7 +20,9 @@ import { tArray } from 'utils/translation';
 
 import { ArticleCategories, HelpArticle } from '..';
 
-const covertToLowercaseAndDashes = (string: string) =>
+import Table from './table';
+
+export const covertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
 
 const Link = ({ scrollTo }: { scrollTo: string }) => {
@@ -510,6 +512,9 @@ const TwoPagerMeeting = () => {
               <p className="margin-y-0 line-height-sans-4">
                 {twoPageMeetingT('reviewMeeting.criteria.copy')}
               </p>
+
+              {/* Table goes here */}
+              <Table />
 
               <h3 className="margin-top-0 margin-bottom-1">
                 {twoPageMeetingT('reviewMeeting.outcomes.heading')}
