@@ -1,3 +1,5 @@
+import { head } from 'lodash';
+
 const sixPageMeeting = {
   heading: 'About 6-page concept papers and review meetings',
   description:
@@ -47,6 +49,101 @@ const sixPageMeeting = {
         text: 'Create a Model Plan now',
         link: '/models/steps-overview'
       }
+    }
+  },
+  paperTemplateAlert:
+    'Much of the content below is also accessible in the 6-page concept paper template. <link1>Download it from the Strategy Refresh SharePoint site</link1>',
+  aboutConceptPapers: {
+    heading: 'About 6-page concept papers',
+    description:
+      'The 6-page model overview should address all relevant elements outlined below and should reflect consultation with these cross-cutting groups: ',
+    items: [
+      'Business Services Group (BSG) – for feasibility criteria',
+      'CMMI Front Office (FO) – for health equity',
+      '<link1>Learning and Diffusion Group (LDG)</link1> - for learning',
+      'Policy and Programs Group (PPG) – for quality and stakeholder engagement type things',
+      'Research and Rapid Cycle Evaluation Group (RREG) – for evaluation'
+    ],
+    sectionOne: {
+      heading: '1. Model overview and goals',
+      items: [
+        'Describe the need for the model, the challenges the target population faces, related cost and quality/outcomes challenges, and any gaps in CMMI’s portfolio this model might address including lessons learned from previous models. Include the beneficiary perspective.',
+        'Briefly describe the theory of change for the model, including how care will change (i.e., the problem that the model is trying to solve).',
+        'Provide any information on how this model may interact or overlap with other CMMI models or other CMS or Federal programs. ',
+        'In addition to the statutory requirements, consider other potential outcomes following the model test (e.g., spread to Medicare, Medicaid or commercial payers, next generation model, informing ACOs or other Medicare policy, etc.).'
+      ]
+    },
+    sectionTwo: {
+      heading: '2. Description of model elements',
+      items: [
+        {
+          heading:
+            'Provide an overview of key model design elements including:',
+          items: [
+            'Target population, including underserved populations.',
+            'Beneficiary attribution or alignment (or, if applicable, recruitment) to model.',
+            'Target provider types, including safety net providers.',
+            'Participation eligibility requirements for providers, states or other entities.',
+            'Payment approach, including any precedent for approach (i.e., CMMI, CM, Medicaid, commercial insurance) and benchmarking and risk adjustment approaches if applicable.',
+            'Assess whether model will meet the standards for an Accountable Care Relationship and/or for an Advanced APM.',
+            'Quality/performance measurement, including proposed primary quality measures (and alignment to Universal Foundation/CMMI Advancing Quality & PROM strategy) developed in consultation with the Quality Vertical.',
+            'Preliminary driver diagram comprised of a model aim that includes the quality goals and the primary and secondary drivers that will be used to achieve the aim.',
+            'Draft patient journey map that illustrates how these elements address the beneficiary experience of care.'
+          ]
+        }
+      ]
+    },
+    sectionThree: {
+      heading:
+        '3. Model selection criteria – Alignment, Impact, Feasibility, and Innovation ',
+      items: [
+        {
+          heading:
+            '<bold>Alignment:</bold> Describe how the proposed model would support or advance CMMI’s strategic objectives and <link1>metrics</link1>:',
+          link: 'https://innovation.cms.gov/data-and-reports/2022/cmmi-strategy-refresh-imp-report',
+          items: [
+            'Drive accountable care',
+            'Advance health equity',
+            'Support innovation',
+            'Address affordability',
+            'Partner to achieve system transformation, and multi-payer alignment, in particular'
+          ]
+        },
+        {
+          heading:
+            '<bold>Impact:</bold> Model’s anticipated impact on the following dimensions:',
+          items: [
+            'Participation – number of providers, percent of providers within relevant specialty, number of beneficiaries, Medicare and/or Medicaid spending (federal and state). ',
+            'Outcomes – expected improvements in quality and outcomes, changes in beneficiary experience, advancements in equity and reduction in disparities, delivery system change, multi-payer alignment, and market impacts. ',
+            'Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries. '
+          ]
+        },
+        {
+          heading:
+            '<bold>Feasibility:</bold> Likelihood of successful execution of the model including any operational limitations, challenges in recruiting participants and potential for adoption and scaling by non-participants.  Update the analysis of data exchange concepts from the two-pager.',
+          items: []
+        },
+        {
+          heading:
+            '<bold>Innovation:</bold> Model provides or is expected to stimulate innovation in a particular dimension of the Center’s portfolio – payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy.',
+          items: []
+        }
+      ]
+    },
+    sectionFour: {
+      heading: '4. Opportunities to advance health equity',
+      items: [
+        {
+          heading:
+            'Describe how model has the potential to improve care and outcomes for underserved populations by:',
+          items: [
+            'Embedding health equity in design features, including care delivery requirements, payment adjustment, SDOH screening and referral and participant health equity plans.',
+            'Diversifying beneficiaries served, including increasing safety net provider participation through stakeholder engagement, model design elements, and participant recruitment and support during model implementation. ',
+            'Ensuring evaluation assesses model impact on equity, including model access and outcomes for all beneficiary populations. ',
+            'Supporting the collection and analysis of sociodemographic and HRSN data in accordance with Center policy (linked in Resources below).'
+          ]
+        }
+      ]
     }
   },
   crossCuttingGroupsSummaryBox: {
