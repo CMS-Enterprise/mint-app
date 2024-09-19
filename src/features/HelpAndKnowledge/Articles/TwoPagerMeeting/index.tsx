@@ -163,7 +163,7 @@ const TwoPagerMeeting = () => {
               </p>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                 <li className="line-height-sans-4">
-                  {twoPageMeetingT('about.stepOne.items2.brief.text')}
+                  {twoPageMeetingT('about.stepOne.items.brief.text')}
                   <ul className="margin-top-0 padding-left-2">
                     {briefItems.map(k => (
                       <li key={k} className="line-height-sans-4">
@@ -173,19 +173,22 @@ const TwoPagerMeeting = () => {
                   </ul>
                 </li>
                 <li className="line-height-sans-4">
-                  {twoPageMeetingT('about.stepOne.items2.describe')}
+                  {twoPageMeetingT('about.stepOne.items.describe')}
                 </li>
                 <li className="line-height-sans-4">
-                  {twoPageMeetingT('about.stepOne.items2.include')}
+                  {twoPageMeetingT('about.stepOne.items.include')}
                 </li>
                 <li className="line-height-sans-4">
-                  {twoPageMeetingT('about.stepOne.items2.provide')}
+                  {twoPageMeetingT('about.stepOne.items.provide')}
                 </li>
               </ul>
 
               <h3 className="margin-top-0 margin-bottom-1">
                 {twoPageMeetingT('conceptPaper.stepTwo.heading')}
               </h3>
+              <p className="padding-left-3 margin-bottom-0 line-height-sans-4">
+                {twoPageMeetingT('about.stepTwo.copy')}
+              </p>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                 <li className="line-height-sans-4">
                   {twoPageMeetingT('conceptPaper.stepTwo.item')}

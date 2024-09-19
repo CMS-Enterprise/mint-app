@@ -44,7 +44,11 @@ const twoPageMeeting = {
           'Provide background or context on whether the proposed model has previously been tested or is a follow-on model, incorporates learnings from external stakeholders, and/or where concept originated (e.g. private sector, academia, state or regional efforts)'
       }
     },
-    stepTwo: {}
+    stepTwo: {
+      heading: '2. High-level description of model elements',
+      copy: '2-page concept papers will:',
+      item: 'Provide a high-level overview of key model design elements including target population, payment approach, and quality/performance measurement'
+    }
   },
   conceptPaper: {
     introParagraph:
