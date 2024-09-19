@@ -28,7 +28,7 @@ const ExternalLink = ({
       <Modal
         isOpen={isModalOpen}
         closeModal={() => setIsModalOpen(false)}
-        className="external-link-modal maxw-mobile-lg"
+        className="external-link-modal maxw-mobile-lg height-auto"
       >
         <PageHeading
           headingLevel="h3"
