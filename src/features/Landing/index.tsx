@@ -12,6 +12,7 @@ import { DateTime } from 'luxon';
 import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import { tArray } from 'utils/translation';
 
 import './index.scss';
 
@@ -163,9 +164,7 @@ export const LandingFooter = () => {
   const { t } = useTranslation('landing');
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
-  const footerItems: FooterItemType[] = t('footerItems', {
-    returnObjects: true
-  });
+  const footerItems = tArray<FooterItemType>('landing:footerItems');
 
   return (
     <div className="landing bg-mint-cool-5 margin-bottom-neg-7">
@@ -223,15 +222,9 @@ export const LandingFooter = () => {
 };
 
 const SolutionTable = () => {
-  const { t } = useTranslation('landing');
+  const tableHeaders = tArray<string>('landing:tableHeaders');
 
-  const tableHeaders: string[] = t('tableHeaders', {
-    returnObjects: true
-  });
-
-  const tableItems: TableItemType[] = t('table', {
-    returnObjects: true
-  });
+  const tableItems = tArray<TableItemType>('landing:table');
 
   const renderStatus = (status: string): string => {
     let statusClass = '';

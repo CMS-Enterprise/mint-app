@@ -353,15 +353,30 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             hidden=""
             id="cmmi-internal-clearance-process"
           >
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              Learn more about CMMI Internal Clearance on SharePoint
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                Learn more about CMMI Internal Clearance on SharePoint
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
             <table
               class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
               data-testid="table"
@@ -578,15 +593,30 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             >
               Documents listed may not apply to all models. However, all documents in this section will go through CMMI Internal Clearance, CMS Clearance, Health and Human Services (HHS) Clearance, and Office of Management and Budget (OMB) Clearance. 
             </p>
-            <a
-              aria-label="Open in a new tab"
-              class="usa-link usa-link--external"
-              href="https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx"
-              rel="noopener noreferrer"
-              target="_blank"
+            <button
+              class="usa-button usa-button--unstyled margin-right-2"
+              data-testid="button"
+              type="button"
             >
-              Learn more about Clearance on SharePoint
-            </a>
+              <span
+                class="display-flex flex-align-center"
+              >
+                Learn more about Clearance on SharePoint
+                <svg
+                  class="usa-icon margin-left-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                  />
+                </svg>
+              </span>
+            </button>
             <table
               class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W"
               data-testid="table"
@@ -724,15 +754,30 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     <div
                       class="display-flex flex-align-center"
                     >
-                      <a
-                        aria-label="Open in a new tab"
-                        class="usa-link usa-link--external"
-                        href="https://share.cms.gov/center/cmmi/PP/DSEP/Lists/AnnouncementsAndRollouts/Tiles.aspx"
-                        rel="noopener noreferrer"
-                        target="_blank"
+                      <button
+                        class="usa-button usa-button--unstyled margin-right-2"
+                        data-testid="button"
+                        type="button"
                       >
-                        Learn more about announcement materials on SharePoint
-                      </a>
+                        <span
+                          class="display-flex flex-align-center"
+                        >
+                          Learn more about announcement materials on SharePoint
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
+                        </span>
+                      </button>
                     </div>
                   </th>
                   <td
@@ -802,15 +847,30 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     <div
                       class="display-flex flex-align-center"
                     >
-                      <a
-                        aria-label="Open in a new tab"
-                        class="usa-link usa-link--external"
-                        href="https://share.cms.gov/center/cmmi/PP/Model%20Design%20Resources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FPP%2FModel%20Design%20Resources%2FModel%20Agreement%20and%20Rule%20Resources%2FTemplate%20Participation%20Agreement%2FWaiver%20Resources&FolderCTID=0x012000A975146B83F0F045969E1B4CCF269310&View=%7B05D9040E%2DF2A4%2D4351%2D8D9E%2D2F0DBF3CD595%7D"
-                        rel="noopener noreferrer"
-                        target="_blank"
+                      <button
+                        class="usa-button usa-button--unstyled margin-right-2"
+                        data-testid="button"
+                        type="button"
                       >
-                        Learn more about Fraud, Waste, Abuse Waivers on SharePoint
-                      </a>
+                        <span
+                          class="display-flex flex-align-center"
+                        >
+                          Learn more about Fraud, Waste, Abuse Waivers on SharePoint
+                          <svg
+                            class="usa-icon margin-left-05"
+                            focusable="false"
+                            height="1em"
+                            role="img"
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            />
+                          </svg>
+                        </span>
+                      </button>
                     </div>
                   </th>
                   <td

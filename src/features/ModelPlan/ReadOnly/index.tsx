@@ -493,7 +493,13 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                 )}
 
                 <Grid desktop={{ col: 9 }}>
-                  <div id={`read-only-model-plan__${subinfo}-component` ?? ''}>
+                  <div
+                    id={
+                      subinfo
+                        ? `read-only-model-plan__${subinfo}-component`
+                        : ''
+                    }
+                  >
                     <GridContainer className="padding-left-0 padding-right-0">
                       <Grid row gap>
                         {/* Central component */}

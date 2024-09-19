@@ -1,21 +1,15 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
 
-import { TimelineConfigType } from '../../Solutions/Generic/timeline';
-
 const GatheringInfoAlert = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const timelineConfig: TimelineConfigType = t(
-    `solutions.${solution.key}.timeline`,
-    {
-      returnObjects: true
-    }
-  );
+  const timelineConfig = timelineTranslationUtil(solution.key);
 
   const primaryContact = solution.alertPrimaryContact
     ? solution.pointsOfContact?.find(contact => contact.isPrimary)

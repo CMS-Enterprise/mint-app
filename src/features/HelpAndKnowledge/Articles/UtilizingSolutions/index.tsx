@@ -16,6 +16,7 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
 import { ArticleCategories, HelpArticle } from '..';
@@ -28,17 +29,15 @@ type ListItem = {
 export const UtilizingSolutions = () => {
   const { t } = useTranslation('utilizingSolutions');
 
-  const summaryBoxConfig: string[] = t('summaryBox.items', {
-    returnObjects: true
-  });
+  const summaryBoxConfig = tArray<string>(
+    'utilizingSolutions:summaryBox.items'
+  );
 
-  const timingConfig: ListItem[] = t('timingSteps.items', {
-    returnObjects: true
-  });
+  const timingConfig = tArray<ListItem>('utilizingSolutions:timingSteps.items');
 
-  const activityConfig: ListItem[] = t('activitySteps.items', {
-    returnObjects: true
-  });
+  const activityConfig = tArray<ListItem>(
+    'utilizingSolutions:activitySteps.items'
+  );
 
   return (
     <>

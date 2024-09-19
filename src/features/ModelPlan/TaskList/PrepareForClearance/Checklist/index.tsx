@@ -40,6 +40,7 @@ import PageHeading from 'components/PageHeading';
 import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import dirtyInput from 'utils/formDiff';
+import { tArray } from 'utils/translation';
 
 // Initial form values and types for each task-list clearance checkbox
 interface ClearanceFormValues {
@@ -116,9 +117,9 @@ const PrepareForClearanceCheckList = ({
   const history = useHistory();
 
   // Used to map, iterate and label task list sections and values from query
-  const taskListSections: any = t('modelPlanTaskList:numberedList', {
-    returnObjects: true
-  });
+  const taskListSections = tArray<Record<string, string>>(
+    'modelPlanTaskList:numberedList'
+  );
 
   // User to set errors outside the script of the form component
   const formikRef =
@@ -273,100 +274,96 @@ const PrepareForClearanceCheckList = ({
                       >
                         <FieldErrorMsg>{flatErrors.basics}</FieldErrorMsg>
                         {/* Mapping over task list sections and dynamically rendering each checkbox with labels */}
-                        {Object.keys(taskListSections).map(
-                          (section: string) => {
-                            const sectionID =
-                              values[
-                                section as keyof ClearanceStatusesModelPlanFormType
-                              ]?.id;
+                        {Object.keys(taskListSections).map((section: any) => {
+                          const sectionID =
+                            values[
+                              section as keyof ClearanceStatusesModelPlanFormType
+                            ]?.id;
 
-                            const sectionStatus =
-                              values[
-                                section as keyof ClearanceStatusesModelPlanFormType
-                              ]?.status;
+                          const sectionStatus =
+                            values[
+                              section as keyof ClearanceStatusesModelPlanFormType
+                            ]?.status;
 
-                            const readyForClearanceByUserAccount =
-                              values[
-                                section as keyof ClearanceStatusesModelPlanFormType
-                              ]?.readyForClearanceByUserAccount;
+                          const readyForClearanceByUserAccount =
+                            values[
+                              section as keyof ClearanceStatusesModelPlanFormType
+                            ]?.readyForClearanceByUserAccount;
 
-                            const readyForClearanceDts =
-                              values[
-                                section as keyof ClearanceStatusesModelPlanFormType
-                              ]?.readyForClearanceDts;
+                          const readyForClearanceDts =
+                            values[
+                              section as keyof ClearanceStatusesModelPlanFormType
+                            ]?.readyForClearanceDts;
 
-                            // Bypass/don't render itSolutions or prepareForClearance task list sections
-                            if (
-                              section === 'itSolutions' ||
-                              section === 'prepareForClearance'
-                            )
-                              return null;
-                            return (
-                              <Fragment key={section}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`prepare-for-clearance-${section}`}
-                                  testid={`prepare-for-clearance-${section}`}
-                                  name={`${section}.status`}
-                                  label={taskListSections[section].heading}
-                                  checked={
-                                    sectionStatus ===
-                                    TaskStatus.READY_FOR_CLEARANCE
+                          // Bypass/don't render itSolutions or prepareForClearance task list sections
+                          if (
+                            section === 'itSolutions' ||
+                            section === 'prepareForClearance'
+                          )
+                            return null;
+                          return (
+                            <Fragment key={section}>
+                              <Field
+                                as={CheckboxField}
+                                id={`prepare-for-clearance-${section}`}
+                                testid={`prepare-for-clearance-${section}`}
+                                name={`${section}.status`}
+                                label={taskListSections[section].heading}
+                                checked={
+                                  sectionStatus ===
+                                  TaskStatus.READY_FOR_CLEARANCE
+                                }
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                  if (e.target.checked) {
+                                    setFieldValue(
+                                      `${section}.status`,
+                                      TaskStatus.READY_FOR_CLEARANCE
+                                    );
+                                  } else {
+                                    setFieldValue(
+                                      `${section}.status`,
+                                      TaskStatus.IN_PROGRESS
+                                    );
                                   }
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      setFieldValue(
-                                        `${section}.status`,
-                                        TaskStatus.READY_FOR_CLEARANCE
-                                      );
-                                    } else {
-                                      setFieldValue(
-                                        `${section}.status`,
-                                        TaskStatus.IN_PROGRESS
-                                      );
+                                }}
+                              />
+
+                              {/* Label to render who marked readyForClearance and when */}
+                              {readyForClearanceByUserAccount &&
+                                readyForClearanceDts && (
+                                  <SectionClearanceLabel
+                                    commonName={
+                                      readyForClearanceByUserAccount.commonName
                                     }
-                                  }}
-                                />
+                                    readyForClearanceDts={readyForClearanceDts}
+                                  />
+                                )}
 
-                                {/* Label to render who marked readyForClearance and when */}
-                                {readyForClearanceByUserAccount &&
-                                  readyForClearanceDts && (
-                                    <SectionClearanceLabel
-                                      commonName={
-                                        readyForClearanceByUserAccount.commonName
-                                      }
-                                      readyForClearanceDts={
-                                        readyForClearanceDts
-                                      }
-                                    />
-                                  )}
+                              <Grid tablet={{ col: 8 }}>
+                                {/* Need to pass in section ID to update readyForClearance state on next route */}
+                                <UswdsReactLink
+                                  data-testid={`clearance-${section}`}
+                                  to={`/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/${taskListSections[section].path}/${sectionID}`}
+                                  className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
+                                >
+                                  {t('review', {
+                                    section:
+                                      taskListSections[
+                                        section
+                                      ].heading.toLowerCase()
+                                  })}
 
-                                <Grid tablet={{ col: 8 }}>
-                                  {/* Need to pass in section ID to update readyForClearance state on next route */}
-                                  <UswdsReactLink
-                                    data-testid={`clearance-${section}`}
-                                    to={`/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/${taskListSections[section].path}/${sectionID}`}
-                                    className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
-                                  >
-                                    {t('review', {
-                                      section:
-                                        taskListSections[
-                                          section
-                                        ].heading.toLowerCase()
-                                    })}
-
-                                    <Icon.ArrowForward
-                                      className="margin-left-1"
-                                      aria-hidden
-                                    />
-                                  </UswdsReactLink>
-                                </Grid>
-                              </Fragment>
-                            );
-                          }
-                        )}
+                                  <Icon.ArrowForward
+                                    className="margin-left-1"
+                                    aria-hidden
+                                  />
+                                </UswdsReactLink>
+                              </Grid>
+                            </Fragment>
+                          );
+                        })}
                       </FieldGroup>
 
                       <Button

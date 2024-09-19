@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { CardGroup } from '@trussworks/react-uswds';
 import ArticleCard from 'features/HelpAndKnowledge/Articles/_components/ArticleCard';
 
 import usePagination from 'hooks/usePagination';
+import { tObject } from 'utils/translation';
 
 import helpAndKnowledgeArticles, { ArticleProps, HelpArticle } from '../..';
 
@@ -22,11 +22,9 @@ const HelpCardGroup = ({
   tag,
   pagination = false
 }: HelpCardGroupType) => {
-  const { t } = useTranslation('helpAndKnowledge');
-
-  const articleNames: Record<HelpArticle, string> = t('helpArticleNames', {
-    returnObjects: true
-  });
+  const articleNames = tObject<HelpArticle>(
+    'helpAndKnowledge:helpArticleNames'
+  );
 
   helpAndKnowledgeArticles.sort((a, b) =>
     articleNames[a.key]

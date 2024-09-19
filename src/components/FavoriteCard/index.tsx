@@ -95,7 +95,7 @@ const FavoriteCard = ({
         {nameHistory && nameHistory.length > 1 && (
           <p className="margin-y-0 font-body-xs line-height-sans-2">
             {h('previously')} {firstThreeNames}{' '}
-            {filteredList.length > 3 ??
+            {filteredList.length > 3 &&
               `+ ${filteredList.length - 3} ${h('more')}`}
           </p>
         )}

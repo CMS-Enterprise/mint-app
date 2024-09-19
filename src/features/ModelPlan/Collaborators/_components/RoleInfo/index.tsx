@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 import CollapsableLink from 'components/CollapsableLink';
+import { tObject } from 'utils/translation';
 
 type RoleInfoProps = {
   className?: string;
@@ -11,11 +12,8 @@ type RoleInfoProps = {
 const RoleInfo = ({ className }: RoleInfoProps) => {
   const { t: collaboratorsMiscT } = useTranslation('collaboratorsMisc');
 
-  const roleInfoConfig: Record<string, string[]> = collaboratorsMiscT(
-    'rolesInfo',
-    {
-      returnObjects: true
-    }
+  const roleInfoConfig = tObject<string, string[]>(
+    'collaboratorsMisc:rolesInfo'
   );
 
   return (

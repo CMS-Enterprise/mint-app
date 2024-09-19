@@ -43,6 +43,7 @@ import RequiredAsterisk from 'components/RequiredAsterisk';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import useMessage from 'hooks/useMessage';
 import flattenErrors from 'utils/flattenErrors';
+import { tArray } from 'utils/translation';
 import { CRValidationSchema, TDLValidationSchema } from 'validations/crtdl';
 
 import './index.scss';
@@ -91,9 +92,7 @@ const AddCRTDL = () => {
     crtdlType || 'cr'
   );
 
-  const dateMonths: string[] = t('dateMonths', {
-    returnObjects: true
-  });
+  const dateMonths = tArray('crtdlsMisc:dateMonths');
 
   const formikRef = useRef<FormikProps<CRTDLFormType>>(null);
 

@@ -14,6 +14,7 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
 import { ArticleCategories, HelpArticle } from '..';
@@ -30,9 +31,7 @@ type StepsType = {
 export const PhasesInvolved = () => {
   const { t } = useTranslation('phasesInvolved');
 
-  const stepsConfig: StepsType[] = t('steps', {
-    returnObjects: true
-  });
+  const stepsConfig = tArray<StepsType>('phasesInvolved:steps');
 
   return (
     <>

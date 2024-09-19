@@ -3,12 +3,14 @@ import { useTranslation } from 'react-i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
+import { tArray } from 'utils/translation';
 
 import './index.scss';
 
 const NotFoundPartial = () => {
   const { t } = useTranslation();
-  const listItems: string[] = t('error:notFound.list', { returnObjects: true });
+
+  const listItems = tArray('error:notFound.list');
 
   return (
     <div className="margin-y-7">
