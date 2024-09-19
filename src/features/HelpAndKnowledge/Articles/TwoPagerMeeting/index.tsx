@@ -38,25 +38,21 @@ const Link = ({ scrollTo }: { scrollTo: string }) => {
 const TwoPagerMeeting = () => {
   const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
 
-  const modelOverviewAndGoals = tArray<string>(
-    'twoPageMeeting:conceptPaper.stepOne.items'
-  );
-
   const briefItems = tArray<string>(
     'twoPageMeeting:about.stepOne.items.brief.list'
   );
 
-  const alignmentListItems: string[] = tArray(
-    'twoPageMeeting:conceptPaper.stepThree.alignment.numberedList'
-  );
+  // const alignmentListItems: string[] = tArray(
+  //   'twoPageMeeting:conceptPaper.stepThree.alignment.numberedList'
+  // );
 
-  const impactListItems: string[] = tArray(
-    'twoPageMeeting:conceptPaper.stepThree.impact.list'
-  );
+  // const impactListItems: string[] = tArray(
+  //   'twoPageMeeting:conceptPaper.stepThree.impact.list'
+  // );
 
-  const additionalResourcesListItems: string[] = tArray(
-    'twoPageMeeting:additionalResources.list'
-  );
+  // const additionalResourcesListItems: string[] = tArray(
+  //   'twoPageMeeting:additionalResources.list'
+  // );
 
   const additionalResourcesParagraphs: string[] = tArray(
     'twoPageMeeting:additionalResources.paragraph'
@@ -184,14 +180,14 @@ const TwoPagerMeeting = () => {
               </ul>
 
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('conceptPaper.stepTwo.heading')}
+                {twoPageMeetingT('about.stepTwo.heading')}
               </h3>
               <p className="padding-left-3 margin-bottom-0 line-height-sans-4">
                 {twoPageMeetingT('about.stepTwo.copy')}
               </p>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                 <li className="line-height-sans-4">
-                  {twoPageMeetingT('conceptPaper.stepTwo.item')}
+                  {twoPageMeetingT('about.stepTwo.item')}
                 </li>
               </ul>
 
@@ -212,16 +208,20 @@ const TwoPagerMeeting = () => {
               </p>
               <ul className="margin-top-0 margin-bottom-5 padding-left-6">
                 <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.alignment.bold')}
-                  </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.alignment.text')}
+                  {/* {twoPageMeetingT('conceptPaper.stepThree.alignment.text')} */}
+                  <Trans
+                    t={twoPageMeetingT}
+                    i18nKey="about.stepThree.alignment.text"
+                    components={{
+                      bold: <strong />
+                    }}
+                  />
                   <ol className="padding-left-3 margin-top-05">
-                    {alignmentListItems.map(k => (
+                    {/* {alignmentListItems.map(k => (
                       <li key={k} className="line-height-sans-4">
                         {k}
                       </li>
-                    ))}
+                    ))} */}
                   </ol>
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
@@ -230,11 +230,11 @@ const TwoPagerMeeting = () => {
                   </strong>
                   {twoPageMeetingT('conceptPaper.stepThree.impact.text')}
                   <ul className="padding-left-3 margin-top-05">
-                    {impactListItems.map(k => (
+                    {/* {impactListItems.map(k => (
                       <li key={k} className="line-height-sans-4">
                         {k}
                       </li>
-                    ))}
+                    ))} */}
                   </ul>
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
@@ -277,11 +277,11 @@ const TwoPagerMeeting = () => {
                 {twoPageMeetingT('conceptPaper.stepOne.heading')}
               </h3>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                {modelOverviewAndGoals.map(k => (
+                {/* {modelOverviewAndGoals.map(k => (
                   <li key={k} className="line-height-sans-4">
                     {k}
                   </li>
-                ))}
+                ))} */}
               </ul>
 
               <h3 className="margin-top-0 margin-bottom-1">
@@ -306,11 +306,11 @@ const TwoPagerMeeting = () => {
                   </strong>
                   {twoPageMeetingT('conceptPaper.stepThree.alignment.text')}
                   <ol className="padding-left-3 margin-top-05">
-                    {alignmentListItems.map(k => (
+                    {/* {alignmentListItems.map(k => (
                       <li key={k} className="line-height-sans-4">
                         {k}
                       </li>
-                    ))}
+                    ))} */}
                   </ol>
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
@@ -319,11 +319,11 @@ const TwoPagerMeeting = () => {
                   </strong>
                   {twoPageMeetingT('conceptPaper.stepThree.impact.text')}
                   <ul className="padding-left-3 margin-top-05">
-                    {impactListItems.map(k => (
+                    {/* {impactListItems.map(k => (
                       <li key={k} className="line-height-sans-4">
                         {k}
                       </li>
-                    ))}
+                    ))} */}
                   </ul>
                 </li>
                 <li className="line-height-sans-4 margin-bottom-05">
@@ -415,11 +415,11 @@ const TwoPagerMeeting = () => {
                 {twoPageMeetingT('additionalResources.subheading')}
               </h3>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                {additionalResourcesListItems.map(k => (
+                {/* {additionalResourcesListItems.map(k => (
                   <li key={k} className="line-height-sans-4 margin-bottom-05">
                     {k}
                   </li>
-                ))}
+                ))} */}
               </ul>
               {additionalResourcesParagraphs.map(k => (
                 <p

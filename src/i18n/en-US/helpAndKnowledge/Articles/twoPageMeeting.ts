@@ -54,60 +54,42 @@ const twoPageMeeting = {
         '3. Preliminary analysis of the proposed model relative to selection criteria',
       italics:
         'Not all of these may be answerable early in model development/consideration',
-      copy: '2-page concept papers may address <bold>Alignment, Impact, Feasibility, Innovation,</bold> and may list a brief description of <bold>Interested parties</bold> by:'
+      copy: '2-page concept papers may address <bold>Alignment, Impact, Feasibility, Innovation,</bold> and may list a brief description of <bold>Interested parties</bold> by:',
+      alignment: {
+        text: 'Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level (<bold>Alignment</bold>):',
+        numberedList: [
+          'Drive accountable care',
+          'Advance health equity',
+          'Support innovation ',
+          'Address affordability ',
+          'Partner to achieve system transformation, and multi-payer alignment in particular'
+        ]
+      },
+      impact: {
+        text: 'Outlining the potential for the model to impact the following dimensions (<bold>Impact</bold>):',
+        list: [
+          'Participation – number and types of providers, beneficiaries',
+          'Outcomes – expected improvements in quality, and outcomes, changes in beneficiary experience, advancements in equity and reduction in disparities, delivery system change, multi-payer alignment, and market impacts',
+          'Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries'
+        ]
+      },
+      feasibility: {
+        text: 'Considering the likelihood of successful execution of the model including initial operational phases, CMMI staffing, evaluation challenges, feasibility limitations, participant interest, and potential for scaling. Complete preliminary assessment of data exchanges concept in the model. (<bold>Feasibility</bold>)'
+      },
+      innovation: {
+        text: 'Considering whether the model provides or is expected to stimulate innovation in a particular dimension such as payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy. (<bold>Innovation</bold>)'
+      },
+      stakeholders: {
+        text: 'Including brief descriptions of any engagement or advocacy by interested parties on the model concept. (<bold>Interested parties</bold>)'
+      }
     }
   },
   conceptPaper: {
-    introParagraph:
-      'A 2-page overview of a model concept may or may not include all of the elements listed below. The following is intended as a guide. Teams can focus on the most relevant and impactful information to decide if a model concept should move to the next development phase.',
-    stepOne: {
-      heading: '1. Proposed model overview and goals',
-      items: [
-        'Briefly describe the need for the model, including the challenges the target population faces',
-        'Describe the preliminary theory of change for the model',
-        'Provide background or context on if the proposed model has been tested before or is a follow-on model, incorporates learnings from external stakeholders, and/or where the concept originated (e.g., private sector, academia, state or regional efforts)'
-      ]
-    },
-    stepTwo: {
-      heading: '2. High-level description of model elements',
-      item: 'Provide a high-level overview of key model design elements including target population, payment approach, and quality/performance measurement'
-    },
     stepThree: {
       heading:
         '3. Preliminary analysis of the proposed model relative to selection criteria',
       italics:
-        'Not all of these may be answerable early in model development/consideration',
-      alignment: {
-        bold: 'Alignment: ',
-        text: 'Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level:',
-        numberedList: [
-          'Drive accountable care',
-          'Advance health equity',
-          'Support Innovation ',
-          'Address affordability ',
-          'Partner to achieve system transformation'
-        ]
-      },
-      impact: {
-        bold: 'Impact: ',
-        text: 'Potential for the model to impact the following dimensions:',
-        list: [
-          'Participation – number of providers, beneficiaries, Medicare and Medicaid spending',
-          'Transformation – cost reduction, quality and outcomes improvements, advancements in equity and reduction in disparities, and delivery system change'
-        ]
-      },
-      feasibility: {
-        bold: 'Feasibility: ',
-        text: 'Consider the likelihood of successful execution of the model including initial operational or feasibility limitations, and potential for scaling'
-      },
-      innovation: {
-        bold: 'Innovation: ',
-        text: 'The model provides innovation in a particular dimension – payment approach, provider type, patient population, mechanisms of transformation'
-      },
-      stakeholders: {
-        bold: 'Stakeholders: ',
-        text: 'Include a brief description of any stakeholder engagement in the model concept'
-      }
+        'Not all of these may be answerable early in model development/consideration'
     },
     exampleSummaryBox: {
       heading: 'Example 2-pagers',
