@@ -244,7 +244,6 @@ const TwoPagerMeeting = () => {
                     className="margin-top-0 padding-left-2"
                     style={{ listStyleType: 'disc' }}
                   >
-                    gary
                     {briefItems.map(k => (
                       <li key={k} className="line-height-sans-4">
                         {k}
