@@ -149,11 +149,11 @@ const twoPageMeeting = {
       heading: 'Cross-cutting groups',
       copy: 'During the concept, design, and development phases of a model, there are a variety of other groups within CMMI and the larger CMS organization that can help model teams with a variety of aspects of their model. These areas of specialty include:',
       list: [
-        'Business Services Group (BSG) – for feasibility criteria',
-        'CMMI Front Office (FO) – for health equity',
-        'Learning and Diffusion Group (LDG) - for learning',
-        'Policy and Programs Group (PPG) – for quality and stakeholder engagement',
-        'Research and Rapid Cycle Evaluation Group (RREG) – for evaluation'
+        'Business Services Group (BSG) - for feasibility criteria',
+        'CMMI Front Office (FO) - for health equity',
+        '<ml>Learning and Diffusion Group (LDG)</ml> - for learning',
+        'Policy and Programs Group (PPG) - for quality and stakeholder engagement',
+        'Research and Rapid Cycle Evaluation Group (RREG) - for evaluation'
       ]
     }
   },

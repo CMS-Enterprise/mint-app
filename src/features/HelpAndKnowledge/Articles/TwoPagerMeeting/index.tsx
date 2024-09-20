@@ -14,6 +14,7 @@ import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/Help
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
 
 import ExternalLink from 'components/ExternalLink';
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { tArray } from 'utils/translation';
@@ -463,7 +464,19 @@ const TwoPagerMeeting = () => {
               <ul className="margin-y-0 padding-left-6">
                 {crossCutListItems.map(k => (
                   <li key={k} className="line-height-sans-4">
-                    {k}
+                    <Trans
+                      i18nKey={k}
+                      components={{
+                        ml: (
+                          <UswdsReactLink
+                            className="usa-button usa-button--unstyled"
+                            to="high-level-project-plan?solution=learning-and-diffusion-group&section=about"
+                          >
+                            {k}
+                          </UswdsReactLink>
+                        )
+                      }}
+                    />
                   </li>
                 ))}
               </ul>
