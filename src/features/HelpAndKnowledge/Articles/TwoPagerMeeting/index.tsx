@@ -2,6 +2,8 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Alert,
+  Card,
+  CardGroup,
   Grid,
   GridContainer,
   Icon,
@@ -147,7 +149,53 @@ const TwoPagerMeeting = () => {
                 {twoPageMeetingT('keyResources.introParagraph')}
               </p>
 
-              {/* Shared component goes here */}
+              <CardGroup>
+                <Card
+                  gridLayout={{ desktop: { col: 6 } }}
+                  containerProps={{ className: 'shadow-2 padding-2' }}
+                >
+                  <p className="text-bold margin-y-0 line-height-sans-4">
+                    {twoPageMeetingT(
+                      'keyResources.cards.strategyRefresh.heading'
+                    )}
+                  </p>
+                  <ExternalLink
+                    className="line-height-sans-4"
+                    href="https://share.cms.gov/center/cmmi/SR/SitePages/Home.aspx"
+                  >
+                    {twoPageMeetingT(
+                      'keyResources.cards.strategyRefresh.link1'
+                    )}
+                  </ExternalLink>
+                  <ExternalLink
+                    className="line-height-sans-4"
+                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx"
+                  >
+                    {twoPageMeetingT(
+                      'keyResources.cards.strategyRefresh.link2'
+                    )}
+                  </ExternalLink>
+                </Card>
+                <Card
+                  gridLayout={{ desktop: { col: 6 } }}
+                  containerProps={{ className: 'shadow-2 padding-2' }}
+                >
+                  <p className="text-bold margin-y-0 line-height-sans-4">
+                    {twoPageMeetingT(
+                      'keyResources.cards.twoPageTemplate.heading'
+                    )}
+                  </p>
+                  <p className="text-base margin-y-0 line-height-sans-4">
+                    {twoPageMeetingT('keyResources.cards.twoPageTemplate.copy')}
+                  </p>
+                  <ExternalLink
+                    className="line-height-sans-4"
+                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx"
+                  >
+                    {twoPageMeetingT('keyResources.cards.twoPageTemplate.link')}
+                  </ExternalLink>
+                </Card>
+              </CardGroup>
             </div>
 
             <div
@@ -176,7 +224,7 @@ const TwoPagerMeeting = () => {
                     el: (
                       <ExternalLink
                         className="margin-right-0"
-                        href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739"
+                        href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx"
                       />
                     )
                   }}

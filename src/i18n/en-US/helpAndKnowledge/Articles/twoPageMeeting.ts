@@ -14,7 +14,19 @@ const twoPageMeeting = {
   },
   keyResources: {
     introParagraph:
-      'Visit the CMMI Strategy Refresh SharePoint site to access additional model development resources including those that will help with the creation of 2-page and 6-page concept papers.'
+      'Visit the CMMI Strategy Refresh SharePoint site to access additional model development resources including those that will help with the creation of 2-page and 6-page concept papers.',
+    cards: {
+      strategyRefresh: {
+        heading: 'Strategy Refresh SharePoint site',
+        link1: 'Go to the Strategy Refresh landing page',
+        link2: 'Go to the Resources page'
+      },
+      twoPageTemplate: {
+        heading: '2-page concept paper template',
+        copy: 'Download the template from the Strategy Refresh SharePoint site.',
+        link: 'Go to the template on SharePoint'
+      }
+    }
   },
   about: {
     introParagraph:
