@@ -12,7 +12,7 @@ type ContentTypes = {
   score: string;
 };
 
-const Table = () => {
+const ModelSectionCriteriaTable = () => {
   const headers = tArray('twoPageMeeting:reviewMeeting.criteria.table.header');
 
   const content = tObject(
@@ -59,4 +59,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default ModelSectionCriteriaTable;

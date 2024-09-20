@@ -59,7 +59,7 @@ const twoPageMeeting = {
     stepTwo: {
       heading: '2. High-level description of model elements',
       copy: '2-page concept papers will:',
-      item: 'Provide a high-level overview of key model design elements including target population, payment approach, and quality/performance measurement'
+      item: 'Provide a high-level overview of key model design elements including: target population, payment approach, geography, and key quality domains'
     },
     stepThree: {
       heading:
@@ -117,7 +117,7 @@ const twoPageMeeting = {
           'Visit the <bold>Strategy Refresh SharePoint site</bold> for additional guidance and helpful resources such as the 2-page concept paper template.'
       },
       exampleSummaryBox: {
-        heading: 'Example 2-pagers',
+        heading: 'Example 2-page concept papers',
         text: 'While all models are different, and therefore the content within a 2-page concept paper may vary drastically, it could be helpful for model teams or other interested parties to see examples of what previous model teams have put together in the past.',
         list: {
           one: 'AHEAD 2-page concept paper',
@@ -196,7 +196,7 @@ const twoPageMeeting = {
           {
             criteria: 'Impact',
             description:
-              'The potential for the model to impact participation, outcomes, and cost',
+              '<paragraph>Model effect as a function of participation and the potential for health system transformation</paragraph><ul><li>Participation: number of providers, beneficiaries, Medicare spending, Medicaid spending​</li><li>Transformation, including: cost reduction, quality and equity improvement, delivery system change​</li></ul>',
             score:
               '<bold>High/Medium/Low</bold>Model must score high or medium to move forward'
           },

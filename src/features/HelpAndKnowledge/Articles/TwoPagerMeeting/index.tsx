@@ -23,7 +23,7 @@ import { tArray } from 'utils/translation';
 
 import { ArticleCategories, HelpArticle } from '..';
 
-import Table from './table';
+import ModelSectionCriteriaTable from './table';
 
 export const covertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
@@ -240,7 +240,11 @@ const TwoPagerMeeting = () => {
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                 <li className="line-height-sans-4">
                   {twoPageMeetingT('about.stepOne.items.brief.text')}
-                  <ul className="margin-top-0 padding-left-2">
+                  <ul
+                    className="margin-top-0 padding-left-2"
+                    style={{ listStyleType: 'disc' }}
+                  >
+                    gary
                     {briefItems.map(k => (
                       <li key={k} className="line-height-sans-4">
                         {k}
@@ -311,7 +315,10 @@ const TwoPagerMeeting = () => {
                       bold: <strong />
                     }}
                   />
-                  <ul className="padding-left-3 margin-top-05">
+                  <ul
+                    className="padding-left-3 margin-top-05"
+                    style={{ listStyleType: 'disc' }}
+                  >
                     {impactListItems.map(k => (
                       <li key={k} className="line-height-sans-4">
                         {k}
@@ -574,7 +581,7 @@ const TwoPagerMeeting = () => {
               </p>
 
               {/* Table goes here */}
-              <Table />
+              <ModelSectionCriteriaTable />
 
               <h3 className="margin-top-0 margin-bottom-1">
                 {twoPageMeetingT('reviewMeeting.outcomes.heading')}
