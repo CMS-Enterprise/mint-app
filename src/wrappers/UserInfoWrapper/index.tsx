@@ -80,6 +80,28 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState?.isAuthenticated, data]);
 
+  // Check if user has an existing okta session, if so, sign them in
+  useEffect(() => {
+    const checkSession = async () => {
+      const sessionExists = await oktaAuth.session.exists();
+
+      if (
+        sessionExists &&
+        /* eslint no-underscore-dangle: 0 */
+        oktaAuth.authStateManager._authState?.isAuthenticated === false
+      ) {
+        oktaAuth.signInWithRedirect();
+      }
+    };
+
+    checkSession();
+  }, [oktaAuth]);
+
+  // Return null until we know if the user is authenticated.  This prevents unwanted UX flicker.
+  if (oktaAuth.authStateManager.getAuthState() === undefined) {
+    return null;
+  }
+
   return <>{children}</>;
 };
 
