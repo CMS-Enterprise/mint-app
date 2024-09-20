@@ -1975,7 +1975,8 @@ There are two types of CRs:`,
 
 const helpCategories: Record<ArticleCategories, string> = {
   [ArticleCategories.GETTING_STARTED]: 'Getting started',
-  [ArticleCategories.IT_IMPLEMENTATION]: 'IT implementation'
+  [ArticleCategories.IT_IMPLEMENTATION]: 'IT implementation',
+  [ArticleCategories.MODEL_CONCEPT_AND_DESIGN]: 'Model concept and design'
 };
 
 const helpArticleNames: Record<HelpArticle, string> = {

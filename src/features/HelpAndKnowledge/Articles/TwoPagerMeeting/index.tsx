@@ -93,7 +93,7 @@ const TwoPagerMeeting = () => {
               {twoPageMeetingT('title')}
             </PageHeading>
             <HelpCategoryTag
-              type={ArticleCategories.GETTING_STARTED}
+              type={ArticleCategories.MODEL_CONCEPT_AND_DESIGN}
               className="margin-bottom-1"
             />
             <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">

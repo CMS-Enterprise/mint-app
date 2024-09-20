@@ -3,7 +3,8 @@ import { Icon } from '@trussworks/react-uswds';
 
 export enum ArticleCategories {
   GETTING_STARTED = 'getting-started',
-  IT_IMPLEMENTATION = 'it-implementation'
+  IT_IMPLEMENTATION = 'it-implementation',
+  MODEL_CONCEPT_AND_DESIGN = 'model-concept-and-design'
 }
 
 export const articleCategories: ArticleCategories[] = [
