@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { act, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import {
   GetOperationalNeedDocument,
   GetOperationalNeedQuery,
@@ -73,46 +73,44 @@ const mocks = [
 
 describe('Operational Solutions NeedQuestionAndAnswer', () => {
   it('renders correctly', async () => {
-    await act(async () => {
-      const { getByText, getAllByTestId, getByRole, user } = setup(
-        <MemoryRouter
-          initialEntries={[
-            {
-              pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
-            }
-          ]}
-        >
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
-              <MessageProvider>
-                <SolutionImplmentation />
-              </MessageProvider>
-            </Route>
-          </MockedProvider>
-        </MemoryRouter>
-      );
+    const { getByText, getAllByTestId, getByRole, user } = setup(
+      <MemoryRouter
+        initialEntries={[
+          {
+            pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+          }
+        ]}
+      >
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+            <MessageProvider>
+              <SolutionImplmentation />
+            </MessageProvider>
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
+    );
 
-      await waitFor(() => {
-        expect(
-          getByText('Research, Measurement, Assessment, Design, and Analysis')
-        ).toBeInTheDocument();
-      });
+    await waitFor(() => {
+      expect(
+        getByText('Research, Measurement, Assessment, Design, and Analysis')
+      ).toBeInTheDocument();
+    });
 
-      const datePicker = getAllByTestId('date-picker-external-input')[0];
-      await user.type(datePicker, '12/10/2030');
+    const datePicker = getAllByTestId('date-picker-external-input')[0];
+    await user.type(datePicker, '12/10/2030');
 
-      await waitFor(() => {
-        expect(datePicker).toHaveValue('12/10/2030');
-      });
+    await waitFor(() => {
+      expect(datePicker).toHaveValue('12/10/2030');
+    });
 
-      const atRisk = getByRole('radio', { name: 'At risk' });
-      const backlog = getByRole('radio', { name: 'Backlog' });
-      await user.click(backlog);
+    const atRisk = getByRole('radio', { name: 'At risk' });
+    const backlog = getByRole('radio', { name: 'Backlog' });
+    await user.click(backlog);
 
-      await waitFor(() => {
-        expect(atRisk).not.toBeChecked();
-        expect(backlog).toBeChecked();
-      });
+    await waitFor(() => {
+      expect(atRisk).not.toBeChecked();
+      expect(backlog).toBeChecked();
     });
   });
 

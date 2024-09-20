@@ -95,8 +95,11 @@ describe('Model Plan -- Complexity', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('payment-complexity-form')).toBeInTheDocument();
+      expect(screen.getByTestId('payment-multiple-payments-how')).toHaveValue(
+        'lorem ipsum'
+      );
     });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -179,26 +179,27 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
               <div
                 class="margin-top-3 margin-bottom-6"
               >
-                <div
-                  class="usa-form-group"
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
                 >
-                  <label
-                    class="usa-label"
-                    for="payment-recover-payment-note"
-                    id="label-payment-recover-payment-note"
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Notes
-                  </label>
-                  <textarea
-                    aria-labelledby="label-payment-recover-payment-note hint-payment-recover-payment-note"
-                    class="usa-textarea"
-                    data-testid="payment-recover-payment-note"
-                    id="payment-recover-payment-note"
-                    name="willRecoverPaymentsNote"
-                  >
-                    string
-                  </textarea>
-                </div>
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
               </div>
             </div>
             <div
@@ -257,26 +258,27 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
               <div
                 class="margin-top-3 margin-bottom-6"
               >
-                <div
-                  class="usa-form-group"
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
                 >
-                  <label
-                    class="usa-label"
-                    for="payment-anticipate-reconciling-payment-retro-note"
-                    id="label-payment-anticipate-reconciling-payment-retro-note"
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Notes
-                  </label>
-                  <textarea
-                    aria-labelledby="label-payment-anticipate-reconciling-payment-retro-note hint-payment-anticipate-reconciling-payment-retro-note"
-                    class="usa-textarea"
-                    data-testid="payment-anticipate-reconciling-payment-retro-note"
-                    id="payment-anticipate-reconciling-payment-retro-note"
-                    name="anticipateReconcilingPaymentsRetrospectivelyNote"
-                  >
-                    string
-                  </textarea>
-                </div>
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
               </div>
             </div>
             <div
@@ -391,24 +393,6 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                 />
               </div>
               <div
-                class="margin-left-4"
-              >
-                <label
-                  class="usa-label text-normal margin-top-1"
-                  data-testid="label"
-                  for="payment-reconciliation-frequency-continually"
-                >
-                  Please specify
-                </label>
-                <input
-                  class="usa-input"
-                  data-testid="payment-reconciliation-frequency-continually-text"
-                  id="payment-reconciliation-frequency-continually-text"
-                  name="paymentReconciliationFrequencyContinually"
-                  value="Continual Frequency"
-                />
-              </div>
-              <div
                 class="mint-checkbox usa-checkbox"
               >
                 <input
@@ -431,26 +415,27 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
               <div
                 class="margin-top-3 margin-bottom-6"
               >
-                <div
-                  class="usa-form-group"
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
                 >
-                  <label
-                    class="usa-label"
-                    for="payment-reconciliation-frequency-note"
-                    id="label-payment-reconciliation-frequency-note"
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Notes
-                  </label>
-                  <textarea
-                    aria-labelledby="label-payment-reconciliation-frequency-note hint-payment-reconciliation-frequency-note"
-                    class="usa-textarea"
-                    data-testid="payment-reconciliation-frequency-note"
-                    id="payment-reconciliation-frequency-note"
-                    name="paymentReconciliationFrequencyNote"
-                  >
-                    Reconciliation note
-                  </textarea>
-                </div>
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
               </div>
             </div>
             <div
@@ -565,24 +550,6 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
                 />
               </div>
               <div
-                class="margin-left-4"
-              >
-                <label
-                  class="usa-label text-normal margin-top-1"
-                  data-testid="label"
-                  for="payment-demand-recoupment-frequency-continually"
-                >
-                  Please specify
-                </label>
-                <input
-                  class="usa-input"
-                  data-testid="payment-demand-recoupment-frequency-continually-text"
-                  id="payment-demand-recoupment-frequency-continually-text"
-                  name="paymentDemandRecoupmentFrequencyContinually"
-                  value="Continual Frequency"
-                />
-              </div>
-              <div
                 class="mint-checkbox usa-checkbox"
               >
                 <input
@@ -605,26 +572,27 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
               <div
                 class="margin-top-3 margin-bottom-6"
               >
-                <div
-                  class="usa-form-group"
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
                 >
-                  <label
-                    class="usa-label"
-                    for="payment-demand-recoupment-frequency-note"
-                    id="label-payment-demand-recoupment-frequency-note"
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Notes
-                  </label>
-                  <textarea
-                    aria-labelledby="label-payment-demand-recoupment-frequency-note hint-payment-demand-recoupment-frequency-note"
-                    class="usa-textarea"
-                    data-testid="payment-demand-recoupment-frequency-note"
-                    id="payment-demand-recoupment-frequency-note"
-                    name="paymentDemandRecoupmentFrequencyNote"
-                  >
-                    Demand and Recoupment note
-                  </textarea>
-                </div>
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
               </div>
             </div>
             <div
@@ -712,65 +680,27 @@ exports[`Model Plan -- Recover > matches snapshot 1`] = `
             <div
               class="margin-top-3 margin-bottom-6"
             >
-              <div
-                class="usa-form-group"
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="add-note-toggle"
+                type="button"
               >
-                <label
-                  class="usa-label"
-                  for="payment-payment-start-date-note"
-                  id="label-payment-payment-start-date-note"
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  Notes
-                </label>
-                <textarea
-                  aria-labelledby="label-payment-payment-start-date-note hint-payment-payment-start-date-note"
-                  class="usa-textarea"
-                  data-testid="payment-payment-start-date-note"
-                  id="payment-payment-start-date-note"
-                  name="paymentStartDateNote"
-                >
-                  string
-                </textarea>
-              </div>
-            </div>
-            <div
-              class="usa-form-group margin-top-8 margin-bottom-3"
-            >
-              <div
-                class="usa-summary-box bg-white border-base-light padding-2"
-                data-testid="summary-box"
-              >
-                <div
-                  class="usa-summary-box__body"
-                >
-                  <p
-                    class="margin-0"
-                  >
-                    Model Plan status
-                  </p>
-                  <div
-                    class="mint-checkbox usa-checkbox"
-                  >
-                    <input
-                      class="usa-checkbox__input"
-                      data-testid="payment-status"
-                      id="payment-status"
-                      name="status"
-                      type="checkbox"
-                      value="IN_PROGRESS"
-                    />
-                    <label
-                      class="usa-checkbox__label"
-                      for="payment-status"
-                    >
-                      This section of the Model Plan (Payment) is ready for review.
-                    </label>
-                    <p
-                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-                    />
-                  </div>
-                </div>
-              </div>
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                Add an additional note
+              </button>
             </div>
             <div
               class="margin-top-6 margin-bottom-3"

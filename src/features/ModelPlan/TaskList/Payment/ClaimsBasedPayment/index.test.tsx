@@ -101,10 +101,11 @@ describe('Model Plan -- Claims Based Payment', () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('payment-claims-based-payment-form')
-      ).toBeInTheDocument();
+      expect(screen.getByTestId('payment-pay-claims-other')).toHaveValue(
+        'pay claims other'
+      );
     });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

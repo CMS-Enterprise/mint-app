@@ -9,7 +9,7 @@ describe('RelatedArticle', () => {
   it('matches the snapshot', () => {
     const { asFragment } = render(
       <MemoryRouter>
-        <ArticleCard {...helpAndKnowledgeArticles[0]} />
+        <ArticleCard {...helpAndKnowledgeArticles[0]} key="article-1" />
       </MemoryRouter>
     );
     expect(asFragment()).toMatchSnapshot();
@@ -18,7 +18,7 @@ describe('RelatedArticle', () => {
   it('renders Article Card entirely wrapped as a link', () => {
     const { container } = render(
       <MemoryRouter>
-        <ArticleCard {...helpAndKnowledgeArticles[0]} isLink />
+        <ArticleCard {...helpAndKnowledgeArticles[0]} isLink key="article-2" />
       </MemoryRouter>
     );
 

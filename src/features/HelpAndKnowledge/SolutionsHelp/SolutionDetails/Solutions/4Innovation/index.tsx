@@ -6,10 +6,9 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { timelineTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 
 import ExternalLink from 'components/ExternalLink';
-
-import { TimelineConfigType } from '../Generic/timeline';
 
 import '../index.scss';
 
@@ -21,27 +20,24 @@ export interface ProcessListItemProps {
 const Innovation4TimeLine = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const timelineConfig: TimelineConfigType = t(
-    `solutions.${solution.key}.timeline`,
-    {
-      returnObjects: true
+  const timelineConfig = timelineTranslationUtil(solution.key);
+
+  const StandardTimelineItems = timelineConfig.items.map(
+    (item: any, index: number) => {
+      if (index === 0) return <div key="empty" />;
+      return (
+        <ProcessListItem
+          key={item.header}
+          className="operational-solution-details__timeline-item"
+        >
+          <ProcessListHeading type="h3" className="margin-top-neg-05">
+            {item.header}
+          </ProcessListHeading>
+          <p>{item.description}</p>
+        </ProcessListItem>
+      );
     }
   );
-
-  const StandardTimelineItems = timelineConfig.items.map((item, index) => {
-    if (index === 0) return <div key="empty" />;
-    return (
-      <ProcessListItem
-        key={item.header}
-        className="operational-solution-details__timeline-item"
-      >
-        <ProcessListHeading type="h3" className="margin-top-neg-05">
-          {item.header}
-        </ProcessListHeading>
-        <p>{item.description}</p>
-      </ProcessListItem>
-    );
-  });
 
   return (
     <div className="operational-solution-details line-height-body-5 font-body-md">

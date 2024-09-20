@@ -12,7 +12,7 @@ type ExternalLinkModalTypes = {
   buttonText: string;
 };
 
-const ExternalLinkWithModal = ({ url, buttonText }: ExternalLinkModalTypes) => {
+const ExternalDocumentLink = ({ url, buttonText }: ExternalLinkModalTypes) => {
   const { t: externalT } = useTranslation('externalLinkModal');
   const [showFullUrl, setShowFullUrl] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,18 +30,18 @@ const ExternalLinkWithModal = ({ url, buttonText }: ExternalLinkModalTypes) => {
           headingLevel="h3"
           className="margin-top-neg-2 margin-bottom-2"
         >
-          {externalT('heading')}
+          {externalT('document.heading')}
         </PageHeading>
 
         <p className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-1">
-          {externalT('redirectingCopy')}
+          {externalT('document.redirectingCopy')}
         </p>
         <p className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-1 text-base-dark">
           “{hostname}”
         </p>
 
         <p className="font-body-md margin-top-0 margin-bottom-1 line-height-sans-4">
-          {externalT('notConfident')}
+          {externalT('document.notConfident')}
         </p>
 
         <div className="margin-bottom-3">
@@ -57,7 +57,7 @@ const ExternalLinkWithModal = ({ url, buttonText }: ExternalLinkModalTypes) => {
               }`}
             >
               {showFullUrl ? <Icon.ExpandMore /> : <Icon.NavigateNext />}
-              {externalT('viewFullURL')}
+              {externalT('document.viewFullURL')}
             </span>
           </Button>
 
@@ -78,7 +78,7 @@ const ExternalLinkWithModal = ({ url, buttonText }: ExternalLinkModalTypes) => {
           href={url}
           variant="unstyled"
         >
-          {externalT('continueButton')}
+          {externalT('document.continueButton')}
         </ExternalLink>
 
         <Button
@@ -90,7 +90,7 @@ const ExternalLinkWithModal = ({ url, buttonText }: ExternalLinkModalTypes) => {
             setIsModalOpen(false);
           }}
         >
-          {externalT('returnButton')}
+          {externalT('document.returnButton')}
         </Button>
       </Modal>
       <Button
@@ -110,4 +110,4 @@ const ExternalLinkWithModal = ({ url, buttonText }: ExternalLinkModalTypes) => {
   );
 };
 
-export default ExternalLinkWithModal;
+export default ExternalDocumentLink;

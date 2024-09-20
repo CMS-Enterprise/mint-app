@@ -2,6 +2,7 @@ import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { aboutTranslationUtil } from 'features/HelpAndKnowledge/SolutionsHelp/util';
 
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -81,17 +82,14 @@ export const getTransLinkComponents = (links?: LinkType[]) => {
 export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const aboutConfig: AboutConfigType = t(`solutions.${solution.key}.about`, {
-    returnObjects: true
-  });
+  const aboutConfig = aboutTranslationUtil(solution.key);
 
   const descriptionItems = aboutConfig?.items;
   const hasDescriptionItems = Array.isArray(descriptionItems);
   const isDescriptionItemsOrdered = aboutConfig?.ordered;
 
-  const components = t(`solutions.${solution.key}.about.components`, {
-    returnObjects: true
-  });
+  const { components } = aboutTranslationUtil(solution.key);
+
   const hasComponents = Array.isArray(components);
 
   // Render ordered list or unordered dynaically

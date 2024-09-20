@@ -7,6 +7,7 @@ module.exports = {
     service: {
       name: 'mint-app',
       localSchemaFile: allGraphQLFiles
-    }
+    },
+    includes: ['./src/gql/operations/**/*.ts']
   }
 };

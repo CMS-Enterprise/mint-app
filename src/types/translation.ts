@@ -84,6 +84,7 @@ import {
   YesNoOtherType,
   YesNoType
 } from 'gql/generated/graphql';
+
 // Util used to preserve type defintions when mapping over keys of object
 // https://stackoverflow.com/questions/52856496/typescript-object-keys-return-string
 export const getKeys = Object.keys as <T extends object>(

@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { GetNotificationsDocument } from 'gql/generated/graphql';
 import setup from 'tests/util';
 
@@ -84,24 +84,22 @@ const notificationsMock = [
 
 describe('Notification Page', () => {
   it('renders without errors', async () => {
-    await act(async () => {
-      setup(
-        <MemoryRouter initialEntries={[`/notifications`]}>
-          <MockedProvider mocks={notificationsMock} addTypename={false}>
-            <Route path="/notifications">
-              <MessageProvider>
-                <NotificationsHome />
-              </MessageProvider>
-            </Route>
-          </MockedProvider>
-        </MemoryRouter>
-      );
+    setup(
+      <MemoryRouter initialEntries={[`/notifications`]}>
+        <MockedProvider mocks={notificationsMock} addTypename={false}>
+          <Route path="/notifications">
+            <MessageProvider>
+              <NotificationsHome />
+            </MessageProvider>
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
+    );
 
-      await waitFor(() => {
-        expect(screen.getByTestId('notification-index')).toBeInTheDocument();
-        expect(screen.getByText(/Excellent Model/i)).toBeInTheDocument();
-        expect(screen.getByText(/Second Notification/i)).toBeInTheDocument();
-      });
+    await waitFor(() => {
+      expect(screen.getByTestId('notification-index')).toBeInTheDocument();
+      expect(screen.getByText(/Excellent Model/i)).toBeInTheDocument();
+      expect(screen.getByText(/Second Notification/i)).toBeInTheDocument();
     });
   });
 

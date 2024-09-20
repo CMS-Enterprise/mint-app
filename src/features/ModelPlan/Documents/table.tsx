@@ -26,7 +26,7 @@ import {
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
-import ExternalLinkWithModal from 'components/ExternalLinkWithModal';
+import ExternalDocumentLink from 'components/ExternalDocumentLink';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -413,7 +413,7 @@ export const Table = ({
                     </span>
                   </Button>
                 ) : (
-                  <ExternalLinkWithModal
+                  <ExternalDocumentLink
                     url={row.original.url}
                     buttonText={t('documentTable.visit')}
                   />
@@ -485,7 +485,10 @@ export const Table = ({
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <tr
+              {...headerGroup.getHeaderGroupProps()}
+              key={{ ...headerGroup.getHeaderGroupProps() }.key}
+            >
               {headerGroup.headers
                 // @ts-ignore
                 .filter(column => !hiddenColumns?.includes(column.Header))
@@ -501,6 +504,7 @@ export const Table = ({
                       paddingBottom: '.5rem',
                       position: 'relative'
                     }}
+                    key={column.id}
                   >
                     <button
                       className="usa-button usa-button--unstyled position-relative"
@@ -518,9 +522,9 @@ export const Table = ({
         <tbody {...getTableBodyProps()}>
           {page.map(row => {
             prepareRow(row);
-            const { getRowProps, cells } = { ...row };
+            const { getRowProps, cells, id } = { ...row };
             return (
-              <tr {...getRowProps()}>
+              <tr {...getRowProps()} key={id}>
                 {cells
                   .filter(cell => {
                     // @ts-ignore
@@ -535,6 +539,7 @@ export const Table = ({
                           style={{
                             paddingLeft: '0'
                           }}
+                          key={cell.getCellProps().key}
                         >
                           {cell.render('Cell')}
                         </th>
@@ -548,6 +553,7 @@ export const Table = ({
                             paddingLeft: '0',
                             paddingRight: '0'
                           }}
+                          key={cell.getCellProps().key}
                         >
                           {cell.render('Cell')}
                         </td>
@@ -560,6 +566,7 @@ export const Table = ({
                           paddingLeft: '0',
                           whiteSpace: 'normal'
                         }}
+                        key={cell.getCellProps().key}
                       >
                         {cell.render('Cell')}
                       </td>

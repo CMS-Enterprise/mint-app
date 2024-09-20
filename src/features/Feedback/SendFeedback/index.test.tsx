@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { act, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { EaseOfUse, MintUses, SatisfactionLevel } from 'gql/generated/graphql';
 import CreateSendFeedback from 'gql/operations/Feedback/CreateSendFeedback';
 import setup from 'tests/util';
@@ -37,47 +37,43 @@ const mocks = [
 
 describe('Send feedback form', () => {
   it('submits the "Send feedback" form successfully', async () => {
-    await act(async () => {
-      const { findByText, getByRole, getByTestId, getByText, user } = setup(
-        <MemoryRouter initialEntries={['send-feedback']}>
-          <Route path="send-feedback">
-            <MockedProvider mocks={mocks} addTypename={false}>
-              <SendFeedback />
-            </MockedProvider>
-          </Route>
-        </MemoryRouter>
-      );
+    const { findByText, getByRole, getByTestId, getByText, user } = setup(
+      <MemoryRouter initialEntries={['send-feedback']}>
+        <Route path="send-feedback">
+          <MockedProvider mocks={mocks} addTypename={false}>
+            <SendFeedback />
+          </MockedProvider>
+        </Route>
+      </MemoryRouter>
+    );
 
-      // Fill out form
+    // Fill out form
 
-      await user.click(
-        getByTestId('send-feedback-allow-anon-submission-false')
-      );
+    await user.click(getByTestId('send-feedback-allow-anon-submission-false'));
 
-      await user.click(getByTestId('send-feedback-allow-contact-true'));
+    await user.click(getByTestId('send-feedback-allow-contact-true'));
 
-      await user.type(getByTestId('send-feedback-cms-role'), 'Architect');
+    await user.type(getByTestId('send-feedback-cms-role'), 'Architect');
 
-      await user.click(getByText('To edit Model Plans'));
+    await user.click(getByText('To edit Model Plans'));
 
-      await user.click(getByTestId('send-feedback-ease-of-use-UNSURE'));
+    await user.click(getByTestId('send-feedback-ease-of-use-UNSURE'));
 
-      await user.type(
-        getByTestId('send-feedback-ease-of-use-other'),
-        'Effortless'
-      );
+    await user.type(
+      getByTestId('send-feedback-ease-of-use-other'),
+      'Effortless'
+    );
 
-      await user.click(getByTestId('send-feedback-how-satisfied-NEUTRAL'));
+    await user.click(getByTestId('send-feedback-how-satisfied-NEUTRAL'));
 
-      await user.type(getByTestId('send-feedback-how-can-we-improve'), 'Alot');
+    await user.type(getByTestId('send-feedback-how-can-we-improve'), 'Alot');
 
-      const submitButton = getByRole('button', { name: 'Send feedback' });
+    const submitButton = getByRole('button', { name: 'Send feedback' });
 
-      await user.click(submitButton);
+    await user.click(submitButton);
 
-      // Submit success
-      findByText('Thank you for your feedback');
-    });
+    // Submit success
+    findByText('Thank you for your feedback');
   });
 
   it('matches snapshot', async () => {
