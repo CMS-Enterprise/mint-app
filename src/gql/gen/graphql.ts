@@ -324,6 +324,7 @@ export type DataExchangeApproach = {
 export type DataExchangeApproachCompletedActivityMeta = {
   __typename: 'DataExchangeApproachCompletedActivityMeta';
   dataExchangeApproach: DataExchangeApproach;
+  dataExchangeApproachID: Scalars['UUID']['output'];
   markedCompleteBy: Scalars['UUID']['output'];
   markedCompleteByUserAccount: UserAccount;
   type: ActivityType;

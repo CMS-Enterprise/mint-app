@@ -454,7 +454,12 @@ func (s *Seeder) SeedData() {
 		s.Config.AddressBook,
 		actorPrincipal.UserAccount.ID,
 		s.Config.Store,
-		[]uuid.UUID{planWithDocuments.CreatedBy},
+		[]*models.UserAccountAndNotificationPreferences{
+			{
+				UserAccount:     *testUser.UserAccount,
+				PreferenceFlags: models.DefaultUserNotificationPreferencesFlags(),
+			},
+		},
 		planWithDocuments,
 		dataExchangeApproach,
 		testUser.UserAccount.ID,

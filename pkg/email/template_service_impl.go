@@ -249,7 +249,6 @@ func (t *TemplateServiceImpl) Load() error {
 		return err
 	}
 
-
 	err = t.loadEmailTemplate(DataExchangeApproachCompletedTemplateName, dataExchangeApproachCompletedSubjectTemplate, dataExchangeApproachCompletedBodyTemplate)
 	if err != nil {
 		return err

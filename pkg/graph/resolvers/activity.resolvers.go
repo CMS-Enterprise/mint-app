@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -37,6 +38,12 @@ func (r *dailyDigestCompleteActivityMetaResolver) AnalyzedAudits(ctx context.Con
 // ModelPlan is the resolver for the modelPlan field.
 func (r *dataExchangeApproachResolver) ModelPlan(ctx context.Context, obj *models.DataExchangeApproach) (*models.ModelPlan, error) {
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// DataExchangeApproach is the resolver for the dataExchangeApproach field.
+func (r *dataExchangeApproachCompletedActivityMetaResolver) DataExchangeApproach(ctx context.Context, obj *models.DataExchangeApproachCompletedActivityMeta) (*models.DataExchangeApproach, error) {
+	// TODO: Implement this resolver
+	panic(fmt.Errorf("not implemented: DataExchangeApproach - dataExchangeApproach"))
 }
 
 // MarkedCompleteByUserAccount is the resolver for the markedCompleteByUserAccount field.

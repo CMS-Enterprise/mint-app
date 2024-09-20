@@ -67,18 +67,13 @@ func SendDataExchangeApproachCompletedEmailNotifications(
 	emailService oddmail.EmailService,
 	templateService email.TemplateService,
 	addressBook email.AddressBook,
-	receiverIDs []uuid.UUID,
+	receivers []*models.UserAccountAndNotificationPreferences,
 	modelPlan *models.ModelPlan,
 	markedCompletedByUserCommonName string,
 	showFooter bool,
 ) error {
-	for _, userID := range receiverIDs {
-		user, err := userhelpers.UserAccountGetByIDLOADER(ctx, userID)
-		if err != nil {
-			return err
-		}
-
-		err = SendDataExchangeApproachCompletedEmailNotification(
+	for _, user := range receivers {
+		err := SendDataExchangeApproachCompletedEmailNotification(
 			emailService,
 			templateService,
 			addressBook,
@@ -101,20 +96,22 @@ func SendDataExchangeApproachCompletedNotification(
 	addressBook email.AddressBook,
 	actorID uuid.UUID,
 	np sqlutils.NamedPreparer,
-	receiverIDs []uuid.UUID,
+	receivers []*models.UserAccountAndNotificationPreferences,
 	modelPlan *models.ModelPlan,
-	approach *models.DataExchangeApproach, // TODO: We should probably remove this and reference it from modelPlan
+	approach *models.DataExchangeApproach,
 	markedCompletedBy uuid.UUID,
 ) error {
 	logger := appcontext.ZLogger(ctx)
+
+	emailPreferences, inAppPreferences := models.FilterNotificationPreferences(receivers)
 
 	// Create and send in-app notifications
 	_, err := notifications.ActivityDataExchangeApproachCompletedCreate(
 		ctx,
 		actorID,
 		np,
-		receiverIDs,
-		approach,
+		inAppPreferences,
+		approach.ID,
 		markedCompletedBy,
 		loaders.UserNotificationPreferencesGetByUserID,
 	)
@@ -150,7 +147,7 @@ func SendDataExchangeApproachCompletedNotification(
 		emailService,
 		templateService,
 		addressBook,
-		receiverIDs,
+		emailPreferences,
 		modelPlan,
 		markedCompletedByUser.CommonName,
 		true,
