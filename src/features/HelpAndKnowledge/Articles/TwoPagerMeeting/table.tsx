@@ -42,7 +42,16 @@ const ModelSectionCriteriaTable = () => {
               <th scope="row" className="text-baseline text-bold">
                 {item.criteria}
               </th>
-              <td className="text-baseline">{item.description}</td>
+              <td className="text-baseline">
+                <Trans
+                  i18nKey={item.description}
+                  components={{
+                    paragraph: <p className="margin-y-0" />,
+                    ul: <ul className="margin-y-0 padding-left-2" />,
+                    li: <li className="line-height-sans-4 margin-bottom-05" />
+                  }}
+                />
+              </td>
               <td className="text-baseline">
                 <Trans
                   i18nKey={item.score}
