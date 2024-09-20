@@ -186,6 +186,116 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           >
             Visit the CMMI Strategy Refresh SharePoint site to access additional model development resources including those that will help with the creation of 2-page and 6-page concept papers.
           </p>
+          <ul
+            class="usa-card-group"
+            data-testid="CardGroup"
+          >
+            <li
+              class="usa-card desktop:grid-col-6"
+              data-testid="Card"
+            >
+              <div
+                class="usa-card__container shadow-2 padding-2"
+              >
+                <p
+                  class="text-bold margin-y-0 line-height-sans-4"
+                >
+                  Strategy Refresh SharePoint site
+                </p>
+                <button
+                  class="usa-button usa-button--unstyled line-height-sans-4 margin-right-2"
+                  data-testid="button"
+                  type="button"
+                >
+                  <span
+                    class="display-flex flex-align-center"
+                  >
+                    Go to the Strategy Refresh landing page
+                    <svg
+                      class="usa-icon margin-left-05"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                <button
+                  class="usa-button usa-button--unstyled line-height-sans-4 margin-right-2"
+                  data-testid="button"
+                  type="button"
+                >
+                  <span
+                    class="display-flex flex-align-center"
+                  >
+                    Go to the Resources page
+                    <svg
+                      class="usa-icon margin-left-05"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </li>
+            <li
+              class="usa-card desktop:grid-col-6"
+              data-testid="Card"
+            >
+              <div
+                class="usa-card__container shadow-2 padding-2"
+              >
+                <p
+                  class="text-bold margin-y-0 line-height-sans-4"
+                >
+                  2-page concept paper template
+                </p>
+                <p
+                  class="text-base margin-y-0 line-height-sans-4"
+                >
+                  Download the template from the Strategy Refresh SharePoint site.
+                </p>
+                <button
+                  class="usa-button usa-button--unstyled line-height-sans-4 margin-right-2"
+                  data-testid="button"
+                  type="button"
+                >
+                  <span
+                    class="display-flex flex-align-center"
+                  >
+                    Go to the template on SharePoint
+                    <svg
+                      class="usa-icon margin-left-05"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </li>
+          </ul>
         </div>
         <div
           class="margin-bottom-6"
