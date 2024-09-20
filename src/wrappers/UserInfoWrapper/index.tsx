@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
@@ -22,7 +22,10 @@ type oktaUserProps = {
 
 const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
   const dispatch = useDispatch();
+
   const { authState, oktaAuth } = useOktaAuth();
+
+  const [hasSession, setHasSession] = useState(false);
 
   const { data } = useQuery(GetNDA, {
     skip: !authState?.isAuthenticated
@@ -85,11 +88,12 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
     const checkSession = async () => {
       const sessionExists = await oktaAuth.session.exists();
 
-      if (
-        sessionExists &&
-        /* eslint no-underscore-dangle: 0 */
-        oktaAuth.authStateManager._authState?.isAuthenticated === false
-      ) {
+      setHasSession(sessionExists);
+
+      const isNotAuthenticated =
+        oktaAuth.authStateManager.getAuthState()?.isAuthenticated === false;
+
+      if (sessionExists && isNotAuthenticated) {
         oktaAuth.signInWithRedirect();
       }
     };
@@ -98,7 +102,7 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
   }, [oktaAuth]);
 
   // Return null until we know if the user is authenticated.  This prevents unwanted UX flicker.
-  if (oktaAuth.authStateManager.getAuthState() === undefined) {
+  if (oktaAuth.authStateManager.getAuthState() === null && !hasSession) {
     return null;
   }
 
