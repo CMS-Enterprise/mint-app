@@ -47,9 +47,9 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
   },
   {
     key: HelpArticle.TWO_PAGER_MEETING,
-    route: '/how-to-have-a-successful-2-pager-meeting',
+    route: '/about-2-page-concept-papers-and-review-meetings',
     translation: 'twoPageMeeting',
-    type: ArticleCategories.GETTING_STARTED
+    type: ArticleCategories.MODEL_CONCEPT_AND_DESIGN
   },
   {
     key: HelpArticle.SIX_PAGER_MEETING,
