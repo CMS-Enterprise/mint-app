@@ -172,7 +172,6 @@ const TwoPagerMeeting = () => {
                   t={twoPageMeetingT}
                   i18nKey="about.alert"
                   components={{
-                    s: <span />,
                     el: (
                       <ExternalLink
                         className="margin-right-0"

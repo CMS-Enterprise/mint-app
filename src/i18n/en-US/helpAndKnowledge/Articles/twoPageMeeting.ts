@@ -18,9 +18,9 @@ const twoPageMeeting = {
   },
   about: {
     introParagraph:
-      'A 2-page concept paper is an overview of an early development model concept, and may or may not include all of the elements listed below. Teams can focus on the most relevant and impactful information to help CMMI decide if a model concept should move to the next development phase. As teams are considering a 2-page concept paper, they may consult with their group leadership and the CMMI FO for early guidance and to support efficient use of staff and other resources.',
+      'A 2-page concept paper is an overview of an early development model concept, and may or may not include all of the elements listed below. Teams can focus on the most relevant and impactful information to help CMMI decide if a model concept should move to the next development phase. As teams are considering a 2-page concept paper, they may consult with their group leadership and the CMMI FO for early guidance and to support efficient use of staff and other resources.',
     alert:
-      '<s>Much of the content below is also accessible in the 6-page concept paper template. <el>Download it from the Strategy Refresh SharePoint site</el></s>',
+      'Much of the content below is also accessible in the 6-page concept paper template. <el>Download it from the Strategy Refresh SharePoint site</el>',
     link: 'Download it from the Strategy Refresh SharePoint site',
     stepOne: {
       heading: '1. Proposed model overview and goals',
