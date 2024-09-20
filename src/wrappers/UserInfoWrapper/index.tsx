@@ -94,7 +94,7 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
         oktaAuth.authStateManager.getAuthState()?.isAuthenticated === false;
 
       if (sessionExists && isNotAuthenticated) {
-        oktaAuth.signInWithRedirect();
+        oktaAuth.signInWithRedirect({ originalUri: '/pre-decisional-notice' });
       }
     };
 
