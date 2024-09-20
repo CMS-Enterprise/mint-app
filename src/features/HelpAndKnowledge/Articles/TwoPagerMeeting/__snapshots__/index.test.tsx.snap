@@ -45,14 +45,14 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
         </h1>
         <a
           class="usa-link width-fit-content display-block margin-bottom-1"
-          href="/help-and-knowledge/articles?category=getting-started"
+          href="/help-and-knowledge/articles?category=undefined"
         >
           <span
-            aria-label="Articles under the Getting started category"
+            aria-label="Articles under the Model concept and design category"
             class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
             data-testid="tag"
           >
-            Getting started
+            Model concept and design
           </span>
         </a>
         <p
@@ -368,7 +368,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               Briefly discuss the problem the model intends to address, including a description of the:
               <ul
                 class="margin-top-0 padding-left-2"
+                style="list-style-type: disc;"
               >
+                gary
                 <li
                   class="line-height-sans-4"
                 >
@@ -428,7 +430,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <li
               class="line-height-sans-4"
             >
-              Provide a high-level overview of key model design elements including target population, payment approach, and quality/performance measurement
+              Provide a high-level overview of key model design elements including: target population, payment approach, geography, and key quality domains
             </li>
           </ul>
           <h3
@@ -505,6 +507,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               ):
               <ul
                 class="padding-left-3 margin-top-05"
+                style="list-style-type: disc;"
               >
                 <li
                   class="line-height-sans-4"
@@ -667,7 +670,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               <h3
                 class="usa-summary-box__heading"
               >
-                Example 2-pagers
+                Example 2-page concept papers
               </h3>
               <div
                 class="usa-summary-box__text"
@@ -1110,7 +1113,25 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 <td
                   class="text-baseline"
                 >
-                  The potential for the model to impact participation, outcomes, and cost
+                  <p
+                    class="margin-y-0"
+                  >
+                    Model effect as a function of participation and the potential for health system transformation
+                  </p>
+                  <ul
+                    class="margin-y-0 padding-left-2"
+                  >
+                    <li
+                      class="line-height-sans-4 margin-bottom-05"
+                    >
+                      Participation: number of providers, beneficiaries, Medicare spending, Medicaid spending​
+                    </li>
+                    <li
+                      class="line-height-sans-4 margin-bottom-05"
+                    >
+                      Transformation, including: cost reduction, quality and equity improvement, delivery system change​
+                    </li>
+                  </ul>
                 </td>
                 <td
                   class="text-baseline"

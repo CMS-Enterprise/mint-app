@@ -1023,14 +1023,14 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               </header>
               <a
                 class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/articles?category=getting-started"
+                href="/help-and-knowledge/articles?category=undefined"
               >
                 <span
-                  aria-label="Articles under the Getting started category"
+                  aria-label="Articles under the Model concept and design category"
                   class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
                   data-testid="tag"
                 >
-                  Getting started
+                  Model concept and design
                 </span>
               </a>
               <div
