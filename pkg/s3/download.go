@@ -7,34 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
-
-func (c S3Client) DownloadStream() {
-
-}
-
-// TODO: (Parquet) Should we remove this func
-
-// DownloadToMemory downloads an object from the S3 bucket to a buffer in memory
-func (c S3Client) DownloadToMemory(key string) ([]byte, error) {
-	//  Note, this might live in another package
-	downloader := s3manager.NewDownloaderWithClient(c.client)
-
-	// Create an in-memory buffer to store the file data
-	buffer := &aws.WriteAtBuffer{}
-
-	// Download the file to the buffer
-	_, err := downloader.Download(buffer, &s3.GetObjectInput{
-		Bucket: aws.String(c.config.Bucket),
-		Key:    aws.String(key),
-	})
-	if err != nil {
-		return nil, fmt.Errorf("failed to download file to memory, %v", err)
-	}
-
-	return buffer.Bytes(), nil
-}
 
 // GetS3ObjectReaderAt returns an io.ReaderAt from an S3 object
 func (c S3Client) GetS3ObjectReaderAt(key string) (io.ReaderAt, int64, error) {

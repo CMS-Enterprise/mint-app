@@ -7,7 +7,7 @@ type EChimpCR {
   title: String
   sensitiveFlag: Boolean
   implementationDate: String
-  crSummary: String
+  crSummary: String #TODO (echimp) consider making this an HTML / TaggedContent.
   crStatus: String
   emergencyCrFlag: Boolean
   relatedCrNumbers: String
