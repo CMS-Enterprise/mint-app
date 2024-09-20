@@ -78,7 +78,10 @@ function Table({
         </caption>
         <thead>
           {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <tr
+              {...headerGroup.getHeaderGroupProps()}
+              key={{ ...headerGroup.getHeaderGroupProps() }.key}
+            >
               {headerGroup.headers.map(column => (
                 <th
                   {...column.getHeaderProps()}
@@ -86,6 +89,7 @@ function Table({
                     column.id === 'providerType' ? 'width-card' : ''
                   }`}
                   scope="col"
+                  key={column.id}
                 >
                   <button
                     className="usa-button usa-button--unstyled position-relative"
@@ -104,10 +108,12 @@ function Table({
           {page.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr {...row.getRowProps()} key={row.id}>
                 {row.cells.map(cell => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    <td {...cell.getCellProps()} key={cell.getCellProps().key}>
+                      {cell.render('Cell')}
+                    </td>
                   );
                 })}
               </tr>

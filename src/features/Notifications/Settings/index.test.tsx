@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   GetNotificationSettingsDocument,
   UserNotificationPreferenceFlag
@@ -58,66 +58,64 @@ const notificationsSettingsMock = [
 
 describe('Notification Settings Page', () => {
   it('renders without errors and unchecks an item', async () => {
-    await act(async () => {
-      const { user } = setup(
-        <MemoryRouter initialEntries={[`/notifications/settings`]}>
-          <MockedProvider mocks={notificationsSettingsMock} addTypename={false}>
-            <Route path="/notifications/settings">
-              <MessageProvider>
-                <NotificationSettings />
-              </MessageProvider>
-            </Route>
-          </MockedProvider>
-        </MemoryRouter>
-      );
+    const { user } = setup(
+      <MemoryRouter initialEntries={[`/notifications/settings`]}>
+        <MockedProvider mocks={notificationsSettingsMock} addTypename={false}>
+          <Route path="/notifications/settings">
+            <MessageProvider>
+              <NotificationSettings />
+            </MessageProvider>
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
+    );
 
-      await waitFor(() => {
-        expect(
-          screen.getByTestId('notification-setting-email-dailyDigestComplete')
-        ).toBeChecked();
-
-        expect(
-          screen.getByTestId('notification-setting-in-app-dailyDigestComplete')
-        ).toBeChecked();
-
-        expect(
-          screen.getByTestId('notification-setting-email-newModelPlan')
-        ).not.toBeChecked();
-
-        expect(
-          screen.getByTestId('notification-setting-email-datesChanged')
-        ).not.toBeChecked();
-        expect(
-          screen.getByTestId('notification-setting-whichModel')
-        ).toBeDisabled();
-      });
-
-      await user.click(
+    await waitFor(() => {
+      expect(
         screen.getByTestId('notification-setting-email-dailyDigestComplete')
-      );
-      await user.click(
+      ).toBeChecked();
+
+      expect(
+        screen.getByTestId('notification-setting-in-app-dailyDigestComplete')
+      ).toBeChecked();
+
+      expect(
         screen.getByTestId('notification-setting-email-newModelPlan')
-      );
-      await user.click(
+      ).not.toBeChecked();
+
+      expect(
         screen.getByTestId('notification-setting-email-datesChanged')
-      );
+      ).not.toBeChecked();
+      expect(
+        screen.getByTestId('notification-setting-whichModel')
+      ).toBeDisabled();
+    });
 
-      await waitFor(() => {
-        expect(
-          screen.getByTestId('notification-setting-email-dailyDigestComplete')
-        ).not.toBeChecked();
+    await user.click(
+      screen.getByTestId('notification-setting-email-dailyDigestComplete')
+    );
+    await user.click(
+      screen.getByTestId('notification-setting-email-newModelPlan')
+    );
+    await user.click(
+      screen.getByTestId('notification-setting-email-datesChanged')
+    );
 
-        expect(
-          screen.getByTestId('notification-setting-email-newModelPlan')
-        ).toBeChecked();
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('notification-setting-email-dailyDigestComplete')
+      ).not.toBeChecked();
 
-        expect(
-          screen.getByTestId('notification-setting-email-datesChanged')
-        ).toBeChecked();
-        expect(
-          screen.getByTestId('notification-setting-whichModel')
-        ).not.toBeDisabled();
-      });
+      expect(
+        screen.getByTestId('notification-setting-email-newModelPlan')
+      ).toBeChecked();
+
+      expect(
+        screen.getByTestId('notification-setting-email-datesChanged')
+      ).toBeChecked();
+      expect(
+        screen.getByTestId('notification-setting-whichModel')
+      ).not.toBeDisabled();
     });
   });
 

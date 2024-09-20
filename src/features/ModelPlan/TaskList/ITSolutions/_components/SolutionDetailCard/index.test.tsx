@@ -1,7 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import {
-  act,
   render,
   waitFor,
   waitForElementToBeRemoved
@@ -51,73 +50,69 @@ const mocks = [...possibleSolutionsMock, ...needQuestionAndAnswerMock];
 
 describe('SolutionDetailsCard', () => {
   it('matches snapshot', async () => {
-    await act(async () => {
-      const { asFragment, getByText, getByTestId } = render(
-        <MemoryRouter
-          initialEntries={[
-            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
-          ]}
-        >
-          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
-              <MessageProvider>
-                <SolutionDetailCard
-                  solution={solution}
-                  modelID={modelID}
-                  operationalNeedID={operationalNeedID}
-                  operationalSolutionID={operationalSolutionID}
-                />
-              </MessageProvider>
-            </VerboseMockedProvider>
-          </Route>
-        </MemoryRouter>
-      );
+    const { asFragment, getByText, getByTestId } = render(
+      <MemoryRouter
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+        ]}
+      >
+        <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <MessageProvider>
+              <SolutionDetailCard
+                solution={solution}
+                modelID={modelID}
+                operationalNeedID={operationalNeedID}
+                operationalSolutionID={operationalSolutionID}
+              />
+            </MessageProvider>
+          </VerboseMockedProvider>
+        </Route>
+      </MemoryRouter>
+    );
 
-      await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
+    await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
 
-      await waitFor(() => {
-        expect(
-          getByText('Obtain an application support contractor')
-        ).toBeInTheDocument();
-        expect(getByText('December 30, 2022')).toBeInTheDocument();
-      });
-
-      expect(asFragment()).toMatchSnapshot();
+    await waitFor(() => {
+      expect(
+        getByText('Obtain an application support contractor')
+      ).toBeInTheDocument();
+      expect(getByText('December 30, 2022')).toBeInTheDocument();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('isUpdatingStatus variant', async () => {
-    await act(async () => {
-      const { asFragment, getByText, getByTestId } = render(
-        <MemoryRouter
-          initialEntries={[
-            `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
-          ]}
-        >
-          <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
-              <MessageProvider>
-                <SolutionDetailCard
-                  solution={solution}
-                  modelID={modelID}
-                  operationalNeedID={operationalNeedID}
-                  operationalSolutionID={operationalSolutionID}
-                  isUpdatingStatus
-                />
-              </MessageProvider>
-            </VerboseMockedProvider>
-          </Route>
-        </MemoryRouter>
-      );
+    const { asFragment, getByText, getByTestId } = render(
+      <MemoryRouter
+        initialEntries={[
+          `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/solution-implementation-details`
+        ]}
+      >
+        <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/solution-implementation-details">
+          <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <MessageProvider>
+              <SolutionDetailCard
+                solution={solution}
+                modelID={modelID}
+                operationalNeedID={operationalNeedID}
+                operationalSolutionID={operationalSolutionID}
+                isUpdatingStatus
+              />
+            </MessageProvider>
+          </VerboseMockedProvider>
+        </Route>
+      </MemoryRouter>
+    );
 
-      await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
+    await waitForElementToBeRemoved(() => getByTestId('needs-spinner'));
 
-      await waitFor(() => {
-        expect(() => getByText('Must start by')).toThrow();
-        expect(() => getByText('December 30, 2022')).toThrow();
-      });
-
-      expect(asFragment()).toMatchSnapshot();
+    await waitFor(() => {
+      expect(() => getByText('Must start by')).toThrow();
+      expect(() => getByText('December 30, 2022')).toThrow();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });
