@@ -452,6 +452,39 @@ export enum DocumentType {
   POLICY_PAPER = 'POLICY_PAPER'
 }
 
+export type EChimpCr = {
+  __typename: 'EChimpCR';
+  associatedModelUids?: Maybe<Scalars['UUID']['output']>;
+  crNumber: Scalars['String']['output'];
+  crStatus?: Maybe<Scalars['String']['output']>;
+  crSummary?: Maybe<Scalars['String']['output']>;
+  emergencyCrFlag?: Maybe<Scalars['Boolean']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  implementationDate?: Maybe<Scalars['String']['output']>;
+  initiator?: Maybe<Scalars['String']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+  relatedCrNumbers?: Maybe<Scalars['String']['output']>;
+  relatedCrTdlNumbers?: Maybe<Scalars['String']['output']>;
+  sensitiveFlag?: Maybe<Scalars['Boolean']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  versionNum: Scalars['String']['output'];
+};
+
+export type EChimpCrAndTdls = EChimpCr | EChimpTdl;
+
+export type EChimpTdl = {
+  __typename: 'EChimpTDL';
+  associatedModelUids?: Maybe<Scalars['UUID']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  initiator?: Maybe<Scalars['String']['output']>;
+  issuedDate?: Maybe<Scalars['String']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  tdlNumber: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+  versionNum: Scalars['String']['output'];
+};
+
 export enum EaseOfUse {
   AGREE = 'AGREE',
   DISAGREE = 'DISAGREE',
@@ -661,6 +694,9 @@ export type ModelPlan = {
   crs: Array<PlanCr>;
   discussions: Array<PlanDiscussion>;
   documents: Array<PlanDocument>;
+  echimpCRs: Array<EChimpCr>;
+  echimpCRsAndTDLs: Array<EChimpCrAndTdls>;
+  echimpTDLs: Array<EChimpTdl>;
   generalCharacteristics: PlanGeneralCharacteristics;
   id: Scalars['UUID']['output'];
   isCollaborator: Scalars['Boolean']['output'];
@@ -3127,6 +3163,11 @@ export type Query = {
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
   currentUser: CurrentUser;
+  echimpCR: EChimpCr;
+  echimpCRAndTDLS: Array<EChimpCrAndTdls>;
+  echimpCRs: Array<EChimpCr>;
+  echimpTDL: EChimpTdl;
+  echimpTDLs: Array<EChimpTdl>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   modelPlan: ModelPlan;
@@ -3169,6 +3210,18 @@ export type QueryAnalyzedAuditsArgs = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: TableName;
+};
+
+
+/** Query definition for the schema */
+export type QueryEchimpCrArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryEchimpTdlArgs = {
+  id: Scalars['String']['input'];
 };
 
 

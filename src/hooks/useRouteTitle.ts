@@ -1,8 +1,9 @@
 // Hook to map react-touter-dom routes to translation titles
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import ReactGA from 'react-ga4';
 import { useLocation } from 'react-router-dom';
 
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { tObject } from 'utils/translation';
 
 // List of routes where the last part of the route is a UUID
@@ -10,6 +11,8 @@ const currentUUIDRoutes: string[] = ['solution-implementation-details'];
 
 const useRouteTitle = ({ sendGA = false }: { sendGA: boolean }): string => {
   const location = useLocation();
+
+  const { modelName } = useContext(ModelInfoContext);
 
   const routeTitles = tObject<string, string>('routes:titles');
 
@@ -57,11 +60,12 @@ const useRouteTitle = ({ sendGA = false }: { sendGA: boolean }): string => {
         ReactGA.send({
           hitType: 'pageview',
           page: location.pathname,
-          title: title.current
+          title: title.current,
+          model_name: modelName
         });
       }
     }
-  }, [location, routeTitles, sendGA]);
+  }, [location, routeTitles, sendGA, modelName]);
 
   return title.current;
 };

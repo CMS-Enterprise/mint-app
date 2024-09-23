@@ -53,7 +53,7 @@ func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	documents, err := PlanDocumentsReadByModelPlanID(logger, obj.ID, principal, r.store, r.s3Client)
+	documents, err := PlanDocumentsReadByModelPlanID(logger, obj.ID, principal, r.store, r.fileUploadS3Client)
 	return documents, err
 }
 
@@ -105,6 +105,21 @@ func (r *modelPlanResolver) Crs(ctx context.Context, obj *models.ModelPlan) ([]*
 func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanTDL, error) {
 	logger := appcontext.ZLogger(ctx)
 	return PlanTDLsGetByModelPlanID(logger, obj.ID, r.store)
+}
+
+// EchimpCRs is the resolver for the echimpCRs field.
+func (r *modelPlanResolver) EchimpCRs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpCR, error) {
+	return GetEChimpCRsByModelPlanID(r.echimpS3Client, obj.ID)
+}
+
+// EchimpTDLs is the resolver for the echimpTDLs field.
+func (r *modelPlanResolver) EchimpTDLs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpTDL, error) {
+	return GetEChimpTDLSByModelPlanID(r.echimpS3Client, obj.ID)
+}
+
+// EchimpCRsAndTDLs is the resolver for the echimpCRsAndTDLs field.
+func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.ModelPlan) ([]models.EChimpCRAndTDLS, error) {
+	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, obj.ID)
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.

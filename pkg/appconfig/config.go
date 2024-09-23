@@ -173,6 +173,9 @@ const ClientAddressKey = "CLIENT_ADDRESS"
 // AWSS3FileUploadBucket is the key for the bucket we upload files to
 const AWSS3FileUploadBucket = "AWS_S3_FILE_UPLOAD_BUCKET"
 
+// AWSS3ECHIMPBucket is the key for the bucket we EChimp data files are located
+const AWSS3ECHIMPBucket = "AWS_S3_ECHIMP_BUCKET"
+
 // LocalMinioAddressKey is the host used for local minio
 const LocalMinioAddressKey = "MINIO_ADDRESS"
 

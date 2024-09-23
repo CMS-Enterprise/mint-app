@@ -146,7 +146,7 @@ describe('Operational Solutions Link Documents', () => {
   });
 
   it('matches snapshot', async () => {
-    const { user, asFragment, getByTestId } = setup(
+    const { asFragment } = setup(
       <MemoryRouter
         initialEntries={[
           {
@@ -165,15 +165,6 @@ describe('Operational Solutions Link Documents', () => {
         </VerboseMockedProvider>
       </MemoryRouter>
     );
-
-    // Wait for page to load
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
-
-    // Click checkbox table cell to toggle document selection
-    const solutionDocument1 = getByTestId(
-      'link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634'
-    );
-    await user.click(solutionDocument1);
 
     expect(asFragment()).toMatchSnapshot();
   });

@@ -56,6 +56,16 @@ const ModelInfoWrapper = ({ children }: ModelInfoWrapperProps) => {
   if (data) {
     // Sets the model plan ref info once fetched
     modelContextData.current = { ...data.modelPlan };
+  } else {
+    // If no data is fetched, set the model plan ref info to default
+    modelContextData.current = {
+      __typename: 'ModelPlan',
+      id: '',
+      modelName: '',
+      modifiedDts: '',
+      createdDts: '2024-01-01T00:00:00Z',
+      status: ModelStatus.PLAN_DRAFT
+    };
   }
 
   return (
