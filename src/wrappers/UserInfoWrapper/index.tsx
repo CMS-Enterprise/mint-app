@@ -101,9 +101,9 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
     checkSession();
   }, [oktaAuth]);
 
-  // Return null until we know if the user is authenticated.  This prevents unwanted UX flicker.
+  // Return null until we know if the user is authenticated.  This prevents unwanted UX flicker. Does not trigger condition for local auth/non okta development
   if (
-    !isLocalAuthEnabled() &&
+    !window.localStorage[localAuthStorageKey] &&
     oktaAuth.authStateManager.getAuthState() === null &&
     !hasSession
   ) {
