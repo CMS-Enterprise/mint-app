@@ -1,6 +1,5 @@
 WITH QUERIED_IDS AS (
     /*Translate the input to a table */
-    -- SELECT UNNEST(CAST(:model_plan_ids AS UUID[])) WITH ORDINALITY AS id, ordinality
     SELECT UNNEST(CAST(:model_plan_ids AS UUID[]))  AS id
 )
 

@@ -22,9 +22,9 @@ import (
 	_ "embed"
 )
 
-func ModelPlansGetByModePlanIDsLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs uuid.UUIDs) ([]*models.ModelPlan, error) {
+func ModelPlansGetByModePlanIDsLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.ModelPlan, error) {
 	args := map[string]interface{}{
-		"model_plan_ids": pq.StringArray(modelPlanIDs.Strings()),
+		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 	//TODO: see if we can more natively handle an array of UUIDs, the uuids type still doesn't cast directly
 	res, err := sqlutils.SelectProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.GetByModelPlanIDLoadgen, args)
