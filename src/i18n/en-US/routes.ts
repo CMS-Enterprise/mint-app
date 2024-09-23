@@ -137,7 +137,7 @@ const routes = {
     '/how-to-have-a-successful-2-pager-meeting':
       'Help and knowledge center - How to have a successful 2 pager meeting',
     '/how-to-have-a-successful-6-pager-meeting':
-      'Help and knowledge center - How to have a successful 6 pager meeting',
+      'Help and knowledge center - About 6-page concept papers and review meetings',
     '/utilizing-solutions': 'Help and knowledge center - Utilizing solutions',
     '/model-and-solution-implementation':
       'Help and knowledge center - Model and solution implementation',

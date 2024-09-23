@@ -1,7 +1,5 @@
-import { head } from 'lodash';
-
 const sixPageMeeting = {
-  heading: 'About 6-page concept papers and review meetings',
+  title: 'About 6-page concept papers and review meetings',
   description:
     'Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-page concept paper. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.',
   summaryBox: {
@@ -146,6 +144,23 @@ const sixPageMeeting = {
       ]
     }
   },
+  tipsSummaryBox: {
+    heading: 'Tips to learn more about health equity',
+    items: [
+      {
+        text: 'View the <link1>Health Equity Resources on the Quality Vertical SharePoint</link1>',
+        link: 'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D'
+      },
+      {
+        text: 'View the <link1>CMS Framework for Health Equity</link1>',
+        link: 'https://www.cms.gov/about-cms/agency-information/omh/health-equity-programs/cms-framework-for-health-equity'
+      },
+      {
+        text: 'Work with CMMI FO',
+        link: ''
+      }
+    ]
+  },
   crossCuttingGroupsSummaryBox: {
     title: 'Cross-cutting groups',
     item: {
@@ -155,15 +170,6 @@ const sixPageMeeting = {
       learning: ' – for learning',
       four: 'Policy and Programs Group (PPG) – for quality and stakeholder engagement type things',
       five: 'Research and Rapid Cycle Evaluation Group (RREG) – for evaluation'
-    }
-  },
-  tipsSummaryBox: {
-    heading: 'Tips to learn more about health equity',
-    items: {
-      view: 'View the ',
-      one: 'Health Equity Resources on the Quality Vertical SharePoint',
-      two: 'CMS Framework for Health Equity',
-      three: 'Work with CMMI FO'
     }
   },
   conceptPaper: {

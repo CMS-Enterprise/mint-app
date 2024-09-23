@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import {
   Card,
   CardBody,
-  CardFooter,
   CardGroup,
   CardHeader,
   Grid,
@@ -68,6 +67,10 @@ const SixPagerMeeting = () => {
     'sixPageMeeting:aboutConceptPapers.sectionFour.items'
   );
 
+  const tipsToLearn = tArray<Record<string, any>>(
+    'sixPageMeeting:tipsSummaryBox.items'
+  );
+
   const additionalResourcesListItems = tArray(
     'sixPageMeeting:additionalResources.list'
   );
@@ -99,10 +102,10 @@ const SixPagerMeeting = () => {
       <MainContent className="line-height-sans-5">
         <GridContainer>
           <Grid>
-            <HelpBreadcrumb text={sixPageMeetingT('heading')} />
+            <HelpBreadcrumb text={sixPageMeetingT('title')} />
 
             <PageHeading className="margin-bottom-1">
-              {sixPageMeetingT('heading')}
+              {sixPageMeetingT('title')}
             </PageHeading>
 
             <HelpCategoryTag
@@ -318,6 +321,37 @@ const SixPagerMeeting = () => {
                 ))}
               </ul>
             </div>
+
+            {/* Tips to learn */}
+            <SummaryBox className="margin-bottom-3">
+              <SummaryBoxHeading headingLevel="h3">
+                {sixPageMeetingT('tipsSummaryBox.heading')}
+              </SummaryBoxHeading>
+
+              <SummaryBoxContent>
+                <ul className="margin-y-0 padding-top-1">
+                  {tipsToLearn.map((section, index) => (
+                    <li key={section.heading} className="padding-bottom-05">
+                      <Trans
+                        i18nKey={`tipsSummaryBox.items.${index}.text`}
+                        t={sixPageMeetingT}
+                        components={{
+                          link1: (
+                            <ExternalLink
+                              href={sixPageMeetingT(
+                                `tipsSummaryBox.items.${index}.link`
+                              )}
+                            >
+                              {' '}
+                            </ExternalLink>
+                          )
+                        }}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </SummaryBoxContent>
+            </SummaryBox>
 
             <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0">
               <SummaryBoxHeading headingLevel="h3">

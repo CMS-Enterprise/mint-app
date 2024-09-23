@@ -1,6 +1,3 @@
-import React from 'react';
-import { Icon } from '@trussworks/react-uswds';
-
 export enum ArticleCategories {
   GETTING_STARTED = 'getting-started',
   IT_IMPLEMENTATION = 'it-implementation',
