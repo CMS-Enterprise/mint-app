@@ -18,10 +18,10 @@ import (
 const echimpCacheTimeHours = 3
 
 // CRKey is the name of the file that is stored in the ECHIMP bucket representing all the echimp CR data
-const CRKey = "FFS_CR_DATA"
+const CRKey = "FFS_CR_DATA.parquet"
 
 // TDLKey is the name of the file that is stored in the ECHIMP bucket representing all the echimp TDL data
-const TDLKey = "TDL_DATA"
+const TDLKey = "TDL_DATA.parquet"
 
 var CRAndTDLCache *crAndTDLCache
 
