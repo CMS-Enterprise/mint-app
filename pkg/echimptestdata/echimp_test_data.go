@@ -9,8 +9,8 @@ import (
 
 // TODO consider fetching the key from a shared environment variable
 
-const CRKey = "echimp_cr"
-const TDLKey = "echimp_tdl"
+const CRKey = "FFS_CR_DATA"
+const TDLKey = "TDL_DATA"
 
 //go:embed FFS_CR_DATA.parquet
 var fsCrDataParquet []byte
