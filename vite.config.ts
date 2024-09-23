@@ -33,7 +33,6 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         sourceMap: true,
-        api: 'modern-compiler', // or "modern"
         includePaths: [
           './src/stylesheets',
           './node_modules/@uswds/uswds/packages'
