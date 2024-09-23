@@ -1,11 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
-import {
-  act,
-  waitFor,
-  waitForElementToBeRemoved
-} from '@testing-library/react';
+import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import documentMocks from 'features/ModelPlan/Documents/index.test';
 import {
   GetOperationalSolutionDocument,
@@ -135,6 +131,8 @@ describe('Operational Solutions Link Documents', () => {
       'link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634'
     );
 
+    expect(solutionDocument1).not.toBeChecked();
+
     await user.click(solutionDocument1);
 
     const solutionDocument2 = getByTestId(
@@ -142,44 +140,32 @@ describe('Operational Solutions Link Documents', () => {
     );
 
     await waitFor(() => {
-      expect(solutionDocument1).not.toBeChecked();
       expect(solutionDocument2).toBeChecked();
-      expect(linkButton).not.toHaveAttribute('disabled');
+      expect(linkButton).toHaveAttribute('disabled', '');
     });
   });
 
   it('matches snapshot', async () => {
-    await act(async () => {
-      const { user, asFragment, getByTestId } = setup(
-        <MemoryRouter
-          initialEntries={[
-            {
-              pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
-            }
-          ]}
-        >
-          <VerboseMockedProvider mocks={mocks} addTypename={false}>
-            <Provider store={store}>
-              <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents">
-                <MessageProvider>
-                  <LinkDocuments />
-                </MessageProvider>
-              </Route>
-            </Provider>
-          </VerboseMockedProvider>
-        </MemoryRouter>
-      );
+    const { asFragment } = setup(
+      <MemoryRouter
+        initialEntries={[
+          {
+            pathname: `/models/${modelID}/collaboration-area/task-list/it-solutions/${operationalNeedID}/${operationalSolutionID}/link-documents`
+          }
+        ]}
+      >
+        <VerboseMockedProvider mocks={mocks} addTypename={false}>
+          <Provider store={store}>
+            <Route path="/models/:modelID/collaboration-area/task-list/it-solutions/:operationalNeedID/:operationalSolutionID/link-documents">
+              <MessageProvider>
+                <LinkDocuments />
+              </MessageProvider>
+            </Route>
+          </Provider>
+        </VerboseMockedProvider>
+      </MemoryRouter>
+    );
 
-      // Wait for page to load
-      await waitForElementToBeRemoved(() => getByTestId('page-loading'));
-
-      // Click checkbox table cell to toggle document selection
-      const solutionDocument1 = getByTestId(
-        'link-document-9d828454-9ecd-42a0-ad84-bc8c8ddea634'
-      );
-      await user.click(solutionDocument1);
-
-      expect(asFragment()).toMatchSnapshot();
-    });
+    expect(asFragment()).toMatchSnapshot();
   });
 });

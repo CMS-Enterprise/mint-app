@@ -39,7 +39,7 @@ const mocks = [
               virusScanned: true,
               virusClean: true,
               restricted: false,
-              fileName: null,
+              fileName: 'My Document',
               fileSize: 123,
               downloadUrl: null,
               documentType: DocumentType.MARKET_RESEARCH,
@@ -105,11 +105,9 @@ describe('Model Plan Documents page', () => {
       </MemoryRouter>
     );
     await waitFor(() => {
-      expect(screen.getByText('Documents')).toBeInTheDocument();
-      expect(
-        screen.getByTestId('model-plan-documents-table')
-      ).toBeInTheDocument();
-      expect(asFragment()).toMatchSnapshot();
+      expect(screen.getByText('My Document')).toBeInTheDocument();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

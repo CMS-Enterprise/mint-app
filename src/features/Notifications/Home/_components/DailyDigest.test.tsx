@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   AnalyzedAudit as AnalyzedAuditsTypes,
   TableName
@@ -75,38 +75,34 @@ const dailyDigestProps: AnalyzedAuditsTypes[] = [
 
 describe('Daily Digest in Notifications', () => {
   it('renders without errors', async () => {
-    await act(async () => {
-      setup(
-        <MemoryRouter initialEntries={[`/notifications`]}>
-          <Route path="/notifications">
-            <DailyDigest analyzedAudits={dailyDigestProps} />
-          </Route>
-        </MemoryRouter>
-      );
+    setup(
+      <MemoryRouter initialEntries={[`/notifications`]}>
+        <Route path="/notifications">
+          <DailyDigest analyzedAudits={dailyDigestProps} />
+        </Route>
+      </MemoryRouter>
+    );
 
-      await waitFor(() => {
-        expect(
-          screen.getByTestId('notification--daily-digest')
-        ).toBeInTheDocument();
-        expect(screen.getByText(/Empty Plan/i)).toBeInTheDocument();
-        expect(screen.getByText(/previously Old Name/i)).toBeInTheDocument();
-        expect(
-          screen.getByText(/MINT Doe has been added as a model lead/i)
-        ).toBeInTheDocument();
-        expect(
-          screen.getByText(/This Model Plan is complete/i)
-        ).toBeInTheDocument();
-        expect(
-          screen.getByText(/Updates to Model Basics/i)
-        ).toBeInTheDocument();
-        expect(screen.getByText(/2 new documents/i)).toBeInTheDocument();
-        expect(
-          screen.getByText('View all recent changes').closest('a')
-        ).toHaveAttribute(
-          'href',
-          `/models/${dailyDigestProps[0].modelPlanID}/change-history`
-        );
-      });
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('notification--daily-digest')
+      ).toBeInTheDocument();
+      expect(screen.getByText(/Empty Plan/i)).toBeInTheDocument();
+      expect(screen.getByText(/previously Old Name/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/MINT Doe has been added as a model lead/i)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/This Model Plan is complete/i)
+      ).toBeInTheDocument();
+      expect(screen.getByText(/Updates to Model Basics/i)).toBeInTheDocument();
+      expect(screen.getByText(/2 new documents/i)).toBeInTheDocument();
+      expect(
+        screen.getByText('View all recent changes').closest('a')
+      ).toHaveAttribute(
+        'href',
+        `/models/${dailyDigestProps[0].modelPlanID}/change-history`
+      );
     });
   });
 

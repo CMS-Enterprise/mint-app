@@ -335,11 +335,17 @@ describe('Notification Center', () => {
       .type('2025-12-31')
       .should('have.value', '2025-12-31');
 
+    cy.clickOutside();
+
     cy.contains('button', 'Save and return to task list').click();
+
+    cy.get('[data-testid="page-loading"]').should('not.exist');
 
     cy.get('[data-testid="navmenu__notification"]').click();
 
     cy.url().should('include', '/notifications');
+
+    cy.get('[data-testid="spinner"]').should('not.exist');
 
     cy.get('[data-testid="individual-notification"]').contains(
       'Dates have been updated for Empty Plan.'
