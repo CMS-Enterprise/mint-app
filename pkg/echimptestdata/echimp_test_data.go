@@ -4,6 +4,8 @@ import (
 	"bytes"
 	_ "embed"
 
+	"github.com/spf13/viper"
+
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
@@ -19,7 +21,7 @@ var fsCrDataParquet []byte
 var tdlDataParquet []byte
 
 // SeedEChimpTestData uploads EChimp data to MINIO if it has not yet happened
-func SeedEChimpTestData(eChimpClient *s3.S3Client) error {
+func SeedEChimpTestData(eChimpClient *s3.S3Client, viperConfig *viper.Viper) error {
 
 	// TODO: see if you can validate if the data is already seeded so you don't upload multiple copies
 	// Create a crReader from the embedded byte slice

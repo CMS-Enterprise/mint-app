@@ -79,4 +79,5 @@ type SeederConfig struct {
 	EmailTemplateService email.TemplateService
 	AddressBook          email.AddressBook
 	OktaClient           oktaapi.Client
+	viperConfig          *viper.Viper
 }

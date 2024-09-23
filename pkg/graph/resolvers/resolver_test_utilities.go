@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/spf13/viper"
+
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/local"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
@@ -39,6 +41,7 @@ type TestConfigs struct {
 	Principal      *authentication.ApplicationPrincipal
 	Context        context.Context
 	OktaClient     oktaapi.Client
+	viperConfig    *viper.Viper
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -49,18 +52,17 @@ func GetDefaultTestConfigs() *TestConfigs {
 	return &tc
 }
 
-func createS3Client() s3.S3Client {
-	config := testhelpers.NewConfig()
+func createS3Client(viperConfig *viper.Viper) s3.S3Client {
 
 	s3Cfg := s3.Config{
-		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
-		Region:  config.GetString(appconfig.AWSRegion),
+		Bucket:  viperConfig.GetString(appconfig.AWSS3FileUploadBucket),
+		Region:  viperConfig.GetString(appconfig.AWSRegion),
 		IsLocal: true,
 	}
 	//OS ENV won't get environment variables set by VSCODE for debugging
-	_ = os.Setenv(appconfig.LocalMinioAddressKey, config.GetString(appconfig.LocalMinioAddressKey))
-	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, config.GetString(appconfig.LocalMinioS3AccessKey))
-	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, config.GetString(appconfig.LocalMinioS3SecretKey))
+	_ = os.Setenv(appconfig.LocalMinioAddressKey, viperConfig.GetString(appconfig.LocalMinioAddressKey))
+	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, viperConfig.GetString(appconfig.LocalMinioS3AccessKey))
+	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, viperConfig.GetString(appconfig.LocalMinioS3SecretKey))
 
 	return s3.NewS3Client(s3Cfg)
 }
@@ -71,8 +73,10 @@ func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(config, ldClient)
 
-	s3Client := createS3Client()
-	eChimpS3Client := s3testconfigs.S3TestECHIMPClient()
+	viperConfig := testhelpers.NewConfig()
+
+	s3Client := createS3Client(viperConfig)
+	eChimpS3Client := s3testconfigs.S3TestECHIMPClient(viperConfig)
 	tc.DBConfig = config
 	tc.LDClient = ldClient
 	tc.Logger = logger
@@ -81,6 +85,7 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.S3Client = &s3Client
 	tc.EChimpS3Client = &eChimpS3Client
 	tc.PubSub = ps
+	tc.viperConfig = viperConfig
 
 	oktaClient, oktaClientErr := local.NewOktaAPIClient()
 	if oktaClientErr != nil {
