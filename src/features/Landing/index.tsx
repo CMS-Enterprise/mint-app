@@ -1,6 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, GridContainer, Icon, Link, Tag } from '@trussworks/react-uswds';
+import {
+  Button,
+  Grid,
+  GridContainer,
+  Icon,
+  Link,
+  Tag
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import FormatDiscussion from 'features/ModelPlan/Discussions/FormatDiscussion';
 import {
@@ -12,6 +19,7 @@ import { DateTime } from 'luxon';
 import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useOktaSession from 'hooks/useOktaSession';
 import { tArray } from 'utils/translation';
 
 import './index.scss';
@@ -43,6 +51,8 @@ export const Landing = () => {
 export const LandingHeader = () => {
   const { t } = useTranslation('landing');
 
+  const { hasSession, oktaAuth } = useOktaSession();
+
   return (
     <div className="landing bg-primary-darker text-white">
       <GridContainer className="padding-top-1">
@@ -58,13 +68,27 @@ export const LandingHeader = () => {
         </p>
 
         <span className="hide-print">
-          <UswdsReactLink
-            className="usa-button bg-mint-cool-vivid text-white width-auto"
-            variant="unstyled"
-            to="/signin"
-          >
-            {t('signIn')}
-          </UswdsReactLink>
+          {hasSession ? (
+            <Button
+              type="button"
+              className="bg-mint-cool-vivid text-white width-auto"
+              onClick={() =>
+                oktaAuth.signInWithRedirect({
+                  originalUri: '/pre-decisional-notice'
+                })
+              }
+            >
+              {t('signIn')}
+            </Button>
+          ) : (
+            <UswdsReactLink
+              className="usa-button bg-mint-cool-vivid text-white width-auto"
+              variant="unstyled"
+              to="/signin"
+            >
+              {t('signIn')}
+            </UswdsReactLink>
+          )}
 
           <UswdsReactLink
             to="/how-to-get-access"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@apollo/client';
@@ -7,6 +7,7 @@ import GetNDA from 'gql/operations/Miscellaneous/GetNDA';
 import { setUser } from 'stores/reducers/authReducer';
 
 import { localAuthStorageKey } from 'constants/localAuth';
+import useOktaSession from 'hooks/useOktaSession';
 import { isLocalAuthEnabled } from 'utils/auth';
 
 type UserInfoWrapperProps = {
@@ -25,7 +26,7 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
 
   const { authState, oktaAuth } = useOktaAuth();
 
-  const [hasSession, setHasSession] = useState(false);
+  const { hasSession } = useOktaSession();
 
   const { data } = useQuery(GetNDA, {
     skip: !authState?.isAuthenticated
@@ -82,24 +83,6 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState?.isAuthenticated, data]);
-
-  // Check if user has an existing okta session, if so, sign them in
-  useEffect(() => {
-    const checkSession = async () => {
-      const sessionExists = await oktaAuth.session.exists();
-
-      setHasSession(sessionExists);
-
-      const isNotAuthenticated =
-        oktaAuth.authStateManager.getAuthState()?.isAuthenticated === false;
-
-      if (sessionExists && isNotAuthenticated) {
-        oktaAuth.signInWithRedirect({ originalUri: '/pre-decisional-notice' });
-      }
-    };
-
-    checkSession();
-  }, [oktaAuth]);
 
   // Return null until we know if the user is authenticated.  This prevents unwanted UX flicker. Does not trigger condition for local auth/non okta development
   if (
