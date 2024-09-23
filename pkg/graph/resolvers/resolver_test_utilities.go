@@ -86,6 +86,18 @@ func (tc *TestConfigs) GetDefaults() {
 
 	dataLoaders := loaders.NewDataLoaders(tc.Store)
 	tc.Context = loaders.CTXWithLoaders(context.Background(), dataLoaders)
+
+	// This part sets up the new dataloadgen library
+
+	// we need to construct a NEW set of dataloaders for each incoming HTTP request to avoid the forced caching of
+	// the dataloaders
+	// dataloader caches remain indefinitely once constructed, and we do not return the same (potentially stale) piece
+	// of data for every single HTTP request from server start
+	buildDataloadgens := func() *loaders.DataLoadgens {
+		return loaders.NewDataLoadgens(store)
+	}
+	tc.Context = loaders.CTXWithLoadgen(tc.Context, buildDataloadgens)
+
 	tc.Context = appcontext.WithLogger(tc.Context, tc.Logger)
 	tc.Context = appcontext.WithUserAccountService(tc.Context, userhelpers.UserAccountGetByIDLOADER)
 

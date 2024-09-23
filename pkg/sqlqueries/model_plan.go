@@ -32,6 +32,9 @@ var modelPlanDeleteByID string
 //go:embed SQL/model_plan/get_by_id_LOADER.sql
 var modelPlanGetByIDLoaderSQL string
 
+//go:embed SQL/model_plan/get_by_id_LOADGEN.sql
+var modelPlanGetByIDLoadgenSQL string
+
 //go:embed SQL/model_plan/get_op_solution_last_modified_dts_by_id_LOADER.sql
 var modelPlanPlanOpSolutionLastModifiedDtsGetByIDLoaderSQL string
 
@@ -55,6 +58,7 @@ type modelPlanScripts struct {
 	CollectionApproachingClearance         string
 	DeleteByID                             string
 	GetByIDLoader                          string
+	GetByModelPlanIDLoadgen                string
 	GetOpSolutionLastModifiedDtsByIDLoader string
 	GetByOperationalSolutionKey            string
 	CollectionWhereFavoritedByUserID       string
@@ -66,6 +70,7 @@ var ModelPlan = modelPlanScripts{
 	Create:                                 modelPlanCreateSQL,
 	Update:                                 modelPlanUpdateSQL,
 	GetByID:                                modelPlanGetByIDSQL,
+	GetByModelPlanIDLoadgen:                modelPlanGetByIDLoadgenSQL,
 	GetByName:                              modelPlanGetByNameSQL,
 	CollectionWhereArchived:                modelPlanCollectionWhereArchivedSQL,
 	CollectionByCollaborator:               modelPlanCollectionByCollaboratorSQL,

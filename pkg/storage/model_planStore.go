@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/lib/pq"
+
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -19,6 +21,18 @@ import (
 
 	_ "embed"
 )
+
+func ModelPlansGetByModePlanIDsLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs uuid.UUIDs) ([]*models.ModelPlan, error) {
+	args := map[string]interface{}{
+		"model_plan_ids": pq.StringArray(modelPlanIDs.Strings()),
+	}
+	//TODO: see if we can more natively handle an array of UUIDs, the uuids type still doesn't cast directly
+	res, err := sqlutils.SelectProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.GetByModelPlanIDLoadgen, args)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
 
 // ModelPlanGetByModelPlanIDLOADER returns the model plan for a slice of ids
 func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {

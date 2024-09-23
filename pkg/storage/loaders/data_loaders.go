@@ -23,7 +23,7 @@ type DataLoaders struct {
 	OperationalSolutionAndPossibleCollectionLoader *WrappedDataLoader
 	OperationSolutionSubtaskLoader                 *WrappedDataLoader
 	UserAccountLoader                              *WrappedDataLoader
-	DataReader                                     *DataReader
+	DataReader                                     *dataReader
 	ExistingModelLinkLoader                        *WrappedDataLoader
 	ExistingModelLinkNameLoader                    *WrappedDataLoader
 	ExistingModelLoader                            *WrappedDataLoader
@@ -44,7 +44,7 @@ type DataLoaders struct {
 // NewDataLoaders instantiates data loaders for the middleware
 func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders := &DataLoaders{
-		DataReader: &DataReader{
+		DataReader: &dataReader{
 			Store: store,
 		},
 	}
@@ -86,7 +86,7 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	return loaders
 }
 
-// DataReader reads Users from a database
-type DataReader struct {
+// dataReader is responsible for database access
+type dataReader struct {
 	Store *storage.Store
 }
