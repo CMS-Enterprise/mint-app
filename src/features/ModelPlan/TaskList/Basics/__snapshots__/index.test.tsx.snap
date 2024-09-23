@@ -1589,7 +1589,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                       id="plan-basics-model-name"
                       maxlength="200"
                       name="modelName"
-                      value="My excellent plan that I just initiated"
+                      value=""
                     />
                   </div>
                   <div
@@ -1613,7 +1613,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                       id="plan-basics-abbreviation"
                       maxlength="50"
                       name="abbreviation"
-                      value="MEP"
+                      value=""
                     />
                   </div>
                   <div
@@ -1665,7 +1665,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             id="plan-basics-ams-model-id"
                             maxlength="50"
                             name="basics.amsModelID"
-                            value="2414213"
+                            value=""
                           />
                         </div>
                       </div>
@@ -1689,7 +1689,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                             id="plan-basics-demo-code"
                             maxlength="50"
                             name="basics.demoCode"
-                            value="123"
+                            value=""
                           />
                         </div>
                       </div>
@@ -2376,12 +2376,11 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                       />
                     </div>
                     <div
-                      class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+                      class="mint-checkbox usa-checkbox"
                     >
                       <input
                         class="usa-checkbox__input"
                         data-testid="plan-basics-model-additional-category-STATE_BASED"
-                        disabled=""
                         id="plan-basics-model-additional-category-STATE_BASED"
                         name="basics.additionalModelCategories"
                         type="checkbox"
@@ -2436,7 +2435,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                         </span>
                       </label>
                       <p
-                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
+                        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
                       />
                     </div>
                     <div
