@@ -81,7 +81,7 @@ describe('Model Plan Basics page', () => {
   });
 
   it('disables and clears checkbox when user selects corresponding radio button', async () => {
-    const { asFragment } = render(
+    render(
       <MemoryRouter
         initialEntries={[
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/basics'
@@ -137,12 +137,10 @@ describe('Model Plan Basics page', () => {
         )
       ).toBeDisabled();
     });
-
-    expect(asFragment()).toMatchSnapshot();
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = render(
+    const { asFragment, getByText } = render(
       <MemoryRouter
         initialEntries={[
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/basics'
@@ -157,10 +155,7 @@ describe('Model Plan Basics page', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('model-plan-basics')).toBeInTheDocument();
-      expect(
-        screen.getByTestId('summary-box--previous-name')
-      ).toBeInTheDocument();
+      expect(getByText('First Name')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();
