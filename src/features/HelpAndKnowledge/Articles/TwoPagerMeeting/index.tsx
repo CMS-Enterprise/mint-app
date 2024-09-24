@@ -19,7 +19,8 @@ import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import { tArray } from 'utils/translation';
+import { getKeys } from 'types/translation';
+import { tArray, tObject } from 'utils/translation';
 
 import { ArticleCategories, HelpArticle } from '..';
 
@@ -39,7 +40,12 @@ const Link = ({ scrollTo }: { scrollTo: string }) => {
     </a>
   );
 };
-
+type ExampleSummaryBoxListType = {
+  [key: string]: {
+    href: string;
+    copy: string;
+  };
+};
 const TwoPagerMeeting = () => {
   const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
 
@@ -81,6 +87,10 @@ const TwoPagerMeeting = () => {
 
   const outcomesList: string[] = tArray(
     'twoPageMeeting:reviewMeeting.outcomes.list'
+  );
+
+  const exampleSummaryBoxList: ExampleSummaryBoxListType = tObject(
+    'twoPageMeeting:about.summarybox.exampleSummaryBox.list'
   );
 
   return (
@@ -410,34 +420,13 @@ const TwoPagerMeeting = () => {
                     {twoPageMeetingT('about.summarybox.exampleSummaryBox.text')}
                   </p>
                   <ul className="margin-top-0">
-                    <li className="margin-bottom-1">
-                      <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
-                        {twoPageMeetingT(
-                          'about.summarybox.exampleSummaryBox.list.one'
-                        )}
-                      </ExternalLink>
-                    </li>
-                    <li className="margin-bottom-1">
-                      <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20AOC)%202-pager_October%202021_v2%20clean.docx?d=w4bd1ac8e332c42659f7e4330b519794a">
-                        {twoPageMeetingT(
-                          'about.summarybox.exampleSummaryBox.list.two'
-                        )}
-                      </ExternalLink>
-                    </li>
-                    <li className="margin-bottom-1">
-                      <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Innovation%20in%20Behavioral%20Health%20(formerly%20BHI)%20Model%202-pager_FINAL.docx?d=wf5dc9e25276945278f98c2c8efc31e16">
-                        {twoPageMeetingT(
-                          'about.summarybox.exampleSummaryBox.list.three'
-                        )}
-                      </ExternalLink>
-                    </li>
-                    <li className="margin-bottom-1">
-                      <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/New%20Primary%20Care%20Model%20Concept%202-pager%20Final%20for%20FO.docx?d=webcc03b8baa74b11bc9cd28c264a6178">
-                        {twoPageMeetingT(
-                          'about.summarybox.exampleSummaryBox.list.four'
-                        )}
-                      </ExternalLink>
-                    </li>
+                    {getKeys(exampleSummaryBoxList).map(k => (
+                      <li key={k} className="margin-bottom-1">
+                        <ExternalLink href={exampleSummaryBoxList[k].href}>
+                          {exampleSummaryBoxList[k].copy}
+                        </ExternalLink>
+                      </li>
+                    ))}
                   </ul>
                   <span className="margin-y-0">
                     {twoPageMeetingT(

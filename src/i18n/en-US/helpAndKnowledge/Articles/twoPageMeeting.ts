@@ -120,10 +120,22 @@ const twoPageMeeting = {
         heading: 'Example 2-page concept papers',
         text: 'While all models are different, and therefore the content within a 2-page concept paper may vary drastically, it could be helpful for model teams or other interested parties to see examples of what previous model teams have put together in the past.',
         list: {
-          one: 'AHEAD 2-page concept paper',
-          two: 'Enhancing Oncology Model 2-page concept paper',
-          three: 'Innovation in Behavioral Health 2-pager concept paper',
-          four: 'Making Care Primary 2-pager concept paper'
+          one: {
+            copy: 'AHEAD 2-page concept paper',
+            href: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739'
+          },
+          two: {
+            copy: 'Enhancing Oncology Model 2-page concept paper',
+            href: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20AOC)%202-pager_October%202021_v2%20clean.docx?d=w4bd1ac8e332c42659f7e4330b519794a'
+          },
+          three: {
+            copy: 'Innovation in Behavioral Health 2-pager concept paper',
+            href: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Innovation%20in%20Behavioral%20Health%20(formerly%20BHI)%20Model%202-pager_FINAL.docx?d=wf5dc9e25276945278f98c2c8efc31e16'
+          },
+          four: {
+            copy: 'Making Care Primary 2-pager concept paper',
+            href: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/New%20Primary%20Care%20Model%20Concept%202-pager%20Final%20for%20FO.docx?d=webcc03b8baa74b11bc9cd28c264a6178'
+          }
         },
         footer: 'To view the links above, you will need access to the ',
         footerLink: 'Model Resources area of SharePoint.'
