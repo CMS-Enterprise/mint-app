@@ -19,7 +19,7 @@ const useOktaSession = () => {
   // Check if user has an existing okta session, if so, sign them in autmatically when clicking 'Sign in'
   useEffect(() => {
     const checkSession = async () => {
-      const sessionExists = await oktaAuth.session.exists();
+      const sessionExists = await oktaAuth.session?.exists();
 
       setHasSession(sessionExists);
     };
