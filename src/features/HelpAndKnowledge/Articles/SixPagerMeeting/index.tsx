@@ -118,12 +118,12 @@ const SixPagerMeeting = () => {
         />
       )}
 
-      <MainContent className="line-height-sans-5">
+      <MainContent className="mint-body-normal">
         <GridContainer>
           <Grid>
             <HelpBreadcrumb text={sixPageMeetingT('title')} />
 
-            <PageHeading className="margin-bottom-1">
+            <PageHeading className="margin-bottom-2">
               {sixPageMeetingT('title')}
             </PageHeading>
 
@@ -132,7 +132,7 @@ const SixPagerMeeting = () => {
               className="margin-bottom-1"
             />
 
-            <p className="font-body-lg margin-top-0 margin-bottom-4">
+            <p className="margin-top-0 margin-bottom-4 mint-body-large">
               {sixPageMeetingT('description')}
             </p>
 
@@ -158,7 +158,7 @@ const SixPagerMeeting = () => {
               )}
               className="margin-bottom-4"
             >
-              <h2 className="margin-y-2">
+              <h2 className="margin-y-4">
                 {sixPageMeetingT('keyResources.heading')}
               </h2>
 
@@ -172,7 +172,7 @@ const SixPagerMeeting = () => {
                 sixPageMeetingT('summaryBox.sections.1')
               )}
             >
-              <h2 className="margin-y-2">
+              <h2 className="margin-y-2 margin-bottom-3">
                 {sixPageMeetingT('modelPlansInMINT.heading')}
               </h2>
 
@@ -208,11 +208,13 @@ const SixPagerMeeting = () => {
                 sixPageMeetingT('summaryBox.sections.2')
               )}
             >
-              <h2 className="margin-y-2 margin-top-4">
+              <h2 className="margin-y-3 margin-top-5">
                 {sixPageMeetingT('aboutConceptPapers.heading')}
               </h2>
 
-              <p>{sixPageMeetingT('aboutConceptPapers.description')}</p>
+              <p className="margin-bottom-0">
+                {sixPageMeetingT('aboutConceptPapers.description')}
+              </p>
 
               <ul className="margin-y-0">
                 {crossCuttingGroups.map((item, index) => (
@@ -260,7 +262,7 @@ const SixPagerMeeting = () => {
               />
 
               {/* Section 2 */}
-              <div className="margin-bottom-4">
+              <div className="margin-bottom-3">
                 <h3 className="margin-y-0">
                   {sixPageMeetingT('aboutConceptPapers.sectionTwo.heading')}
                 </h3>
@@ -282,7 +284,7 @@ const SixPagerMeeting = () => {
               </div>
 
               {/* Section 3 */}
-              <div className="margin-bottom-4">
+              <div className="margin-bottom-3">
                 <h3 className="margin-y-0">
                   {sixPageMeetingT('aboutConceptPapers.sectionThree.heading')}
                 </h3>
@@ -321,7 +323,7 @@ const SixPagerMeeting = () => {
               </div>
 
               {/* Section 4 */}
-              <div className="margin-bottom-4">
+              <div className="margin-bottom-3">
                 <h3 className="margin-y-0">
                   {sixPageMeetingT('aboutConceptPapers.sectionFour.heading')}
                 </h3>
@@ -542,19 +544,19 @@ const SixPagerMeeting = () => {
                 sixPageMeetingT('summaryBox.sections.3')
               )}
             >
-              <h2 className="margin-y-2">
+              <h2 className="margin-y-3 margin-top-6">
                 {sixPageMeetingT('additionalResources.heading')}
               </h2>
 
               <p>{sixPageMeetingT('additionalResources.description')}</p>
 
-              <h3 className="margin-y-2">
+              <h3 className="margin-y-2 margin-bottom-0">
                 {sixPageMeetingT(
                   'additionalResources.pipelineContractors.heading'
                 )}
               </h3>
 
-              <p className="text-pre-line">
+              <p className="text-pre-line margin-top-1">
                 {sixPageMeetingT(
                   'additionalResources.pipelineContractors.description'
                 )}
@@ -597,7 +599,7 @@ const SixPagerMeeting = () => {
                 sixPageMeetingT('summaryBox.sections.3')
               )}
             >
-              <h2 className="margin-y-2">
+              <h2 className="margin-y-3 margin-top-6">
                 {sixPageMeetingT('howSixPagerReviewed.heading')}
               </h2>
 
