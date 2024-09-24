@@ -257,7 +257,9 @@ describe('The Model Plan Task List', () => {
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
-    expect(getByTestId('update-status-modal')).toBeInTheDocument();
+    expect(
+      await screen.findByTestId('update-status-modal')
+    ).toBeInTheDocument();
 
     const goBackButton = getByTestId('go-to-timeline');
     fireEvent.click(goBackButton);
