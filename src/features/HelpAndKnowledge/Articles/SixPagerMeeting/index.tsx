@@ -5,7 +5,6 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardGroup,
   CardHeader,
   Grid,
   GridContainer,
@@ -31,6 +30,8 @@ import useModalSolutionState from 'hooks/useModalSolutionState';
 import { covertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
+import KeyResourcesCards from '../_components/KeyResourcesCards';
+import SimpleList from '../_components/SimpleList';
 import { ArticleCategories, HelpArticle } from '..';
 
 const SixPagerMeeting = () => {
@@ -99,6 +100,10 @@ const SixPagerMeeting = () => {
     'sixPageMeeting:additionalResources.tipsSummaryBox.items'
   );
 
+  const tipsToLearnSixPagerReviewed = tArray<string>(
+    'sixPageMeeting:howSixPagerReviewed.tipsSummaryBox.items'
+  );
+
   if (loading) {
     return <PageLoading />;
   }
@@ -159,7 +164,7 @@ const SixPagerMeeting = () => {
 
               <p>{sixPageMeetingT('keyResources.description')}</p>
 
-              <KeyResourcesPageCards />
+              <KeyResourcesCards />
             </div>
 
             <div
@@ -422,16 +427,20 @@ const SixPagerMeeting = () => {
                                   i18nKey={`aboutConceptPapers.additionalResources.items.${index}.items.${index2}.text`}
                                   t={sixPageMeetingT}
                                   components={{
-                                    link1: (
-                                      <ExternalLink
-                                        href={sixPageMeetingT(
-                                          `aboutConceptPapers.additionalResources.items.${index}.items.${index2}.link`
-                                        )}
-                                      >
-                                        {' '}
-                                      </ExternalLink>
-                                    )
+                                    link1: <span> </span>
                                   }}
+                                  //  TODO: implement links once verified from UX
+                                  // components={{
+                                  //   link1: (
+                                  //     <ExternalLink
+                                  //       href={sixPageMeetingT(
+                                  //         `aboutConceptPapers.additionalResources.items.${index}.items.${index2}.link`
+                                  //       )}
+                                  //     >
+                                  //       {' '}
+                                  //     </ExternalLink>
+                                  //   )
+                                  // }}
                                 />
                               </li>
                             )
@@ -552,7 +561,7 @@ const SixPagerMeeting = () => {
               </p>
 
               {/* Tips to learn */}
-              <SummaryBox className="margin-bottom-3">
+              <SummaryBox className="margin-y-3">
                 <SummaryBoxHeading headingLevel="h3">
                   {sixPageMeetingT(
                     'additionalResources.tipsSummaryBox.heading'
@@ -560,13 +569,13 @@ const SixPagerMeeting = () => {
                 </SummaryBoxHeading>
 
                 <SummaryBoxContent>
-                  <p className="text-pre-line">
+                  <p className="margin-bottom-0 text-pre-line">
                     {sixPageMeetingT(
                       'additionalResources.tipsSummaryBox.description'
                     )}
                   </p>
 
-                  <ul className="margin-y-0 padding-top-1">
+                  <ul className="margin-y-0">
                     {tipsToLearnAdditionalResources.map((section, index) => (
                       <li key={section} className="padding-bottom-05">
                         {section}
@@ -574,11 +583,48 @@ const SixPagerMeeting = () => {
                     ))}
                   </ul>
 
-                  <p className="text-pre-line">
+                  <p className="text-pre-line margin-y-0">
                     {sixPageMeetingT(
                       'additionalResources.tipsSummaryBox.footer'
                     )}
                   </p>
+                </SummaryBoxContent>
+              </SummaryBox>
+            </div>
+
+            <div
+              id={covertToLowercaseAndDashes(
+                sixPageMeetingT('summaryBox.sections.3')
+              )}
+            >
+              <h2 className="margin-y-2">
+                {sixPageMeetingT('howSixPagerReviewed.heading')}
+              </h2>
+
+              <p>{sixPageMeetingT('howSixPagerReviewed.description')}</p>
+
+              {/* Tips to learn */}
+              <SummaryBox className="margin-y-3">
+                <SummaryBoxHeading headingLevel="h3">
+                  {sixPageMeetingT(
+                    'howSixPagerReviewed.tipsSummaryBox.heading'
+                  )}
+                </SummaryBoxHeading>
+
+                <SummaryBoxContent>
+                  <p className="margin-bottom-0 text-pre-line">
+                    {sixPageMeetingT(
+                      'howSixPagerReviewed.tipsSummaryBox.description'
+                    )}
+                  </p>
+
+                  <ul className="margin-y-0">
+                    {tipsToLearnSixPagerReviewed.map((section, index) => (
+                      <li key={section} className="padding-bottom-05">
+                        {section}
+                      </li>
+                    ))}
+                  </ul>
                 </SummaryBoxContent>
               </SummaryBox>
             </div>
@@ -597,95 +643,6 @@ const SixPagerMeeting = () => {
         />
       </div>
     </>
-  );
-};
-
-const SimpleList = ({ list, heading }: { list: string[]; heading: string }) => {
-  return (
-    <div className="margin-bottom-4">
-      <h3 className="margin-y-0">{heading}</h3>
-
-      <ul className="margin-y-0 padding-top-1">
-        {list.map(section => (
-          <li key={section}>{section}</li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-export const KeyResourcesPageCards = () => {
-  const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
-
-  return (
-    <Grid row gap>
-      <CardGroup>
-        <Grid
-          tablet={{ col: 6 }}
-          desktop={{ col: 6 }}
-          className="display-flex flex-align-stretch"
-        >
-          <Card
-            containerProps={{
-              className: 'radius-md shadow-2 padding-2'
-            }}
-            data-testid="article-card"
-          >
-            <CardHeader className="padding-0">
-              <h4 className="line-height-body-4 margin-bottom-1">
-                {sixPageMeetingT('keyResources.cardOne.heading')}
-              </h4>
-            </CardHeader>
-
-            <CardBody className="padding-0 line-height-sans-6">
-              <ExternalLink
-                href={sixPageMeetingT('keyResources.cardOne.linkOne.link')}
-              >
-                {sixPageMeetingT('keyResources.cardOne.linkOne.text')}
-              </ExternalLink>
-
-              <ExternalLink
-                href={sixPageMeetingT('keyResources.cardOne.linkTwo.link')}
-              >
-                {sixPageMeetingT('keyResources.cardOne.linkTwo.text')}
-              </ExternalLink>
-            </CardBody>
-          </Card>
-        </Grid>
-
-        <Grid
-          tablet={{ col: 6 }}
-          desktop={{ col: 6 }}
-          className="display-flex flex-align-stretch"
-        >
-          <Card
-            containerProps={{
-              className: 'radius-md shadow-2 padding-2'
-            }}
-            className="width-full"
-            data-testid="article-card"
-          >
-            <CardHeader className="padding-0">
-              <h4 className="line-height-body-4 margin-bottom-1">
-                {sixPageMeetingT('keyResources.cardTwo.heading')}
-              </h4>
-
-              <p className="margin-y-0 text-base">
-                {sixPageMeetingT('keyResources.cardTwo.hint')}
-              </p>
-            </CardHeader>
-
-            <CardBody className="padding-0 line-height-sans-6">
-              <ExternalLink
-                href={sixPageMeetingT('keyResources.cardTwo.linkOne.link')}
-              >
-                {sixPageMeetingT('keyResources.cardTwo.linkOne.text')}
-              </ExternalLink>
-            </CardBody>
-          </Card>
-        </Grid>
-      </CardGroup>
-    </Grid>
   );
 };
 

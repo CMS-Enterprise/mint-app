@@ -346,6 +346,21 @@ const sixPageMeeting = {
         'If the answer is yes to one or more of these questions, your model would likely benefit from utilizing a pipeline contractor.'
     }
   },
+  howSixPagerReviewed: {
+    heading: 'How 6-page concept papers are reviewed',
+    description:
+      'After division and group leadership have reviewed and approved the 2-page concept paper, then a review meeting with CMMI FO is scheduled. This review meeting is a key step to moving a model concept forward in the process.',
+    tipsSummaryBox: {
+      heading: 'Tips for model teams',
+      description: 'Suggestions for having a successful 6-page review meeting:',
+      items: [
+        'Before the meeting, attach your 6-page concept paper to the calendar invite for your meeting with CMMI FO. We also recommend uploading your concept paper to your model collaboration area within MINT. This will allow other CMS staff involved in the model development process to begin preparing as early as possible for their work with your model team.',
+        'Come prepared to discuss your model concept with the CMMI FO and receive feedback.',
+        'If you think you’ll need a pipeline contractor, and haven’t already spoken to CMMI FO about this, definitely flag this during the meeting. As mentioned above, they will need to approve the request.',
+        'If CMMI FO has not requested many revisions to the 6-page concept paper and approves the forward progress, it might be a good to have thought through a general mock up of a timeframe with proposed approximate dates for ICIP draft, potential clearance, etc.'
+      ]
+    }
+  },
   footerSummaryBox: {
     title: 'Need help?',
     body: 'Contact the MINT team at <1>MINTTeam@cms.hhs.gov</1>'
