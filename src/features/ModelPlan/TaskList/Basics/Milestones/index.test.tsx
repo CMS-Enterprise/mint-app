@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import {
   GetMilestonesDocument,
   GetMilestonesQuery,
@@ -71,9 +71,7 @@ describe('Model Basics Milestones page', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => {
-      expect(screen.getByText('Phased in note')).toBeInTheDocument();
-    });
+    expect(await screen.findByText('Phased in note')).toBeInTheDocument();
 
     expect(asFragment()).toMatchSnapshot();
   });
