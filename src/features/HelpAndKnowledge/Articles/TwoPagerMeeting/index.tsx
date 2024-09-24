@@ -328,10 +328,7 @@ const TwoPagerMeeting = () => {
                       </ol>
                     )}
                     {k.list && (
-                      <ul
-                        className="padding-left-3 margin-top-05"
-                        style={{ listStyleType: 'disc' }}
-                      >
+                      <ul className="padding-left-3 margin-top-05">
                         {k.list.map(listItem => (
                           <li
                             key={covertToLowercaseAndDashes(listItem)}
@@ -391,7 +388,7 @@ const TwoPagerMeeting = () => {
                 </SummaryBoxContent>
               </SummaryBox>
 
-              <SummaryBox className="padding-3 border-gray-10 bg-white">
+              <SummaryBox className="padding-3 border-gray-10 bg-white shadow-2">
                 <SummaryBoxHeading headingLevel="h3">
                   {twoPageMeetingT(
                     'about.summarybox.exampleSummaryBox.heading'
