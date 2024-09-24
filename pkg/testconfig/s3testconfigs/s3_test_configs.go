@@ -18,7 +18,7 @@ func S3TestClient(viperConfig *viper.Viper) s3.S3Client {
 		Region:  viperConfig.GetString(appconfig.AWSRegion),
 		IsLocal: true,
 	}
-	//OS ENV won't get environment variables set by VSCODE for debugging
+	//OS GetEnv(called in NewS3Client ) won't get environment variables set by VSCODE for debugging. Set here for testing
 	_ = os.Setenv(appconfig.LocalMinioAddressKey, viperConfig.GetString(appconfig.LocalMinioAddressKey))
 	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, viperConfig.GetString(appconfig.LocalMinioS3AccessKey))
 	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, viperConfig.GetString(appconfig.LocalMinioS3SecretKey))
