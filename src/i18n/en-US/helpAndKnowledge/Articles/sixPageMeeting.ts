@@ -142,6 +142,16 @@ const sixPageMeeting = {
           ]
         }
       ]
+    },
+    sectionFive: {
+      heading: '5. Model evaluation',
+      items: [
+        'Discuss evaluability of the proposed model and general approach to study design.',
+        'Describe how evaluation could assess broader cost and quality impacts and potential approaches to evaluating delivery system changes and interventions within and outside of the model, including priority questions in the organization and delivery of care tied to model aim.',
+        'Discuss potential for formal expansion, particularly if evaluation findings would be generalizable.',
+        'Discuss potential for adoption and scaling by non-participants outside of formal expansion.',
+        'Describe options for collecting data on key measures for assessing impact and innovation (as articulated in Section 3 above), including comparison group data.'
+      ]
     }
   },
   tipsSummaryBox: {

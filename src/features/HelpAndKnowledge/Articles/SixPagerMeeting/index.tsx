@@ -67,6 +67,10 @@ const SixPagerMeeting = () => {
     'sixPageMeeting:aboutConceptPapers.sectionFour.items'
   );
 
+  const conceptPaperSectionFive = tArray(
+    'sixPageMeeting:aboutConceptPapers.sectionFive.items'
+  );
+
   const tipsToLearn = tArray<Record<string, any>>(
     'sixPageMeeting:tipsSummaryBox.items'
   );
@@ -257,7 +261,9 @@ const SixPagerMeeting = () => {
                     {section.heading}
                     <ul className="margin-y-0 padding-top-1">
                       {section.items.map((item: string) => (
-                        <li key={item}>{item}</li>
+                        <li key={item} style={{ listStyleType: 'disc' }}>
+                          {item}
+                        </li>
                       ))}
                     </ul>
                   </li>
@@ -293,7 +299,9 @@ const SixPagerMeeting = () => {
                     {section.items.length > 0 && (
                       <ul className="margin-y-0 padding-top-1">
                         {section.items.map((item: string) => (
-                          <li key={item}>{item}</li>
+                          <li key={item} style={{ listStyleType: 'disc' }}>
+                            {item}
+                          </li>
                         ))}
                       </ul>
                     )}
@@ -314,7 +322,9 @@ const SixPagerMeeting = () => {
                     {section.heading}
                     <ul className="margin-y-0 padding-top-1">
                       {section.items.map((item: string) => (
-                        <li key={item}>{item}</li>
+                        <li key={item} style={{ listStyleType: 'disc' }}>
+                          {item}
+                        </li>
                       ))}
                     </ul>
                   </li>
@@ -352,6 +362,19 @@ const SixPagerMeeting = () => {
                 </ul>
               </SummaryBoxContent>
             </SummaryBox>
+
+            {/* Section 5 */}
+            <div className="margin-bottom-4">
+              <h3 className="margin-y-0">
+                {sixPageMeetingT('aboutConceptPapers.sectionFive.heading')}
+              </h3>
+
+              <ul className="margin-y-0 padding-top-1">
+                {conceptPaperSectionFive.map(section => (
+                  <li key={section}>{section}</li>
+                ))}
+              </ul>
+            </div>
 
             <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0">
               <SummaryBoxHeading headingLevel="h3">
