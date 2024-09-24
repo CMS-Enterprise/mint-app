@@ -1,0 +1,45 @@
+type EChimpCR {
+  crNumber: String!
+  versionNum: String!
+  initiator: String
+  firstName: String
+  lastName: String
+  title: String
+  sensitiveFlag: Boolean
+  implementationDate: String
+  crSummary: String #TODO (echimp) consider making this an HTML / TaggedContent.
+  crStatus: String
+  emergencyCrFlag: Boolean
+  relatedCrNumbers: String
+  relatedCrTdlNumbers: String
+  associatedModelUids: UUID
+}
+
+type EChimpTDL {
+  tdlNumber: String!
+  versionNum: String!
+  initiator: String
+  firstName: String
+  lastName: String
+  title: String
+  issuedDate: String
+  status: String
+  associatedModelUids: UUID
+}
+
+
+# """
+# EChimpCRAndTDLS is a type that represents CRS and TDLS so they can be returned together in graphql
+# """
+union EChimpCRAndTDLS = EChimpCR  | EChimpTDL
+
+
+
+
+extend type Query {
+  echimpCR(id: String!): EChimpCR!
+  echimpCRs: [EChimpCR!]!
+  echimpTDLs: [EChimpTDL!]!
+  echimpTDL(id: String!): EChimpTDL!
+  echimpCRAndTDLS: [EChimpCRAndTDLS!]!
+}

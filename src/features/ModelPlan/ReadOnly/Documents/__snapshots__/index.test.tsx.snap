@@ -238,7 +238,9 @@ exports[`Model Plan Documents page > matches snapshot 1`] = `
                   role="cell"
                   scope="row"
                   style="padding-left: 0px;"
-                />
+                >
+                  My Document
+                </th>
                 <td
                   role="cell"
                   style="padding-left: 0px; white-space: normal;"

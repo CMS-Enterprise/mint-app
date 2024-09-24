@@ -11,11 +11,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/local"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
-	"github.com/cms-enterprise/mint-app/pkg/upload"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
@@ -31,7 +31,7 @@ func newSeeder(config SeederConfig) *Seeder {
 }
 
 func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
-	store, logger, s3Client, _, _ := getResolverDependencies(viperConfig)
+	store, logger, s3Client, echimpS3Client, _, _ := getResolverDependencies(viperConfig)
 
 	dataLoaders := loaders.NewDataLoaders(store)
 	ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
@@ -57,6 +57,7 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 		Store:                store,
 		Logger:               logger,
 		S3Client:             s3Client,
+		EChimpClient:         echimpS3Client,
 		Context:              ctx,
 		EmailService:         emailService,
 		EmailTemplateService: emailTemplateService,
@@ -71,7 +72,8 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 type SeederConfig struct {
 	Store                *storage.Store
 	Logger               *zap.Logger
-	S3Client             *upload.S3Client
+	S3Client             *s3.S3Client
+	EChimpClient         *s3.S3Client
 	Context              context.Context
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateService

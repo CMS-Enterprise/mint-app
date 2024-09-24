@@ -5,15 +5,15 @@ import (
 	"os"
 
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
 	"github.com/cms-enterprise/mint-app/pkg/testhelpers"
-	"github.com/cms-enterprise/mint-app/pkg/upload"
 )
 
 // S3TestClient returns an S3Test client for testing
-func S3TestClient() upload.S3Client {
+func S3TestClient() s3.S3Client {
 	config := testhelpers.NewConfig()
 
-	s3Cfg := upload.Config{
+	s3Cfg := s3.Config{
 		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
@@ -23,5 +23,21 @@ func S3TestClient() upload.S3Client {
 	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, config.GetString(appconfig.LocalMinioS3AccessKey))
 	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, config.GetString(appconfig.LocalMinioS3SecretKey))
 
-	return upload.NewS3Client(s3Cfg)
+	return s3.NewS3Client(s3Cfg)
+}
+
+// S3TestECHIMPClient returns an ECHIMPClient client for testing
+func S3TestECHIMPClient() s3.S3Client {
+	config := testhelpers.NewConfig()
+	s3Cfg := s3.Config{
+		Bucket:  config.GetString(appconfig.AWSS3ECHIMPBucket),
+		Region:  config.GetString(appconfig.AWSRegion),
+		IsLocal: true,
+	}
+	//OS ENV won't get environment variables set by VSCODE for debugging
+	_ = os.Setenv(appconfig.LocalMinioAddressKey, config.GetString(appconfig.LocalMinioAddressKey))
+	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, config.GetString(appconfig.LocalMinioS3AccessKey))
+	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, config.GetString(appconfig.LocalMinioS3SecretKey))
+
+	return s3.NewS3Client(s3Cfg)
 }

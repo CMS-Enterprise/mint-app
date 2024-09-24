@@ -99,6 +99,7 @@ services:
       - ACCESSIBILITY_TEAM_EMAIL
       - AWS_REGION
       - AWS_S3_FILE_UPLOAD_BUCKET
+      - AWS_S3_ECHIMP_BUCKET
       # - AWS_ACCESS_KEY_ID
       # - AWS_SECRET_ACCESS_KEY
       - PGHOST=db # We need to override this to point to the docker-compose service name, rather than `localhost`
@@ -153,6 +154,9 @@ services:
       /usr/bin/mc rb --force s3local/mint-app-file-uploads/;
       /usr/bin/mc mb --quiet s3local/mint-app-file-uploads/;
       /usr/bin/mc policy set public s3local/mint-app-file-uploads;
+      /usr/bin/mc rb --force s3local/mint-app-echimp-uploads/;
+      /usr/bin/mc mb --quiet s3local/mint-app-echimp-uploads/;
+      /usr/bin/mc policy set public s3local/mint-app-echimp-uploads;
       "
 
   email:

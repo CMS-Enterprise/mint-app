@@ -8,15 +8,16 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/local"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
 	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/s3testconfigs"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/pubsub"
-	"github.com/cms-enterprise/mint-app/pkg/upload"
 
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"go.uber.org/zap"
@@ -27,16 +28,17 @@ import (
 
 // TestConfigs is a struct that contains all the dependencies needed to run a test
 type TestConfigs struct {
-	DBConfig   storage.DBConfig
-	LDClient   *ld.LDClient
-	Logger     *zap.Logger
-	UserInfo   *models.UserInfo
-	Store      *storage.Store
-	S3Client   *upload.S3Client
-	PubSub     *pubsub.ServicePubSub
-	Principal  *authentication.ApplicationPrincipal
-	Context    context.Context
-	OktaClient oktaapi.Client
+	DBConfig       storage.DBConfig
+	LDClient       *ld.LDClient
+	Logger         *zap.Logger
+	UserInfo       *models.UserInfo
+	Store          *storage.Store
+	S3Client       *s3.S3Client
+	EChimpS3Client *s3.S3Client
+	PubSub         *pubsub.ServicePubSub
+	Principal      *authentication.ApplicationPrincipal
+	Context        context.Context
+	OktaClient     oktaapi.Client
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -47,10 +49,10 @@ func GetDefaultTestConfigs() *TestConfigs {
 	return &tc
 }
 
-func createS3Client() upload.S3Client {
+func createS3Client() s3.S3Client {
 	config := testhelpers.NewConfig()
 
-	s3Cfg := upload.Config{
+	s3Cfg := s3.Config{
 		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
@@ -60,7 +62,7 @@ func createS3Client() upload.S3Client {
 	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, config.GetString(appconfig.LocalMinioS3AccessKey))
 	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, config.GetString(appconfig.LocalMinioS3SecretKey))
 
-	return upload.NewS3Client(s3Cfg)
+	return s3.NewS3Client(s3Cfg)
 }
 
 // GetDefaults sets the dependencies for the TestConfigs struct
@@ -70,12 +72,14 @@ func (tc *TestConfigs) GetDefaults() {
 	store, _ := storage.NewStore(config, ldClient)
 
 	s3Client := createS3Client()
+	eChimpS3Client := s3testconfigs.S3TestECHIMPClient()
 	tc.DBConfig = config
 	tc.LDClient = ldClient
 	tc.Logger = logger
 	tc.UserInfo = userInfo
 	tc.Store = store
 	tc.S3Client = &s3Client
+	tc.EChimpS3Client = &eChimpS3Client
 	tc.PubSub = ps
 
 	oktaClient, oktaClientErr := local.NewOktaAPIClient()
