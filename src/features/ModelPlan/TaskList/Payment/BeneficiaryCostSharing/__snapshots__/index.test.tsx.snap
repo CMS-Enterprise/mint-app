@@ -146,9 +146,7 @@ exports[`Model Plan -- BeneficiaryCostSharing > matches snapshot 1`] = `
                 data-testid="payment-beneficiary-cost-sharing"
                 id="payment-beneficiary-cost-sharing"
                 name="beneficiaryCostSharingLevelAndHandling"
-              >
-                This is a string
-              </textarea>
+              />
             </div>
             <div
               class="usa-form-group margin-top-4"
@@ -184,24 +182,6 @@ exports[`Model Plan -- BeneficiaryCostSharing > matches snapshot 1`] = `
                   </label>
                 </div>
                 <div
-                  class="usa-form-group margin-left-4 margin-y-1"
-                >
-                  <label
-                    class="usa-label text-normal"
-                    data-testid="label"
-                    for="waiveBeneficiaryCostSharingServiceSpecification"
-                  >
-                    Please specify which services.
-                  </label>
-                  <textarea
-                    aria-labelledby="label-payment-waive-any-service-specification hint-payment-waive-any-service-specification"
-                    class="height-15 usa-textarea"
-                    data-testid="payment-waive-any-service-specification"
-                    id="payment-waive-any-service-specification"
-                    name="waiveBeneficiaryCostSharingServiceSpecification"
-                  />
-                </div>
-                <div
                   class="usa-radio"
                   data-testid="radio"
                 >
@@ -221,65 +201,6 @@ exports[`Model Plan -- BeneficiaryCostSharing > matches snapshot 1`] = `
                   </label>
                 </div>
               </fieldset>
-              <div
-                class="usa-form-group margin-top-4"
-              >
-                <label
-                  class="usa-label maxw-none text-normal"
-                  data-testid="label"
-                  for="waiverOnlyAppliesPartOfPayment"
-                >
-                  Would the waiver only apply for part of the payment?
-                </label>
-                <p
-                  class="text-base margin-y-1"
-                >
-                  For example, we would assess cost-sharing for the service itself, but not for an add-on payment
-                </p>
-                <fieldset
-                  class="usa-fieldset"
-                  data-testid="fieldset"
-                >
-                  <div
-                    class="usa-radio"
-                    data-testid="radio"
-                  >
-                    <input
-                      class="usa-radio__input"
-                      data-testid="payment-waive-part-of-payment-true"
-                      id="payment-waive-part-of-payment-true"
-                      name="waiverOnlyAppliesPartOfPayment"
-                      type="radio"
-                      value="TRUE"
-                    />
-                    <label
-                      class="usa-radio__label"
-                      for="payment-waive-part-of-payment-true"
-                    >
-                      Yes
-                    </label>
-                  </div>
-                  <div
-                    class="usa-radio"
-                    data-testid="radio"
-                  >
-                    <input
-                      class="usa-radio__input"
-                      data-testid="payment-waive-part-of-payment-false"
-                      id="payment-waive-part-of-payment-false"
-                      name="waiverOnlyAppliesPartOfPayment"
-                      type="radio"
-                      value="FALSE"
-                    />
-                    <label
-                      class="usa-radio__label"
-                      for="payment-waive-part-of-payment-false"
-                    >
-                      No
-                    </label>
-                  </div>
-                </fieldset>
-              </div>
               <div
                 class="margin-top-3 margin-bottom-6"
               >
