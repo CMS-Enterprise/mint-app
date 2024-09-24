@@ -13,9 +13,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
-// TODO (echimp) make the file name configurable by envar file
-//TODO: consider making these constants configurable from environment variable
-
 // echimpCacheTimeHours is the length of time before a echimpCache needs to be refreshed
 const echimpCacheTimeHours = 3
 
