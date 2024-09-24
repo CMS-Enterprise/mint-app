@@ -95,18 +95,8 @@ const SixPagerMeeting = () => {
     'sixPageMeeting:aboutConceptPapers.example6Pager.items'
   );
 
-  const additionalResourcesListItems = tArray(
-    'sixPageMeeting:additionalResources.list'
-  );
-
-  const additionalResourcesParagraphs = tArray(
-    'sixPageMeeting:additionalResources.paragraph'
-  );
-
-  const tipsList = tArray('sixPageMeeting:reviewMeeting.subheading.tip.list');
-
-  const outcomesParagraphs = tArray(
-    'sixPageMeeting:reviewMeeting.subheading.outcomes.paragraph'
+  const tipsToLearnAdditionalResources = tArray<string>(
+    'sixPageMeeting:additionalResources.tipsSummaryBox.items'
   );
 
   if (loading) {
@@ -540,14 +530,57 @@ const SixPagerMeeting = () => {
 
             <div
               id={covertToLowercaseAndDashes(
-                sixPageMeetingT('summaryBox.sections.0')
+                sixPageMeetingT('summaryBox.sections.3')
               )}
             >
               <h2 className="margin-y-2">
-                {sixPageMeetingT('keyResources.heading')}
+                {sixPageMeetingT('additionalResources.heading')}
               </h2>
 
-              <p>{sixPageMeetingT('keyResources.description')}</p>
+              <p>{sixPageMeetingT('additionalResources.description')}</p>
+
+              <h3 className="margin-y-2">
+                {sixPageMeetingT(
+                  'additionalResources.pipelineContractors.heading'
+                )}
+              </h3>
+
+              <p className="text-pre-line">
+                {sixPageMeetingT(
+                  'additionalResources.pipelineContractors.description'
+                )}
+              </p>
+
+              {/* Tips to learn */}
+              <SummaryBox className="margin-bottom-3">
+                <SummaryBoxHeading headingLevel="h3">
+                  {sixPageMeetingT(
+                    'additionalResources.tipsSummaryBox.heading'
+                  )}
+                </SummaryBoxHeading>
+
+                <SummaryBoxContent>
+                  <p className="text-pre-line">
+                    {sixPageMeetingT(
+                      'additionalResources.tipsSummaryBox.description'
+                    )}
+                  </p>
+
+                  <ul className="margin-y-0 padding-top-1">
+                    {tipsToLearnAdditionalResources.map((section, index) => (
+                      <li key={section} className="padding-bottom-05">
+                        {section}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <p className="text-pre-line">
+                    {sixPageMeetingT(
+                      'additionalResources.tipsSummaryBox.footer'
+                    )}
+                  </p>
+                </SummaryBoxContent>
+              </SummaryBox>
             </div>
           </Grid>
         </GridContainer>
