@@ -956,7 +956,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             >
               <a
                 class="usa-link usa-button usa-button--unstyled"
-                href="/high-level-project-plan?solution=learning-and-diffusion-group&section=about"
+                href="/help-and-knowledge/about-2-page-concept-papers-and-review-meetings?solution=learning-and-diffusion-group&section=about"
               >
                 Learning and Diffusion Group (LDG)
               </a>

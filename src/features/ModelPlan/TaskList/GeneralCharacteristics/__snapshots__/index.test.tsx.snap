@@ -577,26 +577,27 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         <div
           class="margin-top-3 margin-bottom-6"
         >
-          <div
-            class="usa-form-group"
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
           >
-            <label
-              class="usa-label"
-              for="plan-characteristics-participation-model-precondition-note"
-              id="label-plan-characteristics-participation-model-precondition-note"
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Notes
-            </label>
-            <textarea
-              aria-labelledby="label-plan-characteristics-participation-model-precondition-note hint-plan-characteristics-participation-model-precondition-note"
-              class="usa-textarea"
-              data-testid="plan-characteristics-participation-model-precondition-note"
-              id="plan-characteristics-participation-model-precondition-note"
-              name="participationInModelPreconditionNote"
-            >
-              Precondition note
-            </textarea>
-          </div>
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
         </div>
       </div>
       <div
@@ -680,26 +681,27 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         <div
           class="margin-top-3 margin-bottom-6"
         >
-          <div
-            class="usa-form-group"
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
           >
-            <label
-              class="usa-label"
-              for="plan-characteristics-has-component-or-tracks-note"
-              id="label-plan-characteristics-has-component-or-tracks-note"
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Notes
-            </label>
-            <textarea
-              aria-labelledby="label-plan-characteristics-has-component-or-tracks-note hint-plan-characteristics-has-component-or-tracks-note"
-              class="usa-textarea"
-              data-testid="plan-characteristics-has-component-or-tracks-note"
-              id="plan-characteristics-has-component-or-tracks-note"
-              name="hasComponentsOrTracksNote"
-            >
-              Component note
-            </textarea>
-          </div>
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
         </div>
       </div>
       <div
