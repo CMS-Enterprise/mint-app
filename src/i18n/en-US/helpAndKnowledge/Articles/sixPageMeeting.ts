@@ -152,24 +152,127 @@ const sixPageMeeting = {
         'Discuss potential for adoption and scaling by non-participants outside of formal expansion.',
         'Describe options for collecting data on key measures for assessing impact and innovation (as articulated in Section 3 above), including comparison group data.'
       ]
+    },
+    sectionSix: {
+      heading: '6. Interested parties - Reactions/Issues',
+      items: [
+        'Provide a brief overview of health care constituencies affected, including those interested parties likely to support or voice opposition to or express concerns with the proposed model.',
+        'Discuss potential for support and partnerships across the government – CMS, HHS, OMB, DPC, Congress – and areas of government that may voice concern with the proposed model.',
+        'Provide a summary of stakeholder engagement (e.g. representatives of potential participants, impacted patient groups, policy experts) up to this point in model design.',
+        'Describe how beneficiary perspective/input, especially those representing underserved. populations, has been incorporated to date and will be if model concept proceeds forward.'
+      ]
+    },
+    sectionSeven: {
+      heading: '7. Operational and financial considerations',
+      items: [
+        'CMMI staffing needs to support model.',
+        'Identification and process for addressing potential overlap issues with existing.',
+        'Opportunity or need for cross-CMMI collaboration and staffing.',
+        'Legal considerations.',
+        'Anticipated contracting and technology needs.',
+        'Anticipated resources for obtaining comparison group data.'
+      ]
+    },
+    tipsSummaryBox: {
+      heading: 'Tips to learn more about health equity',
+      items: [
+        {
+          text: 'View the <link1>Health Equity Resources on the Quality Vertical SharePoint</link1>',
+          link: 'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D'
+        },
+        {
+          text: 'View the <link1>CMS Framework for Health Equity</link1>',
+          link: 'https://www.cms.gov/about-cms/agency-information/omh/health-equity-programs/cms-framework-for-health-equity'
+        },
+        {
+          text: 'Work with CMMI FO',
+          link: ''
+        }
+      ]
+    },
+    additionalResources: {
+      heading: 'Additional resources',
+      description:
+        'You can view more resources by visiting the  <link1>Model Development Library</link1>.',
+      items: [
+        {
+          heading: 'General resources ',
+          items: [
+            {
+              text: '<link1>2-pager/6-pager repository</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            },
+            {
+              text: '<link1>ICIPs</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            },
+            {
+              text: '<link1>Waiver database</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            },
+            {
+              text: '<link1>Model Interactions framework resource PPT</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            },
+            {
+              text: 'Guidance on Model Expansion and Other Opportunities for Scaling',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            }
+          ]
+        },
+        {
+          heading: 'Quality resources ',
+          items: [
+            {
+              text: '<link1>Quality Design Process</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            },
+            {
+              text: '<link1>PROMs strategy</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            }
+          ]
+        },
+        {
+          heading: 'Health equity resources ',
+          items: [
+            {
+              text: '<link1>Quality Vertical Health Equity Resource Guide</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            },
+            {
+              text: '<link1>Implicit Bias Guide</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            },
+            {
+              text: '<link1>Health-Related Social Needs (HRSN) Screening and Referral Data Policy Memo</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            },
+            {
+              text: '<link1>HRSN Screening and Referral Implementation Guide</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            },
+            {
+              text: 'Sexual Orientation and Gender Identity (SOGI) Data Collection and Reporting Policy Memo</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            }
+          ]
+        },
+        {
+          heading: 'Implementation resources ',
+          items: [
+            {
+              text: '<link1>BSG Checklist</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            },
+            {
+              text: '<link1>Framework for Evaluating Data Exchange Concepts in Models</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+            }
+          ]
+        }
+      ]
     }
-  },
-  tipsSummaryBox: {
-    heading: 'Tips to learn more about health equity',
-    items: [
-      {
-        text: 'View the <link1>Health Equity Resources on the Quality Vertical SharePoint</link1>',
-        link: 'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D'
-      },
-      {
-        text: 'View the <link1>CMS Framework for Health Equity</link1>',
-        link: 'https://www.cms.gov/about-cms/agency-information/omh/health-equity-programs/cms-framework-for-health-equity'
-      },
-      {
-        text: 'Work with CMMI FO',
-        link: ''
-      }
-    ]
   },
   crossCuttingGroupsSummaryBox: {
     title: 'Cross-cutting groups',

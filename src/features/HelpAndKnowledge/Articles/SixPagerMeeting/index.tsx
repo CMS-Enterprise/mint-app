@@ -13,7 +13,6 @@ import {
   SummaryBoxContent,
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
@@ -71,8 +70,20 @@ const SixPagerMeeting = () => {
     'sixPageMeeting:aboutConceptPapers.sectionFive.items'
   );
 
+  const conceptPaperSectionSix = tArray(
+    'sixPageMeeting:aboutConceptPapers.sectionSix.items'
+  );
+
+  const conceptPaperSectionSeven = tArray(
+    'sixPageMeeting:aboutConceptPapers.sectionSeven.items'
+  );
+
   const tipsToLearn = tArray<Record<string, any>>(
-    'sixPageMeeting:tipsSummaryBox.items'
+    'sixPageMeeting:aboutConceptPapers.tipsSummaryBox.items'
+  );
+
+  const conceptPaperAdditionalResources = tArray<Record<string, any>>(
+    'sixPageMeeting:aboutConceptPapers.additionalResources.items'
   );
 
   const additionalResourcesListItems = tArray(
@@ -237,17 +248,10 @@ const SixPagerMeeting = () => {
             </Alert>
 
             {/* Section 1 */}
-            <div className="margin-bottom-4">
-              <h3 className="margin-y-0">
-                {sixPageMeetingT('aboutConceptPapers.sectionOne.heading')}
-              </h3>
-
-              <ul className="margin-y-0 padding-top-1">
-                {conceptPaperSectionOne.map(section => (
-                  <li key={section}>{section}</li>
-                ))}
-              </ul>
-            </div>
+            <SimpleList
+              list={conceptPaperSectionOne}
+              heading={sixPageMeetingT('aboutConceptPapers.sectionOne.heading')}
+            />
 
             {/* Section 2 */}
             <div className="margin-bottom-4">
@@ -335,7 +339,7 @@ const SixPagerMeeting = () => {
             {/* Tips to learn */}
             <SummaryBox className="margin-bottom-3">
               <SummaryBoxHeading headingLevel="h3">
-                {sixPageMeetingT('tipsSummaryBox.heading')}
+                {sixPageMeetingT('aboutConceptPapers.tipsSummaryBox.heading')}
               </SummaryBoxHeading>
 
               <SummaryBoxContent>
@@ -343,13 +347,13 @@ const SixPagerMeeting = () => {
                   {tipsToLearn.map((section, index) => (
                     <li key={section.heading} className="padding-bottom-05">
                       <Trans
-                        i18nKey={`tipsSummaryBox.items.${index}.text`}
+                        i18nKey={`aboutConceptPapers.tipsSummaryBox.items.${index}.text`}
                         t={sixPageMeetingT}
                         components={{
                           link1: (
                             <ExternalLink
                               href={sixPageMeetingT(
-                                `tipsSummaryBox.items.${index}.link`
+                                `aboutConceptPapers.tipsSummaryBox.items.${index}.link`
                               )}
                             >
                               {' '}
@@ -364,59 +368,75 @@ const SixPagerMeeting = () => {
             </SummaryBox>
 
             {/* Section 5 */}
-            <div className="margin-bottom-4">
-              <h3 className="margin-y-0">
-                {sixPageMeetingT('aboutConceptPapers.sectionFive.heading')}
-              </h3>
+            <SimpleList
+              list={conceptPaperSectionFive}
+              heading={sixPageMeetingT(
+                'aboutConceptPapers.sectionFive.heading'
+              )}
+            />
 
-              <ul className="margin-y-0 padding-top-1">
-                {conceptPaperSectionFive.map(section => (
-                  <li key={section}>{section}</li>
-                ))}
-              </ul>
-            </div>
+            {/* Section 6 */}
+            <SimpleList
+              list={conceptPaperSectionSix}
+              heading={sixPageMeetingT('aboutConceptPapers.sectionSix.heading')}
+            />
+
+            {/* Section 7 */}
+            <SimpleList
+              list={conceptPaperSectionSeven}
+              heading={sixPageMeetingT(
+                'aboutConceptPapers.sectionSeven.heading'
+              )}
+            />
 
             <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0">
               <SummaryBoxHeading headingLevel="h3">
-                {sixPageMeetingT('conceptPaper.exampleSummaryBox.heading')}
+                {sixPageMeetingT(
+                  'aboutConceptPapers.additionalResources.heading'
+                )}
               </SummaryBoxHeading>
-              <SummaryBoxContent>
+
+              <SummaryBoxContent className="margin-bottom-1">
                 <p className="margin-y-1">
-                  {sixPageMeetingT('conceptPaper.exampleSummaryBox.paragraph')}
+                  <Trans
+                    i18nKey="aboutConceptPapers.additionalResources.description"
+                    t={sixPageMeetingT}
+                    components={{
+                      link1: <ExternalLink href="/"> </ExternalLink>
+                    }}
+                  />
                 </p>
-                <ul className="margin-top-0">
-                  <li>
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
-                      {sixPageMeetingT(
-                        'conceptPaper.exampleSummaryBox.items.one'
-                      )}
-                    </ExternalLink>
-                  </li>
-                  <li>
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/AHEAD%206-page%20concept_Clean.docx?d=wbdf205743dac4ebaa2a99ea37af6b5a7">
-                      {sixPageMeetingT(
-                        'conceptPaper.exampleSummaryBox.items.two'
-                      )}
-                    </ExternalLink>
-                  </li>
-                  <li>
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20OncT)%206-pager_10252021_clean.docx?d=w1e0f202072d14d8fb64366aff294e415">
-                      {sixPageMeetingT(
-                        'conceptPaper.exampleSummaryBox.items.three'
-                      )}
-                    </ExternalLink>
-                  </li>
-                </ul>
-                <span className="margin-y-0">
-                  {sixPageMeetingT(
-                    'conceptPaper.exampleSummaryBox.footer.copy'
-                  )}
-                  <ExternalLink href="https://share.cms.gov/center/CMMI/SR/ModelDev/Forms/AllItems.aspx">
-                    {sixPageMeetingT(
-                      'conceptPaper.exampleSummaryBox.footer.link'
-                    )}
-                  </ExternalLink>
-                </span>
+
+                <div className="margin-y-0 text-bold">
+                  {conceptPaperAdditionalResources.map((section, index) => (
+                    <div key={section.heading}>
+                      {section.heading}
+                      <ul className="margin-top-0 margin-bottom-05 text-normal">
+                        {section.items.map(
+                          (item2: Record<string, string>, index2: number) => (
+                            <li style={{ listStyleType: 'disc' }}>
+                              <Trans
+                                i18nKey={`aboutConceptPapers.additionalResources.items.${index}.items.${index2}.text`}
+                                t={sixPageMeetingT}
+                                components={{
+                                  link1: (
+                                    <ExternalLink
+                                      href={sixPageMeetingT(
+                                        `aboutConceptPapers.additionalResources.items.${index}.items.${index2}.link`
+                                      )}
+                                    >
+                                      {' '}
+                                    </ExternalLink>
+                                  )
+                                }}
+                              />
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </SummaryBoxContent>
             </SummaryBox>
 
@@ -514,6 +534,20 @@ const SixPagerMeeting = () => {
         />
       </div>
     </>
+  );
+};
+
+const SimpleList = ({ list, heading }: { list: string[]; heading: string }) => {
+  return (
+    <div className="margin-bottom-4">
+      <h3 className="margin-y-0">{heading}</h3>
+
+      <ul className="margin-y-0 padding-top-1">
+        {list.map(section => (
+          <li key={section}>{section}</li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
