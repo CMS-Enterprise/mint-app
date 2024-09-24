@@ -25,7 +25,6 @@ func (r *queryResolver) EchimpCr(ctx context.Context, id string) (*models.EChimp
 	}
 
 	return nil, nil
-
 }
 
 // EchimpCRs is the resolver for the echimpCRs field.

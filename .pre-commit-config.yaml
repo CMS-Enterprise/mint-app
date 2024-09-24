@@ -92,7 +92,7 @@ repos:
         name: Run GraphQL code generation
         entry: scripts/pre-commit-check-code-generation
         language: script
-        files: "pkg/graph/schema\\.graphql|pkg/graph/schema\\.resolvers\\.go|src/queries/.*\\.ts|src/queriesCodegen/.*\\.ts"
+        files: "pkg/graph/.*\\.go|pkg/graph/.*\\.graphql|src/gql/operations.*\\.ts"
         pass_filenames: false
 
   - repo: https://github.com/awslabs/git-secrets
