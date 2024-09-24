@@ -259,26 +259,27 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
               <div
                 class="margin-top-3 margin-bottom-6"
               >
-                <div
-                  class="usa-form-group"
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
                 >
-                  <label
-                    class="usa-label"
-                    for="beneficiaries-impact-confidence-note"
-                    id="label-beneficiaries-impact-confidence-note"
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Notes
-                  </label>
-                  <textarea
-                    aria-labelledby="label-beneficiaries-impact-confidence-note hint-beneficiaries-impact-confidence-note"
-                    class="usa-textarea"
-                    data-testid="beneficiaries-impact-confidence-note"
-                    id="beneficiaries-impact-confidence-note"
-                    name="confidenceNote"
-                  >
-                    String
-                  </textarea>
-                </div>
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
               </div>
             </div>
             <div
@@ -496,26 +497,27 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
               <div
                 class="margin-top-3 margin-bottom-6"
               >
-                <div
-                  class="usa-form-group"
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="add-note-toggle"
+                  type="button"
                 >
-                  <label
-                    class="usa-label"
-                    for="beneficiaries-selection-note"
-                    id="label-beneficiaries-selection-note"
+                  <svg
+                    aria-hidden="true"
+                    class="usa-icon margin-right-1"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Notes
-                  </label>
-                  <textarea
-                    aria-labelledby="label-beneficiaries-selection-note hint-beneficiaries-selection-note"
-                    class="usa-textarea"
-                    data-testid="beneficiaries-selection-note"
-                    id="beneficiaries-selection-note"
-                    name="beneficiarySelectionNote"
-                  >
-                    String
-                  </textarea>
-                </div>
+                    <path
+                      d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    />
+                  </svg>
+                  Add an additional note
+                </button>
               </div>
             </div>
             <div

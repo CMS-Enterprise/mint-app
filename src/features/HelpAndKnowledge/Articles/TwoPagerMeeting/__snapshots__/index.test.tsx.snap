@@ -370,7 +370,6 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 class="margin-top-0 padding-left-2"
                 style="list-style-type: disc;"
               >
-                gary
                 <li
                   class="line-height-sans-4"
                 >
@@ -507,7 +506,6 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               ):
               <ul
                 class="padding-left-3 margin-top-05"
-                style="list-style-type: disc;"
               >
                 <li
                   class="line-height-sans-4"
@@ -661,7 +659,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             </div>
           </div>
           <div
-            class="usa-summary-box padding-3 border-gray-10 bg-white"
+            class="usa-summary-box padding-3 border-gray-10 bg-white shadow-2"
             data-testid="summary-box"
           >
             <div
