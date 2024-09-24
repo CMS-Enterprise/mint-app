@@ -65,11 +65,13 @@ describe('Model Plan -- BeneficiaryCostSharing', () => {
         screen.getByTestId('payment-beneficiary-cost-sharing-form')
       ).toBeInTheDocument();
     });
+
     await waitFor(() => {
       expect(
         screen.getByTestId('payment-beneficiary-cost-sharing')
       ).toHaveValue('This is a string');
     });
+
     await waitFor(() => {
       expect(
         screen.getByTestId('payment-waive-any-service-specification')
@@ -94,9 +96,10 @@ describe('Model Plan -- BeneficiaryCostSharing', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('payment-beneficiary-cost-sharing-form')
-      ).toBeInTheDocument();
+        screen.getByTestId('payment-beneficiary-cost-sharing')
+      ).toHaveValue('This is a string');
     });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });
