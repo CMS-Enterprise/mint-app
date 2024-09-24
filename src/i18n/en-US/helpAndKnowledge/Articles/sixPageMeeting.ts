@@ -272,6 +272,50 @@ const sixPageMeeting = {
           ]
         }
       ]
+    },
+    tipsForModelTeamsSummary: {
+      heading: 'Tips for model teams',
+      description:
+        'While working on your 6-page concept paper, consider the following best practices',
+      items: [
+        {
+          heading:
+            'Engage with relevant internal colleagues (within CMS and HHS)',
+          items: [
+            'OA will want to know that we worked with colleagues and incorporated their input'
+          ]
+        },
+        {
+          heading: 'Consult with external experts (thought leaders, e.g.)​'
+        },
+        {
+          heading: 'Listen to those potentially impacted by the model​'
+        },
+        {
+          heading: 'Prioritize patients and patient organizations​'
+        }
+      ]
+    },
+    example6Pager: {
+      heading: 'Example 6-page concept papers',
+      description:
+        'While all models are different, and therefore the content within a 6-page concept paper may vary drastically, it could be helpful for model teams or other interested parties to see examples of what previous model teams have put together in the past.',
+      items: [
+        {
+          text: 'AHEAD 6-page concept paper',
+          link: ''
+        },
+        {
+          text: 'Enhancing Oncology Model 6-page concept paper',
+          link: ''
+        },
+        {
+          text: 'Making Care Primary 6-page concept paper',
+          link: ''
+        }
+      ],
+      footer:
+        'To view the links above, you will need access to the <link1>Model Resources area of SharePoint</link1>'
     }
   },
   crossCuttingGroupsSummaryBox: {

@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import {
   Card,
   CardBody,
+  CardFooter,
   CardGroup,
   CardHeader,
   Grid,
@@ -84,6 +85,14 @@ const SixPagerMeeting = () => {
 
   const conceptPaperAdditionalResources = tArray<Record<string, any>>(
     'sixPageMeeting:aboutConceptPapers.additionalResources.items'
+  );
+
+  const tipsForModelTeamsSummary = tArray<Record<string, any>>(
+    'sixPageMeeting:aboutConceptPapers.tipsForModelTeamsSummary.items'
+  );
+
+  const example6Pager = tArray<Record<string, any>>(
+    'sixPageMeeting:aboutConceptPapers.example6Pager.items'
   );
 
   const additionalResourcesListItems = tArray(
@@ -439,6 +448,90 @@ const SixPagerMeeting = () => {
                 </div>
               </SummaryBoxContent>
             </SummaryBox>
+
+            {/* Tips for model teams */}
+            <SummaryBox className="margin-y-3">
+              <SummaryBoxHeading headingLevel="h3">
+                {sixPageMeetingT(
+                  'aboutConceptPapers.tipsForModelTeamsSummary.heading'
+                )}
+              </SummaryBoxHeading>
+
+              <p className="margin-bottom-0">
+                {sixPageMeetingT(
+                  'aboutConceptPapers.tipsForModelTeamsSummary.description'
+                )}
+              </p>
+
+              <SummaryBoxContent>
+                <ul className="margin-y-0">
+                  {tipsForModelTeamsSummary.map((section, index) => (
+                    <li key={section.heading}>
+                      {section.heading}
+
+                      {section.items?.length > 0 && (
+                        <ul className="margin-y-0">
+                          {section.items.map((item: string) => (
+                            <li key={item} style={{ listStyleType: 'disc' }}>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </SummaryBoxContent>
+            </SummaryBox>
+
+            <Grid desktop={{ col: 12 }}>
+              <Card
+                containerProps={{
+                  className: 'radius-md shadow-2 padding-3 margin-0'
+                }}
+                className="width-full"
+              >
+                <CardHeader className="padding-0">
+                  <h3 className="line-height-body-4 margin-bottom-1">
+                    {sixPageMeetingT(
+                      'aboutConceptPapers.example6Pager.heading'
+                    )}
+                  </h3>
+
+                  <p className="margin-y-0">
+                    {sixPageMeetingT(
+                      'aboutConceptPapers.example6Pager.description'
+                    )}
+                  </p>
+                </CardHeader>
+
+                <CardBody className="padding-0 line-height-sans-6">
+                  <ul className="margin-y-0 padding-top-1">
+                    {example6Pager.map((section, index) => (
+                      <li key={section.text} className="padding-bottom-05">
+                        <ExternalLink
+                          href={sixPageMeetingT(
+                            `aboutConceptPapers.example6Pager.items.${index}.link`
+                          )}
+                        >
+                          {section.text}
+                        </ExternalLink>
+                      </li>
+                    ))}
+                  </ul>
+                </CardBody>
+
+                <CardFooter className="padding-bottom-0 padding-x-0">
+                  <Trans
+                    i18nKey="aboutConceptPapers.example6Pager.footer"
+                    t={sixPageMeetingT}
+                    components={{
+                      link1: <ExternalLink href=""> </ExternalLink>
+                    }}
+                  />
+                </CardFooter>
+              </Card>
+            </Grid>
 
             <div
               id={covertToLowercaseAndDashes(
