@@ -31,7 +31,7 @@ function useOktaUserLookup(
           variables: { searchTerm }
         }
       : {
-          skip: !searchTerm || searchTerm.length < 3 || userSelected
+          skip: !searchTerm || searchTerm.length < 3 || !!userSelected
         }
   );
 
