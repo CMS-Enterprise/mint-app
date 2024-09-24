@@ -845,6 +845,49 @@ func (e AlternativePaymentModelType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type AnticipatedMultiPayerDataAvailabilityUseCase string
+
+const (
+	AnticipatedMultiPayerDataAvailabilityUseCaseMoreCompetentAlertDischargeTransferNotification   AnticipatedMultiPayerDataAvailabilityUseCase = "MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION"
+	AnticipatedMultiPayerDataAvailabilityUseCaseSupplyMultiPayerClaimsCostUtilAndQualityReporting AnticipatedMultiPayerDataAvailabilityUseCase = "SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING"
+	AnticipatedMultiPayerDataAvailabilityUseCaseFillGapsInCareAlertingAndReports                  AnticipatedMultiPayerDataAvailabilityUseCase = "FILL_GAPS_IN_CARE_ALERTING_AND_REPORTS"
+)
+
+var AllAnticipatedMultiPayerDataAvailabilityUseCase = []AnticipatedMultiPayerDataAvailabilityUseCase{
+	AnticipatedMultiPayerDataAvailabilityUseCaseMoreCompetentAlertDischargeTransferNotification,
+	AnticipatedMultiPayerDataAvailabilityUseCaseSupplyMultiPayerClaimsCostUtilAndQualityReporting,
+	AnticipatedMultiPayerDataAvailabilityUseCaseFillGapsInCareAlertingAndReports,
+}
+
+func (e AnticipatedMultiPayerDataAvailabilityUseCase) IsValid() bool {
+	switch e {
+	case AnticipatedMultiPayerDataAvailabilityUseCaseMoreCompetentAlertDischargeTransferNotification, AnticipatedMultiPayerDataAvailabilityUseCaseSupplyMultiPayerClaimsCostUtilAndQualityReporting, AnticipatedMultiPayerDataAvailabilityUseCaseFillGapsInCareAlertingAndReports:
+		return true
+	}
+	return false
+}
+
+func (e AnticipatedMultiPayerDataAvailabilityUseCase) String() string {
+	return string(e)
+}
+
+func (e *AnticipatedMultiPayerDataAvailabilityUseCase) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = AnticipatedMultiPayerDataAvailabilityUseCase(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid AnticipatedMultiPayerDataAvailabilityUseCase", str)
+	}
+	return nil
+}
+
+func (e AnticipatedMultiPayerDataAvailabilityUseCase) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type AuthorityAllowance string
 
 const (
@@ -1235,6 +1278,79 @@ func (e DataForMonitoringType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type DataToCollectFromParticipants string
+
+const (
+	DataToCollectFromParticipantsBankingInformationToMakeNonClaimsBasedPayments DataToCollectFromParticipants = "BANKING_INFORMATION_TO_MAKE_NON_CLAIMS_BASED_PAYMENTS"
+	DataToCollectFromParticipantsClinicalData                                   DataToCollectFromParticipants = "CLINICAL_DATA"
+	DataToCollectFromParticipantsCollectBidsAndPlanInformation                  DataToCollectFromParticipants = "COLLECT_BIDS_AND_PLAN_INFORMATION"
+	DataToCollectFromParticipantsCooperativeAgreementApplication                DataToCollectFromParticipants = "COOPERATIVE_AGREEMENT_APPLICATION"
+	DataToCollectFromParticipantsDecarbonizationData                            DataToCollectFromParticipants = "DECARBONIZATION_DATA"
+	DataToCollectFromParticipantsExpandedDemographicsData                       DataToCollectFromParticipants = "EXPANDED_DEMOGRAPHICS_DATA"
+	DataToCollectFromParticipantsFeeForServiceClaimsAndApplyModelRules          DataToCollectFromParticipants = "FEE_FOR_SERVICE_CLAIMS_AND_APPLY_MODEL_RULES"
+	DataToCollectFromParticipantsLearningSystemMetrics                          DataToCollectFromParticipants = "LEARNING_SYSTEM_METRICS"
+	DataToCollectFromParticipantsParticipantAgreement                           DataToCollectFromParticipants = "PARTICIPANT_AGREEMENT"
+	DataToCollectFromParticipantsParticipantAgreementLetterOfIntent             DataToCollectFromParticipants = "PARTICIPANT_AGREEMENT_LETTER_OF_INTENT"
+	DataToCollectFromParticipantsParticipantAgreementRequestForApplication      DataToCollectFromParticipants = "PARTICIPANT_AGREEMENT_REQUEST_FOR_APPLICATION"
+	DataToCollectFromParticipantsParticipantReportedData                        DataToCollectFromParticipants = "PARTICIPANT_REPORTED_DATA"
+	DataToCollectFromParticipantsParticipantReportedQualityMeasures             DataToCollectFromParticipants = "PARTICIPANT_REPORTED_QUALITY_MEASURES"
+	DataToCollectFromParticipantsProviderParticipantRoster                      DataToCollectFromParticipants = "PROVIDER_PARTICIPANT_ROSTER"
+	DataToCollectFromParticipantsReportsFromParticipants                        DataToCollectFromParticipants = "REPORTS_FROM_PARTICIPANTS"
+	DataToCollectFromParticipantsSocialDeterminantsOfHealth                     DataToCollectFromParticipants = "SOCIAL_DETERMINANTS_OF_HEALTH"
+	DataToCollectFromParticipantsSurvey                                         DataToCollectFromParticipants = "SURVEY"
+	DataToCollectFromParticipantsOther                                          DataToCollectFromParticipants = "OTHER"
+)
+
+var AllDataToCollectFromParticipants = []DataToCollectFromParticipants{
+	DataToCollectFromParticipantsBankingInformationToMakeNonClaimsBasedPayments,
+	DataToCollectFromParticipantsClinicalData,
+	DataToCollectFromParticipantsCollectBidsAndPlanInformation,
+	DataToCollectFromParticipantsCooperativeAgreementApplication,
+	DataToCollectFromParticipantsDecarbonizationData,
+	DataToCollectFromParticipantsExpandedDemographicsData,
+	DataToCollectFromParticipantsFeeForServiceClaimsAndApplyModelRules,
+	DataToCollectFromParticipantsLearningSystemMetrics,
+	DataToCollectFromParticipantsParticipantAgreement,
+	DataToCollectFromParticipantsParticipantAgreementLetterOfIntent,
+	DataToCollectFromParticipantsParticipantAgreementRequestForApplication,
+	DataToCollectFromParticipantsParticipantReportedData,
+	DataToCollectFromParticipantsParticipantReportedQualityMeasures,
+	DataToCollectFromParticipantsProviderParticipantRoster,
+	DataToCollectFromParticipantsReportsFromParticipants,
+	DataToCollectFromParticipantsSocialDeterminantsOfHealth,
+	DataToCollectFromParticipantsSurvey,
+	DataToCollectFromParticipantsOther,
+}
+
+func (e DataToCollectFromParticipants) IsValid() bool {
+	switch e {
+	case DataToCollectFromParticipantsBankingInformationToMakeNonClaimsBasedPayments, DataToCollectFromParticipantsClinicalData, DataToCollectFromParticipantsCollectBidsAndPlanInformation, DataToCollectFromParticipantsCooperativeAgreementApplication, DataToCollectFromParticipantsDecarbonizationData, DataToCollectFromParticipantsExpandedDemographicsData, DataToCollectFromParticipantsFeeForServiceClaimsAndApplyModelRules, DataToCollectFromParticipantsLearningSystemMetrics, DataToCollectFromParticipantsParticipantAgreement, DataToCollectFromParticipantsParticipantAgreementLetterOfIntent, DataToCollectFromParticipantsParticipantAgreementRequestForApplication, DataToCollectFromParticipantsParticipantReportedData, DataToCollectFromParticipantsParticipantReportedQualityMeasures, DataToCollectFromParticipantsProviderParticipantRoster, DataToCollectFromParticipantsReportsFromParticipants, DataToCollectFromParticipantsSocialDeterminantsOfHealth, DataToCollectFromParticipantsSurvey, DataToCollectFromParticipantsOther:
+		return true
+	}
+	return false
+}
+
+func (e DataToCollectFromParticipants) String() string {
+	return string(e)
+}
+
+func (e *DataToCollectFromParticipants) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = DataToCollectFromParticipants(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid DataToCollectFromParticipants", str)
+	}
+	return nil
+}
+
+func (e DataToCollectFromParticipants) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type DataToSendParticipantsType string
 
 const (
@@ -1283,6 +1399,55 @@ func (e *DataToSendParticipantsType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e DataToSendParticipantsType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type DataToSendToParticipants string
+
+const (
+	DataToSendToParticipantsDataFeedbackDashboard           DataToSendToParticipants = "DATA_FEEDBACK_DASHBOARD"
+	DataToSendToParticipantsNonClaimsBasedPayments          DataToSendToParticipants = "NON_CLAIMS_BASED_PAYMENTS"
+	DataToSendToParticipantsOperationsData                  DataToSendToParticipants = "OPERATIONS_DATA"
+	DataToSendToParticipantsPartiallyAdjustedClaimsData     DataToSendToParticipants = "PARTIALLY_ADJUSTED_CLAIMS_DATA"
+	DataToSendToParticipantsRawClaimsData                   DataToSendToParticipants = "RAW_CLAIMS_DATA"
+	DataToSendToParticipantsDataWillNotBeSentToParticipants DataToSendToParticipants = "DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS"
+)
+
+var AllDataToSendToParticipants = []DataToSendToParticipants{
+	DataToSendToParticipantsDataFeedbackDashboard,
+	DataToSendToParticipantsNonClaimsBasedPayments,
+	DataToSendToParticipantsOperationsData,
+	DataToSendToParticipantsPartiallyAdjustedClaimsData,
+	DataToSendToParticipantsRawClaimsData,
+	DataToSendToParticipantsDataWillNotBeSentToParticipants,
+}
+
+func (e DataToSendToParticipants) IsValid() bool {
+	switch e {
+	case DataToSendToParticipantsDataFeedbackDashboard, DataToSendToParticipantsNonClaimsBasedPayments, DataToSendToParticipantsOperationsData, DataToSendToParticipantsPartiallyAdjustedClaimsData, DataToSendToParticipantsRawClaimsData, DataToSendToParticipantsDataWillNotBeSentToParticipants:
+		return true
+	}
+	return false
+}
+
+func (e DataToSendToParticipants) String() string {
+	return string(e)
+}
+
+func (e *DataToSendToParticipants) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = DataToSendToParticipants(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid DataToSendToParticipants", str)
+	}
+	return nil
+}
+
+func (e DataToSendToParticipants) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -1759,6 +1924,57 @@ func (e *MonitoringFileType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e MonitoringFileType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type MultiSourceDataToCollect string
+
+const (
+	MultiSourceDataToCollectCommercialClaims MultiSourceDataToCollect = "COMMERCIAL_CLAIMS"
+	MultiSourceDataToCollectLabData          MultiSourceDataToCollect = "LAB_DATA"
+	MultiSourceDataToCollectManufacturer     MultiSourceDataToCollect = "MANUFACTURER"
+	MultiSourceDataToCollectMedicaidClaims   MultiSourceDataToCollect = "MEDICAID_CLAIMS"
+	MultiSourceDataToCollectMedicareClaims   MultiSourceDataToCollect = "MEDICARE_CLAIMS"
+	MultiSourceDataToCollectPatientRegistry  MultiSourceDataToCollect = "PATIENT_REGISTRY"
+	MultiSourceDataToCollectOther            MultiSourceDataToCollect = "OTHER"
+)
+
+var AllMultiSourceDataToCollect = []MultiSourceDataToCollect{
+	MultiSourceDataToCollectCommercialClaims,
+	MultiSourceDataToCollectLabData,
+	MultiSourceDataToCollectManufacturer,
+	MultiSourceDataToCollectMedicaidClaims,
+	MultiSourceDataToCollectMedicareClaims,
+	MultiSourceDataToCollectPatientRegistry,
+	MultiSourceDataToCollectOther,
+}
+
+func (e MultiSourceDataToCollect) IsValid() bool {
+	switch e {
+	case MultiSourceDataToCollectCommercialClaims, MultiSourceDataToCollectLabData, MultiSourceDataToCollectManufacturer, MultiSourceDataToCollectMedicaidClaims, MultiSourceDataToCollectMedicareClaims, MultiSourceDataToCollectPatientRegistry, MultiSourceDataToCollectOther:
+		return true
+	}
+	return false
+}
+
+func (e MultiSourceDataToCollect) String() string {
+	return string(e)
+}
+
+func (e *MultiSourceDataToCollect) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = MultiSourceDataToCollect(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid MultiSourceDataToCollect", str)
+	}
+	return nil
+}
+
+func (e MultiSourceDataToCollect) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
