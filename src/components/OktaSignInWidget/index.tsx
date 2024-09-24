@@ -13,14 +13,12 @@ type OktaSignInWidgetProps = {
   onSuccess: (auth: any) => any;
   onError: () => void;
   setError: (value: boolean) => void;
-  className?: string;
 };
 
 const OktaSignInWidget = ({
   onSuccess,
   onError,
-  setError,
-  className
+  setError
 }: OktaSignInWidgetProps) => {
   const { t } = useTranslation('general');
   const widgetRef = useRef(null);
@@ -76,7 +74,7 @@ const OktaSignInWidget = ({
   return (
     <div className="center-container">
       <div className="okta-sign-in-container">
-        <div id="mint-okta-sign-in" className={className} ref={widgetRef} />
+        <div id="mint-okta-sign-in" ref={widgetRef} />
         {hasSession !== false && (
           <div className="nested-overlay">
             <Spinner size="large" />

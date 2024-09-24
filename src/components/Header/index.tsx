@@ -155,6 +155,7 @@ const Header = () => {
                   {t('landing:getAccess')}
                 </UswdsReactLink>
               )}
+              {/* If a user has an active okta session, replace router link with a button that automicatally authenticates the user for MINT.  Bypasses /signin */}
               {hasSession ? (
                 <Button
                   type="button"
