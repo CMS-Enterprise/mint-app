@@ -14,11 +14,15 @@ import {
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
+import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
+import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import useHelpSolution from 'hooks/useHelpSolutions';
+import useModalSolutionState from 'hooks/useModalSolutionState';
 import { getKeys } from 'types/translation';
 import { tArray, tObject } from 'utils/translation';
 
@@ -96,8 +100,25 @@ const TwoPagerMeeting = () => {
     'twoPageMeeting:about.stepThree.list'
   );
 
+  const { helpSolutions } = useHelpSolution();
+  const { prevPathname, selectedSolution: solution } =
+    useModalSolutionState(null);
+
+  // Solution to render in modal
+  const selectedSolution = findSolutionByRouteParam(
+    solution?.route || null,
+    helpSolutions
+  );
+
   return (
     <>
+      {selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute="help-and-knowledge/about-2-page-concept-papers-and-review-meetings"
+        />
+      )}
       <MainContent>
         <GridContainer>
           <Grid>
@@ -492,7 +513,7 @@ const TwoPagerMeeting = () => {
                         ml: (
                           <UswdsReactLink
                             className="usa-button usa-button--unstyled"
-                            to="high-level-project-plan?solution=learning-and-diffusion-group&section=about"
+                            to="?solution=learning-and-diffusion-group&section=about"
                           >
                             {k}
                           </UswdsReactLink>
