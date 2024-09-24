@@ -55,8 +55,8 @@ func (loaders *DataLoaders) GetModelPlanByModelPlanID(ctx context.Context, keys 
 
 }
 
-// GetModelPlanByModelPlanID uses a data loader to return a model plan for a given model plan
-func GetModelPlanByModelPlanID(ctx context.Context, modelPlanID uuid.UUID) (*models.ModelPlan, error) {
+// ModelPlanGetByID uses a data loader to return a model plan for a given model plan
+func ModelPlanGetByID(ctx context.Context, modelPlanID uuid.UUID) (*models.ModelPlan, error) {
 	loadgen, ok := loadgensFromCTX(ctx)
 	if !ok {
 		return nil, fmt.Errorf("unexpected nil loaders in GetModelPlanByModelPlanID")
