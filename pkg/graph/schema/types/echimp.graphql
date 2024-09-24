@@ -7,7 +7,11 @@ type EChimpCR {
   title: String
   sensitiveFlag: Boolean
   implementationDate: String
-  crSummary: String #TODO (echimp) consider making this an HTML / TaggedContent.
+  """
+  CRSummary is rich text in HTML format, in practice, the data is not tagged.
+  We use the TaggedContent type as we don't have another use for a plain HTML type.
+  """
+  crSummary: TaggedContent 
   crStatus: String
   emergencyCrFlag: Boolean
   relatedCrNumbers: String
