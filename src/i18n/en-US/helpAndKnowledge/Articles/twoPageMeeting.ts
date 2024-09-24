@@ -67,33 +67,35 @@ const twoPageMeeting = {
       italics:
         'Not all of these may be answerable early in model development/consideration',
       copy: '2-page concept papers may address <bold>Alignment, Impact, Feasibility, Innovation,</bold> and may list a brief description of <bold>Interested parties</bold> by:',
-      alignment: {
-        text: 'Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level (<bold>Alignment</bold>):',
-        numberedList: [
-          'Drive accountable care',
-          'Advance health equity',
-          'Support innovation ',
-          'Address affordability ',
-          'Partner to achieve system transformation, and multi-payer alignment in particular'
-        ]
-      },
-      impact: {
-        text: 'Outlining the potential for the model to impact the following dimensions (<bold>Impact</bold>):',
-        list: [
-          'Participation – number and types of providers, beneficiaries',
-          'Outcomes – expected improvements in quality, and outcomes, changes in beneficiary experience, advancements in equity and reduction in disparities, delivery system change, multi-payer alignment, and market impacts',
-          'Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries'
-        ]
-      },
-      feasibility: {
-        text: 'Considering the likelihood of successful execution of the model including initial operational phases, CMMI staffing, evaluation challenges, feasibility limitations, participant interest, and potential for scaling. Complete preliminary assessment of data exchanges concept in the model. (<bold>Feasibility</bold>)'
-      },
-      innovation: {
-        text: 'Considering whether the model provides or is expected to stimulate innovation in a particular dimension such as payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy. (<bold>Innovation</bold>)'
-      },
-      interestedParty: {
-        text: 'Including brief descriptions of any engagement or advocacy by interested parties on the model concept. (<bold>Interested parties</bold>)'
-      }
+      list: [
+        {
+          text: 'Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level (<bold>Alignment</bold>):',
+          numberedList: [
+            'Drive accountable care',
+            'Advance health equity',
+            'Support innovation ',
+            'Address affordability ',
+            'Partner to achieve system transformation, and multi-payer alignment in particular'
+          ]
+        },
+        {
+          text: 'Outlining the potential for the model to impact the following dimensions (<bold>Impact</bold>):',
+          list: [
+            'Participation – number and types of providers, beneficiaries',
+            'Outcomes – expected improvements in quality, and outcomes, changes in beneficiary experience, advancements in equity and reduction in disparities, delivery system change, multi-payer alignment, and market impacts',
+            'Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries'
+          ]
+        },
+        {
+          text: 'Considering the likelihood of successful execution of the model including initial operational phases, CMMI staffing, evaluation challenges, feasibility limitations, participant interest, and potential for scaling. Complete preliminary assessment of data exchanges concept in the model. (<bold>Feasibility</bold>)'
+        },
+        {
+          text: 'Considering whether the model provides or is expected to stimulate innovation in a particular dimension such as payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy. (<bold>Innovation</bold>)'
+        },
+        {
+          text: 'Including brief descriptions of any engagement or advocacy by interested parties on the model concept. (<bold>Interested parties</bold>)'
+        }
+      ]
     },
     summarybox: {
       tips: {

@@ -46,19 +46,18 @@ type ExampleSummaryBoxListType = {
     copy: string;
   };
 };
+
+type StepThreeListType = {
+  text: string;
+  numberedList?: string[];
+  list?: string[];
+};
+
 const TwoPagerMeeting = () => {
   const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
 
   const briefItems = tArray<string>(
     'twoPageMeeting:about.stepOne.items.brief.list'
-  );
-
-  const alignmentListItems: string[] = tArray(
-    'twoPageMeeting:about.stepThree.alignment.numberedList'
-  );
-
-  const impactListItems: string[] = tArray(
-    'twoPageMeeting:about.stepThree.impact.list'
   );
 
   const aboutTipsList1: string[] = tArray(
@@ -91,6 +90,10 @@ const TwoPagerMeeting = () => {
 
   const exampleSummaryBoxList: ExampleSummaryBoxListType = tObject(
     'twoPageMeeting:about.summarybox.exampleSummaryBox.list'
+  );
+
+  const stepThreeList: StepThreeListType[] = tArray(
+    'twoPageMeeting:about.stepThree.list'
   );
 
   return (
@@ -300,68 +303,47 @@ const TwoPagerMeeting = () => {
                 />
               </p>
               <ul className="margin-top-0 margin-bottom-5 padding-left-6">
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <Trans
-                    t={twoPageMeetingT}
-                    i18nKey="about.stepThree.alignment.text"
-                    components={{
-                      bold: <strong />
-                    }}
-                  />
-                  <ol className="padding-left-3 margin-top-05">
-                    {alignmentListItems.map(k => (
-                      <li key={k} className="line-height-sans-4">
-                        {k}
-                      </li>
-                    ))}
-                  </ol>
-                </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <Trans
-                    t={twoPageMeetingT}
-                    i18nKey="about.stepThree.impact.text"
-                    components={{
-                      bold: <strong />
-                    }}
-                  />
-                  <ul
-                    className="padding-left-3 margin-top-05"
-                    style={{ listStyleType: 'disc' }}
+                {Object.values(stepThreeList).map(k => (
+                  <li
+                    key={covertToLowercaseAndDashes(k.text)}
+                    className="line-height-sans-4 margin-bottom-05"
                   >
-                    {impactListItems.map(k => (
-                      <li key={k} className="line-height-sans-4">
-                        {k}
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <Trans
-                    t={twoPageMeetingT}
-                    i18nKey="about.stepThree.feasibility.text"
-                    components={{
-                      bold: <strong />
-                    }}
-                  />
-                </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <Trans
-                    t={twoPageMeetingT}
-                    i18nKey="about.stepThree.innovation.text"
-                    components={{
-                      bold: <strong />
-                    }}
-                  />
-                </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <Trans
-                    t={twoPageMeetingT}
-                    i18nKey="about.stepThree.interestedParty.text"
-                    components={{
-                      bold: <strong />
-                    }}
-                  />
-                </li>
+                    <Trans
+                      t={twoPageMeetingT}
+                      i18nKey={k.text}
+                      components={{
+                        bold: <strong />
+                      }}
+                    />
+                    {k.numberedList && (
+                      <ol className="padding-left-3 margin-top-05">
+                        {k.numberedList.map(listItem => (
+                          <li
+                            key={covertToLowercaseAndDashes(listItem)}
+                            className="line-height-sans-4"
+                          >
+                            {listItem}
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                    {k.list && (
+                      <ul
+                        className="padding-left-3 margin-top-05"
+                        style={{ listStyleType: 'disc' }}
+                      >
+                        {k.list.map(listItem => (
+                          <li
+                            key={covertToLowercaseAndDashes(listItem)}
+                            className="line-height-sans-4"
+                          >
+                            {listItem}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
               </ul>
 
               <SummaryBox className="padding-3 margin-bottom-3">
