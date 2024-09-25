@@ -200,23 +200,23 @@ const sixPageMeeting = {
           items: [
             {
               text: '<link1>2-pager/6-pager repository</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FSR%2FModelDev%2FSubmitted%20Two%20Pagers&FolderCTID=0x01200036E3B855163F814699A0837BA1A30AAB&View=%7BE27BAB55%2D0182%2D4AEB%2D811C%2D92373E7CCCAC%7D'
             },
             {
               text: '<link1>ICIPs</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FSR%2FModelDev%2FSubmitted%20Six%20Pagers&FolderCTID=0x01200036E3B855163F814699A0837BA1A30AAB&View=%7BE27BAB55%2D0182%2D4AEB%2D811C%2D92373E7CCCAC%7D'
             },
             {
-              text: '<link1>Waiver database</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              text: 'Waiver database',
+              link: ''
             },
             {
-              text: '<link1>Model Interactions framework resource PPT</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              text: 'Model Interactions framework resource PPT',
+              link: ''
             },
             {
-              text: 'Guidance on Model Expansion and Other Opportunities for Scaling',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              text: '<link1>Guidance on Model Expansion and Other Opportunities for Scaling</link1>',
+              link: 'https://share.cms.gov/center/cmmi/PP/_layouts/15/WopiFrame.aspx?sourcedoc=%7B7DA78D15-DEB5-45AE-9366-1D335708B3C8%7D&file=Model%20Expansion%20and%20Scaling%20Guidance%20Final.pdf&action=default'
             }
           ]
         },
@@ -224,12 +224,12 @@ const sixPageMeeting = {
           heading: 'Quality resources ',
           items: [
             {
-              text: '<link1>Quality Design Process</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              text: 'Quality Design Process',
+              link: ''
             },
             {
-              text: '<link1>PROMs strategy</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              text: 'PROMs strategy',
+              link: ''
             }
           ]
         },
@@ -238,23 +238,23 @@ const sixPageMeeting = {
           items: [
             {
               text: '<link1>Quality Vertical Health Equity Resource Guide</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              link: 'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D'
             },
             {
               text: '<link1>Implicit Bias Guide</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/Implicit%20Bias%20Guide%20for%20Model%20Devt%2002.28.24.docx'
             },
             {
               text: '<link1>Health-Related Social Needs (HRSN) Screening and Referral Data Policy Memo</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/HRSN%20Screening%20and%20Referral%20Policy%20Memo%2002.01.24%20clean.docx'
             },
             {
               text: '<link1>HRSN Screening and Referral Implementation Guide</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/HRSN%20Screening%20and%20Referral%20Implementation%20Guide%20Version%202%20FINAL%205-21-24.pdf'
             },
             {
-              text: 'Sexual Orientation and Gender Identity (SOGI) Data Collection and Reporting Policy Memo</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              text: '<link1>Sexual Orientation and Gender Identity (SOGI) Data Collection and Reporting Policy Memo</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/SOGI%20Data%20Collection%20and%20Reporting%20Policy%20Memo%201.24.docx'
             }
           ]
         },
@@ -262,12 +262,12 @@ const sixPageMeeting = {
           heading: 'Implementation resources ',
           items: [
             {
-              text: '<link1>BSG Checklist</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              text: 'BSG Checklist',
+              link: ''
             },
             {
-              text: '<link1>Framework for Evaluating Data Exchange Concepts in Models</link1>',
-              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+              text: 'Framework for Evaluating Data Exchange Concepts in Models',
+              link: ''
             }
           ]
         }

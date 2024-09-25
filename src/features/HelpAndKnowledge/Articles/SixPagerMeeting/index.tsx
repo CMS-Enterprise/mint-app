@@ -412,7 +412,11 @@ const SixPagerMeeting = () => {
                       i18nKey="aboutConceptPapers.additionalResources.description"
                       t={sixPageMeetingT}
                       components={{
-                        link1: <ExternalLink href="/"> </ExternalLink>
+                        link1: (
+                          <ExternalLink href="https://share.cms.gov/center/CMMI/SR/ModelDev/Forms/AllItems.aspx">
+                            {' '}
+                          </ExternalLink>
+                        )
                       }}
                     />
                   </p>
@@ -428,21 +432,21 @@ const SixPagerMeeting = () => {
                                 <Trans
                                   i18nKey={`aboutConceptPapers.additionalResources.items.${index}.items.${index2}.text`}
                                   t={sixPageMeetingT}
-                                  components={{
-                                    link1: <span> </span>
-                                  }}
-                                  //  TODO: implement links once verified from UX
                                   // components={{
-                                  //   link1: (
-                                  //     <ExternalLink
-                                  //       href={sixPageMeetingT(
-                                  //         `aboutConceptPapers.additionalResources.items.${index}.items.${index2}.link`
-                                  //       )}
-                                  //     >
-                                  //       {' '}
-                                  //     </ExternalLink>
-                                  //   )
+                                  //   link1: <span> </span>
                                   // }}
+                                  //  TODO: implement links once verified from UX
+                                  components={{
+                                    link1: (
+                                      <ExternalLink
+                                        href={sixPageMeetingT(
+                                          `aboutConceptPapers.additionalResources.items.${index}.items.${index2}.link`
+                                        )}
+                                      >
+                                        {' '}
+                                      </ExternalLink>
+                                    )
+                                  }}
                                 />
                               </li>
                             )
