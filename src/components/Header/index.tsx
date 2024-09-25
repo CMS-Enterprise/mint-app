@@ -2,13 +2,19 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
-import { GovBanner, Icon, NavMenuButton } from '@trussworks/react-uswds';
+import {
+  Button,
+  GovBanner,
+  Icon,
+  NavMenuButton
+} from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import NavigationBar from 'components/NavigationBar';
 import { localAuthStorageKey } from 'constants/localAuth';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useOktaSession from 'hooks/useOktaSession';
 import useOutsideClick from 'hooks/useOutsideClick';
 
 import { NavContext } from '../../contexts/NavContext';
@@ -20,6 +26,8 @@ const Header = () => {
   const { pathname } = useLocation();
   const { t } = useTranslation();
   const [userName, setUserName] = useState('');
+
+  const { hasSession } = useOktaSession();
 
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
   const { isMobileSideNavExpanded, setIsMobileSideNavExpanded } =
@@ -147,18 +155,39 @@ const Header = () => {
                   {t('landing:getAccess')}
                 </UswdsReactLink>
               )}
-              <Link
-                className={classnames(
-                  'mint-header__nav-link  radius-md padding-y-105 padding-x-2',
-                  {
-                    'text-white border': isLanding,
-                    'text-base-darker': !isLanding
+              {/* If a user has an active okta session, replace router link with a button that automicatally authenticates the user for MINT.  Bypasses /signin */}
+              {hasSession ? (
+                <Button
+                  type="button"
+                  className={classnames(
+                    'mint-header__nav-link  radius-md padding-y-105 padding-x-2 bg-transparent',
+                    {
+                      'text-white border': isLanding,
+                      'text-base-darker': !isLanding
+                    }
+                  )}
+                  onClick={() =>
+                    oktaAuth.signInWithRedirect({
+                      originalUri: '/pre-decisional-notice'
+                    })
                   }
-                )}
-                to="/signin"
-              >
-                {t('header:signIn')}
-              </Link>
+                >
+                  {t('header:signIn')}
+                </Button>
+              ) : (
+                <Link
+                  className={classnames(
+                    'mint-header__nav-link  radius-md padding-y-105 padding-x-2',
+                    {
+                      'text-white border': isLanding,
+                      'text-base-darker': !isLanding
+                    }
+                  )}
+                  to="/signin"
+                >
+                  {t('header:signIn')}
+                </Link>
+              )}
             </div>
           )}
         </div>
