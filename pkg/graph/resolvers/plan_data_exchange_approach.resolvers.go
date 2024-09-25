@@ -6,36 +6,19 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // ModelPlan is the resolver for the modelPlan field.
 func (r *planDataExchangeApproachResolver) ModelPlan(ctx context.Context, obj *models.PlanDataExchangeApproach) (*models.ModelPlan, error) {
-	panic(fmt.Errorf("not implemented: ModelPlan - modelPlan"))
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
 // DataToCollectFromParticipants is the resolver for the dataToCollectFromParticipants field.
-func (r *planDataExchangeApproachResolver) DataToCollectFromParticipants(ctx context.Context, obj *models.PlanDataExchangeApproach) ([]model.DataToCollectFromParticipants, error) {
-	panic(fmt.Errorf("not implemented: DataToCollectFromParticipants - dataToCollectFromParticipants"))
-}
-
-// DataToSendToParticipants is the resolver for the dataToSendToParticipants field.
-func (r *planDataExchangeApproachResolver) DataToSendToParticipants(ctx context.Context, obj *models.PlanDataExchangeApproach) (*model.DataToSendToParticipants, error) {
-	panic(fmt.Errorf("not implemented: DataToSendToParticipants - dataToSendToParticipants"))
-}
-
-// AnticipatedMultiPayerDataAvailabilityUseCase is the resolver for the anticipatedMultiPayerDataAvailabilityUseCase field.
-func (r *planDataExchangeApproachResolver) AnticipatedMultiPayerDataAvailabilityUseCase(ctx context.Context, obj *models.PlanDataExchangeApproach) (*model.AnticipatedMultiPayerDataAvailabilityUseCase, error) {
-	panic(fmt.Errorf("not implemented: AnticipatedMultiPayerDataAvailabilityUseCase - anticipatedMultiPayerDataAvailabilityUseCase"))
-}
-
-// MultiSourceDataToCollect is the resolver for the multiSourceDataToCollect field.
-func (r *planDataExchangeApproachResolver) MultiSourceDataToCollect(ctx context.Context, obj *models.PlanDataExchangeApproach) (*model.MultiSourceDataToCollect, error) {
-	panic(fmt.Errorf("not implemented: MultiSourceDataToCollect - multiSourceDataToCollect"))
+func (r *planDataExchangeApproachResolver) DataToCollectFromParticipants(ctx context.Context, obj *models.PlanDataExchangeApproach) ([]models.DataToCollectFromParticipants, error) {
+	return models.ConvertEnums[models.DataToCollectFromParticipants](obj.DataToCollectFromParticipants), nil
 }
 
 // PlanDataExchangeApproach returns generated.PlanDataExchangeApproachResolver implementation.

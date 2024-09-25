@@ -79,6 +79,7 @@ type ModelPlan {
   documents: [PlanDocument!]!
   discussions: [PlanDiscussion!]!
   payments: PlanPayments!
+  dataExchangeApproach: PlanDataExchangeApproach!
   status: ModelStatus!
   taskListStatus: TaskStatus!
   suggestedPhase: PhaseSuggestion

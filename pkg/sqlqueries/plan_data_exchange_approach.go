@@ -14,17 +14,22 @@ var planDataExchangeApproachDeleteSQL string
 //go:embed SQL/plan_data_exchange_approach/get_by_id.sql
 var planDataExchangeApproachGetByIDSQL string
 
+//go:embed SQL/plan_data_exchange_approach/get_by_model_plan_id.sql
+var planDataExchangeApproachGetByModelPlanIDSQL string
+
 type planDataExchangeApproachScripts struct {
-	Create  string
-	Update  string
-	Delete  string
-	GetByID string
+	Create           string
+	Update           string
+	Delete           string
+	GetByID          string
+	GetByModelPlanID string
 }
 
 // PlanDataExchangeApproach houses all the SQL scripts for the plan_data_exchange_approach table
 var PlanDataExchangeApproach = planDataExchangeApproachScripts{
-	Create:  planDataExchangeApproachCreateSQL,
-	Update:  planDataExchangeApproachUpdateSQL,
-	Delete:  planDataExchangeApproachDeleteSQL,
-	GetByID: planDataExchangeApproachGetByIDSQL,
+	Create:           planDataExchangeApproachCreateSQL,
+	Update:           planDataExchangeApproachUpdateSQL,
+	Delete:           planDataExchangeApproachDeleteSQL,
+	GetByID:          planDataExchangeApproachGetByIDSQL,
+	GetByModelPlanID: planDataExchangeApproachGetByModelPlanIDSQL,
 }

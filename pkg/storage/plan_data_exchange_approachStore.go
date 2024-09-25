@@ -2,6 +2,7 @@ package storage
 
 import (
 	_ "embed"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/sqlqueries"
 
@@ -12,7 +13,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
 	"github.com/cmsgov/mint-app/pkg/sqlutils"
-	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
 
 // PlanDataExchangeApproachCreate creates a new plan data exchange approach
@@ -22,7 +22,7 @@ func (s *Store) PlanDataExchangeApproachCreate(np sqlutils.NamedPreparer, logger
 
 	stmt, err := np.PrepareNamed(sqlqueries.PlanDataExchangeApproach.Create)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, approach)
+		return nil, fmt.Errorf("error preparing named statement: %w", err)
 	}
 	defer stmt.Close()
 
@@ -31,7 +31,7 @@ func (s *Store) PlanDataExchangeApproachCreate(np sqlutils.NamedPreparer, logger
 
 	err = stmt.Get(approach, approach)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, approach)
+		return nil, fmt.Errorf("error getting plan data exchange approach: %w", err)
 	}
 
 	return approach, nil
@@ -42,13 +42,13 @@ func (s *Store) PlanDataExchangeApproachUpdate(logger *zap.Logger, approach *mod
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDataExchangeApproach.Update)
 	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, approach)
+		return nil, fmt.Errorf("error preparing named statement: %w", err)
 	}
 	defer stmt.Close()
 
 	err = stmt.Get(approach, approach)
 	if err != nil {
-		return nil, genericmodel.HandleModelQueryError(logger, err, approach)
+		return nil, fmt.Errorf("error getting plan data exchange approach: %w", err)
 	}
 
 	return approach, nil
@@ -73,12 +73,31 @@ func (s *Store) PlanDataExchangeApproachGetByID(_ *zap.Logger, id uuid.UUID) (*m
 	return &approach, nil
 }
 
+// PlanDataExchangeApproachGetByModelPlanID returns the plan data exchange approach for a given model plan id
+func (s *Store) PlanDataExchangeApproachGetByModelPlanID(_ *zap.Logger, modelPlanID uuid.UUID) (*models.PlanDataExchangeApproach, error) {
+
+	approach := models.PlanDataExchangeApproach{}
+
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDataExchangeApproach.GetByModelPlanID)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	err = stmt.Get(&approach, utilitysql.CreateIDQueryMap(modelPlanID))
+
+	if err != nil {
+		return nil, err
+	}
+	return &approach, nil
+}
+
 // PlanDataExchangeApproachDelete deletes a plan data exchange approach by id
-func (s *Store) PlanDataExchangeApproachDelete(logger *zap.Logger, id uuid.UUID) error {
+func (s *Store) PlanDataExchangeApproachDelete(_ *zap.Logger, id uuid.UUID) error {
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDataExchangeApproach.Delete)
 	if err != nil {
-		return genericmodel.HandleModelQueryError(logger, err, id)
+		return fmt.Errorf("error preparing named statement: %w", err)
 	}
 	defer stmt.Close()
 
@@ -86,7 +105,7 @@ func (s *Store) PlanDataExchangeApproachDelete(logger *zap.Logger, id uuid.UUID)
 
 	_, err = stmt.Exec(arg)
 	if err != nil {
-		return genericmodel.HandleModelQueryError(logger, err, id)
+		return fmt.Errorf("error executing statement: %w", err)
 	}
 
 	return nil

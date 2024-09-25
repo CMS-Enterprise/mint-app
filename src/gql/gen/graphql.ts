@@ -696,6 +696,7 @@ export type ModelPlan = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   crs: Array<PlanCr>;
+  dataExchangeApproach: PlanDataExchangeApproach;
   discussions: Array<PlanDiscussion>;
   documents: Array<PlanDocument>;
   generalCharacteristics: PlanGeneralCharacteristics;
@@ -1864,6 +1865,7 @@ export type PlanDataExchangeApproachCompletedActivityMeta = {
   dataExchangeApproachID: Scalars['UUID']['output'];
   markedCompleteBy: Scalars['UUID']['output'];
   markedCompleteByUserAccount: UserAccount;
+  modelPlan: ModelPlan;
   type: ActivityType;
   version: Scalars['Int']['output'];
 };

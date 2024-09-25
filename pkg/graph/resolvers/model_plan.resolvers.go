@@ -67,6 +67,13 @@ func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan)
 	return PlanPaymentsGetByModelPlanIDLOADER(ctx, obj.ID)
 }
 
+// DataExchangeApproach is the resolver for the dataExchangeApproach field.
+func (r *modelPlanResolver) DataExchangeApproach(ctx context.Context, obj *models.ModelPlan) (*models.PlanDataExchangeApproach, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return PlanDataExchangeApproachGetByModelPlanID(logger, r.store, obj.ID)
+}
+
 // TaskListStatus is the resolver for the taskListStatus field.
 func (r *modelPlanResolver) TaskListStatus(ctx context.Context, obj *models.ModelPlan) (models.TaskStatus, error) {
 	logger := appcontext.ZLogger(ctx)

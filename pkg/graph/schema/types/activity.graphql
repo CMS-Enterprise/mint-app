@@ -119,7 +119,7 @@ type PlanDataExchangeApproachCompletedActivityMeta {
   type: ActivityType!
   dataExchangeApproachID: UUID!
   dataExchangeApproach: PlanDataExchangeApproach!
-  # TODO: (data_exchange) Add a resolver to fetch the DataExchange Model as well
+  modelPlan: ModelPlan!
   markedCompleteBy: UUID!
   markedCompleteByUserAccount: UserAccount!
 }
