@@ -11,6 +11,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // GetPlanBasicsByModelPlanID uses a DataLoader to aggreggate a SQL call and return all plan basics in one query
@@ -65,7 +66,17 @@ func PlanBasicsGetByModelPlanID(ctx context.Context, modelPlanID uuid.UUID) (*mo
 }
 
 func (dl *DataLoadgens) batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) ([]*models.PlanBasics, []error) {
+	logger := appcontext.ZLogger(ctx)
+	data, err := storage.PlanBasicsGetByModelPlanIDLOADGEN(dl.dataReader.Store, logger, modelPlanIDs)
+	if err != nil {
+		// TODO: verify that this works as anticipated
+		return nil, []error{err}
+	}
+	basicsByModelPlanID := lo.Associate(data, func(basics *models.PlanBasics) (uuid.UUID, *models.PlanBasics) {
+		return basics.ModelPlanID, basics
+	})
 	//TODO: Implement
+	_ = basicsByModelPlanID
 	return nil, nil
 
 }

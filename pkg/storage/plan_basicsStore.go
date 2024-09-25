@@ -4,6 +4,8 @@ import (
 	_ "embed"
 	"fmt"
 
+	"github.com/lib/pq"
+
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"github.com/google/uuid"
@@ -110,4 +112,19 @@ func (s *Store) PlanBasicsGetByModelPlanID(modelPlanID uuid.UUID) (*models.PlanB
 		return nil, fmt.Errorf("error getting plan basics by model plan id: %w", err)
 	}
 	return planBasics, nil
+}
+
+// PlanBasicsGetByModelPlanIDLOADGEN returns the plan basics for a slice of model plan ids
+func PlanBasicsGetByModelPlanIDLOADGEN(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.PlanBasics, error) {
+
+	args := map[string]interface{}{
+		"model_plan_ids": pq.Array(modelPlanIDs),
+	}
+
+	res, err := sqlutils.SelectProcedure[models.PlanBasics](np, sqlqueries.ModelPlan.GetByModelPlanIDLoadgen, args)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+
 }
