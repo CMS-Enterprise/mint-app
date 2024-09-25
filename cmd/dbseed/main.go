@@ -20,8 +20,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
-	"github.com/cms-enterprise/mint-app/pkg/upload"
 
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 )
@@ -93,7 +93,8 @@ func execute() {
 func getResolverDependencies(config *viper.Viper) (
 	*storage.Store,
 	*zap.Logger,
-	*upload.S3Client,
+	*s3.S3Client, //the files for MINT
+	*s3.S3Client, //the files for ECHIMP
 	oddmail.EmailService,
 	email.TemplateService,
 ) {
@@ -122,16 +123,24 @@ func getResolverDependencies(config *viper.Viper) (
 		panic(err)
 	}
 
-	// Create S3 client
-	s3Cfg := upload.Config{
+	// Create MINT S3 client
+	s3MintFileCfg := s3.Config{
 		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
 	}
 
-	s3Client := upload.NewS3Client(s3Cfg)
+	// Create ECHIMP S3 client
+	s3ECHIMPFileCfg := s3.Config{
+		Bucket:  config.GetString(appconfig.AWSS3ECHIMPBucket),
+		Region:  config.GetString(appconfig.AWSRegion),
+		IsLocal: true,
+	}
 
-	return store, logger, &s3Client, nil, nil
+	s3MINTFileClient := s3.NewS3Client(s3MintFileCfg)
+	s3ECHIMPFileClient := s3.NewS3Client(s3ECHIMPFileCfg)
+
+	return store, logger, &s3MINTFileClient, &s3ECHIMPFileClient, nil, nil
 }
 
 // SeedData uses seeder to seed data in the database
@@ -140,6 +149,7 @@ func seed(config *viper.Viper) {
 	seeder.SeedData()
 	seeder.CreateAnalyzedAuditData()
 	seeder.SetDefaultUserViews()
+	seeder.SeedEChimpBucket()
 }
 
 // SeedData gets resolver dependencies and calls wrapped resolver functions to seed data.

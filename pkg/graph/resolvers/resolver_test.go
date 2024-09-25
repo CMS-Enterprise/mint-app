@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/echimptestdata"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
@@ -385,6 +386,12 @@ func (suite *ResolverSuite) createDefaultTestAnalyzedAudit(mp *models.ModelPlan,
 func TestResolverSuite(t *testing.T) {
 	rs := new(ResolverSuite)
 	rs.testConfigs = GetDefaultTestConfigs()
+	err := echimptestdata.SeedEChimpTestData(rs.testConfigs.EChimpS3Client, rs.testConfigs.viperConfig)
+	if !assert.NoError(t, err) {
+
+		assert.Fail(t, "unable to seed test echimp data")
+
+	}
 	suite.Run(t, rs)
 }
 

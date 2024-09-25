@@ -344,12 +344,12 @@ const App = () => {
       <BrowserRouter>
         <RouterProvider>
           <AuthenticationWrapper>
-            <SubscriptionWrapper>
-              <SubscriptionHandler>
-                <MessageProvider>
-                  <FlagsWrapper>
-                    <UserInfoWrapper>
-                      <BeaconWrapper>
+            <FlagsWrapper>
+              <UserInfoWrapper>
+                <BeaconWrapper>
+                  <SubscriptionWrapper>
+                    <SubscriptionHandler>
+                      <MessageProvider>
                         <NDAWrapper>
                           <ModelAccessWrapper>
                             <ModelInfoWrapper>
@@ -366,12 +366,12 @@ const App = () => {
                             </ModelInfoWrapper>
                           </ModelAccessWrapper>
                         </NDAWrapper>
-                      </BeaconWrapper>
-                    </UserInfoWrapper>
-                  </FlagsWrapper>
-                </MessageProvider>
-              </SubscriptionHandler>
-            </SubscriptionWrapper>
+                      </MessageProvider>
+                    </SubscriptionHandler>
+                  </SubscriptionWrapper>
+                </BeaconWrapper>
+              </UserInfoWrapper>
+            </FlagsWrapper>
           </AuthenticationWrapper>
         </RouterProvider>
       </BrowserRouter>

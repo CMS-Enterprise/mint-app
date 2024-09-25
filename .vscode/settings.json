@@ -26,6 +26,9 @@
     "DB_MAX_CONNECTIONS": "20",
     "AWS_REGION": "us-west-2",
     "AWS_S3_FILE_UPLOAD_BUCKET": "mint-app-file-uploads",
+    "AWS_S3_ECHIMP_BUCKET": "mint-app-echimp-uploads",
+    "AWS_ECHIMP_CR_FILE_NAME": "FFS_CR_DATA.parquet",
+    "AWS_ECHIMP_TDL_FILE_NAME": "TDL_DATA.parquet",
     "MINIO_ADDRESS": "http://localhost:9005",
     "MINIO_ACCESS_KEY": "minioadmin",
     "MINIO_SECRET_KEY": "minioadmin"

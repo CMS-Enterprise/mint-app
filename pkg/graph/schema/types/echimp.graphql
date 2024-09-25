@@ -1,0 +1,45 @@
+type EChimpCR {
+  id: String! # This is "crNumber" under the hood, but it's aliased as "id" here for the sake of GQL/Apollo caching
+  versionNum: String!
+  initiator: String
+  firstName: String
+  lastName: String
+  title: String
+  sensitiveFlag: Boolean
+  implementationDate: String
+  """
+  CRSummary is rich text in HTML format, in practice, the data is not tagged.
+  We use the TaggedContent type as we don't have another use for a plain HTML type.
+  """
+  crSummary: TaggedContent 
+  crStatus: String
+  emergencyCrFlag: Boolean
+  relatedCrNumbers: String
+  relatedCrTdlNumbers: String
+  associatedModelUids: UUID
+}
+
+type EChimpTDL {
+  id: String! # This is "tdlNumber" under the hood, but it's aliased as "id" here for the sake of GQL/Apollo caching
+  versionNum: String!
+  initiator: String
+  firstName: String
+  lastName: String
+  title: String
+  issuedDate: String # TODO Convert to "Time" type if possible
+  status: String
+  associatedModelUids: UUID
+}
+
+# """
+# EChimpCRAndTDLS is a type that represents CRS and TDLS so they can be returned together in graphql
+# """
+union EChimpCRAndTDLS = EChimpCR | EChimpTDL
+
+extend type Query {
+  echimpCR(id: String!): EChimpCR!
+  echimpCRs: [EChimpCR!]!
+  echimpTDLs: [EChimpTDL!]!
+  echimpTDL(id: String!): EChimpTDL!
+  echimpCRAndTDLS: [EChimpCRAndTDLS!]!
+}

@@ -110,13 +110,9 @@ describe('Read Only CR and TDLs page', () => {
       </MemoryRouter>
     );
     await waitFor(() => {
-      expect(screen.getByText('FFS CRs and TDLs')).toBeInTheDocument();
-      expect(screen.getByTestId('cr-tdl-table-cr')).toBeInTheDocument();
-      expect(screen.queryAllByText('Edit')[0].closest('a')).toHaveAttribute(
-        'href',
-        expect.stringMatching(/models.*#read-only$/)
-      );
-      expect(asFragment()).toMatchSnapshot();
+      expect(screen.getByText('This is a CR and TDL plan')).toBeInTheDocument();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });

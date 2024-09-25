@@ -110,8 +110,11 @@ describe('Model Plan -- Recover', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('payment-recover-form')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('payment-anticipate-reconciling-payment-retro-true')
+      ).toBeChecked();
     });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

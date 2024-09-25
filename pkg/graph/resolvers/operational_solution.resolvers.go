@@ -47,7 +47,7 @@ func (r *operationalSolutionResolver) Documents(ctx context.Context, obj *models
 		obj.ID,
 		principal,
 		r.store,
-		r.s3Client,
+		r.fileUploadS3Client,
 	)
 }
 
