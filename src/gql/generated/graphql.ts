@@ -455,7 +455,6 @@ export enum DocumentType {
 export type EChimpCr = {
   __typename: 'EChimpCR';
   associatedModelUids?: Maybe<Scalars['UUID']['output']>;
-  crNumber: Scalars['String']['output'];
   crStatus?: Maybe<Scalars['String']['output']>;
   /**
    * CRSummary is rich text in HTML format, in practice, the data is not tagged.
@@ -464,6 +463,7 @@ export type EChimpCr = {
   crSummary?: Maybe<TaggedContent>;
   emergencyCrFlag?: Maybe<Scalars['Boolean']['output']>;
   firstName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
   implementationDate?: Maybe<Scalars['String']['output']>;
   initiator?: Maybe<Scalars['String']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
@@ -480,11 +480,11 @@ export type EChimpTdl = {
   __typename: 'EChimpTDL';
   associatedModelUids?: Maybe<Scalars['UUID']['output']>;
   firstName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
   initiator?: Maybe<Scalars['String']['output']>;
   issuedDate?: Maybe<Scalars['String']['output']>;
   lastName?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
-  tdlNumber: Scalars['String']['output'];
   title?: Maybe<Scalars['String']['output']>;
   versionNum: Scalars['String']['output'];
 };

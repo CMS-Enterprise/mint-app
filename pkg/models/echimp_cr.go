@@ -8,7 +8,7 @@ import (
 
 // EChimpCRRaw represents a CR that came from E-Chimp before sanitization
 type EChimpCRRaw struct {
-	CrNumber            string `parquet:"crNumber" json:"crNumber"`
+	CrNumber            string `parquet:"crNumber" json:"crNumber" gqlgen:"id"` // we use gqlgen:"id" here to match the GQL schema
 	VersionNum          string `parquet:"versionNum" json:"versionNum"`
 	Initiator           string `parquet:"initiator" json:"initiator"`
 	FirstName           string `parquet:"firstName" json:"firstName"`
@@ -78,7 +78,7 @@ func ConvertRawCRSToParsed(rawRecords []*EChimpCRRaw) ([]*EChimpCR, error) {
 
 // EChimpCR represents a CR that came from E-Chimp
 type EChimpCR struct {
-	CrNumber            string         `parquet:"crNumber" json:"crNumber"`
+	CrNumber            string         `parquet:"crNumber" json:"crNumber" gqlgen:"id"` // we use gqlgen:"id" here to match the GQL schema
 	VersionNum          string         `parquet:"versionNum" json:"versionNum"`
 	Initiator           *string        `parquet:"initiator" json:"initiator"`
 	FirstName           *string        `parquet:"firstName" json:"firstName"`
