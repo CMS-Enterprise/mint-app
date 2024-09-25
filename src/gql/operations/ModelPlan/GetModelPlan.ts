@@ -51,6 +51,9 @@ export default gql(/* GraphQL */ `
         id
         idNumber
       }
+      echimpCRsAndTDLs {
+        id
+      }
       discussions {
         id
         content {

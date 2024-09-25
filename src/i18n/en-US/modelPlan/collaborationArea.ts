@@ -39,6 +39,12 @@ const collaborationArea = {
     discussion: '{{count}} discussion',
     discussion_other: '{{count}} discussions',
     noDiscussions: 'No discussions started'
+  },
+  crtdlsCard: {
+    heading: 'FFS CRs and TDLS',
+    addDocument: 'Add in ECHIMP',
+    viewAll: 'View all',
+    noDocuments: 'No CRs or TDLs'
   }
 };
 
