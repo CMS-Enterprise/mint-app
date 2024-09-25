@@ -18,7 +18,9 @@ type (
 type DataLoadgens struct {
 	dataReader *dataReader
 
-	GetModelPlanByModelPlanID *dataloadgen.Loader[uuid.UUID, *models.ModelPlan]
+	//TODO: perhaps these methods should remain unimported?
+	ModelPlanByModelPlanID  *dataloadgen.Loader[uuid.UUID, *models.ModelPlan]
+	PlanBasicsByModelPlanID *dataloadgen.Loader[uuid.UUID, *models.PlanBasics]
 }
 
 func NewDataLoadgens(store *storage.Store) *DataLoadgens {
@@ -28,7 +30,8 @@ func NewDataLoadgens(store *storage.Store) *DataLoadgens {
 		},
 	}
 
-	loadgen.GetModelPlanByModelPlanID = dataloadgen.NewLoader(loadgen.batchModelPlanByModelPlanID)
+	loadgen.ModelPlanByModelPlanID = dataloadgen.NewLoader(loadgen.batchModelPlanByModelPlanID)
+	loadgen.PlanBasicsByModelPlanID = dataloadgen.NewLoader(loadgen.batchPlanBasicsGetByModelPlanID)
 
 	return loadgen
 

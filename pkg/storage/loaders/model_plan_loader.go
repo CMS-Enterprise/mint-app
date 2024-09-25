@@ -62,7 +62,7 @@ func ModelPlanGetByID(ctx context.Context, modelPlanID uuid.UUID) (*models.Model
 		return nil, fmt.Errorf("unexpected nil loaders in GetModelPlanByModelPlanID")
 	}
 
-	return loadgen.GetModelPlanByModelPlanID.Load(ctx, modelPlanID)
+	return loadgen.ModelPlanByModelPlanID.Load(ctx, modelPlanID)
 
 }
 
