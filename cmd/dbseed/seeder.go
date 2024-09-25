@@ -63,6 +63,7 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 		EmailTemplateService: emailTemplateService,
 		AddressBook:          addressBook,
 		OktaClient:           oktaClient,
+		viperConfig:          viperConfig,
 	}
 	return newSeeder(seederConfig)
 
@@ -79,4 +80,5 @@ type SeederConfig struct {
 	EmailTemplateService email.TemplateService
 	AddressBook          email.AddressBook
 	OktaClient           oktaapi.Client
+	viperConfig          *viper.Viper
 }

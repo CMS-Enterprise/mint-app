@@ -176,6 +176,12 @@ const AWSS3FileUploadBucket = "AWS_S3_FILE_UPLOAD_BUCKET"
 // AWSS3ECHIMPBucket is the key for the bucket we EChimp data files are located
 const AWSS3ECHIMPBucket = "AWS_S3_ECHIMP_BUCKET"
 
+// AWSS3ECHIMPCRFileName is the name for the file in the echimp bucket that contains CR data
+const AWSS3ECHIMPCRFileName = "AWS_ECHIMP_CR_FILE_NAME"
+
+// AWSS3ECHIMPTDLFileName is the name for the file in the echimp bucket that contains TDL data
+const AWSS3ECHIMPTDLFileName = "AWS_ECHIMP_TDL_FILE_NAME"
+
 // LocalMinioAddressKey is the host used for local minio
 const LocalMinioAddressKey = "MINIO_ADDRESS"
 

@@ -12,16 +12,6 @@ import (
 // GetS3ObjectReaderAt returns an io.ReaderAt from an S3 object
 func (c S3Client) GetS3ObjectReaderAt(key string) (io.ReaderAt, int64, error) {
 
-	// Get the object metadata to find the size
-	headResp, err := c.client.HeadObject(&s3.HeadObjectInput{
-		Bucket: aws.String(c.config.Bucket),
-		Key:    aws.String(key),
-	})
-	if err != nil {
-		return nil, 0, fmt.Errorf("failed to head S3 object: %w", err)
-	}
-	size := aws.Int64Value(headResp.ContentLength)
-
 	// Get the S3 object
 	resp, err := c.client.GetObject(&s3.GetObjectInput{
 		Bucket: aws.String(c.config.Bucket),
@@ -31,6 +21,7 @@ func (c S3Client) GetS3ObjectReaderAt(key string) (io.ReaderAt, int64, error) {
 		return nil, 0, fmt.Errorf("failed to get S3 object: %w", err)
 	}
 	defer resp.Body.Close()
+	size := aws.Int64Value(resp.ContentLength)
 
 	// Read the object into memory (make sure the object is not too large for this!)
 	buf := new(bytes.Buffer)
