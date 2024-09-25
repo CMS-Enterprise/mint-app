@@ -8,7 +8,7 @@ import (
 
 // EChimpTDLRaw represents a TDL that came from E-Chimp parquet file before being sanitized
 type EChimpTDLRaw struct {
-	TdlNumber           string `parquet:"tdlNumber" json:"tdlNumber"`
+	TdlNumber           string `parquet:"tdlNumber" json:"tdlNumber" gqlgen:"id"` // we use gqlgen:"id" here to match the GQL schema
 	VersionNum          string `parquet:"versionNum" json:"versionNum"`
 	Initiator           string `parquet:"initiator" json:"initiator"`
 	FirstName           string `parquet:"firstName" json:"firstName"`
@@ -64,7 +64,7 @@ func ConvertRawTDLSToParsed(rawRecords []*EChimpTDLRaw) ([]*EChimpTDL, error) {
 
 // EChimpTDL represents a TDL that came from E-Chimp
 type EChimpTDL struct {
-	TdlNumber           string     `parquet:"tdlNumber" json:"tdlNumber"`
+	TdlNumber           string     `parquet:"tdlNumber" json:"tdlNumber" gqlgen:"id"` // we use gqlgen:"id" here to match the GQL schema
 	VersionNum          string     `parquet:"versionNum" json:"versionNum"`
 	Initiator           *string    `parquet:"initiator" json:"initiator"`
 	FirstName           *string    `parquet:"firstName" json:"firstName"`

@@ -8,7 +8,7 @@ import (
 
 // SeedEChimpBucket uploads EChimp data to MINIO if it has not yet happened
 func (s *Seeder) SeedEChimpBucket() {
-	err := echimptestdata.SeedEChimpTestData(s.Config.EChimpClient)
+	err := echimptestdata.SeedEChimpTestData(s.Config.EChimpClient, s.Config.viperConfig)
 	if err != nil {
 		panic(err)
 	}

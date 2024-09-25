@@ -239,6 +239,7 @@ func (s *Server) routes(
 		addressBook,
 		ldClient,
 		s.pubsub,
+		s.Config,
 	)
 
 	gqlDirectives := generated.DirectiveRoot{
