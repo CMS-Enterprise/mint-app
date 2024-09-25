@@ -157,6 +157,7 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string
 		r.emailTemplateService,
 		r.addressBook,
 		modelName,
+		nil,
 		r.store,
 		principal,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),

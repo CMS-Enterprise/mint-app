@@ -24,6 +24,7 @@ import (
 func (s *Seeder) createModelPlan(
 	modelName string,
 	euaID string,
+	id *uuid.UUID,
 ) *models.ModelPlan {
 
 	princ := s.getTestPrincipalByUsername(euaID)
@@ -34,6 +35,7 @@ func (s *Seeder) createModelPlan(
 		nil,
 		email.AddressBook{},
 		modelName,
+		id,
 		s.Config.Store,
 		princ,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo),

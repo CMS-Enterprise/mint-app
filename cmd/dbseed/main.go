@@ -163,7 +163,7 @@ func (s *Seeder) SeedData() {
 	now := time.Now()
 
 	// Seed an empty plan
-	emptyPlan := s.createModelPlan("Empty Plan", "MINT")
+	emptyPlan := s.createModelPlan("Empty Plan", "MINT", nil)
 	s.updateModelPlan(emptyPlan, map[string]interface{}{
 		"abbreviation": "emptyPlan",
 		"status":       models.ModelStatusCanceled,
@@ -187,7 +187,7 @@ func (s *Seeder) SeedData() {
 	)
 
 	// Seed a plan with some information already in it
-	planWithBasics := s.createModelPlan("Plan with Basics", "MINT")
+	planWithBasics := s.createModelPlan("Plan with Basics", "MINT", nil)
 	s.updatePlanBasics(
 		s.Config.Context,
 		nil,
@@ -229,7 +229,7 @@ func (s *Seeder) SeedData() {
 	)
 
 	// Seed a plan with collaborators
-	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT")
+	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT", nil)
 	s.addPlanCollaborator(
 		nil,
 		nil,
@@ -264,8 +264,13 @@ func (s *Seeder) SeedData() {
 
 	s.existingModelLinkCreate(planWithCollaborators, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[4].ID}, nil)
 
+	// seed another model that is
+	eChimp2relatedMPID := uuid.MustParse("003032aa-4a75-49c1-8dca-91e645c4384f")
+	s.createModelPlan("Plan With echimp CRs and TDLs 2", "MINT", &eChimp2relatedMPID)
+
 	// Seed a plan with CRs / TDLs
-	planWithCrTDLs := s.createModelPlan("Plan With CRs and TDLs", "MINT")
+	eChimp1relatedMPID := uuid.MustParse("082b49d3-b548-48cb-9119-77a281bc2a8c")
+	planWithCrTDLs := s.createModelPlan("Plan With CRs and TDLs 1", "MINT", &eChimp1relatedMPID)
 	s.addCR(planWithCrTDLs, &model.PlanCRCreateInput{
 		ModelPlanID:     planWithCrTDLs.ID,
 		IDNumber:        "CR-123",
@@ -307,7 +312,7 @@ func (s *Seeder) SeedData() {
 	)
 
 	// Seed a plan that is already archived
-	archivedPlan := s.createModelPlan("Archived Plan", "MINT")
+	archivedPlan := s.createModelPlan("Archived Plan", "MINT", nil)
 	s.updateModelPlan(archivedPlan, map[string]interface{}{
 		"archived":     true,
 		"abbreviation": "arch",
@@ -332,13 +337,13 @@ func (s *Seeder) SeedData() {
 	)
 
 	// Seed a plan with some documents
-	planWithDocuments := s.createModelPlan("Plan with Documents", "MINT")
+	planWithDocuments := s.createModelPlan("Plan with Documents", "MINT", nil)
 	restrictedDocument := s.planDocumentCreate(planWithDocuments, "File (Unscanned)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeConceptPaper, true, nil, nil, false, false)
 	unrestrictedDocument := s.planDocumentCreate(planWithDocuments, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, false, nil, zero.StringFrom("Company Presentation").Ptr(), true, false)
 	_ = s.planDocumentCreate(planWithDocuments, "File (Scanned - Virus Found)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeOther, false, zero.StringFrom("Trojan Horse").Ptr(), nil, true, true)
 
 	sampleModelName := "Enhancing Oncology Model"
-	sampleModelPlan := s.createModelPlan(sampleModelName, "MINT")
+	sampleModelPlan := s.createModelPlan(sampleModelName, "MINT", nil)
 	s.addTDL(planWithCrTDLs, &model.PlanTDLCreateInput{
 		ModelPlanID:   sampleModelPlan.ID,
 		IDNumber:      "TDL-123",
@@ -417,7 +422,7 @@ func (s *Seeder) SeedData() {
 	)
 
 	// Seed a plan that is has a clearance start date 3 months from today
-	planApproachingClearance := s.createModelPlan("Plan Approaching Clearance in 3 months", "MINT")
+	planApproachingClearance := s.createModelPlan("Plan Approaching Clearance in 3 months", "MINT", nil)
 	s.updateModelPlan(planApproachingClearance, map[string]interface{}{
 		"abbreviation": "Clearance",
 		"status":       models.ModelStatusPaused,
