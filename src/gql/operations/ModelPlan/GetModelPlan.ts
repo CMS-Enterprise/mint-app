@@ -52,7 +52,12 @@ export default gql(/* GraphQL */ `
         idNumber
       }
       echimpCRsAndTDLs {
-        id
+        ... on EChimpCR {
+          id
+        }
+        ... on EChimpTDL {
+          id
+        }
       }
       discussions {
         id

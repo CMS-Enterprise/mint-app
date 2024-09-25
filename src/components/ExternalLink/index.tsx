@@ -8,15 +8,19 @@ import PageHeading from 'components/PageHeading';
 
 type ExternalLinkModalTypes = {
   children: React.ReactNode;
-  className?: string;
   href: string;
+  id?: string;
   variant?: 'external' | 'unstyled' | 'nav';
+  asButton?: boolean;
+  className?: string;
 };
 
 const ExternalLink = ({
   children,
   href,
+  id = 'external-link',
   variant,
+  asButton,
   className
 }: ExternalLinkModalTypes) => {
   const { t: externalT } = useTranslation('externalLinkModal');
@@ -70,8 +74,10 @@ const ExternalLink = ({
 
       <Button
         type="button"
-        unstyled
+        unstyled={!asButton}
         className={classNames(className, 'margin-right-2')}
+        id={id}
+        data-testid={id}
         onClick={() => {
           setIsModalOpen(true);
         }}

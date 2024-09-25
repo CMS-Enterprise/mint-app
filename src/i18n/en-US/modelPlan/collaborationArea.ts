@@ -42,9 +42,9 @@ const collaborationArea = {
   },
   crtdlsCard: {
     heading: 'FFS CRs and TDLS',
-    addDocument: 'Add in ECHIMP',
+    addInEChimp: 'Add in ECHIMP',
     viewAll: 'View all',
-    noDocuments: 'No CRs or TDLs'
+    noCrtdls: 'No CRs or TDLs'
   }
 };
 

@@ -4,8 +4,7 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader,
-  Icon
+  CardHeader
 } from '@trussworks/react-uswds';
 import { GetModelPlanQuery } from 'gql/generated/graphql';
 
@@ -14,14 +13,14 @@ import UswdsReactLink from 'components/LinkWrapper';
 
 import '../../index.scss';
 
-type CRTDLType = GetModelPlanQuery['modelPlan']['echimpCRsAndTDLs'][0];
+export type CRTDLType = GetModelPlanQuery['modelPlan']['echimpCRsAndTDLs'][0];
 
 type CRTDLCardType = {
   crtdls: CRTDLType[];
   modelID: string;
 };
 
-const CRTDLCard = ({ crtdls, modelID }: CRTDLCardType) => {
+const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
   return (
@@ -52,7 +51,8 @@ const CRTDLCard = ({ crtdls, modelID }: CRTDLCardType) => {
           href="https://echimp.cmsnet/"
           className="usa-button"
           variant="unstyled"
-          data-testid="to-echimp"
+          asButton
+          id="to-echimp"
         >
           {collaborationAreaT('crtdlsCard.addInEChimp')}
         </ExternalLink>
