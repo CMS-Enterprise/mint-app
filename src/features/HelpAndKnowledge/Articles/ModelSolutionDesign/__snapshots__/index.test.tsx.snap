@@ -84,10 +84,9 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                   <div
                     class="margin-left-1 display-flex flex-align-center"
                   >
-                    <button
-                      class="usa-button usa-button--unstyled display-flex flex-align-center"
-                      data-testid="button"
-                      type="button"
+                    <a
+                      class="display-flex flex-align-center"
+                      href="#start-a-model-plan"
                     >
                       Start a Model Plan
                       <svg
@@ -103,7 +102,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                           d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                         />
                       </svg>
-                    </button>
+                    </a>
                   </div>
                 </li>
                 <li
@@ -112,10 +111,9 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                   <div
                     class="margin-left-1 display-flex flex-align-center"
                   >
-                    <button
-                      class="usa-button usa-button--unstyled display-flex flex-align-center"
-                      data-testid="button"
-                      type="button"
+                    <a
+                      class="display-flex flex-align-center"
+                      href="#assemble-the-it-and-operational-team"
                     >
                       Assemble the IT and operational team
                       <svg
@@ -131,7 +129,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                           d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                         />
                       </svg>
-                    </button>
+                    </a>
                   </div>
                 </li>
                 <li
@@ -140,10 +138,9 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                   <div
                     class="margin-left-1 display-flex flex-align-center"
                   >
-                    <button
-                      class="usa-button usa-button--unstyled display-flex flex-align-center"
-                      data-testid="button"
-                      type="button"
+                    <a
+                      class="display-flex flex-align-center"
+                      href="#identify-the-solutions-for-the-model’s-operational-needs"
                     >
                       Identify the solutions for the model’s operational needs
                       <svg
@@ -159,7 +156,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                           d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                         />
                       </svg>
-                    </button>
+                    </a>
                   </div>
                 </li>
               </ol>

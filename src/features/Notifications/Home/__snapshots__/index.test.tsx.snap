@@ -127,18 +127,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                       <div
                         class="notification__content text-base-darker margin-bottom-1 tiptap__readonly"
                         id="mention-279ba41b-232a-49b2-9607-a3951d301218"
-                      >
-                        <div
-                          class="tiptap ProseMirror"
-                          contenteditable="false"
-                          id="mention-279ba41b-232a-49b2-9607-a3951d301218"
-                          translate="no"
-                        >
-                          <p>
-                            First Notification
-                          </p>
-                        </div>
-                      </div>
+                      />
                       <button
                         class="usa-button usa-button--unstyled display-flex flex-align-center"
                         data-testid="button"
@@ -219,18 +208,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                       <div
                         class="notification__content text-base-darker margin-bottom-1 tiptap__readonly"
                         id="mention-ccf6830b-5c20-4394-84d6-78e0c9f31ec5"
-                      >
-                        <div
-                          class="tiptap ProseMirror"
-                          contenteditable="false"
-                          id="mention-ccf6830b-5c20-4394-84d6-78e0c9f31ec5"
-                          translate="no"
-                        >
-                          <p>
-                            Second Notification
-                          </p>
-                        </div>
-                      </div>
+                      />
                       <button
                         class="usa-button usa-button--unstyled display-flex flex-align-center"
                         data-testid="button"
