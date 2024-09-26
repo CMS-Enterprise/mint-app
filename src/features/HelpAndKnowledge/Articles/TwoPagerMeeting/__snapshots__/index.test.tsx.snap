@@ -81,10 +81,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <button
-                    class="usa-button usa-button--unstyled display-flex flex-align-center"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="display-flex flex-align-center"
+                    href="#key-resources-for-model-teams-writing-2-page-concept-papers"
                   >
                     Key resources for model teams writing 2-page concept papers
                     <svg
@@ -100,15 +99,14 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </li>
                 <li
-                  class="margin-bottom-1"
+                  class="margin-top-05 margin-bottom-1"
                 >
-                  <button
-                    class="usa-button usa-button--unstyled display-flex flex-align-center"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="display-flex flex-align-center"
+                    href="#about-2-page-concept-papers"
                   >
                     About 2-page concept papers
                     <svg
@@ -124,15 +122,14 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </li>
                 <li
-                  class="margin-bottom-1"
+                  class="margin-top-05 margin-bottom-1"
                 >
-                  <button
-                    class="usa-button usa-button--unstyled display-flex flex-align-center"
-                    data-testid="button"
-                    type="button"
+                  <a
+                    class="display-flex flex-align-center"
+                    href="#additional-resources-available-to-model-teams"
                   >
                     Additional resources available to model teams
                     <svg
@@ -148,13 +145,14 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </li>
-                <li>
-                  <button
-                    class="usa-button usa-button--unstyled display-flex flex-align-center"
-                    data-testid="button"
-                    type="button"
+                <li
+                  class="margin-top-05 margin-bottom-1"
+                >
+                  <a
+                    class="display-flex flex-align-center"
+                    href="#how-2-page-concept-papers-are-reviewed"
                   >
                     How 2-page concept papers are reviewed
                     <svg
@@ -170,14 +168,14 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </button>
+                  </a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
         <div
-          class="margin-bottom-6"
+          class="margin-bottom-6 scroll-target"
           id="key-resources-for-model-teams-writing-2-page-concept-papers"
         >
           <h2
@@ -302,7 +300,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           </ul>
         </div>
         <div
-          class="margin-bottom-6"
+          class="margin-bottom-6 scroll-target"
           id="about-2-page-concept-papers"
         >
           <h2
@@ -832,7 +830,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           </div>
         </div>
         <div
-          class="margin-bottom-6"
+          class="margin-bottom-6 scroll-target"
           id="additional-resources-available-to-model-teams"
         >
           <h2
@@ -979,7 +977,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           </ul>
         </div>
         <div
-          class="margin-bottom-6"
+          class="margin-bottom-6 scroll-target"
           id="how-2-page-concept-papers-are-reviewed"
         >
           <h2
