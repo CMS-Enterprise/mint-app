@@ -110,15 +110,25 @@ const DataExchangeApproachTable = () => {
   const rows = tArray<RowType>('evaluatingDataExhangeApproach:table.rows');
 
   return (
-    <TrussTable bordered={false} fullWidth fixed>
+    <TrussTable
+      bordered={false}
+      fullWidth
+      fixed
+      className="fixed-table"
+      scrollable
+    >
       <thead>
         <tr className="border-bottom-1px">
-          {headers.map(k => (
+          {headers.map((k, kIndex) => (
             <th
               key={k}
               scope="col"
               className="padding-y-1"
-              style={{ minWidth: '170px' }}
+              style={{
+                maxWidth: '250px',
+                width: '250px',
+                whiteSpace: 'pre-line'
+              }}
             >
               <strong>{k}</strong>
             </th>
@@ -129,13 +139,27 @@ const DataExchangeApproachTable = () => {
         {rows.map((row: RowType, rowIndex) => {
           return (
             <tr key={covertToLowercaseAndDashes(row.id)}>
-              <td className="text-baseline padding-y-2">
+              <td
+                className="text-baseline padding-y-2"
+                style={{
+                  maxWidth: '250px',
+                  width: '250px',
+                  whiteSpace: 'pre-line'
+                }}
+              >
                 <p className="text-bold margin-0">{row.category.header}</p>
 
                 <span>{row.category.description}</span>
               </td>
 
-              <td className="text-baseline padding-y-2">
+              <td
+                className="text-baseline padding-y-2"
+                style={{
+                  maxWidth: '250px',
+                  width: '250px',
+                  whiteSpace: 'pre-line'
+                }}
+              >
                 <span>{row.additionalDetails.header}</span>
 
                 <ul className="margin-0">
@@ -144,7 +168,12 @@ const DataExchangeApproachTable = () => {
                       return <li key={item}>{item}</li>;
                     }
                     return (
-                      <li key={item.text}>
+                      <li
+                        key={item.text}
+                        style={{
+                          whiteSpace: 'pre'
+                        }}
+                      >
                         <Trans
                           i18nKey={`evaluatingDataExhangeApproach:table.rows.${rowIndex}.additionalDetails.list.${index}.text`}
                           components={{
