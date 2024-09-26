@@ -18,7 +18,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import ScrollLink from 'components/ScrollLink';
-import { covertToLowercaseAndDashes } from 'utils/modelPlan';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
@@ -101,7 +101,7 @@ export const ModelSolutionDesign = () => {
             {/* START MODEL PLAN */}
 
             <h2
-              id={covertToLowercaseAndDashes(t('summaryBox.items.0'))}
+              id={convertToLowercaseAndDashes(t('summaryBox.items.0'))}
               className="margin-top-6 margin-bottom-2"
             >
               {t('startModelPlan.heading')}
@@ -177,7 +177,7 @@ export const ModelSolutionDesign = () => {
             {/* ASSEMBLE TEAM */}
 
             <h2
-              id={covertToLowercaseAndDashes(t('summaryBox.items.1'))}
+              id={convertToLowercaseAndDashes(t('summaryBox.items.1'))}
               className="margin-top-7 margin-bottom-2"
             >
               {t('assembleTeam.heading')}
@@ -237,7 +237,7 @@ export const ModelSolutionDesign = () => {
             {/* IDENTIFY SOLUTIONS */}
 
             <h2
-              id={covertToLowercaseAndDashes(t('summaryBox.items.2'))}
+              id={convertToLowercaseAndDashes(t('summaryBox.items.2'))}
               className="margin-top-7 margin-bottom-2"
             >
               {t('identifySolutions.heading')}

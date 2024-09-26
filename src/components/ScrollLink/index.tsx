@@ -1,12 +1,12 @@
 import React from 'react';
 import { Icon } from '@trussworks/react-uswds';
 
-import { covertToLowercaseAndDashes } from 'utils/modelPlan';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
 const ScrollLink = ({ scrollTo }: { scrollTo: string }) => {
   return (
     <a
-      href={`#${covertToLowercaseAndDashes(scrollTo)}`}
+      href={`#${convertToLowercaseAndDashes(scrollTo)}`}
       className="display-flex flex-align-center"
     >
       {scrollTo}

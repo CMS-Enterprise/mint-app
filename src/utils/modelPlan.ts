@@ -154,5 +154,5 @@ export const insertIf = (condition: boolean, ...elements: any) => {
   return condition ? elements : [];
 };
 
-export const covertToLowercaseAndDashes = (string: string) =>
+export const convertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');

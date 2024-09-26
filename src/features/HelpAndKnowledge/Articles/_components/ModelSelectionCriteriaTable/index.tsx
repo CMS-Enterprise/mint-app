@@ -2,9 +2,8 @@ import React from 'react';
 import { Trans } from 'react-i18next';
 import { Table as TrussTable } from '@trussworks/react-uswds';
 
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray, tObject } from 'utils/translation';
-
-import { covertToLowercaseAndDashes } from '..';
 
 type ContentTypes = {
   criteria: string;
@@ -38,7 +37,7 @@ const ModelSectionCriteriaTable = () => {
       <tbody>
         {content.map((item: ContentTypes) => {
           return (
-            <tr key={covertToLowercaseAndDashes(item.criteria)}>
+            <tr key={convertToLowercaseAndDashes(item.criteria)}>
               <th scope="row" className="text-baseline text-bold">
                 {item.criteria}
               </th>

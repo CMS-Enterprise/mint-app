@@ -27,7 +27,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import ScrollLink from 'components/ScrollLink';
 import useModalSolutionState from 'hooks/useModalSolutionState';
-import { covertToLowercaseAndDashes } from 'utils/modelPlan';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import KeyResourcesCards from '../_components/KeyResourcesCards';
@@ -153,7 +153,7 @@ const SixPagerMeeting = () => {
             </SummaryBox>
 
             <div
-              id={covertToLowercaseAndDashes(
+              id={convertToLowercaseAndDashes(
                 sixPageMeetingT('summaryBox.sections.0')
               )}
               className="margin-bottom-4"
@@ -168,7 +168,7 @@ const SixPagerMeeting = () => {
             </div>
 
             <div
-              id={covertToLowercaseAndDashes(
+              id={convertToLowercaseAndDashes(
                 sixPageMeetingT('summaryBox.sections.1')
               )}
             >
@@ -204,7 +204,7 @@ const SixPagerMeeting = () => {
             </div>
 
             <div
-              id={covertToLowercaseAndDashes(
+              id={convertToLowercaseAndDashes(
                 sixPageMeetingT('summaryBox.sections.2')
               )}
             >
@@ -432,10 +432,6 @@ const SixPagerMeeting = () => {
                                 <Trans
                                   i18nKey={`aboutConceptPapers.additionalResources.items.${index}.items.${index2}.text`}
                                   t={sixPageMeetingT}
-                                  // components={{
-                                  //   link1: <span> </span>
-                                  // }}
-                                  //  TODO: implement links once verified from UX
                                   components={{
                                     link1: (
                                       <ExternalLink
@@ -544,7 +540,7 @@ const SixPagerMeeting = () => {
             </div>
 
             <div
-              id={covertToLowercaseAndDashes(
+              id={convertToLowercaseAndDashes(
                 sixPageMeetingT('summaryBox.sections.3')
               )}
             >
@@ -599,7 +595,7 @@ const SixPagerMeeting = () => {
             </div>
 
             <div
-              id={covertToLowercaseAndDashes(
+              id={convertToLowercaseAndDashes(
                 sixPageMeetingT('summaryBox.sections.3')
               )}
             >

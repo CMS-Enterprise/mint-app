@@ -1,7 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  Alert,
   Card,
   CardGroup,
   Grid,
@@ -16,20 +15,22 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
+import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import ScrollLink from 'components/ScrollLink';
 import useHelpSolution from 'hooks/useHelpSolutions';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { getKeys } from 'types/translation';
 import { tArray, tObject } from 'utils/translation';
 
-import { ArticleCategories, HelpArticle, ScrollLink } from '..';
+import KeyResourcesCards from '../_components/KeyResourcesCards';
+import ModelSectionCriteriaTable from '../_components/ModelSelectionCriteriaTable';
+import { ArticleCategories, HelpArticle } from '..';
 
-import ModelSectionCriteriaTable from './table';
-
-export const covertToLowercaseAndDashes = (string: string) =>
+export const convertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
 
 type ExampleSummaryBoxListType = {
@@ -134,7 +135,7 @@ const TwoPagerMeeting = () => {
                 <ul className="margin-y-0">
                   {summaryboxListItems.map(k => (
                     <li
-                      key={covertToLowercaseAndDashes(k)}
+                      key={convertToLowercaseAndDashes(k)}
                       className="margin-top-05 margin-bottom-1"
                     >
                       <ScrollLink scrollTo={k} />
@@ -145,10 +146,10 @@ const TwoPagerMeeting = () => {
             </SummaryBox>
 
             <div
-              id={covertToLowercaseAndDashes(
+              id={convertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.list.0')
               )}
-              className="margin-bottom-6 scroll-target"
+              className="margin-bottom-5 scroll-target"
             >
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.list.0')}
@@ -157,86 +158,36 @@ const TwoPagerMeeting = () => {
                 {twoPageMeetingT('keyResources.introParagraph')}
               </p>
 
-              <CardGroup>
-                <Card
-                  gridLayout={{ desktop: { col: 6 } }}
-                  containerProps={{ className: 'shadow-2 padding-2' }}
-                >
-                  <p className="text-bold margin-y-0 line-height-normal">
-                    {twoPageMeetingT(
-                      'keyResources.cards.strategyRefresh.heading'
-                    )}
-                  </p>
-                  <ExternalLink
-                    className="line-height-normal"
-                    href="https://share.cms.gov/center/cmmi/SR/SitePages/Home.aspx"
-                  >
-                    {twoPageMeetingT(
-                      'keyResources.cards.strategyRefresh.link1'
-                    )}
-                  </ExternalLink>
-                  <ExternalLink
-                    className="line-height-normal"
-                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx"
-                  >
-                    {twoPageMeetingT(
-                      'keyResources.cards.strategyRefresh.link2'
-                    )}
-                  </ExternalLink>
-                </Card>
-                <Card
-                  gridLayout={{ desktop: { col: 6 } }}
-                  containerProps={{ className: 'shadow-2 padding-2' }}
-                >
-                  <p className="text-bold margin-y-0 line-height-normal">
-                    {twoPageMeetingT(
-                      'keyResources.cards.twoPageTemplate.heading'
-                    )}
-                  </p>
-                  <p className="text-base margin-y-0 line-height-normal">
-                    {twoPageMeetingT('keyResources.cards.twoPageTemplate.copy')}
-                  </p>
-                  <ExternalLink
-                    className="line-height-normal"
-                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx"
-                  >
-                    {twoPageMeetingT('keyResources.cards.twoPageTemplate.link')}
-                  </ExternalLink>
-                </Card>
-              </CardGroup>
+              <KeyResourcesCards />
             </div>
 
             <div
-              id={covertToLowercaseAndDashes(
+              id={convertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.list.1')
               )}
-              className="margin-bottom-6 scroll-target"
+              className="margin-bottom-5 scroll-target"
             >
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.list.1')}
               </h2>
+
               <p className="margin-top-0 margin-bottom-3 line-height-normal">
                 {twoPageMeetingT('about.introParagraph')}
               </p>
 
-              <Alert
-                type="info"
-                slim
-                headingLevel="h4"
-                className="margin-bottom-3"
-              >
-                <Trans
-                  t={twoPageMeetingT}
-                  i18nKey="about.alert"
-                  components={{
-                    el: (
-                      <ExternalLink
-                        className="margin-right-0"
-                        href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx"
-                      />
-                    )
-                  }}
-                />
+              <Alert type="info" className="margin-y-3">
+                <div style={{ whiteSpace: 'pre' }}>
+                  <Trans
+                    i18nKey="sixPageMeeting:paperTemplateAlert"
+                    components={{
+                      link1: (
+                        <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx">
+                          {' '}
+                        </ExternalLink>
+                      )
+                    }}
+                  />
+                </div>
               </Alert>
 
               <h3 className="margin-top-0 margin-bottom-1">
@@ -300,7 +251,7 @@ const TwoPagerMeeting = () => {
               <ul className="margin-top-0 margin-bottom-5 padding-left-6">
                 {Object.values(stepThreeList).map(k => (
                   <li
-                    key={covertToLowercaseAndDashes(k.text)}
+                    key={convertToLowercaseAndDashes(k.text)}
                     className="line-height-normal margin-bottom-05"
                   >
                     <Trans
@@ -314,7 +265,7 @@ const TwoPagerMeeting = () => {
                       <ol className="padding-left-3 margin-top-05">
                         {k.numberedList.map(listItem => (
                           <li
-                            key={covertToLowercaseAndDashes(listItem)}
+                            key={convertToLowercaseAndDashes(listItem)}
                             className="line-height-normal"
                           >
                             {listItem}
@@ -326,7 +277,7 @@ const TwoPagerMeeting = () => {
                       <ul className="padding-left-3 margin-top-05">
                         {k.list.map(listItem => (
                           <li
-                            key={covertToLowercaseAndDashes(listItem)}
+                            key={convertToLowercaseAndDashes(listItem)}
                             className="line-height-normal"
                           >
                             {listItem}
@@ -345,10 +296,12 @@ const TwoPagerMeeting = () => {
                 >
                   {twoPageMeetingT('about.summarybox.tips.heading')}
                 </SummaryBoxHeading>
+
                 <SummaryBoxContent>
                   <p className="margin-y-0">
                     {twoPageMeetingT('about.summarybox.tips.firstParagraph')}
                   </p>
+
                   <ul className="margin-y-0 padding-left-6">
                     {aboutTipsList1.map(k => (
                       <li key={k} className="line-height-normal">
@@ -356,9 +309,11 @@ const TwoPagerMeeting = () => {
                       </li>
                     ))}
                   </ul>
+
                   <p className="margin-y-0">
                     {twoPageMeetingT('about.summarybox.tips.secondParagraph')}
                   </p>
+
                   <ul className="margin-top-0 margin-bottom-2 padding-left-6">
                     {aboutTipsList2.map(k => (
                       <li key={k} className="line-height-normal">
@@ -366,6 +321,7 @@ const TwoPagerMeeting = () => {
                       </li>
                     ))}
                   </ul>
+
                   <p className="margin-y-0">
                     <Trans
                       t={twoPageMeetingT}
@@ -417,10 +373,10 @@ const TwoPagerMeeting = () => {
             </div>
 
             <div
-              id={covertToLowercaseAndDashes(
+              id={convertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.list.2')
               )}
-              className="margin-bottom-6 scroll-target"
+              className="margin-bottom-5 scroll-target"
             >
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.list.2')}
@@ -500,10 +456,10 @@ const TwoPagerMeeting = () => {
             </div>
 
             <div
-              id={covertToLowercaseAndDashes(
+              id={convertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.list.3')
               )}
-              className="margin-bottom-6 scroll-target"
+              className="margin-bottom-5 scroll-target"
             >
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.list.3')}
@@ -565,7 +521,7 @@ const TwoPagerMeeting = () => {
               </ul>
             </div>
 
-            <SummaryBox>
+            <SummaryBox className="margin-bottom-6">
               <SummaryBoxHeading headingLevel="h3">
                 {twoPageMeetingT('footerSummaryBox.title')}
               </SummaryBoxHeading>
@@ -582,6 +538,7 @@ const TwoPagerMeeting = () => {
           </Grid>
         </GridContainer>
       </MainContent>
+
       <div className="margin-top-6 margin-bottom-neg-7">
         <RelatedArticles
           currentArticle={HelpArticle.TWO_PAGER_MEETING}
