@@ -42,6 +42,8 @@ type S3Client struct {
 
 // NewS3Client creates a new s3 service client
 func NewS3Client(config Config) S3Client {
+	//TODO: Consider deprecating config, and replacing with parameters
+	//TODO: Consider replacing the calls to os.Getenv to user viper.GetString to be consistent with the rest of the app (and remove any need to call os.SetEnv)
 	awsConfig := &aws.Config{
 		Region: aws.String(config.Region),
 	}

@@ -8,6 +8,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/testconfig/dbtestconfigs"
 	"github.com/cms-enterprise/mint-app/pkg/testconfig/s3testconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/testhelpers"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
@@ -50,8 +51,9 @@ func (config *Base) GetDefaults(ctxCallbacks ...func(context.Context) context.Co
 	dbConfig, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(dbConfig, ldClient)
 
-	s3Client := s3testconfigs.S3TestClient()
-	eChimpS3Client := s3testconfigs.S3TestECHIMPClient()
+	viperConfig := testhelpers.NewConfig()
+	s3Client := s3testconfigs.S3TestClient(viperConfig)
+	eChimpS3Client := s3testconfigs.S3TestECHIMPClient(viperConfig)
 	config.DBConfig = dbConfig
 	config.LDClient = ldClient
 	config.Logger = logger

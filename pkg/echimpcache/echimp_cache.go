@@ -5,34 +5,27 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/samber/lo"
+	"github.com/spf13/viper"
 
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/parquet"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
-// TODO (echimp) make the file name configurable by envar file
-//TODO: consider making these constants configurable from environment variable
-
 // echimpCacheTimeHours is the length of time before a echimpCache needs to be refreshed
 const echimpCacheTimeHours = 3
-
-// CRKey is the name of the file that is stored in the ECHIMP bucket representing all the echimp CR data
-const CRKey = "FFS_CR_DATA.parquet"
-
-// TDLKey is the name of the file that is stored in the ECHIMP bucket representing all the echimp TDL data
-const TDLKey = "TDL_DATA.parquet"
 
 var CRAndTDLCache *crAndTDLCache
 
 // GetECHIMPCrAndTDLCache returns a cached of data for CR and TDLs from an echimp s3 bucket.
 // If the time since it was last updated has elapsed, it will fetch the data again
-func GetECHIMPCrAndTDLCache(client *s3.S3Client) (*crAndTDLCache, error) {
+func GetECHIMPCrAndTDLCache(client *s3.S3Client, viperConfig *viper.Viper) (*crAndTDLCache, error) {
 	if CRAndTDLCache == nil {
 		CRAndTDLCache = &crAndTDLCache{}
 	}
 	if CRAndTDLCache.IsOld() {
-		err := CRAndTDLCache.refreshCache(client)
+		err := CRAndTDLCache.refreshCache(client, viperConfig)
 		if err != nil {
 			return nil, err
 		}
@@ -62,7 +55,9 @@ func (c *crAndTDLCache) IsOld() bool {
 
 }
 
-func (c *crAndTDLCache) refreshCache(client *s3.S3Client) error {
+func (c *crAndTDLCache) refreshCache(client *s3.S3Client, viperConfig *viper.Viper) error {
+	CRKey := viperConfig.GetString(appconfig.AWSS3ECHIMPCRFileName)
+	TDLKey := viperConfig.GetString(appconfig.AWSS3ECHIMPTDLFileName)
 
 	crsRaw, err := parquet.ReadFromS3[*models.EChimpCRRaw](client, CRKey)
 	if err != nil {

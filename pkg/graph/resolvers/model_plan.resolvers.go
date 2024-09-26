@@ -109,17 +109,17 @@ func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]
 
 // EchimpCRs is the resolver for the echimpCRs field.
 func (r *modelPlanResolver) EchimpCRs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpCR, error) {
-	return GetEChimpCRsByModelPlanID(r.echimpS3Client, obj.ID)
+	return GetEChimpCRsByModelPlanID(r.echimpS3Client, r.viperConfig, obj.ID)
 }
 
 // EchimpTDLs is the resolver for the echimpTDLs field.
 func (r *modelPlanResolver) EchimpTDLs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpTDL, error) {
-	return GetEChimpTDLSByModelPlanID(r.echimpS3Client, obj.ID)
+	return GetEChimpTDLSByModelPlanID(r.echimpS3Client, r.viperConfig, obj.ID)
 }
 
 // EchimpCRsAndTDLs is the resolver for the echimpCRsAndTDLs field.
 func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.ModelPlan) ([]models.EChimpCRAndTDLS, error) {
-	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, obj.ID)
+	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, r.viperConfig, obj.ID)
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.

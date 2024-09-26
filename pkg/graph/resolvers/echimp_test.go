@@ -15,7 +15,7 @@ const eChimp2relatedMPID = "003032aa-4a75-49c1-8dca-91e645c4384f"
 // GetEChimpCRs returns echimp CRS from the cache
 func (suite *ResolverSuite) TestGetEChimpCRs() {
 
-	crs, err := GetEChimpCRs(suite.testConfigs.EChimpS3Client)
+	crs, err := GetEChimpCRs(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig)
 	suite.NoError(err)
 	suite.Len(crs, 2)
 
@@ -25,7 +25,7 @@ func (suite *ResolverSuite) TestGetEChimpCRs() {
 func (suite *ResolverSuite) TestGetEChimpCRsByModelPlanID() {
 	mpID1 := uuid.MustParse(eChimp1relatedMPID)
 
-	result, err := GetEChimpCRsByModelPlanID(suite.testConfigs.EChimpS3Client, mpID1)
+	result, err := GetEChimpCRsByModelPlanID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, mpID1)
 	suite.NoError(err)
 	suite.NotNil(result)
 	if suite.Len(result, 1) {
@@ -34,7 +34,7 @@ func (suite *ResolverSuite) TestGetEChimpCRsByModelPlanID() {
 
 	mpID2 := uuid.MustParse(eChimp2relatedMPID)
 
-	result, err = GetEChimpCRsByModelPlanID(suite.testConfigs.EChimpS3Client, mpID2)
+	result, err = GetEChimpCRsByModelPlanID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, mpID2)
 	suite.NoError(err)
 	suite.NotNil(result)
 	if suite.Len(result, 1) {
@@ -44,14 +44,14 @@ func (suite *ResolverSuite) TestGetEChimpCRsByModelPlanID() {
 }
 
 func (suite *ResolverSuite) TestGetEChimpTDLS() {
-	result, err := GetEChimpTDLS(suite.testConfigs.EChimpS3Client)
+	result, err := GetEChimpTDLS(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig)
 	suite.NoError(err)
 	suite.NotNil(result)
 }
 
 func (suite *ResolverSuite) TestGetEChimpTDLSByModelPlanID() {
 	mpID1 := uuid.MustParse(eChimp1relatedMPID)
-	result, err := GetEChimpTDLSByModelPlanID(suite.testConfigs.EChimpS3Client, mpID1)
+	result, err := GetEChimpTDLSByModelPlanID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, mpID1)
 	suite.NoError(err)
 	suite.NotNil(result)
 	if suite.Len(result, 1) {
@@ -59,7 +59,7 @@ func (suite *ResolverSuite) TestGetEChimpTDLSByModelPlanID() {
 	}
 
 	mpID2 := uuid.MustParse(eChimp2relatedMPID)
-	result, err = GetEChimpTDLSByModelPlanID(suite.testConfigs.EChimpS3Client, mpID2)
+	result, err = GetEChimpTDLSByModelPlanID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, mpID2)
 	suite.NoError(err)
 	suite.NotNil(result)
 	if suite.Len(result, 1) {
@@ -69,7 +69,7 @@ func (suite *ResolverSuite) TestGetEChimpTDLSByModelPlanID() {
 }
 
 func (suite *ResolverSuite) TestGetEchimpCRAndTdls() {
-	result, err := GetEchimpCRAndTdls(suite.testConfigs.EChimpS3Client)
+	result, err := GetEchimpCRAndTdls(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 4)
@@ -78,13 +78,13 @@ func (suite *ResolverSuite) TestGetEchimpCRAndTdls() {
 
 func (suite *ResolverSuite) TestGetEchimpCRAndTdlsByModelPlanID() {
 	mpID1 := uuid.MustParse(eChimp1relatedMPID)
-	result, err := GetEchimpCRAndTdlsByModelPlanID(suite.testConfigs.EChimpS3Client, mpID1)
+	result, err := GetEchimpCRAndTdlsByModelPlanID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, mpID1)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 2)
 
 	mpID2 := uuid.MustParse(eChimp1relatedMPID)
-	result, err = GetEchimpCRAndTdlsByModelPlanID(suite.testConfigs.EChimpS3Client, mpID2)
+	result, err = GetEchimpCRAndTdlsByModelPlanID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, mpID2)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 2)
@@ -93,14 +93,14 @@ func (suite *ResolverSuite) TestGetEchimpCRAndTdlsByModelPlanID() {
 
 func (suite *ResolverSuite) TestGetEChimpCRByID() {
 
-	result, err := GetEChimpCRByID(suite.testConfigs.EChimpS3Client, eChimpCR1Id)
+	result, err := GetEChimpCRByID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, eChimpCR1Id)
 	suite.NoError(err)
 
 	if suite.NotNil(result) {
 		suite.EqualValues(eChimpCR1Id, result.CrNumber)
 	}
 
-	result, err = GetEChimpCRByID(suite.testConfigs.EChimpS3Client, eChimpCR2Id)
+	result, err = GetEChimpCRByID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, eChimpCR2Id)
 	suite.NoError(err)
 
 	if suite.NotNil(result) {
@@ -111,14 +111,14 @@ func (suite *ResolverSuite) TestGetEChimpCRByID() {
 
 func (suite *ResolverSuite) TestGetEChimpTDLByID() {
 
-	result, err := GetEChimpTDLByID(suite.testConfigs.EChimpS3Client, eChimpTDL1Id)
+	result, err := GetEChimpTDLByID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, eChimpTDL1Id)
 	suite.NoError(err)
 
 	if suite.NotNil(result) {
 		suite.EqualValues(eChimpTDL1Id, result.TdlNumber)
 	}
 
-	result, err = GetEChimpTDLByID(suite.testConfigs.EChimpS3Client, eChimpTDL2Id)
+	result, err = GetEChimpTDLByID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, eChimpTDL2Id)
 	suite.NoError(err)
 
 	if suite.NotNil(result) {

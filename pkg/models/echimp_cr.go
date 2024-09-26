@@ -8,7 +8,7 @@ import (
 
 // EChimpCRRaw represents a CR that came from E-Chimp before sanitization
 type EChimpCRRaw struct {
-	CrNumber            string `parquet:"crNumber" json:"crNumber"`
+	CrNumber            string `parquet:"crNumber" json:"crNumber" gqlgen:"id"` // we use gqlgen:"id" here to match the GQL schema
 	VersionNum          string `parquet:"versionNum" json:"versionNum"`
 	Initiator           string `parquet:"initiator" json:"initiator"`
 	FirstName           string `parquet:"firstName" json:"firstName"`
@@ -25,9 +25,13 @@ type EChimpCRRaw struct {
 }
 
 func (raw *EChimpCRRaw) Sanitize() (*EChimpCR, error) {
-	sanitizedSummary := sanitization.InnerHTML(sanitization.SanitizeString(raw.CrSummary))
+
+	sanitizedSummary, sanitizeErr := NewTaggedContentFromString(raw.CrSummary)
+	if sanitizeErr != nil {
+		return nil, sanitizeErr
+	}
 	sanitizedPointer := &sanitizedSummary
-	if sanitizedSummary == "" {
+	if sanitizedSummary.RawContent == "" {
 		sanitizedPointer = nil
 	}
 	associatedUUID, parseError := uuid.Parse(raw.AssociatedModelUids)
@@ -74,20 +78,20 @@ func ConvertRawCRSToParsed(rawRecords []*EChimpCRRaw) ([]*EChimpCR, error) {
 
 // EChimpCR represents a CR that came from E-Chimp
 type EChimpCR struct {
-	CrNumber            string     `parquet:"crNumber" json:"crNumber"`
-	VersionNum          string     `parquet:"versionNum" json:"versionNum"`
-	Initiator           *string    `parquet:"initiator" json:"initiator"`
-	FirstName           *string    `parquet:"firstName" json:"firstName"`
-	LastName            *string    `parquet:"lastName" json:"lastName"`
-	Title               *string    `parquet:"title" json:"title"`
-	SensitiveFlag       *bool      `parquet:"sensitiveFlag" json:"sensitiveFlag"`
-	ImplementationDate  *string    `parquet:"implementationDate" json:"implementationDate"`
-	CrSummary           *string    `parquet:"crSummary" json:"crSummary"`
-	CrStatus            *string    `parquet:"crStatus" json:"crStatus"`
-	EmergencyCrFlag     *bool      `parquet:"emergencyCrFlag" json:"emergencyCrFlag"`
-	RelatedCrNumbers    *string    `parquet:"relatedCrNumbers" json:"relatedCrNumbers"`
-	RelatedCrTdlNumbers *string    `parquet:"relatedCrTdlNumbers" json:"relatedCrTdlNumbers"`
-	AssociatedModelUids *uuid.UUID `parquet:"associatedModelUids" json:"associatedModelUids"`
+	CrNumber            string         `parquet:"crNumber" json:"crNumber" gqlgen:"id"` // we use gqlgen:"id" here to match the GQL schema
+	VersionNum          string         `parquet:"versionNum" json:"versionNum"`
+	Initiator           *string        `parquet:"initiator" json:"initiator"`
+	FirstName           *string        `parquet:"firstName" json:"firstName"`
+	LastName            *string        `parquet:"lastName" json:"lastName"`
+	Title               *string        `parquet:"title" json:"title"`
+	SensitiveFlag       *bool          `parquet:"sensitiveFlag" json:"sensitiveFlag"`
+	ImplementationDate  *string        `parquet:"implementationDate" json:"implementationDate"`
+	CrSummary           *TaggedContent `parquet:"crSummary" json:"crSummary"`
+	CrStatus            *string        `parquet:"crStatus" json:"crStatus"`
+	EmergencyCrFlag     *bool          `parquet:"emergencyCrFlag" json:"emergencyCrFlag"`
+	RelatedCrNumbers    *string        `parquet:"relatedCrNumbers" json:"relatedCrNumbers"`
+	RelatedCrTdlNumbers *string        `parquet:"relatedCrTdlNumbers" json:"relatedCrTdlNumbers"`
+	AssociatedModelUids *uuid.UUID     `parquet:"associatedModelUids" json:"associatedModelUids"`
 }
 
 func (echimp *EChimpCR) IsEChimpCRAndTdls() {}
