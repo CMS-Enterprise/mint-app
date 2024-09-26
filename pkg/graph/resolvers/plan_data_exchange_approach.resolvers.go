@@ -32,6 +32,16 @@ func (r *planDataExchangeApproachResolver) DataToCollectFromParticipants(ctx con
 	return models.ConvertEnums[models.DataToCollectFromParticipants](obj.DataToCollectFromParticipants), nil
 }
 
+// DataToSendToParticipants is the resolver for the dataToSendToParticipants field.
+func (r *planDataExchangeApproachResolver) DataToSendToParticipants(ctx context.Context, obj *models.PlanDataExchangeApproach) ([]models.DataToSendToParticipants, error) {
+	return models.ConvertEnums[models.DataToSendToParticipants](obj.DataToSendToParticipants), nil
+}
+
+// MultiSourceDataToCollect is the resolver for the multiSourceDataToCollect field.
+func (r *planDataExchangeApproachResolver) MultiSourceDataToCollect(ctx context.Context, obj *models.PlanDataExchangeApproach) ([]models.MultiSourceDataToCollect, error) {
+	return models.ConvertEnums[models.MultiSourceDataToCollect](obj.MultiSourceDataToCollect), nil
+}
+
 // PlanDataExchangeApproach returns generated.PlanDataExchangeApproachResolver implementation.
 func (r *Resolver) PlanDataExchangeApproach() generated.PlanDataExchangeApproachResolver {
 	return &planDataExchangeApproachResolver{r}

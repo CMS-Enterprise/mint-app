@@ -15,8 +15,8 @@ type PlanDataExchangeApproach struct {
 	DataWillNotBeCollectedFromParticipants      bool           `json:"dataWillNotBeCollectedFromParticipants" db:"data_will_not_be_collected_from_participants" statusWeight:"1"`
 	DataToCollectFromParticipantsNote           *string        `json:"dataToCollectFromParticipantsNote" db:"data_to_collect_from_participants_note"`
 
-	DataToSendToParticipants     *DataToSendToParticipants `json:"dataToSendToParticipants" db:"data_to_send_to_participants"`
-	DataToSendToParticipantsNote *string                   `json:"dataToSendToParticipantsNote" db:"data_to_send_to_participants_note"`
+	DataToSendToParticipants     pq.StringArray `json:"dataToSendToParticipants" db:"data_to_send_to_participants"`
+	DataToSendToParticipantsNote *string        `json:"dataToSendToParticipantsNote" db:"data_to_send_to_participants_note"`
 
 	// Page 3
 	DoesNeedToMakeMultiPayerDataAvailable        *YesNoType                                    `json:"doesNeedToMakeMultiPayerDataAvailable" db:"does_need_to_make_multi_payer_data_available" statusWeight:"1"`
@@ -24,15 +24,17 @@ type PlanDataExchangeApproach struct {
 	DoesNeedToMakeMultiPayerDataAvailableOther   *string                                       `json:"doesNeedToMakeMultiPayerDataAvailableOther" db:"does_need_to_make_multi_payer_data_available_other"`
 	DoesNeedToMakeMultiPayerDataAvailableNote    *string                                       `json:"doesNeedToMakeMultiPayerDataAvailableNote" db:"does_need_to_make_multi_payer_data_available_note"`
 
-	DoesNeedToCollectAndAggregateMultiSourceData     *YesNoType                `json:"doesNeedToCollectAndAggregateMultiSourceData" db:"does_need_to_collect_and_aggregate_multi_source_data" statusWeight:"1"`
-	MultiSourceDataToCollect                         *MultiSourceDataToCollect `json:"multiSourceDataToCollect" db:"multi_source_data_to_collect"`
-	MultiSourceDataToCollectOther                    *string                   `json:"multiSourceDataToCollectOther" db:"multi_source_data_to_collect_other"`
-	DoesNeedToCollectAndAggregateMultiSourceDataNote *string                   `json:"doesNeedToCollectAndAggregateMultiSourceDataNote" db:"does_need_to_collect_and_aggregate_multi_source_data_note"`
+	DoesNeedToCollectAndAggregateMultiSourceData     *YesNoType     `json:"doesNeedToCollectAndAggregateMultiSourceData" db:"does_need_to_collect_and_aggregate_multi_source_data" statusWeight:"1"`
+	MultiSourceDataToCollect                         pq.StringArray `json:"multiSourceDataToCollect" db:"multi_source_data_to_collect"`
+	MultiSourceDataToCollectOther                    *string        `json:"multiSourceDataToCollectOther" db:"multi_source_data_to_collect_other"`
+	DoesNeedToCollectAndAggregateMultiSourceDataNote *string        `json:"doesNeedToCollectAndAggregateMultiSourceDataNote" db:"does_need_to_collect_and_aggregate_multi_source_data_note"`
 
 	// Page 4
 	WillImplementNewDataExchangeMethods *YesNoType `json:"willImplementNewDataExchangeMethods" db:"will_implement_new_data_exchange_methods" statusWeight:"1"`
 	NewDataExchangeMethodsDescription   *string    `json:"newDataExchangeMethodsDescription" db:"new_data_exchange_methods_description"`
 	NewDataExchangeMethodsNote          *string    `json:"newDataExchangeMethodsNote" db:"new_data_exchange_methods_note"`
+
+	AdditionalDataExchangeConsiderationsDescription *string `json:"additionalDataExchangeConsiderationsDescription" db:"additional_data_exchange_considerations_description"`
 
 	IsDataExchangeApproachComplete bool `json:"isDataExchangeApproachComplete" db:"is_data_exchange_approach_complete" statusWeight:"1"`
 }

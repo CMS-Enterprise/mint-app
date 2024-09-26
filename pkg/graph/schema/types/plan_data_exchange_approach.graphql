@@ -52,10 +52,10 @@ type PlanDataExchangeApproach {
   dataToCollectFromParticipants: [DataToCollectFromParticipants!]!
   dataToCollectFromParticipantsReportsDetails: String
   dataToCollectFromParticipantsOther: String
-  dataWillNotBeCollectedFromParticipants: Boolean!
+  dataWillNotBeCollectedFromParticipants: Boolean
   dataToCollectFromParticipantsNote: String
 
-  dataToSendToParticipants: DataToSendToParticipants
+  dataToSendToParticipants: [DataToSendToParticipants!]!
   dataToSendToParticipantsNote: String
 
   doesNeedToMakeMultiPayerDataAvailable: YesNoType
@@ -64,13 +64,15 @@ type PlanDataExchangeApproach {
   doesNeedToMakeMultiPayerDataAvailableNote: String
 
   doesNeedToCollectAndAggregateMultiSourceData: YesNoType
-  multiSourceDataToCollect: MultiSourceDataToCollect
+  multiSourceDataToCollect: [MultiSourceDataToCollect!]!
   multiSourceDataToCollectOther: String
   doesNeedToCollectAndAggregateMultiSourceDataNote: String
 
   willImplementNewDataExchangeMethods: YesNoType
   newDataExchangeMethodsDescription: String
   newDataExchangeMethodsNote: String
+
+  additionalDataExchangeConsiderationsDescription: String
 
   isDataExchangeApproachComplete: Boolean!
 
@@ -95,7 +97,7 @@ input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") 
   dataWillNotBeCollectedFromParticipants: Boolean
   dataToCollectFromParticipantsNote: String
 
-  dataToSendToParticipants: DataToSendToParticipants
+  dataToSendToParticipants: [DataToSendToParticipants!]!
   dataToSendToParticipantsNote: String
 
   doesNeedToMakeMultiPayerDataAvailable: YesNoType
@@ -104,13 +106,15 @@ input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") 
   doesNeedToMakeMultiPayerDataAvailableNote: String
 
   doesNeedToCollectAndAggregateMultiSourceData: YesNoType
-  multiSourceDataToCollect: MultiSourceDataToCollect
+  multiSourceDataToCollect: [MultiSourceDataToCollect!]
   multiSourceDataToCollectOther: String
   doesNeedToCollectAndAggregateMultiSourceDataNote: String
 
   willImplementNewDataExchangeMethods: YesNoType
   newDataExchangeMethodsDescription: String
   newDataExchangeMethodsNote: String
+
+  additionalDataExchangeConsiderationsDescription: String
 
   isDataExchangeApproachComplete: Boolean
 

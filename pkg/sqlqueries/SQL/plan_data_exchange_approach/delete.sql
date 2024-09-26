@@ -21,6 +21,7 @@ RETURNING
   will_implement_new_data_exchange_methods,
   new_data_exchange_methods_description,
   new_data_exchange_methods_note,
+  additional_data_exchange_considerations_description,
   is_data_exchange_approach_complete,
   created_by,
   created_dts,

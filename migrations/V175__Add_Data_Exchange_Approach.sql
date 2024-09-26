@@ -55,7 +55,7 @@ CREATE TABLE plan_data_exchange_approach (
                                       data_will_not_be_collected_from_participants BOOLEAN NOT NULL DEFAULT FALSE,
                                       data_to_collect_from_participants_note ZERO_STRING,
 
-                                      data_to_send_to_participants DEA_DATA_TO_SEND_TO_PARTICIPANTS DEFAULT NULL,
+                                      data_to_send_to_participants DEA_DATA_TO_SEND_TO_PARTICIPANTS[],
                                       data_to_send_to_participants_note ZERO_STRING,
 
   -- page 3
@@ -65,7 +65,7 @@ CREATE TABLE plan_data_exchange_approach (
                                       does_need_to_make_multi_payer_data_available_note ZERO_STRING,
 
                                       does_need_to_collect_and_aggregate_multi_source_data YES_NO_TYPE DEFAULT NULL,
-                                      multi_source_data_to_collect DEA_MULTI_SOURCE_DATA_TO_COLLECT DEFAULT NULL,
+                                      multi_source_data_to_collect DEA_MULTI_SOURCE_DATA_TO_COLLECT[],
                                       multi_source_data_to_collect_other ZERO_STRING,
                                       does_need_to_collect_and_aggregate_multi_source_data_note ZERO_STRING,
 
@@ -73,6 +73,8 @@ CREATE TABLE plan_data_exchange_approach (
                                       will_implement_new_data_exchange_methods YES_NO_TYPE DEFAULT NULL,
                                       new_data_exchange_methods_description ZERO_STRING,
                                       new_data_exchange_methods_note ZERO_STRING,
+
+                                      additional_data_exchange_considerations_description ZERO_STRING,
 
                                       is_data_exchange_approach_complete BOOLEAN NOT NULL DEFAULT FALSE,
 

@@ -1832,6 +1832,7 @@ export type PlanCollaboratorTranslation = {
 
 export type PlanDataExchangeApproach = {
   __typename: 'PlanDataExchangeApproach';
+  additionalDataExchangeConsiderationsDescription?: Maybe<Scalars['String']['output']>;
   anticipatedMultiPayerDataAvailabilityUseCase?: Maybe<AnticipatedMultiPayerDataAvailabilityUseCase>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
@@ -1840,9 +1841,9 @@ export type PlanDataExchangeApproach = {
   dataToCollectFromParticipantsNote?: Maybe<Scalars['String']['output']>;
   dataToCollectFromParticipantsOther?: Maybe<Scalars['String']['output']>;
   dataToCollectFromParticipantsReportsDetails?: Maybe<Scalars['String']['output']>;
-  dataToSendToParticipants?: Maybe<DataToSendToParticipants>;
+  dataToSendToParticipants: Array<DataToSendToParticipants>;
   dataToSendToParticipantsNote?: Maybe<Scalars['String']['output']>;
-  dataWillNotBeCollectedFromParticipants: Scalars['Boolean']['output'];
+  dataWillNotBeCollectedFromParticipants?: Maybe<Scalars['Boolean']['output']>;
   doesNeedToCollectAndAggregateMultiSourceData?: Maybe<YesNoType>;
   doesNeedToCollectAndAggregateMultiSourceDataNote?: Maybe<Scalars['String']['output']>;
   doesNeedToMakeMultiPayerDataAvailable?: Maybe<YesNoType>;
@@ -1855,7 +1856,7 @@ export type PlanDataExchangeApproach = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
-  multiSourceDataToCollect?: Maybe<MultiSourceDataToCollect>;
+  multiSourceDataToCollect: Array<MultiSourceDataToCollect>;
   multiSourceDataToCollectOther?: Maybe<Scalars['String']['output']>;
   newDataExchangeMethodsDescription?: Maybe<Scalars['String']['output']>;
   newDataExchangeMethodsNote?: Maybe<Scalars['String']['output']>;
@@ -1868,12 +1869,13 @@ export type PlanDataExchangeApproach = {
 };
 
 export type PlanDataExchangeApproachChanges = {
+  additionalDataExchangeConsiderationsDescription?: InputMaybe<Scalars['String']['input']>;
   anticipatedMultiPayerDataAvailabilityUseCase?: InputMaybe<AnticipatedMultiPayerDataAvailabilityUseCase>;
   dataToCollectFromParticipants?: InputMaybe<Array<DataToCollectFromParticipants>>;
   dataToCollectFromParticipantsNote?: InputMaybe<Scalars['String']['input']>;
   dataToCollectFromParticipantsOther?: InputMaybe<Scalars['String']['input']>;
   dataToCollectFromParticipantsReportsDetails?: InputMaybe<Scalars['String']['input']>;
-  dataToSendToParticipants?: InputMaybe<DataToSendToParticipants>;
+  dataToSendToParticipants: Array<DataToSendToParticipants>;
   dataToSendToParticipantsNote?: InputMaybe<Scalars['String']['input']>;
   dataWillNotBeCollectedFromParticipants?: InputMaybe<Scalars['Boolean']['input']>;
   doesNeedToCollectAndAggregateMultiSourceData?: InputMaybe<YesNoType>;
@@ -1882,7 +1884,7 @@ export type PlanDataExchangeApproachChanges = {
   doesNeedToMakeMultiPayerDataAvailableNote?: InputMaybe<Scalars['String']['input']>;
   doesNeedToMakeMultiPayerDataAvailableOther?: InputMaybe<Scalars['String']['input']>;
   isDataExchangeApproachComplete?: InputMaybe<Scalars['Boolean']['input']>;
-  multiSourceDataToCollect?: InputMaybe<MultiSourceDataToCollect>;
+  multiSourceDataToCollect?: InputMaybe<Array<MultiSourceDataToCollect>>;
   multiSourceDataToCollectOther?: InputMaybe<Scalars['String']['input']>;
   newDataExchangeMethodsDescription?: InputMaybe<Scalars['String']['input']>;
   newDataExchangeMethodsNote?: InputMaybe<Scalars['String']['input']>;
