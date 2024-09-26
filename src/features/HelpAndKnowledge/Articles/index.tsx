@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Icon } from '@trussworks/react-uswds';
+import { Icon } from '@trussworks/react-uswds';
 
 export enum ArticleCategories {
   GETTING_STARTED = 'getting-started',
@@ -93,49 +93,14 @@ export const covertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
 
 export const ScrollLink = ({ scrollTo }: { scrollTo: string }) => {
-  const scrollToElementAndNavBarOffest = () => {
-    setTimeout(() => {
-      // the height of navigation bar
-      const navBarHeight = document.querySelector(
-        '[data-testid="navigation-bar"]'
-      )?.clientHeight;
-
-      // Find the div to scroll to
-      const scrollElement = document.querySelector(
-        `#${covertToLowercaseAndDashes(scrollTo)}`
-      );
-
-      // Find heading element
-      const headingElement = document.querySelector(
-        `#${covertToLowercaseAndDashes(scrollTo)} > h2`
-      );
-
-      if (!scrollElement || !navBarHeight || !headingElement) {
-        return;
-      }
-
-      // Find the top of the scroll element
-      const { top } = scrollElement.getBoundingClientRect();
-
-      // Find top margin of the heading element
-      const marginOfHeading = parseFloat(
-        window.getComputedStyle(headingElement).marginTop
-      );
-
-      window.scroll(0, top - marginOfHeading - navBarHeight);
-    }, 0);
-  };
-
   return (
-    <Button
-      type="button"
-      onClick={scrollToElementAndNavBarOffest}
-      unstyled
+    <a
+      href={`#${covertToLowercaseAndDashes(scrollTo)}`}
       className="display-flex flex-align-center"
     >
       {scrollTo}
       <Icon.ArrowForward />
-    </Button>
+    </a>
   );
 };
 

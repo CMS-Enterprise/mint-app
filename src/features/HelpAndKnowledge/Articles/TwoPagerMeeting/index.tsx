@@ -148,7 +148,7 @@ const TwoPagerMeeting = () => {
               id={covertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.list.0')
               )}
-              className="margin-bottom-6"
+              className="margin-bottom-6 scroll-target"
             >
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.list.0')}
@@ -210,7 +210,7 @@ const TwoPagerMeeting = () => {
               id={covertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.list.1')
               )}
-              className="margin-bottom-6"
+              className="margin-bottom-6 scroll-target"
             >
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.list.1')}
@@ -420,7 +420,7 @@ const TwoPagerMeeting = () => {
               id={covertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.list.2')
               )}
-              className="margin-bottom-6"
+              className="margin-bottom-6 scroll-target"
             >
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.list.2')}
@@ -503,7 +503,7 @@ const TwoPagerMeeting = () => {
               id={covertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.list.3')
               )}
-              className="margin-bottom-6"
+              className="margin-bottom-6 scroll-target"
             >
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.list.3')}
