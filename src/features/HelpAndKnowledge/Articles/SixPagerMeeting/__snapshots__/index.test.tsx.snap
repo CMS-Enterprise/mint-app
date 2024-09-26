@@ -81,9 +81,10 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#create-your-model-plan-within-mint"
+                  <button
+                    class="usa-button usa-button--unstyled display-flex flex-align-center"
+                    data-testid="button"
+                    type="button"
                   >
                     Create your Model Plan within MINT
                     <svg
@@ -99,14 +100,15 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li
                   class="margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#draft-your-6-page-concept-paper"
+                  <button
+                    class="usa-button usa-button--unstyled display-flex flex-align-center"
+                    data-testid="button"
+                    type="button"
                   >
                     Draft your 6-page concept paper
                     <svg
@@ -122,14 +124,15 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li
                   class="margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#determine-additional-resources-needed"
+                  <button
+                    class="usa-button usa-button--unstyled display-flex flex-align-center"
+                    data-testid="button"
+                    type="button"
                   >
                     Determine additional resources needed
                     <svg
@@ -145,12 +148,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#the-review-meeting"
+                  <button
+                    class="usa-button usa-button--unstyled display-flex flex-align-center"
+                    data-testid="button"
+                    type="button"
                   >
                     The review meeting
                     <svg
@@ -166,7 +170,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>

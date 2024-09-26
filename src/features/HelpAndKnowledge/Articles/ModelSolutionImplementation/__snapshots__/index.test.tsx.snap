@@ -84,9 +84,10 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                   <div
                     class="margin-left-1 display-flex flex-align-center"
                   >
-                    <a
-                      class="display-flex flex-align-center"
-                      href="#initiate-work-with-each-operational-solution-team"
+                    <button
+                      class="usa-button usa-button--unstyled display-flex flex-align-center"
+                      data-testid="button"
+                      type="button"
                     >
                       Initiate work with each operational solution team
                       <svg
@@ -102,7 +103,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                           d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                         />
                       </svg>
-                    </a>
+                    </button>
                   </div>
                 </li>
                 <li
@@ -111,9 +112,10 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                   <div
                     class="margin-left-1 display-flex flex-align-center"
                   >
-                    <a
-                      class="display-flex flex-align-center"
-                      href="#track-work-up-through-implementation"
+                    <button
+                      class="usa-button usa-button--unstyled display-flex flex-align-center"
+                      data-testid="button"
+                      type="button"
                     >
                       Track work up through implementation
                       <svg
@@ -129,7 +131,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                           d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                         />
                       </svg>
-                    </a>
+                    </button>
                   </div>
                 </li>
               </ol>

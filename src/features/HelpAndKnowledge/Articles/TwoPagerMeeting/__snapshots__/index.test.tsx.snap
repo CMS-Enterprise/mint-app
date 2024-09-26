@@ -56,7 +56,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           </span>
         </a>
         <p
-          class="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4"
+          class="mint-body-large line-height-large margin-top-0 margin-bottom-4"
         >
           Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.
         </p>
@@ -81,9 +81,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 <li
                   class="margin-top-05 margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#key-resources-for-model-teams-writing-2-page-concept-papers"
+                  <button
+                    class="usa-button usa-button--unstyled display-flex flex-align-center"
+                    data-testid="button"
+                    type="button"
                   >
                     Key resources for model teams writing 2-page concept papers
                     <svg
@@ -99,14 +100,15 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li
                   class="margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#about-2-page-concept-papers"
+                  <button
+                    class="usa-button usa-button--unstyled display-flex flex-align-center"
+                    data-testid="button"
+                    type="button"
                   >
                     About 2-page concept papers
                     <svg
@@ -122,14 +124,15 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li
                   class="margin-bottom-1"
                 >
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#additional-resources-available-to-model-teams"
+                  <button
+                    class="usa-button usa-button--unstyled display-flex flex-align-center"
+                    data-testid="button"
+                    type="button"
                   >
                     Additional resources available to model teams
                     <svg
@@ -145,12 +148,13 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a
-                    class="display-flex flex-align-center"
-                    href="#how-2-page-concept-papers-are-reviewed"
+                  <button
+                    class="usa-button usa-button--unstyled display-flex flex-align-center"
+                    data-testid="button"
+                    type="button"
                   >
                     How 2-page concept papers are reviewed
                     <svg
@@ -166,7 +170,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                         d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
                       />
                     </svg>
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -182,7 +186,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             Key resources for model teams writing 2-page concept papers
           </h2>
           <p
-            class="margin-top-0 margin-bottom-3 line-height-sans-4"
+            class="margin-top-0 margin-bottom-3 line-height-normal"
           >
             Visit the CMMI Strategy Refresh SharePoint site to access additional model development resources including those that will help with the creation of 2-page and 6-page concept papers.
           </p>
@@ -198,12 +202,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 class="usa-card__container shadow-2 padding-2"
               >
                 <p
-                  class="text-bold margin-y-0 line-height-sans-4"
+                  class="text-bold margin-y-0 line-height-normal"
                 >
                   Strategy Refresh SharePoint site
                 </p>
                 <button
-                  class="usa-button usa-button--unstyled line-height-sans-4 margin-right-2"
+                  class="usa-button usa-button--unstyled line-height-normal margin-right-2"
                   data-testid="button"
                   type="button"
                 >
@@ -227,7 +231,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   </span>
                 </button>
                 <button
-                  class="usa-button usa-button--unstyled line-height-sans-4 margin-right-2"
+                  class="usa-button usa-button--unstyled line-height-normal margin-right-2"
                   data-testid="button"
                   type="button"
                 >
@@ -260,17 +264,17 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 class="usa-card__container shadow-2 padding-2"
               >
                 <p
-                  class="text-bold margin-y-0 line-height-sans-4"
+                  class="text-bold margin-y-0 line-height-normal"
                 >
                   2-page concept paper template
                 </p>
                 <p
-                  class="text-base margin-y-0 line-height-sans-4"
+                  class="text-base margin-y-0 line-height-normal"
                 >
                   Download the template from the Strategy Refresh SharePoint site.
                 </p>
                 <button
-                  class="usa-button usa-button--unstyled line-height-sans-4 margin-right-2"
+                  class="usa-button usa-button--unstyled line-height-normal margin-right-2"
                   data-testid="button"
                   type="button"
                 >
@@ -307,7 +311,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             About 2-page concept papers
           </h2>
           <p
-            class="margin-top-0 margin-bottom-3 line-height-sans-4"
+            class="margin-top-0 margin-bottom-3 line-height-normal"
           >
             A 2-page concept paper is an overview of an early development model concept, and may or may not include all of the elements listed below. Teams can focus on the most relevant and impactful information to help CMMI decide if a model concept should move to the next development phase. As teams are considering a 2-page concept paper, they may consult with their group leadership and the CMMI FO for early guidance and to support efficient use of staff and other resources.
           </p>
@@ -355,7 +359,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             1. Proposed model overview and goals
           </h3>
           <p
-            class="padding-left-3 margin-bottom-0 line-height-sans-4"
+            class="padding-left-3 margin-bottom-0 line-height-normal"
           >
             2-page concept papers will:
           </p>
@@ -363,7 +367,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             class="margin-top-0 margin-bottom-3 padding-left-6"
           >
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               Briefly discuss the problem the model intends to address, including a description of the:
               <ul
@@ -371,44 +375,44 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 style="list-style-type: disc;"
               >
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Causes and enablers of the problem
                 </li>
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Magnitude/scope of the problem 
                 </li>
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Population(s) affected 
                 </li>
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Why a model is appropriate to address the problem
                 </li>
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   How a model may address access, health disparities, affordability, quality, and/or care experience, as well as priority questions in the delivery and organization of care or in CMS operations
                 </li>
               </ul>
             </li>
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               Describe the preliminary theory of change for the model including a statement of the model aim with an initial driver diagram in consultation with LDG, RREG and the Quality Vertical that shows how the model will address the problem and questions above
             </li>
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               Include the beneficiary perspective regarding the need for the model, supported by a preliminary patient journey map
             </li>
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               Provide background or context on whether the proposed model has previously been tested or is a follow-on model, incorporates learnings from external stakeholders, and/or where concept originated (e.g. private sector, academia, state or regional efforts)
             </li>
@@ -419,7 +423,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             2. High-level description of model elements
           </h3>
           <p
-            class="padding-left-3 margin-bottom-0 line-height-sans-4"
+            class="padding-left-3 margin-bottom-0 line-height-normal"
           >
             2-page concept papers will:
           </p>
@@ -427,7 +431,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             class="margin-top-0 margin-bottom-3 padding-left-6"
           >
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               Provide a high-level overview of key model design elements including: target population, payment approach, geography, and key quality domains
             </li>
@@ -443,7 +447,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             Not all of these may be answerable early in model development/consideration
           </i>
           <p
-            class="padding-left-3 margin-bottom-0 line-height-sans-4"
+            class="padding-left-3 margin-bottom-0 line-height-normal"
           >
             2-page concept papers may address 
             <strong>
@@ -459,7 +463,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             class="margin-top-0 margin-bottom-5 padding-left-6"
           >
             <li
-              class="line-height-sans-4 margin-bottom-05"
+              class="line-height-normal margin-bottom-05"
             >
               Describe how the model would advance one (or more) of the strategy refresh pillars, including, as relevant, how it will support strategy refresh drivers at a high level (
               <strong>
@@ -470,34 +474,34 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 class="padding-left-3 margin-top-05"
               >
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Drive accountable care
                 </li>
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Advance health equity
                 </li>
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Support innovation 
                 </li>
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Address affordability 
                 </li>
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Partner to achieve system transformation, and multi-payer alignment in particular
                 </li>
               </ol>
             </li>
             <li
-              class="line-height-sans-4 margin-bottom-05"
+              class="line-height-normal margin-bottom-05"
             >
               Outlining the potential for the model to impact the following dimensions (
               <strong>
@@ -508,24 +512,24 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 class="padding-left-3 margin-top-05"
               >
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Participation – number and types of providers, beneficiaries
                 </li>
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Outcomes – expected improvements in quality, and outcomes, changes in beneficiary experience, advancements in equity and reduction in disparities, delivery system change, multi-payer alignment, and market impacts
                 </li>
                 <li
-                  class="line-height-sans-4"
+                  class="line-height-normal"
                 >
                   Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries
                 </li>
               </ul>
             </li>
             <li
-              class="line-height-sans-4 margin-bottom-05"
+              class="line-height-normal margin-bottom-05"
             >
               Considering the likelihood of successful execution of the model including initial operational phases, CMMI staffing, evaluation challenges, feasibility limitations, participant interest, and potential for scaling. Complete preliminary assessment of data exchanges concept in the model. (
               <strong>
@@ -534,7 +538,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               )
             </li>
             <li
-              class="line-height-sans-4 margin-bottom-05"
+              class="line-height-normal margin-bottom-05"
             >
               Considering whether the model provides or is expected to stimulate innovation in a particular dimension such as payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy. (
               <strong>
@@ -543,7 +547,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               )
             </li>
             <li
-              class="line-height-sans-4 margin-bottom-05"
+              class="line-height-normal margin-bottom-05"
             >
               Including brief descriptions of any engagement or advocacy by interested parties on the model concept. (
               <strong>
@@ -576,22 +580,22 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   class="margin-y-0 padding-left-6"
                 >
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     What does success look like?
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     What will improve for patients?
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     How will the care experience be different?
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     What do we want providers/payers to change?
                   </li>
@@ -605,22 +609,22 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   class="margin-top-0 margin-bottom-2 padding-left-6"
                 >
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Think about building on existing work
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Pay attention to interested party interests and ideas
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Build connections with other parts of CMS and HHS
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Be prepared for opportunities
                   </li>
@@ -837,7 +841,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             Additional resources available to model teams
           </h2>
           <p
-            class="margin-top-0 margin-bottom-3 line-height-sans-4"
+            class="margin-top-0 margin-bottom-3 line-height-normal"
           >
             This early in the process, it can be hard for model teams to know exactly what they’ll need regarding contractor support during the model concept, design, and development phases.
           </p>
@@ -847,12 +851,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             Pipeline contractors
           </h3>
           <p
-            class="line-height-sans-4 margin-top-0 margin-bottom-3"
+            class="line-height-normal margin-top-0 margin-bottom-3"
           >
             CMMI generally has two pipeline contractors available (currently MITRE and ARDS have pipeline contracts with CMMI) that can assist model teams with various needs leading up to clearance. It’s important to note, model teams need to get approval from CMMI FO to utilize one of these contractors, so it can be important for model teams to begin considering contractor involvement even as early as the 2-page concept phase.
           </p>
           <p
-            class="line-height-sans-4 margin-top-0 margin-bottom-3"
+            class="line-height-normal margin-top-0 margin-bottom-3"
           >
             While it is fine to use pipeline support for 2-page and 6-page concept paper work and for developing ICIP content, after the ICIP clears, model teams can no longer use pipeline funding. It can take a few months to get implementation contractor support, so plan accordingly. Model teams should work with the Division of Central Contracts Services (DCCS), the Division of Systems Support, Operation & Security (DSSOS), and the Office of Acquisition and Grants Management (OAGM) for assistance with contracting needs.
           </p>
@@ -880,42 +884,42 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   class="margin-y-0 padding-left-6"
                 >
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Do you need an in-house expert on data? 
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Do you need help crunching numbers? 
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Do you need analytics support?
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Do you need help drafting the Innovation Center Investment Proposal (ICIP) or other documents? 
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Do you need literature review support? 
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Do you need rule-writing support?
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Do you need a clinical specialist? 
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Do you need help on a specific aspect of your model? 
                   </li>
@@ -934,7 +938,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             Cross-cutting groups
           </h3>
           <p
-            class="line-height-sans-4 margin-y-0"
+            class="line-height-normal margin-y-0"
           >
             During the concept, design, and development phases of a model, there are a variety of other groups within CMMI and the larger CMS organization that can help model teams with a variety of aspects of their model. These areas of specialty include:
           </p>
@@ -942,17 +946,17 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             class="margin-y-0 padding-left-6"
           >
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               Business Services Group (BSG) - for feasibility criteria
             </li>
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               CMMI Front Office (FO) - for health equity
             </li>
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               <a
                 class="usa-link usa-button usa-button--unstyled"
@@ -963,12 +967,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                - for learning
             </li>
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               Policy and Programs Group (PPG) - for quality and stakeholder engagement
             </li>
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               Research and Rapid Cycle Evaluation Group (RREG) - for evaluation
             </li>
@@ -984,7 +988,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             How 2-page concept papers are reviewed
           </h2>
           <p
-            class="margin-top-0 margin-bottom-3 line-height-sans-4"
+            class="margin-top-0 margin-bottom-3 line-height-normal"
           >
             After division and group leadership have reviewed and approved the 2-page concept paper, a review meeting with CMMI FO is scheduled. This review meeting is a key step to moving a model concept forward in the process.
           </p>
@@ -1012,17 +1016,17 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   class="margin-y-0 padding-left-3"
                 >
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Before the meeting, attach your 2-page concept paper to the calendar invite for your meeting with CMMI FO. We also recommend uploading your concept paper to your model collaboration area within MINT. This will allow other CMS staff involved in the model development process to begin preparing as early as possible for their work with your model team.
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     Come prepared to discuss your model concept with the CMMI FO and receive feedback.
                   </li>
                   <li
-                    class="line-height-sans-4"
+                    class="line-height-normal"
                   >
                     If you think you’ll need a pipeline contractor, flag this during the meeting. CMMI FO may have a preference for which contractor to use and will ultimately need to approve the request.
                   </li>
@@ -1036,7 +1040,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             Model selection criteria
           </h3>
           <p
-            class="margin-y-0 line-height-sans-4"
+            class="margin-y-0 line-height-normal"
           >
             These selection criteria detail how models are evaluated overall. The CMMI FO may consider these criteria in different ways and to different degrees in each review meeting and phase of the model concept and design process.
           </p>
@@ -1117,15 +1121,15 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     Model effect as a function of participation and the potential for health system transformation
                   </p>
                   <ul
-                    class="margin-y-0 padding-left-2"
+                    class="margin-y-0 padding-left-3"
                   >
                     <li
-                      class="line-height-sans-4 margin-bottom-05"
+                      class="line-height-normal margin-bottom-05"
                     >
                       Participation: number of providers, beneficiaries, Medicare spending, Medicaid spending​
                     </li>
                     <li
-                      class="line-height-sans-4 margin-bottom-05"
+                      class="line-height-normal margin-bottom-05"
                     >
                       Transformation, including: cost reduction, quality and equity improvement, delivery system change​
                     </li>
@@ -1219,7 +1223,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             Possible outcomes
           </h3>
           <p
-            class="margin-y-0 line-height-sans-4"
+            class="margin-y-0 line-height-normal"
           >
             After the review meeting, the CMMI FO may direct you in one of the following directions:
           </p>
@@ -1227,7 +1231,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             class="margin-y-0 padding-left-3"
           >
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               <strong>
                 Continue iterating:
@@ -1235,7 +1239,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                Since the 2-page review meeting is still pretty high level in terms of model design, the CMMI FO may have suggestions for the team to iterate on. In this case, model teams may be asked to come back for another 2-page review after they’ve had time to ideate and address feedback from the FO. Some concepts require multiple rounds of iteration, so model teams shouldn’t be discouraged if their concept isn’t approved the first time around.
             </li>
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               <strong>
                 Approval:
@@ -1243,7 +1247,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                If the CMMI FO decides the model concept is feasible, they will approve the 2-page concept paper. Model teams will then work on ironing out additional details of their model design as they work to write their 6-page concept paper. They may work with cross-cutting groups to write their 6-page concept paper. If they haven’t already started filling out a Model Plan within MINT, this is often a great time to start that. Many of the details that will go into a 6-page concept paper are also asked within the Model Plan. A Model Plan in MINT is a useful way to help communicate concepts and implementation details with other groups across CMS who assist with various aspects of development and implementation of models.
             </li>
             <li
-              class="line-height-sans-4"
+              class="line-height-normal"
             >
               <strong>
                 Pause:
