@@ -87,3 +87,36 @@ type PlanDataExchangeApproach {
   readyForClearanceDts: Time
   status: TaskStatus!
 }
+
+input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") {
+  dataToCollectFromParticipants: [DataToCollectFromParticipants!]
+  dataToCollectFromParticipantsReportsDetails: String
+  dataToCollectFromParticipantsOther: String
+  dataWillNotBeCollectedFromParticipants: Boolean
+  dataToCollectFromParticipantsNote: String
+
+  dataToSendToParticipants: DataToSendToParticipants
+  dataToSendToParticipantsNote: String
+
+  doesNeedToMakeMultiPayerDataAvailable: YesNoType
+  anticipatedMultiPayerDataAvailabilityUseCase: AnticipatedMultiPayerDataAvailabilityUseCase
+  doesNeedToMakeMultiPayerDataAvailableOther: String
+  doesNeedToMakeMultiPayerDataAvailableNote: String
+
+  doesNeedToCollectAndAggregateMultiSourceData: YesNoType
+  multiSourceDataToCollect: MultiSourceDataToCollect
+  multiSourceDataToCollectOther: String
+  doesNeedToCollectAndAggregateMultiSourceDataNote: String
+
+  willImplementNewDataExchangeMethods: YesNoType
+  newDataExchangeMethodsDescription: String
+  newDataExchangeMethodsNote: String
+
+  isDataExchangeApproachComplete: Boolean
+
+  status: TaskStatusInput
+}
+
+extend type Mutation {
+  updatePlanDataExchangeApproach(id: UUID!, changes: PlanDataExchangeApproachChanges!): PlanDataExchangeApproach!
+}

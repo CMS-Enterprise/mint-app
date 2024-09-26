@@ -49,7 +49,7 @@ CREATE TABLE plan_data_exchange_approach (
                                       model_plan_id UUID NOT NULL REFERENCES model_plan(id),
 
   -- page 2
-                                      data_to_collect_from_participants DEA_DATA_TO_COLLECT_FROM_PARTICIPANTS[] NOT NULL,
+                                      data_to_collect_from_participants DEA_DATA_TO_COLLECT_FROM_PARTICIPANTS[],
                                       data_to_collect_from_participants_reports_details ZERO_STRING,
                                       data_to_collect_from_participants_other ZERO_STRING,
                                       data_will_not_be_collected_from_participants BOOLEAN NOT NULL DEFAULT FALSE,

@@ -878,6 +878,7 @@ export type Mutation = {
   updatePlanBeneficiaries: PlanBeneficiaries;
   updatePlanCR: PlanCr;
   updatePlanCollaborator: PlanCollaborator;
+  updatePlanDataExchangeApproach: PlanDataExchangeApproach;
   updatePlanGeneralCharacteristics: PlanGeneralCharacteristics;
   updatePlanOpsEvalAndLearning: PlanOpsEvalAndLearning;
   updatePlanParticipantsAndProviders: PlanParticipantsAndProviders;
@@ -1126,6 +1127,13 @@ export type MutationUpdatePlanCrArgs = {
 export type MutationUpdatePlanCollaboratorArgs = {
   id: Scalars['UUID']['input'];
   newRoles: Array<TeamRole>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdatePlanDataExchangeApproachArgs = {
+  changes: PlanDataExchangeApproachChanges;
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -1857,6 +1865,29 @@ export type PlanDataExchangeApproach = {
   readyForReviewDts?: Maybe<Scalars['Time']['output']>;
   status: TaskStatus;
   willImplementNewDataExchangeMethods?: Maybe<YesNoType>;
+};
+
+export type PlanDataExchangeApproachChanges = {
+  anticipatedMultiPayerDataAvailabilityUseCase?: InputMaybe<AnticipatedMultiPayerDataAvailabilityUseCase>;
+  dataToCollectFromParticipants?: InputMaybe<Array<DataToCollectFromParticipants>>;
+  dataToCollectFromParticipantsNote?: InputMaybe<Scalars['String']['input']>;
+  dataToCollectFromParticipantsOther?: InputMaybe<Scalars['String']['input']>;
+  dataToCollectFromParticipantsReportsDetails?: InputMaybe<Scalars['String']['input']>;
+  dataToSendToParticipants?: InputMaybe<DataToSendToParticipants>;
+  dataToSendToParticipantsNote?: InputMaybe<Scalars['String']['input']>;
+  dataWillNotBeCollectedFromParticipants?: InputMaybe<Scalars['Boolean']['input']>;
+  doesNeedToCollectAndAggregateMultiSourceData?: InputMaybe<YesNoType>;
+  doesNeedToCollectAndAggregateMultiSourceDataNote?: InputMaybe<Scalars['String']['input']>;
+  doesNeedToMakeMultiPayerDataAvailable?: InputMaybe<YesNoType>;
+  doesNeedToMakeMultiPayerDataAvailableNote?: InputMaybe<Scalars['String']['input']>;
+  doesNeedToMakeMultiPayerDataAvailableOther?: InputMaybe<Scalars['String']['input']>;
+  isDataExchangeApproachComplete?: InputMaybe<Scalars['Boolean']['input']>;
+  multiSourceDataToCollect?: InputMaybe<MultiSourceDataToCollect>;
+  multiSourceDataToCollectOther?: InputMaybe<Scalars['String']['input']>;
+  newDataExchangeMethodsDescription?: InputMaybe<Scalars['String']['input']>;
+  newDataExchangeMethodsNote?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<TaskStatusInput>;
+  willImplementNewDataExchangeMethods?: InputMaybe<YesNoType>;
 };
 
 export type PlanDataExchangeApproachCompletedActivityMeta = {

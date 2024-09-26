@@ -7,9 +7,20 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
+
+// UpdatePlanDataExchangeApproach is the resolver for the updatePlanDataExchangeApproach field.
+func (r *mutationResolver) UpdatePlanDataExchangeApproach(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDataExchangeApproach, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return PlanDataExchangeApproachUpdate(logger, id, changes, principal, r.store)
+}
 
 // ModelPlan is the resolver for the modelPlan field.
 func (r *planDataExchangeApproachResolver) ModelPlan(ctx context.Context, obj *models.PlanDataExchangeApproach) (*models.ModelPlan, error) {
