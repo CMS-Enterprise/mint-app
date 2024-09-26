@@ -90,7 +90,7 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
   {
     key: HelpArticle.EVALUATING_DATA_EXCHANGE_APPROACH,
     route: '/evaluating-data-exchange-approach',
-    translation: 'evaluatingDataExhangeApproach',
+    translation: 'evaluatingDataExchangeApproach',
     type: ArticleCategories.GETTING_STARTED
   }
 ];

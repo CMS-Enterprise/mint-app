@@ -64,7 +64,13 @@ const RelatedArticles = ({
       : 'bg-primary-lighter';
 
   return (
-    <div className={classNames(bgClass, className)}>
+    <div
+      className={classNames(
+        'margin-bottom-neg-7 padding-bottom-4 padding-top-2',
+        bgClass,
+        className
+      )}
+    >
       <GridContainer className="padding-top-4 padding-bottom-10">
         <h2 className="margin-top-0 margin-bottom-1">
           {implementationType === 'Additional Resources'
@@ -81,11 +87,9 @@ const RelatedArticles = ({
         </CardGroup>
 
         {viewAllLink && (
-          <div className="margin-top-3">
-            <UswdsReactLink to="/help-and-knowledge/articles">
-              {t('viewAllRelated')}
-            </UswdsReactLink>
-          </div>
+          <UswdsReactLink to="/help-and-knowledge/articles">
+            {t('viewAllRelated')}
+          </UswdsReactLink>
         )}
       </GridContainer>
     </div>

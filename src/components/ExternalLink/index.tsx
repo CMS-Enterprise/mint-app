@@ -76,9 +76,9 @@ const ExternalLink = ({
           setIsModalOpen(true);
         }}
       >
-        <span className="display-flex flex-align-center">
+        <span>
           {children}
-          <Icon.Launch className="margin-left-05" />
+          <Icon.Launch className="margin-left-05 top-05" />
         </span>
       </Button>
     </>

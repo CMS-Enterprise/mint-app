@@ -524,7 +524,7 @@ const SixPagerMeeting = () => {
           </Grid>
         </GridContainer>
       </MainContent>
-      <div className="margin-top-6 margin-bottom-neg-7">
+      <div className="margin-top-6">
         <RelatedArticles
           currentArticle={HelpArticle.SIX_PAGER_MEETING}
           specificArticles={[

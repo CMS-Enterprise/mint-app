@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from 'features/NotFound';
 
 import AllArticles from './Articles/AllArticles';
-import EvaluatingDataExhangeApproach from './Articles/EvaluatingDataExchangeApproach';
+import EvaluatingDataExchangeApproach from './Articles/EvaluatingDataExchangeApproach';
 import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import ModelSolutionDesign from './Articles/ModelSolutionDesign';
@@ -55,7 +55,7 @@ export const HelpAndKnowledge = () => {
       </Route>
 
       <Route path="/help-and-knowledge/evaluating-data-exchange-approach" exact>
-        <EvaluatingDataExhangeApproach />
+        <EvaluatingDataExchangeApproach />
       </Route>
 
       <Redirect

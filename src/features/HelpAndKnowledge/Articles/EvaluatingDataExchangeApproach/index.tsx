@@ -21,8 +21,8 @@ import { tArray } from 'utils/translation';
 import HelpCategoryTag from '../_components/HelpCategoryTag';
 import { ArticleCategories, covertToLowercaseAndDashes, HelpArticle } from '..';
 
-export const EvaluatingDataExhangeApproach = () => {
-  const { t } = useTranslation('evaluatingDataExhangeApproach');
+export const EvaluatingDataExchangeApproach = () => {
+  const { t } = useTranslation('evaluatingDataExchangeApproach');
 
   // Used for react-to-pdf to render pdf from component ref
   const componentRef = useRef<HTMLDivElement>(null);
@@ -58,7 +58,7 @@ export const EvaluatingDataExhangeApproach = () => {
                 type="info"
                 noIcon
                 slim
-                className="margin-top-4 margin-bottom-6"
+                className="margin-top-4 margin-bottom-5"
               >
                 {t('alert')}
               </Alert>
@@ -74,6 +74,14 @@ export const EvaluatingDataExhangeApproach = () => {
               </Button>
 
               <DataExchangeApproachTable />
+
+              <p className="text-bold margin-bottom-0">
+                {t('additionalConsiderations')}
+              </p>
+
+              <p className="border-bottom padding-bottom-2 margin-bottom-0 margin-top-0">
+                {t('additionalConsiderationsDescription')}
+              </p>
             </div>
           </Grid>
         </GridContainer>
@@ -105,9 +113,9 @@ type RowType = {
 };
 
 const DataExchangeApproachTable = () => {
-  const headers = tArray('evaluatingDataExhangeApproach:table.headers');
+  const headers = tArray('evaluatingDataExchangeApproach:table.headers');
 
-  const rows = tArray<RowType>('evaluatingDataExhangeApproach:table.rows');
+  const rows = tArray<RowType>('evaluatingDataExchangeApproach:table.rows');
 
   return (
     <TrussTable
@@ -168,20 +176,18 @@ const DataExchangeApproachTable = () => {
                       return <li key={item}>{item}</li>;
                     }
                     return (
-                      <li
-                        key={item.text}
-                        style={{
-                          whiteSpace: 'pre'
-                        }}
-                      >
-                        <Trans
-                          i18nKey={`evaluatingDataExhangeApproach:table.rows.${rowIndex}.additionalDetails.list.${index}.text`}
-                          components={{
-                            link1: (
-                              <ExternalLink href={item.link}> </ExternalLink>
-                            )
-                          }}
-                        />
+                      <li key={item.text}>
+                        <div className="flex-container">
+                          <Trans
+                            i18nKey={`evaluatingDataExchangeApproach:table.rows.${rowIndex}.additionalDetails.list.${index}.text`}
+                            components={{
+                              inlineText: <span />,
+                              link1: (
+                                <ExternalLink href={item.link}> </ExternalLink>
+                              )
+                            }}
+                          />
+                        </div>
                       </li>
                     );
                   })}
@@ -194,4 +200,4 @@ const DataExchangeApproachTable = () => {
     </TrussTable>
   );
 };
-export default EvaluatingDataExhangeApproach;
+export default EvaluatingDataExchangeApproach;

@@ -1,4 +1,5 @@
-const evaluatingDataExhangeApproach = {
+const evaluatingDataExchangeApproach = {
+  title: 'Evaluate your data exchange approach',
   heading: 'Evaluate your data exchange approach',
   description:
     'Exchanging data is an essential component of model operations and can take many forms depending on policy goals, implementation needs, and participants in the model. Examples of data that are typically exchanged include CMS sharing data with participants (for example, claims data) or participants sharing quality data (for example, a new measure or patient-reported outcome). We often collect health-related social needs data, such as socio-demographic data. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange.',
@@ -106,7 +107,7 @@ const evaluatingDataExhangeApproach = {
               link: 'https://www.cdcfoundation.org/CDCFoundationPPRLSummary.pdf?inline'
             },
             {
-              text: 'Utilizing the <link1>Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]</link1>',
+              text: '<inlineText>Utilizing the </inlineText><link1>Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]</link1>',
               link: 'https://www.healthit.gov/topic/interoperability/policy/trusted-exchange-framework-and-common-agreement-tefca'
             },
             'Enabling an additional data stream not previously used at CMMI'
@@ -114,6 +115,9 @@ const evaluatingDataExhangeApproach = {
         }
       }
     ]
-  }
+  },
+  additionalConsiderations: 'Additional considerations',
+  additionalConsiderationsDescription:
+    'Please describe any additional data exchange considerations.'
 };
-export default evaluatingDataExhangeApproach;
+export default evaluatingDataExchangeApproach;

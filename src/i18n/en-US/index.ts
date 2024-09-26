@@ -1,4 +1,4 @@
-import evaluatingDataExhangeApproach from './helpAndKnowledge/Articles/evaluatingDataExchangeApproach';
+import evaluatingDataExchangeApproach from './helpAndKnowledge/Articles/evaluatingDataExchangeApproach';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
@@ -121,7 +121,7 @@ const enUS = {
   readOnlyModelPlan,
   feedback,
   // Help and Knowledge Center Articles
-  evaluatingDataExhangeApproach,
+  evaluatingDataExchangeApproach,
   getAccess,
   helpAndKnowledge,
   highLevelProjectPlans,
