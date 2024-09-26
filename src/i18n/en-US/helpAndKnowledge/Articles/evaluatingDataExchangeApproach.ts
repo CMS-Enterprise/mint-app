@@ -107,7 +107,7 @@ const evaluatingDataExchangeApproach = {
               link: 'https://www.cdcfoundation.org/CDCFoundationPPRLSummary.pdf?inline'
             },
             {
-              text: '<inlineText>Utilizing the </inlineText><link1>Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]</link1>',
+              text: 'Utilizing the <link1>Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]</link1>',
               link: 'https://www.healthit.gov/topic/interoperability/policy/trusted-exchange-framework-and-common-agreement-tefca'
             },
             'Enabling an additional data stream not previously used at CMMI'

@@ -177,7 +177,7 @@ const DataExchangeApproachTable = () => {
                     }
                     return (
                       <li key={item.text}>
-                        <div className="flex-container">
+                        <div className="flex-container margin-bottom-05">
                           <Trans
                             i18nKey={`evaluatingDataExchangeApproach:table.rows.${rowIndex}.additionalDetails.list.${index}.text`}
                             components={{
