@@ -198,3 +198,27 @@
     border-bottom: 1px solid;
   }
 }
+
+.line-height-normal {
+  line-height: 1.5625rem !important;
+}
+
+.line-height-large {
+  line-height: 2.1875rem !important;
+}
+
+.mint-body-normal {
+  font-weight: 400 !important;
+  line-height: 1.5625rem !important;
+  font-size: 1rem !important;
+}
+
+.mint-body-large {
+  font-weight: 300 !important;
+  line-height: 2.1875rem !important;
+  font-size: 1.375rem !important;
+}
+
+.scroll-target {
+  scroll-margin-top: 5rem;
+}

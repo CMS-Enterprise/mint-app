@@ -1975,14 +1975,16 @@ There are two types of CRs:`,
 
 const helpCategories: Record<ArticleCategories, string> = {
   [ArticleCategories.GETTING_STARTED]: 'Getting started',
-  [ArticleCategories.IT_IMPLEMENTATION]: 'IT implementation'
+  [ArticleCategories.IT_IMPLEMENTATION]: 'IT implementation',
+  [ArticleCategories.MODEL_CONCEPT_AND_DESIGN]: 'Model concept and design'
 };
 
 const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.MODEL_PLAN_OVERVIEW]: 'Overview for adding a model',
   [HelpArticle.HIGH_LEVEL_PROJECT_PLAN]: 'High-Level Project Plan',
   [HelpArticle.SAMPLE_MODEL_PLAN]: 'Sample Model Plan',
-  [HelpArticle.TWO_PAGER_MEETING]: 'How to have a successful 2-pager meeting',
+  [HelpArticle.TWO_PAGER_MEETING]:
+    'About 2-page concept papers and review meetings',
   [HelpArticle.SIX_PAGER_MEETING]: 'How to have a successful 6-pager meeting',
   [HelpArticle.UTILIZING_SOLUTIONS]:
     'Utilizing available operational solutions',
