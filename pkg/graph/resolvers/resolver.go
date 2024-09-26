@@ -3,6 +3,8 @@ package resolvers
 import (
 	"context"
 
+	"github.com/spf13/viper"
+
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
@@ -32,6 +34,7 @@ type Resolver struct {
 	addressBook          email.AddressBook
 	ldClient             *ldclient.LDClient
 	pubsub               pubsub.PubSub
+	viperConfig          *viper.Viper
 }
 
 // ResolverService holds service methods for use in resolvers
@@ -51,6 +54,7 @@ func NewResolver(
 	addressBook email.AddressBook,
 	ldClient *ldclient.LDClient,
 	pubsub pubsub.PubSub,
+	viperConfig *viper.Viper,
 ) *Resolver {
 	return &Resolver{
 		store:                store,
@@ -62,5 +66,6 @@ func NewResolver(
 		addressBook:          addressBook,
 		ldClient:             ldClient,
 		pubsub:               pubsub,
+		viperConfig:          viperConfig,
 	}
 }
