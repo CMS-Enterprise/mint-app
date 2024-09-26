@@ -1,4 +1,4 @@
-import evaluatingDataExhangeApproach from './helpAndKnowledge/Articles/dataExchangeApproach';
+import evaluatingDataExhangeApproach from './helpAndKnowledge/Articles/evaluatingDataExchangeApproach';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
