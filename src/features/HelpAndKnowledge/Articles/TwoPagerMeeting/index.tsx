@@ -48,6 +48,10 @@ type StepThreeListType = {
 const TwoPagerMeeting = () => {
   const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
 
+  const summaryboxListItems: string[] = tArray(
+    'twoPageMeeting:summaryBox.list'
+  );
+
   const briefItems = tArray<string>(
     'twoPageMeeting:about.stepOne.items.brief.list'
   );
@@ -128,44 +132,26 @@ const TwoPagerMeeting = () => {
               </SummaryBoxHeading>
               <SummaryBoxContent>
                 <ul className="margin-y-0">
-                  {/* eslint-disable jsx-a11y/anchor-is-valid */}
-                  <li className="margin-top-05 margin-bottom-1">
-                    <ScrollLink
-                      scrollTo={twoPageMeetingT(
-                        'summaryBox.listItem.keyResources'
-                      )}
-                    />
-                  </li>
-                  <li className="margin-bottom-1">
-                    <ScrollLink
-                      scrollTo={twoPageMeetingT('summaryBox.listItem.about')}
-                    />
-                  </li>
-                  <li className="margin-bottom-1">
-                    <ScrollLink
-                      scrollTo={twoPageMeetingT(
-                        'summaryBox.listItem.additionalResources'
-                      )}
-                    />
-                  </li>
-                  <li>
-                    <ScrollLink
-                      scrollTo={twoPageMeetingT('summaryBox.listItem.review')}
-                    />
-                  </li>
-                  {/* eslint-enable jsx-a11y/anchor-is-valid */}
+                  {summaryboxListItems.map(k => (
+                    <li
+                      key={covertToLowercaseAndDashes(k)}
+                      className="margin-top-05 margin-bottom-1"
+                    >
+                      <ScrollLink scrollTo={k} />
+                    </li>
+                  ))}
                 </ul>
               </SummaryBoxContent>
             </SummaryBox>
 
             <div
               id={covertToLowercaseAndDashes(
-                twoPageMeetingT('summaryBox.listItem.keyResources')
+                twoPageMeetingT('summaryBox.list.0')
               )}
               className="margin-bottom-6"
             >
               <h2 className="margin-bottom-3">
-                {twoPageMeetingT('summaryBox.listItem.keyResources')}
+                {twoPageMeetingT('summaryBox.list.0')}
               </h2>
               <p className="margin-top-0 margin-bottom-3 line-height-normal">
                 {twoPageMeetingT('keyResources.introParagraph')}
@@ -222,12 +208,12 @@ const TwoPagerMeeting = () => {
 
             <div
               id={covertToLowercaseAndDashes(
-                twoPageMeetingT('summaryBox.listItem.about')
+                twoPageMeetingT('summaryBox.list.1')
               )}
               className="margin-bottom-6"
             >
               <h2 className="margin-bottom-3">
-                {twoPageMeetingT('summaryBox.listItem.about')}
+                {twoPageMeetingT('summaryBox.list.1')}
               </h2>
               <p className="margin-top-0 margin-bottom-3 line-height-normal">
                 {twoPageMeetingT('about.introParagraph')}
@@ -432,12 +418,12 @@ const TwoPagerMeeting = () => {
 
             <div
               id={covertToLowercaseAndDashes(
-                twoPageMeetingT('summaryBox.listItem.additionalResources')
+                twoPageMeetingT('summaryBox.list.2')
               )}
               className="margin-bottom-6"
             >
               <h2 className="margin-bottom-3">
-                {twoPageMeetingT('summaryBox.listItem.additionalResources')}
+                {twoPageMeetingT('summaryBox.list.2')}
               </h2>
               <p className="margin-top-0 margin-bottom-3 line-height-normal">
                 {twoPageMeetingT('additionalResources.intro')}
@@ -515,12 +501,12 @@ const TwoPagerMeeting = () => {
 
             <div
               id={covertToLowercaseAndDashes(
-                twoPageMeetingT('summaryBox.listItem.review')
+                twoPageMeetingT('summaryBox.list.3')
               )}
               className="margin-bottom-6"
             >
               <h2 className="margin-bottom-3">
-                {twoPageMeetingT('summaryBox.listItem.review')}
+                {twoPageMeetingT('summaryBox.list.3')}
               </h2>
               <p className="margin-top-0 margin-bottom-3 line-height-normal">
                 {twoPageMeetingT('reviewMeeting.intro')}

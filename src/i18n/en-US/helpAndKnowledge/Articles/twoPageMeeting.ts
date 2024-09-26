@@ -4,13 +4,12 @@ const twoPageMeeting = {
     'Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.',
   summaryBox: {
     title: 'Sections of this article',
-    listItem: {
-      keyResources:
-        'Key resources for model teams writing 2-page concept papers',
-      about: 'About 2-page concept papers',
-      additionalResources: 'Additional resources available to model teams',
-      review: 'How 2-page concept papers are reviewed'
-    }
+    list: [
+      'Key resources for model teams writing 2-page concept papers',
+      'About 2-page concept papers',
+      'Additional resources available to model teams',
+      'How 2-page concept papers are reviewed'
+    ]
   },
   keyResources: {
     introParagraph:
