@@ -7,7 +7,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 
 type ExternalLinkModalTypes = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   href: string;
   variant?: 'external' | 'unstyled' | 'nav';

@@ -21,6 +21,7 @@ const Login = () => {
 
   let defaultAuth = false;
   const { oktaAuth, authState } = useOktaAuth();
+
   const history = useHistory();
 
   if (isLocalAuthEnabled() && window.localStorage[localAuthStorageKey]) {

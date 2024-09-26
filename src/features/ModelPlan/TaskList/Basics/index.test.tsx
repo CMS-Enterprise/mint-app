@@ -140,7 +140,7 @@ describe('Model Plan Basics page', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment, getByText } = render(
+    const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
           '/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list/basics'
@@ -154,9 +154,7 @@ describe('Model Plan Basics page', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => {
-      expect(getByText('First Name')).toBeInTheDocument();
-    });
+    expect(await screen.findByText('First Name')).toBeInTheDocument();
 
     expect(asFragment()).toMatchSnapshot();
   });

@@ -21,11 +21,10 @@ func (r *queryResolver) EchimpCr(ctx context.Context, id string) (*models.EChimp
 		return nil, err
 	}
 	if enabled {
-		return GetEChimpCRByID(r.echimpS3Client, id)
+		return GetEChimpCRByID(r.echimpS3Client, r.viperConfig, id)
 	}
 
 	return nil, nil
-
 }
 
 // EchimpCRs is the resolver for the echimpCRs field.
@@ -37,7 +36,7 @@ func (r *queryResolver) EchimpCRs(ctx context.Context) ([]*models.EChimpCR, erro
 		return nil, err
 	}
 	if enabled {
-		return GetEChimpCRs(r.echimpS3Client)
+		return GetEChimpCRs(r.echimpS3Client, r.viperConfig)
 	}
 
 	return nil, nil
@@ -51,7 +50,7 @@ func (r *queryResolver) EchimpTDLs(ctx context.Context) ([]*models.EChimpTDL, er
 		return nil, err
 	}
 	if enabled {
-		return GetEChimpTDLS(r.echimpS3Client)
+		return GetEChimpTDLS(r.echimpS3Client, r.viperConfig)
 	}
 
 	return nil, nil
@@ -66,7 +65,7 @@ func (r *queryResolver) EchimpTdl(ctx context.Context, id string) (*models.EChim
 		return nil, err
 	}
 	if enabled {
-		return GetEChimpTDLByID(r.echimpS3Client, id)
+		return GetEChimpTDLByID(r.echimpS3Client, r.viperConfig, id)
 	}
 
 	return nil, nil
@@ -80,7 +79,7 @@ func (r *queryResolver) EchimpCRAndTdls(ctx context.Context) ([]models.EChimpCRA
 		return nil, err
 	}
 	if enabled {
-		return GetEchimpCRAndTdls(r.echimpS3Client)
+		return GetEchimpCRAndTdls(r.echimpS3Client, r.viperConfig)
 	}
 
 	return nil, nil
