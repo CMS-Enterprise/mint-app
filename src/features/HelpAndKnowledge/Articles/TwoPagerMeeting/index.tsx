@@ -6,7 +6,6 @@ import {
   CardGroup,
   Grid,
   GridContainer,
-  Icon,
   SummaryBox,
   SummaryBoxContent,
   SummaryBoxHeading
@@ -26,24 +25,13 @@ import useModalSolutionState from 'hooks/useModalSolutionState';
 import { getKeys } from 'types/translation';
 import { tArray, tObject } from 'utils/translation';
 
-import { ArticleCategories, HelpArticle } from '..';
+import { ArticleCategories, HelpArticle, ScrollLink } from '..';
 
 import ModelSectionCriteriaTable from './table';
 
 export const covertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
 
-const Link = ({ scrollTo }: { scrollTo: string }) => {
-  return (
-    <a
-      href={`#${covertToLowercaseAndDashes(scrollTo)}`}
-      className="display-flex flex-align-center"
-    >
-      {scrollTo}
-      <Icon.ArrowForward />
-    </a>
-  );
-};
 type ExampleSummaryBoxListType = {
   [key: string]: {
     href: string;
@@ -142,26 +130,26 @@ const TwoPagerMeeting = () => {
                 <ul className="margin-y-0">
                   {/* eslint-disable jsx-a11y/anchor-is-valid */}
                   <li className="margin-top-05 margin-bottom-1">
-                    <Link
+                    <ScrollLink
                       scrollTo={twoPageMeetingT(
                         'summaryBox.listItem.keyResources'
                       )}
                     />
                   </li>
                   <li className="margin-bottom-1">
-                    <Link
+                    <ScrollLink
                       scrollTo={twoPageMeetingT('summaryBox.listItem.about')}
                     />
                   </li>
                   <li className="margin-bottom-1">
-                    <Link
+                    <ScrollLink
                       scrollTo={twoPageMeetingT(
                         'summaryBox.listItem.additionalResources'
                       )}
                     />
                   </li>
                   <li>
-                    <Link
+                    <ScrollLink
                       scrollTo={twoPageMeetingT('summaryBox.listItem.review')}
                     />
                   </li>
