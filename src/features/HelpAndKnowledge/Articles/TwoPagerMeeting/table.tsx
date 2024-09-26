@@ -47,8 +47,8 @@ const ModelSectionCriteriaTable = () => {
                   i18nKey={item.description}
                   components={{
                     paragraph: <p className="margin-y-0" />,
-                    ul: <ul className="margin-y-0 padding-left-2" />,
-                    li: <li className="line-height-sans-4 margin-bottom-05" />
+                    ul: <ul className="margin-y-0 padding-left-3" />,
+                    li: <li className="line-height-normal margin-bottom-05" />
                   }}
                 />
               </td>

@@ -130,7 +130,7 @@ const TwoPagerMeeting = () => {
               type={ArticleCategories.MODEL_CONCEPT_AND_DESIGN}
               className="margin-bottom-1"
             />
-            <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
+            <p className="mint-body-large line-height-large margin-top-0 margin-bottom-4">
               {twoPageMeetingT('description')}
             </p>
 
@@ -179,7 +179,7 @@ const TwoPagerMeeting = () => {
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.listItem.keyResources')}
               </h2>
-              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+              <p className="margin-top-0 margin-bottom-3 line-height-normal">
                 {twoPageMeetingT('keyResources.introParagraph')}
               </p>
 
@@ -188,13 +188,13 @@ const TwoPagerMeeting = () => {
                   gridLayout={{ desktop: { col: 6 } }}
                   containerProps={{ className: 'shadow-2 padding-2' }}
                 >
-                  <p className="text-bold margin-y-0 line-height-sans-4">
+                  <p className="text-bold margin-y-0 line-height-normal">
                     {twoPageMeetingT(
                       'keyResources.cards.strategyRefresh.heading'
                     )}
                   </p>
                   <ExternalLink
-                    className="line-height-sans-4"
+                    className="line-height-normal"
                     href="https://share.cms.gov/center/cmmi/SR/SitePages/Home.aspx"
                   >
                     {twoPageMeetingT(
@@ -202,7 +202,7 @@ const TwoPagerMeeting = () => {
                     )}
                   </ExternalLink>
                   <ExternalLink
-                    className="line-height-sans-4"
+                    className="line-height-normal"
                     href="https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx"
                   >
                     {twoPageMeetingT(
@@ -214,16 +214,16 @@ const TwoPagerMeeting = () => {
                   gridLayout={{ desktop: { col: 6 } }}
                   containerProps={{ className: 'shadow-2 padding-2' }}
                 >
-                  <p className="text-bold margin-y-0 line-height-sans-4">
+                  <p className="text-bold margin-y-0 line-height-normal">
                     {twoPageMeetingT(
                       'keyResources.cards.twoPageTemplate.heading'
                     )}
                   </p>
-                  <p className="text-base margin-y-0 line-height-sans-4">
+                  <p className="text-base margin-y-0 line-height-normal">
                     {twoPageMeetingT('keyResources.cards.twoPageTemplate.copy')}
                   </p>
                   <ExternalLink
-                    className="line-height-sans-4"
+                    className="line-height-normal"
                     href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx"
                   >
                     {twoPageMeetingT('keyResources.cards.twoPageTemplate.link')}
@@ -241,7 +241,7 @@ const TwoPagerMeeting = () => {
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.listItem.about')}
               </h2>
-              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+              <p className="margin-top-0 margin-bottom-3 line-height-normal">
                 {twoPageMeetingT('about.introParagraph')}
               </p>
 
@@ -268,30 +268,30 @@ const TwoPagerMeeting = () => {
               <h3 className="margin-top-0 margin-bottom-1">
                 {twoPageMeetingT('about.stepOne.heading')}
               </h3>
-              <p className="padding-left-3 margin-bottom-0 line-height-sans-4">
+              <p className="padding-left-3 margin-bottom-0 line-height-normal">
                 {twoPageMeetingT('about.stepOne.copy')}
               </p>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                <li className="line-height-sans-4">
+                <li className="line-height-normal">
                   {twoPageMeetingT('about.stepOne.items.brief.text')}
                   <ul
                     className="margin-top-0 padding-left-2"
                     style={{ listStyleType: 'disc' }}
                   >
                     {briefItems.map(k => (
-                      <li key={k} className="line-height-sans-4">
+                      <li key={k} className="line-height-normal">
                         {k}
                       </li>
                     ))}
                   </ul>
                 </li>
-                <li className="line-height-sans-4">
+                <li className="line-height-normal">
                   {twoPageMeetingT('about.stepOne.items.describe')}
                 </li>
-                <li className="line-height-sans-4">
+                <li className="line-height-normal">
                   {twoPageMeetingT('about.stepOne.items.include')}
                 </li>
-                <li className="line-height-sans-4">
+                <li className="line-height-normal">
                   {twoPageMeetingT('about.stepOne.items.provide')}
                 </li>
               </ul>
@@ -299,11 +299,11 @@ const TwoPagerMeeting = () => {
               <h3 className="margin-top-0 margin-bottom-1">
                 {twoPageMeetingT('about.stepTwo.heading')}
               </h3>
-              <p className="padding-left-3 margin-bottom-0 line-height-sans-4">
+              <p className="padding-left-3 margin-bottom-0 line-height-normal">
                 {twoPageMeetingT('about.stepTwo.copy')}
               </p>
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                <li className="line-height-sans-4">
+                <li className="line-height-normal">
                   {twoPageMeetingT('about.stepTwo.item')}
                 </li>
               </ul>
@@ -314,7 +314,7 @@ const TwoPagerMeeting = () => {
               <i className="display-block margin-top-0 margin-bottom-1 padding-left-3">
                 {twoPageMeetingT('about.stepThree.italics')}
               </i>
-              <p className="padding-left-3 margin-bottom-0 line-height-sans-4">
+              <p className="padding-left-3 margin-bottom-0 line-height-normal">
                 <Trans
                   t={twoPageMeetingT}
                   i18nKey="about.stepThree.copy"
@@ -327,7 +327,7 @@ const TwoPagerMeeting = () => {
                 {Object.values(stepThreeList).map(k => (
                   <li
                     key={covertToLowercaseAndDashes(k.text)}
-                    className="line-height-sans-4 margin-bottom-05"
+                    className="line-height-normal margin-bottom-05"
                   >
                     <Trans
                       t={twoPageMeetingT}
@@ -341,7 +341,7 @@ const TwoPagerMeeting = () => {
                         {k.numberedList.map(listItem => (
                           <li
                             key={covertToLowercaseAndDashes(listItem)}
-                            className="line-height-sans-4"
+                            className="line-height-normal"
                           >
                             {listItem}
                           </li>
@@ -353,7 +353,7 @@ const TwoPagerMeeting = () => {
                         {k.list.map(listItem => (
                           <li
                             key={covertToLowercaseAndDashes(listItem)}
-                            className="line-height-sans-4"
+                            className="line-height-normal"
                           >
                             {listItem}
                           </li>
@@ -377,7 +377,7 @@ const TwoPagerMeeting = () => {
                   </p>
                   <ul className="margin-y-0 padding-left-6">
                     {aboutTipsList1.map(k => (
-                      <li key={k} className="line-height-sans-4">
+                      <li key={k} className="line-height-normal">
                         {k}
                       </li>
                     ))}
@@ -387,7 +387,7 @@ const TwoPagerMeeting = () => {
                   </p>
                   <ul className="margin-top-0 margin-bottom-2 padding-left-6">
                     {aboutTipsList2.map(k => (
-                      <li key={k} className="line-height-sans-4">
+                      <li key={k} className="line-height-normal">
                         {k}
                       </li>
                     ))}
@@ -451,7 +451,7 @@ const TwoPagerMeeting = () => {
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.listItem.additionalResources')}
               </h2>
-              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+              <p className="margin-top-0 margin-bottom-3 line-height-normal">
                 {twoPageMeetingT('additionalResources.intro')}
               </p>
 
@@ -461,7 +461,7 @@ const TwoPagerMeeting = () => {
               {contractorParagraphs.map(k => (
                 <p
                   key={k}
-                  className="line-height-sans-4 margin-top-0 margin-bottom-3"
+                  className="line-height-normal margin-top-0 margin-bottom-3"
                 >
                   {k}
                 </p>
@@ -484,7 +484,7 @@ const TwoPagerMeeting = () => {
                   </p>
                   <ul className="margin-y-0 padding-left-6">
                     {additionalResourceTips.map(k => (
-                      <li key={k} className="line-height-sans-4">
+                      <li key={k} className="line-height-normal">
                         {k}
                       </li>
                     ))}
@@ -500,13 +500,13 @@ const TwoPagerMeeting = () => {
               <h3 className="margin-top-0 margin-bottom-1">
                 {twoPageMeetingT('additionalResources.crossCut.heading')}
               </h3>
-              <p className="line-height-sans-4 margin-y-0">
+              <p className="line-height-normal margin-y-0">
                 {twoPageMeetingT('additionalResources.crossCut.copy')}
               </p>
 
               <ul className="margin-y-0 padding-left-6">
                 {crossCutListItems.map(k => (
-                  <li key={k} className="line-height-sans-4">
+                  <li key={k} className="line-height-normal">
                     <Trans
                       i18nKey={k}
                       components={{
@@ -534,7 +534,7 @@ const TwoPagerMeeting = () => {
               <h2 className="margin-bottom-3">
                 {twoPageMeetingT('summaryBox.listItem.review')}
               </h2>
-              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+              <p className="margin-top-0 margin-bottom-3 line-height-normal">
                 {twoPageMeetingT('reviewMeeting.intro')}
               </p>
 
@@ -553,7 +553,7 @@ const TwoPagerMeeting = () => {
                   </p>
                   <ul className="margin-y-0 padding-left-3">
                     {reviewTipsList.map(k => (
-                      <li key={k} className="line-height-sans-4">
+                      <li key={k} className="line-height-normal">
                         {k}
                       </li>
                     ))}
@@ -564,7 +564,7 @@ const TwoPagerMeeting = () => {
               <h3 className="margin-top-0 margin-bottom-1">
                 {twoPageMeetingT('reviewMeeting.criteria.heading')}
               </h3>
-              <p className="margin-y-0 line-height-sans-4">
+              <p className="margin-y-0 line-height-normal">
                 {twoPageMeetingT('reviewMeeting.criteria.copy')}
               </p>
 
@@ -574,12 +574,12 @@ const TwoPagerMeeting = () => {
               <h3 className="margin-top-0 margin-bottom-1">
                 {twoPageMeetingT('reviewMeeting.outcomes.heading')}
               </h3>
-              <p className="margin-y-0 line-height-sans-4">
+              <p className="margin-y-0 line-height-normal">
                 {twoPageMeetingT('reviewMeeting.outcomes.copy')}
               </p>
               <ul className="margin-y-0 padding-left-3">
                 {outcomesList.map(k => (
-                  <li key={k} className="line-height-sans-4">
+                  <li key={k} className="line-height-normal">
                     <Trans
                       i18nKey={k}
                       components={{
