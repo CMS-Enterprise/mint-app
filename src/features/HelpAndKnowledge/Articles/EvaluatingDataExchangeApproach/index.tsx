@@ -6,6 +6,7 @@ import {
   Grid,
   GridContainer,
   Icon,
+  Link,
   Table as TrussTable
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
@@ -75,11 +76,11 @@ export const EvaluatingDataExchangeApproach = () => {
 
               <DataExchangeApproachTable />
 
-              <p className="text-bold margin-bottom-0">
+              <p className="text-bold margin-bottom-0 margin-top-1">
                 {t('additionalConsiderations')}
               </p>
 
-              <p className="border-bottom padding-bottom-2 margin-bottom-0 margin-top-0">
+              <p className="border-bottom padding-bottom-2 margin-bottom-1 margin-top-0">
                 {t('additionalConsiderationsDescription')}
               </p>
             </div>
@@ -131,7 +132,7 @@ const DataExchangeApproachTable = () => {
             <th
               key={k}
               scope="col"
-              className="padding-y-1"
+              className="padding-y-1 padding-left-0"
               style={{
                 maxWidth: '250px',
                 width: '250px',
@@ -148,7 +149,7 @@ const DataExchangeApproachTable = () => {
           return (
             <tr key={covertToLowercaseAndDashes(row.id)}>
               <td
-                className="text-baseline padding-y-2"
+                className="text-baseline padding-y-2 padding-left-0"
                 style={{
                   maxWidth: '250px',
                   width: '250px',
@@ -161,7 +162,7 @@ const DataExchangeApproachTable = () => {
               </td>
 
               <td
-                className="text-baseline padding-y-2"
+                className="text-baseline padding-y-2 padding-left-0"
                 style={{
                   maxWidth: '250px',
                   width: '250px',
@@ -183,7 +184,9 @@ const DataExchangeApproachTable = () => {
                             components={{
                               inlineText: <span />,
                               link1: (
-                                <ExternalLink href={item.link}> </ExternalLink>
+                                <ExternalLink href={item.link} inlineText>
+                                  {' '}
+                                </ExternalLink>
                               )
                             }}
                           />
