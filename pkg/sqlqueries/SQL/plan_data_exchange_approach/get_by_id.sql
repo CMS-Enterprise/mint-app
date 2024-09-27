@@ -19,10 +19,12 @@ SELECT
   new_data_exchange_methods_description,
   new_data_exchange_methods_note,
   additional_data_exchange_considerations_description,
-  is_data_exchange_approach_complete,
   created_by,
   created_dts,
   modified_by,
-  modified_dts
+  modified_dts,
+  is_data_exchange_approach_complete,
+  marked_complete_by,
+  marked_complete_dts
 FROM plan_data_exchange_approach
 WHERE id = :id;

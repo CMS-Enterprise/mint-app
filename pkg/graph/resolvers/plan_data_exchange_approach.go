@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"github.com/davecgh/go-spew/spew"
 	"time"
 
 	"github.com/google/uuid"
@@ -36,20 +37,27 @@ func PlanDataExchangeApproachUpdate(
 		return nil, err
 	}
 
+	// Check if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the
+	// 'isDataExchangeApproachComplete' is different from the existing value
+	println("Checking if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the 'isDataExchangeApproachComplete is different from the existing value")
+	spew.Dump(changes)
+	if isDataExchangeApproachComplete, ok := changes["isDataExchangeApproachComplete"]; ok {
+		println("isDataExchangeApproachComplete is in the changes map")
+
+		isSettingToComplete := true == isDataExchangeApproachComplete.(bool)
+		println("isSettingToComplete: ", isSettingToComplete)
+		println("existing.IsDataExchangeApproachComplete: ", existing.IsDataExchangeApproachComplete)
+		if existing.IsDataExchangeApproachComplete != true && isSettingToComplete {
+			println("existing.IsDataExchangeApproachComplete != true && isSettingToComplete")
+			existing.MarkedCompleteBy = principal.Account().ID
+			existing.MarkedCompleteDts = time.Now().UTC()
+		}
+	}
+
 	// Update the base task list section
 	err = CoreTaskListSectionPreUpdate(logger, existing, changes, principal, store)
 	if err != nil {
 		return nil, err
-	}
-
-	// Check if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the
-	// 'isDataExchangeApproachComplete' is different from the existing value
-	if isDataExchangeApproachComplete, ok := changes["isDataExchangeApproachComplete"]; ok {
-		if existing.IsDataExchangeApproachComplete != isDataExchangeApproachComplete.(bool) {
-			existing.IsDataExchangeApproachComplete = isDataExchangeApproachComplete.(bool)
-			existing.MarkedCompleteBy = principal.Account().ID
-			existing.MarkedCompleteDts = time.Now().UTC()
-		}
 	}
 
 	// Update the plan data exchange approach

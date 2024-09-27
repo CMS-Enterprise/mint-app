@@ -19,9 +19,11 @@ SET
   new_data_exchange_methods_description = :new_data_exchange_methods_description,
   new_data_exchange_methods_note = :new_data_exchange_methods_note,
   additional_data_exchange_considerations_description = :additional_data_exchange_considerations_description,
-  is_data_exchange_approach_complete = :is_data_exchange_approach_complete,
   modified_by = :modified_by,
-  modified_dts = CURRENT_TIMESTAMP
+  modified_dts = CURRENT_TIMESTAMP,
+  is_data_exchange_approach_complete = :is_data_exchange_approach_complete,
+  marked_complete_by = :marked_complete_by,
+  marked_complete_dts = :marked_complete_dts
 WHERE id = :id
 RETURNING
   id,
@@ -44,8 +46,10 @@ RETURNING
   new_data_exchange_methods_description,
   new_data_exchange_methods_note,
   additional_data_exchange_considerations_description,
-  is_data_exchange_approach_complete,
   created_by,
   created_dts,
   modified_by,
-  modified_dts;
+  modified_dts,
+  is_data_exchange_approach_complete,
+  marked_complete_by,
+  marked_complete_dts;
