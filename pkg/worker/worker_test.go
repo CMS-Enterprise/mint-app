@@ -62,6 +62,7 @@ func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
 		nil,
 		email.AddressBook{},
 		planName,
+		nil,
 		suite.testConfigs.Store,
 		suite.testConfigs.Principal,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
