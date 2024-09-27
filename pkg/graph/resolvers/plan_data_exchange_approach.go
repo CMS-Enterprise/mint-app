@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -38,6 +40,16 @@ func PlanDataExchangeApproachUpdate(
 	err = CoreTaskListSectionPreUpdate(logger, existing, changes, principal, store)
 	if err != nil {
 		return nil, err
+	}
+
+	// Check if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the
+	// 'isDataExchangeApproachComplete' is different from the existing value
+	if isDataExchangeApproachComplete, ok := changes["isDataExchangeApproachComplete"]; ok {
+		if existing.IsDataExchangeApproachComplete != isDataExchangeApproachComplete.(bool) {
+			existing.IsDataExchangeApproachComplete = isDataExchangeApproachComplete.(bool)
+			existing.MarkedCompleteBy = principal.Account().ID
+			existing.MarkedCompleteDts = time.Now().UTC()
+		}
 	}
 
 	// Update the plan data exchange approach

@@ -45,43 +45,45 @@ CREATE TYPE DEA_MULTI_SOURCE_DATA_TO_COLLECT AS ENUM (
   );
 
 CREATE TABLE plan_data_exchange_approach (
-                                      id UUID PRIMARY KEY NOT NULL,
-                                      model_plan_id UUID NOT NULL REFERENCES model_plan(id),
+                                           id UUID PRIMARY KEY NOT NULL,
+                                           model_plan_id UUID NOT NULL REFERENCES model_plan(id),
 
   -- page 2
-                                      data_to_collect_from_participants DEA_DATA_TO_COLLECT_FROM_PARTICIPANTS[],
-                                      data_to_collect_from_participants_reports_details ZERO_STRING,
-                                      data_to_collect_from_participants_other ZERO_STRING,
-                                      data_will_not_be_collected_from_participants BOOLEAN NOT NULL DEFAULT FALSE,
-                                      data_to_collect_from_participants_note ZERO_STRING,
+                                           data_to_collect_from_participants DEA_DATA_TO_COLLECT_FROM_PARTICIPANTS[],
+                                           data_to_collect_from_participants_reports_details ZERO_STRING,
+                                           data_to_collect_from_participants_other ZERO_STRING,
+                                           data_will_not_be_collected_from_participants BOOLEAN NOT NULL DEFAULT FALSE,
+                                           data_to_collect_from_participants_note ZERO_STRING,
 
-                                      data_to_send_to_participants DEA_DATA_TO_SEND_TO_PARTICIPANTS[],
-                                      data_to_send_to_participants_note ZERO_STRING,
+                                           data_to_send_to_participants DEA_DATA_TO_SEND_TO_PARTICIPANTS[],
+                                           data_to_send_to_participants_note ZERO_STRING,
 
   -- page 3
-                                      does_need_to_make_multi_payer_data_available YES_NO_TYPE DEFAULT NULL,
-                                      anticipated_multi_payer_data_availability_use_case DEA_ANTICIPATED_MULTI_PAYER_DATA_AVAILABILITY_USE_CASE DEFAULT NULL,
-                                      does_need_to_make_multi_payer_data_available_note ZERO_STRING,
+                                           does_need_to_make_multi_payer_data_available YES_NO_TYPE DEFAULT NULL,
+                                           anticipated_multi_payer_data_availability_use_case DEA_ANTICIPATED_MULTI_PAYER_DATA_AVAILABILITY_USE_CASE DEFAULT NULL,
+                                           does_need_to_make_multi_payer_data_available_note ZERO_STRING,
 
-                                      does_need_to_collect_and_aggregate_multi_source_data YES_NO_TYPE DEFAULT NULL,
-                                      multi_source_data_to_collect DEA_MULTI_SOURCE_DATA_TO_COLLECT[],
-                                      multi_source_data_to_collect_other ZERO_STRING,
-                                      does_need_to_collect_and_aggregate_multi_source_data_note ZERO_STRING,
+                                           does_need_to_collect_and_aggregate_multi_source_data YES_NO_TYPE DEFAULT NULL,
+                                           multi_source_data_to_collect DEA_MULTI_SOURCE_DATA_TO_COLLECT[],
+                                           multi_source_data_to_collect_other ZERO_STRING,
+                                           does_need_to_collect_and_aggregate_multi_source_data_note ZERO_STRING,
 
 -- page 4
-                                      will_implement_new_data_exchange_methods YES_NO_TYPE DEFAULT NULL,
-                                      new_data_exchange_methods_description ZERO_STRING,
-                                      new_data_exchange_methods_note ZERO_STRING,
+                                           will_implement_new_data_exchange_methods YES_NO_TYPE DEFAULT NULL,
+                                           new_data_exchange_methods_description ZERO_STRING,
+                                           new_data_exchange_methods_note ZERO_STRING,
 
-                                      additional_data_exchange_considerations_description ZERO_STRING,
+                                           additional_data_exchange_considerations_description ZERO_STRING,
 
-                                      is_data_exchange_approach_complete BOOLEAN NOT NULL DEFAULT FALSE,
 
   -- META DATA
-                                      created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE NOT NULL,
-                                      created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                      modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
-                                      modified_dts TIMESTAMP WITH TIME ZONE
+                                           created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE NOT NULL,
+                                           created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                           modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
+                                           modified_dts TIMESTAMP WITH TIME ZONE,
+                                           is_data_exchange_approach_complete BOOLEAN NOT NULL DEFAULT FALSE,
+                                           marked_complete_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
+                                           marked_complete_dts TIMESTAMP WITH TIME ZONE
 );
 
 COMMENT ON TABLE plan_data_exchange_approach IS 'This table stores the data exchange approach for a model plan.';

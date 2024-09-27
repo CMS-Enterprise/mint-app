@@ -73,8 +73,6 @@ type PlanDataExchangeApproach {
 
   additionalDataExchangeConsiderationsDescription: String
 
-  isDataExchangeApproachComplete: Boolean!
-
   # Metadata fields
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -82,6 +80,10 @@ type PlanDataExchangeApproach {
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
+  isDataExchangeApproachComplete: Boolean!
+  markedCompleteBy: UUID
+  markedCompleteByUserAccount: UserAccount
+  markedCompleteDts: Time
 }
 
 input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") {

@@ -1850,6 +1850,9 @@ export type PlanDataExchangeApproach = {
   doesNeedToMakeMultiPayerDataAvailableNote?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
   isDataExchangeApproachComplete: Scalars['Boolean']['output'];
+  markedCompleteBy?: Maybe<Scalars['UUID']['output']>;
+  markedCompleteByUserAccount?: Maybe<UserAccount>;
+  markedCompleteDts?: Maybe<Scalars['Time']['output']>;
   modelPlan: ModelPlan;
   modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;

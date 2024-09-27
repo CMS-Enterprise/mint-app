@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -48,3 +49,13 @@ func (r *Resolver) PlanDataExchangeApproach() generated.PlanDataExchangeApproach
 }
 
 type planDataExchangeApproachResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *planDataExchangeApproachResolver) MarkedCompleteByUserAccount(ctx context.Context, obj *models.PlanDataExchangeApproach) (*authentication.UserAccount, error) {
+	return obj.MarkedCompleteByUserAccount(ctx)
+}

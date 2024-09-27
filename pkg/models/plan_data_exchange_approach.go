@@ -7,6 +7,7 @@ import (
 // PlanDataExchangeApproach represents the data exchange approach of a model plan
 type PlanDataExchangeApproach struct {
 	coreTaskListSection
+	markedCompleteByRelation
 
 	// Page 2
 	DataToCollectFromParticipants               pq.StringArray `json:"dataToCollectFromParticipants" db:"data_to_collect_from_participants" statusWeight:"1"`
