@@ -21,7 +21,6 @@ type PlanDataExchangeApproach struct {
 	// Page 3
 	DoesNeedToMakeMultiPayerDataAvailable        *YesNoType                                    `json:"doesNeedToMakeMultiPayerDataAvailable" db:"does_need_to_make_multi_payer_data_available" statusWeight:"1"`
 	AnticipatedMultiPayerDataAvailabilityUseCase *AnticipatedMultiPayerDataAvailabilityUseCase `json:"anticipatedMultiPayerDataAvailabilityUseCase" db:"anticipated_multi_payer_data_availability_use_case"`
-	DoesNeedToMakeMultiPayerDataAvailableOther   *string                                       `json:"doesNeedToMakeMultiPayerDataAvailableOther" db:"does_need_to_make_multi_payer_data_available_other"`
 	DoesNeedToMakeMultiPayerDataAvailableNote    *string                                       `json:"doesNeedToMakeMultiPayerDataAvailableNote" db:"does_need_to_make_multi_payer_data_available_note"`
 
 	DoesNeedToCollectAndAggregateMultiSourceData     *YesNoType     `json:"doesNeedToCollectAndAggregateMultiSourceData" db:"does_need_to_collect_and_aggregate_multi_source_data" statusWeight:"1"`

@@ -61,7 +61,6 @@ CREATE TABLE plan_data_exchange_approach (
   -- page 3
                                       does_need_to_make_multi_payer_data_available YES_NO_TYPE DEFAULT NULL,
                                       anticipated_multi_payer_data_availability_use_case DEA_ANTICIPATED_MULTI_PAYER_DATA_AVAILABILITY_USE_CASE DEFAULT NULL,
-                                      does_need_to_make_multi_payer_data_available_other ZERO_STRING,
                                       does_need_to_make_multi_payer_data_available_note ZERO_STRING,
 
                                       does_need_to_collect_and_aggregate_multi_source_data YES_NO_TYPE DEFAULT NULL,
@@ -97,7 +96,6 @@ COMMENT ON COLUMN plan_data_exchange_approach.data_to_send_to_participants IS 'T
 COMMENT ON COLUMN plan_data_exchange_approach.data_to_send_to_participants_note IS 'Additional notes about the data that will be sent to participants.';
 COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_make_multi_payer_data_available IS 'Indicates if multi-payer data needs to be made available.';
 COMMENT ON COLUMN plan_data_exchange_approach.anticipated_multi_payer_data_availability_use_case IS 'The anticipated use case for multi-payer data availability.';
-COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_make_multi_payer_data_available_other IS 'Other reasons for needing to make multi-payer data available.';
 COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_make_multi_payer_data_available_note IS 'Additional notes about the need to make multi-payer data available.';
 COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_collect_and_aggregate_multi_source_data IS 'Indicates if multi-source data needs to be collected and aggregated.';
 COMMENT ON COLUMN plan_data_exchange_approach.multi_source_data_to_collect IS 'The multi-source data that needs to be collected and aggregated.';

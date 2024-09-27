@@ -10,7 +10,6 @@ SET
   data_to_send_to_participants_note = :data_to_send_to_participants_note,
   does_need_to_make_multi_payer_data_available = :does_need_to_make_multi_payer_data_available,
   anticipated_multi_payer_data_availability_use_case = :anticipated_multi_payer_data_availability_use_case,
-  does_need_to_make_multi_payer_data_available_other = :does_need_to_make_multi_payer_data_available_other,
   does_need_to_make_multi_payer_data_available_note = :does_need_to_make_multi_payer_data_available_note,
   does_need_to_collect_and_aggregate_multi_source_data = :does_need_to_collect_and_aggregate_multi_source_data,
   multi_source_data_to_collect = :multi_source_data_to_collect,

@@ -60,7 +60,6 @@ type PlanDataExchangeApproach {
 
   doesNeedToMakeMultiPayerDataAvailable: YesNoType
   anticipatedMultiPayerDataAvailabilityUseCase: AnticipatedMultiPayerDataAvailabilityUseCase
-  doesNeedToMakeMultiPayerDataAvailableOther: String
   doesNeedToMakeMultiPayerDataAvailableNote: String
 
   doesNeedToCollectAndAggregateMultiSourceData: YesNoType

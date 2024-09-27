@@ -1848,7 +1848,6 @@ export type PlanDataExchangeApproach = {
   doesNeedToCollectAndAggregateMultiSourceDataNote?: Maybe<Scalars['String']['output']>;
   doesNeedToMakeMultiPayerDataAvailable?: Maybe<YesNoType>;
   doesNeedToMakeMultiPayerDataAvailableNote?: Maybe<Scalars['String']['output']>;
-  doesNeedToMakeMultiPayerDataAvailableOther?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
   isDataExchangeApproachComplete: Scalars['Boolean']['output'];
   modelPlan: ModelPlan;
