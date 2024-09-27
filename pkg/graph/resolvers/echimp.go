@@ -3,6 +3,7 @@ package resolvers
 import (
 	"github.com/google/uuid"
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -10,9 +11,9 @@ import (
 )
 
 // GetEChimpCRs returns echimp CRS from the cache
-func GetEChimpCRs(echimpS3Client *s3.S3Client, viperConfig *viper.Viper) ([]*models.EChimpCR, error) {
+func GetEChimpCRs(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) ([]*models.EChimpCR, error) {
 
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig)
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -21,9 +22,9 @@ func GetEChimpCRs(echimpS3Client *s3.S3Client, viperConfig *viper.Viper) ([]*mod
 }
 
 // GetEChimpCRByID returns an echimp CR from the cache by id number if it exists
-func GetEChimpCRByID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, id string) (*models.EChimpCR, error) {
+func GetEChimpCRByID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, id string) (*models.EChimpCR, error) {
 
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig)
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -32,9 +33,9 @@ func GetEChimpCRByID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, id s
 }
 
 // GetEChimpCRsByModelPlanID returns echimp CRS from the cache for a specific model plan
-func GetEChimpCRsByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, modelPlanID uuid.UUID) ([]*models.EChimpCR, error) {
+func GetEChimpCRsByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.EChimpCR, error) {
 
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig)
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -43,8 +44,8 @@ func GetEChimpCRsByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.V
 }
 
 // GetEChimpTDLS returns echimptdls from the cache
-func GetEChimpTDLS(echimpS3Client *s3.S3Client, viperConfig *viper.Viper) ([]*models.EChimpTDL, error) {
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig)
+func GetEChimpTDLS(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) ([]*models.EChimpTDL, error) {
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -52,8 +53,8 @@ func GetEChimpTDLS(echimpS3Client *s3.S3Client, viperConfig *viper.Viper) ([]*mo
 }
 
 // GetEChimpTDLByID returns an Echimp TDL from the cache by id number if it exists
-func GetEChimpTDLByID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, id string) (*models.EChimpTDL, error) {
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig)
+func GetEChimpTDLByID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, id string) (*models.EChimpTDL, error) {
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -61,9 +62,9 @@ func GetEChimpTDLByID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, id 
 }
 
 // GetEChimpTDLSByModelPlanID from the cache for a specific modelplan
-func GetEChimpTDLSByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, modelPlanID uuid.UUID) ([]*models.EChimpTDL, error) {
+func GetEChimpTDLSByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.EChimpTDL, error) {
 
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig)
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -71,8 +72,8 @@ func GetEChimpTDLSByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.
 }
 
 // GetEchimpCRAndTdls returns a union of EChimp CR and TDLs from the cache
-func GetEchimpCRAndTdls(echimpS3Client *s3.S3Client, viperConfig *viper.Viper) ([]models.EChimpCRAndTDLS, error) {
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig)
+func GetEchimpCRAndTdls(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) ([]models.EChimpCRAndTDLS, error) {
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -81,8 +82,8 @@ func GetEchimpCRAndTdls(echimpS3Client *s3.S3Client, viperConfig *viper.Viper) (
 }
 
 // GetEchimpCRAndTdlsByModelPlanID returns a union of EChimp CR and TDLs from the cache for a given model plan
-func GetEchimpCRAndTdlsByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, modelPlanID uuid.UUID) ([]models.EChimpCRAndTDLS, error) {
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig)
+func GetEchimpCRAndTdlsByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, modelPlanID uuid.UUID) ([]models.EChimpCRAndTDLS, error) {
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
 	if err != nil {
 		return nil, err
 	}
