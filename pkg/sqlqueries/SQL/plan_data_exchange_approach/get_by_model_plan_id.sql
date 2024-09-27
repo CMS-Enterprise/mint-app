@@ -10,7 +10,6 @@ SELECT
   data_to_send_to_participants_note,
   does_need_to_make_multi_payer_data_available,
   anticipated_multi_payer_data_availability_use_case,
-  does_need_to_make_multi_payer_data_available_other,
   does_need_to_make_multi_payer_data_available_note,
   does_need_to_collect_and_aggregate_multi_source_data,
   multi_source_data_to_collect,
@@ -24,11 +23,6 @@ SELECT
   created_by,
   created_dts,
   modified_by,
-  modified_dts,
-  ready_for_review_by,
-  ready_for_review_dts,
-  ready_for_clearance_by,
-  ready_for_clearance_dts,
-  status
+  modified_dts
 FROM plan_data_exchange_approach
 WHERE model_plan_id = :model_plan_id;

@@ -28,7 +28,7 @@ func (suite *NotificationsSuite) TestActivityDataExchangeApproachCompletedCreate
 	}
 
 	approach := models.NewPlanDataExchangeApproach(
-		models.NewBaseTaskListSection(
+		models.NewCoreTaskListSection(
 			actorID,
 			modelPlanID,
 		),

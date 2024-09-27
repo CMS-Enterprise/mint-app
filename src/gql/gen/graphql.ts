@@ -1860,11 +1860,6 @@ export type PlanDataExchangeApproach = {
   multiSourceDataToCollectOther?: Maybe<Scalars['String']['output']>;
   newDataExchangeMethodsDescription?: Maybe<Scalars['String']['output']>;
   newDataExchangeMethodsNote?: Maybe<Scalars['String']['output']>;
-  readyForClearanceBy?: Maybe<Scalars['UUID']['output']>;
-  readyForClearanceDts?: Maybe<Scalars['Time']['output']>;
-  readyForReviewBy?: Maybe<Scalars['UUID']['output']>;
-  readyForReviewDts?: Maybe<Scalars['Time']['output']>;
-  status: TaskStatus;
   willImplementNewDataExchangeMethods?: Maybe<YesNoType>;
 };
 
@@ -1882,13 +1877,11 @@ export type PlanDataExchangeApproachChanges = {
   doesNeedToCollectAndAggregateMultiSourceDataNote?: InputMaybe<Scalars['String']['input']>;
   doesNeedToMakeMultiPayerDataAvailable?: InputMaybe<YesNoType>;
   doesNeedToMakeMultiPayerDataAvailableNote?: InputMaybe<Scalars['String']['input']>;
-  doesNeedToMakeMultiPayerDataAvailableOther?: InputMaybe<Scalars['String']['input']>;
   isDataExchangeApproachComplete?: InputMaybe<Scalars['Boolean']['input']>;
   multiSourceDataToCollect?: InputMaybe<Array<MultiSourceDataToCollect>>;
   multiSourceDataToCollectOther?: InputMaybe<Scalars['String']['input']>;
   newDataExchangeMethodsDescription?: InputMaybe<Scalars['String']['input']>;
   newDataExchangeMethodsNote?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<TaskStatusInput>;
   willImplementNewDataExchangeMethods?: InputMaybe<YesNoType>;
 };
 

@@ -22,12 +22,7 @@ SET
   additional_data_exchange_considerations_description = :additional_data_exchange_considerations_description,
   is_data_exchange_approach_complete = :is_data_exchange_approach_complete,
   modified_by = :modified_by,
-  modified_dts = CURRENT_TIMESTAMP,
-  ready_for_review_by = :ready_for_review_by,
-  ready_for_review_dts = :ready_for_review_dts,
-  ready_for_clearance_by = :ready_for_clearance_by,
-  ready_for_clearance_dts = :ready_for_clearance_dts,
-  status = :status
+  modified_dts = CURRENT_TIMESTAMP
 WHERE id = :id
 RETURNING
   id,
@@ -41,7 +36,6 @@ RETURNING
   data_to_send_to_participants_note,
   does_need_to_make_multi_payer_data_available,
   anticipated_multi_payer_data_availability_use_case,
-  does_need_to_make_multi_payer_data_available_other,
   does_need_to_make_multi_payer_data_available_note,
   does_need_to_collect_and_aggregate_multi_source_data,
   multi_source_data_to_collect,
@@ -55,9 +49,4 @@ RETURNING
   created_by,
   created_dts,
   modified_by,
-  modified_dts,
-  ready_for_review_by,
-  ready_for_review_dts,
-  ready_for_clearance_by,
-  ready_for_clearance_dts,
-  status;
+  modified_dts;

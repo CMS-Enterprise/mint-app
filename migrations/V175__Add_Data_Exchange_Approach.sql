@@ -82,37 +82,33 @@ CREATE TABLE plan_data_exchange_approach (
                                       created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE NOT NULL,
                                       created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                       modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
-                                      modified_dts TIMESTAMP WITH TIME ZONE,
-                                      ready_for_review_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
-                                      ready_for_review_dts TIMESTAMP WITH TIME ZONE,
-                                      ready_for_clearance_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
-                                      ready_for_clearance_dts TIMESTAMP WITH TIME ZONE,
-                                      status TASK_STATUS NOT NULL DEFAULT 'READY'
+                                      modified_dts TIMESTAMP WITH TIME ZONE
 );
 
-COMMENT ON COLUMN plan_data_exchange_approach.data_to_collect_from_participants IS 'Data to collect from participants';
-COMMENT ON COLUMN plan_data_exchange_approach.data_to_collect_from_participants_reports_details IS 'Data to collect from participants - Reports details';
-COMMENT ON COLUMN plan_data_exchange_approach.data_to_collect_from_participants_other IS 'Data to collect from participants - Other';
-COMMENT ON COLUMN plan_data_exchange_approach.data_will_not_be_collected_from_participants IS 'Data will not be collected from participants';
-COMMENT ON COLUMN plan_data_exchange_approach.data_to_collect_from_participants_note IS 'Data to collect from participants - Note';
-
-COMMENT ON COLUMN plan_data_exchange_approach.data_to_send_to_participants IS 'Data to send to participants';
-COMMENT ON COLUMN plan_data_exchange_approach.data_to_send_to_participants_note IS 'Data to send to participants - Note';
-
-COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_make_multi_payer_data_available IS 'Does need to make multi-payer data available';
-COMMENT ON COLUMN plan_data_exchange_approach.anticipated_multi_payer_data_availability_use_case IS 'Anticipated multi-payer data availability use case';
-COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_make_multi_payer_data_available_other IS 'Does need to make multi-payer data available - Other';
-COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_make_multi_payer_data_available_note IS 'Does need to make multi-payer data available - Note';
-
-COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_collect_and_aggregate_multi_source_data IS 'Does need to collect and aggregate multi-source data';
-COMMENT ON COLUMN plan_data_exchange_approach.multi_source_data_to_collect IS 'Multi-source data to collect';
-COMMENT ON COLUMN plan_data_exchange_approach.multi_source_data_to_collect_other IS 'Multi-source data to collect - Other';
-COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_collect_and_aggregate_multi_source_data_note IS 'Does need to collect and aggregate multi-source data - Note';
-
-COMMENT ON COLUMN plan_data_exchange_approach.will_implement_new_data_exchange_methods IS 'Will implement new data exchange methods';
-COMMENT ON COLUMN plan_data_exchange_approach.new_data_exchange_methods_description IS 'New data exchange methods description';
-COMMENT ON COLUMN plan_data_exchange_approach.new_data_exchange_methods_note IS 'New data exchange methods - Note';
-
-COMMENT ON COLUMN plan_data_exchange_approach.is_data_exchange_approach_complete IS 'Is data exchange approach complete';
-
-COMMENT ON TABLE plan_data_exchange_approach IS 'Data Exchange Approach';
+COMMENT ON TABLE plan_data_exchange_approach IS 'This table stores the data exchange approach for a model plan.';
+COMMENT ON COLUMN plan_data_exchange_approach.id IS 'Unique identifier for the data exchange approach.';
+COMMENT ON COLUMN plan_data_exchange_approach.model_plan_id IS 'The model plan identifier that this data exchange approach is associated with.';
+COMMENT ON COLUMN plan_data_exchange_approach.data_to_collect_from_participants IS 'The data that will be collected from participants.';
+COMMENT ON COLUMN plan_data_exchange_approach.data_to_collect_from_participants_reports_details IS 'The details of the data that will be collected from participants.';
+COMMENT ON COLUMN plan_data_exchange_approach.data_to_collect_from_participants_other IS 'Other data that will be collected from participants.';
+COMMENT ON COLUMN plan_data_exchange_approach.data_will_not_be_collected_from_participants IS 'Indicates if data will not be collected from participants.';
+COMMENT ON COLUMN plan_data_exchange_approach.data_to_collect_from_participants_note IS 'Additional notes about the data that will be collected from participants.';
+COMMENT ON COLUMN plan_data_exchange_approach.data_to_send_to_participants IS 'The data that will be sent to participants.';
+COMMENT ON COLUMN plan_data_exchange_approach.data_to_send_to_participants_note IS 'Additional notes about the data that will be sent to participants.';
+COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_make_multi_payer_data_available IS 'Indicates if multi-payer data needs to be made available.';
+COMMENT ON COLUMN plan_data_exchange_approach.anticipated_multi_payer_data_availability_use_case IS 'The anticipated use case for multi-payer data availability.';
+COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_make_multi_payer_data_available_other IS 'Other reasons for needing to make multi-payer data available.';
+COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_make_multi_payer_data_available_note IS 'Additional notes about the need to make multi-payer data available.';
+COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_collect_and_aggregate_multi_source_data IS 'Indicates if multi-source data needs to be collected and aggregated.';
+COMMENT ON COLUMN plan_data_exchange_approach.multi_source_data_to_collect IS 'The multi-source data that needs to be collected and aggregated.';
+COMMENT ON COLUMN plan_data_exchange_approach.multi_source_data_to_collect_other IS 'Other multi-source data that needs to be collected and aggregated.';
+COMMENT ON COLUMN plan_data_exchange_approach.does_need_to_collect_and_aggregate_multi_source_data_note IS 'Additional notes about the need to collect and aggregate multi-source data.';
+COMMENT ON COLUMN plan_data_exchange_approach.will_implement_new_data_exchange_methods IS 'Indicates if new data exchange methods will be implemented.';
+COMMENT ON COLUMN plan_data_exchange_approach.new_data_exchange_methods_description IS 'The description of the new data exchange methods that will be implemented.';
+COMMENT ON COLUMN plan_data_exchange_approach.new_data_exchange_methods_note IS 'Additional notes about the new data exchange methods that will be implemented.';
+COMMENT ON COLUMN plan_data_exchange_approach.additional_data_exchange_considerations_description IS 'Additional considerations for data exchange.';
+COMMENT ON COLUMN plan_data_exchange_approach.is_data_exchange_approach_complete IS 'Indicates if the data exchange approach is complete.';
+COMMENT ON COLUMN plan_data_exchange_approach.created_by IS 'The user that created the data exchange approach.';
+COMMENT ON COLUMN plan_data_exchange_approach.created_dts IS 'The date and time that the data exchange approach was created.';
+COMMENT ON COLUMN plan_data_exchange_approach.modified_by IS 'The user that last modified the data exchange approach.';
+COMMENT ON COLUMN plan_data_exchange_approach.modified_dts IS 'The date and time that the data exchange approach was last modified.';

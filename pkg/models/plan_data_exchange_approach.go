@@ -6,7 +6,7 @@ import (
 
 // PlanDataExchangeApproach represents the data exchange approach of a model plan
 type PlanDataExchangeApproach struct {
-	baseTaskListSection
+	coreTaskListSection
 
 	// Page 2
 	DataToCollectFromParticipants               pq.StringArray `json:"dataToCollectFromParticipants" db:"data_to_collect_from_participants" statusWeight:"1"`
@@ -40,9 +40,18 @@ type PlanDataExchangeApproach struct {
 }
 
 // NewPlanDataExchangeApproach creates a new PlanDataExchangeApproach with the required fields
-func NewPlanDataExchangeApproach(tls baseTaskListSection) *PlanDataExchangeApproach {
+func NewPlanDataExchangeApproach(tls coreTaskListSection) *PlanDataExchangeApproach {
 	return &PlanDataExchangeApproach{
-		baseTaskListSection:                    tls,
+		coreTaskListSection:                    tls,
+		DataWillNotBeCollectedFromParticipants: false,
+		IsDataExchangeApproachComplete:         false,
+	}
+}
+
+// NewPlanDataExchangeApproachFromBaseTaskListSection creates a new PlanDataExchangeApproach from a base task list section
+func NewPlanDataExchangeApproachFromBaseTaskListSection(tls baseTaskListSection) *PlanDataExchangeApproach {
+	return &PlanDataExchangeApproach{
+		coreTaskListSection:                    tls.coreTaskListSection,
 		DataWillNotBeCollectedFromParticipants: false,
 		IsDataExchangeApproachComplete:         false,
 	}

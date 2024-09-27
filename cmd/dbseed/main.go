@@ -433,7 +433,7 @@ func (s *Seeder) SeedData() {
 
 	// Send a notification for Data Exchange Approach Completed
 	dataExchangeApproach := models.NewPlanDataExchangeApproach(
-		models.NewBaseTaskListSection(
+		models.NewCoreTaskListSection(
 			planWithDocuments.CreatedBy,
 			planWithDocuments.ID,
 		),

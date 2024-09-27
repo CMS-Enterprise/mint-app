@@ -6,6 +6,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/davecgh/go-spew/spew"
+
 	"github.com/samber/lo"
 
 	"github.com/cmsgov/mint-app/pkg/notifications"
@@ -111,10 +113,11 @@ func ModelPlanCreate(
 		}
 
 		// Create default Plan Data Exchange Approach object
-		dataExchangeApproach := models.NewPlanDataExchangeApproach(baseTaskListUser)
+		dataExchangeApproach := models.NewPlanDataExchangeApproachFromBaseTaskListSection(baseTaskListUser)
 
 		_, err = store.PlanDataExchangeApproachCreate(tx, logger, dataExchangeApproach)
 		if err != nil {
+			spew.Dump(err)
 			return nil, err
 		}
 
