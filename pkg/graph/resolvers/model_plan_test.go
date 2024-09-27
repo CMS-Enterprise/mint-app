@@ -25,6 +25,7 @@ func (suite *ResolverSuite) TestModelPlanCreate() {
 		nil,
 		email.AddressBook{},
 		planName,
+		nil,
 		suite.testConfigs.Store,
 		suite.testConfigs.Principal,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
