@@ -38,6 +38,7 @@ func ModelPlanCreate(
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelName string,
+	id *uuid.UUID,
 	store *storage.Store,
 	principal authentication.Principal,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
@@ -47,6 +48,9 @@ func ModelPlanCreate(
 
 	newPlan, err := sqlutils.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 		plan := models.NewModelPlan(principal.Account().ID, modelName)
+		if id != nil {
+			plan.ID = *id
+		}
 
 		err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
 		if err != nil {

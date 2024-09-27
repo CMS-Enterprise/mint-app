@@ -109,17 +109,23 @@ func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]
 
 // EchimpCRs is the resolver for the echimpCRs field.
 func (r *modelPlanResolver) EchimpCRs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpCR, error) {
-	return GetEChimpCRsByModelPlanID(r.echimpS3Client, r.viperConfig, obj.ID)
+	logger := appcontext.ZLogger(ctx)
+
+	return GetEChimpCRsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
 }
 
 // EchimpTDLs is the resolver for the echimpTDLs field.
 func (r *modelPlanResolver) EchimpTDLs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpTDL, error) {
-	return GetEChimpTDLSByModelPlanID(r.echimpS3Client, r.viperConfig, obj.ID)
+	logger := appcontext.ZLogger(ctx)
+
+	return GetEChimpTDLSByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
 }
 
 // EchimpCRsAndTDLs is the resolver for the echimpCRsAndTDLs field.
 func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.ModelPlan) ([]models.EChimpCRAndTDLS, error) {
-	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, r.viperConfig, obj.ID)
+	logger := appcontext.ZLogger(ctx)
+
+	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.
@@ -157,6 +163,7 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string
 		r.emailTemplateService,
 		r.addressBook,
 		modelName,
+		nil,
 		r.store,
 		principal,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),

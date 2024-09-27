@@ -15,13 +15,14 @@ import (
 // EchimpCr is the resolver for the echimpCR field.
 func (r *queryResolver) EchimpCr(ctx context.Context, id string) (*models.EChimpCR, error) {
 	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
 
 	enabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}
 	if enabled {
-		return GetEChimpCRByID(r.echimpS3Client, r.viperConfig, id)
+		return GetEChimpCRByID(r.echimpS3Client, r.viperConfig, logger, id)
 	}
 
 	return nil, nil
@@ -30,13 +31,14 @@ func (r *queryResolver) EchimpCr(ctx context.Context, id string) (*models.EChimp
 // EchimpCRs is the resolver for the echimpCRs field.
 func (r *queryResolver) EchimpCRs(ctx context.Context) ([]*models.EChimpCR, error) {
 	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
 
 	enabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}
 	if enabled {
-		return GetEChimpCRs(r.echimpS3Client, r.viperConfig)
+		return GetEChimpCRs(r.echimpS3Client, r.viperConfig, logger)
 	}
 
 	return nil, nil
@@ -45,12 +47,14 @@ func (r *queryResolver) EchimpCRs(ctx context.Context) ([]*models.EChimpCR, erro
 // EchimpTDLs is the resolver for the echimpTDLs field.
 func (r *queryResolver) EchimpTDLs(ctx context.Context) ([]*models.EChimpTDL, error) {
 	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
 	enabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}
 	if enabled {
-		return GetEChimpTDLS(r.echimpS3Client, r.viperConfig)
+		return GetEChimpTDLS(r.echimpS3Client, r.viperConfig, logger)
 	}
 
 	return nil, nil
@@ -59,13 +63,14 @@ func (r *queryResolver) EchimpTDLs(ctx context.Context) ([]*models.EChimpTDL, er
 // EchimpTdl is the resolver for the echimpTDL field.
 func (r *queryResolver) EchimpTdl(ctx context.Context, id string) (*models.EChimpTDL, error) {
 	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
 
 	enabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}
 	if enabled {
-		return GetEChimpTDLByID(r.echimpS3Client, r.viperConfig, id)
+		return GetEChimpTDLByID(r.echimpS3Client, r.viperConfig, logger, id)
 	}
 
 	return nil, nil
@@ -74,12 +79,14 @@ func (r *queryResolver) EchimpTdl(ctx context.Context, id string) (*models.EChim
 // EchimpCRAndTdls is the resolver for the echimpCRAndTDLS field.
 func (r *queryResolver) EchimpCRAndTdls(ctx context.Context) ([]models.EChimpCRAndTDLS, error) {
 	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
 	enabled, err := flags.GetBool(r.ldClient, principal, flags.LDEChimpEnabledKey, false)
 	if err != nil {
 		return nil, err
 	}
 	if enabled {
-		return GetEchimpCRAndTdls(r.echimpS3Client, r.viperConfig)
+		return GetEchimpCRAndTdls(r.echimpS3Client, r.viperConfig, logger)
 	}
 
 	return nil, nil
