@@ -207,12 +207,12 @@ const sixPageMeeting = {
               link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FSR%2FModelDev%2FSubmitted%20Six%20Pagers&FolderCTID=0x01200036E3B855163F814699A0837BA1A30AAB&View=%7BE27BAB55%2D0182%2D4AEB%2D811C%2D92373E7CCCAC%7D'
             },
             {
-              text: 'Waiver database',
-              link: ''
+              text: '<link1>Waiver database</link1>',
+              link: 'https://share.cms.gov/center/cmmi/PP/DAPMI/Lists/Existing%20Models/Waiver%20and%20Background%20Language.aspx'
             },
             {
-              text: 'Model Interactions framework resource PPT',
-              link: ''
+              text: '<link1>Model Interactions framework resource PPT</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/Model%20Interactions%20Framework%20Resource.pptx'
             },
             {
               text: '<link1>Guidance on Model Expansion and Other Opportunities for Scaling</link1>',
@@ -224,12 +224,12 @@ const sixPageMeeting = {
           heading: 'Quality resources ',
           items: [
             {
-              text: 'Quality Design Process',
-              link: ''
+              text: '<link1>Quality Design Process</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/Innovation%20Center%20Model%20Quality%20Design%20Process_0907.pdf'
             },
             {
-              text: 'PROMs strategy',
-              link: ''
+              text: '<link1>PROMs strategy</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/CMMI%20Patient-Reported%20Outcome%20Measure%20Strategy_FINAL_5.16.22.docx'
             }
           ]
         },
@@ -262,8 +262,8 @@ const sixPageMeeting = {
           heading: 'Implementation resources ',
           items: [
             {
-              text: 'BSG Checklist',
-              link: ''
+              text: '<link1>BSG Checklist</link1>',
+              link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/Operations%20(BSG)%20Information%20for%20Concept-ICIP%203.24.docx'
             },
             {
               text: 'Framework for Evaluating Data Exchange Concepts in Models',
@@ -378,7 +378,7 @@ const sixPageMeeting = {
   },
   footerSummaryBox: {
     title: 'Need help?',
-    body: 'Contact the MINT team at <link1>MINTTeam@cms.hhs.gov</link1>'
+    body: 'Contact the MINT team at <link1>MINTTeam@cms.hhs.gov <mailIcon /></link1>'
   }
 };
 

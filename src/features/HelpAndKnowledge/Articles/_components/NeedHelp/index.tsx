@@ -1,13 +1,13 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
 import {
+  Icon,
+  Link,
   SummaryBox,
   SummaryBoxContent,
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
 import i18next from 'i18next';
-
-import ExternalLink from 'components/ExternalLink';
 
 const NeedHelp = () => {
   return (
@@ -20,11 +20,8 @@ const NeedHelp = () => {
         <Trans
           i18nKey="sixPageMeeting:footerSummaryBox.body"
           components={{
-            link1: (
-              <ExternalLink href="mailto:MINTTeam@cms.hhs.gov" mail>
-                {' '}
-              </ExternalLink>
-            )
+            link1: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>,
+            mailIcon: <Icon.MailOutline className="margin-left-05 top-05" />
           }}
         />
       </SummaryBoxContent>

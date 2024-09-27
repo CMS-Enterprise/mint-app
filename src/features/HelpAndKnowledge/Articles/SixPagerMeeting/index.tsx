@@ -120,7 +120,7 @@ const SixPagerMeeting = () => {
         <SolutionDetailsModal
           solution={selectedSolution}
           openedFrom={prevPathname}
-          closeRoute="/help-and-knowledge/how-to-have-a-successful-6-pager-meeting"
+          closeRoute="/help-and-knowledge/about-six-page-concept-papers-and-review-meeting"
         />
       )}
 
@@ -281,9 +281,7 @@ const SixPagerMeeting = () => {
                       {section.heading}
                       <ul className="margin-y-0 padding-top-1">
                         {section.items.map((item: string) => (
-                          <li key={item} style={{ listStyleType: 'disc' }}>
-                            {item}
-                          </li>
+                          <li key={item}>{item}</li>
                         ))}
                       </ul>
                     </li>
@@ -319,9 +317,7 @@ const SixPagerMeeting = () => {
                       {section.items.length > 0 && (
                         <ul className="margin-y-0 padding-top-1">
                           {section.items.map((item: string) => (
-                            <li key={item} style={{ listStyleType: 'disc' }}>
-                              {item}
-                            </li>
+                            <li key={item}>{item}</li>
                           ))}
                         </ul>
                       )}
@@ -342,9 +338,7 @@ const SixPagerMeeting = () => {
                       {section.heading}
                       <ul className="margin-y-0 padding-top-1">
                         {section.items.map((item: string) => (
-                          <li key={item} style={{ listStyleType: 'disc' }}>
-                            {item}
-                          </li>
+                          <li key={item}>{item}</li>
                         ))}
                       </ul>
                     </li>
@@ -436,7 +430,7 @@ const SixPagerMeeting = () => {
                         <ul className="margin-top-0 margin-bottom-05 text-normal">
                           {section.items.map(
                             (item2: Record<string, string>, index2: number) => (
-                              <li style={{ listStyleType: 'disc' }}>
+                              <li>
                                 <Trans
                                   i18nKey={`aboutConceptPapers.additionalResources.items.${index}.items.${index2}.text`}
                                   t={sixPageMeetingT}
@@ -485,9 +479,7 @@ const SixPagerMeeting = () => {
                         {section.items?.length > 0 && (
                           <ul className="margin-y-0">
                             {section.items.map((item: string) => (
-                              <li key={item} style={{ listStyleType: 'disc' }}>
-                                {item}
-                              </li>
+                              <li key={item}>{item}</li>
                             ))}
                           </ul>
                         )}

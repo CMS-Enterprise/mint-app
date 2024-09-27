@@ -51,7 +51,7 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
   },
   {
     key: HelpArticle.SIX_PAGER_MEETING,
-    route: '/how-to-have-a-successful-6-pager-meeting',
+    route: '/about-six-page-concept-papers-and-review-meeting',
     translation: 'sixPageMeeting',
     type: ArticleCategories.MODEL_CONCEPT_AND_DESIGN
   },

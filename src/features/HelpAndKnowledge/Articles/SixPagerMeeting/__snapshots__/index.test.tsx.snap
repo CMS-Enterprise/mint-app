@@ -259,7 +259,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                             />
                           </svg>
                         </span>
@@ -281,7 +281,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                             />
                           </svg>
                         </span>
@@ -337,7 +337,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                             />
                           </svg>
                         </span>
@@ -471,7 +471,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                       />
                     </svg>
                   </span>
@@ -521,49 +521,31 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <ul
                   class="margin-y-0 padding-top-1"
                 >
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Target population, including underserved populations.
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Beneficiary attribution or alignment (or, if applicable, recruitment) to model.
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Target provider types, including safety net providers.
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Participation eligibility requirements for providers, states or other entities.
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Payment approach, including any precedent for approach (i.e., CMMI, CM, Medicaid, commercial insurance) and benchmarking and risk adjustment approaches if applicable.
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Assess whether model will meet the standards for an Accountable Care Relationship and/or for an Advanced APM.
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Quality/performance measurement, including proposed primary quality measures (and alignment to Universal Foundation/CMMI Advancing Quality & PROM strategy) developed in consultation with the Quality Vertical.
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Preliminary driver diagram comprised of a model aim that includes the quality goals and the primary and secondary drivers that will be used to achieve the aim.
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Draft patient journey map that illustrates how these elements address the beneficiary experience of care.
                   </li>
                 </ul>
@@ -603,7 +585,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                       />
                     </svg>
                   </span>
@@ -612,29 +594,19 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <ul
                   class="margin-y-0 padding-top-1"
                 >
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Drive accountable care
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Advance health equity
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Support innovation
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Address affordability
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Partner to achieve system transformation, and multi-payer alignment, in particular
                   </li>
                 </ul>
@@ -647,19 +619,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <ul
                   class="margin-y-0 padding-top-1"
                 >
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Participation – number of providers, percent of providers within relevant specialty, number of beneficiaries, Medicare and/or Medicaid spending (federal and state). 
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Outcomes – expected improvements in quality and outcomes, changes in beneficiary experience, advancements in equity and reduction in disparities, delivery system change, multi-payer alignment, and market impacts. 
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries. 
                   </li>
                 </ul>
@@ -694,24 +660,16 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <ul
                   class="margin-y-0 padding-top-1"
                 >
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Embedding health equity in design features, including care delivery requirements, payment adjustment, SDOH screening and referral and participant health equity plans.
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Diversifying beneficiaries served, including increasing safety net provider participation through stakeholder engagement, model design elements, and participant recruitment and support during model implementation. 
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Ensuring evaluation assesses model impact on equity, including model access and outcomes for all beneficiary populations. 
                   </li>
-                  <li
-                    style="list-style-type: disc;"
-                  >
+                  <li>
                     Supporting the collection and analysis of sociodemographic and HRSN data in accordance with Center policy (linked in Resources below).
                   </li>
                 </ul>
@@ -757,7 +715,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                           />
                         </svg>
                       </span>
@@ -784,7 +742,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                           />
                         </svg>
                       </span>
@@ -919,7 +877,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                          d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                         />
                       </svg>
                     </span>
@@ -934,9 +892,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     <ul
                       class="margin-top-0 margin-bottom-05 text-normal"
                     >
-                      <li
-                        style="list-style-type: disc;"
-                      >
+                      <li>
                         <button
                           class="usa-button usa-button--unstyled margin-right-05"
                           data-testid="button"
@@ -954,15 +910,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                               />
                             </svg>
                           </span>
                         </button>
                       </li>
-                      <li
-                        style="list-style-type: disc;"
-                      >
+                      <li>
                         <button
                           class="usa-button usa-button--unstyled margin-right-05"
                           data-testid="button"
@@ -980,25 +934,61 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                               />
                             </svg>
                           </span>
                         </button>
                       </li>
-                      <li
-                        style="list-style-type: disc;"
-                      >
-                        Waiver database
+                      <li>
+                        <button
+                          class="usa-button usa-button--unstyled margin-right-05"
+                          data-testid="button"
+                          type="button"
+                        >
+                          <span>
+                            Waiver database
+                            <svg
+                              class="usa-icon margin-left-05 top-05"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                              />
+                            </svg>
+                          </span>
+                        </button>
                       </li>
-                      <li
-                        style="list-style-type: disc;"
-                      >
-                        Model Interactions framework resource PPT
+                      <li>
+                        <button
+                          class="usa-button usa-button--unstyled margin-right-05"
+                          data-testid="button"
+                          type="button"
+                        >
+                          <span>
+                            Model Interactions framework resource PPT
+                            <svg
+                              class="usa-icon margin-left-05 top-05"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                              />
+                            </svg>
+                          </span>
+                        </button>
                       </li>
-                      <li
-                        style="list-style-type: disc;"
-                      >
+                      <li>
                         <button
                           class="usa-button usa-button--unstyled margin-right-05"
                           data-testid="button"
@@ -1016,7 +1006,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                               />
                             </svg>
                           </span>
@@ -1029,15 +1019,53 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     <ul
                       class="margin-top-0 margin-bottom-05 text-normal"
                     >
-                      <li
-                        style="list-style-type: disc;"
-                      >
-                        Quality Design Process
+                      <li>
+                        <button
+                          class="usa-button usa-button--unstyled margin-right-05"
+                          data-testid="button"
+                          type="button"
+                        >
+                          <span>
+                            Quality Design Process
+                            <svg
+                              class="usa-icon margin-left-05 top-05"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                              />
+                            </svg>
+                          </span>
+                        </button>
                       </li>
-                      <li
-                        style="list-style-type: disc;"
-                      >
-                        PROMs strategy
+                      <li>
+                        <button
+                          class="usa-button usa-button--unstyled margin-right-05"
+                          data-testid="button"
+                          type="button"
+                        >
+                          <span>
+                            PROMs strategy
+                            <svg
+                              class="usa-icon margin-left-05 top-05"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                              />
+                            </svg>
+                          </span>
+                        </button>
                       </li>
                     </ul>
                   </div>
@@ -1046,9 +1074,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     <ul
                       class="margin-top-0 margin-bottom-05 text-normal"
                     >
-                      <li
-                        style="list-style-type: disc;"
-                      >
+                      <li>
                         <button
                           class="usa-button usa-button--unstyled margin-right-05"
                           data-testid="button"
@@ -1066,15 +1092,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                               />
                             </svg>
                           </span>
                         </button>
                       </li>
-                      <li
-                        style="list-style-type: disc;"
-                      >
+                      <li>
                         <button
                           class="usa-button usa-button--unstyled margin-right-05"
                           data-testid="button"
@@ -1092,15 +1116,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                               />
                             </svg>
                           </span>
                         </button>
                       </li>
-                      <li
-                        style="list-style-type: disc;"
-                      >
+                      <li>
                         <button
                           class="usa-button usa-button--unstyled margin-right-05"
                           data-testid="button"
@@ -1118,15 +1140,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                               />
                             </svg>
                           </span>
                         </button>
                       </li>
-                      <li
-                        style="list-style-type: disc;"
-                      >
+                      <li>
                         <button
                           class="usa-button usa-button--unstyled margin-right-05"
                           data-testid="button"
@@ -1144,15 +1164,13 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                               />
                             </svg>
                           </span>
                         </button>
                       </li>
-                      <li
-                        style="list-style-type: disc;"
-                      >
+                      <li>
                         <button
                           class="usa-button usa-button--unstyled margin-right-05"
                           data-testid="button"
@@ -1170,7 +1188,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                               />
                             </svg>
                           </span>
@@ -1183,14 +1201,31 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     <ul
                       class="margin-top-0 margin-bottom-05 text-normal"
                     >
-                      <li
-                        style="list-style-type: disc;"
-                      >
-                        BSG Checklist
+                      <li>
+                        <button
+                          class="usa-button usa-button--unstyled margin-right-05"
+                          data-testid="button"
+                          type="button"
+                        >
+                          <span>
+                            BSG Checklist
+                            <svg
+                              class="usa-icon margin-left-05 top-05"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                              />
+                            </svg>
+                          </span>
+                        </button>
                       </li>
-                      <li
-                        style="list-style-type: disc;"
-                      >
+                      <li>
                         Framework for Evaluating Data Exchange Concepts in Models
                       </li>
                     </ul>
@@ -1227,9 +1262,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     <ul
                       class="margin-y-0"
                     >
-                      <li
-                        style="list-style-type: disc;"
-                      >
+                      <li>
                         OA will want to know that we worked with colleagues and incorporated their input
                       </li>
                     </ul>
@@ -1300,7 +1333,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                             />
                           </svg>
                         </span>
@@ -1326,7 +1359,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                             />
                           </svg>
                         </span>
@@ -1352,7 +1385,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
-                              d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                             />
                           </svg>
                         </span>
@@ -1382,7 +1415,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                          d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                         />
                       </svg>
                     </span>
@@ -1780,28 +1813,25 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               class="usa-summary-box__text"
             >
               Contact the MINT team at 
-              <button
-                class="usa-button usa-button--unstyled margin-right-05"
-                data-testid="button"
-                type="button"
+              <a
+                class="usa-link"
+                href="mailto:MINTTeam@cms.hhs.gov"
               >
-                <span>
-                  MINTTeam@cms.hhs.gov
-                  <svg
-                    class="usa-icon margin-left-05 top-05"
-                    focusable="false"
-                    height="1em"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
-                    />
-                  </svg>
-                </span>
-              </button>
+                MINTTeam@cms.hhs.gov 
+                <svg
+                  class="usa-icon margin-left-05 top-05"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                  />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
