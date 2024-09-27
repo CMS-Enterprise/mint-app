@@ -2,10 +2,6 @@
 package loaders
 
 import (
-	"github.com/google/uuid"
-	"github.com/graph-gophers/dataloader/v7"
-
-	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
@@ -46,7 +42,10 @@ type DataLoaders struct {
 
 	TranslatedAuditFieldCollectionLoader *WrappedDataLoader
 
-	planBasicsByModelPlanID *dataloader.Loader[uuid.UUID, *models.PlanBasics]
+	basics planBasicsLoaders
+
+	// planBasicsByModelPlanID *dataloader.Loader[uuid.UUID, *models.PlanBasics]
+	//TODO (loaders) consider creating nested parent fields, eg Basics has
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -92,7 +91,14 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.TranslatedAuditFieldCollectionLoader = newWrappedDataLoader(loaders.translatedAuditFieldCollectionGetByTranslatedAuditIDBatch)
 
 	// TODO (loaders) can we associate the parent field
-	loaders.planBasicsByModelPlanID = PlanBasics.GetByModelPlanID.NewBatchedLoader()
+	// loaders.planBasicsByModelPlanID = PlanBasics.GetByModelPlanID.NewBatchedLoader()
+	// loaders.planBasicsByModelPlanID = PlanBasics.GetByModelPlanID.NewBatchedLoader()
+	// loaders.basics = planBasicsLoaders{
+	// 	ByModelPlanID: PlanBasics.GetByModelPlanID.NewBatchedLoader(),
+	// }
+	// loaders.basics = planBasicsLoaders{}
+	// loaders.basics.Init()
+	loaders.basics = newPlanBasicsLoaders()
 
 	return loaders
 }

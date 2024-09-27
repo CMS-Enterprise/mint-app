@@ -16,11 +16,26 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-type planBasicsLoader struct {
+type planBasicsLoaders struct {
+	ByModelPlanID *dataloader.Loader[uuid.UUID, *models.PlanBasics]
+}
+
+// TODO: (loaders) make a generic method to initialize these methods?
+func (l *planBasicsLoaders) init() {
+	l.ByModelPlanID = PlanBasics.GetByModelPlanID.NewBatchedLoader()
+}
+
+func newPlanBasicsLoaders() planBasicsLoaders {
+	loader := planBasicsLoaders{}
+	loader.init()
+	return loader
+}
+
+type planBasicsLoaderConfig struct {
 	GetByModelPlanID LoaderConfig[uuid.UUID, *models.PlanBasics]
 }
 
-var PlanBasics planBasicsLoader = planBasicsLoader{
+var PlanBasics planBasicsLoaderConfig = planBasicsLoaderConfig{
 	GetByModelPlanID: LoaderConfig[uuid.UUID, *models.PlanBasics]{
 		Note:          "Gets a plan basics record associated with a model plan by the supplied model plan id",
 		Load:          planBasicsGetByModelPlanIDLoad, // Direct assignment
@@ -133,9 +148,6 @@ func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UU
 
 func planBasicsGetByModelPlanIDLoad(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
 	allLoaders := Loaders(ctx)
-	// TODO (loaders) consider how we might get this loader generically?
-	basicsLoader := allLoaders.planBasicsByModelPlanID
-
+	basicsLoader := allLoaders.basics.ByModelPlanID
 	return basicsLoader.Load(ctx, modelPlanID)()
-
 }
