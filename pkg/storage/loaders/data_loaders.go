@@ -91,7 +91,7 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 
 	loaders.TranslatedAuditFieldCollectionLoader = newWrappedDataLoader(loaders.translatedAuditFieldCollectionGetByTranslatedAuditIDBatch)
 
-	loaders.TestingLoader = v7.NewBatchedLoader(loaders.batchPlanBasicsGetByModelPlanID)
+	loaders.TestingLoader = v7.NewBatchedLoader(loaders.batchPlanBasicsGetByModelPlanID, v7.WithClearCacheOnBatch[uuid.UUID, *models.PlanBasics]())
 
 	return loaders
 }
