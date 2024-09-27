@@ -328,7 +328,7 @@ func sendDateChangedEmails(
 
 // PlanBasicsGetByModelPlanIDLOADER implements resolver logic to get plan basics by a model plan ID using a data loader
 func PlanBasicsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	return loaders.PlanBasicsLoader.Load(ctx, modelPlanID)
+	return loaders.PlanBasics.GetByModelPlanID.Load(ctx, modelPlanID)
 	// allLoaders := loaders.Loaders(ctx)
 	// basicsLoader := allLoaders.BasicsLoader
 	// key := loaders.NewKeyArgs()

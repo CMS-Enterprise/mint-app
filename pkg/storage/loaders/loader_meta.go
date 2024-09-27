@@ -15,6 +15,9 @@ type LoaderConfig[K comparable, V any] struct {
 	batchFunction dataloader.BatchFunc[K, V]
 	// Load is an abstraction used to call a dataloader
 	Load LoadFunc[K, V]
+
+	//TODO (loaders) decide if we want to abstract the method for fetching a specific loader. This might be circular, we can consider a map and key approach
+	// getExistingBatchFunction func(ctx context.Context) dataloader.BatchFunc[K, V]
 }
 
 // NewBatchedLoader generates a Batched loader based on the specified configuration

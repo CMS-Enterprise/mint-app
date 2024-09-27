@@ -16,10 +16,17 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-var PlanBasicsLoader LoaderConfig[uuid.UUID, *models.PlanBasics] = LoaderConfig[uuid.UUID, *models.PlanBasics]{
-	Note:          "Gets a plan basics record associated with a model plan",
-	Load:          planBasicsGetByModelPlanIDLoader2, // Direct assignment
-	batchFunction: batchPlanBasicsGetByModelPlanID,
+type planBasicsLoader struct {
+	GetByModelPlanID LoaderConfig[uuid.UUID, *models.PlanBasics]
+}
+
+var PlanBasics planBasicsLoader = planBasicsLoader{
+	GetByModelPlanID: LoaderConfig[uuid.UUID, *models.PlanBasics]{
+		Note:          "Gets a plan basics record associated with a model plan by the supplied model plan id",
+		Load:          planBasicsGetByModelPlanIDLoad, // Direct assignment
+		batchFunction: batchPlanBasicsGetByModelPlanID,
+		// getExistingBatchFunction: ,
+	},
 }
 
 // GetPlanBasicsByModelPlanID uses a DataLoader to aggreggate a SQL call and return all plan basics in one query
@@ -122,8 +129,11 @@ func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UU
 
 }
 
-func planBasicsGetByModelPlanIDLoader2(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
+// func
+
+func planBasicsGetByModelPlanIDLoad(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
 	allLoaders := Loaders(ctx)
+	// TODO (loaders) consider how we might get this loader generically?
 	basicsLoader := allLoaders.planBasicsByModelPlanID
 
 	return basicsLoader.Load(ctx, modelPlanID)()

@@ -91,7 +91,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 
 	loaders.TranslatedAuditFieldCollectionLoader = newWrappedDataLoader(loaders.translatedAuditFieldCollectionGetByTranslatedAuditIDBatch)
 
-	loaders.planBasicsByModelPlanID = PlanBasicsLoader.NewBatchedLoader()
+	// TODO (loaders) can we associate the parent field
+	loaders.planBasicsByModelPlanID = PlanBasics.GetByModelPlanID.NewBatchedLoader()
 
 	return loaders
 }
