@@ -3,7 +3,7 @@ package loaders
 
 import (
 	"github.com/google/uuid"
-	v7 "github.com/graph-gophers/dataloader/v7"
+	"github.com/graph-gophers/dataloader/v7"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -46,7 +46,7 @@ type DataLoaders struct {
 
 	TranslatedAuditFieldCollectionLoader *WrappedDataLoader
 
-	TestingLoader *v7.Loader[uuid.UUID, *models.PlanBasics]
+	planBasicsByModelPlanID *dataloader.Loader[uuid.UUID, *models.PlanBasics]
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -91,7 +91,7 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 
 	loaders.TranslatedAuditFieldCollectionLoader = newWrappedDataLoader(loaders.translatedAuditFieldCollectionGetByTranslatedAuditIDBatch)
 
-	loaders.TestingLoader = v7.NewBatchedLoader(loaders.batchPlanBasicsGetByModelPlanID, v7.WithClearCacheOnBatch[uuid.UUID, *models.PlanBasics]())
+	loaders.planBasicsByModelPlanID = PlanBasicsLoader.NewBatchedLoader()
 
 	return loaders
 }

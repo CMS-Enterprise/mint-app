@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/graph-gophers/dataloader"
+	dataloaderOld "github.com/graph-gophers/dataloader"
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
@@ -13,11 +13,17 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 
-	v7 "github.com/graph-gophers/dataloader/v7"
+	"github.com/graph-gophers/dataloader/v7"
 )
 
+var PlanBasicsLoader LoaderConfig[uuid.UUID, *models.PlanBasics] = LoaderConfig[uuid.UUID, *models.PlanBasics]{
+	Note:          "Gets a plan basics record associated with a model plan",
+	Load:          planBasicsGetByModelPlanIDLoader2, // Direct assignment
+	batchFunction: batchPlanBasicsGetByModelPlanID,
+}
+
 // GetPlanBasicsByModelPlanID uses a DataLoader to aggreggate a SQL call and return all plan basics in one query
-func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys dataloaderOld.Keys) []*dataloaderOld.Result {
 	dr := loaders.DataReader
 
 	logger := appcontext.ZLogger(ctx)
@@ -36,21 +42,21 @@ func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys
 	})
 
 	// RETURN IN THE SAME ORDER REQUESTED
-	output := make([]*dataloader.Result, len(keys))
+	output := make([]*dataloaderOld.Result, len(keys))
 	for index, key := range keys {
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
-			resKey := fmt.Sprint(ck.Args["model_plan_id"])
+			resKey := fmt.Sprint(ck.Args[DLModelPlanIDKey])
 			basic, ok := basicsByID[resKey]
 			if ok {
-				output[index] = &dataloader.Result{Data: basic, Error: nil}
+				output[index] = &dataloaderOld.Result{Data: basic, Error: nil}
 			} else {
 				err := fmt.Errorf("plan basic not found for model plan %s", resKey)
-				output[index] = &dataloader.Result{Data: nil, Error: err}
+				output[index] = &dataloaderOld.Result{Data: nil, Error: err}
 			}
 		} else {
 			err := fmt.Errorf("could not retrive key from %s", key.String())
-			output[index] = &dataloader.Result{Data: nil, Error: err}
+			output[index] = &dataloaderOld.Result{Data: nil, Error: err}
 		}
 	}
 	return output
@@ -83,26 +89,22 @@ func (dl *DataLoadgens) batchPlanBasicsGetByModelPlanID(ctx context.Context, mod
 
 }
 
-func (loaders *DataLoaders) batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*v7.Result[*models.PlanBasics] {
-	// ([]*models.PlanBasics, []error) {
+func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.PlanBasics] {
 	logger := appcontext.ZLogger(ctx)
-	output := make([]*v7.Result[*models.PlanBasics], len(modelPlanIDs))
+	output := make([]*dataloader.Result[*models.PlanBasics], len(modelPlanIDs))
+	loaders := Loaders(ctx)
 
 	data, err := storage.PlanBasicsGetByModelPlanIDLOADGEN(loaders.DataReader.Store, logger, modelPlanIDs)
 	if err != nil {
 
-		// TODO return an error per result if needed
 		for index := range modelPlanIDs {
-			output[index] = &v7.Result[*models.PlanBasics]{Data: nil, Error: err}
+			output[index] = &dataloader.Result[*models.PlanBasics]{Data: nil, Error: err}
 		}
 		return output
-		// return nil, []error{err}
 	}
 	basicsByModelPlanID := lo.Associate(data, func(basics *models.PlanBasics) (uuid.UUID, *models.PlanBasics) {
 		return basics.ModelPlanID, basics
 	})
-	//TODO: Implement
-	_ = basicsByModelPlanID
 
 	// RETURN IN THE SAME ORDER REQUESTED
 
@@ -110,27 +112,20 @@ func (loaders *DataLoaders) batchPlanBasicsGetByModelPlanID(ctx context.Context,
 
 		basics, ok := basicsByModelPlanID[id]
 		if ok {
-			output[index] = &v7.Result[*models.PlanBasics]{Data: basics, Error: nil}
+			output[index] = &dataloader.Result[*models.PlanBasics]{Data: basics, Error: nil}
 		} else {
 			err2 := fmt.Errorf("plan basics not found for modelPlanID id %s", id)
-			output[index] = &v7.Result[*models.PlanBasics]{Data: nil, Error: err2}
+			output[index] = &dataloader.Result[*models.PlanBasics]{Data: nil, Error: err2}
 		}
 	}
 	return output
 
 }
 
-func PlanBasicsGetByModelPlanIDLoader2(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
+func planBasicsGetByModelPlanIDLoader2(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
 	allLoaders := Loaders(ctx)
-	basicsLoader := allLoaders.TestingLoader
-	// loaders, ok := Loader(ctx)
-	// if !ok {
-	// 	return nil, fmt.Errorf("unexpected nil loaders in GetModelPlanByModelPlanID")
-	// }
+	basicsLoader := allLoaders.planBasicsByModelPlanID
 
-	// thunk := basicsLoader.Load(ctx, modelPlanID)
-	// return thunk()
-	// TODO (loaders), should we inline this? Or separate the thunk?
 	return basicsLoader.Load(ctx, modelPlanID)()
 
 }

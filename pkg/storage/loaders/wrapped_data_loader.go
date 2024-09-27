@@ -1,30 +1,22 @@
 package loaders
 
 import (
-	"github.com/graph-gophers/dataloader"
+	oldDataloader "github.com/graph-gophers/dataloader"
+)
+
+const (
+	// DLModelPlanIDKey is the key used to store and retrieve the modelPlanID
+	DLModelPlanIDKey string = "model_plan_id"
 )
 
 // WrappedDataLoader wraps a DataLoader so it has access to an optional Map
 type WrappedDataLoader struct {
-	Loader *dataloader.Loader
+	Loader *oldDataloader.Loader
 }
 
-func newWrappedDataLoader(batchFn dataloader.BatchFunc) *WrappedDataLoader {
+func newWrappedDataLoader(batchFn oldDataloader.BatchFunc) *WrappedDataLoader {
 
 	return &WrappedDataLoader{
-		Loader: dataloader.NewBatchedLoader(batchFn, dataloader.WithClearCacheOnBatch()),
+		Loader: oldDataloader.NewBatchedLoader(batchFn, oldDataloader.WithClearCacheOnBatch()),
 	}
 }
-
-// // WrappedTypedDataLoader wraps a DataLoader so it has access to an optional Map
-// type WrappedTypedDataLoader struct {
-// 	Loader [K any, V any]*v7.L
-// }
-
-// func newWrappedTypedDataLoader(batchFn dataloader.BatchFunc) *WrappedTypedDataLoader {
-// 	loader := v7.NewBatchedLoader()
-
-// 	return &WrappedTypedDataLoader{
-// 		Loader: dataloader.NewBatchedLoader(batchFn, dataloader.WithClearCacheOnBatch()),
-// 	}
-// }
