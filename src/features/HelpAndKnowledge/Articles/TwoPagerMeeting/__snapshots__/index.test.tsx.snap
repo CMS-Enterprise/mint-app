@@ -328,12 +328,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     data-testid="button"
                     type="button"
                   >
-                    <span
-                      class="display-flex flex-align-center"
-                    >
+                    <span>
                       AHEAD 2-pager
                       <svg
-                        class="usa-icon margin-left-05"
+                        class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -354,12 +352,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     data-testid="button"
                     type="button"
                   >
-                    <span
-                      class="display-flex flex-align-center"
-                    >
+                    <span>
                       Enhancing Oncology Model 2-pager
                       <svg
-                        class="usa-icon margin-left-05"
+                        class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -380,12 +376,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     data-testid="button"
                     type="button"
                   >
-                    <span
-                      class="display-flex flex-align-center"
-                    >
+                    <span>
                       Innovation in Behavioral Health 2-pager
                       <svg
-                        class="usa-icon margin-left-05"
+                        class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -406,12 +400,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     data-testid="button"
                     type="button"
                   >
-                    <span
-                      class="display-flex flex-align-center"
-                    >
+                    <span>
                       Making Care Primary 2-pager
                       <svg
-                        class="usa-icon margin-left-05"
+                        class="usa-icon margin-left-05 top-05"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -436,12 +428,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   data-testid="button"
                   type="button"
                 >
-                  <span
-                    class="display-flex flex-align-center"
-                  >
+                  <span>
                     Model Resources area of SharePoint.
                     <svg
-                      class="usa-icon margin-left-05"
+                      class="usa-icon margin-left-05 top-05"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -611,12 +601,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 data-testid="button"
                 type="button"
               >
-                <span
-                  class="display-flex flex-align-center"
-                >
+                <span>
                   MINTTeam@cms.hhs.gov
                   <svg
-                    class="usa-icon margin-left-05"
+                    class="usa-icon margin-left-05 top-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -637,10 +625,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
     </div>
   </main>
   <div
-    class="margin-top-6 margin-bottom-neg-7"
+    class="margin-top-6"
   >
     <div
-      class="bg-primary-lighter"
+      class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
     >
       <div
         class="grid-container padding-top-4 padding-bottom-10"
@@ -814,16 +802,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             </div>
           </li>
         </ul>
-        <div
-          class="margin-top-3"
+        <a
+          class="usa-link"
+          href="/help-and-knowledge/articles"
         >
-          <a
-            class="usa-link"
-            href="/help-and-knowledge/articles"
-          >
-            View all help articles
-          </a>
-        </div>
+          View all help articles
+        </a>
       </div>
     </div>
   </div>

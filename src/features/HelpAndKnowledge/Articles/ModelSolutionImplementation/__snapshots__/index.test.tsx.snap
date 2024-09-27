@@ -414,7 +414,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
     </div>
   </main>
   <div
-    class="bg-primary-lighter"
+    class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
   >
     <div
       class="grid-container padding-top-4 padding-bottom-10"
@@ -588,16 +588,12 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
           </div>
         </li>
       </ul>
-      <div
-        class="margin-top-3"
+      <a
+        class="usa-link"
+        href="/help-and-knowledge/articles"
       >
-        <a
-          class="usa-link"
-          href="/help-and-knowledge/articles"
-        >
-          View all help articles
-        </a>
-      </div>
+        View all help articles
+      </a>
     </div>
   </div>
 </DocumentFragment>

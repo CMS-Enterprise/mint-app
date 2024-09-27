@@ -6,7 +6,6 @@ import {
   Grid,
   GridContainer,
   Icon,
-  Link,
   Table as TrussTable
 } from '@trussworks/react-uswds';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
