@@ -1,7 +1,13 @@
 // Package loaders is a responsible for batched data calls
 package loaders
 
-import "github.com/cms-enterprise/mint-app/pkg/storage"
+import (
+	"github.com/google/uuid"
+	v7 "github.com/graph-gophers/dataloader/v7"
+
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+)
 
 // DataLoaders wrap your data loaders to inject via middleware
 type DataLoaders struct {
@@ -39,6 +45,8 @@ type DataLoaders struct {
 	AnalyzedAuditLoader *WrappedDataLoader
 
 	TranslatedAuditFieldCollectionLoader *WrappedDataLoader
+
+	TestingLoader *v7.Loader[uuid.UUID, *models.PlanBasics]
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -82,6 +90,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.AnalyzedAuditLoader = newWrappedDataLoader(loaders.analyzedAuditGetByModelPlanIDAndDateBatch)
 
 	loaders.TranslatedAuditFieldCollectionLoader = newWrappedDataLoader(loaders.translatedAuditFieldCollectionGetByTranslatedAuditIDBatch)
+
+	loaders.TestingLoader = v7.NewBatchedLoader(loaders.batchPlanBasicsGetByModelPlanID)
 
 	return loaders
 }

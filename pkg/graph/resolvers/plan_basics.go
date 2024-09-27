@@ -2,9 +2,6 @@ package resolvers
 
 import (
 	"context"
-	"database/sql"
-	"errors"
-	"fmt"
 	"time"
 
 	"github.com/samber/lo"
@@ -331,22 +328,23 @@ func sendDateChangedEmails(
 
 // PlanBasicsGetByModelPlanIDLOADER implements resolver logic to get plan basics by a model plan ID using a data loader
 func PlanBasicsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	allLoaders := loaders.Loaders(ctx)
-	basicsLoader := allLoaders.BasicsLoader
-	key := loaders.NewKeyArgs()
-	key.Args["model_plan_id"] = modelPlanID
+	return loaders.PlanBasicsGetByModelPlanIDLoader2(ctx, modelPlanID)
+	// allLoaders := loaders.Loaders(ctx)
+	// basicsLoader := allLoaders.BasicsLoader
+	// key := loaders.NewKeyArgs()
+	// key.Args["model_plan_id"] = modelPlanID
 
-	//TODO do we need to write a new interface to convert our types to what we need?
-	thunk := basicsLoader.Loader.Load(ctx, key)
-	result, err := thunk()
+	// //TODO do we need to write a new interface to convert our types to what we need?
+	// thunk := basicsLoader.Loader.Load(ctx, key)
+	// result, err := thunk()
 
-	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, fmt.Errorf("no plan basics found for the given modelPlanID: %w", err)
-		}
+	// if err != nil {
+	// 	if errors.Is(err, sql.ErrNoRows) {
+	// 		return nil, fmt.Errorf("no plan basics found for the given modelPlanID: %w", err)
+	// 	}
 
-		return nil, fmt.Errorf("failed to fetch the plan basics: %w", err)
-	}
+	// 	return nil, fmt.Errorf("failed to fetch the plan basics: %w", err)
+	// }
 
-	return result.(*models.PlanBasics), nil
+	// return result.(*models.PlanBasics), nil
 }

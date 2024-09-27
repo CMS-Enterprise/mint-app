@@ -29,6 +29,7 @@ func NewDataLoaderMiddleware(loaders *DataLoaders) func(http.Handler) http.Handl
 // Loaders returns the dataLoaders for a given context
 func Loaders(ctx context.Context) *DataLoaders {
 	return ctx.Value(loadersKey).(*DataLoaders)
+	//TODO: (loaders) consider returning a check if the loaders exists
 }
 
 // CTXWithLoaders decorates the context with a dataloader

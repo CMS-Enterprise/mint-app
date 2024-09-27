@@ -12,6 +12,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+
+	v7 "github.com/graph-gophers/dataloader/v7"
 )
 
 // GetPlanBasicsByModelPlanID uses a DataLoader to aggreggate a SQL call and return all plan basics in one query
@@ -78,5 +80,57 @@ func (dl *DataLoadgens) batchPlanBasicsGetByModelPlanID(ctx context.Context, mod
 	//TODO: Implement
 	_ = basicsByModelPlanID
 	return nil, nil
+
+}
+
+func (loaders *DataLoaders) batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*v7.Result[*models.PlanBasics] {
+	// ([]*models.PlanBasics, []error) {
+	logger := appcontext.ZLogger(ctx)
+	output := make([]*v7.Result[*models.PlanBasics], len(modelPlanIDs))
+
+	data, err := storage.PlanBasicsGetByModelPlanIDLOADGEN(loaders.DataReader.Store, logger, modelPlanIDs)
+	if err != nil {
+
+		// TODO return an error per result if needed
+		for index := range modelPlanIDs {
+			output[index] = &v7.Result[*models.PlanBasics]{Data: nil, Error: err}
+		}
+		return output
+		// return nil, []error{err}
+	}
+	basicsByModelPlanID := lo.Associate(data, func(basics *models.PlanBasics) (uuid.UUID, *models.PlanBasics) {
+		return basics.ModelPlanID, basics
+	})
+	//TODO: Implement
+	_ = basicsByModelPlanID
+
+	// RETURN IN THE SAME ORDER REQUESTED
+
+	for index, id := range modelPlanIDs {
+
+		basics, ok := basicsByModelPlanID[id]
+		if ok {
+			output[index] = &v7.Result[*models.PlanBasics]{Data: basics, Error: nil}
+		} else {
+			err2 := fmt.Errorf("plan basics not found for modelPlanID id %s", id)
+			output[index] = &v7.Result[*models.PlanBasics]{Data: nil, Error: err2}
+		}
+	}
+	return output
+
+}
+
+func PlanBasicsGetByModelPlanIDLoader2(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
+	allLoaders := Loaders(ctx)
+	basicsLoader := allLoaders.TestingLoader
+	// loaders, ok := Loader(ctx)
+	// if !ok {
+	// 	return nil, fmt.Errorf("unexpected nil loaders in GetModelPlanByModelPlanID")
+	// }
+
+	// thunk := basicsLoader.Load(ctx, modelPlanID)
+	// return thunk()
+	// TODO (loaders), should we inline this? Or separate the thunk?
+	return basicsLoader.Load(ctx, modelPlanID)()
 
 }

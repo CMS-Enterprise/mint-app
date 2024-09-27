@@ -121,7 +121,7 @@ func PlanBasicsGetByModelPlanIDLOADGEN(np sqlutils.NamedPreparer, _ *zap.Logger,
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 
-	res, err := sqlutils.SelectProcedure[models.PlanBasics](np, sqlqueries.ModelPlan.GetByModelPlanIDLoadgen, args)
+	res, err := sqlutils.SelectProcedure[models.PlanBasics](np, sqlqueries.PlanBasics.GetByModelPlanIDLoaderV7, args)
 	if err != nil {
 		return nil, err
 	}
