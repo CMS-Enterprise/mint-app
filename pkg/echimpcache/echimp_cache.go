@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -20,12 +21,12 @@ var CRAndTDLCache *crAndTDLCache
 
 // GetECHIMPCrAndTDLCache returns a cached of data for CR and TDLs from an echimp s3 bucket.
 // If the time since it was last updated has elapsed, it will fetch the data again
-func GetECHIMPCrAndTDLCache(client *s3.S3Client, viperConfig *viper.Viper) (*crAndTDLCache, error) {
+func GetECHIMPCrAndTDLCache(client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) (*crAndTDLCache, error) {
 	if CRAndTDLCache == nil {
 		CRAndTDLCache = &crAndTDLCache{}
 	}
 	if CRAndTDLCache.IsOld() {
-		err := CRAndTDLCache.refreshCache(client, viperConfig)
+		err := CRAndTDLCache.refreshCache(client, viperConfig, logger)
 		if err != nil {
 			return nil, err
 		}
@@ -55,12 +56,16 @@ func (c *crAndTDLCache) IsOld() bool {
 
 }
 
-func (c *crAndTDLCache) refreshCache(client *s3.S3Client, viperConfig *viper.Viper) error {
+func (c *crAndTDLCache) refreshCache(client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) error {
 	CRKey := viperConfig.GetString(appconfig.AWSS3ECHIMPCRFileName)
 	TDLKey := viperConfig.GetString(appconfig.AWSS3ECHIMPTDLFileName)
 
 	crsRaw, err := parquet.ReadFromS3[*models.EChimpCRRaw](client, CRKey)
 	if err != nil {
+		if s3.S3ErrorIsKeyNotFound(err) {
+			logger.Error("file not found for ECHIMP CR data", zap.Error(err))
+			return nil
+		}
 		return err
 	}
 	sanitizedCRS, err := models.ConvertRawCRSToParsed(crsRaw)
@@ -71,6 +76,10 @@ func (c *crAndTDLCache) refreshCache(client *s3.S3Client, viperConfig *viper.Vip
 
 	tdlsRaw, err := parquet.ReadFromS3[*models.EChimpTDLRaw](client, TDLKey)
 	if err != nil {
+		if s3.S3ErrorIsKeyNotFound(err) {
+			logger.Error("file not found for ECHIMP TDL data", zap.Error(err))
+			return nil
+		}
 		return err
 	}
 	sanitizedTDLS, err := models.ConvertRawTDLSToParsed(tdlsRaw)
