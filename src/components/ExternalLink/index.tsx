@@ -11,17 +11,21 @@ type ExternalLinkModalTypes = {
   className?: string;
   href: string;
   variant?: 'external' | 'unstyled' | 'nav';
+  mail?: boolean;
 };
 
 const ExternalLink = ({
   children,
   href,
   variant,
-  className
+  className,
+  mail
 }: ExternalLinkModalTypes) => {
   const { t: externalT } = useTranslation('externalLinkModal');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const ExternalIcon = mail ? Icon.MailOutline : Icon.Launch;
 
   return (
     <>
@@ -77,9 +81,9 @@ const ExternalLink = ({
           setIsModalOpen(true);
         }}
       >
-        <span className="display-flex flex-align-center">
+        <span>
           {children}
-          <Icon.Launch className="margin-left-05" />
+          <ExternalIcon className="margin-left-05 top-05" />
         </span>
       </Button>
     </>

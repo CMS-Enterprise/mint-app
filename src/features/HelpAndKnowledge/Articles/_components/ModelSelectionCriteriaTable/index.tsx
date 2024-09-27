@@ -26,7 +26,7 @@ const ModelSectionCriteriaTable = () => {
             <th
               key={k}
               scope="col"
-              className="padding-y-1"
+              className="padding-y-1 padding-left-0"
               style={{ minWidth: '170px' }}
             >
               <strong>{k}</strong>
@@ -38,10 +38,13 @@ const ModelSectionCriteriaTable = () => {
         {content.map((item: ContentTypes) => {
           return (
             <tr key={convertToLowercaseAndDashes(item.criteria)}>
-              <th scope="row" className="text-baseline text-bold">
+              <th
+                scope="row"
+                className="text-baseline text-bold padding-left-0"
+              >
                 {item.criteria}
               </th>
-              <td className="text-baseline">
+              <td className="text-baseline padding-left-0">
                 <Trans
                   i18nKey={item.description}
                   components={{
@@ -51,7 +54,7 @@ const ModelSectionCriteriaTable = () => {
                   }}
                 />
               </td>
-              <td className="text-baseline">
+              <td className="text-baseline padding-left-0">
                 <Trans
                   i18nKey={item.score}
                   components={{

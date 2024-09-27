@@ -359,11 +359,26 @@ const sixPageMeeting = {
         'If you think you’ll need a pipeline contractor, and haven’t already spoken to CMMI FO about this, definitely flag this during the meeting. As mentioned above, they will need to approve the request.',
         'If CMMI FO has not requested many revisions to the 6-page concept paper and approves the forward progress, it might be a good to have thought through a general mock up of a timeframe with proposed approximate dates for ICIP draft, potential clearance, etc.'
       ]
+    },
+    modelSelectionCriteria: {
+      heading: 'Model selection criteria',
+      description:
+        'These selection criteria detail how models are evaluated overall. The CMMI FO may consider these criteria in different ways and to different degrees in each review meeting and phase of the model concept and design process.'
+    },
+    possibleOutcomes: {
+      heading: 'Possible outcomes',
+      description:
+        'After the review meeting, the CMMI FO may direct you in one of the following directions:',
+      items: [
+        '<bold>Continue iterating:</bold> CMMI FO may have suggestions for the team to iterate on. In this case, model teams may be asked to come back for another 6-page concept review after they’ve had time to ideate and address their considerations. Some concepts require multiple rounds of iteration, so model teams shouldn’t be discouraged if their concept isn’t approved the first time around.',
+        '<bold>Approval:</bold> If during the meeting CMMI FO decides the model concept is feasible, they will approve the 6-page concept paper and it will move on to review by the Office of the Administrator. Model teams will then continue to refine and solidify aspects of their model and can start writing their ICIP. As they work through and refine the details of their model, model teams will continue to update their Model Plan within MINT. If they haven’t already started filling out a Model Plan within MINT, this is often a great time to start that. Many of the details that will go into a 6-page concept paper are also asked within the Model Plan. A Model Plan in MINT is a useful way to help communicate concepts and implementation details with other groups across CMS who assist with various aspects of development and implementation of models.',
+        '<bold>Not approved:</bold> If CMMI FO determines the concept isn’t a path they’re comfortable exploring, the concept may be shelved. When this happens, concepts may be saved for future development.'
+      ]
     }
   },
   footerSummaryBox: {
     title: 'Need help?',
-    body: 'Contact the MINT team at <1>MINTTeam@cms.hhs.gov</1>'
+    body: 'Contact the MINT team at <link1>MINTTeam@cms.hhs.gov</link1>'
   }
 };
 

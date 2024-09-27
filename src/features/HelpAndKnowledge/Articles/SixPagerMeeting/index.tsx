@@ -31,6 +31,8 @@ import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import KeyResourcesCards from '../_components/KeyResourcesCards';
+import ModelSectionCriteriaTable from '../_components/ModelSelectionCriteriaTable';
+import NeedHelp from '../_components/NeedHelp';
 import SimpleList from '../_components/SimpleList';
 import { ArticleCategories, HelpArticle } from '..';
 
@@ -104,6 +106,10 @@ const SixPagerMeeting = () => {
     'sixPageMeeting:howSixPagerReviewed.tipsSummaryBox.items'
   );
 
+  const possibleOutcomes = tArray<string>(
+    'sixPageMeeting:howSixPagerReviewed.possibleOutcomes.items'
+  );
+
   if (loading) {
     return <PageLoading />;
   }
@@ -156,7 +162,7 @@ const SixPagerMeeting = () => {
               id={convertToLowercaseAndDashes(
                 sixPageMeetingT('summaryBox.sections.0')
               )}
-              className="margin-bottom-4"
+              className="margin-bottom-4 scroll-target"
             >
               <h2 className="margin-y-4">
                 {sixPageMeetingT('keyResources.heading')}
@@ -171,6 +177,7 @@ const SixPagerMeeting = () => {
               id={convertToLowercaseAndDashes(
                 sixPageMeetingT('summaryBox.sections.1')
               )}
+              className="scroll-target"
             >
               <h2 className="margin-y-2 margin-bottom-3">
                 {sixPageMeetingT('modelPlansInMINT.heading')}
@@ -207,6 +214,7 @@ const SixPagerMeeting = () => {
               id={convertToLowercaseAndDashes(
                 sixPageMeetingT('summaryBox.sections.2')
               )}
+              className="scroll-target"
             >
               <h2 className="margin-y-3 margin-top-5">
                 {sixPageMeetingT('aboutConceptPapers.heading')}
@@ -543,6 +551,7 @@ const SixPagerMeeting = () => {
               id={convertToLowercaseAndDashes(
                 sixPageMeetingT('summaryBox.sections.3')
               )}
+              className="scroll-target"
             >
               <h2 className="margin-y-3 margin-top-6">
                 {sixPageMeetingT('additionalResources.heading')}
@@ -596,8 +605,9 @@ const SixPagerMeeting = () => {
 
             <div
               id={convertToLowercaseAndDashes(
-                sixPageMeetingT('summaryBox.sections.3')
+                sixPageMeetingT('summaryBox.sections.4')
               )}
+              className="scroll-target"
             >
               <h2 className="margin-y-3 margin-top-6">
                 {sixPageMeetingT('howSixPagerReviewed.heading')}
@@ -629,10 +639,53 @@ const SixPagerMeeting = () => {
                   </ul>
                 </SummaryBoxContent>
               </SummaryBox>
+
+              <h3 className="margin-bottom-0">
+                {sixPageMeetingT(
+                  'howSixPagerReviewed.modelSelectionCriteria.heading'
+                )}
+              </h3>
+
+              <p className="margin-top-1">
+                {sixPageMeetingT(
+                  'howSixPagerReviewed.modelSelectionCriteria.description'
+                )}
+              </p>
+
+              <ModelSectionCriteriaTable />
+
+              <h3 className="margin-bottom-0 margin-top-4">
+                {sixPageMeetingT(
+                  'howSixPagerReviewed.possibleOutcomes.heading'
+                )}
+              </h3>
+
+              <p className="margin-top-1">
+                {sixPageMeetingT(
+                  'howSixPagerReviewed.possibleOutcomes.description'
+                )}
+              </p>
+
+              <ul className="margin-y-0 padding-top-1">
+                {possibleOutcomes.map((section, index) => (
+                  <li key={section}>
+                    <Trans
+                      i18nKey={`howSixPagerReviewed.possibleOutcomes.items.${index}`}
+                      t={sixPageMeetingT}
+                      components={{
+                        bold: <strong />
+                      }}
+                    />
+                  </li>
+                ))}
+              </ul>
             </div>
+
+            <NeedHelp />
           </Grid>
         </GridContainer>
       </MainContent>
+
       <div className="margin-top-6 margin-bottom-neg-7">
         <RelatedArticles
           currentArticle={HelpArticle.SIX_PAGER_MEETING}
