@@ -117,7 +117,7 @@ func structToTypedMapByTag[MapType any](source interface{}, tagKey string) (map[
 }
 
 // StructArrayToMapArray converts an array of structs to an array of Maps
-func StructArrayToMapArray[StructType ~struct{}](structArray []StructType) ([]map[string]interface{}, error) {
+func StructArrayToMapArray[StructType any](structArray []StructType) ([]map[string]interface{}, error) {
 	mapSlice := []map[string]interface{}{}
 	for _, strct := range structArray {
 		sMap, err := StructToMap(strct)
@@ -142,7 +142,7 @@ func MapArrayToJSONArray(mapSlice []map[string]interface{}) (string, error) {
 }
 
 // StructArrayToJSONArray converts an array of structs to a JSON array
-func StructArrayToJSONArray[StructType ~struct{}](structArray []StructType) (string, error) {
+func StructArrayToJSONArray[StructType any](structArray []StructType) (string, error) {
 	mapSlice, err := StructArrayToMapArray[StructType](structArray)
 	if err != nil {
 		return "", err

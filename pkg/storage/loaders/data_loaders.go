@@ -42,6 +42,8 @@ type DataLoaders struct {
 
 	modelPlan  modelPlanLoader
 	planBasics planBasicsLoaders
+
+	operationalSolutions operationalSolutionsLoaders
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -95,6 +97,7 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	// loaders.basics.Init()
 	loaders.modelPlan = newModelPlanLoaders()
 	loaders.planBasics = newPlanBasicsLoaders()
+	loaders.operationalSolutions = newOperationalSolutionsLoaders()
 
 	return loaders
 }

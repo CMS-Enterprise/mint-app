@@ -70,22 +70,27 @@ func OperationalSolutionUpdate(logger *zap.Logger, id uuid.UUID, changes map[str
 
 // OperationalSolutionsAndPossibleGetByOPNeedIDLOADER returns operational Solutions and possible Operational Solutions based on a specific operational Need ID using a Data Loader
 func OperationalSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, operationalNeedID uuid.UUID, includeNotNeeded bool) ([]*models.OperationalSolution, error) {
-	allLoaders := loaders.Loaders(ctx)
-	opSolutionLoader := allLoaders.OperationalSolutionAndPossibleCollectionLoader
+	return loaders.OperationalSolutions.AndPossibleByOperationalNeedID.Load(ctx,
+		storage.SolutionAndPossibleKey{
+			OperationalNeedID: operationalNeedID,
+			IncludeNotNeeded:  includeNotNeeded,
+		})
+	// allLoaders := loaders.Loaders(ctx)
+	// opSolutionLoader := allLoaders.OperationalSolutionAndPossibleCollectionLoader
 
-	key := loaders.NewKeyArgs()
+	// key := loaders.NewKeyArgs()
 
-	key.Args["include_not_needed"] = includeNotNeeded
-	key.Args["operational_need_id"] = operationalNeedID
+	// key.Args["include_not_needed"] = includeNotNeeded
+	// key.Args["operational_need_id"] = operationalNeedID
 
-	thunk := opSolutionLoader.Loader.Load(ctx, key)
-	result, err := thunk()
+	// thunk := opSolutionLoader.Loader.Load(ctx, key)
+	// result, err := thunk()
 
-	if err != nil {
-		return nil, err
-	}
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	return result.([]*models.OperationalSolution), nil
+	// return result.([]*models.OperationalSolution), nil
 }
 
 // OperationalSolutionGetByID returns an operational Solution by it's ID

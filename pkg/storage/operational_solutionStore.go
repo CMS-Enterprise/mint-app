@@ -17,6 +17,14 @@ import (
 	_ "embed"
 )
 
+// TODO (loaders) where should these compound keys live? better to strongly type than to use a map
+
+// SolutionAndPossibleKey is a key to get a operational solution and possible operational solution
+type SolutionAndPossibleKey struct {
+	OperationalNeedID uuid.UUID
+	IncludeNotNeeded  bool
+}
+
 //go:embed SQL/operational_solution/and_possible_get_by_operational_need_id_LOADER.sql
 var operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSQL string
 
@@ -49,6 +57,25 @@ func (s *Store) OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLO
 	}
 
 	err = stmt.Select(&solutions, arg) //this returns more than one
+	if err != nil {
+		return nil, err
+	}
+
+	return solutions, nil
+}
+
+// OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER returns an array of
+func OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, keys []SolutionAndPossibleKey) ([]*models.OperationalSolution, error) {
+
+	jsonParam, err := models.StructArrayToJSONArray(keys)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": jsonParam,
+	}
+
+	solutions, err := sqlutils.SelectProcedure[models.OperationalSolution](np, operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSQL, arg)
 	if err != nil {
 		return nil, err
 	}
