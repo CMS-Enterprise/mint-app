@@ -193,18 +193,22 @@ const sixPageMeeting = {
     additionalResources: {
       heading: 'Additional resources',
       description:
-        'You can view more resources by visiting the  <link1>Model Development Library</link1>.',
+        'You can view more resources by visiting the  <link1>Strategy Refresh Model Development Library</link1>.',
       items: [
         {
           heading: 'General resources ',
           items: [
             {
-              text: '<link1>2-pager/6-pager repository</link1>',
+              text: '<link1>2-pager repository</link1>',
               link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FSR%2FModelDev%2FSubmitted%20Two%20Pagers&FolderCTID=0x01200036E3B855163F814699A0837BA1A30AAB&View=%7BE27BAB55%2D0182%2D4AEB%2D811C%2D92373E7CCCAC%7D'
             },
             {
-              text: '<link1>ICIPs</link1>',
+              text: '<link1>6-pager repository</link1>',
               link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FSR%2FModelDev%2FSubmitted%20Six%20Pagers&FolderCTID=0x01200036E3B855163F814699A0837BA1A30AAB&View=%7BE27BAB55%2D0182%2D4AEB%2D811C%2D92373E7CCCAC%7D'
+            },
+            {
+              text: '<link1>ICIP repository</link1>',
+              link: 'https://share.cms.gov/center/CMMI/ICIPs/SitePages/Home.aspx'
             },
             {
               text: '<link1>Waiver database</link1>',
@@ -228,7 +232,7 @@ const sixPageMeeting = {
               link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/Innovation%20Center%20Model%20Quality%20Design%20Process_0907.pdf'
             },
             {
-              text: '<link1>PROMs strategy</link1>',
+              text: '<link1>Patient Reported Outcome Measure(PROM) strategy</link1>',
               link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20Development%20Resources/CMMI%20Patient-Reported%20Outcome%20Measure%20Strategy_FINAL_5.16.22.docx'
             }
           ]

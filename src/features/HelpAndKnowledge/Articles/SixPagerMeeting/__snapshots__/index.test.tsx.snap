@@ -866,7 +866,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     type="button"
                   >
                     <span>
-                      Model Development Library
+                      Strategy Refresh Model Development Library
                       <svg
                         class="usa-icon margin-left-05 top-05"
                         focusable="false"
@@ -899,7 +899,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span>
-                            2-pager/6-pager repository
+                            2-pager repository
                             <svg
                               class="usa-icon margin-left-05 top-05"
                               focusable="false"
@@ -923,7 +923,31 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span>
-                            ICIPs
+                            6-pager repository
+                            <svg
+                              class="usa-icon margin-left-05 top-05"
+                              focusable="false"
+                              height="1em"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          class="usa-button usa-button--unstyled margin-right-05"
+                          data-testid="button"
+                          type="button"
+                        >
+                          <span>
+                            ICIP repository
                             <svg
                               class="usa-icon margin-left-05 top-05"
                               focusable="false"
@@ -1050,7 +1074,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                           type="button"
                         >
                           <span>
-                            PROMs strategy
+                            Patient Reported Outcome Measure(PROM) strategy
                             <svg
                               class="usa-icon margin-left-05 top-05"
                               focusable="false"
