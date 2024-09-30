@@ -265,7 +265,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-additional-frequency-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -478,7 +478,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-provider-add-method-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -639,7 +639,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-leave-method-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -908,7 +908,7 @@ exports[`Model Plan ProviderOptions > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-provider-overlap-note-add-note-toggle"
             type="button"
           >
             <svg

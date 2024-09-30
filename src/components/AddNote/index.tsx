@@ -44,7 +44,7 @@ const AddNote = ({ field: fieldName, id, className }: AddNoteType) => {
       {!note && !open && !touched && (
         <Button
           type="button"
-          data-testid="add-note-toggle"
+          data-testid={`${id}-add-note-toggle`}
           className="usa-button usa-button--unstyled"
           onClick={() => setOpen(true)}
         >

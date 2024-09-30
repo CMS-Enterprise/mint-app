@@ -135,7 +135,8 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                   Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at 
                   <button
                     class="usa-button usa-button--unstyled margin-right-2"
-                    data-testid="button"
+                    data-testid="external-link"
+                    id="external-link"
                     type="button"
                   >
                     <span>
@@ -209,7 +210,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           readonly=""
                           tabindex="-1"
                           type="text"
-                          value="2029-05-12T15:01:39.190679Z"
+                          value=""
                         />
                         <div
                           class="usa-date-picker__wrapper"
@@ -223,7 +224,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                             id="Milestone-completeICIP"
                             maxlength="50"
                             type="text"
-                            value="05/12/2029"
+                            value=""
                           />
                           <button
                             aria-haspopup="true"
@@ -310,7 +311,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           readonly=""
                           tabindex="-1"
                           type="text"
-                          value="2030-06-12T15:01:39.190679Z"
+                          value=""
                         />
                         <div
                           class="usa-date-picker__wrapper"
@@ -324,7 +325,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                             id="Milestone-clearanceStarts"
                             maxlength="50"
                             type="text"
-                            value="06/12/2030"
+                            value=""
                           />
                           <button
                             aria-haspopup="true"
@@ -387,7 +388,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           readonly=""
                           tabindex="-1"
                           type="text"
-                          value="2028-12-12T15:01:39.190679Z"
+                          value=""
                         />
                         <div
                           class="usa-date-picker__wrapper"
@@ -401,7 +402,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                             id="Milestone-clearanceEnds"
                             maxlength="50"
                             type="text"
-                            value="12/12/2028"
+                            value=""
                           />
                           <button
                             aria-haspopup="true"
@@ -477,7 +478,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                         readonly=""
                         tabindex="-1"
                         type="text"
-                        value="2029-07-08T15:01:39.190679Z"
+                        value=""
                       />
                       <div
                         class="usa-date-picker__wrapper"
@@ -491,7 +492,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           id="Milestone-announced"
                           maxlength="50"
                           type="text"
-                          value="07/08/2029"
+                          value=""
                         />
                         <button
                           aria-haspopup="true"
@@ -572,7 +573,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                         readonly=""
                         tabindex="-1"
                         type="text"
-                        value="2031-02-114T15:01:39.190679Z"
+                        value=""
                       />
                       <div
                         class="usa-date-picker__wrapper"
@@ -586,7 +587,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           id="Milestone-applicationsStart"
                           maxlength="50"
                           type="text"
-                          value="05/25/2031"
+                          value=""
                         />
                         <button
                           aria-haspopup="true"
@@ -649,7 +650,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                         readonly=""
                         tabindex="-1"
                         type="text"
-                        value="2031-01-23T15:01:39.190679Z"
+                        value=""
                       />
                       <div
                         class="usa-date-picker__wrapper"
@@ -663,7 +664,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           id="Milestone-applicationsEnd"
                           maxlength="50"
                           type="text"
-                          value="01/23/2031"
+                          value=""
                         />
                         <button
                           aria-haspopup="true"
@@ -750,7 +751,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                         readonly=""
                         tabindex="-1"
                         type="text"
-                        value="2029-06-12T15:01:39.190679Z"
+                        value=""
                       />
                       <div
                         class="usa-date-picker__wrapper"
@@ -764,7 +765,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           id="Milestone-performancePeriodStarts"
                           maxlength="50"
                           type="text"
-                          value="06/12/2029"
+                          value=""
                         />
                         <button
                           aria-haspopup="true"
@@ -827,7 +828,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                         readonly=""
                         tabindex="-1"
                         type="text"
-                        value="2029-012-28T15:01:39.190679Z"
+                        value=""
                       />
                       <div
                         class="usa-date-picker__wrapper"
@@ -841,7 +842,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           id="Milestone-performancePeriodEnds"
                           maxlength="50"
                           type="text"
-                          value="12/28/2029"
+                          value=""
                         />
                         <button
                           aria-haspopup="true"
@@ -916,7 +917,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                         readonly=""
                         tabindex="-1"
                         type="text"
-                        value="2030-05-08T15:01:39.190679Z"
+                        value=""
                       />
                       <div
                         class="usa-date-picker__wrapper"
@@ -930,7 +931,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                           id="Milestone-wrapUpEnds"
                           maxlength="50"
                           type="text"
-                          value="05/08/2030"
+                          value=""
                         />
                         <button
                           aria-haspopup="true"

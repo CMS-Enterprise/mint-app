@@ -214,7 +214,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="ops-eval-and-learning-stakeholders-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -294,7 +294,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="ops-eval-and-learning-help-desk-use-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -436,7 +436,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="ops-eval-and-learning-contractor-support-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -525,7 +525,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="ops-eval-and-learning-iddoc-support-note-add-note-toggle"
             type="button"
           >
             <svg
