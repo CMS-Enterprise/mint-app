@@ -240,11 +240,10 @@ export const isHiddenByParentCondition = <
     return false;
 
   // Typescript is not inferring the parent config type, but we know it has options with children
-  const parentConfig =
-    config.parentRelation() as TranslationFieldPropertiesWithOptionsAndChildren<
-      T,
-      C
-    >;
+  const parentConfig = config.parentRelation() as TranslationFieldPropertiesWithOptionsAndChildren<
+    T,
+    C
+  >;
 
   const parentValue: T = values[parentConfig.gqlField];
 

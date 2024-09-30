@@ -12,8 +12,7 @@ import { initialValues } from '../../SelectSolutions';
 
 import CheckboxCard from '.';
 
-type GetOperationalNeedSolutionsType =
-  GetOperationalNeedQuery['operationalNeed']['solutions'][0];
+type GetOperationalNeedSolutionsType = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
 export default {
   title: 'Operational Need Checkbox Card',
   component: CheckboxCard,

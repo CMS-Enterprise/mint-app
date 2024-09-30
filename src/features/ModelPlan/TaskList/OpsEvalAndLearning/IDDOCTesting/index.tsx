@@ -39,8 +39,7 @@ import {
   renderTotalPages
 } from '..';
 
-type IDDOCTestingFormType =
-  GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
+type IDDOCTestingFormType = GetIddocTestingQuery['modelPlan']['opsEvalAndLearning'];
 
 const IDDOCTesting = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -50,8 +49,9 @@ const IDDOCTesting = () => {
   );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
-  const { dataMonitoringFileTypes: dataMonitoringFileTypesConfig } =
-    usePlanTranslation('opsEvalAndLearning');
+  const {
+    dataMonitoringFileTypes: dataMonitoringFileTypesConfig
+  } = usePlanTranslation('opsEvalAndLearning');
 
   const { modelID } = useParams<{ modelID: string }>();
 

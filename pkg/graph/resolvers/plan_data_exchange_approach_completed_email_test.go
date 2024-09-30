@@ -20,7 +20,7 @@ func (s *ResolverSuite) TestDataExchangeApproachCompletedEmail() {
 		MINTTeamEmail: "mint.team@local.fake",
 	}
 
-	testTemplate, expectedSubject, expectedBody := createDummyTemplateCacheHelper(planName, plan)
+	testTemplate, expectedSubject, expectedBody := createTemplateCacheHelper(planName, plan)
 	mockEmailTemplateService.
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.DataExchangeApproachCompletedTemplateName)).

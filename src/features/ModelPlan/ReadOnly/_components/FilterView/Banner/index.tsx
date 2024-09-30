@@ -10,7 +10,7 @@ import { filterGroups } from '../BodyContent/_filterGroupMapping';
 import './index.scss';
 
 type FilterViewBannerProps = {
-  filteredView?: (typeof filterGroups)[number] | null;
+  filteredView?: typeof filterGroups[number] | null;
   openFilterModal: () => void;
   openExportModal: () => void;
 };

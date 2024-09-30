@@ -11,8 +11,7 @@ import {
 
 import BeneficiaryCostSharing from './index';
 
-type GetBeneficiaryCostSharingType =
-  GetBeneficiaryCostSharingQuery['modelPlan']['payments'];
+type GetBeneficiaryCostSharingType = GetBeneficiaryCostSharingQuery['modelPlan']['payments'];
 
 const mockData: GetBeneficiaryCostSharingType = {
   __typename: 'PlanPayments',

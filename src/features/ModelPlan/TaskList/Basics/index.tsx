@@ -144,8 +144,10 @@ const BasicsContent = () => {
           formikRef?.current?.values.basics
         );
 
-        const { modelName: updateModelName, abbreviation: updateAbbreviation } =
-          changes;
+        const {
+          modelName: updateModelName,
+          abbreviation: updateAbbreviation
+        } = changes;
 
         update({
           variables: {

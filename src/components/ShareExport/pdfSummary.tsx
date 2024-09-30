@@ -26,7 +26,7 @@ const PDFSummary = ({
   filteredView,
   className
 }: {
-  filteredView?: (typeof filterGroups)[number] | 'all';
+  filteredView?: typeof filterGroups[number] | 'all';
   className?: string;
 }) => {
   const { t: generalReadOnlyT } = useTranslation('generalReadOnly');
@@ -84,7 +84,7 @@ const PDFSummary = ({
         <FilterViewBanner
           filteredView={
             filteredView &&
-            (filteredViewOutput(filteredView) as (typeof filterGroups)[number])
+            (filteredViewOutput(filteredView) as typeof filterGroups[number])
           }
           openFilterModal={() => null}
           openExportModal={() => null}

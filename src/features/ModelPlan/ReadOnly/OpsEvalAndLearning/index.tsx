@@ -167,17 +167,13 @@ const ReadOnlyOpsEvalAndLearning = ({
     sendFilesBetweenCcw,
     sendFilesBetweenCcwNote,
     appToSendFilesToKnown,
-    useCcwForFileDistribiutionToParticipants:
-      useCcwForFileDistribiutionToParticipantsRemoved,
-    useCcwForFileDistribiutionToParticipantsNote:
-      useCcwForFileDistribiutionToParticipantsNoteRemoved,
+    useCcwForFileDistribiutionToParticipants: useCcwForFileDistribiutionToParticipantsRemoved,
+    useCcwForFileDistribiutionToParticipantsNote: useCcwForFileDistribiutionToParticipantsNoteRemoved,
     developNewQualityMeasures: developNewQualityMeasuresRemoved,
     developNewQualityMeasuresNote: developNewQualityMeasuresNoteRemoved,
     qualityPerformanceImpactsPayment: qualityPerformanceImpactsPaymentRemoved,
-    qualityPerformanceImpactsPaymentOther:
-      qualityPerformanceImpactsPaymentOtherRemoved,
-    qualityPerformanceImpactsPaymentNote:
-      qualityPerformanceImpactsPaymentNoteRemoved,
+    qualityPerformanceImpactsPaymentOther: qualityPerformanceImpactsPaymentOtherRemoved,
+    qualityPerformanceImpactsPaymentNote: qualityPerformanceImpactsPaymentNoteRemoved,
     ...opsEvalAndLearningConfigTwo
   } = opsEvalAndLearningConfig;
 
