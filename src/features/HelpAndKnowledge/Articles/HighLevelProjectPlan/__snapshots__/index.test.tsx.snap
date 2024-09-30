@@ -354,16 +354,14 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             id="cmmi-internal-clearance-process"
           >
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 Learn more about CMMI Internal Clearance on SharePoint
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -594,16 +592,14 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
               Documents listed may not apply to all models. However, all documents in this section will go through CMMI Internal Clearance, CMS Clearance, Health and Human Services (HHS) Clearance, and Office of Management and Budget (OMB) Clearance. 
             </p>
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 Learn more about Clearance on SharePoint
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -755,16 +751,14 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                       class="display-flex flex-align-center"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2"
+                        class="usa-button usa-button--unstyled margin-right-05"
                         data-testid="button"
                         type="button"
                       >
-                        <span
-                          class="display-flex flex-align-center"
-                        >
+                        <span>
                           Learn more about announcement materials on SharePoint
                           <svg
-                            class="usa-icon margin-left-05"
+                            class="usa-icon margin-left-05 top-05"
                             focusable="false"
                             height="1em"
                             role="img"
@@ -848,16 +842,14 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                       class="display-flex flex-align-center"
                     >
                       <button
-                        class="usa-button usa-button--unstyled margin-right-2"
+                        class="usa-button usa-button--unstyled margin-right-05"
                         data-testid="button"
                         type="button"
                       >
-                        <span
-                          class="display-flex flex-align-center"
-                        >
+                        <span>
                           Learn more about Fraud, Waste, Abuse Waivers on SharePoint
                           <svg
-                            class="usa-icon margin-left-05"
+                            class="usa-icon margin-left-05 top-05"
                             focusable="false"
                             height="1em"
                             role="img"
@@ -2126,7 +2118,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                 </header>
                 <a
                   class="usa-link width-fit-content display-block "
-                  href="/help-and-knowledge/articles?category=undefined"
+                  href="/help-and-knowledge/articles?category=model-concept-and-design"
                 >
                   <span
                     aria-label="Articles under the Model concept and design category"

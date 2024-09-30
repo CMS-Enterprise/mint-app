@@ -1,6 +1,3 @@
-import React from 'react';
-import { Icon } from '@trussworks/react-uswds';
-
 export enum ArticleCategories {
   GETTING_STARTED = 'getting-started',
   IT_IMPLEMENTATION = 'it-implementation',
@@ -9,7 +6,8 @@ export enum ArticleCategories {
 
 export const articleCategories: ArticleCategories[] = [
   ArticleCategories.GETTING_STARTED,
-  ArticleCategories.IT_IMPLEMENTATION
+  ArticleCategories.IT_IMPLEMENTATION,
+  ArticleCategories.MODEL_CONCEPT_AND_DESIGN
 ];
 
 export enum HelpArticle {
@@ -53,9 +51,9 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
   },
   {
     key: HelpArticle.SIX_PAGER_MEETING,
-    route: '/how-to-have-a-successful-6-pager-meeting',
+    route: '/about-six-page-concept-papers-and-review-meeting',
     translation: 'sixPageMeeting',
-    type: ArticleCategories.GETTING_STARTED
+    type: ArticleCategories.MODEL_CONCEPT_AND_DESIGN
   },
   {
     key: HelpArticle.HIGH_LEVEL_PROJECT_PLAN,
@@ -88,20 +86,5 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     type: ArticleCategories.IT_IMPLEMENTATION
   }
 ];
-
-export const covertToLowercaseAndDashes = (string: string) =>
-  string.toLowerCase().replace(/\s+/g, '-');
-
-export const ScrollLink = ({ scrollTo }: { scrollTo: string }) => {
-  return (
-    <a
-      href={`#${covertToLowercaseAndDashes(scrollTo)}`}
-      className="display-flex flex-align-center"
-    >
-      {scrollTo}
-      <Icon.ArrowForward />
-    </a>
-  );
-};
 
 export default helpAndKnowledgeArticles;

@@ -17,15 +17,12 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import ScrollLink from 'components/ScrollLink';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
-import {
-  ArticleCategories,
-  covertToLowercaseAndDashes,
-  HelpArticle,
-  ScrollLink
-} from '..';
+import { ArticleCategories, HelpArticle } from '..';
 
 export const ModelSolutionImplementation = () => {
   const { t } = useTranslation('modelSolutionImplementation');
@@ -93,7 +90,7 @@ export const ModelSolutionImplementation = () => {
             {/* INITIATE WORK */}
 
             <h2
-              id={covertToLowercaseAndDashes(t('summaryBox.items.0'))}
+              id={convertToLowercaseAndDashes(t('summaryBox.items.0'))}
               className="margin-top-6 margin-bottom-2"
             >
               {t('initiateWork.heading')}
@@ -171,7 +168,7 @@ export const ModelSolutionImplementation = () => {
             {/* TRACK WORK */}
 
             <h2
-              id={covertToLowercaseAndDashes(t('summaryBox.items.1'))}
+              id={convertToLowercaseAndDashes(t('summaryBox.items.1'))}
               className="margin-top-7 margin-bottom-2"
             >
               {t('trackWork.heading')}

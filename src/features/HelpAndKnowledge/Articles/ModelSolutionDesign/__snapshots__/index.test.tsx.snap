@@ -90,7 +90,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                     >
                       Start a Model Plan
                       <svg
-                        class="usa-icon"
+                        class="usa-icon margin-left-1"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -117,7 +117,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                     >
                       Assemble the IT and operational team
                       <svg
-                        class="usa-icon"
+                        class="usa-icon margin-left-1"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -144,7 +144,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                     >
                       Identify the solutions for the model’s operational needs
                       <svg
-                        class="usa-icon"
+                        class="usa-icon margin-left-1"
                         focusable="false"
                         height="1em"
                         role="img"

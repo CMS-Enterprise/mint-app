@@ -27,6 +27,7 @@ const ExternalLink = ({
     <>
       <Modal
         isOpen={isModalOpen}
+        shouldCloseOnOverlayClick
         closeModal={() => setIsModalOpen(false)}
         className="external-link-modal maxw-mobile-lg height-auto"
       >
@@ -71,14 +72,14 @@ const ExternalLink = ({
       <Button
         type="button"
         unstyled
-        className={classNames(className, 'margin-right-2')}
+        className={classNames(className, 'margin-right-05')}
         onClick={() => {
           setIsModalOpen(true);
         }}
       >
-        <span className="display-flex flex-align-center">
+        <span>
           {children}
-          <Icon.Launch className="margin-left-05" />
+          <Icon.Launch className="margin-left-05 top-05" />
         </span>
       </Button>
     </>

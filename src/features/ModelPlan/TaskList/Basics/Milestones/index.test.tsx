@@ -1,7 +1,11 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import {
   GetMilestonesDocument,
   GetMilestonesQuery,
@@ -71,7 +75,7 @@ describe('Model Basics Milestones page', () => {
       </MemoryRouter>
     );
 
-    expect(await screen.findByText('Phased in note')).toBeInTheDocument();
+    await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
 
     expect(asFragment()).toMatchSnapshot();
   });

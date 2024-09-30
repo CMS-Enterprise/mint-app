@@ -28,16 +28,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > 4inn
           </h3>
           Send an email to 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               ACO-OIT@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -218,16 +216,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Acco
           </h3>
           Send an email to 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               ACO-OIT@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -525,16 +521,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
     >
       Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Box, contact the MINT Team at 
       <button
-        class="usa-button usa-button--unstyled margin-right-2"
+        class="usa-button usa-button--unstyled margin-right-05"
         data-testid="button"
         type="button"
       >
-        <span
-          class="display-flex flex-align-center"
-        >
+        <span>
           MINTTeam@cms.hhs.gov
           <svg
-            class="usa-icon margin-left-05"
+            class="usa-icon margin-left-05 top-05"
             focusable="false"
             height="1em"
             role="img"
@@ -564,16 +558,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
           G​o to CMS Box and click Continue to confirm you are a part of the Centers for Medicare & M​edicaid services. You will be automatically signed in.
           <p>
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 Go to CMS Box
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -601,16 +593,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
           If using CMS Box to share files with participants, additional permissions will need to be set up.
           <p>
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 View resources on CMS Intranet
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -645,16 +635,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
     >
       Since this is a self service tool, you can work at your own pace. If you have questions or need help using CMS Qualtrics, contact the MINT Team at 
       <button
-        class="usa-button usa-button--unstyled margin-right-2"
+        class="usa-button usa-button--unstyled margin-right-05"
         data-testid="button"
         type="button"
       >
-        <span
-          class="display-flex flex-align-center"
-        >
+        <span>
           MINTTeam@cms.hhs.gov
           <svg
-            class="usa-icon margin-left-05"
+            class="usa-icon margin-left-05 top-05"
             focusable="false"
             height="1em"
             role="img"
@@ -684,16 +672,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
           Log in to CMS Qualtrics using your CMS user name and password.
           <p>
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 Go to CMS Qualtrics
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -763,16 +749,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CPI 
           <span>
             In the meantime, contact the MINT Team at 
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 MINTTeam@cms.hhs.gov
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -821,16 +805,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cent
           </h3>
           If you’re interested in using CDX for your model or would like to learn more about the system, please contact 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               MINTTeam@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -862,16 +844,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cent
             <li>
               Register as New User in the 
               <button
-                class="usa-button usa-button--unstyled margin-right-2"
+                class="usa-button usa-button--unstyled margin-right-05"
                 data-testid="button"
                 type="button"
               >
-                <span
-                  class="display-flex flex-align-center"
-                >
+                <span>
                   CMS Enterprise Portal
                   <svg
-                    class="usa-icon margin-left-05"
+                    class="usa-icon margin-left-05 top-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -947,16 +927,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
           Anyone wanting to access CCW data will need a valid CMS DUA (Data User Agreement).
           <p>
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 Data Disclosures and Data Use Agreements
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -983,16 +961,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
           </h3>
           Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               CCWAccess@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -1054,16 +1030,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
           </h3>
           Contact Velda McGhee, and she’ll send the CCW VRDC Access Request worksheet to complete. Once completed, email it with a copy of the approved CMS DUA to OEDA (
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               CCWAccess@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -1237,16 +1211,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Elec
           <span>
             In the meantime, contact the MINT Team at 
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 MINTTeam@cms.hhs.gov
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -1554,16 +1526,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
           <span>
             In the meantime, contact the MINT Team at 
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 MINTTeam@cms.hhs.gov
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -1599,16 +1569,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
     >
       Any necessary setup for HIGLAS will be taken care of when working with the Innovation Payment Contractor (IPC) or the Shared Systems. Contact Donna Schmidt at 
       <button
-        class="usa-button usa-button--unstyled margin-right-2"
+        class="usa-button usa-button--unstyled margin-right-05"
         data-testid="button"
         type="button"
       >
-        <span
-          class="display-flex flex-align-center"
-        >
+        <span>
           donna.schmidt@cms.hhs.gov
           <svg
-            class="usa-icon margin-left-05"
+            class="usa-icon margin-left-05 top-05"
             focusable="false"
             height="1em"
             role="img"
@@ -1886,16 +1854,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Inte
           <span>
             In the meantime, contact the MINT Team at 
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 MINTTeam@cms.hhs.gov
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -2079,16 +2045,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
 
 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Onboarding Request Form for MDM-POR
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2127,16 +2091,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
 
 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to ICD and Onboarding Mapping for MDM-POR
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2209,16 +2171,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
 
 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Onboarding Request Form for MDM-NCBP
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2257,16 +2217,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
 
 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to ICD and Onboarding Mapping for MDM-NCBP
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2402,16 +2360,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Medi
           <span>
             In the meantime, contact the MINT Team at 
             <button
-              class="usa-button usa-button--unstyled margin-right-2"
+              class="usa-button usa-button--unstyled margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 MINTTeam@cms.hhs.gov
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -2541,16 +2497,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Outl
           </ul>
           If you’d rather submit a request by email, please send the above information to 
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               cms_it_service_desk@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2653,16 +2607,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Rese
     >
       Model teams should follow the 
       <button
-        class="usa-button usa-button--unstyled margin-right-2"
+        class="usa-button usa-button--unstyled margin-right-05"
         data-testid="button"
         type="button"
       >
-        <span
-          class="display-flex flex-align-center"
-        >
+        <span>
           Procurement Administrative Lead Time (PALT)
           <svg
-            class="usa-icon margin-left-05"
+            class="usa-icon margin-left-05 top-05"
             focusable="false"
             height="1em"
             role="img"
@@ -2749,16 +2701,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             </li>
           </ul>
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Salesforce CMT
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2896,16 +2846,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             </li>
           </ul>
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Salesforce CMT
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3043,16 +2991,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             </li>
           </ul>
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Salesforce CMT
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3190,16 +3136,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             </li>
           </ul>
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Salesforce CMT
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3337,16 +3281,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             </li>
           </ul>
           <button
-            class="usa-button usa-button--unstyled margin-right-2"
+            class="usa-button usa-button--unstyled margin-right-05"
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Salesforce CMT
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3459,16 +3401,14 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Shar
 
 
             <button
-              class="usa-button usa-button--unstyled display-block margin-top-105 margin-bottom-3 margin-right-2"
+              class="usa-button usa-button--unstyled display-block margin-top-105 margin-bottom-3 margin-right-05"
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 Go to Fee For Service Change Request Resource Center
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"

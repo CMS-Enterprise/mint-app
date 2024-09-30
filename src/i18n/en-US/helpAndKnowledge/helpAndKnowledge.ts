@@ -1985,7 +1985,8 @@ const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.SAMPLE_MODEL_PLAN]: 'Sample Model Plan',
   [HelpArticle.TWO_PAGER_MEETING]:
     'About 2-page concept papers and review meetings',
-  [HelpArticle.SIX_PAGER_MEETING]: 'How to have a successful 6-pager meeting',
+  [HelpArticle.SIX_PAGER_MEETING]:
+    'About 6-page concept papers and review meetings',
   [HelpArticle.UTILIZING_SOLUTIONS]:
     'Utilizing available operational solutions',
   [HelpArticle.MODEL_SOLUTION_IMPLEMENTATION]:

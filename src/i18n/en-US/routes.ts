@@ -136,8 +136,8 @@ const routes = {
       'Help and knowledge center - High level project plan',
     '/about-2-page-concept-papers-and-review-meetings':
       'Help and knowledge center - About 2-page concept papers and review meetings',
-    '/how-to-have-a-successful-6-pager-meeting':
-      'Help and knowledge center - How to have a successful 6 pager meeting',
+    '/about-six-page-concept-papers-and-review-meeting':
+      'Help and knowledge center - About 6-page concept papers and review meetings',
     '/utilizing-solutions': 'Help and knowledge center - Utilizing solutions',
     '/model-and-solution-implementation':
       'Help and knowledge center - Model and solution implementation',
