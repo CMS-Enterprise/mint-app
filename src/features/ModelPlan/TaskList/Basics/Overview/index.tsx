@@ -131,8 +131,13 @@ const Overview = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<BasicsFormType>) => {
-          const { dirty, handleSubmit, isValid, setErrors, values } =
-            formikProps;
+          const {
+            dirty,
+            handleSubmit,
+            isValid,
+            setErrors,
+            values
+          } = formikProps;
 
           return (
             <>

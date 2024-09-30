@@ -33,8 +33,7 @@ import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 
-type AuthorityFormType =
-  GetAuthorityQuery['modelPlan']['generalCharacteristics'];
+type AuthorityFormType = GetAuthorityQuery['modelPlan']['generalCharacteristics'];
 
 // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
 type InitialValueType = Omit<
@@ -159,8 +158,12 @@ const Authority = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InitialValueType>) => {
-          const { handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+          const {
+            handleSubmit,
+            setErrors,
+            setFieldValue,
+            values
+          } = formikProps;
 
           return (
             <>

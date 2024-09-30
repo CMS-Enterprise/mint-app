@@ -9,8 +9,7 @@ import {
 
 import ParticipantOptions from './index';
 
-type GetParticipantOptionsType =
-  GetParticipantOptionsQuery['modelPlan']['participantsAndProviders'];
+type GetParticipantOptionsType = GetParticipantOptionsQuery['modelPlan']['participantsAndProviders'];
 
 const participantOptionsMockData: GetParticipantOptionsType = {
   __typename: 'PlanParticipantsAndProviders',

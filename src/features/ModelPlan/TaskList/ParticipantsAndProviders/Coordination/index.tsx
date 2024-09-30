@@ -36,8 +36,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 
-type CoordinationFormType =
-  GetCoordinationQuery['modelPlan']['participantsAndProviders'];
+type CoordinationFormType = GetCoordinationQuery['modelPlan']['participantsAndProviders'];
 
 export const Coordination = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -49,10 +48,8 @@ export const Coordination = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
-    participantRequireFinancialGuarantee:
-      participantRequireFinancialGuaranteeConfig,
-    participantRequireFinancialGuaranteeType:
-      participantRequireFinancialGuaranteeTypeConfig,
+    participantRequireFinancialGuarantee: participantRequireFinancialGuaranteeConfig,
+    participantRequireFinancialGuaranteeType: participantRequireFinancialGuaranteeTypeConfig,
     coordinateWork: coordinateWorkConfig,
     gainsharePayments: gainsharePaymentsConfig,
     gainsharePaymentsTrack: gainsharePaymentsTrackConfig,
@@ -178,8 +175,12 @@ export const Coordination = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<CoordinationFormType>) => {
-          const { handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+          const {
+            handleSubmit,
+            setErrors,
+            setFieldValue,
+            values
+          } = formikProps;
 
           return (
             <>

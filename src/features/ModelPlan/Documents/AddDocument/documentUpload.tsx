@@ -39,8 +39,10 @@ const DocumentUpload = ({
   const { t: documentsT } = useTranslation('documents');
   const { t: documentsMiscT } = useTranslation('documentsMisc');
 
-  const { documentType: documentTypeConfig, restricted: restrictedConfig } =
-    usePlanTranslation('documents');
+  const {
+    documentType: documentTypeConfig,
+    restricted: restrictedConfig
+  } = usePlanTranslation('documents');
 
   const { showMessageOnNextPage } = useMessage();
   const formikRef = useRef<FormikProps<FileUploadForm>>(null);

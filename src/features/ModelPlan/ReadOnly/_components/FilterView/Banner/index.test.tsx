@@ -13,7 +13,7 @@ describe('Filter View Modal', () => {
       <Banner
         openFilterModal={openFilterModal}
         openExportModal={openExportModal}
-        filteredView={'CMMI' as (typeof filterGroups)[number]}
+        filteredView={'CMMI' as typeof filterGroups[number]}
       />
     );
 
@@ -28,7 +28,7 @@ describe('Filter View Modal', () => {
       <Banner
         openFilterModal={openFilterModal}
         openExportModal={openExportModal}
-        filteredView={'CMMI' as (typeof filterGroups)[number]}
+        filteredView={'CMMI' as typeof filterGroups[number]}
       />
     );
 

@@ -10,8 +10,7 @@ import {
 
 import Performance from '.';
 
-type GetPerformanceType =
-  GetPerformanceQuery['modelPlan']['opsEvalAndLearning'];
+type GetPerformanceType = GetPerformanceQuery['modelPlan']['opsEvalAndLearning'];
 
 const performanceMockData: GetPerformanceType = {
   __typename: 'PlanOpsEvalAndLearning',

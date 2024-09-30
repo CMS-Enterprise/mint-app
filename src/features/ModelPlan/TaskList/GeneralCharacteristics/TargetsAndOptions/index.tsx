@@ -37,8 +37,7 @@ import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
-type TargetsAndOptionsFormType =
-  GetTargetsAndOptionsQuery['modelPlan']['generalCharacteristics'];
+type TargetsAndOptionsFormType = GetTargetsAndOptionsQuery['modelPlan']['generalCharacteristics'];
 
 const TargetsAndOptions = () => {
   const { t: generalCharacteristicsT } = useTranslation(
@@ -57,8 +56,7 @@ const TargetsAndOptions = () => {
     geographiesRegionTypes: geographiesRegionTypesConfig,
     participationOptions: participationOptionsConfig,
     agreementTypes: agreementTypesConfig,
-    multiplePatricipationAgreementsNeeded:
-      multiplePatricipationAgreementsNeededConfig
+    multiplePatricipationAgreementsNeeded: multiplePatricipationAgreementsNeededConfig
   } = usePlanTranslation('generalCharacteristics');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -176,8 +174,12 @@ const TargetsAndOptions = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<TargetsAndOptionsFormType>) => {
-          const { handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+          const {
+            handleSubmit,
+            setErrors,
+            setFieldValue,
+            values
+          } = formikProps;
 
           return (
             <>

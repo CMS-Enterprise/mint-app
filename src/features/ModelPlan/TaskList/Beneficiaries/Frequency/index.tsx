@@ -177,8 +177,12 @@ const Frequency = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InitialValueType>) => {
-          const { handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+          const {
+            handleSubmit,
+            setErrors,
+            setFieldValue,
+            values
+          } = formikProps;
 
           return (
             <>

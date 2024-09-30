@@ -79,9 +79,9 @@ export const GenericPointsOfContact = ({
 }) => {
   const { t } = useTranslation('helpAndKnowledge');
 
-  const pointsOfContactSorted = [...(solution?.pointsOfContact || [])].sort(
-    (a, b) => a.name.localeCompare(b.name)
-  );
+  const pointsOfContactSorted = [
+    ...(solution?.pointsOfContact || [])
+  ].sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <div>

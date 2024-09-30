@@ -12,8 +12,7 @@ import {
 
 import DataSharing from '.';
 
-type GetDataSharingType =
-  GetDataSharingQuery['modelPlan']['opsEvalAndLearning'];
+type GetDataSharingType = GetDataSharingQuery['modelPlan']['opsEvalAndLearning'];
 
 const dataSharingMockData: GetDataSharingType = {
   __typename: 'PlanOpsEvalAndLearning',

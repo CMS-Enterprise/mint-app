@@ -34,8 +34,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
-type BeneficiaryCostSharingFormType =
-  GetBeneficiaryCostSharingQuery['modelPlan']['payments'];
+type BeneficiaryCostSharingFormType = GetBeneficiaryCostSharingQuery['modelPlan']['payments'];
 
 const BeneficiaryCostSharing = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -45,8 +44,7 @@ const BeneficiaryCostSharing = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
-    waiveBeneficiaryCostSharingForAnyServices:
-      waiveBeneficiaryCostSharingForAnyServicesConfig,
+    waiveBeneficiaryCostSharingForAnyServices: waiveBeneficiaryCostSharingForAnyServicesConfig,
     waiverOnlyAppliesPartOfPayment: waiverOnlyAppliesPartOfPaymentConfig
   } = usePlanTranslation('payments');
 
@@ -156,8 +154,12 @@ const BeneficiaryCostSharing = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<BeneficiaryCostSharingFormType>) => {
-          const { handleSubmit, setFieldValue, setErrors, values } =
-            formikProps;
+          const {
+            handleSubmit,
+            setFieldValue,
+            setErrors,
+            values
+          } = formikProps;
 
           return (
             <>
