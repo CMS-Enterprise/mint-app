@@ -10,7 +10,8 @@ import {
 
 import TitleAndStatus from '../_components/TitleAndStatus';
 
-type OperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
+type OperationalNeedsType =
+  GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
 
 const ReadOnlyOperationalNeeds = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('opSolutionsMisc');

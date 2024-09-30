@@ -35,7 +35,8 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 
-type CommunicationFormType = GetCommunicationQuery['modelPlan']['participantsAndProviders'];
+type CommunicationFormType =
+  GetCommunicationQuery['modelPlan']['participantsAndProviders'];
 
 export const Communication = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -175,12 +176,8 @@ export const Communication = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<CommunicationFormType>) => {
-          const {
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
 
           return (
             <>

@@ -17,7 +17,8 @@ import {
   returnActionLinks
 } from './util';
 
-type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'];
+type GetOperationalNeedsOperationalNeedsType =
+  GetOperationalNeedsQuery['modelPlan']['operationalNeeds'];
 
 const modelID = 'f4f0a51d-590d-47fb-82e4-b6e6cdcfde06';
 

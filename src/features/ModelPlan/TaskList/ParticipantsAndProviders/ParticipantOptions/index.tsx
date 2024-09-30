@@ -37,7 +37,8 @@ import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
-type ParticipantOptionsFormType = GetParticipantOptionsQuery['modelPlan']['participantsAndProviders'];
+type ParticipantOptionsFormType =
+  GetParticipantOptionsQuery['modelPlan']['participantsAndProviders'];
 
 export const ParticipantOptions = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -158,12 +159,8 @@ export const ParticipantOptions = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ParticipantOptionsFormType>) => {
-          const {
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
 
           return (
             <>

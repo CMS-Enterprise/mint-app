@@ -32,7 +32,8 @@ import { getKeys } from 'types/translation';
 import { dirtyInput } from 'utils/formDiff';
 import { tObject } from 'utils/translation';
 
-type GetNotifcationSettingsType = GetNotificationSettingsQuery['currentUser']['notificationPreferences'];
+type GetNotifcationSettingsType =
+  GetNotificationSettingsQuery['currentUser']['notificationPreferences'];
 
 type NotificationSettingsFormType = Omit<
   GetNotifcationSettingsType,
@@ -59,9 +60,10 @@ const NotificationSettings = () => {
   const { message } = useMessage();
   const location = useLocation();
 
-  const params = useMemo(() => new URLSearchParams(location.search), [
-    location.search
-  ]);
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
   const unsubscribeEmailParams = params.get('unsubscribe_email');
 
   const { data, loading, error } = useGetNotificationSettingsQuery();
@@ -338,12 +340,8 @@ const NotificationSettings = () => {
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<NotificationSettingsFormType>) => {
-              const {
-                dirty,
-                handleSubmit,
-                setFieldValue,
-                values
-              } = formikProps;
+              const { dirty, handleSubmit, setFieldValue, values } =
+                formikProps;
 
               return (
                 <>

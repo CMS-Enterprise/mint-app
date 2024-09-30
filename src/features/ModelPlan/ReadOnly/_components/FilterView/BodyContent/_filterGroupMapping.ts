@@ -7,7 +7,7 @@ export const filterGroups = getKeys(ModelViewFilter).map(filter =>
   filter.toLowerCase()
 );
 
-export type FilterGroup = typeof filterGroups[number];
+export type FilterGroup = (typeof filterGroups)[number];
 
 // Map for url route params to ModelViewFilter enum
 export const filterGroupKey: Record<FilterGroup, ModelViewFilter> = {
