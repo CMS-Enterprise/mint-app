@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/google/uuid"
 	"github.com/lib/pq"
+	"time"
 )
 
 // StringPointer returns a pointer to a string input
@@ -18,6 +19,11 @@ func BoolPointer(value bool) *bool {
 // IntPointer returns a pointer to a bool input
 func IntPointer(val int) *int {
 	return &val
+}
+
+// TimePointer returns a pointer to a time.Time input
+func TimePointer(t time.Time) *time.Time {
+	return &t
 }
 
 // DiscussionUserRolePointer returns a pointer to a DiscussionUserRole input

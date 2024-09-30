@@ -40,10 +40,20 @@ func PlanDataExchangeApproachUpdate(
 	// 'isDataExchangeApproachComplete' is different from the existing value
 	if isDataExchangeApproachComplete, ok := changes["isDataExchangeApproachComplete"]; ok {
 		isSettingToComplete := isDataExchangeApproachComplete.(bool)
-		if existing.IsDataExchangeApproachComplete != isSettingToComplete {
-			existing.MarkedCompleteBy = principal.Account().ID
-			existing.MarkedCompleteDts = time.Now().UTC()
+
+		// Check if time has been set or is the default value
+		if existing.MarkedCompleteDts == nil && isSettingToComplete {
+			// We do not actually store the isDataExchangeApproachComplete field in the database
+			// so we need to remove it from the changes map
+
+			existing.MarkedCompleteBy = &principal.Account().ID
+			existing.MarkedCompleteDts = models.TimePointer(time.Now().UTC())
+		} else if !isSettingToComplete {
+			existing.MarkedCompleteBy = nil
+			existing.MarkedCompleteDts = nil
 		}
+
+		delete(changes, "isDataExchangeApproachComplete")
 	}
 
 	// Update the base task list section

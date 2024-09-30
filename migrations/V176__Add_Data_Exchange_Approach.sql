@@ -44,6 +44,12 @@ CREATE TYPE DEA_MULTI_SOURCE_DATA_TO_COLLECT AS ENUM (
   'OTHER'
   );
 
+CREATE TYPE DEA_TASK_LIST_STATUS AS ENUM (
+  'NOT_STARTED',
+  'IN_PROGRESS',
+  'COMPLETED'
+  );
+
 CREATE TABLE plan_data_exchange_approach (
                                            id UUID PRIMARY KEY NOT NULL,
                                            model_plan_id UUID NOT NULL REFERENCES model_plan(id),
@@ -81,9 +87,10 @@ CREATE TABLE plan_data_exchange_approach (
                                            created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                            modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
                                            modified_dts TIMESTAMP WITH TIME ZONE,
-                                           is_data_exchange_approach_complete BOOLEAN NOT NULL DEFAULT FALSE,
                                            marked_complete_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
-                                           marked_complete_dts TIMESTAMP WITH TIME ZONE
+                                           marked_complete_dts TIMESTAMP WITH TIME ZONE,
+
+                                           status DEA_TASK_LIST_STATUS NOT NULL DEFAULT 'NOT_STARTED'
 );
 
 COMMENT ON TABLE plan_data_exchange_approach IS 'This table stores the data exchange approach for a model plan.';
@@ -107,7 +114,6 @@ COMMENT ON COLUMN plan_data_exchange_approach.will_implement_new_data_exchange_m
 COMMENT ON COLUMN plan_data_exchange_approach.new_data_exchange_methods_description IS 'The description of the new data exchange methods that will be implemented.';
 COMMENT ON COLUMN plan_data_exchange_approach.new_data_exchange_methods_note IS 'Additional notes about the new data exchange methods that will be implemented.';
 COMMENT ON COLUMN plan_data_exchange_approach.additional_data_exchange_considerations_description IS 'Additional considerations for data exchange.';
-COMMENT ON COLUMN plan_data_exchange_approach.is_data_exchange_approach_complete IS 'Indicates if the data exchange approach is complete.';
 COMMENT ON COLUMN plan_data_exchange_approach.created_by IS 'The user that created the data exchange approach.';
 COMMENT ON COLUMN plan_data_exchange_approach.created_dts IS 'The date and time that the data exchange approach was created.';
 COMMENT ON COLUMN plan_data_exchange_approach.modified_by IS 'The user that last modified the data exchange approach.';

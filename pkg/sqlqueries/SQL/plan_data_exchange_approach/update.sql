@@ -21,7 +21,6 @@ SET
     additional_data_exchange_considerations_description = :additional_data_exchange_considerations_description,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP,
-    is_data_exchange_approach_complete = :is_data_exchange_approach_complete,
     marked_complete_by = :marked_complete_by,
     marked_complete_dts = :marked_complete_dts
 WHERE id = :id
@@ -50,6 +49,5 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
-is_data_exchange_approach_complete,
 marked_complete_by,
 marked_complete_dts;

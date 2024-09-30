@@ -25,6 +25,5 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
-is_data_exchange_approach_complete,
 marked_complete_by,
 marked_complete_dts;

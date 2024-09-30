@@ -36,7 +36,7 @@ type PlanDataExchangeApproach struct {
 
 	AdditionalDataExchangeConsiderationsDescription *string `json:"additionalDataExchangeConsiderationsDescription" db:"additional_data_exchange_considerations_description"`
 
-	IsDataExchangeApproachComplete bool `json:"isDataExchangeApproachComplete" db:"is_data_exchange_approach_complete" statusWeight:"1"`
+	Status *DataExchangeApproachStatus `json:"status" db:"status"`
 }
 
 // NewPlanDataExchangeApproach creates a new PlanDataExchangeApproach with the required fields
@@ -44,7 +44,6 @@ func NewPlanDataExchangeApproach(tls coreTaskListSection) *PlanDataExchangeAppro
 	return &PlanDataExchangeApproach{
 		coreTaskListSection:                    tls,
 		DataWillNotBeCollectedFromParticipants: false,
-		IsDataExchangeApproachComplete:         false,
 	}
 }
 
@@ -53,7 +52,6 @@ func NewPlanDataExchangeApproachFromBaseTaskListSection(tls baseTaskListSection)
 	return &PlanDataExchangeApproach{
 		coreTaskListSection:                    tls.coreTaskListSection,
 		DataWillNotBeCollectedFromParticipants: false,
-		IsDataExchangeApproachComplete:         false,
 	}
 }
 
@@ -117,4 +115,14 @@ const (
 	MultiSourceDataToCollectMedicareClaims   MultiSourceDataToCollect = "MEDICARE_CLAIMS"
 	MultiSourceDataToCollectPatientRegistry  MultiSourceDataToCollect = "PATIENT_REGISTRY"
 	MultiSourceDataToCollectOther            MultiSourceDataToCollect = "OTHER"
+)
+
+// DataExchangeApproachStatus represents the status of the data exchange approach
+type DataExchangeApproachStatus string
+
+// Enum values for DataExchangeApproachStatus
+const (
+	DataExchangeApproachStatusNotStarted DataExchangeApproachStatus = "NOT_STARTED"
+	DataExchangeApproachStatusInProgress DataExchangeApproachStatus = "IN_PROGRESS"
+	DataExchangeApproachStatusComplete   DataExchangeApproachStatus = "COMPLETE"
 )

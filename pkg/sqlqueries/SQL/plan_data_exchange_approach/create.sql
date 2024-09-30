@@ -21,7 +21,6 @@ INSERT INTO plan_data_exchange_approach (
     additional_data_exchange_considerations_description,
     created_by,
     modified_by,
-    is_data_exchange_approach_complete,
     marked_complete_by,
     marked_complete_dts
 )
@@ -48,7 +47,6 @@ VALUES (
     :additional_data_exchange_considerations_description,
     :created_by,
     :modified_by,
-    :is_data_exchange_approach_complete,
     :marked_complete_by,
     :marked_complete_dts
 )
@@ -77,6 +75,5 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
-is_data_exchange_approach_complete,
 marked_complete_by,
 marked_complete_dts;

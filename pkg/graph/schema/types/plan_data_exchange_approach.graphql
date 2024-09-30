@@ -44,10 +44,15 @@ enum MultiSourceDataToCollect {
   OTHER
 }
 
+enum DataExchangeApproachStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETE
+}
+
 type PlanDataExchangeApproach {
   id: UUID!
   modelPlanID: UUID!
-  modelPlan: ModelPlan!
 
   dataToCollectFromParticipants: [DataToCollectFromParticipants!]!
   dataToCollectFromParticipantsReportsDetails: String
@@ -84,6 +89,8 @@ type PlanDataExchangeApproach {
   markedCompleteBy: UUID
   markedCompleteByUserAccount: UserAccount
   markedCompleteDts: Time
+
+  status: DataExchangeApproachStatus!
 }
 
 input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") {
@@ -112,6 +119,8 @@ input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") 
   additionalDataExchangeConsiderationsDescription: String
 
   isDataExchangeApproachComplete: Boolean
+
+  status: DataExchangeApproachStatus
 }
 
 extend type Mutation {

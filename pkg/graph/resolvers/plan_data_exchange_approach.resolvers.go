@@ -10,7 +10,6 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -21,11 +20,6 @@ func (r *mutationResolver) UpdatePlanDataExchangeApproach(ctx context.Context, i
 	principal := appcontext.Principal(ctx)
 
 	return PlanDataExchangeApproachUpdate(logger, id, changes, principal, r.store)
-}
-
-// ModelPlan is the resolver for the modelPlan field.
-func (r *planDataExchangeApproachResolver) ModelPlan(ctx context.Context, obj *models.PlanDataExchangeApproach) (*models.ModelPlan, error) {
-	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
 // DataToCollectFromParticipants is the resolver for the dataToCollectFromParticipants field.
@@ -43,19 +37,14 @@ func (r *planDataExchangeApproachResolver) MultiSourceDataToCollect(ctx context.
 	return models.ConvertEnums[models.MultiSourceDataToCollect](obj.MultiSourceDataToCollect), nil
 }
 
+// IsDataExchangeApproachComplete is the resolver for the isDataExchangeApproachComplete field.
+func (r *planDataExchangeApproachResolver) IsDataExchangeApproachComplete(ctx context.Context, obj *models.PlanDataExchangeApproach) (bool, error) {
+	return obj.MarkedCompleteDts != nil, nil
+}
+
 // PlanDataExchangeApproach returns generated.PlanDataExchangeApproachResolver implementation.
 func (r *Resolver) PlanDataExchangeApproach() generated.PlanDataExchangeApproachResolver {
 	return &planDataExchangeApproachResolver{r}
 }
 
 type planDataExchangeApproachResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *planDataExchangeApproachResolver) MarkedCompleteByUserAccount(ctx context.Context, obj *models.PlanDataExchangeApproach) (*authentication.UserAccount, error) {
-	return obj.MarkedCompleteByUserAccount(ctx)
-}
