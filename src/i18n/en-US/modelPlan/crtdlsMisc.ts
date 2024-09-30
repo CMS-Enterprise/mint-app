@@ -1,15 +1,14 @@
 const crtdlsMisc = {
   heading: 'FFS CRs and TDLs',
-  subheading: 'for <1>{{modelName}}</1>',
+  subheading: 'for {{modelName}}',
   breadcrumb: 'Model Plan task list',
   breadcrumb2: 'FFS CRs and TDLs',
   crs: 'CRs',
   tdls: 'TDLs',
   description:
-    'Add, manage, and update any known Fee-for Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs) associated with the model. CRs and TDLs are created and stored in Enterprise Electronic Change Information Management Portal (ECHIMP).',
+    "If your model makes changes to the Medicare Fee for Service (FFS) payment systems, you will do so through Change Requests (CRs) and Technical Direction Letters (TDLs) in the <el>Enterprise Electronic Change Information Management Portal (ECHIMP)</el>. MINT will automatically display ECHIMP information about CRs and TDLs associated with each model. It would be best if you worked with the Center for Medicare's Provider Billing Group (PBG) to create these. Note that the CR and TDL numbers are associated with your model to support PBG, OIT, the Medicare Administrative Contractors (MACs), and Shared System Maintainers (SSMs) who implement these changes to the FFS payment systems.",
   echimp:
-    'To get access to the ECHIMP system, please request the proper job code through EUA. If you need assistance, please contact the CMS IT Service Desk at 410-786-2580 or 800-562-1963.',
-  visitECHIMP: 'Visit ECHIMP',
+    'It may take up to 24 hours for CRs and TDLs to appear in MINT once added to ECHIMP.',
   visitECHIMPReadonly: 'Visit FFS CR and TDL details in ECHIMP',
   readOnlyDescription:
     'More information about each Fee-for Service (FFS) Change Request (CR) or Technical Direction Letter (TDL) can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at ',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import {
   Grid,
@@ -15,6 +15,7 @@ import {
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Expire from 'components/Expire';
+import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -27,8 +28,10 @@ type ModelPlanType = GetModelPlanBaseQuery['modelPlan'];
 type CRTDLStatusType = 'success' | 'error';
 
 export const CRTDLs = () => {
-  const { t: h } = useTranslation('general');
-  const { t } = useTranslation('crtdlsMisc');
+  // const { t: h } = useTranslation('general');
+  const { t: crtdlsT } = useTranslation('crtdlsMisc');
+  const { t: miscT } = useTranslation('miscellaneous');
+
   const { modelID } = useParams<{ modelID: string }>();
   const { message } = useMessage();
   const [crtdlMessage, setCRTDLMessage] = useState('');
@@ -50,7 +53,6 @@ export const CRTDLs = () => {
             items={[
               BreadcrumbItemOptions.HOME,
               BreadcrumbItemOptions.COLLABORATION_AREA,
-              BreadcrumbItemOptions.TASK_LIST,
               BreadcrumbItemOptions.CR_TDLS
             ]}
           />
@@ -73,57 +75,47 @@ export const CRTDLs = () => {
           )}
 
           <PageHeading className="margin-top-4 margin-bottom-0">
-            {t('heading')}
+            {crtdlsT('heading')}
           </PageHeading>
 
-          <p
-            className="margin-top-0 margin-bottom-2 font-body-lg"
-            data-testid="model-plan-name"
-          >
-            {h('for')} {modelPlan.modelName}
+          <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
+            {crtdlsT('subheading', { modelName: modelPlan.modelName })}
           </p>
-
-          <p className="margin-bottom-2 font-body-md line-height-body-4">
-            {t('description')}
-          </p>
-
-          <TrussLink
-            aria-label="Open EUA in a new tab"
-            href="https://echimp.cmsnet/"
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="external"
-          >
-            {t('visitECHIMP')}
-          </TrussLink>
-
-          <Alert type="info" slim className="margin-bottom-1">
-            {t('echimp')}
-          </Alert>
 
           <UswdsReactLink
-            to={`/models/${modelID}/collaboration-area/task-list`}
+            to={`/models/${modelID}/collaboration-area`}
             className="display-inline-flex flex-align-center margin-y-3"
           >
             <Icon.ArrowBack className="margin-right-1" aria-hidden />
-            {h('returnToTaskList')}
+            {miscT('returnToCollaborationArea')}
           </UswdsReactLink>
 
-          <h4 className="margin-top-2 margin-bottom-1">{t('heading')}</h4>
+          <p className="margin-top-0 margin-bottom-3 font-body-md line-height-body-4">
+            <Trans
+              t={crtdlsT}
+              i18nKey="description"
+              components={{
+                el: (
+                  <ExternalLink
+                    className="margin-right-0"
+                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx"
+                  >
+                    {' '}
+                  </ExternalLink>
+                )
+              }}
+            />
+          </p>
 
-          <UswdsReactLink
-            className="usa-button"
-            variant="unstyled"
-            to={`/models/${modelID}/collaboration-area/cr-and-tdl/add-cr-and-tdl`}
-          >
-            {t('addCRTDL')}
-          </UswdsReactLink>
+          <Alert type="info" slim className="margin-bottom-6">
+            {crtdlsT('echimp')}
+          </Alert>
 
-          <PlanCRTDLsTable
+          {/* <PlanCRTDLsTable
             modelID={modelID}
             setCRTDLMessage={setCRTDLMessage}
             setCRTDLStatus={setCRTDLStatus}
-          />
+          /> */}
         </Grid>
       </GridContainer>
     </MainContent>
