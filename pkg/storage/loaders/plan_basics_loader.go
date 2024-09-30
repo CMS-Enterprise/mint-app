@@ -85,32 +85,6 @@ func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys
 
 }
 
-func PlanBasicsGetByModelPlanID(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-
-	loadgen, ok := loadgensFromCTX(ctx)
-	if !ok {
-		return nil, fmt.Errorf("unexpected nil loaders in PlanBasicsGetByModelPlanID")
-	}
-
-	return loadgen.PlanBasicsByModelPlanID.Load(ctx, modelPlanID)
-}
-
-func (dl *DataLoadgens) batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) ([]*models.PlanBasics, []error) {
-	logger := appcontext.ZLogger(ctx)
-	data, err := storage.PlanBasicsGetByModelPlanIDLOADGEN(dl.dataReader.Store, logger, modelPlanIDs)
-	if err != nil {
-		// TODO: verify that this works as anticipated
-		return nil, []error{err}
-	}
-	basicsByModelPlanID := lo.Associate(data, func(basics *models.PlanBasics) (uuid.UUID, *models.PlanBasics) {
-		return basics.ModelPlanID, basics
-	})
-	//TODO: Implement
-	_ = basicsByModelPlanID
-	return nil, nil
-
-}
-
 func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.PlanBasics] {
 	logger := appcontext.ZLogger(ctx)
 	output := make([]*dataloader.Result[*models.PlanBasics], len(modelPlanIDs))

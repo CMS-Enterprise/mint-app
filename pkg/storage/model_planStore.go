@@ -27,7 +27,7 @@ func ModelPlansGetByModePlanIDsLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, 
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 	//TODO: see if we can more natively handle an array of UUIDs, the uuids type still doesn't cast directly
-	res, err := sqlutils.SelectProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.GetByModelPlanIDLoadgen, args)
+	res, err := sqlutils.SelectProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.GetByIDLoader, args)
 	if err != nil {
 		return nil, err
 	}

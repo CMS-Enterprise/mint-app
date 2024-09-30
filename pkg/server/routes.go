@@ -116,17 +116,6 @@ func (s *Server) routes(
 	dataLoaderMiddleware := loaders.NewDataLoaderMiddleware(dataLoaders)
 	s.router.Use(dataLoaderMiddleware)
 
-	// This part sets up the new dataloadgen library
-	buildDataloadgens := func() *loaders.DataLoadgens {
-		return loaders.NewDataLoadgens(store)
-	}
-	// we need to construct a NEW set of dataloaders for each incoming HTTP request to avoid the forced caching of
-	// the dataloaders
-	// dataloader caches remain indefinitely once constructed, and we do not return the same (potentially stale) piece
-	// of data for every single HTTP request from server start
-	dataLoadgenMiddleware := loaders.NewDataLoadgenMiddleware(buildDataloadgens)
-	s.router.Use(dataLoadgenMiddleware)
-
 	userAccountServiceMiddleware := userhelpers.NewUserAccountServiceMiddleware(userhelpers.UserAccountGetByIDLOADER)
 
 	s.router.Use(userAccountServiceMiddleware)
