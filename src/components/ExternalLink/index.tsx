@@ -79,7 +79,7 @@ const ExternalLink = ({
       >
         <span>
           {children}
-          <Icon.MailOutline className="margin-left-05 top-05" />
+          <Icon.Launch className="margin-left-05 top-05" />
         </span>
       </Button>
     </>

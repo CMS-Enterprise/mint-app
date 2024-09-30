@@ -303,15 +303,15 @@ const sixPageMeeting = {
       items: [
         {
           text: 'AHEAD 6-page concept paper',
-          link: ''
+          link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/AHEAD%206-page%20concept_Clean.docx?d=wbdf205743dac4ebaa2a99ea37af6b5a7'
         },
         {
           text: 'Enhancing Oncology Model 6-page concept paper',
-          link: ''
+          link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20OncT)%206-pager_10252021_clean.docx?d=w1e0f202072d14d8fb64366aff294e415'
         },
         {
           text: 'Making Care Primary 6-page concept paper',
-          link: ''
+          link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Six%20Pagers/Making%20Care%20Primary%20(formerly%20P2CARES)%206%20pager_v1.docx?d=waf076d71662340d4b74e42c09caa8631'
         }
       ],
       footer:
