@@ -148,6 +148,6 @@ func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UU
 
 func planBasicsGetByModelPlanIDLoad(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
 	allLoaders := Loaders(ctx)
-	basicsLoader := allLoaders.basics.ByModelPlanID
+	basicsLoader := allLoaders.planBasics.ByModelPlanID
 	return basicsLoader.Load(ctx, modelPlanID)()
 }

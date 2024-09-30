@@ -29,7 +29,7 @@ type DataLoaders struct {
 	ExistingModelLinkLoader                        *WrappedDataLoader
 	ExistingModelLinkNameLoader                    *WrappedDataLoader
 	ExistingModelLoader                            *WrappedDataLoader
-	ModelPlanLoader                                *WrappedDataLoader
+	ModelPlanLoaderOLD                             *WrappedDataLoader
 	ModelPlanOpSolutionLastModifiedDtsLoader       *WrappedDataLoader
 
 	PossibleOperationSolutionByKeyLoader   *WrappedDataLoader
@@ -42,7 +42,8 @@ type DataLoaders struct {
 
 	TranslatedAuditFieldCollectionLoader *WrappedDataLoader
 
-	basics planBasicsLoaders
+	modelPlan  modelPlanLoader
+	planBasics planBasicsLoaders
 
 	// planBasicsByModelPlanID *dataloader.Loader[uuid.UUID, *models.PlanBasics]
 	//TODO (loaders) consider creating nested parent fields, eg Basics has
@@ -77,7 +78,7 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.ExistingModelLinkLoader = newWrappedDataLoader(loaders.GetExistingModelLinkByModelPlanIDAndFieldName)
 	loaders.ExistingModelLinkNameLoader = newWrappedDataLoader(loaders.GetExistingModelLinkNamesByModelPlanIDAndFieldName)
 	loaders.ExistingModelLoader = newWrappedDataLoader(loaders.GetExistingModelByModelPlanID)
-	loaders.ModelPlanLoader = newWrappedDataLoader(loaders.GetModelPlanByModelPlanID)
+	loaders.ModelPlanLoaderOLD = newWrappedDataLoader(loaders.GetModelPlanByModelPlanID)
 	loaders.ModelPlanOpSolutionLastModifiedDtsLoader = newWrappedDataLoader(loaders.GetModelPlanOpSolutionLastModifiedDtsByModelPlanID)
 
 	loaders.PossibleOperationSolutionByKeyLoader = newWrappedDataLoader(loaders.possibleOperationalSolutionByKeyBatch)
@@ -98,7 +99,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	// }
 	// loaders.basics = planBasicsLoaders{}
 	// loaders.basics.Init()
-	loaders.basics = newPlanBasicsLoaders()
+	loaders.modelPlan = newModelPlanLoaders()
+	loaders.planBasics = newPlanBasicsLoaders()
 
 	return loaders
 }

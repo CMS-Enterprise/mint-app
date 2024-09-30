@@ -5,17 +5,45 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/graph-gophers/dataloader"
+	dataloaderOld "github.com/graph-gophers/dataloader"
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+
+	"github.com/graph-gophers/dataloader/v7"
 )
 
+type modelPlanLoader struct {
+	ByID *dataloader.Loader[uuid.UUID, *models.ModelPlan]
+}
+
+func (l *modelPlanLoader) init() {
+	l.ByID = ModelPlan.GetByID.NewBatchedLoader()
+}
+
+func newModelPlanLoaders() modelPlanLoader {
+	loader := modelPlanLoader{}
+	loader.init()
+	return loader
+}
+
+type modelPlanLoaderConfig struct {
+	GetByID LoaderConfig[uuid.UUID, *models.ModelPlan]
+}
+
+var ModelPlan modelPlanLoaderConfig = modelPlanLoaderConfig{
+	GetByID: LoaderConfig[uuid.UUID, *models.ModelPlan]{
+		Note:          "Gets a model plan record associated with a uuid",
+		Load:          modelPlanGetByIDLoad,
+		batchFunction: batchModelPlanByModelPlanID,
+	},
+}
+
 // GetModelPlanByModelPlanID uses a DataLoader to aggreggate a SQL call and return all Model Plan in one query
-func (loaders *DataLoaders) GetModelPlanByModelPlanID(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+func (loaders *DataLoaders) GetModelPlanByModelPlanID(ctx context.Context, keys dataloaderOld.Keys) []*dataloaderOld.Result {
 	dr := loaders.DataReader
 
 	logger := appcontext.ZLogger(ctx)
@@ -34,29 +62,29 @@ func (loaders *DataLoaders) GetModelPlanByModelPlanID(ctx context.Context, keys 
 	})
 
 	// RETURN IN THE SAME ORDER REQUESTED
-	output := make([]*dataloader.Result, len(keys))
+	output := make([]*dataloaderOld.Result, len(keys))
 	for index, key := range keys {
 		ck, ok := key.Raw().(KeyArgs)
 		if ok {
 			resKey := fmt.Sprint(ck.Args["id"])
 			plan, ok := planByID[resKey]
 			if ok {
-				output[index] = &dataloader.Result{Data: plan, Error: nil}
+				output[index] = &dataloaderOld.Result{Data: plan, Error: nil}
 			} else {
 				err := fmt.Errorf("model Plan not found for id %s", resKey)
-				output[index] = &dataloader.Result{Data: nil, Error: err}
+				output[index] = &dataloaderOld.Result{Data: nil, Error: err}
 			}
 		} else {
 			err := fmt.Errorf("could not retrive key from %s", key.String())
-			output[index] = &dataloader.Result{Data: nil, Error: err}
+			output[index] = &dataloaderOld.Result{Data: nil, Error: err}
 		}
 	}
 	return output
 
 }
 
-// ModelPlanGetByID uses a data loader to return a model plan for a given model plan
-func ModelPlanGetByID(ctx context.Context, modelPlanID uuid.UUID) (*models.ModelPlan, error) {
+// ModelPlanGetByIDLOADGEN uses a data loader to return a model plan for a given model plan
+func ModelPlanGetByIDLOADGEN(ctx context.Context, modelPlanID uuid.UUID) (*models.ModelPlan, error) {
 	loadgen, ok := loadgensFromCTX(ctx)
 	if !ok {
 		return nil, fmt.Errorf("unexpected nil loaders in GetModelPlanByModelPlanID")
@@ -67,6 +95,7 @@ func ModelPlanGetByID(ctx context.Context, modelPlanID uuid.UUID) (*models.Model
 }
 
 func (dl *DataLoadgens) batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) ([]*models.ModelPlan, []error) {
+	// TODO remove this if we don't use this library
 	logger := appcontext.ZLogger(ctx)
 	data, err := storage.ModelPlansGetByModePlanIDsLOADER(dl.dataReader.Store, logger, modelPlanIDs)
 	if err != nil {
@@ -93,4 +122,42 @@ func (dl *DataLoadgens) batchModelPlanByModelPlanID(ctx context.Context, modelPl
 		}
 	}
 	return output, errOutput
+}
+
+func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.ModelPlan] {
+	logger := appcontext.ZLogger(ctx)
+	output := make([]*dataloader.Result[*models.ModelPlan], len(modelPlanIDs))
+	loaders := Loaders(ctx)
+
+	data, err := storage.ModelPlansGetByModePlanIDsLOADER(loaders.DataReader.Store, logger, modelPlanIDs)
+	if err != nil {
+		//TODO: (loaders) make this a helper function to return an error per result
+		for index := range modelPlanIDs {
+			output[index] = &dataloader.Result[*models.ModelPlan]{Data: nil, Error: err}
+		}
+		return output
+	}
+	planByID := lo.Associate(data, func(plan *models.ModelPlan) (uuid.UUID, *models.ModelPlan) {
+		return plan.ID, plan
+	})
+
+	// RETURN IN THE SAME ORDER REQUESTED
+	for index, id := range modelPlanIDs {
+
+		plan, ok := planByID[id]
+		if ok {
+			output[index] = &dataloader.Result[*models.ModelPlan]{Data: plan, Error: nil}
+		} else {
+			err2 := fmt.Errorf("model plan not found for modelPlanID id %s", id)
+			output[index] = &dataloader.Result[*models.ModelPlan]{Data: nil, Error: err2}
+		}
+	}
+	return output
+}
+
+// modelPlanGetByIDLoad uses a data loader to return a model plan for a given model plan
+func modelPlanGetByIDLoad(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
+	allLoaders := Loaders(ctx)
+	modelPlanLoader := allLoaders.modelPlan.ByID
+	return modelPlanLoader.Load(ctx, id)()
 }

@@ -295,7 +295,7 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 
 // ModelPlanGetByIDLOADER implements resolver logic to get Model Plan by a model plan ID using a data loader
 func ModelPlanGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
-	return loaders.ModelPlanGetByID(ctx, id)
+	return loaders.ModelPlanGetByIDLOADGEN(ctx, id)
 	// allLoaders := loaders.Loaders(ctx)
 	// planLoader := allLoaders.ModelPlanLoader
 	// key := loaders.NewKeyArgs()
