@@ -30,9 +30,8 @@ const Header = () => {
   const { hasSession } = useOktaSession();
 
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
-  const { isMobileSideNavExpanded, setIsMobileSideNavExpanded } = useContext(
-    NavContext
-  );
+  const { isMobileSideNavExpanded, setIsMobileSideNavExpanded } =
+    useContext(NavContext);
 
   const isMobile = useCheckResponsiveScreen('tablet', 'smaller');
 

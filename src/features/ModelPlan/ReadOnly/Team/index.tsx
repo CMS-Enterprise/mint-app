@@ -12,7 +12,8 @@ import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 
 import './index.scss';
 
-type CollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type CollaboratorsType =
+  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 const MemberCards = ({ collaborator }: { collaborator: CollaboratorsType }) => {
   const { t: collaboratorsT } = useTranslation('collaborators');

@@ -192,12 +192,8 @@ const Evaluation = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<EvaluationFormType>) => {
-          const {
-            handleSubmit,
-            setErrors,
-            values,
-            setFieldValue
-          } = formikProps;
+          const { handleSubmit, setErrors, values, setFieldValue } =
+            formikProps;
 
           return (
             <>

@@ -93,10 +93,8 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   });
 
   // useLazyQuery hook to init query and create subscription in the presence of a new model plan id
-  const [
-    getTaskListLocks,
-    { data: subData, subscribeToMore }
-  ] = useGetTaskListSubscriptionsLazyQuery();
+  const [getTaskListLocks, { data: subData, subscribeToMore }] =
+    useGetTaskListSubscriptionsLazyQuery();
 
   useEffect(() => {
     if (validModelID && subscribeToMore && taskList) {

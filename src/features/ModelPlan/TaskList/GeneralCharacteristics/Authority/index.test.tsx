@@ -10,7 +10,8 @@ import {
 
 import Authority from './index';
 
-type GetAuthorityType = GetAuthorityQuery['modelPlan']['generalCharacteristics'];
+type GetAuthorityType =
+  GetAuthorityQuery['modelPlan']['generalCharacteristics'];
 
 const authorityMockData: GetAuthorityType = {
   __typename: 'PlanGeneralCharacteristics',

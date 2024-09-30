@@ -119,9 +119,11 @@ export const MultiSelectTag = ({
               // Handler to focus on the first tag after one has been removed
               if (parentId) {
                 setTimeout(() => {
-                  (document?.querySelector(
-                    `#${parentId} .easi-multiselect--tag .usa-icon`
-                  ) as HTMLElement)?.focus();
+                  (
+                    document?.querySelector(
+                      `#${parentId} .easi-multiselect--tag .usa-icon`
+                    ) as HTMLElement
+                  )?.focus();
                 }, 0);
               }
             }
@@ -247,16 +249,14 @@ const MultiSelect = ({
   const sortSelectedTags = (order: 'asc' | 'desc' | string) => {
     switch (order) {
       case 'desc':
-        return [
-          ...selected
-        ].sort((a: { label: string }, b: { label: string }) =>
-          b.label.localeCompare(a.label)
+        return [...selected].sort(
+          (a: { label: string }, b: { label: string }) =>
+            b.label.localeCompare(a.label)
         );
       case 'asc':
-        return [
-          ...selected
-        ].sort((a: { label: string }, b: { label: string }) =>
-          a.label.localeCompare(b.label)
+        return [...selected].sort(
+          (a: { label: string }, b: { label: string }) =>
+            a.label.localeCompare(b.label)
         );
 
       default:

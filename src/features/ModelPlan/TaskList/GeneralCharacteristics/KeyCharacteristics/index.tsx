@@ -39,7 +39,8 @@ import useScrollElement from 'hooks/useScrollElement';
 import { getKeys } from 'types/translation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
-type KeyCharacteristicsFormType = GetKeyCharacteristicsQuery['modelPlan']['generalCharacteristics'];
+type KeyCharacteristicsFormType =
+  GetKeyCharacteristicsQuery['modelPlan']['generalCharacteristics'];
 
 const KeyCharacteristics = () => {
   const { t: generalCharacteristicsT } = useTranslation(
@@ -174,12 +175,8 @@ const KeyCharacteristics = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<KeyCharacteristicsFormType>) => {
-          const {
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
 
           return (
             <>

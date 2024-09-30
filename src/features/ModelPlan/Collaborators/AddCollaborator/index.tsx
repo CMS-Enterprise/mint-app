@@ -35,8 +35,10 @@ import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 import RoleInfo from '../_components/RoleInfo';
 import { isLastModelLead } from '..';
 
-type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
-type CollaboratorFormType = GetIndividualModelPlanCollaboratorQuery['planCollaboratorByID'];
+type GetCollaboratorsType =
+  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type CollaboratorFormType =
+  GetIndividualModelPlanCollaboratorQuery['planCollaboratorByID'];
 
 type LocationProps = {
   fromCollaborationArea: boolean;
@@ -73,19 +75,15 @@ const Collaborators = () => {
 
   const [create, { loading }] = useCreateModelPlanCollaboratorMutation();
 
-  const [
-    update,
-    { loading: updateLoading }
-  ] = useUpdateModelPlanCollaboratorMutation();
+  const [update, { loading: updateLoading }] =
+    useUpdateModelPlanCollaboratorMutation();
 
-  const {
-    data: allCollaboratorsData,
-    loading: queryLoading
-  } = useGetModelCollaboratorsQuery({
-    variables: {
-      id: modelID
-    }
-  });
+  const { data: allCollaboratorsData, loading: queryLoading } =
+    useGetModelCollaboratorsQuery({
+      variables: {
+        id: modelID
+      }
+    });
 
   const allCollaborators =
     allCollaboratorsData?.modelPlan?.collaborators ??
@@ -181,9 +179,10 @@ const Collaborators = () => {
           }
         })
         .catch(errors => {
-          const collaboratorExistingError = errors.graphQLErrors[0]?.message.includes(
-            'unique_collaborator_per_plan'
-          );
+          const collaboratorExistingError =
+            errors.graphQLErrors[0]?.message.includes(
+              'unique_collaborator_per_plan'
+            );
           if (collaboratorExistingError) {
             formikRef?.current?.setErrors({
               userAccount: {
@@ -252,12 +251,8 @@ const Collaborators = () => {
             innerRef={formikRef}
           >
             {(formikProps: FormikProps<CollaboratorFormType>) => {
-              const {
-                errors,
-                values,
-                setFieldValue,
-                handleSubmit
-              } = formikProps;
+              const { errors, values, setFieldValue, handleSubmit } =
+                formikProps;
               const flatErrors = flattenErrors(errors);
 
               return (

@@ -31,7 +31,8 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 
 import './index.scss';
 
-type GetOperationalNeedSolutionsType = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
+type GetOperationalNeedSolutionsType =
+  GetOperationalNeedQuery['operationalNeed']['solutions'][0];
 
 type CheckboxCardProps = {
   className?: string;

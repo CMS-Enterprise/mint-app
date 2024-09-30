@@ -47,9 +47,11 @@ const Complexity = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   const {
-    expectedCalculationComplexityLevel: expectedCalculationComplexityLevelConfig,
+    expectedCalculationComplexityLevel:
+      expectedCalculationComplexityLevelConfig,
     claimsProcessingPrecedence: claimsProcessingPrecedenceConfig,
-    canParticipantsSelectBetweenPaymentMechanisms: canParticipantsSelectBetweenPaymentMechanismsConfig,
+    canParticipantsSelectBetweenPaymentMechanisms:
+      canParticipantsSelectBetweenPaymentMechanismsConfig,
     anticipatedPaymentFrequency: anticipatedPaymentFrequencyConfig
   } = usePlanTranslation('payments');
 
@@ -93,9 +95,10 @@ const Complexity = () => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.CLAIMS_BASED_PAYMENTS
     );
-    const hasReductionToCostSharing = formikRef?.current?.values.payClaims.includes(
-      ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-    );
+    const hasReductionToCostSharing =
+      formikRef?.current?.values.payClaims.includes(
+        ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+      );
     const hasNonClaimBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.NON_CLAIMS_BASED_PAYMENTS
     );
@@ -193,12 +196,8 @@ const Complexity = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ComplexityFormType>) => {
-          const {
-            handleSubmit,
-            setFieldValue,
-            setErrors,
-            values
-          } = formikProps;
+          const { handleSubmit, setFieldValue, setErrors, values } =
+            formikProps;
 
           return (
             <>

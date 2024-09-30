@@ -32,7 +32,8 @@ import {
   renderTotalPages
 } from '..';
 
-type GetDataSharingFormType = GetDataSharingQuery['modelPlan']['opsEvalAndLearning'];
+type GetDataSharingFormType =
+  GetDataSharingQuery['modelPlan']['opsEvalAndLearning'];
 
 const DataSharing = () => {
   const { t: opsEvalAndLearningT } = useTranslation('opsEvalAndLearning');
@@ -189,12 +190,8 @@ const DataSharing = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<GetDataSharingFormType>) => {
-          const {
-            handleSubmit,
-            setErrors,
-            values,
-            setFieldValue
-          } = formikProps;
+          const { handleSubmit, setErrors, values, setFieldValue } =
+            formikProps;
 
           return (
             <>

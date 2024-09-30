@@ -34,8 +34,10 @@ import { collaboratorsOrderedByModelLeads } from 'utils/modelPlan';
 import AddCollaborator from './AddCollaborator';
 import CollaboratorsTable from './table';
 
-type ModelPlanCollaboratorType = DeleteModelPlanCollaboratorMutation['deletePlanCollaborator'];
-type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type ModelPlanCollaboratorType =
+  DeleteModelPlanCollaboratorMutation['deletePlanCollaborator'];
+type GetCollaboratorsType =
+  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 // Checking if there is only one collaborator with role of MODEL_LEAD - can't edit or remove if so
 export const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {
@@ -86,10 +88,8 @@ export const CollaboratorsContent = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLastLead, setIsLastLead] = useState(false);
 
-  const [
-    removeCollaborator,
-    setRemoveCollaborator
-  ] = useState<ModelPlanCollaboratorType>();
+  const [removeCollaborator, setRemoveCollaborator] =
+    useState<ModelPlanCollaboratorType>();
 
   // Current user's EUA id - to warn about removing yourself from model plan
   const { euaId } = useSelector((state: RootStateOrAny) => state.auth);

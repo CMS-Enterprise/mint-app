@@ -15,7 +15,8 @@ import {
   renderTotalPages
 } from './index';
 
-type GetOpsEvalAndLearningType = GetOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
+type GetOpsEvalAndLearningType =
+  GetOpsEvalAndLearningQuery['modelPlan']['opsEvalAndLearning'];
 
 const opsEvalAndLearningMockData: GetOpsEvalAndLearningType = {
   __typename: 'PlanOpsEvalAndLearning',

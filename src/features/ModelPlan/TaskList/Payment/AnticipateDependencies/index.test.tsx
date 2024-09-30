@@ -11,7 +11,8 @@ import {
 
 import AnticipateDependencies from './index';
 
-type GetAnticipateDependenciesType = GetAnticipateDependenciesQuery['modelPlan']['payments'];
+type GetAnticipateDependenciesType =
+  GetAnticipateDependenciesQuery['modelPlan']['payments'];
 
 const mockData: GetAnticipateDependenciesType = {
   __typename: 'PlanPayments',
