@@ -71,7 +71,11 @@ describe('Model Basics Milestones page', () => {
       </MemoryRouter>
     );
 
-    expect(await screen.findByText('Phased in note')).toBeInTheDocument();
+    const completeICIP = await screen.findAllByTestId(
+      'date-picker-internal-input'
+    );
+
+    expect(completeICIP[0]).toHaveValue('2029-05-12T15:01:39.190679Z');
 
     expect(asFragment()).toMatchSnapshot();
   });
