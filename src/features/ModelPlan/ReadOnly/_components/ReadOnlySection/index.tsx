@@ -274,10 +274,8 @@ export const RadioValue = <
   // Checks if configuration exists to optionally render a child's value with the radio value
   const childField = config.optionsRelatedInfo?.[value as T];
 
-  const childFieldValue:
-    | Partial<Record<T, string>>[T]
-    | undefined
-    | null = childField ? values[childField] : null;
+  const childFieldValue: Partial<Record<T, string>>[T] | undefined | null =
+    childField ? values[childField] : null;
 
   // Checks if the child field is an array to render as a bulleted list beneath the radio selection
   const isChildMultiple: boolean = Array.isArray(childFieldValue);

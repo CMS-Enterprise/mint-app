@@ -65,7 +65,8 @@ import Involvements from './Involvements';
 import KeyCharacteristics from './KeyCharacteristics';
 import TargetsAndOptions from './TargetsAndOptions';
 
-type GeneralCharacteristicsFormType = GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
+type GeneralCharacteristicsFormType =
+  GetGeneralCharacteristicsQuery['modelPlan']['generalCharacteristics'];
 
 interface GetGeneralCharacteristicsFormTypeWithLinks
   extends Omit<
@@ -95,9 +96,8 @@ export const CharacteristicsContent = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<
-    FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>
-  >(null);
+  const formikRef =
+    useRef<FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>>(null);
 
   const history = useHistory();
   const location = useLocation();
@@ -229,19 +229,17 @@ export const CharacteristicsContent = () => {
     formatExistingLinkData
   ]);
 
-  const participationInModelPreconditionLinks: (
-    | string
-    | number
-  )[] = useMemo(() => {
-    return formatExistingLinkData(
-      participationInModelPreconditionWhich as ExistingModelLinks,
-      participationInModelPreconditionOtherSelected
-    );
-  }, [
-    participationInModelPreconditionWhich,
-    participationInModelPreconditionOtherSelected,
-    formatExistingLinkData
-  ]);
+  const participationInModelPreconditionLinks: (string | number)[] =
+    useMemo(() => {
+      return formatExistingLinkData(
+        participationInModelPreconditionWhich as ExistingModelLinks,
+        participationInModelPreconditionOtherSelected
+      );
+    }, [
+      participationInModelPreconditionWhich,
+      participationInModelPreconditionOtherSelected,
+      formatExistingLinkData
+    ]);
 
   const [destinationURL, setDestinationURL] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -273,14 +271,16 @@ export const CharacteristicsContent = () => {
         // Getting the initial values of model links
         const {
           resemblesExistingModelLinks: resemblesExistingModelLinksInitial,
-          participationInModelPreconditionLinks: participationInModelPreconditionLinksInitial,
+          participationInModelPreconditionLinks:
+            participationInModelPreconditionLinksInitial,
           ...initialValues
         } = formikRef?.current?.initialValues || {};
 
         // Getting the current form values of model links
         const {
           resemblesExistingModelLinks: resemblesExistingModelLinksValues,
-          participationInModelPreconditionLinks: participationInModelPreconditionLinksValues,
+          participationInModelPreconditionLinks:
+            participationInModelPreconditionLinksValues,
           ...values
         } = formValues || {};
 
@@ -292,11 +292,12 @@ export const CharacteristicsContent = () => {
         );
 
         // Separates the participationInModelPreconditionLinks by type (string/number) to pass into the appropriate mutation
-        const participationInModelPreconditionLinksToUpdate = separateLinksByType(
-          participationInModelPreconditionLinksValues || [],
-          modelData?.modelPlanCollection || [],
-          existingModelData?.existingModelCollection || []
-        );
+        const participationInModelPreconditionLinksToUpdate =
+          separateLinksByType(
+            participationInModelPreconditionLinksValues || [],
+            modelData?.modelPlanCollection || [],
+            existingModelData?.existingModelCollection || []
+          );
 
         const genCharUpdates = dirtyInput(initialValues, values);
 
@@ -463,12 +464,8 @@ export const CharacteristicsContent = () => {
         {(
           formikProps: FormikProps<GetGeneralCharacteristicsFormTypeWithLinks>
         ) => {
-          const {
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
 
           return (
             <>

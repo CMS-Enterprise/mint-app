@@ -39,7 +39,8 @@ import { composeMultiSelectOptions } from 'utils/modelPlan';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
-type NonClaimsBasedPaymentFormType = GetNonClaimsBasedPaymentQuery['modelPlan']['payments'];
+type NonClaimsBasedPaymentFormType =
+  GetNonClaimsBasedPaymentQuery['modelPlan']['payments'];
 
 const NonClaimsBasedPayment = () => {
   const { t: paymentsT } = useTranslation('payments');
@@ -50,8 +51,10 @@ const NonClaimsBasedPayment = () => {
 
   const {
     nonClaimsPayments: nonClaimsPaymentsConfig,
-    sharedSystemsInvolvedAdditionalClaimPayment: sharedSystemsInvolvedAdditionalClaimPaymentConfig,
-    planningToUseInnovationPaymentContractor: planningToUseInnovationPaymentContractorConfig
+    sharedSystemsInvolvedAdditionalClaimPayment:
+      sharedSystemsInvolvedAdditionalClaimPaymentConfig,
+    planningToUseInnovationPaymentContractor:
+      planningToUseInnovationPaymentContractorConfig
   } = usePlanTranslation('payments');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -99,9 +102,10 @@ const NonClaimsBasedPayment = () => {
     const hasClaimsBasedPayment = formikRef?.current?.values.payType.includes(
       PayType.CLAIMS_BASED_PAYMENTS
     );
-    const hasReductionToCostSharing = formikRef?.current?.values.payClaims.includes(
-      ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-    );
+    const hasReductionToCostSharing =
+      formikRef?.current?.values.payClaims.includes(
+        ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+      );
 
     if (hasClaimsBasedPayment) {
       if (hasReductionToCostSharing) {
@@ -188,12 +192,8 @@ const NonClaimsBasedPayment = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<NonClaimsBasedPaymentFormType>) => {
-          const {
-            handleSubmit,
-            setFieldValue,
-            setErrors,
-            values
-          } = formikProps;
+          const { handleSubmit, setFieldValue, setErrors, values } =
+            formikProps;
 
           return (
             <>

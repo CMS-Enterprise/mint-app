@@ -89,16 +89,14 @@ const SolutionsHelp = ({ className }: OperationalSolutionsHelpProps) => {
   const { helpSolutions, loading } = useHelpSolution();
 
   // Get the solution map details from solution route param
-  const { prevPathname, selectedSolution: solution } = useModalSolutionState(
-    null
-  );
+  const { prevPathname, selectedSolution: solution } =
+    useModalSolutionState(null);
 
   const [query, setQuery] = useState<string>('');
   const [resultsNum, setResultsNum] = useState<number>(0);
 
-  const [querySolutions, setQuerySolutions] = useState<HelpSolutionType[]>(
-    helpSolutions
-  );
+  const [querySolutions, setQuerySolutions] =
+    useState<HelpSolutionType[]>(helpSolutions);
 
   const fromModal: boolean = prevPathname.includes('solution=');
 

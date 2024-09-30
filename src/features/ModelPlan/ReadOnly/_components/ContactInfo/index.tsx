@@ -9,7 +9,8 @@ import {
 
 import UswdsReactLink from 'components/LinkWrapper';
 
-type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type GetCollaboratorsType =
+  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 const ContactInfo = ({
   modelID,

@@ -24,7 +24,8 @@ import { tArray } from 'utils/translation';
 
 import './index.scss';
 
-type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
+type DiscussionType =
+  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
 
 export type FooterItemType = {
   heading: string;

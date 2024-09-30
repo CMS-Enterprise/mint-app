@@ -19,7 +19,8 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 
-type CollaboratorType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type CollaboratorType =
+  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 type TableProps = {
   collaborators: CollaboratorType[];

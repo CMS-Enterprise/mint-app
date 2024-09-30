@@ -23,7 +23,8 @@ import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 
-type InvolvementsFormType = GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
+type InvolvementsFormType =
+  GetInvolvementsQuery['modelPlan']['generalCharacteristics'];
 
 const Involvements = () => {
   const { t: generalCharacteristicsT } = useTranslation(
@@ -139,12 +140,8 @@ const Involvements = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<InvolvementsFormType>) => {
-          const {
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { handleSubmit, setErrors, setFieldValue, values } =
+            formikProps;
 
           return (
             <>

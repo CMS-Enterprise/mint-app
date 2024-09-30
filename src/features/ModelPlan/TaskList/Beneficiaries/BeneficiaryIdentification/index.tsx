@@ -36,7 +36,8 @@ import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
-type BeneficiaryIdentificationFormType = GetBeneficiaryIdentificationQuery['modelPlan']['beneficiaries'];
+type BeneficiaryIdentificationFormType =
+  GetBeneficiaryIdentificationQuery['modelPlan']['beneficiaries'];
 
 const BeneficiaryIdentification = () => {
   const { t: beneficiariesT } = useTranslation('beneficiaries');
@@ -53,9 +54,8 @@ const BeneficiaryIdentification = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<BeneficiaryIdentificationFormType>>(
-    null
-  );
+  const formikRef =
+    useRef<FormikProps<BeneficiaryIdentificationFormType>>(null);
 
   const history = useHistory();
 
@@ -155,12 +155,8 @@ const BeneficiaryIdentification = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<BeneficiaryIdentificationFormType>) => {
-          const {
-            setErrors,
-            setFieldValue,
-            values,
-            handleSubmit
-          } = formikProps;
+          const { setErrors, setFieldValue, values, handleSubmit } =
+            formikProps;
 
           return (
             <>

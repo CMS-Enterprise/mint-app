@@ -32,10 +32,8 @@ const ModelsBySolutions = ({
     );
   }, [operationalSolutionKeys]);
 
-  const [
-    isCurrentSolution,
-    setIsCurrentSolution
-  ] = useState<OperationalSolutionKey>(orderedOperationalSolutionKeys[0]);
+  const [isCurrentSolution, setIsCurrentSolution] =
+    useState<OperationalSolutionKey>(orderedOperationalSolutionKeys[0]);
 
   const getSolutionNameorAcronym = (solution?: HelpSolutionBaseType) => {
     if (!solution) return '';
