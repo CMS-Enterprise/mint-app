@@ -7,13 +7,13 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
 
-func (s *ResolverSuite) TestDataExchangeApproachCompletedEmail() {
-	mockController := gomock.NewController(s.T())
+func (suite *ResolverSuite) TestDataExchangeApproachCompletedEmail() {
+	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
 	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
 	planName := "Plan For Milestones"
-	plan := s.createModelPlan(planName)
+	plan := suite.createModelPlan(planName)
 
 	addressBook := email.AddressBook{
 		DefaultSender: "unit-test-execution@mint.cms.gov",
@@ -59,7 +59,7 @@ func (s *ResolverSuite) TestDataExchangeApproachCompletedEmail() {
 		"Test User",
 		false,
 	)
-	s.NoError(err)
+	suite.NoError(err)
 
 	mockController.Finish()
 }

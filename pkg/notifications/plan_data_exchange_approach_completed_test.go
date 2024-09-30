@@ -1,9 +1,8 @@
 package notifications
 
 import (
+	"context"
 	"github.com/google/uuid"
-
-	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -13,6 +12,11 @@ func (suite *NotificationsSuite) TestActivityDataExchangeApproachCompletedCreate
 	// we are just choosing a valid UUID to set for the entityID
 	modelPlanID := uuid.New()
 	actorID := suite.testConfigs.Principal.Account().ID
+
+	mockPreferencesLoader := func(ctx context.Context, user_id uuid.UUID) (*models.UserNotificationPreferences, error) {
+		// Return mock data, all notifications enabled
+		return models.NewUserNotificationPreferences(user_id), nil
+	}
 
 	approachCreator, err := suite.testConfigs.GetTestPrincipal(suite.testConfigs.Store, "FAKE")
 	suite.NoError(err)
@@ -41,7 +45,7 @@ func (suite *NotificationsSuite) TestActivityDataExchangeApproachCompletedCreate
 		receivers,
 		approach.ID,
 		approachMarkedCompleteBy.Account().ID,
-		loaders.UserNotificationPreferencesGetByUserID,
+		mockPreferencesLoader,
 	)
 
 	suite.NoError(err)

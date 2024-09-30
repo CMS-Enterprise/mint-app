@@ -39,8 +39,8 @@ func PlanDataExchangeApproachUpdate(
 	// Check if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the
 	// 'isDataExchangeApproachComplete' is different from the existing value
 	if isDataExchangeApproachComplete, ok := changes["isDataExchangeApproachComplete"]; ok {
-		isSettingToComplete := true == isDataExchangeApproachComplete.(bool)
-		if existing.IsDataExchangeApproachComplete != true && isSettingToComplete {
+		isSettingToComplete := isDataExchangeApproachComplete.(bool)
+		if existing.IsDataExchangeApproachComplete != isSettingToComplete {
 			existing.MarkedCompleteBy = principal.Account().ID
 			existing.MarkedCompleteDts = time.Now().UTC()
 		}
