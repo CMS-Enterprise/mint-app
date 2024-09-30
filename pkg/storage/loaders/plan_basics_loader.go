@@ -5,9 +5,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	dataloaderOld "github.com/graph-gophers/dataloader"
 	"github.com/samber/lo"
-	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -44,47 +42,6 @@ var PlanBasics planBasicsLoaderConfig = planBasicsLoaderConfig{
 	},
 }
 
-// GetPlanBasicsByModelPlanID uses a DataLoader to aggreggate a SQL call and return all plan basics in one query
-func (loaders *DataLoaders) GetPlanBasicsByModelPlanID(ctx context.Context, keys dataloaderOld.Keys) []*dataloaderOld.Result {
-	dr := loaders.DataReader
-
-	logger := appcontext.ZLogger(ctx)
-	arrayCK, err := ConvertToKeyArgsArray(keys)
-	if err != nil {
-		logger.Error("issue converting keys for data loader in Plan Basics", zap.Error(*err))
-	}
-	marshaledParams, err := arrayCK.ToJSONArray()
-	if err != nil {
-		logger.Error("issue converting keys to JSON for data loader in Plan Basics", zap.Error(*err))
-	}
-
-	basics, _ := dr.Store.PlanBasicsGetByModelPlanIDLOADER(logger, marshaledParams)
-	basicsByID := lo.Associate(basics, func(b *models.PlanBasics) (string, *models.PlanBasics) {
-		return b.ModelPlanID.String(), b
-	})
-
-	// RETURN IN THE SAME ORDER REQUESTED
-	output := make([]*dataloaderOld.Result, len(keys))
-	for index, key := range keys {
-		ck, ok := key.Raw().(KeyArgs)
-		if ok {
-			resKey := fmt.Sprint(ck.Args[DLModelPlanIDKey])
-			basic, ok := basicsByID[resKey]
-			if ok {
-				output[index] = &dataloaderOld.Result{Data: basic, Error: nil}
-			} else {
-				err := fmt.Errorf("plan basic not found for model plan %s", resKey)
-				output[index] = &dataloaderOld.Result{Data: nil, Error: err}
-			}
-		} else {
-			err := fmt.Errorf("could not retrive key from %s", key.String())
-			output[index] = &dataloaderOld.Result{Data: nil, Error: err}
-		}
-	}
-	return output
-
-}
-
 func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.PlanBasics] {
 	logger := appcontext.ZLogger(ctx)
 	output := make([]*dataloader.Result[*models.PlanBasics], len(modelPlanIDs))
@@ -117,8 +74,6 @@ func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UU
 	return output
 
 }
-
-// func
 
 func planBasicsGetByModelPlanIDLoad(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
 	allLoaders := Loaders(ctx)

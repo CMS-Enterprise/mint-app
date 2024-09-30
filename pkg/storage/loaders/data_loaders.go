@@ -7,7 +7,6 @@ import (
 
 // DataLoaders wrap your data loaders to inject via middleware
 type DataLoaders struct {
-	BasicsLoader                          *WrappedDataLoader
 	GeneralCharacteristicsLoader          *WrappedDataLoader
 	ParticipantsAndProvidersLoader        *WrappedDataLoader
 	BeneficiariesLoader                   *WrappedDataLoader
@@ -43,9 +42,6 @@ type DataLoaders struct {
 
 	modelPlan  modelPlanLoader
 	planBasics planBasicsLoaders
-
-	// planBasicsByModelPlanID *dataloader.Loader[uuid.UUID, *models.PlanBasics]
-	//TODO (loaders) consider creating nested parent fields, eg Basics has
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -55,7 +51,7 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 			Store: store,
 		},
 	}
-	loaders.BasicsLoader = newWrappedDataLoader(loaders.GetPlanBasicsByModelPlanID)
+
 	loaders.GeneralCharacteristicsLoader = newWrappedDataLoader(loaders.GetPlanGeneralCharacteristicsByModelPlanID)
 	loaders.ParticipantsAndProvidersLoader = newWrappedDataLoader(loaders.GetPlanParticipantsAndProvidersByModelPlanID)
 	loaders.BeneficiariesLoader = newWrappedDataLoader(loaders.GetPlanBeneficiariesByModelPlanID)
