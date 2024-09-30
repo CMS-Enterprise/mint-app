@@ -23,6 +23,10 @@ type CRTDLCardType = {
 const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
+  const firstFirstFiveCRTDLs = crtdls.slice(0, 5);
+
+  const remainingCRTDLs: number = crtdls.length - firstFirstFiveCRTDLs.length;
+
   return (
     <Card
       gridLayout={{ mobile: { col: 12 }, desktop: { col: 4 } }}
@@ -40,8 +44,16 @@ const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
             {collaborationAreaT('crtdlsCard.noCrtdls')}
           </p>
         ) : (
-          <p className="text-base">
-            {crtdls.map(crtdl => crtdl.id).join(', ')}
+          <p className="text-base-dark">
+            {firstFirstFiveCRTDLs.map(crtdl => crtdl.id).join(', ')}
+            {remainingCRTDLs > 0 && (
+              <>
+                {' '}
+                {collaborationAreaT('crtdlsCard.andMore', {
+                  count: remainingCRTDLs
+                })}
+              </>
+            )}
           </p>
         )}
       </CardBody>
@@ -52,6 +64,7 @@ const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
           className="usa-button"
           variant="unstyled"
           asButton
+          toEchimp
           id="to-echimp"
         >
           {collaborationAreaT('crtdlsCard.addInEChimp')}

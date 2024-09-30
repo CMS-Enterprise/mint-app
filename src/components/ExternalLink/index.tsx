@@ -13,6 +13,7 @@ type ExternalLinkModalTypes = {
   variant?: 'external' | 'unstyled' | 'nav';
   asButton?: boolean;
   className?: string;
+  toEchimp?: boolean;
 };
 
 const ExternalLink = ({
@@ -21,7 +22,8 @@ const ExternalLink = ({
   id = 'external-link',
   variant,
   asButton,
-  className
+  className,
+  toEchimp
 }: ExternalLinkModalTypes) => {
   const { t: externalT } = useTranslation('externalLinkModal');
 
@@ -45,19 +47,21 @@ const ExternalLink = ({
           className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-4"
           style={{ whiteSpace: 'break-spaces' }}
         >
-          {externalT('description')}
+          {toEchimp ? externalT('descriptionEchimp') : externalT('description')}
         </p>
 
         <Link
           href={href}
-          aria-label={externalT('continueButton')}
+          aria-label={
+            toEchimp ? externalT('continueEchimp') : externalT('continueButton')
+          }
           target="_blank"
           rel="noopener noreferrer"
           className="usa-button text-white text-no-underline"
           onClick={() => setIsModalOpen(false)}
           variant={variant}
         >
-          {externalT('leave')}
+          {toEchimp ? externalT('continueEchimp') : externalT('leave')}
         </Link>
 
         <Button

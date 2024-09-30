@@ -44,7 +44,8 @@ const collaborationArea = {
     heading: 'FFS CRs and TDLS',
     addInEChimp: 'Add in ECHIMP',
     viewAll: 'View all',
-    noCrtdls: 'No CRs or TDLs'
+    noCrtdls: 'No CRs or TDLs',
+    andMore: ' + {{count}} more'
   }
 };
 
