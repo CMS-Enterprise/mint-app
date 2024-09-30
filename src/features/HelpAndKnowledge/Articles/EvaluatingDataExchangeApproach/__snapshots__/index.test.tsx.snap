@@ -1,0 +1,631 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SixPagerMeeting > matches the snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content mint-body-normal"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="tablet:grid-col-12"
+        data-testid="grid"
+      >
+        <button
+          class="usa-button usa-button--unstyled margin-top-6"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            class="usa-icon margin-right-05 text-tbottom"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+          Close tab
+        </button>
+        <div
+          class="padding-bottom-6"
+        >
+          <h1
+            aria-live="polite"
+            class="mint-h1 margin-bottom-2"
+            tabindex="-1"
+          >
+            Evaluate your data exchange approach
+          </h1>
+          <a
+            class="usa-link width-fit-content display-block "
+            href="/help-and-knowledge/articles?category=getting-started"
+          >
+            <span
+              aria-label="Articles under the Getting started category"
+              class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+              data-testid="tag"
+            >
+              Getting started
+            </span>
+          </a>
+          <p
+            class="mint-body-large margin-1"
+          >
+            Exchanging data is an essential component of model operations and can take many forms depending on policy goals, implementation needs, and participants in the model. Examples of data that are typically exchanged include CMS sharing data with participants (for example, claims data) or participants sharing quality data (for example, a new measure or patient-reported outcome). We often collect health-related social needs data, such as socio-demographic data. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange.
+          </p>
+          <div
+            class="usa-alert usa-alert--info usa-alert--slim usa-alert--no-icon flex margin-top-4 margin-bottom-5"
+            data-testid="alert"
+          >
+            <div
+              class="usa-alert__body"
+            >
+              <p
+                class="usa-alert__text"
+              >
+                <span>
+                  After your 6-page concept paper has been approved, we recommend working with your IT Lead or Solution Architect (or reach out to the MINT Team if one still needs to be assigned) to determine how you’ll exchange data. These considerations should also be included in your ICIP.
+                </span>
+              </p>
+            </div>
+          </div>
+          <button
+            class="usa-button usa-button--unstyled mint-no-print margin-bottom-2"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              class="usa-icon margin-right-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+              />
+            </svg>
+            Download this article as a PDF
+          </button>
+          <div
+            class="usa-table-container--scrollable"
+            data-testid="scrollable-table-container"
+            tabindex="0"
+          >
+            <table
+              class="usa-table usa-table--borderless width-full src-components-Table-Table-module__fixed--Eq00W fixed-table"
+              data-testid="table"
+            >
+              <thead>
+                <tr
+                  class="border-bottom-1px"
+                >
+                  <th
+                    class="padding-y-1 padding-left-0"
+                    scope="col"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <strong>
+                      Category
+                    </strong>
+                  </th>
+                  <th
+                    class="padding-y-1 padding-left-0"
+                    scope="col"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <strong>
+                      Additional details and examples
+                    </strong>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td
+                    class="text-baseline padding-y-2 padding-left-0"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <p
+                      class="text-bold margin-0"
+                    >
+                      Data collection
+                    </p>
+                    <span>
+                      What data will you collect from participants?
+                    </span>
+                  </td>
+                  <td
+                    class="text-baseline padding-y-2 padding-left-0"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <span>
+                      Types of data can include:
+                    </span>
+                    <ul
+                      class="margin-0"
+                    >
+                      <li>
+                        Banking information to make non-claims-based payments
+                      </li>
+                      <li>
+                        Clinical data
+                      </li>
+                      <li>
+                        Collect bids and plan information (MAPD)
+                      </li>
+                      <li>
+                        Cooperative Agreement Application
+                      </li>
+                      <li>
+                        Decarbonization data
+                      </li>
+                      <li>
+                        Expanded demographics data
+                      </li>
+                      <li>
+                        Fee-for-Service (FFS) claims and apply model rules (e.g., reduce FFS payment)
+                      </li>
+                      <li>
+                        Learning system metrics (e.g., # of learning events)
+                      </li>
+                      <li>
+                        Participant Agreement
+                      </li>
+                      <li>
+                        Participant Agreement Letter of Intent
+                      </li>
+                      <li>
+                        Participant Agreement Request for Application
+                      </li>
+                      <li>
+                        Participant reported data (e.g., unique model metrics)
+                      </li>
+                      <li>
+                        Participant reported quality measures
+                      </li>
+                      <li>
+                        Provider roster / participant roster
+                      </li>
+                      <li>
+                        Reports from participants (e.g., health equity report)
+                      </li>
+                      <li>
+                        Social Determinants of Health
+                      </li>
+                      <li>
+                        Survey
+                      </li>
+                      <li>
+                        Other
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    class="text-baseline padding-y-2 padding-left-0"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <p
+                      class="text-bold margin-0"
+                    >
+                      Sending data
+                    </p>
+                    <span>
+                      What data will you send to participants?
+                    </span>
+                  </td>
+                  <td
+                    class="text-baseline padding-y-2 padding-left-0"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <span>
+                      Types of data can include:
+                    </span>
+                    <ul
+                      class="margin-0"
+                    >
+                      <li>
+                        Data feedback dashboard
+                      </li>
+                      <li>
+                        Non-claims based payments
+                      </li>
+                      <li>
+                        Operations data (e.g., attribution file, benchmark file)
+                      </li>
+                      <li>
+                        Partially adjudicated claims data
+                      </li>
+                      <li>
+                        Raw claims data
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    class="text-baseline padding-y-2 padding-left-0"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <p
+                      class="text-bold margin-0"
+                    >
+                      Multi-payer data
+                    </p>
+                    <span>
+                      Do you need to make multi-payer data available to participants?
+                    </span>
+                  </td>
+                  <td
+                    class="text-baseline padding-y-2 padding-left-0"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <span>
+                      Use cases can include:
+                    </span>
+                    <ul
+                      class="margin-0"
+                    >
+                      <li>
+                        More complete alert/discharge/transfer notification
+                      </li>
+                      <li>
+                        Supply multi-payer claims cost, utilization, and quality reporting
+                      </li>
+                      <li>
+                        Fill gaps in care alerting and reports
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    class="text-baseline padding-y-2 padding-left-0"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <p
+                      class="text-bold margin-0"
+                    >
+                      Multi-source collection and aggregation
+                    </p>
+                    <span>
+                      Do you need to collect and aggregate multi-source data for analyses by the model team and implementation contractor?
+                    </span>
+                  </td>
+                  <td
+                    class="text-baseline padding-y-2 padding-left-0"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <span>
+                      Types of data can include:
+                    </span>
+                    <ul
+                      class="margin-0"
+                    >
+                      <li>
+                        Commercial claims
+                      </li>
+                      <li>
+                        Lab data
+                      </li>
+                      <li>
+                        Manufacturer
+                      </li>
+                      <li>
+                        Medicaid claims
+                      </li>
+                      <li>
+                        Medicare claims
+                      </li>
+                      <li>
+                        Patient registry
+                      </li>
+                      <li>
+                        Other
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    class="text-baseline padding-y-2 padding-left-0"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <p
+                      class="text-bold margin-0"
+                    >
+                      New methodologies
+                    </p>
+                    <span>
+                      Do you plan to implement any new or novel data exchange methods based on new technologies or policy initiatives?
+                    </span>
+                  </td>
+                  <td
+                    class="text-baseline padding-y-2 padding-left-0"
+                    style="max-width: 250px; width: 250px; white-space: pre-line;"
+                  >
+                    <span>
+                      Examples of novel data exchange methodologies include:
+                    </span>
+                    <ul
+                      class="margin-0"
+                    >
+                      <li>
+                        <div
+                          class="flex-container margin-bottom-05"
+                        >
+                          <span
+                            class="usa-link pointer margin-right-2"
+                            role="button"
+                            tabindex="0"
+                          >
+                            <span>
+                              Privacy-preserving record linkage (PPRL) [cdcfoundation.org]
+                              <svg
+                                class="usa-icon margin-left-05 top-05"
+                                focusable="false"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </div>
+                      </li>
+                      <li>
+                        <div
+                          class="flex-container margin-bottom-05"
+                        >
+                          Utilizing the 
+                          <span
+                            class="usa-link pointer margin-right-2"
+                            role="button"
+                            tabindex="0"
+                          >
+                            <span>
+                              Trusted Exchange Framework and Common Agreement (TEFCA) [healthit.gov]
+                              <svg
+                                class="usa-icon margin-left-05 top-05"
+                                focusable="false"
+                                height="1em"
+                                role="img"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </div>
+                      </li>
+                      <li>
+                        Enabling an additional data stream not previously used at CMMI
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p
+            class="text-bold margin-bottom-0 margin-top-1"
+          >
+            Additional considerations
+          </p>
+          <p
+            class="border-bottom padding-bottom-2 margin-bottom-1 margin-top-0"
+          >
+            Please describe any additional data exchange considerations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div
+    class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
+  >
+    <div
+      class="grid-container padding-top-4 padding-bottom-10"
+      data-testid="gridContainer"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-1"
+      >
+        Related help articles
+      </h2>
+      <dt
+        class="margin-bottom-4"
+      >
+        Below are some additional help articles that you may find useful.
+      </dt>
+      <ul
+        class="usa-card-group"
+        data-testid="CardGroup"
+      >
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <header
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
+                How to have a successful 2-pager meeting
+              </h3>
+            </header>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=getting-started"
+            >
+              <span
+                aria-label="Articles under the Getting started category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                Getting started
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body padding-top-2"
+              data-testid="CardBody"
+            >
+              <p>
+                Use this article to ensure you’re fully prepared for your 2-page concept review meeting with CMMI Front Office (FO).
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read How to have a successful 2-pager meeting article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <header
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
+                How to have a successful 6-pager meeting
+              </h3>
+            </header>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=getting-started"
+            >
+              <span
+                aria-label="Articles under the Getting started category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                Getting started
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body padding-top-2"
+              data-testid="CardBody"
+            >
+              <p>
+                Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-pager. Use this article to ensure you’re fully prepared for your 6-page concept review meeting with CMMI FO.
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read How to have a successful 6-pager meeting article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <header
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
+                High-level project plan
+              </h3>
+            </header>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=getting-started"
+            >
+              <span
+                aria-label="Articles under the Getting started category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                Getting started
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body padding-top-2"
+              data-testid="CardBody"
+            >
+              <p>
+                Use this high-level project plan to understand and track the key pieces of work involved in developing a model. The MINT Team can assist model teams in completing this for upcoming models once collaboration begins.
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read High-level project plan article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <a
+        class="usa-link"
+        href="/help-and-knowledge/articles"
+      >
+        View all help articles
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;

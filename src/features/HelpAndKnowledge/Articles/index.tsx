@@ -20,7 +20,8 @@ export enum HelpArticle {
   UTILIZING_SOLUTIONS = 'UTILIZING_SOLUTIONS',
   MODEL_SOLUTION_IMPLEMENTATION = 'MODEL_SOLUTION_IMPLEMENTATION',
   MODEL_SOLUTION_DESIGN = 'MODEL_SOLUTION_DESIGN',
-  PHASES_INVOLVED = 'PHASES_INVOLVED'
+  PHASES_INVOLVED = 'PHASES_INVOLVED',
+  EVALUATING_DATA_EXCHANGE_APPROACH = 'EVALUATING_DATA_EXCHANGE_APPROACH'
 }
 
 export type ArticleProps = {
@@ -85,6 +86,12 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     route: '/phases-involved',
     translation: 'phasesInvolved',
     type: ArticleCategories.IT_IMPLEMENTATION
+  },
+  {
+    key: HelpArticle.EVALUATING_DATA_EXCHANGE_APPROACH,
+    route: '/evaluating-data-exchange-approach',
+    translation: 'evaluatingDataExchangeApproach',
+    type: ArticleCategories.GETTING_STARTED
   }
 ];
 
