@@ -11,8 +11,10 @@ import UswdsReactLink from 'components/LinkWrapper';
 
 import { OperationalNeedStatus } from './_components/NeedsStatus';
 
-type GetOperationalNeedsOperationalNeedsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
-type GetOperationalNeedsSolutionsType = GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0]['solutions'][0];
+type GetOperationalNeedsOperationalNeedsType =
+  GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0];
+type GetOperationalNeedsSolutionsType =
+  GetOperationalNeedsQuery['modelPlan']['operationalNeeds'][0]['solutions'][0];
 
 // Utility function for getting a list of operational needs that are not answered/needed
 export const filterPossibleNeeds = (

@@ -10,8 +10,10 @@ import { getTimeElapsed } from 'utils/date';
 
 import './index.scss';
 
-type DiscussionType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
-type ReplyType = GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
+type DiscussionType =
+  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
+type ReplyType =
+  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 type DiscussionUserInfoProps = {
   connected?: boolean;

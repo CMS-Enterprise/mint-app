@@ -1,48 +1,48 @@
 CREATE TYPE DEA_DATA_TO_COLLECT_FROM_PARTICIPANTS AS ENUM (
-  'BANKING_INFORMATION_TO_MAKE_NON_CLAIMS_BASED_PAYMENTS',
-  'CLINICAL_DATA',
-  'COLLECT_BIDS_AND_PLAN_INFORMATION',
-  'COOPERATIVE_AGREEMENT_APPLICATION',
-  'DECARBONIZATION_DATA',
-  'EXPANDED_DEMOGRAPHICS_DATA',
-  'FEE_FOR_SERVICE_CLAIMS_AND_APPLY_MODEL_RULES',
-  'LEARNING_SYSTEM_METRICS',
-  'PARTICIPANT_AGREEMENT',
-  'PARTICIPANT_AGREEMENT_LETTER_OF_INTENT',
-  'PARTICIPANT_AGREEMENT_REQUEST_FOR_APPLICATION',
-  'PARTICIPANT_REPORTED_DATA',
-  'PARTICIPANT_REPORTED_QUALITY_MEASURES',
-  'PROVIDER_PARTICIPANT_ROSTER',
-  'REPORTS_FROM_PARTICIPANTS',
-  'SOCIAL_DETERMINANTS_OF_HEALTH',
-  'SURVEY',
-  'OTHER'
-  );
+    'BANKING_INFORMATION_TO_MAKE_NON_CLAIMS_BASED_PAYMENTS',
+    'CLINICAL_DATA',
+    'COLLECT_BIDS_AND_PLAN_INFORMATION',
+    'COOPERATIVE_AGREEMENT_APPLICATION',
+    'DECARBONIZATION_DATA',
+    'EXPANDED_DEMOGRAPHICS_DATA',
+    'FEE_FOR_SERVICE_CLAIMS_AND_APPLY_MODEL_RULES',
+    'LEARNING_SYSTEM_METRICS',
+    'PARTICIPANT_AGREEMENT',
+    'PARTICIPANT_AGREEMENT_LETTER_OF_INTENT',
+    'PARTICIPANT_AGREEMENT_REQUEST_FOR_APPLICATION',
+    'PARTICIPANT_REPORTED_DATA',
+    'PARTICIPANT_REPORTED_QUALITY_MEASURES',
+    'PROVIDER_PARTICIPANT_ROSTER',
+    'REPORTS_FROM_PARTICIPANTS',
+    'SOCIAL_DETERMINANTS_OF_HEALTH',
+    'SURVEY',
+    'OTHER'
+);
 
 CREATE TYPE DEA_DATA_TO_SEND_TO_PARTICIPANTS AS ENUM (
-  'DATA_FEEDBACK_DASHBOARD',
-  'NON_CLAIMS_BASED_PAYMENTS',
-  'OPERATIONS_DATA',
-  'PARTIALLY_ADJUSTED_CLAIMS_DATA',
-  'RAW_CLAIMS_DATA',
-  'DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS'
-  );
+    'DATA_FEEDBACK_DASHBOARD',
+    'NON_CLAIMS_BASED_PAYMENTS',
+    'OPERATIONS_DATA',
+    'PARTIALLY_ADJUSTED_CLAIMS_DATA',
+    'RAW_CLAIMS_DATA',
+    'DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS'
+);
 
 CREATE TYPE DEA_ANTICIPATED_MULTI_PAYER_DATA_AVAILABILITY_USE_CASE AS ENUM (
-  'MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION',
-  'SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING',
-  'FILL_GAPS_IN_CARE_ALERTING_AND_REPORTS'
-  );
+    'MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION',
+    'SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING',
+    'FILL_GAPS_IN_CARE_ALERTING_AND_REPORTS'
+);
 
 CREATE TYPE DEA_MULTI_SOURCE_DATA_TO_COLLECT AS ENUM (
-  'COMMERCIAL_CLAIMS',
-  'LAB_DATA',
-  'MANUFACTURER',
-  'MEDICAID_CLAIMS',
-  'MEDICARE_CLAIMS',
-  'PATIENT_REGISTRY',
-  'OTHER'
-  );
+    'COMMERCIAL_CLAIMS',
+    'LAB_DATA',
+    'MANUFACTURER',
+    'MEDICAID_CLAIMS',
+    'MEDICARE_CLAIMS',
+    'PATIENT_REGISTRY',
+    'OTHER'
+);
 
 CREATE TYPE DEA_TASK_LIST_STATUS AS ENUM (
   'NOT_STARTED',
@@ -51,46 +51,46 @@ CREATE TYPE DEA_TASK_LIST_STATUS AS ENUM (
   );
 
 CREATE TABLE plan_data_exchange_approach (
-                                           id UUID PRIMARY KEY NOT NULL,
-                                           model_plan_id UUID NOT NULL REFERENCES model_plan(id),
+    id UUID PRIMARY KEY NOT NULL,
+    model_plan_id UUID NOT NULL REFERENCES model_plan(id),
 
-  -- page 2
-                                           data_to_collect_from_participants DEA_DATA_TO_COLLECT_FROM_PARTICIPANTS[],
-                                           data_to_collect_from_participants_reports_details ZERO_STRING,
-                                           data_to_collect_from_participants_other ZERO_STRING,
-                                           data_will_not_be_collected_from_participants BOOLEAN NOT NULL DEFAULT FALSE,
-                                           data_to_collect_from_participants_note ZERO_STRING,
+    -- page 2
+    data_to_collect_from_participants DEA_DATA_TO_COLLECT_FROM_PARTICIPANTS[],
+    data_to_collect_from_participants_reports_details ZERO_STRING,
+    data_to_collect_from_participants_other ZERO_STRING,
+    data_will_not_be_collected_from_participants BOOLEAN NOT NULL DEFAULT FALSE,
+    data_to_collect_from_participants_note ZERO_STRING,
 
-                                           data_to_send_to_participants DEA_DATA_TO_SEND_TO_PARTICIPANTS[],
-                                           data_to_send_to_participants_note ZERO_STRING,
+    data_to_send_to_participants DEA_DATA_TO_SEND_TO_PARTICIPANTS[],
+    data_to_send_to_participants_note ZERO_STRING,
 
-  -- page 3
-                                           does_need_to_make_multi_payer_data_available YES_NO_TYPE DEFAULT NULL,
-                                           anticipated_multi_payer_data_availability_use_case DEA_ANTICIPATED_MULTI_PAYER_DATA_AVAILABILITY_USE_CASE DEFAULT NULL,
-                                           does_need_to_make_multi_payer_data_available_note ZERO_STRING,
+    -- page 3
+    does_need_to_make_multi_payer_data_available YES_NO_TYPE DEFAULT NULL,
+    anticipated_multi_payer_data_availability_use_case DEA_ANTICIPATED_MULTI_PAYER_DATA_AVAILABILITY_USE_CASE DEFAULT NULL,
+    does_need_to_make_multi_payer_data_available_note ZERO_STRING,
 
-                                           does_need_to_collect_and_aggregate_multi_source_data YES_NO_TYPE DEFAULT NULL,
-                                           multi_source_data_to_collect DEA_MULTI_SOURCE_DATA_TO_COLLECT[],
-                                           multi_source_data_to_collect_other ZERO_STRING,
-                                           does_need_to_collect_and_aggregate_multi_source_data_note ZERO_STRING,
+    does_need_to_collect_and_aggregate_multi_source_data YES_NO_TYPE DEFAULT NULL,
+    multi_source_data_to_collect DEA_MULTI_SOURCE_DATA_TO_COLLECT[],
+    multi_source_data_to_collect_other ZERO_STRING,
+    does_need_to_collect_and_aggregate_multi_source_data_note ZERO_STRING,
 
--- page 4
-                                           will_implement_new_data_exchange_methods YES_NO_TYPE DEFAULT NULL,
-                                           new_data_exchange_methods_description ZERO_STRING,
-                                           new_data_exchange_methods_note ZERO_STRING,
+    -- page 4
+    will_implement_new_data_exchange_methods YES_NO_TYPE DEFAULT NULL,
+    new_data_exchange_methods_description ZERO_STRING,
+    new_data_exchange_methods_note ZERO_STRING,
 
-                                           additional_data_exchange_considerations_description ZERO_STRING,
+    additional_data_exchange_considerations_description ZERO_STRING,
 
 
-  -- META DATA
-                                           created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE NOT NULL,
-                                           created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                           modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
-                                           modified_dts TIMESTAMP WITH TIME ZONE,
-                                           marked_complete_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
-                                           marked_complete_dts TIMESTAMP WITH TIME ZONE,
+    -- META DATA
+    created_by UUID REFERENCES public.user_account (id) MATCH SIMPLE NOT NULL,
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
+    modified_dts TIMESTAMP WITH TIME ZONE,
+    marked_complete_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
+    marked_complete_dts TIMESTAMP WITH TIME ZONE,
 
-                                           status DEA_TASK_LIST_STATUS NOT NULL DEFAULT 'NOT_STARTED'
+    status DEA_TASK_LIST_STATUS NOT NULL DEFAULT 'NOT_STARTED'
 );
 
 COMMENT ON TABLE plan_data_exchange_approach IS 'This table stores the data exchange approach for a model plan.';
