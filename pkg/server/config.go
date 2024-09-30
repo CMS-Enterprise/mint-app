@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/flags"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/upload"
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/flags"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 const configMissingMessage = "Must set config: %v"
@@ -44,12 +44,24 @@ func (s Server) NewDBConfig() storage.DBConfig {
 }
 
 // NewS3Config returns a new s3.Config and checks required fields
-func (s Server) NewS3Config() upload.Config {
+func (s Server) NewS3Config() s3.Config {
 	s.checkRequiredConfig(appconfig.AWSS3FileUploadBucket)
 	s.checkRequiredConfig(appconfig.AWSRegion)
 
-	return upload.Config{
+	return s3.Config{
 		Bucket:  s.Config.GetString(appconfig.AWSS3FileUploadBucket),
+		Region:  s.Config.GetString(appconfig.AWSRegion),
+		IsLocal: false,
+	}
+}
+
+// NewEChimpS3Config returns a new s3.Config and checks required fields
+func (s Server) NewEChimpS3Config() s3.Config {
+	s.checkRequiredConfig(appconfig.AWSS3ECHIMPBucket)
+	s.checkRequiredConfig(appconfig.AWSRegion)
+
+	return s3.Config{
+		Bucket:  s.Config.GetString(appconfig.AWSS3ECHIMPBucket),
 		Region:  s.Config.GetString(appconfig.AWSRegion),
 		IsLocal: false,
 	}

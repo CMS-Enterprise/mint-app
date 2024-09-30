@@ -10,12 +10,12 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/constants"
-	"github.com/cmsgov/mint-app/pkg/graph/generated"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/userhelpers"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 // Basics is the resolver for the basics field.
@@ -53,7 +53,7 @@ func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	documents, err := PlanDocumentsReadByModelPlanID(logger, obj.ID, principal, r.store, r.s3Client)
+	documents, err := PlanDocumentsReadByModelPlanID(logger, obj.ID, principal, r.store, r.fileUploadS3Client)
 	return documents, err
 }
 
@@ -114,6 +114,27 @@ func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]
 	return PlanTDLsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
+// EchimpCRs is the resolver for the echimpCRs field.
+func (r *modelPlanResolver) EchimpCRs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpCR, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return GetEChimpCRsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
+}
+
+// EchimpTDLs is the resolver for the echimpTDLs field.
+func (r *modelPlanResolver) EchimpTDLs(ctx context.Context, obj *models.ModelPlan) ([]*models.EChimpTDL, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return GetEChimpTDLSByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
+}
+
+// EchimpCRsAndTDLs is the resolver for the echimpCRsAndTDLs field.
+func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.ModelPlan) ([]models.EChimpCRAndTDLS, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
+}
+
 // PrepareForClearance is the resolver for the prepareForClearance field.
 func (r *modelPlanResolver) PrepareForClearance(ctx context.Context, obj *models.ModelPlan) (*model.PrepareForClearance, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -149,6 +170,7 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string
 		r.emailTemplateService,
 		r.addressBook,
 		modelName,
+		nil,
 		r.store,
 		principal,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),

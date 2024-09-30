@@ -1,0 +1,868 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Model Plan Communication > matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb usa-breadcrumb--wrap"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/"
+        >
+          <span>
+            Home
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+        >
+          <span>
+            Model Plan task list
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current"
+      >
+        <span>
+          Participants and providers
+        </span>
+      </li>
+    </ol>
+  </nav>
+  <h1
+    aria-live="polite"
+    class="mint-h1 margin-top-4 margin-bottom-2"
+    tabindex="-1"
+  >
+    Participants and providers
+  </h1>
+  <p
+    class="margin-top-0 margin-bottom-1 font-body-lg"
+    data-testid="model-plan-name"
+  >
+    for My excellent plan that I just initiated
+  </p>
+  <p
+    class="margin-bottom-2 font-body-md line-height-sans-4"
+  >
+    If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
+  </p>
+  <div
+    class="padding-2 bg-primary-lighter"
+  >
+    <div
+      class="display-flex"
+      data-testid="ask-a-question"
+    >
+      <svg
+        class="usa-icon text-primary margin-right-1"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+        />
+      </svg>
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="ask-a-question-button"
+        type="button"
+      >
+        Start a discussion
+      </button>
+    </div>
+  </div>
+  <form
+    action="#"
+    class="desktop:grid-col-6 margin-top-6"
+    data-testid="participants-and-providers-communication-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <div
+        class="usa-form-group"
+        data-scroll="participantAddedFrequency"
+      >
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="participant-added-frequency"
+        >
+          How frequently are participants added?
+        </label>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-added-frequency-annually"
+            name="participantAddedFrequency"
+            type="checkbox"
+            value="ANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-added-frequency-annually"
+          >
+            Annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-added-frequency-semiannually"
+            name="participantAddedFrequency"
+            type="checkbox"
+            value="SEMIANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-added-frequency-semiannually"
+          >
+            Semi-annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-added-frequency-quarterly"
+            name="participantAddedFrequency"
+            type="checkbox"
+            value="QUARTERLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-added-frequency-quarterly"
+          >
+            Quarterly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-added-frequency-monthly"
+            name="participantAddedFrequency"
+            type="checkbox"
+            value="MONTHLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-added-frequency-monthly"
+          >
+            Monthly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-added-frequency-continually"
+            name="participantAddedFrequency"
+            type="checkbox"
+            value="CONTINUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-added-frequency-continually"
+          >
+            Continually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="margin-left-4"
+        >
+          <label
+            class="usa-label text-normal margin-top-1"
+            data-testid="label"
+            for="participant-added-frequency-continually"
+          >
+            Please specify
+          </label>
+          <input
+            class="usa-input"
+            data-testid="participant-added-frequency-continually-text"
+            id="participant-added-frequency-continually-text"
+            name="participantAddedFrequencyContinually"
+            value="participant added continually"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-added-frequency-other"
+            name="participantAddedFrequency"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-added-frequency-other"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <div
+            class="usa-form-group"
+          >
+            <label
+              class="usa-label"
+              for="participant-added-frequency-note"
+              id="label-participant-added-frequency-note"
+            >
+              Notes
+            </label>
+            <textarea
+              aria-labelledby="label-participant-added-frequency-note hint-participant-added-frequency-note"
+              class="usa-textarea"
+              data-testid="participant-added-frequency-note"
+              id="participant-added-frequency-note"
+              name="participantAddedFrequencyNote"
+            >
+              My note
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <div
+        class="usa-form-group"
+        data-scroll="participantRemovedFrequency"
+      >
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="participant-removed-frequency"
+        >
+          How frequently are participants removed?
+        </label>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-removed-frequency-annually"
+            name="participantRemovedFrequency"
+            type="checkbox"
+            value="ANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-removed-frequency-annually"
+          >
+            Annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-removed-frequency-semiannually"
+            name="participantRemovedFrequency"
+            type="checkbox"
+            value="SEMIANNUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-removed-frequency-semiannually"
+          >
+            Semi-annually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-removed-frequency-quarterly"
+            name="participantRemovedFrequency"
+            type="checkbox"
+            value="QUARTERLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-removed-frequency-quarterly"
+          >
+            Quarterly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-removed-frequency-monthly"
+            name="participantRemovedFrequency"
+            type="checkbox"
+            value="MONTHLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-removed-frequency-monthly"
+          >
+            Monthly
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-removed-frequency-continually"
+            name="participantRemovedFrequency"
+            type="checkbox"
+            value="CONTINUALLY"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-removed-frequency-continually"
+          >
+            Continually
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participant-removed-frequency-other"
+            name="participantRemovedFrequency"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participant-removed-frequency-other"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="margin-left-4"
+        >
+          <label
+            class="usa-label text-normal margin-top-1"
+            data-testid="label"
+            for="participant-removed-frequency-other"
+          >
+            Please specify
+          </label>
+          <input
+            class="usa-input"
+            data-testid="participant-removed-frequency-other-text"
+            id="participant-removed-frequency-other-text"
+            name="participantRemovedFrequencyOther"
+            value="participant added other"
+          />
+        </div>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <div
+            class="usa-form-group"
+          >
+            <label
+              class="usa-label"
+              for="participant-removed-frequency-note"
+              id="label-participant-removed-frequency-note"
+            >
+              Notes
+            </label>
+            <textarea
+              aria-labelledby="label-participant-removed-frequency-note hint-participant-removed-frequency-note"
+              class="usa-textarea"
+              data-testid="participant-removed-frequency-note"
+              id="participant-removed-frequency-note"
+              name="participantRemovedFrequencyNote"
+            >
+              Second note
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <div
+        class="usa-form-group"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="participants-and-providers-communication-method"
+        >
+          How will you communicate with participants?
+        </label>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-communication-method-IT_TOOL"
+            name="communicationMethod"
+            type="checkbox"
+            value="IT_TOOL"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-communication-method-IT_TOOL"
+          >
+            Manage ongoing communications with participants using an IT tool
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-communication-method-MASS_EMAIL"
+            name="communicationMethod"
+            type="checkbox"
+            value="MASS_EMAIL"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-communication-method-MASS_EMAIL"
+          >
+            Send mass emails to new participants
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-communication-method-OTHER"
+            name="communicationMethod"
+            type="checkbox"
+            value="OTHER"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-communication-method-OTHER"
+          >
+            Other
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="mint-checkbox usa-checkbox"
+        >
+          <input
+            class="usa-checkbox__input"
+            id="participants-and-providers-communication-method-NO_COMMUNICATION"
+            name="communicationMethod"
+            type="checkbox"
+            value="NO_COMMUNICATION"
+          />
+          <label
+            class="usa-checkbox__label"
+            for="participants-and-providers-communication-method-NO_COMMUNICATION"
+          >
+            We are not planning to communicate
+          </label>
+          <p
+            class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+          />
+        </div>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-y-4 margin-bottom-8"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="participants-and-providers-risk-type"
+        >
+          What type of risk will the participant assume?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="participants-and-providers-risk-type-TWO_SIDED"
+              name="riskType"
+              type="checkbox"
+              value="TWO_SIDED"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-risk-type-TWO_SIDED"
+            >
+              Two-sided
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="participants-and-providers-risk-type-ONE_SIDED"
+              name="riskType"
+              type="checkbox"
+              value="ONE_SIDED"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-risk-type-ONE_SIDED"
+            >
+              One-sided
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="participants-and-providers-risk-type-CAPITATION"
+              name="riskType"
+              type="checkbox"
+              value="CAPITATION"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-risk-type-CAPITATION"
+            >
+              Capitation
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="participants-and-providers-risk-type-NOT_RISK_BASED"
+              name="riskType"
+              type="checkbox"
+              value="NOT_RISK_BASED"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-risk-type-NOT_RISK_BASED"
+            >
+              Not risk-based
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="participants-and-providers-risk-type-OTHER"
+              name="riskType"
+              type="checkbox"
+              value="OTHER"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="participants-and-providers-risk-type-OTHER"
+            >
+              Other
+            </label>
+            <p
+              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+            />
+          </div>
+          <div
+            class="margin-left-4"
+          >
+            <label
+              class="usa-label text-normal"
+              data-testid="label"
+              for="participants-and-providers-risk-type-other"
+            >
+              Please specify
+            </label>
+            <input
+              class="usa-input maxw-none mint-textarea"
+              data-testid="participants-and-providers-risk-type-other"
+              id="participants-and-providers-risk-type-other"
+              name="riskOther"
+              value="Programmatic Risk"
+            />
+          </div>
+        </fieldset>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="usa-form-group margin-y-4 margin-bottom-8"
+      >
+        <label
+          class="usa-label"
+          data-testid="label"
+          for="participants-and-providers-risk-change"
+        >
+          Will the risk arrangement change as the model progresses?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="participants-and-providers-risk-change-true"
+              id="participants-and-providers-risk-change-true"
+              name="willRiskChange"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-risk-change-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="participants-and-providers-risk-change-false"
+              id="participants-and-providers-risk-change-false"
+              name="willRiskChange"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="participants-and-providers-risk-change-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="margin-top-6 margin-bottom-3"
+      >
+        <button
+          class="usa-button usa-button usa-button--outline margin-bottom-1"
+          data-testid="button"
+          type="button"
+        >
+          Back
+        </button>
+        <button
+          class="usa-button"
+          data-testid="button"
+          type="submit"
+        >
+          Next
+        </button>
+      </div>
+      <button
+        class="usa-button usa-button usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="usa-icon margin-right-1"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+          />
+        </svg>
+        Save and return to task list
+      </button>
+    </fieldset>
+  </form>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 3 of 5
+    </span>
+  </div>
+</DocumentFragment>
+`;

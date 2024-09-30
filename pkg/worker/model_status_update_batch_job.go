@@ -8,8 +8,8 @@ import (
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/logfields"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 var modelStatusUpdateJobMaxRetry = 2

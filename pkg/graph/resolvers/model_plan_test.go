@@ -9,11 +9,11 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/userhelpers"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 func (suite *ResolverSuite) TestModelPlanCreate() {
@@ -25,6 +25,7 @@ func (suite *ResolverSuite) TestModelPlanCreate() {
 		nil,
 		email.AddressBook{},
 		planName,
+		nil,
 		suite.testConfigs.Store,
 		suite.testConfigs.Principal,
 		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),

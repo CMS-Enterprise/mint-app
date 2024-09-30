@@ -3,10 +3,10 @@ Hook used to get the state/route of the modal for IT lead solution details
 */
 
 import { useLocation } from 'react-router-dom';
+import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
+import { HelpSolutionType } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import usePrevLocation from 'hooks/usePrevious';
-import { findSolutionByRouteParam } from 'views/HelpAndKnowledge/SolutionsHelp';
-import { HelpSolutionType } from 'views/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 
 import useHelpSolution from './useHelpSolutions';
 

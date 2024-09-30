@@ -3,7 +3,7 @@ package models
 import (
 	"github.com/samber/lo"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 )
 
 type UserAccountAndNotificationPreferences struct {

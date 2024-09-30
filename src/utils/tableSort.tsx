@@ -26,7 +26,7 @@ export const getHeaderSortIcon = <T extends {}>(
   column: HeaderGroup<T>,
   icon: boolean
 ) => {
-  const sharedClassName = classNames('margin-left-05 position-absolute', {
+  const sharedClassName = classNames('margin-left-05', {
     'margin-top-05': icon
   });
   if (!column.isSorted) {

@@ -1,27 +1,24 @@
 import React from 'react';
-import { act, render, waitFor } from '@testing-library/react';
-
-import setup from 'utils/testing/setup';
+import { render, waitFor } from '@testing-library/react';
+import setup from 'tests/util';
 
 import TabPanel from './TabPanel';
 import Tabs from './Tabs';
 
 describe('The Tabs component', () => {
   it('renders without errors', async () => {
-    await act(async () => {
-      const { getByTestId } = render(
-        <Tabs>
-          <TabPanel id="Tab1" tabName="Tab 1">
-            Tab 1
-          </TabPanel>
-          <TabPanel id="Tab2" tabName="Tab 2">
-            Tab 2
-          </TabPanel>
-        </Tabs>
-      );
+    const { getByTestId } = render(
+      <Tabs>
+        <TabPanel id="Tab1" tabName="Tab 1">
+          Tab 1
+        </TabPanel>
+        <TabPanel id="Tab2" tabName="Tab 2">
+          Tab 2
+        </TabPanel>
+      </Tabs>
+    );
 
-      expect(getByTestId('mint-tabs')).toBeInTheDocument();
-    });
+    expect(getByTestId('mint-tabs')).toBeInTheDocument();
   });
 
   it('renders the first tab panel', () => {
@@ -42,41 +39,37 @@ describe('The Tabs component', () => {
   });
 
   it('renders a custom default active tab', async () => {
-    await act(async () => {
-      const { getByTestId } = render(
-        <Tabs defaultActiveTab="Tab 2">
-          <TabPanel id="Tab1" tabName="Tab 1">
-            Tab 1
-          </TabPanel>
-          <TabPanel id="Tab2" tabName="Tab 2">
-            Tab 2
-          </TabPanel>
-        </Tabs>
-      );
+    const { getByTestId } = render(
+      <Tabs defaultActiveTab="Tab 2">
+        <TabPanel id="Tab1" tabName="Tab 1">
+          Tab 1
+        </TabPanel>
+        <TabPanel id="Tab2" tabName="Tab 2">
+          Tab 2
+        </TabPanel>
+      </Tabs>
+    );
 
-      expect(getByTestId('Tab2-tab')).toHaveClass('mint-tabs__tab--selected');
-      expect(getByTestId('Tab2-panel')).not.toHaveClass('mint-print-only');
-    });
+    expect(getByTestId('Tab2-tab')).toHaveClass('mint-tabs__tab--selected');
+    expect(getByTestId('Tab2-panel')).not.toHaveClass('mint-print-only');
   });
 
   it('renders tabs based on tab panel children', async () => {
-    await act(async () => {
-      const { getAllByRole } = render(
-        <Tabs>
-          <TabPanel id="Tab1" tabName="Tab 1">
-            Tab 1
-          </TabPanel>
-          <TabPanel id="Tab2" tabName="Tab 2">
-            Tab 2
-          </TabPanel>
-          <TabPanel id="Tab3" tabName="Tab 3">
-            Tab 3
-          </TabPanel>
-        </Tabs>
-      );
+    const { getAllByRole } = render(
+      <Tabs>
+        <TabPanel id="Tab1" tabName="Tab 1">
+          Tab 1
+        </TabPanel>
+        <TabPanel id="Tab2" tabName="Tab 2">
+          Tab 2
+        </TabPanel>
+        <TabPanel id="Tab3" tabName="Tab 3">
+          Tab 3
+        </TabPanel>
+      </Tabs>
+    );
 
-      expect(getAllByRole('tab').length).toEqual(3);
-    });
+    expect(getAllByRole('tab').length).toEqual(3);
   });
 
   it('renders new tab panel on click', async () => {
@@ -272,41 +265,37 @@ describe('The Tabs component', () => {
   });
   describe('html attributes', () => {
     it('has required accessiiblity attributes for selected tab', async () => {
-      await act(async () => {
-        const { getByTestId } = render(
-          <Tabs>
-            <TabPanel id="Tab1" tabName="Tab 1">
-              Tab 1
-            </TabPanel>
-            <TabPanel id="Tab2" tabName="Tab 2">
-              Tab 2
-            </TabPanel>
-          </Tabs>
-        );
-        const selectedTab = getByTestId('Tab1-tab-btn');
-        const selectedTabPanel = getByTestId('Tab1-panel');
-        expect(selectedTab).toHaveAttribute('aria-selected', 'true');
-        expect(selectedTab).toHaveAttribute('aria-controls', 'Tab1');
-        expect(selectedTabPanel).toHaveAttribute('id', 'Tab1');
-      });
+      const { getByTestId } = render(
+        <Tabs>
+          <TabPanel id="Tab1" tabName="Tab 1">
+            Tab 1
+          </TabPanel>
+          <TabPanel id="Tab2" tabName="Tab 2">
+            Tab 2
+          </TabPanel>
+        </Tabs>
+      );
+      const selectedTab = getByTestId('Tab1-tab-btn');
+      const selectedTabPanel = getByTestId('Tab1-panel');
+      expect(selectedTab).toHaveAttribute('aria-selected', 'true');
+      expect(selectedTab).toHaveAttribute('aria-controls', 'Tab1');
+      expect(selectedTabPanel).toHaveAttribute('id', 'Tab1');
     });
     it('unselected tab has correct attributes', async () => {
-      await act(async () => {
-        const { getByTestId } = render(
-          <Tabs>
-            <TabPanel id="Tab1" tabName="Tab 1">
-              Tab 1
-            </TabPanel>
-            <TabPanel id="Tab2" tabName="Tab 2">
-              Tab 2
-            </TabPanel>
-          </Tabs>
-        );
-        const selectedTab = getByTestId('Tab2-tab-btn');
-        expect(selectedTab).toHaveAttribute('aria-selected', 'false');
-        expect(selectedTab).toHaveAttribute('tabindex', '-1');
-        expect(selectedTab).toHaveAttribute('aria-controls', 'Tab2');
-      });
+      const { getByTestId } = render(
+        <Tabs>
+          <TabPanel id="Tab1" tabName="Tab 1">
+            Tab 1
+          </TabPanel>
+          <TabPanel id="Tab2" tabName="Tab 2">
+            Tab 2
+          </TabPanel>
+        </Tabs>
+      );
+      const selectedTab = getByTestId('Tab2-tab-btn');
+      expect(selectedTab).toHaveAttribute('aria-selected', 'false');
+      expect(selectedTab).toHaveAttribute('tabindex', '-1');
+      expect(selectedTab).toHaveAttribute('aria-controls', 'Tab2');
     });
   });
 });

@@ -3,23 +3,18 @@ import { useTranslation } from 'react-i18next';
 import Select from 'react-select';
 import classNames from 'classnames';
 
-import Alert from 'components/shared/Alert';
+import Alert from 'components/Alert';
 import {
   ClearIndicator,
   customStyles,
+  MultiSelectOptionProps,
   MultiSelectTag,
   Option
-} from 'components/shared/MultiSelect';
+} from 'components/MultiSelect';
 import useDebounce from 'hooks/useDebounce';
 import useOktaUserLookup, { OktaUserType } from 'hooks/useOktaUserLookup';
 
 import './index.scss';
-
-type MultiSelectOptionProps = {
-  value: string;
-  label: string;
-  email: string;
-};
 
 const selectedContainsNonCMS = (
   selectedUsers: MultiSelectOptionProps[]

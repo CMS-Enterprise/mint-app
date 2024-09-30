@@ -3,10 +3,10 @@ package subscribers
 import (
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/shared/pubsub"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 )
 
 // OnTaskListSectionLockChangedUnsubscribedCallback is a callback that will be called when a TaskListSectionLockChangedSubscriber is unsubscribed

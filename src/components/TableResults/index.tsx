@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { FilterValue } from 'react-table';
 import classnames from 'classnames';
 
-import Alert from 'components/shared/Alert';
+import Alert from 'components/Alert';
 
 type TableResultsProps = {
   className?: string;

@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	"github.com/cmsgov/mint-app/pkg/testconfig"
-	useraccounthelperstestconfigs "github.com/cmsgov/mint-app/pkg/testconfig/useraccountstoretestconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig"
+	useraccounthelperstestconfigs "github.com/cms-enterprise/mint-app/pkg/testconfig/useraccountstoretestconfigs"
 )
 
 // TAuditSuite is the testify suite for the translated audit package

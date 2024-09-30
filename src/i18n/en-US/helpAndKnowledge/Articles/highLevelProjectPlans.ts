@@ -40,7 +40,7 @@ const highLevelProjectPlans = {
         },
         {
           activity:
-            '<paragraph>Contractor support prior to clearance</paragraph><italics> We recommend discussing pre- clearance contractor support needs during your 2-pager or 6-pager review with the CMMI Front Office(FO), as CMMI FO will need to approve this request.</italics>',
+            '<paragraph>Contractor support prior to clearance</paragraph><italics> We recommend discussing pre- clearance contractor support needs during your 2-pager or 6-pager review with the CMMI Front Office (FO), as CMMI FO will need to approve this request.</italics>',
           party:
             'ARDS (available through BSG/DCCS), MITRE (available through PPG)'
         },
@@ -50,7 +50,7 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Conduct kick-off meeting',
-          party: 'Mint Team'
+          party: 'MINT Team'
         },
         {
           activity: '6-pager review with CMMI FO',
@@ -58,7 +58,7 @@ const highLevelProjectPlans = {
         },
         {
           activity: 'Perform iterative analysis of IT plans',
-          party: 'Model Team, MINT Team'
+          party: 'IT Lead, Model Team, MINT Team'
         },
         {
           activity: 'Draft IT cost estimates',
@@ -341,8 +341,8 @@ const highLevelProjectPlans = {
           activity: 'Manage provider overlaps',
           modalLinks: [
             {
-              copy: '<ml>MDM</ml>',
-              route: 'master-data-management'
+              copy: '<ml>MDM-POR</ml>',
+              route: 'master-data-management-program-organization-relationship'
             }
           ]
         },
@@ -350,8 +350,8 @@ const highLevelProjectPlans = {
           activity: 'Manage beneficiary overlaps',
           modalLinks: [
             {
-              copy: '<ml>MDM</ml>',
-              route: 'master-data-management'
+              copy: '<ml>MDM-POR</ml>',
+              route: 'master-data-management-program-organization-relationship'
             }
           ]
         }
@@ -546,7 +546,7 @@ const highLevelProjectPlans = {
         },
         { activity: 'MAPD payments', party: 'MAPD Systems / CR' },
         {
-          activity: 'Make non-claims based payment',
+          activity: 'Make non-claims based payments',
           modalLinks: [
             {
               copy: '<ml>APPS</ml>',
@@ -559,11 +559,15 @@ const highLevelProjectPlans = {
             {
               copy: '<ml>IPC</ml>',
               route: 'innovation-payment-contract'
+            },
+            {
+              copy: '<ml>MDM-NCBP</ml>',
+              route: 'master-data-management-for-ncbp'
             }
           ]
         },
         {
-          activity: 'Compute shared savings payment',
+          activity: 'Compute shared savings payments',
           modalLinks: [
             {
               copy: '<ml>RMADA</ml>',

@@ -1,5 +1,3 @@
-import draftModelPlan from './draftModelPlan/draftModelPlan';
-import prepareForClearance from './draftModelPlan/prepareForClearance';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
@@ -15,6 +13,7 @@ import customHome from './home/customHome';
 import homepageSettings from './home/settings';
 import { basics, basicsMisc } from './modelPlan/basics';
 import { beneficiaries, beneficiariesMisc } from './modelPlan/beneficiaries';
+import changeHistory from './modelPlan/changeHistory';
 import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
 import crs from './modelPlan/crs';
 import crtdlsMisc from './modelPlan/crtdlsMisc';
@@ -38,8 +37,10 @@ import {
   participantsAndProvidersMisc
 } from './modelPlan/participantsAndProviders';
 import { payments, paymentsMisc } from './modelPlan/payments';
+import prepareForClearance from './modelPlan/prepareForClearance';
 import replies from './modelPlan/replies';
 import solutions from './modelPlan/solutions';
+import modelPlanTaskList from './modelPlan/taskList';
 import tdls from './modelPlan/tdls';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
@@ -47,7 +48,6 @@ import modelSummary from './readOnly/modelSummary';
 import readOnlyModelPlan from './readOnly/readOnlyModelPlan';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
-import changeHistory from './changeHistory';
 import collaborationArea from './collaborationArea';
 import cookies from './cookies';
 import error from './error';
@@ -57,8 +57,6 @@ import footer from './footer';
 import general from './general';
 import header from './header';
 import landing from './landing';
-import plan from './modelPlan';
-import modelPlanTaskList from './modelPlanTaskList';
 import nda from './nda';
 import notifications from './notifications';
 import privacyPolicy from './privacyPolicy';
@@ -73,7 +71,6 @@ const enUS = {
   cookies,
   changeHistory,
   customHome,
-  draftModelPlan,
   error,
   filterView,
   footer,
@@ -84,7 +81,6 @@ const enUS = {
   helpAndKnowledge,
   homepageSettings,
   landing,
-  plan,
   modelPlanOverview,
   modelPlanTaskList,
   modelSummary,

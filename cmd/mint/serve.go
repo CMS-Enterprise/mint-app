@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/cmsgov/mint-app/pkg/server"
+	"github.com/cms-enterprise/mint-app/pkg/server"
 )
 
 var serveCmd = &cobra.Command{

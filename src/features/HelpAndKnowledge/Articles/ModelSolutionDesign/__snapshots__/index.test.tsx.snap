@@ -1,0 +1,703 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ModelSolutionDesign > matches the snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <button
+          class="usa-button usa-button--unstyled margin-top-6"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            class="usa-icon margin-right-05 text-tbottom"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+          Close tab
+        </button>
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-bottom-1 margin-top-4"
+          tabindex="-1"
+        >
+          Model design and solution design
+        </h1>
+        <a
+          class="usa-link width-fit-content display-block margin-bottom-1"
+          href="/help-and-knowledge/articles?category=it-implementation"
+        >
+          <span
+            aria-label="Articles under the IT implementation category"
+            class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+            data-testid="tag"
+          >
+            IT implementation
+          </span>
+        </a>
+        <p
+          class="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4"
+        >
+          This is the first phase in obtaining operational support for models. This phase kicks off work within MINT, assembles the team, and identifies all of the IT systems, data, and operational contracts needed to support the model.
+        </p>
+        <div
+          class="usa-summary-box bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
+          data-testid="summary-box"
+        >
+          <div
+            class="usa-summary-box__body"
+          >
+            <h3
+              class="usa-summary-box__heading margin-top-0 margin-bottom-1"
+            >
+              Activities involved
+            </h3>
+            <div
+              class="usa-summary-box__text"
+            >
+              <ol
+                class="padding-left-5 margin-y-0"
+              >
+                <li
+                  class="margin-bottom-1"
+                >
+                  <div
+                    class="margin-left-1 display-flex flex-align-center"
+                  >
+                    <a
+                      class="display-flex flex-align-center"
+                      href="#start-a-model-plan"
+                    >
+                      Start a Model Plan
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </li>
+                <li
+                  class="margin-bottom-1"
+                >
+                  <div
+                    class="margin-left-1 display-flex flex-align-center"
+                  >
+                    <a
+                      class="display-flex flex-align-center"
+                      href="#assemble-the-it-and-operational-team"
+                    >
+                      Assemble the IT and operational team
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </li>
+                <li
+                  class="margin-bottom-1"
+                >
+                  <div
+                    class="margin-left-1 display-flex flex-align-center"
+                  >
+                    <a
+                      class="display-flex flex-align-center"
+                      href="#identify-the-solutions-for-the-model’s-operational-needs"
+                    >
+                      Identify the solutions for the model’s operational needs
+                      <svg
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <h2
+          class="margin-top-6 margin-bottom-2"
+          id="start-a-model-plan"
+        >
+          1. Start a Model Plan
+        </h2>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          Purpose
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          To provide BSG with an understanding of the model needs so they can help determine the necessary operational solutions for the model.
+        </p>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          When
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          The model team should begin their Model Plan after they’ve completed their 2-page concept document.
+        </p>
+        <h3
+          class="margin-top-3 margin-bottom-4"
+        >
+          Activities
+        </h3>
+        <ol
+          class="usa-process-list"
+        >
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Start a Model Plan
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              Once a concept paper has been written, the Model Lead (or other model team member) will create a Model Plan within MINT to collaborate on the operational needs of the model.
+            
+            
+              <a
+                class="usa-link margin-top-2 display-block display-flex flex-align-center text-bold"
+                href="/models/steps-overview"
+              >
+                Start a new Model Plan
+                <svg
+                  class="usa-icon margin-left-1 text-bold"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                  />
+                </svg>
+              </a>
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Upload relevant documents
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              Upload relevant documents
+            
+            These will provide BSG and/or the IT Lead helpful background.
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Make time to work with BSG during model design
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              Operational planning for models is a very iterative process so collaboration is key.
+            </p>
+          </li>
+        </ol>
+        <h3
+          class="margin-top-neg-2 margin-bottom-1"
+        >
+          Outcomes
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          These activities produce the following outcomes:
+        </p>
+        <ol
+          class="padding-left-8 margin-bottom-6"
+        >
+          <li
+            class="line-height-sans-5"
+          >
+            Model Plan that identifies the high-level operational requirements for your model; 
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Provides BSG with enough information to start assisting with the model
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Project Management and IT subject matter experts identified to work with the model team to plan, execute, and manage the IT and operational implementation for the CMMI model.
+          </li>
+        </ol>
+        <h2
+          class="margin-top-7 margin-bottom-2"
+          id="assemble-the-it-and-operational-team"
+        >
+          2. Assemble the IT and operational team
+        </h2>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          Purpose
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          To provide the model team with the necessary expertise to assist with completing the IT and operational projects.
+        </p>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          When
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          This happens after the Model Plan has been started in MINT.
+        </p>
+        <h3
+          class="margin-top-3 margin-bottom-4"
+        >
+          Activities
+        </h3>
+        <ol
+          class="usa-process-list"
+        >
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Assign an IT Lead
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              An IT Lead is a member of BSG that will work closely with the Model Team to orchestrate the implementation of all the IT and operations needed for a model. Other organizations might refer to this role as an integrator.
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Collaborate with other SMEs as necessary
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              Other SMEs may be brought in to help with other aspects of the operational and IT needs of the model.
+            </p>
+          </li>
+        </ol>
+        <h3
+          class="margin-top-neg-2 margin-bottom-1"
+        >
+          Outcomes
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          These activities produce the following outcomes:
+        </p>
+        <ol
+          class="padding-left-8 margin-bottom-6"
+        >
+          <li
+            class="line-height-sans-5"
+          >
+            IT Lead and other relevant SMEs are identified to work with the model team to plan, execute, and manage the IT and operational implementation for the model.
+          </li>
+        </ol>
+        <h2
+          class="margin-top-7 margin-bottom-2"
+          id="identify-the-solutions-for-the-model’s-operational-needs"
+        >
+          3.   Identify the solutions for the model’s operational needs
+        </h2>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          Purpose
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          To identify the systems, data, and operational contracts needed to support a model. This step should identify the breadth of system and operational needs for a model.
+        </p>
+        <h3
+          class="margin-top-3 margin-bottom-1"
+        >
+          When
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          The operational needs identification should begin as soon as the model team:
+        </p>
+        <ol
+          class="padding-left-8 margin-bottom-1"
+        >
+          <li
+            class="line-height-sans-5"
+          >
+            Starts developing the Innovation Center Investment Proposal (ICIP) after approval by the Portfolio Management Committee (PMC) and/or
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Begins developing a Notice of Proposed Rulemaking (NPRM). Ideally, the operational needs identification occurs in parallel with the ICIP / NPRM development.
+          </li>
+        </ol>
+        <p
+          class="margin-y-0 line-height-sans-5 padding-left-6"
+        >
+          Identifying operational and IT needs early allows the model and BSG team to identify the most effective and efficient operational support strategies. As the model design becomes clearer, the operational strategy should also increase in precision.
+        </p>
+        <h3
+          class="margin-top-4 margin-bottom-4"
+        >
+          Activities
+        </h3>
+        <ol
+          class="usa-process-list"
+        >
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Iterate and complete the Model Plan
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              The model team should keep their Model Plan as up to date as possible, especially date related changes. As they answer questions within the Model Plan, operational needs are identified within the operational solutions and implementation status tracker. 
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Select the necessary solutions for the model’s operational needs
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              Within the operational solutions and implementation status tracker, the Model Lead and IT Lead will work together to select the operational solutions the model will use, keeping the milestones in mind.
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full margin-bottom-3 padding-left-2"
+          >
+            <h5
+              class="usa-process-list__heading font-body-sm"
+              data-testid="processListHeading"
+            >
+              Understand and plan for the data needs of the model
+            </h5>
+            <p
+              class="margin-top-105"
+            >
+              BSG will meet with model teams to understand the data the model will be collecting. For example: Models may choose to track participation in the model (the participants, providers, or beneficiaries). You will be asked to produce participation files in a specified format to be loaded into CMMI's central data repository the APM Management System (AMS).
+          
+          This model data will be shared with AMS, QPP, and ResDAC. Data will be made available for researchers in ResDAC after the first quarter of operations if it is ready at that point in time.
+            </p>
+          </li>
+        </ol>
+        <h3
+          class="margin-top-neg-2 margin-bottom-1"
+        >
+          Outcomes
+        </h3>
+        <p
+          class="margin-y-0 line-height-sans-5"
+        >
+          These activities produce the following outcomes:
+        </p>
+        <ol
+          class="padding-left-8 margin-bottom-6"
+        >
+          <li
+            class="line-height-sans-5"
+          >
+            Required operational needs for the model are identified.
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            IT systems are identified for meeting the model needs.
+          </li>
+          <li
+            class="line-height-sans-5"
+          >
+            Operational and data support for the model is identified.
+          </li>
+        </ol>
+      </div>
+    </div>
+  </main>
+  <div
+    class="bg-primary-lighter"
+  >
+    <div
+      class="grid-container padding-top-4 padding-bottom-10"
+      data-testid="gridContainer"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-1"
+      >
+        Related help articles
+      </h2>
+      <dt
+        class="margin-bottom-4"
+      >
+        Below are some additional help articles that you may find useful.
+      </dt>
+      <ul
+        class="usa-card-group"
+        data-testid="CardGroup"
+      >
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <header
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
+                Phases involved in creating IT and operational support for models
+              </h3>
+            </header>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=it-implementation"
+            >
+              <span
+                aria-label="Articles under the IT implementation category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                IT implementation
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body padding-top-2"
+              data-testid="CardBody"
+            >
+              <p>
+                There are two phases invovled in creating IT and operational support for CMMI models.
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read Phases involved in creating IT and operational support for models article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <header
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
+                Model implementation and solution implementation
+              </h3>
+            </header>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=it-implementation"
+            >
+              <span
+                aria-label="Articles under the IT implementation category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                IT implementation
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body padding-top-2"
+              data-testid="CardBody"
+            >
+              <p>
+                This is the second phase in obtaining operational support for models. This phase initiates and completes the necessary IT projects for the model.
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read Model implementation and solution implementation article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
+        <li
+          class="usa-card desktop:grid-col-4 article article-card--isLink"
+          data-testid="article-card"
+        >
+          <div
+            class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+          >
+            <header
+              class="usa-card__header padding-0"
+              data-testid="CardHeader"
+            >
+              <h3
+                class="line-height-body-4 margin-bottom-1"
+              >
+                Utilizing available operational solutions
+              </h3>
+            </header>
+            <a
+              class="usa-link width-fit-content display-block "
+              href="/help-and-knowledge/articles?category=it-implementation"
+            >
+              <span
+                aria-label="Articles under the IT implementation category"
+                class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                data-testid="tag"
+              >
+                IT implementation
+              </span>
+            </a>
+            <div
+              class="usa-card__body padding-x-0 article__body padding-top-2"
+              data-testid="CardBody"
+            >
+              <p>
+                One model will require several operational solutions to complete the essential functions. This is an overview of timing and activities involved in working with existing systems and services.
+              </p>
+            </div>
+            <div
+              class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+              data-testid="CardFooter"
+            >
+              <button
+                aria-label="Read Utilizing available operational solutions article"
+                class="usa-button usa-button--outline"
+                type="button"
+              >
+                Read
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div
+        class="margin-top-3"
+      >
+        <a
+          class="usa-link"
+          href="/help-and-knowledge/articles"
+        >
+          View all help articles
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

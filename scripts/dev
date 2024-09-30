@@ -353,6 +353,15 @@ namespace :db do
     sh "go run ./cmd/dbseed/*go seed"
   end
 
+  desc "Seed local database with development data"
+  namespace :seed do
+
+    desc "Runs the interactive seeding program"
+      task :interactive do
+        sh "go run ./cmd/dbseed/*go"
+      end
+  end
+
   task :drop_connections do
     `echo "select pg_terminate_backend(pg_stat_activity.pid) from pg_stat_activity where datname='postgres' AND state='idle'" | psql`
   end
@@ -379,7 +388,7 @@ namespace :gql do
 
     task :go do
       sh "go generate ./..." do |ok|
-        sh "goimports -w -local github.com/cmsgov/mint-app pkg/graph/resolvers" if ok
+        sh "goimports -w -local github.com/cms-enterprise/mint-app pkg/graph/resolvers" if ok
       end
     end
   end

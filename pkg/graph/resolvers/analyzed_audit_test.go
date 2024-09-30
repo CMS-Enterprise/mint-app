@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 func (suite *ResolverSuite) TestAnalyzedAuditLoader() {

@@ -4,19 +4,20 @@ package testconfig
 import (
 	"context"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/testconfig/dbtestconfigs"
-	"github.com/cmsgov/mint-app/pkg/testconfig/s3testconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/dbtestconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/s3testconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/testhelpers"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
-	"github.com/cmsgov/mint-app/pkg/upload"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/shared/pubsub"
 
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // Base is a struct that contains all base dependencies needed to run a test. It is meant to be embedded to allow reusable testing dependencies,
@@ -27,7 +28,8 @@ type Base struct {
 	Logger                   *zap.Logger
 	UserInfo                 *models.UserInfo
 	Store                    *storage.Store
-	S3Client                 *upload.S3Client
+	S3Client                 *s3.S3Client
+	EChimpS3Client           *s3.S3Client
 	PubSub                   *pubsub.ServicePubSub
 	Principal                *authentication.ApplicationPrincipal
 	Context                  context.Context
@@ -49,13 +51,16 @@ func (config *Base) GetDefaults(ctxCallbacks ...func(context.Context) context.Co
 	dbConfig, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(dbConfig, ldClient)
 
-	s3Client := s3testconfigs.S3TestClient()
+	viperConfig := testhelpers.NewConfig()
+	s3Client := s3testconfigs.S3TestClient(viperConfig)
+	eChimpS3Client := s3testconfigs.S3TestECHIMPClient(viperConfig)
 	config.DBConfig = dbConfig
 	config.LDClient = ldClient
 	config.Logger = logger
 	config.UserInfo = userInfo
 	config.Store = store
 	config.S3Client = &s3Client
+	config.EChimpS3Client = &eChimpS3Client
 	config.PubSub = ps
 
 	config.Context = appcontext.WithLogger(context.Background(), config.Logger)

@@ -1,0 +1,610 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Model Plan Ops Eval and Learning CCW and Qualtiy > matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb usa-breadcrumb--wrap"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/"
+        >
+          <span>
+            Home
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+        >
+          <span>
+            Model Plan task list
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current"
+      >
+        <span>
+          Operations, evaluation, and learning
+        </span>
+      </li>
+    </ol>
+  </nav>
+  <h1
+    aria-live="polite"
+    class="mint-h1 margin-top-4 margin-bottom-2"
+    tabindex="-1"
+  >
+    Operations, evaluation, and learning
+  </h1>
+  <p
+    class="margin-top-0 margin-bottom-1 font-body-lg"
+    data-testid="model-plan-name"
+  >
+    for My excellent plan that I just initiated
+  </p>
+  <p
+    class="margin-bottom-2 font-body-md line-height-sans-4"
+  >
+    If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
+  </p>
+  <div
+    class="padding-2 bg-primary-lighter"
+  >
+    <div
+      class="display-flex"
+      data-testid="ask-a-question"
+    >
+      <svg
+        class="usa-icon text-primary margin-right-1"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+        />
+      </svg>
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="ask-a-question-button"
+        type="button"
+      >
+        Start a discussion
+      </button>
+    </div>
+  </div>
+  <form
+    action="#"
+    class="desktop:grid-col-6 margin-top-6"
+    data-testid="ops-eval-and-learning-ccw-and-quality-form"
+  >
+    <fieldset
+      class="usa-fieldset"
+      data-testid="fieldset"
+    >
+      <h3>
+        Chronic Conditions Warehouse (CCW) questions
+      </h3>
+      <div
+        class="usa-form-group"
+      >
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="ops-eval-and-learning-send-files"
+        >
+          Will you need to send files between the CCW and other applications?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-send-files-true"
+              id="ops-eval-and-learning-send-files-true"
+              name="sendFilesBetweenCcw"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-send-files-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-send-files-false"
+              id="ops-eval-and-learning-send-files-false"
+              name="sendFilesBetweenCcw"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-send-files-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="usa-form-group"
+      >
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="ops-eval-and-learning-app-to-send-files"
+        >
+          Do you know which applications will be on the other sides of the file transfers?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-app-to-send-files-true"
+              id="ops-eval-and-learning-app-to-send-files-true"
+              name="appToSendFilesToKnown"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-app-to-send-files-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-app-to-send-files-false"
+              id="ops-eval-and-learning-app-to-send-files-false"
+              name="appToSendFilesToKnown"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-app-to-send-files-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="usa-form-group"
+      >
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="ops-eval-and-learning-distribute-files"
+        >
+          Will you use the CCW to distribute files to and from model participants?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-distribute-files-true"
+              id="ops-eval-and-learning-distribute-files-true"
+              name="useCcwForFileDistribiutionToParticipants"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-distribute-files-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-distribute-files-false"
+              id="ops-eval-and-learning-distribute-files-false"
+              name="useCcwForFileDistribiutionToParticipants"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-distribute-files-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <h3>
+        Quality questions
+      </h3>
+      <div
+        class="usa-form-group"
+      >
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="ops-eval-and-learning-develop-measures"
+        >
+          Do you plan to develop a new validated quality measure for your model?
+        </label>
+        <div
+          class="usa-alert usa-alert--warning icon-padding flex it-solutions-warning"
+          data-testid="alert"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                Changing your answer to this question may also affect your selections in the operational solutions and implementation status tracker.  
+                <button
+                  class="usa-button usa-button usa-button--unstyled"
+                  data-testid="button"
+                  id="ops-eval-and-learning-data-needed-warning"
+                  type="button"
+                >
+                  Go to operational solutions tracker.
+                </button>
+              </span>
+            </p>
+          </div>
+        </div>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-develop-measures-true"
+              id="ops-eval-and-learning-develop-measures-true"
+              name="developNewQualityMeasures"
+              type="radio"
+              value="TRUE"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-develop-measures-true"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-develop-measures-false"
+              id="ops-eval-and-learning-develop-measures-false"
+              name="developNewQualityMeasures"
+              type="radio"
+              value="FALSE"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-develop-measures-false"
+            >
+              No
+            </label>
+          </div>
+        </fieldset>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="usa-form-group"
+      >
+        <label
+          class="usa-label maxw-none"
+          data-testid="label"
+          for="ops-eval-and-learning-performance-impact"
+        >
+          Does quality performance impact payment?
+        </label>
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-performance-impact-YES"
+              id="ops-eval-and-learning-performance-impact-YES"
+              name="qualityPerformanceImpactsPayment"
+              type="radio"
+              value="YES"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-performance-impact-YES"
+            >
+              Yes
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-performance-impact-NO"
+              id="ops-eval-and-learning-performance-impact-NO"
+              name="qualityPerformanceImpactsPayment"
+              type="radio"
+              value="NO"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-performance-impact-NO"
+            >
+              No
+            </label>
+          </div>
+          <div
+            class="usa-radio"
+            data-testid="radio"
+          >
+            <input
+              class="usa-radio__input"
+              data-testid="ops-eval-and-learning-performance-impact-OTHER"
+              id="ops-eval-and-learning-performance-impact-OTHER"
+              name="qualityPerformanceImpactsPayment"
+              type="radio"
+              value="OTHER"
+            />
+            <label
+              class="usa-radio__label"
+              for="ops-eval-and-learning-performance-impact-OTHER"
+            >
+              Other
+            </label>
+          </div>
+        </fieldset>
+        <div
+          class="margin-top-3 margin-bottom-6"
+        >
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="add-note-toggle"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+              />
+            </svg>
+            Add an additional note
+          </button>
+        </div>
+      </div>
+      <div
+        class="margin-top-6 margin-bottom-3"
+      >
+        <button
+          class="usa-button usa-button usa-button--outline margin-bottom-1"
+          data-testid="button"
+          type="button"
+        >
+          Back
+        </button>
+        <button
+          class="usa-button"
+          data-testid="button"
+          type="submit"
+        >
+          Next
+        </button>
+      </div>
+      <button
+        class="usa-button usa-button usa-button--unstyled"
+        data-testid="button"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="usa-icon margin-right-1"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+          />
+        </svg>
+        Save and return to task list
+      </button>
+    </fieldset>
+  </form>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 7 of 9
+    </span>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,756 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb usa-breadcrumb--wrap"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/"
+        >
+          <span>
+            Home
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
+        >
+          <span>
+            Model collaboration area
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-link usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list"
+        >
+          <span>
+            Model Plan task list
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current"
+      >
+        <span>
+          Beneficiaries
+        </span>
+      </li>
+    </ol>
+  </nav>
+  <h1
+    aria-live="polite"
+    class="mint-h1 margin-top-4 margin-bottom-2"
+    tabindex="-1"
+  >
+    Beneficiaries
+  </h1>
+  <p
+    class="margin-top-0 margin-bottom-1 font-body-lg"
+    data-testid="model-plan-name"
+  >
+    for My excellent plan that I just initiated
+  </p>
+  <p
+    class="margin-bottom-2 font-body-md line-height-sans-4"
+  >
+    If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
+  </p>
+  <div
+    class="padding-2 bg-primary-lighter"
+  >
+    <div
+      class="display-flex"
+      data-testid="ask-a-question"
+    >
+      <svg
+        class="usa-icon text-primary margin-right-1"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+        />
+      </svg>
+      <button
+        class="usa-button usa-button--unstyled"
+        data-testid="ask-a-question-button"
+        type="button"
+      >
+        Start a discussion
+      </button>
+    </div>
+  </div>
+  <div
+    class="grid-container padding-left-0 padding-right-0"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row grid-gap"
+      data-testid="grid"
+    >
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <form
+          action="#"
+          class="margin-top-6"
+          data-testid="beneficiaries-frequency-form"
+        >
+          <div
+            class="usa-form-group"
+            data-scroll="beneficiarySelectionFrequency"
+          >
+            <label
+              class="usa-label maxw-none"
+              data-testid="label"
+              for="beneficiary-selection-frequency"
+            >
+              How frequently are beneficiaries added?
+            </label>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-annually"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="ANNUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-annually"
+              >
+                Annually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-semiannually"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="SEMIANNUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-semiannually"
+              >
+                Semi-annually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-quarterly"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="QUARTERLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-quarterly"
+              >
+                Quarterly
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-monthly"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="MONTHLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-monthly"
+              >
+                Monthly
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-continually"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="CONTINUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-continually"
+              >
+                Continually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-selection-frequency-other"
+                name="beneficiarySelectionFrequency"
+                type="checkbox"
+                value="OTHER"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-selection-frequency-other"
+              >
+                Other
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="margin-left-4"
+            >
+              <label
+                class="usa-label text-normal margin-top-1"
+                data-testid="label"
+                for="beneficiary-selection-frequency-other"
+              >
+                Please specify
+              </label>
+              <input
+                class="usa-input"
+                data-testid="beneficiary-selection-frequency-other-text"
+                id="beneficiary-selection-frequency-other-text"
+                name="beneficiarySelectionFrequencyOther"
+                value="Very often"
+              />
+            </div>
+            <div
+              class="margin-top-3 margin-bottom-6"
+            >
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="add-note-toggle"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                Add an additional note
+              </button>
+            </div>
+          </div>
+          <div
+            class="usa-form-group"
+            data-scroll="beneficiaryRemovalFrequency"
+          >
+            <label
+              class="usa-label maxw-none"
+              data-testid="label"
+              for="beneficiary-removal-frequency"
+            >
+              How frequently are beneficiaries removed?
+            </label>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-annually"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="ANNUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-annually"
+              >
+                Annually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-semiannually"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="SEMIANNUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-semiannually"
+              >
+                Semi-annually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-quarterly"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="QUARTERLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-quarterly"
+              >
+                Quarterly
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-monthly"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="MONTHLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-monthly"
+              >
+                Monthly
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-continually"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="CONTINUALLY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-continually"
+              >
+                Continually
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="margin-left-4"
+            >
+              <label
+                class="usa-label text-normal margin-top-1"
+                data-testid="label"
+                for="beneficiary-removal-frequency-continually"
+              >
+                Please specify
+              </label>
+              <input
+                class="usa-input"
+                data-testid="beneficiary-removal-frequency-continually-text"
+                id="beneficiary-removal-frequency-continually-text"
+                name="beneficiaryRemovalFrequencyContinually"
+                value="continually"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiary-removal-frequency-other"
+                name="beneficiaryRemovalFrequency"
+                type="checkbox"
+                value="OTHER"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiary-removal-frequency-other"
+              >
+                Other
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="margin-top-3 margin-bottom-6"
+            >
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="add-note-toggle"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                Add an additional note
+              </button>
+            </div>
+          </div>
+          <div
+            class="usa-form-group"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="beneficiaries-overlap"
+            >
+              Will the beneficiaries overlap with other models?
+            </label>
+            <fieldset
+              class="usa-fieldset"
+              data-testid="fieldset"
+            >
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="beneficiaries-overlap-YES_NEED_POLICIES"
+                  name="beneficiariesOverlap"
+                  type="radio"
+                  value="YES_NEED_POLICIES"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="beneficiaries-overlap-YES_NEED_POLICIES"
+                >
+                  Yes, we expect to develop policies to manage the overlaps
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="beneficiaries-overlap-YES_NO_ISSUES"
+                  name="beneficiariesOverlap"
+                  type="radio"
+                  value="YES_NO_ISSUES"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="beneficiaries-overlap-YES_NO_ISSUES"
+                >
+                  Yes, and the overlaps would not be an issue
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="beneficiaries-overlap-NO"
+                  name="beneficiariesOverlap"
+                  type="radio"
+                  value="NO"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="beneficiaries-overlap-NO"
+                >
+                  No
+                </label>
+              </div>
+            </fieldset>
+            <div
+              class="margin-top-3 margin-bottom-6"
+            >
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="add-note-toggle"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                Add an additional note
+              </button>
+            </div>
+          </div>
+          <div
+            class="usa-form-group"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="precedenceRules"
+            >
+              Are there precedence rules between this model and other model(s)?
+            </label>
+            <p
+              class="text-base margin-top-1 margin-bottom-0 line-height-body-3"
+            >
+              i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)
+            </p>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiaries-precedence-rules-YES"
+                name="precedenceRules"
+                type="checkbox"
+                value="YES"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiaries-precedence-rules-YES"
+              >
+                Yes
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="margin-left-4"
+            >
+              <span>
+                Please describe
+              </span>
+              <textarea
+                aria-labelledby="label-beneficiaries-precedence-rules-YES-note hint-beneficiaries-precedence-rules-YES-note"
+                class="height-15 usa-textarea"
+                data-testid="beneficiaries-precedence-rules-YES-note"
+                id="beneficiaries-precedence-rules-YES-note"
+                name="precedenceRulesYes"
+              >
+                Yes precedence rules
+              </textarea>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="beneficiaries-precedence-rules-NO"
+                name="precedenceRules"
+                type="checkbox"
+                value="NO"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="beneficiaries-precedence-rules-NO"
+              >
+                No
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+              />
+            </div>
+            <div
+              class="margin-top-3 margin-bottom-6"
+            >
+              <div
+                class="usa-form-group"
+              >
+                <label
+                  class="usa-label"
+                  for="beneficiaries-precedence-note"
+                  id="label-beneficiaries-precedence-note"
+                >
+                  Notes
+                </label>
+                <textarea
+                  aria-labelledby="label-beneficiaries-precedence-note hint-beneficiaries-precedence-note"
+                  class="usa-textarea"
+                  data-testid="beneficiaries-precedence-note"
+                  id="beneficiaries-precedence-note"
+                  name="precedenceRulesNote"
+                >
+                  Precedent note
+                </textarea>
+              </div>
+            </div>
+          </div>
+          <div
+            class="usa-form-group margin-top-8 margin-bottom-3"
+          >
+            <div
+              class="usa-summary-box bg-white border-base-light padding-2"
+              data-testid="summary-box"
+            >
+              <div
+                class="usa-summary-box__body"
+              >
+                <p
+                  class="margin-0"
+                >
+                  Model Plan status
+                </p>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    data-testid="beneficiaries-status"
+                    id="beneficiaries-status"
+                    name="status"
+                    type="checkbox"
+                    value="IN_PROGRESS"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="beneficiaries-status"
+                  >
+                    This section of the Model Plan (Beneficiaries) is ready for review.
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="margin-top-6 margin-bottom-3"
+          >
+            <button
+              class="usa-button usa-button usa-button--outline margin-bottom-1"
+              data-testid="button"
+              type="button"
+            >
+              Back
+            </button>
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="submit"
+            >
+              Save and start next Model Plan section
+            </button>
+          </div>
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Save and return to task list
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div
+    class="mint-page-number margin-y-6"
+    data-testid="page-num"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 3 of 3
+    </span>
+  </div>
+</DocumentFragment>
+`;

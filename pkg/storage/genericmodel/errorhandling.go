@@ -6,8 +6,8 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/apperrors"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/apperrors"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // HandleModelCreationError handles errors from creating a model

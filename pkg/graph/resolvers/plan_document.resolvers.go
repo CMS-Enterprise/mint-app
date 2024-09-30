@@ -9,10 +9,10 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/graph/generated"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // UploadNewPlanDocument is the resolver for the uploadNewPlanDocument field.
@@ -20,7 +20,7 @@ func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input mode
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	planDocument, err := PlanDocumentCreate(logger, &input, principal, r.store, r.s3Client)
+	planDocument, err := PlanDocumentCreate(logger, &input, principal, r.store, r.fileUploadS3Client)
 	return planDocument, err
 }
 
@@ -36,7 +36,7 @@ func (r *mutationResolver) DeletePlanDocument(ctx context.Context, id uuid.UUID)
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return PlanDocumentDelete(logger, r.s3Client, id, principal, r.store)
+	return PlanDocumentDelete(logger, r.fileUploadS3Client, id, principal, r.store)
 }
 
 // URL is the resolver for the url field.
@@ -59,7 +59,7 @@ func (r *planDocumentResolver) DownloadURL(ctx context.Context, obj *models.Plan
 	if obj.IsLink {
 		return nil, nil
 	}
-	url, err := r.s3Client.NewGetPresignedURL(obj.FileKey)
+	url, err := r.fileUploadS3Client.NewGetPresignedURL(obj.FileKey)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func (r *planDocumentResolver) NumLinkedSolutions(ctx context.Context, obj *mode
 func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error) {
 	logger := appcontext.ZLogger(ctx)
 
-	return PlanDocumentRead(logger, r.store, r.s3Client, id)
+	return PlanDocumentRead(logger, r.store, r.fileUploadS3Client, id)
 }
 
 // PlanDocument returns generated.PlanDocumentResolver implementation.

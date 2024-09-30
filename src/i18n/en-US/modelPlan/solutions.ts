@@ -3,7 +3,7 @@ import { TranslationOperationalSolutions } from 'types/translation';
 import {
   TranslationDataType,
   TranslationFormType
-} from '../../../gql/gen/graphql';
+} from '../../../gql/generated/graphql';
 
 const operationalSolutions: TranslationOperationalSolutions = {
   name: {

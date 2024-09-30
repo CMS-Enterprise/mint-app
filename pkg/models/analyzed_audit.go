@@ -11,7 +11,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
-	"github.com/cmsgov/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/constants"
 )
 
 // AnalyzedAudit represents a analyzed_audit to a table row in the database

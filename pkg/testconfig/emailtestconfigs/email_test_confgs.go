@@ -4,8 +4,8 @@ package emailtestconfigs
 import (
 	"github.com/golang/mock/gomock"
 
-	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
 
 // TestEmailServiceConfig is a shared emailServiceConfig that can be used to test multiple test packages

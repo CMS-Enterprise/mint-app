@@ -10,8 +10,8 @@ import (
 	"github.com/okta/okta-sdk-golang/v2/okta/query"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // Client is a wrapper around github.com/okta/okta-sdk-golang/v2/okta Client type.

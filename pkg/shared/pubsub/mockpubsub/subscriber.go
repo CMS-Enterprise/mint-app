@@ -10,8 +10,8 @@ import (
 	gomock "github.com/golang/mock/gomock"
 	uuid "github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	pubsub "github.com/cmsgov/mint-app/pkg/shared/pubsub"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	pubsub "github.com/cms-enterprise/mint-app/pkg/shared/pubsub"
 )
 
 // MockSubscriber is a mock of Subscriber interface.

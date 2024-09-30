@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/mitchellh/mapstructure"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // sanitizeChanges performs some pre-processing of the changes map for "known" cases that we'd like to handle.

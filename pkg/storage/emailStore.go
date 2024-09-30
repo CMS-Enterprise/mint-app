@@ -3,11 +3,11 @@ package storage
 import (
 	_ "embed"
 
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 )
 
 // GetSolutionSelectedDetails queries the database to return information that is useful

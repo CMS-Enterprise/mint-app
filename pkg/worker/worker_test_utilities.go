@@ -5,24 +5,24 @@ import (
 	"context"
 	"os"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/local"
-	"github.com/cmsgov/mint-app/pkg/oktaapi"
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/local"
+	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
-	"github.com/cmsgov/mint-app/pkg/upload"
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/shared/pubsub"
 
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/testhelpers"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/testhelpers"
 )
 
 // TestConfigs is a struct that contains all the dependencies needed to run a test
@@ -32,7 +32,7 @@ type TestConfigs struct {
 	Logger               *zap.Logger
 	UserInfo             *models.UserInfo
 	Store                *storage.Store
-	S3Client             *upload.S3Client
+	S3Client             *s3.S3Client
 	PubSub               *pubsub.ServicePubSub
 	Principal            *authentication.ApplicationPrincipal
 	EmailTemplateService email.TemplateServiceImpl
@@ -47,10 +47,10 @@ func GetDefaultTestConfigs() *TestConfigs {
 	return &tc
 }
 
-func createS3Client() upload.S3Client {
+func createS3Client() s3.S3Client {
 	config := testhelpers.NewConfig()
 
-	s3Cfg := upload.Config{
+	s3Cfg := s3.Config{
 		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
@@ -60,7 +60,7 @@ func createS3Client() upload.S3Client {
 	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, config.GetString(appconfig.LocalMinioS3AccessKey))
 	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, config.GetString(appconfig.LocalMinioS3SecretKey))
 
-	return upload.NewS3Client(s3Cfg)
+	return s3.NewS3Client(s3Cfg)
 }
 
 // GetDefaults sets the dependencies for the TestConfigs struct that will remain constant across the suite

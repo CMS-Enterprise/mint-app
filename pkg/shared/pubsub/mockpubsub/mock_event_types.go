@@ -1,6 +1,6 @@
 package mockpubsub
 
-import "github.com/cmsgov/mint-app/pkg/shared/pubsub"
+import "github.com/cms-enterprise/mint-app/pkg/shared/pubsub"
 
 const (
 	// MockEvent is a generic mock event type for testing

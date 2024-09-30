@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
-	"github.com/cmsgov/mint-app/pkg/serialization"
+	"github.com/cms-enterprise/mint-app/pkg/serialization"
 )
 
 // UserNotificationPreferences represents a discrete event that has happened in the application that might be notifiable.

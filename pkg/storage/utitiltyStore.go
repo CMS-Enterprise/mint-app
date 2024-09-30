@@ -4,13 +4,13 @@ import (
 	_ "embed"
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 )
 
 // setCurrentSessionUserVariable sets the userID for a scope of a transaction.

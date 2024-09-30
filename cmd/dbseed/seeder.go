@@ -7,16 +7,16 @@ import (
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/local"
-	"github.com/cmsgov/mint-app/pkg/oktaapi"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
-	"github.com/cmsgov/mint-app/pkg/testconfig/emailtestconfigs"
-	"github.com/cmsgov/mint-app/pkg/upload"
-	"github.com/cmsgov/mint-app/pkg/userhelpers"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/local"
+	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 // Seeder  is a struct which wraps configurations needed to seed data in the database
@@ -31,7 +31,7 @@ func newSeeder(config SeederConfig) *Seeder {
 }
 
 func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
-	store, logger, s3Client, _, _ := getResolverDependencies(viperConfig)
+	store, logger, s3Client, echimpS3Client, _, _ := getResolverDependencies(viperConfig)
 
 	dataLoaders := loaders.NewDataLoaders(store)
 	ctx := loaders.CTXWithLoaders(context.Background(), dataLoaders)
@@ -57,11 +57,13 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 		Store:                store,
 		Logger:               logger,
 		S3Client:             s3Client,
+		EChimpClient:         echimpS3Client,
 		Context:              ctx,
 		EmailService:         emailService,
 		EmailTemplateService: emailTemplateService,
 		AddressBook:          addressBook,
 		OktaClient:           oktaClient,
+		viperConfig:          viperConfig,
 	}
 	return newSeeder(seederConfig)
 
@@ -71,10 +73,12 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 type SeederConfig struct {
 	Store                *storage.Store
 	Logger               *zap.Logger
-	S3Client             *upload.S3Client
+	S3Client             *s3.S3Client
+	EChimpClient         *s3.S3Client
 	Context              context.Context
 	EmailService         oddmail.EmailService
 	EmailTemplateService email.TemplateService
 	AddressBook          email.AddressBook
 	OktaClient           oktaapi.Client
+	viperConfig          *viper.Viper
 }

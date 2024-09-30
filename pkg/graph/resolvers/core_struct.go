@@ -3,10 +3,10 @@ package resolvers
 import (
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/accesscontrol"
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // CoreStructPreUpdate applies incoming changes from to a core TaskList Section, and validates its status

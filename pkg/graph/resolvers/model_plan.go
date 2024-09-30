@@ -6,28 +6,26 @@ import (
 	"strings"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
-
 	"github.com/samber/lo"
 
-	"github.com/cmsgov/mint-app/pkg/notifications"
+	"github.com/cms-enterprise/mint-app/pkg/notifications"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
-	"github.com/cmsgov/mint-app/pkg/sqlutils"
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/userhelpers"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/constants"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // ModelPlanCreate implements resolver logic to create a model plan, and send relevant notifications about it's creation
@@ -40,6 +38,7 @@ func ModelPlanCreate(
 	emailTemplateService email.TemplateService,
 	addressBook email.AddressBook,
 	modelName string,
+	id *uuid.UUID,
 	store *storage.Store,
 	principal authentication.Principal,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
@@ -49,6 +48,9 @@ func ModelPlanCreate(
 
 	newPlan, err := sqlutils.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 		plan := models.NewModelPlan(principal.Account().ID, modelName)
+		if id != nil {
+			plan.ID = *id
+		}
 
 		err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
 		if err != nil {
@@ -117,7 +119,6 @@ func ModelPlanCreate(
 
 		_, err = store.PlanDataExchangeApproachCreate(tx, logger, dataExchangeApproach)
 		if err != nil {
-			spew.Dump(err)
 			return nil, err
 		}
 

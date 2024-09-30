@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 
 	"github.com/mitchellh/mapstructure"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 type dateFieldData struct {

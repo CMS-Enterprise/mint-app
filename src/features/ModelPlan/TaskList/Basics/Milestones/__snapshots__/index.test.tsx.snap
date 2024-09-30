@@ -1,0 +1,1166 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Model Basics Milestones page > renders without errors and matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <nav
+      aria-label="Breadcrumbs"
+      class="usa-breadcrumb usa-breadcrumb--wrap"
+    >
+      <ol
+        class="usa-breadcrumb__list"
+      >
+        <li
+          class="usa-breadcrumb__list-item"
+        >
+          <a
+            class="usa-link usa-breadcrumb__link"
+            href="/"
+          >
+            <span>
+              Home
+            </span>
+          </a>
+        </li>
+        <li
+          class="usa-breadcrumb__list-item"
+        >
+          <a
+            class="usa-link usa-breadcrumb__link"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area"
+          >
+            <span>
+              Model collaboration area
+            </span>
+          </a>
+        </li>
+        <li
+          class="usa-breadcrumb__list-item"
+        >
+          <a
+            class="usa-link usa-breadcrumb__link"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaboration-area/task-list"
+          >
+            <span>
+              Model Plan task list
+            </span>
+          </a>
+        </li>
+        <li
+          aria-current="page"
+          class="usa-breadcrumb__list-item usa-current"
+        >
+          <span>
+            Model basics
+          </span>
+        </li>
+      </ol>
+    </nav>
+    <h1
+      aria-live="polite"
+      class="mint-h1 margin-top-4 margin-bottom-1"
+      tabindex="-1"
+    >
+      Model basics
+    </h1>
+    <p
+      class="margin-top-0 margin-bottom-1 font-body-lg"
+      data-testid="model-plan-name"
+    >
+      for My excellent plan that I just initiated
+    </p>
+    <p
+      class="margin-bottom-2 font-body-md line-height-sans-4"
+    >
+      If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
+    </p>
+    <div
+      class="padding-2 bg-primary-lighter"
+    >
+      <div
+        class="display-flex"
+        data-testid="ask-a-question"
+      >
+        <svg
+          class="usa-icon text-primary margin-right-1"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+          />
+        </svg>
+        <button
+          class="usa-button usa-button--unstyled"
+          data-testid="ask-a-question-button"
+          type="button"
+        >
+          Start a discussion
+        </button>
+      </div>
+    </div>
+    <div
+      data-testid="model-plan-milestones"
+    >
+      <form
+        action="#"
+        class="desktop:grid-col-7 milestone-form margin-top-6"
+      >
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <h3
+            aria-live="polite"
+            class="mint-h1 margin-bottom-2"
+            tabindex="-1"
+          >
+            Anticipated high level timeline
+          </h3>
+          <div
+            class="usa-alert usa-alert--info usa-alert--slim icon-padding flex"
+            data-testid="alert"
+          >
+            <div
+              class="usa-alert__body"
+            >
+              <p
+                class="usa-alert__text"
+              >
+                <span>
+                  Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at 
+                  <button
+                    class="usa-button usa-button--unstyled margin-right-2"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span
+                      class="display-flex flex-align-center"
+                    >
+                      MINTTeam@cms.hhs.gov
+                      <svg
+                        class="usa-icon margin-left-05"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                   if you have any questions.
+                </span>
+              </p>
+            </div>
+          </div>
+          <ol
+            class="usa-process-list read-only-model-plan__timeline maxw-full margin-left-neg-105  "
+          >
+            <li
+              class="usa-process-list__item read-only-model-plan__timeline__list-item maxw-full"
+            >
+              <h5
+                class="usa-process-list__heading font-body-sm line-height-sans-4 text-normal"
+                data-testid="processListHeading"
+              >
+                <div
+                  class="datepicker__wrapper display-block"
+                >
+                  <div
+                    class="usa-form-group margin-top-0 margin-right-4 desktop:grid-col-6 padding-right-4"
+                    data-scroll="completeICIP"
+                  >
+                    <label
+                      class="usa-label usa-legend margin-top-0"
+                      data-testid="label"
+                      for="Milestone-completeICIP"
+                      id="label-Milestone-completeICIP"
+                    >
+                      Complete ICIP
+                    </label>
+                    <div
+                      class="usa-hint"
+                      id="appointment-date-hint"
+                    >
+                      mm/dd/yyyy
+                    </div>
+                    <div
+                      class="position-relative"
+                    >
+                      <div
+                        class="usa-date-picker usa-date-picker--initialized"
+                        data-testid="date-picker"
+                      >
+                        <input
+                          aria-hidden="true"
+                          aria-labelledby="label-Milestone-completeICIP appointment-date-hint"
+                          class="usa-input usa-sr-only usa-date-picker__internal-input"
+                          data-testid="date-picker-internal-input"
+                          error="0"
+                          maxlength="50"
+                          name="completeICIP"
+                          readonly=""
+                          tabindex="-1"
+                          type="text"
+                          value="2029-05-12T15:01:39.190679Z"
+                        />
+                        <div
+                          class="usa-date-picker__wrapper"
+                          tabindex="-1"
+                        >
+                          <input
+                            aria-labelledby="label-Milestone-completeICIP appointment-date-hint"
+                            class="usa-input usa-date-picker__external-input"
+                            data-testid="date-picker-external-input"
+                            error="0"
+                            id="Milestone-completeICIP"
+                            maxlength="50"
+                            type="text"
+                            value="05/12/2029"
+                          />
+                          <button
+                            aria-haspopup="true"
+                            aria-label="Toggle calendar"
+                            class="usa-date-picker__button"
+                            data-testid="date-picker-button"
+                            type="button"
+                          />
+                          <div
+                            aria-modal="true"
+                            class="usa-date-picker__calendar"
+                            data-testid="date-picker-calendar"
+                            hidden=""
+                            role="dialog"
+                            style="top: 0px;"
+                          />
+                          <div
+                            aria-live="polite"
+                            class="usa-sr-only usa-date-picker__status"
+                            data-testid="date-picker-status"
+                            role="status"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </h5>
+            </li>
+            <li
+              class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full"
+            >
+              <h5
+                class="usa-process-list__heading font-body-sm line-height-sans-4 text-normal"
+                data-testid="processListHeading"
+              >
+                <legend
+                  class="usa-label margin-bottom-05"
+                >
+                  Clearance
+                </legend>
+                <label
+                  class="text-base"
+                  for="Milestone-clearanceStarts"
+                >
+                  When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance
+                </label>
+                <div
+                  class="datepicker__wrapper text-normal"
+                >
+                  <div
+                    class="usa-form-group margin-top-1 margin-right-4"
+                    data-scroll="clearanceStarts"
+                  >
+                    <label
+                      class="usa-label usa-legend margin-top-0 text-normal"
+                      data-testid="label"
+                      for="Milestone-clearanceStarts"
+                      id="label-Milestone-clearanceStarts"
+                    >
+                      Clearance start date
+                    </label>
+                    <div
+                      class="usa-hint"
+                      id="appointment-date-hint"
+                    >
+                      mm/dd/yyyy
+                    </div>
+                    <div
+                      class="position-relative"
+                    >
+                      <div
+                        class="usa-date-picker usa-date-picker--initialized"
+                        data-testid="date-picker"
+                      >
+                        <input
+                          aria-hidden="true"
+                          aria-labelledby="label-Milestone-clearanceStarts appointment-date-hint"
+                          class="usa-input usa-sr-only usa-date-picker__internal-input"
+                          data-testid="date-picker-internal-input"
+                          error="0"
+                          maxlength="50"
+                          name="clearanceStarts"
+                          readonly=""
+                          tabindex="-1"
+                          type="text"
+                          value="2030-06-12T15:01:39.190679Z"
+                        />
+                        <div
+                          class="usa-date-picker__wrapper"
+                          tabindex="-1"
+                        >
+                          <input
+                            aria-labelledby="label-Milestone-clearanceStarts appointment-date-hint"
+                            class="usa-input usa-date-picker__external-input"
+                            data-testid="date-picker-external-input"
+                            error="0"
+                            id="Milestone-clearanceStarts"
+                            maxlength="50"
+                            type="text"
+                            value="06/12/2030"
+                          />
+                          <button
+                            aria-haspopup="true"
+                            aria-label="Toggle calendar"
+                            class="usa-date-picker__button"
+                            data-testid="date-picker-button"
+                            type="button"
+                          />
+                          <div
+                            aria-modal="true"
+                            class="usa-date-picker__calendar"
+                            data-testid="date-picker-calendar"
+                            hidden=""
+                            role="dialog"
+                            style="top: 0px;"
+                          />
+                          <div
+                            aria-live="polite"
+                            class="usa-sr-only usa-date-picker__status"
+                            data-testid="date-picker-status"
+                            role="status"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="usa-form-group margin-top-1 margin-right-4"
+                    data-scroll="clearanceEnds"
+                  >
+                    <label
+                      class="usa-label usa-legend margin-top-0 text-normal"
+                      data-testid="label"
+                      for="Milestone-clearanceEnds"
+                      id="label-Milestone-clearanceEnds"
+                    >
+                      Clearance end date
+                    </label>
+                    <div
+                      class="usa-hint"
+                      id="appointment-date-hint"
+                    >
+                      mm/dd/yyyy
+                    </div>
+                    <div
+                      class="position-relative"
+                    >
+                      <div
+                        class="usa-date-picker usa-date-picker--initialized"
+                        data-testid="date-picker"
+                      >
+                        <input
+                          aria-hidden="true"
+                          aria-labelledby="label-Milestone-clearanceEnds appointment-date-hint"
+                          class="usa-input usa-sr-only usa-date-picker__internal-input"
+                          data-testid="date-picker-internal-input"
+                          error="0"
+                          maxlength="50"
+                          name="clearanceEnds"
+                          readonly=""
+                          tabindex="-1"
+                          type="text"
+                          value="2028-12-12T15:01:39.190679Z"
+                        />
+                        <div
+                          class="usa-date-picker__wrapper"
+                          tabindex="-1"
+                        >
+                          <input
+                            aria-labelledby="label-Milestone-clearanceEnds appointment-date-hint"
+                            class="usa-input usa-date-picker__external-input"
+                            data-testid="date-picker-external-input"
+                            error="0"
+                            id="Milestone-clearanceEnds"
+                            maxlength="50"
+                            type="text"
+                            value="12/12/2028"
+                          />
+                          <button
+                            aria-haspopup="true"
+                            aria-label="Toggle calendar"
+                            class="usa-date-picker__button"
+                            data-testid="date-picker-button"
+                            type="button"
+                          />
+                          <div
+                            aria-modal="true"
+                            class="usa-date-picker__calendar"
+                            data-testid="date-picker-calendar"
+                            hidden=""
+                            role="dialog"
+                            style="top: 0px;"
+                          />
+                          <div
+                            aria-live="polite"
+                            class="usa-sr-only usa-date-picker__status"
+                            data-testid="date-picker-status"
+                            role="status"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </h5>
+            </li>
+            <li
+              class="usa-process-list__item read-only-model-plan__timeline__list-item maxw-full"
+            >
+              <h5
+                class="usa-process-list__heading font-body-sm line-height-sans-4 text-normal"
+                data-testid="processListHeading"
+              />
+              <div
+                class="datepicker__wrapper display-block"
+              >
+                <div
+                  class="usa-form-group margin-top-0 margin-right-4 desktop:grid-col-6 padding-right-4"
+                  data-scroll="announced"
+                >
+                  <label
+                    class="usa-label usa-legend margin-top-0"
+                    data-testid="label"
+                    for="Milestone-announced"
+                    id="label-Milestone-announced"
+                  >
+                    Announce model
+                  </label>
+                  <div
+                    class="usa-hint"
+                    id="appointment-date-hint"
+                  >
+                    mm/dd/yyyy
+                  </div>
+                  <div
+                    class="position-relative"
+                  >
+                    <div
+                      class="usa-date-picker usa-date-picker--initialized"
+                      data-testid="date-picker"
+                    >
+                      <input
+                        aria-hidden="true"
+                        aria-labelledby="label-Milestone-announced appointment-date-hint"
+                        class="usa-input usa-sr-only usa-date-picker__internal-input"
+                        data-testid="date-picker-internal-input"
+                        error="0"
+                        maxlength="50"
+                        name="announced"
+                        readonly=""
+                        tabindex="-1"
+                        type="text"
+                        value="2029-07-08T15:01:39.190679Z"
+                      />
+                      <div
+                        class="usa-date-picker__wrapper"
+                        tabindex="-1"
+                      >
+                        <input
+                          aria-labelledby="label-Milestone-announced appointment-date-hint"
+                          class="usa-input usa-date-picker__external-input"
+                          data-testid="date-picker-external-input"
+                          error="0"
+                          id="Milestone-announced"
+                          maxlength="50"
+                          type="text"
+                          value="07/08/2029"
+                        />
+                        <button
+                          aria-haspopup="true"
+                          aria-label="Toggle calendar"
+                          class="usa-date-picker__button"
+                          data-testid="date-picker-button"
+                          type="button"
+                        />
+                        <div
+                          aria-modal="true"
+                          class="usa-date-picker__calendar"
+                          data-testid="date-picker-calendar"
+                          hidden=""
+                          role="dialog"
+                          style="top: 0px;"
+                        />
+                        <div
+                          aria-live="polite"
+                          class="usa-sr-only usa-date-picker__status"
+                          data-testid="date-picker-status"
+                          role="status"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full"
+            >
+              <h5
+                class="usa-process-list__heading font-body-sm line-height-sans-4 text-normal"
+                data-testid="processListHeading"
+              >
+                <legend
+                  class="usa-label margin-bottom-neg-2"
+                >
+                  Application period
+                </legend>
+              </h5>
+              <div
+                class="datepicker__wrapper"
+              >
+                <div
+                  class="usa-form-group margin-right-4"
+                  data-scroll="applicationsStart"
+                >
+                  <label
+                    class="usa-label usa-legend margin-top-0 text-normal"
+                    data-testid="label"
+                    for="Milestone-applicationsStart"
+                    id="label-Milestone-applicationsStart"
+                  >
+                    Application start date
+                  </label>
+                  <div
+                    class="usa-hint"
+                    id="appointment-date-hint"
+                  >
+                    mm/dd/yyyy
+                  </div>
+                  <div
+                    class="position-relative"
+                  >
+                    <div
+                      class="usa-date-picker usa-date-picker--initialized"
+                      data-testid="date-picker"
+                    >
+                      <input
+                        aria-hidden="true"
+                        aria-labelledby="label-Milestone-applicationsStart appointment-date-hint"
+                        class="usa-input usa-sr-only usa-date-picker__internal-input"
+                        data-testid="date-picker-internal-input"
+                        error="0"
+                        maxlength="50"
+                        name="applicationsStart"
+                        readonly=""
+                        tabindex="-1"
+                        type="text"
+                        value="2031-02-114T15:01:39.190679Z"
+                      />
+                      <div
+                        class="usa-date-picker__wrapper"
+                        tabindex="-1"
+                      >
+                        <input
+                          aria-labelledby="label-Milestone-applicationsStart appointment-date-hint"
+                          class="usa-input usa-date-picker__external-input"
+                          data-testid="date-picker-external-input"
+                          error="0"
+                          id="Milestone-applicationsStart"
+                          maxlength="50"
+                          type="text"
+                          value="05/25/2031"
+                        />
+                        <button
+                          aria-haspopup="true"
+                          aria-label="Toggle calendar"
+                          class="usa-date-picker__button"
+                          data-testid="date-picker-button"
+                          type="button"
+                        />
+                        <div
+                          aria-modal="true"
+                          class="usa-date-picker__calendar"
+                          data-testid="date-picker-calendar"
+                          hidden=""
+                          role="dialog"
+                          style="top: 0px;"
+                        />
+                        <div
+                          aria-live="polite"
+                          class="usa-sr-only usa-date-picker__status"
+                          data-testid="date-picker-status"
+                          role="status"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="usa-form-group margin-right-4"
+                  data-scroll="applicationsEnd"
+                >
+                  <label
+                    class="usa-label usa-legend margin-top-0 text-normal"
+                    data-testid="label"
+                    for="Milestone-applicationsEnd"
+                    id="label-Milestone-applicationsEnd"
+                  >
+                    Application end date
+                  </label>
+                  <div
+                    class="usa-hint"
+                    id="appointment-date-hint"
+                  >
+                    mm/dd/yyyy
+                  </div>
+                  <div
+                    class="position-relative"
+                  >
+                    <div
+                      class="usa-date-picker usa-date-picker--initialized"
+                      data-testid="date-picker"
+                    >
+                      <input
+                        aria-hidden="true"
+                        aria-labelledby="label-Milestone-applicationsEnd appointment-date-hint"
+                        class="usa-input usa-sr-only usa-date-picker__internal-input"
+                        data-testid="date-picker-internal-input"
+                        error="0"
+                        maxlength="50"
+                        name="applicationsEnd"
+                        readonly=""
+                        tabindex="-1"
+                        type="text"
+                        value="2031-01-23T15:01:39.190679Z"
+                      />
+                      <div
+                        class="usa-date-picker__wrapper"
+                        tabindex="-1"
+                      >
+                        <input
+                          aria-labelledby="label-Milestone-applicationsEnd appointment-date-hint"
+                          class="usa-input usa-date-picker__external-input"
+                          data-testid="date-picker-external-input"
+                          error="0"
+                          id="Milestone-applicationsEnd"
+                          maxlength="50"
+                          type="text"
+                          value="01/23/2031"
+                        />
+                        <button
+                          aria-haspopup="true"
+                          aria-label="Toggle calendar"
+                          class="usa-date-picker__button"
+                          data-testid="date-picker-button"
+                          type="button"
+                        />
+                        <div
+                          aria-modal="true"
+                          class="usa-date-picker__calendar"
+                          data-testid="date-picker-calendar"
+                          hidden=""
+                          role="dialog"
+                          style="top: 0px;"
+                        />
+                        <div
+                          aria-live="polite"
+                          class="usa-sr-only usa-date-picker__status"
+                          data-testid="date-picker-status"
+                          role="status"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-process-list__item read-only-model-plan__timeline__list-item margin-top-neg-4 maxw-full"
+            >
+              <h5
+                class="usa-process-list__heading font-body-sm line-height-sans-4 text-normal"
+                data-testid="processListHeading"
+              >
+                <legend
+                  class="usa-label"
+                >
+                  Performance period
+                </legend>
+                <label
+                  class="text-base"
+                  for="Milestone-performancePeriodStarts"
+                >
+                  When the model will be active beginning with the go-live date
+                </label>
+              </h5>
+              <div
+                class="datepicker__wrapper"
+              >
+                <div
+                  class="usa-form-group margin-top-0 margin-right-4"
+                  data-scroll="performancePeriodStarts"
+                >
+                  <label
+                    class="usa-label usa-legend margin-top-0 text-normal"
+                    data-testid="label"
+                    for="Milestone-performancePeriodStarts"
+                    id="label-Milestone-performancePeriodStarts"
+                  >
+                    Performance start date
+                  </label>
+                  <div
+                    class="usa-hint"
+                    id="appointment-date-hint"
+                  >
+                    mm/dd/yyyy
+                  </div>
+                  <div
+                    class="position-relative"
+                  >
+                    <div
+                      class="usa-date-picker usa-date-picker--initialized"
+                      data-testid="date-picker"
+                    >
+                      <input
+                        aria-hidden="true"
+                        aria-labelledby="label-Milestone-performancePeriodStarts appointment-date-hint"
+                        class="usa-input usa-sr-only usa-date-picker__internal-input"
+                        data-testid="date-picker-internal-input"
+                        error="0"
+                        maxlength="50"
+                        name="performancePeriodStarts"
+                        readonly=""
+                        tabindex="-1"
+                        type="text"
+                        value="2029-06-12T15:01:39.190679Z"
+                      />
+                      <div
+                        class="usa-date-picker__wrapper"
+                        tabindex="-1"
+                      >
+                        <input
+                          aria-labelledby="label-Milestone-performancePeriodStarts appointment-date-hint"
+                          class="usa-input usa-date-picker__external-input"
+                          data-testid="date-picker-external-input"
+                          error="0"
+                          id="Milestone-performancePeriodStarts"
+                          maxlength="50"
+                          type="text"
+                          value="06/12/2029"
+                        />
+                        <button
+                          aria-haspopup="true"
+                          aria-label="Toggle calendar"
+                          class="usa-date-picker__button"
+                          data-testid="date-picker-button"
+                          type="button"
+                        />
+                        <div
+                          aria-modal="true"
+                          class="usa-date-picker__calendar"
+                          data-testid="date-picker-calendar"
+                          hidden=""
+                          role="dialog"
+                          style="top: 0px;"
+                        />
+                        <div
+                          aria-live="polite"
+                          class="usa-sr-only usa-date-picker__status"
+                          data-testid="date-picker-status"
+                          role="status"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="usa-form-group margin-top-0 margin-right-4"
+                  data-scroll="performancePeriodEnds"
+                >
+                  <label
+                    class="usa-label usa-legend margin-top-0 text-normal"
+                    data-testid="label"
+                    for="Milestone-performancePeriodEnds"
+                    id="label-Milestone-performancePeriodEnds"
+                  >
+                    Performance end date
+                  </label>
+                  <div
+                    class="usa-hint"
+                    id="appointment-date-hint"
+                  >
+                    mm/dd/yyyy
+                  </div>
+                  <div
+                    class="position-relative"
+                  >
+                    <div
+                      class="usa-date-picker usa-date-picker--initialized"
+                      data-testid="date-picker"
+                    >
+                      <input
+                        aria-hidden="true"
+                        aria-labelledby="label-Milestone-performancePeriodEnds appointment-date-hint"
+                        class="usa-input usa-sr-only usa-date-picker__internal-input"
+                        data-testid="date-picker-internal-input"
+                        error="0"
+                        maxlength="50"
+                        name="performancePeriodEnds"
+                        readonly=""
+                        tabindex="-1"
+                        type="text"
+                        value="2029-012-28T15:01:39.190679Z"
+                      />
+                      <div
+                        class="usa-date-picker__wrapper"
+                        tabindex="-1"
+                      >
+                        <input
+                          aria-labelledby="label-Milestone-performancePeriodEnds appointment-date-hint"
+                          class="usa-input usa-date-picker__external-input"
+                          data-testid="date-picker-external-input"
+                          error="0"
+                          id="Milestone-performancePeriodEnds"
+                          maxlength="50"
+                          type="text"
+                          value="12/28/2029"
+                        />
+                        <button
+                          aria-haspopup="true"
+                          aria-label="Toggle calendar"
+                          class="usa-date-picker__button"
+                          data-testid="date-picker-button"
+                          type="button"
+                        />
+                        <div
+                          aria-modal="true"
+                          class="usa-date-picker__calendar"
+                          data-testid="date-picker-calendar"
+                          hidden=""
+                          role="dialog"
+                          style="top: 0px;"
+                        />
+                        <div
+                          aria-live="polite"
+                          class="usa-sr-only usa-date-picker__status"
+                          data-testid="date-picker-status"
+                          role="status"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-process-list__item read-only-model-plan__timeline__list-item maxw-full"
+            >
+              <h5
+                class="usa-process-list__heading font-body-sm line-height-sans-4 text-normal"
+                data-testid="processListHeading"
+              />
+              <div
+                class="datepicker__wrapper display-block"
+              >
+                <div
+                  class="usa-form-group margin-top-0 margin-right-4 desktop:grid-col-6 padding-right-4"
+                  data-scroll="wrapUpEnds"
+                >
+                  <label
+                    class="usa-label usa-legend margin-top-0"
+                    data-testid="label"
+                    for="Milestone-wrapUpEnds"
+                    id="label-Milestone-wrapUpEnds"
+                  >
+                    Model wrap-up end date
+                  </label>
+                  <div
+                    class="usa-hint"
+                    id="appointment-date-hint"
+                  >
+                    mm/dd/yyyy
+                  </div>
+                  <div
+                    class="position-relative"
+                  >
+                    <div
+                      class="usa-date-picker usa-date-picker--initialized"
+                      data-testid="date-picker"
+                    >
+                      <input
+                        aria-hidden="true"
+                        aria-labelledby="label-Milestone-wrapUpEnds appointment-date-hint"
+                        class="usa-input usa-sr-only usa-date-picker__internal-input"
+                        data-testid="date-picker-internal-input"
+                        error="0"
+                        maxlength="50"
+                        name="wrapUpEnds"
+                        readonly=""
+                        tabindex="-1"
+                        type="text"
+                        value="2030-05-08T15:01:39.190679Z"
+                      />
+                      <div
+                        class="usa-date-picker__wrapper"
+                        tabindex="-1"
+                      >
+                        <input
+                          aria-labelledby="label-Milestone-wrapUpEnds appointment-date-hint"
+                          class="usa-input usa-date-picker__external-input"
+                          data-testid="date-picker-external-input"
+                          error="0"
+                          id="Milestone-wrapUpEnds"
+                          maxlength="50"
+                          type="text"
+                          value="05/08/2030"
+                        />
+                        <button
+                          aria-haspopup="true"
+                          aria-label="Toggle calendar"
+                          class="usa-date-picker__button"
+                          data-testid="date-picker-button"
+                          type="button"
+                        />
+                        <div
+                          aria-modal="true"
+                          class="usa-date-picker__calendar"
+                          data-testid="date-picker-calendar"
+                          hidden=""
+                          role="dialog"
+                          style="top: 0px;"
+                        />
+                        <div
+                          aria-live="polite"
+                          class="usa-sr-only usa-date-picker__status"
+                          data-testid="date-picker-status"
+                          role="status"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ol>
+          <div
+            class="margin-top-3 margin-bottom-6"
+          >
+            <div
+              class="usa-form-group"
+            >
+              <label
+                class="usa-label"
+                for="ModelType-HighLevelNote"
+                id="label-ModelType-HighLevelNote"
+              >
+                Notes
+              </label>
+              <textarea
+                aria-labelledby="label-ModelType-HighLevelNote hint-ModelType-HighLevelNote"
+                class="usa-textarea"
+                data-testid="ModelType-HighLevelNote"
+                id="ModelType-HighLevelNote"
+                name="highLevelNote"
+              >
+                High level note
+              </textarea>
+            </div>
+          </div>
+          <div
+            class="usa-form-group margin-top-4"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="phasedIn"
+            >
+              If timelines are tight, might there be pieces of the model that can be phased in over time?
+            </label>
+            <span
+              class="usa-hint display-block text-normal margin-top-1"
+            >
+              That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.
+            </span>
+            <fieldset
+              class="usa-fieldset"
+              data-testid="fieldset"
+            >
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  checked=""
+                  class="usa-radio__input"
+                  data-testid="phasedIn-true"
+                  id="phasedIn-true"
+                  name="phasedIn"
+                  type="radio"
+                  value="TRUE"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="phasedIn-true"
+                >
+                  Yes
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  data-testid="phasedIn-false"
+                  id="phasedIn-false"
+                  name="phasedIn"
+                  type="radio"
+                  value="FALSE"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="phasedIn-false"
+                >
+                  No
+                </label>
+              </div>
+            </fieldset>
+          </div>
+          <div
+            class="margin-top-3 margin-bottom-6"
+          >
+            <div
+              class="usa-form-group"
+            >
+              <label
+                class="usa-label"
+                for="ModelType-phasedInNote"
+                id="label-ModelType-phasedInNote"
+              >
+                Notes
+              </label>
+              <textarea
+                aria-labelledby="label-ModelType-phasedInNote hint-ModelType-phasedInNote"
+                class="usa-textarea"
+                data-testid="ModelType-phasedInNote"
+                id="ModelType-phasedInNote"
+                name="phasedInNote"
+              >
+                Phased in note
+              </textarea>
+            </div>
+          </div>
+          <div
+            class="usa-form-group margin-top-8 margin-bottom-3"
+          >
+            <div
+              class="usa-summary-box bg-white border-base-light padding-2"
+              data-testid="summary-box"
+            >
+              <div
+                class="usa-summary-box__body"
+              >
+                <p
+                  class="margin-0"
+                >
+                  Model Plan status
+                </p>
+                <div
+                  class="mint-checkbox usa-checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    data-testid="milestones-status"
+                    id="milestones-status"
+                    name="status"
+                    type="checkbox"
+                    value="IN_PROGRESS"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="milestones-status"
+                  >
+                    This section of the Model Plan (Model basics) is ready for review.
+                  </label>
+                  <p
+                    class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="margin-top-6 margin-bottom-3"
+          >
+            <button
+              class="usa-button usa-button usa-button--outline margin-bottom-1"
+              data-testid="button"
+              type="button"
+            >
+              Back
+            </button>
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="submit"
+            >
+              Save and start next Model Plan section
+            </button>
+          </div>
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Save and return to task list
+          </button>
+        </fieldset>
+      </form>
+    </div>
+    <div
+      class="mint-page-number margin-bottom-10"
+      data-testid="page-num"
+    >
+      <span
+        class="mint-page-number__page-num"
+      >
+        Page 3 of 3
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;

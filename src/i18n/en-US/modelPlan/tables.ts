@@ -1,4 +1,4 @@
-import { EnumTranslation, TableName } from '../../../gql/gen/graphql';
+import { EnumTranslation, TableName } from '../../../gql/generated/graphql';
 
 export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
   [TableName.ACTIVITY]: { generalName: 'Activities' },

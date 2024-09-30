@@ -4,20 +4,20 @@ import (
 	"database/sql"
 	_ "embed"
 
-	"github.com/cmsgov/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
 	"golang.org/x/sync/errgroup"
 
-	"github.com/cmsgov/mint-app/pkg/shared/utilityuuid"
-	"github.com/cmsgov/mint-app/pkg/sqlutils"
-	"github.com/cmsgov/mint-app/pkg/upload"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utilitysql"
-	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
+	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
 // PlanDocumentCreate creates a plan document
@@ -70,7 +70,7 @@ func PlanDocumentGetByIDNoS3Check(
 // PlanDocumentRead reads a plan document object by id
 func (s *Store) PlanDocumentRead(
 	_ *zap.Logger,
-	s3Client *upload.S3Client,
+	s3Client *s3.S3Client,
 	id uuid.UUID,
 ) (*models.PlanDocument, error) {
 
@@ -98,7 +98,7 @@ func (s *Store) PlanDocumentRead(
 func (s *Store) PlanDocumentsReadByModelPlanID(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
-	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+	s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByModelPlanID)
 	if err != nil {
@@ -125,7 +125,7 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 func (s *Store) PlanDocumentsReadBySolutionID(
 	logger *zap.Logger,
 	solutionID uuid.UUID,
-	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+	s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetBySolutionID)
 	if err != nil {
@@ -152,7 +152,7 @@ func (s *Store) PlanDocumentsReadBySolutionID(
 func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
-	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+	s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByModelPlanIDNotRestricted)
 	if err != nil {
@@ -179,7 +179,7 @@ func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
 func (s *Store) PlanDocumentsReadBySolutionIDNotRestricted(
 	logger *zap.Logger,
 	solutionID uuid.UUID,
-	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+	s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetBySolutionIDNotRestricted)
 	if err != nil {
@@ -202,7 +202,7 @@ func (s *Store) PlanDocumentsReadBySolutionIDNotRestricted(
 	return documents, err
 }
 
-func planDocumentsUpdateVirusScanStatuses(s3Client *upload.S3Client, documents []*models.PlanDocument) error {
+func planDocumentsUpdateVirusScanStatuses(s3Client *s3.S3Client, documents []*models.PlanDocument) error {
 	var errorGroup errgroup.Group
 	for documentIndex := range documents {
 		document := documents[documentIndex]
@@ -214,7 +214,7 @@ func planDocumentsUpdateVirusScanStatuses(s3Client *upload.S3Client, documents [
 	return errorGroup.Wait()
 }
 
-func planDocumentUpdateVirusScanStatus(s3Client *upload.S3Client, document *models.PlanDocument) error {
+func planDocumentUpdateVirusScanStatus(s3Client *s3.S3Client, document *models.PlanDocument) error {
 
 	// if this is a link to another website, we are not currently able to scan the link.
 	// in this case, we'll just assume it's clean, otherwise the user won't be able to do anything with the link, making it useless.
@@ -241,7 +241,7 @@ func planDocumentUpdateVirusScanStatus(s3Client *upload.S3Client, document *mode
 	return nil
 }
 
-func fetchDocumentTag(s3Client *upload.S3Client, document *models.PlanDocument, tagName string) (string, error) {
+func fetchDocumentTag(s3Client *s3.S3Client, document *models.PlanDocument, tagName string) (string, error) {
 	value, valueErr := s3Client.TagValueForKey(document.FileKey, tagName)
 	if valueErr != nil {
 		return "", valueErr

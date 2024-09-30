@@ -5,38 +5,43 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/local"
-	"github.com/cmsgov/mint-app/pkg/oktaapi"
-	"github.com/cmsgov/mint-app/pkg/shared/emailtemplates"
-	"github.com/cmsgov/mint-app/pkg/storage/loaders"
-	"github.com/cmsgov/mint-app/pkg/userhelpers"
+	"github.com/spf13/viper"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
-	"github.com/cmsgov/mint-app/pkg/upload"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/local"
+	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/testconfig/s3testconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
+
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/pubsub"
 
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/testhelpers"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/testhelpers"
 )
 
 // TestConfigs is a struct that contains all the dependencies needed to run a test
 type TestConfigs struct {
-	DBConfig   storage.DBConfig
-	LDClient   *ld.LDClient
-	Logger     *zap.Logger
-	UserInfo   *models.UserInfo
-	Store      *storage.Store
-	S3Client   *upload.S3Client
-	PubSub     *pubsub.ServicePubSub
-	Principal  *authentication.ApplicationPrincipal
-	Context    context.Context
-	OktaClient oktaapi.Client
+	DBConfig       storage.DBConfig
+	LDClient       *ld.LDClient
+	Logger         *zap.Logger
+	UserInfo       *models.UserInfo
+	Store          *storage.Store
+	S3Client       *s3.S3Client
+	EChimpS3Client *s3.S3Client
+	PubSub         *pubsub.ServicePubSub
+	Principal      *authentication.ApplicationPrincipal
+	Context        context.Context
+	OktaClient     oktaapi.Client
+	viperConfig    *viper.Viper
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -47,20 +52,19 @@ func GetDefaultTestConfigs() *TestConfigs {
 	return &tc
 }
 
-func createS3Client() upload.S3Client {
-	config := testhelpers.NewConfig()
+func createS3Client(viperConfig *viper.Viper) s3.S3Client {
 
-	s3Cfg := upload.Config{
-		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
-		Region:  config.GetString(appconfig.AWSRegion),
+	s3Cfg := s3.Config{
+		Bucket:  viperConfig.GetString(appconfig.AWSS3FileUploadBucket),
+		Region:  viperConfig.GetString(appconfig.AWSRegion),
 		IsLocal: true,
 	}
-	//OS ENV won't get environment variables set by VSCODE for debugging
-	_ = os.Setenv(appconfig.LocalMinioAddressKey, config.GetString(appconfig.LocalMinioAddressKey))
-	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, config.GetString(appconfig.LocalMinioS3AccessKey))
-	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, config.GetString(appconfig.LocalMinioS3SecretKey))
+	//OS GetEnv(called in NewS3Client ) won't get environment variables set by VSCODE for debugging. Set here for testing
+	_ = os.Setenv(appconfig.LocalMinioAddressKey, viperConfig.GetString(appconfig.LocalMinioAddressKey))
+	_ = os.Setenv(appconfig.LocalMinioS3AccessKey, viperConfig.GetString(appconfig.LocalMinioS3AccessKey))
+	_ = os.Setenv(appconfig.LocalMinioS3SecretKey, viperConfig.GetString(appconfig.LocalMinioS3SecretKey))
 
-	return upload.NewS3Client(s3Cfg)
+	return s3.NewS3Client(s3Cfg)
 }
 
 // GetDefaults sets the dependencies for the TestConfigs struct
@@ -69,14 +73,19 @@ func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, userInfo, ps := getTestDependencies()
 	store, _ := storage.NewStore(config, ldClient)
 
-	s3Client := createS3Client()
+	viperConfig := testhelpers.NewConfig()
+
+	s3Client := createS3Client(viperConfig)
+	eChimpS3Client := s3testconfigs.S3TestECHIMPClient(viperConfig)
 	tc.DBConfig = config
 	tc.LDClient = ldClient
 	tc.Logger = logger
 	tc.UserInfo = userInfo
 	tc.Store = store
 	tc.S3Client = &s3Client
+	tc.EChimpS3Client = &eChimpS3Client
 	tc.PubSub = ps
+	tc.viperConfig = viperConfig
 
 	oktaClient, oktaClientErr := local.NewOktaAPIClient()
 	if oktaClientErr != nil {

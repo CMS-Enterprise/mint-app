@@ -6,7 +6,7 @@ import (
 	"github.com/facebookgo/clock"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 func (s *ServicesTestSuite) TestNewFetchMetrics() {

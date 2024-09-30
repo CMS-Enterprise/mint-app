@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import ReactGA from 'react-ga4';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
-
-import Discussions from 'views/ModelPlan/Discussions';
-import DiscussionModalWrapper from 'views/ModelPlan/Discussions/DiscussionModalWrapper';
+import Discussions from 'features/ModelPlan/Discussions';
+import DiscussionModalWrapper from 'features/ModelPlan/Discussions/DiscussionModalWrapper';
 
 type AskAQuestionType = {
   modelID: string;

@@ -3,7 +3,7 @@ package models
 import (
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 )
 
 // ICoreStruct is an interface that all core models must implement

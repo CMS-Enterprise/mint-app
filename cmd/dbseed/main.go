@@ -9,19 +9,19 @@ import (
 
 	"github.com/guregu/null/zero"
 
-	"github.com/cmsgov/mint-app/pkg/email"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
-	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/upload"
+	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 )
@@ -93,7 +93,8 @@ func execute() {
 func getResolverDependencies(config *viper.Viper) (
 	*storage.Store,
 	*zap.Logger,
-	*upload.S3Client,
+	*s3.S3Client, //the files for MINT
+	*s3.S3Client, //the files for ECHIMP
 	oddmail.EmailService,
 	email.TemplateService,
 ) {
@@ -122,16 +123,24 @@ func getResolverDependencies(config *viper.Viper) (
 		panic(err)
 	}
 
-	// Create S3 client
-	s3Cfg := upload.Config{
+	// Create MINT S3 client
+	s3MintFileCfg := s3.Config{
 		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
 		Region:  config.GetString(appconfig.AWSRegion),
 		IsLocal: true,
 	}
 
-	s3Client := upload.NewS3Client(s3Cfg)
+	// Create ECHIMP S3 client
+	s3ECHIMPFileCfg := s3.Config{
+		Bucket:  config.GetString(appconfig.AWSS3ECHIMPBucket),
+		Region:  config.GetString(appconfig.AWSRegion),
+		IsLocal: true,
+	}
 
-	return store, logger, &s3Client, nil, nil
+	s3MINTFileClient := s3.NewS3Client(s3MintFileCfg)
+	s3ECHIMPFileClient := s3.NewS3Client(s3ECHIMPFileCfg)
+
+	return store, logger, &s3MINTFileClient, &s3ECHIMPFileClient, nil, nil
 }
 
 // SeedData uses seeder to seed data in the database
@@ -140,6 +149,7 @@ func seed(config *viper.Viper) {
 	seeder.SeedData()
 	seeder.CreateAnalyzedAuditData()
 	seeder.SetDefaultUserViews()
+	seeder.SeedEChimpBucket()
 }
 
 // SeedData gets resolver dependencies and calls wrapped resolver functions to seed data.
@@ -153,7 +163,7 @@ func (s *Seeder) SeedData() {
 	now := time.Now()
 
 	// Seed an empty plan
-	emptyPlan := s.createModelPlan("Empty Plan", "MINT")
+	emptyPlan := s.createModelPlan("Empty Plan", "MINT", nil)
 	s.updateModelPlan(emptyPlan, map[string]interface{}{
 		"abbreviation": "emptyPlan",
 		"status":       models.ModelStatusCanceled,
@@ -177,7 +187,7 @@ func (s *Seeder) SeedData() {
 	)
 
 	// Seed a plan with some information already in it
-	planWithBasics := s.createModelPlan("Plan with Basics", "MINT")
+	planWithBasics := s.createModelPlan("Plan with Basics", "MINT", nil)
 	s.updatePlanBasics(
 		s.Config.Context,
 		nil,
@@ -219,7 +229,7 @@ func (s *Seeder) SeedData() {
 	)
 
 	// Seed a plan with collaborators
-	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT")
+	planWithCollaborators := s.createModelPlan("Plan With Collaborators", "MINT", nil)
 	s.addPlanCollaborator(
 		nil,
 		nil,
@@ -254,8 +264,13 @@ func (s *Seeder) SeedData() {
 
 	s.existingModelLinkCreate(planWithCollaborators, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[4].ID}, nil)
 
+	// seed another model that is
+	eChimp2relatedMPID := uuid.MustParse("003032aa-4a75-49c1-8dca-91e645c4384f")
+	s.createModelPlan("Plan With echimp CRs and TDLs 2", "MINT", &eChimp2relatedMPID)
+
 	// Seed a plan with CRs / TDLs
-	planWithCrTDLs := s.createModelPlan("Plan With CRs and TDLs", "MINT")
+	eChimp1relatedMPID := uuid.MustParse("082b49d3-b548-48cb-9119-77a281bc2a8c")
+	planWithCrTDLs := s.createModelPlan("Plan With CRs and TDLs 1", "MINT", &eChimp1relatedMPID)
 	s.addCR(planWithCrTDLs, &model.PlanCRCreateInput{
 		ModelPlanID:     planWithCrTDLs.ID,
 		IDNumber:        "CR-123",
@@ -297,7 +312,7 @@ func (s *Seeder) SeedData() {
 	)
 
 	// Seed a plan that is already archived
-	archivedPlan := s.createModelPlan("Archived Plan", "MINT")
+	archivedPlan := s.createModelPlan("Archived Plan", "MINT", nil)
 	s.updateModelPlan(archivedPlan, map[string]interface{}{
 		"archived":     true,
 		"abbreviation": "arch",
@@ -322,13 +337,13 @@ func (s *Seeder) SeedData() {
 	)
 
 	// Seed a plan with some documents
-	planWithDocuments := s.createModelPlan("Plan with Documents", "MINT")
+	planWithDocuments := s.createModelPlan("Plan with Documents", "MINT", nil)
 	restrictedDocument := s.planDocumentCreate(planWithDocuments, "File (Unscanned)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeConceptPaper, true, nil, nil, false, false)
 	unrestrictedDocument := s.planDocumentCreate(planWithDocuments, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, false, nil, zero.StringFrom("Company Presentation").Ptr(), true, false)
 	_ = s.planDocumentCreate(planWithDocuments, "File (Scanned - Virus Found)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeOther, false, zero.StringFrom("Trojan Horse").Ptr(), nil, true, true)
 
 	sampleModelName := "Enhancing Oncology Model"
-	sampleModelPlan := s.createModelPlan(sampleModelName, "MINT")
+	sampleModelPlan := s.createModelPlan(sampleModelName, "MINT", nil)
 	s.addTDL(planWithCrTDLs, &model.PlanTDLCreateInput{
 		ModelPlanID:   sampleModelPlan.ID,
 		IDNumber:      "TDL-123",
@@ -407,7 +422,7 @@ func (s *Seeder) SeedData() {
 	)
 
 	// Seed a plan that is has a clearance start date 3 months from today
-	planApproachingClearance := s.createModelPlan("Plan Approaching Clearance in 3 months", "MINT")
+	planApproachingClearance := s.createModelPlan("Plan Approaching Clearance in 3 months", "MINT", nil)
 	s.updateModelPlan(planApproachingClearance, map[string]interface{}{
 		"abbreviation": "Clearance",
 		"status":       models.ModelStatusPaused,
