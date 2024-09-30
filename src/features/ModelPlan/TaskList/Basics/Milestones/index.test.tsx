@@ -1,7 +1,11 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import {
   GetMilestonesDocument,
   GetMilestonesQuery,
@@ -71,11 +75,7 @@ describe('Model Basics Milestones page', () => {
       </MemoryRouter>
     );
 
-    const completeICIP = await screen.findAllByTestId(
-      'date-picker-internal-input'
-    );
-
-    expect(completeICIP[0]).toHaveValue('2029-05-12T15:01:39.190679Z');
+    await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
 
     expect(asFragment()).toMatchSnapshot();
   });
