@@ -38,10 +38,8 @@ import CheckboxCard from '../_components/CheckboxCard';
 import ITSolutionsSidebar from '../_components/ITSolutionSidebar';
 import NeedQuestionAndAnswer from '../_components/NeedQuestionAndAnswer';
 
-type GetOperationalNeedOperationalNeedType =
-  GetOperationalNeedQuery['operationalNeed'];
-type GetOperationalNeedSolutionsType =
-  GetOperationalNeedQuery['operationalNeed']['solutions'][0];
+type GetOperationalNeedOperationalNeedType = GetOperationalNeedQuery['operationalNeed'];
+type GetOperationalNeedSolutionsType = GetOperationalNeedQuery['operationalNeed']['solutions'][0];
 
 // Passing in operationalNeed to Formik instead of array of solutions
 // Fomik does not take an array structure
@@ -88,8 +86,9 @@ const SelectSolutions = () => {
   // State management for mutation errors
   const [mutationError, setMutationError] = useState<boolean>(false);
 
-  const formikRef =
-    useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(null);
+  const formikRef = useRef<FormikProps<GetOperationalNeedOperationalNeedType>>(
+    null
+  );
 
   const { modelName } = useContext(ModelInfoContext);
 

@@ -36,8 +36,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
 import { composeMultiSelectOptions } from 'utils/modelPlan';
 
-type PeopleImpactedFormType =
-  GetPeopleImpactedQuery['modelPlan']['beneficiaries'];
+type PeopleImpactedFormType = GetPeopleImpactedQuery['modelPlan']['beneficiaries'];
 
 const PeopleImpact = () => {
   const { t: beneficiariesT } = useTranslation('beneficiaries');
@@ -142,8 +141,12 @@ const PeopleImpact = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<PeopleImpactedFormType>) => {
-          const { handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+          const {
+            handleSubmit,
+            setErrors,
+            setFieldValue,
+            values
+          } = formikProps;
 
           return (
             <>

@@ -49,8 +49,10 @@ const SelectSolutionSettings = () => {
 
   const { data, loading, error } = useGetHomepageSettingsQuery();
 
-  const { data: solutionData, loading: solutionLoading } =
-    useGetPossibleOperationalSolutionsQuery();
+  const {
+    data: solutionData,
+    loading: solutionLoading
+  } = useGetPossibleOperationalSolutionsQuery();
 
   // Sorts, filters, and formats the possible operational solutions for multiselect component
   const solutionOptions = useMemo(() => {

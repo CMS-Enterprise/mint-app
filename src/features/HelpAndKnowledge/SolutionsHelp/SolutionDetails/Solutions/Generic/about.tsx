@@ -178,8 +178,9 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
                             component.items.length > 1 &&
                             component.level !== 'h4' &&
                             component.header,
-                          'list-style-none':
-                            !!component?.hideBullet?.includes(index)
+                          'list-style-none': !!component?.hideBullet?.includes(
+                            index
+                          )
                         })}
                       >
                         {/* Renders list item or another nested list */}

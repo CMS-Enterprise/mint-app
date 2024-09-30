@@ -46,8 +46,7 @@ import ProviderOptions from './ProviderOptions';
 
 import './index.scss';
 
-type ParticipantsAndProvidersFormType =
-  GetParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
+type ParticipantsAndProvidersFormType = GetParticipantsAndProvidersQuery['modelPlan']['participantsAndProviders'];
 
 export const ParticipantsAndProvidersContent = () => {
   const { t: participantsAndProvidersT } = useTranslation(
@@ -169,8 +168,12 @@ export const ParticipantsAndProvidersContent = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ParticipantsAndProvidersFormType>) => {
-          const { handleSubmit, setErrors, setFieldValue, values } =
-            formikProps;
+          const {
+            handleSubmit,
+            setErrors,
+            setFieldValue,
+            values
+          } = formikProps;
 
           return (
             <>

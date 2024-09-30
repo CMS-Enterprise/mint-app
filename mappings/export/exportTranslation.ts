@@ -56,8 +56,9 @@ export const parseTypscriptToJSON = (translations: any, outputFile: string) => {
 };
 
 (function main() {
-  const transformedTranslationSections =
-    processDataMapping(translationSections);
+  const transformedTranslationSections = processDataMapping(
+    translationSections
+  );
 
   const allTranslationExports = {
     table_name: tables,

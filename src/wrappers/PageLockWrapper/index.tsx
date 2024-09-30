@@ -98,11 +98,15 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   const taskListSection: TaskListSection = taskListSectionMap[taskListRoute];
 
-  const [addLock, { loading: addLockLoading }] =
-    useLockTaskListSectionMutation();
+  const [
+    addLock,
+    { loading: addLockLoading }
+  ] = useLockTaskListSectionMutation();
 
-  const [removeLock, { loading: removeLockLoading }] =
-    useUnlockTaskListSectionMutation();
+  const [
+    removeLock,
+    { loading: removeLockLoading }
+  ] = useUnlockTaskListSectionMutation();
 
   let lockState: LockStatus;
 

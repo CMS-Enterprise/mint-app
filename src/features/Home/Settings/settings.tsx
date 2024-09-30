@@ -164,10 +164,9 @@ const SettingsForm = () => {
                           <Card
                             className={classNames(
                               {
-                                'settings__card-selected':
-                                  values.viewCustomization.includes(
-                                    settionOption
-                                  )
+                                'settings__card-selected': values.viewCustomization.includes(
+                                  settionOption
+                                )
                               },
                               'settings__card'
                             )}

@@ -96,11 +96,7 @@ const AddCRTDL = () => {
 
   const formikRef = useRef<FormikProps<CRTDLFormType>>(null);
 
-  const {
-    data: crData,
-    loading: crLoading,
-    error: crError
-  } = useGetCrQuery({
+  const { data: crData, loading: crLoading, error: crError } = useGetCrQuery({
     variables: {
       id: crtdlID!
     },
@@ -178,8 +174,11 @@ const AddCRTDL = () => {
     };
 
     // Removing dateImplemented from mutation input for TDL or to format CR date
-    const { dateImplementedMonth, dateImplementedYear, ...changes } =
-      formikValues;
+    const {
+      dateImplementedMonth,
+      dateImplementedYear,
+      ...changes
+    } = formikValues;
 
     if (crtdlID) {
       if (crtdlFormType === 'cr') {

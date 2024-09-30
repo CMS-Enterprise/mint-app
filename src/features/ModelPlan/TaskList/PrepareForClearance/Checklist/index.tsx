@@ -69,15 +69,14 @@ export type ClearanceStatusesModelPlanFormType = {
   payments: ClearanceFormValues;
 };
 
-export const initialPrepareForClearanceValues: ClearanceStatusesModelPlanFormType =
-  {
-    basics: { ...initialClearanceFormValues },
-    generalCharacteristics: { ...initialClearanceFormValues },
-    participantsAndProviders: { ...initialClearanceFormValues },
-    beneficiaries: { ...initialClearanceFormValues },
-    opsEvalAndLearning: { ...initialClearanceFormValues },
-    payments: { ...initialClearanceFormValues }
-  };
+export const initialPrepareForClearanceValues: ClearanceStatusesModelPlanFormType = {
+  basics: { ...initialClearanceFormValues },
+  generalCharacteristics: { ...initialClearanceFormValues },
+  participantsAndProviders: { ...initialClearanceFormValues },
+  beneficiaries: { ...initialClearanceFormValues },
+  opsEvalAndLearning: { ...initialClearanceFormValues },
+  payments: { ...initialClearanceFormValues }
+};
 
 type MutationObjectType = {
   basics: UpdateClearanceBasicsMutationFn;
@@ -122,8 +121,9 @@ const PrepareForClearanceCheckList = ({
   );
 
   // User to set errors outside the script of the form component
-  const formikRef =
-    useRef<FormikProps<ClearanceStatusesModelPlanFormType>>(null);
+  const formikRef = useRef<FormikProps<ClearanceStatusesModelPlanFormType>>(
+    null
+  );
 
   const { data, loading, error } = useGetClearanceStatusesQuery({
     variables: {
@@ -140,13 +140,15 @@ const PrepareForClearanceCheckList = ({
 
   const [updateCharacteristics] = useUpdateClearanceCharacteristicsMutation();
 
-  const [updateParticipantsAndProviders] =
-    useUpdateClearanceParticipantsAndProvidersMutation();
+  const [
+    updateParticipantsAndProviders
+  ] = useUpdateClearanceParticipantsAndProvidersMutation();
 
   const [updateBeneficiaries] = useUpdateClearanceBeneficiariesMutation();
 
-  const [updateOpsEvalAndLearning] =
-    useUpdateClearanceOpsEvalAndLearningMutation();
+  const [
+    updateOpsEvalAndLearning
+  ] = useUpdateClearanceOpsEvalAndLearningMutation();
 
   const [updatePayments] = useUpdateClearancePaymentsMutation();
 
@@ -232,8 +234,13 @@ const PrepareForClearanceCheckList = ({
           innerRef={formikRef}
         >
           {(formikProps: FormikProps<ClearanceStatusesModelPlanFormType>) => {
-            const { errors, handleSubmit, setErrors, values, setFieldValue } =
-              formikProps;
+            const {
+              errors,
+              handleSubmit,
+              setErrors,
+              values,
+              setFieldValue
+            } = formikProps;
             const flatErrors = flattenErrors(errors);
 
             return (
@@ -349,10 +356,9 @@ const PrepareForClearanceCheckList = ({
                                   className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                                 >
                                   {t('review', {
-                                    section:
-                                      taskListSections[
-                                        section
-                                      ].heading.toLowerCase()
+                                    section: taskListSections[
+                                      section
+                                    ].heading.toLowerCase()
                                   })}
 
                                   <Icon.ArrowForward

@@ -45,8 +45,7 @@ import { isAssessment } from 'utils/user';
 
 import './index.scss';
 
-type SolutionDocumentType =
-  GetOperationalSolutionQuery['operationalSolution']['documents'][0];
+type SolutionDocumentType = GetOperationalSolutionQuery['operationalSolution']['documents'][0];
 
 type PlanDocumentsTableProps = {
   hiddenColumns?: string[];
@@ -452,31 +451,36 @@ export const Table = ({
     documentTypeConfig.options
   ]);
 
-  const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow } =
-    useTable(
-      {
-        columns,
-        data,
-        sortTypes: {
-          alphanumeric: (rowOne, rowTwo, columnName) => {
-            return sortColumnValues(
-              rowOne.values[columnName],
-              rowTwo.values[columnName]
-            );
-          }
-        },
-        globalFilter: useMemo(() => globalFilterCellText, []),
-        autoResetSortBy: false,
-        autoResetPage: false,
-        initialState: {
-          sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
-          pageIndex: 0
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow
+  } = useTable(
+    {
+      columns,
+      data,
+      sortTypes: {
+        alphanumeric: (rowOne, rowTwo, columnName) => {
+          return sortColumnValues(
+            rowOne.values[columnName],
+            rowTwo.values[columnName]
+          );
         }
       },
-      useFilters,
-      useSortBy,
-      usePagination
-    );
+      globalFilter: useMemo(() => globalFilterCellText, []),
+      autoResetSortBy: false,
+      autoResetPage: false,
+      initialState: {
+        sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
+        pageIndex: 0
+      }
+    },
+    useFilters,
+    useSortBy,
+    usePagination
+  );
 
   return (
     <div className="model-plan-table" data-testid="model-plan-documents-table">

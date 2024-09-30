@@ -30,8 +30,7 @@ import { isMAC } from 'utils/user';
 
 import ModelPlansTable from '../../Home/Table';
 
-type GetFavoritesModelPlanCollection =
-  GetFavoritesQuery['modelPlanCollection'][0];
+type GetFavoritesModelPlanCollection = GetFavoritesQuery['modelPlanCollection'][0];
 
 export type UpdateFavoriteProps = 'addFavorite' | 'removeFavorite';
 

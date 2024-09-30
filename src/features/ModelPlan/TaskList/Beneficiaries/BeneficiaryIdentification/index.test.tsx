@@ -11,8 +11,7 @@ import {
 
 import BeneficiaryIdentification from './index';
 
-type GetBeneficiaryIdentificationType =
-  GetBeneficiaryIdentificationQuery['modelPlan']['beneficiaries'];
+type GetBeneficiaryIdentificationType = GetBeneficiaryIdentificationQuery['modelPlan']['beneficiaries'];
 
 const mockData: GetBeneficiaryIdentificationType = {
   __typename: 'PlanBeneficiaries',

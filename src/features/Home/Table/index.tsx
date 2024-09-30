@@ -42,8 +42,7 @@ import {
 import './index.scss';
 
 type AllModelPlansType = GetModelPlansQuery['modelPlanCollection'][0];
-type CollaboratorsType =
-  GetModelPlansQuery['modelPlanCollection'][0]['collaborators'][0];
+type CollaboratorsType = GetModelPlansQuery['modelPlanCollection'][0]['collaborators'][0];
 
 type HomeTableTypes =
   | ViewCustomizationType.ALL_MODEL_PLANS
@@ -85,11 +84,7 @@ const ModelPlansTable = ({
     queryType = ModelPlanFilter.WITH_CR_TDLS;
   }
 
-  const {
-    data: modelPlans,
-    loading,
-    error
-  } = useGetModelPlansQuery({
+  const { data: modelPlans, loading, error } = useGetModelPlansQuery({
     variables: {
       filter: queryType,
       isMAC: type === ViewCustomizationType.MODELS_WITH_CR_TDL
@@ -187,8 +182,9 @@ const ModelPlansTable = ({
         Header: homeT('requestsTable.headers.name'),
         accessor: 'modelName',
         Cell: ({ row, value }: any) => {
-          const filteredNameHistory: string[] =
-            row.original.nameHistory?.slice(1);
+          const filteredNameHistory: string[] = row.original.nameHistory?.slice(
+            1
+          );
           return (
             <>
               <UswdsReactLink

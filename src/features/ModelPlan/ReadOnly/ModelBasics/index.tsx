@@ -253,8 +253,7 @@ const ReadOnlyModelBasics = ({
               className={classNames(
                 'read-only-model-plan__timeline--wrapper border-base-light padding-top-4 ',
                 {
-                  'border-y-1px padding-bottom-2 margin-bottom-4 margin-top-6':
-                    !filteredView
+                  'border-y-1px padding-bottom-2 margin-bottom-4 margin-top-6': !filteredView
                 }
               )}
             >

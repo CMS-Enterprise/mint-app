@@ -38,7 +38,7 @@ import './index.scss';
 
 const navElement = ['share', 'export'] as const;
 
-export type NavModelElemet = (typeof navElement)[number];
+export type NavModelElemet = typeof navElement[number];
 
 export type FitlerGroup = FilterGroup | 'all';
 
@@ -79,8 +79,10 @@ const ShareExportModal = ({
   // State for modal navigation elements
   const [isActive, setIsActive] = useState<NavModelElemet>(defaultTab);
 
-  const { fetchSingleData, setFilteredGroup: setFilteredGroupForExport } =
-    useFetchCSVData();
+  const {
+    fetchSingleData,
+    setFilteredGroup: setFilteredGroupForExport
+  } = useFetchCSVData();
 
   const modalElementId: string = 'share-export-modal';
 
@@ -434,7 +436,7 @@ const ShareExportModal = ({
             {generalReadOnlyT('modal.exportSelectFormat')}
           </Label>
 
-          {FileTypes.map((file: (typeof FileTypes)[number]) => (
+          {FileTypes.map((file: typeof FileTypes[number]) => (
             <CheckboxField
               key={file}
               id={`${modalElementId}-file-type-${file}`}

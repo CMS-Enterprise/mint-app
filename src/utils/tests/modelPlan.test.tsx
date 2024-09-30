@@ -6,8 +6,7 @@ import {
   returnValidLetter
 } from '../modelPlan';
 
-type GetCollaboratorsType =
-  GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
+type GetCollaboratorsType = GetModelCollaboratorsQuery['modelPlan']['collaborators'][0];
 
 describe('model plan util', () => {
   it('return valid user initials', () => {
