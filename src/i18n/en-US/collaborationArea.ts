@@ -39,6 +39,13 @@ const collaborationArea = {
     discussion: '{{count}} discussion',
     discussion_other: '{{count}} discussions',
     noDiscussions: 'No discussions started'
+  },
+  dataExchangeApproachCard: {
+    heading: 'Data exchange approach',
+    body: 'After your 6-page concept paper is approved, work with your IT Lead or Solution Architect (or reach out to the MINT Team if one still needs to be assigned) to determine how you’ll exchange data so that we can help with new policy or technology opportunities. You should also include your data exchange approach in your ICIP.',
+    lastModified: 'Most recent edit on {{-date}} by ',
+    editApproach: 'Edit approach',
+    viewHelpArticle: 'View help article'
   }
 };
 
