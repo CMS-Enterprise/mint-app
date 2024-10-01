@@ -34,5 +34,21 @@
     padding-inline: 0;
     margin-inline: 1.5rem;
     padding-top: 1.5rem;
-}
+
+    .usa-button {
+      width: 100%;
+      margin-bottom: 1rem;
+
+      @media screen and (min-width: 520px) {
+        width: auto;
+        margin-bottom: 0;
+        margin-right: 1rem;
+      }
+
+      @media screen and (min-width: 1024px) and (max-width: 1172px) {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+    }
+  }
 }
