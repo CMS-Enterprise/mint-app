@@ -103,6 +103,10 @@ const crtdlsMisc = {
   },
   echimpCard: {
     crStatus: 'CR Status',
+    crTag: {
+      emergency: 'Emergency',
+      sensitive: 'Sensitive/controversial'
+    },
     implementationDate: 'Implementation Date',
     viewMore: 'View more',
     viewThisInECHIMP: 'View this in ECHIMP'
