@@ -59,16 +59,27 @@ const EChimpCard = ({
           </div>
         )}
 
-        <div className="echimp-card__cr-status">
-          <p className="text-bold">{crtdlsT('echimpCard.crStatus')}</p>
-          <p>{crStatus}</p>
-        </div>
+        {crStatus && (
+          <div className="echimp-card__cr-status">
+            <p className="text-bold">{crtdlsT('echimpCard.crStatus')}</p>
+            <p>{crStatus}</p>
+          </div>
+        )}
         <div className="echimp-card__date">
-          <p className="text-bold">
-            {implementationDate && crtdlsT('echimpCard.implementationDate')}
-            {issuedDate && crtdlsT('echimpCard.initiatedDate')}
-          </p>
-          <p>{implementationDate ?? issuedDate}</p>
+          {implementationDate && (
+            <>
+              <p className="text-bold">
+                {crtdlsT('echimpCard.implementationDate')}
+              </p>
+              <p>{implementationDate}</p>
+            </>
+          )}
+          {issuedDate && (
+            <>
+              <p className="text-bold">{crtdlsT('echimpCard.initiatedDate')}</p>
+              <p>{issuedDate?.split(' ')[0]}</p>
+            </>
+          )}
         </div>
       </CardBody>
 
