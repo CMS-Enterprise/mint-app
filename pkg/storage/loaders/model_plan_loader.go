@@ -28,13 +28,15 @@ func newModelPlanLoaders() modelPlanLoader {
 	return loader
 }
 
+// modelPlanLoaderConfig is the loader config for all fetching of model plan data
 type modelPlanLoaderConfig struct {
+	// GetByID returns a model plan record associated with a uuid
 	GetByID LoaderConfig[uuid.UUID, *models.ModelPlan]
 }
 
+// ModelPlan is the loader config for all fetching of model plan data
 var ModelPlan modelPlanLoaderConfig = modelPlanLoaderConfig{
 	GetByID: LoaderConfig[uuid.UUID, *models.ModelPlan]{
-		Note:          "Gets a model plan record associated with a uuid",
 		Load:          modelPlanGetByIDLoad,
 		batchFunction: batchModelPlanByModelPlanID,
 	},

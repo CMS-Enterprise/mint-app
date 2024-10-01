@@ -30,12 +30,13 @@ func newPlanBasicsLoaders() planBasicsLoaders {
 }
 
 type planBasicsLoaderConfig struct {
+	// GetByModelPlanID Gets a plan basics record associated with a model plan by the supplied model plan id
 	GetByModelPlanID LoaderConfig[uuid.UUID, *models.PlanBasics]
 }
 
+// PlanBasics is the loader config for all  plan basics fetching operations
 var PlanBasics planBasicsLoaderConfig = planBasicsLoaderConfig{
 	GetByModelPlanID: LoaderConfig[uuid.UUID, *models.PlanBasics]{
-		Note:          "Gets a plan basics record associated with a model plan by the supplied model plan id",
 		Load:          planBasicsGetByModelPlanIDLoad, // Direct assignment
 		batchFunction: batchPlanBasicsGetByModelPlanID,
 		// getExistingBatchFunction: ,

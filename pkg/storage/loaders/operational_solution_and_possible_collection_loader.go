@@ -32,19 +32,21 @@ func newOperationalSolutionsLoaders() operationalSolutionsLoaders {
 }
 
 type operationalSolutionsLoaderConfig struct {
-	ByOperationalNeedID            LoaderConfig[uuid.UUID, *models.OperationalSolution]
+	// ByOperationalNeedID Returns an operational solution by an operational need id
+	ByOperationalNeedID LoaderConfig[uuid.UUID, *models.OperationalSolution]
+	// AndPossibleByOperationalNeedID Returns an array of operational solutions, and possible operational solutions by an operational need id
 	AndPossibleByOperationalNeedID LoaderConfig[storage.SolutionAndPossibleKey, []*models.OperationalSolution]
 }
 
+// OperationalSolutions is the loader config for all operational solution fetching
 var OperationalSolutions = operationalSolutionsLoaderConfig{
 	ByOperationalNeedID: LoaderConfig[uuid.UUID, *models.OperationalSolution]{
-		Note: "Returns an operational solution by an operational need id",
+
 		// Load: ,
 		// batchFunction: ,
 		//TODO: (loaders) implement this
 	},
 	AndPossibleByOperationalNeedID: LoaderConfig[storage.SolutionAndPossibleKey, []*models.OperationalSolution]{
-		Note:          "Returns an array of operational solutions, and possible operational solutions by an operational need id",
 		Load:          OperationalSolutionAndPossibleCollectionGetByOperationalNeedID,
 		batchFunction: batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID,
 	},

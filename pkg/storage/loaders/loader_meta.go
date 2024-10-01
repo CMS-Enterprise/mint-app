@@ -10,9 +10,6 @@ import (
 type LoadFunc[K comparable, V any] func(context.Context, K) (V, error)
 
 type LoaderConfig[K comparable, V any] struct {
-	Note string
-	Key  string
-
 	batchFunction dataloader.BatchFunc[K, V]
 	// Load is an abstraction used to call a dataloader
 	Load LoadFunc[K, V]
