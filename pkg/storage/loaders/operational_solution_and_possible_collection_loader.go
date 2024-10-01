@@ -15,19 +15,9 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-type CompoundKey[K comparable, V comparable] struct {
-	One K
-	Two V
-}
-
-func NewCompoundKey[K comparable, V comparable](one K, two V) CompoundKey[K, V] {
-	return CompoundKey[K, V]{One: one, Two: two}
-}
-
 type operationalSolutionsLoaders struct {
 	ByOperationalNeedID            *dataloader.Loader[uuid.UUID, *models.OperationalSolution]
 	AndPossibleByOperationalNeedID *dataloader.Loader[storage.SolutionAndPossibleKey, []*models.OperationalSolution]
-	FalseLoader                    *dataloader.Loader[CompoundKey[uuid.UUID, int], *models.OperationalSolution]
 	//TODO: (loaders) consider renaming this
 }
 
