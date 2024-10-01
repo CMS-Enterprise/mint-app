@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import {
-  Grid,
-  GridContainer,
-  Icon,
-  Link as TrussLink
-} from '@trussworks/react-uswds';
+import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import {
   GetModelPlanBaseQuery,
   useGetModelPlanBaseQuery
@@ -14,6 +9,7 @@ import {
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import EChimpCards from 'components/EChimpCards';
 import Expire from 'components/Expire';
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -21,11 +17,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 
-import PlanCRTDLsTable from './table';
-
 type ModelPlanType = GetModelPlanBaseQuery['modelPlan'];
-
-type CRTDLStatusType = 'success' | 'error';
 
 export const CRTDLs = () => {
   // const { t: h } = useTranslation('general');
@@ -34,8 +26,6 @@ export const CRTDLs = () => {
 
   const { modelID } = useParams<{ modelID: string }>();
   const { message } = useMessage();
-  const [crtdlMessage, setCRTDLMessage] = useState('');
-  const [crtdlStatus, setCRTDLStatus] = useState<CRTDLStatusType>('error');
 
   const { data } = useGetModelPlanBaseQuery({
     variables: {
@@ -59,7 +49,7 @@ export const CRTDLs = () => {
 
           {message && <Expire delay={45000}>{message}</Expire>}
 
-          {crtdlMessage && (
+          {/* {crtdlMessage && (
             <Expire delay={45000}>
               <Alert
                 type={crtdlStatus}
@@ -72,7 +62,7 @@ export const CRTDLs = () => {
                 </span>
               </Alert>
             </Expire>
-          )}
+          )} */}
 
           <PageHeading className="margin-top-4 margin-bottom-0">
             {crtdlsT('heading')}
@@ -98,7 +88,7 @@ export const CRTDLs = () => {
                 el: (
                   <ExternalLink
                     className="margin-right-0"
-                    href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx"
+                    href="https://echimp.cmsnet/"
                   >
                     {' '}
                   </ExternalLink>
@@ -116,6 +106,7 @@ export const CRTDLs = () => {
             setCRTDLMessage={setCRTDLMessage}
             setCRTDLStatus={setCRTDLStatus}
           /> */}
+          <EChimpCards currentItems={[]} />
         </Grid>
       </GridContainer>
     </MainContent>
