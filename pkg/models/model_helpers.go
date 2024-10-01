@@ -1,9 +1,10 @@
 package models
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/lib/pq"
-	"time"
 )
 
 // StringPointer returns a pointer to a string input

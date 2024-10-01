@@ -119,8 +119,6 @@ input PlanDataExchangeApproachChanges @goModel(model: "map[string]interface{}") 
   additionalDataExchangeConsiderationsDescription: String
 
   isDataExchangeApproachComplete: Boolean
-
-  status: DataExchangeApproachStatus
 }
 
 extend type Mutation {

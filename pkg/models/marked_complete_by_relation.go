@@ -28,7 +28,7 @@ func (relation *markedCompleteByRelation) MarkedCompleteByUserAccount(ctx contex
 	}
 
 	if relation.MarkedCompleteBy == nil {
-		return nil, fmt.Errorf("unable to get marked complete by user account, marked complete by is nil")
+		return nil, nil
 	}
 
 	account, err := service(ctx, *relation.MarkedCompleteBy)

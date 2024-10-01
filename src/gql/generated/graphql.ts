@@ -1930,7 +1930,6 @@ export type PlanDataExchangeApproachChanges = {
   multiSourceDataToCollectOther?: InputMaybe<Scalars['String']['input']>;
   newDataExchangeMethodsDescription?: InputMaybe<Scalars['String']['input']>;
   newDataExchangeMethodsNote?: InputMaybe<Scalars['String']['input']>;
-  status?: InputMaybe<DataExchangeApproachStatus>;
   willImplementNewDataExchangeMethods?: InputMaybe<YesNoType>;
 };
 

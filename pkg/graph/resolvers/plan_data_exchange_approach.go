@@ -62,7 +62,28 @@ func PlanDataExchangeApproachUpdate(
 		return nil, err
 	}
 
+	targetStatus, err := EvaluateStatus(existing)
+	if err != nil {
+		return nil, err
+	}
+
+	existing.Status = &targetStatus
+
 	// Update the plan data exchange approach
 	retDataExchangeApproach, err := store.PlanDataExchangeApproachUpdate(logger, existing)
 	return retDataExchangeApproach, err
+}
+
+// EvaluateStatus derives the status of the data exchange approach based on the current state of the model
+func EvaluateStatus(dea *models.PlanDataExchangeApproach) (models.DataExchangeApproachStatus, error) {
+
+	if dea.ModifiedDts == nil {
+		return models.DataExchangeApproachStatusNotStarted, nil
+	}
+
+	if dea.MarkedCompleteDts != nil {
+		return models.DataExchangeApproachStatusComplete, nil
+	}
+
+	return models.DataExchangeApproachStatusInProgress, nil
 }

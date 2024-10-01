@@ -421,7 +421,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation updatePlanDataExchangeApproach {\n  updatePlanDataExchangeApproach(id: \"{{dataExchangeApproachID}}\", changes: {\n    # Page 1\n    dataToCollectFromParticipants: [CLINICAL_DATA, OTHER]\n    dataToCollectFromParticipantsReportsDetails: \"Detailed reports information\"\n    dataToCollectFromParticipantsOther: \"Additional data to collect from participants\"\n    dataWillNotBeCollectedFromParticipants: false\n    dataToCollectFromParticipantsNote: \"Notes regarding data collection from participants\"\n\n    # Page 2\n    dataToSendToParticipants: [DATA_FEEDBACK_DASHBOARD]\n    dataToSendToParticipantsNote: \"Notes about data being sent to participants\"\n\n    # Page 3\n    doesNeedToMakeMultiPayerDataAvailable: YES\n    anticipatedMultiPayerDataAvailabilityUseCase: MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION\n    doesNeedToMakeMultiPayerDataAvailableNote: \"Notes on multi-payer data availability\"\n\n    doesNeedToCollectAndAggregateMultiSourceData: YES\n    multiSourceDataToCollect: [COMMERCIAL_CLAIMS]\n    multiSourceDataToCollectOther: \"Additional multi-source data to collect\"\n    doesNeedToCollectAndAggregateMultiSourceDataNote: \"Notes on multi-source data collection\"\n\n    # Page 4\n    willImplementNewDataExchangeMethods: YES\n    newDataExchangeMethodsDescription: \"Description of new data exchange methods\"\n    newDataExchangeMethodsNote: \"Notes on new data exchange methods\"\n\n    # Meta\n    isDataExchangeApproachComplete: true\n  }) {\n    # Meta Fields\n    id\n    modelPlanID\n    isDataExchangeApproachComplete\n\n    # Page 1\n    dataToCollectFromParticipants\n    dataToCollectFromParticipantsReportsDetails\n    dataToCollectFromParticipantsOther\n    dataWillNotBeCollectedFromParticipants\n    dataToCollectFromParticipantsNote\n\n    # Page 2\n    dataToSendToParticipants\n    dataToSendToParticipantsNote\n\n    # Page 3\n    doesNeedToMakeMultiPayerDataAvailable\n    anticipatedMultiPayerDataAvailabilityUseCase\n    doesNeedToMakeMultiPayerDataAvailableNote\n    doesNeedToCollectAndAggregateMultiSourceData\n    multiSourceDataToCollect\n    multiSourceDataToCollectOther\n    doesNeedToCollectAndAggregateMultiSourceDataNote\n\n    # Page 4\n    willImplementNewDataExchangeMethods\n    newDataExchangeMethodsDescription\n    newDataExchangeMethodsNote\n    additionalDataExchangeConsiderationsDescription\n    isDataExchangeApproachComplete\n\n    # User Accounts\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n\n    createdByUserAccount {\n      commonName\n    }\n    modifiedByUserAccount {\n      commonName\n    }\n  }\n}\n",
+								"query": "mutation updatePlanDataExchangeApproach {\n  updatePlanDataExchangeApproach(id: \"{{dataExchangeApproachID}}\", changes: {\n    # Page 1\n    dataToCollectFromParticipants: [CLINICAL_DATA, OTHER]\n    dataToCollectFromParticipantsReportsDetails: \"Detailed reports information\"\n    dataToCollectFromParticipantsOther: \"Additional data to collect from participants\"\n    dataWillNotBeCollectedFromParticipants: false\n    dataToCollectFromParticipantsNote: \"Notes regarding data collection from participants\"\n\n    # Page 2\n    dataToSendToParticipants: [DATA_FEEDBACK_DASHBOARD]\n    dataToSendToParticipantsNote: \"Notes about data being sent to participants\"\n\n    # Page 3\n    doesNeedToMakeMultiPayerDataAvailable: YES\n    anticipatedMultiPayerDataAvailabilityUseCase: MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION\n    doesNeedToMakeMultiPayerDataAvailableNote: \"Notes on multi-payer data availability\"\n\n    doesNeedToCollectAndAggregateMultiSourceData: YES\n    multiSourceDataToCollect: [COMMERCIAL_CLAIMS]\n    multiSourceDataToCollectOther: \"Additional multi-source data to collect\"\n    doesNeedToCollectAndAggregateMultiSourceDataNote: \"Notes on multi-source data collection\"\n\n    # Page 4\n    willImplementNewDataExchangeMethods: YES\n    newDataExchangeMethodsDescription: \"Description of new data exchange methods\"\n    newDataExchangeMethodsNote: \"Notes on new data exchange methods\"\n\n    # Meta\n    isDataExchangeApproachComplete: false\n  }) {\n    # Meta Fields\n    id\n    modelPlanID\n    isDataExchangeApproachComplete\n\n    # Page 1\n    dataToCollectFromParticipants\n    dataToCollectFromParticipantsReportsDetails\n    dataToCollectFromParticipantsOther\n    dataWillNotBeCollectedFromParticipants\n    dataToCollectFromParticipantsNote\n\n    # Page 2\n    dataToSendToParticipants\n    dataToSendToParticipantsNote\n\n    # Page 3\n    doesNeedToMakeMultiPayerDataAvailable\n    anticipatedMultiPayerDataAvailabilityUseCase\n    doesNeedToMakeMultiPayerDataAvailableNote\n    doesNeedToCollectAndAggregateMultiSourceData\n    multiSourceDataToCollect\n    multiSourceDataToCollectOther\n    doesNeedToCollectAndAggregateMultiSourceDataNote\n\n    # Page 4\n    willImplementNewDataExchangeMethods\n    newDataExchangeMethodsDescription\n    newDataExchangeMethodsNote\n    additionalDataExchangeConsiderationsDescription\n    isDataExchangeApproachComplete\n\n    # User Accounts\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    markedCompleteDts\n    markedCompleteBy\n    markedCompleteByUserAccount {\n        id\n        email\n    }\n\n    createdByUserAccount {\n      commonName\n    }\n    modifiedByUserAccount {\n      commonName\n    }\n    \n    status\n  }\n}\n",
 								"variables": ""
 							}
 						},
@@ -2679,137 +2679,6 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "ECHIMP",
-			"item": [
-				{
-					"name": "CR Echimp by id",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query echimpCR {\n    echimpCR(id: \"FFS3550\") {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        sensitiveFlag\n        implementationDate\n        crSummary {\n            rawContent\n        }\n        crStatus\n        emergencyCrFlag\n        relatedCrNumbers\n        relatedCrTdlNumbers\n        associatedModelUids\n    }\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "All CR Echimp data",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query echimpCR {\n    echimpCRs {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        sensitiveFlag\n        implementationDate\n        crSummary {\n            rawContent\n        }\n        crStatus\n        emergencyCrFlag\n        relatedCrNumbers\n        relatedCrTdlNumbers\n        associatedModelUids\n    }\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "All Echimp CRS And TDLS",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query echimpCRAndTDLS {\n    echimpCRAndTDLS{\n        __typename\n    ... on EChimpCR {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        sensitiveFlag\n        implementationDate\n        crSummary {\n            rawContent\n        }\n        crStatus\n        emergencyCrFlag\n        relatedCrNumbers\n        relatedCrTdlNumbers\n        associatedModelUids\n    }\n    ... on     EChimpTDL {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        issuedDate\n        status\n        associatedModelUids\n    }\n    }\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "TDL Echimp by id",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query echimpTDL {\n    echimpTDL(id: \"TDL240535\") {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        issuedDate\n        status\n        associatedModelUids\n    }\n\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "ALL TDL Echimp data",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query echimpTDL {\n    echimpTDLs {\n        id\n        versionNum\n        initiator\n        firstName\n        lastName\n        title\n        issuedDate\n        status\n        associatedModelUids\n    }\n\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{url}}",
-							"host": [
-								"{{url}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Get Model Plan with ECHIMP data",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "query modelPlan ($id: UUID!) {\n    modelPlan (id: $id) {\n        id\n        modelName\n        echimpCRs{\n            title\n        }\n        echimpTDLs{\n            title\n        }\n\n    }\n}",
-						"variables": "{\n  \"id\": \"{{modelPlanID}}\"\n}"
-					}
-				},
-				"url": {
-					"raw": "{{url}}",
-					"host": [
-						"{{url}}"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"auth": {
@@ -2865,7 +2734,7 @@
 		},
 		{
 			"key": "modelPlanID",
-			"value": "082b49d3-b548-48cb-9119-77a281bc2a8c"
+			"value": ""
 		},
 		{
 			"key": "basicsID",
