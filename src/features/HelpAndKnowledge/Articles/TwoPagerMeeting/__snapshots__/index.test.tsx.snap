@@ -325,8 +325,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 <li>
                   <button
                     class="usa-button usa-button--unstyled margin-right-2"
-                    data-testid="external-link"
-                    id="external-link"
+                    data-testid="button"
                     type="button"
                   >
                     <span>
@@ -350,8 +349,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 <li>
                   <button
                     class="usa-button usa-button--unstyled margin-right-2"
-                    data-testid="external-link"
-                    id="external-link"
+                    data-testid="button"
                     type="button"
                   >
                     <span>
@@ -375,8 +373,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 <li>
                   <button
                     class="usa-button usa-button--unstyled margin-right-2"
-                    data-testid="external-link"
-                    id="external-link"
+                    data-testid="button"
                     type="button"
                   >
                     <span>
@@ -400,8 +397,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 <li>
                   <button
                     class="usa-button usa-button--unstyled margin-right-2"
-                    data-testid="external-link"
-                    id="external-link"
+                    data-testid="button"
                     type="button"
                   >
                     <span>
@@ -429,8 +425,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 To view the links above, you will need access to the 
                 <button
                   class="usa-button usa-button--unstyled margin-right-2"
-                  data-testid="external-link"
-                  id="external-link"
+                  data-testid="button"
                   type="button"
                 >
                   <span>
@@ -603,8 +598,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               Contact the MINT team at 
               <button
                 class="usa-button usa-button--unstyled margin-right-2"
-                data-testid="external-link"
-                id="external-link"
+                data-testid="button"
                 type="button"
               >
                 <span>

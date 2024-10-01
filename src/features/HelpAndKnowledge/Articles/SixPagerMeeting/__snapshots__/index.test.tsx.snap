@@ -374,8 +374,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                   Describe how the proposed model would support or advance one (or more) of the  
                   <button
                     class="usa-button usa-button--unstyled margin-right-2"
-                    data-testid="external-link"
-                    id="external-link"
+                    data-testid="button"
                     type="button"
                   >
                     <span>
@@ -511,8 +510,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     View the 
                     <button
                       class="usa-button usa-button--unstyled margin-right-2"
-                      data-testid="external-link"
-                      id="external-link"
+                      data-testid="button"
                       type="button"
                     >
                       <span>
@@ -537,8 +535,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     View the 
                     <button
                       class="usa-button usa-button--unstyled margin-right-2"
-                      data-testid="external-link"
-                      id="external-link"
+                      data-testid="button"
                       type="button"
                     >
                       <span>
@@ -687,8 +684,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <li>
                   <button
                     class="usa-button usa-button--unstyled margin-right-2"
-                    data-testid="external-link"
-                    id="external-link"
+                    data-testid="button"
                     type="button"
                   >
                     <span>
@@ -712,8 +708,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <li>
                   <button
                     class="usa-button usa-button--unstyled margin-right-2"
-                    data-testid="external-link"
-                    id="external-link"
+                    data-testid="button"
                     type="button"
                   >
                     <span>
@@ -737,8 +732,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 <li>
                   <button
                     class="usa-button usa-button--unstyled margin-right-2"
-                    data-testid="external-link"
-                    id="external-link"
+                    data-testid="button"
                     type="button"
                   >
                     <span>
@@ -766,8 +760,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 To view the links above, you will need access to the 
                 <button
                   class="usa-button usa-button--unstyled margin-right-2"
-                  data-testid="external-link"
-                  id="external-link"
+                  data-testid="button"
                   type="button"
                 >
                   <span>
@@ -945,8 +938,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               Contact the MINT team at 
               <button
                 class="usa-button usa-button--unstyled margin-right-2"
-                data-testid="external-link"
-                id="external-link"
+                data-testid="button"
                 type="button"
               >
                 <span>

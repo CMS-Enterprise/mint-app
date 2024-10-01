@@ -355,8 +355,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
           >
             <button
               class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="external-link"
-              id="external-link"
+              data-testid="button"
               type="button"
             >
               <span>
@@ -594,8 +593,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
             </p>
             <button
               class="usa-button usa-button--unstyled margin-right-2"
-              data-testid="external-link"
-              id="external-link"
+              data-testid="button"
               type="button"
             >
               <span>
@@ -754,8 +752,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       <button
                         class="usa-button usa-button--unstyled margin-right-2"
-                        data-testid="external-link"
-                        id="external-link"
+                        data-testid="button"
                         type="button"
                       >
                         <span>
@@ -846,8 +843,7 @@ exports[`High Level Project Plan Article > matches snapshot 1`] = `
                     >
                       <button
                         class="usa-button usa-button--unstyled margin-right-2"
-                        data-testid="external-link"
-                        id="external-link"
+                        data-testid="button"
                         type="button"
                       >
                         <span>
