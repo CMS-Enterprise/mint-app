@@ -22,7 +22,8 @@ INSERT INTO plan_data_exchange_approach (
     created_by,
     modified_by,
     marked_complete_by,
-    marked_complete_dts
+    marked_complete_dts,
+    status
 )
 VALUES (
     :id,
@@ -48,7 +49,8 @@ VALUES (
     :created_by,
     :modified_by,
     :marked_complete_by,
-    :marked_complete_dts
+    :marked_complete_dts,
+    :status
 )
 RETURNING
 id,
@@ -76,4 +78,5 @@ created_dts,
 modified_by,
 modified_dts,
 marked_complete_by,
-marked_complete_dts;
+marked_complete_dts,
+status;

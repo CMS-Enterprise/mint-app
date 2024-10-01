@@ -22,7 +22,8 @@ SET
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP,
     marked_complete_by = :marked_complete_by,
-    marked_complete_dts = :marked_complete_dts
+    marked_complete_dts = :marked_complete_dts,
+    status = :status
 WHERE id = :id
 RETURNING
 id,
@@ -50,4 +51,5 @@ created_dts,
 modified_by,
 modified_dts,
 marked_complete_by,
-marked_complete_dts;
+marked_complete_dts,
+status;
