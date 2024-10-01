@@ -80,7 +80,7 @@ func PlanDataExchangeApproachUpdate(
 func EvaluateStatus(hasChanges bool, isSettingToComplete bool) (models.DataExchangeApproachStatus, error) {
 
 	if isSettingToComplete {
-		return models.DataExchangeApproachStatusComplete, nil
+		return models.DataExchangeApproachStatusCompleted, nil
 	} else if hasChanges {
 		return models.DataExchangeApproachStatusInProgress, nil
 	}
