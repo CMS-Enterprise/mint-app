@@ -285,7 +285,7 @@ exports[`Model Plan -- BeneficiaryCostSharing > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-waive-beneficiary-cost-sharing-note-add-note-toggle"
                   type="button"
                 >
                   <svg
