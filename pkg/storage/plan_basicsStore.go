@@ -76,33 +76,6 @@ func (s *Store) PlanBasicsGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanBasi
 	return &plan, nil
 }
 
-// PlanBasicsGetByModelPlanIDLOADER returns the plan basics for a slice of model plan ids
-func (s *Store) PlanBasicsGetByModelPlanIDLOADER(
-	_ *zap.Logger,
-	paramTableJSON string,
-) ([]*models.PlanBasics, error) {
-
-	var basicSlice []*models.PlanBasics // TODO: use new data loader query instead.
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBasics.GetByModelPlanIDLoader)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-		"paramTableJSON": paramTableJSON,
-	}
-
-	err = stmt.Select(&basicSlice, arg) // This returns more than one
-
-	if err != nil {
-		return nil, err
-	}
-
-	return basicSlice, nil
-}
-
 // PlanBasicsGetByModelPlanID returns the plan basics for a given model plan id
 func (s *Store) PlanBasicsGetByModelPlanID(modelPlanID uuid.UUID) (*models.PlanBasics, error) {
 	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
@@ -114,14 +87,14 @@ func (s *Store) PlanBasicsGetByModelPlanID(modelPlanID uuid.UUID) (*models.PlanB
 	return planBasics, nil
 }
 
-// PlanBasicsGetByModelPlanIDLOADGEN returns the plan basics for a slice of model plan ids
-func PlanBasicsGetByModelPlanIDLOADGEN(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.PlanBasics, error) {
+// PlanBasicsGetByModelPlanIDLoader returns the plan basics for a slice of model plan ids
+func PlanBasicsGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.PlanBasics, error) {
 
 	args := map[string]interface{}{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 
-	res, err := sqlutils.SelectProcedure[models.PlanBasics](np, sqlqueries.PlanBasics.GetByModelPlanIDLoaderV7, args)
+	res, err := sqlutils.SelectProcedure[models.PlanBasics](np, sqlqueries.PlanBasics.GetByModelPlanIDLoader, args)
 	if err != nil {
 		return nil, err
 	}

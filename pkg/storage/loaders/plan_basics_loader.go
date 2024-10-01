@@ -48,7 +48,7 @@ func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UU
 	output := make([]*dataloader.Result[*models.PlanBasics], len(modelPlanIDs))
 	loaders := Loaders(ctx)
 
-	data, err := storage.PlanBasicsGetByModelPlanIDLOADGEN(loaders.DataReader.Store, logger, modelPlanIDs)
+	data, err := storage.PlanBasicsGetByModelPlanIDLoader(loaders.DataReader.Store, logger, modelPlanIDs)
 	if err != nil {
 
 		for index := range modelPlanIDs {
