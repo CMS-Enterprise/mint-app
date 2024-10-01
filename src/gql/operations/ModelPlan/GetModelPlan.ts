@@ -38,6 +38,20 @@ export default gql(/* GraphQL */ `
         modelPlanID
         createdDts
       }
+      dataExchangeApproach {
+        id
+        status
+        createdDts
+        createdByUserAccount {
+          id
+          commonName
+        }
+        modifiedDts
+        modifiedByUserAccount {
+          id
+          commonName
+        }
+      }
       documents {
         id
         fileName
