@@ -1,0 +1,38 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
+.echimp-card {
+  min-height: 422px;
+
+  &__header {
+    h4 {
+      margin-bottom: 0.5rem;
+    }
+    h3 {
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 26px;
+      margin: 0 0 1rem;
+    }
+  }
+
+  &__cr-status,
+  &__implementation-date {
+    margin: 0 0 1rem;
+
+    p {
+      line-height: 25px;
+      margin: 0;
+      &:not(.text-bold) {
+        font-size: 17px;
+      }
+    }
+  }
+
+  .usa-card__footer {
+    border-top: 1px solid color("base-light");
+    padding-inline: 0;
+    margin-inline: 1.5rem;
+    padding-top: 1.5rem;
+}
+}
