@@ -5,7 +5,8 @@ import {
   Card,
   CardBody,
   CardFooter,
-  CardHeader
+  CardHeader,
+  Icon
 } from '@trussworks/react-uswds';
 
 import ExternalLink from 'components/ExternalLink';
@@ -25,6 +26,17 @@ const EChimpCard = () => {
       </CardHeader>
 
       <CardBody>
+        <div className="echimp-card__cr-tags">
+          <div className="echimp-card__cr-tag echimp-card__cr-tag--emergency">
+            <Icon.LocalFireDepartment />
+            {crtdlsT('echimpCard.crTag.emergency')}
+          </div>
+          <div className="echimp-card__cr-tag echimp-card__cr-tag--sensitive">
+            <Icon.Flag />
+            {crtdlsT('echimpCard.crTag.sensitive')}
+          </div>
+        </div>
+
         <div className="echimp-card__cr-status">
           <p className="text-bold">{crtdlsT('echimpCard.crStatus')}</p>
           <p>Final issued</p>
