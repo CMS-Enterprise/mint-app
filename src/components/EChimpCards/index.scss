@@ -16,6 +16,33 @@
     }
   }
 
+  &__cr-tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  &__cr-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 15px;
+    line-height: 16px;
+    border-radius: 4px;
+    padding: 4px 8px 4px 6px !important;
+    width: fit-content;
+
+    &--emergency {
+      color: color($theme-color-secondary-dark);
+      background-color: color($theme-color-error-lighter);
+    }
+    &--sensitive {
+      color: color($theme-color-base-dark);
+      background-color: color($theme-color-warning-lighter);
+    }
+  }
+
   &__cr-status,
   &__implementation-date {
     margin: 0 0 1rem;
