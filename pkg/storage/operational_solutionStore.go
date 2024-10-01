@@ -21,8 +21,8 @@ import (
 
 // SolutionAndPossibleKey is a key to get a operational solution and possible operational solution
 type SolutionAndPossibleKey struct {
-	OperationalNeedID uuid.UUID
-	IncludeNotNeeded  bool
+	OperationalNeedID uuid.UUID `json:"operational_need_id"`
+	IncludeNotNeeded  bool      `json:"include_not_needed"`
 }
 
 //go:embed SQL/operational_solution/and_possible_get_by_operational_need_id_LOADER.sql
