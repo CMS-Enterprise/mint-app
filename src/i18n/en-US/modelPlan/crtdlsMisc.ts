@@ -90,7 +90,17 @@ const crtdlsMisc = {
   error: 'There was an error loading CR and TDL data.',
   errorInfo: 'Please try loading the page again.',
   required1: 'All fields marked with ',
-  required2: ' are required.'
+  required2: ' are required.',
+  tableState: {
+    empty: {
+      heading: 'There are no CRs or TDLs associated with this model.',
+      copy: 'CRs and TDLs are associated with models in <el>ECHIMP</el>. It may take up to 24 hours for CRs and TDLs to appear in MINT once added to ECHIMP.'
+    },
+    noResults: {
+      heading: 'We couldn\'t find any matches for "{{searchTerm}}".',
+      copy: 'We couldn\'t find any matches for "FFS9999".'
+    }
+  }
 };
 
 export default crtdlsMisc;
