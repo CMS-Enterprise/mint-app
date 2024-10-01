@@ -13,6 +13,11 @@
       font-size: 22px;
       line-height: 26px;
       margin: 0 0 1rem;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
   }
 
@@ -44,7 +49,7 @@
   }
 
   &__cr-status,
-  &__implementation-date {
+  &__date {
     margin: 0 0 1rem;
 
     p {

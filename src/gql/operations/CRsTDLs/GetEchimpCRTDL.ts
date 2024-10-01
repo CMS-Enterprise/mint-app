@@ -6,7 +6,10 @@ export default gql(/* GraphQL */ `
       __typename
       ... on EChimpCR {
         id
+        versionNum
         initiator
+        firstName
+        lastName
         title
         sensitiveFlag
         implementationDate
@@ -21,8 +24,13 @@ export default gql(/* GraphQL */ `
       }
       ... on EChimpTDL {
         id
+        versionNum
+        initiator
+        firstName
+        lastName
         title
         issuedDate
+        status
         associatedModelUids
       }
     }
