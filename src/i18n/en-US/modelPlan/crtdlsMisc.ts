@@ -100,6 +100,12 @@ const crtdlsMisc = {
       heading: 'We couldn\'t find any matches for "{{searchTerm}}".',
       copy: 'We couldn\'t find any matches for "FFS9999".'
     }
+  },
+  echimpCard: {
+    crStatus: 'CR Status',
+    implementationDate: 'Implementation Date',
+    viewMore: 'View more',
+    viewThisInECHIMP: 'View this in ECHIMP'
   }
 };
 

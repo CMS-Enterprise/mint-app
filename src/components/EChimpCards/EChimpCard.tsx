@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Button,
   Card,
   CardBody,
   CardFooter,
@@ -8,7 +9,6 @@ import {
 } from '@trussworks/react-uswds';
 
 import ExternalLink from 'components/ExternalLink';
-import UswdsReactLink from 'components/LinkWrapper';
 
 import './index.scss';
 
@@ -23,6 +23,7 @@ const EChimpCard = () => {
           CR for minor updates (sensitive and controversial)
         </h3>
       </CardHeader>
+
       <CardBody>
         <div className="echimp-card__cr-status">
           <p className="text-bold">{crtdlsT('echimpCard.crStatus')}</p>
@@ -35,16 +36,12 @@ const EChimpCard = () => {
           <p>04/01/2024</p>
         </div>
       </CardBody>
+
       <CardFooter>
-        <UswdsReactLink
-          to="#"
-          className="usa-button margin-right-1"
-          variant="unstyled"
-          data-testid="to-task-list"
-        >
+        <Button type="button" className="usa-button">
           {crtdlsT('echimpCard.viewMore')}
-        </UswdsReactLink>
-        <ExternalLink href="https://echimp.cmsnet/">
+        </Button>
+        <ExternalLink href="https://echimp.cmsnet/" className="margin-right-0">
           {crtdlsT('echimpCard.viewThisInECHIMP')}
         </ExternalLink>
       </CardFooter>
