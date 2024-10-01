@@ -76,7 +76,6 @@ func (s *Store) PlanDataExchangeApproachGetByID(_ *zap.Logger, id uuid.UUID) (*m
 // PlanDataExchangeApproachGetByModelPlanID returns the plan data exchange approach for a given model plan id
 func (s *Store) PlanDataExchangeApproachGetByModelPlanID(_ *zap.Logger, modelPlanID uuid.UUID) (*models.PlanDataExchangeApproach, error) {
 
-	println("PlanDataExchangeApproachGetByModelPlanID")
 	approach := models.PlanDataExchangeApproach{}
 
 	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDataExchangeApproach.GetByModelPlanID)
