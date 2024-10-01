@@ -22,6 +22,7 @@ type UswdsReactLinkProps = {
   'data-testid'?: string;
   'aria-label'?: string;
   children?: React.ReactNode | string;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 };
 
 const UswdsReactLink = ({
@@ -32,7 +33,8 @@ const UswdsReactLink = ({
   rel,
   'data-testid': datatestid,
   'aria-label': ariaLabel,
-  children
+  children,
+  onClick
 }: UswdsReactLinkProps) => {
   return (
     <UswdsLink
@@ -44,6 +46,7 @@ const UswdsReactLink = ({
       asCustom={RouterLink}
       className={classnames(className)}
       aria-label={ariaLabel}
+      onClick={onClick}
     >
       {children}
     </UswdsLink>

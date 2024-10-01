@@ -1993,7 +1993,9 @@ const helpArticleNames: Record<HelpArticle, string> = {
     'Model implementation and solution implementation',
   [HelpArticle.MODEL_SOLUTION_DESIGN]: 'Model design and solution design',
   [HelpArticle.PHASES_INVOLVED]:
-    'Phases involved in creating IT and operational support for models'
+    'Phases involved in creating IT and operational support for models',
+  [HelpArticle.EVALUATING_DATA_EXCHANGE_APPROACH]:
+    'Evaluating your data exchange approach'
 };
 
 const helpAndKnowledge = {

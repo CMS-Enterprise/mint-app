@@ -357,14 +357,114 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               <div
                 style="white-space: pre;"
               >
-                Much of the content below is also accessible in the 6-page concept paper template. 
+                <li>
+                  <button
+                    class="usa-button usa-button--unstyled margin-right-2"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span>
+                      AHEAD 2-pager
+                      <svg
+                        class="usa-icon margin-left-05 top-05"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="usa-button usa-button--unstyled margin-right-2"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span>
+                      Enhancing Oncology Model 2-pager
+                      <svg
+                        class="usa-icon margin-left-05 top-05"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="usa-button usa-button--unstyled margin-right-2"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span>
+                      Innovation in Behavioral Health 2-pager
+                      <svg
+                        class="usa-icon margin-left-05 top-05"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="usa-button usa-button--unstyled margin-right-2"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span>
+                      Making Care Primary 2-pager
+                      <svg
+                        class="usa-icon margin-left-05 top-05"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+              </ul>
+              <span
+                class="margin-y-0"
+              >
+                To view the links above, you will need access to the 
                 <button
                   class="usa-button usa-button--unstyled margin-right-05"
                   data-testid="button"
                   type="button"
                 >
                   <span>
-                    Download it from the Strategy Refresh SharePoint site
+                    Model Resources area of SharePoint.
                     <svg
                       class="usa-icon margin-left-05 top-05"
                       focusable="false"
@@ -1295,21 +1395,23 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 class="usa-link"
                 href="mailto:MINTTeam@cms.hhs.gov"
               >
-                MINTTeam@cms.hhs.gov 
-                <svg
-                  class="usa-icon margin-left-05 top-05"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
-                  />
-                </svg>
-              </a>
+                <span>
+                  MINTTeam@cms.hhs.gov
+                  <svg
+                    class="usa-icon margin-left-05 top-05"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
             </div>
           </div>
         </div>
@@ -1317,10 +1419,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
     </div>
   </main>
   <div
-    class="margin-top-6 margin-bottom-neg-7"
+    class="margin-top-6"
   >
     <div
-      class="bg-primary-lighter"
+      class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
     >
       <div
         class="grid-container padding-top-4 padding-bottom-10"
@@ -1494,16 +1596,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             </div>
           </li>
         </ul>
-        <div
-          class="margin-top-3"
+        <a
+          class="usa-link"
+          href="/help-and-knowledge/articles"
         >
-          <a
-            class="usa-link"
-            href="/help-and-knowledge/articles"
-          >
-            View all help articles
-          </a>
-        </div>
+          View all help articles
+        </a>
       </div>
     </div>
   </div>

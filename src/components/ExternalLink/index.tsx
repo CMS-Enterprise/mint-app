@@ -11,13 +11,15 @@ type ExternalLinkModalTypes = {
   className?: string;
   href: string;
   variant?: 'external' | 'unstyled' | 'nav';
+  inlineText?: boolean;
 };
 
 const ExternalLink = ({
   children,
   href,
   variant,
-  className
+  className,
+  inlineText = false
 }: ExternalLinkModalTypes) => {
   const { t: externalT } = useTranslation('externalLinkModal');
 
@@ -69,19 +71,40 @@ const ExternalLink = ({
         </Button>
       </Modal>
 
-      <Button
-        type="button"
-        unstyled
-        className={classNames(className, 'margin-right-05')}
-        onClick={() => {
-          setIsModalOpen(true);
-        }}
-      >
-        <span>
-          {children}
-          <Icon.Launch className="margin-left-05 top-05" />
+      {inlineText ? (
+        <span
+          className={classNames(className, 'usa-link pointer margin-right-2')}
+          role="button"
+          tabIndex={0}
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+          onKeyPress={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              setIsModalOpen(true);
+            }
+          }}
+        >
+          <span>
+            {children}
+            <Icon.Launch className="margin-left-05 top-05" />
+          </span>
         </span>
-      </Button>
+      ) : (
+        <Button
+          type="button"
+          unstyled
+          className={classNames(className, 'margin-right-2')}
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
+          <span>
+            {children}
+            <Icon.Launch className="margin-left-05 top-05" />
+          </span>
+        </Button>
+      )}
     </>
   );
 };

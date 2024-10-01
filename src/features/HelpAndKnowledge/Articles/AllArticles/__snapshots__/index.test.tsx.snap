@@ -61,19 +61,19 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 <h3
                   class="line-height-body-4 margin-bottom-1"
                 >
-                  About 2-page concept papers and review meetings
+                  Evaluate your data exchange approach
                 </h3>
               </header>
               <a
                 class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/articles?category=model-concept-and-design"
+                href="/help-and-knowledge/articles?category=getting-started"
               >
                 <span
-                  aria-label="Articles under the Model concept and design category"
+                  aria-label="Articles under the Getting started category"
                   class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
                   data-testid="tag"
                 >
-                  Model concept and design
+                  Getting started
                 </span>
               </a>
               <div
@@ -81,7 +81,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.
+                  Exchanging data is an essential component of model operations and can take many forms depending on policy goals, implementation needs, and participants in the model. Examples of data that are typically exchanged include CMS sharing data with participants (for example, claims data) or participants sharing quality data (for example, a new measure or patient-reported outcome). We often collect health-related social needs data, such as socio-demographic data. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange.
                 </p>
               </div>
               <div
@@ -89,58 +89,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 data-testid="CardFooter"
               >
                 <button
-                  aria-label="Read About 2-page concept papers and review meetings article"
-                  class="usa-button usa-button--outline"
-                  type="button"
-                >
-                  Read
-                </button>
-              </div>
-            </div>
-          </li>
-          <li
-            class="usa-card desktop:grid-col-4 article article-card--isLink"
-            data-testid="article-card"
-          >
-            <div
-              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
-            >
-              <header
-                class="usa-card__header padding-0"
-                data-testid="CardHeader"
-              >
-                <h3
-                  class="line-height-body-4 margin-bottom-1"
-                >
-                  About 6-page concept papers and review meetings
-                </h3>
-              </header>
-              <a
-                class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/articles?category=model-concept-and-design"
-              >
-                <span
-                  aria-label="Articles under the Model concept and design category"
-                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                  data-testid="tag"
-                >
-                  Model concept and design
-                </span>
-              </a>
-              <div
-                class="usa-card__body padding-x-0 article__body padding-top-2"
-                data-testid="CardBody"
-              >
-                <p>
-                  Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-page concept paper. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.
-                </p>
-              </div>
-              <div
-                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-                data-testid="CardFooter"
-              >
-                <button
-                  aria-label="Read About 6-page concept papers and review meetings article"
+                  aria-label="Read Evaluate your data exchange approach article"
                   class="usa-button usa-button--outline"
                   type="button"
                 >
@@ -455,61 +404,74 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               </div>
             </div>
           </li>
-          <li
-            class="usa-card desktop:grid-col-4 article article-card--isLink"
-            data-testid="article-card"
-          >
-            <div
-              class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
-            >
-              <header
-                class="usa-card__header padding-0"
-                data-testid="CardHeader"
-              >
-                <h3
-                  class="line-height-body-4 margin-bottom-1"
-                >
-                  Utilizing available operational solutions
-                </h3>
-              </header>
-              <a
-                class="usa-link width-fit-content display-block "
-                href="/help-and-knowledge/articles?category=it-implementation"
-              >
-                <span
-                  aria-label="Articles under the IT implementation category"
-                  class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                  data-testid="tag"
-                >
-                  IT implementation
-                </span>
-              </a>
-              <div
-                class="usa-card__body padding-x-0 article__body padding-top-2"
-                data-testid="CardBody"
-              >
-                <p>
-                  One model will require several operational solutions to complete the essential functions. This is an overview of timing and activities involved in working with existing systems and services.
-                </p>
-              </div>
-              <div
-                class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-                data-testid="CardFooter"
-              >
-                <button
-                  aria-label="Read Utilizing available operational solutions article"
-                  class="usa-button usa-button--outline"
-                  type="button"
-                >
-                  Read
-                </button>
-              </div>
-            </div>
-          </li>
         </ul>
         <div
           class=""
-        />
+        >
+          <nav
+            aria-label="Pagination"
+            class="usa-pagination mint-pagination"
+          >
+            <ul
+              class="usa-pagination__list"
+            >
+              <li
+                class="usa-pagination__item usa-pagination__page-no"
+              >
+                <button
+                  aria-current="page"
+                  aria-label="Page 1"
+                  class="usa-button usa-button--unstyled usa-pagination__button usa-current"
+                  data-testid="pagination-page-number"
+                  type="button"
+                >
+                  1
+                </button>
+              </li>
+              <li
+                class="usa-pagination__item usa-pagination__page-no"
+              >
+                <button
+                  aria-label="Page 2"
+                  class="usa-button usa-button--unstyled usa-pagination__button"
+                  data-testid="pagination-page-number"
+                  type="button"
+                >
+                  2
+                </button>
+              </li>
+              <li
+                class="usa-pagination__item usa-pagination__arrow"
+              >
+                <button
+                  aria-label="Next page"
+                  class="usa-button usa-button--unstyled usa-pagination__link usa-pagination__next-page"
+                  data-testid="pagination-next"
+                  type="button"
+                >
+                  <span
+                    class="usa-pagination__link-text"
+                  >
+                    Next
+                  </span>
+                  <svg
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                    />
+                  </svg>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
   </main>
