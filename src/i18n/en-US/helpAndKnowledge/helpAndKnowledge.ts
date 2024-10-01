@@ -2036,6 +2036,7 @@ const helpAndKnowledge = {
   browseAll: 'Browse all help articles',
   viewGettingStarted: 'View getting started articles',
   viewITImplementation: 'View IT implementation articles',
+  viewModelConcept: 'View model concept and design articles',
   noResults: {
     header: 'There are no operational solutions that match your search.',
     content:

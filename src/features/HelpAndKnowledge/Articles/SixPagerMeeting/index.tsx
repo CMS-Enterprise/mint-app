@@ -308,6 +308,7 @@ const SixPagerMeeting = () => {
                               href={sixPageMeetingT(
                                 `aboutConceptPapers.sectionThree.items.${index}.link`
                               )}
+                              inlineText
                             >
                               {' '}
                             </ExternalLink>

@@ -73,7 +73,7 @@ const ExternalLink = ({
 
       {inlineText ? (
         <span
-          className={classNames(className, 'usa-link pointer margin-right-2')}
+          className={classNames(className, 'usa-link pointer margin-right-05')}
           role="button"
           tabIndex={0}
           onClick={() => {
