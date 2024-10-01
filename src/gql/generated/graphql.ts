@@ -4299,6 +4299,11 @@ export type GetCrtdLsQueryVariables = Exact<{
 
 export type GetCrtdLsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, isCollaborator: boolean, crs: Array<{ __typename: 'PlanCR', id: UUID, modelPlanID: UUID, title: string, idNumber: string, dateInitiated: Time, dateImplemented?: Time | null, note?: string | null }>, tdls: Array<{ __typename: 'PlanTDL', id: UUID, modelPlanID: UUID, title: string, idNumber: string, dateInitiated: Time, note?: string | null }> } };
 
+export type EchimpCrAndTdlsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EchimpCrAndTdlsQuery = { __typename: 'Query', echimpCRAndTDLS: Array<{ __typename: 'EChimpCR', id: string, initiator?: string | null, title?: string | null, sensitiveFlag?: boolean | null, implementationDate?: string | null, crStatus?: string | null, emergencyCrFlag?: boolean | null, relatedCrNumbers?: string | null, relatedCrTdlNumbers?: string | null, associatedModelUids?: UUID | null, crSummary?: { __typename: 'TaggedContent', rawContent: string } | null } | { __typename: 'EChimpTDL', id: string, title?: string | null, issuedDate?: string | null, associatedModelUids?: UUID | null }> };
+
 export type GetTdlQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -5999,6 +6004,66 @@ export type GetCrtdLsQueryHookResult = ReturnType<typeof useGetCrtdLsQuery>;
 export type GetCrtdLsLazyQueryHookResult = ReturnType<typeof useGetCrtdLsLazyQuery>;
 export type GetCrtdLsSuspenseQueryHookResult = ReturnType<typeof useGetCrtdLsSuspenseQuery>;
 export type GetCrtdLsQueryResult = Apollo.QueryResult<GetCrtdLsQuery, GetCrtdLsQueryVariables>;
+export const EchimpCrAndTdlsDocument = gql`
+    query echimpCRAndTDLS {
+  echimpCRAndTDLS {
+    __typename
+    ... on EChimpCR {
+      id
+      initiator
+      title
+      sensitiveFlag
+      implementationDate
+      crSummary {
+        rawContent
+      }
+      crStatus
+      emergencyCrFlag
+      relatedCrNumbers
+      relatedCrTdlNumbers
+      associatedModelUids
+    }
+    ... on EChimpTDL {
+      id
+      title
+      issuedDate
+      associatedModelUids
+    }
+  }
+}
+    `;
+
+/**
+ * __useEchimpCrAndTdlsQuery__
+ *
+ * To run a query within a React component, call `useEchimpCrAndTdlsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEchimpCrAndTdlsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEchimpCrAndTdlsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useEchimpCrAndTdlsQuery(baseOptions?: Apollo.QueryHookOptions<EchimpCrAndTdlsQuery, EchimpCrAndTdlsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EchimpCrAndTdlsQuery, EchimpCrAndTdlsQueryVariables>(EchimpCrAndTdlsDocument, options);
+      }
+export function useEchimpCrAndTdlsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EchimpCrAndTdlsQuery, EchimpCrAndTdlsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EchimpCrAndTdlsQuery, EchimpCrAndTdlsQueryVariables>(EchimpCrAndTdlsDocument, options);
+        }
+export function useEchimpCrAndTdlsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<EchimpCrAndTdlsQuery, EchimpCrAndTdlsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<EchimpCrAndTdlsQuery, EchimpCrAndTdlsQueryVariables>(EchimpCrAndTdlsDocument, options);
+        }
+export type EchimpCrAndTdlsQueryHookResult = ReturnType<typeof useEchimpCrAndTdlsQuery>;
+export type EchimpCrAndTdlsLazyQueryHookResult = ReturnType<typeof useEchimpCrAndTdlsLazyQuery>;
+export type EchimpCrAndTdlsSuspenseQueryHookResult = ReturnType<typeof useEchimpCrAndTdlsSuspenseQuery>;
+export type EchimpCrAndTdlsQueryResult = Apollo.QueryResult<EchimpCrAndTdlsQuery, EchimpCrAndTdlsQueryVariables>;
 export const GetTdlDocument = gql`
     query GetTDL($id: UUID!) {
   planTDL(id: $id) {
@@ -13070,6 +13135,7 @@ export const TypedDeleteCrDocument = {"kind":"Document","definitions":[{"kind":"
 export const TypedDeleteTdlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteTDL"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePlanTDL"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}},{"kind":"Field","name":{"kind":"Name","value":"dateInitiated"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]} as unknown as DocumentNode<DeleteTdlMutation, DeleteTdlMutationVariables>;
 export const TypedGetCrDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCR"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planCR"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}},{"kind":"Field","name":{"kind":"Name","value":"dateInitiated"}},{"kind":"Field","name":{"kind":"Name","value":"dateImplemented"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]} as unknown as DocumentNode<GetCrQuery, GetCrQueryVariables>;
 export const TypedGetCrtdLsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCRTDLs"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"crs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}},{"kind":"Field","name":{"kind":"Name","value":"dateInitiated"}},{"kind":"Field","name":{"kind":"Name","value":"dateImplemented"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tdls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}},{"kind":"Field","name":{"kind":"Name","value":"dateInitiated"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]}}]} as unknown as DocumentNode<GetCrtdLsQuery, GetCrtdLsQueryVariables>;
+export const TypedechimpCrAndTdlsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"echimpCRAndTDLS"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"echimpCRAndTDLS"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"initiator"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"sensitiveFlag"}},{"kind":"Field","name":{"kind":"Name","value":"implementationDate"}},{"kind":"Field","name":{"kind":"Name","value":"crSummary"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"crStatus"}},{"kind":"Field","name":{"kind":"Name","value":"emergencyCrFlag"}},{"kind":"Field","name":{"kind":"Name","value":"relatedCrNumbers"}},{"kind":"Field","name":{"kind":"Name","value":"relatedCrTdlNumbers"}},{"kind":"Field","name":{"kind":"Name","value":"associatedModelUids"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"issuedDate"}},{"kind":"Field","name":{"kind":"Name","value":"associatedModelUids"}}]}}]}}]}}]} as unknown as DocumentNode<EchimpCrAndTdlsQuery, EchimpCrAndTdlsQueryVariables>;
 export const TypedGetTdlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTDL"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planTDL"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}},{"kind":"Field","name":{"kind":"Name","value":"dateInitiated"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]} as unknown as DocumentNode<GetTdlQuery, GetTdlQueryVariables>;
 export const TypedUpdateCrDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateCR"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanCRChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanCR"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}},{"kind":"Field","name":{"kind":"Name","value":"dateInitiated"}},{"kind":"Field","name":{"kind":"Name","value":"dateImplemented"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]} as unknown as DocumentNode<UpdateCrMutation, UpdateCrMutationVariables>;
 export const TypedUpdateTdlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateTDL"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanTDLChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanTDL"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"idNumber"}},{"kind":"Field","name":{"kind":"Name","value":"dateInitiated"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]}}]} as unknown as DocumentNode<UpdateTdlMutation, UpdateTdlMutationVariables>;
