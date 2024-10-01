@@ -17,7 +17,7 @@ import (
 	_ "embed"
 )
 
-// TODO (loaders) where should these compound keys live? better to strongly type than to use a map
+// TODO (loaders) where should these compound keys live? better to strongly type than to use a map, but this means they can't live in data loaders.
 
 // SolutionAndPossibleKey is a key to get a operational solution and possible operational solution
 type SolutionAndPossibleKey struct {
