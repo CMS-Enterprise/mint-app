@@ -37,7 +37,7 @@ const ArticlePageInfo = ({ className }: ArticlePageInfoProps) => {
       </UswdsReactLink>
 
       <UswdsReactLink
-        to="/help-and-knowledge/articles?category=model-concept-and-designd"
+        to="/help-and-knowledge/articles?category=model-concept-and-design"
         className="margin-right-3"
       >
         {t('viewModelConcept')}
