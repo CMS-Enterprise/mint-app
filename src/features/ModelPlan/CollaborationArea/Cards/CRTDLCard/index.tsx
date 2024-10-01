@@ -65,7 +65,6 @@ const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
           variant="unstyled"
           asButton
           toEchimp
-          id="to-echimp"
         >
           {collaborationAreaT('crtdlsCard.addInEChimp')}
         </ExternalLink>

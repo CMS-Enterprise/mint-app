@@ -226,7 +226,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="plan-characteristics-agency-or-state-help-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -365,7 +365,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="plan-characteristics-alternative-payment-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -554,7 +554,7 @@ exports[`Model Plan Characteristics > matches snapshot 1`] = `
       >
         <button
           class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
+          data-testid="plan-characteristics-key-characteristics-note-add-note-toggle"
           type="button"
         >
           <svg

@@ -1,7 +1,12 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import {
   FrequencyType,
   GetProviderOptionsDocument,
@@ -125,13 +130,12 @@ describe('Model Plan ProviderOptions', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => {
-      expect(
-        screen.getByTestId(
-          'participants-and-providers-provider-add-method-other'
-        )
-      ).toHaveValue('Competitive ball-room dancing, free for all');
-    });
+    await waitForElementToBeRemoved(() =>
+      screen.getByTestId(
+        'participants-and-providers-removal-frequency-note-add-note-toggle'
+      )
+    );
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

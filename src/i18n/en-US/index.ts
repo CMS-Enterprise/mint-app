@@ -1,3 +1,4 @@
+import evaluatingDataExchangeApproach from './helpAndKnowledge/Articles/evaluatingDataExchangeApproach';
 import getAccess from './helpAndKnowledge/Articles/getAccess';
 import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectPlans';
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
@@ -76,12 +77,9 @@ const enUS = {
   footer,
   general,
   generalReadOnly,
-  getAccess,
   header,
-  helpAndKnowledge,
   homepageSettings,
   landing,
-  modelPlanOverview,
   modelPlanTaskList,
   modelSummary,
   nda,
@@ -123,7 +121,11 @@ const enUS = {
   readOnlyModelPlan,
   feedback,
   // Help and Knowledge Center Articles
+  evaluatingDataExchangeApproach,
+  getAccess,
+  helpAndKnowledge,
   highLevelProjectPlans,
+  modelPlanOverview,
   modelSolutionDesign,
   modelSolutionImplementation,
   phasesInvolved,
