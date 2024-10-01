@@ -36,10 +36,12 @@ func PlanDataExchangeApproachUpdate(
 		return nil, err
 	}
 
+	isSettingToComplete := false
+
 	// Check if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the
 	// 'isDataExchangeApproachComplete' is different from the existing value
 	if isDataExchangeApproachComplete, ok := changes["isDataExchangeApproachComplete"]; ok {
-		isSettingToComplete := isDataExchangeApproachComplete.(bool)
+		isSettingToComplete = isDataExchangeApproachComplete.(bool)
 
 		// Check if time has been set or is the default value
 		if existing.MarkedCompleteDts == nil && isSettingToComplete {
@@ -62,7 +64,7 @@ func PlanDataExchangeApproachUpdate(
 		return nil, err
 	}
 
-	targetStatus, err := EvaluateStatus(existing)
+	targetStatus, err := EvaluateStatus(len(changes) > 0, isSettingToComplete)
 	if err != nil {
 		return nil, err
 	}
@@ -75,15 +77,13 @@ func PlanDataExchangeApproachUpdate(
 }
 
 // EvaluateStatus derives the status of the data exchange approach based on the current state of the model
-func EvaluateStatus(dea *models.PlanDataExchangeApproach) (models.DataExchangeApproachStatus, error) {
+func EvaluateStatus(hasChanges bool, isSettingToComplete bool) (models.DataExchangeApproachStatus, error) {
 
-	if dea.ModifiedDts == nil {
-		return models.DataExchangeApproachStatusNotStarted, nil
-	}
-
-	if dea.MarkedCompleteDts != nil {
+	if isSettingToComplete {
 		return models.DataExchangeApproachStatusComplete, nil
+	} else if hasChanges {
+		return models.DataExchangeApproachStatusInProgress, nil
 	}
 
-	return models.DataExchangeApproachStatusInProgress, nil
+	return models.DataExchangeApproachStatusNotStarted, nil
 }
