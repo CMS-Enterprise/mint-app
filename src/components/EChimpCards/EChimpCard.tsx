@@ -35,7 +35,11 @@ const EChimpCard = ({
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
   return (
-    <Card gridLayout={{ desktop: { col: 4 } }} className="echimp-card">
+    <Card
+      gridLayout={{ desktop: { col: 4 } }}
+      className="echimp-card"
+      containerProps={{ className: 'shadow-2' }}
+    >
       <CardHeader className="echimp-card__header">
         <h4 className="text-base">{id}</h4>
         <h3 className="echimp-card__header">{title?.replace(/&amp;/g, '&')}</h3>
