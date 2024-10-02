@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { CardGroup } from '@trussworks/react-uswds';
-import { useEchimpCrAndTdlsQuery } from 'gql/generated/graphql';
+import {
+  EchimpCrAndTdlsQuery,
+  useEchimpCrAndTdlsQuery
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
@@ -11,11 +14,13 @@ import usePagination from 'hooks/usePagination';
 
 import EChimpCard from './EChimpCard';
 
-type EChimpCardsSectionProps = {
+type EChimpCardsTableProps = {
   className?: string;
 };
 
-const EChimpCardsSection = ({ className }: EChimpCardsSectionProps) => {
+type EchimpCrAndTdlsType = EchimpCrAndTdlsQuery['echimpCRAndTDLS'];
+
+const EChimpCardsTable = ({ className }: EChimpCardsTableProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
   const { data, loading } = useEchimpCrAndTdlsQuery({
@@ -24,12 +29,14 @@ const EChimpCardsSection = ({ className }: EChimpCardsSectionProps) => {
 
   const [query, setQuery] = useState('');
 
-  const { currentItems, Pagination, Results } = usePagination({
-    items: data?.echimpCRAndTDLS || [],
-    itemsPerPage: 6,
-    loading,
-    query
-  });
+  const { currentItems, Pagination, Results } =
+    usePagination<EchimpCrAndTdlsType>({
+      items: data?.echimpCRAndTDLS || [],
+      itemsPerPage: 6,
+      loading,
+      query
+    });
+  // console.log(currentItems);
 
   if (loading || !data) {
     return (
@@ -66,15 +73,15 @@ const EChimpCardsSection = ({ className }: EChimpCardsSectionProps) => {
         <GlobalClientFilter
           globalFilter={query}
           setGlobalFilter={setQuery}
-          tableID="models-by-solution-table"
+          tableID="cr-and-tdl-table"
           tableName={crtdlsT('heading')}
           className="margin-bottom-3 maxw-none width-mobile-lg"
         />
         {Results}
       </div>
       <CardGroup>
-        {currentItems.map(item => (
-          <EChimpCard key={item.id} {...item} />
+        {currentItems.map(card => (
+          <EChimpCard key={card.id} {...card} />
         ))}
       </CardGroup>
       {Pagination}
@@ -82,4 +89,4 @@ const EChimpCardsSection = ({ className }: EChimpCardsSectionProps) => {
   );
 };
 
-export default EChimpCardsSection;
+export default EChimpCardsTable;

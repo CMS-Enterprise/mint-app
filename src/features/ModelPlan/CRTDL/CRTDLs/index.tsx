@@ -9,7 +9,7 @@ import {
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
-import EChimpCardsSection from 'components/EChimpCards/EChimpCardsSection';
+import EChimpCardsTable from 'components/EChimpCards/EChimpCardsTable';
 import Expire from 'components/Expire';
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -101,7 +101,7 @@ export const CRTDLs = () => {
             {crtdlsT('echimp')}
           </Alert>
 
-          <EChimpCardsSection />
+          <EChimpCardsTable />
         </Grid>
       </GridContainer>
     </MainContent>
