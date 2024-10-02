@@ -37,11 +37,6 @@ func (r *planDataExchangeApproachResolver) MultiSourceDataToCollect(ctx context.
 	return models.ConvertEnums[models.MultiSourceDataToCollect](obj.MultiSourceDataToCollect), nil
 }
 
-// IsDataExchangeApproachComplete is the resolver for the isDataExchangeApproachComplete field.
-func (r *planDataExchangeApproachResolver) IsDataExchangeApproachComplete(ctx context.Context, obj *models.PlanDataExchangeApproach) (bool, error) {
-	return obj.MarkedCompleteDts != nil, nil
-}
-
 // PlanDataExchangeApproach returns generated.PlanDataExchangeApproachResolver implementation.
 func (r *Resolver) PlanDataExchangeApproach() generated.PlanDataExchangeApproachResolver {
 	return &planDataExchangeApproachResolver{r}

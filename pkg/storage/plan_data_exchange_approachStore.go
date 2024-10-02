@@ -91,22 +91,3 @@ func (s *Store) PlanDataExchangeApproachGetByModelPlanID(_ *zap.Logger, modelPla
 
 	return &approach, nil
 }
-
-// PlanDataExchangeApproachDelete deletes a plan data exchange approach by id
-func (s *Store) PlanDataExchangeApproachDelete(_ *zap.Logger, id uuid.UUID) error {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDataExchangeApproach.Delete)
-	if err != nil {
-		return fmt.Errorf("error preparing named statement: %w", err)
-	}
-	defer stmt.Close()
-
-	arg := utilitysql.CreateIDQueryMap(id)
-
-	_, err = stmt.Exec(arg)
-	if err != nil {
-		return fmt.Errorf("error executing statement: %w", err)
-	}
-
-	return nil
-}

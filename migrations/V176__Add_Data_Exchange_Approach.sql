@@ -45,7 +45,7 @@ CREATE TYPE DEA_MULTI_SOURCE_DATA_TO_COLLECT AS ENUM (
 );
 
 CREATE TYPE DEA_TASK_LIST_STATUS AS ENUM (
-  'NOT_STARTED',
+  'READY',
   'IN_PROGRESS',
   'COMPLETED'
   );
@@ -90,7 +90,7 @@ CREATE TABLE plan_data_exchange_approach (
     marked_complete_by UUID REFERENCES public.user_account (id) MATCH SIMPLE,
     marked_complete_dts TIMESTAMP WITH TIME ZONE,
 
-    status DEA_TASK_LIST_STATUS NOT NULL DEFAULT 'NOT_STARTED'
+    status DEA_TASK_LIST_STATUS NOT NULL DEFAULT 'READY'
 );
 
 COMMENT ON TABLE plan_data_exchange_approach IS 'This table stores the data exchange approach for a model plan.';
