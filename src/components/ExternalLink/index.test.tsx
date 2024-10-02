@@ -53,4 +53,28 @@ describe('ExternalLink', () => {
     expect(externalLink).toHaveAttribute('target', '_blank');
     expect(externalLink).toHaveAttribute('rel', 'noopener noreferrer');
   });
+
+  it('renders the modal with the correct text when toEchimp is true', () => {
+    render(
+      <ExternalLink href="https://echimp.cmsnet/" toEchimp>
+        Click me
+      </ExternalLink>
+    );
+
+    const linkElement = screen.getByText('Click me');
+
+    fireEvent.click(linkElement);
+
+    expect(
+      screen.getByText(i18next.t('externalLinkModal:heading'))
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText(
+        (_, element) =>
+          element?.textContent ===
+          i18next.t('externalLinkModal:descriptionEchimp')
+      )
+    ).toBeInTheDocument();
+  });
 });

@@ -121,9 +121,9 @@ describe('Model Plan Beneficiaries', () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('beneficiaries-precedence-rules-YES-note')
-      ).toHaveValue('Yes precedence rules');
+      expect(screen.getByTestId('beneficiaries-precedence-note')).toHaveValue(
+        'Precedent note'
+      );
     });
 
     expect(asFragment()).toMatchSnapshot();

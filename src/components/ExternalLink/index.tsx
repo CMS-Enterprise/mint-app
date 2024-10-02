@@ -8,9 +8,11 @@ import PageHeading from 'components/PageHeading';
 
 type ExternalLinkModalTypes = {
   children: React.ReactNode;
-  className?: string;
   href: string;
   variant?: 'external' | 'unstyled' | 'nav';
+  asButton?: boolean;
+  className?: string;
+  toEchimp?: boolean;
   inlineText?: boolean;
 };
 
@@ -18,7 +20,9 @@ const ExternalLink = ({
   children,
   href,
   variant,
+  asButton,
   className,
+  toEchimp,
   inlineText = false
 }: ExternalLinkModalTypes) => {
   const { t: externalT } = useTranslation('externalLinkModal');
@@ -43,19 +47,21 @@ const ExternalLink = ({
           className="font-body-md line-height-sans-4 margin-top-0 margin-bottom-4"
           style={{ whiteSpace: 'break-spaces' }}
         >
-          {externalT('description')}
+          {toEchimp ? externalT('descriptionEchimp') : externalT('description')}
         </p>
 
         <Link
           href={href}
-          aria-label={externalT('continueButton')}
+          aria-label={
+            toEchimp ? externalT('continueEchimp') : externalT('continueButton')
+          }
           target="_blank"
           rel="noopener noreferrer"
           className="usa-button text-white text-no-underline"
           onClick={() => setIsModalOpen(false)}
           variant={variant}
         >
-          {externalT('leave')}
+          {toEchimp ? externalT('continueEchimp') : externalT('leave')}
         </Link>
 
         <Button
@@ -92,7 +98,7 @@ const ExternalLink = ({
       ) : (
         <Button
           type="button"
-          unstyled
+          unstyled={!asButton}
           className={classNames(className, 'margin-right-2')}
           onClick={() => {
             setIsModalOpen(true);
