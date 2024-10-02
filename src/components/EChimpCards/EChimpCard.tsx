@@ -77,6 +77,7 @@ const EChimpCard = ({
           {issuedDate && (
             <>
               <p className="text-bold">{crtdlsT('echimpCard.initiatedDate')}</p>
+              {/* Currently issuedDate returns '2024-07-24 00:00:00' */}
               <p>{issuedDate?.split(' ')[0]}</p>
             </>
           )}
