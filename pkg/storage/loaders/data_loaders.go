@@ -68,7 +68,6 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 
 	loaders.OperationalNeedLoader = newWrappedDataLoader(loaders.GetOperationalNeedsByModelPlanID)
 	loaders.OperationalSolutionLoader = newWrappedDataLoader(loaders.OperationalSolutionGetByID)
-	loaders.OperationalSolutionAndPossibleCollectionLoader = newWrappedDataLoader(loaders.GetOperationalSolutionAndPossibleCollectionByOperationalNeedID)
 	loaders.OperationSolutionSubtaskLoader = newWrappedDataLoader(loaders.GetOperationalSolutionSubtaskByModelPlanID)
 	loaders.UserAccountLoader = newWrappedDataLoader(loaders.GetUserAccountsByIDLoader)
 
