@@ -61,12 +61,13 @@ export type Activity = {
 };
 
 /** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
-export type ActivityMetaData = AddedAsCollaboratorMeta | DailyDigestCompleteActivityMeta | DatesChangedActivityMeta | ModelPlanSharedActivityMeta | NewDiscussionRepliedActivityMeta | NewModelPlanActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
+export type ActivityMetaData = AddedAsCollaboratorMeta | DailyDigestCompleteActivityMeta | DatesChangedActivityMeta | ModelPlanSharedActivityMeta | NewDiscussionRepliedActivityMeta | NewModelPlanActivityMeta | PlanDataExchangeApproachCompletedActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
   ADDED_AS_COLLABORATOR = 'ADDED_AS_COLLABORATOR',
   DAILY_DIGEST_COMPLETE = 'DAILY_DIGEST_COMPLETE',
+  DATA_EXCHANGE_APPROACH_COMPLETED = 'DATA_EXCHANGE_APPROACH_COMPLETED',
   DATES_CHANGED = 'DATES_CHANGED',
   MODEL_PLAN_SHARED = 'MODEL_PLAN_SHARED',
   NEW_DISCUSSION_REPLY = 'NEW_DISCUSSION_REPLY',
@@ -172,6 +173,12 @@ export type AnalyzedPlanSections = {
   readyForReview: Array<TableName>;
   updated: Array<TableName>;
 };
+
+export enum AnticipatedMultiPayerDataAvailabilityUseCase {
+  FILL_GAPS_IN_CARE_ALERTING_AND_REPORTS = 'FILL_GAPS_IN_CARE_ALERTING_AND_REPORTS',
+  MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION = 'MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION',
+  SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING = 'SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING'
+}
 
 export type AuditChange = {
   __typename: 'AuditChange';
@@ -304,6 +311,12 @@ export type DailyDigestCompleteActivityMeta = {
   version: Scalars['Int']['output'];
 };
 
+export enum DataExchangeApproachStatus {
+  COMPLETE = 'COMPLETE',
+  IN_PROGRESS = 'IN_PROGRESS',
+  READY = 'READY'
+}
+
 export enum DataForMonitoringType {
   CLINICAL_DATA = 'CLINICAL_DATA',
   ENCOUNTER_DATA = 'ENCOUNTER_DATA',
@@ -335,6 +348,27 @@ export enum DataStartsType {
   SHORTLY_BEFORE_THE_START_DATE = 'SHORTLY_BEFORE_THE_START_DATE'
 }
 
+export enum DataToCollectFromParticipants {
+  BANKING_INFORMATION_TO_MAKE_NON_CLAIMS_BASED_PAYMENTS = 'BANKING_INFORMATION_TO_MAKE_NON_CLAIMS_BASED_PAYMENTS',
+  CLINICAL_DATA = 'CLINICAL_DATA',
+  COLLECT_BIDS_AND_PLAN_INFORMATION = 'COLLECT_BIDS_AND_PLAN_INFORMATION',
+  COOPERATIVE_AGREEMENT_APPLICATION = 'COOPERATIVE_AGREEMENT_APPLICATION',
+  DECARBONIZATION_DATA = 'DECARBONIZATION_DATA',
+  EXPANDED_DEMOGRAPHICS_DATA = 'EXPANDED_DEMOGRAPHICS_DATA',
+  FEE_FOR_SERVICE_CLAIMS_AND_APPLY_MODEL_RULES = 'FEE_FOR_SERVICE_CLAIMS_AND_APPLY_MODEL_RULES',
+  LEARNING_SYSTEM_METRICS = 'LEARNING_SYSTEM_METRICS',
+  OTHER = 'OTHER',
+  PARTICIPANT_AGREEMENT = 'PARTICIPANT_AGREEMENT',
+  PARTICIPANT_AGREEMENT_LETTER_OF_INTENT = 'PARTICIPANT_AGREEMENT_LETTER_OF_INTENT',
+  PARTICIPANT_AGREEMENT_REQUEST_FOR_APPLICATION = 'PARTICIPANT_AGREEMENT_REQUEST_FOR_APPLICATION',
+  PARTICIPANT_REPORTED_DATA = 'PARTICIPANT_REPORTED_DATA',
+  PARTICIPANT_REPORTED_QUALITY_MEASURES = 'PARTICIPANT_REPORTED_QUALITY_MEASURES',
+  PROVIDER_PARTICIPANT_ROSTER = 'PROVIDER_PARTICIPANT_ROSTER',
+  REPORTS_FROM_PARTICIPANTS = 'REPORTS_FROM_PARTICIPANTS',
+  SOCIAL_DETERMINANTS_OF_HEALTH = 'SOCIAL_DETERMINANTS_OF_HEALTH',
+  SURVEY = 'SURVEY'
+}
+
 export enum DataToSendParticipantsType {
   BASELINE_HISTORICAL_DATA = 'BASELINE_HISTORICAL_DATA',
   BENEFICIARY_LEVEL_DATA = 'BENEFICIARY_LEVEL_DATA',
@@ -343,6 +377,15 @@ export enum DataToSendParticipantsType {
   OTHER_MIPS_DATA = 'OTHER_MIPS_DATA',
   PARTICIPANT_LEVEL_DATA = 'PARTICIPANT_LEVEL_DATA',
   PROVIDER_LEVEL_DATA = 'PROVIDER_LEVEL_DATA'
+}
+
+export enum DataToSendToParticipants {
+  DATA_FEEDBACK_DASHBOARD = 'DATA_FEEDBACK_DASHBOARD',
+  DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS = 'DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS',
+  NON_CLAIMS_BASED_PAYMENTS = 'NON_CLAIMS_BASED_PAYMENTS',
+  OPERATIONS_DATA = 'OPERATIONS_DATA',
+  PARTIALLY_ADJUSTED_CLAIMS_DATA = 'PARTIALLY_ADJUSTED_CLAIMS_DATA',
+  RAW_CLAIMS_DATA = 'RAW_CLAIMS_DATA'
 }
 
 export enum DatabaseOperation {
@@ -696,6 +739,7 @@ export type ModelPlan = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   crs: Array<PlanCr>;
+  dataExchangeApproach: PlanDataExchangeApproach;
   discussions: Array<PlanDiscussion>;
   documents: Array<PlanDocument>;
   echimpCRs: Array<EChimpCr>;
@@ -823,6 +867,16 @@ export enum MonitoringFileType {
   PROVIDER = 'PROVIDER'
 }
 
+export enum MultiSourceDataToCollect {
+  COMMERCIAL_CLAIMS = 'COMMERCIAL_CLAIMS',
+  LAB_DATA = 'LAB_DATA',
+  MANUFACTURER = 'MANUFACTURER',
+  MEDICAID_CLAIMS = 'MEDICAID_CLAIMS',
+  MEDICARE_CLAIMS = 'MEDICARE_CLAIMS',
+  OTHER = 'OTHER',
+  PATIENT_REGISTRY = 'PATIENT_REGISTRY'
+}
+
 /** Mutations definition for the schema */
 export type Mutation = {
   __typename: 'Mutation';
@@ -870,6 +924,7 @@ export type Mutation = {
   updatePlanBeneficiaries: PlanBeneficiaries;
   updatePlanCR: PlanCr;
   updatePlanCollaborator: PlanCollaborator;
+  updatePlanDataExchangeApproach: PlanDataExchangeApproach;
   updatePlanGeneralCharacteristics: PlanGeneralCharacteristics;
   updatePlanOpsEvalAndLearning: PlanOpsEvalAndLearning;
   updatePlanParticipantsAndProviders: PlanParticipantsAndProviders;
@@ -1118,6 +1173,13 @@ export type MutationUpdatePlanCrArgs = {
 export type MutationUpdatePlanCollaboratorArgs = {
   id: Scalars['UUID']['input'];
   newRoles: Array<TeamRole>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdatePlanDataExchangeApproachArgs = {
+  changes: PlanDataExchangeApproachChanges;
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -1812,6 +1874,74 @@ export type PlanCollaboratorTranslation = {
   teamRoles: TranslationFieldWithOptions;
   userID: TranslationField;
   username: TranslationField;
+};
+
+export type PlanDataExchangeApproach = {
+  __typename: 'PlanDataExchangeApproach';
+  additionalDataExchangeConsiderationsDescription?: Maybe<Scalars['String']['output']>;
+  anticipatedMultiPayerDataAvailabilityUseCase?: Maybe<AnticipatedMultiPayerDataAvailabilityUseCase>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dataToCollectFromParticipants: Array<DataToCollectFromParticipants>;
+  dataToCollectFromParticipantsNote?: Maybe<Scalars['String']['output']>;
+  dataToCollectFromParticipantsOther?: Maybe<Scalars['String']['output']>;
+  dataToCollectFromParticipantsReportsDetails?: Maybe<Scalars['String']['output']>;
+  dataToSendToParticipants: Array<DataToSendToParticipants>;
+  dataToSendToParticipantsNote?: Maybe<Scalars['String']['output']>;
+  dataWillNotBeCollectedFromParticipants?: Maybe<Scalars['Boolean']['output']>;
+  doesNeedToCollectAndAggregateMultiSourceData?: Maybe<YesNoType>;
+  doesNeedToCollectAndAggregateMultiSourceDataNote?: Maybe<Scalars['String']['output']>;
+  doesNeedToMakeMultiPayerDataAvailable?: Maybe<YesNoType>;
+  doesNeedToMakeMultiPayerDataAvailableNote?: Maybe<Scalars['String']['output']>;
+  id: Scalars['UUID']['output'];
+  isDataExchangeApproachComplete: Scalars['Boolean']['output'];
+  markedCompleteBy?: Maybe<Scalars['UUID']['output']>;
+  markedCompleteByUserAccount?: Maybe<UserAccount>;
+  markedCompleteDts?: Maybe<Scalars['Time']['output']>;
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  multiSourceDataToCollect: Array<MultiSourceDataToCollect>;
+  multiSourceDataToCollectOther?: Maybe<Scalars['String']['output']>;
+  newDataExchangeMethodsDescription?: Maybe<Scalars['String']['output']>;
+  newDataExchangeMethodsNote?: Maybe<Scalars['String']['output']>;
+  status: DataExchangeApproachStatus;
+  willImplementNewDataExchangeMethods?: Maybe<YesNoType>;
+};
+
+export type PlanDataExchangeApproachChanges = {
+  additionalDataExchangeConsiderationsDescription?: InputMaybe<Scalars['String']['input']>;
+  anticipatedMultiPayerDataAvailabilityUseCase?: InputMaybe<AnticipatedMultiPayerDataAvailabilityUseCase>;
+  dataToCollectFromParticipants?: InputMaybe<Array<DataToCollectFromParticipants>>;
+  dataToCollectFromParticipantsNote?: InputMaybe<Scalars['String']['input']>;
+  dataToCollectFromParticipantsOther?: InputMaybe<Scalars['String']['input']>;
+  dataToCollectFromParticipantsReportsDetails?: InputMaybe<Scalars['String']['input']>;
+  dataToSendToParticipants: Array<DataToSendToParticipants>;
+  dataToSendToParticipantsNote?: InputMaybe<Scalars['String']['input']>;
+  dataWillNotBeCollectedFromParticipants?: InputMaybe<Scalars['Boolean']['input']>;
+  doesNeedToCollectAndAggregateMultiSourceData?: InputMaybe<YesNoType>;
+  doesNeedToCollectAndAggregateMultiSourceDataNote?: InputMaybe<Scalars['String']['input']>;
+  doesNeedToMakeMultiPayerDataAvailable?: InputMaybe<YesNoType>;
+  doesNeedToMakeMultiPayerDataAvailableNote?: InputMaybe<Scalars['String']['input']>;
+  isDataExchangeApproachComplete?: InputMaybe<Scalars['Boolean']['input']>;
+  multiSourceDataToCollect?: InputMaybe<Array<MultiSourceDataToCollect>>;
+  multiSourceDataToCollectOther?: InputMaybe<Scalars['String']['input']>;
+  newDataExchangeMethodsDescription?: InputMaybe<Scalars['String']['input']>;
+  newDataExchangeMethodsNote?: InputMaybe<Scalars['String']['input']>;
+  willImplementNewDataExchangeMethods?: InputMaybe<YesNoType>;
+};
+
+export type PlanDataExchangeApproachCompletedActivityMeta = {
+  __typename: 'PlanDataExchangeApproachCompletedActivityMeta';
+  dataExchangeApproach: PlanDataExchangeApproach;
+  dataExchangeApproachID: Scalars['UUID']['output'];
+  markedCompleteBy: Scalars['UUID']['output'];
+  markedCompleteByUserAccount: UserAccount;
+  modelPlan: ModelPlan;
+  type: ActivityType;
+  version: Scalars['Int']['output'];
 };
 
 /** PlanDiscussion represents plan discussion */
@@ -4091,6 +4221,7 @@ export type UserNotificationPreferences = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   dailyDigestComplete: Array<UserNotificationPreferenceFlag>;
+  dataExchangeApproachCompleted: Array<UserNotificationPreferenceFlag>;
   datesChanged: Array<UserNotificationPreferenceFlag>;
   datesChangedNotificationType?: Maybe<DatesChangedNotificationType>;
   id: Scalars['UUID']['output'];
@@ -4109,6 +4240,7 @@ export type UserNotificationPreferences = {
 export type UserNotificationPreferencesChanges = {
   addedAsCollaborator?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   dailyDigestComplete?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  dataExchangeApproachCompleted?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   datesChanged?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   datesChangedNotificationType?: InputMaybe<DatesChangedNotificationType>;
   modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
@@ -4801,7 +4933,7 @@ export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: {
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'AddedAsCollaboratorMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<TableName>, readyForReview: Array<TableName>, readyForClearance: Array<TableName> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'DatesChangedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string }, dateChanges: Array<{ __typename: 'DateChange', isChanged: boolean, field: DateChangeFieldType, isRange: boolean, oldDate?: Time | null, newDate?: Time | null, oldRangeStart?: Time | null, oldRangeEnd?: Time | null, newRangeStart?: Time | null, newRangeEnd?: Time | null }> } | { __typename: 'ModelPlanSharedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, optionalMessage?: string | null, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewModelPlanActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
+export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'AddedAsCollaboratorMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<TableName>, readyForReview: Array<TableName>, readyForClearance: Array<TableName> } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'DatesChangedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string }, dateChanges: Array<{ __typename: 'DateChange', isChanged: boolean, field: DateChangeFieldType, isRange: boolean, oldDate?: Time | null, newDate?: Time | null, oldRangeStart?: Time | null, oldRangeEnd?: Time | null, newRangeStart?: Time | null, newRangeEnd?: Time | null }> } | { __typename: 'ModelPlanSharedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, optionalMessage?: string | null, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewModelPlanActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'PlanDataExchangeApproachCompletedActivityMeta' } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
 
 export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
