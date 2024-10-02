@@ -100,19 +100,7 @@ func OperationalSolutionGetByID(logger *zap.Logger, id uuid.UUID, store *storage
 
 // OperationalSolutionGetByIDLOADER implements resolver logic to get an Operational Solution by ID using a data loader
 func OperationalSolutionGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error) {
-	allLoaders := loaders.Loaders(ctx)
-	opSolLoader := allLoaders.OperationalSolutionLoader
-	key := loaders.NewKeyArgs()
-	key.Args["id"] = id
-
-	thunk := opSolLoader.Loader.Load(ctx, key)
-	result, err := thunk()
-
-	if err != nil {
-		return nil, err
-	}
-
-	return result.(*models.OperationalSolution), nil
+	return loaders.OperationalSolutions.ByID.Load(ctx, id)
 }
 
 // sendSolutionSelectedEmails gets the data and sends the emails for when a solution is selected

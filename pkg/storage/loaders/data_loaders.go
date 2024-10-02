@@ -19,16 +19,14 @@ type DataLoaders struct {
 	DiscussionLoader      *WrappedDataLoader
 	DiscussionReplyLoader *WrappedDataLoader
 
-	OperationalNeedLoader                          *WrappedDataLoader
-	OperationalSolutionLoader                      *WrappedDataLoader
-	OperationalSolutionAndPossibleCollectionLoader *WrappedDataLoader
-	OperationSolutionSubtaskLoader                 *WrappedDataLoader
-	UserAccountLoader                              *WrappedDataLoader
-	DataReader                                     *dataReader
-	ExistingModelLinkLoader                        *WrappedDataLoader
-	ExistingModelLinkNameLoader                    *WrappedDataLoader
-	ExistingModelLoader                            *WrappedDataLoader
-	ModelPlanOpSolutionLastModifiedDtsLoader       *WrappedDataLoader
+	OperationalNeedLoader                    *WrappedDataLoader
+	OperationSolutionSubtaskLoader           *WrappedDataLoader
+	UserAccountLoader                        *WrappedDataLoader
+	DataReader                               *dataReader
+	ExistingModelLinkLoader                  *WrappedDataLoader
+	ExistingModelLinkNameLoader              *WrappedDataLoader
+	ExistingModelLoader                      *WrappedDataLoader
+	ModelPlanOpSolutionLastModifiedDtsLoader *WrappedDataLoader
 
 	PossibleOperationSolutionByKeyLoader   *WrappedDataLoader
 	PossibleOperationSolutionContactLoader *WrappedDataLoader
@@ -67,7 +65,6 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.DiscussionReplyLoader = newWrappedDataLoader(loaders.GetDiscussionReplyByModelPlanID)
 
 	loaders.OperationalNeedLoader = newWrappedDataLoader(loaders.GetOperationalNeedsByModelPlanID)
-	loaders.OperationalSolutionLoader = newWrappedDataLoader(loaders.OperationalSolutionGetByID)
 	loaders.OperationSolutionSubtaskLoader = newWrappedDataLoader(loaders.GetOperationalSolutionSubtaskByModelPlanID)
 	loaders.UserAccountLoader = newWrappedDataLoader(loaders.GetUserAccountsByIDLoader)
 

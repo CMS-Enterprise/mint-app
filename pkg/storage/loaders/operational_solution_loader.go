@@ -5,9 +5,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	dataloaderOld "github.com/graph-gophers/dataloader"
 	"github.com/samber/lo"
-	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -17,13 +15,13 @@ import (
 )
 
 type operationalSolutionsLoaders struct {
-	ByOperationalNeedID                                *dataloader.Loader[uuid.UUID, *models.OperationalSolution]
+	ByID                                               *dataloader.Loader[uuid.UUID, *models.OperationalSolution]
 	AndPossibleByOperationalNeedIDWithIncludeNotNeeded *dataloader.Loader[storage.SolutionAndPossibleKey, []*models.OperationalSolution]
 	//TODO: (loaders) consider renaming this
 }
 
 func (l *operationalSolutionsLoaders) init() {
-	l.ByOperationalNeedID = OperationalSolutions.ByOperationalNeedID.NewBatchedLoader()
+	l.ByID = OperationalSolutions.ByID.NewBatchedLoader()
 	l.AndPossibleByOperationalNeedIDWithIncludeNotNeeded = OperationalSolutions.AndPossibleByOperationalNeedID.NewBatchedLoader()
 }
 func newOperationalSolutionsLoaders() operationalSolutionsLoaders {
@@ -33,19 +31,18 @@ func newOperationalSolutionsLoaders() operationalSolutionsLoaders {
 }
 
 type operationalSolutionsLoaderConfig struct {
-	// ByOperationalNeedID Returns an operational solution by an operational need id
-	ByOperationalNeedID LoaderConfig[uuid.UUID, *models.OperationalSolution]
+	// ByID Returns an operational solution by it's id
+	ByID LoaderConfig[uuid.UUID, *models.OperationalSolution]
 	// AndPossibleByOperationalNeedID Returns an array of operational solutions, and possible operational solutions by an operational need id. It also will conditionally return needed / not needed
 	AndPossibleByOperationalNeedID LoaderConfig[storage.SolutionAndPossibleKey, []*models.OperationalSolution]
 }
 
 // OperationalSolutions is the loader config for all operational solution fetching
 var OperationalSolutions = operationalSolutionsLoaderConfig{
-	ByOperationalNeedID: LoaderConfig[uuid.UUID, *models.OperationalSolution]{
+	ByID: LoaderConfig[uuid.UUID, *models.OperationalSolution]{
 
-		// Load: ,
-		// batchFunction: ,
-		//TODO: (loaders) implement this
+		Load:          operationalSolutionGetByIDLoad,
+		batchFunction: operationalSolutionGetByIDBatch,
 	},
 	AndPossibleByOperationalNeedID: LoaderConfig[storage.SolutionAndPossibleKey, []*models.OperationalSolution]{
 		Load:          operationalSolutionAndPossibleCollectionGetByOperationalNeedID,
@@ -53,49 +50,43 @@ var OperationalSolutions = operationalSolutionsLoaderConfig{
 	},
 }
 
-// OperationalSolutionGetByID uses a data loader to return an operational solution by ID
-func (loaders *DataLoaders) OperationalSolutionGetByID(
+func operationalSolutionGetByIDLoad(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error) {
+	allLoaders := Loaders(ctx)
+	return allLoaders.operationalSolutions.ByID.Load(ctx, id)()
+}
+
+// operationalSolutionGetByIDBatch uses a data loader to return an operational solution by ID
+func operationalSolutionGetByIDBatch(
 	ctx context.Context,
-	keys dataloaderOld.Keys,
-) []*dataloaderOld.Result {
+	ids []uuid.UUID,
+) []*dataloader.Result[*models.OperationalSolution] {
 	logger := appcontext.ZLogger(ctx)
-	arrayCK, err := ConvertToKeyArgsArray(keys)
-	if err != nil {
-		logger.Error("issue converting keys for data loader in Operational Solution", zap.Error(*err))
-	}
-	marshaledParams, err := arrayCK.ToJSONArray()
-	if err != nil {
-		logger.Error("issue converting keys to JSON for data loader in Operational Solution", zap.Error(*err))
-	}
+	output := make([]*dataloader.Result[*models.OperationalSolution], len(ids))
+	loaders := Loaders(ctx)
 
-	dr := loaders.DataReader
-
-	opSols, loadErr := dr.Store.OperationalSolutionGetByIDLOADER(logger, marshaledParams)
+	opSols, loadErr := storage.OperationalSolutionGetByIDLOADER(loaders.DataReader.Store, logger, ids)
 	if loadErr != nil {
-		return []*dataloaderOld.Result{{Data: nil, Error: loadErr}}
+		for index := range ids {
+			output[index] = &dataloader.Result[*models.OperationalSolution]{Data: nil, Error: loadErr}
+		}
+		return output
 	}
 
-	opSolsByID := lo.Associate(opSols, func(gc *models.OperationalSolution) (string, *models.OperationalSolution) {
-		return gc.ID.String(), gc
+	opSolsByID := lo.Associate(opSols, func(gc *models.OperationalSolution) (uuid.UUID, *models.OperationalSolution) {
+		return gc.ID, gc
 	})
 
 	// RETURN IN THE SAME ORDER REQUESTED
-	output := make([]*dataloaderOld.Result, len(keys))
-	for index, key := range keys {
-		ck, ok := key.Raw().(KeyArgs)
+	for index, key := range ids {
+
+		opSol, ok := opSolsByID[key]
 		if ok {
-			resKey := fmt.Sprint(ck.Args["id"])
-			opSol, ok := opSolsByID[resKey]
-			if ok {
-				output[index] = &dataloaderOld.Result{Data: opSol, Error: nil}
-			} else {
-				err := fmt.Errorf("operational solution not found for id %s", resKey)
-				output[index] = &dataloaderOld.Result{Data: nil, Error: err}
-			}
+			output[index] = &dataloader.Result[*models.OperationalSolution]{Data: opSol, Error: nil}
 		} else {
-			err := fmt.Errorf("could not retrive key from %s", key.String())
-			output[index] = &dataloaderOld.Result{Data: nil, Error: err}
+			err := fmt.Errorf("operational solution not found for id %s", key)
+			output[index] = &dataloader.Result[*models.OperationalSolution]{Data: nil, Error: err}
 		}
+
 	}
 
 	return output
