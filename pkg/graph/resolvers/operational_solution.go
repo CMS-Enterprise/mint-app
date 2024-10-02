@@ -75,22 +75,6 @@ func OperationalSolutionsAndPossibleGetByOPNeedIDLOADER(ctx context.Context, ope
 			OperationalNeedID: operationalNeedID,
 			IncludeNotNeeded:  includeNotNeeded,
 		})
-	// allLoaders := loaders.Loaders(ctx)
-	// opSolutionLoader := allLoaders.OperationalSolutionAndPossibleCollectionLoader
-
-	// key := loaders.NewKeyArgs()
-
-	// key.Args["include_not_needed"] = includeNotNeeded
-	// key.Args["operational_need_id"] = operationalNeedID
-
-	// thunk := opSolutionLoader.Loader.Load(ctx, key)
-	// result, err := thunk()
-
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	// return result.([]*models.OperationalSolution), nil
 }
 
 // OperationalSolutionGetByID returns an operational Solution by it's ID

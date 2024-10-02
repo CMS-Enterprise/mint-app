@@ -20,11 +20,4 @@ func (lm *LoaderConfig[K, V]) NewBatchedLoader() *dataloader.Loader[K, V] {
 	return dataloader.NewBatchedLoader(lm.batchFunction, dataloader.WithClearCacheOnBatch[K, V]())
 }
 
-// // getExistingLoader returns a Batched loader from context configuration
-// func (lm *LoaderConfig[K, V]) getExistingLoader(ctx context.Context) *dataloader.Loader[K, V] {
-// 	allLoaders := Loaders(ctx)
-// 	// TODO (loaders) consider how we might get this loader generically?
-// 	basicsLoader := allLoaders.planBasicsByModelPlanID
-// 	return loader
-// 	//TODO, just initialize instead
-// }
+//TODO (loaders) Consider how we might be able to generically retrieve a data loader by a key, and cast it to a specific type.

@@ -55,7 +55,6 @@ type modelPlanScripts struct {
 	CollectionApproachingClearance         string
 	DeleteByID                             string
 	GetByIDLoader                          string
-	GetByModelPlanIDLoadgen                string
 	GetOpSolutionLastModifiedDtsByIDLoader string
 	GetByOperationalSolutionKey            string
 	CollectionWhereFavoritedByUserID       string

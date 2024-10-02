@@ -22,8 +22,7 @@ type planBasicsScripts struct {
 	Update                 string
 	GetByID                string
 	GetByModelPlanIDLoader string
-
-	GetByModelPlanID string
+	GetByModelPlanID       string
 }
 
 // PlanBasics houses all the sql for getting data for plan basics from the database
