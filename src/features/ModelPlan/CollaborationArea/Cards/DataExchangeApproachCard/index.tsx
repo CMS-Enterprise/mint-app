@@ -26,16 +26,8 @@ const DataExchangeApproachCard = ({
 }: DataExchangeApproachCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  const {
-    modifiedDts,
-    modifiedByUserAccount,
-    createdDts,
-    createdByUserAccount,
-    status
-  } = dataExhangeApproachData;
-
-  const lastModified = modifiedDts || createdDts;
-  const lastModifiedBy = modifiedByUserAccount || createdByUserAccount;
+  const { modifiedDts, modifiedByUserAccount, status } =
+    dataExhangeApproachData;
 
   return (
     <>
@@ -56,17 +48,19 @@ const DataExchangeApproachCard = ({
           <p>{collaborationAreaT('dataExchangeApproachCard.body')}</p>
         </CardBody>
 
-        <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3">
-          <span className="text-base margin-right-1">
-            {collaborationAreaT('dataExchangeApproachCard.lastModified', {
-              date: formatDateLocal(lastModified, 'MM/dd/yyyy')
-            })}
-          </span>
-          <Avatar
-            className="text-base-darkest"
-            user={lastModifiedBy.commonName}
-          />
-        </div>
+        {modifiedDts && modifiedByUserAccount && (
+          <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3">
+            <span className="text-base margin-right-1">
+              {collaborationAreaT('dataExchangeApproachCard.lastModified', {
+                date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+              })}
+            </span>
+            <Avatar
+              className="text-base-darkest"
+              user={modifiedByUserAccount.commonName}
+            />
+          </div>
+        )}
 
         <CardFooter>
           <UswdsReactLink
@@ -76,7 +70,9 @@ const DataExchangeApproachCard = ({
             variant="unstyled"
             data-testid="to-task-list"
           >
-            {collaborationAreaT('dataExchangeApproachCard.editApproach')}
+            {modifiedDts
+              ? collaborationAreaT('dataExchangeApproachCard.editApproach')
+              : collaborationAreaT('dataExchangeApproachCard.startApproach')}
           </UswdsReactLink>
 
           <UswdsReactLink

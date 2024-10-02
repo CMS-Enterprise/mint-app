@@ -41,11 +41,6 @@ export default gql(/* GraphQL */ `
       dataExchangeApproach {
         id
         status
-        createdDts
-        createdByUserAccount {
-          id
-          commonName
-        }
         modifiedDts
         modifiedByUserAccount {
           id
