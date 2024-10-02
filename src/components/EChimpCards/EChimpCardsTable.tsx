@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { CardGroup } from '@trussworks/react-uswds';
 import {
@@ -14,29 +14,64 @@ import usePagination from 'hooks/usePagination';
 
 import EChimpCard from './EChimpCard';
 
-type EChimpCardsTableProps = {
-  className?: string;
+type EchimpCrAndTdlsType = EchimpCrAndTdlsQuery['echimpCRAndTDLS'][0];
+
+// TODO: REMOVE IF NOT USED AT THE END
+// // Type guard to check union type
+// const isEchimpCRType = (
+//   crtdl: EchimpCrAndTdlsType
+// ): crtdl is EchimpCrAndTdlsType => {
+//   /* eslint no-underscore-dangle: 0 */
+//   return crtdl.__typename === 'EChimpCR';
+// };
+// const isEchimpTDLType = (
+//   crtdl: EchimpCrAndTdlsType
+// ): crtdl is EchimpCrAndTdlsType => {
+//   /* eslint no-underscore-dangle: 0 */
+//   return crtdl.__typename === 'EChimpTDL';
+// };
+
+const searchSolutions = (
+  query: string,
+  solutions: EchimpCrAndTdlsType[]
+): EchimpCrAndTdlsType[] => {
+  return solutions.filter(
+    solution =>
+      solution.title?.toLowerCase().includes(query.toLowerCase()) ||
+      solution.id?.toLowerCase().includes(query.toLowerCase())
+  );
 };
 
-type EchimpCrAndTdlsType = EchimpCrAndTdlsQuery['echimpCRAndTDLS'];
-
-const EChimpCardsTable = ({ className }: EChimpCardsTableProps) => {
+const EChimpCardsTable = () => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
   const { data, loading } = useEchimpCrAndTdlsQuery({
     variables: {}
   });
 
+  const echimpItems = React.useMemo(() => data?.echimpCRAndTDLS || [], [data]);
   const [query, setQuery] = useState('');
 
-  const { currentItems, Pagination, Results } =
-    usePagination<EchimpCrAndTdlsType>({
-      items: data?.echimpCRAndTDLS || [],
-      itemsPerPage: 6,
-      loading,
-      query
-    });
-  // console.log(currentItems);
+  const [filteredEchimpItems, setFilteredEchimpItems] =
+    useState<EchimpCrAndTdlsType[]>(echimpItems);
+
+  const { currentItems, Pagination, Results } = usePagination<
+    EchimpCrAndTdlsType[]
+  >({
+    items: filteredEchimpItems,
+    itemsPerPage: 6,
+    loading,
+    query
+  });
+
+  //  If no query, return all solutions, otherwise, matching query solutions
+  useEffect(() => {
+    if (query.trim()) {
+      setFilteredEchimpItems(searchSolutions(query, echimpItems));
+    } else {
+      setFilteredEchimpItems(echimpItems);
+    }
+  }, [query, echimpItems]);
 
   if (loading || !data) {
     return (
