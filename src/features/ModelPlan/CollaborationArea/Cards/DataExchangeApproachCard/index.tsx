@@ -15,9 +15,12 @@ import { formatDateLocal } from 'utils/date';
 
 import '../cards.scss';
 
+export type DataExchangeApproachType =
+  GetModelPlanQuery['modelPlan']['dataExchangeApproach'];
+
 type DataExchangeApproachCardType = {
   modelID: string;
-  dataExhangeApproachData: GetModelPlanQuery['modelPlan']['dataExchangeApproach'];
+  dataExhangeApproachData: DataExchangeApproachType;
 };
 
 const DataExchangeApproachCard = ({
@@ -64,11 +67,10 @@ const DataExchangeApproachCard = ({
 
         <CardFooter>
           <UswdsReactLink
-            //   TODO: link up to DEA form once built
-            to={`/models/${modelID}/task-list`}
+            to={`/models/${modelID}/data-exchange-approach/about-completing-data-exchange-approach`}
             className="usa-button margin-right-2"
             variant="unstyled"
-            data-testid="to-task-list"
+            data-testid="to-data-exchange-approach"
           >
             {modifiedDts
               ? collaborationAreaT('dataExchangeApproachCard.editApproach')
@@ -78,6 +80,7 @@ const DataExchangeApproachCard = ({
           <UswdsReactLink
             variant="external"
             target="_blank"
+            data-testid="view-data-exchange-help-article"
             to="/help-and-knowledge/evaluating-data-exchange-approach"
           >
             {collaborationAreaT('dataExchangeApproachCard.viewHelpArticle')}
