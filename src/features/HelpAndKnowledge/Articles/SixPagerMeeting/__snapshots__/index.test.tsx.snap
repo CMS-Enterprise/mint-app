@@ -432,14 +432,14 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                - for learning
             </li>
             <li>
-              Policy and Programs Group (PPG) – for quality and stakeholder engagement type things
+              Policy and Programs Group (PPG) – for quality and stakeholder engagement
             </li>
             <li>
               Research and Rapid Cycle Evaluation Group (RREG) – for evaluation
             </li>
           </ul>
           <div
-            class="usa-alert usa-alert--info icon-padding flex margin-y-3"
+            class="usa-alert usa-alert--info icon-padding mint-alert-slim-right flex margin-y-3"
             data-testid="alert"
           >
             <div
@@ -450,14 +450,12 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
               >
                 <span />
               </p>
-              <div
-                style="white-space: pre;"
-              >
+              <div>
                 Much of the content below is also accessible in the 6-page concept paper template. 
-                <button
-                  class="usa-button usa-button--unstyled margin-right-2"
-                  data-testid="button"
-                  type="button"
+                <span
+                  class="usa-link pointer margin-right-05"
+                  role="button"
+                  tabindex="0"
                 >
                   <span>
                     Download it from the Strategy Refresh SharePoint site
@@ -475,7 +473,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                       />
                     </svg>
                   </span>
-                </button>
+                </span>
               </div>
               <p />
             </div>
@@ -806,7 +804,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                 Provide a summary of stakeholder engagement (e.g. representatives of potential participants, impacted patient groups, policy experts) up to this point in model design.
               </li>
               <li>
-                Describe how beneficiary perspective/input, especially those representing underserved. populations, has been incorporated to date and will be if model concept proceeds forward.
+                Describe how beneficiary perspective/input, especially those representing underserved populations, has been incorporated to date and will be if model concept proceeds forward.
               </li>
             </ul>
           </div>

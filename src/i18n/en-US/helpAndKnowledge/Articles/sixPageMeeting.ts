@@ -59,7 +59,7 @@ const sixPageMeeting = {
       'Business Services Group (BSG) – for feasibility criteria',
       'CMMI Front Office (FO) – for health equity',
       '<link1>Learning and Diffusion Group (LDG)</link1> - for learning',
-      'Policy and Programs Group (PPG) – for quality and stakeholder engagement type things',
+      'Policy and Programs Group (PPG) – for quality and stakeholder engagement',
       'Research and Rapid Cycle Evaluation Group (RREG) – for evaluation'
     ],
     sectionOne: {
@@ -159,7 +159,7 @@ const sixPageMeeting = {
         'Provide a brief overview of health care constituencies affected, including those interested parties likely to support or voice opposition to or express concerns with the proposed model.',
         'Discuss potential for support and partnerships across the government – CMS, HHS, OMB, DPC, Congress – and areas of government that may voice concern with the proposed model.',
         'Provide a summary of stakeholder engagement (e.g. representatives of potential participants, impacted patient groups, policy experts) up to this point in model design.',
-        'Describe how beneficiary perspective/input, especially those representing underserved. populations, has been incorporated to date and will be if model concept proceeds forward.'
+        'Describe how beneficiary perspective/input, especially those representing underserved populations, has been incorporated to date and will be if model concept proceeds forward.'
       ]
     },
     sectionSeven: {

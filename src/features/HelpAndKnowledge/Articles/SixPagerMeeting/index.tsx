@@ -245,14 +245,17 @@ const SixPagerMeeting = () => {
                 ))}
               </ul>
 
-              <Alert type="info" className="margin-y-3">
-                <div style={{ whiteSpace: 'pre' }}>
+              <Alert type="info" className="margin-y-3" lessRightPadding>
+                <div>
                   <Trans
                     i18nKey="paperTemplateAlert"
                     t={sixPageMeetingT}
                     components={{
                       link1: (
-                        <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx">
+                        <ExternalLink
+                          href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx"
+                          inlineText
+                        >
                           {' '}
                         </ExternalLink>
                       )

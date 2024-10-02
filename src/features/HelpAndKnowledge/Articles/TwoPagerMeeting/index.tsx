@@ -201,10 +201,7 @@ const TwoPagerMeeting = () => {
               <ul className="margin-top-0 margin-bottom-3 padding-left-6">
                 <li className="line-height-normal">
                   {twoPageMeetingT('about.stepOne.items.brief.text')}
-                  <ul
-                    className="margin-top-0 padding-left-2"
-                    style={{ listStyleType: 'disc' }}
-                  >
+                  <ul className="margin-top-0 padding-left-2">
                     {briefItems.map(k => (
                       <li key={k} className="line-height-normal">
                         {k}

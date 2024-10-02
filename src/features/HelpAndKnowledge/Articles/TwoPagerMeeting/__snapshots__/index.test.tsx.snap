@@ -403,7 +403,6 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               Briefly discuss the problem the model intends to address, including a description of the:
               <ul
                 class="margin-top-0 padding-left-2"
-                style="list-style-type: disc;"
               >
                 <li
                   class="line-height-normal"
