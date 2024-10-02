@@ -161,7 +161,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     </label>
                     <input
                       class="usa-input"
-                      data-testid="textInput"
+                      data-testid="plan-basics-model-name"
                       id="plan-basics-model-name"
                       maxlength="200"
                       name="modelName"

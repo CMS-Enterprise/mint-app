@@ -317,6 +317,7 @@ const BasicsContent = () => {
                             id="plan-basics-model-name"
                             maxLength={200}
                             name="modelName"
+                            data-testid="plan-basics-model-name"
                           />
                         </FieldGroup>
 
