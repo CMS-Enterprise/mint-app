@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import NotFound from 'features/NotFound';
 
 import AllArticles from './Articles/AllArticles';
+import EvaluatingDataExchangeApproach from './Articles/EvaluatingDataExchangeApproach';
 import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import ModelSolutionDesign from './Articles/ModelSolutionDesign';
@@ -40,17 +41,21 @@ export const HelpAndKnowledge = () => {
       </Route>
 
       <Route
-        path="/help-and-knowledge/how-to-have-a-successful-2-pager-meeting"
+        path="/help-and-knowledge/about-2-page-concept-papers-and-review-meetings"
         exact
       >
         <TwoPagerMeeting />
       </Route>
 
       <Route
-        path="/help-and-knowledge/how-to-have-a-successful-6-pager-meeting"
+        path="/help-and-knowledge/about-six-page-concept-papers-and-review-meeting"
         exact
       >
         <SixPagerMeeting />
+      </Route>
+
+      <Route path="/help-and-knowledge/evaluating-data-exchange-approach" exact>
+        <EvaluatingDataExchangeApproach />
       </Route>
 
       <Redirect

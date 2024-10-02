@@ -309,7 +309,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-participant-require-financial-guarantee-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -393,7 +393,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-coordniate-work-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -472,7 +472,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-gainshare-payment-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -656,7 +656,7 @@ exports[`Model Plan Coordination > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-participant-id-note-add-note-toggle"
             type="button"
           >
             <svg

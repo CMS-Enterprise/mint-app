@@ -344,7 +344,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-funding-source-note-add-note-toggle"
                   type="button"
                 >
                   <svg
@@ -568,7 +568,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-funding-source-reconciliation-note-add-note-toggle"
                   type="button"
                 >
                   <svg
@@ -709,7 +709,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-pay-recipients-note-add-note-toggle"
                   type="button"
                 >
                   <svg
@@ -815,7 +815,7 @@ exports[`Model Plan Payment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-pay-type-note-add-note-toggle"
                   type="button"
                 >
                   <svg

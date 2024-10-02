@@ -246,7 +246,6 @@ const CollaborationArea = () => {
       </div>
 
       <RelatedArticles
-        className="margin-bottom-neg-7 padding-bottom-4 padding-top-2"
         implementationType="Additional Resources"
         specificArticles={[
           HelpArticle.HIGH_LEVEL_PROJECT_PLAN,

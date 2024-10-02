@@ -56,8 +56,11 @@ func (s Server) NewS3Config() s3.Config {
 }
 
 // NewEChimpS3Config returns a new s3.Config and checks required fields
+//
+// appconfig.AWSS3ECHIMPBucket is purposely not required here since the connection to ECHIMP is _not_ enabled in every environment
+// Check the `echimpEnabled` flag in LaunchDarkly to see if the connection is enabled in the envrionment you're testing against.
+// https://app.launchdarkly.com/projects/mint/flags/echimpEnabled/targeting?env=local&env=dev&env=test&env=impl&env=production
 func (s Server) NewEChimpS3Config() s3.Config {
-	s.checkRequiredConfig(appconfig.AWSS3ECHIMPBucket)
 	s.checkRequiredConfig(appconfig.AWSRegion)
 
 	return s3.Config{

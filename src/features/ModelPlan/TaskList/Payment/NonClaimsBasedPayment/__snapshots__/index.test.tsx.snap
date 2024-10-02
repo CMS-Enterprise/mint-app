@@ -316,7 +316,7 @@ exports[`Model Plan -- NonClaimsBasedPayment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-nonclaims-payments-note-add-note-toggle"
                   type="button"
                 >
                   <svg
@@ -384,7 +384,7 @@ exports[`Model Plan -- NonClaimsBasedPayment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-nonclaims-payments-paycycle-note-add-note-toggle"
                   type="button"
                 >
                   <svg
@@ -463,7 +463,7 @@ exports[`Model Plan -- NonClaimsBasedPayment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-nonclaims-shared-involvement-note-add-note-toggle"
                   type="button"
                 >
                   <svg
@@ -547,7 +547,7 @@ exports[`Model Plan -- NonClaimsBasedPayment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-use-innovation-payment-contractor-note-add-note-toggle"
                   type="button"
                 >
                   <svg

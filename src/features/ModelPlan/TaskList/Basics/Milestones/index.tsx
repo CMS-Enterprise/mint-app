@@ -30,6 +30,7 @@ import ExternalLink from 'components/ExternalLink';
 import FieldGroup from 'components/FieldGroup';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import useHandleMutation from 'hooks/useHandleMutation';
@@ -151,7 +152,9 @@ const Milestones = () => {
         Naviagting to this component through react-router-dom however properly loads the async data into the Truss datepickers
       */}
 
-      {!loading && (
+      {loading ? (
+        <PageLoading />
+      ) : (
         <Formik
           initialValues={initialValues}
           onSubmit={() => {
@@ -211,7 +214,10 @@ const Milestones = () => {
                         Please be sure that the dates listed here are updated in
                         the clearance calendar, if applicable. Contact the MINT
                         Team at{' '}
-                        <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
+                        <ExternalLink
+                          href="mailto:MINTTeam@cms.hhs.gov"
+                          inlineText
+                        >
                           MINTTeam@cms.hhs.gov
                         </ExternalLink>{' '}
                         if you have any questions.

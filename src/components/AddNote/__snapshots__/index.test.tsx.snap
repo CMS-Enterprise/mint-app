@@ -7,7 +7,7 @@ exports[`The AddNote component > matches snapshot 1`] = `
   >
     <button
       class="usa-button usa-button usa-button--unstyled"
-      data-testid="add-note-toggle"
+      data-testid="test-note-add-note-toggle"
       type="button"
     >
       <svg
