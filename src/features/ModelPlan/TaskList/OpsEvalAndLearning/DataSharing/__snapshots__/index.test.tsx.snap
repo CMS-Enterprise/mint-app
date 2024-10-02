@@ -320,7 +320,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
       >
         <button
           class="usa-button usa-button usa-button--unstyled"
-          data-testid="add-note-toggle"
+          data-testid="ops-eval-and-learning-data-sharing-starts-note-add-note-toggle"
           type="button"
         >
           <svg
@@ -543,7 +543,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="ops-eval-and-learning-data-collection-frequency-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -806,7 +806,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing > matches snapshot 1`] = 
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="ops-eval-and-learning-data-reporting-frequency-note-add-note-toggle"
             type="button"
           >
             <svg

@@ -483,7 +483,7 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="participants-and-providers-participants-note-add-note-toggle"
                   type="button"
                 >
                   <svg
@@ -567,7 +567,7 @@ exports[`Model Plan Participants and Providers > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="participants-and-providers-current-participants-note-add-note-toggle"
                   type="button"
                 >
                   <svg

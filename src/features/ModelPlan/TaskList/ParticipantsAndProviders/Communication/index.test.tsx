@@ -1,7 +1,12 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import {
   FrequencyType,
   GetCommunicationDocument,
@@ -104,11 +109,10 @@ describe('Model Plan Communication', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => {
-      expect(
-        screen.getByTestId('participants-and-providers-risk-type-other')
-      ).toHaveValue('Programmatic Risk');
-    });
+    await waitForElementToBeRemoved(() =>
+      screen.getByTestId('participant-removed-frequency-note-add-note-toggle')
+    );
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -273,7 +273,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
             >
               <button
                 class="usa-button usa-button usa-button--unstyled"
-                data-testid="add-note-toggle"
+                data-testid="beneficiary-selection-frequency-note-add-note-toggle"
                 type="button"
               >
                 <svg
@@ -448,7 +448,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
             >
               <button
                 class="usa-button usa-button usa-button--unstyled"
-                data-testid="add-note-toggle"
+                data-testid="beneficiary-removal-frequency-note-add-note-toggle"
                 type="button"
               >
                 <svg
@@ -543,7 +543,7 @@ exports[`Model Plan Beneficiaries > matches snapshot 1`] = `
             >
               <button
                 class="usa-button usa-button usa-button--unstyled"
-                data-testid="add-note-toggle"
+                data-testid="beneficiaries-overlap-note-add-note-toggle"
                 type="button"
               >
                 <svg

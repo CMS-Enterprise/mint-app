@@ -321,7 +321,7 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="pay-claims-note-add-note-toggle"
                   type="button"
                 >
                   <svg
@@ -400,7 +400,7 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-provider-exclusion-ffs-system-note-add-note-toggle"
                   type="button"
                 >
                   <svg
@@ -484,7 +484,7 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-change-medicare-phyisican-fee-schedule-note-add-note-toggle"
                   type="button"
                 >
                   <svg
@@ -563,7 +563,7 @@ exports[`Model Plan -- Claims Based Payment > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-affects-medicare-secondary-payer-claims-note-add-note-toggle"
                   type="button"
                 >
                   <svg

@@ -8,7 +8,7 @@ window.URL.createObjectURL = vi.fn();
 // Fill in some scroll functions
 // Usually for alerts and form field attention
 window.scroll = vi.fn;
-Element.prototype.scrollIntoView = vi.fn;
+Element.prototype.scrollIntoView = vi.fn(() => {});
 
 // Mocks the clipboard and drag events - needed for TipTap editor
 Object.defineProperty(window, 'ClipboardEvent', {
