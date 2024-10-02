@@ -63,7 +63,10 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('td', 'BTAL Doe').siblings().contains('a', 'Edit').click();
+        cy.contains('td', 'Betty Alpha')
+          .siblings()
+          .contains('a', 'Edit')
+          .click();
       });
     });
 
@@ -95,7 +98,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('td', 'BTAL Doe').siblings('td').contains('Model Team');
+        cy.contains('td', 'Betty Alpha').siblings('td').contains('Model Team');
       });
     });
 
@@ -106,7 +109,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('td', 'BTAL Doe')
+        cy.contains('td', 'Betty Alpha')
           .siblings()
           .contains('button', 'Remove')
           .click();
@@ -117,7 +120,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('td', 'BTAL Doe').should('not.exist');
+        cy.contains('td', 'Betty Alpha').should('not.exist');
       });
     });
 

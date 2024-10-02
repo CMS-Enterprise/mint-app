@@ -32,12 +32,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > 4inn
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               ACO-OIT@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -222,12 +220,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Acco
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               ACO-OIT@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -529,12 +525,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
         data-testid="button"
         type="button"
       >
-        <span
-          class="display-flex flex-align-center"
-        >
+        <span>
           MINTTeam@cms.hhs.gov
           <svg
-            class="usa-icon margin-left-05"
+            class="usa-icon margin-left-05 top-05"
             focusable="false"
             height="1em"
             role="img"
@@ -568,12 +562,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 Go to CMS Box
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -605,12 +597,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 View resources on CMS Intranet
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -649,12 +639,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
         data-testid="button"
         type="button"
       >
-        <span
-          class="display-flex flex-align-center"
-        >
+        <span>
           MINTTeam@cms.hhs.gov
           <svg
-            class="usa-icon margin-left-05"
+            class="usa-icon margin-left-05 top-05"
             focusable="false"
             height="1em"
             role="img"
@@ -688,12 +676,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CMS 
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 Go to CMS Qualtrics
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -767,12 +753,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > CPI 
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 MINTTeam@cms.hhs.gov
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -825,12 +809,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cent
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               MINTTeam@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -866,12 +848,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Cent
                 data-testid="button"
                 type="button"
               >
-                <span
-                  class="display-flex flex-align-center"
-                >
+                <span>
                   CMS Enterprise Portal
                   <svg
-                    class="usa-icon margin-left-05"
+                    class="usa-icon margin-left-05 top-05"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -951,12 +931,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 Data Disclosures and Data Use Agreements
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -987,12 +965,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               CCWAccess@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -1058,12 +1034,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Chro
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               CCWAccess@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -1241,12 +1215,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Elec
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 MINTTeam@cms.hhs.gov
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -1558,12 +1530,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 MINTTeam@cms.hhs.gov
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -1603,12 +1573,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Heal
         data-testid="button"
         type="button"
       >
-        <span
-          class="display-flex flex-align-center"
-        >
+        <span>
           donna.schmidt@cms.hhs.gov
           <svg
-            class="usa-icon margin-left-05"
+            class="usa-icon margin-left-05 top-05"
             focusable="false"
             height="1em"
             role="img"
@@ -1890,12 +1858,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Inte
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 MINTTeam@cms.hhs.gov
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -2083,12 +2049,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Onboarding Request Form for MDM-POR
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2131,12 +2095,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to ICD and Onboarding Mapping for MDM-POR
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2213,12 +2175,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Onboarding Request Form for MDM-NCBP
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2261,12 +2221,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Mast
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to ICD and Onboarding Mapping for MDM-NCBP
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2406,12 +2364,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Medi
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 MINTTeam@cms.hhs.gov
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"
@@ -2545,12 +2501,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Outl
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               cms_it_service_desk@cms.hhs.gov
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2657,12 +2611,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Rese
         data-testid="button"
         type="button"
       >
-        <span
-          class="display-flex flex-align-center"
-        >
+        <span>
           Procurement Administrative Lead Time (PALT)
           <svg
-            class="usa-icon margin-left-05"
+            class="usa-icon margin-left-05 top-05"
             focusable="false"
             height="1em"
             role="img"
@@ -2753,12 +2705,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Salesforce CMT
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -2900,12 +2850,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Salesforce CMT
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3047,12 +2995,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Salesforce CMT
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3194,12 +3140,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Salesforce CMT
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3341,12 +3285,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Sale
             data-testid="button"
             type="button"
           >
-            <span
-              class="display-flex flex-align-center"
-            >
+            <span>
               Go to Salesforce CMT
               <svg
-                class="usa-icon margin-left-05"
+                class="usa-icon margin-left-05 top-05"
                 focusable="false"
                 height="1em"
                 role="img"
@@ -3463,12 +3405,10 @@ exports[`Operational Solutions Timeline Components > matches the snapshot > Shar
               data-testid="button"
               type="button"
             >
-              <span
-                class="display-flex flex-align-center"
-              >
+              <span>
                 Go to Fee For Service Change Request Resource Center
                 <svg
-                  class="usa-icon margin-left-05"
+                  class="usa-icon margin-left-05 top-05"
                   focusable="false"
                   height="1em"
                   role="img"

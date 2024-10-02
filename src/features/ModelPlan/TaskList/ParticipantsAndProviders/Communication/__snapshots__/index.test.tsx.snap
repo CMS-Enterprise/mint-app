@@ -554,7 +554,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-communication-method-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -713,7 +713,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-risk-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -792,7 +792,7 @@ exports[`Model Plan Communication > matches snapshot 1`] = `
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="participants-and-providers-risk-change-note-add-note-toggle"
             type="button"
           >
             <svg

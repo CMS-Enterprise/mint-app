@@ -24,6 +24,7 @@ import (
 func (s *Seeder) createModelPlan(
 	modelName string,
 	euaID string,
+	id *uuid.UUID,
 ) *models.ModelPlan {
 
 	princ := s.getTestPrincipalByUsername(euaID)
@@ -34,9 +35,10 @@ func (s *Seeder) createModelPlan(
 		nil,
 		email.AddressBook{},
 		modelName,
+		id,
 		s.Config.Store,
 		princ,
-		userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo),
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(s.Config.OktaClient.FetchUserInfo),
 	)
 	if err != nil {
 		panic(err)
@@ -91,16 +93,6 @@ func (s *Seeder) updatePlanBasics(
 	return updated
 }
 
-func stubFetchUserInfo(ctx context.Context, username string) (*models.UserInfo, error) {
-	return &models.UserInfo{
-		Username:    username,
-		FirstName:   username,
-		LastName:    "Doe",
-		DisplayName: username + " Doe",
-		Email:       username + ".doe@local.fake",
-	}, nil
-}
-
 // addPlanCollaborator is a wrapper for resolvers.CreatePlanCollaborator
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the collaborator object with the principal value of the Model Plan's "createdBy"
@@ -123,7 +115,7 @@ func (s *Seeder) addPlanCollaborator(
 		input,
 		princ,
 		true,
-		userhelpers.GetUserInfoAccountInfoWrapperFunc(stubFetchUserInfo),
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(s.Config.OktaClient.FetchUserInfo),
 		true,
 	)
 	if err != nil {
