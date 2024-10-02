@@ -16,14 +16,6 @@ import (
 	_ "embed"
 )
 
-// TODO (loaders) where should these compound keys live? better to strongly type than to use a map, but this means they can't live in data loaders.
-
-// SolutionAndPossibleKey is a key to get a operational solution and possible operational solution
-type SolutionAndPossibleKey struct {
-	OperationalNeedID uuid.UUID `json:"operational_need_id"`
-	IncludeNotNeeded  bool      `json:"include_not_needed"`
-}
-
 //go:embed SQL/operational_solution/and_possible_get_by_operational_need_id_LOADER.sql
 var operationalSolutionAndPossibleGetByOperationalNeedIDLOADERSQL string
 
