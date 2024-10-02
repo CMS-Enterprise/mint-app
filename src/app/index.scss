@@ -6,6 +6,7 @@
 // USWDS typography/color theme used below
 @use 'uswds-core' as *;
 @use 'viewports' as *;
+@use 'colors' as *;
 
 // USWDS all packages
 // @forward 'uswds';
@@ -102,6 +103,10 @@ h4 {
 
 h5 {
   font-size: size('body', $theme-h5-font-size);
+}
+
+a {
+  color: $mint-blue;
 }
 
 .flex-none {

@@ -214,7 +214,10 @@ const Milestones = () => {
                         Please be sure that the dates listed here are updated in
                         the clearance calendar, if applicable. Contact the MINT
                         Team at{' '}
-                        <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
+                        <ExternalLink
+                          href="mailto:MINTTeam@cms.hhs.gov"
+                          inlineText
+                        >
                           MINTTeam@cms.hhs.gov
                         </ExternalLink>{' '}
                         if you have any questions.

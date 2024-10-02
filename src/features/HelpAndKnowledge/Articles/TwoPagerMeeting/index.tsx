@@ -3,7 +3,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import {
   Grid,
   GridContainer,
-  Icon,
   SummaryBox,
   SummaryBoxContent,
   SummaryBoxHeading
@@ -11,62 +10,107 @@ import {
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
+import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
+import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
+import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import { tArray } from 'utils/translation';
+import ScrollLink from 'components/ScrollLink';
+import useHelpSolution from 'hooks/useHelpSolutions';
+import useModalSolutionState from 'hooks/useModalSolutionState';
+import { getKeys } from 'types/translation';
+import { tArray, tObject } from 'utils/translation';
 
+import KeyResourcesCards from '../_components/KeyResourcesCards';
+import ModelSectionCriteriaTable from '../_components/ModelSelectionCriteriaTable';
+import NeedHelp from '../_components/NeedHelp';
 import { ArticleCategories, HelpArticle } from '..';
 
-const covertToLowercaseAndDashes = (string: string) =>
+export const convertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
 
-const Link = ({ scrollTo }: { scrollTo: string }) => {
-  return (
-    <a
-      href={`#${covertToLowercaseAndDashes(scrollTo)}`}
-      className="display-flex flex-align-center"
-    >
-      {scrollTo}
-      <Icon.ArrowForward />
-    </a>
-  );
+type ExampleSummaryBoxListType = {
+  [key: string]: {
+    href: string;
+    copy: string;
+  };
+};
+
+type StepThreeListType = {
+  text: string;
+  numberedList?: string[];
+  list?: string[];
 };
 
 const TwoPagerMeeting = () => {
   const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
 
-  const modelOverviewAndGoals = tArray<string>(
-    'twoPageMeeting:conceptPaper.stepOne.items'
+  const summaryboxListItems: string[] = tArray(
+    'twoPageMeeting:summaryBox.list'
   );
 
-  const alignmentListItems: string[] = tArray(
-    'twoPageMeeting:conceptPaper.stepThree.alignment.numberedList'
+  const briefItems = tArray<string>(
+    'twoPageMeeting:about.stepOne.items.brief.list'
   );
 
-  const impactListItems: string[] = tArray(
-    'twoPageMeeting:conceptPaper.stepThree.impact.list'
+  const aboutTipsList1: string[] = tArray(
+    'twoPageMeeting:about.summarybox.tips.list1'
   );
 
-  const additionalResourcesListItems: string[] = tArray(
-    'twoPageMeeting:additionalResources.list'
+  const aboutTipsList2: string[] = tArray(
+    'twoPageMeeting:about.summarybox.tips.list2'
   );
 
-  const additionalResourcesParagraphs: string[] = tArray(
-    'twoPageMeeting:additionalResources.paragraph'
+  const contractorParagraphs: string[] = tArray(
+    'twoPageMeeting:additionalResources.contractorParagraph'
   );
 
-  const tipsList: string[] = tArray(
-    'twoPageMeeting:reviewMeeting.subheading.tip.list'
+  const additionalResourceTips: string[] = tArray(
+    'twoPageMeeting:additionalResources.summarybox.tips.list'
   );
 
-  const outcomesParagraphs: string[] = tArray(
-    'twoPageMeeting:reviewMeeting.subheading.outcomes.paragraph'
+  const crossCutListItems: string[] = tArray(
+    'twoPageMeeting:additionalResources.crossCut.list'
+  );
+
+  const reviewTipsList: string[] = tArray(
+    'twoPageMeeting:reviewMeeting.tipbox.list'
+  );
+
+  const outcomesList: string[] = tArray(
+    'twoPageMeeting:reviewMeeting.outcomes.list'
+  );
+
+  const exampleSummaryBoxList: ExampleSummaryBoxListType = tObject(
+    'twoPageMeeting:about.summarybox.exampleSummaryBox.list'
+  );
+
+  const stepThreeList: StepThreeListType[] = tArray(
+    'twoPageMeeting:about.stepThree.list'
+  );
+
+  const { helpSolutions } = useHelpSolution();
+  const { prevPathname, selectedSolution: solution } =
+    useModalSolutionState(null);
+
+  // Solution to render in modal
+  const selectedSolution = findSolutionByRouteParam(
+    solution?.route || null,
+    helpSolutions
   );
 
   return (
     <>
+      {selectedSolution && (
+        <SolutionDetailsModal
+          solution={selectedSolution}
+          openedFrom={prevPathname}
+          closeRoute="help-and-knowledge/about-2-page-concept-papers-and-review-meetings"
+        />
+      )}
       <MainContent>
         <GridContainer>
           <Grid>
@@ -75,10 +119,10 @@ const TwoPagerMeeting = () => {
               {twoPageMeetingT('title')}
             </PageHeading>
             <HelpCategoryTag
-              type={ArticleCategories.GETTING_STARTED}
+              type={ArticleCategories.MODEL_CONCEPT_AND_DESIGN}
               className="margin-bottom-1"
             />
-            <p className="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-4">
+            <p className="mint-body-large line-height-large margin-top-0 margin-bottom-4">
               {twoPageMeetingT('description')}
             </p>
 
@@ -88,250 +132,417 @@ const TwoPagerMeeting = () => {
               </SummaryBoxHeading>
               <SummaryBoxContent>
                 <ul className="margin-y-0">
-                  {/* eslint-disable jsx-a11y/anchor-is-valid */}
-                  <li className="margin-top-05 margin-bottom-1">
-                    <Link
-                      scrollTo={twoPageMeetingT('summaryBox.listItem.draft')}
-                    />
-                  </li>
-                  <li className="margin-bottom-1">
-                    <Link
-                      scrollTo={twoPageMeetingT('summaryBox.listItem.start')}
-                    />
-                  </li>
-                  <li>
-                    <Link
-                      scrollTo={twoPageMeetingT('summaryBox.listItem.review')}
-                    />
-                  </li>
-                  {/* eslint-enable jsx-a11y/anchor-is-valid */}
+                  {summaryboxListItems.map(k => (
+                    <li
+                      key={convertToLowercaseAndDashes(k)}
+                      className="margin-top-05 margin-bottom-1"
+                    >
+                      <ScrollLink scrollTo={k} />
+                    </li>
+                  ))}
                 </ul>
               </SummaryBoxContent>
             </SummaryBox>
 
             <div
-              id={covertToLowercaseAndDashes(
-                twoPageMeetingT('summaryBox.listItem.draft')
+              id={convertToLowercaseAndDashes(
+                twoPageMeetingT('summaryBox.list.0')
               )}
-              className="margin-bottom-6"
+              className="margin-bottom-5 scroll-target"
             >
               <h2 className="margin-bottom-3">
-                {twoPageMeetingT('summaryBox.listItem.draft')}
+                {twoPageMeetingT('summaryBox.list.0')}
               </h2>
-              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
-                {twoPageMeetingT('conceptPaper.introParagraph')}
+
+              <p className="margin-top-0 margin-bottom-3 line-height-normal">
+                {twoPageMeetingT('keyResources.introParagraph')}
               </p>
 
-              <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('conceptPaper.stepOne.heading')}
-              </h3>
-              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                {modelOverviewAndGoals.map(k => (
-                  <li key={k} className="line-height-sans-4">
-                    {k}
-                  </li>
-                ))}
-              </ul>
+              <KeyResourcesCards />
+            </div>
+
+            <div
+              id={convertToLowercaseAndDashes(
+                twoPageMeetingT('summaryBox.list.1')
+              )}
+              className="margin-bottom-5 scroll-target"
+            >
+              <h2 className="margin-bottom-3">
+                {twoPageMeetingT('summaryBox.list.1')}
+              </h2>
+
+              <p className="margin-top-0 margin-bottom-3 line-height-normal">
+                {twoPageMeetingT('about.introParagraph')}
+              </p>
+
+              <Alert type="info" className="margin-y-3">
+                <div style={{ whiteSpace: 'pre' }}>
+                  <Trans
+                    i18nKey="sixPageMeeting:paperTemplateAlert"
+                    components={{
+                      link1: (
+                        <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx">
+                          {' '}
+                        </ExternalLink>
+                      )
+                    }}
+                  />
+                </div>
+              </Alert>
 
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('conceptPaper.stepTwo.heading')}
+                {twoPageMeetingT('about.stepOne.heading')}
               </h3>
-              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                <li className="line-height-sans-4">
-                  {twoPageMeetingT('conceptPaper.stepTwo.item')}
-                </li>
-              </ul>
 
-              <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('conceptPaper.stepThree.heading')}
-              </h3>
-              <i className="display-block margin-top-0 margin-bottom-1 padding-left-3">
-                {twoPageMeetingT('conceptPaper.stepThree.italics')}
-              </i>
-              <ul className="margin-top-0 margin-bottom-5 padding-left-6">
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.alignment.bold')}
-                  </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.alignment.text')}
-                  <ol className="padding-left-3 margin-top-05">
-                    {alignmentListItems.map(k => (
-                      <li key={k} className="line-height-sans-4">
-                        {k}
-                      </li>
-                    ))}
-                  </ol>
-                </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.impact.bold')}
-                  </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.impact.text')}
-                  <ul className="padding-left-3 margin-top-05">
-                    {impactListItems.map(k => (
-                      <li key={k} className="line-height-sans-4">
+              <p className="padding-left-3 margin-bottom-0 line-height-normal">
+                {twoPageMeetingT('about.stepOne.copy')}
+              </p>
+
+              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                <li className="line-height-normal">
+                  {twoPageMeetingT('about.stepOne.items.brief.text')}
+                  <ul className="margin-top-0 padding-left-2">
+                    {briefItems.map(k => (
+                      <li key={k} className="line-height-normal">
                         {k}
                       </li>
                     ))}
                   </ul>
                 </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.feasibility.bold')}
-                  </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.feasibility.text')}
+
+                <li className="line-height-normal">
+                  {twoPageMeetingT('about.stepOne.items.describe')}
                 </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {twoPageMeetingT('conceptPaper.stepThree.innovation.bold')}
-                  </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.innovation.text')}
+
+                <li className="line-height-normal">
+                  {twoPageMeetingT('about.stepOne.items.include')}
                 </li>
-                <li className="line-height-sans-4 margin-bottom-05">
-                  <strong>
-                    {twoPageMeetingT(
-                      'conceptPaper.stepThree.stakeholders.bold'
-                    )}
-                  </strong>
-                  {twoPageMeetingT('conceptPaper.stepThree.stakeholders.text')}
+
+                <li className="line-height-normal">
+                  {twoPageMeetingT('about.stepOne.items.provide')}
                 </li>
               </ul>
-            </div>
 
-            <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0">
-              <SummaryBoxHeading headingLevel="h3">
-                {twoPageMeetingT('conceptPaper.exampleSummaryBox.heading')}
-              </SummaryBoxHeading>
-              <SummaryBoxContent>
-                <p className="margin-y-1">
-                  {twoPageMeetingT('conceptPaper.exampleSummaryBox.text')}
-                </p>
-                <ul className="margin-top-0">
-                  <li>
+              <h3 className="margin-top-0 margin-bottom-1">
+                {twoPageMeetingT('about.stepTwo.heading')}
+              </h3>
+
+              <p className="padding-left-3 margin-bottom-0 line-height-normal">
+                {twoPageMeetingT('about.stepTwo.copy')}
+              </p>
+
+              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
+                <li className="line-height-normal">
+                  {twoPageMeetingT('about.stepTwo.item')}
+                </li>
+              </ul>
+
+              <h3 className="margin-top-0 margin-bottom-1">
+                {twoPageMeetingT('about.stepThree.heading')}
+              </h3>
+
+              <i className="display-block margin-top-0 margin-bottom-1 padding-left-3">
+                {twoPageMeetingT('about.stepThree.italics')}
+              </i>
+
+              <p className="padding-left-3 margin-bottom-0 line-height-normal">
+                <Trans
+                  t={twoPageMeetingT}
+                  i18nKey="about.stepThree.copy"
+                  components={{
+                    bold: <strong />
+                  }}
+                />
+              </p>
+              <ul className="margin-top-0 margin-bottom-5 padding-left-6">
+                {Object.values(stepThreeList).map(k => (
+                  <li
+                    key={convertToLowercaseAndDashes(k.text)}
+                    className="line-height-normal margin-bottom-05"
+                  >
+                    <Trans
+                      t={twoPageMeetingT}
+                      i18nKey={k.text}
+                      components={{
+                        bold: <strong />
+                      }}
+                    />
+
+                    {k.numberedList && (
+                      <ol className="padding-left-3 margin-top-05">
+                        {k.numberedList.map(listItem => (
+                          <li
+                            key={convertToLowercaseAndDashes(listItem)}
+                            className="line-height-normal"
+                          >
+                            {listItem}
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+
+                    {k.list && (
+                      <ul className="padding-left-3 margin-top-05">
+                        {k.list.map(listItem => (
+                          <li
+                            key={convertToLowercaseAndDashes(listItem)}
+                            className="line-height-normal"
+                          >
+                            {listItem}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+
+              <SummaryBox className="padding-3 margin-bottom-3">
+                <SummaryBoxHeading
+                  headingLevel="h3"
+                  className="margin-bottom-2"
+                >
+                  {twoPageMeetingT('about.summarybox.tips.heading')}
+                </SummaryBoxHeading>
+
+                <SummaryBoxContent>
+                  <p className="margin-y-0">
+                    {twoPageMeetingT('about.summarybox.tips.firstParagraph')}
+                  </p>
+
+                  <ul className="margin-y-0 padding-left-6">
+                    {aboutTipsList1.map(k => (
+                      <li key={k} className="line-height-normal">
+                        {k}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <p className="margin-y-0">
+                    {twoPageMeetingT('about.summarybox.tips.secondParagraph')}
+                  </p>
+
+                  <ul className="margin-top-0 margin-bottom-2 padding-left-6">
+                    {aboutTipsList2.map(k => (
+                      <li key={k} className="line-height-normal">
+                        {k}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <p className="margin-y-0">
+                    <Trans
+                      t={twoPageMeetingT}
+                      i18nKey="about.summarybox.tips.footer"
+                      components={{
+                        bold: (
+                          <ExternalLink
+                            className="margin-right-0"
+                            href="https://share.cms.gov/center/cmmi/SR/SitePages/Home.aspx"
+                          />
+                        )
+                      }}
+                    />
+                  </p>
+                </SummaryBoxContent>
+              </SummaryBox>
+
+              <SummaryBox className="padding-3 border-gray-10 bg-white shadow-2">
+                <SummaryBoxHeading headingLevel="h3">
+                  {twoPageMeetingT(
+                    'about.summarybox.exampleSummaryBox.heading'
+                  )}
+                </SummaryBoxHeading>
+
+                <SummaryBoxContent>
+                  <p className="margin-y-1">
+                    {twoPageMeetingT('about.summarybox.exampleSummaryBox.text')}
+                  </p>
+
+                  <ul className="margin-top-0">
+                    {getKeys(exampleSummaryBoxList).map(k => (
+                      <li key={k} className="margin-bottom-1">
+                        <ExternalLink href={exampleSummaryBoxList[k].href}>
+                          {exampleSummaryBoxList[k].copy}
+                        </ExternalLink>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <span className="margin-y-0">
+                    {twoPageMeetingT(
+                      'about.summarybox.exampleSummaryBox.footer'
+                    )}
                     <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
                       {twoPageMeetingT(
-                        'conceptPaper.exampleSummaryBox.list.one'
+                        'about.summarybox.exampleSummaryBox.footerLink'
                       )}
                     </ExternalLink>
-                  </li>
-                  <li>
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20AOC)%202-pager_October%202021_v2%20clean.docx?d=w4bd1ac8e332c42659f7e4330b519794a">
-                      {twoPageMeetingT(
-                        'conceptPaper.exampleSummaryBox.list.two'
-                      )}
-                    </ExternalLink>
-                  </li>
-                  <li>
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Innovation%20in%20Behavioral%20Health%20(formerly%20BHI)%20Model%202-pager_FINAL.docx?d=wf5dc9e25276945278f98c2c8efc31e16">
-                      {twoPageMeetingT(
-                        'conceptPaper.exampleSummaryBox.list.three'
-                      )}
-                    </ExternalLink>
-                  </li>
-                  <li>
-                    <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/New%20Primary%20Care%20Model%20Concept%202-pager%20Final%20for%20FO.docx?d=webcc03b8baa74b11bc9cd28c264a6178">
-                      {twoPageMeetingT(
-                        'conceptPaper.exampleSummaryBox.list.four'
-                      )}
-                    </ExternalLink>
-                  </li>
-                </ul>
-                <span className="margin-y-0">
-                  {twoPageMeetingT('conceptPaper.exampleSummaryBox.footer')}
-                  <ExternalLink href="https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739">
-                    {twoPageMeetingT(
-                      'conceptPaper.exampleSummaryBox.footerLink'
-                    )}
-                  </ExternalLink>
-                </span>
-              </SummaryBoxContent>
-            </SummaryBox>
+                  </span>
+                </SummaryBoxContent>
+              </SummaryBox>
+            </div>
 
             <div
-              id={covertToLowercaseAndDashes(
-                twoPageMeetingT('summaryBox.listItem.start')
+              id={convertToLowercaseAndDashes(
+                twoPageMeetingT('summaryBox.list.2')
               )}
-              className="margin-bottom-6"
+              className="margin-bottom-5 scroll-target"
             >
               <h2 className="margin-bottom-3">
-                {twoPageMeetingT('summaryBox.listItem.start')}
+                {twoPageMeetingT('summaryBox.list.2')}
               </h2>
-              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+
+              <p className="margin-top-0 margin-bottom-3 line-height-normal">
                 {twoPageMeetingT('additionalResources.intro')}
               </p>
 
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('additionalResources.subheading')}
+                {twoPageMeetingT('additionalResources.contractor')}
               </h3>
-              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                {additionalResourcesListItems.map(k => (
-                  <li key={k} className="line-height-sans-4 margin-bottom-05">
-                    {k}
-                  </li>
-                ))}
-              </ul>
-              {additionalResourcesParagraphs.map(k => (
+
+              {contractorParagraphs.map(k => (
                 <p
                   key={k}
-                  className="line-height-sans-4 margin-top-0 margin-bottom-3"
+                  className="line-height-normal margin-top-0 margin-bottom-3"
                 >
                   {k}
                 </p>
               ))}
+
+              <SummaryBox className="padding-3 margin-bottom-3">
+                <SummaryBoxHeading
+                  headingLevel="h3"
+                  className="margin-bottom-2"
+                >
+                  {twoPageMeetingT(
+                    'additionalResources.summarybox.tips.heading'
+                  )}
+                </SummaryBoxHeading>
+
+                <SummaryBoxContent>
+                  <p className="margin-y-0">
+                    {twoPageMeetingT(
+                      'additionalResources.summarybox.tips.firstParagraph'
+                    )}
+                  </p>
+
+                  <ul className="margin-y-0 padding-left-6">
+                    {additionalResourceTips.map(k => (
+                      <li key={k} className="line-height-normal">
+                        {k}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <p className="margin-y-0">
+                    {twoPageMeetingT(
+                      'additionalResources.summarybox.tips.footer'
+                    )}
+                  </p>
+                </SummaryBoxContent>
+              </SummaryBox>
+
+              <h3 className="margin-top-0 margin-bottom-1">
+                {twoPageMeetingT('additionalResources.crossCut.heading')}
+              </h3>
+
+              <p className="line-height-normal margin-y-0">
+                {twoPageMeetingT('additionalResources.crossCut.copy')}
+              </p>
+
+              <ul className="margin-y-0 padding-left-6">
+                {crossCutListItems.map(k => (
+                  <li key={k} className="line-height-normal">
+                    <Trans
+                      i18nKey={k}
+                      components={{
+                        ml: (
+                          <UswdsReactLink
+                            className="usa-button usa-button--unstyled"
+                            to="?solution=learning-and-diffusion-group&section=about"
+                          >
+                            {k}
+                          </UswdsReactLink>
+                        )
+                      }}
+                    />
+                  </li>
+                ))}
+              </ul>
             </div>
 
             <div
-              id={covertToLowercaseAndDashes(
-                twoPageMeetingT('summaryBox.listItem.review')
+              id={convertToLowercaseAndDashes(
+                twoPageMeetingT('summaryBox.list.3')
               )}
-              className="margin-bottom-6"
+              className="margin-bottom-5 scroll-target"
             >
               <h2 className="margin-bottom-3">
-                {twoPageMeetingT('summaryBox.listItem.review')}
+                {twoPageMeetingT('summaryBox.list.3')}
               </h2>
-              <p className="margin-top-0 margin-bottom-3 line-height-sans-4">
+
+              <p className="margin-top-0 margin-bottom-3 line-height-normal">
                 {twoPageMeetingT('reviewMeeting.intro')}
-                <i>{twoPageMeetingT('reviewMeeting.italicsNowWhat')}</i>
               </p>
 
+              <SummaryBox className="padding-3 margin-bottom-3">
+                <SummaryBoxHeading
+                  headingLevel="h3"
+                  className="margin-bottom-2"
+                >
+                  {twoPageMeetingT(
+                    'additionalResources.summarybox.tips.heading'
+                  )}
+                </SummaryBoxHeading>
+
+                <SummaryBoxContent>
+                  <p className="margin-y-0">
+                    {twoPageMeetingT('reviewMeeting.tipbox.copy')}
+                  </p>
+
+                  <ul className="margin-y-0 padding-left-3">
+                    {reviewTipsList.map(k => (
+                      <li key={k} className="line-height-normal">
+                        {k}
+                      </li>
+                    ))}
+                  </ul>
+                </SummaryBoxContent>
+              </SummaryBox>
+
               <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('reviewMeeting.subheading.tip.text')}
+                {twoPageMeetingT('reviewMeeting.criteria.heading')}
               </h3>
-              <ul className="margin-top-0 margin-bottom-3 padding-left-6">
-                {tipsList.map(k => (
-                  <li key={k} className="line-height-sans-4 margin-bottom-05">
-                    {k}
+              <p className="margin-y-0 line-height-normal">
+                {twoPageMeetingT('reviewMeeting.criteria.copy')}
+              </p>
+
+              <ModelSectionCriteriaTable />
+
+              <h3 className="margin-top-0 margin-bottom-1">
+                {twoPageMeetingT('reviewMeeting.outcomes.heading')}
+              </h3>
+
+              <p className="margin-y-0 line-height-normal">
+                {twoPageMeetingT('reviewMeeting.outcomes.copy')}
+              </p>
+
+              <ul className="margin-y-0 padding-left-3">
+                {outcomesList.map(k => (
+                  <li key={k} className="line-height-normal">
+                    <Trans
+                      i18nKey={k}
+                      components={{
+                        bold: <strong />
+                      }}
+                    />
                   </li>
                 ))}
               </ul>
-
-              <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('reviewMeeting.subheading.outcomes.text')}
-              </h3>
-              {outcomesParagraphs.map(k => (
-                <p
-                  key={k}
-                  className="line-height-sans-4 margin-top-0 margin-bottom-3"
-                >
-                  {k}
-                </p>
-              ))}
             </div>
 
-            <SummaryBox>
-              <SummaryBoxHeading headingLevel="h3">
-                {twoPageMeetingT('footerSummaryBox.title')}
-              </SummaryBoxHeading>
-              <SummaryBoxContent>
-                <Trans i18nKey="twoPageMeeting:footerSummaryBox.body">
-                  indexZero
-                  <ExternalLink href="mailto:MINTTeam@cms.hhs.gov">
-                    email
-                  </ExternalLink>
-                  indexTwo
-                </Trans>
-              </SummaryBoxContent>
-            </SummaryBox>
+            <NeedHelp />
           </Grid>
         </GridContainer>
       </MainContent>

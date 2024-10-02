@@ -16,10 +16,11 @@ import ExternalLink from 'components/ExternalLink';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PrintPDFWrapper, { PrintPDFContext } from 'contexts/PrintPDFContext';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 import HelpCategoryTag from '../_components/HelpCategoryTag';
-import { ArticleCategories, covertToLowercaseAndDashes, HelpArticle } from '..';
+import { ArticleCategories, HelpArticle } from '..';
 
 export const EvaluatingDataExchangeApproach = () => {
   const { t } = useTranslation('evaluatingDataExchangeApproach');
@@ -146,7 +147,7 @@ const DataExchangeApproachTable = () => {
       <tbody>
         {rows.map((row: RowType, rowIndex) => {
           return (
-            <tr key={covertToLowercaseAndDashes(row.id)}>
+            <tr key={convertToLowercaseAndDashes(row.id)}>
               <td
                 className="text-baseline padding-y-2 padding-left-0"
                 style={{

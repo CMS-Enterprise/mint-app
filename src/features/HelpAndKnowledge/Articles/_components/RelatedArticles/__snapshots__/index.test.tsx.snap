@@ -88,19 +88,19 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
               <h3
                 class="line-height-body-4 margin-bottom-1"
               >
-                How to have a successful 2-pager meeting
+                About 2-page concept papers and review meetings
               </h3>
             </header>
             <a
               class="usa-link width-fit-content display-block "
-              href="/help-and-knowledge/articles?category=getting-started"
+              href="/help-and-knowledge/articles?category=model-concept-and-design"
             >
               <span
-                aria-label="Articles under the Getting started category"
+                aria-label="Articles under the Model concept and design category"
                 class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
                 data-testid="tag"
               >
-                Getting started
+                Model concept and design
               </span>
             </a>
             <div
@@ -108,7 +108,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
-                Use this article to ensure you’re fully prepared for your 2-page concept review meeting with CMMI Front Office (FO).
+                Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.
               </p>
             </div>
             <div
@@ -116,7 +116,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
               data-testid="CardFooter"
             >
               <button
-                aria-label="Read How to have a successful 2-pager meeting article"
+                aria-label="Read About 2-page concept papers and review meetings article"
                 class="usa-button usa-button--outline"
                 type="button"
               >
@@ -139,19 +139,19 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
               <h3
                 class="line-height-body-4 margin-bottom-1"
               >
-                How to have a successful 6-pager meeting
+                About 6-page concept papers and review meetings
               </h3>
             </header>
             <a
               class="usa-link width-fit-content display-block "
-              href="/help-and-knowledge/articles?category=getting-started"
+              href="/help-and-knowledge/articles?category=model-concept-and-design"
             >
               <span
-                aria-label="Articles under the Getting started category"
+                aria-label="Articles under the Model concept and design category"
                 class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
                 data-testid="tag"
               >
-                Getting started
+                Model concept and design
               </span>
             </a>
             <div
@@ -159,7 +159,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
               data-testid="CardBody"
             >
               <p>
-                Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-pager. Use this article to ensure you’re fully prepared for your 6-page concept review meeting with CMMI FO.
+                Once CMMI Front Office (FO) approves the 2-page model concept, model teams can begin developing the 6-page concept paper. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.
               </p>
             </div>
             <div
@@ -167,7 +167,7 @@ exports[`RelatedArticle > matches the snapshot 1`] = `
               data-testid="CardFooter"
             >
               <button
-                aria-label="Read How to have a successful 6-pager meeting article"
+                aria-label="Read About 6-page concept papers and review meetings article"
                 class="usa-button usa-button--outline"
                 type="button"
               >

@@ -133,10 +133,10 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
               >
                 <span>
                   Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at 
-                  <button
-                    class="usa-button usa-button--unstyled margin-right-2"
-                    data-testid="button"
-                    type="button"
+                  <span
+                    class="usa-link pointer margin-right-05"
+                    role="button"
+                    tabindex="0"
                   >
                     <span>
                       MINTTeam@cms.hhs.gov
@@ -154,7 +154,7 @@ exports[`Model Basics Milestones page > renders without errors and matches snaps
                         />
                       </svg>
                     </span>
-                  </button>
+                  </span>
                    if you have any questions.
                 </span>
               </p>
