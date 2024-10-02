@@ -49,10 +49,7 @@ const DataExchangeApproachCard = ({
           </h3>
         </CardHeader>
         <div className="collaboration-area__status flex-align-center">
-          <TaskListStatusTag
-            status="IN_PROGRESS"
-            classname="width-fit-content"
-          />
+          <TaskListStatusTag status={status} classname="width-fit-content" />
         </div>
 
         <CardBody>
@@ -73,6 +70,7 @@ const DataExchangeApproachCard = ({
 
         <CardFooter>
           <UswdsReactLink
+            //   TODO: link up to DEA form once built
             to={`/models/${modelID}/task-list`}
             className="usa-button margin-right-2"
             variant="unstyled"
