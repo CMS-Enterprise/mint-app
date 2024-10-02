@@ -22,7 +22,10 @@ func ExistingModelCollectionGet(logger *zap.Logger, store *storage.Store) ([]*mo
 
 // ExistingModelGetByIDLOADER implements resolver logic to get Existing Model by a model plan ID using a data loader
 func ExistingModelGetByIDLOADER(ctx context.Context, id int) (*models.ExistingModel, error) {
-	allLoaders := loaders.Loaders(ctx)
+	allLoaders, ok := loaders.Loaders(ctx)
+	if !ok {
+		return nil, loaders.ErrNoLoaderOnContext
+	}
 	eMLoader := allLoaders.ExistingModelLoader
 	key := loaders.NewKeyArgs()
 	key.Args["id"] = id

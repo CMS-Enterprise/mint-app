@@ -43,7 +43,10 @@ func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes 
 
 // PlanGeneralCharacteristicsGetByModelPlanIDLOADER implements resolver logic to get plan general characteristics by a model plan ID using a data loader
 func PlanGeneralCharacteristicsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanGeneralCharacteristics, error) {
-	allLoaders := loaders.Loaders(ctx)
+	allLoaders, ok := loaders.Loaders(ctx)
+	if !ok {
+		return nil, loaders.ErrNoLoaderOnContext
+	}
 	gcLoader := allLoaders.GeneralCharacteristicsLoader
 	key := loaders.NewKeyArgs()
 	key.Args["model_plan_id"] = modelPlanID

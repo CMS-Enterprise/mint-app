@@ -13,7 +13,10 @@ import (
 )
 
 func operationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx context.Context, key storage.SolutionAndPossibleKey) ([]*models.OperationalSolution, error) {
-	allLoaders := Loaders(ctx)
+	allLoaders, ok := Loaders(ctx)
+	if !ok {
+		return nil, ErrNoLoaderOnContext
+	}
 	loader := allLoaders.operationalSolutions.AndPossibleByOperationalNeedIDWithIncludeNotNeeded
 	return loader.Load(ctx, key)()
 }
@@ -21,7 +24,13 @@ func operationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx context.
 func batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx context.Context, keys []storage.SolutionAndPossibleKey) []*dataloader.Result[[]*models.OperationalSolution] {
 	logger := appcontext.ZLogger(ctx)
 	output := make([]*dataloader.Result[[]*models.OperationalSolution], len(keys))
-	loaders := Loaders(ctx)
+	loaders, ok := Loaders(ctx)
+	if !ok {
+		for index := range keys {
+			output[index] = &dataloader.Result[[]*models.OperationalSolution]{Data: nil, Error: ErrNoLoaderOnContext}
+		}
+		return output
+	}
 
 	sols, loadErr := storage.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(loaders.DataReader.Store, logger, keys)
 

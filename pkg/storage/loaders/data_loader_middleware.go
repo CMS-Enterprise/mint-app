@@ -26,10 +26,15 @@ func NewDataLoaderMiddleware(loaders *DataLoaders) func(http.Handler) http.Handl
 	}
 }
 
-// Loaders returns the dataLoaders for a given context
-func Loaders(ctx context.Context) *DataLoaders {
-	return ctx.Value(loadersKey).(*DataLoaders)
-	//TODO: (loaders) consider returning a check if the loaders exists
+// Loaders returns the dataLoaders for a given context, along with a bool to say if it returned. It will return true if the loader is present, and false if not
+func Loaders(ctx context.Context) (*DataLoaders, bool) {
+	loaders := ctx.Value(loadersKey)
+	if loaders == nil {
+		return nil, false
+	}
+
+	dl, ok := loaders.(*DataLoaders)
+	return dl, ok
 }
 
 // CTXWithLoaders decorates the context with a dataloader

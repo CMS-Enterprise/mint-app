@@ -14,7 +14,10 @@ import (
 
 // PlanOpsEvalAndLearningGetByModelPlanIDLOADER implements resolver logic to get Plan Operations Evaluation And Learning by a model plan ID using a data loader
 func PlanOpsEvalAndLearningGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanOpsEvalAndLearning, error) {
-	allLoaders := loaders.Loaders(ctx)
+	allLoaders, ok := loaders.Loaders(ctx)
+	if !ok {
+		return nil, loaders.ErrNoLoaderOnContext
+	}
 	oelLoader := allLoaders.OperationsEvaluationAndLearningLoader
 	key := loaders.NewKeyArgs()
 	key.Args["model_plan_id"] = modelPlanID

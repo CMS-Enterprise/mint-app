@@ -51,7 +51,10 @@ var OperationalSolutions = operationalSolutionsLoaderConfig{
 }
 
 func operationalSolutionGetByIDLoad(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error) {
-	allLoaders := Loaders(ctx)
+	allLoaders, ok := Loaders(ctx)
+	if !ok {
+		return nil, ErrNoLoaderOnContext
+	}
 	return allLoaders.operationalSolutions.ByID.Load(ctx, id)()
 }
 
@@ -62,7 +65,13 @@ func operationalSolutionGetByIDBatch(
 ) []*dataloader.Result[*models.OperationalSolution] {
 	logger := appcontext.ZLogger(ctx)
 	output := make([]*dataloader.Result[*models.OperationalSolution], len(ids))
-	loaders := Loaders(ctx)
+	loaders, ok := Loaders(ctx)
+	if !ok {
+		for index := range ids {
+			output[index] = &dataloader.Result[*models.OperationalSolution]{Data: nil, Error: ErrNoLoaderOnContext}
+		}
+		return output
+	}
 
 	opSols, loadErr := storage.OperationalSolutionGetByIDLOADER(loaders.DataReader.Store, logger, ids)
 	if loadErr != nil {
