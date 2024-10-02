@@ -139,6 +139,7 @@ describe('The Model Plan Task List', () => {
     },
     crs: [],
     tdls: [],
+    echimpCRsAndTDLs: [],
     operationalNeeds: [] as any,
     documents: [
       {
