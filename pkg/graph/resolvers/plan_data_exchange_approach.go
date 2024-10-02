@@ -85,5 +85,5 @@ func EvaluateStatus(hasChanges bool, isSettingToComplete bool) (models.DataExcha
 		return models.DataExchangeApproachStatusInProgress, nil
 	}
 
-	return models.DataExchangeApproachStatusNotStarted, nil
+	return models.DataExchangeApproachStatusReady, nil
 }

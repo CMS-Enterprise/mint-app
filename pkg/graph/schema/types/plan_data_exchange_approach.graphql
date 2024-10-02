@@ -45,7 +45,7 @@ enum MultiSourceDataToCollect {
 }
 
 enum DataExchangeApproachStatus {
-  NOT_STARTED
+  READY
   IN_PROGRESS
   COMPLETE
 }

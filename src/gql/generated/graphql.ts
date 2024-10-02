@@ -314,7 +314,7 @@ export type DailyDigestCompleteActivityMeta = {
 export enum DataExchangeApproachStatus {
   COMPLETE = 'COMPLETE',
   IN_PROGRESS = 'IN_PROGRESS',
-  NOT_STARTED = 'NOT_STARTED'
+  READY = 'READY'
 }
 
 export enum DataForMonitoringType {

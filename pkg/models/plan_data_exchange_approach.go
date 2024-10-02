@@ -126,7 +126,7 @@ type DataExchangeApproachStatus string
 
 // Enum values for DataExchangeApproachStatus
 const (
-	DataExchangeApproachStatusNotStarted DataExchangeApproachStatus = "NOT_STARTED"
+	DataExchangeApproachStatusReady      DataExchangeApproachStatus = "READY"
 	DataExchangeApproachStatusInProgress DataExchangeApproachStatus = "IN_PROGRESS"
 	DataExchangeApproachStatusCompleted  DataExchangeApproachStatus = "COMPLETED"
 )
