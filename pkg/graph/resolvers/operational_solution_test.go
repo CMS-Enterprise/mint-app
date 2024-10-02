@@ -374,3 +374,47 @@ func (suite *ResolverSuite) TestGetSolutionSelectedDetails() {
 	suite.EqualValues(sol.Status, solutionSelectedDetails.SolutionStatus)
 
 }
+
+func (suite *ResolverSuite) TestOperationalSolutionGetByIDLOADER() {
+	// 1. Create solution, ensure fields are as expected
+	plan := suite.createModelPlan("plan for solutions")
+	needType := models.OpNKAcquireALearnCont
+	solType1 := models.OpSKOutlookMailbox
+	solType2 := models.OpSKAcoOs
+
+	need, err := suite.testConfigs.Store.OperationalNeedGetByModelPlanIDAndType(suite.testConfigs.Logger, plan.ID, needType)
+	suite.NoError(err)
+
+	changes := map[string]interface{}{}
+	changes["needed"] = false
+
+	sol1, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, &solType1, changes, suite.testConfigs.Principal)
+	suite.NoError(err)
+	suite.NotNil(sol1)
+
+	sol2, err := OperationalSolutionCreate(suite.testConfigs.Context, suite.testConfigs.Store, suite.testConfigs.Logger, nil, nil, email.AddressBook{}, need.ID, &solType2, changes, suite.testConfigs.Principal)
+	suite.NoError(err)
+	suite.NotNil(sol2)
+
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		suite.verifyOpSolByIDLoader(ctx, sol1.ID)
+		return nil
+	})
+	g.Go(func() error {
+		suite.verifyOpSolByIDLoader(ctx, sol2.ID)
+		return nil
+	})
+	err = g.Wait()
+	suite.NoError(err)
+
+}
+
+func (suite *ResolverSuite) verifyOpSolByIDLoader(ctx context.Context, id uuid.UUID) {
+	opSol, err := OperationalSolutionGetByIDLOADER(ctx, id)
+	suite.NoError(err)
+
+	if suite.NotNil(opSol) {
+		suite.EqualValues(id, opSol.ID)
+	}
+}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -119,7 +120,7 @@ func OperationalSolutionGetByIDWithNumberOfSubtasks(np sqlutils.NamedPreparer, _
 // OperationalSolutionGetByIDLOADER returns an operational solution by ID using a DataLoader
 func OperationalSolutionGetByIDLOADER(np sqlutils.NamedPreparer, logger *zap.Logger, ids []uuid.UUID) ([]*models.OperationalSolution, error) {
 	args := map[string]interface{}{
-		"ids": ids,
+		"ids": pq.Array(ids),
 	}
 	res, err := sqlutils.SelectProcedure[models.OperationalSolution](np, sqlqueries.OperationalSolution.GetByIDLOADER, args)
 	if err != nil {
