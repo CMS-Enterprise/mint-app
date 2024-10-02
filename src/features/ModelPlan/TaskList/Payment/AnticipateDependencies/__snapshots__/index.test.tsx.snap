@@ -276,7 +276,7 @@ exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-creating-dependencies-between-services-note-add-note-toggle"
                   type="button"
                 >
                   <svg
@@ -360,7 +360,7 @@ exports[`Model Plan -- Anticipate Dependencies > matches snapshot 1`] = `
               >
                 <button
                   class="usa-button usa-button usa-button--unstyled"
-                  data-testid="add-note-toggle"
+                  data-testid="payment-needs-claims-data-collection-note-add-note-toggle"
                   type="button"
                 >
                   <svg

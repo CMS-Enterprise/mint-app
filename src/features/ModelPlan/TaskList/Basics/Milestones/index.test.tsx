@@ -77,6 +77,8 @@ describe('Model Basics Milestones page', () => {
 
     await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
 
+    expect(await screen.findByText('Phased in note')).toBeInTheDocument();
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

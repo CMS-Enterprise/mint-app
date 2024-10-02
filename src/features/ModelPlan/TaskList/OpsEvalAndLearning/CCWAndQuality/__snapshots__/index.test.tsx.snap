@@ -172,7 +172,7 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy > matches snapshot 1`]
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="ops-eval-and-learning-send-files-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -251,7 +251,7 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy > matches snapshot 1`]
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="ops-eval-and-learning-app-to-distribute-files-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -330,7 +330,7 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy > matches snapshot 1`]
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="ops-eval-and-learning-distribute-files-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -436,7 +436,7 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy > matches snapshot 1`]
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="ops-eval-and-learning-develop-measures-note-add-note-toggle"
             type="button"
           >
             <svg
@@ -534,7 +534,7 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy > matches snapshot 1`]
         >
           <button
             class="usa-button usa-button usa-button--unstyled"
-            data-testid="add-note-toggle"
+            data-testid="ops-eval-and-learning-performance-impact-note-add-note-toggle"
             type="button"
           >
             <svg
