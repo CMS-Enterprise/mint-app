@@ -39,6 +39,10 @@ type PlanDataExchangeApproach struct {
 	Status *DataExchangeApproachStatus `json:"status" db:"status"`
 }
 
+func (p *PlanDataExchangeApproach) IsDataExchangeApproachComplete() bool {
+	return p.MarkedCompleteDts != nil
+}
+
 // NewPlanDataExchangeApproach creates a new PlanDataExchangeApproach with the required fields
 func NewPlanDataExchangeApproach(tls coreTaskListSection) *PlanDataExchangeApproach {
 	return &PlanDataExchangeApproach{
