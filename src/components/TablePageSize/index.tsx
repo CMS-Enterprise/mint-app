@@ -5,8 +5,10 @@ import classnames from 'classnames';
 
 type TablePageSizeProps = {
   className?: string;
-  pageSize: number;
-  setPageSize: (pageSize: number) => void;
+  pageSize: number | 'all';
+  setPageSize:
+    | ((pageSize: number | 'all') => void)
+    | ((pageSize: number) => void);
   valueArray?: (number | 'all')[];
 };
 
@@ -33,17 +35,14 @@ const TablePageSize = ({
         id="table-page-size"
         data-testid="table-page-size"
         name="tablePageSize"
-        onChange={(e: any) => setPageSize(Number(e.target.value))}
+        onChange={(e: any) => {
+          setPageSize(e.target.value);
+        }}
         value={pageSize}
       >
         {valueArray.map(value => (
           <Option value={value} />
         ))}
-        {/* <Option value={5} />
-        <Option value={10} />
-        <Option value={25} />
-        <Option value={50} />
-        <Option value={100} /> */}
       </Select>
     </div>
   );
