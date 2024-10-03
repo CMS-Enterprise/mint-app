@@ -6,9 +6,7 @@ import classnames from 'classnames';
 type TablePageSizeProps = {
   className?: string;
   pageSize: number | 'all';
-  setPageSize:
-    | ((pageSize: number | 'all') => void)
-    | ((pageSize: number) => void);
+  setPageSize: (pageSize: number) => void;
   valueArray?: (number | 'all')[];
 };
 
