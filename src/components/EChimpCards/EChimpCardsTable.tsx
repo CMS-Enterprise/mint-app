@@ -60,7 +60,11 @@ const sortOptions: SortProps[] = [
   }
 ];
 
-const EChimpCardsTable = () => {
+const EChimpCardsTable = ({
+  isInReadView = false
+}: {
+  isInReadView?: boolean;
+}) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
@@ -183,7 +187,7 @@ const EChimpCardsTable = () => {
       </Grid>
       <CardGroup>
         {currentItems.map(card => (
-          <EChimpCard key={card.id} {...card} />
+          <EChimpCard key={card.id} {...card} isInReadView={isInReadView} />
         ))}
       </CardGroup>
       <Grid row>

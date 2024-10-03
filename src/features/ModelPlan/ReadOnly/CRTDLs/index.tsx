@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from '@trussworks/react-uswds';
-import CRTDLTable from 'features/ModelPlan/CRTDL/CRTDLs/table';
+import React from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import Alert from 'components/Alert';
-import Expire from 'components/Expire';
-
-type CRTDLStatusType = 'success' | 'error';
+import EChimpCardsTable from 'components/EChimpCards/EChimpCardsTable';
+import ExternalLink from 'components/ExternalLink';
 
 const ReadOnlyCRTDLs = ({
   modelID,
@@ -16,8 +13,6 @@ const ReadOnlyCRTDLs = ({
   isHelpArticle?: boolean;
 }) => {
   const { t } = useTranslation('crtdlsMisc');
-  const [crtdlMessage, setCRTDLMessage] = useState('');
-  const [crtdlStatus, setCRTDLStatus] = useState<CRTDLStatusType>('error');
 
   return (
     <div
@@ -27,44 +22,28 @@ const ReadOnlyCRTDLs = ({
       <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
 
       <p className="font-body-md line-height-body-4">
-        {t('readOnlyDescription')}
+        <Trans
+          t={t}
+          i18nKey="readOnlyDescription"
+          components={{
+            el: (
+              <ExternalLink
+                className="margin-right-0"
+                href="https://echimp.cmsnet/"
+                toEchimp
+              >
+                {' '}
+              </ExternalLink>
+            )
+          }}
+        />
       </p>
 
-      <Link
-        aria-label="Open EUA in a new tab"
-        href="https://echimp.cmsnet/"
-        target="_blank"
-        rel="noopener noreferrer"
-        variant="external"
-        className="display-block margin-y-3"
-      >
-        {t('visitECHIMPReadonly')}
-      </Link>
-
-      <Alert type="info" slim className="margin-bottom-1">
+      <Alert type="info" slim className="margin-bottom-5">
         {t('echimp')}
       </Alert>
 
-      {crtdlMessage && (
-        <Expire delay={45000}>
-          <Alert
-            type={crtdlStatus}
-            slim
-            data-testid="mandatory-fields-alert"
-            className="margin-y-4"
-          >
-            <span className="mandatory-fields-alert__text">{crtdlMessage}</span>
-          </Alert>
-        </Expire>
-      )}
-
-      <CRTDLTable
-        modelID={modelID}
-        readOnly
-        setCRTDLMessage={setCRTDLMessage}
-        setCRTDLStatus={setCRTDLStatus}
-        isHelpArticle={isHelpArticle}
-      />
+      <EChimpCardsTable isInReadView />
     </div>
   );
 };

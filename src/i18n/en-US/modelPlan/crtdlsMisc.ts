@@ -11,7 +11,7 @@ const crtdlsMisc = {
     'It may take up to 24 hours for CRs and TDLs to appear in MINT once added to ECHIMP.',
   visitECHIMPReadonly: 'Visit FFS CR and TDL details in ECHIMP',
   readOnlyDescription:
-    'More information about each Fee-for Service (FFS) Change Request (CR) or Technical Direction Letter (TDL) can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the MINT Team at ',
+    'More information about each Fee-for Service (FFS) Change Request (CR) or Technical Direction Letter (TDL) can be found in <el>Enterprise Electronic Change Information Management Portal (ECHIMP)</el>. To get access to the ECHIMP system, request the proper job code through EUA. Please contact the CMS IT Service Desk at 410-786-2580 or 800-562-1963 if you need assistance.',
   crButton: 'Change Request (CR)',
   tdlButton: 'Technical Direction Letter (TDL)',
   addCRTDL: 'Add a CR or TDL',
