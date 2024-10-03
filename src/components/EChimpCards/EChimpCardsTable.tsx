@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { CardGroup } from '@trussworks/react-uswds';
+import {
+  CardGroup,
+  Grid,
+  GridContainer,
+  Label,
+  Select
+} from '@trussworks/react-uswds';
 import {
   EchimpCrAndTdlsQuery,
   useEchimpCrAndTdlsQuery
 } from 'gql/generated/graphql';
+import i18next from 'i18next';
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
@@ -81,7 +88,7 @@ const EChimpCardsTable = () => {
     );
   }
 
-  if (data.echimpCRAndTDLS?.length === 0) {
+  if (echimpItems.length === 0) {
     <Alert type="info" heading={crtdlsT('tableState.empty.heading')}>
       <span className="mandatory-fields-alert__text">
         <Trans
@@ -104,16 +111,54 @@ const EChimpCardsTable = () => {
 
   return (
     <>
-      <div className="margin-bottom-4">
-        <GlobalClientFilter
-          globalFilter={query}
-          setGlobalFilter={setQuery}
-          tableID="cr-and-tdl-table"
-          tableName={crtdlsT('heading')}
-          className="margin-bottom-3 maxw-none width-mobile-lg"
-        />
-        {Results}
-      </div>
+      {/* <div className="margin-bottom-4"> */}
+      <Grid row>
+        <Grid desktop={{ col: 6 }}>
+          <GlobalClientFilter
+            globalFilter={query}
+            setGlobalFilter={setQuery}
+            tableID="cr-and-tdl-table"
+            tableName={crtdlsT('heading')}
+            className="margin-bottom-3 maxw-none tablet:width-mobile-lg"
+          />
+        </Grid>
+        {/* </div> */}
+        {/* Select sort display */}
+        <Grid desktop={{ col: 6 }}>
+          <div
+            className="desktop:margin-left-auto display-flex"
+            style={{ maxWidth: '13rem' }}
+          >
+            <Label
+              htmlFor="sort"
+              className="text-normal margin-top-1 margin-right-1"
+            >
+              {i18next.t('changeHistory:sort.label')}
+            </Label>
+
+            <Select
+              id="sort"
+              className="margin-bottom-2 margin-top-0"
+              name="sort"
+              value=""
+              // onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+              //   setSort(e.target.value as SortProps['value']);
+              // }}
+            >
+              {/* {sortOptions.map(option => {
+              return (
+                <option key={`sort-${option.value}`} value={option.value}>
+                  {option.label}
+                </option>
+              );
+            })} */}
+            </Select>
+          </div>
+        </Grid>
+      </Grid>
+      <Grid row className="margin-bottom-4">
+        <Grid col={12}>{Results}</Grid>
+      </Grid>
       <CardGroup>
         {currentItems.map(card => (
           <EChimpCard key={card.id} {...card} />
