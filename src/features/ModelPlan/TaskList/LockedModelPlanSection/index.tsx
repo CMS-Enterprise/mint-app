@@ -15,7 +15,7 @@ interface LocationState {
   error: boolean;
   route: string;
 }
-const LockedTaskListSection = () => {
+const LockedModelPlanSection = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const location = useLocation<LocationState>();
   const { error, route } = location?.state;
@@ -69,4 +69,4 @@ const LockedTaskListSection = () => {
   );
 };
 
-export default LockedTaskListSection;
+export default LockedModelPlanSection;

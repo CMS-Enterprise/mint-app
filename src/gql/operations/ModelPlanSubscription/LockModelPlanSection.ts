@@ -1,10 +1,10 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  mutation UnlockTaskListSection(
+  mutation LockModelPlanSection(
     $modelPlanID: UUID!
     $section: LockableSection!
   ) {
-    unlockTaskListSection(modelPlanID: $modelPlanID, section: $section)
+    lockLockableSection(modelPlanID: $modelPlanID, section: $section)
   }
 `);

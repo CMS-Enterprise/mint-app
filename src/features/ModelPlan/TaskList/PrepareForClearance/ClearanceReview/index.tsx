@@ -117,11 +117,11 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
   const history = useHistory();
 
   // Subscription locks context for task list
-  const { taskListSectionLocks } = useContext(SubscriptionContext);
+  const { lockableSectionLocks } = useContext(SubscriptionContext);
 
   // Subscription lock boolean if current section is locked
   const taskListLocked: boolean =
-    findLockedSection(taskListSectionLocks, taskListSectionMap[section]) ===
+    findLockedSection(lockableSectionLocks, taskListSectionMap[section]) ===
     LockStatus.LOCKED;
 
   const taskListSections = tArray<Record<string, string>>(

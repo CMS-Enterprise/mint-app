@@ -126,7 +126,7 @@ const client = new ApolloClient({
       OperationalSolution: {
         keyFields: ['key', 'nameOther', 'id']
       },
-      TaskListSectionLockStatus: {
+      LockableSectionLockStatus: {
         keyFields: ['lockedByUserAccount', ['id'], 'section', 'modelPlanID']
       }
     }

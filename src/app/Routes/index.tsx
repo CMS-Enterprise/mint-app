@@ -34,7 +34,7 @@ import Beneficiaries from 'features/ModelPlan/TaskList/Beneficiaries';
 import CostEstimate from 'features/ModelPlan/TaskList/CostEstimate';
 import Characteristics from 'features/ModelPlan/TaskList/GeneralCharacteristics';
 import ITSolutions from 'features/ModelPlan/TaskList/ITSolutions';
-import LockedTaskListSection from 'features/ModelPlan/TaskList/LockedTaskListSection';
+import LockedTaskListSection from 'features/ModelPlan/TaskList/LockedModelPlanSection';
 import OpsEvalAndLearning from 'features/ModelPlan/TaskList/OpsEvalAndLearning';
 import Participants from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'features/ModelPlan/TaskList/Payment';

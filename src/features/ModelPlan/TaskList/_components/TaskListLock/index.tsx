@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { TaskListSubscriptionSubscription } from 'gql/generated/graphql';
+import { ModelPlanSubscriptionSubscription } from 'gql/generated/graphql';
 
 import { AvatarCircle } from 'components/Avatar';
 
 type LockedByUserAccount =
-  TaskListSubscriptionSubscription['onLockTaskListSectionContext']['lockStatus']['lockedByUserAccount'];
+  ModelPlanSubscriptionSubscription['onLockLockableSectionContext']['lockStatus']['lockedByUserAccount'];
 
 type TaskListLockProps = {
   lockedByUserAccount: LockedByUserAccount | undefined;

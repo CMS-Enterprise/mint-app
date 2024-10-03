@@ -9,15 +9,16 @@ import React, { createContext, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   ChangeType,
-  GetTaskListSubscriptionsQuery,
-  TaskListSubscriptionDocument,
-  TaskListSubscriptionSubscription,
-  useGetTaskListSubscriptionsLazyQuery
+  GetLockedModelPlanSectionsQuery,
+  ModelPlanSubscriptionDocument,
+  ModelPlanSubscriptionSubscription,
+  useGetLockedModelPlanSectionsLazyQuery
 } from 'gql/generated/graphql';
 
 import { isUUID } from 'utils/modelPlan';
 
-type LockSectionType = GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
+type LockSectionType =
+  GetLockedModelPlanSectionsQuery['lockableSectionLocks'][0];
 
 type SubscriptionWrapperProps = {
   children: React.ReactNode;
@@ -64,10 +65,10 @@ export const removeLockedSection = (
 
 // Create the subscription context - can be used anywhere in a model plan
 export const SubscriptionContext = createContext<{
-  taskListSectionLocks: LockSectionType[];
+  lockableSectionLocks: LockSectionType[];
   loading: boolean;
 }>({
-  taskListSectionLocks: [],
+  lockableSectionLocks: [],
   loading: true
 });
 
@@ -85,16 +86,16 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
 
   // // The value that will be given to the context
   const subscriptionContextData = useRef<{
-    taskListSectionLocks: LockSectionType[];
+    lockableSectionLocks: LockSectionType[];
     loading: boolean;
   }>({
-    taskListSectionLocks: [],
+    lockableSectionLocks: [],
     loading: true
   });
 
   // useLazyQuery hook to init query and create subscription in the presence of a new model plan id
   const [getTaskListLocks, { data: subData, subscribeToMore }] =
-    useGetTaskListSubscriptionsLazyQuery();
+    useGetLockedModelPlanSectionsLazyQuery();
 
   useEffect(() => {
     if (validModelID && subscribeToMore && taskList) {
@@ -109,7 +110,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
       if (!subscribed.current) {
         // Subscription initiator and message update method
         subscribed.current = subscribeToMore({
-          document: TaskListSubscriptionDocument,
+          document: ModelPlanSubscriptionDocument,
           variables: {
             modelPlanID: modelID
           },
@@ -117,29 +118,29 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
             prev,
             {
               subscriptionData: { data }
-            }: { subscriptionData: { data: TaskListSubscriptionSubscription } }
+            }: { subscriptionData: { data: ModelPlanSubscriptionSubscription } }
           ) => {
             if (!data) return prev;
 
-            const lockChange = data.onLockTaskListSectionContext;
+            const lockChange = data.onLockLockableSectionContext;
 
             const updatedSubscriptionContext =
               lockChange.changeType === ChangeType.REMOVED
                 ? // If section lock is to be freed, remove the lock from the SubscriptionContext
                   removeLockedSection(
-                    prev.taskListSectionLocks,
+                    prev.lockableSectionLocks,
                     lockChange.lockStatus
                   )
                 : // If section lock is to be added, add the lock from the SubscriptionContext
                   addLockedSection(
-                    prev.taskListSectionLocks,
+                    prev.lockableSectionLocks,
                     lockChange.lockStatus
                   );
 
             // Formatting lock object to mirror prev updateQuery param
             const formattedSubscriptionContext = {
               ...prev,
-              taskListSectionLocks: updatedSubscriptionContext,
+              lockableSectionLocks: updatedSubscriptionContext,
               loading: false
             };
 

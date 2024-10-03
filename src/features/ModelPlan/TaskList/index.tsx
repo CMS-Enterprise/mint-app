@@ -23,8 +23,8 @@ import {
 import classNames from 'classnames';
 import {
   GetCrtdLsQuery,
+  GetLockedModelPlanSectionsQuery,
   GetModelPlanQuery,
-  GetTaskListSubscriptionsQuery,
   TaskListSection,
   TaskStatus,
   useGetModelPlanQuery
@@ -56,7 +56,7 @@ import TaskListSideNav from './_components/TaskListSideNav';
 import './index.scss';
 
 type TaskListSectionLockStatus =
-  GetTaskListSubscriptionsQuery['taskListSectionLocks'][0];
+  GetLockedModelPlanSectionsQuery['lockableSectionLocks'][0];
 
 type GetModelPlanTypes = GetModelPlanQuery['modelPlan'];
 type BasicsType = GetModelPlanQuery['modelPlan']['basics'];
@@ -165,7 +165,7 @@ const TaskList = () => {
   // Used to conditonally render role specific text in task list
   const userRole = isAssessment(groups, flags) ? 'assessment' : 'team';
 
-  const { taskListSectionLocks } = useContext(SubscriptionContext);
+  const { lockableSectionLocks } = useContext(SubscriptionContext);
 
   const { data, loading, error, refetch } = useGetModelPlanQuery({
     variables: {
@@ -245,7 +245,7 @@ const TaskList = () => {
   const getTaskListLockedStatus = (
     section: string
   ): TaskListSectionLockStatus | undefined => {
-    return taskListSectionLocks.find(
+    return lockableSectionLocks.find(
       sectionLock => sectionLock.section === taskListSectionMap[section]
     );
   };
