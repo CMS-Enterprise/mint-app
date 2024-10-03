@@ -20,14 +20,19 @@ type modelPlanLoaderConfig struct {
 	GetByID LoaderConfig[uuid.UUID, *models.ModelPlan]
 }
 
+// init initializes all relevant loaders for this loader config
+func (c *modelPlanLoaderConfig) init() {
+	c.GetByID.init()
+}
+
 // ModelPlan is the loader config for all fetching of model plan data
-var ModelPlan = func() modelPlanLoaderConfig {
-	config := modelPlanLoaderConfig{
+var ModelPlan = func() *modelPlanLoaderConfig {
+	config := &modelPlanLoaderConfig{
 		GetByID: LoaderConfig[uuid.UUID, *models.ModelPlan]{
 			batchFunction: batchModelPlanByModelPlanID,
 		},
 	}
-	config.GetByID.init()
+	config.init()
 	return config
 }()
 

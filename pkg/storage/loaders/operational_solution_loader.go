@@ -28,8 +28,8 @@ func (c *operationalSolutionsLoaderConfig) init() {
 }
 
 // OperationalSolutions is the loader config for all operational solution fetching
-var OperationalSolutions = func() operationalSolutionsLoaderConfig {
-	config := operationalSolutionsLoaderConfig{
+var OperationalSolutions = func() *operationalSolutionsLoaderConfig {
+	config := &operationalSolutionsLoaderConfig{
 		ByID: LoaderConfig[uuid.UUID, *models.OperationalSolution]{
 			batchFunction: operationalSolutionGetByIDBatch,
 		},

@@ -15,18 +15,24 @@ import (
 )
 
 type planBasicsLoaderConfig struct {
-	// GetByModelPlanID Gets a plan basics record associated with a model plan by the supplied model plan id
-	GetByModelPlanID LoaderConfig[uuid.UUID, *models.PlanBasics]
+	// ByModelPlanID Gets a plan basics record associated with a model plan by the supplied model plan id
+	ByModelPlanID LoaderConfig[uuid.UUID, *models.PlanBasics]
+}
+
+// init initializes all relevant loaders for this loader config
+func (c *planBasicsLoaderConfig) init() {
+	c.ByModelPlanID.init()
 }
 
 // PlanBasics is the loader config for all  plan basics fetching operations
-var PlanBasics planBasicsLoaderConfig = func() planBasicsLoaderConfig {
-	config := planBasicsLoaderConfig{
-		GetByModelPlanID: LoaderConfig[uuid.UUID, *models.PlanBasics]{
+var PlanBasics = func() *planBasicsLoaderConfig {
+	config := &planBasicsLoaderConfig{
+		ByModelPlanID: LoaderConfig[uuid.UUID, *models.PlanBasics]{
 			batchFunction: batchPlanBasicsGetByModelPlanID,
 		},
 	}
-	config.GetByModelPlanID.init()
+
+	config.ByModelPlanID.init()
 
 	return config
 }()
