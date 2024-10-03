@@ -10,12 +10,10 @@ import {
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import EChimpCardsTable from 'components/EChimpCards/EChimpCardsTable';
-import Expire from 'components/Expire';
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import useMessage from 'hooks/useMessage';
 
 type ModelPlanType = GetModelPlanBaseQuery['modelPlan'];
 
@@ -25,7 +23,6 @@ export const CRTDLs = () => {
   const { t: miscT } = useTranslation('miscellaneous');
 
   const { modelID } = useParams<{ modelID: string }>();
-  const { message } = useMessage();
 
   const { data } = useGetModelPlanBaseQuery({
     variables: {
@@ -46,23 +43,6 @@ export const CRTDLs = () => {
               BreadcrumbItemOptions.CR_TDLS
             ]}
           />
-
-          {message && <Expire delay={45000}>{message}</Expire>}
-
-          {/* {crtdlMessage && (
-            <Expire delay={45000}>
-              <Alert
-                type={crtdlStatus}
-                slim
-                data-testid="mandatory-fields-alert"
-                className="margin-y-4"
-              >
-                <span className="mandatory-fields-alert__text">
-                  {crtdlMessage}
-                </span>
-              </Alert>
-            </Expire>
-          )} */}
 
           <PageHeading className="margin-top-4 margin-bottom-0">
             {crtdlsT('heading')}
