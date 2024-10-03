@@ -36,7 +36,7 @@ import {
 import {
   findLockedSection,
   LockStatus,
-  taskListSectionMap
+  modelPlanSectionMap
 } from 'wrappers/PageLockWrapper';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -121,7 +121,7 @@ export const ClearanceReview = ({ modelID }: ClearanceReviewProps) => {
 
   // Subscription lock boolean if current section is locked
   const taskListLocked: boolean =
-    findLockedSection(lockableSectionLocks, taskListSectionMap[section]) ===
+    findLockedSection(lockableSectionLocks, modelPlanSectionMap[section]) ===
     LockStatus.LOCKED;
 
   const taskListSections = tArray<Record<string, string>>(

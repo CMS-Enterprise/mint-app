@@ -1,7 +1,7 @@
 /**
-  Subscription wrapper and context for fetching and updating task list locked states.
+  Subscription wrapper and context for fetching and updating model plan locked states.
   subscribeToMore method returns a previous state and a new subscription message.
-  SubscriptionContext gets modified based on the addition or removal of a locked task list section.
+  SubscriptionContext gets modified based on the addition or removal of a locked model plan section.
   SubscriptionContext can be accessed from anywhere in a model plan
  */
 
@@ -72,14 +72,17 @@ export const SubscriptionContext = createContext<{
   loading: true
 });
 
-const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
+const PageLockContext = ({ children }: SubscriptionWrapperProps) => {
   // Gets the model plan id from any location within the application
   const { pathname } = useLocation();
   const modelID: string | undefined = pathname.split('/')[2];
   const validModelID: boolean = isUUID(modelID);
 
-  // Needed to only subscribe on task-list views of current model
-  const taskList: boolean = pathname.split('/')[4] === 'task-list';
+  // Needed to only subscribe on model plan views of current model
+  const shouldFetchLocks: boolean =
+    pathname.split('/')[4] === 'task-list' ||
+    (pathname.split('/')[3] === 'collaboration-area' &&
+      pathname.split('/')[4] === undefined);
 
   // Holds reference to subscribeToMore used for closing ws connection on leaving model plan
   const subscribed = useRef<ReturnType<typeof subscribeToMore> | null>(null);
@@ -94,13 +97,13 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   });
 
   // useLazyQuery hook to init query and create subscription in the presence of a new model plan id
-  const [getTaskListLocks, { data: subData, subscribeToMore }] =
+  const [getModelPlanLocks, { data: subData, subscribeToMore }] =
     useGetLockedModelPlanSectionsLazyQuery();
 
   useEffect(() => {
-    if (validModelID && subscribeToMore && taskList) {
+    if (validModelID && subscribeToMore && shouldFetchLocks) {
       // useLazyQuery hook to fetch existing subscription data on new modelID
-      getTaskListLocks({ variables: { modelPlanID: modelID } });
+      getModelPlanLocks({ variables: { modelPlanID: modelID } });
 
       if (subData) {
         // Sets the initial lock statuses once useLazyQuery data is fetched
@@ -158,10 +161,10 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
     }
   }, [
     modelID,
-    taskList,
+    shouldFetchLocks,
     validModelID,
     subData,
-    getTaskListLocks,
+    getModelPlanLocks,
     subscribeToMore,
     subscribed
   ]);
@@ -174,4 +177,4 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   );
 };
 
-export default SubscriptionWrapper;
+export default PageLockContext;

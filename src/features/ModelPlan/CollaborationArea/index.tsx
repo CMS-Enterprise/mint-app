@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, GridContainer } from '@trussworks/react-uswds';
 import { HelpArticle } from 'features/HelpAndKnowledge/Articles';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
-import { GetModelPlanQuery, useGetModelPlanQuery } from 'gql/generated/graphql';
+import {
+  GetModelPlanQuery,
+  LockableSection,
+  useGetModelPlanQuery
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -17,6 +21,7 @@ import PageLoading from 'components/PageLoading';
 import ShareExportButton from 'components/ShareExport/ShareExportButton';
 import StatusBanner from 'components/StatusBanner';
 import UpdateStatusModal from 'components/UpdateStatusModal';
+import { SubscriptionContext } from 'contexts/PageLockContext';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 
@@ -47,6 +52,16 @@ const CollaborationArea = () => {
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
     null
   );
+
+  const { lockableSectionLocks } = useContext(SubscriptionContext);
+
+  console.log(lockableSectionLocks);
+
+  const dataExchangeApproachLock = lockableSectionLocks?.find(
+    lock => lock.section === LockableSection.DATA_EXCHANGE_APPROACH
+  );
+
+  // console.log(dataExchangeApproachLock);
 
   const { data, loading, error, refetch } = useGetModelPlanQuery({
     variables: {
