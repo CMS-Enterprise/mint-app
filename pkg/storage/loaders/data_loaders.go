@@ -38,12 +38,6 @@ type DataLoaders struct {
 	AnalyzedAuditLoader *WrappedDataLoader
 
 	TranslatedAuditFieldCollectionLoader *WrappedDataLoader
-
-	modelPlan  modelPlanLoader
-	planBasics planBasicsLoaders
-
-	operationalSolutions operationalSolutionsLoaders
-	myMap                HolderMap
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -86,31 +80,11 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.AnalyzedAuditLoader = newWrappedDataLoader(loaders.analyzedAuditGetByModelPlanIDAndDateBatch)
 
 	loaders.TranslatedAuditFieldCollectionLoader = newWrappedDataLoader(loaders.translatedAuditFieldCollectionGetByTranslatedAuditIDBatch)
-	mpl := newModelPlanLoaders()
-	loaderList := []DataLoadersHolder{&mpl}
-	myMap := HolderMap{}
-
-	for _, loaderHolder := range loaderList {
-		loaderHolder.addLoaderByKeys(&myMap)
-	}
-	loaders.myMap = myMap
 
 	// TODO (loaders) can we associate the parent field
 
 	// New V7 loaders rely on generics. They have a configuration, and a parent level struct that holds and initializes the dataloaders
-
-	// loaders.modelPlan = newModelPlanLoaders()
-	loaders.planBasics = newPlanBasicsLoaders()
-	loaders.operationalSolutions = newOperationalSolutionsLoaders()
-	// myMap := LoaderMap[any,any]{
-	// 	"model_plan": loaders.modelPlan.ByID,
-
-	// }
-
-	// myMap := HolderMap{
-	// 	"model_plan": &loaders.modelPlan,
-	// }
-	// loaders.myMap = myMap
+	// They are instantiated in each loader file definition
 
 	return loaders
 }

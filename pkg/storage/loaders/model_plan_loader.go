@@ -14,52 +14,21 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-type modelPlanLoader struct {
-	ByID *dataloader.Loader[uuid.UUID, *models.ModelPlan]
-}
-
-func (l *modelPlanLoader) init() {
-	l.ByID = ModelPlan.GetByID.NewBatchedLoader()
-}
-func (l *modelPlanLoader) getByKey() any {
-	return l.ByID
-}
-func (l *modelPlanLoader) addLoaderByKeys(hMap *HolderMap) {
-	// hMap["model_plan"] = l.ByID
-}
-
-func newModelPlanLoaders() modelPlanLoader {
-	loader := modelPlanLoader{}
-	loader.init()
-	return loader
-}
-
 // modelPlanLoaderConfig is the loader config for all fetching of model plan data
 type modelPlanLoaderConfig struct {
 	// GetByID returns a model plan record associated with a uuid
 	GetByID LoaderConfig[uuid.UUID, *models.ModelPlan]
 }
 
-// // ModelPlan is the loader config for all fetching of model plan data
-// var ModelPlan modelPlanLoaderConfig = modelPlanLoaderConfig{
-// 	GetByID: LoaderConfig[uuid.UUID, *models.ModelPlan]{
-// 		LoadFunc:      modelPlanGetByIDLoad,
-// 		batchFunction: batchModelPlanByModelPlanID,
-// 	},
-// }
-
+// ModelPlan is the loader config for all fetching of model plan data
 var ModelPlan = func() modelPlanLoaderConfig {
-	cfg := modelPlanLoaderConfig{
+	config := modelPlanLoaderConfig{
 		GetByID: LoaderConfig[uuid.UUID, *models.ModelPlan]{
-			loadFunc:      modelPlanGetByIDLoad,
 			batchFunction: batchModelPlanByModelPlanID,
 		},
 	}
-	cfg.GetByID.loader = cfg.GetByID.NewBatchedLoader()
-
-	// TODO: should we define an interface or just require this? that needs to be
-	// cfg.InstantiateMethod()
-	return cfg
+	config.GetByID.init()
+	return config
 }()
 
 func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.ModelPlan] {
@@ -98,18 +67,4 @@ func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) 
 		}
 	}
 	return output
-}
-
-// modelPlanGetByIDLoad uses a data loader to return a model plan for a given model plan
-func modelPlanGetByIDLoad(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
-	allLoaders, err := Loaders(ctx)
-	if err != nil {
-		return nil, err
-	}
-	// // loader := allLoaders.myMap["model_plan"]
-	// // retLoaderAny := loader.getByKey()
-	// typedLoader := retLoaderAny.(*dataloader.Loader[uuid.UUID, *models.ModelPlan])
-	// return loader.Load(ctx, id)()
-	modelPlanLoader := allLoaders.modelPlan.ByID
-	return modelPlanLoader.Load(ctx, id)()
 }

@@ -14,22 +14,6 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-type operationalSolutionsLoaders struct {
-	ByID                                               *dataloader.Loader[uuid.UUID, *models.OperationalSolution]
-	AndPossibleByOperationalNeedIDWithIncludeNotNeeded *dataloader.Loader[storage.SolutionAndPossibleKey, []*models.OperationalSolution]
-	//TODO: (loaders) consider renaming this
-}
-
-func (l *operationalSolutionsLoaders) init() {
-	l.ByID = OperationalSolutions.ByID.NewBatchedLoader()
-	l.AndPossibleByOperationalNeedIDWithIncludeNotNeeded = OperationalSolutions.AndPossibleByOperationalNeedID.NewBatchedLoader()
-}
-func newOperationalSolutionsLoaders() operationalSolutionsLoaders {
-	loader := operationalSolutionsLoaders{}
-	loader.init()
-	return loader
-}
-
 type operationalSolutionsLoaderConfig struct {
 	// ByID Returns an operational solution by it's id
 	ByID LoaderConfig[uuid.UUID, *models.OperationalSolution]
@@ -37,26 +21,26 @@ type operationalSolutionsLoaderConfig struct {
 	AndPossibleByOperationalNeedID LoaderConfig[storage.SolutionAndPossibleKey, []*models.OperationalSolution]
 }
 
+// init initializes all relevant loaders for this loader config
+func (c *operationalSolutionsLoaderConfig) init() {
+	c.ByID.init()
+	c.AndPossibleByOperationalNeedID.init()
+}
+
 // OperationalSolutions is the loader config for all operational solution fetching
-var OperationalSolutions = operationalSolutionsLoaderConfig{
-	ByID: LoaderConfig[uuid.UUID, *models.OperationalSolution]{
-
-		loadFunc:      operationalSolutionGetByIDLoad,
-		batchFunction: operationalSolutionGetByIDBatch,
-	},
-	AndPossibleByOperationalNeedID: LoaderConfig[storage.SolutionAndPossibleKey, []*models.OperationalSolution]{
-		loadFunc:      operationalSolutionAndPossibleCollectionGetByOperationalNeedID,
-		batchFunction: batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID,
-	},
-}
-
-func operationalSolutionGetByIDLoad(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error) {
-	allLoaders, err := Loaders(ctx)
-	if err != nil {
-		return nil, err
+var OperationalSolutions = func() operationalSolutionsLoaderConfig {
+	config := operationalSolutionsLoaderConfig{
+		ByID: LoaderConfig[uuid.UUID, *models.OperationalSolution]{
+			batchFunction: operationalSolutionGetByIDBatch,
+		},
+		AndPossibleByOperationalNeedID: LoaderConfig[storage.SolutionAndPossibleKey, []*models.OperationalSolution]{
+			batchFunction: batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID,
+		},
 	}
-	return allLoaders.operationalSolutions.ByID.Load(ctx, id)()
-}
+	config.ByID.init()
+
+	return config
+}()
 
 // operationalSolutionGetByIDBatch uses a data loader to return an operational solution by ID
 func operationalSolutionGetByIDBatch(

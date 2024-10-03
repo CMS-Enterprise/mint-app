@@ -12,15 +12,6 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-func operationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx context.Context, key storage.SolutionAndPossibleKey) ([]*models.OperationalSolution, error) {
-	allLoaders, err := Loaders(ctx)
-	if err != nil {
-		return nil, err
-	}
-	loader := allLoaders.operationalSolutions.AndPossibleByOperationalNeedIDWithIncludeNotNeeded
-	return loader.Load(ctx, key)()
-}
-
 func batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx context.Context, keys []storage.SolutionAndPossibleKey) []*dataloader.Result[[]*models.OperationalSolution] {
 	logger := appcontext.ZLogger(ctx)
 	output := make([]*dataloader.Result[[]*models.OperationalSolution], len(keys))

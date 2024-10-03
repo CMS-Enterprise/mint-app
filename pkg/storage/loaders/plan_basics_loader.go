@@ -14,34 +14,22 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-type planBasicsLoaders struct {
-	ByModelPlanID *dataloader.Loader[uuid.UUID, *models.PlanBasics]
-}
-
-// TODO: (loaders) make a generic method to initialize these methods?
-func (l *planBasicsLoaders) init() {
-	l.ByModelPlanID = PlanBasics.GetByModelPlanID.NewBatchedLoader()
-}
-
-func newPlanBasicsLoaders() planBasicsLoaders {
-	loader := planBasicsLoaders{}
-	loader.init()
-	return loader
-}
-
 type planBasicsLoaderConfig struct {
 	// GetByModelPlanID Gets a plan basics record associated with a model plan by the supplied model plan id
 	GetByModelPlanID LoaderConfig[uuid.UUID, *models.PlanBasics]
 }
 
 // PlanBasics is the loader config for all  plan basics fetching operations
-var PlanBasics planBasicsLoaderConfig = planBasicsLoaderConfig{
-	GetByModelPlanID: LoaderConfig[uuid.UUID, *models.PlanBasics]{
-		loadFunc:      planBasicsGetByModelPlanIDLoad, // Direct assignment
-		batchFunction: batchPlanBasicsGetByModelPlanID,
-		// getExistingBatchFunction: ,
-	},
-}
+var PlanBasics planBasicsLoaderConfig = func() planBasicsLoaderConfig {
+	config := planBasicsLoaderConfig{
+		GetByModelPlanID: LoaderConfig[uuid.UUID, *models.PlanBasics]{
+			batchFunction: batchPlanBasicsGetByModelPlanID,
+		},
+	}
+	config.GetByModelPlanID.init()
+
+	return config
+}()
 
 func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.PlanBasics] {
 	logger := appcontext.ZLogger(ctx)
@@ -80,13 +68,4 @@ func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UU
 	}
 	return output
 
-}
-
-func planBasicsGetByModelPlanIDLoad(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	allLoaders, err := Loaders(ctx)
-	if err != nil {
-		return nil, err
-	}
-	basicsLoader := allLoaders.planBasics.ByModelPlanID
-	return basicsLoader.Load(ctx, modelPlanID)()
 }
