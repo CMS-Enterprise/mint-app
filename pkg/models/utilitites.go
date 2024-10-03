@@ -142,6 +142,48 @@ func MapArrayToJSONArray(mapSlice []map[string]interface{}) (string, error) {
 }
 
 // StructArrayToJSONArray converts an array of structs to a JSON array
+//
+//	EX: keys := []storage.SolutionAndPossibleKey{{
+//		OperationalNeedID: uuid.MustParse("477d4dd4-243d-4e37-82d5-85a583145db0"),
+//		IncludeNotNeeded:  true,
+//	},
+//
+//		{
+//			OperationalNeedID: uuid.MustParse("84cb4902-3e9a-43dc-ba03-9579bacafd2e"),
+//			IncludeNotNeeded:  false,
+//		},
+//	}
+//
+// jsonParam, err := models.StructArrayToJSONArray(keys)
+//
+// This will return the following (using the json tag on the struct field to set the name)
+// [
+//
+//	{
+//	    "include_not_needed": true,
+//	    "operational_need_id": "477d4dd4-243d-4e37-82d5-85a583145db0"
+//	},
+//	{
+//	    "include_not_needed": false,
+//	    "operational_need_id": "84cb4902-3e9a-43dc-ba03-9579bacafd2e"
+//	}
+//
+// ]
+// This will allow you to query an array of data as a table in SQL EX
+/* SQL
+WITH QUERIED_IDS AS (
+    SELECT
+        include_not_needed,
+        operational_need_id,
+        CAST(operational_need_id AS TEXT) || CAST(include_not_needed AS TEXT) AS res_key
+    FROM
+        JSON_TO_RECORDSET(:paramTableJSON)
+        AS x("operational_need_id" UUID, "include_not_needed" BOOLEAN ) --noqa
+)
+
+
+*/
+// note, that JSON_TO_RECORDSET will parse the JSON from this function, providing the expected type and and field name from the JSON
 func StructArrayToJSONArray[StructType any](structArray []StructType) (string, error) {
 	mapSlice, err := StructArrayToMapArray[StructType](structArray)
 	if err != nil {

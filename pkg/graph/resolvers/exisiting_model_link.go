@@ -16,9 +16,9 @@ import (
 
 // ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER implements resolver logic to get Existing Model Link by a model plan ID using a data loader
 func ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType) ([]*models.ExistingModelLink, error) {
-	allLoaders, ok := loaders.Loaders(ctx)
-	if !ok {
-		return nil, loaders.ErrNoLoaderOnContext
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	linkLoader := allLoaders.ExistingModelLinkLoader
 	key := loaders.NewKeyArgs()
@@ -90,9 +90,9 @@ func ExistingModelLinkGetModel(ctx context.Context, link *models.ExistingModelLi
 }
 
 func ExistingModelLinksNameArray(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType) ([]string, error) {
-	allLoaders, ok := loaders.Loaders(ctx)
-	if !ok {
-		return nil, loaders.ErrNoLoaderOnContext
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	linkLoader := allLoaders.ExistingModelLinkNameLoader
 	key := loaders.NewKeyArgs()

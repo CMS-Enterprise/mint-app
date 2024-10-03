@@ -24,9 +24,9 @@ func PlanPaymentsRead(
 
 // PlanPaymentsGetByModelPlanIDLOADER implements resolver logic to get Plan Payments by a model plan ID using a data loader
 func PlanPaymentsGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanPayments, error) {
-	allLoaders, ok := loaders.Loaders(ctx)
-	if !ok {
-		return nil, loaders.ErrNoLoaderOnContext
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	payLoader := allLoaders.PaymentLoader
 	key := loaders.NewKeyArgs()

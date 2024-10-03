@@ -18,6 +18,7 @@ type DataLoadersHolder interface {
 }
 
 type LoaderConfig[K comparable, V any] struct {
+	// batchFunction is a type of function which takes an array of keys, and returns an array of *dataloader.Result[V]. It's responsible for returning the list ordered the same as the provided keys
 	batchFunction dataloader.BatchFunc[K, V]
 	// Load is an abstraction used to call a dataloader
 	Load LoadFunc[K, V]

@@ -14,9 +14,9 @@ import (
 
 // PlanParticipantsAndProvidersGetByModelPlanIDLOADER implements resolver logic to get Plan Participants and Providers by a model plan ID using a data loader
 func PlanParticipantsAndProvidersGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanParticipantsAndProviders, error) {
-	allLoaders, ok := loaders.Loaders(ctx)
-	if !ok {
-		return nil, loaders.ErrNoLoaderOnContext
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	pAndPLoader := allLoaders.ParticipantsAndProvidersLoader
 	key := loaders.NewKeyArgs()
