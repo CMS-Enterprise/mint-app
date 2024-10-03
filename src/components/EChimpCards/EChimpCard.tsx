@@ -92,7 +92,11 @@ const EChimpCard = ({
         <Button type="button" className="usa-button">
           {crtdlsT('echimpCard.viewMore')}
         </Button>
-        <ExternalLink href="https://echimp.cmsnet/" className="margin-right-0">
+        <ExternalLink
+          href="https://echimp.cmsnet/"
+          className="margin-right-0"
+          toEchimp
+        >
           {crtdlsT('echimpCard.viewThisInECHIMP')}
         </ExternalLink>
       </CardFooter>

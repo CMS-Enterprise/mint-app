@@ -89,6 +89,7 @@ export const CRTDLs = () => {
                   <ExternalLink
                     className="margin-right-0"
                     href="https://echimp.cmsnet/"
+                    toEchimp
                   >
                     {' '}
                   </ExternalLink>
