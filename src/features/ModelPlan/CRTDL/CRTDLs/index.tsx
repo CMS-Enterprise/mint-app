@@ -1,11 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
-import {
-  GetModelPlanBaseQuery,
-  useGetModelPlanBaseQuery
-} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -14,22 +10,14 @@ import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-
-type ModelPlanType = GetModelPlanBaseQuery['modelPlan'];
+import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 export const CRTDLs = () => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
   const { t: miscT } = useTranslation('miscellaneous');
 
   const { modelID } = useParams<{ modelID: string }>();
-
-  const { data } = useGetModelPlanBaseQuery({
-    variables: {
-      id: modelID
-    }
-  });
-
-  const modelPlan = data?.modelPlan || ({} as ModelPlanType);
+  const { modelName } = useContext(ModelInfoContext);
 
   return (
     <MainContent data-testid="model-crtdls">
@@ -48,7 +36,7 @@ export const CRTDLs = () => {
           </PageHeading>
 
           <p className="margin-y-0 font-body-lg" data-testid="model-plan-name">
-            {crtdlsT('subheading', { modelName: modelPlan.modelName })}
+            {crtdlsT('subheading', { modelName })}
           </p>
 
           <UswdsReactLink
