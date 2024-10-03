@@ -2,7 +2,9 @@
 @use 'viewports' as *;
 
 .echimp-card {
-  min-height: 422px;
+  @media (min-width: $desktop) {
+    min-height: 422px;
+  }
 
   &__header {
     h4 {
