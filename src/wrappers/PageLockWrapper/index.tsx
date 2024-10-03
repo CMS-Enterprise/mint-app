@@ -231,7 +231,6 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
     }
 
     if (lockState === LockStatus.UNLOCKED) {
-      console.log(modelPlanSection);
       addLockedSection(modelPlanSection);
     }
   }

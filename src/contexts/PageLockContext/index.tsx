@@ -80,9 +80,7 @@ const PageLockContext = ({ children }: SubscriptionWrapperProps) => {
 
   // Needed to only subscribe on model plan views of current model
   const shouldFetchLocks: boolean =
-    pathname.split('/')[4] === 'task-list' ||
-    (pathname.split('/')[3] === 'collaboration-area' &&
-      pathname.split('/')[4] === undefined);
+    pathname.split('/')[3] === 'collaboration-area';
 
   // Holds reference to subscribeToMore used for closing ws connection on leaving model plan
   const subscribed = useRef<ReturnType<typeof subscribeToMore> | null>(null);

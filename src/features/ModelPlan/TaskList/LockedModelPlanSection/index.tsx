@@ -27,8 +27,7 @@ const LockedModelPlanSection = () => {
         <Breadcrumbs
           items={[
             BreadcrumbItemOptions.HOME,
-            BreadcrumbItemOptions.COLLABORATION_AREA,
-            BreadcrumbItemOptions.TASK_LIST
+            BreadcrumbItemOptions.COLLABORATION_AREA
           ]}
           customItem={t(`breadCrumbState.${route}`)}
         />
@@ -61,7 +60,7 @@ const LockedModelPlanSection = () => {
             variant="unstyled"
             to={`/models/${modelID}/collaboration-area/task-list`}
           >
-            {t('returnToTaskList')}
+            {t('returnToCollaboration')}
           </UswdsReactLink>
         </div>
       )}

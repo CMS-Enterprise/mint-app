@@ -13,7 +13,10 @@ import {
 import classNames from 'classnames';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
 import TaskListLock from 'features/ModelPlan/TaskList/_components/TaskListLock';
-import { GetModelPlanQuery } from 'gql/generated/graphql';
+import {
+  DataExchangeApproachStatus,
+  GetModelPlanQuery
+} from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -45,7 +48,10 @@ const DataExchangeApproachCard = ({
   const { modifiedDts, modifiedByUserAccount, status } =
     dataExhangeApproachData;
 
-  console.log(sectionLock);
+  const testModifiedDts = '2021-09-01T00:00:00Z';
+  const testModifiedByUserAccount = {
+    commonName: 'Gail Forcewind'
+  };
 
   return (
     <>
@@ -59,22 +65,25 @@ const DataExchangeApproachCard = ({
           </h3>
         </CardHeader>
         <div className="collaboration-area__status flex-align-center">
-          <TaskListStatusTag status={status} classname="width-fit-content" />
+          <TaskListStatusTag
+            status={DataExchangeApproachStatus.IN_PROGRESS}
+            classname="width-fit-content"
+          />
         </div>
 
         <CardBody>
           <p>{collaborationAreaT('dataExchangeApproachCard.body')}</p>
 
-          {modifiedDts && modifiedByUserAccount && !sectionLock && (
-            <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center padding-x-3">
+          {testModifiedDts && testModifiedByUserAccount && !sectionLock && (
+            <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
               <span className="text-base margin-right-1">
                 {collaborationAreaT('dataExchangeApproachCard.lastModified', {
-                  date: formatDateLocal(modifiedDts, 'MM/dd/yyyy')
+                  date: formatDateLocal(testModifiedDts, 'MM/dd/yyyy')
                 })}
               </span>
               <Avatar
                 className="text-base-darkest"
-                user={modifiedByUserAccount.commonName}
+                user={testModifiedByUserAccount.commonName}
               />
             </div>
           )}
@@ -103,7 +112,7 @@ const DataExchangeApproachCard = ({
             }
             data-testid="to-data-exchange-approach"
           >
-            {modifiedDts
+            {testModifiedDts
               ? collaborationAreaT('dataExchangeApproachCard.editApproach')
               : collaborationAreaT('dataExchangeApproachCard.startApproach')}
           </Button>
