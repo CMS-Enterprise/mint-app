@@ -29,13 +29,13 @@ enum LockableSection {
   DATA_EXCHANGE_APPROACH
 }
 
-type TaskListSectionLockStatusChanged {
+type LockableSectionLockStatusChanged {
   changeType: ChangeType!
-  lockStatus: TaskListSectionLockStatus!
+  lockStatus: LockableSectionLockStatus!
   actionType: ActionType!
 }
 
-type TaskListSectionLockStatus {
+type LockableSectionLockStatus {
   modelPlanID: UUID!
   section: LockableSection!
   lockedByUserAccount: UserAccount!
@@ -43,25 +43,25 @@ type TaskListSectionLockStatus {
 }
 
 extend type Query {
-  taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
+  lockableSectionLocks(modelPlanID: UUID!): [LockableSectionLockStatus!]!
   @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
-  lockTaskListSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
+  lockLockableSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
   @hasRole(role: MINT_USER)
 
-  unlockTaskListSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
+  unlockLockableSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
   @hasRole(role: MINT_USER)
 
-  unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
+  unlockAllLockableSections(modelPlanID: UUID!): [LockableSectionLockStatus!]!
   @hasRole(role: MINT_ASSESSMENT)
 }
 
 type Subscription {
-  onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
+  onLockableSectionLocksChanged(modelPlanID: UUID!): LockableSectionLockStatusChanged!
   @hasRole(role: MINT_USER)
 
-  onLockTaskListSectionContext(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
+  onLockLockableSectionContext(modelPlanID: UUID!): LockableSectionLockStatusChanged!
   @hasRole(role: MINT_USER)
 }
