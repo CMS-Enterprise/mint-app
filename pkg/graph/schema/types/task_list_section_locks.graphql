@@ -16,6 +16,19 @@ enum ActionType {
   ADMIN
 }
 
+# LockableSection represents any section of the application that a user can uniquely hold a lock on.
+# It _largely_ (currently) maps to the sections of the Task List, but also includes Data Exchange, which notably isn't part of the Task List.
+enum LockableSection {
+  BASICS,
+  GENERAL_CHARACTERISTICS,
+  PARTICIPANTS_AND_PROVIDERS,
+  BENEFICIARIES,
+  OPERATIONS_EVALUATION_AND_LEARNING,
+  PAYMENT,
+  PREPARE_FOR_CLEARANCE,
+  DATA_EXCHANGE_APPROACH
+}
+
 type TaskListSectionLockStatusChanged {
   changeType: ChangeType!
   lockStatus: TaskListSectionLockStatus!
@@ -24,7 +37,7 @@ type TaskListSectionLockStatusChanged {
 
 type TaskListSectionLockStatus {
   modelPlanID: UUID!
-  section: TaskListSection!
+  section: LockableSection!
   lockedByUserAccount: UserAccount!
   isAssessment: Boolean!
 }
@@ -35,10 +48,10 @@ extend type Query {
 }
 
 extend type Mutation {
-  lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
+  lockTaskListSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
   @hasRole(role: MINT_USER)
 
-  unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
+  unlockTaskListSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
   @hasRole(role: MINT_USER)
 
   unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!

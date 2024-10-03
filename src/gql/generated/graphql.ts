@@ -682,6 +682,17 @@ export type LaunchDarklySettings = {
 /** LinkedExistingModel is a union type that returns either an Existing Model, or a Model plan from the database */
 export type LinkedExistingModel = ExistingModel | ModelPlan;
 
+export enum LockableSection {
+  BASICS = 'BASICS',
+  BENEFICIARIES = 'BENEFICIARIES',
+  DATA_EXCHANGE_APPROACH = 'DATA_EXCHANGE_APPROACH',
+  GENERAL_CHARACTERISTICS = 'GENERAL_CHARACTERISTICS',
+  OPERATIONS_EVALUATION_AND_LEARNING = 'OPERATIONS_EVALUATION_AND_LEARNING',
+  PARTICIPANTS_AND_PROVIDERS = 'PARTICIPANTS_AND_PROVIDERS',
+  PAYMENT = 'PAYMENT',
+  PREPARE_FOR_CLEARANCE = 'PREPARE_FOR_CLEARANCE'
+}
+
 export enum MintUses {
   CONTRIBUTE_DISCUSSIONS = 'CONTRIBUTE_DISCUSSIONS',
   EDIT_MODEL = 'EDIT_MODEL',
@@ -1060,7 +1071,7 @@ export type MutationLinkNewPlanDocumentArgs = {
 /** Mutations definition for the schema */
 export type MutationLockTaskListSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
-  section: TaskListSection;
+  section: LockableSection;
 };
 
 
@@ -1107,7 +1118,7 @@ export type MutationUnlockAllTaskListSectionsArgs = {
 /** Mutations definition for the schema */
 export type MutationUnlockTaskListSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
-  section: TaskListSection;
+  section: LockableSection;
 };
 
 
@@ -3736,7 +3747,7 @@ export type TaskListSectionLockStatus = {
   isAssessment: Scalars['Boolean']['output'];
   lockedByUserAccount: UserAccount;
   modelPlanID: Scalars['UUID']['output'];
-  section: TaskListSection;
+  section: LockableSection;
 };
 
 export type TaskListSectionLockStatusChanged = {
@@ -5252,11 +5263,11 @@ export type GetTaskListSubscriptionsQueryVariables = Exact<{
 }>;
 
 
-export type GetTaskListSubscriptionsQuery = { __typename: 'Query', taskListSectionLocks: Array<{ __typename: 'TaskListSectionLockStatus', modelPlanID: UUID, section: TaskListSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } }> };
+export type GetTaskListSubscriptionsQuery = { __typename: 'Query', taskListSectionLocks: Array<{ __typename: 'TaskListSectionLockStatus', modelPlanID: UUID, section: LockableSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } }> };
 
 export type LockTaskListSectionMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
-  section: TaskListSection;
+  section: LockableSection;
 }>;
 
 
@@ -5267,11 +5278,11 @@ export type TaskListSubscriptionSubscriptionVariables = Exact<{
 }>;
 
 
-export type TaskListSubscriptionSubscription = { __typename: 'Subscription', onLockTaskListSectionContext: { __typename: 'TaskListSectionLockStatusChanged', changeType: ChangeType, actionType: ActionType, lockStatus: { __typename: 'TaskListSectionLockStatus', modelPlanID: UUID, section: TaskListSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } } } };
+export type TaskListSubscriptionSubscription = { __typename: 'Subscription', onLockTaskListSectionContext: { __typename: 'TaskListSectionLockStatusChanged', changeType: ChangeType, actionType: ActionType, lockStatus: { __typename: 'TaskListSectionLockStatus', modelPlanID: UUID, section: LockableSection, isAssessment: boolean, lockedByUserAccount: { __typename: 'UserAccount', id: UUID, username: string, commonName: string } } } };
 
 export type UnlockTaskListSectionMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
-  section: TaskListSection;
+  section: LockableSection;
 }>;
 
 
@@ -13072,7 +13083,7 @@ export type GetTaskListSubscriptionsLazyQueryHookResult = ReturnType<typeof useG
 export type GetTaskListSubscriptionsSuspenseQueryHookResult = ReturnType<typeof useGetTaskListSubscriptionsSuspenseQuery>;
 export type GetTaskListSubscriptionsQueryResult = Apollo.QueryResult<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>;
 export const LockTaskListSectionDocument = gql`
-    mutation LockTaskListSection($modelPlanID: UUID!, $section: TaskListSection!) {
+    mutation LockTaskListSection($modelPlanID: UUID!, $section: LockableSection!) {
   lockTaskListSection(modelPlanID: $modelPlanID, section: $section)
 }
     `;
@@ -13145,7 +13156,7 @@ export function useTaskListSubscriptionSubscription(baseOptions: Apollo.Subscrip
 export type TaskListSubscriptionSubscriptionHookResult = ReturnType<typeof useTaskListSubscriptionSubscription>;
 export type TaskListSubscriptionSubscriptionResult = Apollo.SubscriptionResult<TaskListSubscriptionSubscription>;
 export const UnlockTaskListSectionDocument = gql`
-    mutation UnlockTaskListSection($modelPlanID: UUID!, $section: TaskListSection!) {
+    mutation UnlockTaskListSection($modelPlanID: UUID!, $section: LockableSection!) {
   unlockTaskListSection(modelPlanID: $modelPlanID, section: $section)
 }
     `;
@@ -13304,6 +13315,6 @@ export const TypedGetModelSummaryDocument = {"kind":"Document","definitions":[{"
 export const TypedCreateShareModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateShareModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelViewFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"usernames"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shareModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"viewFilter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}}},{"kind":"Argument","name":{"kind":"Name","value":"usernames"},"value":{"kind":"Variable","name":{"kind":"Name","value":"usernames"}}},{"kind":"Argument","name":{"kind":"Name","value":"optionalMessage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}}}]}]}}]} as unknown as DocumentNode<CreateShareModelPlanMutation, CreateShareModelPlanMutationVariables>;
 export const TypedGetPossibleSolutionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPossibleSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"possibleOperationalSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"key"}},{"kind":"Field","name":{"kind":"Name","value":"pointsOfContact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"isTeam"}},{"kind":"Field","name":{"kind":"Name","value":"isPrimary"}},{"kind":"Field","name":{"kind":"Name","value":"role"}}]}}]}}]}}]} as unknown as DocumentNode<GetPossibleSolutionsQuery, GetPossibleSolutionsQueryVariables>;
 export const TypedGetTaskListSubscriptionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTaskListSubscriptions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"taskListSectionLocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}}]}}]} as unknown as DocumentNode<GetTaskListSubscriptionsQuery, GetTaskListSubscriptionsQueryVariables>;
-export const TypedLockTaskListSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LockTaskListSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TaskListSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockTaskListSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>;
+export const TypedLockTaskListSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LockTaskListSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockTaskListSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<LockTaskListSectionMutation, LockTaskListSectionMutationVariables>;
 export const TypedTaskListSubscriptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"TaskListSubscription"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"onLockTaskListSectionContext"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"lockStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"actionType"}}]}}]}}]} as unknown as DocumentNode<TaskListSubscriptionSubscription, TaskListSubscriptionSubscriptionVariables>;
-export const TypedUnlockTaskListSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnlockTaskListSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TaskListSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unlockTaskListSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>;
+export const TypedUnlockTaskListSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnlockTaskListSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unlockTaskListSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<UnlockTaskListSectionMutation, UnlockTaskListSectionMutationVariables>;

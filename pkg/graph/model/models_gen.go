@@ -651,7 +651,7 @@ type SendFeedbackEmailInput struct {
 
 type TaskListSectionLockStatus struct {
 	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
-	Section             models.TaskListSection     `json:"section"`
+	Section             models.LockableSection     `json:"section"`
 	LockedByUserAccount authentication.UserAccount `json:"lockedByUserAccount"`
 	IsAssessment        bool                       `json:"isAssessment"`
 }

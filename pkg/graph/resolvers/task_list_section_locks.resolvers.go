@@ -16,14 +16,14 @@ import (
 )
 
 // LockTaskListSection is the resolver for the lockTaskListSection field.
-func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
+func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.LockableSection) (bool, error) {
 	principal := appcontext.Principal(ctx)
 
 	return LockTaskListSection(r.pubsub, modelPlanID, section, principal)
 }
 
 // UnlockTaskListSection is the resolver for the unlockTaskListSection field.
-func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.TaskListSection) (bool, error) {
+func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section models.LockableSection) (bool, error) {
 	userID := appcontext.Principal(ctx).Account().ID
 
 	return UnlockTaskListSection(r.pubsub, modelPlanID, section, userID, model.ActionTypeNormal)
