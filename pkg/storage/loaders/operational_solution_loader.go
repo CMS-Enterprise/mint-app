@@ -37,7 +37,7 @@ var OperationalSolutions = func() *operationalSolutionsLoaderConfig {
 			batchFunction: batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID,
 		},
 	}
-	config.ByID.init()
+	config.init()
 
 	return config
 }()
