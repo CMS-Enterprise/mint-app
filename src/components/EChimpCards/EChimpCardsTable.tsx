@@ -11,6 +11,7 @@ import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
 import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
+import TablePageSize from 'components/TablePageSize';
 import usePagination from 'hooks/usePagination';
 
 import EChimpCard from './EChimpCard';
@@ -84,6 +85,7 @@ const EChimpCardsTable = () => {
 
   const echimpItems = React.useMemo(() => data?.echimpCRAndTDLS || [], [data]);
   const [query, setQuery] = useState('');
+  const [pageSize, setPageSize] = useState<'all' | number>(6);
 
   const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
 
@@ -94,7 +96,7 @@ const EChimpCardsTable = () => {
     EchimpCrAndTdlsType[]
   >({
     items: filteredEchimpItems,
-    itemsPerPage: 6,
+    itemsPerPage: pageSize === 'all' ? filteredEchimpItems.length : pageSize,
     loading,
     query
   });
@@ -193,7 +195,15 @@ const EChimpCardsTable = () => {
           <EChimpCard key={card.id} {...card} />
         ))}
       </CardGroup>
-      {Pagination}
+      <Grid row>
+        {Pagination}
+        <TablePageSize
+          className="margin-left-auto desktop:grid-col-auto"
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          valueArray={[1, 2, 'all']}
+        />
+      </Grid>
     </>
   );
 };
