@@ -6,6 +6,7 @@ import (
 )
 
 // DataLoaders wrap your data loaders to inject via middleware
+// TODO: (loaders) WrappedDataLoaders are the legacy loaders, which should be refactored to use the v7 library
 type DataLoaders struct {
 	GeneralCharacteristicsLoader          *WrappedDataLoader
 	ParticipantsAndProvidersLoader        *WrappedDataLoader
@@ -52,6 +53,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 		},
 	}
 
+	// TODO: (loaders)  Old Dataloaders, convert to the new style (V7) Anything that uses WrappedDataLoader will be refactored
+
 	loaders.GeneralCharacteristicsLoader = newWrappedDataLoader(loaders.GetPlanGeneralCharacteristicsByModelPlanID)
 	loaders.ParticipantsAndProvidersLoader = newWrappedDataLoader(loaders.GetPlanParticipantsAndProvidersByModelPlanID)
 	loaders.BeneficiariesLoader = newWrappedDataLoader(loaders.GetPlanBeneficiariesByModelPlanID)
@@ -84,6 +87,8 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.TranslatedAuditFieldCollectionLoader = newWrappedDataLoader(loaders.translatedAuditFieldCollectionGetByTranslatedAuditIDBatch)
 
 	// TODO (loaders) can we associate the parent field
+
+	// New V7 loaders rely on generics. They have a configuration, and a parent level struct that holds and initializes the dataloaders
 
 	loaders.modelPlan = newModelPlanLoaders()
 	loaders.planBasics = newPlanBasicsLoaders()
