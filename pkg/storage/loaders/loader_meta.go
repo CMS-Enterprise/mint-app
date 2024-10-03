@@ -6,8 +6,16 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
+type LoaderMap[K comparable, V any] map[string]*dataloader.Loader[K, V]
+type HolderMap map[string]DataLoadersHolder
+
 // LoadFunc is a function called to load dataloader and return a result
 type LoadFunc[K comparable, V any] func(context.Context, K) (V, error)
+
+type DataLoadersHolder interface {
+	init()
+	getByKey() any
+}
 
 type LoaderConfig[K comparable, V any] struct {
 	batchFunction dataloader.BatchFunc[K, V]

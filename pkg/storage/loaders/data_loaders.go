@@ -42,6 +42,7 @@ type DataLoaders struct {
 	planBasics planBasicsLoaders
 
 	operationalSolutions operationalSolutionsLoaders
+	myMap                HolderMap
 }
 
 // NewDataLoaders instantiates data loaders for the middleware
@@ -88,6 +89,15 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.modelPlan = newModelPlanLoaders()
 	loaders.planBasics = newPlanBasicsLoaders()
 	loaders.operationalSolutions = newOperationalSolutionsLoaders()
+	// myMap := LoaderMap[any,any]{
+	// 	"model_plan": loaders.modelPlan.ByID,
+
+	// }
+
+	myMap := HolderMap{
+		"model_plan": &loaders.modelPlan,
+	}
+	loaders.myMap = myMap
 
 	return loaders
 }

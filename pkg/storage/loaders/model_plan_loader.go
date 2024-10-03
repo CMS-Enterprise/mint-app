@@ -21,6 +21,9 @@ type modelPlanLoader struct {
 func (l *modelPlanLoader) init() {
 	l.ByID = ModelPlan.GetByID.NewBatchedLoader()
 }
+func (l *modelPlanLoader) getByKey() any {
+	return l.ByID
+}
 
 func newModelPlanLoaders() modelPlanLoader {
 	loader := modelPlanLoader{}
@@ -86,6 +89,10 @@ func modelPlanGetByIDLoad(ctx context.Context, id uuid.UUID) (*models.ModelPlan,
 	if !ok {
 		return nil, ErrNoLoaderOnContext
 	}
-	modelPlanLoader := allLoaders.modelPlan.ByID
-	return modelPlanLoader.Load(ctx, id)()
+	loader := allLoaders.myMap["model_plan"]
+	retLoaderAny := loader.getByKey()
+	typedLoader := retLoaderAny.(*dataloader.Loader[uuid.UUID, *models.ModelPlan])
+	return typedLoader.Load(ctx, id)()
+	// modelPlanLoader := allLoaders.modelPlan.ByID
+	// return modelPlanLoader.Load(ctx, id)()
 }
