@@ -22,6 +22,7 @@ import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
 import Collaborators from 'features/ModelPlan/Collaborators';
 import CRTDL from 'features/ModelPlan/CRTDL';
+import DataEchangeApproach from 'features/ModelPlan/DataExchangeApproach';
 import Documents from 'features/ModelPlan/Documents';
 import ModelPlan from 'features/ModelPlan/ModelPlanOverview';
 import NewPlan from 'features/ModelPlan/NewPlan';
@@ -160,8 +161,14 @@ const AppRoutes = () => {
             component={Status}
           />
 
-          {/* Task List Routes */}
+          {/* Data Echange Approach Routes */}
+          <ProtectedRoute
+            path="/models/:modelID/collaboration-area/data-exchange-approach"
+            exact
+            component={DataEchangeApproach}
+          />
 
+          {/* Task List Routes */}
           <Redirect
             exact
             from="/models/:modelID/task-list"

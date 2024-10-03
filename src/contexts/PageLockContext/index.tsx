@@ -17,7 +17,7 @@ import {
 
 import { isUUID } from 'utils/modelPlan';
 
-type LockSectionType =
+export type LockSectionType =
   GetLockedModelPlanSectionsQuery['lockableSectionLocks'][0];
 
 type SubscriptionWrapperProps = {

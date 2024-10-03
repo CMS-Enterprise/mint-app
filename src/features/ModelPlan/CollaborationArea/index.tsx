@@ -55,13 +55,9 @@ const CollaborationArea = () => {
 
   const { lockableSectionLocks } = useContext(SubscriptionContext);
 
-  console.log(lockableSectionLocks);
-
   const dataExchangeApproachLock = lockableSectionLocks?.find(
     lock => lock.section === LockableSection.DATA_EXCHANGE_APPROACH
   );
-
-  // console.log(dataExchangeApproachLock);
 
   const { data, loading, error, refetch } = useGetModelPlanQuery({
     variables: {
@@ -225,6 +221,7 @@ const CollaborationArea = () => {
                   <DataExchangeApproachCard
                     modelID={modelID}
                     dataExhangeApproachData={dataExchangeApproach}
+                    sectionLock={dataExchangeApproachLock}
                   />
                 </CardGroup>
               </Grid>
