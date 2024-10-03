@@ -2,7 +2,10 @@ import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, Label, Select } from '@trussworks/react-uswds';
-import { GetModelPlanQuery, useGetModelPlanQuery } from 'gql/generated/graphql';
+import {
+  GetEchimpCrandTdlQuery,
+  useGetEchimpCrandTdlQuery
+} from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import Alert from 'components/Alert';
@@ -15,7 +18,7 @@ import usePagination from 'hooks/usePagination';
 import EChimpCard from './EChimpCard';
 
 type EchimpCrAndTdlsType =
-  GetModelPlanQuery['modelPlan']['echimpCRsAndTDLs'][0];
+  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
 
 const searchSolutions = (
   query: string,
@@ -68,7 +71,7 @@ const EChimpCardsTable = ({
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
   const { modelID } = useParams<{ modelID: string }>();
-  const { data, loading } = useGetModelPlanQuery({
+  const { data, loading } = useGetEchimpCrandTdlQuery({
     variables: {
       id: modelID
     }
