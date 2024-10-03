@@ -34,46 +34,6 @@ const mocks = [
         }
       }
     }
-  },
-  {
-    request: {
-      query: GetCrtdLsDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: {
-        modelPlan: {
-          __typename: 'ModelPlan',
-          id: modelID,
-          modelName: 'My Plan',
-          isCollaborator: true,
-          crs: [
-            {
-              __typename: 'PlanCR',
-              id: '123',
-              modelPlanID: modelID,
-              title: 'My CR',
-              idNumber: 'CR123',
-              dateInitiated: '2022-07-30T05:00:00Z',
-              dateImplemented: '2022-07-30T05:00:00Z',
-              note: 'note'
-            }
-          ],
-          tdls: [
-            {
-              __typename: 'PlanTDL',
-              idNumber: 'TDL 456',
-              id: '456',
-              modelPlanID: modelID,
-              title: 'My TDL',
-              dateInitiated: '2022-07-30T05:00:00Z',
-              dateImplemented: '2022-07-30T05:00:00Z',
-              note: 'note'
-            }
-          ]
-        }
-      }
-    }
   }
 ];
 
