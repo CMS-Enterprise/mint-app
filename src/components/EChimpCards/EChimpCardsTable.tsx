@@ -1,10 +1,8 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import { CardGroup, Grid, Label, Select } from '@trussworks/react-uswds';
-import {
-  EchimpCrAndTdlsQuery,
-  useEchimpCrAndTdlsQuery
-} from 'gql/generated/graphql';
+import { GetModelPlanQuery, useGetModelPlanQuery } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import Alert from 'components/Alert';
@@ -16,22 +14,8 @@ import usePagination from 'hooks/usePagination';
 
 import EChimpCard from './EChimpCard';
 
-type EchimpCrAndTdlsType = EchimpCrAndTdlsQuery['echimpCRAndTDLS'][0];
-
-// TODO: REMOVE IF NOT USED AT THE END
-// // Type guard to check union type
-// const isEchimpCRType = (
-//   crtdl: EchimpCrAndTdlsType
-// ): crtdl is EchimpCrAndTdlsType => {
-//   /* eslint no-underscore-dangle: 0 */
-//   return crtdl.__typename === 'EChimpCR';
-// };
-// const isEchimpTDLType = (
-//   crtdl: EchimpCrAndTdlsType
-// ): crtdl is EchimpCrAndTdlsType => {
-//   /* eslint no-underscore-dangle: 0 */
-//   return crtdl.__typename === 'EChimpTDL';
-// };
+type EchimpCrAndTdlsType =
+  GetModelPlanQuery['modelPlan']['echimpCRsAndTDLs'][0];
 
 const searchSolutions = (
   query: string,
@@ -79,11 +63,18 @@ const sortOptions: SortProps[] = [
 const EChimpCardsTable = () => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
-  const { data, loading } = useEchimpCrAndTdlsQuery({
-    variables: {}
+  const { modelID } = useParams<{ modelID: string }>();
+  const { data, loading } = useGetModelPlanQuery({
+    variables: {
+      id: modelID
+    }
   });
 
-  const echimpItems = React.useMemo(() => data?.echimpCRAndTDLS || [], [data]);
+  const echimpItems = useMemo(
+    () => data?.modelPlan?.echimpCRsAndTDLs ?? [],
+    [data]
+  );
+
   const [query, setQuery] = useState('');
   const [pageSize, setPageSize] = useState<'all' | number>(6);
 
@@ -201,7 +192,7 @@ const EChimpCardsTable = () => {
           className="margin-left-auto desktop:grid-col-auto"
           pageSize={pageSize}
           setPageSize={setPageSize}
-          valueArray={[1, 2, 'all']}
+          valueArray={[6, 9, 'all']}
         />
       </Grid>
     </>
