@@ -139,7 +139,7 @@ const EChimpCardsTable = ({
   }
 
   return (
-    <>
+    <div data-testid="echimp-cr-and-tdls-table">
       <Grid row>
         <Grid desktop={{ col: 6 }}>
           <GlobalClientFilter
@@ -199,7 +199,7 @@ const EChimpCardsTable = ({
           valueArray={[6, 9, 'all']}
         />
       </Grid>
-    </>
+    </div>
   );
 };
 
