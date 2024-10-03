@@ -39,4 +39,15 @@
       }
     }
   }
+
+  &__main-card {
+    min-height: 420px;
+  }
+
+  &__status {
+    display: flex;
+    gap: 24px;
+    padding: 0 24px;
+    margin-block: 16px;
+  }
 }
