@@ -15,18 +15,30 @@ type LoadFunc[K comparable, V any] func(context.Context, K) (V, error)
 type DataLoadersHolder interface {
 	init()
 	getByKey() any
+	addLoaderByKeys(*HolderMap)
 }
 
 type LoaderConfig[K comparable, V any] struct {
 	// batchFunction is a type of function which takes an array of keys, and returns an array of *dataloader.Result[V]. It's responsible for returning the list ordered the same as the provided keys
 	batchFunction dataloader.BatchFunc[K, V]
-	// Load is an abstraction used to call a dataloader
-	Load LoadFunc[K, V]
+	// loadFunc is an abstraction used to store the reference to the load function
+	loadFunc LoadFunc[K, V]
+
+	// loader is the actual reference to a dataloader. It must be instantiated
+	loader *dataloader.Loader[K, V]
 }
 
 // NewBatchedLoader generates a Batched loader based on the specified configuration
 func (lm *LoaderConfig[K, V]) NewBatchedLoader() *dataloader.Loader[K, V] {
-	return dataloader.NewBatchedLoader(lm.batchFunction, dataloader.WithClearCacheOnBatch[K, V]())
+	loader := dataloader.NewBatchedLoader(lm.batchFunction, dataloader.WithClearCacheOnBatch[K, V]())
+	lm.loader = loader
+	return loader
 }
 
-//TODO (loaders) Consider how we might be able to generically retrieve a data loader by a key, and cast it to a specific type.
+func (lm *LoaderConfig[K, V]) Load(ctx context.Context, key K) (V, error) {
+	var empty V
+	if lm.loader == nil {
+		return empty, ErrLoaderIsNotInstantiated
+	}
+	return lm.loader.Load(ctx, key)()
+}

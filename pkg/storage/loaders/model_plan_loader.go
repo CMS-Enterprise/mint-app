@@ -24,6 +24,9 @@ func (l *modelPlanLoader) init() {
 func (l *modelPlanLoader) getByKey() any {
 	return l.ByID
 }
+func (l *modelPlanLoader) addLoaderByKeys(hMap *HolderMap) {
+	// hMap["model_plan"] = l.ByID
+}
 
 func newModelPlanLoaders() modelPlanLoader {
 	loader := modelPlanLoader{}
@@ -37,13 +40,27 @@ type modelPlanLoaderConfig struct {
 	GetByID LoaderConfig[uuid.UUID, *models.ModelPlan]
 }
 
-// ModelPlan is the loader config for all fetching of model plan data
-var ModelPlan modelPlanLoaderConfig = modelPlanLoaderConfig{
-	GetByID: LoaderConfig[uuid.UUID, *models.ModelPlan]{
-		Load:          modelPlanGetByIDLoad,
-		batchFunction: batchModelPlanByModelPlanID,
-	},
-}
+// // ModelPlan is the loader config for all fetching of model plan data
+// var ModelPlan modelPlanLoaderConfig = modelPlanLoaderConfig{
+// 	GetByID: LoaderConfig[uuid.UUID, *models.ModelPlan]{
+// 		LoadFunc:      modelPlanGetByIDLoad,
+// 		batchFunction: batchModelPlanByModelPlanID,
+// 	},
+// }
+
+var ModelPlan = func() modelPlanLoaderConfig {
+	cfg := modelPlanLoaderConfig{
+		GetByID: LoaderConfig[uuid.UUID, *models.ModelPlan]{
+			loadFunc:      modelPlanGetByIDLoad,
+			batchFunction: batchModelPlanByModelPlanID,
+		},
+	}
+	cfg.GetByID.loader = cfg.GetByID.NewBatchedLoader()
+
+	// TODO: should we define an interface or just require this? that needs to be
+	// cfg.InstantiateMethod()
+	return cfg
+}()
 
 func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.ModelPlan] {
 	logger := appcontext.ZLogger(ctx)
@@ -89,10 +106,10 @@ func modelPlanGetByIDLoad(ctx context.Context, id uuid.UUID) (*models.ModelPlan,
 	if err != nil {
 		return nil, err
 	}
-	loader := allLoaders.myMap["model_plan"]
-	retLoaderAny := loader.getByKey()
-	typedLoader := retLoaderAny.(*dataloader.Loader[uuid.UUID, *models.ModelPlan])
-	return typedLoader.Load(ctx, id)()
-	// modelPlanLoader := allLoaders.modelPlan.ByID
-	// return modelPlanLoader.Load(ctx, id)()
+	// // loader := allLoaders.myMap["model_plan"]
+	// // retLoaderAny := loader.getByKey()
+	// typedLoader := retLoaderAny.(*dataloader.Loader[uuid.UUID, *models.ModelPlan])
+	// return loader.Load(ctx, id)()
+	modelPlanLoader := allLoaders.modelPlan.ByID
+	return modelPlanLoader.Load(ctx, id)()
 }

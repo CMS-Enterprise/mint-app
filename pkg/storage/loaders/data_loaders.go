@@ -86,12 +86,20 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.AnalyzedAuditLoader = newWrappedDataLoader(loaders.analyzedAuditGetByModelPlanIDAndDateBatch)
 
 	loaders.TranslatedAuditFieldCollectionLoader = newWrappedDataLoader(loaders.translatedAuditFieldCollectionGetByTranslatedAuditIDBatch)
+	mpl := newModelPlanLoaders()
+	loaderList := []DataLoadersHolder{&mpl}
+	myMap := HolderMap{}
+
+	for _, loaderHolder := range loaderList {
+		loaderHolder.addLoaderByKeys(&myMap)
+	}
+	loaders.myMap = myMap
 
 	// TODO (loaders) can we associate the parent field
 
 	// New V7 loaders rely on generics. They have a configuration, and a parent level struct that holds and initializes the dataloaders
 
-	loaders.modelPlan = newModelPlanLoaders()
+	// loaders.modelPlan = newModelPlanLoaders()
 	loaders.planBasics = newPlanBasicsLoaders()
 	loaders.operationalSolutions = newOperationalSolutionsLoaders()
 	// myMap := LoaderMap[any,any]{
@@ -99,10 +107,10 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 
 	// }
 
-	myMap := HolderMap{
-		"model_plan": &loaders.modelPlan,
-	}
-	loaders.myMap = myMap
+	// myMap := HolderMap{
+	// 	"model_plan": &loaders.modelPlan,
+	// }
+	// loaders.myMap = myMap
 
 	return loaders
 }

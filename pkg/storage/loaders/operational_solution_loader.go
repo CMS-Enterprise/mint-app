@@ -41,11 +41,11 @@ type operationalSolutionsLoaderConfig struct {
 var OperationalSolutions = operationalSolutionsLoaderConfig{
 	ByID: LoaderConfig[uuid.UUID, *models.OperationalSolution]{
 
-		Load:          operationalSolutionGetByIDLoad,
+		loadFunc:      operationalSolutionGetByIDLoad,
 		batchFunction: operationalSolutionGetByIDBatch,
 	},
 	AndPossibleByOperationalNeedID: LoaderConfig[storage.SolutionAndPossibleKey, []*models.OperationalSolution]{
-		Load:          operationalSolutionAndPossibleCollectionGetByOperationalNeedID,
+		loadFunc:      operationalSolutionAndPossibleCollectionGetByOperationalNeedID,
 		batchFunction: batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID,
 	},
 }

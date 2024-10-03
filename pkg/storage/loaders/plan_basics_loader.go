@@ -37,7 +37,7 @@ type planBasicsLoaderConfig struct {
 // PlanBasics is the loader config for all  plan basics fetching operations
 var PlanBasics planBasicsLoaderConfig = planBasicsLoaderConfig{
 	GetByModelPlanID: LoaderConfig[uuid.UUID, *models.PlanBasics]{
-		Load:          planBasicsGetByModelPlanIDLoad, // Direct assignment
+		loadFunc:      planBasicsGetByModelPlanIDLoad, // Direct assignment
 		batchFunction: batchPlanBasicsGetByModelPlanID,
 		// getExistingBatchFunction: ,
 	},
