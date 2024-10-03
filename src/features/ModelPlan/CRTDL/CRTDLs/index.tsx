@@ -18,7 +18,6 @@ import PageHeading from 'components/PageHeading';
 type ModelPlanType = GetModelPlanBaseQuery['modelPlan'];
 
 export const CRTDLs = () => {
-  // const { t: h } = useTranslation('general');
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
   const { t: miscT } = useTranslation('miscellaneous');
 
