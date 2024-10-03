@@ -16,27 +16,29 @@ import './index.scss';
 type EChimpCardProps = {
   id: string;
   title?: string | null;
-  emergencyCrFlag?: boolean | null;
-  sensitiveFlag?: boolean | null;
   crStatus?: string | null;
+  emergencyCrFlag?: boolean | null;
   implementationDate?: string | null;
+  isInReadView?: boolean;
   issuedDate?: string | null;
+  sensitiveFlag?: boolean | null;
 };
 
 const EChimpCard = ({
   id,
   title,
-  emergencyCrFlag,
-  sensitiveFlag,
   crStatus,
+  emergencyCrFlag,
   implementationDate,
-  issuedDate
+  isInReadView,
+  issuedDate,
+  sensitiveFlag
 }: EChimpCardProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
   return (
     <Card
-      gridLayout={{ desktop: { col: 4 } }}
+      gridLayout={{ desktop: { col: isInReadView ? 6 : 4 } }}
       className="echimp-card"
       containerProps={{ className: 'shadow-2' }}
     >
