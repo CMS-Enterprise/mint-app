@@ -13,9 +13,9 @@ import (
 )
 
 func operationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx context.Context, key storage.SolutionAndPossibleKey) ([]*models.OperationalSolution, error) {
-	allLoaders, ok := Loaders(ctx)
-	if !ok {
-		return nil, ErrNoLoaderOnContext
+	allLoaders, err := Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	loader := allLoaders.operationalSolutions.AndPossibleByOperationalNeedIDWithIncludeNotNeeded
 	return loader.Load(ctx, key)()
@@ -24,10 +24,10 @@ func operationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx context.
 func batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx context.Context, keys []storage.SolutionAndPossibleKey) []*dataloader.Result[[]*models.OperationalSolution] {
 	logger := appcontext.ZLogger(ctx)
 	output := make([]*dataloader.Result[[]*models.OperationalSolution], len(keys))
-	loaders, ok := Loaders(ctx)
-	if !ok {
+	loaders, err := Loaders(ctx)
+	if err != nil {
 		for index := range keys {
-			output[index] = &dataloader.Result[[]*models.OperationalSolution]{Data: nil, Error: ErrNoLoaderOnContext}
+			output[index] = &dataloader.Result[[]*models.OperationalSolution]{Data: nil, Error: err}
 		}
 		return output
 	}

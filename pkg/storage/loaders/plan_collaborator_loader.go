@@ -107,9 +107,9 @@ func (loaders *DataLoaders) getPlanCollaboratorByIDBatch(ctx context.Context, ke
 
 // PlanCollaboratorByID returns the Plan Collaborator data loader, loads it, and returns the correct result
 func PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error) {
-	allLoaders, ok := Loaders(ctx)
-	if !ok {
-		return nil, ErrNoLoaderOnContext
+	allLoaders, err := Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	collabByIDLoader := allLoaders.PlanCollaboratorByIDLoader
 	key := NewKeyArgs()

@@ -96,9 +96,9 @@ func (loaders *DataLoaders) analyzedAuditGetByModelPlanIDAndDateBatch(_ context.
 // AnalyzedAuditGetByModelPlanIDsAndDate returns a collection of analyzed audits for a model plans for a specific date utilizing a data loader
 func AnalyzedAuditGetByModelPlanIDsAndDate(ctx context.Context, modelPlanIDs []uuid.UUID, date time.Time) ([]*models.AnalyzedAudit, error) {
 
-	allLoaders, ok := Loaders(ctx)
-	if !ok {
-		return nil, ErrNoLoaderOnContext
+	allLoaders, err := Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	auditLoader := allLoaders.AnalyzedAuditLoader
 	key := NewKeyArgs()

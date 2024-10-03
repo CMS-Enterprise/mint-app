@@ -46,10 +46,10 @@ var PlanBasics planBasicsLoaderConfig = planBasicsLoaderConfig{
 func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.PlanBasics] {
 	logger := appcontext.ZLogger(ctx)
 	output := make([]*dataloader.Result[*models.PlanBasics], len(modelPlanIDs))
-	loaders, ok := Loaders(ctx)
-	if !ok {
+	loaders, err := Loaders(ctx)
+	if err != nil {
 		for index := range modelPlanIDs {
-			output[index] = &dataloader.Result[*models.PlanBasics]{Data: nil, Error: ErrNoLoaderOnContext}
+			output[index] = &dataloader.Result[*models.PlanBasics]{Data: nil, Error: err}
 		}
 		return output
 	}
@@ -83,9 +83,9 @@ func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UU
 }
 
 func planBasicsGetByModelPlanIDLoad(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	allLoaders, ok := Loaders(ctx)
-	if !ok {
-		return nil, ErrNoLoaderOnContext
+	allLoaders, err := Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	basicsLoader := allLoaders.planBasics.ByModelPlanID
 	return basicsLoader.Load(ctx, modelPlanID)()

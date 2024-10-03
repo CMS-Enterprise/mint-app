@@ -66,9 +66,9 @@ func (loaders *DataLoaders) translatedAuditFieldCollectionGetByTranslatedAuditID
 }
 
 func TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx context.Context, translatedAuditID uuid.UUID) ([]*models.TranslatedAuditField, error) {
-	allLoaders, ok := Loaders(ctx)
-	if !ok {
-		return nil, ErrNoLoaderOnContext
+	allLoaders, err := Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	TranslatedFieldLoader := allLoaders.TranslatedAuditFieldCollectionLoader
 	key := NewKeyArgs()

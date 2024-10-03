@@ -61,9 +61,9 @@ func (loaders *DataLoaders) possibleOperationalSolutionByKeyBatch(ctx context.Co
 // PossibleOperationalSolutionByKey returns a collection of analyzed audits for a model plans for a specific date utilizing a data loader
 func PossibleOperationalSolutionByKey(ctx context.Context, solKey models.OperationalSolutionKey) (*models.PossibleOperationalSolution, error) {
 
-	allLoaders, ok := Loaders(ctx)
-	if !ok {
-		return nil, ErrNoLoaderOnContext
+	allLoaders, err := Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	auditLoader := allLoaders.PossibleOperationSolutionByKeyLoader
 	key := NewKeyArgs()

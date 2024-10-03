@@ -46,9 +46,9 @@ func (loaders *DataLoaders) activityGetByIDLoaderBatch(ctx context.Context, keys
 // ActivityGetByID returns an activity by it's ID utilizing a data loaders
 func ActivityGetByID(ctx context.Context, activityID uuid.UUID) (*models.Activity, error) {
 
-	allLoaders, ok := Loaders(ctx)
-	if !ok {
-		return nil, ErrNoLoaderOnContext
+	allLoaders, err := Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	activityLoader := allLoaders.ActivityLoader
 	key := NewKeyArgs()

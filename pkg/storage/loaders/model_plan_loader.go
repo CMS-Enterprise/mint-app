@@ -45,11 +45,11 @@ var ModelPlan modelPlanLoaderConfig = modelPlanLoaderConfig{
 func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.ModelPlan] {
 	logger := appcontext.ZLogger(ctx)
 	output := make([]*dataloader.Result[*models.ModelPlan], len(modelPlanIDs))
-	loaders, ok := Loaders(ctx)
-	if !ok {
+	loaders, err := Loaders(ctx)
+	if err != nil {
 		//TODO: (loaders) make this a helper function to return an error per result
 		for index := range modelPlanIDs {
-			output[index] = &dataloader.Result[*models.ModelPlan]{Data: nil, Error: ErrNoLoaderOnContext}
+			output[index] = &dataloader.Result[*models.ModelPlan]{Data: nil, Error: err}
 		}
 		return output
 	}
@@ -82,9 +82,9 @@ func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) 
 
 // modelPlanGetByIDLoad uses a data loader to return a model plan for a given model plan
 func modelPlanGetByIDLoad(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
-	allLoaders, ok := Loaders(ctx)
-	if !ok {
-		return nil, ErrNoLoaderOnContext
+	allLoaders, err := Loaders(ctx)
+	if err != nil {
+		return nil, err
 	}
 	modelPlanLoader := allLoaders.modelPlan.ByID
 	return modelPlanLoader.Load(ctx, id)()
