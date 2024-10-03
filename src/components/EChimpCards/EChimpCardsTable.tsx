@@ -1,12 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import {
-  CardGroup,
-  Grid,
-  GridContainer,
-  Label,
-  Select
-} from '@trussworks/react-uswds';
+import { CardGroup, Grid, Label, Select } from '@trussworks/react-uswds';
 import {
   EchimpCrAndTdlsQuery,
   useEchimpCrAndTdlsQuery
@@ -49,6 +43,38 @@ const searchSolutions = (
   );
 };
 
+const handleSort = (solutions: EchimpCrAndTdlsType[], sort: 'id' | 'title') => {
+  // Make a shallow copy of the array before sorting to avoid mutation of the original array
+  return [...solutions].sort((a, b) => {
+    if (sort === 'id') {
+      return a.id.localeCompare(b.id);
+    }
+    if (sort === 'title') {
+      // Handle undefined titles by putting them at the end
+      if (!a.title) return 1; // a has no title, so it should come after b
+      if (!b.title) return -1; // b has no title, so it should come after a
+      return a.title.localeCompare(b.title);
+    }
+    return 0;
+  });
+};
+
+type SortProps = {
+  value: 'id' | 'title';
+  label: string;
+};
+// Sort options for the select dropdown
+const sortOptions: SortProps[] = [
+  {
+    value: 'id',
+    label: i18next.t('crtdlsMisc:sortBy.id')
+  },
+  {
+    value: 'title',
+    label: i18next.t('crtdlsMisc:sortBy.title')
+  }
+];
+
 const EChimpCardsTable = () => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
@@ -58,6 +84,8 @@ const EChimpCardsTable = () => {
 
   const echimpItems = React.useMemo(() => data?.echimpCRAndTDLS || [], [data]);
   const [query, setQuery] = useState('');
+
+  const [sort, setSort] = useState<SortProps['value']>(sortOptions[0].value);
 
   const [filteredEchimpItems, setFilteredEchimpItems] =
     useState<EchimpCrAndTdlsType[]>(echimpItems);
@@ -79,6 +107,10 @@ const EChimpCardsTable = () => {
       setFilteredEchimpItems(echimpItems);
     }
   }, [query, echimpItems]);
+
+  useEffect(() => {
+    setFilteredEchimpItems(handleSort(filteredEchimpItems, sort));
+  }, [sort]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading || !data) {
     return (
@@ -111,7 +143,6 @@ const EChimpCardsTable = () => {
 
   return (
     <>
-      {/* <div className="margin-bottom-4"> */}
       <Grid row>
         <Grid desktop={{ col: 6 }}>
           <GlobalClientFilter
@@ -122,8 +153,6 @@ const EChimpCardsTable = () => {
             className="margin-bottom-3 maxw-none tablet:width-mobile-lg"
           />
         </Grid>
-        {/* </div> */}
-        {/* Select sort display */}
         <Grid desktop={{ col: 6 }}>
           <div
             className="desktop:margin-left-auto display-flex"
@@ -140,18 +169,18 @@ const EChimpCardsTable = () => {
               id="sort"
               className="margin-bottom-2 margin-top-0"
               name="sort"
-              value=""
-              // onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-              //   setSort(e.target.value as SortProps['value']);
-              // }}
+              value={sort}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                setSort(e.target.value as SortProps['value']);
+              }}
             >
-              {/* {sortOptions.map(option => {
-              return (
-                <option key={`sort-${option.value}`} value={option.value}>
-                  {option.label}
-                </option>
-              );
-            })} */}
+              {sortOptions.map(option => {
+                return (
+                  <option key={`sort-${option.value}`} value={option.value}>
+                    {option.label}
+                  </option>
+                );
+              })}
             </Select>
           </div>
         </Grid>

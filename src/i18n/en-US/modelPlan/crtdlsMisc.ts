@@ -111,6 +111,10 @@ const crtdlsMisc = {
     initiatedDate: 'Initiated date',
     viewMore: 'View more',
     viewThisInECHIMP: 'View this in ECHIMP'
+  },
+  sortBy: {
+    id: 'By ID number',
+    title: 'By title'
   }
 };
 
