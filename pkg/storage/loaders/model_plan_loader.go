@@ -25,23 +25,14 @@ var ModelPlan = &modelPlanLoaders{
 
 func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.ModelPlan] {
 	logger := appcontext.ZLogger(ctx)
-	output := make([]*dataloader.Result[*models.ModelPlan], len(modelPlanIDs))
 	loaders, err := Loaders(ctx)
 	if err != nil {
-		//TODO: (loaders) make this a helper function to return an error per result
-		for index := range modelPlanIDs {
-			output[index] = &dataloader.Result[*models.ModelPlan]{Data: nil, Error: err}
-		}
-		return output
+		return errorPerEachKey[uuid.UUID, *models.ModelPlan](modelPlanIDs, err)
 	}
 
 	data, err := storage.ModelPlansGetByModePlanIDsLOADER(loaders.DataReader.Store, logger, modelPlanIDs)
 	if err != nil {
-		//TODO: (loaders) make this a helper function to return an error per result
-		for index := range modelPlanIDs {
-			output[index] = &dataloader.Result[*models.ModelPlan]{Data: nil, Error: err}
-		}
-		return output
+		return errorPerEachKey[uuid.UUID, *models.ModelPlan](modelPlanIDs, err)
 	}
 	getKeyFunc := func(modelPlan *models.ModelPlan) uuid.UUID {
 		return modelPlan.ID

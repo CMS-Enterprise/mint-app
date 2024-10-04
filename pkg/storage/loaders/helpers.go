@@ -20,3 +20,12 @@ func oneToOneDataLoaderFunc[K comparable, V any](keys []K, values []V, getKey fu
 
 	return helpers.OneToOneFunc(keys, values, getKey, transformToDataLoaderResult)
 }
+
+func errorPerEachKey[K comparable, V any](keys []K, err error) []*dataloader.Result[V] {
+	var empty V
+	output := make([]*dataloader.Result[V], len(keys))
+	for index := range keys {
+		output[index] = &dataloader.Result[V]{Data: empty, Error: err}
+	}
+	return output
+}
