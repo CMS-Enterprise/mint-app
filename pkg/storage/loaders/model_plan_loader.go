@@ -6,7 +6,6 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 
@@ -48,5 +47,5 @@ func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) 
 		return modelPlan.ID
 	}
 
-	return helpers.OneToOneDataLoaderFunc(modelPlanIDs, data, getKeyFunc)
+	return oneToOneDataLoaderFunc(modelPlanIDs, data, getKeyFunc)
 }

@@ -2,10 +2,8 @@ package loaders
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -50,23 +48,10 @@ func operationalSolutionGetByIDBatch(
 		}
 		return output
 	}
-
-	opSolsByID := lo.Associate(opSols, func(gc *models.OperationalSolution) (uuid.UUID, *models.OperationalSolution) {
-		return gc.ID, gc
-	})
-
-	// RETURN IN THE SAME ORDER REQUESTED
-	for index, key := range ids {
-
-		opSol, ok := opSolsByID[key]
-		if ok {
-			output[index] = &dataloader.Result[*models.OperationalSolution]{Data: opSol, Error: nil}
-		} else {
-			err := fmt.Errorf("operational solution not found for id %s", key)
-			output[index] = &dataloader.Result[*models.OperationalSolution]{Data: nil, Error: err}
-		}
-
+	getKeyFunc := func(data *models.OperationalSolution) uuid.UUID {
+		return data.ID
 	}
 
-	return output
+	return oneToOneDataLoaderFunc(ids, opSols, getKeyFunc)
+
 }

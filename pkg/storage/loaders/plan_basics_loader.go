@@ -2,10 +2,8 @@ package loaders
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -44,22 +42,10 @@ func batchPlanBasicsGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UU
 		}
 		return output
 	}
-	basicsByModelPlanID := lo.Associate(data, func(basics *models.PlanBasics) (uuid.UUID, *models.PlanBasics) {
-		return basics.ModelPlanID, basics
-	})
-
-	// RETURN IN THE SAME ORDER REQUESTED
-
-	for index, id := range modelPlanIDs {
-
-		basics, ok := basicsByModelPlanID[id]
-		if ok {
-			output[index] = &dataloader.Result[*models.PlanBasics]{Data: basics, Error: nil}
-		} else {
-			err2 := fmt.Errorf("plan basics not found for modelPlanID id %s", id)
-			output[index] = &dataloader.Result[*models.PlanBasics]{Data: nil, Error: err2}
-		}
+	getKeyFunc := func(data *models.PlanBasics) uuid.UUID {
+		return data.ModelPlanID
 	}
-	return output
+
+	return oneToOneDataLoaderFunc(modelPlanIDs, data, getKeyFunc)
 
 }

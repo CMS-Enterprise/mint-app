@@ -62,26 +62,20 @@ func OneToOne[valT Mapper[keyT, retT], keyT comparable, retT any](keys []keyT, v
 	return out
 }
 
-// OneToOneDataLoaderFunc takes a list of keys and a list of values which map one-to-one (key-to-value)
-func OneToOneDataLoaderFunc[K comparable, V any](keys []K, vals []V, getKey func(V) K) []*dataloader.Result[V] {
+// OneToOneFunc takes a list of keys and a list of values which map one-to-one (key-to-value).
+// it relies on the transformOutput func to return the result in expected format
+func OneToOneFunc[K comparable, V any, Output any](keys []K, vals []V, getKey func(V) K, transformOutput func(V, bool) Output) []Output {
 	store := map[K]V{}
 
 	for _, val := range vals {
 		id := getKey(val)
 		store[id] = val
 	}
-	output := make([]*dataloader.Result[V], len(keys))
+	output := make([]Output, len(keys))
 
 	for index, key := range keys {
 		data, ok := store[key]
-		if ok {
-			output[index] = &dataloader.Result[V]{Data: data, Error: nil}
-		} else {
-			// data is the zero state of the type
-			err := fmt.Errorf("result not found for given key %v", key)
-			output[index] = &dataloader.Result[V]{Data: data, Error: err}
-		}
-
+		output[index] = transformOutput(data, ok)
 	}
 
 	return output
