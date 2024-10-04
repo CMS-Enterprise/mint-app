@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
-import { GetCrtdLsDocument } from 'gql/generated/graphql';
+import { GetEchimpCrandTdlDocument } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -16,38 +16,28 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const mocks = [
   {
     request: {
-      query: GetCrtdLsDocument,
+      query: GetEchimpCrandTdlDocument,
       variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: {
           __typename: 'ModelPlan',
-          id: modelID,
-          modelName: 'modelName',
-          isCollaborator: true,
-          crs: [
+          echimpCRsAndTDLs: [
             {
-              __typename: 'PlanCrTdl',
+              __typename: 'EChimpCR',
               id: '123',
-              modelPlanID: modelID,
-              title: 'This is a CR and TDL plan',
-              idNumber: '321',
-              dateInitiated: '2022-05-12T15:01:39.190679Z',
-              dateImplemented: '2022-07-30T05:00:00Z',
-              note: 'string'
-            }
-          ],
-          tdls: [
+              title: 'Echimp CR',
+              crStatus: 'Open',
+              emergencyCrFlag: true,
+              implementationDate: '2022-05-12T15:01:39.190679Z',
+              sensitiveFlag: true
+            },
             {
-              __typename: 'PlanTDL',
-              idNumber: 'TDL 456',
+              __typename: 'EChimpTDL',
               id: '456',
-              modelPlanID: modelID,
-              title: 'My TDL',
-              dateInitiated: '2022-07-30T05:00:00Z',
-              dateImplemented: '2022-07-30T05:00:00Z',
-              note: 'note'
+              title: 'Echimp TDL',
+              issuedDate: '2022-05-12T15:01:39.190679Z'
             }
           ]
         }
@@ -85,11 +75,10 @@ describe('Read Only CR and TDLs page', () => {
 
     await waitFor(() => {
       expect(screen.getByText('FFS CRs and TDLs')).toBeInTheDocument();
-      expect(screen.getByTestId('cr-tdl-table-cr')).toBeInTheDocument();
-      expect(screen.queryAllByText('Edit')[0].closest('a')).toHaveAttribute(
-        'href',
-        expect.stringMatching(/models.*#read-only$/)
-      );
+      expect(
+        screen.getByTestId('echimp-cr-and-tdls-table')
+      ).toBeInTheDocument();
+      expect(screen.getByTestId('emergency__cr-tag')).toBeInTheDocument();
     });
   });
 
@@ -110,7 +99,11 @@ describe('Read Only CR and TDLs page', () => {
       </MemoryRouter>
     );
     await waitFor(() => {
-      expect(screen.getByText('This is a CR and TDL plan')).toBeInTheDocument();
+      expect(screen.getByText('FFS CRs and TDLs')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('echimp-cr-and-tdls-table')
+      ).toBeInTheDocument();
+      expect(screen.getByTestId('emergency__cr-tag')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();

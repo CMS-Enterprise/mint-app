@@ -51,13 +51,19 @@ const EChimpCard = ({
         {(emergencyCrFlag || sensitiveFlag) && (
           <div className="echimp-card__cr-tags">
             {emergencyCrFlag && (
-              <div className="echimp-card__cr-tag echimp-card__cr-tag--emergency">
+              <div
+                className="echimp-card__cr-tag echimp-card__cr-tag--emergency"
+                data-testid="emergency__cr-tag"
+              >
                 <Icon.LocalFireDepartment />
                 {crtdlsT('echimpCard.crTag.emergency')}
               </div>
             )}
             {sensitiveFlag && (
-              <div className="echimp-card__cr-tag echimp-card__cr-tag--sensitive">
+              <div
+                className="echimp-card__cr-tag echimp-card__cr-tag--sensitive"
+                data-testid="sensitive__cr-tag"
+              >
                 <Icon.Flag />
                 {crtdlsT('echimpCard.crTag.sensitive')}
               </div>
