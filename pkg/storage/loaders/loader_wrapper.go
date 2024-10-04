@@ -21,6 +21,7 @@ type LoaderWrapper[K comparable, V any] struct {
 }
 
 // Load loads a dataloader with a relevant key to return a result. It relies on the batch function to debounce and return the result
+// If the internal loader is not instantiated, it will return a ErrLoaderIsNotInstantiated error
 func (lw *LoaderWrapper[K, V]) Load(ctx context.Context, key K) (V, error) {
 	var empty V
 	if lw.loader == nil {
@@ -29,6 +30,8 @@ func (lw *LoaderWrapper[K, V]) Load(ctx context.Context, key K) (V, error) {
 	return lw.loader.Load(ctx, key)()
 }
 
+// NewLoaderWrapper creates a new LoaderWrapper with a batch function and returns it
+// The internal loader is instantiated with the `WithClearCacheOnBatch` cache option, so data is not cached between batches
 func NewLoaderWrapper[K comparable, V any](batchFn dataloader.BatchFunc[K, V]) LoaderWrapper[K, V] {
 	lw := LoaderWrapper[K, V]{
 		batchFunction: batchFn,
