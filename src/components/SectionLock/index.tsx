@@ -10,17 +10,21 @@ type SectionLockProps = {
   section: LockableSection;
 };
 
+// Component to display the lock state of a section
 const SectionLock = ({ section }: SectionLockProps) => {
   const { t } = useTranslation('modelPlanTaskList');
 
   const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
 
+  // Get the lockable sections from the SubscriptionContext
   const { lockableSectionLocks } = useContext(SubscriptionContext);
 
+  // Find the lock for the specified section
   const sectionLock = lockableSectionLocks?.find(
     lock => lock.section === section
   );
 
+  // If current section lock is not found, return null
   if (!sectionLock) {
     return null;
   }
@@ -33,6 +37,7 @@ const SectionLock = ({ section }: SectionLockProps) => {
         teamMember: sectionLock.lockedByUserAccount?.commonName
       });
 
+  // Determine if the section is self-locked by the current user
   const selfLocked = sectionLock.lockedByUserAccount.username === euaId;
 
   return (
