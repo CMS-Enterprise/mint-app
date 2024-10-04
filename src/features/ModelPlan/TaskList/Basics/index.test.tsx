@@ -154,6 +154,10 @@ describe('Model Plan Basics page', () => {
       </MemoryRouter>
     );
 
+    expect(
+      await screen.findByTestId('plan-basics-model-name')
+    ).not.toBeDisabled();
+
     expect(await screen.findByText('First Name')).toBeInTheDocument();
 
     expect(asFragment()).toMatchSnapshot();

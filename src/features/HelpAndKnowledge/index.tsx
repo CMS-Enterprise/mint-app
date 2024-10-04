@@ -41,14 +41,14 @@ export const HelpAndKnowledge = () => {
       </Route>
 
       <Route
-        path="/help-and-knowledge/how-to-have-a-successful-2-pager-meeting"
+        path="/help-and-knowledge/about-2-page-concept-papers-and-review-meetings"
         exact
       >
         <TwoPagerMeeting />
       </Route>
 
       <Route
-        path="/help-and-knowledge/how-to-have-a-successful-6-pager-meeting"
+        path="/help-and-knowledge/about-six-page-concept-papers-and-review-meeting"
         exact
       >
         <SixPagerMeeting />

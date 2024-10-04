@@ -1,7 +1,12 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import {
   FrequencyType,
   GetFrequencyDocument,
@@ -120,11 +125,9 @@ describe('Model Plan Beneficiaries', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => {
-      expect(screen.getByTestId('beneficiaries-precedence-note')).toHaveValue(
-        'Precedent note'
-      );
-    });
+    await waitForElementToBeRemoved(() =>
+      screen.getByTestId('beneficiaries-precedence-note-add-note-toggle')
+    );
 
     expect(asFragment()).toMatchSnapshot();
   });
