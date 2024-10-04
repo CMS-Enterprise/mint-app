@@ -25,7 +25,7 @@ describe('Locked Task List Section Page', () => {
 
     await waitFor(() => {
       expect(getByTestId('page-locked')).toHaveTextContent(
-        'Someone is currently editing the Model Plan section you’re trying to access'
+        'Someone is currently editing the section you’re trying to access.'
       );
     });
   });

@@ -40,18 +40,6 @@ exports[`Locked Task List Section Page > matches snapshot 1`] = `
           </a>
         </li>
         <li
-          class="usa-breadcrumb__list-item"
-        >
-          <a
-            class="usa-link usa-breadcrumb__link"
-            href="/models/53e06174-83b9-462a-86d0-3a936f3c2670/collaboration-area/task-list"
-          >
-            <span>
-              Model Plan task list
-            </span>
-          </a>
-        </li>
-        <li
           aria-current="page"
           class="usa-breadcrumb__list-item usa-current"
         >
@@ -70,7 +58,7 @@ exports[`Locked Task List Section Page > matches snapshot 1`] = `
         data-testid="page-locked"
         tabindex="-1"
       >
-        Someone is currently editing the Model Plan section you’re trying to access.
+        Someone is currently editing the section you’re trying to access.
       </h1>
       <p>
         Please try again later.
