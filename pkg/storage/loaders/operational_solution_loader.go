@@ -14,33 +14,19 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-type operationalSolutionsLoaderConfig struct {
+// operationalSolutionLoaders is a struct that holds LoaderWrappers related to Operational Solutions
+type operationalSolutionLoaders struct {
 	// ByID Returns an operational solution by it's id
-	ByID LoaderConfig[uuid.UUID, *models.OperationalSolution]
+	ByID LoaderWrapper[uuid.UUID, *models.OperationalSolution]
 	// AndPossibleByOperationalNeedID Returns an array of operational solutions, and possible operational solutions by an operational need id. It also will conditionally return needed / not needed
-	AndPossibleByOperationalNeedID LoaderConfig[storage.SolutionAndPossibleKey, []*models.OperationalSolution]
+	AndPossibleByOperationalNeedID LoaderWrapper[storage.SolutionAndPossibleKey, []*models.OperationalSolution]
 }
 
-// init initializes all relevant loaders for this loader config
-func (c *operationalSolutionsLoaderConfig) init() {
-	c.ByID.init()
-	c.AndPossibleByOperationalNeedID.init()
+// OperationalSolutions is the singleton instance of all LoaderWrappers related to Operational Solutions
+var OperationalSolutions = &operationalSolutionLoaders{
+	ByID:                           NewLoaderWrapper(operationalSolutionGetByIDBatch),
+	AndPossibleByOperationalNeedID: NewLoaderWrapper(batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID),
 }
-
-// OperationalSolutions is the loader config for all operational solution fetching
-var OperationalSolutions = func() *operationalSolutionsLoaderConfig {
-	config := &operationalSolutionsLoaderConfig{
-		ByID: LoaderConfig[uuid.UUID, *models.OperationalSolution]{
-			batchFunction: operationalSolutionGetByIDBatch,
-		},
-		AndPossibleByOperationalNeedID: LoaderConfig[storage.SolutionAndPossibleKey, []*models.OperationalSolution]{
-			batchFunction: batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID,
-		},
-	}
-	config.init()
-
-	return config
-}()
 
 // operationalSolutionGetByIDBatch uses a data loader to return an operational solution by ID
 func operationalSolutionGetByIDBatch(
