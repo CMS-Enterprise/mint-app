@@ -13,7 +13,7 @@ import ExternalLink from 'components/ExternalLink';
 
 import './index.scss';
 
-type EChimpCardProps = {
+export type EChimpCardProps = {
   id: string;
   title?: string | null;
   crStatus?: string | null;
