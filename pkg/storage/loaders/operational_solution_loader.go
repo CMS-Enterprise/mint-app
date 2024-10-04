@@ -32,21 +32,14 @@ func operationalSolutionGetByIDBatch(
 	ids []uuid.UUID,
 ) []*dataloader.Result[*models.OperationalSolution] {
 	logger := appcontext.ZLogger(ctx)
-	output := make([]*dataloader.Result[*models.OperationalSolution], len(ids))
 	loaders, err := Loaders(ctx)
 	if err != nil {
-		for index := range ids {
-			output[index] = &dataloader.Result[*models.OperationalSolution]{Data: nil, Error: ErrNoLoaderOnContext}
-		}
-		return output
+		return errorPerEachKey[uuid.UUID, *models.OperationalSolution](ids, err)
 	}
 
 	opSols, loadErr := storage.OperationalSolutionGetByIDLOADER(loaders.DataReader.Store, logger, ids)
 	if loadErr != nil {
-		for index := range ids {
-			output[index] = &dataloader.Result[*models.OperationalSolution]{Data: nil, Error: loadErr}
-		}
-		return output
+		return errorPerEachKey[uuid.UUID, *models.OperationalSolution](ids, loadErr)
 	}
 	getKeyFunc := func(data *models.OperationalSolution) uuid.UUID {
 		return data.ID

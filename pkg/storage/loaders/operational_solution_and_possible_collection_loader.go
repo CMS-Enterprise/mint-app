@@ -17,20 +17,13 @@ func batchOperationalSolutionAndPossibleCollectionGetByOperationalNeedID(ctx con
 	output := make([]*dataloader.Result[[]*models.OperationalSolution], len(keys))
 	loaders, err := Loaders(ctx)
 	if err != nil {
-		for index := range keys {
-			output[index] = &dataloader.Result[[]*models.OperationalSolution]{Data: nil, Error: err}
-		}
-		return output
+		return errorPerEachKey[storage.SolutionAndPossibleKey, []*models.OperationalSolution](keys, err)
+
 	}
 
 	sols, loadErr := storage.OperationalSolutionAndPossibleCollectionGetByOperationalNeedIDLOADER(loaders.DataReader.Store, logger, keys)
-
 	if loadErr != nil {
-		for index := range keys {
-			output[index] = &dataloader.Result[[]*models.OperationalSolution]{Data: nil, Error: loadErr}
-		}
-		return output
-
+		return errorPerEachKey[storage.SolutionAndPossibleKey, []*models.OperationalSolution](keys, loadErr)
 	}
 	solsByID := map[uuid.UUID][]*models.OperationalSolution{}
 	for _, sol := range sols {
