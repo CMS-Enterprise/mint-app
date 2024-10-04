@@ -9,7 +9,7 @@ import configureMockStore from 'redux-mock-store';
 import { ASSESSMENT } from 'constants/jobCodes';
 import MessageProvider from 'contexts/MessageContext';
 
-import CRTDLs from './index';
+import EChimpCardsTable from './EChimpCardsTable';
 
 const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
@@ -54,7 +54,7 @@ const mockAuthReducer = {
 const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
-describe('Read Only CR and TDLs page', () => {
+describe('EChimpCardsTable', () => {
   it('renders without errors', async () => {
     render(
       <MemoryRouter
@@ -64,7 +64,7 @@ describe('Read Only CR and TDLs page', () => {
           <MessageProvider>
             <Route path="/models/:modelID/collaboration-area/cr-and-tdl">
               <Provider store={store}>
-                <CRTDLs />
+                <EChimpCardsTable />
               </Provider>
             </Route>
           </MessageProvider>
@@ -91,7 +91,7 @@ describe('Read Only CR and TDLs page', () => {
           <MessageProvider>
             <Route path="/models/:modelID/collaboration-area/cr-and-tdl">
               <Provider store={store}>
-                <CRTDLs />
+                <EChimpCardsTable />
               </Provider>
             </Route>
           </MessageProvider>
