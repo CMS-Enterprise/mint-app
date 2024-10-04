@@ -25,6 +25,7 @@ import {
   GetCrtdLsQuery,
   GetLockedModelPlanSectionsQuery,
   GetModelPlanQuery,
+  LockableSection,
   TaskListSection,
   TaskStatus,
   useGetModelPlanQuery
@@ -45,12 +46,12 @@ import useMessage from 'hooks/useMessage';
 import { formatDateLocal } from 'utils/date';
 import { isAssessment } from 'utils/user';
 
+import SectionLock from '../../../components/SectionLock';
 import Discussions from '../Discussions';
 import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
 
 import TaskListButton from './_components/TaskListButton';
 import TaskListItem, { TaskListDescription } from './_components/TaskListItem';
-import TaskListLock from './_components/TaskListLock';
 import TaskListSideNav from './_components/TaskListSideNav';
 
 import './index.scss';
@@ -213,6 +214,16 @@ const TaskList = () => {
     payments,
     itSolutions,
     prepareForClearance
+  };
+
+  const sectionMap: Partial<Record<string, LockableSection>> = {
+    basics: LockableSection.BASICS,
+    generalCharacteristics: LockableSection.GENERAL_CHARACTERISTICS,
+    participantsAndProviders: LockableSection.PARTICIPANTS_AND_PROVIDERS,
+    beneficiaries: LockableSection.BENEFICIARIES,
+    opsEvalAndLearning: LockableSection.OPERATIONS_EVALUATION_AND_LEARNING,
+    payments: LockableSection.PAYMENT,
+    prepareForClearance: LockableSection.PREPARE_FOR_CLEARANCE
   };
 
   // Gets the sessions storage variable for statusChecked of modelPlan
@@ -412,18 +423,9 @@ const TaskList = () => {
                           status={taskListSections[key].status}
                         />
 
-                        <TaskListLock
-                          isAssessment={
-                            !!getTaskListLockedStatus(key)?.isAssessment
-                          }
-                          selfLocked={
-                            getTaskListLockedStatus(key)?.lockedByUserAccount
-                              .username === euaId
-                          }
-                          lockedByUserAccount={
-                            getTaskListLockedStatus(key)?.lockedByUserAccount
-                          }
-                        />
+                        {sectionMap[key] && (
+                          <SectionLock section={sectionMap[key]} />
+                        )}
                       </TaskListItem>
                       {key !== 'prepareForClearance' && (
                         <Divider className="margin-bottom-4" />

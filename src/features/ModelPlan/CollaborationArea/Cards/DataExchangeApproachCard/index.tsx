@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
   Button,
@@ -10,12 +9,11 @@ import {
   CardHeader
 } from '@trussworks/react-uswds';
 import { TaskListStatusTag } from 'features/ModelPlan/TaskList/_components/TaskListItem';
-import TaskListLock from 'features/ModelPlan/TaskList/_components/TaskListLock';
-import { GetModelPlanQuery } from 'gql/generated/graphql';
+import { GetModelPlanQuery, LockableSection } from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
 import UswdsReactLink from 'components/LinkWrapper';
-import { LockSectionType } from 'contexts/PageLockContext';
+import useSectionLock from 'hooks/useSectionLock';
 import { formatDateLocal } from 'utils/date';
 
 import '../cards.scss';
@@ -26,22 +24,22 @@ export type DataExchangeApproachType =
 type DataExchangeApproachCardType = {
   modelID: string;
   dataExhangeApproachData: DataExchangeApproachType;
-  sectionLock: LockSectionType | undefined;
 };
 
 const DataExchangeApproachCard = ({
   modelID,
-  dataExhangeApproachData,
-  sectionLock
+  dataExhangeApproachData
 }: DataExchangeApproachCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
   const history = useHistory();
 
-  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
-
   const { modifiedDts, modifiedByUserAccount, status } =
     dataExhangeApproachData;
+
+  const { SectionLock, isLocked } = useSectionLock({
+    section: LockableSection.DATA_EXCHANGE_APPROACH
+  });
 
   return (
     <>
@@ -61,7 +59,7 @@ const DataExchangeApproachCard = ({
         <CardBody>
           <p>{collaborationAreaT('dataExchangeApproachCard.body')}</p>
 
-          {modifiedDts && modifiedByUserAccount && !sectionLock && (
+          {modifiedDts && modifiedByUserAccount && !isLocked && (
             <div className="display-inline tablet:display-flex margin-top-2 margin-bottom-3 flex-align-center">
               <span className="text-base margin-right-1">
                 {collaborationAreaT('dataExchangeApproachCard.lastModified', {
@@ -75,23 +73,14 @@ const DataExchangeApproachCard = ({
             </div>
           )}
 
-          {sectionLock && (
-            <TaskListLock
-              isAssessment={!!sectionLock.isAssessment}
-              selfLocked={sectionLock.lockedByUserAccount.username === euaId}
-              lockedByUserAccount={sectionLock.lockedByUserAccount}
-            />
-          )}
+          <SectionLock />
         </CardBody>
 
         <CardFooter>
           <Button
             type="button"
             className="margin-right-2"
-            disabled={
-              !!sectionLock &&
-              sectionLock.lockedByUserAccount.username !== euaId
-            }
+            disabled={isLocked}
             onClick={() =>
               history.push(
                 `/models/${modelID}/collaboration-area/data-exchange-approach`
