@@ -63,9 +63,7 @@ func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNee
 
 // OperationalSolution is the resolver for the operationalSolution field.
 func (r *queryResolver) OperationalSolution(ctx context.Context, id uuid.UUID) (*models.OperationalSolution, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return OperationalSolutionGetByID(logger, id, r.store)
+	return OperationalSolutionGetByIDLOADER(ctx, id)
 }
 
 // OperationalSolution returns generated.OperationalSolutionResolver implementation.

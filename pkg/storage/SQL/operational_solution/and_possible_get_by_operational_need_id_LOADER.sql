@@ -13,9 +13,9 @@ possibleSolution AS (
     /*Get the mapped possible solutions for given operational need */
     SELECT
         OpSol.id,
-        qID.operational_need_id AS operational_need_id,
+        qID.operational_need_id,
         pOpSol.id AS solution_type,
-        OpSol.needed AS needed,
+        OpSol.needed,
         pOpSol.sol_name,
         pOpSol.sol_key,
         OpSol.name_other,
@@ -32,10 +32,10 @@ possibleSolution AS (
         OpSol.modified_dts,
         TRUE AS is_common_solution -- Linked Possible Solutions are always a common solution
     FROM QUERIED_IDS AS qID
-    INNER JOIN operational_need AS OpNd ON OpNd.id = qID.operational_need_id
-    INNER JOIN possible_need_solution_link AS PNSL ON PNSL.need_type = OpNd.need_type
-    INNER JOIN possible_operational_solution AS pOpSol ON pOpSol.id = PNSL.solution_type
-    LEFT JOIN operational_solution AS OpSol ON OpSol.solution_type = pOpSol.id AND OpSol.operational_need_id = OpNd.id
+    INNER JOIN operational_need AS OpNd ON qID.operational_need_id = OpNd.id
+    INNER JOIN possible_need_solution_link AS PNSL ON OpNd.need_type = PNSL.need_type
+    INNER JOIN possible_operational_solution AS pOpSol ON PNSL.solution_type = pOpSol.id
+    LEFT JOIN operational_solution AS OpSol ON pOpSol.id = OpSol.solution_type AND OpNd.id = OpSol.operational_need_id
     WHERE (qID.include_not_needed = TRUE OR OpSol.needed = TRUE)
 ),
 
@@ -66,10 +66,10 @@ resultSet AS (
         PNSL.id IS NOT NULL AS is_common_solution -- A Common Solution is a solution that is linked as a possible solution for an operational need
 
     FROM QUERIED_IDS AS qID
-    INNER JOIN operational_solution AS OpSol ON OpSol.operational_need_id = qID.operational_need_id
+    INNER JOIN operational_solution AS OpSol ON qID.operational_need_id = OpSol.operational_need_id
     LEFT JOIN possible_operational_solution AS pOpSol ON OpSol.solution_type = pOpSol.id
-    LEFT JOIN operational_need ON operational_need.id = OpSol.operational_need_id
-    LEFT JOIN possible_need_solution_link AS PNSL ON PNSL.solution_type = pOpSol.id AND PNSL.need_type = operational_need.need_type
+    LEFT JOIN operational_need ON OpSol.operational_need_id = operational_need.id
+    LEFT JOIN possible_need_solution_link AS PNSL ON pOpSol.id = PNSL.solution_type AND operational_need.need_type = PNSL.need_type
     WHERE (qID.include_not_needed = TRUE OR OpSol.needed = TRUE)
     ORDER BY solution_type ASC
 )

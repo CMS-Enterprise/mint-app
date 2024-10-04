@@ -61,7 +61,10 @@ func OperationalSolutionSubtaskGetByID(
 
 // OperationalSolutionSubtaskGetBySolutionIDLOADER implements resolver logic to get Operational Solution Subtask by a model plan ID using a data loader
 func OperationalSolutionSubtaskGetBySolutionIDLOADER(ctx context.Context, solutionID uuid.UUID) ([]*models.OperationalSolutionSubtask, error) {
-	allLoaders := loaders.Loaders(ctx)
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
+	}
 	OpSolSLoader := allLoaders.OperationSolutionSubtaskLoader
 	key := loaders.NewKeyArgs()
 	key.Args["solution_id"] = solutionID

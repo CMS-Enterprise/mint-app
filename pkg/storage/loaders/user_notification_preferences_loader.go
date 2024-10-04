@@ -59,7 +59,10 @@ func (loaders *DataLoaders) userNotificationPreferencesGetByUserIDBatch(_ contex
 // UserNotificationPreferencesGetByUserID returns a user notification preferences object by a user id utilizing a data loader
 func UserNotificationPreferencesGetByUserID(ctx context.Context, userID uuid.UUID) (*models.UserNotificationPreferences, error) {
 
-	allLoaders := Loaders(ctx)
+	allLoaders, err := Loaders(ctx)
+	if err != nil {
+		return nil, err
+	}
 	UserNotificationPreferencesLoader := allLoaders.UserNotificationPreferencesLoader
 	key := NewKeyArgs()
 	key.Args[DLUserNotificationPreferencesKey] = userID
