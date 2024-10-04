@@ -14,22 +14,16 @@ import (
 	"github.com/graph-gophers/dataloader/v7"
 )
 
-// modelPlanLoaderConfig is the loader config for all fetching of model plan data
-type modelPlanLoaderConfig struct {
+// modelPlanLoaders is a struct that holds LoaderWrappers related to Model Plans
+type modelPlanLoaders struct {
 	// GetByID returns a model plan record associated with a uuid
-	GetByID LoaderConfig[uuid.UUID, *models.ModelPlan]
+	GetByID LoaderWrapper[uuid.UUID, *models.ModelPlan]
 }
 
-// ModelPlan is the loader config for all fetching of model plan data
-var ModelPlan = func() modelPlanLoaderConfig {
-	config := modelPlanLoaderConfig{
-		GetByID: LoaderConfig[uuid.UUID, *models.ModelPlan]{
-			batchFunction: batchModelPlanByModelPlanID,
-		},
-	}
-	config.GetByID.init()
-	return config
-}()
+// ModelPlan is the singleton instance of all LoaderWrappers related to Model Plans
+var ModelPlan = &modelPlanLoaders{
+	GetByID: NewLoaderWrapper(batchModelPlanByModelPlanID),
+}
 
 func batchModelPlanByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[*models.ModelPlan] {
 	logger := appcontext.ZLogger(ctx)
