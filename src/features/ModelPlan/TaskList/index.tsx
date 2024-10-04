@@ -26,7 +26,6 @@ import {
   GetLockedModelPlanSectionsQuery,
   GetModelPlanQuery,
   LockableSection,
-  TaskListSection,
   TaskStatus,
   useGetModelPlanQuery
 } from 'gql/generated/graphql';
@@ -96,18 +95,14 @@ type TaskListSectionsType = {
     | PrepareForClearanceType;
 };
 
-type TaskListSectionMapType = {
-  [key: string]: string;
-};
-
-const taskListSectionMap: TaskListSectionMapType = {
-  basics: TaskListSection.BASICS,
-  beneficiaries: TaskListSection.BENEFICIARIES,
-  generalCharacteristics: TaskListSection.GENERAL_CHARACTERISTICS,
-  opsEvalAndLearning: TaskListSection.OPERATIONS_EVALUATION_AND_LEARNING,
-  participantsAndProviders: TaskListSection.PARTICIPANTS_AND_PROVIDERS,
-  payments: TaskListSection.PAYMENT,
-  prepareForClearance: TaskListSection.PREPARE_FOR_CLEARANCE
+const taskListSectionMap: Partial<Record<string, LockableSection>> = {
+  basics: LockableSection.BASICS,
+  generalCharacteristics: LockableSection.GENERAL_CHARACTERISTICS,
+  participantsAndProviders: LockableSection.PARTICIPANTS_AND_PROVIDERS,
+  beneficiaries: LockableSection.BENEFICIARIES,
+  opsEvalAndLearning: LockableSection.OPERATIONS_EVALUATION_AND_LEARNING,
+  payments: LockableSection.PAYMENT,
+  prepareForClearance: LockableSection.PREPARE_FOR_CLEARANCE
 };
 
 export const getLatestModifiedDate = (
@@ -214,16 +209,6 @@ const TaskList = () => {
     payments,
     itSolutions,
     prepareForClearance
-  };
-
-  const sectionMap: Partial<Record<string, LockableSection>> = {
-    basics: LockableSection.BASICS,
-    generalCharacteristics: LockableSection.GENERAL_CHARACTERISTICS,
-    participantsAndProviders: LockableSection.PARTICIPANTS_AND_PROVIDERS,
-    beneficiaries: LockableSection.BENEFICIARIES,
-    opsEvalAndLearning: LockableSection.OPERATIONS_EVALUATION_AND_LEARNING,
-    payments: LockableSection.PAYMENT,
-    prepareForClearance: LockableSection.PREPARE_FOR_CLEARANCE
   };
 
   // Gets the sessions storage variable for statusChecked of modelPlan
@@ -423,8 +408,8 @@ const TaskList = () => {
                           status={taskListSections[key].status}
                         />
 
-                        {sectionMap[key] && (
-                          <SectionLock section={sectionMap[key]} />
+                        {taskListSectionMap[key] && (
+                          <SectionLock section={taskListSectionMap[key]} />
                         )}
                       </TaskListItem>
                       {key !== 'prepareForClearance' && (
