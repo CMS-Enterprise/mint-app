@@ -568,7 +568,10 @@ func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal authentic
 
 // DiscussionReplyCollectionByDiscusionIDLOADER implements resolver logic to get Discussion Reply by a model plan ID using a data loader
 func DiscussionReplyCollectionByDiscusionIDLOADER(ctx context.Context, discussionID uuid.UUID) ([]*models.DiscussionReply, error) {
-	allLoaders := loaders.Loaders(ctx)
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
+	}
 	discRLoader := allLoaders.DiscussionReplyLoader
 	key := loaders.NewKeyArgs()
 	key.Args["discussion_id"] = discussionID
@@ -585,7 +588,10 @@ func DiscussionReplyCollectionByDiscusionIDLOADER(ctx context.Context, discussio
 
 // PlanDiscussionGetByModelPlanIDLOADER implements resolver logic to get Plan Discussion by a model plan ID using a data loader
 func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanDiscussion, error) {
-	allLoaders := loaders.Loaders(ctx)
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
+	}
 	discLoader := allLoaders.DiscussionLoader
 	key := loaders.NewKeyArgs()
 	key.Args["model_plan_id"] = modelPlanID

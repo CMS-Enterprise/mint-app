@@ -1,11 +1,13 @@
 // Package loaders is a responsible for batched data calls
 package loaders
 
-import "github.com/cms-enterprise/mint-app/pkg/storage"
+import (
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+)
 
 // DataLoaders wrap your data loaders to inject via middleware
+// TODO: (loaders) WrappedDataLoaders are the legacy loaders, which should be refactored to use the v7 library
 type DataLoaders struct {
-	BasicsLoader                          *WrappedDataLoader
 	GeneralCharacteristicsLoader          *WrappedDataLoader
 	ParticipantsAndProvidersLoader        *WrappedDataLoader
 	BeneficiariesLoader                   *WrappedDataLoader
@@ -18,17 +20,14 @@ type DataLoaders struct {
 	DiscussionLoader      *WrappedDataLoader
 	DiscussionReplyLoader *WrappedDataLoader
 
-	OperationalNeedLoader                          *WrappedDataLoader
-	OperationalSolutionLoader                      *WrappedDataLoader
-	OperationalSolutionAndPossibleCollectionLoader *WrappedDataLoader
-	OperationSolutionSubtaskLoader                 *WrappedDataLoader
-	UserAccountLoader                              *WrappedDataLoader
-	DataReader                                     *DataReader
-	ExistingModelLinkLoader                        *WrappedDataLoader
-	ExistingModelLinkNameLoader                    *WrappedDataLoader
-	ExistingModelLoader                            *WrappedDataLoader
-	ModelPlanLoader                                *WrappedDataLoader
-	ModelPlanOpSolutionLastModifiedDtsLoader       *WrappedDataLoader
+	OperationalNeedLoader                    *WrappedDataLoader
+	OperationSolutionSubtaskLoader           *WrappedDataLoader
+	UserAccountLoader                        *WrappedDataLoader
+	DataReader                               *dataReader
+	ExistingModelLinkLoader                  *WrappedDataLoader
+	ExistingModelLinkNameLoader              *WrappedDataLoader
+	ExistingModelLoader                      *WrappedDataLoader
+	ModelPlanOpSolutionLastModifiedDtsLoader *WrappedDataLoader
 
 	PossibleOperationSolutionByKeyLoader   *WrappedDataLoader
 	PossibleOperationSolutionContactLoader *WrappedDataLoader
@@ -44,11 +43,13 @@ type DataLoaders struct {
 // NewDataLoaders instantiates data loaders for the middleware
 func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders := &DataLoaders{
-		DataReader: &DataReader{
+		DataReader: &dataReader{
 			Store: store,
 		},
 	}
-	loaders.BasicsLoader = newWrappedDataLoader(loaders.GetPlanBasicsByModelPlanID)
+
+	// TODO: (loaders)  Old Dataloaders, convert to the new style (V7) Anything that uses WrappedDataLoader will be refactored
+
 	loaders.GeneralCharacteristicsLoader = newWrappedDataLoader(loaders.GetPlanGeneralCharacteristicsByModelPlanID)
 	loaders.ParticipantsAndProvidersLoader = newWrappedDataLoader(loaders.GetPlanParticipantsAndProvidersByModelPlanID)
 	loaders.BeneficiariesLoader = newWrappedDataLoader(loaders.GetPlanBeneficiariesByModelPlanID)
@@ -62,15 +63,12 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 	loaders.DiscussionReplyLoader = newWrappedDataLoader(loaders.GetDiscussionReplyByModelPlanID)
 
 	loaders.OperationalNeedLoader = newWrappedDataLoader(loaders.GetOperationalNeedsByModelPlanID)
-	loaders.OperationalSolutionLoader = newWrappedDataLoader(loaders.OperationalSolutionGetByID)
-	loaders.OperationalSolutionAndPossibleCollectionLoader = newWrappedDataLoader(loaders.GetOperationalSolutionAndPossibleCollectionByOperationalNeedID)
 	loaders.OperationSolutionSubtaskLoader = newWrappedDataLoader(loaders.GetOperationalSolutionSubtaskByModelPlanID)
 	loaders.UserAccountLoader = newWrappedDataLoader(loaders.GetUserAccountsByIDLoader)
 
 	loaders.ExistingModelLinkLoader = newWrappedDataLoader(loaders.GetExistingModelLinkByModelPlanIDAndFieldName)
 	loaders.ExistingModelLinkNameLoader = newWrappedDataLoader(loaders.GetExistingModelLinkNamesByModelPlanIDAndFieldName)
 	loaders.ExistingModelLoader = newWrappedDataLoader(loaders.GetExistingModelByModelPlanID)
-	loaders.ModelPlanLoader = newWrappedDataLoader(loaders.GetModelPlanByModelPlanID)
 	loaders.ModelPlanOpSolutionLastModifiedDtsLoader = newWrappedDataLoader(loaders.GetModelPlanOpSolutionLastModifiedDtsByModelPlanID)
 
 	loaders.PossibleOperationSolutionByKeyLoader = newWrappedDataLoader(loaders.possibleOperationalSolutionByKeyBatch)
@@ -83,10 +81,15 @@ func NewDataLoaders(store *storage.Store) *DataLoaders {
 
 	loaders.TranslatedAuditFieldCollectionLoader = newWrappedDataLoader(loaders.translatedAuditFieldCollectionGetByTranslatedAuditIDBatch)
 
+	// TODO (loaders) can we associate the parent field
+
+	// New V7 loaders rely on generics. They have a configuration, and a parent level struct that holds and initializes the dataloaders
+	// They are instantiated in each loader file definition
+
 	return loaders
 }
 
-// DataReader reads Users from a database
-type DataReader struct {
+// dataReader is responsible for database access
+type dataReader struct {
 	Store *storage.Store
 }
