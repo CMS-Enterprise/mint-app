@@ -66,7 +66,7 @@ exports[`CR and TDLs page > matches snapshot 1`] = `
           FFS CRs and TDLs
         </h1>
         <p
-          class="margin-y-0 font-body-lg"
+          class="margin-top-1 margin-bottom-0 font-body-lg"
           data-testid="model-plan-name"
         >
           for 
