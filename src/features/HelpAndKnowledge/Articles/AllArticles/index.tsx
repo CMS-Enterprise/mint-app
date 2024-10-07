@@ -9,6 +9,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
 import HelpCardGroup from '../_components/HelpCardGroup';
+import ResourcesByCategory from '../_components/ResourcesByCategory';
 import { ArticleCategories, articleCategories } from '..';
 
 const AllArticles = () => {
@@ -40,6 +41,8 @@ const AllArticles = () => {
             filter={category}
           />
         </Grid>
+
+        <ResourcesByCategory currentCategory={category as ArticleCategories} />
       </GridContainer>
     </MainContent>
   );

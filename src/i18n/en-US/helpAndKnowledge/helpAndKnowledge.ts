@@ -2065,6 +2065,7 @@ const helpAndKnowledge = {
   itLeadInfo:
     'If your model has an IT lead, please make sure you work with them when expressing interest in solutions.',
   solutions,
+  allHelpResources: 'All help resources',
   browseByCategory: 'Browse resources by category',
   otherCategories: 'Other categories',
   numResources: '{{count}} resource',
