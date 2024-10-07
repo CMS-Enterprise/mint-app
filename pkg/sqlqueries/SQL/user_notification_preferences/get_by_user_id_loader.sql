@@ -18,7 +18,7 @@ SELECT
     UNP.new_model_plan,
     UNP.dates_changed,
     UNP.dates_changed_notification_type,
-    UNP.data_exchange_approach_completed,
+    UNP.data_exchange_approach_marked_complete,
     UNP.created_by,
     UNP.created_dts,
     UNP.modified_by,

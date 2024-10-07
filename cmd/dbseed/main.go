@@ -463,7 +463,7 @@ func (s *Seeder) SeedData() {
 	// Use a test user to mark the data exchange approach as complete
 	testUser := s.getTestPrincipalByUsername("BTAL")
 
-	err = resolvers.SendDataExchangeApproachCompletedNotification(
+	err = resolvers.SendDataExchangeApproachMarkedCompleteNotification(
 		s.Config.Context,
 		s.Config.EmailService,
 		s.Config.EmailTemplateService,

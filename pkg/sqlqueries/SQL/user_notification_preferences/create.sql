@@ -10,7 +10,7 @@ INSERT INTO public.user_notification_preferences(
     new_model_plan,
     dates_changed,
     dates_changed_notification_type,
-    data_exchange_approach_completed,
+    data_exchange_approach_marked_complete,
     created_by
 )
 VALUES (
@@ -25,7 +25,7 @@ VALUES (
     :new_model_plan,
     :dates_changed,
     :dates_changed_notification_type,
-    :data_exchange_approach_completed,
+    :data_exchange_approach_marked_complete,
     :created_by
 )
 RETURNING
@@ -40,7 +40,7 @@ model_plan_shared,
 new_model_plan,
 dates_changed,
 dates_changed_notification_type,
-data_exchange_approach_completed,
+data_exchange_approach_marked_complete,
 created_by,
 created_dts,
 modified_by,

@@ -6,29 +6,29 @@ import (
 	"github.com/google/uuid"
 )
 
-// PlanDataExchangeApproachCompletedActivityMeta represents the notification data that
+// PlanDataExchangeApproachMarkedCompleteActivityMeta represents the notification data that
 // is relevant to completing a Data Exchange Approach
-type PlanDataExchangeApproachCompletedActivityMeta struct {
+type PlanDataExchangeApproachMarkedCompleteActivityMeta struct {
 	ActivityMetaBaseStruct
 	DataExchangeApproachID uuid.UUID `json:"dataExchangeApproachID"`
 	MarkedCompleteBy       uuid.UUID `json:"markedCompleteBy"`
 }
 
-// newPlanDataExchangeApproachCompletedActivityMeta creates a new PlanDataExchangeApproachCompletedActivityMeta
-func newPlanDataExchangeApproachCompletedActivityMeta(
+// newPlanDataExchangeApproachMarkedCompleteActivityMeta creates a new PlanDataExchangeApproachMarkedCompleteActivityMeta
+func newPlanDataExchangeApproachMarkedCompleteActivityMeta(
 	dataExchangeApproachID uuid.UUID,
 	markedCompleteBy uuid.UUID,
-) *PlanDataExchangeApproachCompletedActivityMeta {
+) *PlanDataExchangeApproachMarkedCompleteActivityMeta {
 	version := 0 // iterate this if this type ever updates
-	return &PlanDataExchangeApproachCompletedActivityMeta{
-		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityDataExchangeApproachCompleted, version),
+	return &PlanDataExchangeApproachMarkedCompleteActivityMeta{
+		ActivityMetaBaseStruct: NewActivityMetaBaseStruct(ActivityDataExchangeApproachMarkedComplete, version),
 		DataExchangeApproachID: dataExchangeApproachID,
 		MarkedCompleteBy:       markedCompleteBy,
 	}
 }
 
-// NewPlanDataExchangeApproachCompletedActivity creates a new ActivityDataExchangeApproachCompleted type of Activity
-func NewPlanDataExchangeApproachCompletedActivity(
+// NewPlanDataExchangeApproachMarkedCompleteActivity creates a new ActivityDataExchangeApproachMarkedComplete type of Activity
+func NewPlanDataExchangeApproachMarkedCompleteActivity(
 	actorID uuid.UUID,
 	dataExchangeApproachID uuid.UUID,
 	markedCompleteBy uuid.UUID,
@@ -37,8 +37,8 @@ func NewPlanDataExchangeApproachCompletedActivity(
 		baseStruct:   NewBaseStruct(actorID),
 		ActorID:      actorID,
 		EntityID:     markedCompleteBy,
-		ActivityType: ActivityDataExchangeApproachCompleted,
-		MetaData: newPlanDataExchangeApproachCompletedActivityMeta(
+		ActivityType: ActivityDataExchangeApproachMarkedComplete,
+		MetaData: newPlanDataExchangeApproachMarkedCompleteActivityMeta(
 			dataExchangeApproachID,
 			markedCompleteBy,
 		),
@@ -46,11 +46,11 @@ func NewPlanDataExchangeApproachCompletedActivity(
 }
 
 // Value allows us to satisfy the valuer interface so we can write to the database
-func (d PlanDataExchangeApproachCompletedActivityMeta) Value() (driver.Value, error) {
+func (d PlanDataExchangeApproachMarkedCompleteActivityMeta) Value() (driver.Value, error) {
 	return GenericValue(d)
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (d *PlanDataExchangeApproachCompletedActivityMeta) Scan(src interface{}) error {
+func (d *PlanDataExchangeApproachMarkedCompleteActivityMeta) Scan(src interface{}) error {
 	return GenericScan(src, d)
 }
