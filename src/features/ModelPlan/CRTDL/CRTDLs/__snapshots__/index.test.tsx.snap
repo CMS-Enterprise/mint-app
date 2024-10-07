@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Read Only CR and TDLs page > matches snapshot 1`] = `
+exports[`CR and TDLs page > matches snapshot 1`] = `
 <DocumentFragment>
   <main
     class="mint-main-content"
