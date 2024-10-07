@@ -2064,7 +2064,11 @@ const helpAndKnowledge = {
   subCategories: solutionSubCategories,
   itLeadInfo:
     'If your model has an IT lead, please make sure you work with them when expressing interest in solutions.',
-  solutions
+  solutions,
+  browseByCategory: 'Browse resources by category',
+  otherCategories: 'Other categories',
+  numResources: '{{count}} resource',
+  numResources_other: '{{count}} resources'
 };
 
 export default helpAndKnowledge;

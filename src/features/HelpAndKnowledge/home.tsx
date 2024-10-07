@@ -7,6 +7,7 @@ import PageHeading from 'components/PageHeading';
 
 import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
+import ResourcesByCategory from './Articles/_components/ResourcesByCategory';
 import SolutionCategories from './SolutionsHelp/_components/SolutionCategories';
 import { ArticleCategories } from './Articles';
 
@@ -41,6 +42,8 @@ export const HelpAndKnowledgeHome = () => {
           showFirstThree
         />
         <ArticlePageInfo />
+
+        <ResourcesByCategory />
       </GridContainer>
 
       <SolutionCategories />
