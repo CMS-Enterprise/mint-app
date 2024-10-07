@@ -215,7 +215,7 @@ func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.Mo
 func (r *queryResolver) ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return ModelPlanCollection(logger, principal, r.store, filter)
+	return ModelPlanCollection(r.echimpS3Client, r.viperConfig, logger, principal, r.store, filter)
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.
