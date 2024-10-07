@@ -6,6 +6,7 @@ import usePagination from 'hooks/usePagination';
 import { tObject } from 'utils/translation';
 
 import helpAndKnowledgeArticles, { ArticleProps, HelpArticle } from '../..';
+import ExternalResourceCard from '../ExternalResourceCard';
 
 type HelpCardGroupType = {
   className?: string;
@@ -52,13 +53,25 @@ const HelpCardGroup = ({
     <>
       <CardGroup className={className}>
         {firstThreeArticles.map(article => (
-          <ArticleCard
-            {...article}
-            isLink
-            tag={tag}
-            type={article.type}
-            key={article.key}
-          />
+          <>
+            {article.external ? (
+              <ExternalResourceCard
+                {...article}
+                isLink
+                tag={tag}
+                type={article.type}
+                key={article.key}
+              />
+            ) : (
+              <ArticleCard
+                {...article}
+                isLink
+                tag={tag}
+                type={article.type}
+                key={article.key}
+              />
+            )}
+          </>
         ))}
       </CardGroup>
 

@@ -1995,7 +1995,21 @@ const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.PHASES_INVOLVED]:
     'Phases involved in creating IT and operational support for models',
   [HelpArticle.EVALUATING_DATA_EXCHANGE_APPROACH]:
-    'Evaluating your data exchange approach'
+    'Evaluating your data exchange approach',
+  [HelpArticle.ANNOUNCEMENT_MATERIALS]: 'Announcement materials on SharePoint'
+};
+
+type ExternalResourcesType = {
+  heading: string;
+  description: string;
+};
+
+const externalResources: Partial<Record<HelpArticle, ExternalResourcesType>> = {
+  [HelpArticle.ANNOUNCEMENT_MATERIALS]: {
+    heading: 'Announcement materials on SharePoint',
+    description:
+      'Access the Stakeholder Engagement and Policy team’s materials related to announcements and rollouts. The available materials include guides, FAQs, and SOPs. '
+  }
 };
 
 const helpAndKnowledge = {
@@ -2007,6 +2021,7 @@ const helpAndKnowledge = {
   all: 'All help articles',
   helpCategories,
   helpArticleNames,
+  externalResources,
   instructions:
     'Use the articles below to help get started with your Model Plan and IT implementation.',
   gettingStartedInstructions:
@@ -2068,8 +2083,10 @@ const helpAndKnowledge = {
   allHelpResources: 'All help resources',
   browseByCategory: 'Browse resources by category',
   otherCategories: 'Other categories',
+  externalResource: 'External resource',
   numResources: '{{count}} resource',
-  numResources_other: '{{count}} resources'
+  numResources_other: '{{count}} resources',
+  viewOnSharePoint: 'View on SharePoint'
 };
 
 export default helpAndKnowledge;

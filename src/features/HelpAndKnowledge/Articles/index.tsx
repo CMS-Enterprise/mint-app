@@ -20,7 +20,8 @@ export enum HelpArticle {
   MODEL_SOLUTION_IMPLEMENTATION = 'MODEL_SOLUTION_IMPLEMENTATION',
   MODEL_SOLUTION_DESIGN = 'MODEL_SOLUTION_DESIGN',
   PHASES_INVOLVED = 'PHASES_INVOLVED',
-  EVALUATING_DATA_EXCHANGE_APPROACH = 'EVALUATING_DATA_EXCHANGE_APPROACH'
+  EVALUATING_DATA_EXCHANGE_APPROACH = 'EVALUATING_DATA_EXCHANGE_APPROACH',
+  ANNOUNCEMENT_MATERIALS = 'ANNOUNCEMENT_MATERIALS'
 }
 
 export type ArticleProps = {
@@ -28,6 +29,7 @@ export type ArticleProps = {
   route: string;
   translation: string;
   type: ArticleCategories;
+  external?: boolean;
 };
 
 // Help and Knowledge Articles
@@ -91,6 +93,14 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     route: '/evaluating-data-exchange-approach',
     translation: 'evaluatingDataExchangeApproach',
     type: ArticleCategories.GETTING_STARTED
+  },
+  {
+    key: HelpArticle.ANNOUNCEMENT_MATERIALS,
+    route:
+      'https://share.cms.gov/center/cmmi/PP/DSEP/Lists/AnnouncementsAndRollouts/Tiles.aspx',
+    translation: HelpArticle.ANNOUNCEMENT_MATERIALS,
+    type: ArticleCategories.GETTING_STARTED,
+    external: true
   }
 ];
 
