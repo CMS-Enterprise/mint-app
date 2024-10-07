@@ -17,10 +17,10 @@ import usePagination from 'hooks/usePagination';
 
 import EChimpCard from './EChimpCard';
 
-type EchimpCrAndTdlsType =
+export type EchimpCrAndTdlsType =
   GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
 
-const searchSolutions = (
+export const searchSolutions = (
   query: string,
   solutions: EchimpCrAndTdlsType[]
 ): EchimpCrAndTdlsType[] => {
@@ -31,7 +31,10 @@ const searchSolutions = (
   );
 };
 
-const handleSort = (solutions: EchimpCrAndTdlsType[], sort: 'id' | 'title') => {
+export const handleSort = (
+  solutions: EchimpCrAndTdlsType[],
+  sort: 'id' | 'title'
+) => {
   // Make a shallow copy of the array before sorting to avoid mutation of the original array
   return [...solutions].sort((a, b) => {
     if (sort === 'id') {
