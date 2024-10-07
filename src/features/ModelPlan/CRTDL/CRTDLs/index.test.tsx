@@ -54,7 +54,7 @@ const mockAuthReducer = {
 const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthReducer });
 
-describe('Read Only CR and TDLs page', () => {
+describe('CR and TDLs page', () => {
   it('renders without errors', async () => {
     render(
       <MemoryRouter
