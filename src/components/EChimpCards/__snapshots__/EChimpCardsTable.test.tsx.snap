@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Read Only CR and TDLs page > renders without errors 1`] = `
+exports[`EChimpCardsTable > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     data-testid="echimp-cr-and-tdls-table"
