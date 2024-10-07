@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/cms-enterprise/mint-app/pkg/notifications"
+
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 
@@ -106,9 +108,24 @@ func PlanDataExchangeApproachUpdate(
 				return
 			}
 
-			dataExchangeApproachUANs, uacErr := store.UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete(existing.ID)
+			dataExchangeApproachUANs, uacErr := store.UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete(existing.ModelPlanID)
 			if uacErr != nil {
 				logger.Error("failed to get user account notification preferences", zap.Error(uacErr))
+				return
+			}
+
+			emailUANs, inAppUANs := models.FilterNotificationPreferences(dataExchangeApproachUANs)
+
+			_, notifErr = notifications.ActivityDataExchangeApproachMarkedCompleteCreate(
+				ctx,
+				principal.Account().ID,
+				store,
+				inAppUANs,
+				existing.ID,
+				principal.Account().ID,
+			)
+			if notifErr != nil {
+				logger.Error("failed to create activity", zap.Error(notifErr))
 				return
 			}
 
@@ -117,7 +134,7 @@ func PlanDataExchangeApproachUpdate(
 				emailService,
 				emailTemplateService,
 				emailAddressBook,
-				dataExchangeApproachUANs,
+				emailUANs,
 				modelPlan,
 				principal.Account().CommonName,
 				false,
