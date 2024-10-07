@@ -57,16 +57,9 @@ export default gql(/* GraphQL */ `
       echimpCRsAndTDLs {
         ... on EChimpCR {
           id
-          title
-          emergencyCrFlag
-          sensitiveFlag
-          crStatus
-          implementationDate
         }
         ... on EChimpTDL {
           id
-          title
-          issuedDate
         }
       }
       discussions {
