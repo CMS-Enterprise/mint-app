@@ -39,7 +39,7 @@ const TablePageSize = ({
         value={pageSize}
       >
         {valueArray.map(value => (
-          <Option value={value} />
+          <Option key={`table-page-size--${value}`} value={value} />
         ))}
       </Select>
     </div>
